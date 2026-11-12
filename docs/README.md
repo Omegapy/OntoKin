@@ -4,7 +4,7 @@
 
 Start with [current status and integration ownership](../STATUS.md), the [revised goal](../GOAL.md), and [C210 semantic export](engineering/semantic-export-c210/README.md). The [dated scope decision](engineering/semantic-export-c210/DECISION.md) adopts semantic object authoring and checked transport, explicitly defers the C209/C201 preparation sequence, and preserves earlier contracts and failed/unrun evidence. The [finite contract](engineering/semantic-export-c210/CONTRACT.md) reuses normalized records and the existing Agent/0.2 and GLB/0.2 paths. The [Unreal boundary](engineering/semantic-export-c210/UNREAL-INTEROP.md) separates conceptual mappings from support.
 
-The roadmap is this finite proof, one version-pinned receiving application, a second-target/source-traceability proof, then a matched direct-authoring comparison. Only the first stage belongs to C210. Earlier current-checkpoint paragraphs below are historical navigation, not authority to resume old priorities.
+The roadmap is this finite proof, one version-pinned receiving application, a second-target/source-traceability proof, then a matched direct-authoring comparison. The first stage now has [executed results](engineering/semantic-export-c210/RESULTS.md) and an explicit [regression disposition](engineering/semantic-export-c210/REGRESSION.md). Only that stage belongs to C210; the next implementation action is one bounded receiving proof using a single pinned Blender build. Earlier current-checkpoint paragraphs below are historical navigation, not authority to resume old priorities.
 
 ## Preserved preparation and development history
 

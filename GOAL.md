@@ -33,7 +33,7 @@ The older world-building ambition is preserved in the [pre-C210 goal](https://gi
 
 This is an order of work, not a schedule commitment. The former goal deferred a general importer, capture pipeline or new production backend until the comparison justified its expense. That investment restriction is clarified and revised to permit the small interoperability experiments in stages 1–3 before the comparison. General importers, capture pipelines, production backends and broad investment still require demonstrated need and measured benefit. C209's CPU-only job/0.2 retained-result compatibility and C201 native admission are deferred; neither is needed by the selected Agent/0.2 and GLB/0.2 proof. Frozen C201 instructions and closed C199/C200 schedules remain unchanged.
 
-The current action is to finish and independently verify the C210 semantic proof, then deliver its restorable handoff. The current status records whether that gate has passed; later roadmap stages must not be started as part of that handoff task.
+The C210 finite semantic proof has passed its affected and independent checks; its broad regression attempt remains failed with a separate scoped disposition. The next implementation action is one bounded receiving-application proof using a single pinned Blender build and the exact C210 accepted after-artifact. Record the actual build and predeclare identity, units/frames, geometry, supported semantic mappings and loss before implementing the adapter. C210 closes with verified publication and its restorable handoff; this next stage must not start in the C210 task.
 
 ## Evidence before expansion
 

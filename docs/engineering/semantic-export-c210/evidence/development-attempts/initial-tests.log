@@ -1,0 +1,33 @@
+test_actual_broken_geometry_reference_and_binary_mutation_reject (tests.test_semantic_export.SemanticExportTests.test_actual_broken_geometry_reference_and_binary_mutation_reject) ... ok
+test_broken_sidecar_reference_and_changed_semantics_reject (tests.test_semantic_export.SemanticExportTests.test_broken_sidecar_reference_and_changed_semantics_reject) ... ok
+test_callback_interrupt_propagates_without_mutating_inputs (tests.test_semantic_export.SemanticExportTests.test_callback_interrupt_propagates_without_mutating_inputs) ... ok
+test_canonical_comparison_is_deterministic_and_rejects_unknown_fields (tests.test_semantic_export.SemanticExportTests.test_canonical_comparison_is_deterministic_and_rejects_unknown_fields) ... ok
+test_changed_dependency_and_updated_pin_cannot_relabel_glb (tests.test_semantic_export.SemanticExportTests.test_changed_dependency_and_updated_pin_cannot_relabel_glb) ... ok
+test_complete_finite_inventory_bound_to_frozen_oracle (tests.test_semantic_export.SemanticExportTests.test_complete_finite_inventory_bound_to_frozen_oracle) ... FAIL
+test_external_requirements_cannot_be_erased_from_manifest (tests.test_semantic_export.SemanticExportTests.test_external_requirements_cannot_be_erased_from_manifest) ... ok
+test_ownership_and_declared_connections_do_not_parent_glb_transforms (tests.test_semantic_export.SemanticExportTests.test_ownership_and_declared_connections_do_not_parent_glb_transforms) ... ok
+test_real_prefix_export_cannot_silently_omit_source_interval (tests.test_semantic_export.SemanticExportTests.test_real_prefix_export_cannot_silently_omit_source_interval) ... ok
+test_same_geometry_with_changed_source_revision_cannot_relabel_glb (tests.test_semantic_export.SemanticExportTests.test_same_geometry_with_changed_source_revision_cannot_relabel_glb) ... ok
+test_stale_accepted_revision_rejects_before_artifact_use (tests.test_semantic_export.SemanticExportTests.test_stale_accepted_revision_rejects_before_artifact_use) ... ok
+test_unknown_and_required_unimplemented_features_reject (tests.test_semantic_export.SemanticExportTests.test_unknown_and_required_unimplemented_features_reject) ... ok
+test_visual_helpers_are_explicitly_outside_selected_profile (tests.test_semantic_export.SemanticExportTests.test_visual_helpers_are_explicitly_outside_selected_profile) ... ok
+
+======================================================================
+FAIL: test_complete_finite_inventory_bound_to_frozen_oracle (tests.test_semantic_export.SemanticExportTests.test_complete_finite_inventory_bound_to_frozen_oracle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/fe98ab19ba73/worktrees/semantic-implementation/tests/test_semantic_export.py", line 70, in test_complete_finite_inventory_bound_to_frozen_oracle
+    self.assertEqual(shape.get("size", shape.get("radius")), wanted.get("size_m", wanted.get("radius_m")))
+AssertionError: Lists differ: [0.1, 1.7999999999999998, 0.1] != [0.1, 1.8, 0.1]
+
+First differing element 1:
+1.7999999999999998
+1.8
+
+- [0.1, 1.7999999999999998, 0.1]
++ [0.1, 1.8, 0.1]
+
+----------------------------------------------------------------------
+Ran 13 tests in 47.800s
+
+FAILED (failures=1)

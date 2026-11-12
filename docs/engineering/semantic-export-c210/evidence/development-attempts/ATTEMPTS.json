@@ -1,0 +1,43 @@
+{
+  "base_commit": "94dee707c148b7a545e43d4de0d601642c5fa3e8",
+  "source_state": "Uncommitted new files at execution; original failed source copies reconstructed only from the two exact recorded one-line/block patches, otherwise unchanged. Original log bytes copied unchanged. No shared source edits.",
+  "attempts": [
+    {
+      "command": "python3 -m unittest tests.test_semantic_export -v",
+      "result": "FAILED;12 passed;1 new oracle comparison failed",
+      "cause": "New test incorrectly required binary64 0.6*3 == decimal oracle1.8 exactly; existing frozen tolerance is1e-12",
+      "correction": "Use frozen expected.json comparison.geometry_dimension_tolerance_m; no oracle or runtime changes"
+    },
+    {
+      "command": "python3 tools/build_semantic_export_demo.py --output-dir state/semantic-worker/proof-initial",
+      "result": "FAILED;TypeError in transcript summary of protocol rejection result=null",
+      "correction": "Treat absent/null result as empty mapping when omitting artifact base64; Agent runtime unchanged"
+    }
+  ],
+  "files": {
+    "initial-tests.log": {
+      "bytes": 3238,
+      "sha256": "f098d22cc2d00489e93b3c307e0a83268af0368c4657ac74666ad4455ecb6168"
+    },
+    "corrected-oracle-test.log": {
+      "bytes": 261,
+      "sha256": "4d21b7a7a28be0d2c0d5823938b7dc1c1c6b9251e751af979142f841ee214761"
+    },
+    "semantic_export.py": {
+      "bytes": 18860,
+      "sha256": "59d0b21ec2aebc97b09d4edfa069d7ce8589e87071000912448aaa76d9e7aa7a"
+    },
+    "build_semantic_export_demo-initial.py": {
+      "bytes": 21249,
+      "sha256": "bb0b398558d9728d6d8839a946e32c530aa05b6dccaa1c3750789ebc9fd6edf2"
+    },
+    "initial-harness.log": {
+      "bytes": 826,
+      "sha256": "f2f569e47dbc61f1f1d56123a034fc002bd99de54c8e69f049846b78f8d89e63"
+    },
+    "test_semantic_export-initial.py": {
+      "bytes": 10233,
+      "sha256": "ad3fbf61210493408246b0309352fa68e125aa2fc33829df92442792931136b3"
+    }
+  }
+}

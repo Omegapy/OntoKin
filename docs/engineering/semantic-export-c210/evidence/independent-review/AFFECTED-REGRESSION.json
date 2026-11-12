@@ -1,0 +1,2390 @@
+{
+  "schema_version": "ontokin.c210-affected-regression-inventory/0.1",
+  "candidate_commit": "7feb0dc501d3a6995732637f38c3c3b651914f4b",
+  "candidate_tree": "4e542247459a9002acaa02c5a054cb061be0c0c7",
+  "inventory_observed_commit": "11849729212cd5ae1e46194b4b7984ccc230dc02",
+  "verification_candidate_input_equivalence": {
+    "paths": [
+      "ontokin",
+      "tests",
+      "tools/build_semantic_export_demo.py",
+      "tools/check_local.py"
+    ],
+    "changed_committed_paths": [],
+    "changed_uncommitted_paths": [],
+    "matching": true
+  },
+  "inventory_method": "AST-only top-level test class methods; no module import, collection, or test execution.",
+  "scope": "Complete C210 affected cohort defined as every method in the 18 named preexisting modules, plus the new sidecar module. No cherry-picking by result.",
+  "summary": {
+    "preexisting_modules": 18,
+    "preexisting_test_ids": 262,
+    "adopted_C01_C20_unique_required_ids": 128,
+    "adopted_required_ids_missing_from_cohort": [],
+    "new_sidecar_tests": 13,
+    "all_cohort_tests": 275
+  },
+  "modules": [
+    {
+      "module": "test_bundle",
+      "path": "tests/test_bundle.py",
+      "sha256": "sha256:4e5eb05456bbeb8bc238a763a33cf590d7540373cf3fd4e9cda279ac8af571ca",
+      "test_count": 10,
+      "tests": [
+        {
+          "test_id": "test_bundle.BundleTests.test_frozen_golden_pin_and_exact_file_inline_round_trip",
+          "class": "BundleTests",
+          "method": "test_frozen_golden_pin_and_exact_file_inline_round_trip",
+          "definition_line": 32,
+          "log_method_prefix": "test_frozen_golden_pin_and_exact_file_inline_round_trip (test_bundle.BundleTests"
+        },
+        {
+          "test_id": "test_bundle.BundleTests.test_candidate_hash_is_defined_before_parsing_and_survives_exact_utf8",
+          "class": "BundleTests",
+          "method": "test_candidate_hash_is_defined_before_parsing_and_survives_exact_utf8",
+          "definition_line": 45,
+          "log_method_prefix": "test_candidate_hash_is_defined_before_parsing_and_survives_exact_utf8 (test_bundle.BundleTests"
+        },
+        {
+          "test_id": "test_bundle.BundleTests.test_hash_order_and_every_declared_identity_input",
+          "class": "BundleTests",
+          "method": "test_hash_order_and_every_declared_identity_input",
+          "definition_line": 53,
+          "log_method_prefix": "test_hash_order_and_every_declared_identity_input (test_bundle.BundleTests"
+        },
+        {
+          "test_id": "test_bundle.BundleTests.test_snapshot_does_not_share_mutable_source_or_payload",
+          "class": "BundleTests",
+          "method": "test_snapshot_does_not_share_mutable_source_or_payload",
+          "definition_line": 72,
+          "log_method_prefix": "test_snapshot_does_not_share_mutable_source_or_payload (test_bundle.BundleTests"
+        },
+        {
+          "test_id": "test_bundle.BundleTests.test_source_id_ambiguity_and_conflicting_versions_are_distinct",
+          "class": "BundleTests",
+          "method": "test_source_id_ambiguity_and_conflicting_versions_are_distinct",
+          "definition_line": 89,
+          "log_method_prefix": "test_source_id_ambiguity_and_conflicting_versions_are_distinct (test_bundle.BundleTests"
+        },
+        {
+          "test_id": "test_bundle.BundleTests.test_closed_transport_shapes_unicode_and_pin_domains",
+          "class": "BundleTests",
+          "method": "test_closed_transport_shapes_unicode_and_pin_domains",
+          "definition_line": 98,
+          "log_method_prefix": "test_closed_transport_shapes_unicode_and_pin_domains (test_bundle.BundleTests"
+        },
+        {
+          "test_id": "test_bundle.BundleTests.test_aggregate_source_module_and_filename_boundaries",
+          "class": "BundleTests",
+          "method": "test_aggregate_source_module_and_filename_boundaries",
+          "definition_line": 116,
+          "log_method_prefix": "test_aggregate_source_module_and_filename_boundaries (test_bundle.BundleTests"
+        },
+        {
+          "test_id": "test_bundle.BundleTests.test_file_manifest_preserves_bytes_and_ignores_transport_location",
+          "class": "BundleTests",
+          "method": "test_file_manifest_preserves_bytes_and_ignores_transport_location",
+          "definition_line": 130,
+          "log_method_prefix": "test_file_manifest_preserves_bytes_and_ignores_transport_location (test_bundle.BundleTests"
+        },
+        {
+          "test_id": "test_bundle.BundleTests.test_file_path_validation_rejects_escape_symlink_and_nonregular",
+          "class": "BundleTests",
+          "method": "test_file_path_validation_rejects_escape_symlink_and_nonregular",
+          "definition_line": 147,
+          "log_method_prefix": "test_file_path_validation_rejects_escape_symlink_and_nonregular (test_bundle.BundleTests"
+        },
+        {
+          "test_id": "test_bundle.BundleTests.test_manifest_json_and_source_bytes_fail_as_transport",
+          "class": "BundleTests",
+          "method": "test_manifest_json_and_source_bytes_fail_as_transport",
+          "definition_line": 170,
+          "log_method_prefix": "test_manifest_json_and_source_bytes_fail_as_transport (test_bundle.BundleTests"
+        }
+      ],
+      "rationale": "Exact immutable source closure, dependency pins, source revisions, and transport/file boundaries used by the sidecar and actual Agent workflow.",
+      "preexisting": true
+    },
+    {
+      "module": "test_linker",
+      "path": "tests/test_linker.py",
+      "sha256": "sha256:326e74ccd9547c0309a9614f9ee6d68cb4476f269779662cfed3cab1f8f80b26",
+      "test_count": 19,
+      "tests": [
+        {
+          "test_id": "test_linker.LinkerTests.test_c01_reusable_library_has_original_namespace_and_private_boundary",
+          "class": "LinkerTests",
+          "method": "test_c01_reusable_library_has_original_namespace_and_private_boundary",
+          "definition_line": 68,
+          "log_method_prefix": "test_c01_reusable_library_has_original_namespace_and_private_boundary (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_c02_equal_lexical_names_and_module_keys_are_package_scoped",
+          "class": "LinkerTests",
+          "method": "test_c02_equal_lexical_names_and_module_keys_are_package_scoped",
+          "definition_line": 82,
+          "log_method_prefix": "test_c02_equal_lexical_names_and_module_keys_are_package_scoped (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_c03_transitive_and_diamond_resolution_use_supplied_exact_units_once",
+          "class": "LinkerTests",
+          "method": "test_c03_transitive_and_diamond_resolution_use_supplied_exact_units_once",
+          "definition_line": 94,
+          "log_method_prefix": "test_c03_transitive_and_diamond_resolution_use_supplied_exact_units_once (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_alias_rename_and_two_aliases_do_not_create_nominal_types",
+          "class": "LinkerTests",
+          "method": "test_alias_rename_and_two_aliases_do_not_create_nominal_types",
+          "definition_line": 108,
+          "log_method_prefix": "test_alias_rename_and_two_aliases_do_not_create_nominal_types (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_c10_missing_wrong_changed_and_extra_content_rejects_with_candidate_identity",
+          "class": "LinkerTests",
+          "method": "test_c10_missing_wrong_changed_and_extra_content_rejects_with_candidate_identity",
+          "definition_line": 123,
+          "log_method_prefix": "test_c10_missing_wrong_changed_and_extra_content_rejects_with_candidate_identity (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_import_pin_literal_domains_are_source_diagnostics",
+          "class": "LinkerTests",
+          "method": "test_import_pin_literal_domains_are_source_diagnostics",
+          "definition_line": 145,
+          "log_method_prefix": "test_import_pin_literal_domains_are_source_diagnostics (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_c11_cycles_are_detected_before_impossible_digest_fixed_points",
+          "class": "LinkerTests",
+          "method": "test_c11_cycles_are_detected_before_impossible_digest_fixed_points",
+          "definition_line": 157,
+          "log_method_prefix": "test_c11_cycles_are_detected_before_impossible_digest_fixed_points (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_conflicting_versions_are_revision_bound_semantic_rejection",
+          "class": "LinkerTests",
+          "method": "test_conflicting_versions_are_revision_bound_semantic_rejection",
+          "definition_line": 167,
+          "log_method_prefix": "test_conflicting_versions_are_revision_bound_semantic_rejection (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_imported_scene_missing_entry_scene_and_unsupported_profiles",
+          "class": "LinkerTests",
+          "method": "test_imported_scene_missing_entry_scene_and_unsupported_profiles",
+          "definition_line": 175,
+          "log_method_prefix": "test_imported_scene_missing_entry_scene_and_unsupported_profiles (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_module_lookup_scope_disallows_collisions_unqualified_imports_and_reexports",
+          "class": "LinkerTests",
+          "method": "test_module_lookup_scope_disallows_collisions_unqualified_imports_and_reexports",
+          "definition_line": 185,
+          "log_method_prefix": "test_module_lookup_scope_disallows_collisions_unqualified_imports_and_reexports (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_module_and_longest_import_depth_boundaries",
+          "class": "LinkerTests",
+          "method": "test_module_and_longest_import_depth_boundaries",
+          "definition_line": 202,
+          "log_method_prefix": "test_module_and_longest_import_depth_boundaries (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_total_token_budget_is_not_reset_for_each_dependency",
+          "class": "LinkerTests",
+          "method": "test_total_token_budget_is_not_reset_for_each_dependency",
+          "definition_line": 210,
+          "log_method_prefix": "test_total_token_budget_is_not_reset_for_each_dependency (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_whole_closure_requires_and_caller_cancellation_are_preserved",
+          "class": "LinkerTests",
+          "method": "test_whole_closure_requires_and_caller_cancellation_are_preserved",
+          "definition_line": 221,
+          "log_method_prefix": "test_whole_closure_requires_and_caller_cancellation_are_preserved (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_c19_supplied_snapshot_hash_precedes_any_link_error",
+          "class": "LinkerTests",
+          "method": "test_c19_supplied_snapshot_hash_precedes_any_link_error",
+          "definition_line": 234,
+          "log_method_prefix": "test_c19_supplied_snapshot_hash_precedes_any_link_error (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins",
+          "class": "LinkerTests",
+          "method": "test_manifest_seals_concrete_cases_and_expected_failure_origins",
+          "definition_line": 246,
+          "log_method_prefix": "test_manifest_seals_concrete_cases_and_expected_failure_origins (test_linker.LinkerTests"
+        },
+        {
+          "test_id": "test_linker.ModuleExecutionTests.test_c01_actual_reused_component_instances_are_independent",
+          "class": "ModuleExecutionTests",
+          "method": "test_c01_actual_reused_component_instances_are_independent",
+          "definition_line": 284,
+          "log_method_prefix": "test_c01_actual_reused_component_instances_are_independent (test_linker.ModuleExecutionTests"
+        },
+        {
+          "test_id": "test_linker.ModuleExecutionTests.test_c02_c03_execute_declaring_module_helpers_and_nominal_references",
+          "class": "ModuleExecutionTests",
+          "method": "test_c02_c03_execute_declaring_module_helpers_and_nominal_references",
+          "definition_line": 293,
+          "log_method_prefix": "test_c02_c03_execute_declaring_module_helpers_and_nominal_references (test_linker.ModuleExecutionTests"
+        },
+        {
+          "test_id": "test_linker.ModuleExecutionTests.test_alias_change_preserves_constructed_types_and_strict_nominal_argument_check",
+          "class": "ModuleExecutionTests",
+          "method": "test_alias_change_preserves_constructed_types_and_strict_nominal_argument_check",
+          "definition_line": 308,
+          "log_method_prefix": "test_alias_change_preserves_constructed_types_and_strict_nominal_argument_check (test_linker.ModuleExecutionTests"
+        },
+        {
+          "test_id": "test_linker.ModuleExecutionTests.test_unused_imported_function_body_and_capability_requirements_are_not_ignored",
+          "class": "ModuleExecutionTests",
+          "method": "test_unused_imported_function_body_and_capability_requirements_are_not_ignored",
+          "definition_line": 322,
+          "log_method_prefix": "test_unused_imported_function_body_and_capability_requirements_are_not_ignored (test_linker.ModuleExecutionTests"
+        }
+      ],
+      "rationale": "Pinned reusable module linking and source origins consumed by compile_construction.",
+      "preexisting": true
+    },
+    {
+      "module": "test_syntax02",
+      "path": "tests/test_syntax02.py",
+      "sha256": "sha256:4db175bead1ea57f04882f348521a65a2e5cdda71c60fdc20d2bdaaca8a862d3",
+      "test_count": 9,
+      "tests": [
+        {
+          "test_id": "test_syntax02.Syntax02Tests.test_complete_fixtures_retain_every_source_origin",
+          "class": "Syntax02Tests",
+          "method": "test_complete_fixtures_retain_every_source_origin",
+          "definition_line": 38,
+          "log_method_prefix": "test_complete_fixtures_retain_every_source_origin (test_syntax02.Syntax02Tests"
+        },
+        {
+          "test_id": "test_syntax02.Syntax02Tests.test_key_steps_do_not_split_dotted_entry_names",
+          "class": "Syntax02Tests",
+          "method": "test_key_steps_do_not_split_dotted_entry_names",
+          "definition_line": 51,
+          "log_method_prefix": "test_key_steps_do_not_split_dotted_entry_names (test_syntax02.Syntax02Tests"
+        },
+        {
+          "test_id": "test_syntax02.Syntax02Tests.test_expression_keys_can_be_computed_but_assignment_keys_are_literals",
+          "class": "Syntax02Tests",
+          "method": "test_expression_keys_can_be_computed_but_assignment_keys_are_literals",
+          "definition_line": 70,
+          "log_method_prefix": "test_expression_keys_can_be_computed_but_assignment_keys_are_literals (test_syntax02.Syntax02Tests"
+        },
+        {
+          "test_id": "test_syntax02.Syntax02Tests.test_keyed_empty_type_duplicate_entries_and_typed_body_bindings",
+          "class": "Syntax02Tests",
+          "method": "test_keyed_empty_type_duplicate_entries_and_typed_body_bindings",
+          "definition_line": 83,
+          "log_method_prefix": "test_keyed_empty_type_duplicate_entries_and_typed_body_bindings (test_syntax02.Syntax02Tests"
+        },
+        {
+          "test_id": "test_syntax02.Syntax02Tests.test_qualified_base_reference_types_calls_and_visibility",
+          "class": "Syntax02Tests",
+          "method": "test_qualified_base_reference_types_calls_and_visibility",
+          "definition_line": 100,
+          "log_method_prefix": "test_qualified_base_reference_types_calls_and_visibility (test_syntax02.Syntax02Tests"
+        },
+        {
+          "test_id": "test_syntax02.Syntax02Tests.test_utf8_crlf_primary_and_import_literal_spans",
+          "class": "Syntax02Tests",
+          "method": "test_utf8_crlf_primary_and_import_literal_spans",
+          "definition_line": 112,
+          "log_method_prefix": "test_utf8_crlf_primary_and_import_literal_spans (test_syntax02.Syntax02Tests"
+        },
+        {
+          "test_id": "test_syntax02.Syntax02Tests.test_old_keywords_and_old_path_ast_keep_their_meaning",
+          "class": "Syntax02Tests",
+          "method": "test_old_keywords_and_old_path_ast_keep_their_meaning",
+          "definition_line": 125,
+          "log_method_prefix": "test_old_keywords_and_old_path_ast_keep_their_meaning (test_syntax02.Syntax02Tests"
+        },
+        {
+          "test_id": "test_syntax02.Syntax02Tests.test_role_is_linked_version_and_profile_are_explicit",
+          "class": "Syntax02Tests",
+          "method": "test_role_is_linked_version_and_profile_are_explicit",
+          "definition_line": 137,
+          "log_method_prefix": "test_role_is_linked_version_and_profile_are_explicit (test_syntax02.Syntax02Tests"
+        },
+        {
+          "test_id": "test_syntax02.Syntax02Tests.test_bounded_nesting_and_caller_interrupt_are_not_host_failures",
+          "class": "Syntax02Tests",
+          "method": "test_bounded_nesting_and_caller_interrupt_are_not_host_failures",
+          "definition_line": 147,
+          "log_method_prefix": "test_bounded_nesting_and_caller_interrupt_are_not_host_failures (test_syntax02.Syntax02Tests"
+        }
+      ],
+      "rationale": "The unchanged construction-0.1 parser and existing source syntax used for the keyed-rack derivative and invalid edit.",
+      "preexisting": true
+    },
+    {
+      "module": "test_construction",
+      "path": "tests/test_construction.py",
+      "sha256": "sha256:14efc50c4a4bcfcb4d1b9f596cabf5466e58f11aa3283ccda467cfc2963e1004",
+      "test_count": 30,
+      "tests": [
+        {
+          "test_id": "test_construction.ConstructionTests.test_frozen_rack_all_126_independent_world_poses",
+          "class": "ConstructionTests",
+          "method": "test_frozen_rack_all_126_independent_world_poses",
+          "definition_line": 94,
+          "log_method_prefix": "test_frozen_rack_all_126_independent_world_poses (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_generated_provenance_and_precise_public_repair_target",
+          "class": "ConstructionTests",
+          "method": "test_generated_provenance_and_precise_public_repair_target",
+          "definition_line": 131,
+          "log_method_prefix": "test_generated_provenance_and_precise_public_repair_target (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_rack_matches_separately_authored_ordinary_assembly",
+          "class": "ConstructionTests",
+          "method": "test_rack_matches_separately_authored_ordinary_assembly",
+          "definition_line": 148,
+          "log_method_prefix": "test_rack_matches_separately_authored_ordinary_assembly (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_stable_keys_order_insert_remove_and_dot_key",
+          "class": "ConstructionTests",
+          "method": "test_stable_keys_order_insert_remove_and_dot_key",
+          "definition_line": 178,
+          "log_method_prefix": "test_stable_keys_order_insert_remove_and_dot_key (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_empty_singleton_have_no_collection_body_or_frame",
+          "class": "ConstructionTests",
+          "method": "test_empty_singleton_have_no_collection_body_or_frame",
+          "definition_line": 196,
+          "log_method_prefix": "test_empty_singleton_have_no_collection_body_or_frame (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_empty_body_still_type_access_and_recursive_composition_checked",
+          "class": "ConstructionTests",
+          "method": "test_empty_body_still_type_access_and_recursive_composition_checked",
+          "definition_line": 204,
+          "log_method_prefix": "test_empty_body_still_type_access_and_recursive_composition_checked (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_keyed_literal_coercion_is_per_entry_and_collection_is_invariant",
+          "class": "ConstructionTests",
+          "method": "test_keyed_literal_coercion_is_per_entry_and_collection_is_invariant",
+          "definition_line": 214,
+          "log_method_prefix": "test_keyed_literal_coercion_is_per_entry_and_collection_is_invariant (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_no_keyed_operators_or_nested_reference_inputs",
+          "class": "ConstructionTests",
+          "method": "test_no_keyed_operators_or_nested_reference_inputs",
+          "definition_line": 226,
+          "log_method_prefix": "test_no_keyed_operators_or_nested_reference_inputs (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_duplicate_invalid_missing_and_wrong_dimension_keys",
+          "class": "ConstructionTests",
+          "method": "test_duplicate_invalid_missing_and_wrong_dimension_keys",
+          "definition_line": 234,
+          "log_method_prefix": "test_duplicate_invalid_missing_and_wrong_dimension_keys (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_per_key_scope_precedence_and_duplicate_write",
+          "class": "ConstructionTests",
+          "method": "test_per_key_scope_precedence_and_duplicate_write",
+          "definition_line": 243,
+          "log_method_prefix": "test_per_key_scope_precedence_and_duplicate_write (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_final_keyed_override_replaces_shape_before_registration",
+          "class": "ConstructionTests",
+          "method": "test_final_keyed_override_replaces_shape_before_registration",
+          "definition_line": 254,
+          "log_method_prefix": "test_final_keyed_override_replaces_shape_before_registration (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_generated_child_own_final_input_drives_nested_shape",
+          "class": "ConstructionTests",
+          "method": "test_generated_child_own_final_input_drives_nested_shape",
+          "definition_line": 267,
+          "log_method_prefix": "test_generated_child_own_final_input_drives_nested_shape (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_deeper_generated_parent_lexical_self_inputs_feed_child_shape",
+          "class": "ConstructionTests",
+          "method": "test_deeper_generated_parent_lexical_self_inputs_feed_child_shape",
+          "definition_line": 283,
+          "log_method_prefix": "test_deeper_generated_parent_lexical_self_inputs_feed_child_shape (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_cached_generated_scalar_and_true_derived_cycle_remain_invalid",
+          "class": "ConstructionTests",
+          "method": "test_cached_generated_scalar_and_true_derived_cycle_remain_invalid",
+          "definition_line": 300,
+          "log_method_prefix": "test_cached_generated_scalar_and_true_derived_cycle_remain_invalid (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_helper_preserves_lexical_self_origin_through_base_ref_coercion",
+          "class": "ConstructionTests",
+          "method": "test_helper_preserves_lexical_self_origin_through_base_ref_coercion",
+          "definition_line": 321,
+          "log_method_prefix": "test_helper_preserves_lexical_self_origin_through_base_ref_coercion (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_tainted_copy_does_not_poison_shared_untainted_keyed_input",
+          "class": "ConstructionTests",
+          "method": "test_tainted_copy_does_not_poison_shared_untainted_keyed_input",
+          "definition_line": 350,
+          "log_method_prefix": "test_tainted_copy_does_not_poison_shared_untainted_keyed_input (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_shape_forbids_generated_views_len_and_cached_derivation",
+          "class": "ConstructionTests",
+          "method": "test_shape_forbids_generated_views_len_and_cached_derivation",
+          "definition_line": 365,
+          "log_method_prefix": "test_shape_forbids_generated_views_len_and_cached_derivation (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_tainted_body_assignment_cannot_become_own_nested_input",
+          "class": "ConstructionTests",
+          "method": "test_tainted_body_assignment_cannot_become_own_nested_input",
+          "definition_line": 385,
+          "log_method_prefix": "test_tainted_body_assignment_cannot_become_own_nested_input (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_lazy_unused_generated_read_branch_is_typechecked_only",
+          "class": "ConstructionTests",
+          "method": "test_lazy_unused_generated_read_branch_is_typechecked_only",
+          "definition_line": 394,
+          "log_method_prefix": "test_lazy_unused_generated_read_branch_is_typechecked_only (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_all_generated_sibling_shells_exist_before_body_fields",
+          "class": "ConstructionTests",
+          "method": "test_all_generated_sibling_shells_exist_before_body_fields",
+          "definition_line": 401,
+          "log_method_prefix": "test_all_generated_sibling_shells_exist_before_body_fields (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_nonzero_own_and_aggregate_mass_has_no_collection_contribution",
+          "class": "ConstructionTests",
+          "method": "test_nonzero_own_and_aggregate_mass_has_no_collection_contribution",
+          "definition_line": 411,
+          "log_method_prefix": "test_nonzero_own_and_aggregate_mass_has_no_collection_contribution (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_generated_grip_release_inherits_world_motion_then_gravity",
+          "class": "ConstructionTests",
+          "method": "test_generated_grip_release_inherits_world_motion_then_gravity",
+          "definition_line": 419,
+          "log_method_prefix": "test_generated_grip_release_inherits_world_motion_then_gravity (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_key_count_256_and_257_boundary",
+          "class": "ConstructionTests",
+          "method": "test_key_count_256_and_257_boundary",
+          "definition_line": 441,
+          "log_method_prefix": "test_key_count_256_and_257_boundary (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_1000_objects_and_one_over",
+          "class": "ConstructionTests",
+          "method": "test_1000_objects_and_one_over",
+          "definition_line": 447,
+          "log_method_prefix": "test_1000_objects_and_one_over (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_1000_total_generated_objects_and_one_over",
+          "class": "ConstructionTests",
+          "method": "test_1000_total_generated_objects_and_one_over",
+          "definition_line": 453,
+          "log_method_prefix": "test_1000_total_generated_objects_and_one_over (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_repeated_generated_reference_views_charge_logical_values",
+          "class": "ConstructionTests",
+          "method": "test_repeated_generated_reference_views_charge_logical_values",
+          "definition_line": 467,
+          "log_method_prefix": "test_repeated_generated_reference_views_charge_logical_values (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_ownership_depth64_and65_before_host_recursion",
+          "class": "ConstructionTests",
+          "method": "test_ownership_depth64_and65_before_host_recursion",
+          "definition_line": 473,
+          "log_method_prefix": "test_ownership_depth64_and65_before_host_recursion (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_generated_collection_steps_add_no_ownership_depth",
+          "class": "ConstructionTests",
+          "method": "test_generated_collection_steps_add_no_ownership_depth",
+          "definition_line": 483,
+          "log_method_prefix": "test_generated_collection_steps_add_no_ownership_depth (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_work_value_and_encoded_byte_budgets",
+          "class": "ConstructionTests",
+          "method": "test_work_value_and_encoded_byte_budgets",
+          "definition_line": 498,
+          "log_method_prefix": "test_work_value_and_encoded_byte_budgets (test_construction.ConstructionTests"
+        },
+        {
+          "test_id": "test_construction.ConstructionTests.test_check_callback_cancels_real_work",
+          "class": "ConstructionTests",
+          "method": "test_check_callback_cancels_real_work",
+          "definition_line": 511,
+          "log_method_prefix": "test_check_callback_cancels_real_work (test_construction.ConstructionTests"
+        }
+      ],
+      "rationale": "Normalized object/part identities, generated keys, typed parameter overrides, relationships, materialization and resource boundaries.",
+      "preexisting": true
+    },
+    {
+      "module": "test_construction_catalog",
+      "path": "tests/test_construction_catalog.py",
+      "sha256": "sha256:bd0a249d4c10fad39306b5574fd8eeb149d852319519db97767fc2f94afc4c78",
+      "test_count": 9,
+      "tests": [
+        {
+          "test_id": "test_construction_catalog.ConstructionCatalogTests.test_global_metadata_preserves_core_and_covers_executable_names",
+          "class": "ConstructionCatalogTests",
+          "method": "test_global_metadata_preserves_core_and_covers_executable_names",
+          "definition_line": 66,
+          "log_method_prefix": "test_global_metadata_preserves_core_and_covers_executable_names (test_construction_catalog.ConstructionCatalogTests"
+        },
+        {
+          "test_id": "test_construction_catalog.ConstructionCatalogTests.test_catalog_revisions_identify_content_and_returns_are_detached",
+          "class": "ConstructionCatalogTests",
+          "method": "test_catalog_revisions_identify_content_and_returns_are_detached",
+          "definition_line": 90,
+          "log_method_prefix": "test_catalog_revisions_identify_content_and_returns_are_detached (test_construction_catalog.ConstructionCatalogTests"
+        },
+        {
+          "test_id": "test_construction_catalog.ConstructionCatalogTests.test_linked_rack_exposes_public_declarations_at_exact_original_spans",
+          "class": "ConstructionCatalogTests",
+          "method": "test_linked_rack_exposes_public_declarations_at_exact_original_spans",
+          "definition_line": 107,
+          "log_method_prefix": "test_linked_rack_exposes_public_declarations_at_exact_original_spans (test_construction_catalog.ConstructionCatalogTests"
+        },
+        {
+          "test_id": "test_construction_catalog.ConstructionCatalogTests.test_alias_changes_preserve_imported_nominal_identity_and_source_provenance",
+          "class": "ConstructionCatalogTests",
+          "method": "test_alias_changes_preserve_imported_nominal_identity_and_source_provenance",
+          "definition_line": 149,
+          "log_method_prefix": "test_alias_changes_preserve_imported_nominal_identity_and_source_provenance (test_construction_catalog.ConstructionCatalogTests"
+        },
+        {
+          "test_id": "test_construction_catalog.ConstructionCatalogTests.test_unrelated_packages_may_share_module_names_keys_and_filenames",
+          "class": "ConstructionCatalogTests",
+          "method": "test_unrelated_packages_may_share_module_names_keys_and_filenames",
+          "definition_line": 165,
+          "log_method_prefix": "test_unrelated_packages_may_share_module_names_keys_and_filenames (test_construction_catalog.ConstructionCatalogTests"
+        },
+        {
+          "test_id": "test_construction_catalog.ConstructionCatalogTests.test_utf8_source_previews_are_bounded_without_fabricated_characters",
+          "class": "ConstructionCatalogTests",
+          "method": "test_utf8_source_previews_are_bounded_without_fabricated_characters",
+          "definition_line": 181,
+          "log_method_prefix": "test_utf8_source_previews_are_bounded_without_fabricated_characters (test_construction_catalog.ConstructionCatalogTests"
+        },
+        {
+          "test_id": "test_construction_catalog.ConstructionCatalogTests.test_closed_keyed_and_len_examples_construct_real_geometry",
+          "class": "ConstructionCatalogTests",
+          "method": "test_closed_keyed_and_len_examples_construct_real_geometry",
+          "definition_line": 198,
+          "log_method_prefix": "test_closed_keyed_and_len_examples_construct_real_geometry (test_construction_catalog.ConstructionCatalogTests"
+        },
+        {
+          "test_id": "test_construction_catalog.ConstructionCatalogTests.test_complete_import_parts_override_and_action_example_evaluates",
+          "class": "ConstructionCatalogTests",
+          "method": "test_complete_import_parts_override_and_action_example_evaluates",
+          "definition_line": 225,
+          "log_method_prefix": "test_complete_import_parts_override_and_action_example_evaluates (test_construction_catalog.ConstructionCatalogTests"
+        },
+        {
+          "test_id": "test_construction_catalog.ConstructionCatalogTests.test_cancellation_and_materialization_limits_do_not_return_partial_success",
+          "class": "ConstructionCatalogTests",
+          "method": "test_cancellation_and_materialization_limits_do_not_return_partial_success",
+          "definition_line": 243,
+          "log_method_prefix": "test_cancellation_and_materialization_limits_do_not_return_partial_success (test_construction_catalog.ConstructionCatalogTests"
+        }
+      ],
+      "rationale": "Actual discover request and public initializer/definition metadata used by the proof.",
+      "preexisting": true
+    },
+    {
+      "module": "test_construction_export",
+      "path": "tests/test_construction_export.py",
+      "sha256": "sha256:708650b05d24cb08376a2145d631c4165d9c4b093766789f504da72bdcb7b78f",
+      "test_count": 6,
+      "tests": [
+        {
+          "test_id": "test_construction_export.ConstructionExportTests.test_explicit_target_profile_and_complete_exact_source_map",
+          "class": "ConstructionExportTests",
+          "method": "test_explicit_target_profile_and_complete_exact_source_map",
+          "definition_line": 31,
+          "log_method_prefix": "test_explicit_target_profile_and_complete_exact_source_map (test_construction_export.ConstructionExportTests"
+        },
+        {
+          "test_id": "test_construction_export.ConstructionExportTests.test_independent_decode_matches_all126_frozen_poses_and_geometry",
+          "class": "ConstructionExportTests",
+          "method": "test_independent_decode_matches_all126_frozen_poses_and_geometry",
+          "definition_line": 55,
+          "log_method_prefix": "test_independent_decode_matches_all126_frozen_poses_and_geometry (test_construction_export.ConstructionExportTests"
+        },
+        {
+          "test_id": "test_construction_export.ConstructionExportTests.test_version_mismatch_and_ambiguous_source_hash_fail_closed",
+          "class": "ConstructionExportTests",
+          "method": "test_version_mismatch_and_ambiguous_source_hash_fail_closed",
+          "definition_line": 77,
+          "log_method_prefix": "test_version_mismatch_and_ambiguous_source_hash_fail_closed (test_construction_export.ConstructionExportTests"
+        },
+        {
+          "test_id": "test_construction_export.ConstructionExportTests.test_real_serialized_provenance_tampering_is_rejected",
+          "class": "ConstructionExportTests",
+          "method": "test_real_serialized_provenance_tampering_is_rejected",
+          "definition_line": 89,
+          "log_method_prefix": "test_real_serialized_provenance_tampering_is_rejected (test_construction_export.ConstructionExportTests"
+        },
+        {
+          "test_id": "test_construction_export.ConstructionExportTests.test_dependency_revision_cannot_relabel_existing_artifact",
+          "class": "ConstructionExportTests",
+          "method": "test_dependency_revision_cannot_relabel_existing_artifact",
+          "definition_line": 109,
+          "log_method_prefix": "test_dependency_revision_cannot_relabel_existing_artifact (test_construction_export.ConstructionExportTests"
+        },
+        {
+          "test_id": "test_construction_export.ConstructionExportTests.test_generated_release_is_world_baked_and_other_entry_remains_carried",
+          "class": "ConstructionExportTests",
+          "method": "test_generated_release_is_world_baked_and_other_entry_remains_carried",
+          "definition_line": 120,
+          "log_method_prefix": "test_generated_release_is_world_baked_and_other_entry_remains_carried (test_construction_export.ConstructionExportTests"
+        }
+      ],
+      "rationale": "Existing GLB/0.2 program/source mapping, independent frozen geometry/poses and tamper rejection reused by the sidecar.",
+      "preexisting": true
+    },
+    {
+      "module": "test_program_protocol",
+      "path": "tests/test_program_protocol.py",
+      "sha256": "sha256:7d7a15e191295fbcd1b879254cb76b14e3222561e8c43fd4dbbde36b230cf172",
+      "test_count": 6,
+      "tests": [
+        {
+          "test_id": "test_program_protocol.ProgramProtocolTests.test_new_envelope_requires_program_fields_and_explicit_protocol",
+          "class": "ProgramProtocolTests",
+          "method": "test_new_envelope_requires_program_fields_and_explicit_protocol",
+          "definition_line": 25,
+          "log_method_prefix": "test_new_envelope_requires_program_fields_and_explicit_protocol (test_program_protocol.ProgramProtocolTests"
+        },
+        {
+          "test_id": "test_program_protocol.ProgramProtocolTests.test_malformed_bundle_has_transport_error_before_candidate",
+          "class": "ProgramProtocolTests",
+          "method": "test_malformed_bundle_has_transport_error_before_candidate",
+          "definition_line": 39,
+          "log_method_prefix": "test_malformed_bundle_has_transport_error_before_candidate (test_program_protocol.ProgramProtocolTests"
+        },
+        {
+          "test_id": "test_program_protocol.ProgramProtocolTests.test_exact_utf8_json_size_and_logically_repeated_values",
+          "class": "ProgramProtocolTests",
+          "method": "test_exact_utf8_json_size_and_logically_repeated_values",
+          "definition_line": 50,
+          "log_method_prefix": "test_exact_utf8_json_size_and_logically_repeated_values (test_program_protocol.ProgramProtocolTests"
+        },
+        {
+          "test_id": "test_program_protocol.ProgramProtocolTests.test_oversized_shared_graph_fails_before_json_string_allocation",
+          "class": "ProgramProtocolTests",
+          "method": "test_oversized_shared_graph_fails_before_json_string_allocation",
+          "definition_line": 64,
+          "log_method_prefix": "test_oversized_shared_graph_fails_before_json_string_allocation (test_program_protocol.ProgramProtocolTests"
+        },
+        {
+          "test_id": "test_program_protocol.ProgramProtocolTests.test_cli_requires_version_selection_and_keeps_stores_separate",
+          "class": "ProgramProtocolTests",
+          "method": "test_cli_requires_version_selection_and_keeps_stores_separate",
+          "definition_line": 75,
+          "log_method_prefix": "test_cli_requires_version_selection_and_keeps_stores_separate (test_program_protocol.ProgramProtocolTests"
+        },
+        {
+          "test_id": "test_program_protocol.ProgramProtocolTests.test_cli_invalid_json_still_returns_selected_protocol",
+          "class": "ProgramProtocolTests",
+          "method": "test_cli_invalid_json_still_returns_selected_protocol",
+          "definition_line": 93,
+          "log_method_prefix": "test_cli_invalid_json_still_returns_selected_protocol (test_program_protocol.ProgramProtocolTests"
+        }
+      ],
+      "rationale": "Existing Agent/0.2 request shapes, source/revision envelope and error boundaries; the new proof does not add a protocol.",
+      "preexisting": true
+    },
+    {
+      "module": "test_program_agent",
+      "path": "tests/test_program_agent.py",
+      "sha256": "sha256:e71e0148c229e9c2509e07e5faf1acad766b1fb966eef33193707c6453f066dc",
+      "test_count": 14,
+      "tests": [
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_complete_program_identity_and_independent_store",
+          "class": "ProgramAgentTests",
+          "method": "test_complete_program_identity_and_independent_store",
+          "definition_line": 55,
+          "log_method_prefix": "test_complete_program_identity_and_independent_store (test_program_agent.ProgramAgentTests"
+        },
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_unverified_patch_coordinates_do_not_invent_source_locations",
+          "class": "ProgramAgentTests",
+          "method": "test_unverified_patch_coordinates_do_not_invent_source_locations",
+          "definition_line": 64,
+          "log_method_prefix": "test_unverified_patch_coordinates_do_not_invent_source_locations (test_program_agent.ProgramAgentTests"
+        },
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_generated_source_locations_and_public_initializer_target",
+          "class": "ProgramAgentTests",
+          "method": "test_generated_source_locations_and_public_initializer_target",
+          "definition_line": 87,
+          "log_method_prefix": "test_generated_source_locations_and_public_initializer_target (test_program_agent.ProgramAgentTests"
+        },
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_scoped_repair_changes_one_generated_occurrence_only",
+          "class": "ProgramAgentTests",
+          "method": "test_scoped_repair_changes_one_generated_occurrence_only",
+          "definition_line": 103,
+          "log_method_prefix": "test_scoped_repair_changes_one_generated_occurrence_only (test_program_agent.ProgramAgentTests"
+        },
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_invalid_candidate_has_its_actual_unit_hash_and_preserves_head",
+          "class": "ProgramAgentTests",
+          "method": "test_invalid_candidate_has_its_actual_unit_hash_and_preserves_head",
+          "definition_line": 115,
+          "log_method_prefix": "test_invalid_candidate_has_its_actual_unit_hash_and_preserves_head (test_program_agent.ProgramAgentTests"
+        },
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_generated_identity_cannot_write_shared_library_bytes",
+          "class": "ProgramAgentTests",
+          "method": "test_generated_identity_cannot_write_shared_library_bytes",
+          "definition_line": 138,
+          "log_method_prefix": "test_generated_identity_cannot_write_shared_library_bytes (test_program_agent.ProgramAgentTests"
+        },
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_library_change_and_exact_import_pin_are_one_candidate",
+          "class": "ProgramAgentTests",
+          "method": "test_library_change_and_exact_import_pin_are_one_candidate",
+          "definition_line": 147,
+          "log_method_prefix": "test_library_change_and_exact_import_pin_are_one_candidate (test_program_agent.ProgramAgentTests"
+        },
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_entry_and_library_patch_is_atomic_on_wrong_source_precondition",
+          "class": "ProgramAgentTests",
+          "method": "test_entry_and_library_patch_is_atomic_on_wrong_source_precondition",
+          "definition_line": 165,
+          "log_method_prefix": "test_entry_and_library_patch_is_atomic_on_wrong_source_precondition (test_program_agent.ProgramAgentTests"
+        },
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_utf8_boundary_failure_uses_original_source_location",
+          "class": "ProgramAgentTests",
+          "method": "test_utf8_boundary_failure_uses_original_source_location",
+          "definition_line": 175,
+          "log_method_prefix": "test_utf8_boundary_failure_uses_original_source_location (test_program_agent.ProgramAgentTests"
+        },
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_source_only_state_prefix_and_old_program_run_isolation",
+          "class": "ProgramAgentTests",
+          "method": "test_source_only_state_prefix_and_old_program_run_isolation",
+          "definition_line": 188,
+          "log_method_prefix": "test_source_only_state_prefix_and_old_program_run_isolation (test_program_agent.ProgramAgentTests"
+        },
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_cursor_is_bound_to_program_and_immutable_query",
+          "class": "ProgramAgentTests",
+          "method": "test_cursor_is_bound_to_program_and_immutable_query",
+          "definition_line": 203,
+          "log_method_prefix": "test_cursor_is_bound_to_program_and_immutable_query (test_program_agent.ProgramAgentTests"
+        },
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_result_budget_failure_rolls_back_computed_acceptance_and_run",
+          "class": "ProgramAgentTests",
+          "method": "test_result_budget_failure_rolls_back_computed_acceptance_and_run",
+          "definition_line": 216,
+          "log_method_prefix": "test_result_budget_failure_rolls_back_computed_acceptance_and_run (test_program_agent.ProgramAgentTests"
+        },
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_generated_nominal_replacement_requires_new_occurrence_key",
+          "class": "ProgramAgentTests",
+          "method": "test_generated_nominal_replacement_requires_new_occurrence_key",
+          "definition_line": 231,
+          "log_method_prefix": "test_generated_nominal_replacement_requires_new_occurrence_key (test_program_agent.ProgramAgentTests"
+        },
+        {
+          "test_id": "test_program_agent.ProgramAgentTests.test_retrieved_old_artifact_keeps_its_original_program_after_edit",
+          "class": "ProgramAgentTests",
+          "method": "test_retrieved_old_artifact_keeps_its_original_program_after_edit",
+          "definition_line": 245,
+          "log_method_prefix": "test_retrieved_old_artifact_keeps_its_original_program_after_edit (test_program_agent.ProgramAgentTests"
+        }
+      ],
+      "rationale": "Actual create/inspect/edit/evaluate/export/artifact paths, scoped repair, invalid source, source/precondition integrity, old result identity.",
+      "preexisting": true
+    },
+    {
+      "module": "test_program_source_review",
+      "path": "tests/test_program_source_review.py",
+      "sha256": "sha256:3ce42588ffe8fd581a13b7b91e0b96c10c3431665df8506577f37fbf1ba34d59",
+      "test_count": 6,
+      "tests": [
+        {
+          "test_id": "test_program_source_review.SourceProjectionReviewTests.test_equal_filenames_offsets_and_text_do_not_grant_cross_unit_write_scope",
+          "class": "SourceProjectionReviewTests",
+          "method": "test_equal_filenames_offsets_and_text_do_not_grant_cross_unit_write_scope",
+          "definition_line": 55,
+          "log_method_prefix": "test_equal_filenames_offsets_and_text_do_not_grant_cross_unit_write_scope (test_program_source_review.SourceProjectionReviewTests"
+        },
+        {
+          "test_id": "test_program_source_review.SourceProjectionReviewTests.test_imported_utf8_diagnostic_and_cross_file_related_span_use_original_units",
+          "class": "SourceProjectionReviewTests",
+          "method": "test_imported_utf8_diagnostic_and_cross_file_related_span_use_original_units",
+          "definition_line": 84,
+          "log_method_prefix": "test_imported_utf8_diagnostic_and_cross_file_related_span_use_original_units (test_program_source_review.SourceProjectionReviewTests"
+        },
+        {
+          "test_id": "test_program_source_review.SourceProjectionReviewTests.test_program_conditions_do_not_invent_locations_or_mutate_core_diagnostics",
+          "class": "SourceProjectionReviewTests",
+          "method": "test_program_conditions_do_not_invent_locations_or_mutate_core_diagnostics",
+          "definition_line": 117,
+          "log_method_prefix": "test_program_conditions_do_not_invent_locations_or_mutate_core_diagnostics (test_program_source_review.SourceProjectionReviewTests"
+        },
+        {
+          "test_id": "test_program_source_review.SourceProjectionReviewTests.test_generated_collection_and_occurrence_scopes_are_distinct_from_shared_definitions",
+          "class": "SourceProjectionReviewTests",
+          "method": "test_generated_collection_and_occurrence_scopes_are_distinct_from_shared_definitions",
+          "definition_line": 134,
+          "log_method_prefix": "test_generated_collection_and_occurrence_scopes_are_distinct_from_shared_definitions (test_program_source_review.SourceProjectionReviewTests"
+        },
+        {
+          "test_id": "test_program_source_review.ProgramEditReviewTests.test_c09_utf8_dot_key_candidate_failure_and_accepted_head_repair",
+          "class": "ProgramEditReviewTests",
+          "method": "test_c09_utf8_dot_key_candidate_failure_and_accepted_head_repair",
+          "definition_line": 186,
+          "log_method_prefix": "test_c09_utf8_dot_key_candidate_failure_and_accepted_head_repair (test_program_source_review.ProgramEditReviewTests"
+        },
+        {
+          "test_id": "test_program_source_review.ProgramEditReviewTests.test_c13_alias_rename_retains_nominal_identity_but_class_replacement_rejects",
+          "class": "ProgramEditReviewTests",
+          "method": "test_c13_alias_rename_retains_nominal_identity_but_class_replacement_rejects",
+          "definition_line": 219,
+          "log_method_prefix": "test_c13_alias_rename_retains_nominal_identity_but_class_replacement_rejects (test_program_source_review.ProgramEditReviewTests"
+        }
+      ],
+      "rationale": "Exact per-source spans, generated occurrence versus shared-definition write scope, precise rejected-candidate diagnostics.",
+      "preexisting": true
+    },
+    {
+      "module": "test_program_transactions",
+      "path": "tests/test_program_transactions.py",
+      "sha256": "sha256:f3c299b0be2a1f2ff071111860a35443ee27d11e9ef663fb9b24335699d71f45",
+      "test_count": 9,
+      "tests": [
+        {
+          "test_id": "test_program_transactions.ProgramTransactionTests.test_competing_complete_bundles_commit_one_head_and_retain_loser_evidence",
+          "class": "ProgramTransactionTests",
+          "method": "test_competing_complete_bundles_commit_one_head_and_retain_loser_evidence",
+          "definition_line": 224,
+          "log_method_prefix": "test_competing_complete_bundles_commit_one_head_and_retain_loser_evidence (test_program_transactions.ProgramTransactionTests"
+        },
+        {
+          "test_id": "test_program_transactions.ProgramTransactionTests.test_competing_run_extensions_report_the_actual_committed_program_prefix",
+          "class": "ProgramTransactionTests",
+          "method": "test_competing_run_extensions_report_the_actual_committed_program_prefix",
+          "definition_line": 259,
+          "log_method_prefix": "test_competing_run_extensions_report_the_actual_committed_program_prefix (test_program_transactions.ProgramTransactionTests"
+        },
+        {
+          "test_id": "test_program_transactions.ProgramTransactionTests.test_request_termination_cannot_commit_a_computed_program_run_extension",
+          "class": "ProgramTransactionTests",
+          "method": "test_request_termination_cannot_commit_a_computed_program_run_extension",
+          "definition_line": 286,
+          "log_method_prefix": "test_request_termination_cannot_commit_a_computed_program_run_extension (test_program_transactions.ProgramTransactionTests"
+        },
+        {
+          "test_id": "test_program_transactions.ProgramTransactionTests.test_cancellation_after_complete_bundle_computation_prevents_acceptance",
+          "class": "ProgramTransactionTests",
+          "method": "test_cancellation_after_complete_bundle_computation_prevents_acceptance",
+          "definition_line": 308,
+          "log_method_prefix": "test_cancellation_after_complete_bundle_computation_prevents_acceptance (test_program_transactions.ProgramTransactionTests"
+        },
+        {
+          "test_id": "test_program_transactions.ProgramTransactionTests.test_oversized_control_response_rolls_back_real_pending_cancellation",
+          "class": "ProgramTransactionTests",
+          "method": "test_oversized_control_response_rolls_back_real_pending_cancellation",
+          "definition_line": 333,
+          "log_method_prefix": "test_oversized_control_response_rolls_back_real_pending_cancellation (test_program_transactions.ProgramTransactionTests"
+        },
+        {
+          "test_id": "test_program_transactions.ProgramTransactionTests.test_persisted_queued_bundle_resumes_in_a_new_python_process",
+          "class": "ProgramTransactionTests",
+          "method": "test_persisted_queued_bundle_resumes_in_a_new_python_process",
+          "definition_line": 351,
+          "log_method_prefix": "test_persisted_queued_bundle_resumes_in_a_new_python_process (test_program_transactions.ProgramTransactionTests"
+        },
+        {
+          "test_id": "test_program_transactions.ProgramTransactionTests.test_proven_dead_worker_is_fenced_but_a_live_worker_is_not_stolen",
+          "class": "ProgramTransactionTests",
+          "method": "test_proven_dead_worker_is_fenced_but_a_live_worker_is_not_stolen",
+          "definition_line": 374,
+          "log_method_prefix": "test_proven_dead_worker_is_fenced_but_a_live_worker_is_not_stolen (test_program_transactions.ProgramTransactionTests"
+        },
+        {
+          "test_id": "test_program_transactions.ProgramTransactionTests.test_exact_retry_and_expired_identity_never_replay_program_effects",
+          "class": "ProgramTransactionTests",
+          "method": "test_exact_retry_and_expired_identity_never_replay_program_effects",
+          "definition_line": 405,
+          "log_method_prefix": "test_exact_retry_and_expired_identity_never_replay_program_effects (test_program_transactions.ProgramTransactionTests"
+        },
+        {
+          "test_id": "test_program_transactions.ProgramTransactionTests.test_changed_engine_preserves_program_evidence_but_fences_old_work",
+          "class": "ProgramTransactionTests",
+          "method": "test_changed_engine_preserves_program_evidence_but_fences_old_work",
+          "definition_line": 433,
+          "log_method_prefix": "test_changed_engine_preserves_program_evidence_but_fences_old_work (test_program_transactions.ProgramTransactionTests"
+        }
+      ],
+      "rationale": "Concurrent acceptance/run commits, cancellation, dead-worker fencing, retries, process recovery and changed-engine result preservation.",
+      "preexisting": true
+    },
+    {
+      "module": "test_export",
+      "path": "tests/test_export.py",
+      "sha256": "sha256:3f06394d93041f7beb04d33c4c5c6e6a95d3718c2f7a3e2be55b56dcab77cdaf",
+      "test_count": 27,
+      "tests": [
+        {
+          "test_id": "test_export.ExportTests.test_p01_world_translation_and_independent_head_and_hand",
+          "class": "ExportTests",
+          "method": "test_p01_world_translation_and_independent_head_and_hand",
+          "definition_line": 249,
+          "log_method_prefix": "test_p01_world_translation_and_independent_head_and_hand (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_p02_release_has_world_trajectory_and_no_implicit_ground",
+          "class": "ExportTests",
+          "method": "test_p02_release_has_world_trajectory_and_no_implicit_ground",
+          "definition_line": 262,
+          "log_method_prefix": "test_p02_release_has_world_trajectory_and_no_implicit_ground (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_p03_release_preserves_tangential_velocity_and_angular_motion",
+          "class": "ExportTests",
+          "method": "test_p03_release_preserves_tangential_velocity_and_angular_motion",
+          "definition_line": 272,
+          "log_method_prefix": "test_p03_release_preserves_tangential_velocity_and_angular_motion (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_p04_ownership_and_follow_remain_different_relationships",
+          "class": "ExportTests",
+          "method": "test_p04_ownership_and_follow_remain_different_relationships",
+          "definition_line": 286,
+          "log_method_prefix": "test_p04_ownership_and_follow_remain_different_relationships (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_all_source_nodes_are_world_roots_with_stable_identity",
+          "class": "ExportTests",
+          "method": "test_all_source_nodes_are_world_roots_with_stable_identity",
+          "definition_line": 296,
+          "log_method_prefix": "test_all_source_nodes_are_world_roots_with_stable_identity (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_release_survives_pause_completion_and_carrier_replacement",
+          "class": "ExportTests",
+          "method": "test_release_survives_pause_completion_and_carrier_replacement",
+          "definition_line": 312,
+          "log_method_prefix": "test_release_survives_pause_completion_and_carrier_replacement (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_stop_root_preserves_local_action_and_completed_head_angle",
+          "class": "ExportTests",
+          "method": "test_stop_root_preserves_local_action_and_completed_head_angle",
+          "definition_line": 325,
+          "log_method_prefix": "test_stop_root_preserves_local_action_and_completed_head_angle (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_nonzero_child_site_and_local_joint_rates_transfer_through_release",
+          "class": "ExportTests",
+          "method": "test_nonzero_child_site_and_local_joint_rates_transfer_through_release",
+          "definition_line": 331,
+          "log_method_prefix": "test_nonzero_child_site_and_local_joint_rates_transfer_through_release (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_world_spin_multiplies_noncommuting_initial_orientation_on_left",
+          "class": "ExportTests",
+          "method": "test_world_spin_multiplies_noncommuting_initial_orientation_on_left",
+          "definition_line": 348,
+          "log_method_prefix": "test_world_spin_multiplies_noncommuting_initial_orientation_on_left (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_low_requested_fps_cannot_alias_multiple_complete_turns",
+          "class": "ExportTests",
+          "method": "test_low_requested_fps_cannot_alias_multiple_complete_turns",
+          "definition_line": 364,
+          "log_method_prefix": "test_low_requested_fps_cannot_alias_multiple_complete_turns (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_event_and_natural_completion_boundaries_are_explicit_keys",
+          "class": "ExportTests",
+          "method": "test_event_and_natural_completion_boundaries_are_explicit_keys",
+          "definition_line": 385,
+          "log_method_prefix": "test_event_and_natural_completion_boundaries_are_explicit_keys (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_meshes_have_outward_winding_finite_unit_normals_and_valid_indices",
+          "class": "ExportTests",
+          "method": "test_meshes_have_outward_winding_finite_unit_normals_and_valid_indices",
+          "definition_line": 402,
+          "log_method_prefix": "test_meshes_have_outward_winding_finite_unit_normals_and_valid_indices (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_box_uses_full_lengths_and_visual_geometry_not_sphere_physics_proxy",
+          "class": "ExportTests",
+          "method": "test_box_uses_full_lengths_and_visual_geometry_not_sphere_physics_proxy",
+          "definition_line": 425,
+          "log_method_prefix": "test_box_uses_full_lengths_and_visual_geometry_not_sphere_physics_proxy (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_sphere_vertices_use_authored_radius_and_instance_overrides",
+          "class": "ExportTests",
+          "method": "test_sphere_vertices_use_authored_radius_and_instance_overrides",
+          "definition_line": 436,
+          "log_method_prefix": "test_sphere_vertices_use_authored_radius_and_instance_overrides (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_linear_rgba_and_alpha_are_preserved_in_material",
+          "class": "ExportTests",
+          "method": "test_linear_rgba_and_alpha_are_preserved_in_material",
+          "definition_line": 444,
+          "log_method_prefix": "test_linear_rgba_and_alpha_are_preserved_in_material (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_helpers_are_separate_massless_glyphs_and_empty_source_geometry_stays_empty",
+          "class": "ExportTests",
+          "method": "test_helpers_are_separate_massless_glyphs_and_empty_source_geometry_stays_empty",
+          "definition_line": 452,
+          "log_method_prefix": "test_helpers_are_separate_massless_glyphs_and_empty_source_geometry_stays_empty (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_identical_source_export_is_deterministic_and_does_not_mutate_model",
+          "class": "ExportTests",
+          "method": "test_identical_source_export_is_deterministic_and_does_not_mutate_model",
+          "definition_line": 469,
+          "log_method_prefix": "test_identical_source_export_is_deterministic_and_does_not_mutate_model (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_numerical_validation_reads_the_serialized_animation_bytes",
+          "class": "ExportTests",
+          "method": "test_numerical_validation_reads_the_serialized_animation_bytes",
+          "definition_line": 478,
+          "log_method_prefix": "test_numerical_validation_reads_the_serialized_animation_bytes (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_modified_scale_or_default_transform_is_rejected",
+          "class": "ExportTests",
+          "method": "test_modified_scale_or_default_transform_is_rejected",
+          "definition_line": 498,
+          "log_method_prefix": "test_modified_scale_or_default_transform_is_rejected (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_coarsened_complete_turns_cannot_evade_independent_angular_bound",
+          "class": "ExportTests",
+          "method": "test_coarsened_complete_turns_cannot_evade_independent_angular_bound",
+          "definition_line": 515,
+          "log_method_prefix": "test_coarsened_complete_turns_cannot_evade_independent_angular_bound (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_equivalent_units_and_renamed_display_symbol_preserve_identity_and_geometry",
+          "class": "ExportTests",
+          "method": "test_equivalent_units_and_renamed_display_symbol_preserve_identity_and_geometry",
+          "definition_line": 568,
+          "log_method_prefix": "test_equivalent_units_and_renamed_display_symbol_preserve_identity_and_geometry (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_invalid_sampling_arguments_report_structured_delivery_failure",
+          "class": "ExportTests",
+          "method": "test_invalid_sampling_arguments_report_structured_delivery_failure",
+          "definition_line": 597,
+          "log_method_prefix": "test_invalid_sampling_arguments_report_structured_delivery_failure (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_float32_collapsed_event_times_are_not_silently_merged",
+          "class": "ExportTests",
+          "method": "test_float32_collapsed_event_times_are_not_silently_merged",
+          "definition_line": 606,
+          "log_method_prefix": "test_float32_collapsed_event_times_are_not_silently_merged (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_curved_flight_cannot_pass_by_checking_keyframes_only",
+          "class": "ExportTests",
+          "method": "test_curved_flight_cannot_pass_by_checking_keyframes_only",
+          "definition_line": 610,
+          "log_method_prefix": "test_curved_flight_cannot_pass_by_checking_keyframes_only (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_finite_source_coordinates_cannot_hide_float32_precision_loss",
+          "class": "ExportTests",
+          "method": "test_finite_source_coordinates_cannot_hide_float32_precision_loss",
+          "definition_line": 615,
+          "log_method_prefix": "test_finite_source_coordinates_cannot_hide_float32_precision_loss (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_tiny_valid_geometry_cannot_be_exported_as_collapsed_triangles",
+          "class": "ExportTests",
+          "method": "test_tiny_valid_geometry_cannot_be_exported_as_collapsed_triangles",
+          "definition_line": 620,
+          "log_method_prefix": "test_tiny_valid_geometry_cannot_be_exported_as_collapsed_triangles (test_export.ExportTests"
+        },
+        {
+          "test_id": "test_export.ExportTests.test_requested_unavailable_capability_blocks_export_of_represented_model",
+          "class": "ExportTests",
+          "method": "test_requested_unavailable_capability_blocks_export_of_represented_model",
+          "definition_line": 627,
+          "log_method_prefix": "test_requested_unavailable_capability_blocks_export_of_represented_model (test_export.ExportTests"
+        }
+      ],
+      "rationale": "Existing primitive geometry/material generation, root world transforms, deterministic GLB bytes, decoded validation and exporter rejection boundaries.",
+      "preexisting": true
+    },
+    {
+      "module": "test_json_limits",
+      "path": "tests/test_json_limits.py",
+      "sha256": "sha256:546b0db477d5e6b4785057c66929c0a4a334e09f015459e102342061c5448a05",
+      "test_count": 21,
+      "tests": [
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_dictionary_cannot_hide_values_from_the_byte_guard",
+          "class": "JSONLimitsTests",
+          "method": "test_dictionary_cannot_hide_values_from_the_byte_guard",
+          "definition_line": 17,
+          "log_method_prefix": "test_dictionary_cannot_hide_values_from_the_byte_guard (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_dictionary_cannot_substitute_items_during_encoding",
+          "class": "JSONLimitsTests",
+          "method": "test_dictionary_cannot_substitute_items_during_encoding",
+          "definition_line": 24,
+          "log_method_prefix": "test_dictionary_cannot_substitute_items_during_encoding (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_dictionary_length_hook_is_not_called",
+          "class": "JSONLimitsTests",
+          "method": "test_dictionary_length_hook_is_not_called",
+          "definition_line": 31,
+          "log_method_prefix": "test_dictionary_length_hook_is_not_called (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_dictionary_iteration_hook_is_not_called",
+          "class": "JSONLimitsTests",
+          "method": "test_dictionary_iteration_hook_is_not_called",
+          "definition_line": 38,
+          "log_method_prefix": "test_dictionary_iteration_hook_is_not_called (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_list_length_hook_is_not_called",
+          "class": "JSONLimitsTests",
+          "method": "test_list_length_hook_is_not_called",
+          "definition_line": 45,
+          "log_method_prefix": "test_list_length_hook_is_not_called (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_list_iteration_hook_is_not_called",
+          "class": "JSONLimitsTests",
+          "method": "test_list_iteration_hook_is_not_called",
+          "definition_line": 52,
+          "log_method_prefix": "test_list_iteration_hook_is_not_called (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_tuple_length_hook_is_not_called",
+          "class": "JSONLimitsTests",
+          "method": "test_tuple_length_hook_is_not_called",
+          "definition_line": 59,
+          "log_method_prefix": "test_tuple_length_hook_is_not_called (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_tuple_iteration_hook_is_not_called",
+          "class": "JSONLimitsTests",
+          "method": "test_tuple_iteration_hook_is_not_called",
+          "definition_line": 66,
+          "log_method_prefix": "test_tuple_iteration_hook_is_not_called (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_nested_custom_containers_are_also_rejected",
+          "class": "JSONLimitsTests",
+          "method": "test_nested_custom_containers_are_also_rejected",
+          "definition_line": 73,
+          "log_method_prefix": "test_nested_custom_containers_are_also_rejected (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_container_type_equality_hook_is_not_called",
+          "class": "JSONLimitsTests",
+          "method": "test_container_type_equality_hook_is_not_called",
+          "definition_line": 87,
+          "log_method_prefix": "test_container_type_equality_hook_is_not_called (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_builtin_scalars_and_containers_keep_exact_utf8_sizes",
+          "class": "JSONLimitsTests",
+          "method": "test_builtin_scalars_and_containers_keep_exact_utf8_sizes",
+          "definition_line": 97,
+          "log_method_prefix": "test_builtin_scalars_and_containers_keep_exact_utf8_sizes (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_all_control_character_and_unicode_sizes_match_encoding",
+          "class": "JSONLimitsTests",
+          "method": "test_all_control_character_and_unicode_sizes_match_encoding",
+          "definition_line": 110,
+          "log_method_prefix": "test_all_control_character_and_unicode_sizes_match_encoding (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_exact_byte_boundary_is_accepted_and_one_byte_less_is_rejected",
+          "class": "JSONLimitsTests",
+          "method": "test_exact_byte_boundary_is_accepted_and_one_byte_less_is_rejected",
+          "definition_line": 116,
+          "log_method_prefix": "test_exact_byte_boundary_is_accepted_and_one_byte_less_is_rejected (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_shared_values_count_each_logical_occurrence",
+          "class": "JSONLimitsTests",
+          "method": "test_shared_values_count_each_logical_occurrence",
+          "definition_line": 126,
+          "log_method_prefix": "test_shared_values_count_each_logical_occurrence (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_depth_boundary_is_preserved",
+          "class": "JSONLimitsTests",
+          "method": "test_depth_boundary_is_preserved",
+          "definition_line": 136,
+          "log_method_prefix": "test_depth_boundary_is_preserved (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_cycles_are_rejected_but_noncyclic_shared_containers_are_valid",
+          "class": "JSONLimitsTests",
+          "method": "test_cycles_are_rejected_but_noncyclic_shared_containers_are_valid",
+          "definition_line": 144,
+          "log_method_prefix": "test_cycles_are_rejected_but_noncyclic_shared_containers_are_valid (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_oversized_shared_values_are_rejected_before_encoding",
+          "class": "JSONLimitsTests",
+          "method": "test_oversized_shared_values_are_rejected_before_encoding",
+          "definition_line": 159,
+          "log_method_prefix": "test_oversized_shared_values_are_rejected_before_encoding (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_nonfinite_numbers_and_surrogate_strings_remain_invalid",
+          "class": "JSONLimitsTests",
+          "method": "test_nonfinite_numbers_and_surrogate_strings_remain_invalid",
+          "definition_line": 166,
+          "log_method_prefix": "test_nonfinite_numbers_and_surrogate_strings_remain_invalid (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_nonstring_keys_and_scalar_subclasses_remain_invalid",
+          "class": "JSONLimitsTests",
+          "method": "test_nonstring_keys_and_scalar_subclasses_remain_invalid",
+          "definition_line": 172,
+          "log_method_prefix": "test_nonstring_keys_and_scalar_subclasses_remain_invalid (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_cancellation_exception_is_not_swallowed",
+          "class": "JSONLimitsTests",
+          "method": "test_cancellation_exception_is_not_swallowed",
+          "definition_line": 184,
+          "log_method_prefix": "test_cancellation_exception_is_not_swallowed (test_json_limits.JSONLimitsTests"
+        },
+        {
+          "test_id": "test_json_limits.JSONLimitsTests.test_deterministic_builtin_corpus_matches_encoder",
+          "class": "JSONLimitsTests",
+          "method": "test_deterministic_builtin_corpus_matches_encoder",
+          "definition_line": 194,
+          "log_method_prefix": "test_deterministic_builtin_corpus_matches_encoder (test_json_limits.JSONLimitsTests"
+        }
+      ],
+      "rationale": "The existing bounded JSON walker directly called by the new canonical sidecar encoder and verifier.",
+      "preexisting": true
+    },
+    {
+      "module": "test_evaluator",
+      "path": "tests/test_evaluator.py",
+      "sha256": "sha256:84ca96177244318704c0e0305057195fde629cf0a3f0faf1c6593b803a0cbd25",
+      "test_count": 31,
+      "tests": [
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_p01_independent_parts_and_completion_derivatives",
+          "class": "EvaluatorTests",
+          "method": "test_p01_independent_parts_and_completion_derivatives",
+          "definition_line": 133,
+          "log_method_prefix": "test_p01_independent_parts_and_completion_derivatives (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_p02_release_is_continuous_and_later_carrier_stop_is_independent",
+          "class": "EvaluatorTests",
+          "method": "test_p02_release_is_continuous_and_later_carrier_stop_is_independent",
+          "definition_line": 148,
+          "log_method_prefix": "test_p02_release_is_continuous_and_later_carrier_stop_is_independent (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_p03_rotating_release_retains_offset_velocity_and_spin",
+          "class": "EvaluatorTests",
+          "method": "test_p03_rotating_release_retains_offset_velocity_and_spin",
+          "definition_line": 164,
+          "log_method_prefix": "test_p03_rotating_release_retains_offset_velocity_and_spin (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_p04_ownership_adds_neither_pose_nor_duplicate_mass",
+          "class": "EvaluatorTests",
+          "method": "test_p04_ownership_adds_neither_pose_nor_duplicate_mass",
+          "definition_line": 177,
+          "log_method_prefix": "test_p04_ownership_adds_neither_pose_nor_duplicate_mass (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_pause_holds_only_its_action_and_horizon_does_not_force_completion",
+          "class": "EvaluatorTests",
+          "method": "test_pause_holds_only_its_action_and_horizon_does_not_force_completion",
+          "definition_line": 192,
+          "log_method_prefix": "test_pause_holds_only_its_action_and_horizon_does_not_force_completion (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_natural_completion_precedes_release_but_not_its_incoming_snapshot",
+          "class": "EvaluatorTests",
+          "method": "test_natural_completion_precedes_release_but_not_its_incoming_snapshot",
+          "definition_line": 205,
+          "log_method_prefix": "test_natural_completion_precedes_release_but_not_its_incoming_snapshot (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_release_then_stop_then_replacement_captures_current_coordinate",
+          "class": "EvaluatorTests",
+          "method": "test_release_then_stop_then_replacement_captures_current_coordinate",
+          "definition_line": 212,
+          "log_method_prefix": "test_release_then_stop_then_replacement_captures_current_coordinate (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_stopping_root_preserves_local_reach_and_completed_yaw",
+          "class": "EvaluatorTests",
+          "method": "test_stopping_root_preserves_local_reach_and_completed_yaw",
+          "definition_line": 222,
+          "log_method_prefix": "test_stopping_root_preserves_local_reach_and_completed_yaw (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_joint_chain_and_nonzero_child_site_transfer_all_derivatives",
+          "class": "EvaluatorTests",
+          "method": "test_joint_chain_and_nonzero_child_site_transfer_all_derivatives",
+          "definition_line": 231,
+          "log_method_prefix": "test_joint_chain_and_nonzero_child_site_transfer_all_derivatives (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_world_angular_velocity_multiplies_rotation_on_the_left",
+          "class": "EvaluatorTests",
+          "method": "test_world_angular_velocity_multiplies_rotation_on_the_left",
+          "definition_line": 265,
+          "log_method_prefix": "test_world_angular_velocity_multiplies_rotation_on_the_left (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_velocity_inspection_changes_axes_without_subtracting_frame_motion",
+          "class": "EvaluatorTests",
+          "method": "test_velocity_inspection_changes_axes_without_subtracting_frame_motion",
+          "definition_line": 273,
+          "log_method_prefix": "test_velocity_inspection_changes_axes_without_subtracting_frame_motion (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_zero_spin_has_a_valid_orientation_and_still_claims_its_channel",
+          "class": "EvaluatorTests",
+          "method": "test_zero_spin_has_a_valid_orientation_and_still_claims_its_channel",
+          "definition_line": 285,
+          "log_method_prefix": "test_zero_spin_has_a_valid_orientation_and_still_claims_its_channel (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_protocol_decimal_and_source_binary64_are_distinct_instants",
+          "class": "EvaluatorTests",
+          "method": "test_protocol_decimal_and_source_binary64_are_distinct_instants",
+          "definition_line": 294,
+          "log_method_prefix": "test_protocol_decimal_and_source_binary64_are_distinct_instants (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_exact_sum_endpoint_must_not_be_rounded_to_authored_timestamp",
+          "class": "EvaluatorTests",
+          "method": "test_exact_sum_endpoint_must_not_be_rounded_to_authored_timestamp",
+          "definition_line": 308,
+          "log_method_prefix": "test_exact_sum_endpoint_must_not_be_rounded_to_authored_timestamp (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_pause_keeps_channel_claim_and_restart_checks_state_first",
+          "class": "EvaluatorTests",
+          "method": "test_pause_keeps_channel_claim_and_restart_checks_state_first",
+          "definition_line": 320,
+          "log_method_prefix": "test_pause_keeps_channel_claim_and_restart_checks_state_first (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_natural_completion_before_explicit_pause_rejects_completed_action",
+          "class": "EvaluatorTests",
+          "method": "test_natural_completion_before_explicit_pause_rejects_completed_action",
+          "definition_line": 332,
+          "log_method_prefix": "test_natural_completion_before_explicit_pause_rejects_completed_action (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_stop_before_release_fails_without_persisting_partial_event_changes",
+          "class": "EvaluatorTests",
+          "method": "test_stop_before_release_fails_without_persisting_partial_event_changes",
+          "definition_line": 340,
+          "log_method_prefix": "test_stop_before_release_fails_without_persisting_partial_event_changes (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_release_twice_and_prescribed_action_on_dynamic_body_reject",
+          "class": "EvaluatorTests",
+          "method": "test_release_twice_and_prescribed_action_on_dynamic_body_reject",
+          "definition_line": 354,
+          "log_method_prefix": "test_release_twice_and_prescribed_action_on_dynamic_body_reject (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_joint_limit_error_is_an_admission_failure",
+          "class": "EvaluatorTests",
+          "method": "test_joint_limit_error_is_an_admission_failure",
+          "definition_line": 367,
+          "log_method_prefix": "test_joint_limit_error_is_an_admission_failure (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_repeated_and_unsorted_samples_are_read_only_and_reset",
+          "class": "EvaluatorTests",
+          "method": "test_repeated_and_unsorted_samples_are_read_only_and_reset",
+          "definition_line": 375,
+          "log_method_prefix": "test_repeated_and_unsorted_samples_are_read_only_and_reset (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_dynamic_interior_extremum_cannot_hide_overflow_between_samples",
+          "class": "EvaluatorTests",
+          "method": "test_dynamic_interior_extremum_cannot_hide_overflow_between_samples",
+          "definition_line": 387,
+          "log_method_prefix": "test_dynamic_interior_extremum_cannot_hide_overflow_between_samples (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_finite_affine_state_survives_large_intermediate_cancellation",
+          "class": "EvaluatorTests",
+          "method": "test_finite_affine_state_survives_large_intermediate_cancellation",
+          "definition_line": 399,
+          "log_method_prefix": "test_finite_affine_state_survives_large_intermediate_cancellation (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_invalid_sample_requests_produce_schema_compatible_time_fields",
+          "class": "EvaluatorTests",
+          "method": "test_invalid_sample_requests_produce_schema_compatible_time_fields",
+          "definition_line": 408,
+          "log_method_prefix": "test_invalid_sample_requests_produce_schema_compatible_time_fields (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_excessive_timestamp_precision_reports_resource_limit",
+          "class": "EvaluatorTests",
+          "method": "test_excessive_timestamp_precision_reports_resource_limit",
+          "definition_line": 421,
+          "log_method_prefix": "test_excessive_timestamp_precision_reports_resource_limit (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_relative_coordinate_overflow_is_a_structured_inspection_failure",
+          "class": "EvaluatorTests",
+          "method": "test_relative_coordinate_overflow_is_a_structured_inspection_failure",
+          "definition_line": 431,
+          "log_method_prefix": "test_relative_coordinate_overflow_is_a_structured_inspection_failure (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_aggregate_mass_cannot_serialize_as_infinity",
+          "class": "EvaluatorTests",
+          "method": "test_aggregate_mass_cannot_serialize_as_infinity",
+          "definition_line": 446,
+          "log_method_prefix": "test_aggregate_mass_cannot_serialize_as_infinity (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_construct_derives_grip_alignment_before_zero_events",
+          "class": "EvaluatorTests",
+          "method": "test_construct_derives_grip_alignment_before_zero_events",
+          "definition_line": 455,
+          "log_method_prefix": "test_construct_derives_grip_alignment_before_zero_events (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_construct_does_not_claim_timeline_admission",
+          "class": "EvaluatorTests",
+          "method": "test_construct_does_not_claim_timeline_admission",
+          "definition_line": 466,
+          "log_method_prefix": "test_construct_does_not_claim_timeline_admission (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_construct_reports_invalid_initial_world_state_at_constructed_level",
+          "class": "EvaluatorTests",
+          "method": "test_construct_reports_invalid_initial_world_state_at_constructed_level",
+          "definition_line": 476,
+          "log_method_prefix": "test_construct_reports_invalid_initial_world_state_at_constructed_level (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_sample_budget_stops_an_unbounded_generator",
+          "class": "EvaluatorTests",
+          "method": "test_sample_budget_stops_an_unbounded_generator",
+          "definition_line": 488,
+          "log_method_prefix": "test_sample_budget_stops_an_unbounded_generator (test_evaluator.EvaluatorTests"
+        },
+        {
+          "test_id": "test_evaluator.EvaluatorTests.test_output_budget_counts_attachment_frames_before_evaluation",
+          "class": "EvaluatorTests",
+          "method": "test_output_budget_counts_attachment_frames_before_evaluation",
+          "definition_line": 502,
+          "log_method_prefix": "test_output_budget_counts_attachment_frames_before_evaluation (test_evaluator.EvaluatorTests"
+        }
+      ],
+      "rationale": "Existing world motion and reference preflight/sample behavior used by validate_export; no numerical algorithms or budgets change.",
+      "preexisting": true
+    },
+    {
+      "module": "test_agent",
+      "path": "tests/test_agent.py",
+      "sha256": "sha256:05b3c902807c5f85e23382fd4766e8e50866f2c69e643c0650014309b2f38ad5",
+      "test_count": 30,
+      "tests": [
+        {
+          "test_id": "test_agent.AgentContractTests.test_A01_stale_edit_preserves_current_revision",
+          "class": "AgentContractTests",
+          "method": "test_A01_stale_edit_preserves_current_revision",
+          "definition_line": 294,
+          "log_method_prefix": "test_A01_stale_edit_preserves_current_revision (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_A02_invalid_multi_patch_candidate_is_atomic",
+          "class": "AgentContractTests",
+          "method": "test_A02_invalid_multi_patch_candidate_is_atomic",
+          "definition_line": 304,
+          "log_method_prefix": "test_A02_invalid_multi_patch_candidate_is_atomic (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_A03_same_canonical_request_has_one_durable_effect",
+          "class": "AgentContractTests",
+          "method": "test_A03_same_canonical_request_has_one_durable_effect",
+          "definition_line": 319,
+          "log_method_prefix": "test_A03_same_canonical_request_has_one_durable_effect (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_A04_request_identity_cannot_change_payload",
+          "class": "AgentContractTests",
+          "method": "test_A04_request_identity_cannot_change_payload",
+          "definition_line": 339,
+          "log_method_prefix": "test_A04_request_identity_cannot_change_payload (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_A05_inspection_is_repeatable_without_advancing_run",
+          "class": "AgentContractTests",
+          "method": "test_A05_inspection_is_repeatable_without_advancing_run",
+          "definition_line": 356,
+          "log_method_prefix": "test_A05_inspection_is_repeatable_without_advancing_run (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_A06_continuation_cannot_switch_context",
+          "class": "AgentContractTests",
+          "method": "test_A06_continuation_cannot_switch_context",
+          "definition_line": 375,
+          "log_method_prefix": "test_A06_continuation_cannot_switch_context (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_A07_requested_support_is_not_silently_downgraded",
+          "class": "AgentContractTests",
+          "method": "test_A07_requested_support_is_not_silently_downgraded",
+          "definition_line": 417,
+          "log_method_prefix": "test_A07_requested_support_is_not_silently_downgraded (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_A08_cancel_after_commit_reports_accepted_result",
+          "class": "AgentContractTests",
+          "method": "test_A08_cancel_after_commit_reports_accepted_result",
+          "definition_line": 429,
+          "log_method_prefix": "test_A08_cancel_after_commit_reports_accepted_result (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_A09_expired_result_retains_unknown_outcome_tombstone",
+          "class": "AgentContractTests",
+          "method": "test_A09_expired_result_retains_unknown_outcome_tombstone",
+          "definition_line": 440,
+          "log_method_prefix": "test_A09_expired_result_retains_unknown_outcome_tombstone (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_A10_rotated_velocity_keeps_world_measurement_frame",
+          "class": "AgentContractTests",
+          "method": "test_A10_rotated_velocity_keeps_world_measurement_frame",
+          "definition_line": 460,
+          "log_method_prefix": "test_A10_rotated_velocity_keeps_world_measurement_frame (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_queued_cancellation_prevents_a_real_candidate_acceptance",
+          "class": "AgentContractTests",
+          "method": "test_queued_cancellation_prevents_a_real_candidate_acceptance",
+          "definition_line": 475,
+          "log_method_prefix": "test_queued_cancellation_prevents_a_real_candidate_acceptance (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_two_queued_edits_recheck_head_before_acceptance",
+          "class": "AgentContractTests",
+          "method": "test_two_queued_edits_recheck_head_before_acceptance",
+          "definition_line": 490,
+          "log_method_prefix": "test_two_queued_edits_recheck_head_before_acceptance (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_retry_is_durable_across_an_independent_python_process",
+          "class": "AgentContractTests",
+          "method": "test_retry_is_durable_across_an_independent_python_process",
+          "definition_line": 512,
+          "log_method_prefix": "test_retry_is_durable_across_an_independent_python_process (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_protocol_failures_without_a_snapshot_do_not_invent_diagnostics",
+          "class": "AgentContractTests",
+          "method": "test_protocol_failures_without_a_snapshot_do_not_invent_diagnostics",
+          "definition_line": 534,
+          "log_method_prefix": "test_protocol_failures_without_a_snapshot_do_not_invent_diagnostics (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_running_cancellation_wins_before_a_prepared_candidate_commits",
+          "class": "AgentContractTests",
+          "method": "test_running_cancellation_wins_before_a_prepared_candidate_commits",
+          "definition_line": 557,
+          "log_method_prefix": "test_running_cancellation_wins_before_a_prepared_candidate_commits (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_malformed_payload_boundaries_always_return_encodable_protocol_errors",
+          "class": "AgentContractTests",
+          "method": "test_malformed_payload_boundaries_always_return_encodable_protocol_errors",
+          "definition_line": 582,
+          "log_method_prefix": "test_malformed_payload_boundaries_always_return_encodable_protocol_errors (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_dead_worker_is_fenced_and_live_worker_is_never_stolen",
+          "class": "AgentContractTests",
+          "method": "test_dead_worker_is_fenced_and_live_worker_is_never_stolen",
+          "definition_line": 620,
+          "log_method_prefix": "test_dead_worker_is_fenced_and_live_worker_is_never_stolen (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_engine_change_preserves_old_results_but_cannot_replay_old_runs_or_receipts",
+          "class": "AgentContractTests",
+          "method": "test_engine_change_preserves_old_results_but_cannot_replay_old_runs_or_receipts",
+          "definition_line": 652,
+          "log_method_prefix": "test_engine_change_preserves_old_results_but_cannot_replay_old_runs_or_receipts (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_utf8_edits_use_original_bytes_and_preserve_unselected_comments",
+          "class": "AgentContractTests",
+          "method": "test_utf8_edits_use_original_bytes_and_preserve_unselected_comments",
+          "definition_line": 688,
+          "log_method_prefix": "test_utf8_edits_use_original_bytes_and_preserve_unselected_comments (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_patch_mismatch_overlap_and_wrong_element_never_partially_apply",
+          "class": "AgentContractTests",
+          "method": "test_patch_mismatch_overlap_and_wrong_element_never_partially_apply",
+          "definition_line": 703,
+          "log_method_prefix": "test_patch_mismatch_overlap_and_wrong_element_never_partially_apply (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_rejected_first_create_keeps_source_for_an_explicit_repair",
+          "class": "AgentContractTests",
+          "method": "test_rejected_first_create_keeps_source_for_an_explicit_repair",
+          "definition_line": 716,
+          "log_method_prefix": "test_rejected_first_create_keeps_source_for_an_explicit_repair (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_syntax_invalid_snapshot_is_retrievable_without_fabricated_identity",
+          "class": "AgentContractTests",
+          "method": "test_syntax_invalid_snapshot_is_retrievable_without_fabricated_identity",
+          "definition_line": 730,
+          "log_method_prefix": "test_syntax_invalid_snapshot_is_retrievable_without_fabricated_identity (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_single_instance_override_cannot_edit_a_shared_default",
+          "class": "AgentContractTests",
+          "method": "test_single_instance_override_cannot_edit_a_shared_default",
+          "definition_line": 741,
+          "log_method_prefix": "test_single_instance_override_cannot_edit_a_shared_default (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_reset_is_before_zero_and_historical_accepted_runs_stay_pinned",
+          "class": "AgentContractTests",
+          "method": "test_reset_is_before_zero_and_historical_accepted_runs_stay_pinned",
+          "definition_line": 756,
+          "log_method_prefix": "test_reset_is_before_zero_and_historical_accepted_runs_stay_pinned (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_short_evaluation_retains_valid_prefix_before_a_later_failure",
+          "class": "AgentContractTests",
+          "method": "test_short_evaluation_retains_valid_prefix_before_a_later_failure",
+          "definition_line": 780,
+          "log_method_prefix": "test_short_evaluation_retains_valid_prefix_before_a_later_failure (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_source_only_inspection_and_invalid_run_requests_do_not_invent_state",
+          "class": "AgentContractTests",
+          "method": "test_source_only_inspection_and_invalid_run_requests_do_not_invent_state",
+          "definition_line": 798,
+          "log_method_prefix": "test_source_only_inspection_and_invalid_run_requests_do_not_invent_state (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_requested_object_budget_is_enforced_without_losing_the_head",
+          "class": "AgentContractTests",
+          "method": "test_requested_object_budget_is_enforced_without_losing_the_head",
+          "definition_line": 810,
+          "log_method_prefix": "test_requested_object_budget_is_enforced_without_losing_the_head (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_explicit_delivery_produces_retrievable_revision_bound_glb_bytes",
+          "class": "AgentContractTests",
+          "method": "test_explicit_delivery_produces_retrievable_revision_bound_glb_bytes",
+          "definition_line": 819,
+          "log_method_prefix": "test_explicit_delivery_produces_retrievable_revision_bound_glb_bytes (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_failed_actual_delivery_cannot_accept_an_otherwise_valid_edit",
+          "class": "AgentContractTests",
+          "method": "test_failed_actual_delivery_cannot_accept_an_otherwise_valid_edit",
+          "definition_line": 854,
+          "log_method_prefix": "test_failed_actual_delivery_cannot_accept_an_otherwise_valid_edit (test_agent.AgentContractTests"
+        },
+        {
+          "test_id": "test_agent.AgentContractTests.test_schemas_cover_manifest_cases_and_reject_unbounded_or_ambiguous_requests",
+          "class": "AgentContractTests",
+          "method": "test_schemas_cover_manifest_cases_and_reject_unbounded_or_ambiguous_requests",
+          "definition_line": 865,
+          "log_method_prefix": "test_schemas_cover_manifest_cases_and_reject_unbounded_or_ambiguous_requests (test_agent.AgentContractTests"
+        }
+      ],
+      "rationale": "Legacy Agent service base lifecycle and its original A01-A10 cases inherited by ProgramAgentService; all methods retained as one cohort.",
+      "preexisting": true
+    },
+    {
+      "module": "test_agent_transactions",
+      "path": "tests/test_agent_transactions.py",
+      "sha256": "sha256:8ad9fa2c5ea559fb8c9ea9ac9901957b089cf61c64a09dbfe4cb394d7f1c8d5b",
+      "test_count": 6,
+      "tests": [
+        {
+          "test_id": "test_agent_transactions.AgentTransactionTests.test_two_prepared_candidates_commit_one_head_and_retain_loser_evidence",
+          "class": "AgentTransactionTests",
+          "method": "test_two_prepared_candidates_commit_one_head_and_retain_loser_evidence",
+          "definition_line": 178,
+          "log_method_prefix": "test_two_prepared_candidates_commit_one_head_and_retain_loser_evidence (test_agent_transactions.AgentTransactionTests"
+        },
+        {
+          "test_id": "test_agent_transactions.AgentTransactionTests.test_two_prepared_run_extensions_return_the_actual_committed_interval",
+          "class": "AgentTransactionTests",
+          "method": "test_two_prepared_run_extensions_return_the_actual_committed_interval",
+          "definition_line": 207,
+          "log_method_prefix": "test_two_prepared_run_extensions_return_the_actual_committed_interval (test_agent_transactions.AgentTransactionTests"
+        },
+        {
+          "test_id": "test_agent_transactions.AgentTransactionTests.test_late_deadline_or_operation_budget_cannot_commit_computed_advancement",
+          "class": "AgentTransactionTests",
+          "method": "test_late_deadline_or_operation_budget_cannot_commit_computed_advancement",
+          "definition_line": 231,
+          "log_method_prefix": "test_late_deadline_or_operation_budget_cannot_commit_computed_advancement (test_agent_transactions.AgentTransactionTests"
+        },
+        {
+          "test_id": "test_agent_transactions.AgentTransactionTests.test_early_resource_error_does_not_look_up_an_unresolved_run_unsafely",
+          "class": "AgentTransactionTests",
+          "method": "test_early_resource_error_does_not_look_up_an_unresolved_run_unsafely",
+          "definition_line": 250,
+          "log_method_prefix": "test_early_resource_error_does_not_look_up_an_unresolved_run_unsafely (test_agent_transactions.AgentTransactionTests"
+        },
+        {
+          "test_id": "test_agent_transactions.AgentTransactionTests.test_identical_candidate_bytes_have_one_canonical_filename",
+          "class": "AgentTransactionTests",
+          "method": "test_identical_candidate_bytes_have_one_canonical_filename",
+          "definition_line": 263,
+          "log_method_prefix": "test_identical_candidate_bytes_have_one_canonical_filename (test_agent_transactions.AgentTransactionTests"
+        },
+        {
+          "test_id": "test_agent_transactions.AgentTransactionTests.test_nominal_replacement_requires_new_key_but_lexical_rename_preserves_identity",
+          "class": "AgentTransactionTests",
+          "method": "test_nominal_replacement_requires_new_key_but_lexical_rename_preserves_identity",
+          "definition_line": 285,
+          "log_method_prefix": "test_nominal_replacement_requires_new_key_but_lexical_rename_preserves_identity (test_agent_transactions.AgentTransactionTests"
+        }
+      ],
+      "rationale": "Shared Agent store/request transaction guarantees inherited by the actual program workflow; all methods retained.",
+      "preexisting": true
+    },
+    {
+      "module": "test_conformance",
+      "path": "tests/test_conformance.py",
+      "sha256": "sha256:1d5d49273c2d4c24dd97380e805683c45c20feed5ca24725ab5009418b79c8ea",
+      "test_count": 3,
+      "tests": [
+        {
+          "test_id": "test_conformance.ConformanceTests.test_all_published_cases_and_observations",
+          "class": "ConformanceTests",
+          "method": "test_all_published_cases_and_observations",
+          "definition_line": 69,
+          "log_method_prefix": "test_all_published_cases_and_observations (test_conformance.ConformanceTests"
+        },
+        {
+          "test_id": "test_conformance.ConformanceTests.test_actual_diagnostics_match_published_schema_and_registry",
+          "class": "ConformanceTests",
+          "method": "test_actual_diagnostics_match_published_schema_and_registry",
+          "definition_line": 76,
+          "log_method_prefix": "test_actual_diagnostics_match_published_schema_and_registry (test_conformance.ConformanceTests"
+        },
+        {
+          "test_id": "test_conformance.ConformanceTests.test_source_evidence_does_not_claim_agent_protocol_or_universal_numeric_conformance",
+          "class": "ConformanceTests",
+          "method": "test_source_evidence_does_not_claim_agent_protocol_or_universal_numeric_conformance",
+          "definition_line": 91,
+          "log_method_prefix": "test_source_evidence_does_not_claim_agent_protocol_or_universal_numeric_conformance (test_conformance.ConformanceTests"
+        }
+      ],
+      "rationale": "Existing core conformance execution and trustworthy pass/failure accounting; includes the core test required by the adopted C manifest.",
+      "preexisting": true
+    },
+    {
+      "module": "test_parser",
+      "path": "tests/test_parser.py",
+      "sha256": "sha256:927f2385097feeb45d03b25355646f3c256b33f019d83a6c7f3ab88f18ae75f9",
+      "test_count": 8,
+      "tests": [
+        {
+          "test_id": "test_parser.ParserTests.test_published_source_syntax",
+          "class": "ParserTests",
+          "method": "test_published_source_syntax",
+          "definition_line": 21,
+          "log_method_prefix": "test_published_source_syntax (test_parser.ParserTests"
+        },
+        {
+          "test_id": "test_parser.ParserTests.test_exact_original_utf8_spans_and_crlf",
+          "class": "ParserTests",
+          "method": "test_exact_original_utf8_spans_and_crlf",
+          "definition_line": 32,
+          "log_method_prefix": "test_exact_original_utf8_spans_and_crlf (test_parser.ParserTests"
+        },
+        {
+          "test_id": "test_parser.ParserTests.test_comments_and_escaped_characters",
+          "class": "ParserTests",
+          "method": "test_comments_and_escaped_characters",
+          "definition_line": 42,
+          "log_method_prefix": "test_comments_and_escaped_characters (test_parser.ParserTests"
+        },
+        {
+          "test_id": "test_parser.ParserTests.test_invalid_lexical_forms",
+          "class": "ParserTests",
+          "method": "test_invalid_lexical_forms",
+          "definition_line": 49,
+          "log_method_prefix": "test_invalid_lexical_forms (test_parser.ParserTests"
+        },
+        {
+          "test_id": "test_parser.ParserTests.test_grammar_requires_one_complete_scene",
+          "class": "ParserTests",
+          "method": "test_grammar_requires_one_complete_scene",
+          "definition_line": 58,
+          "log_method_prefix": "test_grammar_requires_one_complete_scene (test_parser.ParserTests"
+        },
+        {
+          "test_id": "test_parser.ParserTests.test_unary_minus_and_operator_precedence",
+          "class": "ParserTests",
+          "method": "test_unary_minus_and_operator_precedence",
+          "definition_line": 63,
+          "log_method_prefix": "test_unary_minus_and_operator_precedence (test_parser.ParserTests"
+        },
+        {
+          "test_id": "test_parser.ParserTests.test_chained_comparison_rejected",
+          "class": "ParserTests",
+          "method": "test_chained_comparison_rejected",
+          "definition_line": 70,
+          "log_method_prefix": "test_chained_comparison_rejected (test_parser.ParserTests"
+        },
+        {
+          "test_id": "test_parser.ParserTests.test_source_revision_changes_with_original_bytes",
+          "class": "ParserTests",
+          "method": "test_source_revision_changes_with_original_bytes",
+          "definition_line": 76,
+          "log_method_prefix": "test_source_revision_changes_with_original_bytes (test_parser.ParserTests"
+        }
+      ],
+      "rationale": "Shared lexer/core parser behavior beneath the construction parser; complete small preexisting module retained.",
+      "preexisting": true
+    },
+    {
+      "module": "test_validator_edges",
+      "path": "tests/test_validator_edges.py",
+      "sha256": "sha256:0ce9edd43131462cd7b8dd8f0a46dab765d35e9aa4ad56426bf072975b9187f0",
+      "test_count": 18,
+      "tests": [
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_unused_branches_are_typed_but_not_evaluated",
+          "class": "ValidatorEdgeTests",
+          "method": "test_unused_branches_are_typed_but_not_evaluated",
+          "definition_line": 40,
+          "log_method_prefix": "test_unused_branches_are_typed_but_not_evaluated (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_scene_fields_validate_unused_branch_units",
+          "class": "ValidatorEdgeTests",
+          "method": "test_scene_fields_validate_unused_branch_units",
+          "definition_line": 52,
+          "log_method_prefix": "test_scene_fields_validate_unused_branch_units (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_unused_callable_has_a_checked_return_type",
+          "class": "ValidatorEdgeTests",
+          "method": "test_unused_callable_has_a_checked_return_type",
+          "definition_line": 59,
+          "log_method_prefix": "test_unused_callable_has_a_checked_return_type (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_unused_class_initializers_are_type_checked",
+          "class": "ValidatorEdgeTests",
+          "method": "test_unused_class_initializers_are_type_checked",
+          "definition_line": 64,
+          "log_method_prefix": "test_unused_class_initializers_are_type_checked (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_private_members_keep_their_declaring_scope",
+          "class": "ValidatorEdgeTests",
+          "method": "test_private_members_keep_their_declaring_scope",
+          "definition_line": 71,
+          "log_method_prefix": "test_private_members_keep_their_declaring_scope (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_nominal_upcast_dispatches_to_the_instance_override",
+          "class": "ValidatorEdgeTests",
+          "method": "test_nominal_upcast_dispatches_to_the_instance_override",
+          "definition_line": 95,
+          "log_method_prefix": "test_nominal_upcast_dispatches_to_the_instance_override (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_override_retains_parameter_names_and_member_keys",
+          "class": "ValidatorEdgeTests",
+          "method": "test_override_retains_parameter_names_and_member_keys",
+          "definition_line": 117,
+          "log_method_prefix": "test_override_retains_parameter_names_and_member_keys (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_explicit_inherited_builtin_defaults_require_override",
+          "class": "ValidatorEdgeTests",
+          "method": "test_explicit_inherited_builtin_defaults_require_override",
+          "definition_line": 131,
+          "log_method_prefix": "test_explicit_inherited_builtin_defaults_require_override (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_outer_override_wins_and_part_rhs_uses_owner_scope",
+          "class": "ValidatorEdgeTests",
+          "method": "test_outer_override_wins_and_part_rhs_uses_owner_scope",
+          "definition_line": 140,
+          "log_method_prefix": "test_outer_override_wins_and_part_rhs_uses_owner_scope (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_same_scope_duplicate_assignments_are_errors",
+          "class": "ValidatorEdgeTests",
+          "method": "test_same_scope_duplicate_assignments_are_errors",
+          "definition_line": 157,
+          "log_method_prefix": "test_same_scope_duplicate_assignments_are_errors (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_derived_values_and_nested_builtin_fields_are_readonly",
+          "class": "ValidatorEdgeTests",
+          "method": "test_derived_values_and_nested_builtin_fields_are_readonly",
+          "definition_line": 165,
+          "log_method_prefix": "test_derived_values_and_nested_builtin_fields_are_readonly (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_distinct_dependency_cycles_have_distinct_diagnostics",
+          "class": "ValidatorEdgeTests",
+          "method": "test_distinct_dependency_cycles_have_distinct_diagnostics",
+          "definition_line": 175,
+          "log_method_prefix": "test_distinct_dependency_cycles_have_distinct_diagnostics (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_class_expressions_cannot_capture_scene_names",
+          "class": "ValidatorEdgeTests",
+          "method": "test_class_expressions_cannot_capture_scene_names",
+          "definition_line": 192,
+          "log_method_prefix": "test_class_expressions_cannot_capture_scene_names (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_unit_errors_and_unsupported_dimensions_are_distinct",
+          "class": "ValidatorEdgeTests",
+          "method": "test_unit_errors_and_unsupported_dimensions_are_distinct",
+          "definition_line": 197,
+          "log_method_prefix": "test_unit_errors_and_unsupported_dimensions_are_distinct (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_unit_diagnostic_identifies_the_definition_and_exact_source",
+          "class": "ValidatorEdgeTests",
+          "method": "test_unit_diagnostic_identifies_the_definition_and_exact_source",
+          "definition_line": 205,
+          "log_method_prefix": "test_unit_diagnostic_identifies_the_definition_and_exact_source (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_integer_boundaries_and_explicit_rounding",
+          "class": "ValidatorEdgeTests",
+          "method": "test_integer_boundaries_and_explicit_rounding",
+          "definition_line": 219,
+          "log_method_prefix": "test_integer_boundaries_and_explicit_rounding (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_oversized_numeric_tokens_receive_structured_diagnostics",
+          "class": "ValidatorEdgeTests",
+          "method": "test_oversized_numeric_tokens_receive_structured_diagnostics",
+          "definition_line": 232,
+          "log_method_prefix": "test_oversized_numeric_tokens_receive_structured_diagnostics (test_validator_edges.ValidatorEdgeTests"
+        },
+        {
+          "test_id": "test_validator_edges.ValidatorEdgeTests.test_scene_fields_and_namespace_are_checked",
+          "class": "ValidatorEdgeTests",
+          "method": "test_scene_fields_and_namespace_are_checked",
+          "definition_line": 240,
+          "log_method_prefix": "test_scene_fields_and_namespace_are_checked (test_validator_edges.ValidatorEdgeTests"
+        }
+      ],
+      "rationale": "Shared validator/type/frame/motion edge cases beneath the construction compiler; complete small preexisting module retained.",
+      "preexisting": true
+    }
+  ],
+  "new_sidecar_module": {
+    "module": "test_semantic_export",
+    "path": "tests/test_semantic_export.py",
+    "sha256": "sha256:445de6339a75cf766a4196fbb4f853f0fecda8f38ae45ab4e734643822dece65",
+    "test_count": 13,
+    "tests": [
+      {
+        "test_id": "test_semantic_export.SemanticExportTests.test_complete_finite_inventory_bound_to_frozen_oracle",
+        "class": "SemanticExportTests",
+        "method": "test_complete_finite_inventory_bound_to_frozen_oracle",
+        "definition_line": 58,
+        "log_method_prefix": "test_complete_finite_inventory_bound_to_frozen_oracle (test_semantic_export.SemanticExportTests"
+      },
+      {
+        "test_id": "test_semantic_export.SemanticExportTests.test_ownership_and_declared_connections_do_not_parent_glb_transforms",
+        "class": "SemanticExportTests",
+        "method": "test_ownership_and_declared_connections_do_not_parent_glb_transforms",
+        "definition_line": 79,
+        "log_method_prefix": "test_ownership_and_declared_connections_do_not_parent_glb_transforms (test_semantic_export.SemanticExportTests"
+      },
+      {
+        "test_id": "test_semantic_export.SemanticExportTests.test_unknown_and_required_unimplemented_features_reject",
+        "class": "SemanticExportTests",
+        "method": "test_unknown_and_required_unimplemented_features_reject",
+        "definition_line": 90,
+        "log_method_prefix": "test_unknown_and_required_unimplemented_features_reject (test_semantic_export.SemanticExportTests"
+      },
+      {
+        "test_id": "test_semantic_export.SemanticExportTests.test_stale_accepted_revision_rejects_before_artifact_use",
+        "class": "SemanticExportTests",
+        "method": "test_stale_accepted_revision_rejects_before_artifact_use",
+        "definition_line": 100,
+        "log_method_prefix": "test_stale_accepted_revision_rejects_before_artifact_use (test_semantic_export.SemanticExportTests"
+      },
+      {
+        "test_id": "test_semantic_export.SemanticExportTests.test_same_geometry_with_changed_source_revision_cannot_relabel_glb",
+        "class": "SemanticExportTests",
+        "method": "test_same_geometry_with_changed_source_revision_cannot_relabel_glb",
+        "definition_line": 105,
+        "log_method_prefix": "test_same_geometry_with_changed_source_revision_cannot_relabel_glb (test_semantic_export.SemanticExportTests"
+      },
+      {
+        "test_id": "test_semantic_export.SemanticExportTests.test_changed_dependency_and_updated_pin_cannot_relabel_glb",
+        "class": "SemanticExportTests",
+        "method": "test_changed_dependency_and_updated_pin_cannot_relabel_glb",
+        "definition_line": 111,
+        "log_method_prefix": "test_changed_dependency_and_updated_pin_cannot_relabel_glb (test_semantic_export.SemanticExportTests"
+      },
+      {
+        "test_id": "test_semantic_export.SemanticExportTests.test_broken_sidecar_reference_and_changed_semantics_reject",
+        "class": "SemanticExportTests",
+        "method": "test_broken_sidecar_reference_and_changed_semantics_reject",
+        "definition_line": 119,
+        "log_method_prefix": "test_broken_sidecar_reference_and_changed_semantics_reject (test_semantic_export.SemanticExportTests"
+      },
+      {
+        "test_id": "test_semantic_export.SemanticExportTests.test_actual_broken_geometry_reference_and_binary_mutation_reject",
+        "class": "SemanticExportTests",
+        "method": "test_actual_broken_geometry_reference_and_binary_mutation_reject",
+        "definition_line": 134,
+        "log_method_prefix": "test_actual_broken_geometry_reference_and_binary_mutation_reject (test_semantic_export.SemanticExportTests"
+      },
+      {
+        "test_id": "test_semantic_export.SemanticExportTests.test_real_prefix_export_cannot_silently_omit_source_interval",
+        "class": "SemanticExportTests",
+        "method": "test_real_prefix_export_cannot_silently_omit_source_interval",
+        "definition_line": 150,
+        "log_method_prefix": "test_real_prefix_export_cannot_silently_omit_source_interval (test_semantic_export.SemanticExportTests"
+      },
+      {
+        "test_id": "test_semantic_export.SemanticExportTests.test_visual_helpers_are_explicitly_outside_selected_profile",
+        "class": "SemanticExportTests",
+        "method": "test_visual_helpers_are_explicitly_outside_selected_profile",
+        "definition_line": 157,
+        "log_method_prefix": "test_visual_helpers_are_explicitly_outside_selected_profile (test_semantic_export.SemanticExportTests"
+      },
+      {
+        "test_id": "test_semantic_export.SemanticExportTests.test_external_requirements_cannot_be_erased_from_manifest",
+        "class": "SemanticExportTests",
+        "method": "test_external_requirements_cannot_be_erased_from_manifest",
+        "definition_line": 163,
+        "log_method_prefix": "test_external_requirements_cannot_be_erased_from_manifest (test_semantic_export.SemanticExportTests"
+      },
+      {
+        "test_id": "test_semantic_export.SemanticExportTests.test_canonical_comparison_is_deterministic_and_rejects_unknown_fields",
+        "class": "SemanticExportTests",
+        "method": "test_canonical_comparison_is_deterministic_and_rejects_unknown_fields",
+        "definition_line": 171,
+        "log_method_prefix": "test_canonical_comparison_is_deterministic_and_rejects_unknown_fields (test_semantic_export.SemanticExportTests"
+      },
+      {
+        "test_id": "test_semantic_export.SemanticExportTests.test_callback_interrupt_propagates_without_mutating_inputs",
+        "class": "SemanticExportTests",
+        "method": "test_callback_interrupt_propagates_without_mutating_inputs",
+        "definition_line": 179,
+        "log_method_prefix": "test_callback_interrupt_propagates_without_mutating_inputs (test_semantic_export.SemanticExportTests"
+      }
+    ],
+    "preexisting": false
+  },
+  "adopted_construction_manifest": {
+    "path": "docs/language-design/construction-v0.1/validation-cases.json",
+    "sha256": "sha256:7d88f1c15ba8dd473d2311eb2c475b883a0a9af295053c92f56da262421a399c",
+    "case_required_tests": {
+      "C01": [
+        "test_construction.ConstructionTests.test_frozen_rack_all_126_independent_world_poses",
+        "test_construction_catalog.ConstructionCatalogTests.test_complete_import_parts_override_and_action_example_evaluates",
+        "test_construction_catalog.ConstructionCatalogTests.test_linked_rack_exposes_public_declarations_at_exact_original_spans",
+        "test_linker.LinkerTests.test_c01_reusable_library_has_original_namespace_and_private_boundary",
+        "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins",
+        "test_linker.ModuleExecutionTests.test_c01_actual_reused_component_instances_are_independent"
+      ],
+      "C02": [
+        "test_construction_catalog.ConstructionCatalogTests.test_alias_changes_preserve_imported_nominal_identity_and_source_provenance",
+        "test_construction_catalog.ConstructionCatalogTests.test_unrelated_packages_may_share_module_names_keys_and_filenames",
+        "test_linker.LinkerTests.test_alias_rename_and_two_aliases_do_not_create_nominal_types",
+        "test_linker.LinkerTests.test_c02_equal_lexical_names_and_module_keys_are_package_scoped",
+        "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins",
+        "test_linker.ModuleExecutionTests.test_alias_change_preserves_constructed_types_and_strict_nominal_argument_check",
+        "test_linker.ModuleExecutionTests.test_c02_c03_execute_declaring_module_helpers_and_nominal_references",
+        "test_syntax02.Syntax02Tests.test_qualified_base_reference_types_calls_and_visibility"
+      ],
+      "C03": [
+        "test_bundle.BundleTests.test_file_manifest_preserves_bytes_and_ignores_transport_location",
+        "test_linker.LinkerTests.test_c03_transitive_and_diamond_resolution_use_supplied_exact_units_once",
+        "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins",
+        "test_linker.LinkerTests.test_whole_closure_requires_and_caller_cancellation_are_preserved",
+        "test_linker.ModuleExecutionTests.test_c02_c03_execute_declaring_module_helpers_and_nominal_references"
+      ],
+      "C04": [
+        "test_construction.ConstructionTests.test_frozen_rack_all_126_independent_world_poses",
+        "test_construction.ConstructionTests.test_nonzero_own_and_aggregate_mass_has_no_collection_contribution",
+        "test_construction.ConstructionTests.test_rack_matches_separately_authored_ordinary_assembly"
+      ],
+      "C05": [
+        "test_construction.ConstructionTests.test_stable_keys_order_insert_remove_and_dot_key",
+        "test_syntax02.Syntax02Tests.test_key_steps_do_not_split_dotted_entry_names"
+      ],
+      "C06": [
+        "test_construction.ConstructionTests.test_empty_body_still_type_access_and_recursive_composition_checked",
+        "test_construction.ConstructionTests.test_empty_singleton_have_no_collection_body_or_frame",
+        "test_construction_catalog.ConstructionCatalogTests.test_closed_keyed_and_len_examples_construct_real_geometry"
+      ],
+      "C07": [
+        "test_construction.ConstructionTests.test_all_generated_sibling_shells_exist_before_body_fields",
+        "test_construction.ConstructionTests.test_deeper_generated_parent_lexical_self_inputs_feed_child_shape",
+        "test_construction.ConstructionTests.test_final_keyed_override_replaces_shape_before_registration",
+        "test_construction.ConstructionTests.test_generated_child_own_final_input_drives_nested_shape",
+        "test_construction.ConstructionTests.test_helper_preserves_lexical_self_origin_through_base_ref_coercion"
+      ],
+      "C08": [
+        "test_construction.ConstructionTests.test_generated_provenance_and_precise_public_repair_target",
+        "test_construction.ConstructionTests.test_per_key_scope_precedence_and_duplicate_write",
+        "test_program_agent.ProgramAgentTests.test_generated_source_locations_and_public_initializer_target",
+        "test_program_agent.ProgramAgentTests.test_scoped_repair_changes_one_generated_occurrence_only"
+      ],
+      "C09": [
+        "test_construction_catalog.ConstructionCatalogTests.test_utf8_source_previews_are_bounded_without_fabricated_characters",
+        "test_program_agent.ProgramAgentTests.test_entry_and_library_patch_is_atomic_on_wrong_source_precondition",
+        "test_program_agent.ProgramAgentTests.test_invalid_candidate_has_its_actual_unit_hash_and_preserves_head",
+        "test_program_agent.ProgramAgentTests.test_utf8_boundary_failure_uses_original_source_location",
+        "test_program_source_review.ProgramEditReviewTests.test_c09_utf8_dot_key_candidate_failure_and_accepted_head_repair",
+        "test_program_source_review.SourceProjectionReviewTests.test_imported_utf8_diagnostic_and_cross_file_related_span_use_original_units",
+        "test_syntax02.Syntax02Tests.test_utf8_crlf_primary_and_import_literal_spans",
+        "test_program_agent.ProgramAgentTests.test_unverified_patch_coordinates_do_not_invent_source_locations"
+      ],
+      "C10": [
+        "test_bundle.BundleTests.test_closed_transport_shapes_unicode_and_pin_domains",
+        "test_bundle.BundleTests.test_file_path_validation_rejects_escape_symlink_and_nonregular",
+        "test_bundle.BundleTests.test_manifest_json_and_source_bytes_fail_as_transport",
+        "test_linker.LinkerTests.test_c10_missing_wrong_changed_and_extra_content_rejects_with_candidate_identity",
+        "test_linker.LinkerTests.test_import_pin_literal_domains_are_source_diagnostics",
+        "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins"
+      ],
+      "C11": [
+        "test_construction_catalog.ConstructionCatalogTests.test_unrelated_packages_may_share_module_names_keys_and_filenames",
+        "test_linker.LinkerTests.test_c11_cycles_are_detected_before_impossible_digest_fixed_points",
+        "test_linker.LinkerTests.test_conflicting_versions_are_revision_bound_semantic_rejection",
+        "test_linker.LinkerTests.test_imported_scene_missing_entry_scene_and_unsupported_profiles",
+        "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins",
+        "test_linker.LinkerTests.test_module_lookup_scope_disallows_collisions_unqualified_imports_and_reexports",
+        "test_linker.ModuleExecutionTests.test_unused_imported_function_body_and_capability_requirements_are_not_ignored",
+        "test_syntax02.Syntax02Tests.test_role_is_linked_version_and_profile_are_explicit"
+      ],
+      "C12": [
+        "test_construction.ConstructionTests.test_duplicate_invalid_missing_and_wrong_dimension_keys",
+        "test_construction.ConstructionTests.test_keyed_literal_coercion_is_per_entry_and_collection_is_invariant",
+        "test_construction.ConstructionTests.test_no_keyed_operators_or_nested_reference_inputs",
+        "test_syntax02.Syntax02Tests.test_expression_keys_can_be_computed_but_assignment_keys_are_literals",
+        "test_syntax02.Syntax02Tests.test_keyed_empty_type_duplicate_entries_and_typed_body_bindings"
+      ],
+      "C13": [
+        "test_construction.ConstructionTests.test_empty_body_still_type_access_and_recursive_composition_checked",
+        "test_construction.ConstructionTests.test_per_key_scope_precedence_and_duplicate_write",
+        "test_program_agent.ProgramAgentTests.test_generated_identity_cannot_write_shared_library_bytes",
+        "test_program_agent.ProgramAgentTests.test_generated_nominal_replacement_requires_new_occurrence_key",
+        "test_program_source_review.ProgramEditReviewTests.test_c13_alias_rename_retains_nominal_identity_but_class_replacement_rejects",
+        "test_program_source_review.SourceProjectionReviewTests.test_equal_filenames_offsets_and_text_do_not_grant_cross_unit_write_scope",
+        "test_program_source_review.SourceProjectionReviewTests.test_generated_collection_and_occurrence_scopes_are_distinct_from_shared_definitions",
+        "test_program_agent.ProgramAgentTests.test_unverified_patch_coordinates_do_not_invent_source_locations"
+      ],
+      "C14": [
+        "test_construction.ConstructionTests.test_cached_generated_scalar_and_true_derived_cycle_remain_invalid",
+        "test_construction.ConstructionTests.test_empty_body_still_type_access_and_recursive_composition_checked",
+        "test_construction.ConstructionTests.test_helper_preserves_lexical_self_origin_through_base_ref_coercion",
+        "test_construction.ConstructionTests.test_lazy_unused_generated_read_branch_is_typechecked_only",
+        "test_construction.ConstructionTests.test_shape_forbids_generated_views_len_and_cached_derivation",
+        "test_construction.ConstructionTests.test_tainted_body_assignment_cannot_become_own_nested_input",
+        "test_construction.ConstructionTests.test_tainted_copy_does_not_poison_shared_untainted_keyed_input"
+      ],
+      "C15": [
+        "test_bundle.BundleTests.test_aggregate_source_module_and_filename_boundaries",
+        "test_construction.ConstructionTests.test_1000_objects_and_one_over",
+        "test_construction.ConstructionTests.test_1000_total_generated_objects_and_one_over",
+        "test_construction.ConstructionTests.test_check_callback_cancels_real_work",
+        "test_construction.ConstructionTests.test_key_count_256_and_257_boundary",
+        "test_construction.ConstructionTests.test_ownership_depth64_and65_before_host_recursion",
+        "test_construction.ConstructionTests.test_repeated_generated_reference_views_charge_logical_values",
+        "test_construction.ConstructionTests.test_work_value_and_encoded_byte_budgets",
+        "test_construction_catalog.ConstructionCatalogTests.test_cancellation_and_materialization_limits_do_not_return_partial_success",
+        "test_linker.LinkerTests.test_module_and_longest_import_depth_boundaries",
+        "test_linker.LinkerTests.test_total_token_budget_is_not_reset_for_each_dependency",
+        "test_program_agent.ProgramAgentTests.test_result_budget_failure_rolls_back_computed_acceptance_and_run",
+        "test_program_protocol.ProgramProtocolTests.test_exact_utf8_json_size_and_logically_repeated_values",
+        "test_program_protocol.ProgramProtocolTests.test_oversized_shared_graph_fails_before_json_string_allocation",
+        "test_program_transactions.ProgramTransactionTests.test_oversized_control_response_rolls_back_real_pending_cancellation",
+        "test_program_transactions.ProgramTransactionTests.test_request_termination_cannot_commit_a_computed_program_run_extension",
+        "test_syntax02.Syntax02Tests.test_bounded_nesting_and_caller_interrupt_are_not_host_failures",
+        "test_construction.ConstructionTests.test_generated_collection_steps_add_no_ownership_depth"
+      ],
+      "C16": [
+        "test_construction.ConstructionTests.test_frozen_rack_all_126_independent_world_poses",
+        "test_construction.ConstructionTests.test_nonzero_own_and_aggregate_mass_has_no_collection_contribution",
+        "test_construction.ConstructionTests.test_rack_matches_separately_authored_ordinary_assembly",
+        "test_construction_catalog.ConstructionCatalogTests.test_complete_import_parts_override_and_action_example_evaluates"
+      ],
+      "C17": [
+        "test_construction.ConstructionTests.test_generated_grip_release_inherits_world_motion_then_gravity",
+        "test_construction_export.ConstructionExportTests.test_generated_release_is_world_baked_and_other_entry_remains_carried"
+      ],
+      "C18": [
+        "test_agent.AgentContractTests.test_A01_stale_edit_preserves_current_revision",
+        "test_agent.AgentContractTests.test_A02_invalid_multi_patch_candidate_is_atomic",
+        "test_agent.AgentContractTests.test_A03_same_canonical_request_has_one_durable_effect",
+        "test_agent.AgentContractTests.test_A04_request_identity_cannot_change_payload",
+        "test_agent.AgentContractTests.test_A05_inspection_is_repeatable_without_advancing_run",
+        "test_agent.AgentContractTests.test_A06_continuation_cannot_switch_context",
+        "test_agent.AgentContractTests.test_A07_requested_support_is_not_silently_downgraded",
+        "test_agent.AgentContractTests.test_A08_cancel_after_commit_reports_accepted_result",
+        "test_agent.AgentContractTests.test_A09_expired_result_retains_unknown_outcome_tombstone",
+        "test_agent.AgentContractTests.test_A10_rotated_velocity_keeps_world_measurement_frame",
+        "test_conformance.ConformanceTests.test_all_published_cases_and_observations",
+        "test_program_agent.ProgramAgentTests.test_complete_program_identity_and_independent_store",
+        "test_program_agent.ProgramAgentTests.test_cursor_is_bound_to_program_and_immutable_query",
+        "test_program_agent.ProgramAgentTests.test_entry_and_library_patch_is_atomic_on_wrong_source_precondition",
+        "test_program_agent.ProgramAgentTests.test_library_change_and_exact_import_pin_are_one_candidate",
+        "test_program_agent.ProgramAgentTests.test_retrieved_old_artifact_keeps_its_original_program_after_edit",
+        "test_program_agent.ProgramAgentTests.test_source_only_state_prefix_and_old_program_run_isolation",
+        "test_program_protocol.ProgramProtocolTests.test_cli_invalid_json_still_returns_selected_protocol",
+        "test_program_protocol.ProgramProtocolTests.test_cli_requires_version_selection_and_keeps_stores_separate",
+        "test_program_protocol.ProgramProtocolTests.test_malformed_bundle_has_transport_error_before_candidate",
+        "test_program_protocol.ProgramProtocolTests.test_new_envelope_requires_program_fields_and_explicit_protocol",
+        "test_program_source_review.SourceProjectionReviewTests.test_program_conditions_do_not_invent_locations_or_mutate_core_diagnostics",
+        "test_program_transactions.ProgramTransactionTests.test_cancellation_after_complete_bundle_computation_prevents_acceptance",
+        "test_program_transactions.ProgramTransactionTests.test_changed_engine_preserves_program_evidence_but_fences_old_work",
+        "test_program_transactions.ProgramTransactionTests.test_competing_complete_bundles_commit_one_head_and_retain_loser_evidence",
+        "test_program_transactions.ProgramTransactionTests.test_competing_run_extensions_report_the_actual_committed_program_prefix",
+        "test_program_transactions.ProgramTransactionTests.test_exact_retry_and_expired_identity_never_replay_program_effects",
+        "test_program_transactions.ProgramTransactionTests.test_persisted_queued_bundle_resumes_in_a_new_python_process",
+        "test_program_transactions.ProgramTransactionTests.test_proven_dead_worker_is_fenced_but_a_live_worker_is_not_stolen",
+        "test_syntax02.Syntax02Tests.test_old_keywords_and_old_path_ast_keep_their_meaning"
+      ],
+      "C19": [
+        "test_bundle.BundleTests.test_candidate_hash_is_defined_before_parsing_and_survives_exact_utf8",
+        "test_bundle.BundleTests.test_frozen_golden_pin_and_exact_file_inline_round_trip",
+        "test_bundle.BundleTests.test_hash_order_and_every_declared_identity_input",
+        "test_bundle.BundleTests.test_snapshot_does_not_share_mutable_source_or_payload",
+        "test_bundle.BundleTests.test_source_id_ambiguity_and_conflicting_versions_are_distinct",
+        "test_construction_catalog.ConstructionCatalogTests.test_catalog_revisions_identify_content_and_returns_are_detached",
+        "test_construction_export.ConstructionExportTests.test_dependency_revision_cannot_relabel_existing_artifact",
+        "test_linker.LinkerTests.test_c19_supplied_snapshot_hash_precedes_any_link_error",
+        "test_linker.LinkerTests.test_manifest_seals_concrete_cases_and_expected_failure_origins",
+        "test_program_agent.ProgramAgentTests.test_cursor_is_bound_to_program_and_immutable_query",
+        "test_program_agent.ProgramAgentTests.test_retrieved_old_artifact_keeps_its_original_program_after_edit",
+        "test_program_agent.ProgramAgentTests.test_source_only_state_prefix_and_old_program_run_isolation"
+      ],
+      "C20": [
+        "test_construction_catalog.ConstructionCatalogTests.test_global_metadata_preserves_core_and_covers_executable_names",
+        "test_construction_export.ConstructionExportTests.test_dependency_revision_cannot_relabel_existing_artifact",
+        "test_construction_export.ConstructionExportTests.test_explicit_target_profile_and_complete_exact_source_map",
+        "test_construction_export.ConstructionExportTests.test_generated_release_is_world_baked_and_other_entry_remains_carried",
+        "test_construction_export.ConstructionExportTests.test_independent_decode_matches_all126_frozen_poses_and_geometry",
+        "test_construction_export.ConstructionExportTests.test_real_serialized_provenance_tampering_is_rejected",
+        "test_construction_export.ConstructionExportTests.test_version_mismatch_and_ambiguous_source_hash_fail_closed",
+        "test_program_agent.ProgramAgentTests.test_retrieved_old_artifact_keeps_its_original_program_after_edit"
+      ]
+    }
+  },
+  "source_change_boundary": {
+    "preexisting_ontokin_python_files": 192,
+    "changed_preexisting_ontokin_python_files": [],
+    "added_runtime_module": "ontokin/semantic_export.py",
+    "shared_parser_compiler_evaluator_agent_exporter_changed": false,
+    "new_protocol_or_syntax": false
+  },
+  "other_required_checks": [
+    {
+      "command": "python3 tools/check_local.py --output-dir <new-directory>",
+      "meaning": "Mandatory complete existing local driver; its global outcome remains reported separately and is not replaced by this cohort."
+    },
+    {
+      "command": "python3 -m ontokin conformance --output <path>",
+      "meaning": "Original 43 source cases; actual local-driver source role can satisfy this without a duplicate invocation."
+    },
+    {
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "meaning": "Preservation/navigation check; actual local-driver documents role can satisfy this."
+    },
+    {
+      "command": "python3 tools/build_semantic_export_demo.py --output-dir <new-directory>",
+      "meaning": "54 real Agent workflow checks and exact before/after/rejected source/artifact preservation evidence already separately bound."
+    },
+    {
+      "command": "node tools/verify_gltf.mjs <proof-directory> --output <path>",
+      "meaning": "Pinned Khronos/Three.js checks on actual C210 artifacts, distinct from retained C20 release metadata."
+    }
+  ],
+  "coverage_reconciliation_rule": "Bind each candidate source/test hash to an observed completed unittest method outcome from the mandatory driver or a separately recorded focused run. An AST ID is not a test pass. Missing, skipped, failed, errored or timed-out methods remain explicit. Run only missing affected IDs or concrete failure-resolution controls, keeping original outcomes.",
+  "inherited_global_failure_rule": "Preserve the inherited failed/unrun full regression and any new mandatory-driver failure as distinct observations. This affected cohort is not a full-suite pass and does not waive newly introduced or worsened failures.",
+  "excluded_from_extra_affected_reruns": [
+    {
+      "scope": "Torque, reach, force, surface, texture and other source/Agent/GLB profile suites",
+      "reason": "No implementation bytes or profile contracts changed; the new sidecar rejects these profiles. Their mandatory-driver outcomes and historical failures remain visible; do not rerun them merely to improve a global count."
+    },
+    {
+      "scope": "CLI wrappers and formal evidence-gate checker unit modules outside the listed cohort",
+      "reason": "The new entry points are opt-in Python APIs plus a separate driver; no existing CLI or gate-checker machinery changed. Mandatory-driver executions still apply and remain separately recorded."
+    },
+    {
+      "scope": "C201 native admission, C199/C200 transactions and closed schedules",
+      "reason": "Outside authorization for this milestone; ordinary C210 GLB checks do not execute or reopen them."
+    }
+  ],
+  "limitations": [
+    "Inventory establishes expected coverage only; observed test execution must be reconciled separately.",
+    "Approval of this finite increment cannot establish complete release acceptance, broad application integration, live physics or authoring advantage."
+  ]
+}
