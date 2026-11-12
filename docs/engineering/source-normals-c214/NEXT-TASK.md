@@ -1,0 +1,9 @@
+# Next bounded task: reviewed receiving adapter and contract
+
+Prepare one separately reviewed, CPU-only receiving adapter and contract for the existing held Blender experiment. Reuse C214's exact source payload and extend the synthetic-only observation boundary through an explicitly versioned proposal. Keep C214/0.1 synthetic-only behavior unchanged. Any native observation adapter needs a separately named/versioned profile, and synthetic tests cannot count as native evidence. Define how native corners map to the original node/mesh/primitive/triangle/corner and winding identities; name the exact normal frame/conversion and distinguish missing, ambiguous and invalid observations. Bind the accepted source triple, exact receiver/build/settings and any observed scene to the report.
+
+Do not approve native shading using a metadata copy or a maximum observed error. Preserve C211's original strict `2e-6` failure and unrun native save/reopen/visual gates. Decide the new receiving promise explicitly: exact retained source authority plus independently measured native shading and its disclosed loss, or a separately justified approximation policy. No receiving pass exists until the adopted requirements are actually executed and reviewed.
+
+Complete the bounded adapter/contract and independent synthetic checks, or preserve a precise blocker. Before any future Blender start, require a separately reviewed finite execution plan with attempted/unknown outcomes counted, input locks, failure stop rules, native save/reopen and visual evidence. C214 does not authorize that launch. Keep held PR #155 unchanged until explicit integration review resolves its source and unexecuted correction. No second target or author comparison belongs to that step.
+
+Finish C214's verified saved handoff and stop. The next conversation must reconcile live source/ownership and undertake only this bounded successor task. Do not begin it during C214 closure.

@@ -1,0 +1,165 @@
+{
+  "schema": "ontokin.c214.independent-controls/0.1",
+  "predeclared_at": "2026-11-12T14:30:00Z",
+  "timing_note": "Prepared before implementation interface review or execution. This timestamp is approximate; file sealing hash is authoritative for subsequent byte preservation.",
+  "scope": "CPU-only source-normal payload and explicit loss-report prototype; no native process, receiver mutation, source export or production execution",
+  "oracle": "Independent struct/json GLB reader and analytic vector cases; no calls to implementation reader, validator or loss math when deriving expected values. Interface adapter may call public prototype API only.",
+  "source_base": "d1ba7fcbf4e7efe41cff508356d1fe122674ae74",
+  "controls": [
+    {
+      "id": "P01",
+      "name": "Exact accepted payload",
+      "expected": "Independent GLB byte reader derives all mesh/primitive/triangle/corner/vertex identities and float32 bit patterns; every payload record equals that oracle"
+    },
+    {
+      "id": "P02",
+      "name": "Exact payload round trip",
+      "expected": "Serialization and reparse preserve each float32 bit pattern and source/artifact/sidecar binding"
+    },
+    {
+      "id": "P03",
+      "name": "Shared mesh identity",
+      "expected": "Reusable mesh references do not cause duplicate or ambiguous source-corner records"
+    },
+    {
+      "id": "P04",
+      "name": "Signed zero",
+      "expected": "Independent synthetic GLB includes negative zero; raw float32 sign bit survives round trip"
+    },
+    {
+      "id": "P05",
+      "name": "Sharp boundary",
+      "expected": "Two source vertices at the same position with different normals remain separate; matching by position alone cannot pass"
+    },
+    {
+      "id": "P06",
+      "name": "Exact synthetic observation",
+      "expected": "Matching directions produce zero component and angular differences; result visibly remains synthetic and supplies no native/shading acceptance"
+    },
+    {
+      "id": "P07",
+      "name": "Sign inversion",
+      "expected": "Opposite axis normal has 2.0 component difference and 180-degree angular difference"
+    },
+    {
+      "id": "P08",
+      "name": "Perpendicular direction",
+      "expected": "Orthogonal axis normal has 90-degree angular difference"
+    },
+    {
+      "id": "P09",
+      "name": "Non-unit nonzero observation",
+      "expected": "Direction comparison treats magnitude explicitly according to the declared contract; normalization must not silently erase component error"
+    },
+    {
+      "id": "N01",
+      "name": "Missing payload corner",
+      "expected": "Delete one expected corner: payload validator refuses"
+    },
+    {
+      "id": "N02",
+      "name": "Duplicate payload corner",
+      "expected": "Duplicate one corner while retaining count: validator refuses"
+    },
+    {
+      "id": "N03",
+      "name": "Unknown source corner",
+      "expected": "Replace an identity with an out-of-range mesh/primitive/triangle/corner: validator refuses"
+    },
+    {
+      "id": "N04",
+      "name": "Changed winding",
+      "expected": "Swap triangle indices/corner order while retaining original binding: validator refuses"
+    },
+    {
+      "id": "N05",
+      "name": "Wrong vertex binding",
+      "expected": "Change the source vertex for one corner without changing its tuple: validator refuses"
+    },
+    {
+      "id": "N06",
+      "name": "Source-normal sign alteration",
+      "expected": "Negate a payload direction without changing authoritative GLB: validator refuses"
+    },
+    {
+      "id": "N07",
+      "name": "Float32 bit alteration",
+      "expected": "Alter one least significant bit while preserving a plausible unit vector: validator refuses"
+    },
+    {
+      "id": "N08",
+      "name": "Nonfinite source vector",
+      "expected": "NaN, positive infinity, and negative infinity in source normals each cause refusal"
+    },
+    {
+      "id": "N09",
+      "name": "Zero source vector",
+      "expected": "All-zero source normal causes refusal"
+    },
+    {
+      "id": "N10",
+      "name": "Stale artifact identity",
+      "expected": "Correct payload paired with a different GLB hash is refused"
+    },
+    {
+      "id": "N11",
+      "name": "Stale source identity",
+      "expected": "Correct GLB paired with wrong accepted source/revision identity is refused"
+    },
+    {
+      "id": "N12",
+      "name": "Stale sidecar identity",
+      "expected": "Correct GLB paired with altered semantic sidecar/hash is refused"
+    },
+    {
+      "id": "N13",
+      "name": "Duplicate observation",
+      "expected": "Multiple destination observations for one source corner are refused or explicitly invalid; never silently overwritten"
+    },
+    {
+      "id": "N14",
+      "name": "Missing observation",
+      "expected": "Missing destination record is reported explicitly and cannot count as a matched/fidelity-passed direction"
+    },
+    {
+      "id": "N15",
+      "name": "Unknown observation corner",
+      "expected": "An observation naming an unknown source corner cannot be accepted as valid"
+    },
+    {
+      "id": "N16",
+      "name": "Nonfinite observation",
+      "expected": "NaN/Inf destination vectors are explicitly invalid with no finite error or pass claim"
+    },
+    {
+      "id": "N17",
+      "name": "Zero observation",
+      "expected": "Zero destination vector is explicitly invalid; undefined angle is not reported as zero"
+    },
+    {
+      "id": "N18",
+      "name": "Wrong observation binding",
+      "expected": "Observation with stale GLB/source/sidecar binding is refused"
+    },
+    {
+      "id": "N19",
+      "name": "Synthetic relabeling",
+      "expected": "A synthetic CPU fixture cannot be promoted to native receiving evidence by changing a label"
+    },
+    {
+      "id": "N20",
+      "name": "Noncanonical numeric/identity types",
+      "expected": "Booleans in numeric identity fields and malformed float32 values cannot be silently coerced into valid records"
+    },
+    {
+      "id": "N21",
+      "name": "GLB accessor bounds",
+      "expected": "Truncated/out-of-range normal/index buffer data is refused before producing a partial payload"
+    },
+    {
+      "id": "N22",
+      "name": "Malformed source references",
+      "expected": "Absent normals, unsupported primitive mode, out-of-range indices and sparse/unsupported layout have explicit refusal behavior"
+    }
+  ]
+}

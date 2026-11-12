@@ -2,7 +2,15 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
-## C213 current result: finite codec loss characterized
+## C214 current result: exact source-normal payload and synthetic loss report
+
+The [C214 CPU prototype](docs/engineering/source-normals-c214/README.md) preserves all 3,024 source-corner float32 normal triples from the exact accepted C210 source/artifact/sidecar. Explicit instance mapping covers 18 objects and 23,400 observation corners. Its separately versioned [proposed profile](docs/engineering/source-normals-c214/CONTRACT.md) strictly validates source, mesh/primitive/corner, winding and direction identities. Synthetic loss reports retain missing/invalid observations and component/angular differences; native observation labels are refused.
+
+All eleven CPU proof checks and 31 predeclared independent controls / 52,957 assertions pass. Exact synthetic copies still report native fidelity and receiving evidence as false; no approximation tolerance is adopted. [Results and limits](docs/engineering/source-normals-c214/RESULTS.md). The original one-link documentation failure and corrected result remain preserved in the C214 handoff. Production/runtime/exporter/receiver/workflow files and original evidence remain unchanged. This finite CPU result is not a full regression or receiving pass.
+
+**Next action:** complete C214's reviewed publication and verified saved handoff, then stop. The next conversation may undertake one [separately reviewed CPU receiving adapter/contract](docs/engineering/source-normals-c214/NEXT-TASK.md). Keep C214/0.1 synthetic-only behavior unchanged; native work requires a separately named/versioned profile and a reviewed finite execution plan. C211's original `2e-6` gate remains failed, PR #155 stays held, and save/reopen/visual gates remain unrun.
+
+## C213 preserved result: finite codec loss characterized
 
 The [C213 CPU characterization](docs/engineering/normal-codec-c213/README.md) implements the complete selected pinned Blender normal encoder/decoder with explicit independent frames and source-bound scalar float32 evaluation. Independent review approves 212 predeclared cases / 934 numerical assertions after one explicitly preserved decoder-domain oracle correction, 11 supplemental input refusals and 731 source/execution assertions. A separate 13-check source-fidelity audit passes. The original failed assertion remains retained.
 
@@ -10,7 +18,7 @@ Explicit-frame shortcut cases lose up to `0.014142955653369427` in a normal comp
 
 [PR #159](https://github.com/Omegapy/OntoKin/pull/159) merged at `4e45172c97e22e03c1f04dca1a740fdcd43751ed`, tree `565a2f807872ac6a68fac1875adab426b1f706e7`, exactly equal to the reviewed candidate. Fresh actual-main documentation checks passed 29 preserved sources / 4,416 local links; exact implementation/input equality retains the independent numerical evidence. [Integration receipt](docs/engineering/normal-codec-c213/evidence/publication/INTEGRATION.json). This finite experiment is not a full product regression or receiving pass.
 
-**Next action:** one [CPU-only exact source-normal payload and explicit loss-report prototype](docs/engineering/normal-codec-c213/NEXT-TASK.md), with a separately versioned proposed contract and independent controls. It must distinguish authoritative source directions from native shading observations. No new receiving attempt or arbitrary approximation budget is authorized. Finish C213's verified saved handoff and stop before that next task.
+**Successor disposition:** C214 completes the nominated CPU source-normal payload/loss-report prototype above. This does not change C213's finite results, the original C211 strict failure or the need for a separately reviewed receiving contract and execution plan.
 
 ## C212 preserved result: strict normal contract retained
 

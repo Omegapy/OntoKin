@@ -1,0 +1,141 @@
+{
+  "acceptanceTolerance": null,
+  "checks": [
+    {
+      "name": "exact-payload-roundtrip",
+      "passed": true
+    },
+    {
+      "name": "selected-source-size",
+      "passed": true
+    },
+    {
+      "name": "complete-instance-observations",
+      "passed": true
+    },
+    {
+      "name": "exact-synthetic-differences",
+      "passed": true
+    },
+    {
+      "name": "no-native-claim-from-exact-copy",
+      "passed": true
+    },
+    {
+      "name": "missing-invalid-denominator",
+      "passed": true
+    },
+    {
+      "name": "opposite-direction-visible",
+      "passed": true
+    },
+    {
+      "name": "magnitude-loss-visible",
+      "passed": true
+    },
+    {
+      "name": "extreme-directions-measured",
+      "passed": true
+    },
+    {
+      "name": "normal-sign-tamper-refused",
+      "passed": true
+    },
+    {
+      "name": "native-label-refused",
+      "passed": true
+    }
+  ],
+  "checksPassed": 11,
+  "command": "python3 -IB docs/engineering/source-normals-c214/run_proof.py --output <new-output-directory>",
+  "exactSyntheticSummary": {
+    "expected": 23400,
+    "invalid": 0,
+    "maximumAngularDifferenceDegrees": 0.0,
+    "maximumComponentDifference": 0.0,
+    "missing": 0,
+    "observed": 23400
+  },
+  "handoffOutputPath": "evidence/c214/generated/",
+  "inputs": {
+    "docs/engineering/semantic-export-c210/evidence/proof/after.glb": {
+      "bytes": 185236,
+      "sha256": "sha256:05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+    },
+    "docs/engineering/semantic-export-c210/evidence/proof/after.program.bundle.json": {
+      "bytes": 4065,
+      "sha256": "sha256:83ca659aadd23d7ce09ebcd209c210efd69028ca6e51ebd70d69ec47f65098e4"
+    },
+    "docs/engineering/semantic-export-c210/evidence/proof/after.semantic.json": {
+      "bytes": 191181,
+      "sha256": "sha256:1077eff813807c0b2058d35e2007c234b4d8c157f6dc0177f5a548924edd2c34"
+    }
+  },
+  "instances": 18,
+  "knownLimits": [
+    "Only exact accepted C210 input triple",
+    "Synthetic observations only",
+    "No receiving application or native shading validation",
+    "No full product regression claim"
+  ],
+  "lossSyntheticSummary": {
+    "expected": 23400,
+    "invalid": 5,
+    "maximumAngularDifferenceDegrees": 180.0,
+    "maximumComponentDifference": 1e+308,
+    "missing": 23389,
+    "observed": 6
+  },
+  "nativeProcessesStarted": 0,
+  "outputs": {
+    "payload-validation.json": {
+      "bytes": 220,
+      "sha256": "sha256:157eb535f6c474641608c4fd8dfc70f2930597acac692e103e77108fb54369f2"
+    },
+    "source-normal-payload.json": {
+      "bytes": 431292,
+      "sha256": "sha256:6f959056d0d61e5c0aed32929673a50f040136abbeb201307961bc90ee73b743"
+    },
+    "synthetic-exact-loss-report.json": {
+      "bytes": 6710668,
+      "sha256": "sha256:f436b21613a97111ff5a2a6049378ce882cc8f662a61f4404016f653cee7b1c5"
+    },
+    "synthetic-exact-observations.json": {
+      "bytes": 2107525,
+      "sha256": "sha256:9151a4203875cae9eff098ea616590d077291410d087cd031c33e23d8a9b58e9"
+    },
+    "synthetic-loss-observations.json": {
+      "bytes": 820,
+      "sha256": "sha256:5f4753821a49e400c4cdad057bec47e8d591ed8e7fac39b1f274ef52eaa209a2"
+    },
+    "synthetic-loss-report.json": {
+      "bytes": 969734,
+      "sha256": "sha256:afdd9c87c47587dafe6e2a6228539e2bc2aca0a2470b52709b6c0675812189b6"
+    }
+  },
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "receivingEvidence": false,
+  "recordedAtUtc": "2026-11-12T14:30:11.728557+00:00",
+  "schema": "ontokin.c214.cpu-proof/0.1",
+  "sourceCorners": 3024,
+  "sourceExports": 0,
+  "sourceFiles": {
+    "docs/engineering/source-normals-c214/CONTRACT.md": {
+      "bytes": 9444,
+      "sha256": "sha256:6786c25c84d613b8749a4431c514cb93f136e48b80817702ce855e59e3378b8e"
+    },
+    "docs/engineering/source-normals-c214/prototype.py": {
+      "bytes": 24103,
+      "sha256": "sha256:006be6d64253d01d88518d284f6daf483971487983606bb5f21dd832dd7e9b0b"
+    },
+    "docs/engineering/source-normals-c214/run_proof.py": {
+      "bytes": 8250,
+      "sha256": "sha256:d6cb538463baa4de86c99e8526644dae5c16d59ff889eaa816552f3f80e12496"
+    }
+  },
+  "sourceProgramRuns": 0,
+  "sourceRevision": "0adef30c46697adffc5dfaaed6c7c2278d5b985e",
+  "sourceWorktreeStatus": [],
+  "status": "PASS"
+}
