@@ -1,0 +1,433 @@
+{
+  "schema": "ontokin.c220.final-integration-review/0.1",
+  "disposition": "APPROVED_DOCUMENTATION_INTEGRATION",
+  "recordedAtUtc": "2026-11-12T18:57:04.679988+00:00",
+  "baseCommit": "09863061e43f7c0753625e041924c1e4a2f184b3",
+  "reviewedLocalCommit": "f79f9ddcfbba248958c81c970a34612d5ca3f9e4",
+  "reviewedTree": "d9be713ddf17ffc9081bf43be624973a09ceb721",
+  "localCandidatePublished": false,
+  "checks": [
+    {
+      "name": "existing non-navigation entries unchanged",
+      "passed": true,
+      "details": {
+        "entries": 15584,
+        "differences": []
+      }
+    },
+    {
+      "name": "cumulative changed scope documentation only",
+      "passed": true,
+      "details": {
+        "paths": [
+          "GOAL.md",
+          "README.md",
+          "STATUS.md",
+          "docs/README.md",
+          "docs/engineering/second-target-c220/NEXT-TASK.md",
+          "docs/engineering/second-target-c220/PLAN.md",
+          "docs/engineering/second-target-c220/README.md",
+          "docs/engineering/second-target-c220/REVIEW.md",
+          "docs/engineering/second-target-c220/evidence/HOST-ACCESS.json",
+          "docs/engineering/second-target-c220/evidence/INDEPENDENT-REVIEW.json",
+          "docs/engineering/second-target-c220/evidence/INPUT-BINDINGS.json",
+          "docs/engineering/second-target-c220/evidence/PART-MAP.json",
+          "docs/engineering/second-target-c220/evidence/PLANNING-STATUS.json",
+          "docs/engineering/second-target-c220/evidence/PRIMARY-SOURCES.json",
+          "docs/engineering/second-target-c220/evidence/TARGET-IDENTITY.json"
+        ]
+      }
+    },
+    {
+      "name": "new files limited to C220 documentation and JSON evidence",
+      "passed": true,
+      "details": {
+        "added": [
+          "docs/engineering/second-target-c220/NEXT-TASK.md",
+          "docs/engineering/second-target-c220/PLAN.md",
+          "docs/engineering/second-target-c220/README.md",
+          "docs/engineering/second-target-c220/REVIEW.md",
+          "docs/engineering/second-target-c220/evidence/HOST-ACCESS.json",
+          "docs/engineering/second-target-c220/evidence/INDEPENDENT-REVIEW.json",
+          "docs/engineering/second-target-c220/evidence/INPUT-BINDINGS.json",
+          "docs/engineering/second-target-c220/evidence/PART-MAP.json",
+          "docs/engineering/second-target-c220/evidence/PLANNING-STATUS.json",
+          "docs/engineering/second-target-c220/evidence/PRIMARY-SOURCES.json",
+          "docs/engineering/second-target-c220/evidence/TARGET-IDENTITY.json"
+        ]
+      }
+    },
+    {
+      "name": "no changed runtime tests or workflows",
+      "passed": true,
+      "details": {
+        "runtimeTestsWorkflowsChanged": false
+      }
+    },
+    {
+      "name": "all retained source and raw native comparison locks exact",
+      "passed": true,
+      "details": [
+        {
+          "path": "agent-results/namespace-repair/run-01/inputs/after.glb",
+          "passed": true,
+          "actual": {
+            "bytes": 185236,
+            "sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8",
+            "mode": 420
+          }
+        },
+        {
+          "path": "agent-results/namespace-repair/run-01/inputs/after.program.bundle.json",
+          "passed": true,
+          "actual": {
+            "bytes": 4065,
+            "sha256": "83ca659aadd23d7ce09ebcd209c210efd69028ca6e51ebd70d69ec47f65098e4",
+            "mode": 420
+          }
+        },
+        {
+          "path": "agent-results/namespace-repair/run-01/inputs/after.semantic.json",
+          "passed": true,
+          "actual": {
+            "bytes": 191181,
+            "sha256": "1077eff813807c0b2058d35e2007c234b4d8c157f6dc0177f5a548924edd2c34",
+            "mode": 420
+          }
+        },
+        {
+          "path": "agent-results/namespace-repair/run-01/inputs/source-payload.json",
+          "passed": true,
+          "actual": {
+            "bytes": 431292,
+            "sha256": "6f959056d0d61e5c0aed32929673a50f040136abbeb201307961bc90ee73b743",
+            "mode": 420
+          }
+        },
+        {
+          "path": "agent-results/namespace-repair/run-01/inputs/after.reference.json",
+          "passed": true,
+          "actual": {
+            "bytes": 41761,
+            "sha256": "b8df15b2645caaa523a79116912ddbfb9db1eb293c2f1f6d3e190b212bcd8a55",
+            "mode": 420
+          }
+        },
+        {
+          "path": "agent-results/reopen-c218/run-01/reopen-details.json",
+          "passed": true,
+          "actual": {
+            "bytes": 574847,
+            "sha256": "8f5e17191e6fbaf65e9be752d9f754bb4010b04863643607cf0056f908df3212",
+            "mode": 420
+          }
+        },
+        {
+          "path": "workers/native-review/source-expectations.json",
+          "passed": true,
+          "actual": {
+            "bytes": 1027965,
+            "sha256": "537e27b11ab0a66b7bdcb2e4f293f294f58815c905df6699fcfc44842f2efbc3",
+            "mode": 420
+          }
+        },
+        {
+          "path": "agent-results/reopen-c218/run-01/reopen-observations.json",
+          "passed": true,
+          "actual": {
+            "bytes": 3488870,
+            "sha256": "85fbde69c91da380b145484621f7c79ee07c9cc486eb0ef9fe8423839c98663e",
+            "mode": 420
+          }
+        }
+      ]
+    },
+    {
+      "name": "planned part map equals authoritative sidecar",
+      "passed": true,
+      "details": [
+        {
+          "path": "first",
+          "passed": true
+        },
+        {
+          "path": "first.fingers[\"lower\"]",
+          "passed": true
+        },
+        {
+          "path": "first.fingers[\"lower\"].blade",
+          "passed": true
+        },
+        {
+          "path": "first.fingers[\"middle\"]",
+          "passed": true
+        },
+        {
+          "path": "first.fingers[\"middle\"].blade",
+          "passed": true
+        },
+        {
+          "path": "first.fingers[\"upper\"]",
+          "passed": true
+        },
+        {
+          "path": "first.fingers[\"upper\"].blade",
+          "passed": true
+        },
+        {
+          "path": "second",
+          "passed": true
+        },
+        {
+          "path": "second.fingers[\"bottom\"]",
+          "passed": true
+        },
+        {
+          "path": "second.fingers[\"bottom\"].blade",
+          "passed": true
+        },
+        {
+          "path": "second.fingers[\"lower\"]",
+          "passed": true
+        },
+        {
+          "path": "second.fingers[\"lower\"].blade",
+          "passed": true
+        },
+        {
+          "path": "second.fingers[\"middle\"]",
+          "passed": true
+        },
+        {
+          "path": "second.fingers[\"middle\"].blade",
+          "passed": true
+        },
+        {
+          "path": "second.fingers[\"top\"]",
+          "passed": true
+        },
+        {
+          "path": "second.fingers[\"top\"].blade",
+          "passed": true
+        },
+        {
+          "path": "second.fingers[\"upper\"]",
+          "passed": true
+        },
+        {
+          "path": "second.fingers[\"upper\"].blade",
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "planned target node map explicitly unobserved",
+      "passed": true,
+      "details": {
+        "nativeGodotMappingObserved": false
+      }
+    },
+    {
+      "name": "accepted revision and source manifest exact",
+      "passed": true,
+      "details": {
+        "acceptedProgramRevision": "sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082"
+      }
+    },
+    {
+      "name": "retained source unit content matches pinned revisions",
+      "passed": true,
+      "details": {
+        "main.ok": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+        "hinges.ok": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+      }
+    },
+    {
+      "name": "C214 canonical authority exact",
+      "passed": true,
+      "details": {
+        "canonicalSha256": "033bbc224803b7e1f73e7f223d3552ea3830d069767ef9ed9ec176d0fa2cf85c",
+        "authorityEntries": 3024
+      }
+    },
+    {
+      "name": "installed target bytes exact without execution",
+      "passed": true,
+      "details": {
+        "path": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+        "bytes": 138981968,
+        "sha256": "f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3",
+        "executed": false
+      }
+    },
+    {
+      "name": "build and rendering limitations explicit",
+      "passed": true,
+      "details": {
+        "upstreamAuthenticityClaimed": false,
+        "renderingReadyClaimed": false
+      }
+    },
+    {
+      "name": "historical strict normal failure preserved",
+      "passed": true,
+      "details": {
+        "newTolerance": null
+      }
+    },
+    {
+      "name": "source metadata distinct from destination behavior",
+      "passed": true,
+      "details": {
+        "livePhysicsOrActionClaim": false
+      }
+    },
+    {
+      "name": "future process scope bounded and not authorized",
+      "passed": true,
+      "details": {
+        "futureCeiling": 2,
+        "currentAuthority": 0
+      }
+    },
+    {
+      "name": "next task CPU only with stop boundary",
+      "passed": true,
+      "details": {
+        "nextTask": "CPU-only observer/checker preparation"
+      }
+    },
+    {
+      "name": "held prototypes and broader failures stay explicit",
+      "passed": true,
+      "details": {
+        "prototypeMergeClaimed": false,
+        "fullRegressionPassClaimed": false
+      }
+    },
+    {
+      "name": "exact committed candidate and clean worktree",
+      "passed": true,
+      "details": {
+        "commit": "f79f9ddcfbba248958c81c970a34612d5ca3f9e4",
+        "tree": "d9be713ddf17ffc9081bf43be624973a09ceb721",
+        "status": ""
+      }
+    },
+    {
+      "name": "compact review locks match committed core plan and authority",
+      "passed": true,
+      "details": {
+        "PLAN.md": "1181b7a5939d0c566c777aeb8715f045fc9a15ab0d1b999e8ad6c71d68399f1c",
+        "evidence/INPUT-BINDINGS.json": "6ce256ab7cfd9690665b7577e7bb9e3aca952c9b73e5e017b30dcded1d053625",
+        "evidence/PART-MAP.json": "f8911b5d846114fe525ab753b78a16f665bd7a43775ecfce2e656d17eb1419ed"
+      }
+    },
+    {
+      "name": "all nine detailed review records match exact hashes",
+      "passed": true,
+      "details": [
+        {
+          "packagePath": "workers/c220/plan-review-source/REPORT.md",
+          "passed": true,
+          "sha256": "08e2190eca8354bba44bae69616e39cd532e86c721331708760bdf461c71309e"
+        },
+        {
+          "packagePath": "workers/c220/plan-review-source/SOURCE-REVIEW.json",
+          "passed": true,
+          "sha256": "b1e6c837b803c47a3fe6dd13616fb32e7a0ed73c80383b395e3a2bcf892620bf"
+        },
+        {
+          "packagePath": "workers/c220/plan-review-source/CONTRACT-REVIEW.json",
+          "passed": true,
+          "sha256": "abd08f1c6b8bc782d5b9e1cc39029717d124dedf3d94177a0273c79cbb4bb66b"
+        },
+        {
+          "packagePath": "workers/c220/plan-review-source/FINAL-READBACK.json",
+          "passed": true,
+          "sha256": "2e4ebc5263eb6f003d8d4a944c063cf2353cfd01c91a8b2ef741c79242a23547"
+        },
+        {
+          "packagePath": "workers/c220/plan-review-source/review_inputs.py",
+          "passed": true,
+          "sha256": "9a581078203e7bdc938a23886d5566ba82c8aebf68b9d61d4658754839c12270"
+        },
+        {
+          "packagePath": "workers/c220/plan-review-target/TARGET-PLAN-REVIEW.json",
+          "passed": true,
+          "sha256": "38bb09780a79f7c3ee430d531f2cb9973c7827c4719ec81cca98eb50a66c4502"
+        },
+        {
+          "packagePath": "workers/c220/plan-review-target/FINAL-TARGET-REVIEW.json",
+          "passed": true,
+          "sha256": "9191e86e24c2f2b516d35bed73466cb7883733f56eede2256eb77ab8cb99c61d"
+        },
+        {
+          "packagePath": "workers/c220/plan-review-target/DELTA-RECONCILIATION-INITIAL.json",
+          "passed": true,
+          "sha256": "c6b26eebd64e67f95b5ff04ec9038f44881846e1bcf040e9579cac55a3ebb203"
+        },
+        {
+          "packagePath": "workers/c220/plan-review-target/PLAN-DELTA.diff",
+          "passed": true,
+          "sha256": "79b007588c8dc52f76a4db6e18794d783652c829b2bd085bcabfbaf1b461f298"
+        }
+      ]
+    },
+    {
+      "name": "independent source and target approval applies to exact candidate plan",
+      "passed": true,
+      "details": {
+        "sourceAssertions": 9499,
+        "sourceConditions": 14,
+        "targetConditions": 25,
+        "targetDeltaChecks": 7,
+        "readiness": false
+      }
+    },
+    {
+      "name": "review additions and corrections remain bounded documentation",
+      "passed": true,
+      "details": [
+        "STATUS.md",
+        "docs/engineering/second-target-c220/PLAN.md",
+        "docs/engineering/second-target-c220/README.md",
+        "docs/engineering/second-target-c220/REVIEW.md",
+        "docs/engineering/second-target-c220/evidence/INDEPENDENT-REVIEW.json",
+        "docs/engineering/second-target-c220/evidence/INPUT-BINDINGS.json"
+      ]
+    },
+    {
+      "name": "required documentation receipt passes",
+      "passed": true,
+      "details": {
+        "path": "/workspace/scratch/6e98bd70835f/handoff/evidence/candidate-docs-reviewed.log",
+        "sha256": "cb938017c090063ea65de0c32113e64867ee0fa64e4cf19559a8d69a8d1ec02d",
+        "sources": 29,
+        "links": 4559,
+        "rerunByReviewer": false
+      }
+    },
+    {
+      "name": "local lease matches pinned live ownership and remains unexpired",
+      "passed": true,
+      "details": {
+        "liveMainAtReview": "95be8d8feae0f11eefdd4174e0851f7cb71ab627",
+        "owner": "c220-root-6e98bd70835f",
+        "expiresAtUtc": "2026-11-12T19:12:51.000Z",
+        "observedAtUtc": "2026-11-12T18:57:04.679988+00:00"
+      }
+    }
+  ],
+  "passed": true,
+  "checkCount": 24,
+  "existingNonNavigationEntriesUnchanged": 15584,
+  "futureTargetStartsAuthorized": 0,
+  "nativeProductOrSourceExecutionInReview": false,
+  "requiredRootActions": [
+    "Reconcile current live head and lease immediately before conditional/protected publication",
+    "Verify exact remote result tree and required actual-main documentation checks",
+    "Preserve local unpublished identities separately from published commits",
+    "Freeze package only after all workers finish; verify restore/archive and actual final save"
+  ]
+}
