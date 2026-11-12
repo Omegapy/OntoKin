@@ -8,7 +8,9 @@ The [C215 CPU adapter](docs/engineering/receiving-adapter-c215/README.md) maps B
 
 Five proof checks pass across all 18 synthetic objects / 7,800 triangles / 23,400 corners, with actual CLI/API output equality and safe existing-output refusal. Independent review checks 35 executable groups / 234,467 successful assertions and five source requirements. [Results and limits](docs/engineering/receiving-adapter-c215/RESULTS.md). Original harness/setup failures and their narrow corrections remain preserved. C214's synthetic-only behavior and C211's original strict `2e-6` failure remain unchanged; PR #155 stays held. No Blender, source program or exporter ran.
 
-**Next action:** complete reviewed C215 publication and its verified saved handoff, then stop. A later conversation may undertake one [separately reviewed native receiving proof](docs/engineering/receiving-adapter-c215/NEXT-TASK.md), starting with exact capture source and a finite execution plan before any native launch. Native save/reopen and useful visual evidence remain unmet.
+[PR #163](https://github.com/Omegapy/OntoKin/pull/163) merged at `d9361ba6c5b05ccdb30ca4dd440eec343c2d0aa5`, tree `bb5a2527d31986dded69eccbf129bf5dcb16e70c`, exactly equal to the reviewed candidate. Fresh actual-main checks pass 29 preserved sources / 4,465 links and all 1,244 protected hashes. [Integration receipt](docs/engineering/receiving-adapter-c215/evidence/publication/INTEGRATION.json).
+
+**Next action:** finish C215's verified saved handoff, then stop. A later conversation may undertake one [separately reviewed native receiving proof](docs/engineering/receiving-adapter-c215/NEXT-TASK.md), starting with exact capture source and a finite execution plan before any native launch. Native save/reopen and useful visual evidence remain unmet.
 
 ## C214 preserved result: exact source-normal payload and synthetic loss report
 
@@ -66,7 +68,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner `c215-receiving-adapter-20261112` holds main integration for [C215 CPU receiving observation adapter and contract](https://github.com/Omegapy/OntoKin/issues/162), acquired from verified main `4ce61e61b7edc8cc9ab75f4f68fa40b22fc17a7a`. Acquired 2026-11-12T15:01:39.106853+00:00; expires 2026-11-12T15:31:39.106853+00:00. Scope: new isolated `docs/engineering/receiving-adapter-c215/`, related current navigation/STATUS, reviewed publication, recovery and handoff. Worker branch `work/c215-receiving-adapter` owns adapter/contract files; independent reviewer owns separate controls and evidence. CPU-only task: no Blender or held receiver change. C214 synthetic-only behavior stays unchanged; C211 original normal gate remains failed and PR #155 stays held. Other nonoverlapping branch work is allowed under AGENTS. Reconcile actual heads and outstanding writes before ownership transfer.
+No active integration lease. Owner `c215-receiving-adapter-20261112` releases ownership after verified PR #163 merge `d9361ba6c5b05ccdb30ca4dd440eec343c2d0aa5` and actual-main documentation/input checks. [C215 integration record](docs/engineering/receiving-adapter-c215/evidence/publication/INTEGRATION.json). All implementation, control and integration-review workers have finished. PR #155 stays held at its unchanged source and issue #154 remains blocked. This release grants no native execution. Reconcile live main, refs, ownership and unknown writes before the next bounded task. Final source and confirmed handoff delivery are recorded in the C215 handoff/recovery.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
