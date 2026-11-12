@@ -1,0 +1,84 @@
+{
+  "schema": "ontokin.c222.author-result/0.1",
+  "recordedAtUtc": "2026-11-12T23:34:09.703132+00:00",
+  "owner": "c222-observation-author",
+  "base": "bbf2bec6efeb537622475ae6727319e55af40ff6",
+  "commit": "6e02cef9e78b4b1ee51d9bf3eae50fb9e0968a8d",
+  "tree": "5fc4c367283e957553fa72d9c86f142f7178c5d0",
+  "firstCoherentCommit": "526a20805a8011223bacb0556c6d125c4a2cd43c",
+  "files": [
+    {
+      "path": "tools/second_target_c222/check_observations.py",
+      "bytes": 18786,
+      "sha256": "1eab170204d8f02b5d281f7e67d7f649040a1c525884fcc17eadfed6c765b6b9"
+    },
+    {
+      "path": "tools/second_target_c222/tests/run_controls.py",
+      "bytes": 13588,
+      "sha256": "ac74a4c8096c3d45373f61781c40057f48f2a8346c14e8428287b3c8753bbe82"
+    },
+    {
+      "path": "docs/engineering/second-target-c222/CONTRACT.md",
+      "bytes": 9087,
+      "sha256": "77ba5941e1694b7716045bc1d4c7d5118e6a96a0fb6bd4c1a9f838738a7dc79e"
+    }
+  ],
+  "environment": {
+    "python": "3.12.14",
+    "implementation": "CPython",
+    "platform": "Linux",
+    "machine": "x86_64"
+  },
+  "scope": "R00 finite CPU observation schema and exact corner correspondence only",
+  "checks": {
+    "authorControls": {
+      "methods": 23,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "elapsedSeconds": 4.056,
+      "log": "author-controls-final.log",
+      "command": "python3 -IB tools/second_target_c222/tests/run_controls.py --package-root /workspace/scratch/44c64028ec84/source-handoff"
+    },
+    "initialIndependentFixtureSmoke": {
+      "result": "PASS_CPU_CORRESPONDENCE",
+      "parts": 18,
+      "surfaces": 18,
+      "vertices": 4096,
+      "triangles": 7800,
+      "corners": 23400,
+      "report": "initial-smoke-report.json"
+    }
+  },
+  "preservedFailures": [
+    {
+      "evidence": "author-controls-initial.log",
+      "outcome": "0 methods; setup error",
+      "cause": "Author fixture helper used nonexistent semantic row glb key",
+      "repair": "Read exact existing geometry_binding.node; checker unaffected"
+    },
+    {
+      "evidence": "author-controls-526a208.log",
+      "outcome": "23 methods; 22 pass and one test assertion failure",
+      "cause": "Duplicate box triangle also orphaned a raw vertex; checker correctly rejected EXTRA_GEOMETRY before correspondence",
+      "repair": "Duplicate shared-vertex triangle whose removal preserves complete vertex usage; unchanged checker now reaches intended DUPLICATE_CORRESPONDENCE refusal"
+    }
+  ],
+  "execution": {
+    "nativeStarts": 0,
+    "versionProbes": 0,
+    "sourceEvaluations": 0,
+    "exports": 0,
+    "imports": 0,
+    "renders": 0,
+    "nativeSceneWrites": 0
+  },
+  "limits": [
+    "Synthetic/unattested observations only; no verified native provenance or actual GLTFState binding",
+    "Finite exact local geometry correspondence, not numerical normal/material/pose checks",
+    "Original strict Blender normal failure remains unchanged",
+    "Public byte admission cannot be bypassed by supplying an authority report",
+    "Broad product regression and all R01-R08 work remain unrun by this author"
+  ],
+  "status": "AUTHOR_CHECKS_PASS; INDEPENDENT_REVIEW_PENDING; ROOT_INTEGRATION_PENDING"
+}
