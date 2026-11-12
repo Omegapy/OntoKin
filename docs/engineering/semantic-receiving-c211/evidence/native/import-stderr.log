@@ -1,0 +1,18 @@
+Failed to denoise, build has no OpenImageDenoise support
+Traceback (most recent call last):
+  File "/workspace/scratch/a191c8d7a494/OntoKin/prototypes/semantic_receiving_c211/blender_observe.py", line 244, in <module>
+    main()
+    ~~~~^^
+  File "/workspace/scratch/a191c8d7a494/OntoKin/prototypes/semantic_receiving_c211/blender_observe.py", line 237, in main
+    report['renders'] = render_views(output)
+                        ~~~~~~~~~~~~^^^^^^^^
+  File "/workspace/scratch/a191c8d7a494/OntoKin/prototypes/semantic_receiving_c211/blender_observe.py", line 172, in render_views
+    require(bpy.ops.render.render(write_still=True) == {'FINISHED'}, 'native render did not finish')
+            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/share/blender/scripts/modules/bpy/ops.py", line 109, in __call__
+    ret = _op_call(self.idname_py(), kw)
+RuntimeError: Error: Failed to denoise, build has no OpenImageDenoise support
+Error: Failed to denoise, build has no OpenImageDenoise support
+
+
+Error: script failed, file: '/workspace/scratch/a191c8d7a494/OntoKin/prototypes/semantic_receiving_c211/blender_observe.py', exiting.

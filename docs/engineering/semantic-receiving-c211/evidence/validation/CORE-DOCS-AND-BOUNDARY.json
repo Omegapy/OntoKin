@@ -1,0 +1,39 @@
+{
+  "schema": "ontokin.c211.core-documentation-candidate-checks/0.1",
+  "candidate": "66f1940c4c99f52dfdea835445cdc380498815f7",
+  "baseline": "4f7a62cf965066ee7f27540c3c5f2554732c6950",
+  "recorded_at_utc": "2026-11-12T02:06:15.236793+00:00",
+  "steps": [
+    {
+      "name": "core",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "ontokin",
+        "conformance",
+        "--output",
+        "/workspace/scratch/a191c8d7a494/state/c211-validation-plan/execution/core.json"
+      ],
+      "returncode": 0,
+      "seconds": 0.5150657960002718,
+      "log_sha256": "fa6dec4658ce10d637ddf688e197db53472330e90104d70448cb34eec0d229c6"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "returncode": 0,
+      "seconds": 1.1659384699996735,
+      "log_sha256": "d60a6d7f52fd6c6e72aeb618139ac400d20ad18bfe2c750d248309e802fc5ef1"
+    }
+  ],
+  "passed": true,
+  "source_status": "",
+  "cumulative_diff": "M\tSTATUS.md\nA\tdocs/engineering/semantic-receiving-c211/CONTRACT.md\nA\tprototypes/semantic_receiving_c211/README.md\nA\tprototypes/semantic_receiving_c211/__init__.py\nA\tprototypes/semantic_receiving_c211/blender_observe.py\nA\tprototypes/semantic_receiving_c211/build_bindings.json\nA\tprototypes/semantic_receiving_c211/input_bindings.json\nA\tprototypes/semantic_receiving_c211/run.py\nA\tprototypes/semantic_receiving_c211/validation.py\nA\ttests/test_semantic_receiving_c211.py\n",
+  "protected_runtime_diff": "A\ttests/test_semantic_receiving_c211.py\n",
+  "all_preexisting_protected_files_unchanged": true
+}

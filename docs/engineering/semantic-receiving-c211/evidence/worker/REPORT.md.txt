@@ -1,0 +1,13 @@
+# C211 implementation worker
+
+Commit `fda92dab2fc184b7d90f27b6ca292217efcd07a8` on `work/c211-receiver-implementation` adds only the finite experimental receiver, its contract and 27 CPU controls. The worktree is clean.
+
+All 27 controls pass with zero skips. They exercise changed input bindings, missing/duplicate native IDs, stale revisions, metadata damage, units, winding, vertex/normal data, raw/source coordinate consistency, material slots and inputs, missing motion samples, frame timing, raw matrices, unsupported physics and tolerant triangle reordering. Synthetic positive data tests validation; it does not claim actual Blender acceptance.
+
+One metadata-only Blender preflight succeeded; upstream build hash/date/branch report Unknown. Executable and 117 importer Python files are pinned. No GLB import, render or save/reopen ran. Actual import is held for root authorization after durable checkpoint.
+
+Independent pre-execution review tightened raw shapes, material slots/inputs, executable identity and comparator matching. Raw native Blender triangles/matrices and pre-mapping object/scene extras are retained separately from source-basis derived fields and deliberately attached semantic JSON. No compiler, Agent, exporter, prior receiver, shared STATUS or historical file changed.
+
+Initial CPU input validation checked the wrong historical Agent status literal (accepted instead of succeeded); that pre-import implementation failure is preserved in CPU-PREFLIGHT-FAILURE.txt and corrected. The original immutable transcript did not change. Initial contract prose incorrectly mentioned a directory operator property; actual pinned operator has only13 properties and no directory. Corrected contract uses an absolute filepath and empty files collection; root retains the earlier recovery version. Markdown metadata line breaks produced three whitespace warnings before the first commit, then a separate formatting commit normalized them; latest diff check passes.
+
+Exact files and hashes are in CHECKPOINT.json. Execution entry: `python3 -B prototypes/semantic_receiving_c211/run.py --inputs <exact-proof-directory> --output <new-output-directory>`. The runner performs one import then one reopen, records bounded commands/process logs and raw failures, and never retries.

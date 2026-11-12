@@ -1,0 +1,30 @@
+{
+  "schema": "ontokin.c211.renderer-correction/0.1",
+  "head": "61eb6e9ad425047f73a48c7e3861752768e3ae4a",
+  "parent": "fda92dab2fc184b7d90f27b6ca292217efcd07a8",
+  "reason": "Attempt1 imported and retained raw observations but Cycles rendering failed because the installed build lacks OpenImageDenoise; no native save/reopen completed.",
+  "change": "Explicitly disable scene and all view-layer Cycles denoising, record effective values per render; document separately reviewed corrective invocation.",
+  "original_failure": "../receiving-run/import-stderr.log",
+  "original_summary": "../receiving-run/SUMMARY.json",
+  "validation": [
+    "Installed Cycles source defines both scene and view-layer use_denoising Boolean properties",
+    "Observer compile/syntax passed",
+    "git diff --check passed"
+  ],
+  "new_blender_starts": 0,
+  "files": {
+    "prototypes/semantic_receiving_c211/blender_observe.py": {
+      "bytes": 12985,
+      "sha256": "6f55e683bb1f040b874eb9b275b699262ae94f98eac16f58d65c2980d443c705"
+    },
+    "docs/engineering/semantic-receiving-c211/CONTRACT.md": {
+      "bytes": 9465,
+      "sha256": "30c4583ef93dbb505759f21288ae741e7c598c0e592e4364d5d50719c9be8f7c"
+    }
+  },
+  "pending": [
+    "Root durable corrected checkpoint",
+    "Independent review",
+    "Root explicit corrective invocation"
+  ]
+}

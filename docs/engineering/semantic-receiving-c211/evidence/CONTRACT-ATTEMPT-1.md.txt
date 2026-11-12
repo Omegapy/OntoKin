@@ -1,0 +1,56 @@
+# C211 finite Blender receiving contract
+
+**Identity:** `ontokin.semantic-receiving.blender/0.1`
+**Date:** November 11, 2026, America/Denver
+**State:** Experimental, one fixture and one installed build; execution and integration are separate results.
+**Scope:** [Issue #154](https://github.com/Omegapy/OntoKin/issues/154), after the [C210 semantic export contract](../semantic-export-c210/CONTRACT.md).
+
+## Selected boundary
+
+Receive the exact accepted C210 **after** source bundle, GLB and semantic sidecar in the installed Blender 4.3.2 build. Keep accepted `.ok` source authoritative. Import the delivered GLB, measure its native geometry, materials and baked motion, and attach declared semantic records explicitly as canonical JSON metadata. Save and reopen the resulting `.blend` to verify persistent identity and metadata. Do not regenerate or repair geometry in the receiver.
+
+This is a separate opt-in prototype. Existing compiler, Agent, GLB writer, frozen static-tray receivers, historical trials and expectations remain unchanged. This contract grants no C201 native admission and reopens no C199/C200 schedule. It establishes no generic importer, production integration, second target, live simulation or authoring benefit.
+
+## Inputs and acceptance provenance
+
+The complete verified C210 handoff is the authority for the exact input bytes. The input manifest binds these eight files: `after.program.bundle.json`, `after.main.ok`, `hinges.ok`, `after.glb`, `after.semantic.json`, `after.reference.json`, `proof.json` and `workflow.json`. All SHA-256 values and sizes are frozen before execution. The last two retain the actual prior Agent acceptance and constrained-edit evidence; a sidecar claim alone is insufficient.
+
+Accepted program revision is `sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082`. The delivered GLB is 185,236 bytes, SHA-256 `05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8`; the sidecar is 191,181 bytes, SHA-256 `1077eff813807c0b2058d35e2007c234b4d8c157f6dc0177f5a548924edd2c34`.
+
+The host validator checks every frozen byte binding, bundle/source equality, the prior proof's accepted revision and artifact hash, and agreement between semantic records, reference expectations and independently decoded GLB nodes. It rejects changed source, dependency, GLB, sidecar or acceptance evidence before import. Exact retained prior evidence is trusted as the identified C210 experimental result, not as a signature against hostile storage.
+
+## Pinned receiving build and settings
+
+The installed executable `/usr/bin/blender` reports Blender **4.3.2** and has SHA-256 `0dfe9af0f3e67643ecf15327fa5e14e7315f61d1a81afdcafe76a71b1918e2b4`. A metadata-only startup found `bpy.app.build_hash`, build date and build branch reported as `Unknown`. This limitation is explicit: the executable hash and manifest of all 117 installed glTF importer Python files identify this build's checked inputs; an unavailable upstream build label is not invented.
+
+The launch uses `--background --factory-startup --threads 2 --python-exit-code 1`. The receiver verifies the executable and importer-source hashes again, Blender version, and the predeclared importer property inventory. Set scene units to metric, scale length 1 metre; set playback to 60 frames/second. Pass all supported scalar importer properties with the captured defaults, with the absolute checked GLB path, an empty file collection. Record the exact settings passed. Imported animation is evaluated at fractional frames without editing its curves.
+
+Only one actual GLB import is selected. A separate process reopens the resulting native scene, with scripts disabled, and measures it again. A failed or interrupted process is retained as failed/unknown; any further attempt requires reconciliation and a recorded concrete correction. This is bounded experiment discipline, not a claim of the C201 lifecycle protocol. Pinning these inputs does not establish a fully hermetic host or other Blender versions.
+
+## Meaning, mapping and loss
+
+The GLB has 18 uniquely named object nodes; each name equals its semantic source path. Match actual imported mesh names to this exact node-name inventory, then verify all 18 stable element IDs through the explicit mapping. Reject missing, duplicate or unexpected product objects. The mapping does not rely on parsing a Python representation of imported custom properties.
+
+Capture native custom properties **before** attaching semantic metadata. Blender's importer may retain nested extras as a Python string. Record that observed treatment and loss. Then attach the unchanged canonical semantic sidecar as a named Blender text block and scene string, and each exact object record as a dedicated string property `ontokin_c211_semantic_json`. Attach canonical element-ID and accepted-revision properties. This is an adapter-provided semantic mapping; it is not evidence that Blender's stock importer preserved structured semantics.
+
+Ownership, sites, hinges, follows, physical declarations, source provenance, actions and events retain separate JSON fields. All 34 sites, eight hinges, eight follows, two actions and one event block remain in the complete sidecar. No source ownership becomes a Blender transform parent. The native objects must have no parent, rigid body, constraints or modifiers; the scene must have no rigid-body world. Baked animation is the only selected motion behavior.
+
+Machine-readable feature rows must distinguish native imported geometry/materials/playback, adapter-mapped semantic metadata, numerical approximation and unsupported execution. Hinge constraints, following and physical declarations are metadata; they do not become executable Blender constraints or physics. Action execution, live physics and reconstruction of source from the sidecar remain unsupported. Original source is delivered separately.
+
+## Predeclared numeric and structural checks
+
+Use the right-handed source frame in metres. Blender maps source `(x,y,z)` to `(x,-z,y)`; compare observations after applying the inverse mapping. Source rotations use WXYZ. Every measured native world matrix must have unit scale and a proper rotation.
+
+Check the complete triangle inventory for each imported mesh, including every triangle's three local positions and split normals. Compare orientation-preserving cyclic triangle order, allowing triangle and vertex reordering. Position tolerance is **0.000002 m**; normal-component tolerance is **0.000002**. The comparator must not accept omitted or extra triangles, reversed winding, changed dimensions or altered local geometry. Compare each material's linear RGBA, metallic and roughness within **0.000002** of the actual GLB material values, with opaque/double-sided treatment recorded. Source properties remain exact JSON metadata and are not replaced by measured tessellated dimensions.
+
+Compare all 18 native world poses at the seven unchanged C210 times: **0, 0.25, 0.5, 0.75, 1, 1.5 and 2 seconds**. Use the frozen reference limits of **0.001 m position**, **0.001 rad rotation** and **0.000001 s time**. Verify those reference poses against independently decoded GLB playback as a separate comparison, and compare native versus decoded playback. These visual-adapter tolerances do not relax core evaluator conformance. Check all objects, including the entire eleven-object second rack and the selected 0.75 m blade.
+
+The reopened scene must pass the same object, geometry, material, motion and canonical metadata checks. An unchanged source hash or a saved file alone does not establish this condition.
+
+## Evidence and completion
+
+Before import, preserve the contract, frozen build/input manifests, adapter source and CPU test outcomes in a durable checkpoint. The integrator explicitly releases the actual receiving run only after that checkpoint is confirmed saved.
+
+The finite gate requires: exact input validation; one successful actual import; full native measurements; canonical semantic mapping; successful save/reopen measurements; all seven-time numeric comparisons; meaningful negative controls for changed inputs, duplicate/missing IDs, corrupt geometry, stale revision and altered metadata; exact process commands/logs/return codes and file hashes; and at least two inspected useful views of the imported scene. Numeric checks and visual judgments are recorded separately. Images are actual receiving renders, not reconstructed source geometry.
+
+If a gate fails, preserve raw outputs and label the proof failed or partial. Do not change frozen inputs or widen a tolerance to produce a pass. Root owns independent review, actual execution authorization, integration, current STATUS and final handoff closure.

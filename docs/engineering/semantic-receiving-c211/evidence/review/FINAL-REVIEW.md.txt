@@ -1,0 +1,56 @@
+# C211 independent receiving review: failed / partial
+
+**Disposition: HOLD product integration.** The one selected receiving attempt produced useful native observations but failed the frozen normal-fidelity gate and then failed rendering. No successful receiving proof, native save/reopen, visual inspection or release acceptance is established. The original limits remain unchanged. No second import was started by this reviewer.
+
+## Exact executed inputs
+
+The actual run used clean source commit `66f1940c4c99f52dfdea835445cdc380498815f7`, tree `efab26f1833f91747bd98f7ba8aacd26277d18ef`. Its executable inputs and contract exactly match the independently reviewed worker commit `fda92dab2fc184b7d90f27b6ca292217efcd07a8`. `ACTUAL-INPUT-AUDIT.json` verifies the immutable Git blobs, all eight copied input files, the Blender executable and all 117 importer Python sources. All bindings pass.
+
+The pinned application is Blender 4.3.2. Its upstream build hash is reported as `Unknown`; the executable SHA-256 is `0dfe9af0f3e67643ecf15327fa5e14e7315f61d1a81afdcafe76a71b1918e2b4`. The complete importer-source inventory is in the executed build manifest. This is a finite build binding, not a fully hermetic host or evidence about other Blender versions.
+
+Accepted source revision is `sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082`; the exact 185,236-byte GLB has SHA-256 `05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8`. The raw native observation file is 11,409,116 bytes with SHA-256 `f566b0f274b8b0e226639d4f10555acb31739f895f61f4e198bbe37a1adbc8bd`.
+
+## Measured outcome
+
+| Check | Actual result | Scope of evidence |
+| --- | --- | --- |
+| Identity | All 18 expected mesh objects and stable IDs present exactly once | Actual imported object inventory and mapped ID properties |
+| Primitive positions and winding | All 7,800 triangle instances match; maximum local coordinate difference is zero | Complete raw Blender triangle positions, matched independently with cyclic order and one-to-one correspondence |
+| Split normals | **Failed:** 7,088 triangles across eight sphere objects exceed the fixed 0.000002 component tolerance | Maximum component error `0.0001531541347503662`; 14,880 failing corner occurrences |
+| Normal direction | Maximum observed angular difference `0.00015615850038545062` rad, approximately 0.00895 degrees | Diagnostic measurement; this angle is not a substitute acceptance criterion |
+| Native materials | All object material checks pass; maximum component difference `2.384185793236071e-08` | Actual Principled BSDF inputs, culling and every triangle's material-slot assignment |
+| Motion and frame conversion | All 126 native world-pose checks pass across the seven frozen times | Raw evaluated matrices, separately compared with decoded GLB and frozen source expectations; maximum position error `4.768371586472142e-08` m and angle error `1.976862424823881e-07` rad |
+| Native object extras | All 18 native dictionaries recursively match the original GLB node extras | Observed before the adapter attaches its additional properties; `attempt1-native-extras-diff.json` has zero differences |
+| Explicit semantic mapping | Complete scene/text sidecar and all object records match canonical source-bound JSON | Adapter-provided metadata; separate from stock importer preservation |
+| Physics and parenting | No product parents, modifiers, constraints, rigid bodies or rigid-body world | Confirms no inferred executable hinge/follow/physics behavior |
+| Receiving renders | **Failed:** this build reports no OpenImageDenoise support | Original render error and nonzero process exit retained |
+| Native save and reopen | **Not reached** | No `received.blend` or reopen observation file exists |
+| Visual judgment | **Not performed** | No successful receiving image was available to inspect |
+
+The full diagnostic inventory has 15,876 explicit checks: 8,788 passed and 7,088 failed normal checks. These are component-level observations from the failed attempt, not a passing receiving result. Detailed comparisons are retained in `attempt1-diagnosis-detail.json`; `attempt1-diagnosis-summary.json` provides the bounded totals.
+
+## Concrete blocking example
+
+For `first.fingers["lower"]`, expected triangle 32 matches observed triangle 32 with the same winding and exact local positions. One corner's expected raw Blender normal is:
+
+`(0.3826834261417389, -0.0, 0.9238795042037964)`
+
+The observed native split normal is:
+
+`(0.38267776370048523, 0.0000005345837621462124, 0.9238818883895874)`
+
+Its largest component difference is `0.000005662441253662109`, already above the frozen `0.000002` limit. `attempt1-first-mesh-failure.json` retains all three complete expected/observed corners. The independent comparator stopped on this failure, and the implementation worker's separate CPU validator corroborated the same object failure. The larger whole-inventory maximum is reported above. The mechanism producing the normal drift has not been established; no cause is asserted from the numeric pattern alone.
+
+## Process accounting and preparation evidence
+
+One actual GLB-import process started at `2026-11-12T02:03:26.022400+00:00` and exited with code 1 after approximately 1.467 seconds. Its authoritative receipt is `state/receiving-run/import-process.json`; the driver's summary has no completed stages because the import stage did not return success. The raw measurements were written before rendering and survived the failure. Zero reopen processes or successful `.blend` saves occurred. There is no unknown result for this observed process exit.
+
+The separate independent preparation uses only Python's standard library and imports no OntoKin or receiving module. Its frozen oracle checks all 18 source primitive descriptions, all raw GLB mesh data and 126 frozen/decoded poses, plus the selected blade's closed form. Twenty-nine synthetic comparator controls and eight separate input-mutation controls passed. They remain explicitly synthetic/CPU preparation and are not counted as actual receiving or successful reopen evidence. The 27 implementation tests are recorded separately by the implementation worker.
+
+The missing-denoiser correction is preserved as separate unexecuted local commit `61eb6e9ad425047f73a48c7e3861752768e3ae4a`. It changes rendering setup only and does not resolve the measured normal failure. Its later publication identity, if any, belongs in the integrator's final record. No tolerance, accepted source, original GLB, historical expectation or product normal was changed by this review. The complete failed attempt remains part of the denominator.
+
+## Next bounded action
+
+Before another counted receiving attempt, investigate the destination's split-normal representation and make an explicit versioned normal-fidelity/loss decision. That work must decide whether to retain the original fidelity requirement with a justified receiving method/build, or define a different, separately reviewed contract appropriate to the representation's measured loss. Preserve the original failed gate either way. A rendering setting correction must also be verified before a new complete attempt. Freeze the revised scope, exact source/build/settings and expected results in a durable checkpoint before execution.
+
+Current C211 code can be published as reviewable failed/partial work with exact provenance, but it is not approved for product integration under the existing contract. Root owns that publication, the current-status failure record and final handoff. C199/C200 remain closed; C201, second-target work, live semantics, full regression and authoring-benefit claims remain outside this outcome.

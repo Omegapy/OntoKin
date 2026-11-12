@@ -1,0 +1,69 @@
+{
+  "schema": "ontokin.c211.independent-preexecution-review/0.1",
+  "recorded_utc": "2026-11-12T02:01:57.126425+00:00",
+  "candidate_commit": "fda92dab2fc184b7d90f27b6ca292217efcd07a8",
+  "candidate_tree": "e17d58d374d16db0e2dbdc3b28892a68dab6866a",
+  "candidate_worktree_clean": true,
+  "source_bindings": {
+    "prototypes/semantic_receiving_c211/__init__.py": {
+      "bytes": 81,
+      "sha256": "41904f068e5bdb4e239204ed8855760483da8bb5b7f643817939de3bb5119834"
+    },
+    "prototypes/semantic_receiving_c211/blender_observe.py": {
+      "bytes": 12671,
+      "sha256": "986923a63cebc83a1fa3286b7804cef2a23750efad19bde356c7ece35dadc118"
+    },
+    "prototypes/semantic_receiving_c211/run.py": {
+      "bytes": 5878,
+      "sha256": "52c4f2d5d3b8069f86a1e41dc4c592d765684abc06efd3367799cce50f4e3020"
+    },
+    "prototypes/semantic_receiving_c211/validation.py": {
+      "bytes": 21113,
+      "sha256": "bd6da557e2f59dad8c2daa44b3bc61f2ab0505ee8b4a10a42f4935b13c5dfc3a"
+    },
+    "prototypes/semantic_receiving_c211/build_bindings.json": {
+      "bytes": 27816,
+      "sha256": "4c884ea54de60a0e81a99341f4894ebc886b6fffd841e59618bc34f84039778b"
+    },
+    "prototypes/semantic_receiving_c211/input_bindings.json": {
+      "bytes": 1259,
+      "sha256": "ac67973d9bdfac36290c4ea592477bcd5fd4ed4233fef491ad9e00776c5c1b7c"
+    },
+    "tests/test_semantic_receiving_c211.py": {
+      "bytes": 9013,
+      "sha256": "14fd9d0ee4b9c4e267ebb800c8bc2648d95c3cea46fb62cebad8a827112918d3"
+    },
+    "docs/engineering/semantic-receiving-c211/CONTRACT.md": {
+      "bytes": 8721,
+      "sha256": "f78f2f6a249ac9944812ba2059c2ba4ba1f96fe2427350bb5e60af94c8f85668"
+    }
+  },
+  "actual_build_recheck": {
+    "executable": {
+      "bytes": 94967000,
+      "sha256": "0dfe9af0f3e67643ecf15327fa5e14e7315f61d1a81afdcafe76a71b1918e2b4"
+    },
+    "importer_files": 117,
+    "importer_files_equal": true
+  },
+  "independent_oracle": {
+    "bytes": 1027965,
+    "sha256": "813fe44ca7133748c7f5935acf697fa4a128577cd5e9df6f6679019416d6d8f2"
+  },
+  "comparator": {
+    "bytes": 16147,
+    "sha256": "93ce9699303a4a81422ccd79abac27aee6f9a689ee152faf11c6515b777ccbb3"
+  },
+  "synthetic_controls": 29,
+  "input_mutation_controls": 8,
+  "native_execution_by_reviewer": false,
+  "code_review_findings_resolved": [
+    "Retain raw Blender triangles and world matrices alongside converted observations",
+    "Bind observed executable hash to pinned build",
+    "Check full raw triangle and material-index inventories",
+    "Compare actual material-node inputs to summaries and GLB",
+    "Use tolerance-aware triangle correspondence without rounding equality"
+  ],
+  "eligible_for_bounded_execution": true,
+  "execution_precondition": "Root must confirm durable exact checkpoint and explicitly release selected one-import and reopen operation. Product integration approval remains pending actual measurements and images."
+}
