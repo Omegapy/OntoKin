@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/fe98ab19ba73/worktrees/semantic-implementation/tools/build_semantic_export_demo.py", line 312, in <module>
+    print(json.dumps(build(parser.parse_args().output_dir), indent=2))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/fe98ab19ba73/worktrees/semantic-implementation/tools/build_semantic_export_demo.py", line 188, in build
+    changed_retry = send(changed_request, "rejected")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/fe98ab19ba73/worktrees/semantic-implementation/tools/build_semantic_export_demo.py", line 107, in send
+    if "data_base64" in retained.get("result", {}):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: argument of type 'NoneType' is not iterable

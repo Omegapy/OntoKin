@@ -1,0 +1,304 @@
+{
+  "affected_cohort": {
+    "coverage": {
+      "bytes": 93980,
+      "path": "local-checks/AFFECTED-COVERAGE.json",
+      "sha256": "sha256:0372f77fac062cd54cd87eedc785277bd095ac8c25153f23c2e210e3239d1a10"
+    },
+    "inventory": {
+      "bytes": 145441,
+      "path": "local-checks/affected-inventory/AFFECTED-REGRESSION.json",
+      "sha256": "sha256:39ee3c195a8b9eab1e64a9851383ee1f4b054a85b673e88067ba89d083cc2910"
+    },
+    "nonpassing": 0,
+    "passed": 275,
+    "required": 275,
+    "scope": "262 existing methods in 18 affected modules plus 13 new semantic-export methods; all 128 required C01-C20 methods are included.",
+    "source_bindings_verified": true,
+    "unrun": 0
+  },
+  "candidate": {
+    "commit": "7feb0dc501d3a6995732637f38c3c3b651914f4b",
+    "source_role": "isolated local candidate, not a resulting-main certification",
+    "tree": "4e542247459a9002acaa02c5a054cb061be0c0c7"
+  },
+  "driver": {
+    "duration_seconds": 984.755,
+    "error": "Source or verification inputs changed during this run.",
+    "exit_code": 1,
+    "finished_at": "2026-11-12T00:43:51.802040+00:00",
+    "git_revision_unchanged": false,
+    "source_unchanged": false,
+    "started_at": "2026-11-12T00:27:27.001333+00:00",
+    "status": "failed"
+  },
+  "evidence": {
+    "actual_collection": {
+      "bytes": 614125,
+      "path": "local-checks/GLOBAL-COLLECTION.json",
+      "sha256": "sha256:1e5e9d024705e677c63aa58e76111f6da3c06f2ce5d100d4bccffd6d8f3f4be9"
+    },
+    "driver_summary": {
+      "bytes": 28996,
+      "path": "local-checks/summary.json",
+      "sha256": "sha256:2bdb7825dcfc3833d8a2a94efd894268aa7193e2be733bbbda6d7b129bfcb659"
+    },
+    "global_tally": {
+      "bytes": 1034229,
+      "path": "local-checks/UNIT-LOG-TALLY.json",
+      "sha256": "sha256:753ec7ce256a8bf6cd4f148a918fe65c5595eaf119b8b2c6b63d29e0263e574d"
+    },
+    "input_reconciliation": {
+      "bytes": 16349,
+      "path": "local-checks/INPUT-RECONCILIATION.json",
+      "sha256": "sha256:335b5dcc8b981a8d58158c9fed984898ab71208cc7c52724a71cf01a59d8f665"
+    },
+    "isolated_after": {
+      "bytes": 3388303,
+      "path": "local-checks/isolated-after-inventory.json",
+      "sha256": "sha256:9f0016f2a62ae56c487af697f14133dae4eadf6803bbd5a493c4f174f68224c3"
+    },
+    "source_after": {
+      "bytes": 3401871,
+      "path": "local-checks/source-after.json",
+      "sha256": "sha256:052c4feb6dbc164e4402910276c526e46689d8451a87c4ced9a82603c55a0900"
+    },
+    "source_before": {
+      "bytes": 3388303,
+      "path": "local-checks/source-before.json",
+      "sha256": "sha256:9f0016f2a62ae56c487af697f14133dae4eadf6803bbd5a493c4f174f68224c3"
+    },
+    "unit_log": {
+      "bytes": 842826,
+      "path": "local-checks/logs/unit-tests.log",
+      "sha256": "sha256:da55883db00725269e54fdd94a620597fdc088fcc34f963faaa531530826b9d2"
+    },
+    "unit_log_gzip": {
+      "bytes": 121513,
+      "path": "local-checks/logs/unit-tests.log.gz",
+      "sha256": "sha256:36017e80dba056aa37baab3007ede3f4887d64eaa15f26f843404d0a01f4528b"
+    }
+  },
+  "global_unittest": {
+    "complete_unittest_footer_present": false,
+    "counting_method": "Actual collection contains 4,654 unique real IDs and zero loader errors; collection ran no tests or setup methods. Terminal outcomes, including multiline test descriptions, are reconciled against the original timed-out log. Seven loader placeholders are separate from those IDs.",
+    "counts": {
+      "collected_real_methods": 4654,
+      "distinct_error_methods": 91,
+      "distinct_passed_methods": 4342,
+      "error_records_including_placeholders": 98,
+      "failed_import_placeholders": 7,
+      "other_nonpassing_methods": 0,
+      "real_methods_without_outcomes": 221
+    },
+    "driver_tests_run_interpretation": "The unchanged parser requires a final unittest footer. Its zero is not a claim of zero executed tests.",
+    "errors_by_module": {
+      "test_force_conformance": 1,
+      "test_static_tray_admission_c201_input_lock": 72,
+      "test_static_tray_finalization_v01": 7,
+      "test_static_tray_source_v01": 1,
+      "test_static_tray_transaction_v01": 9,
+      "test_surface_conformance": 1
+    },
+    "parser_correction": "The original single-line count omitted 60 existing ok outcomes (four ordinary methods and 56 dynamically generated force-source tests). Intermediate 4,286/277 counts are superseded by 4,342/221; no tests were rerun.",
+    "returncode": -15,
+    "status": "FAILED",
+    "timeout_seconds": 900,
+    "unchanged_driver_tests_run_field": 0,
+    "unrun_after_timeout": 5,
+    "unrun_by_module": {
+      "test_static_tray_admission_c201_readback_binding": 52,
+      "test_static_tray_admission_c201_readback_entries": 61,
+      "test_static_tray_admission_c201_transaction": 47,
+      "test_static_tray_admission_c201_working_directories": 16,
+      "test_static_tray_readback_v01": 7,
+      "test_static_tray_reader_v01": 22,
+      "test_static_tray_receiving_v01": 11,
+      "test_verify_duct_span_fit": 5
+    },
+    "unrun_in_failed_import_modules": 216
+  },
+  "input_reconciliation": {
+    "isolated_delta_counts": {
+      "added": 0,
+      "changed": 0,
+      "removed": 0
+    },
+    "isolated_immutable_inputs_match_before": true,
+    "origin_after_commit": "11849729212cd5ae1e46194b4b7984ccc230dc02",
+    "origin_after_tree": "65c17b56c60bf17d1ae2a79a7f5347a16e1a8e70",
+    "origin_delta": {
+      "added_path_scope": "C210 proof/review evidence under docs/engineering/semantic-export-c210/evidence/",
+      "added_paths_count": 62,
+      "changed_paths": [
+        "STATUS.md"
+      ],
+      "removed_paths_count": 0
+    },
+    "qualification": "The origin wrapper correctly failed its source-change guard. The separate isolated candidate comparison matches exactly under the unchanged driver exclusions, which exclude bytecode caches. This does not repair or erase either failure.",
+    "runtime_test_driver_inputs_changed": false
+  },
+  "limits": [
+    "No complete global regression pass; 221 real methods have no terminal outcome.",
+    "The runner success for construction, surface, and impulse leaves 16 external cases pending.",
+    "No three-version Python matrix, resulting-main rerun, remote checks, native Unreal integration, full product conformance, or release certification is claimed.",
+    "The global run remains FAILED due to timeout and the correctly reported original-checkout source-change guard.",
+    "Final integration, source descriptor, Git refs, sealing, archive verification, offline restoration, and post-seal receipts are root-owned follow-up work."
+  ],
+  "pending_external_cases": {
+    "by_role": {
+      "construction": [
+        "C20"
+      ],
+      "impulse": [
+        "I07",
+        "I09",
+        "I11",
+        "I12"
+      ],
+      "surface": [
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "M06",
+        "M07",
+        "M08",
+        "M09",
+        "M11",
+        "M12"
+      ]
+    },
+    "count": 16
+  },
+  "roles": [
+    {
+      "case_summary": {
+        "assertions": 694,
+        "expected_invalid_or_conflicting": 29,
+        "expected_unsupported": 2,
+        "expected_valid": 12,
+        "failed": 0,
+        "passed": 43,
+        "total": 43
+      },
+      "duration_seconds": 0.467,
+      "id": "source",
+      "pending_ids": [],
+      "returncode": 0,
+      "runner_status": "passed"
+    },
+    {
+      "case_summary": {
+        "failed": 0,
+        "passed": 10,
+        "total": 10
+      },
+      "duration_seconds": 0.466,
+      "id": "agent",
+      "pending_ids": [],
+      "returncode": 0,
+      "runner_status": "passed"
+    },
+    {
+      "case_summary": {
+        "all_adopted_cases_selected": true,
+        "case_gate_complete": false,
+        "failed": 0,
+        "passed": 19,
+        "pending": 1,
+        "total": 20
+      },
+      "duration_seconds": 22.111,
+      "id": "construction",
+      "pending_ids": [
+        "C20"
+      ],
+      "returncode": 0,
+      "runner_status": "passed"
+    },
+    {
+      "case_summary": {
+        "all_adopted_cases_selected": true,
+        "failed": 0,
+        "full_gate_complete": false,
+        "passed": 1,
+        "pending": 11,
+        "total": 12
+      },
+      "duration_seconds": 12.695,
+      "id": "surface",
+      "pending_ids": [
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "M06",
+        "M07",
+        "M08",
+        "M09",
+        "M11",
+        "M12"
+      ],
+      "returncode": 0,
+      "runner_status": "passed"
+    },
+    {
+      "case_summary": {
+        "all_adopted_cases_selected": true,
+        "failed": 0,
+        "full_gate_complete": false,
+        "passed": 8,
+        "pending": 4,
+        "total": 12
+      },
+      "duration_seconds": 29.883,
+      "id": "impulse",
+      "pending_ids": [
+        "I07",
+        "I09",
+        "I11",
+        "I12"
+      ],
+      "returncode": 0,
+      "runner_status": "passed"
+    },
+    {
+      "duration_seconds": 1.016,
+      "id": "documents",
+      "preservation_summary": {
+        "failures": [],
+        "local_links_checked": 4281,
+        "sections_verified": 233,
+        "sources_verified": 29
+      },
+      "returncode": 0,
+      "runner_status": "passed"
+    }
+  ],
+  "schema": "ontokin.c210.local-check-accounting/0.1",
+  "scope": "Exact local core-driver candidate evidence; this accounting preserves its failed result.",
+  "setup_diagnosis": {
+    "attribution": "Group setup paths and representative reproductions explain the 98 recorded error/import entries without requiring the new C210 source. The 900-second timeout cause is not established.",
+    "baseline_commit": "94dee707c148b7a545e43d4de0d601642c5fa3e8",
+    "cache_guard_entry_split": {
+      "actual_method_errors": 2,
+      "failed_import_placeholders": 7
+    },
+    "evidence": {
+      "bytes": 18169,
+      "path": "local-checks/setup-diagnosis/DIAGNOSIS.json",
+      "sha256": "sha256:5b66a464ee56fcb2539b2d58638b0ebe5cda9a483ad36a2cf6417aa807c90a4e"
+    },
+    "frozen_guards_or_old_tests_modified": false,
+    "frozen_reader_cache_guard_entries": 9,
+    "method": "Six representative groups reproduced using the unchanged driver copy closure at initial-main baseline and candidate; the full suite was not rerun.",
+    "missing_fixture_copy_method_errors": 89,
+    "missing_tracked_fixture_files": 42,
+    "original_failed_workspace_preserved": true,
+    "status": "inherited_validation_setup_limits_reproduced"
+  },
+  "status": "FAILED"
+}

@@ -1,0 +1,149 @@
+// Load exact C210 artifacts in the unchanged offline viewer and retain evidence.
+import assert from 'node:assert/strict';
+import {readFile, writeFile, mkdir} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {fileURLToPath, pathToFileURL} from 'node:url';
+import path from 'node:path';
+import {chromium} from 'playwright';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const args = process.argv.slice(2);
+assert.equal(args.length, 4, 'Usage: node tools/verify_semantic_export_viewer.mjs --demo-dir DIR --output-dir DIR');
+assert.equal(args[0], '--demo-dir');
+assert.equal(args[2], '--output-dir');
+const demo = path.resolve(args[1]), output = path.resolve(args[3]);
+const hash = data => 'sha256:' + createHash('sha256').update(data).digest('hex');
+const tooling = JSON.parse(await readFile(path.join(root, 'tools/package.json')));
+for (const name of ['playwright', 'three']) {
+  const installed = JSON.parse(await readFile(path.join(root, 'tools/node_modules', name, 'package.json'))).version;
+  assert.equal(installed, tooling.devDependencies[name], 'Pinned ' + name);
+}
+await mkdir(output, {recursive: true});
+const report = {
+  schema_version: 'ontokin.c210.viewer-check/0.1', status: 'running',
+  generated_at_utc: new Date().toISOString(),
+  environment: {node: process.version, platform: process.platform, architecture: process.arch,
+    playwright: tooling.devDependencies.playwright, three: tooling.devDependencies.three,
+    rendering: 'Headless Chromium; ANGLE SwiftShader; actual existing offline viewer'},
+  inputs: {}, artifacts: [], page_errors: [], console_errors: [], network_requests: [], failed_requests: [],
+  limits: ['Finite browser observations; no continuous-time proof.',
+    'Semantic sidecars are checked separately; the viewer correctly leaves source/conformance status unknown.',
+    'No Unreal, UEFN, Blender, live physics or authoring-benefit claim.'],
+};
+for (const file of ['tools/verify_semantic_export_viewer.mjs', 'tools/package-lock.json',
+  'examples/visual/viewer.html', 'examples/visual/viewer.js', 'examples/visual/viewer.bundle.js',
+  'examples/visual/demo-data.js']) report.inputs[file] = hash(await readFile(path.join(root, file)));
+
+function angleError(xyzw, wxyz) {
+  let expected = [wxyz[1], wxyz[2], wxyz[3], wxyz[0]];
+  const a = xyzw.map(x => x / Math.hypot(...xyzw));
+  expected = expected.map(x => x / Math.hypot(...expected));
+  if (a.reduce((s, x, i) => s + x * expected[i], 0) < 0) expected = expected.map(x => -x);
+  return 4 * Math.atan2(Math.hypot(...a.map((x, i) => x - expected[i])),
+    Math.hypot(...a.map((x, i) => x + expected[i])));
+}
+
+let browser;
+try {
+  browser = await chromium.launch({headless: true,
+    args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader']});
+  report.environment.browser = await browser.version();
+  for (const name of ['before', 'after']) {
+    const glbPath = path.join(demo, name + '.glb');
+    const glb = await readFile(glbPath);
+    const refBytes = await readFile(path.join(demo, name + '.reference.json'));
+    const ref = JSON.parse(refBytes);
+    assert.equal(ref.schema_version, 'ontokin.viewer-reference/0.2');
+    assert.equal(ref.artifact_sha256, hash(glb));
+    const document = JSON.parse(glb.subarray(20, 20 + glb.readUInt32LE(12)));
+    assert.equal(document.extras.ontokin.program.revision, ref.program_revision);
+    assert.deepEqual(document.extras.ontokin.program.manifest, ref.source_manifest);
+    assert.equal(ref.samples.length, 7);
+    assert.ok(ref.tolerances.position_m > 0 && ref.tolerances.position_m <= 0.001);
+    assert.ok(ref.tolerances.rotation_rad > 0 && ref.tolerances.rotation_rad <= 0.001);
+    const page = await browser.newPage({viewport: {width: 1440, height: 1060},
+      deviceScaleFactor: 1, reducedMotion: 'reduce'});
+    page.on('pageerror', e => report.page_errors.push({artifact: name, message: e.message}));
+    page.on('console', m => {if (m.type() === 'error') report.console_errors.push({artifact: name, message: m.text()});});
+    page.on('request', r => {if (/^https?:/.test(r.url())) report.network_requests.push(r.url());});
+    page.on('requestfailed', r => report.failed_requests.push({url: r.url(), error: r.failure()?.errorText}));
+    await page.route(/^https?:\/\//, route => route.abort());
+    await page.goto(pathToFileURL(path.join(root, 'examples/visual/viewer.html')).href);
+    await page.waitForFunction(() => window.ontokinViewer?.ready);
+    await page.locator('#local-file').setInputFiles(glbPath);
+    await page.waitForFunction(() => window.ontokinViewer.ready && window.ontokinViewer.state.demo === null);
+    assert.equal(await page.locator('#scene-title').textContent(), name + '.glb');
+    assert.equal(await page.locator('#error').isVisible(), false);
+    await page.click('#fit');
+    const result = {file: name + '.glb', artifact_sha256: hash(glb), reference_sha256: hash(refBytes),
+      program_revision: ref.program_revision, samples: [], captures: [], pose_comparisons: 0,
+      max_position_error_m: 0, max_rotation_error_rad: 0};
+    for (const sample of ref.samples) {
+      const seconds = Number(sample.time_seconds);
+      await page.locator('#timeline').fill(String(seconds));
+      const state = await page.evaluate(() => window.ontokinViewer.state);
+      assert.equal(state.demo, null);
+      assert.equal(state.playing, false);
+      assert.ok(Math.abs(state.time - seconds) <= 0.000001);
+      assert.deepEqual(Object.keys(state.objects).sort(), Object.keys(sample.objects).sort());
+      assert.equal(Object.keys(state.objects).length, 18);
+      for (const [object, expected] of Object.entries(sample.objects)) {
+        const actual = state.objects[object];
+        assert.ok([...actual.position_m, ...actual.orientation_xyzw].every(Number.isFinite));
+        const position = Math.max(...actual.position_m.map((x, i) => Math.abs(x - expected.position_m[i])));
+        const rotation = angleError(actual.orientation_xyzw, expected.orientation_wxyz);
+        assert.ok(position <= ref.tolerances.position_m, object + ' browser position at ' + seconds);
+        assert.ok(rotation <= ref.tolerances.rotation_rad, object + ' browser rotation at ' + seconds);
+        result.max_position_error_m = Math.max(result.max_position_error_m, position);
+        result.max_rotation_error_rad = Math.max(result.max_rotation_error_rad, rotation);
+        result.pose_comparisons++;
+      }
+      result.samples.push({time_seconds: seconds, objects: state.objects});
+    }
+    assert.equal(result.pose_comparisons, 126);
+    await page.locator('#timeline').fill('0.5');
+    await page.click('#play');
+    await page.waitForFunction(() => window.ontokinViewer.state.playing && window.ontokinViewer.state.time > 0.5);
+    await page.click('#play');
+    const paused = await page.evaluate(() => window.ontokinViewer.state);
+    const later = await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() =>
+      requestAnimationFrame(() => resolve(window.ontokinViewer.state)))));
+    assert.equal(paused.playing, false);
+    assert.equal(later.time, paused.time);
+    assert.deepEqual(later.objects, paused.objects);
+    result.playback = {advanced: paused.time > 0.5, paused_at_seconds: paused.time, stable_after_pause: true};
+    assert.equal(result.playback.advanced, true);
+    assert.equal(await page.locator('#asset-badge').textContent(), 'Local GLB · numerical status unknown');
+    assert.equal(await page.locator('#load-status').textContent(), 'Three.js loaded · no conformance report');
+    assert.equal(await page.locator('#download-source').isDisabled(), true);
+    await page.selectOption('#object-select', 'first.fingers["middle"].blade');
+    for (const seconds of [0, 1.5]) {
+      await page.locator('#timeline').fill(String(seconds));
+      await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      const filename = name + '-' + (seconds === 0 ? 'start' : 'motion') + '.png';
+      await page.screenshot({path: path.join(output, filename), fullPage: true});
+      result.captures.push({file: filename, sha256: hash(await readFile(path.join(output, filename))),
+        time_seconds: seconds, selected_object: 'first.fingers["middle"].blade', artifact_sha256: hash(glb)});
+    }
+    result.webgl = await page.evaluate(() => {
+      const gl = document.querySelector('#viewport canvas').getContext('webgl2');
+      return gl ? {version: gl.getParameter(gl.VERSION), renderer: gl.getParameter(gl.RENDERER)} : null;
+    });
+    assert.ok(result.webgl);
+    report.artifacts.push(result);
+    await page.close();
+  }
+  for (const k of ['page_errors', 'console_errors', 'network_requests', 'failed_requests']) assert.deepEqual(report[k], [], k);
+  report.status = 'passed';
+} catch (error) {
+  report.status = 'failed';
+  report.failure = {name: error.name, message: error.message};
+  process.exitCode = 1;
+} finally {
+  if (browser) await browser.close();
+  await writeFile(path.join(output, 'viewer-results.json'), JSON.stringify(report, null, 2) + '\n');
+}
+console.log(JSON.stringify({status: report.status, artifacts: report.artifacts.length,
+  pose_comparisons: report.artifacts.reduce((n, x) => n + x.pose_comparisons, 0),
+  captures: report.artifacts.reduce((n, x) => n + x.captures.length, 0), failure: report.failure,
+  output_dir: output}, null, 2));

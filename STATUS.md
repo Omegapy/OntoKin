@@ -1,11 +1,18 @@
 # OntoKin development status
 
-OntoKin is a typed semantic and physical intermediate language for AI agents.
-Accepted `.ok` source owns the identities, dimensions, relationships and allowed
-edits of an assembly; named destinations construct or simulate it. The current
-investment question is whether an agent can repair and reuse physical assets
-more reliably or at lower cost than with direct Blender/Python. The complete
-[GOAL](GOAL.md) and [coordination rules](AGENTS.md) remain authoritative.
+OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
+
+## C210 current milestone: semantic export and one constrained edit
+
+**Finite proof and affected checks passed; publication and resulting-main closure are pending.** Starting published main was `94dee707c148b7a545e43d4de0d601642c5fa3e8`; its complete C209 package and offline restore passed. [Scope ownership](https://github.com/Omegapy/OntoKin/issues/152), [results](docs/engineering/semantic-export-c210/RESULTS.md) and [integration state](docs/engineering/semantic-export-c210/evidence/INTEGRATION.json) bind the exact source and evidence. The explicit semantic sidecar reuses existing normalized construction, Agent/0.2 and GLB/0.2; no prior runtime module changed.
+
+The actual edit passed 54 workflow checks, all 275 affected tests (262 existing and 13 new), 68 independent controls, both Khronos validations, 252 Three.js and 252 browser pose comparisons, and four inspected captures. All 18 IDs, 16 unrelated object records and the full eleven-object sibling are preserved. The invalid edit preserves accepted source and artifacts; the same accepted revision regenerates identical finite output.
+
+The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method errors, seven failed-import placeholders and 221 real methods without outcomes, followed by the 900-second termination. Baseline reproductions identify unchanged fixture-copy and bytecode/cache incompatibilities. Root lease/evidence changes also tripped the wrapper's source-stability guard; the isolated immutable inputs match the candidate. The complete affected cohort passed. [Exact accounting and scoped integration rationale](docs/engineering/semantic-export-c210/REGRESSION.md) preserve the failed run without claiming a full regression pass.
+
+**Next implementation action:** one bounded receiving proof using a single pinned Blender build and C210's exact accepted after-source, GLB and sidecar. Record the build and predeclare identity, units/frames, geometry, semantic mapping and loss checks first. C210 must finish verified publication, actual-main checks and the saved handoff, then stop. The second target/source-traceability proof and matched direct-authoring comparison remain later stages. Unreal support and authoring advantage remain unestablished.
+
+**Explicit deferral:** C209 job/0.2 retained-result compatibility, C201 wrapper/probe/coordinator/host sealing/readiness/admission, broad new syntax, general gameplay, a replacement real-time physics engine, new creature/vehicle/fluid systems, model training, MCP transport and simultaneous backends. Existing reference physics, geometry, materials and validated exports remain current within their profiles. The older universal world/simulation product requirement is superseded as a current completion criterion, not marked complete. Historical domains and exact prior goals remain linked in the decision.
 
 ## Main integration lease
 
@@ -17,7 +24,7 @@ The separate [C209 job/0.2 component](docs/engineering/static-tray-admission-c20
 
 Independent review approved exact component `d5d02cfadfcd549d527e7699224ff07aa389d4be` after 42 controls. Candidate `39ab1d752eab1e00f95a75dade818831e9c6e7cf` passed all 284 C201 methods, 78 source/compiler methods and 43 core cases / 694 assertions. All 605 reviewed hashes, 301 historical input bindings and four frozen protocol documents remain exact. [Source-bound evidence and limits](docs/engineering/static-tray-admission-c201/evidence/entries-c209/README.md)
 
-[PR #151](https://github.com/Omegapy/OntoKin/pull/151) merged at `dcb1ac9b0a579b09294968a27fdd68a22762f620` with the exact reviewed publication tree. Fresh actual-main checks passed all 284 C201 methods in one clean batch, 43 core cases / 694 assertions, 605 reviewed input bindings and 29 preserved sources / 4,282 local links. [Integration receipt](docs/engineering/static-tray-admission-c201/evidence/entries-c209/INTEGRATION.json). The next bounded implementation is CPU-only job/0.2 result compatibility; executable wrapper/probe, coordinator, real host/dependency sealing, native readiness and admission remain later. C208's original main timeout and separate pass remain unchanged with cause unproven. The inherited failed full regression remains visible below. No Node, native, receiving, lifecycle or timed-author starts occurred.
+[PR #151](https://github.com/Omegapy/OntoKin/pull/151) merged at `dcb1ac9b0a579b09294968a27fdd68a22762f620` with the exact reviewed publication tree. Fresh actual-main checks passed all 284 C201 methods in one clean batch, 43 core cases / 694 assertions, 605 reviewed input bindings and 29 preserved sources / 4,282 local links. [Integration receipt](docs/engineering/static-tray-admission-c201/evidence/entries-c209/INTEGRATION.json). C209 originally nominated CPU-only job/0.2 result compatibility; C210 now defers it together with executable wrapper/probe, coordinator, real host/dependency sealing, native readiness and admission. C208's original main timeout and separate pass remain unchanged with cause unproven. The inherited failed full regression remains visible below. No Node, native, receiving, lifecycle or timed-author starts occurred.
 
 ## C200 integrated; finite qualification retained
 
@@ -140,7 +147,7 @@ Independent review approved local candidate `a645731147e4ce95ddaab8132c5a261cc3a
 
 [PR #149](https://github.com/Omegapy/OntoKin/pull/149) merged at `f8e397405b432d7a63464b136431d15a009c38df` with the exact publication tree. The first actual-main C201 batch remains FAILED: 222 methods passed and one synthetic four-slot setup hit the unchanged three-second promotion limit. The affected method passed separately with identical source/limits; all 223 methods have successful observations across two runs, not one clean batch. The cause is unproven. Independent review retained component approval with this timing limitation. Core passed 43 cases / 694 assertions; documentation preserved 29 sources and 4,258 links. [Integration and original failure](docs/engineering/static-tray-admission-c201/evidence/readback-c208/INTEGRATION.json)
 
-The next bounded step is a versioned job extension for exact lock-bound validator, Three.js and GLTFLoader entry points. The current job is preparation data, not an executable probe contract. Actual wrapper/probe, complete coordinator/process provenance, real host sealing, native readiness and admission remain pending. No C201 native, receiving, Node, lifecycle or timed-author process started.
+The former C208 next step was the versioned job extension completed by C209 for exact lock-bound validator, Three.js and GLTFLoader entry points; further C201 preparation is now deferred. The current job is preparation data, not an executable probe contract. Actual wrapper/probe, complete coordinator/process provenance, real host sealing, native readiness and admission remain pending. No C201 native, receiving, Node, lifecycle or timed-author process started.
 
 ## Verification and remaining limits
 
@@ -158,14 +165,14 @@ physics, actual-Blender cancellation behavior, external compatibility and
 sixteen external roles, comparative authoring advantage and full release remain
 unestablished. [Evidence preservation](docs/engineering/static-tray-exporter-c200/evidence/publication-c203/PRESERVATION.md)
 
-The full product scope remains open across typed algorithms and reusable
+The earlier broader product ambitions remain uncompleted and classified by C210: typed algorithms and reusable
 libraries; composite rigid assets, materials, forces and contacts; mechanisms
 and vehicles; articulated creature bodies, skin deformation and purposeful
 movement; flight and swimming; vegetation and wind; terrain and buildings;
 liquids and deformable solids; appearance and textures; animation transitions,
 live engines, scale and performance. Each expansion needs its named contract,
 bounded tests and destination evidence. Finite tray qualification does not
-complete those domains or the planned direct-tool comparison.
+complete those domains or the planned direct-tool comparison. The revised goal prioritizes semantic authoring and checked transport; new domain expansion requires a demonstrated need.
 
 Keep stable source revisions and part identities, declared units/frames,
 separate ownership/following/connections, one motion authority, represented

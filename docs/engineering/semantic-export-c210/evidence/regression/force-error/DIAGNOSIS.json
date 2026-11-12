@@ -1,0 +1,234 @@
+{
+  "schema_version": "ontokin.c210-global-error-diagnosis/0.1",
+  "status": "inherited_validation_setup_limits_reproduced",
+  "baseline_commit": "94dee707c148b7a545e43d4de0d601642c5fa3e8",
+  "candidate_commit": "7feb0dc501d3a6995732637f38c3c3b651914f4b",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14",
+  "global_error_entries": 98,
+  "actual_method_errors": 91,
+  "failed_import_placeholders": 7,
+  "cause_counts": {
+    "missing_fixture_copy_method_errors": 89,
+    "cache_guard_method_errors_and_failed_imports": 9
+  },
+  "groups": [
+    {
+      "module": "test_force_conformance",
+      "entries": 1,
+      "test_ids": [
+        "test_force_conformance.ForceReleaseContractTests.test_preserves_published_baseline_additive_cohort_and_all_twelve_roles"
+      ],
+      "cause": "frozen_reader_cache_guard",
+      "evidence_basis": "Actual discover_test_ids trace names all seven loader failures; the same guard failures reproduce on baseline."
+    },
+    {
+      "module": "test_static_tray_admission_c201_input_lock",
+      "entries": 72,
+      "test_ids": [
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_approval_cannot_grant_native_authority",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_approval_missing_fields_rejected_after_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_authority_cannot_change_with_output_directory",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_boolean_input_size_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_boolean_slot_limit_rejected_after_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_changed_approval_bytes_rejected_without_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_changed_command_rejected_by_sealed_plan",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_changed_current_source_bytes_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_changed_environment_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_changed_executable_mode_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_changed_gate_receipt_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_changed_limits_rejected_after_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_changed_lock_bytes_rejected_without_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_changed_protocol_bytes_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_changed_protocol_review_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_context_and_result_are_immutable",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_dependency_reachable_only_through_frozen_role_passes",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_double_slash_cannot_hide_output_inside_repository",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_double_slash_context_path_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_duplicate_dependency_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_duplicate_json_object_key_rejected_after_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_existing_invocation_receipt_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_extra_role_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_extra_top_level_field_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_false_gate_receipt_rejected_after_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_fifo_approval_rejected_without_blocking",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_fifo_input_rejected_without_blocking",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_fifo_lock_rejected_without_blocking",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_fifth_slot_rejected_after_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_file_parent_traversal_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_fixture_cannot_be_relabelled_production",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_float_limit_rejected_after_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_gate_receipts_wrong_type_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_hard_link_input_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_historical_transaction_cannot_replace_c201_role",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_host_namespace_cannot_hide_input_in_repository",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_host_version_rejected_after_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_missing_dependency_node_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_missing_file_blocks_validation",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_missing_frozen_binding_rejected_even_with_resealed_closure",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_missing_gate_receipt_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_missing_native_home_rejected_even_with_resealed_plan",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_missing_role_rejected_even_with_resealed_closure",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_missing_top_level_field_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_native_command_cannot_enable_autoexec_even_with_resealed_plan",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_node_loader_requires_exactly_one_input",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_node_safe_flags_cannot_be_removed_even_with_resealed_plan",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_nonempty_store_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_nonfinite_json_rejected_after_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_old_twelve_slot_schema_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_omitted_transitive_dependency_rejected_after_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_orphaned_journal_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_output_alias_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_output_inside_authority_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_producer_cannot_approve_itself",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_producer_cannot_issue_implementation_review",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_real_fixture_bindings_pass_without_authorization",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_replaced_authority_same_path_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_root_host_namespace_represents_actual_absolute_input_paths",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_shared_environment_root_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_stale_source_commit_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_stale_source_tree_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_symbolic_directory_ancestor_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_symbolic_link_input_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_unexpanded_command_rejected_even_with_resealed_plan",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_unreachable_extra_input_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_unresolved_dependency_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_untrusted_context_dict_rejected",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_wrong_native_job_output_rejected_even_with_resealed_plan",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_wrong_regeneration_reference_rejected_after_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_wrong_schedule_route_rejected_after_repin",
+        "test_static_tray_admission_c201_input_lock.InputLockControls.test_wrong_stage_executable_rejected"
+      ],
+      "cause": "missing_fixture_copy",
+      "evidence_basis": "Exact source common setUp/read path plus one reproduced candidate/baseline representative per group."
+    },
+    {
+      "module": "unittest",
+      "entries": 7,
+      "test_ids": [
+        "unittest.loader._FailedTest.test_static_tray_admission_c201_readback_binding",
+        "unittest.loader._FailedTest.test_static_tray_admission_c201_readback_entries",
+        "unittest.loader._FailedTest.test_static_tray_admission_c201_transaction",
+        "unittest.loader._FailedTest.test_static_tray_admission_c201_working_directories",
+        "unittest.loader._FailedTest.test_static_tray_readback_v01",
+        "unittest.loader._FailedTest.test_static_tray_reader_v01",
+        "unittest.loader._FailedTest.test_static_tray_receiving_v01"
+      ],
+      "cause": "frozen_reader_cache_guard",
+      "evidence_basis": "Actual discover_test_ids trace names all seven loader failures; the same guard failures reproduce on baseline."
+    },
+    {
+      "module": "test_static_tray_finalization_v01",
+      "entries": 7,
+      "test_ids": [
+        "test_static_tray_finalization_v01.FinalizationTests.test_alarm_restores_only_unspent_absolute_time",
+        "test_static_tray_finalization_v01.FinalizationTests.test_changed_current_pointer_stops_after_valid_prior_receipt",
+        "test_static_tray_finalization_v01.FinalizationTests.test_durable_result_and_both_closures_are_required_before_next_slot",
+        "test_static_tray_finalization_v01.FinalizationTests.test_expired_alarm_cannot_interrupt_returning_cleanup_receipt",
+        "test_static_tray_finalization_v01.FinalizationTests.test_host_alarm_is_off_while_supervisor_owns_cleanup",
+        "test_static_tray_finalization_v01.FinalizationTests.test_result_persistence_is_charged_to_original_deadline",
+        "test_static_tray_finalization_v01.FinalizationTests.test_result_write_failure_blocks_later_slot_and_keeps_pointer_for_reconciliation"
+      ],
+      "cause": "missing_fixture_copy",
+      "evidence_basis": "Exact source common setUp/read path plus one reproduced candidate/baseline representative per group."
+    },
+    {
+      "module": "test_static_tray_source_v01",
+      "entries": 1,
+      "test_ids": [
+        "test_static_tray_source_v01.StaticTraySourceTests.test_01_all_five_real_source_pairs_and_frozen_sources"
+      ],
+      "cause": "missing_fixture_copy",
+      "evidence_basis": "Exact source common setUp/read path plus one reproduced candidate/baseline representative per group."
+    },
+    {
+      "module": "test_static_tray_transaction_v01",
+      "entries": 9,
+      "test_ids": [
+        "test_static_tray_transaction_v01.TransactionSeamTests.test_failed_child_consumes_slot_without_retry",
+        "test_static_tray_transaction_v01.TransactionSeamTests.test_lock_verification_time_is_charged_to_original_clock",
+        "test_static_tray_transaction_v01.TransactionSeamTests.test_locked_command_mismatch_cannot_launch",
+        "test_static_tray_transaction_v01.TransactionSeamTests.test_missing_approval_cannot_launch_or_reserve",
+        "test_static_tray_transaction_v01.TransactionSeamTests.test_read_only_reconciliation_does_not_retry_uncertain_promotion",
+        "test_static_tray_transaction_v01.TransactionSeamTests.test_receiving_failure_preserves_predecessor",
+        "test_static_tray_transaction_v01.TransactionSeamTests.test_sealed_pending_receiver_then_single_cas",
+        "test_static_tray_transaction_v01.TransactionSeamTests.test_stale_predecessor_rejected_before_any_child",
+        "test_static_tray_transaction_v01.TransactionSeamTests.test_unverified_cleanup_blocks_promotion"
+      ],
+      "cause": "missing_fixture_copy",
+      "evidence_basis": "Exact source common setUp/read path plus one reproduced candidate/baseline representative per group."
+    },
+    {
+      "module": "test_surface_conformance",
+      "entries": 1,
+      "test_ids": [
+        "test_surface_conformance.SurfaceConformanceMappingTests.test_mapping_keeps_frozen_acceptance_limits_cases_and_inherited_test_ids"
+      ],
+      "cause": "frozen_reader_cache_guard",
+      "evidence_basis": "Actual discover_test_ids trace names all seven loader failures; the same guard failures reproduce on baseline."
+    }
+  ],
+  "observed_controls": {
+    "current_force": "current-isolated-test.json",
+    "current_other_groups": "current-representative.json",
+    "baseline_same_copy_closure_all_six_groups": "baseline-representative.json",
+    "baseline_copy_preparation": "baseline-copy.json"
+  },
+  "source_binding": "exact-input-bindings.json",
+  "current_log_identity": {
+    "sha256": "sha256:da55883db00725269e54fdd94a620597fdc088fcc34f963faaa531530826b9d2",
+    "bytes": 842826
+  },
+  "global_driver_status": "failed",
+  "findings": [
+    {
+      "id": "FIXTURE-COPY",
+      "observation": "The unchanged check_local.SOURCE_DIRS omits fixtures/. Both its exact baseline and candidate copies omit all 42 tracked static-tray fixture files. Representative input-lock setup raises FileNotFoundError; finalization/transaction/source lowering raises the existing CLOSURE TrayError. The source test then has a secondary empty-list IndexError.",
+      "inference": "The 89 methods in these four groups share the reproduced missing-input setup/read paths. No source or semantic-export defect is identified."
+    },
+    {
+      "id": "READER-CACHE",
+      "observation": "Default Python discovery writes local bytecode caches, while the frozen independent reader explicitly rejects an unbound __pycache__ before local imports. All seven failing import modules lead to this guard; force/surface discovery tests reject the loader errors. The baseline copy had zero reader caches initially and four after its failing test command.",
+      "inference": "These nine error/import entries are reproduced without any C210 source module or test, so the new semantic sidecar is not required to trigger them."
+    }
+  ],
+  "disposition": {
+    "component_review": "Eligible for experimental integration under the adopted incremental policy, subject to root exact-input and actual-main affected/core/documentation checks. All 275 affected test IDs have ok outcomes in the hash-bound final global log reconciliation. No new or worsened functional legacy failure is identified by the reproduced groups; this does not certify unrun cases or a full regression pass.",
+    "global_regression": "FAILED remains unchanged as an observation. The 900-second global timeout is not converted to a pass and its full-suite timing cause is not proven by these short controls.",
+    "implementation_change_required_for_C210": false,
+    "deferred_driver_followup": "A separately scoped validation-maintenance change could review fixtures/ inclusion and documented source-only Python execution. Do not alter frozen reader guards or silently change old outcomes.",
+    "existing_runtime_files_unchanged": 192,
+    "unrun_tests": "Retain separately; no full baseline suite or broad retry was executed."
+  },
+  "preservation": {
+    "original_failed_workspace_cache_deleted": false,
+    "frozen_source_or_old_tests_modified": false,
+    "global_suite_rerun": false,
+    "C201_native_schedule_executed": false,
+    "packaging": "Keep .json/.log/.md records only; exclude baseline-source and baseline-copy/workspace reconstructions. Exact baseline source is retained by Git history."
+  },
+  "global_coverage_reported_by_root": {
+    "passed_actual_test_ids": 4342,
+    "errored_actual_test_ids": 91,
+    "failed_import_placeholders": 7,
+    "expected_actual_test_ids": 4654,
+    "actual_test_ids_without_terminal_outcome": 221,
+    "without_outcome_inside_failed_imports": 216,
+    "without_outcome_after_timeout": 5,
+    "source": "Frozen full actual-discovery and multiline-log reconciliation; counts and all affected outcomes independently read and checked for this diagnosis.",
+    "report_identity": {
+      "path": "/workspace/scratch/fe98ab19ba73/handoff-c210/evidence/c210/local-checks/UNIT-LOG-TALLY.json",
+      "handoff_relative_path": "evidence/c210/local-checks/UNIT-LOG-TALLY.json",
+      "sha256": "sha256:753ec7ce256a8bf6cd4f148a918fe65c5595eaf119b8b2c6b63d29e0263e574d",
+      "bytes": 1034229
+    },
+    "affected_cohort": {
+      "inventory_path": "/workspace/scratch/fe98ab19ba73/state/semantic-review/AFFECTED-REGRESSION.json",
+      "inventory_sha256": "sha256:39ee3c195a8b9eab1e64a9851383ee1f4b054a85b673e88067ba89d083cc2910",
+      "expected": 275,
+      "observed_passed": 275,
+      "other_or_missing": 0
+    },
+    "parser_correction": "Initial single-line tally missed 60 existing ok outcomes with multiline descriptions: four ordinary methods and 56 dynamically generated force-source tests. No outcome changed and no tests were rerun."
+  }
+}

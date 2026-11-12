@@ -1,0 +1,76 @@
+{
+  "schema_version": "ontokin.c210-independent-component-review/0.1",
+  "status": "approved_for_finite_component_scope",
+  "reviewed_commit": "bb7e831a05513a092ee5845f8bf3fd0124d3e5a4",
+  "reviewed_tree": "752b501fc4ad8ba36a4ecc5c68869267a1e6fd65",
+  "clean_worktree_at_review": true,
+  "owned_file_bindings": {
+    "docs/engineering/semantic-export-c210/CONTRACT.md": {
+      "sha256": "sha256:4f1038a9f82ec5e68c1698114aa810186be07862ce58fa28cae3f457e144ed62",
+      "bytes": 12287
+    },
+    "ontokin/semantic_export.py": {
+      "sha256": "sha256:59d0b21ec2aebc97b09d4edfa069d7ce8589e87071000912448aaa76d9e7aa7a",
+      "bytes": 18860
+    },
+    "tests/test_semantic_export.py": {
+      "sha256": "sha256:445de6339a75cf766a4196fbb4f853f0fecda8f38ae45ab4e734643822dece65",
+      "bytes": 10467
+    },
+    "tools/build_semantic_export_demo.py": {
+      "sha256": "sha256:ed8a3a41ac5f3a7d6253827b9654304088352f0a4d6decf6dfdfb2c751a8c4fd",
+      "bytes": 21637
+    }
+  },
+  "independent_controls": {
+    "checks": 47,
+    "passed": 47,
+    "failed": 0
+  },
+  "transcript_controls": {
+    "checks": 21,
+    "passed": 21,
+    "failed": 0
+  },
+  "frozen_protocol_files": {
+    "docs/engineering/static-tray-admission-c201/README.md": {
+      "sha256": "sha256:414fcf481d61b36bfe7effc110894dd70744efc8f16417db94438962a8e65889",
+      "unchanged_from_published_C209": true
+    },
+    "docs/engineering/static-tray-admission-c201/ADMISSION.md": {
+      "sha256": "sha256:2dd7b250dae4afbbcc363a84f14590e7746016274db6c62e977761953572119b",
+      "unchanged_from_published_C209": true
+    },
+    "docs/engineering/static-tray-admission-c201/ADMISSION.json": {
+      "sha256": "sha256:f1bd2895cc448f5a1ecb6495814c261dfeba8fecab8ea266e274a35475386064",
+      "unchanged_from_published_C209": true
+    },
+    "docs/engineering/static-tray-admission-c201/IMPLEMENTATION-NEXT.md": {
+      "sha256": "sha256:0d43582742824e0421274e1083a915f4e53d7effa17e52513d39e1a5d3f514bd",
+      "unchanged_from_published_C209": true
+    }
+  },
+  "existing_runtime_files_unchanged": 192,
+  "resolved_findings": [
+    {
+      "finding": "A valid partial-interval GLB could be projected without explicit omitted-interval disclosure.",
+      "resolution": "Finite profile rejects partial intervals and records delivered interval separately from source duration. Real prefix control passed."
+    },
+    {
+      "finding": "Direct tests.test_semantic_export import can collide with an installed tests package because this tests tree has no __init__.py.",
+      "resolution": "Contract command uses unittest discover with exact filename pattern."
+    }
+  ],
+  "remaining_integration_gates": [
+    "Root applicable check_local run and honest inherited-failure accounting",
+    "Independent Khronos/Three.js validation of these exact before/after GLBs",
+    "Actual visual inspection and hash-bound root evidence",
+    "Root scope/navigation/preservation checks and conditional serialized integration",
+    "Verified offline-restorable handoff and confirmed persistent save"
+  ],
+  "limits": [
+    "Approval does not establish Unreal/UEFN execution, live destination physics, general authoring advantage, or complete product/release acceptance.",
+    "No C201 native schedule executed and no C199/C200 schedule reopened.",
+    "Accepted revision API argument binds identity but is not proof of acceptance; real transcript checked separately."
+  ]
+}
