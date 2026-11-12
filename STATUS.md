@@ -38,7 +38,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-No active integration lease. Owner `c212-normal-fidelity-20261112` releases ownership after verified PR #157 merge `e3bb16c21371c7472d6a8eb1e649ed356210db24` and its actual-main documentation check. [C212 publication record](docs/engineering/normal-fidelity-c212/evidence/publication/INTEGRATION.json). All independent audit workers have finished. The receiver remains held at PR #155 and issue #154 remains blocked; this release grants no native execution. Reconcile current main, refs, scope and ownership before the next bounded CPU task. Exact final source and confirmed handoff delivery are recorded in the C212 handoff/recovery.
+Active owner `c213-normal-codec-20261112`, [scope issue #158](https://github.com/Omegapy/OntoKin/issues/158), from `2026-11-12T13:47:06.491000+00:00` through `2026-11-12T14:17:06.491000+00:00` UTC. Starting main `f674744c49555261561195f8a007c5a9aeb7e940`; scope branch `work/c213-normal-codec`. This lease reserves main integration and current STATUS/GOAL/docs navigation for the independently reviewed CPU-only codec characterization. The receiver remains held in PR #155, issue #154 remains blocked, and no native execution is authorized. Other independent nonoverlapping work may continue under AGENTS coordination rules.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
