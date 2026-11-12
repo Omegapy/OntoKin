@@ -8,7 +8,9 @@ The bounded [C212 investigation and decision](docs/engineering/normal-fidelity-c
 
 [Decision C212/0.1.0](docs/engineering/normal-fidelity-c212/DECISION.md) adopts no replacement numeric budget and changes no receiver, runtime, exporter, original contract or historical evidence. No Blender process ran. The original `2e-6` gate remains failed, draft PR #155 remains held, and issue #154 remains blocked. C212's documentation/evidence increment and its own checks do not establish a complete receiving proof or full regression pass.
 
-**Next action:** one [CPU-only characterization of the pinned upstream normal codec](docs/engineering/normal-fidelity-c212/NEXT-CPU-PROBE.md) using explicit fan-frame inputs and independently declared boundary controls. Do not repeat the already completed raw remeasurement as a whole milestone, invent missing native fan values, or run another import. Complete C212 through reviewed publication and a verified saved handoff, then stop.
+[PR #157](https://github.com/Omegapy/OntoKin/pull/157) merged at `e3bb16c21371c7472d6a8eb1e649ed356210db24`, tree `384d3e39d273d69f748064095f80d73e3754af9c`, equal to the reviewed candidate. Fresh actual-main documentation checks passed 29 preserved sources / 4,377 local links; exact analysis-input equality retains the thirteen-control results. The [integration record](docs/engineering/normal-fidelity-c212/evidence/publication/INTEGRATION.json) distinguishes this published decision from the still-failed receiving gate.
+
+**Next action:** one [CPU-only characterization of the pinned upstream normal codec](docs/engineering/normal-fidelity-c212/NEXT-CPU-PROBE.md) using explicit fan-frame inputs and independently declared boundary controls. Do not repeat the already completed raw remeasurement as a whole milestone, invent missing native fan values, or run another import. C212 publication is complete; finish its verified saved handoff and stop.
 
 ## C211 preserved result: Blender receiving proof failed/partial
 
@@ -36,7 +38,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Active owner `c212-normal-fidelity-20261112` holds serialized integration for the bounded [C212 decision](https://github.com/Omegapy/OntoKin/issues/156), starting from observed main `12655f101f704050fb178ed1c7bb67e551f53eba`. Acquired at `2026-11-12T13:14:36.852640+00:00`; expires at `2026-11-12T13:44:36.852640+00:00`. Owned shared files: STATUS.md, GOAL.md and docs/README.md. The implementation scope is new `docs/engineering/normal-fidelity-c212/` decision/evidence only; no native attempt or receiver merge. The C211 draft branch remains held and unchanged. Independent audit workers write distinct external evidence; root alone owns main integration and handoff closure.
+No active integration lease. Owner `c212-normal-fidelity-20261112` releases ownership after verified PR #157 merge `e3bb16c21371c7472d6a8eb1e649ed356210db24` and its actual-main documentation check. [C212 publication record](docs/engineering/normal-fidelity-c212/evidence/publication/INTEGRATION.json). All independent audit workers have finished. The receiver remains held at PR #155 and issue #154 remains blocked; this release grants no native execution. Reconcile current main, refs, scope and ownership before the next bounded CPU task. Exact final source and confirmed handoff delivery are recorded in the C212 handoff/recovery.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
