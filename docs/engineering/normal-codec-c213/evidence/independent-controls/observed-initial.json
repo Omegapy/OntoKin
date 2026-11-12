@@ -1,0 +1,5100 @@
+{
+  "schema": "ontokin.c213.cpu-codec-observations/0.1",
+  "upstreamCommit": "32f5fdce0a0a571a39198edf8d7b5d719bf59f2c",
+  "caseInputSha256": "fa2241d38866224fdbe4ea9f9a02a4f667c06df973ea59c67c02cb81adb00f1e",
+  "caseCount": 212,
+  "acceptedCount": 182,
+  "rejectedCount": 30,
+  "rejectionsAreHarnessPolicy": true,
+  "sourceBindings": {
+    "codec_probe.cpp": "0a1a5c1684e2c67dd7c649db736070e7025ba7ebd536a9d1f3a22b865991733d",
+    "codec_exact.inc": "fc2b5deb6cf1272ea132671ce33c296f09ef1fa977aa44fe2737d6c56867832b",
+    "extract_codec.py": "da4efd7531815967caa705502d3a57057732945a2902a71437bfc561321248a3",
+    "run_probe.py": "5b13e2cc0ea498c0bf552c3e75e18ace9ee64fedebcdcec1835b1bb805ddebdf",
+    "SOURCE-BINDINGS.json": "28781632d0abd1f39afc2c24af763b60bb75a8fc23ff21e7abb323af2a2e8c88"
+  },
+  "selectedFunctionSha256": {
+    "unit_short_to_float": "4e3e8ec48dae1d83d4723b400a60712f196cf12861af16186fb05fc65056e37b",
+    "unit_float_to_short": "61fb8a8e8129816777e82ba6672ba3f09e78f6857621d78ad42ebe3b07fded9e",
+    "safe_acos_approx": "1438a812cc0c11f5ff08fafbb75fb699c36440671acd5beebd368e32a5802194",
+    "corner_space_custom_data_to_normal": "6781eae74cacd2ac5678f19fda9d499517c3ac4285ed739ccaf9ce5094173bf7",
+    "corner_space_custom_normal_to_data": "63cbcf8015b3f818f49cbcc17fd77b554e5cf91a019490cddb304e157aca6d5f"
+  },
+  "compiler": {
+    "command": [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-O0",
+      "-fno-fast-math",
+      "-ffp-contract=off",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "/workspace/scratch/0fee8b4c64ac/c213-codec-worker/docs/engineering/normal-codec-c213/codec_probe.cpp",
+      "-o",
+      "/workspace/scratch/0fee8b4c64ac/c213-independent-build/codec_probe"
+    ],
+    "version": "g++ (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+    "path": "/usr/bin/g++",
+    "executableSha256": "6b3696e4dcb85e1c949c732a02befa50e3983ecf94ce7e8e58d9d503b954b79d",
+    "probeSha256": "3edd65719979383e690dc67e10aa8ef4239d356ba4cfa825377fcc7a0afa4147",
+    "flags": [
+      "-std=c++17",
+      "-O0",
+      "-fno-fast-math",
+      "-ffp-contract=off",
+      "-Wall",
+      "-Wextra",
+      "-Werror"
+    ]
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "libc": [
+      "glibc",
+      "2.41"
+    ],
+    "floatBytes": 4,
+    "shortMax": 32767,
+    "FLT_EVAL_METHOD": 0,
+    "roundingMode": "FE_TONEAREST",
+    "float32SubnormalsPreserved": true
+  },
+  "precision": "Selected float32 operations with contraction and fast math disabled; double metrics are independent diagnostics",
+  "limitations": [
+    "Explicit supplied frames do not reproduce native fan construction, splitting or averaging",
+    "Unit mode feeds supplied float32 values directly; strict mode uses pinned upstream normalization first",
+    "No universal error bound or replacement approximation budget is established by finite rows",
+    "Installed C211 binary/source provenance and native frame/short values remain unresolved",
+    "This standalone scalar build is not bitwise attestation of the Blender executable or every platform libm"
+  ],
+  "nativeBlenderProcesses": 0,
+  "rows": [
+    {
+      "id": "canonical_auto",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0,
+        0,
+        1
+      ],
+      "normalizedInput": [
+        0,
+        0,
+        1
+      ],
+      "encoded": [
+        0,
+        0
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "trace": {
+        "nearAuto": true,
+        "zeroSentinel": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0,
+        "unitLengthDrift": 0.0,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 0.0
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": true
+    },
+    {
+      "id": "canonical_anti_auto",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0,
+        0,
+        -1
+      ],
+      "normalizedInput": [
+        0,
+        0,
+        -1
+      ],
+      "encoded": [
+        -21845,
+        16384
+      ],
+      "decoded": [
+        -2.2913830832749227e-09,
+        4.777114008902572e-05,
+        -1
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": -1,
+        "alpha": 3.1415927410125732,
+        "cosBeta": 0,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.6666666865348816,
+        "betaFactor": 0.5,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": true
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.777114008902572e-05,
+        "unitLengthDrift": 1.1410408173873066e-09,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 4.7771140107640564e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "canonical_ref",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        1,
+        0,
+        0
+      ],
+      "normalizedInput": [
+        1,
+        0,
+        0
+      ],
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 1,
+        "azimuthShortcut": true,
+        "alphaFactor": 1,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.371138828673793e-08,
+        "unitLengthDrift": 8.881784197001252e-16,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 4.37113882867379e-08
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": true
+    },
+    {
+      "id": "canonical_anti_ref",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -1,
+        0,
+        0
+      ],
+      "normalizedInput": [
+        -1,
+        0,
+        0
+      ],
+      "encoded": [
+        32767,
+        32767
+      ],
+      "decoded": [
+        -1,
+        -8.742277657347586e-08,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": -1,
+        "azimuthShortcut": false,
+        "alphaFactor": 1,
+        "betaFactor": 1,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 8.742277657347586e-08,
+        "unitLengthDrift": 4.6629367034256575e-15,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 9.774163560003377e-08
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": true
+    },
+    {
+      "id": "canonical_ortho",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0,
+        1,
+        0
+      ],
+      "normalizedInput": [
+        0,
+        1,
+        0
+      ],
+      "encoded": [
+        32767,
+        16384
+      ],
+      "decoded": [
+        -4.796584471478127e-05,
+        1,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0,
+        "azimuthShortcut": false,
+        "alphaFactor": 1,
+        "betaFactor": 0.5,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.796584471478127e-05,
+        "unitLengthDrift": 1.1503620278574544e-09,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 4.7965864595137745e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "canonical_anti_ortho",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0,
+        -1,
+        0
+      ],
+      "normalizedInput": [
+        0,
+        -1,
+        0
+      ],
+      "encoded": [
+        32767,
+        -16384
+      ],
+      "decoded": [
+        -4.796584471478127e-05,
+        -1,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0,
+        "azimuthShortcut": false,
+        "alphaFactor": 1,
+        "betaFactor": -0.5000000596046448,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.796584471478127e-05,
+        "unitLengthDrift": 1.1503620278574544e-09,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 4.7965864595137745e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "canonical_oblique_0",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.448830783367157,
+        0.4621334671974182,
+        0.7648422122001648
+      ],
+      "normalizedInput": [
+        0.448830783367157,
+        0.4621334671974182,
+        0.7648422122001648
+      ],
+      "encoded": [
+        14603,
+        8345
+      ],
+      "decoded": [
+        0.44881200790405273,
+        0.4621985852718353,
+        0.7648138999938965
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0.7648422122001648,
+        "alpha": 0.7000408172607422,
+        "cosBeta": 0.6967067122459412,
+        "azimuthShortcut": false,
+        "alphaFactor": 0.4456598162651062,
+        "betaFactor": 0.25466179847717285,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 6.511807441711426e-05,
+        "unitLengthDrift": 2.6145013265477246e-08,
+        "referenceUnitLengthDrift": 1.1582562464695911e-08,
+        "angularErrorRadians": 7.344700294223827e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "canonical_oblique_1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -0.6304970383644104,
+        0.705660879611969,
+        -0.32328957319259644
+      ],
+      "normalizedInput": [
+        -0.6304970383644104,
+        0.705660879611969,
+        -0.32328957319259644
+      ],
+      "encoded": [
+        -30478,
+        23989
+      ],
+      "decoded": [
+        -0.6304901242256165,
+        0.7056719064712524,
+        -0.32327911257743835
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": -0.32328957319259644,
+        "alpha": 1.9000413417816162,
+        "cosBeta": -0.6662760376930237,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.9301321506500244,
+        "betaFactor": 0.7321003079414368,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 1.1026859283447266e-05,
+        "unitLengthDrift": 1.0478830692051133e-08,
+        "referenceUnitLengthDrift": 2.973195956101904e-08,
+        "angularErrorRadians": 1.6697898037445327e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "canonical_oblique_2",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.20023459196090698,
+        -0.3775707483291626,
+        -0.9040721654891968
+      ],
+      "normalizedInput": [
+        0.20023459196090698,
+        -0.3775707483291626,
+        -0.9040721654891968
+      ],
+      "encoded": [
+        -24915,
+        -11297
+      ],
+      "decoded": [
+        0.2002457082271576,
+        -0.3775315582752228,
+        -0.9040860533714294
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": -0.9040721654891968,
+        "alpha": 2.7000210285186768,
+        "cosBeta": 0.46851661801338196,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.7603710889816284,
+        "betaFactor": -0.3447795808315277,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 3.9190053939819336e-05,
+        "unitLengthDrift": 6.528920515336267e-09,
+        "referenceUnitLengthDrift": 2.1111959958020066e-08,
+        "angularErrorRadians": 4.303840973467989e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "canonical_oblique_3",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.36117711663246155,
+        -0.14559443295001984,
+        0.9210609793663025
+      ],
+      "normalizedInput": [
+        0.36117711663246155,
+        -0.14559443295001984,
+        0.9210609793663025
+      ],
+      "encoded": [
+        8343,
+        -3996
+      ],
+      "decoded": [
+        0.36114320158958435,
+        -0.145554780960083,
+        0.9210805296897888
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0.9210609793663025,
+        "alpha": 0.39996981620788574,
+        "cosBeta": 0.9274784326553345,
+        "azimuthShortcut": false,
+        "alphaFactor": 0.2546286880970001,
+        "betaFactor": -0.1219610720872879,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 3.965198993682861e-05,
+        "unitLengthDrift": 2.5755832910867582e-08,
+        "referenceUnitLengthDrift": 1.1901905683231462e-08,
+        "angularErrorRadians": 5.5720063832711606e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "canonical_oblique_4",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.22036322951316833,
+        0.09316807985305786,
+        -0.9709581732749939
+      ],
+      "normalizedInput": [
+        0.22036322951316833,
+        0.09316807985305786,
+        -0.9709581732749939
+      ],
+      "encoded": [
+        -23524,
+        4172
+      ],
+      "decoded": [
+        0.22029271721839905,
+        0.09313767403364182,
+        -0.9709770679473877
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": -0.9709581732749939,
+        "alpha": 2.9000446796417236,
+        "cosBeta": 0.9210609793663025,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.7179247736930847,
+        "betaFactor": 0.12731434404850006,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 7.051229476928711e-05,
+        "unitLengthDrift": 1.2968215945541317e-08,
+        "referenceUnitLengthDrift": 9.137246070878291e-09,
+        "angularErrorRadians": 7.907911071469333e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_auto",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        1,
+        0,
+        0
+      ],
+      "normalizedInput": [
+        1,
+        0,
+        0
+      ],
+      "encoded": [
+        0,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        0
+      ],
+      "trace": {
+        "nearAuto": true,
+        "zeroSentinel": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0,
+        "unitLengthDrift": 0.0,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 0.0
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": true
+    },
+    {
+      "id": "rotated_anti_auto",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -1,
+        0,
+        0
+      ],
+      "normalizedInput": [
+        -1,
+        0,
+        0
+      ],
+      "encoded": [
+        -19660,
+        32767
+      ],
+      "decoded": [
+        -1,
+        1.4030955217125829e-12,
+        -3.2099083909997717e-05
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": -1,
+        "alpha": 3.1415927410125732,
+        "cosBeta": 0,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.6000000238418579,
+        "betaFactor": 1,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": true
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 3.2099083909997717e-05,
+        "unitLengthDrift": 5.151754578491818e-10,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 3.209908389897331e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_ref",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0,
+        1,
+        0
+      ],
+      "normalizedInput": [
+        0,
+        1,
+        0
+      ],
+      "encoded": [
+        -29490,
+        0
+      ],
+      "decoded": [
+        -4.814862768398598e-05,
+        1,
+        0
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 1,
+        "azimuthShortcut": true,
+        "alphaFactor": -0.9000000357627869,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.814862768398598e-05,
+        "unitLengthDrift": 1.159145224249869e-09,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 4.814862764677848e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_anti_ref",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0,
+        -1,
+        0
+      ],
+      "normalizedInput": [
+        0,
+        -1,
+        0
+      ],
+      "encoded": [
+        -29490,
+        -21845
+      ],
+      "decoded": [
+        -4.814862768398598e-05,
+        -1,
+        4.777114008902572e-05
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": -1,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.9000000357627869,
+        "betaFactor": -0.6666666865348816,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.814862768398598e-05,
+        "unitLengthDrift": 2.3001860416371755e-09,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 6.78260433693981e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_ortho",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0,
+        0,
+        1
+      ],
+      "normalizedInput": [
+        0,
+        0,
+        1
+      ],
+      "encoded": [
+        -29490,
+        32767
+      ],
+      "decoded": [
+        -4.814862768398598e-05,
+        -4.371138828673793e-08,
+        1
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.9000000357627869,
+        "betaFactor": 1,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.814862768398598e-05,
+        "unitLengthDrift": 1.1591461124282887e-09,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 4.814864748831042e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_anti_ortho",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0,
+        0,
+        -1
+      ],
+      "normalizedInput": [
+        0,
+        0,
+        -1
+      ],
+      "encoded": [
+        -29490,
+        -10922
+      ],
+      "decoded": [
+        -4.814862768398598e-05,
+        4.799763337359764e-05,
+        -1
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.9000000357627869,
+        "betaFactor": -0.3333333730697632,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.814862768398598e-05,
+        "unitLengthDrift": 2.3110315883201338e-09,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 6.798575691330563e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_oblique_0",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.7648422122001648,
+        0.448830783367157,
+        0.4621334671974182
+      ],
+      "normalizedInput": [
+        0.7648422122001648,
+        0.448830783367157,
+        0.4621334671974182
+      ],
+      "encoded": [
+        21904,
+        16689
+      ],
+      "decoded": [
+        0.7648242115974426,
+        0.4488256275653839,
+        0.46216827630996704
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0.7648422122001648,
+        "alpha": 0.7000408172607422,
+        "cosBeta": 0.6967067122459412,
+        "azimuthShortcut": false,
+        "alphaFactor": 0.6684896945953369,
+        "betaFactor": 0.5093235969543457,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 3.4809112548828125e-05,
+        "unitLengthDrift": 1.7116217998491834e-08,
+        "referenceUnitLengthDrift": 1.1582562464695911e-08,
+        "angularErrorRadians": 3.952566547790433e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_oblique_1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -0.32328957319259644,
+        -0.6304970383644104,
+        0.705660879611969
+      ],
+      "normalizedInput": [
+        -0.32328957319259644,
+        -0.6304970383644104,
+        0.705660879611969
+      ],
+      "encoded": [
+        -27430,
+        -27697
+      ],
+      "decoded": [
+        -0.3233093321323395,
+        -0.6304493546485901,
+        0.7056944966316223
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": -0.32328957319259644,
+        "alpha": 1.9000413417816162,
+        "cosBeta": -0.6662760376930237,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.837118923664093,
+        "betaFactor": -0.8452664613723755,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.76837158203125e-05,
+        "unitLengthDrift": 1.7798420737236142e-08,
+        "referenceUnitLengthDrift": 2.973195956101904e-08,
+        "angularErrorRadians": 6.159751822860193e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_oblique_2",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -0.9040721654891968,
+        0.20023459196090698,
+        -0.3775707483291626
+      ],
+      "normalizedInput": [
+        -0.9040721654891968,
+        0.20023459196090698,
+        -0.3775707483291626
+      ],
+      "encoded": [
+        -22424,
+        -7532
+      ],
+      "decoded": [
+        -0.9040518999099731,
+        0.20024335384368896,
+        -0.3776145577430725
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": -0.9040721654891968,
+        "alpha": 2.7000210285186768,
+        "cosBeta": 0.46851661801338196,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.6843340396881104,
+        "betaFactor": -0.2298530638217926,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.380941390991211e-05,
+        "unitLengthDrift": 3.6455514162980762e-09,
+        "referenceUnitLengthDrift": 2.1111959958020066e-08,
+        "angularErrorRadians": 4.9058418072746375e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_oblique_3",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9210609793663025,
+        0.36117711663246155,
+        -0.14559443295001984
+      ],
+      "normalizedInput": [
+        0.9210609793663025,
+        0.36117711663246155,
+        -0.14559443295001984
+      ],
+      "encoded": [
+        12515,
+        -2664
+      ],
+      "decoded": [
+        0.9210743308067322,
+        0.3611568510532379,
+        -0.14556026458740234
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0.9210609793663025,
+        "alpha": 0.39996981620788574,
+        "cosBeta": 0.9274784326553345,
+        "azimuthShortcut": false,
+        "alphaFactor": 0.381943017244339,
+        "betaFactor": -0.08130738139152527,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 3.4168362617492676e-05,
+        "unitLengthDrift": 7.719742622924741e-09,
+        "referenceUnitLengthDrift": 1.1901905683231462e-08,
+        "angularErrorRadians": 4.19098041513364e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_oblique_4",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -0.9709581732749939,
+        0.22036322951316833,
+        0.09316807985305786
+      ],
+      "normalizedInput": [
+        -0.9709581732749939,
+        0.22036322951316833,
+        0.09316807985305786
+      ],
+      "encoded": [
+        -21172,
+        8343
+      ],
+      "decoded": [
+        -0.9709618091583252,
+        0.2203543335199356,
+        0.0931512713432312
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": -0.9709581732749939,
+        "alpha": 2.9000446796417236,
+        "cosBeta": 0.9210609793663025,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.6461322903633118,
+        "betaFactor": 0.2546286880970001,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 1.6808509826660156e-05,
+        "unitLengthDrift": 1.3248941499455213e-08,
+        "referenceUnitLengthDrift": 9.137246070878291e-09,
+        "angularErrorRadians": 1.936192966886872e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "oblique_auto",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.6000000238418579,
+        0,
+        0.800000011920929
+      ],
+      "normalizedInput": [
+        0.6000000238418579,
+        0,
+        0.800000011920929
+      ],
+      "encoded": [
+        0,
+        0
+      ],
+      "decoded": [
+        0.6000000238418579,
+        0,
+        0.800000011920929
+      ],
+      "trace": {
+        "nearAuto": true,
+        "zeroSentinel": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.0,
+        "unitLengthDrift": 2.3841858043383013e-08,
+        "referenceUnitLengthDrift": 2.3841858043383013e-08,
+        "angularErrorRadians": 0.0
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": true
+    },
+    {
+      "id": "oblique_anti_auto",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -0.6000000238418579,
+        0,
+        -0.800000011920929
+      ],
+      "normalizedInput": [
+        -0.6000000238418579,
+        0,
+        -0.800000011920929
+      ],
+      "encoded": [
+        -24575,
+        10922
+      ],
+      "decoded": [
+        -0.6000000238418579,
+        -3.1860665330896154e-05,
+        -0.800000011920929
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": -1,
+        "alpha": 3.1415927410125732,
+        "cosBeta": 0,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.75,
+        "betaFactor": 0.3333333432674408,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": true
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 3.1860665330896154e-05,
+        "unitLengthDrift": 2.434940893358828e-08,
+        "referenceUnitLengthDrift": 2.3841858043383013e-08,
+        "angularErrorRadians": 3.1860664560498106e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "oblique_ref",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.800000011920929,
+        0,
+        -0.6000000238418579
+      ],
+      "normalizedInput": [
+        0.800000011920929,
+        0,
+        -0.6000000238418579
+      ],
+      "encoded": [
+        24575,
+        0
+      ],
+      "decoded": [
+        0.800009548664093,
+        0,
+        -0.599987268447876
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 1,
+        "azimuthShortcut": true,
+        "alphaFactor": 0.75,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 1.2755393981933594e-05,
+        "unitLengthDrift": 1.2663470272400446e-10,
+        "referenceUnitLengthDrift": 2.3841858043383013e-08,
+        "angularErrorRadians": 1.5926361082337295e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "oblique_anti_ref",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -0.800000011920929,
+        0,
+        0.6000000238418579
+      ],
+      "normalizedInput": [
+        -0.800000011920929,
+        0,
+        0.6000000238418579
+      ],
+      "encoded": [
+        24575,
+        21845
+      ],
+      "decoded": [
+        -0.7999904751777649,
+        -4.777114008902572e-05,
+        0.6000127792358398
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": -1,
+        "azimuthShortcut": false,
+        "alphaFactor": 0.75,
+        "betaFactor": 0.6666666865348816,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.777114008902572e-05,
+        "unitLengthDrift": 4.8951771081107154e-08,
+        "referenceUnitLengthDrift": 2.3841858043383013e-08,
+        "angularErrorRadians": 5.035603793650914e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "oblique_ortho",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0,
+        1,
+        0
+      ],
+      "normalizedInput": [
+        0,
+        1,
+        0
+      ],
+      "encoded": [
+        24575,
+        10922
+      ],
+      "decoded": [
+        4.7956305934349075e-05,
+        1,
+        -1.605431316420436e-05
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0,
+        "azimuthShortcut": false,
+        "alphaFactor": 0.75,
+        "betaFactor": 0.3333333432674408,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.7956305934349075e-05,
+        "unitLengthDrift": 1.2787739755992789e-09,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 5.0572208234192506e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "oblique_anti_ortho",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0,
+        -1,
+        0
+      ],
+      "normalizedInput": [
+        0,
+        -1,
+        0
+      ],
+      "encoded": [
+        24575,
+        32767
+      ],
+      "decoded": [
+        9.567739652993623e-06,
+        -1,
+        1.2737111319438554e-05
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0,
+        "azimuthShortcut": false,
+        "alphaFactor": 0.75,
+        "betaFactor": 1,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 1.2737111319438554e-05,
+        "unitLengthDrift": 1.26887833573619e-10,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 1.593033730930709e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "oblique_oblique_0",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.8179699182510376,
+        0.4621334671974182,
+        0.3425752818584442
+      ],
+      "normalizedInput": [
+        0.8179699182510376,
+        0.4621334671974182,
+        0.3425752818584442
+      ],
+      "encoded": [
+        10952,
+        5563
+      ],
+      "decoded": [
+        0.8179550170898438,
+        0.46216827630996704,
+        0.3425639867782593
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0.76484215259552,
+        "alpha": 0.7000409364700317,
+        "cosBeta": 0.6967067718505859,
+        "azimuthShortcut": false,
+        "alphaFactor": 0.33424490690231323,
+        "betaFactor": 0.16977453231811523,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 3.4809112548828125e-05,
+        "unitLengthDrift": 5.3235940100648804e-09,
+        "referenceUnitLengthDrift": 2.3796045911517183e-08,
+        "angularErrorRadians": 3.951325016795905e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "oblique_oblique_1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -0.698371410369873,
+        0.705660879611969,
+        0.11966658383607864
+      ],
+      "normalizedInput": [
+        -0.698371410369873,
+        0.705660879611969,
+        0.11966658383607864
+      ],
+      "encoded": [
+        29726,
+        15992
+      ],
+      "decoded": [
+        -0.6983181238174438,
+        0.7057245969772339,
+        0.11960184574127197
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": -0.32328957319259644,
+        "alpha": 1.9000413417816162,
+        "cosBeta": -0.6662760376930237,
+        "azimuthShortcut": false,
+        "alphaFactor": 0.9072028994560242,
+        "betaFactor": 0.4880669116973877,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 6.473809480667114e-05,
+        "unitLengthDrift": 5.1676565249181294e-09,
+        "referenceUnitLengthDrift": 2.4381296981346168e-09,
+        "angularErrorRadians": 0.00010531087383275875
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "oblique_oblique_2",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -0.3822556138038635,
+        -0.3775707483291626,
+        -0.8433984518051147
+      ],
+      "normalizedInput": [
+        -0.3822556138038635,
+        -0.3775707483291626,
+        -0.8433984518051147
+      ],
+      "encoded": [
+        -28029,
+        -22595
+      ],
+      "decoded": [
+        -0.38229799270629883,
+        -0.37750309705734253,
+        -0.8434095978736877
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": -0.9040721654891968,
+        "alpha": 2.7000210285186768,
+        "cosBeta": 0.4685167074203491,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.8554174900054932,
+        "betaFactor": -0.6895591020584106,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 6.765127182006836e-05,
+        "unitLengthDrift": 4.665030206574272e-08,
+        "referenceUnitLengthDrift": 1.360716173071097e-08,
+        "angularErrorRadians": 8.060333090509785e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "oblique_oblique_3",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.8415783047676086,
+        -0.14559443295001984,
+        0.5201425552368164
+      ],
+      "normalizedInput": [
+        0.8415783047676086,
+        -0.14559443295001984,
+        0.5201425552368164
+      ],
+      "encoded": [
+        6258,
+        -7993
+      ],
+      "decoded": [
+        0.8415789008140564,
+        -0.14558862149715424,
+        0.5201431512832642
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0.9210610389709473,
+        "alpha": 0.3999696373939514,
+        "cosBeta": 0.9274784326553345,
+        "azimuthShortcut": false,
+        "alphaFactor": 0.19097143411636353,
+        "betaFactor": -0.24392211437225342,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 5.811452865600586e-06,
+        "unitLengthDrift": 4.584139179364399e-09,
+        "referenceUnitLengthDrift": 2.986492164680499e-08,
+        "angularErrorRadians": 5.87216651120155e-06
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "oblique_oblique_4",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -0.4062843322753906,
+        0.09316807985305786,
+        -0.9089844822883606
+      ],
+      "normalizedInput": [
+        -0.4062843322753906,
+        0.09316807985305786,
+        -0.9089844822883606
+      ],
+      "encoded": [
+        -26465,
+        2781
+      ],
+      "decoded": [
+        -0.4062933921813965,
+        0.09315136075019836,
+        -0.9089821577072144
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": -0.9709581732749939,
+        "alpha": 2.9000446796417236,
+        "cosBeta": 0.9210610389709473,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.8076653480529785,
+        "betaFactor": 0.08487619459629059,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 1.671910285949707e-05,
+        "unitLengthDrift": 2.978497093408805e-08,
+        "referenceUnitLengthDrift": 1.939850213794614e-08,
+        "angularErrorRadians": 1.915760550926312e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "canonical_shortcut_0",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9999499917030334,
+        0.009999833069741726,
+        6.123234262925839e-17
+      ],
+      "normalizedInput": [
+        0.9999499917030334,
+        0.009999833069741726,
+        6.123234262925839e-17
+      ],
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 6.123234262925839e-17,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9999499917030334,
+        "azimuthShortcut": true,
+        "alphaFactor": 1,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.009999833069741726,
+        "unitLengthDrift": 8.881784197001252e-16,
+        "referenceUnitLengthDrift": 8.715840382755857e-09,
+        "angularErrorRadians": 0.009999999822818679
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "canonical_shortcut_1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.8414289355278015,
+        0.008414569310843945,
+        0.5403022766113281
+      ],
+      "normalizedInput": [
+        0.8414289355278015,
+        0.008414569310843945,
+        0.5403022766113281
+      ],
+      "encoded": [
+        20860,
+        0
+      ],
+      "decoded": [
+        0.8414679169654846,
+        0,
+        0.5403071045875549
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0.5403022766113281,
+        "alpha": 0.9999974370002747,
+        "cosBeta": 0.9999499917030334,
+        "azimuthShortcut": true,
+        "alphaFactor": 0.6366181373596191,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.008414569310843945,
+        "unitLengthDrift": 1.127500937059267e-08,
+        "referenceUnitLengthDrift": 4.315760193662754e-09,
+        "angularErrorRadians": 0.00841468574848307
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "canonical_shortcut_2",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9999499917030334,
+        -0.009999833069741726,
+        6.123234262925839e-17
+      ],
+      "normalizedInput": [
+        0.9999499917030334,
+        -0.009999833069741726,
+        6.123234262925839e-17
+      ],
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 6.123234262925839e-17,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9999499917030334,
+        "azimuthShortcut": true,
+        "alphaFactor": 1,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.009999833069741726,
+        "unitLengthDrift": 8.881784197001252e-16,
+        "referenceUnitLengthDrift": 8.715840382755857e-09,
+        "angularErrorRadians": 0.009999999822818679
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "canonical_shortcut_3",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.8414289355278015,
+        -0.008414569310843945,
+        0.5403022766113281
+      ],
+      "normalizedInput": [
+        0.8414289355278015,
+        -0.008414569310843945,
+        0.5403022766113281
+      ],
+      "encoded": [
+        20860,
+        0
+      ],
+      "decoded": [
+        0.8414679169654846,
+        0,
+        0.5403071045875549
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0.5403022766113281,
+        "alpha": 0.9999974370002747,
+        "cosBeta": 0.9999499917030334,
+        "azimuthShortcut": true,
+        "alphaFactor": 0.6366181373596191,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.008414569310843945,
+        "unitLengthDrift": 1.127500937059267e-08,
+        "referenceUnitLengthDrift": 4.315760193662754e-09,
+        "angularErrorRadians": 0.00841468574848307
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_shortcut_0",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        6.123234262925839e-17,
+        0.9999499917030334,
+        0.009999833069741726
+      ],
+      "normalizedInput": [
+        6.123234262925839e-17,
+        0.9999499917030334,
+        0.009999833069741726
+      ],
+      "encoded": [
+        -29490,
+        0
+      ],
+      "decoded": [
+        -4.814862768398598e-05,
+        1,
+        0
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 6.123234262925839e-17,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9999499917030334,
+        "azimuthShortcut": true,
+        "alphaFactor": -0.9000000357627869,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.009999833069741726,
+        "unitLengthDrift": 1.159145224249869e-09,
+        "referenceUnitLengthDrift": 8.715840382755857e-09,
+        "angularErrorRadians": 0.010000115732706816
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_shortcut_1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.5403022766113281,
+        0.8414289355278015,
+        0.008414569310843945
+      ],
+      "normalizedInput": [
+        0.5403022766113281,
+        0.8414289355278015,
+        0.008414569310843945
+      ],
+      "encoded": [
+        31290,
+        0
+      ],
+      "decoded": [
+        0.5403071045875549,
+        0.8414679169654846,
+        0
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0.5403022766113281,
+        "alpha": 0.9999974370002747,
+        "cosBeta": 0.9999499917030334,
+        "azimuthShortcut": true,
+        "alphaFactor": 0.9549272060394287,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.008414569310843945,
+        "unitLengthDrift": 1.127500937059267e-08,
+        "referenceUnitLengthDrift": 4.315760193662754e-09,
+        "angularErrorRadians": 0.00841468574848307
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_shortcut_2",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        6.123234262925839e-17,
+        0.9999499917030334,
+        -0.009999833069741726
+      ],
+      "normalizedInput": [
+        6.123234262925839e-17,
+        0.9999499917030334,
+        -0.009999833069741726
+      ],
+      "encoded": [
+        -29490,
+        0
+      ],
+      "decoded": [
+        -4.814862768398598e-05,
+        1,
+        0
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 6.123234262925839e-17,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9999499917030334,
+        "azimuthShortcut": true,
+        "alphaFactor": -0.9000000357627869,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.009999833069741726,
+        "unitLengthDrift": 1.159145224249869e-09,
+        "referenceUnitLengthDrift": 8.715840382755857e-09,
+        "angularErrorRadians": 0.010000115732706816
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "rotated_shortcut_3",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.5403022766113281,
+        0.8414289355278015,
+        -0.008414569310843945
+      ],
+      "normalizedInput": [
+        0.5403022766113281,
+        0.8414289355278015,
+        -0.008414569310843945
+      ],
+      "encoded": [
+        31290,
+        0
+      ],
+      "decoded": [
+        0.5403071045875549,
+        0.8414679169654846,
+        0
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0.5403022766113281,
+        "alpha": 0.9999974370002747,
+        "cosBeta": 0.9999499917030334,
+        "azimuthShortcut": true,
+        "alphaFactor": 0.9549272060394287,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.008414569310843945,
+        "unitLengthDrift": 1.127500937059267e-08,
+        "referenceUnitLengthDrift": 4.315760193662754e-09,
+        "angularErrorRadians": 0.00841468574848307
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "full_beta_shortcut_0",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9999499917030334,
+        0.009999833069741726,
+        6.123234262925839e-17
+      ],
+      "normalizedInput": [
+        0.9999499917030334,
+        0.009999833069741726,
+        6.123234262925839e-17
+      ],
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 6.123234262925839e-17,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9999499917030334,
+        "azimuthShortcut": true,
+        "alphaFactor": 1,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.009999833069741726,
+        "unitLengthDrift": 8.881784197001252e-16,
+        "referenceUnitLengthDrift": 8.715840382755857e-09,
+        "angularErrorRadians": 0.009999999822818679
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "full_beta_shortcut_1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.8414289355278015,
+        0.008414569310843945,
+        0.5403022766113281
+      ],
+      "normalizedInput": [
+        0.8414289355278015,
+        0.008414569310843945,
+        0.5403022766113281
+      ],
+      "encoded": [
+        20860,
+        0
+      ],
+      "decoded": [
+        0.8414679169654846,
+        0,
+        0.5403071045875549
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0.5403022766113281,
+        "alpha": 0.9999974370002747,
+        "cosBeta": 0.9999499917030334,
+        "azimuthShortcut": true,
+        "alphaFactor": 0.6366181373596191,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.008414569310843945,
+        "unitLengthDrift": 1.127500937059267e-08,
+        "referenceUnitLengthDrift": 4.315760193662754e-09,
+        "angularErrorRadians": 0.00841468574848307
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "full_beta_shortcut_2",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9999499917030334,
+        -0.009999833069741726,
+        6.123234262925839e-17
+      ],
+      "normalizedInput": [
+        0.9999499917030334,
+        -0.009999833069741726,
+        6.123234262925839e-17
+      ],
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 6.123234262925839e-17,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9999499917030334,
+        "azimuthShortcut": true,
+        "alphaFactor": 1,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.009999833069741726,
+        "unitLengthDrift": 8.881784197001252e-16,
+        "referenceUnitLengthDrift": 8.715840382755857e-09,
+        "angularErrorRadians": 0.009999999822818679
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "full_beta_shortcut_3",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.8414289355278015,
+        -0.008414569310843945,
+        0.5403022766113281
+      ],
+      "normalizedInput": [
+        0.8414289355278015,
+        -0.008414569310843945,
+        0.5403022766113281
+      ],
+      "encoded": [
+        20860,
+        0
+      ],
+      "decoded": [
+        0.8414679169654846,
+        0,
+        0.5403071045875549
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0.5403022766113281,
+        "alpha": 0.9999974370002747,
+        "cosBeta": 0.9999499917030334,
+        "azimuthShortcut": true,
+        "alphaFactor": 0.6366181373596191,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.008414569310843945,
+        "unitLengthDrift": 1.127500937059267e-08,
+        "referenceUnitLengthDrift": 4.315760193662754e-09,
+        "angularErrorRadians": 0.00841468574848307
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "near_auto_1_below",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        9.99999901978299e-05,
+        0,
+        1
+      ],
+      "normalizedInput": [
+        9.99999901978299e-05,
+        0,
+        1
+      ],
+      "encoded": [
+        0,
+        0
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "trace": {
+        "nearAuto": true,
+        "zeroSentinel": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 9.99999901978299e-05,
+        "unitLengthDrift": 0.0,
+        "referenceUnitLengthDrift": 4.9999988593896205e-09,
+        "angularErrorRadians": 9.999998986449667e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "near_auto_1_at",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        9.999999747378752e-05,
+        0,
+        1
+      ],
+      "normalizedInput": [
+        9.999999747378752e-05,
+        0,
+        1
+      ],
+      "encoded": [
+        0,
+        0
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "trace": {
+        "nearAuto": true,
+        "zeroSentinel": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 9.999999747378752e-05,
+        "unitLengthDrift": 0.0,
+        "referenceUnitLengthDrift": 4.99999974756804e-09,
+        "angularErrorRadians": 9.999999714045422e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "near_auto_1_above",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.00010000000474974513,
+        0,
+        1
+      ],
+      "normalizedInput": [
+        0.00010000000474974513,
+        0,
+        1
+      ],
+      "encoded": [
+        0,
+        0
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 1,
+        "alpha": 0,
+        "cosBeta": 1,
+        "azimuthShortcut": true,
+        "alphaFactor": 0,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.00010000000474974513,
+        "unitLengthDrift": 0.0,
+        "referenceUnitLengthDrift": 5.000000413701855e-09,
+        "angularErrorRadians": 0.00010000000441641175
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "near_auto_1_twice",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.00019999999494757503,
+        0,
+        1
+      ],
+      "normalizedInput": [
+        0.00019999999494757503,
+        0,
+        1
+      ],
+      "encoded": [
+        0,
+        0
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 1,
+        "alpha": 0,
+        "cosBeta": 1,
+        "azimuthShortcut": true,
+        "alphaFactor": 0,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.00019999999494757503,
+        "unitLengthDrift": 0.0,
+        "referenceUnitLengthDrift": 1.9999998768227556e-08,
+        "angularErrorRadians": 0.0001999999922809086
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "near_auto_-1_below",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -9.99999901978299e-05,
+        0,
+        1
+      ],
+      "normalizedInput": [
+        -9.99999901978299e-05,
+        0,
+        1
+      ],
+      "encoded": [
+        0,
+        0
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "trace": {
+        "nearAuto": true,
+        "zeroSentinel": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 9.99999901978299e-05,
+        "unitLengthDrift": 0.0,
+        "referenceUnitLengthDrift": 4.9999988593896205e-09,
+        "angularErrorRadians": 9.999998986449667e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "near_auto_-1_at",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -9.999999747378752e-05,
+        0,
+        1
+      ],
+      "normalizedInput": [
+        -9.999999747378752e-05,
+        0,
+        1
+      ],
+      "encoded": [
+        0,
+        0
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "trace": {
+        "nearAuto": true,
+        "zeroSentinel": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 9.999999747378752e-05,
+        "unitLengthDrift": 0.0,
+        "referenceUnitLengthDrift": 4.99999974756804e-09,
+        "angularErrorRadians": 9.999999714045422e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "near_auto_-1_above",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -0.00010000000474974513,
+        0,
+        1
+      ],
+      "normalizedInput": [
+        -0.00010000000474974513,
+        0,
+        1
+      ],
+      "encoded": [
+        0,
+        32767
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 1,
+        "alpha": 0,
+        "cosBeta": -1,
+        "azimuthShortcut": false,
+        "alphaFactor": 0,
+        "betaFactor": 1,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.00010000000474974513,
+        "unitLengthDrift": 0.0,
+        "referenceUnitLengthDrift": 5.000000413701855e-09,
+        "angularErrorRadians": 0.00010000000441641175
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "near_auto_-1_twice",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -0.00019999999494757503,
+        0,
+        1
+      ],
+      "normalizedInput": [
+        -0.00019999999494757503,
+        0,
+        1
+      ],
+      "encoded": [
+        0,
+        32767
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 1,
+        "alpha": 0,
+        "cosBeta": -1,
+        "azimuthShortcut": false,
+        "alphaFactor": 0,
+        "betaFactor": 1,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.00019999999494757503,
+        "unitLengthDrift": 0.0,
+        "referenceUnitLengthDrift": 1.9999998768227556e-08,
+        "angularErrorRadians": 0.0001999999922809086
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "near_auto_component_cube",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        9.000000136438757e-05,
+        9.000000136438757e-05,
+        1
+      ],
+      "normalizedInput": [
+        9.000000136438757e-05,
+        9.000000136438757e-05,
+        1
+      ],
+      "encoded": [
+        0,
+        0
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "trace": {
+        "nearAuto": true,
+        "zeroSentinel": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 9.000000136438757e-05,
+        "unitLengthDrift": 0.0,
+        "referenceUnitLengthDrift": 8.100000226107795e-09,
+        "angularErrorRadians": 0.00012727922185580613
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "azimuth_cos_-2_1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9998998641967773,
+        0.014151380397379398,
+        0
+      ],
+      "normalizedInput": [
+        0.9998998641967773,
+        0.014151380397379398,
+        0
+      ],
+      "encoded": [
+        32767,
+        148
+      ],
+      "decoded": [
+        0.9998993277549744,
+        0.0141892796382308,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9998998641967773,
+        "azimuthShortcut": false,
+        "alphaFactor": 1,
+        "betaFactor": 0.004503470379859209,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 3.789924085140228e-05,
+        "unitLengthDrift": 6.507516747689124e-10,
+        "referenceUnitLengthDrift": 6.057487844657317e-12,
+        "angularErrorRadians": 3.790306236203908e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "azimuth_cos_-2_-1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9998998641967773,
+        -0.014151380397379398,
+        0
+      ],
+      "normalizedInput": [
+        0.9998998641967773,
+        -0.014151380397379398,
+        0
+      ],
+      "encoded": [
+        32767,
+        -148
+      ],
+      "decoded": [
+        0.9998993277549744,
+        -0.0141892796382308,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9998998641967773,
+        "azimuthShortcut": false,
+        "alphaFactor": 1,
+        "betaFactor": -0.004503522999584675,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 3.789924085140228e-05,
+        "unitLengthDrift": 6.507516747689124e-10,
+        "referenceUnitLengthDrift": 6.057487844657317e-12,
+        "angularErrorRadians": 3.790306236203908e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "azimuth_cos_-1_1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9998999238014221,
+        0.014147168956696987,
+        0
+      ],
+      "normalizedInput": [
+        0.9998999238014221,
+        0.014147168956696987,
+        0
+      ],
+      "encoded": [
+        32767,
+        148
+      ],
+      "decoded": [
+        0.9998993277549744,
+        0.0141892796382308,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9998999238014221,
+        "azimuthShortcut": false,
+        "alphaFactor": 1,
+        "betaFactor": 0.004502129275351763,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.2110681533813477e-05,
+        "unitLengthDrift": 6.507516747689124e-10,
+        "referenceUnitLengthDrift": 3.789413227650584e-12,
+        "angularErrorRadians": 4.211492229576547e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "azimuth_cos_-1_-1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9998999238014221,
+        -0.014147168956696987,
+        0
+      ],
+      "normalizedInput": [
+        0.9998999238014221,
+        -0.014147168956696987,
+        0
+      ],
+      "encoded": [
+        32767,
+        -148
+      ],
+      "decoded": [
+        0.9998993277549744,
+        -0.0141892796382308,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9998999238014221,
+        "azimuthShortcut": false,
+        "alphaFactor": 1,
+        "betaFactor": -0.004502157215029001,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.2110681533813477e-05,
+        "unitLengthDrift": 6.507516747689124e-10,
+        "referenceUnitLengthDrift": 3.789413227650584e-12,
+        "angularErrorRadians": 4.211492229576547e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "azimuth_cos_0_1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9998999834060669,
+        0.014142955653369427,
+        0
+      ],
+      "normalizedInput": [
+        0.9998999834060669,
+        0.014142955653369427,
+        0
+      ],
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9998999834060669,
+        "azimuthShortcut": true,
+        "alphaFactor": 1,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.014142955653369427,
+        "unitLengthDrift": 8.881784197001252e-16,
+        "referenceUnitLengthDrift": 5.03286301523076e-12,
+        "angularErrorRadians": 0.014143427182338051
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "azimuth_cos_0_-1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9998999834060669,
+        -0.014142955653369427,
+        0
+      ],
+      "normalizedInput": [
+        0.9998999834060669,
+        -0.014142955653369427,
+        0
+      ],
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9998999834060669,
+        "azimuthShortcut": true,
+        "alphaFactor": 1,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.014142955653369427,
+        "unitLengthDrift": 8.881784197001252e-16,
+        "referenceUnitLengthDrift": 5.03286301523076e-12,
+        "angularErrorRadians": 0.014143427182338051
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "azimuth_cos_1_1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9999000430107117,
+        0.014138740487396717,
+        0
+      ],
+      "normalizedInput": [
+        0.9999000430107117,
+        0.014138740487396717,
+        0
+      ],
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9999000430107117,
+        "azimuthShortcut": true,
+        "alphaFactor": 1,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.014138740487396717,
+        "unitLengthDrift": 8.881784197001252e-16,
+        "referenceUnitLengthDrift": 2.3034907314922748e-12,
+        "angularErrorRadians": 0.014139211594966058
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "azimuth_cos_1_-1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9999000430107117,
+        -0.014138740487396717,
+        0
+      ],
+      "normalizedInput": [
+        0.9999000430107117,
+        -0.014138740487396717,
+        0
+      ],
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9999000430107117,
+        "azimuthShortcut": true,
+        "alphaFactor": 1,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.014138740487396717,
+        "unitLengthDrift": 8.881784197001252e-16,
+        "referenceUnitLengthDrift": 2.3034907314922748e-12,
+        "angularErrorRadians": 0.014139211594966058
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "azimuth_cos_2_1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9999001026153564,
+        0.014134524390101433,
+        0
+      ],
+      "normalizedInput": [
+        0.9999001026153564,
+        0.014134524390101433,
+        0
+      ],
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9999001026153564,
+        "azimuthShortcut": true,
+        "alphaFactor": 1,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.014134524390101433,
+        "unitLengthDrift": 8.881784197001252e-16,
+        "referenceUnitLengthDrift": 5.032640970625835e-12,
+        "angularErrorRadians": 0.01413499507636454
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "azimuth_cos_2_-1",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0.9999001026153564,
+        -0.014134524390101433,
+        0
+      ],
+      "normalizedInput": [
+        0.9999001026153564,
+        -0.014134524390101433,
+        0
+      ],
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0.9999001026153564,
+        "azimuthShortcut": true,
+        "alphaFactor": 1,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 0.014134524390101433,
+        "unitLengthDrift": 8.881784197001252e-16,
+        "referenceUnitLengthDrift": 5.032640970625835e-12,
+        "angularErrorRadians": 0.01413499507636454
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "q_1_0_below",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 1.5259252904797904e-05,
+      "scaled": 0.4999999403953552,
+      "shifted": 0.9999999403953552,
+      "encoded": 0,
+      "decodedFraction": 0,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_0_at",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 1.5259254723787308e-05,
+      "scaled": 0.5,
+      "shifted": 1,
+      "encoded": 1,
+      "decodedFraction": 3.0518509447574615e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_0_above",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 1.525925654277671e-05,
+      "scaled": 0.5000000596046448,
+      "shifted": 1,
+      "encoded": 1,
+      "decodedFraction": 3.0518509447574615e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_0_below",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -1.525925654277671e-05,
+      "scaled": -0.5000000596046448,
+      "shifted": -5.960464477539063e-08,
+      "encoded": -1,
+      "decodedFraction": -3.0518509447574615e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_0_at",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -1.5259254723787308e-05,
+      "scaled": -0.5,
+      "shifted": 0,
+      "encoded": 0,
+      "decodedFraction": 0,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_0_above",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -1.5259252904797904e-05,
+      "scaled": -0.4999999403953552,
+      "shifted": 5.960464477539063e-08,
+      "encoded": 0,
+      "decodedFraction": 0,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_1_below",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 4.5777760533383116e-05,
+      "scaled": 1.4999998807907104,
+      "shifted": 1.9999998807907104,
+      "encoded": 1,
+      "decodedFraction": 3.0518509447574615e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_1_at",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 4.577776417136192e-05,
+      "scaled": 1.5,
+      "shifted": 2,
+      "encoded": 2,
+      "decodedFraction": 6.103701889514923e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_1_above",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 4.577776780934073e-05,
+      "scaled": 1.5000001192092896,
+      "shifted": 2,
+      "encoded": 2,
+      "decodedFraction": 6.103701889514923e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_1_below",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -4.577776780934073e-05,
+      "scaled": -1.5000001192092896,
+      "shifted": -1.0000001192092896,
+      "encoded": -2,
+      "decodedFraction": -6.103701889514923e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_1_at",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -4.577776417136192e-05,
+      "scaled": -1.5,
+      "shifted": -1,
+      "encoded": -1,
+      "decodedFraction": -3.0518509447574615e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_1_above",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -4.5777760533383116e-05,
+      "scaled": -1.4999998807907104,
+      "shifted": -0.9999998807907104,
+      "encoded": -1,
+      "decodedFraction": -3.0518509447574615e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_2_below",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 7.629626634297892e-05,
+      "scaled": 2.499999761581421,
+      "shifted": 2.999999761581421,
+      "encoded": 2,
+      "decodedFraction": 6.103701889514923e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_2_at",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 7.629627361893654e-05,
+      "scaled": 2.5,
+      "shifted": 3,
+      "encoded": 3,
+      "decodedFraction": 9.155552834272385e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_2_above",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 7.629628089489415e-05,
+      "scaled": 2.500000238418579,
+      "shifted": 3.000000238418579,
+      "encoded": 3,
+      "decodedFraction": 9.155552834272385e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_2_below",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -7.629628089489415e-05,
+      "scaled": -2.500000238418579,
+      "shifted": -2.000000238418579,
+      "encoded": -3,
+      "decodedFraction": -9.155552834272385e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_2_at",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -7.629627361893654e-05,
+      "scaled": -2.5,
+      "shifted": -2,
+      "encoded": -2,
+      "decodedFraction": -6.103701889514923e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_2_above",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -7.629626634297892e-05,
+      "scaled": -2.499999761581421,
+      "shifted": -1.999999761581421,
+      "encoded": -2,
+      "decodedFraction": -6.103701889514923e-05,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_127_below",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0.00389110972173512,
+      "scaled": 127.49999237060547,
+      "shifted": 127.99999237060547,
+      "encoded": 127,
+      "decodedFraction": 0.003875850699841976,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_127_at",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0.0038911099545657635,
+      "scaled": 127.5,
+      "shifted": 128,
+      "encoded": 128,
+      "decodedFraction": 0.003906369209289551,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_127_above",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0.003891110187396407,
+      "scaled": 127.50000762939453,
+      "shifted": 128,
+      "encoded": 128,
+      "decodedFraction": 0.003906369209289551,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_127_below",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -0.003891110187396407,
+      "scaled": -127.50000762939453,
+      "shifted": -127.00000762939453,
+      "encoded": -128,
+      "decodedFraction": -0.003906369209289551,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_127_at",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -0.0038911099545657635,
+      "scaled": -127.5,
+      "shifted": -127,
+      "encoded": -127,
+      "decodedFraction": -0.003875850699841976,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_127_above",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -0.00389110972173512,
+      "scaled": -127.49999237060547,
+      "shifted": -126.99999237060547,
+      "encoded": -127,
+      "decodedFraction": -0.003875850699841976,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_16382_below",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0.4999694526195526,
+      "scaled": 16382.4990234375,
+      "shifted": 16382.9990234375,
+      "encoded": 16382,
+      "decodedFraction": 0.4999542236328125,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_16382_at",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0.499969482421875,
+      "scaled": 16382.5,
+      "shifted": 16383,
+      "encoded": 16383,
+      "decodedFraction": 0.4999847412109375,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_16382_above",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0.4999695122241974,
+      "scaled": 16382.5009765625,
+      "shifted": 16383.0009765625,
+      "encoded": 16383,
+      "decodedFraction": 0.4999847412109375,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_16382_below",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -0.4999695122241974,
+      "scaled": -16382.5009765625,
+      "shifted": -16382.0009765625,
+      "encoded": -16383,
+      "decodedFraction": -0.4999847412109375,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_16382_at",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -0.499969482421875,
+      "scaled": -16382.5,
+      "shifted": -16382,
+      "encoded": -16382,
+      "decodedFraction": -0.4999542236328125,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_16382_above",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -0.4999694526195526,
+      "scaled": -16382.4990234375,
+      "shifted": -16381.9990234375,
+      "encoded": -16382,
+      "decodedFraction": -0.4999542236328125,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_32766_below",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0.9999846816062927,
+      "scaled": 32766.498046875,
+      "shifted": 32766.998046875,
+      "encoded": 32766,
+      "decodedFraction": 0.999969482421875,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_32766_at",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0.9999847412109375,
+      "scaled": 32766.5,
+      "shifted": 32767,
+      "encoded": 32767,
+      "decodedFraction": 1,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_1_32766_above",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0.9999848008155823,
+      "scaled": 32766.501953125,
+      "shifted": 32767.001953125,
+      "encoded": 32767,
+      "decodedFraction": 1,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_32766_below",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -0.9999848008155823,
+      "scaled": -32766.501953125,
+      "shifted": -32766.001953125,
+      "encoded": -32767,
+      "decodedFraction": -1,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_32766_at",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -0.9999847412109375,
+      "scaled": -32766.5,
+      "shifted": -32766,
+      "encoded": -32766,
+      "decodedFraction": -0.999969482421875,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_-1_32766_above",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -0.9999846816062927,
+      "scaled": -32766.498046875,
+      "shifted": -32765.998046875,
+      "encoded": -32766,
+      "decodedFraction": -0.999969482421875,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_neg_one",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -1,
+      "scaled": -32767,
+      "shifted": -32766.5,
+      "encoded": -32767,
+      "decodedFraction": -1,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_zero",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0,
+      "scaled": 0,
+      "shifted": 0.5,
+      "encoded": 0,
+      "decodedFraction": 0,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_pos_one",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 1,
+      "scaled": 32767,
+      "shifted": 32767.5,
+      "encoded": 32767,
+      "decodedFraction": 1,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_neg_zero",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0,
+      "scaled": 0,
+      "shifted": 0.5,
+      "encoded": 0,
+      "decodedFraction": 0,
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_reject_too_low",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "value_out_of_domain",
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_reject_too_high",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "value_out_of_domain",
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_reject_nan",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "value_nonfinite",
+      "kernelExecuted": true
+    },
+    {
+      "id": "q_reject_infinity",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "value_nonfinite",
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-32767_-32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -32767,
+        -32767
+      ],
+      "decoded": [
+        -1,
+        8.742277657347586e-08,
+        1.1924880638503055e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-32767_-16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -32767,
+        -16384
+      ],
+      "decoded": [
+        -4.796584471478127e-05,
+        -1,
+        1.1924880638503055e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-32767_-1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -32767,
+        -1
+      ],
+      "decoded": [
+        1,
+        -9.5876726845745e-05,
+        1.1924880638503055e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-32767_0",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        1.1924880638503055e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-32767_1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -32767,
+        1
+      ],
+      "decoded": [
+        1,
+        9.5876726845745e-05,
+        1.1924880638503055e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-32767_16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -32767,
+        16384
+      ],
+      "decoded": [
+        -4.796584471478127e-05,
+        1,
+        1.1924880638503055e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-32767_32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -32767,
+        32767
+      ],
+      "decoded": [
+        -1,
+        -8.742277657347586e-08,
+        1.1924880638503055e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-16384_-32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -16384,
+        -32767
+      ],
+      "decoded": [
+        0.7070558667182922,
+        -6.181278422445757e-08,
+        -0.7071576714515686
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-16384_-16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -16384,
+        -16384
+      ],
+      "decoded": [
+        3.391453356016427e-05,
+        0.7070558667182922,
+        -0.7071576714515686
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-16384_-1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -16384,
+        -1
+      ],
+      "decoded": [
+        -0.7070558667182922,
+        6.779019895475358e-05,
+        -0.7071576714515686
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-16384_0",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -16384,
+        0
+      ],
+      "decoded": [
+        -0.7070558667182922,
+        0,
+        -0.7071576714515686
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-16384_1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -16384,
+        1
+      ],
+      "decoded": [
+        -0.7070558667182922,
+        -6.779019895475358e-05,
+        -0.7071576714515686
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-16384_16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -16384,
+        16384
+      ],
+      "decoded": [
+        3.391453356016427e-05,
+        -0.7070558667182922,
+        -0.7071576714515686
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-16384_32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -16384,
+        32767
+      ],
+      "decoded": [
+        0.7070558667182922,
+        6.181278422445757e-08,
+        -0.7071576714515686
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-1_-32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -1,
+        -32767
+      ],
+      "decoded": [
+        0.0001438150939065963,
+        -1.257271457083542e-11,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-1_-16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -1,
+        -16384
+      ],
+      "decoded": [
+        6.8982126677497035e-09,
+        0.0001438150939065963,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-1_-1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -1,
+        -1
+      ],
+      "decoded": [
+        -0.0001438150939065963,
+        1.3788520547564076e-08,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-1_0",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -1,
+        0
+      ],
+      "decoded": [
+        -0.0001438150939065963,
+        0,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-1_1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -1,
+        1
+      ],
+      "decoded": [
+        -0.0001438150939065963,
+        -1.3788520547564076e-08,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-1_16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -1,
+        16384
+      ],
+      "decoded": [
+        6.8982126677497035e-09,
+        -0.0001438150939065963,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_-1_32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -1,
+        32767
+      ],
+      "decoded": [
+        0.0001438150939065963,
+        1.257271457083542e-11,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_0_-32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        0,
+        -32767
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "upstreamFallback": true,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_0_-16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        0,
+        -16384
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "upstreamFallback": true,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_0_-1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        0,
+        -1
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "upstreamFallback": true,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_0_0",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        0,
+        0
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "upstreamFallback": true,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_0_1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        0,
+        1
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "upstreamFallback": true,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_0_16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        0,
+        16384
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "upstreamFallback": true,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_0_32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        0,
+        32767
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "upstreamFallback": true,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_1_-32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        1,
+        -32767
+      ],
+      "decoded": [
+        -4.79383634228725e-05,
+        4.1909050015054294e-12,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_1_-16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        1,
+        -16384
+      ],
+      "decoded": [
+        -2.2994040005386296e-09,
+        -4.79383634228725e-05,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_1_-1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        1,
+        -1
+      ],
+      "decoded": [
+        4.79383634228725e-05,
+        -4.596173219795219e-09,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_1_0",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        1,
+        0
+      ],
+      "decoded": [
+        4.79383634228725e-05,
+        0,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_1_1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        1,
+        1
+      ],
+      "decoded": [
+        4.79383634228725e-05,
+        4.596173219795219e-09,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_1_16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        1,
+        16384
+      ],
+      "decoded": [
+        -2.2994040005386296e-09,
+        4.79383634228725e-05,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_1_32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        1,
+        32767
+      ],
+      "decoded": [
+        -4.79383634228725e-05,
+        -4.1909050015054294e-12,
+        1
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_16384_-32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        16384,
+        -32767
+      ],
+      "decoded": [
+        -0.7071237564086914,
+        6.181872436172853e-08,
+        0.7070898413658142
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_16384_-16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        16384,
+        -16384
+      ],
+      "decoded": [
+        -3.391778955119662e-05,
+        -0.7071237564086914,
+        0.7070898413658142
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_16384_-1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        16384,
+        -1
+      ],
+      "decoded": [
+        0.7071237564086914,
+        -6.779671093681827e-05,
+        0.7070898413658142
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_16384_0",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        16384,
+        0
+      ],
+      "decoded": [
+        0.7071237564086914,
+        0,
+        0.7070898413658142
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_16384_1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        16384,
+        1
+      ],
+      "decoded": [
+        0.7071237564086914,
+        6.779671093681827e-05,
+        0.7070898413658142
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_16384_16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        16384,
+        16384
+      ],
+      "decoded": [
+        -3.391778955119662e-05,
+        0.7071237564086914,
+        0.7070898413658142
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_16384_32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        16384,
+        32767
+      ],
+      "decoded": [
+        -0.7071237564086914,
+        -6.181872436172853e-08,
+        0.7070898413658142
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_32767_-32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        32767,
+        -32767
+      ],
+      "decoded": [
+        -1,
+        8.742277657347586e-08,
+        -4.371138828673793e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_32767_-16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        32767,
+        -16384
+      ],
+      "decoded": [
+        -4.796584471478127e-05,
+        -1,
+        -4.371138828673793e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_32767_-1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        32767,
+        -1
+      ],
+      "decoded": [
+        1,
+        -9.5876726845745e-05,
+        -4.371138828673793e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_32767_0",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_32767_1",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        32767,
+        1
+      ],
+      "decoded": [
+        1,
+        9.5876726845745e-05,
+        -4.371138828673793e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_32767_16384",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        32767,
+        16384
+      ],
+      "decoded": [
+        -4.796584471478127e-05,
+        1,
+        -4.371138828673793e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_32767_32767",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        32767,
+        32767
+      ],
+      "decoded": [
+        -1,
+        -8.742277657347586e-08,
+        -4.371138828673793e-08
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_raw_zero_alpha",
+      "operation": "decode",
+      "mode": "invalid-range-fallback",
+      "status": "accepted",
+      "encoded": [
+        123,
+        456
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "upstreamFallback": true,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_refuse_zero_alpha",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "range_out_of_domain",
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_raw_zero_beta",
+      "operation": "decode",
+      "mode": "invalid-range-fallback",
+      "status": "accepted",
+      "encoded": [
+        123,
+        456
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "upstreamFallback": true,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_refuse_zero_beta",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "range_out_of_domain",
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_refuse_below",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "accepted",
+      "encoded": [
+        -32768,
+        1
+      ],
+      "decoded": [
+        1,
+        9.5876726845745e-05,
+        0.00014401673979591578
+      ],
+      "upstreamFallback": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_refuse_above",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "short_out_of_domain",
+      "kernelExecuted": true
+    },
+    {
+      "id": "decode_refuse_noninteger",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "short_out_of_domain",
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_below_neg_one",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -1.0000100135803223,
+      "approximate": 3.1415927410125732,
+      "exactDoubleReference": 3.141592653589793,
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_neg_one",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -1,
+      "approximate": 3.1415927410125732,
+      "exactDoubleReference": 3.141592653589793,
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_neg_near_one",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -0.9998999834060669,
+      "approximate": 3.127453088760376,
+      "exactDoubleReference": 3.1274492267633542,
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_neg_half",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -0.5,
+      "approximate": 2.0944128036499023,
+      "exactDoubleReference": 2.0943951023931957,
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_neg_tiny",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -9.99994610111476e-41,
+      "approximate": 1.5707963705062866,
+      "exactDoubleReference": 1.5707963267948966,
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_neg_zero",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0,
+      "approximate": 1.5707963705062866,
+      "exactDoubleReference": 1.5707963267948966,
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_zero",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0,
+      "approximate": 1.5707963705062866,
+      "exactDoubleReference": 1.5707963267948966,
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_tiny",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 9.99994610111476e-41,
+      "approximate": 1.5707963705062866,
+      "exactDoubleReference": 1.5707963267948966,
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_half",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0.5,
+      "approximate": 1.0471798181533813,
+      "exactDoubleReference": 1.0471975511965979,
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_near_one",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0.9998999834060669,
+      "approximate": 0.014139644801616669,
+      "exactDoubleReference": 0.014143426826438996,
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_one",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 1,
+      "approximate": 0,
+      "exactDoubleReference": 0,
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_above_one",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 1.0000100135803223,
+      "approximate": 0,
+      "exactDoubleReference": 0,
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_refuse_nan",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "value_nonfinite",
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_refuse_inf",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "value_nonfinite",
+      "kernelExecuted": true
+    },
+    {
+      "id": "acos_refuse_neg_inf",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "value_nonfinite",
+      "kernelExecuted": true
+    },
+    {
+      "id": "normalize_zero",
+      "operation": "normalize",
+      "mode": "strict",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0,
+        0,
+        0
+      ],
+      "squaredLengthFloat32": 0,
+      "normalizedInput": [
+        0,
+        0,
+        0
+      ],
+      "normalizationCollapsed": true,
+      "kernelExecuted": true
+    },
+    {
+      "id": "normalize_ordinary",
+      "operation": "normalize",
+      "mode": "strict",
+      "status": "accepted",
+      "normalInputFloat32": [
+        2,
+        3,
+        4
+      ],
+      "squaredLengthFloat32": 29,
+      "normalizedInput": [
+        0.3713906705379486,
+        0.5570860505104065,
+        0.7427813410758972
+      ],
+      "normalizationCollapsed": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "normalize_negative",
+      "operation": "normalize",
+      "mode": "strict",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -2,
+        -3,
+        -4
+      ],
+      "squaredLengthFloat32": 29,
+      "normalizedInput": [
+        -0.3713906705379486,
+        -0.5570860505104065,
+        -0.7427813410758972
+      ],
+      "normalizationCollapsed": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "normalize_tiny",
+      "operation": "normalize",
+      "mode": "strict",
+      "status": "accepted",
+      "normalInputFloat32": [
+        1.0000000031710769e-30,
+        0,
+        0
+      ],
+      "squaredLengthFloat32": 0,
+      "normalizedInput": [
+        0,
+        0,
+        0
+      ],
+      "normalizationCollapsed": true,
+      "kernelExecuted": true
+    },
+    {
+      "id": "normalize_large",
+      "operation": "normalize",
+      "mode": "strict",
+      "status": "accepted",
+      "normalInputFloat32": [
+        1.0000000150474662e+30,
+        0,
+        0
+      ],
+      "squaredLengthFloat32": null,
+      "normalizedInput": [
+        0,
+        0,
+        0
+      ],
+      "normalizationCollapsed": true,
+      "kernelExecuted": true
+    },
+    {
+      "id": "normalize_cutoff_below",
+      "operation": "normalize",
+      "mode": "strict",
+      "status": "accepted",
+      "normalInputFloat32": [
+        3.16227756738511e-18,
+        0,
+        0
+      ],
+      "squaredLengthFloat32": 9.999999462560281e-36,
+      "normalizedInput": [
+        0,
+        0,
+        0
+      ],
+      "normalizationCollapsed": true,
+      "kernelExecuted": true
+    },
+    {
+      "id": "normalize_cutoff_at",
+      "operation": "normalize",
+      "mode": "strict",
+      "status": "accepted",
+      "normalInputFloat32": [
+        3.1622777741802633e-18,
+        0,
+        0
+      ],
+      "squaredLengthFloat32": 1.0000000897489909e-35,
+      "normalizedInput": [
+        1,
+        0,
+        0
+      ],
+      "normalizationCollapsed": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "normalize_cutoff_above",
+      "operation": "normalize",
+      "mode": "strict",
+      "status": "accepted",
+      "normalInputFloat32": [
+        3.1622779809754164e-18,
+        0,
+        0
+      ],
+      "squaredLengthFloat32": 1.0000002332419536e-35,
+      "normalizedInput": [
+        1,
+        0,
+        0
+      ],
+      "normalizationCollapsed": false,
+      "kernelExecuted": true
+    },
+    {
+      "id": "strict_normal_ordinary",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "accepted",
+      "normalInputFloat32": [
+        2,
+        3,
+        4
+      ],
+      "normalizedInput": [
+        0.3713906705379486,
+        0.5570860505104065,
+        0.7427813410758972
+      ],
+      "encoded": [
+        15304,
+        10251
+      ],
+      "decoded": [
+        0.37139692902565,
+        0.5571420192718506,
+        0.7427362203598022
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0.7427813410758972,
+        "alpha": 0.7336252927780151,
+        "cosBeta": 0.5547001957893372,
+        "azimuthShortcut": false,
+        "alphaFactor": 0.46704035997390747,
+        "betaFactor": 0.3128339350223541,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 5.59687614440918e-05,
+        "unitLengthDrift": 7.811817859249004e-10,
+        "referenceUnitLengthDrift": 9.243209309062195e-09,
+        "angularErrorRadians": 7.216335514141822e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "strict_normal_negative",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -2,
+        -3,
+        -4
+      ],
+      "normalizedInput": [
+        -0.3713906705379486,
+        -0.5570860505104065,
+        -0.7427813410758972
+      ],
+      "encoded": [
+        -26946,
+        -22516
+      ],
+      "decoded": [
+        -0.3713970184326172,
+        -0.5571418404579163,
+        -0.742736279964447
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": -0.7427813410758972,
+        "alpha": 2.4079675674438477,
+        "cosBeta": -0.5547001957893372,
+        "azimuthShortcut": false,
+        "alphaFactor": -0.8223468065261841,
+        "betaFactor": -0.6871660351753235,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 5.5789947509765625e-05,
+        "unitLengthDrift": 2.136755150594638e-08,
+        "referenceUnitLengthDrift": 9.243209309062195e-09,
+        "angularErrorRadians": 7.199525611485092e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "strict_normal_tiny",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "normal_collapsed_by_upstream_normalize",
+      "kernelExecuted": true
+    },
+    {
+      "id": "strict_normal_large",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "normal_collapsed_by_upstream_normalize",
+      "kernelExecuted": true
+    },
+    {
+      "id": "strict_normal_zero",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "normal_zero",
+      "kernelExecuted": true
+    },
+    {
+      "id": "strict_normal_nan",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "normal_nonfinite",
+      "kernelExecuted": true
+    },
+    {
+      "id": "strict_normal_inf",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "normal_nonfinite",
+      "kernelExecuted": true
+    },
+    {
+      "id": "unit_refuse_nonunit",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "rejected",
+      "reason": "normal_not_unit",
+      "kernelExecuted": true
+    },
+    {
+      "id": "raw_zero_sentinel",
+      "operation": "roundtrip",
+      "mode": "zero-sentinel",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0,
+        0,
+        0
+      ],
+      "normalizedInput": [
+        0,
+        0,
+        0
+      ],
+      "encoded": [
+        0,
+        0
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": true
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 1,
+        "unitLengthDrift": 0.0,
+        "referenceUnitLengthDrift": 1.0,
+        "angularErrorRadians": null
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "frame_refuse_alpha_zero",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "range_out_of_domain",
+      "kernelExecuted": true
+    },
+    {
+      "id": "frame_refuse_alpha_negative",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "range_out_of_domain",
+      "kernelExecuted": true
+    },
+    {
+      "id": "frame_refuse_alpha_large",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "range_out_of_domain",
+      "kernelExecuted": true
+    },
+    {
+      "id": "frame_refuse_alpha_nonfinite",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "range_nonfinite",
+      "kernelExecuted": true
+    },
+    {
+      "id": "frame_refuse_beta_zero",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "range_out_of_domain",
+      "kernelExecuted": true
+    },
+    {
+      "id": "frame_refuse_beta_negative",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "range_out_of_domain",
+      "kernelExecuted": true
+    },
+    {
+      "id": "frame_refuse_beta_large",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "range_out_of_domain",
+      "kernelExecuted": true
+    },
+    {
+      "id": "frame_refuse_beta_nonfinite",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "range_nonfinite",
+      "kernelExecuted": true
+    },
+    {
+      "id": "frame_refuse_zero_lnor",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "frame_not_unit",
+      "kernelExecuted": true
+    },
+    {
+      "id": "frame_refuse_nonunit_ref",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "frame_not_unit",
+      "kernelExecuted": true
+    },
+    {
+      "id": "frame_refuse_nonorthogonal",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "frame_not_orthogonal",
+      "kernelExecuted": true
+    },
+    {
+      "id": "frame_refuse_left_handed",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "frame_not_right_handed",
+      "kernelExecuted": true
+    },
+    {
+      "id": "frame_refuse_nonfinite_basis",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "frame_nonfinite",
+      "kernelExecuted": true
+    },
+    {
+      "id": "sharp_face_a",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        1,
+        0,
+        0
+      ],
+      "normalizedInput": [
+        1,
+        0,
+        0
+      ],
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 1,
+        "azimuthShortcut": true,
+        "alphaFactor": 1,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.371138828673793e-08,
+        "unitLengthDrift": 8.881784197001252e-16,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 4.37113882867379e-08
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": true
+    },
+    {
+      "id": "sharp_face_b",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        0,
+        1,
+        0
+      ],
+      "normalizedInput": [
+        0,
+        1,
+        0
+      ],
+      "encoded": [
+        32767,
+        16384
+      ],
+      "decoded": [
+        -4.796584471478127e-05,
+        1,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 0,
+        "azimuthShortcut": false,
+        "alphaFactor": 1,
+        "betaFactor": 0.5,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 4.796584471478127e-05,
+        "unitLengthDrift": 1.1503620278574544e-09,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 4.7965864595137745e-05
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": false
+    },
+    {
+      "id": "sharp_face_c",
+      "operation": "roundtrip",
+      "mode": "unit",
+      "status": "accepted",
+      "normalInputFloat32": [
+        -1,
+        0,
+        0
+      ],
+      "normalizedInput": [
+        -1,
+        0,
+        0
+      ],
+      "encoded": [
+        32767,
+        32767
+      ],
+      "decoded": [
+        -1,
+        -8.742277657347586e-08,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": -1,
+        "azimuthShortcut": false,
+        "alphaFactor": 1,
+        "betaFactor": 1,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "kernelExecuted": true,
+      "metrics": {
+        "maxComponentError": 8.742277657347586e-08,
+        "unitLengthDrift": 4.6629367034256575e-15,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 9.774163560003377e-08
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": true
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "ontokin.c213.oracle-correction/0.1",
+  "createdAtUtc": "2026-11-12T13:46:22.546796+00:00",
+  "caseId": "decode_refuse_below",
+  "sealedCasesSha256": "fa2241d38866224fdbe4ea9f9a02a4f667c06df973ea59c67c02cb81adb00f1e",
+  "sealedExpectationsSha256": "8380c9fa6573beabd238582318610d19de94aa4d9cda680491f3546c33dbe5a7",
+  "originalExpectedStatus": "rejected",
+  "correctedExpectedStatus": "accepted",
+  "classification": "Independent expectation-domain error; no implementation arithmetic defect",
+  "rationale": "Pinned decoder takes a signed short and divides by SHRT_MAX without rejecting -32768. The selected scalar decoder is mathematically defined for -32768, even though the encoder and quantizer produce only [-32767,32767]. The harness explicitly documents full-short decode. Testing this raw-domain observation is appropriate and must not be confused with quantizer input policy.",
+  "source": "Blender 32f5fdce0a0a571a39198edf8d7b5d719bf59f2c mesh_normals.cc unit_short_to_float and corner_space_custom_data_to_normal",
+  "originalRun": "observed-initial.json",
+  "originalFailedAssertions": "checks-initial.json",
+  "initialResultRetained": true,
+  "sealedInputsOrExpectationsChanged": false,
+  "requiredAdditionalAssertion": "Accepted decoded vector must match independent spherical calculation and remain finite; all original cases still execute."
+}

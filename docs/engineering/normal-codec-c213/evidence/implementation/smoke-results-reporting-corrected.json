@@ -1,0 +1,158 @@
+{
+  "schema": "ontokin.c213.cpu-codec-observations/0.1",
+  "upstreamCommit": "32f5fdce0a0a571a39198edf8d7b5d719bf59f2c",
+  "caseInputSha256": "7e7489561747a7bee3317b17e88977f9984d98021247abe10dd1a99193579c8a",
+  "caseCount": 3,
+  "acceptedCount": 3,
+  "rejectedCount": 0,
+  "rejectionsAreHarnessPolicy": true,
+  "sourceBindings": {
+    "codec_probe.cpp": "32a44a85b71559adc14511e6ca39a41dd4898e3c589398e9d75057b827f3376d",
+    "codec_exact.inc": "fc2b5deb6cf1272ea132671ce33c296f09ef1fa977aa44fe2737d6c56867832b",
+    "extract_codec.py": "da4efd7531815967caa705502d3a57057732945a2902a71437bfc561321248a3",
+    "run_probe.py": "ea6673bd60e8bd92877cb0c2b4f48c0440df54598da9034952fb6827ad24d8f5",
+    "SOURCE-BINDINGS.json": "28781632d0abd1f39afc2c24af763b60bb75a8fc23ff21e7abb323af2a2e8c88"
+  },
+  "selectedFunctionSha256": {
+    "unit_short_to_float": "4e3e8ec48dae1d83d4723b400a60712f196cf12861af16186fb05fc65056e37b",
+    "unit_float_to_short": "61fb8a8e8129816777e82ba6672ba3f09e78f6857621d78ad42ebe3b07fded9e",
+    "safe_acos_approx": "1438a812cc0c11f5ff08fafbb75fb699c36440671acd5beebd368e32a5802194",
+    "corner_space_custom_data_to_normal": "6781eae74cacd2ac5678f19fda9d499517c3ac4285ed739ccaf9ce5094173bf7",
+    "corner_space_custom_normal_to_data": "63cbcf8015b3f818f49cbcc17fd77b554e5cf91a019490cddb304e157aca6d5f"
+  },
+  "compiler": {
+    "command": [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-O0",
+      "-fno-fast-math",
+      "-ffp-contract=off",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "/workspace/scratch/0fee8b4c64ac/c213-codec-worker/docs/engineering/normal-codec-c213/codec_probe.cpp",
+      "-o",
+      "/workspace/scratch/0fee8b4c64ac/codec-smoke-build-corrected/codec_probe"
+    ],
+    "version": "g++ (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+    "path": "/usr/bin/g++",
+    "executableSha256": "6b3696e4dcb85e1c949c732a02befa50e3983ecf94ce7e8e58d9d503b954b79d",
+    "probeSha256": "7fc5acdf013ce9aebcdad3f215a66374ecc258c472a068f4e24be0d3a4531790",
+    "flags": [
+      "-std=c++17",
+      "-O0",
+      "-fno-fast-math",
+      "-ffp-contract=off",
+      "-Wall",
+      "-Wextra",
+      "-Werror"
+    ]
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "libc": [
+      "glibc",
+      "2.41"
+    ],
+    "floatBytes": 4,
+    "shortMax": 32767,
+    "FLT_EVAL_METHOD": 0,
+    "roundingMode": "FE_TONEAREST",
+    "float32SubnormalsPreserved": true
+  },
+  "precision": "Selected float32 operations with contraction and fast math disabled; double metrics are independent diagnostics",
+  "limitations": [
+    "Explicit supplied frames do not reproduce native fan construction, splitting or averaging",
+    "Unit mode feeds supplied float32 values directly; strict mode uses pinned upstream normalization first",
+    "No universal error bound or replacement approximation budget is established by finite rows",
+    "Installed C211 binary/source provenance and native frame/short values remain unresolved",
+    "This standalone scalar build is not bitwise attestation of the Blender executable or every platform libm"
+  ],
+  "nativeBlenderProcesses": 0,
+  "rows": [
+    {
+      "id": "axis-x",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "accepted",
+      "normalInputFloat32": [
+        1,
+        0,
+        0
+      ],
+      "normalizedInput": [
+        1,
+        0,
+        0
+      ],
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "trace": {
+        "nearAuto": false,
+        "zeroSentinel": false,
+        "cosAlpha": 0,
+        "alpha": 1.5707963705062866,
+        "cosBeta": 1,
+        "azimuthShortcut": true,
+        "alphaFactor": 1,
+        "betaFactor": 0,
+        "azimuthThresholdFloat32": 0.9998999834060669,
+        "projectionCollapsed": false
+      },
+      "probeProcessExecuted": true,
+      "codecEncoderExecuted": true,
+      "codecDecoderExecuted": true,
+      "inputNormalizationExecuted": true,
+      "standaloneHelperExecuted": null,
+      "metrics": {
+        "maxComponentError": 4.371138828673793e-08,
+        "unitLengthDrift": 8.881784197001252e-16,
+        "referenceUnitLengthDrift": 0.0,
+        "angularErrorRadians": 4.37113882867379e-08
+      },
+      "originalStrictComponentLimit": 2e-06,
+      "originalStrictComponentLimitPassed": true
+    },
+    {
+      "id": "q-pos",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": 0.5,
+      "scaled": 16383.5,
+      "shifted": 16384,
+      "encoded": 16384,
+      "decodedFraction": 0.5000152587890625,
+      "probeProcessExecuted": true,
+      "codecEncoderExecuted": false,
+      "codecDecoderExecuted": false,
+      "inputNormalizationExecuted": false,
+      "standaloneHelperExecuted": "quantize"
+    },
+    {
+      "id": "q-neg",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "accepted",
+      "valueFloat32": -0.5,
+      "scaled": -16383.5,
+      "shifted": -16383,
+      "encoded": -16383,
+      "decodedFraction": -0.4999847412109375,
+      "probeProcessExecuted": true,
+      "codecEncoderExecuted": false,
+      "codecDecoderExecuted": false,
+      "inputNormalizationExecuted": false,
+      "standaloneHelperExecuted": "quantize"
+    }
+  ]
+}

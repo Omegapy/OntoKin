@@ -1,0 +1,2980 @@
+{
+  "schema": "ontokin.c213.independent-source-review/0.1",
+  "passed": true,
+  "checkCount": 731,
+  "failedChecks": [],
+  "reviewedCommit": "36afd901c099bdfb6ac12af3994140a15a19ab4c",
+  "workingTreeStatus": "",
+  "selectedFunctions": {
+    "unit_short_to_float": "4e3e8ec48dae1d83d4723b400a60712f196cf12861af16186fb05fc65056e37b",
+    "unit_float_to_short": "61fb8a8e8129816777e82ba6672ba3f09e78f6857621d78ad42ebe3b07fded9e",
+    "safe_acos_approx": "1438a812cc0c11f5ff08fafbb75fb699c36440671acd5beebd368e32a5802194",
+    "corner_space_custom_data_to_normal": "6781eae74cacd2ac5678f19fda9d499517c3ac4285ed739ccaf9ce5094173bf7",
+    "corner_space_custom_normal_to_data": "63cbcf8015b3f818f49cbcc17fd77b554e5cf91a019490cddb304e157aca6d5f"
+  },
+  "manualSourceReview": [
+    {
+      "topic": "Scalar dot operation order",
+      "finding": "The wrapper accumulates a[0]*b[0], then += the two remaining float products, matching BLI_math_vector.hh dot<float,3>."
+    },
+    {
+      "topic": "Normalization route",
+      "finding": "The wrapper uses squared-length cutoff 1e-35f, float sqrt and per-component division, matching C++ math::normalize used by the selected from-verts input route; it does not substitute the separate C reciprocal-multiply function."
+    },
+    {
+      "topic": "Projection and decoded additions",
+      "finding": "float3 addition/multiplication/division and mul_v3_v3fl/madd_v3_v3fl match pinned componentwise operations; -ffp-contract=off and no-fast-math preserve this selected order."
+    },
+    {
+      "topic": "Component comparison",
+      "finding": "is_zero_v3 exact equality and compare_ff fabsf(a-b)<=limit match independent pinned helpers."
+    },
+    {
+      "topic": "Frame validation",
+      "finding": "The wrapper checks finite/unit/orthogonal/right-handed basis and stated ranges before encoder execution. Zero-range decoder diagnostics remain explicit and separate. This is harness policy, not native fan construction."
+    },
+    {
+      "topic": "Decoder short domain correction",
+      "finding": "Full int16 decoding, including -32768, follows the source. The initial reviewer expectation was narrower than the upstream decoder; ORACLE-CORRECTION.json preserves and explains the corrected assertion."
+    },
+    {
+      "topic": "Missing explicit input correction",
+      "finding": "Initial source defaulted required normal/short/value fields. Corrected source rejects these before probe execution; eleven supplemental controls verify refusal and execution claims."
+    },
+    {
+      "topic": "Scope",
+      "finding": "No OntoKin runtime, existing receiver, fan-construction algorithm, original strict tolerance or historical evidence is modified by this implementation. No Blender process is invoked."
+    }
+  ],
+  "checks": [
+    {
+      "name": "pinned_source_commit",
+      "passed": true
+    },
+    {
+      "name": "source_hash:upstream/mesh_normals.cc",
+      "passed": true
+    },
+    {
+      "name": "source_hash:upstream/BLI_math_base.hh",
+      "passed": true
+    },
+    {
+      "name": "source_hash:upstream/BLI_math_vector.hh",
+      "passed": true
+    },
+    {
+      "name": "source_hash:upstream/BLI_math_vector_types.hh",
+      "passed": true
+    },
+    {
+      "name": "source_hash:upstream/math_vector_inline.c",
+      "passed": true
+    },
+    {
+      "name": "source_hash:upstream/math_base_inline.c",
+      "passed": true
+    },
+    {
+      "name": "retained_c212_source_equality:mesh_normals.cc",
+      "passed": true
+    },
+    {
+      "name": "retained_c212_source_equality:BLI_math_base.hh",
+      "passed": true
+    },
+    {
+      "name": "independently_retrieved_source_equality:math_vector_inline.c",
+      "passed": true
+    },
+    {
+      "name": "independently_retrieved_source_equality:math_base_inline.c",
+      "passed": true
+    },
+    {
+      "name": "independently_retrieved_source_equality:BLI_math_vector.hh",
+      "passed": true
+    },
+    {
+      "name": "complete_exact_body:unit_short_to_float",
+      "passed": true
+    },
+    {
+      "name": "complete_exact_body:unit_float_to_short",
+      "passed": true
+    },
+    {
+      "name": "complete_exact_body:safe_acos_approx",
+      "passed": true
+    },
+    {
+      "name": "complete_exact_body:corner_space_custom_data_to_normal",
+      "passed": true
+    },
+    {
+      "name": "complete_exact_body:corner_space_custom_normal_to_data",
+      "passed": true
+    },
+    {
+      "name": "selected_function_hashes_match_independent_extraction",
+      "passed": true
+    },
+    {
+      "name": "selected_functions_unchanged_by_review_corrections",
+      "passed": true
+    },
+    {
+      "name": "final_observation_binds_current_source:codec_probe.cpp",
+      "passed": true
+    },
+    {
+      "name": "final_observation_binds_current_source:codec_exact.inc",
+      "passed": true
+    },
+    {
+      "name": "final_observation_binds_current_source:extract_codec.py",
+      "passed": true
+    },
+    {
+      "name": "final_observation_binds_current_source:run_probe.py",
+      "passed": true
+    },
+    {
+      "name": "final_observation_binds_current_source:SOURCE-BINDINGS.json",
+      "passed": true
+    },
+    {
+      "name": "all_observed_numeric_values_unchanged_by_corrections",
+      "passed": true
+    },
+    {
+      "name": "supplemental_exact_case_identity_set",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_roundtrip_normal:explicit_refusal",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_roundtrip_normal:encoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_roundtrip_normal:decoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_roundtrip_normal:normalization_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_roundtrip_normal:no_helper_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_roundtrip_normal:accurate_process_observation",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_decode_shorts:explicit_refusal",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_decode_shorts:encoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_decode_shorts:decoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_decode_shorts:normalization_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_decode_shorts:no_helper_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_decode_shorts:accurate_process_observation",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_normalize_normal:explicit_refusal",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_normalize_normal:encoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_normalize_normal:decoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_normalize_normal:normalization_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_normalize_normal:no_helper_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_normalize_normal:accurate_process_observation",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_quantize_value:explicit_refusal",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_quantize_value:encoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_quantize_value:decoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_quantize_value:normalization_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_quantize_value:no_helper_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_quantize_value:accurate_process_observation",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_acos_value:explicit_refusal",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_acos_value:encoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_acos_value:decoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_acos_value:normalization_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_acos_value:no_helper_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_acos_value:accurate_process_observation",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_frame:explicit_refusal",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_frame:encoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_frame:decoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_frame:normalization_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_frame:no_helper_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:missing_frame:accurate_process_observation",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_boolean:explicit_refusal",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_boolean:encoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_boolean:decoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_boolean:normalization_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_boolean:no_helper_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_boolean:accurate_process_observation",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_decimal_integer:explicit_refusal",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_decimal_integer:encoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_decimal_integer:decoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_decimal_integer:normalization_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_decimal_integer:no_helper_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_decimal_integer:accurate_process_observation",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_fraction:explicit_refusal",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_fraction:encoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_fraction:decoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_fraction:normalization_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_fraction:no_helper_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:decode_fraction:accurate_process_observation",
+      "passed": true
+    },
+    {
+      "name": "supplemental:normal_boolean:explicit_refusal",
+      "passed": true
+    },
+    {
+      "name": "supplemental:normal_boolean:encoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:normal_boolean:decoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:normal_boolean:normalization_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:normal_boolean:no_helper_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:normal_boolean:accurate_process_observation",
+      "passed": true
+    },
+    {
+      "name": "supplemental:zero_sentinel_nonzero:explicit_refusal",
+      "passed": true
+    },
+    {
+      "name": "supplemental:zero_sentinel_nonzero:encoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:zero_sentinel_nonzero:decoder_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:zero_sentinel_nonzero:normalization_not_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:zero_sentinel_nonzero:no_helper_executed",
+      "passed": true
+    },
+    {
+      "name": "supplemental:zero_sentinel_nonzero:accurate_process_observation",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_auto:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_auto:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_auto:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_anti_auto:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_anti_auto:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_anti_auto:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_ref:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_ref:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_ref:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_anti_ref:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_anti_ref:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_anti_ref:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_ortho:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_ortho:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_ortho:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_anti_ortho:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_anti_ortho:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_anti_ortho:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_0:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_0:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_0:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_2:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_2:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_2:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_3:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_3:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_3:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_4:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_4:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_oblique_4:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_auto:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_auto:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_auto:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_anti_auto:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_anti_auto:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_anti_auto:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_ref:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_ref:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_ref:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_anti_ref:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_anti_ref:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_anti_ref:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_ortho:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_ortho:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_ortho:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_anti_ortho:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_anti_ortho:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_anti_ortho:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_0:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_0:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_0:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_2:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_2:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_2:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_3:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_3:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_3:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_4:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_4:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_oblique_4:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_auto:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_auto:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_auto:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_anti_auto:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_anti_auto:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_anti_auto:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_ref:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_ref:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_ref:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_anti_ref:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_anti_ref:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_anti_ref:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_ortho:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_ortho:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_ortho:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_anti_ortho:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_anti_ortho:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_anti_ortho:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_0:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_0:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_0:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_2:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_2:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_2:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_3:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_3:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_3:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_4:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_4:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:oblique_oblique_4:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_shortcut_0:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_shortcut_0:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_shortcut_0:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_shortcut_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_shortcut_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_shortcut_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_shortcut_2:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_shortcut_2:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_shortcut_2:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_shortcut_3:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_shortcut_3:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:canonical_shortcut_3:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_shortcut_0:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_shortcut_0:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_shortcut_0:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_shortcut_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_shortcut_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_shortcut_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_shortcut_2:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_shortcut_2:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_shortcut_2:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_shortcut_3:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_shortcut_3:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:rotated_shortcut_3:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:full_beta_shortcut_0:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:full_beta_shortcut_0:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:full_beta_shortcut_0:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:full_beta_shortcut_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:full_beta_shortcut_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:full_beta_shortcut_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:full_beta_shortcut_2:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:full_beta_shortcut_2:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:full_beta_shortcut_2:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:full_beta_shortcut_3:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:full_beta_shortcut_3:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:full_beta_shortcut_3:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_1_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_1_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_1_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_1_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_1_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_1_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_1_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_1_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_1_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_1_twice:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_1_twice:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_1_twice:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_-1_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_-1_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_-1_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_-1_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_-1_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_-1_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_-1_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_-1_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_-1_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_-1_twice:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_-1_twice:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_-1_twice:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_component_cube:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_component_cube:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:near_auto_component_cube:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_-2_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_-2_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_-2_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_-2_-1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_-2_-1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_-2_-1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_-1_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_-1_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_-1_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_-1_-1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_-1_-1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_-1_-1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_0_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_0_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_0_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_0_-1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_0_-1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_0_-1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_1_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_1_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_1_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_1_-1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_1_-1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_1_-1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_2_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_2_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_2_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_2_-1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_2_-1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:azimuth_cos_2_-1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_0_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_0_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_0_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_0_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_0_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_0_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_0_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_0_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_0_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_0_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_0_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_0_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_0_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_0_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_0_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_0_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_0_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_0_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_1_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_1_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_1_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_1_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_1_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_1_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_1_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_1_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_1_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_1_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_1_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_1_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_1_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_1_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_1_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_1_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_1_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_1_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_2_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_2_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_2_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_2_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_2_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_2_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_2_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_2_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_2_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_2_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_2_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_2_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_2_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_2_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_2_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_2_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_2_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_2_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_127_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_127_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_127_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_127_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_127_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_127_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_127_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_127_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_127_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_127_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_127_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_127_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_127_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_127_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_127_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_127_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_127_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_127_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_16382_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_16382_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_16382_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_16382_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_16382_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_16382_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_16382_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_16382_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_16382_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_16382_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_16382_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_16382_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_16382_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_16382_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_16382_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_16382_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_16382_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_16382_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_32766_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_32766_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_32766_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_32766_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_32766_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_32766_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_32766_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_32766_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_1_32766_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_32766_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_32766_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_32766_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_32766_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_32766_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_32766_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_32766_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_32766_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_-1_32766_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_neg_one:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_neg_one:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_neg_one:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_zero:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_zero:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_zero:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_pos_one:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_pos_one:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_pos_one:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_neg_zero:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_neg_zero:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_neg_zero:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_reject_too_low:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_reject_too_low:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_reject_too_low:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_reject_too_high:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_reject_too_high:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_reject_too_high:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_reject_nan:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_reject_nan:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_reject_nan:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_reject_infinity:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_reject_infinity:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:q_reject_infinity:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_-32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_-32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_-32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_-16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_-16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_-16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_-1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_-1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_-1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_0:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_0:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_0:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-32767_32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_-32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_-32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_-32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_-16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_-16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_-16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_-1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_-1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_-1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_0:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_0:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_0:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-16384_32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_-32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_-32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_-32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_-16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_-16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_-16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_-1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_-1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_-1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_0:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_0:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_0:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_-1_32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_-32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_-32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_-32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_-16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_-16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_-16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_-1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_-1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_-1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_0:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_0:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_0:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_0_32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_-32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_-32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_-32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_-16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_-16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_-16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_-1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_-1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_-1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_0:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_0:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_0:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_1_32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_-32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_-32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_-32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_-16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_-16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_-16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_-1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_-1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_-1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_0:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_0:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_0:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_16384_32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_-32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_-32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_-32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_-16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_-16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_-16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_-1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_-1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_-1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_0:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_0:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_0:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_1:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_1:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_1:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_16384:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_16384:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_16384:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_32767:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_32767:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_32767_32767:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_raw_zero_alpha:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_raw_zero_alpha:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_raw_zero_alpha:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_zero_alpha:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_zero_alpha:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_zero_alpha:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_raw_zero_beta:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_raw_zero_beta:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_raw_zero_beta:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_zero_beta:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_zero_beta:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_zero_beta:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_noninteger:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_noninteger:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:decode_refuse_noninteger:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_below_neg_one:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_below_neg_one:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_below_neg_one:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_one:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_one:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_one:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_near_one:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_near_one:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_near_one:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_half:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_half:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_half:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_tiny:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_tiny:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_tiny:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_zero:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_zero:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_neg_zero:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_zero:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_zero:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_zero:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_tiny:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_tiny:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_tiny:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_half:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_half:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_half:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_near_one:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_near_one:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_near_one:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_one:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_one:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_one:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_above_one:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_above_one:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_above_one:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_refuse_nan:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_refuse_nan:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_refuse_nan:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_refuse_inf:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_refuse_inf:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_refuse_inf:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_refuse_neg_inf:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_refuse_neg_inf:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:acos_refuse_neg_inf:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_zero:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_zero:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_zero:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_ordinary:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_ordinary:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_ordinary:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_negative:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_negative:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_negative:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_tiny:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_tiny:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_tiny:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_large:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_large:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_large:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_cutoff_below:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_cutoff_below:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_cutoff_below:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_cutoff_at:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_cutoff_at:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_cutoff_at:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_cutoff_above:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_cutoff_above:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:normalize_cutoff_above:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_ordinary:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_ordinary:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_ordinary:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_negative:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_negative:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_negative:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_tiny:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_tiny:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_tiny:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_large:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_large:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_large:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_zero:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_zero:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_zero:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_nan:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_nan:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_nan:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_inf:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_inf:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:strict_normal_inf:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:unit_refuse_nonunit:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:unit_refuse_nonunit:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:unit_refuse_nonunit:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:raw_zero_sentinel:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:raw_zero_sentinel:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:raw_zero_sentinel:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_alpha_zero:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_alpha_zero:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_alpha_zero:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_alpha_negative:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_alpha_negative:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_alpha_negative:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_alpha_large:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_alpha_large:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_alpha_large:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_alpha_nonfinite:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_alpha_nonfinite:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_alpha_nonfinite:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_beta_zero:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_beta_zero:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_beta_zero:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_beta_negative:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_beta_negative:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_beta_negative:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_beta_large:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_beta_large:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_beta_large:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_beta_nonfinite:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_beta_nonfinite:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_beta_nonfinite:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_zero_lnor:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_zero_lnor:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_zero_lnor:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_nonunit_ref:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_nonunit_ref:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_nonunit_ref:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_nonorthogonal:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_nonorthogonal:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_nonorthogonal:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_left_handed:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_left_handed:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_left_handed:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_nonfinite_basis:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_nonfinite_basis:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:frame_refuse_nonfinite_basis:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:sharp_face_a:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:sharp_face_a:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:sharp_face_a:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:sharp_face_b:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:sharp_face_b:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:sharp_face_b:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:sharp_face_c:encoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:sharp_face_c:decoder",
+      "passed": true
+    },
+    {
+      "name": "execution_observation:sharp_face_c:input_normalization",
+      "passed": true
+    },
+    {
+      "name": "observed_float32_and_short_domain",
+      "passed": true
+    },
+    {
+      "name": "rounding_mode_actually_verified",
+      "passed": true
+    },
+    {
+      "name": "separate_subnormal_observations",
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "This scalar extraction is not a compiled Blender build or native-binary attestation.",
+    "Source-level equivalence of selected adapters is reviewed; compiler/platform/libm equivalence to C211 remains unproved.",
+    "The investigation supports conditional counterexamples and finite observations only; no new receiving loss budget is approved."
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "schema": "ontokin.c213.independent-source-review/0.1",
+  "recordedAtUtc": "2026-11-12T13:49:20.828548+00:00",
+  "verdict": "PASS_WITH_EXPLICIT_SCOPE_LIMITS",
+  "blockingFindings": [],
+  "checkedCommit": "36afd901c099bdfb6ac12af3994140a15a19ab4c",
+  "checkedTree": "885f7fbe662d56d058acbb8c21b8a104a48c87e5",
+  "checks": [
+    {
+      "id": "S01",
+      "topic": "Pinned primary-source identity",
+      "passed": true,
+      "finding": "All six source files and two license files independently fetched at the declared immutable commit equal retained bytes, size and SHA-256; URLs contain the same commit and upstream path."
+    },
+    {
+      "id": "S02",
+      "topic": "Selected function extraction",
+      "passed": true,
+      "finding": "Independent signature-to-unindented-close extraction confirms the two quantizers, approximate acos, encoder and decoder are byte-identical occurrences and match all declared function hashes; implementation extractor was not used."
+    },
+    {
+      "id": "S03",
+      "topic": "C support functions",
+      "passed": true,
+      "finding": "is_zero_v3, compare_ff, compare_v3v3, mul_v3_v3fl and madd_v3_v3fl bodies are byte-identical to their pinned definitions."
+    },
+    {
+      "id": "S04",
+      "topic": "Vector operation adapters",
+      "passed": true,
+      "finding": "dot starts a[0]*b[0], then accumulates indices1 and2 in order. Independently fetched vector unroll macros establish elementwise +, scalar multiply and scalar division; wrapper uses the same operations without reciprocal substitution."
+    },
+    {
+      "id": "S05",
+      "topic": "C++ normalization route",
+      "passed": true,
+      "finding": "Pinned normalize calls normalize_and_get_length: squared dot; threshold1e-35f; float sqrt; per-component divide; otherwise zero. Wrapper output matches this route; omitted local out_length reset is unobservable to its caller. Separate C reciprocal/multiply helper is not substituted."
+    },
+    {
+      "id": "S06",
+      "topic": "Constants and rounding",
+      "passed": true,
+      "finding": "Pinned pi definition rounds to the same double/f32 constants used by the scalar adapter. Encoder retains 1.0f-1e-4f and floorf(val*float(SHRT_MAX)+0.5f), not symmetric rounding. IEEE binary32/16-bit short static assertions and contraction/fast-math exclusions are explicit."
+    },
+    {
+      "id": "S07",
+      "topic": "Floating-point environment reporting",
+      "passed": true,
+      "finding": "Final source verifies fesetround/fegetround and separately reports subnormal parsing and volatile arithmetic observations; actual FLT_EVAL_METHOD and compiler/libc identity remain observed evidence rather than a cross-platform guarantee."
+    },
+    {
+      "id": "S08",
+      "topic": "Input and frame boundary",
+      "passed": true,
+      "finding": "Required operation inputs are explicit; decode shorts require exact non-boolean JSON integers in[-32768,32767]. Explicit codec frames must be finite and satisfy declared unit/orthogonal/right-handed/range checks after f32 conversion. These are experiment preconditions, not native-frame reachability proof."
+    },
+    {
+      "id": "S09",
+      "topic": "Mode and invalid decode boundary",
+      "passed": true,
+      "finding": "strict normalizes and refuses collapse; unit bypasses setter normalization; zero-sentinel permits only zero; invalid-range-fallback is decode-only with an otherwise admissible frame and zero alpha/beta. Encoder division on invalid frames is excluded. Raw decoder fallback is retained exactly."
+    },
+    {
+      "id": "S10",
+      "topic": "Error metrics",
+      "passed": true,
+      "finding": "Component/angle/drift formulas are consistent with the reported f32 encoder input. Strict-mode normalization is a separate conditioning stage: metrics do not compare nonunit raw vector magnitude to decoded output. atan2 cross/dot angle uses normalized double vectors; zero-sentinel has no meaningful angle."
+    },
+    {
+      "id": "S11",
+      "topic": "Execution reporting",
+      "passed": true,
+      "finding": "Final runner removes kernelExecuted; it distinguishes probeProcessExecuted, codecEncoderExecuted, codecDecoderExecuted, inputNormalizationExecuted and standaloneHelperExecuted. Wrapper refusals set codec fields false; a strict normalization-collapse refusal records prior normalization."
+    },
+    {
+      "id": "S12",
+      "topic": "Claims and scope",
+      "passed": true,
+      "finding": "Implementation text and source bindings disclaim native replay, fan/topology/averaging reconstruction, binary attestation, universal error bounds and replacement tolerance. No Blender launch/import path occurs in the harness. Original 2e-6 failed receiving requirement remains unchanged."
+    },
+    {
+      "id": "S13",
+      "topic": "Attribution evidence",
+      "passed": true,
+      "finding": "Original SPDX notices are retained, derived C++/include carry GPL-2.0-or-later notices, and pinned COPYING/GPL text hashes match primary source. This records supplied attribution evidence, not a general legal conclusion."
+    }
+  ],
+  "checkCount": 13,
+  "sourceHashes": {
+    "IMPLEMENTATION.md": "477794a92229a576ff43373214e22566da641622b304f4bb0520c5049f477609",
+    "LICENSE-PROVENANCE.json": "716bfd3f53777353cd5079d7ba459b71ad206842bb14d1ae1dea3b6211362988",
+    "SOURCE-BINDINGS.json": "28781632d0abd1f39afc2c24af763b60bb75a8fc23ff21e7abb323af2a2e8c88",
+    "codec_exact.inc": "fc2b5deb6cf1272ea132671ce33c296f09ef1fa977aa44fe2737d6c56867832b",
+    "codec_probe.cpp": "530362787d0112a1a227ee24460e226142a78603cafa25ab4df1d02372827f90",
+    "extract_codec.py": "da4efd7531815967caa705502d3a57057732945a2902a71437bfc561321248a3",
+    "run_probe.py": "ddd85bf0c7b5732a99b7893746e3b1178b86888dfdb3bb0cbbf9d33b79ae4033"
+  },
+  "full212CaseRunRepeated": false,
+  "nativeBlenderProcesses": 0,
+  "sameHostOnly": true,
+  "limits": [
+    "Primary-source characterization is not proof of the retained C211 executable source lineage or bitwise behavior",
+    "Supplied frames are admissible experiment inputs; no native frame/short pair is fabricated",
+    "Finite observations cannot establish a universal bound or replace the strict receiving tolerance",
+    "Roundtrip metrics are against actual conditioned f32 encoder inputs, with original inputs recorded separately",
+    "Initial and corrected implementation smoke records remain historical; final observations must bind the final executable inputs"
+  ],
+  "requiredFinalIntegrationAction": "Use final-source-bound independent control results, preserve all prior failures, and verify source-byte equality on the actual integrated commit"
+}

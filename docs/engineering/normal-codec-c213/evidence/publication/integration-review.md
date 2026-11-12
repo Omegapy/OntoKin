@@ -1,0 +1,13 @@
+# C213 integration boundary review
+
+**Approve the bounded increment. No blocking finding remains.** This review binds the candidate content in `/workspace/scratch/0fee8b4c64ac/OntoKin`; exact document and source hashes are in `integration-review.json`. Final publication and actual-main verification remain the integrator's responsibility.
+
+All 19 files committed by reviewed worker `36afd901c099bdfb6ac12af3994140a15a19ab4c` remain byte-identical. The source-review inventory also contained an ignored, empty compiler log that was never part of that worker commit. Root preserved the original at `docs/engineering/normal-codec-c213/evidence/implementation/compile.stderr.log`; its observed size is zero and SHA-256 is `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`. This resolves literal audit-inventory completeness without changing implementation source.
+
+The copied final observations bind the current executable inputs. The final numerical record passes 934 assertions over 212 cases; the original single oracle failure, frozen expectations and explicit signed-short-domain correction remain unchanged. Independent evidence supports the documented 182 accepted rows, 30 refusals, 21 families, 11 supplemental refusals and 731 source/execution assertions. The 69 nonzero direction round trips include 62 failures against the strict criterion, with the stated finite maximum `0.014142955653369427`. These summary counts were checked from retained results; no numerical cohort was rerun.
+
+README, RESULTS, NEXT-TASK, CANDIDATE and current STATUS/GOAL/navigation accurately distinguish finite supplied-frame counterexamples from a universal bound, native replay or product release. The original C211 failure and tolerance remain explicit. No revised budget, native execution or full-suite pass is claimed. Relative to starting main `f674744c49555261561195f8a007c5a9aeb7e940`, changes stay inside the new analysis/evidence directory and the three current status/navigation documents.
+
+The next task is a bounded CPU-only source-normal payload and loss-report prototype with a proposed separate contract version. It preserves exact source authority, identifies synthetic observations, and reserves any native receiving attempt for later review. Its implementation is not part of C213 closure.
+
+Root still needs its applicable documentation and unchanged-prefix checks, exact published-source reconciliation, lease closure and verified saved handoff. No repository edits, numerical rerun or native process occurred in this integration review. This worker relinquishes all active work for freeze.
