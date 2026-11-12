@@ -100,7 +100,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-No active integration lease. Owner `c218-root-682636da9b46` releases ownership after observed documentation/evidence publication `4a8fea791840e3cf18010c0c9ee12ffc24f3a1ef` and fresh actual-main checks. [C218 integration record](docs/engineering/native-reopen-c218/evidence/publication/INTEGRATION.json). Implementation, independent native review and independent integration review are finished. Exact observer source remains held in draft PR #169 at `15c369134cf8ae42d092823aeab9348c9861adfd`; older held PRs #155/#165/#167 remain unchanged. One C218 native reopen completed and its schedule is closed. Root finishes only the verified saved handoff, then stops. Reconcile actual refs, ownership and unknown outcomes before a later task.
+Active integration owner `c219-root-709098f4e0fd`, acquired 2026-11-12T18:06:32.892103+00:00; expires 2026-11-12T18:36:32.892103+00:00. Scope [issue #170](https://github.com/Omegapy/OntoKin/issues/170), branch `work/c219-finite-receiving-decision`, observed base `12f9ec0d3dc582fb895799450c5f20945b4647df`. Reserved shared files: STATUS.md, GOAL.md and docs/README.md; new decision/evidence directory: docs/engineering/receiving-decision-c219. Root integrates only the independently reviewed evidence-only finite receiving decision and its handoff. Read-only reviewers and package workers use separate local evidence directories. No native start or second-target execution; held PRs #155/#165/#167/#169 remain unchanged. No unknown remote writes are observed.
 
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
@@ -266,3 +266,4 @@ operations and 30,000 ms; explicit larger requests require current host
 authority. Original fixtures, tolerances, budgets, gates and prior releases
 retain their meanings. Historical checkpoints and complete release records
 remain available through the archive and [GOAL](GOAL.md).
+
