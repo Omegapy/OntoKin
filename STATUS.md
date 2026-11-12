@@ -10,6 +10,8 @@ The original strict source-normal gate remains **FAILED** at maximum component d
 
 C218's completed delivery is reconciled from the exact saved input ZIP, current package verification, documented offline restore and closed issue #168. C219 uses preserved observations and starts no native process, source program, import/export or renderer. Original failed regressions and every broader failed, unknown or unrun claim remain visible in the [decision](docs/engineering/receiving-decision-c219/DECISION.md).
 
+[PR #171](https://github.com/Omegapy/OntoKin/pull/171) merged the documentation-only decision at `e886f2d6575034fd0c521eda5e21327c2aa5f70d`, tree `00bfe5cacb3c0568e162da3ecce8a314101c1dda`, exactly matching the reviewed candidate. Fresh actual-main documentation checks pass 29 preserved sources / 4,533 local links. Independent review passed 22 decision conditions and 18 integration checks; all 15,575 existing non-navigation entries remain unchanged. [Integration record](docs/engineering/receiving-decision-c219/evidence/publication/INTEGRATION.json).
+
 **Next action:** finish the verified saved C219 handoff and stop. The next thread may perform only the [second-target/source-traceability planning task](docs/engineering/receiving-decision-c219/NEXT-TASK.md), with actual availability, exact mappings, loss and review requirements established before future execution. Second-target execution, Unreal support and the matched direct-authoring comparison remain unrun.
 
 ## C218 preserved result: saved-scene reopen persistence passed
@@ -110,7 +112,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Active integration owner `c219-root-709098f4e0fd`, acquired 2026-11-12T18:06:32.892103+00:00; expires 2026-11-12T18:36:32.892103+00:00. Scope [issue #170](https://github.com/Omegapy/OntoKin/issues/170), branch `work/c219-finite-receiving-decision`, observed base `12f9ec0d3dc582fb895799450c5f20945b4647df`. Reserved shared files: STATUS.md, GOAL.md and docs/README.md; new decision/evidence directory: docs/engineering/receiving-decision-c219. Root integrates only the independently reviewed evidence-only finite receiving decision and its handoff. Read-only reviewers and package workers use separate local evidence directories. No native start or second-target execution; held PRs #155/#165/#167/#169 remain unchanged. No unknown remote writes are observed.
+No active integration lease. Owner `c219-root-709098f4e0fd` releases ownership after independently reviewed documentation-only PR #171 merged at `e886f2d6575034fd0c521eda5e21327c2aa5f70d` and fresh actual-main checks passed. Scientific and integration workers have finished; root completes only final handoff verification and confirmed save, then closes [scope issue #170](https://github.com/Omegapy/OntoKin/issues/170). Held PRs #155/#165/#167/#169 and all consumed native schedules remain unchanged. The next scope is planning-only; reconcile current refs and any outstanding writes before acquiring another lease.
 
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
