@@ -8,7 +8,9 @@ The [C214 CPU prototype](docs/engineering/source-normals-c214/README.md) preserv
 
 All eleven CPU proof checks and 31 predeclared independent controls / 52,957 assertions pass. Exact synthetic copies still report native fidelity and receiving evidence as false; no approximation tolerance is adopted. [Results and limits](docs/engineering/source-normals-c214/RESULTS.md). The original one-link documentation failure and corrected result remain preserved in the C214 handoff. Production/runtime/exporter/receiver/workflow files and original evidence remain unchanged. This finite CPU result is not a full regression or receiving pass.
 
-**Next action:** complete C214's reviewed publication and verified saved handoff, then stop. The next conversation may undertake one [separately reviewed CPU receiving adapter/contract](docs/engineering/source-normals-c214/NEXT-TASK.md). Keep C214/0.1 synthetic-only behavior unchanged; native work requires a separately named/versioned profile and a reviewed finite execution plan. C211's original `2e-6` gate remains failed, PR #155 stays held, and save/reopen/visual gates remain unrun.
+[PR #161](https://github.com/Omegapy/OntoKin/pull/161) merged at `c4f9c4b97f5a599e5e4708ca69c8d8d1a68470c5`, tree `b2d0ade1102312f4bdf2679548ff08e9124f4b42`, exactly equal to the reviewed candidate. Fresh actual-main documentation checks passed 29 preserved sources / 4,443 local links; all 1,053 protected input hashes remain exact. [Integration receipt](docs/engineering/source-normals-c214/evidence/publication/INTEGRATION.json).
+
+**Next action:** finish C214's verified saved handoff, then stop. The next conversation may undertake one [separately reviewed CPU receiving adapter/contract](docs/engineering/source-normals-c214/NEXT-TASK.md). Keep C214/0.1 synthetic-only behavior unchanged; native work requires a separately named/versioned profile and a reviewed finite execution plan. C211's original `2e-6` gate remains failed, PR #155 stays held, and save/reopen/visual gates remain unrun.
 
 ## C213 preserved result: finite codec loss characterized
 
@@ -56,7 +58,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner `c214-source-normals-20261112` holds main integration for [C214 source-normal payload/loss reporting](https://github.com/Omegapy/OntoKin/issues/160), acquired from verified main `d1ba7fcbf4e7efe41cff508356d1fe122674ae74`. Acquired 2026-11-12T14:23:53.478287+00:00; expires 2026-11-12T14:53:53.478287+00:00. Scope: new isolated `docs/engineering/source-normals-c214/`, related shared navigation and STATUS, reviewed publication, recovery and handoff. Worker branch `work/c214-source-normal-payload` owns prototype files; independent reviewer owns separate evidence. CPU-only task: no Blender or held receiver change. PR #155 and issue #154 stay held/blocked. Other nonoverlapping branch work is allowed under AGENTS. Reconcile actual heads and outstanding writes before ownership transfer.
+No active integration lease. Owner `c214-source-normals-20261112` releases ownership after verified PR #161 merge `c4f9c4b97f5a599e5e4708ca69c8d8d1a68470c5` and its actual-main documentation/input checks. [C214 integration record](docs/engineering/source-normals-c214/evidence/publication/INTEGRATION.json). All implementation and review workers have finished. PR #155 stays held at its unchanged source and issue #154 remains blocked. This release grants no native execution. Reconcile live main, refs, ownership and unknown writes before the next bounded task. Final source and confirmed handoff delivery are recorded in the C214 handoff/recovery.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
