@@ -1,0 +1,139 @@
+{
+  "schema": "ontokin.c212.normal-remeasurement-controls/0.1",
+  "native_processes": 0,
+  "scope": "Synthetic CPU-only data mutations; not receiving evidence",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "controls": 13,
+  "passed": 13,
+  "all_passed": true,
+  "retained_inputs_unchanged": true,
+  "script_sha256": "9730bafdab049863045d0e9486387d48beb22de9a170b43a323ef0fcee9b3786",
+  "control_script_sha256": "c55495e718ae48b8945dbc6363465eb06e55d44c04e58ea5b51ca25260639b99",
+  "results": [
+    {
+      "case": "explicit_paths_after_script_relocation",
+      "passed": true,
+      "expected_rejection": false,
+      "process_returncode": 0,
+      "failure_tail": [],
+      "expected_extra_normal_failures": 0
+    },
+    {
+      "case": "cyclic_triangle_rotation_preserved",
+      "passed": true,
+      "expected_rejection": false,
+      "process_returncode": 0,
+      "failure_tail": [],
+      "expected_extra_normal_failures": 0
+    },
+    {
+      "case": "triangle_list_reordering_preserved",
+      "passed": true,
+      "expected_rejection": false,
+      "process_returncode": 0,
+      "failure_tail": [],
+      "expected_extra_normal_failures": 0
+    },
+    {
+      "case": "reversed_winding_refused",
+      "passed": true,
+      "expected_rejection": true,
+      "process_returncode": 1,
+      "failure_tail": [
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "AssertionError: first"
+      ],
+      "expected_extra_normal_failures": 0
+    },
+    {
+      "case": "missing_triangle_refused",
+      "passed": true,
+      "expected_rejection": true,
+      "process_returncode": 1,
+      "failure_tail": [
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "AssertionError: first"
+      ],
+      "expected_extra_normal_failures": 0
+    },
+    {
+      "case": "duplicate_triangle_replacing_another_refused",
+      "passed": true,
+      "expected_rejection": true,
+      "process_returncode": 1,
+      "failure_tail": [
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "AssertionError: first"
+      ],
+      "expected_extra_normal_failures": 0
+    },
+    {
+      "case": "duplicate_object_refused",
+      "passed": true,
+      "expected_rejection": true,
+      "process_returncode": 1,
+      "failure_tail": [
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "AssertionError: Observed object inventory differs"
+      ],
+      "expected_extra_normal_failures": 0
+    },
+    {
+      "case": "missing_object_refused",
+      "passed": true,
+      "expected_rejection": true,
+      "process_returncode": 1,
+      "failure_tail": [
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "AssertionError: Observed object inventory differs"
+      ],
+      "expected_extra_normal_failures": 0
+    },
+    {
+      "case": "exact_component_threshold_passes",
+      "passed": true,
+      "expected_rejection": false,
+      "process_returncode": 0,
+      "failure_tail": [],
+      "expected_extra_normal_failures": 0
+    },
+    {
+      "case": "next_float_below_threshold_passes",
+      "passed": true,
+      "expected_rejection": false,
+      "process_returncode": 0,
+      "failure_tail": [],
+      "expected_extra_normal_failures": 0
+    },
+    {
+      "case": "next_float_above_threshold_fails",
+      "passed": true,
+      "expected_rejection": false,
+      "process_returncode": 0,
+      "failure_tail": [],
+      "expected_extra_normal_failures": 1
+    },
+    {
+      "case": "nonfinite_normal_refused",
+      "passed": true,
+      "expected_rejection": true,
+      "process_returncode": 1,
+      "failure_tail": [
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "AssertionError"
+      ],
+      "expected_extra_normal_failures": 0
+    },
+    {
+      "case": "short_corner_refused",
+      "passed": true,
+      "expected_rejection": true,
+      "process_returncode": 1,
+      "failure_tail": [
+        "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "AssertionError"
+      ],
+      "expected_extra_normal_failures": 0
+    }
+  ]
+}

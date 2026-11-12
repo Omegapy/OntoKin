@@ -2,7 +2,15 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
-## C211 current result: Blender receiving proof failed/partial
+## C212 current result: strict normal contract retained
+
+The bounded [C212 investigation and decision](docs/engineering/normal-fidelity-c212/README.md) rejects an unsupported tolerance increase and keeps the receiver held. A fresh GLB decoder reproduces C211's exact normal failure; thirteen synthetic CPU controls pass. Eight failing sphere instances reuse one source mesh, so their maximum is not an independent error bound. All 118 installed executable/importer file bindings match C211. Pinned upstream source supports a lossy native encoding/calculation mechanism; exact executable source provenance and causal replay remain unresolved.
+
+[Decision C212/0.1.0](docs/engineering/normal-fidelity-c212/DECISION.md) adopts no replacement numeric budget and changes no receiver, runtime, exporter, original contract or historical evidence. No Blender process ran. The original `2e-6` gate remains failed, draft PR #155 remains held, and issue #154 remains blocked. C212's documentation/evidence increment and its own checks do not establish a complete receiving proof or full regression pass.
+
+**Next action:** one [CPU-only characterization of the pinned upstream normal codec](docs/engineering/normal-fidelity-c212/NEXT-CPU-PROBE.md) using explicit fan-frame inputs and independently declared boundary controls. Do not repeat the already completed raw remeasurement as a whole milestone, invent missing native fan values, or run another import. Complete C212 through reviewed publication and a verified saved handoff, then stop.
+
+## C211 preserved result: Blender receiving proof failed/partial
 
 The selected one-build receiving proof reached a concrete blocker and stopped. [C211 results](docs/engineering/semantic-receiving-c211/RESULTS.md) preserve one actual Blender 4.3.2 import. All 18 objects, 7,800 triangle positions/winding, 126 sampled poses, actual materials and native GLB object extras passed independent comparisons. Split normals failed on 7,088 triangle instances across eight sphere objects: maximum component error `0.0001531541347503662` exceeds the unchanged `0.000002` limit. Rendering separately failed because OpenImageDenoise is unavailable. Native save/reopen and visual inspection were not reached; no second import occurred.
 
@@ -10,7 +18,7 @@ The prototype remains held in [draft PR #155](https://github.com/Omegapy/OntoKin
 
 All 302 affected methods (275 existing + 27 new), the fresh 54-check source proof, exact after-artifact reproduction, two Khronos validations and 252 Three.js pose checks passed. The broader mandatory driver was interrupted at the stopping point: 1,476 observed passing methods and 3,205 real methods without outcomes; no full-suite pass. Historical failed regressions remain failed. [Independent failed review](docs/engineering/semantic-receiving-c211/evidence/review/FINAL-REVIEW.json)
 
-**Next action:** investigate and explicitly decide the normal-fidelity/loss contract before another receiving attempt. Preserve the original tolerance and failure, reconcile the held branch, and checkpoint any reviewed correction before execution. The second destination and matched authoring comparison remain later stages. C211 closes with its verified saved handoff; no further implementation belongs to this task.
+**Successor disposition:** C212 completes the normal-fidelity decision above while preserving this failure and tolerance. Its next CPU-only characterization must precede any separately reviewed correction or approximation policy. The second destination and matched authoring comparison remain later stages. C211 itself is closed at its saved handoff.
 
 ## C210 current milestone: semantic export and one constrained edit
 
@@ -22,7 +30,7 @@ The actual edit passed 54 workflow checks, all 275 affected tests (262 existing 
 
 The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method errors, seven failed-import placeholders and 221 real methods without outcomes, followed by the 900-second termination. Baseline reproductions identify unchanged fixture-copy and bytecode/cache incompatibilities. Root lease/evidence changes also tripped the wrapper's source-stability guard; the isolated immutable inputs match the candidate. The complete affected cohort passed. [Exact accounting and scoped integration rationale](docs/engineering/semantic-export-c210/REGRESSION.md) preserve the failed run without claiming a full regression pass.
 
-**C210 successor disposition:** C211 executed the selected one-build receiving proof and reached the failed/partial result above. The explicit normal-fidelity/loss decision is now the next action. The second target/source-traceability proof and matched direct-authoring comparison remain later stages. Unreal support and authoring advantage remain unestablished.
+**C210 successor disposition:** C211 executed the selected one-build receiving proof and reached the failed/partial result above. C212 now records that decision; the next action is the bounded CPU-only codec characterization. The second target/source-traceability proof and matched direct-authoring comparison remain later stages. Unreal support and authoring advantage remain unestablished.
 
 **Explicit deferral:** C209 job/0.2 retained-result compatibility, C201 wrapper/probe/coordinator/host sealing/readiness/admission, broad new syntax, general gameplay, a replacement real-time physics engine, new creature/vehicle/fluid systems, model training, MCP transport and simultaneous backends. Existing reference physics, geometry, materials and validated exports remain current within their profiles. The older universal world/simulation product requirement is superseded as a current completion criterion, not marked complete. Historical domains and exact prior goals remain linked in the decision.
 
