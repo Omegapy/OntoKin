@@ -48,7 +48,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-No active integration lease. Owner `c213-normal-codec-20261112` releases ownership after verified PR #159 merge `4e45172c97e22e03c1f04dca1a740fdcd43751ed` and its actual-main documentation/input checks. [C213 integration record](docs/engineering/normal-codec-c213/evidence/publication/INTEGRATION.json). All implementation and review workers have finished. The receiver stays held at PR #155 and issue #154 remains blocked; this release grants no native execution. Reconcile current main, refs, scope and ownership before the next bounded task. Final source and confirmed handoff delivery are recorded in the C213 handoff/recovery.
+Owner `c214-source-normals-20261112` holds main integration for [C214 source-normal payload/loss reporting](https://github.com/Omegapy/OntoKin/issues/160), acquired from verified main `d1ba7fcbf4e7efe41cff508356d1fe122674ae74`. Acquired 2026-11-12T14:23:53.478287+00:00; expires 2026-11-12T14:53:53.478287+00:00. Scope: new isolated `docs/engineering/source-normals-c214/`, related shared navigation and STATUS, reviewed publication, recovery and handoff. Worker branch `work/c214-source-normal-payload` owns prototype files; independent reviewer owns separate evidence. CPU-only task: no Blender or held receiver change. PR #155 and issue #154 stay held/blocked. Other nonoverlapping branch work is allowed under AGENTS. Reconcile actual heads and outstanding writes before ownership transfer.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
