@@ -28,7 +28,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-No active integration lease. Owner `c211-blender-7of9-20261111` releases the C211 lease after publishing documentation-only main `3329fef35a59746dd81b4db745ffb184ccbde1b9` and verifying 29 preserved sources / 4,346 links on its exact clean tree. No receiver product merge occurred. Draft PR #155 and issue #154 remain held/open; no implementation worker is active. The prior renewal was due to expire at `2026-11-12T02:32:21.000Z`; this publication releases it earlier. [Publication and actual-main record](docs/engineering/semantic-receiving-c211/evidence/publication/INTEGRATION.json). Reconcile live refs, the failed receiving gate and ownership before resuming the held branch.
+Active owner `c212-normal-fidelity-20261112` holds serialized integration for the bounded [C212 decision](https://github.com/Omegapy/OntoKin/issues/156), starting from observed main `12655f101f704050fb178ed1c7bb67e551f53eba`. Acquired at `2026-11-12T13:14:36.852640+00:00`; expires at `2026-11-12T13:44:36.852640+00:00`. Owned shared files: STATUS.md, GOAL.md and docs/README.md. The implementation scope is new `docs/engineering/normal-fidelity-c212/` decision/evidence only; no native attempt or receiver merge. The C211 draft branch remains held and unchanged. Independent audit workers write distinct external evidence; root alone owns main integration and handoff closure.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
