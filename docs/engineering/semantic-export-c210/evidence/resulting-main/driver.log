@@ -1,0 +1,74 @@
+{
+  "schema": "ontokin.c210.actual-main-checks/0.1",
+  "passed": true,
+  "before": {
+    "head": "adfb43c5ab1d7750abfa5e5c74ab62e18a6879e7",
+    "tree": "918e398081a70e199e3ae0e29cdea559363397ce",
+    "status": ""
+  },
+  "after": {
+    "head": "adfb43c5ab1d7750abfa5e5c74ab62e18a6879e7",
+    "tree": "918e398081a70e199e3ae0e29cdea559363397ce",
+    "status": ""
+  },
+  "source_stable": true,
+  "eligible_paths": [
+    "ontokin",
+    "tests",
+    "tools",
+    "examples",
+    "fixtures",
+    "docs/language-design",
+    ".github",
+    "pyproject.toml"
+  ],
+  "eligible_diff_from_executed_candidate": "",
+  "affected": {
+    "required": 275,
+    "passed": 275,
+    "seconds": 84.052268
+  },
+  "steps": [
+    {
+      "name": "core",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "ontokin",
+        "conformance",
+        "--output",
+        "/workspace/scratch/fe98ab19ba73/state/actual-main/core.json"
+      ],
+      "returncode": 0,
+      "seconds": 0.51536,
+      "log": {
+        "bytes": 272,
+        "sha256": "sha256:f11ea076107ff0ed22f80e61e7b8b34503d7da5482d36a28e85a3697ca22f37b"
+      }
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "returncode": 0,
+      "seconds": 1.065931,
+      "log": {
+        "bytes": 6606,
+        "sha256": "sha256:e901b28ebada6b214b99f5d7ce3501a362e0117f1e37c5c4320f037fcf63deab"
+      }
+    }
+  ],
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "bytecode_writes": false
+  },
+  "limitations": [
+    "Actual affected development scope only; the separate broad driver remains failed.",
+    "No new receiver or native admission executed; artifact/browser evidence reused only through exact input equality."
+  ]
+}

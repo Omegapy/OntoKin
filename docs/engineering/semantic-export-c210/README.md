@@ -1,6 +1,6 @@
 # C210 semantic export and constrained edit
 
-**Finite experimental proof passed; broad regression attempt remains failed.** The sidecar reuses existing keyed-rack construction, Agent/0.2 and GLB/0.2. It establishes source-bound semantic transport for one constrained edit. [Results](RESULTS.md), [regression disposition](REGRESSION.md) and [publication/actual-main record](evidence/INTEGRATION.json) distinguish the verified proof from the wider unresolved gates.
+**Finite experimental proof integrated through PR #153; actual-main affected/core/docs checks passed. The broad regression attempt remains failed.** The sidecar reuses existing keyed-rack construction, Agent/0.2 and GLB/0.2. It establishes source-bound semantic transport for one constrained edit. [Results](RESULTS.md), [regression disposition](REGRESSION.md) and [publication/actual-main record](evidence/INTEGRATION.json) distinguish the verified proof from the wider unresolved gates.
 
 Read the [scope decision and staged roadmap](DECISION.md), [finite semantic contract](CONTRACT.md), [Unreal interoperability boundary](UNREAL-INTEROP.md) and [current repository status](../../../STATUS.md). The sidecar reuses the normalized model and existing GLB metadata; it adds no syntax, protocol, parallel representation or backend.
 
