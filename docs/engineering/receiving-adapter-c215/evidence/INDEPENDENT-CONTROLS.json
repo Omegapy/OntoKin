@@ -1,0 +1,425 @@
+{
+  "schema": "ontokin.c215.independent-controls-summary/0.1",
+  "reviewer": "root/independent_controls",
+  "recordedAtUtc": "2026-11-12T15:13:07.904107+00:00",
+  "outcome": "PASS_FINITE_CPU_AND_SOURCE_REVIEW",
+  "predeclaredFile": "PREDECLARED-CONTROLS.json",
+  "predeclaredSha256": "75e6bd7d35cb835abb6370f84a9b0cc88dd74a13b9b62c21fcab9052ec775e24",
+  "reviewedHead": "e15a86a9d8d50fb8182a3dac1cf21abe57975b85",
+  "executedAdapterCheckpoint": "c947617af987a316f847166bbdd43bf8cb615e7f",
+  "adapterSha256": "3cac5bf343a3e5eb9eb51541e31c03ab5ea8f7e46ff3561b6fd3427f91fc006d",
+  "predeclaredRequirements": 40,
+  "executableControlGroups": 35,
+  "sourceReviewRequirements": 5,
+  "resolvedPassingAssertions": 234467,
+  "fullBaseline": {
+    "instances": 18,
+    "sourceTriangles": 1008,
+    "sourceCorners": 3024,
+    "mappedObservationCorners": 23400,
+    "nativeTriangleInstances": 7800,
+    "componentDifference": 0.0,
+    "angularDifferenceDegrees": 0.0
+  },
+  "outcomes": {
+    "passed": 40,
+    "failedCurrent": 0,
+    "unexecutedExecutableControls": [],
+    "blocked": []
+  },
+  "preservedOriginalOutcomes": [
+    {
+      "attempt": "attempt-1",
+      "classification": "test-harness invocation failure before adapter import",
+      "evidence": "attempt-1.stderr.log",
+      "correction": "Explicitly add runner sibling directory under Python isolated mode; no adapter change."
+    },
+    {
+      "attempt": "attempt-2",
+      "classification": "34 passed executable groups; C15 fixture-selection assertion failed before its adapter call",
+      "evidence": "attempt-2/RESULT.json",
+      "correction": "Select an actually shared mesh from independent source inventory; rerun C15 only in attempt-3."
+    }
+  ],
+  "executionEvidenceReused": {
+    "fromAttempt2": [
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C07",
+      "C08",
+      "C09",
+      "C10",
+      "C11",
+      "C12",
+      "C13",
+      "C14",
+      "C16",
+      "C17",
+      "C18",
+      "C19",
+      "C20",
+      "C21",
+      "C22",
+      "C23",
+      "C24",
+      "C25",
+      "C26",
+      "C27",
+      "C28",
+      "C29",
+      "C30",
+      "C31",
+      "C32",
+      "C33",
+      "C34",
+      "C35"
+    ],
+    "fromAttempt3": [
+      "C15"
+    ],
+    "adapterSame": true,
+    "sourceInputsSame": true,
+    "oracleSame": true,
+    "fixturesSame": true,
+    "onlyRunnerSelectionCorrected": true
+  },
+  "scopeNotes": [
+    "C12 exercises the production matcher on synthetic duplicate source geometry. Public pinned accepted geometry has no duplicate oriented triangles; whole-report multiple-source-candidate branch is source-reviewed rather than claimed executed.",
+    "Caller-provided locks establish byte consistency, not trusted provenance or actual native execution.",
+    "Exact POSITION equality intentionally rejects coordinate drift and does not replace old C211 tolerances.",
+    "This is one Python/platform finite CPU validation, not a product regression, native receiving gate or universal numeric bound."
+  ],
+  "requirementMapping": [
+    {
+      "id": "C01",
+      "topic": "Complete independent accepted fixture",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 163813
+    },
+    {
+      "id": "C02",
+      "topic": "Frame and handedness",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 12
+    },
+    {
+      "id": "C03",
+      "topic": "Independent normal measurement",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 7
+    },
+    {
+      "id": "C04",
+      "topic": "Opposite normal direction",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 10
+    },
+    {
+      "id": "C05",
+      "topic": "Magnitude differences",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 1
+    },
+    {
+      "id": "C06",
+      "topic": "Missing triangle",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 10
+    },
+    {
+      "id": "C07",
+      "topic": "Empty observations",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 11
+    },
+    {
+      "id": "C08",
+      "topic": "Invalid normal values",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 90
+    },
+    {
+      "id": "C09",
+      "topic": "Mixed validity",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 11
+    },
+    {
+      "id": "C10",
+      "topic": "Duplicate native identifier",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 3
+    },
+    {
+      "id": "C11",
+      "topic": "Duplicate source correspondence",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 12
+    },
+    {
+      "id": "C12",
+      "topic": "Ambiguous geometric correspondence",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 3,
+      "coverageLimit": "C12 exercises the production matcher on synthetic duplicate source geometry. Public pinned accepted geometry has no duplicate oriented triangles; whole-report multiple-source-candidate branch is source-reviewed rather than claimed executed."
+    },
+    {
+      "id": "C13",
+      "topic": "Unmatched geometry",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 11
+    },
+    {
+      "id": "C14",
+      "topic": "Winding reversal",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 10
+    },
+    {
+      "id": "C15",
+      "topic": "Instance separation",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-3/RESULT.json",
+      "assertions": 12,
+      "correction": "FIXTURE-CORRECTION-C15.json; original failed control preserved in attempt-2"
+    },
+    {
+      "id": "C16",
+      "topic": "Unknown object or mesh",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 4
+    },
+    {
+      "id": "C17",
+      "topic": "Native identifier typing",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 12
+    },
+    {
+      "id": "C18",
+      "topic": "Sharp boundaries",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 110
+    },
+    {
+      "id": "C19",
+      "topic": "Source payload tampering",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 4
+    },
+    {
+      "id": "C20",
+      "topic": "Exact accepted input pinning",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 3
+    },
+    {
+      "id": "C21",
+      "topic": "Stale payload binding",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 2
+    },
+    {
+      "id": "C22",
+      "topic": "Stale input/revision binding",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 2
+    },
+    {
+      "id": "C23",
+      "topic": "Receiver and build binding",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 13
+    },
+    {
+      "id": "C24",
+      "topic": "Settings binding",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 2
+    },
+    {
+      "id": "C25",
+      "topic": "Scene binding",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 13
+    },
+    {
+      "id": "C26",
+      "topic": "Observation kind and producer",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 17
+    },
+    {
+      "id": "C27",
+      "topic": "Unsupported frame",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 4
+    },
+    {
+      "id": "C28",
+      "topic": "Unknown and duplicate JSON fields",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 6
+    },
+    {
+      "id": "C29",
+      "topic": "Huge and subnormal finite normals",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 6
+    },
+    {
+      "id": "C30",
+      "topic": "Zero-signed source bytes",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 70202
+    },
+    {
+      "id": "C31",
+      "topic": "Denominator and maxima",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 11
+    },
+    {
+      "id": "C32",
+      "topic": "No acceptance promotion",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 19
+    },
+    {
+      "id": "C33",
+      "topic": "C214 compatibility boundary",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 10
+    },
+    {
+      "id": "C34",
+      "topic": "Order invariance and deterministic output",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 2
+    },
+    {
+      "id": "C35",
+      "topic": "Report audit bindings",
+      "status": "passed",
+      "method": "independent executable CPU control",
+      "result": "attempt-2/RESULT.json",
+      "assertions": 9
+    },
+    {
+      "id": "C36",
+      "topic": "No native or product execution",
+      "status": "passed",
+      "method": "static-source-review",
+      "result": "SOURCE-REVIEW.json",
+      "assertions": null
+    },
+    {
+      "id": "C37",
+      "topic": "Explicit receiving promise",
+      "status": "passed",
+      "method": "contract-review",
+      "result": "SOURCE-REVIEW.json",
+      "assertions": null
+    },
+    {
+      "id": "C38",
+      "topic": "Future native plan and held receiver",
+      "status": "passed",
+      "method": "contract-review",
+      "result": "SOURCE-REVIEW.json",
+      "assertions": null
+    },
+    {
+      "id": "C39",
+      "topic": "Source containment",
+      "status": "passed",
+      "method": "source-boundary-review",
+      "result": "SOURCE-REVIEW.json",
+      "assertions": null
+    },
+    {
+      "id": "C40",
+      "topic": "Evidence and source binding",
+      "status": "passed",
+      "method": "evidence-review",
+      "result": "SOURCE-REVIEW.json",
+      "assertions": null
+    }
+  ],
+  "sourceReview": "SOURCE-REVIEW.json",
+  "originalReviewFindings": "INITIAL-SOURCE-REVIEW.json",
+  "nativeProcessesStarted": 0,
+  "sourceProgramRuns": 0,
+  "sourceExports": 0
+}
