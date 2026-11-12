@@ -8,7 +8,7 @@ The [C213 CPU characterization](docs/engineering/normal-codec-c213/README.md) im
 
 Explicit-frame shortcut cases lose up to `0.014142955653369427` in a normal component in this selected corpus. That observation is not a universal bound or a replay of C211. No replacement tolerance is adopted. C211's original `2e-6` gate remains failed, the receiver in draft PR #155 remains held, and no native process ran. Runtime, exporter, prior receiver and historical evidence are unchanged. [Results and limits](docs/engineering/normal-codec-c213/RESULTS.md)
 
-Implementation review binds local worker `36afd901c099bdfb6ac12af3994140a15a19ab4c`; publication is recorded separately after verified integration. Current ownership is stated in the main integration lease below. This finite experiment is not a full product regression or receiving pass.
+[PR #159](https://github.com/Omegapy/OntoKin/pull/159) merged at `4e45172c97e22e03c1f04dca1a740fdcd43751ed`, tree `565a2f807872ac6a68fac1875adab426b1f706e7`, exactly equal to the reviewed candidate. Fresh actual-main documentation checks passed 29 preserved sources / 4,416 local links; exact implementation/input equality retains the independent numerical evidence. [Integration receipt](docs/engineering/normal-codec-c213/evidence/publication/INTEGRATION.json). This finite experiment is not a full product regression or receiving pass.
 
 **Next action:** one [CPU-only exact source-normal payload and explicit loss-report prototype](docs/engineering/normal-codec-c213/NEXT-TASK.md), with a separately versioned proposed contract and independent controls. It must distinguish authoritative source directions from native shading observations. No new receiving attempt or arbitrary approximation budget is authorized. Finish C213's verified saved handoff and stop before that next task.
 
@@ -48,7 +48,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Active owner `c213-normal-codec-20261112`, [scope issue #158](https://github.com/Omegapy/OntoKin/issues/158), from `2026-11-12T13:47:06.491000+00:00` through `2026-11-12T14:17:06.491000+00:00` UTC. Starting main `f674744c49555261561195f8a007c5a9aeb7e940`; scope branch `work/c213-normal-codec`. This lease reserves main integration and current STATUS/GOAL/docs navigation for the independently reviewed CPU-only codec characterization. The receiver remains held in PR #155, issue #154 remains blocked, and no native execution is authorized. Other independent nonoverlapping work may continue under AGENTS coordination rules.
+No active integration lease. Owner `c213-normal-codec-20261112` releases ownership after verified PR #159 merge `4e45172c97e22e03c1f04dca1a740fdcd43751ed` and its actual-main documentation/input checks. [C213 integration record](docs/engineering/normal-codec-c213/evidence/publication/INTEGRATION.json). All implementation and review workers have finished. The receiver stays held at PR #155 and issue #154 remains blocked; this release grants no native execution. Reconcile current main, refs, scope and ownership before the next bounded task. Final source and confirmed handoff delivery are recorded in the C213 handoff/recovery.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 

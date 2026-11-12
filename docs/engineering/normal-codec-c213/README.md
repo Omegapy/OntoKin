@@ -4,6 +4,8 @@ C213 characterizes the selected Blender 4.3.2 normal encoder and decoder on the 
 
 **The finite characterization is complete; the original receiving gate remains failed.** Independently declared cases show that the codec's direction shortcuts can lose substantially more than short-integer rounding alone. No replacement tolerance is adopted, and held receiver [PR #155](https://github.com/Omegapy/OntoKin/pull/155) is unchanged. No Blender process ran.
 
+Published through [PR #159](https://github.com/Omegapy/OntoKin/pull/159); the [integration receipt](evidence/publication/INTEGRATION.json) binds the exact merged source and actual-main checks.
+
 Start with [results and limits](RESULTS.md). The [implementation](IMPLEMENTATION.md) explains the precise input domain, scalar float32 build, source extraction, reproduction commands and attribution. [Source bindings](SOURCE-BINDINGS.json) identify pinned upstream commit `32f5fdce0a0a571a39198edf8d7b5d719bf59f2c`; they do not attest the source lineage of the C211 executable.
 
 The [independent corpus](evidence/independent-controls/PREDECLARATION.json) was sealed before execution. Its final 212-case run passes 934 assertions after one separately documented [oracle correction](evidence/independent-controls/ORACLE-CORRECTION.json). The original failed assertion and its observations remain unchanged. Separate source review checks the selected function bodies and float support against upstream. These checks qualify this experiment, not a full product release.
