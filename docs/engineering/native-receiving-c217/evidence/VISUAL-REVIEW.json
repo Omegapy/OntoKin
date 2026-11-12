@@ -1,0 +1,55 @@
+{
+  "schema": "ontokin.c217.independent-visual-review/0.1",
+  "recordedAtUtc": "2026-11-12T16:51:48.843465+00:00",
+  "reviewer": "root/independent_review",
+  "sourceRevision": "6af212204d58fbac2a98f3cded44facd67c52528",
+  "method": "Direct tool inspection of both actual native PNGs at their recorded dimensions, after byte/provenance/render-recipe audit",
+  "views": [
+    {
+      "name": "overview",
+      "file": {
+        "path": "handoff/agent-results/namespace-repair/run-01/import-overview.png",
+        "bytes": 411261,
+        "sha256": "sha256:ed84c475f32537d028244c58eeff49037629f5440285f446bffab27a62a7e9e9"
+      },
+      "useful": true,
+      "observed": [
+        "Both vertical gray posts are fully in frame with clear space around the assembly",
+        "Three cyan arms on the left post and five on the right are separately visible, each with a round cyan joint marker",
+        "The longer middle arm on the left and varied arm heights are visible; no obvious missing or extra visible component",
+        "Front/side shading distinguishes the gray posts, cyan bars and joint markers against the gray background"
+      ],
+      "limits": [
+        "Joint markers are small at overview scale",
+        "Back-facing and occluded surfaces are not certified by this view"
+      ]
+    },
+    {
+      "name": "sphere-detail",
+      "file": {
+        "path": "handoff/agent-results/namespace-repair/run-01/import-sphere-detail.png",
+        "bytes": 745179,
+        "sha256": "sha256:57faf8d6556dae7b169854ec499e300f0e902c84f516a2fab0ac35d8d941229f"
+      },
+      "useful": true,
+      "observed": [
+        "One cyan sphere/joint is fully framed and large enough to inspect its front-facing shading",
+        "The adjacent cyan bar and gray post provide visible material and junction context",
+        "A continuous light-to-dark cyan gradient is visible on the exposed sphere surface",
+        "The silhouette is visibly polygonal and surface grain is visible from the fixed 16-sample render"
+      ],
+      "limits": [
+        "The cyan bar extends beyond the close-up frame by design; its whole shape is visible in overview",
+        "The sphere backside and occluded junction surfaces remain unobserved",
+        "Visual appearance cannot establish exact normal fidelity or explain the numerical loss mechanism"
+      ]
+    }
+  ],
+  "usefulVisualEvidence": true,
+  "grossVisibleMissingOrExtraParts": false,
+  "numericNormalFidelityEstablished": false,
+  "pixelReferenceComparisonPerformed": false,
+  "reopenVisualEvidence": false,
+  "newRenderOrRetryRequested": false,
+  "limits": "Useful finite framing and visible shading only. Complete geometry/material/identity denominators come from independent numeric audits, not visual inference."
+}

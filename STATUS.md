@@ -2,7 +2,17 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
-## C216 current result: native start failed before product import
+## C217 current result: namespace repair and native import/capture passed
+
+[C217](docs/engineering/native-receiving-c217/RESULTS.md) completed one independently reviewed Blender 4.3.2 import/save/capture attempt in 14.217 seconds, exit 0, with no timeout or observed process-group residue. The corrected guard records raw module metadata before classification and accepts only pinned namespace directories while retaining exact concrete-source/cache checks. Actual C217 metadata confirms the selected package is a contained namespace; C216's unrecorded attributes remain unknown.
+
+Independent audits cover all 18 objects, 7,800 triangles, 23,400 corners and 126 poses, with zero missing/ambiguous/invalid correspondence. One native scene and both useful images were produced and reviewed. The maximum normal component difference remains `0.0001531541347503662`; the original `2e-6` gate stays **FAILED**. Saved-scene reopen remains **UNRUN**, and complete receiving acceptance is not established. [Independent result](docs/engineering/native-receiving-c217/evidence/FINAL-IMPORT-REVIEW.md)
+
+Actually executed local source `6af212204d58fbac2a98f3cded44facd67c52528` and published held source `55ce9f34a14cbf3d954332244c9e9a6800ed93fb` share tree `50cd8c97290130fc97945e74c51332bd507e91eb` but retain distinct identities. Prototype source is held in [draft PR #167](https://github.com/Omegapy/OntoKin/pull/167); main receives result documentation/evidence only. Original held PRs #155/#165 and all historical failures remain unchanged.
+
+**Next action:** finish the verified saved C217 handoff and stop. A later [bounded reopen proof](docs/engineering/native-receiving-c217/NEXT-TASK.md) must use this exact saved scene with no GLB reimport, a fresh source/plan review and at most one new start. C217's native schedule is closed.
+
+## C216 preserved result: native start failed before product import
 
 [C216](docs/engineering/native-receiving-c216/RESULTS.md) reviewed one finite Blender capture/save/reopen plan. Its first actual start failed in the initial loaded-importer origin guard for `io_scene_gltf2.blender.com`, exiting with code 19 after 2.325 seconds; the process group was absent. No product GLB import, save, native corner/pose/material capture, render or reopen occurred. One start was consumed and no retry was attempted.
 
@@ -10,7 +20,7 @@ Prelaunch source review passed 12 static findings, 385 input-binding assertions 
 
 The documentation/evidence result is published at `5c0dda90cd01ce5e45b12dcfc6615614fe1f64eb`, tree `de22d4ef35b128b955298300df0232f5ad089457`, exactly equal to the independently reviewed candidate. Fresh actual-main checks pass 29 preserved sources / 4,485 local links; all 1,244 protected files and all 15,523 non-navigation baseline tracked files remain exact. [Integration record](docs/engineering/native-receiving-c216/evidence/publication/INTEGRATION.json). No prototype source was merged.
 
-**Next action:** finish C216's verified saved handoff and stop. A later task may perform the [narrow namespace-aware capture repair and one reviewed import proof](docs/engineering/native-receiving-c216/NEXT-TASK.md). The consumed plan must not be replayed. Saved-scene reopen, useful native shading evidence, second-target traceability and the matched authoring comparison remain unproved.
+**Successor disposition:** C217 completed the namespace repair and one separately reviewed import/save/capture step below its own finite plan. C216's failed start and missing raw attributes remain unchanged. Its consumed plan must not be replayed. Saved-scene reopen, second-target traceability and the matched authoring comparison remain later gates.
 
 ## C215 preserved result: CPU receiving observation adapter and proposed contract
 

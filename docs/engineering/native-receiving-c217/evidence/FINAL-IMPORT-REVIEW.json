@@ -1,0 +1,114 @@
+{
+  "schema": "ontokin.c217.independent-final-import-review/0.1",
+  "recordedAtUtc": "2026-11-12T16:52:56.007581+00:00",
+  "reviewer": "root/independent_review",
+  "selectedStepResult": "PASS_NAMESPACE_REPAIR_AND_SINGLE_IMPORT_CAPTURE",
+  "sourceRevision": "6af212204d58fbac2a98f3cded44facd67c52528",
+  "sourceTree": "50cd8c97290130fc97945e74c51332bd507e91eb",
+  "planSha256": "sha256:23d5cf5b91bd598121b5e7d7f4feb27bbc0ca6ae1eb60cd16c7d49b7eb8a2427",
+  "nativeStartsObserved": 1,
+  "nativeStartsByReviewer": 0,
+  "process": {
+    "receipt": {
+      "path": "handoff/agent-results/namespace-repair/run-01/import-process.json",
+      "bytes": 1267,
+      "sha256": "sha256:2f976486df4b6f256b491b3fed002ba0315519695c3923fa9632634626ae0230"
+    },
+    "outcome": "COMPLETED",
+    "returncode": 0,
+    "elapsedSeconds": 14.217256486999759,
+    "timedOut": false,
+    "groupStillExists": false
+  },
+  "checks": {
+    "cornerLossAssertions": 93691,
+    "materialSemanticPoseAssertions": 2695,
+    "byteProcessModuleSceneRenderAssertions": 2260,
+    "objects": 18,
+    "triangles": 7800,
+    "corners": 23400,
+    "poses": 126,
+    "materialObjects": 18,
+    "usefulImages": 2
+  },
+  "measuredNormalLoss": {
+    "maximumComponentDifference": 0.0001531541347503662,
+    "independentMaximumAngularDifferenceDegrees": 0.008947222990085959,
+    "reporterMaximumAngularDifferenceDegrees": 0.008947222990085517,
+    "angleAuditorRoundoffAgreementLimitOnly": 5e-12,
+    "originalStrictThreshold": 2e-06,
+    "originalStrictNormalGate": "FAIL",
+    "cornersExceedingOriginalThreshold": 14880,
+    "trianglesExceedingOriginalThreshold": 7088,
+    "objectsExceedingOriginalThreshold": 8,
+    "newTolerance": null,
+    "limitation": "Eight failing sphere instances share source mesh geometry; this is one fixture/build observation, not an independent universal normal-error bound"
+  },
+  "savedScene": {
+    "path": "handoff/agent-results/namespace-repair/run-01/received.blend",
+    "bytes": 3864164,
+    "sha256": "sha256:dd8a6f32e96e45ec92207ee3417af0b3c88a6f9d898cff6d07e4366ab79993c4"
+  },
+  "namespaceDiagnosis": {
+    "currentC217RawModule": "io_scene_gltf2.blender.com",
+    "currentC217ObservedKind": "namespace-package",
+    "priorC216RuntimeAttributes": "UNKNOWN_NOT_RECORDED",
+    "evidence": {
+      "path": "handoff/agent-results/independent-review/NAMESPACE-OBSERVATION.json",
+      "bytes": 2538,
+      "sha256": "sha256:0f46073347334b77160bbd87d9188423d7210a876b883fed814a9032c12f01a3"
+    }
+  },
+  "gates": {
+    "namespaceRepairAndRawDiagnostics": "PASS_ON_OBSERVED_C217_RUN",
+    "retainedSourceAuthorityAndNativeImportMeasurements": "PASS_ON_OBSERVED_C217_RUN",
+    "usefulImportVisuals": "PASS_WITH_DISCLOSED_LIMITS",
+    "savedSceneReopenPersistence": "UNRUN_DEFERRED",
+    "nativeLosslessNormalFidelity": "NOT_ESTABLISHED_ORIGINAL_STRICT_GATE_FAILED",
+    "completeReceivingAcceptance": "NOT_ESTABLISHED",
+    "fullProductRegression": "NOT_RERUN_PRIOR_FAILED_INCOMPLETE_RESULTS_RETAINED",
+    "secondTargetOrComparativeAuthoring": "UNRUN_DEFERRED",
+    "rootPublicationAndFinalHandoffSave": "PENDING_ROOT_CLOSURE"
+  },
+  "evidence": {
+    "PRE-EXECUTION-REVIEW.json": {
+      "path": "handoff/agent-results/independent-review/PRE-EXECUTION-REVIEW.json",
+      "bytes": 6180,
+      "sha256": "sha256:572cddab4e20c7fe45bdc5883d7bc3e632b25b8fed2407f963386d63d1b275da"
+    },
+    "NATIVE-CORNER-LOSS-AUDIT.json": {
+      "path": "handoff/agent-results/independent-review/NATIVE-CORNER-LOSS-AUDIT.json",
+      "bytes": 9420,
+      "sha256": "sha256:2acb8e9e16edeb8b9e1f78f282a098d630f706ed2a18e32749bd8ae5b3794400"
+    },
+    "NATIVE-DETAILS-AUDIT.json": {
+      "path": "handoff/agent-results/independent-review/NATIVE-DETAILS-AUDIT.json",
+      "bytes": 1780,
+      "sha256": "sha256:905e47346e4a5abaaab14d8b8ae3810444ad49fb00ca417c915b957bcb0667c6"
+    },
+    "NATIVE-BINDINGS-AUDIT.json": {
+      "path": "handoff/agent-results/independent-review/NATIVE-BINDINGS-AUDIT.json",
+      "bytes": 6448,
+      "sha256": "sha256:1475eea5af31071cc7141b7de7f4e0cf629217e7c231e347c00aa36f070a1b7f"
+    },
+    "VISUAL-REVIEW.json": {
+      "path": "handoff/agent-results/independent-review/VISUAL-REVIEW.json",
+      "bytes": 2759,
+      "sha256": "sha256:5dd8bd48f3a58838aa8ecc6795966b1e49f5b3a378c9ff5ffb750a9bd5ffc780"
+    },
+    "NAMESPACE-OBSERVATION.json": {
+      "path": "handoff/agent-results/independent-review/NAMESPACE-OBSERVATION.json",
+      "bytes": 2538,
+      "sha256": "sha256:0f46073347334b77160bbd87d9188423d7210a876b883fed814a9032c12f01a3"
+    }
+  },
+  "limitations": [
+    "C215 automatic fidelity/provenance/receiving flags remain false and shading acceptance remains NOT_EVALUATED",
+    "Scene source texts and semantic mappings were observed before/after saving in the import process; persistence after reopening is unrun",
+    "Visible silhouette faceting and low-sample grain remain; hidden surfaces and numerical normal equality cannot be certified by images",
+    "Upstream build lineage Unknown, system-library closure and hostile-host authenticity remain unproved",
+    "C216 original failure and all closed preparations remain unchanged; no retroactive runtime-attribute claim",
+    "One source-only auditor setup invocation used a nonexistent unused payload path; corrected command is documented separately without changing algorithms, inputs or expectations"
+  ],
+  "nextAction": "Stop all native execution, preserve this exact scene/source/evidence, complete and save the C217 handoff. A later task may independently review one saved-scene reopen plan, with no GLB reimport and no retry."
+}

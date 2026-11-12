@@ -1,0 +1,230 @@
+{
+  "schema": "ontokin.c217.independent-predeclared-requirements/0.1",
+  "recordedAtUtc": "2026-11-12T16:42:06.419336+00:00",
+  "reviewer": "root/independent_review",
+  "scope": "Namespace-aware origin repair and at most one finite import/save/capture/visual start",
+  "requirements": [
+    {
+      "id": "R01",
+      "kind": "source-review",
+      "requirement": "Current baseline, C211 held and executed source identities, C214/C215 authority/profile and accepted source input triple are pinned; prior source and failed evidence remain unchanged.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R02",
+      "kind": "preflight",
+      "requirement": "Exact installed Blender executable and all installed importer-source bytes are hashed before native execution and checked again at native starts; Unknown upstream build lineage is reported without claiming source reproducibility.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R03",
+      "kind": "preflight",
+      "requirement": "Exact capture implementation and all imported local helper bytes are bound to a committed source identity; the reviewer sees the complete native and launch code before launch.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R04",
+      "kind": "contract-review",
+      "requirement": "A separate C217 experimental contract explicitly adopts exact retained source authority plus measured native shading/disclosed loss. It grants no native normal fidelity, replacement tolerance, production integration or retroactive C211 pass.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R05",
+      "kind": "plan-review",
+      "requirement": "A fresh finite plan defines at most one native start: import/save/capture/render. Exact command, source, time/resource bounds, expected files, comparison gates and stop rules are fixed. No exploratory native start, reopen, automatic retry or unplanned rerender.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R06",
+      "kind": "plan-review",
+      "requirement": "Every attempted start is durably recorded before launch; timeout/unknown outcomes are counted and reconciled before any retry. No automatic retry or unplanned rerender is permitted.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R07",
+      "kind": "contract-review",
+      "requirement": "The plan distinguishes immutable prelaunch source/build/importer/settings locks from the post-save scene hash. A future scene hash cannot be represented as preknown. Final per-phase C215 observation locks are independently checked against the prelaunch bindings and actual saved scene.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R08",
+      "kind": "source-review",
+      "requirement": "The source is a separately identified future-proposed receiver, not relabeled held C211 correction. Denoising is explicitly disabled in actual Cycles scene and view-layer settings if Cycles is selected; the executed settings receipt verifies the correction.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R09",
+      "kind": "source-review",
+      "requirement": "Captured positions and corner normals come from actual native object-local mesh/loop data. Source normals never select correspondence or overwrite imported normals; unrelated geometry fixes, coordinate rounding, welding and topology alterations are absent.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R10",
+      "kind": "source-review",
+      "requirement": "Captured native object, mesh, triangle and loop identities are explicit. Source instance binding uses retained metadata and validated source IDs rather than relying on incidental native ordering.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R11",
+      "kind": "native-comparison",
+      "requirement": "All expected 18 source instances, 7800 triangle instances and 23400 corners enter the denominator. Missing, ambiguous, invalid, unmatched and reversed-winding records remain visible rather than being dropped.",
+      "status": "PASS",
+      "evidence": "NATIVE-CORNER-LOSS-AUDIT.json"
+    },
+    {
+      "id": "R12",
+      "kind": "native-comparison",
+      "requirement": "An independent raw GLB reader reconstructs accepted local float32 positions/normals and original topology without using adapter correspondence or source-normal builder as its oracle.",
+      "status": "PASS",
+      "evidence": "NATIVE-CORNER-LOSS-AUDIT.json and ORACLE-REUSE.json"
+    },
+    {
+      "id": "R13",
+      "kind": "native-comparison",
+      "requirement": "Independent correspondence uses source identity plus exact positions and orientation-preserving cyclic winding only, with fixed Blender (X,Y,Z) to glTF (X,Z,-Y) mapping. Drift/ambiguity is a blocker, not a relaxed tolerance.",
+      "status": "PASS",
+      "evidence": "NATIVE-CORNER-LOSS-AUDIT.json"
+    },
+    {
+      "id": "R14",
+      "kind": "native-comparison",
+      "requirement": "Component and angular loss are independently recomputed for every mapped corner; reported maxima, complete state counts and native IDs agree with independently derived values.",
+      "status": "PASS",
+      "evidence": "NATIVE-CORNER-LOSS-AUDIT.json"
+    },
+    {
+      "id": "R15",
+      "kind": "native-comparison",
+      "requirement": "The original 2e-6 normal threshold is reported separately as historical comparison and remains failed if exceeded; no new shading-fidelity pass is inferred from small loss.",
+      "status": "PASS",
+      "evidence": "NATIVE-CORNER-LOSS-AUDIT.json: original strict normal gate remains FAIL"
+    },
+    {
+      "id": "R16",
+      "kind": "native-comparison",
+      "requirement": "Native imported object identity, PBR values, selected world poses/units/frames and supported source semantics are checked against authoritative accepted source. Metadata preservation is distinguished from executable physics.",
+      "status": "PASS",
+      "evidence": "NATIVE-DETAILS-AUDIT.json"
+    },
+    {
+      "id": "R17",
+      "kind": "native-comparison",
+      "requirement": "The actual saved .blend exists, is nonempty and is hashed. Accepted source-normal payload bytes and source references survive as paired retained authority; any in-scene source metadata/text claims are verified from actual native observations.",
+      "status": "PASS",
+      "evidence": "NATIVE-BINDINGS-AUDIT.json and NATIVE-DETAILS-AUDIT.json"
+    },
+    {
+      "id": "R18",
+      "kind": "native-comparison",
+      "requirement": "Saved-scene reopen remains explicitly UNRUN and deferred to a later separately reviewed task. C216 run-02 stays consumed and cannot supply a remaining retry or reopen allowance.",
+      "status": "PASS_SCOPE_CONSTRAINT_REOPEN_UNRUN",
+      "evidence": "No reopen command/approval route/artifacts or execution; final gates explicitly retain UNRUN"
+    },
+    {
+      "id": "R19",
+      "kind": "native-comparison",
+      "requirement": "No saved-scene round-trip or reopen preservation is claimed from an import-only capture; all future reopen gates remain separate and pending.",
+      "status": "PASS_SCOPE_CONSTRAINT_REOPEN_UNRUN",
+      "evidence": "No reopen command/approval route/artifacts or execution; final gates explicitly retain UNRUN"
+    },
+    {
+      "id": "R20",
+      "kind": "visual-review",
+      "requirement": "Useful actual native renders are generated from the inspected imported scene with declared camera/light/render settings, including views exposing the object assembly and sphere shading. Source and render bytes are bound.",
+      "status": "PASS",
+      "evidence": "VISUAL-REVIEW.json and NATIVE-BINDINGS-AUDIT.json"
+    },
+    {
+      "id": "R21",
+      "kind": "visual-review",
+      "requirement": "A human-facing visual inspection checks framing, missing/extra parts, material appearance and visible surface shading. A successful render exit or numeric small error alone is not shading review.",
+      "status": "PASS",
+      "evidence": "VISUAL-REVIEW.json"
+    },
+    {
+      "id": "R22",
+      "kind": "evidence-review",
+      "requirement": "Per-phase output/log/run receipts, measured settings, environment/build identity and process termination evidence are preserved; a successful launch never stands in for complete expected artifacts.",
+      "status": "PASS",
+      "evidence": "NATIVE-BINDINGS-AUDIT.json"
+    },
+    {
+      "id": "R23",
+      "kind": "source-review",
+      "requirement": "Only the isolated C217 experiment and root-owned navigation/status are changed. No prior adapter contract, source/runtime/exporter, held receiver, frozen schedule, tolerances or historical evidence is rewritten.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R24",
+      "kind": "contract-review",
+      "requirement": "C215 reports retain their fixed false evidence/provenance/fidelity flags. Any separate C217 result states only the external measured proof actually reviewed and keeps exact-source authority distinct from native representation.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R25",
+      "kind": "closure-review",
+      "requirement": "All required independent findings are accounted for with PASS/FAIL/UNRUN/BLOCKED evidence. A failed finite gate stops further native steps and produces a restorable checkpoint; full runtime regression/native lossless or general receiving claims are absent.",
+      "status": "PASS",
+      "evidence": "FINAL-IMPORT-REVIEW.json"
+    },
+    {
+      "id": "R26",
+      "kind": "closure-review",
+      "requirement": "Workers preserve source and original attempts; final package retains history/hashes and exact source/evidence references. Root owns final archive/offline restore/save verification and stopping.",
+      "status": "WORKER_COMPLETE_ROOT_CLOSURE_PENDING",
+      "evidence": "Reviewer source and detailed evidence written and frozen; final package/restoration/save owned by root"
+    },
+    {
+      "id": "R27",
+      "kind": "source-review",
+      "requirement": "Every loaded importer entry has complete raw file, module/spec loader class, spec origin, cached path and module/spec search locations durably recorded before classification may reject it. Missing metadata is explicit, never silently replaced by guessed values.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R28",
+      "kind": "source-review",
+      "requirement": "Concrete modules require supported source loader, exact pinned source file and module name, consistent spec/file/search metadata, unchanged source bytes and absent existing bytecode; source/cache bindings stay strict.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R29",
+      "kind": "source-review",
+      "requirement": "Namespace packages require supported namespace loader, explicit absence of concrete source/origin/cache, exact expected package name and contained canonical locations derived from pinned importer Python inventory. Mixed, external, conflicting, escaped, missing or contradictory locations reject.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    },
+    {
+      "id": "R30",
+      "kind": "cpu-control",
+      "requirement": "Meaningful independent CPU controls cover legitimate concrete/namespace cases, missing/contradictory metadata, alien or mixed search locations, source drift and stale bytecode. Native compatibility is not inferred from CPU controls.",
+      "status": "PASS",
+      "evidence": "PRE-EXECUTION-REVIEW.json and bound controls"
+    }
+  ],
+  "expectedDenominator": {
+    "instances": 18,
+    "triangleInstances": 7800,
+    "corners": 23400
+  },
+  "maximumNativeStarts": 1,
+  "nativeStartsByReviewer": 0,
+  "sourceProgramsOrExportsByReviewer": 0,
+  "originalC211NormalThreshold": 2e-06,
+  "newNormalTolerance": null,
+  "note": "Independent predeclared requirements. Not launch authorization. Reopen is explicitly deferred; one failure or unknown consumes the only start and closes this task.",
+  "meaning": "All 30 requirements accounted for. Passing reporting/scope requirements do not turn the preserved strict normal failure or unrun reopen gate into a receiving pass. Root delivery requirement remains pending root closure."
+}
