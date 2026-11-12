@@ -120,8 +120,9 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-No active integration lease. Owner `c220-root-6e98bd70835f` releases ownership after independently reviewed documentation-only PR #173 merged and fresh actual-main checks passed. All workers have finished their plan/integration reviews; root completes only final handoff verification and confirmed save, then closes [scope issue #172](https://github.com/Omegapy/OntoKin/issues/172). Held PRs #155/#165/#167/#169 and consumed native schedules remain unchanged. The next scope is CPU-only observer/checker preparation with zero target starts. Reconcile current refs and outstanding writes before acquiring another lease.
+Owner `c221-root-f982faba8a3d` holds the C221 integration lease from `2026-11-12T20:49:38.512660+00:00` until `2026-11-12T21:19:38.512660+00:00` for [scope issue #174](https://github.com/Omegapy/OntoKin/issues/174). Observed starting main is `a266424b5cb0c3a7e020ab72d0ef8e7cd8886976`. Root owns STATUS, navigation, integration and final handoff; checker worker `c221-binding-checker` owns only new `tools/second_target_c221/` files and the C221 contract on `work/c221-binding-checker`. The root branch is `work/c221-authority-binding`.
 
+Scope is the CPU-only authority-binding checker for the eight fixed C220 inputs and 18-part source map, with independent negative controls. The full observer/numerical protocol remains pending. Zero target/native/version/source/export/import/render starts or native scene writes are authorized. Held PRs #155/#165/#167/#169 and all historical gates remain unchanged. Before expiry, checkpoint real progress and release or renew ownership through the observed-head procedure.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
