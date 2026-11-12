@@ -10,6 +10,8 @@ Independent audits cover all 18 objects, 7,800 triangles, 23,400 corners and 126
 
 Actually executed local source `6af212204d58fbac2a98f3cded44facd67c52528` and published held source `55ce9f34a14cbf3d954332244c9e9a6800ed93fb` share tree `50cd8c97290130fc97945e74c51332bd507e91eb` but retain distinct identities. Prototype source is held in [draft PR #167](https://github.com/Omegapy/OntoKin/pull/167); main receives result documentation/evidence only. Original held PRs #155/#165 and all historical failures remain unchanged.
 
+The documentation/evidence result is published at `7ddb286bb39b3f6d093e03f3f7a306dbc5d539cb`, tree `acacf5aa2b3a208f486453099acd4c9eba1ba109`, exactly equal to the independently reviewed candidate. Fresh actual-main checks pass 29 preserved sources / 4,505 local links, with all 15,539 non-navigation baseline entries unchanged and all eight prototype files absent. [Integration receipt](docs/engineering/native-receiving-c217/evidence/publication/INTEGRATION.json).
+
 **Next action:** finish the verified saved C217 handoff and stop. A later [bounded reopen proof](docs/engineering/native-receiving-c217/NEXT-TASK.md) must use this exact saved scene with no GLB reimport, a fresh source/plan review and at most one new start. C217's native schedule is closed.
 
 ## C216 preserved result: native start failed before product import
@@ -88,9 +90,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Active owner `c217-namespace-capture-20261112-80286e`, acquired from observed main `8263f42c574a660432bc5e61fd7e36cbf7b01d93` for C217 documentation/evidence publication and final handoff. Expires 2026-11-12T17:22:38.158698+00:00. Root exclusively owns current GOAL.md, STATUS.md, docs/README.md and new C217 result records. [Scope issue #166](https://github.com/Omegapy/OntoKin/issues/166).
-
-The one reviewed C217 import/save/capture start has completed and its native schedule is closed. Prototype source remains held in [draft PR #167](https://github.com/Omegapy/OntoKin/pull/167) at `55ce9f34a14cbf3d954332244c9e9a6800ed93fb`; this lease authorizes no additional native start, reopen or product-source integration. Root will publish independently reviewed result evidence, verify actual main, release ownership and deliver the saved handoff. Earlier held PRs #155/#165 and all historical failures remain unchanged.
+No active integration lease. Owner `c217-namespace-capture-20261112-80286e` releases ownership after observed documentation/evidence publication `7ddb286bb39b3f6d093e03f3f7a306dbc5d539cb` and fresh actual-main checks. [C217 integration record](docs/engineering/native-receiving-c217/evidence/publication/INTEGRATION.json). The implementation and independent native/integration reviews are finished. Exact prototype source remains held in draft PR #167 at `55ce9f34a14cbf3d954332244c9e9a6800ed93fb`; older held PRs #155/#165 are unchanged. One C217 native import/save/capture completed; its schedule is closed. No retry or reopen is authorized by this release. Root finishes only the final verified saved handoff, then stops. Reconcile actual refs, ownership and unknown outcomes before a later task.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
