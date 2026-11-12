@@ -1,0 +1,65 @@
+[
+  {
+    "id": "G1",
+    "title": "Godot 4.6 GLTFDocument",
+    "url": "https://docs.godotengine.org/en/4.6/classes/class_gltfdocument.html",
+    "webRef": "turn1view0",
+    "fact": "append_from_file reads glTF into GLTFState; generate_scene creates a Godot scene; generated custom functionality belongs to explicit GLTFDocumentExtension hooks."
+  },
+  {
+    "id": "G2",
+    "title": "Godot 4.6 GLTFState",
+    "url": "https://docs.godotengine.org/en/4.6/classes/class_gltfstate.html",
+    "webRef": "turn1view1",
+    "fact": "GLTFState exposes parsed JSON, node records, materials, animations, and get_scene_node(gltf_node_index)/get_node_index(scene_node) mappings."
+  },
+  {
+    "id": "G3",
+    "title": "Godot 4.6 model export considerations",
+    "url": "https://docs.godotengine.org/en/4.6/tutorials/assets_pipeline/importing_3d_scenes/model_export_considerations.html",
+    "webRef": "turn1view2",
+    "fact": "Godot uses right-handed Y-up coordinates; cameras face -Z and oriented model fronts +Z. Material parameters and rendered appearance require separate comparisons."
+  },
+  {
+    "id": "G4",
+    "title": "Godot 4.6 command-line tutorial",
+    "url": "https://docs.godotengine.org/en/4.6/tutorials/editor/command_line_tutorial.html",
+    "webRef": "turn1view3",
+    "fact": "headless selects headless display and Dummy audio. Command-line script/path options exist. Unknown arguments may be silently ignored, so selected options require actual observation."
+  },
+  {
+    "id": "G5",
+    "title": "Godot 4.6 ResourceImporterScene",
+    "url": "https://docs.godotengine.org/en/4.6/classes/class_resourceimporterscene.html",
+    "webRef": "turn3view1",
+    "fact": "Editor scene importing has geometry compression, LOD, tangent, animation, root-scale and name-suffix options; its defaults are not a neutral identity mapping."
+  },
+  {
+    "id": "G6",
+    "title": "Godot 4.6 PackedScene",
+    "url": "https://docs.godotengine.org/en/4.6/classes/class_packedscene.html",
+    "webRef": "turn3view2",
+    "fact": "Packing saves a node and the nodes it owns. Serialization ownership needs explicit checking and is not OntoKin physical ownership."
+  },
+  {
+    "id": "G7",
+    "title": "Godot 4.6 AnimationPlayer",
+    "url": "https://docs.godotengine.org/en/4.6/classes/class_animationplayer.html",
+    "webRef": "turn3view3",
+    "fact": "AnimationPlayer updates target properties at the process frame. A future observer must force/evaluate the intended sample rather than assuming a seek command already changed native transforms."
+  },
+  {
+    "id": "G8",
+    "title": "Official Godot 4.6.3 release announcement",
+    "url": "https://godotengine.org/article/maintenance-release-godot-4-6-3/",
+    "webRef": "turn3view0",
+    "fact": "The announcement identifies source commit 35e80b3a8; current tag readback gives full 35e80b3a8822a9df9be390814b62f44c0a9c69e8. This differs from the installed binary adjacent commit-like string."
+  },
+  {
+    "id": "G9",
+    "title": "Godot glTF implementation at observed release-tag commit",
+    "url": "https://github.com/godotengine/godot/blob/35e80b3a8822a9df9be390814b62f44c0a9c69e8/modules/gltf/gltf_document.cpp",
+    "sha256": "a33185acc304524e99302244a652c295e9f201fcf9e8269223ea2e8df6fe803e",
+    "fact": "This pinned upstream source is supporting planning material; it is not proven to be the installed executable source."
+  }
+]

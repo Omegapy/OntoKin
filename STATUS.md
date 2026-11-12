@@ -2,7 +2,15 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
-## C219 current result: precise finite Blender receiving promise accepted
+## C220 current result: second-target plan; execution held
+
+[C220/0.1.0](docs/engineering/second-target-c220/PLAN.md) selects the installed Godot 4.6.3 candidate by exact executable digest and binds the same accepted C210 GLB/source/semantic inputs plus C214 authority. The planned mapping enumerates all 18 parts and their source spans, definitions, keyed occurrences and geometry references. Numeric, material, semantic, cross-target, persistence, visual and resource/stop requirements are predeclared.
+
+The executable exists; its upstream build lineage is unresolved because its embedded commit-like value differs from the observed official tag. This shell has no confirmed rendering surface. Runtime/API behavior and useful images remain unverified. C220 is planning and read-only availability inspection only: zero target/native/source/export/import/render starts or scene writes. The original strict normal failure and all historical failed/unrun gates remain unchanged. [Planning status and limitations](docs/engineering/second-target-c220/evidence/PLANNING-STATUS.json).
+
+[Independent review](docs/engineering/second-target-c220/REVIEW.md) passed 9,499 static source assertions, 14 contract conditions, 25 target conditions and seven final delta checks. The missing raw Blender observation binding was corrected and preserved. **Current closure:** finish required documentation checks, scoped publication and the verified saved C220 handoff. The next thread may perform only [CPU-only Godot observer/checker and protocol preparation](docs/engineering/second-target-c220/NEXT-TASK.md), with no target start. Full second-target execution remains blocked on reviewed source and evidenced capabilities; Unreal support and the matched direct-authoring comparison remain unrun.
+
+## C219 preserved result: precise finite Blender receiving promise accepted
 
 [C219/0.1.0](docs/engineering/receiving-decision-c219/DECISION.md) accepts the one-fixture, one-build promise from C217/C218: exact retained source authority, independently checked native geometry and measured shading loss, useful inspected views, and exact persistence of observed native values through the specified save/reopen. Its requirement table binds all 18 objects, 7,800 triangles, 23,400 corners and 126 poses. This is an experimental feasibility decision; it does not establish a general or production importer.
 
@@ -12,7 +20,7 @@ C218's completed delivery is reconciled from the exact saved input ZIP, current 
 
 [PR #171](https://github.com/Omegapy/OntoKin/pull/171) merged the documentation-only decision at `e886f2d6575034fd0c521eda5e21327c2aa5f70d`, tree `00bfe5cacb3c0568e162da3ecce8a314101c1dda`, exactly matching the reviewed candidate. Fresh actual-main documentation checks pass 29 preserved sources / 4,533 local links. Independent review passed 22 decision conditions and 18 integration checks; all 15,575 existing non-navigation entries remain unchanged. [Integration record](docs/engineering/receiving-decision-c219/evidence/publication/INTEGRATION.json).
 
-**Next action:** finish the verified saved C219 handoff and stop. The next thread may perform only the [second-target/source-traceability planning task](docs/engineering/receiving-decision-c219/NEXT-TASK.md), with actual availability, exact mappings, loss and review requirements established before future execution. Second-target execution, Unreal support and the matched direct-authoring comparison remain unrun.
+C219 delivery is confirmed by the exact saved ZIP, fresh input verification/offline restore and closed [scope issue #170](https://github.com/Omegapy/OntoKin/issues/170). Its queued planning step is the current C220 scope above; consumed native schedules remain closed.
 
 ## C218 preserved result: saved-scene reopen persistence passed
 
