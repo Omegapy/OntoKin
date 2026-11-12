@@ -1,0 +1,219 @@
+{
+  "schema": "ontokin.c215.predeclared-independent-controls/0.1",
+  "reviewer": "root/independent_controls",
+  "recordedAtUtc": "2026-11-12T15:01:53.806554+00:00",
+  "startingMain": "4ce61e61b7edc8cc9ab75f4f68fa40b22fc17a7a",
+  "status": "SEALED_BEFORE_IMPLEMENTATION_EXECUTION",
+  "scope": "Finite CPU-only synthetic receiving-adapter validation and source/contract review",
+  "method": "Independent original-GLB accessor decoder and independent analytic rotation/error expectations; no adapter matching/numerical helpers as oracle",
+  "nativeProcessesAuthorized": 0,
+  "sourceProgramOrExporterRunsAuthorized": 0,
+  "notes": [
+    "Public API names may be adapted to the agreed schema without changing required behavior.",
+    "Some malformed structural inputs may be refused instead of returned as per-corner invalid; the final adopted contract must specify this consistently.",
+    "This plan does not authorize native receiving or certify original held C211 native output.",
+    "Source review controls C36-C40 are distinct from executable numeric/schema controls."
+  ],
+  "controls": [
+    {
+      "id": "C01",
+      "topic": "Complete independent accepted fixture",
+      "expected": "Independently decode original GLB indices/accessors; construct Blender-frame local positions and normals for all 18 instances, reorder triangles/cyclic corners, map all 7,800 triangle instances and 23,400 corners back to exact source identity."
+    },
+    {
+      "id": "C02",
+      "topic": "Frame and handedness",
+      "expected": "Asymmetric signed vectors prove inverse rotation (X,Y,Z)->(X,Z,-Y); orientation-preserving cyclic order maps correctly and reversed winding does not become accepted observed rows."
+    },
+    {
+      "id": "C03",
+      "topic": "Independent normal measurement",
+      "expected": "Perturb normal values with source positions unchanged; mapped source identities remain fixed and component/angular errors match independently computed values."
+    },
+    {
+      "id": "C04",
+      "topic": "Opposite normal direction",
+      "expected": "Negate a mapped direction; angle is 180 degrees, full denominator retained, no shading acceptance or tolerance inferred."
+    },
+    {
+      "id": "C05",
+      "topic": "Magnitude differences",
+      "expected": "Scale a mapped direction; component differences remain visible even if angular difference is zero."
+    },
+    {
+      "id": "C06",
+      "topic": "Missing triangle",
+      "expected": "Remove an otherwise mapped triangle; its source corners remain missing and counts sum to all expected corners."
+    },
+    {
+      "id": "C07",
+      "topic": "Empty observations",
+      "expected": "No native triangles yields full missing denominator; maxima are null rather than zero."
+    },
+    {
+      "id": "C08",
+      "topic": "Invalid normal values",
+      "expected": "Null, bool, string, wrong length, zero and nonfinite normal vectors produce invalid observations or strict structural refusal under documented contract; never zero-loss observed values."
+    },
+    {
+      "id": "C09",
+      "topic": "Mixed validity",
+      "expected": "A triangle containing valid and invalid normals preserves valid measurements and separately reports invalid corners."
+    },
+    {
+      "id": "C10",
+      "topic": "Duplicate native identifier",
+      "expected": "Repeat a claimed native object/triangle/corner identity; reject or explicitly flag invalid/ambiguous without overwriting observations."
+    },
+    {
+      "id": "C11",
+      "topic": "Duplicate source correspondence",
+      "expected": "Two native records mapping to the same source triangle remain ambiguous; no arbitrary first/last winner."
+    },
+    {
+      "id": "C12",
+      "topic": "Ambiguous geometric correspondence",
+      "expected": "Coincident/repeated possible source mappings are reported ambiguous or refused; observed normals cannot disambiguate."
+    },
+    {
+      "id": "C13",
+      "topic": "Unmatched geometry",
+      "expected": "Change one local position beyond declared mapping policy; no nearest-triangle guessing or successful native evidence."
+    },
+    {
+      "id": "C14",
+      "topic": "Winding reversal",
+      "expected": "Swap two triangle corners; reflected winding does not match an orientation-preserving source triangle."
+    },
+    {
+      "id": "C15",
+      "topic": "Instance separation",
+      "expected": "Shared mesh instances retain node and source identity; swapping native object labels cannot silently merge instance observations."
+    },
+    {
+      "id": "C16",
+      "topic": "Unknown object or mesh",
+      "expected": "Unknown source identity, node or unsupported mesh/primitive references are refused or reported without dropping the source denominator."
+    },
+    {
+      "id": "C17",
+      "topic": "Native identifier typing",
+      "expected": "Bool/negative/string identifiers, malformed corners and nonunique corner identifiers are refused under the exact schema."
+    },
+    {
+      "id": "C18",
+      "topic": "Sharp boundaries",
+      "expected": "Coincident positions with different source-corner normals stay separate; no position welding or normal averaging."
+    },
+    {
+      "id": "C19",
+      "topic": "Source payload tampering",
+      "expected": "Modified winding, normal sign/bytes, corner identity or payload schema is refused against unchanged accepted triple."
+    },
+    {
+      "id": "C20",
+      "topic": "Exact accepted input pinning",
+      "expected": "Byte mutation/whitespace change in each accepted input is refused; a self-consistent but unaccepted replacement cannot become authority."
+    },
+    {
+      "id": "C21",
+      "topic": "Stale payload binding",
+      "expected": "Observation source-payload digest mismatch is refused."
+    },
+    {
+      "id": "C22",
+      "topic": "Stale input/revision binding",
+      "expected": "Accepted source triple and revision must be bound transitively or explicitly; altered declarations cannot be silently accepted."
+    },
+    {
+      "id": "C23",
+      "topic": "Receiver and build binding",
+      "expected": "Changing receiver/source or executable/importer build identities without updating the independently locked context is refused."
+    },
+    {
+      "id": "C24",
+      "topic": "Settings binding",
+      "expected": "Changing import/extraction settings without matching exact locked settings is refused."
+    },
+    {
+      "id": "C25",
+      "topic": "Scene binding",
+      "expected": "When a scene is supplied, scene bytes/hash/size and observation claims must agree; absent scene remains explicitly absent, never invented save/reopen evidence."
+    },
+    {
+      "id": "C26",
+      "topic": "Observation kind and producer",
+      "expected": "Unknown kind/profile/schema/empty producer and hidden acceptance fields are refused; a native-labeled envelope cannot establish actual execution/fidelity from declarations alone."
+    },
+    {
+      "id": "C27",
+      "topic": "Unsupported frame",
+      "expected": "World-space, left-handed, unknown or nonunit/transformed-frame claims are refused rather than guessed."
+    },
+    {
+      "id": "C28",
+      "topic": "Unknown and duplicate JSON fields",
+      "expected": "Strict reader rejects duplicate members and unsupported schema fields; nonstandard NaN/Infinity JSON cannot bypass numeric checks."
+    },
+    {
+      "id": "C29",
+      "topic": "Huge and subnormal finite normals",
+      "expected": "Admitted extreme finite directions produce stable angular measurement and honest raw component differences; unrepresentable values are explicitly invalid/refused."
+    },
+    {
+      "id": "C30",
+      "topic": "Zero-signed source bytes",
+      "expected": "Source authoritative normal bytes and signed-zero distinctions remain unchanged; frame conversion affects only observations."
+    },
+    {
+      "id": "C31",
+      "topic": "Denominator and maxima",
+      "expected": "Observed/missing/ambiguous/invalid counts sum to expected source corners; excluded/invalid observations never lower the denominator or supply a false zero maximum."
+    },
+    {
+      "id": "C32",
+      "topic": "No acceptance promotion",
+      "expected": "Even complete zero-loss synthetic copy has native fidelity and receiving evidence false, no adopted tolerance and shading/receiving acceptance unevaluated."
+    },
+    {
+      "id": "C33",
+      "topic": "C214 compatibility boundary",
+      "expected": "C214 source and public synthetic-only behavior remain byte-identical; C214 continues to refuse native observation kind."
+    },
+    {
+      "id": "C34",
+      "topic": "Order invariance and deterministic output",
+      "expected": "Permuting native record order and orientation-preserving triangle rotations changes no source mapping/measurement; stable repeat output with fixed inputs."
+    },
+    {
+      "id": "C35",
+      "topic": "Report audit bindings",
+      "expected": "Report retains exact input payload/observations/receiver-build-settings/scene digest references and unmodified source-corner normal authority; reported digests recompute from actual bytes/canonical rules."
+    },
+    {
+      "id": "C36",
+      "topic": "No native or product execution",
+      "expected": "Static source/API review confirms isolated stdlib CPU adapter with no Blender, source compiler, exporter, external dependency/network or hidden execution."
+    },
+    {
+      "id": "C37",
+      "topic": "Explicit receiving promise",
+      "expected": "Contract selects exact retained source plus separately observed native shading/disclosed loss without adopting approximation; original C211 strict failure and unrun gates remain unchanged."
+    },
+    {
+      "id": "C38",
+      "topic": "Future native plan and held receiver",
+      "expected": "Contract and next action require reviewed finite attempts, exact input locks, count unknown/attempted outcomes, stop rules, save/reopen and visual evidence; PR #155 untouched."
+    },
+    {
+      "id": "C39",
+      "topic": "Source containment",
+      "expected": "Diff limited to new C215 adapter/docs and root-owned navigation/status; old C214/C211/frozen/historical input hashes unchanged."
+    },
+    {
+      "id": "C40",
+      "topic": "Evidence and source binding",
+      "expected": "Every execution records actual code digest/revision, Python/platform/command, original failures and corrections; candidate/review identity is explicit."
+    }
+  ]
+}

@@ -2,7 +2,15 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
-## C214 current result: exact source-normal payload and synthetic loss report
+## C215 current result: CPU receiving observation adapter and proposed contract
+
+The [C215 CPU adapter](docs/engineering/receiving-adapter-c215/README.md) maps Blender-format triangle corners to C214's exact source normals using source identity, positions and winding. Independent byte locks bind receiver and importer source, build record, settings and scene. The [proposed profile](docs/engineering/receiving-adapter-c215/CONTRACT.md) distinguishes observed, missing, ambiguous and invalid corners and reports component/angular loss. It establishes no native provenance, shading fidelity, receiving acceptance or new tolerance.
+
+Five proof checks pass across all 18 synthetic objects / 7,800 triangles / 23,400 corners, with actual CLI/API output equality and safe existing-output refusal. Independent review checks 35 executable groups / 234,467 successful assertions and five source requirements. [Results and limits](docs/engineering/receiving-adapter-c215/RESULTS.md). Original harness/setup failures and their narrow corrections remain preserved. C214's synthetic-only behavior and C211's original strict `2e-6` failure remain unchanged; PR #155 stays held. No Blender, source program or exporter ran.
+
+**Next action:** complete reviewed C215 publication and its verified saved handoff, then stop. A later conversation may undertake one [separately reviewed native receiving proof](docs/engineering/receiving-adapter-c215/NEXT-TASK.md), starting with exact capture source and a finite execution plan before any native launch. Native save/reopen and useful visual evidence remain unmet.
+
+## C214 preserved result: exact source-normal payload and synthetic loss report
 
 The [C214 CPU prototype](docs/engineering/source-normals-c214/README.md) preserves all 3,024 source-corner float32 normal triples from the exact accepted C210 source/artifact/sidecar. Explicit instance mapping covers 18 objects and 23,400 observation corners. Its separately versioned [proposed profile](docs/engineering/source-normals-c214/CONTRACT.md) strictly validates source, mesh/primitive/corner, winding and direction identities. Synthetic loss reports retain missing/invalid observations and component/angular differences; native observation labels are refused.
 
@@ -10,7 +18,7 @@ All eleven CPU proof checks and 31 predeclared independent controls / 52,957 ass
 
 [PR #161](https://github.com/Omegapy/OntoKin/pull/161) merged at `c4f9c4b97f5a599e5e4708ca69c8d8d1a68470c5`, tree `b2d0ade1102312f4bdf2679548ff08e9124f4b42`, exactly equal to the reviewed candidate. Fresh actual-main documentation checks passed 29 preserved sources / 4,443 local links; all 1,053 protected input hashes remain exact. [Integration receipt](docs/engineering/source-normals-c214/evidence/publication/INTEGRATION.json).
 
-**Next action:** finish C214's verified saved handoff, then stop. The next conversation may undertake one [separately reviewed CPU receiving adapter/contract](docs/engineering/source-normals-c214/NEXT-TASK.md). Keep C214/0.1 synthetic-only behavior unchanged; native work requires a separately named/versioned profile and a reviewed finite execution plan. C211's original `2e-6` gate remains failed, PR #155 stays held, and save/reopen/visual gates remain unrun.
+C214's handoff was saved and its scope issue closed. Its [successor instructions](docs/engineering/source-normals-c214/NEXT-TASK.md) are implemented by the bounded C215 CPU adapter above. C214/0.1 remains synthetic-only. C211's original `2e-6` gate remains failed, PR #155 stays held, and save/reopen/visual gates remain unrun.
 
 ## C213 preserved result: finite codec loss characterized
 
