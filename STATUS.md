@@ -9,7 +9,7 @@ more reliably or at lower cost than with direct Blender/Python. The complete
 
 ## Main integration lease
 
-No active main integration lease. Owner `c209-entries-dcff4f-20261111` released the C209 scope at `2026-11-11T23:29:47.484317+00:00` after observing [PR #151](https://github.com/Omegapy/OntoKin/pull/151), actual merge `dcb1ac9b0a579b09294968a27fdd68a22762f620`, unchanged reviewed inputs and the passing actual-main results below. Issue #150 is closed; the work branch was observed absent. The next bounded step is CPU-only job/0.2 result compatibility. Future shared writes require fresh reconciliation and an expected-head lease. C199/C200 remain closed.
+Active integration lease: owner `c210-semantic-7of9-20261111`, scope [C210 semantic export and revised direction](https://github.com/Omegapy/OntoKin/issues/152), branch `work/c210-semantic-export`. Acquired from observed main `94dee707c148b7a545e43d4de0d601642c5fa3e8` at `2026-11-12T00:12:13.398Z`; expires `2026-11-12T00:42:13.398Z`. Root owns current root/navigation/status records and serialized integration; `work/c210-semantic-implementation` owns only the new semantic sidecar, driver, tests and contract. The owner-directed semantic proof supersedes the queued C209 job/0.2 task, now deferred. Frozen C201 instructions and closed C199/C200 schedules remain unchanged. Reconcile actual heads and outstanding writes before renewing or succeeding this lease.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
