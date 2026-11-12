@@ -90,7 +90,8 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-No active integration lease. Owner `c217-namespace-capture-20261112-80286e` releases ownership after observed documentation/evidence publication `7ddb286bb39b3f6d093e03f3f7a306dbc5d539cb` and fresh actual-main checks. [C217 integration record](docs/engineering/native-receiving-c217/evidence/publication/INTEGRATION.json). The implementation and independent native/integration reviews are finished. Exact prototype source remains held in draft PR #167 at `55ce9f34a14cbf3d954332244c9e9a6800ed93fb`; older held PRs #155/#165 are unchanged. One C217 native import/save/capture completed; its schedule is closed. No retry or reopen is authorized by this release. Root finishes only the final verified saved handoff, then stops. Reconcile actual refs, ownership and unknown outcomes before a later task.
+Active integration lease: owner `c218-root-682636da9b46`, acquired 2026-11-12T17:25:44.421944+00:00, expires 2026-11-12T17:55:44.421944+00:00. Scope: independently reviewed C218 saved-scene reopen result and documentation/evidence-only publication, then verified saved handoff and ownership release. Starting main `d70513870537611cd423e0fadd2fbb1594beb297`. [Scope issue #168](https://github.com/Omegapy/OntoKin/issues/168). Reserved shared files are STATUS.md, GOAL.md and docs/README.md; the observer worker owns only its new `docs/engineering/native-reopen-c218/` source on `work/c218-saved-scene-reopen`. Older held PRs #155/#165/#167 remain unchanged. No C218 native execution or receiving pass is claimed by this lease.
+
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
