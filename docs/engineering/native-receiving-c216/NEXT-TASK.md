@@ -1,0 +1,17 @@
+# Next bounded task: namespace-aware capture repair and one import proof
+
+C216's sole native start failed during initial importer-module classification, before product GLB import. It did not produce a saved scene, native measurements or renders. Preserve [the failure](RESULTS.md), exact source `2cb197ffe6047b13c9099f2987049ab0d1a29b2d`, held published source `53a6e3169edf944180120a14b10ae09fc471cfc8` in draft PR #165, both preparation plans and every consumed-start receipt. The old run-02 schedule is closed; its unused slot is not a retry allowance.
+
+After restoring and reconciling live main, branches, PRs, ownership and surviving work, select only this narrow scope:
+
+1. Preserve raw loaded-module metadata before validation can raise. Record concrete file, module spec origin, loader class, cached path and package search locations with explicit unavailable values.
+2. Review a namespace-aware origin rule. Concrete modules must still map to exact pinned source bytes. Namespace package search locations must resolve inside the selected importer tree, agree with the pinned package/module inventory, and refuse alien, escaped, conflicting or mixed locations. Do not accept every missing `__file__`, suppress the check or silently substitute a path. Retain cache-origin controls and exact executable/importer bindings.
+3. Exercise targeted CPU controls for concrete modules, legitimate contained namespaces, missing or contradictory metadata, external/mixed search locations, source drift and cached-code mismatches. These controls do not establish native compatibility.
+4. Commit the exact repair and separately review it, the retained source promise and a fresh finite plan. Predeclare at most one native start for this next task: import the unchanged accepted GLB, retain authority, save once, capture actual corner/pose/material/semantic records and render the already selected useful views. Reconcile actual installed inputs and unknown outcomes before launch. No exploratory native start or automatic retry.
+5. After that one observed result, stop and hand off. If it passes, independent complete corner/loss, provenance and visual review supplies the basis for a later separately reviewed reopen task. If it fails or becomes unknown, retain the complete output and precise blocker. Do not alter tolerances, correspondence or the accepted source to make a gate pass.
+
+The actual C216 failing module's runtime file/loader/spec/search paths were not captured. The namespace diagnosis is strongly supported by static layout but remains an inference until the revised raw receipt supplies native evidence. Do not retroactively claim those values.
+
+Use the exact accepted C210 source/artifact/sidecar, C214 source-normal authority and unchanged C215 reporter. Preserve C211's original `2e-6` failure and held PR #155. The receiving promise remains exact retained source authority plus independently measured native shading and disclosed loss, with no new approximation threshold. Metadata or a small difference is not native fidelity or receiving acceptance.
+
+Root owns integration, native starts and final delivery; assign independent source/plan/data review to a real subagent. Save recovery before substantial work and preserve new source/evidence as it appears. Close with one verified offline-restorable handoff, an integrity manifest and confirmed final ZIP save. Do not start reopen, a second target, a general importer, production runtime work or the direct-authoring comparison in that task.

@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/309713e370ee/c216-implementation/docs/engineering/native-receiving-c216/capture.py", line 386, in <module>
+    main(run, args.phase)
+    ~~~~^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/309713e370ee/c216-implementation/docs/engineering/native-receiving-c216/capture.py", line 285, in main
+    initial = cache_receipt(build, phase, "before-cache-isolation")
+  File "/workspace/scratch/309713e370ee/c216-implementation/docs/engineering/native-receiving-c216/capture.py", line 65, in cache_receipt
+    "loadedImporterModules": importer_modules(build),
+                             ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/workspace/scratch/309713e370ee/c216-implementation/docs/engineering/native-receiving-c216/capture.py", line 41, in importer_modules
+    require(filename is not None and str(Path(filename).resolve()) in pinned, "Loaded importer module has unpinned origin: " + name)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/309713e370ee/c216-implementation/docs/engineering/native-receiving-c216/common.py", line 32, in require
+    raise RuntimeError(message)
+RuntimeError: Loaded importer module has unpinned origin: io_scene_gltf2.blender.com
+
+Error: script failed, file: '/workspace/scratch/309713e370ee/c216-implementation/docs/engineering/native-receiving-c216/capture.py', exiting.

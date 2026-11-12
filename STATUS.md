@@ -2,7 +2,15 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
-## C215 current result: CPU receiving observation adapter and proposed contract
+## C216 current result: native start failed before product import
+
+[C216](docs/engineering/native-receiving-c216/RESULTS.md) reviewed one finite Blender capture/save/reopen plan. Its first actual start failed in the initial loaded-importer origin guard for `io_scene_gltf2.blender.com`, exiting with code 19 after 2.325 seconds; the process group was absent. No product GLB import, save, native corner/pose/material capture, render or reopen occurred. One start was consumed and no retry was attempted.
+
+Prelaunch source review passed 12 static findings, 385 input-binding assertions and 14 CPU controls. The installed module directory has no `__init__.py`, supporting a namespace-package explanation, but actual runtime file/loader/spec/search paths were not recorded before the guard raised. The exact executed source is local `2cb197ffe6047b13c9099f2987049ab0d1a29b2d`; identical tree `499fac8f4b51fff9a936d907715ac8427cb273db` is published as held `53a6e3169edf944180120a14b10ae09fc471cfc8` in [draft PR #165](https://github.com/Omegapy/OntoKin/pull/165). Main receives documentation/evidence only. C211's strict normal failure and held PR #155 remain unchanged; C214/C215 grant no new native acceptance.
+
+**Next action:** finish C216's verified saved handoff and stop. A later task may perform the [narrow namespace-aware capture repair and one reviewed import proof](docs/engineering/native-receiving-c216/NEXT-TASK.md). The consumed plan must not be replayed. Saved-scene reopen, useful native shading evidence, second-target traceability and the matched authoring comparison remain unproved.
+
+## C215 preserved result: CPU receiving observation adapter and proposed contract
 
 The [C215 CPU adapter](docs/engineering/receiving-adapter-c215/README.md) maps Blender-format triangle corners to C214's exact source normals using source identity, positions and winding. Independent byte locks bind receiver and importer source, build record, settings and scene. The [proposed profile](docs/engineering/receiving-adapter-c215/CONTRACT.md) distinguishes observed, missing, ambiguous and invalid corners and reports component/angular loss. It establishes no native provenance, shading fidelity, receiving acceptance or new tolerance.
 
@@ -10,7 +18,7 @@ Five proof checks pass across all 18 synthetic objects / 7,800 triangles / 23,40
 
 [PR #163](https://github.com/Omegapy/OntoKin/pull/163) merged at `d9361ba6c5b05ccdb30ca4dd440eec343c2d0aa5`, tree `bb5a2527d31986dded69eccbf129bf5dcb16e70c`, exactly equal to the reviewed candidate. Fresh actual-main checks pass 29 preserved sources / 4,465 links and all 1,244 protected hashes. [Integration receipt](docs/engineering/receiving-adapter-c215/evidence/publication/INTEGRATION.json).
 
-**Next action:** finish C215's verified saved handoff, then stop. A later conversation may undertake one [separately reviewed native receiving proof](docs/engineering/receiving-adapter-c215/NEXT-TASK.md), starting with exact capture source and a finite execution plan before any native launch. Native save/reopen and useful visual evidence remain unmet.
+C215's verified handoff was saved and scope issue #162 closed. C216 attempted the separately reviewed native step above and stopped before import. C215's CPU-only result and all unmet native save/reopen/visual gates retain their meaning.
 
 ## C214 preserved result: exact source-normal payload and synthetic loss report
 

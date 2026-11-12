@@ -1,0 +1,725 @@
+{
+  "schema": "ontokin.c216.static-native-failure-review/0.1",
+  "recordedAtUtc": "2026-11-12T16:06:11.169364+00:00",
+  "sourceRevision": "2cb197ffe6047b13c9099f2987049ab0d1a29b2d",
+  "sourceCheckoutStatus": "",
+  "phase": "import",
+  "observed": {
+    "nativeAttempts": 1,
+    "outcome": "FAILED",
+    "returncode": 19,
+    "elapsedSeconds": 2.3252033009994193,
+    "groupStillExists": false,
+    "timedOut": false,
+    "failureMessage": "Loaded importer module has unpinned origin: io_scene_gltf2.blender.com",
+    "failureStage": "initial cache_receipt -> importer_modules, before initial receipt write, private cache prefix, runtime labels, addon enable or product GLB import call",
+    "absentOutputs": {
+      "received.blend": true,
+      "input-lock.json": true,
+      "import-importer-initial.json": true,
+      "import-importer-before-call.json": true,
+      "import-importer-after-call.json": true,
+      "import-observations.json": true,
+      "import-details.json": true,
+      "import-native-complete.json": true,
+      "import-overview.png": true,
+      "import-sphere-detail.png": true,
+      "reopen-reservation.json": true,
+      "reopen-observations.json": true
+    },
+    "importerNamespaceDirectoryCandidates": [
+      {
+        "relativeDirectory": "blender/com",
+        "moduleName": "io_scene_gltf2.blender.com",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "blender_default.py",
+            "bytes": 311,
+            "sha256": "sha256:84633c83caf11477c1473db1579107b8542d87d3cadea66a1d620e56289722d0"
+          },
+          {
+            "name": "conversion.py",
+            "bytes": 7837,
+            "sha256": "sha256:32495c6fa5f5a32c3c9f63c8fc3124cb6909fae417ef654ade872da5fb6b446f"
+          },
+          {
+            "name": "data_path.py",
+            "bytes": 2891,
+            "sha256": "sha256:969a602b524ed2907b575c8817e1698eea9825e48589a0dfa6280de3005d2e33"
+          },
+          {
+            "name": "extras.py",
+            "bytes": 2382,
+            "sha256": "sha256:e446d9a8d3fac9b5fadc040b129c382780bca5ccb4126bfe1eacc80aa5f16cad"
+          },
+          {
+            "name": "gltf2_blender_math.py",
+            "bytes": 6767,
+            "sha256": "sha256:9f1d3f3e4a7e407a4915e6bf006dc93294208c09a5bee433abf9291e53b444d7"
+          },
+          {
+            "name": "gltf2_blender_ui.py",
+            "bytes": 29199,
+            "sha256": "sha256:6d6300fdf3866524d5c845e225fb4951376fee33dd7948fef8203c77a5a0a589"
+          },
+          {
+            "name": "gltf2_blender_utils.py",
+            "bytes": 3635,
+            "sha256": "sha256:9155b7a71b2deedd6d608f01c50769568d290b1fb9005ea5ac34bb762872401c"
+          },
+          {
+            "name": "json_util.py",
+            "bytes": 651,
+            "sha256": "sha256:072ffecccc01a7c7cca1ee4d774fc905a4e89b0bf3e5d7198f19a0d1bb8fe725"
+          },
+          {
+            "name": "material_helpers.py",
+            "bytes": 905,
+            "sha256": "sha256:ad69d5b2f5f2af364d09a1b1428e23018d4c60381fcd7642dbd9b4f702762833"
+          }
+        ]
+      },
+      {
+        "relativeDirectory": "blender/exp",
+        "moduleName": "io_scene_gltf2.blender.exp",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "accessors.py",
+            "bytes": 5615,
+            "sha256": "sha256:32b553e2b55b8f8d0b8b263bd9a67366fcd9ddb9811ecc8feb0f2a51b0999b1e"
+          },
+          {
+            "name": "cache.py",
+            "bytes": 5239,
+            "sha256": "sha256:881431866dab605512be8064e50bc22a047d6576467813047b40d0fd3512cb27"
+          },
+          {
+            "name": "cameras.py",
+            "bytes": 5041,
+            "sha256": "sha256:cc7c4765d69358dd7f666ff4eed3d0db279438b1b8002a3b58a0ed5f4d55981f"
+          },
+          {
+            "name": "export.py",
+            "bytes": 15777,
+            "sha256": "sha256:35ab66bc2e07f64321f2f21d860c87c3ee862d815724f05a6950e6305389c822"
+          },
+          {
+            "name": "exporter.py",
+            "bytes": 21965,
+            "sha256": "sha256:d9a4441cfd4c353205e422635b5cd86d3ec4d0bbe57b043d85e5b27f5ea7dc30"
+          },
+          {
+            "name": "gather.py",
+            "bytes": 5500,
+            "sha256": "sha256:ee5c7f349cb2677fc64d62385431529c4bba1ad1c6b6553943bc5559a906e2eb"
+          },
+          {
+            "name": "joints.py",
+            "bytes": 3950,
+            "sha256": "sha256:b3c2921b821c7da84d2770034a38f792c8e334e85a22997b2d67d7598175cf63"
+          },
+          {
+            "name": "light_spots.py",
+            "bytes": 1458,
+            "sha256": "sha256:e9cb6bcec2de836756dce73033f43846a2349376c757d0c8318f5f82b6f25a4c"
+          },
+          {
+            "name": "lights.py",
+            "bytes": 7997,
+            "sha256": "sha256:946648259667ce8a0f11cdb4c6acfe5afc7cc050a320172355392395f1726925"
+          },
+          {
+            "name": "mesh.py",
+            "bytes": 6255,
+            "sha256": "sha256:b16f09b830474ac755721b489eebea3f5f4cded9114f396203d9241732e7c4b7"
+          },
+          {
+            "name": "nodes.py",
+            "bytes": 23531,
+            "sha256": "sha256:6169462ff0999683537f19c4a26dcb32b7477acf3fdaf5d164104a19d03d9c81"
+          },
+          {
+            "name": "primitive_attributes.py",
+            "bytes": 10020,
+            "sha256": "sha256:39e826d832f01222cf69cf8da0f72da77191ade0ca4fa293711895d49daf191d"
+          },
+          {
+            "name": "primitive_extract.py",
+            "bytes": 84664,
+            "sha256": "sha256:af539328c81432c23213e5c1d300b0b1646b528c3b419a5b18bfaa21597ad9ae"
+          },
+          {
+            "name": "primitives.py",
+            "bytes": 14474,
+            "sha256": "sha256:93f1f806154fe5793625a743a402cb9f8d2c6afcbfa08d6d716e9472a1a82bea"
+          },
+          {
+            "name": "sampler.py",
+            "bytes": 6836,
+            "sha256": "sha256:4e0a2d099680e86339abf6bfc70de2dad7b2d612b8c7825b8c5c71db315b6996"
+          },
+          {
+            "name": "skins.py",
+            "bytes": 5398,
+            "sha256": "sha256:4db9c3f346464b1638fc4f5cd2abe3733409bc2dc302670c116baa60e5b197e0"
+          },
+          {
+            "name": "tree.py",
+            "bytes": 43651,
+            "sha256": "sha256:0643b385595e45f8404877244446878b8273f6b26645a975907d474a4e6fc8c0"
+          }
+        ]
+      },
+      {
+        "relativeDirectory": "blender/exp/animation",
+        "moduleName": "io_scene_gltf2.blender.exp.animation",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "action.py",
+            "bytes": 43768,
+            "sha256": "sha256:103d6d6d0eaa6aef8961100bb753e481969cd71f8c1fd26dec40fa6b18567e45"
+          },
+          {
+            "name": "anim_utils.py",
+            "bytes": 12614,
+            "sha256": "sha256:86f5be76429b25698b74c96ec31d27c3fd3784032820ba87285b29b5357e89ed"
+          },
+          {
+            "name": "animations.py",
+            "bytes": 777,
+            "sha256": "sha256:39ec425948079cd3c14ba1acb32e3c93cf215fa350ca1776d27b766ec6b23f25"
+          },
+          {
+            "name": "drivers.py",
+            "bytes": 3285,
+            "sha256": "sha256:6108ba9c9bf0bdbe5a6937b287d3b3aa334432581da022924d946c6de9684eb0"
+          },
+          {
+            "name": "keyframes.py",
+            "bytes": 4691,
+            "sha256": "sha256:738f0afd438814a880198edd22eb6836aed56b438ffeb94f64300b2e9fecd6b8"
+          },
+          {
+            "name": "scene_animation.py",
+            "bytes": 10730,
+            "sha256": "sha256:c29ad2907c825a4e9654bdde98fea1f23084205e09ed6380a2ecea11d4e11a95"
+          },
+          {
+            "name": "tracks.py",
+            "bytes": 31257,
+            "sha256": "sha256:d81a531486ccb04ca47f0e4e3def4949c5004c4f63aea16df8439179748f0c97"
+          }
+        ]
+      },
+      {
+        "relativeDirectory": "blender/exp/animation/fcurves",
+        "moduleName": "io_scene_gltf2.blender.exp.animation.fcurves",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "animation.py",
+            "bytes": 1643,
+            "sha256": "sha256:3313867b5f97f8137dea8867e469d0abe1b2a184a8190246f94df0f6f8e7567b"
+          },
+          {
+            "name": "channel_target.py",
+            "bytes": 1715,
+            "sha256": "sha256:cd3775990723da77cecc9e70cb0c78c821e2bad0d85c97cb71ce7c114b49a812"
+          },
+          {
+            "name": "channels.py",
+            "bytes": 17110,
+            "sha256": "sha256:96a2d1b02d61b4667da5d07815460f084afee101cd4cb9378fbe07d5f2d91878"
+          },
+          {
+            "name": "keyframes.py",
+            "bytes": 9038,
+            "sha256": "sha256:9c05d8fb843aa62f4efba05064626322cc6eb2efdd9ad088c91af836a8eff72c"
+          },
+          {
+            "name": "sampler.py",
+            "bytes": 9482,
+            "sha256": "sha256:bcd4892b733517c6803957bc1e39e252e64ff64bf517c64aebd6c16187827e2b"
+          }
+        ]
+      },
+      {
+        "relativeDirectory": "blender/exp/animation/sampled",
+        "moduleName": "io_scene_gltf2.blender.exp.animation.sampled",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "sampling_cache.py",
+            "bytes": 37480,
+            "sha256": "sha256:5297227cc2465098e653f32f79a67196232fd94a2ffe3490d9066608db81e6d1"
+          }
+        ]
+      },
+      {
+        "relativeDirectory": "blender/exp/animation/sampled/armature",
+        "moduleName": "io_scene_gltf2.blender.exp.animation.sampled.armature",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "action_sampled.py",
+            "bytes": 3602,
+            "sha256": "sha256:95057ca25cf01fe77c332e6582e384debb209b48a0b10abac62dcc79b18a8038"
+          },
+          {
+            "name": "channel_target.py",
+            "bytes": 1695,
+            "sha256": "sha256:d6f2ce1be8b3f09e91265076cf13b5c5a217e1c20fae6857f37bc6e1d91c806c"
+          },
+          {
+            "name": "channels.py",
+            "bytes": 8452,
+            "sha256": "sha256:e79f97a9dcf428533b87348f810d953e5e1dce01b0c28d8834dd11cf19ad7e53"
+          },
+          {
+            "name": "keyframes.py",
+            "bytes": 3284,
+            "sha256": "sha256:360b5f532a48731efd22359b595e5ba58ed9dba40152fc9cd9749e1de3876b62"
+          },
+          {
+            "name": "sampler.py",
+            "bytes": 8648,
+            "sha256": "sha256:fe7ee1167fe58a7a46bdfbb07aaacfa89f9d440a703a22cd32623d3acedae9fc"
+          }
+        ]
+      },
+      {
+        "relativeDirectory": "blender/exp/animation/sampled/data",
+        "moduleName": "io_scene_gltf2.blender.exp.animation.sampled.data",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "channel_target.py",
+            "bytes": 1809,
+            "sha256": "sha256:d46981d6b29b30c7aa7f805303d723994f38b514a2cdf6569de5862619e0b40e"
+          },
+          {
+            "name": "channels.py",
+            "bytes": 3820,
+            "sha256": "sha256:69e031702d40f70ce0e16acc260d746e1b51516aacd2fd62de8948bad53e2a5d"
+          },
+          {
+            "name": "keyframes.py",
+            "bytes": 6616,
+            "sha256": "sha256:d88a6e6e7d33d31391284b5cabba361e1dd8d1f33934a5335ddbd01cf4e1bf21"
+          },
+          {
+            "name": "sampler.py",
+            "bytes": 4277,
+            "sha256": "sha256:6397904314d75ab09b49750476056ef673549eb179c185aec3578d84a1553edd"
+          }
+        ]
+      },
+      {
+        "relativeDirectory": "blender/exp/animation/sampled/object",
+        "moduleName": "io_scene_gltf2.blender.exp.animation.sampled.object",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "action_sampled.py",
+            "bytes": 2941,
+            "sha256": "sha256:7ed5724c6fa8f9752ef3224900eb64c2519228ffc11d566a67f06fa4d066e76a"
+          },
+          {
+            "name": "channel_target.py",
+            "bytes": 1491,
+            "sha256": "sha256:4be657337c88c894b6d25ca72fcdb6bcd42f8b2812626ca0459e0ffdc3b8cb29"
+          },
+          {
+            "name": "channels.py",
+            "bytes": 4566,
+            "sha256": "sha256:08c34819e11e9471d4f36f1abb29df84680de71c7cffcceff58a5468ec14f39c"
+          },
+          {
+            "name": "keyframes.py",
+            "bytes": 2913,
+            "sha256": "sha256:6fc4323c40fa288217ecd82635b01d1c4ae39b9c4b54f7c108c5c729499ccc7c"
+          },
+          {
+            "name": "sampler.py",
+            "bytes": 5678,
+            "sha256": "sha256:3cb6bcef03af34128cd1f00b3255f03d4eaaf532e7cd76c680acc602b7158f8a"
+          }
+        ]
+      },
+      {
+        "relativeDirectory": "blender/exp/animation/sampled/shapekeys",
+        "moduleName": "io_scene_gltf2.blender.exp.animation.sampled.shapekeys",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "action_sampled.py",
+            "bytes": 2091,
+            "sha256": "sha256:8ab41584811aacea02548bac9fd22977acd19ee2cbfe5908bb8cfb42980a6003"
+          },
+          {
+            "name": "channel_target.py",
+            "bytes": 1109,
+            "sha256": "sha256:4d025621bab6036654eb5ee9a4a44c900411f9ecb51dd826d961034dc000ce10"
+          },
+          {
+            "name": "channels.py",
+            "bytes": 2121,
+            "sha256": "sha256:3201db36912bcc8d4fe7f3a4060ebbfaee4333b9057bd76c3b83fe6e4d04078c"
+          },
+          {
+            "name": "keyframes.py",
+            "bytes": 5003,
+            "sha256": "sha256:a3e7ad66bd6033a83c990f5ee49d8275b1c4453911bd1950e07e80e6929174e1"
+          },
+          {
+            "name": "sampler.py",
+            "bytes": 3410,
+            "sha256": "sha256:0950823f13d81cb4b59c7f36bf8430ce31a26a0267917a9a0bea0f253d70e208"
+          }
+        ]
+      },
+      {
+        "relativeDirectory": "blender/exp/material",
+        "moduleName": "io_scene_gltf2.blender.exp.material",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "encode_image.py",
+            "bytes": 18815,
+            "sha256": "sha256:70a82939230b8bf15da66f61c2e0610c55fa950ba741a13c75b86d80b8ca2fd7"
+          },
+          {
+            "name": "image.py",
+            "bytes": 19008,
+            "sha256": "sha256:3f4f9cd9773d33f553db96460a4f5a19102476a73769bd2e96154faab23afd74"
+          },
+          {
+            "name": "materials.py",
+            "bytes": 31772,
+            "sha256": "sha256:02f48374fe3b0ee8c4c845c553f33558c1eea9927955709baaa36dfdd4db6aa4"
+          },
+          {
+            "name": "pbr_metallic_roughness.py",
+            "bytes": 10990,
+            "sha256": "sha256:ebd68d8a74dd91f1a961f426c8f8d8cc1ecd661f23943166eb7691b0f552c567"
+          },
+          {
+            "name": "search_node_tree.py",
+            "bytes": 44356,
+            "sha256": "sha256:f901c28b7790648404520481053afb3d7692c4aa447ee7c88b5e5caca70d53b9"
+          },
+          {
+            "name": "texture.py",
+            "bytes": 8942,
+            "sha256": "sha256:6e693c3fa4d170d0c711797a23a3abdf341bc0b5c88a690b287e233af2b442a4"
+          },
+          {
+            "name": "texture_info.py",
+            "bytes": 11152,
+            "sha256": "sha256:25c0d8b54424e7dcef38b56fe869c4e6a90699a228617b7b665a6426b089c453"
+          },
+          {
+            "name": "unlit.py",
+            "bytes": 6624,
+            "sha256": "sha256:93815bc570d2cb5dc3be2a298c81565ade5337f43016ddccc01d47e38054873d"
+          }
+        ]
+      },
+      {
+        "relativeDirectory": "blender/exp/material/extensions",
+        "moduleName": "io_scene_gltf2.blender.exp.material.extensions",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "anisotropy.py",
+            "bytes": 11717,
+            "sha256": "sha256:4228e0e0f5729451fd173425a1c98449e1a42af6a0f24c11ca7724c5767a902d"
+          },
+          {
+            "name": "clearcoat.py",
+            "bytes": 8676,
+            "sha256": "sha256:f712ba93185b5221d400e2bdef6416d3008ff04f96cd9e51fbf55c2cc1a8fa26"
+          },
+          {
+            "name": "emission.py",
+            "bytes": 5115,
+            "sha256": "sha256:a9a7334cfc4ed22cadd6f1f7896e1db8acf88da480618946db11581a6b519e27"
+          },
+          {
+            "name": "ior.py",
+            "bytes": 1576,
+            "sha256": "sha256:6fa43821b28d8e28b2a8deb328fbd61fa8058a5cbe1faa8b7c837d5470d10bd5"
+          },
+          {
+            "name": "sheen.py",
+            "bytes": 6419,
+            "sha256": "sha256:6b5bfe70924890cb8d7ca30375338907266fbbbaa60f78e64aca3887f649ff53"
+          },
+          {
+            "name": "specular.py",
+            "bytes": 6593,
+            "sha256": "sha256:b1af3c0612741cace0e2ab0c2e0fe916f69dafbfe78cdaa5a9502ac2af674307"
+          },
+          {
+            "name": "transmission.py",
+            "bytes": 3286,
+            "sha256": "sha256:36abf725bf752c0435bc2eadc50771135ccca85d1fbf5f54320e41181400d22f"
+          },
+          {
+            "name": "variants.py",
+            "bytes": 516,
+            "sha256": "sha256:2f499e5a6338d02663ccba0820decb843424b3280bb4d8c2cdd9513885c52670"
+          },
+          {
+            "name": "volume.py",
+            "bytes": 5306,
+            "sha256": "sha256:a300c004258c7f4d9088bbc4d9bbf37f5333785b0e53f2a47dbcf0e422b0c033"
+          }
+        ]
+      },
+      {
+        "relativeDirectory": "blender/imp",
+        "moduleName": "io_scene_gltf2.blender.imp",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "KHR_materials_anisotropy.py",
+            "bytes": 4404,
+            "sha256": "sha256:9d1622ac520220f4076042fe3b0e885d089dc70a1992aac68abae78dc558fbab"
+          },
+          {
+            "name": "KHR_materials_pbrSpecularGlossiness.py",
+            "bytes": 5695,
+            "sha256": "sha256:e43d8d56949251d3f548cc9f38b67a54207ec1ae5b39233c8ad12bd49b87ffbb"
+          },
+          {
+            "name": "KHR_materials_unlit.py",
+            "bytes": 2033,
+            "sha256": "sha256:fbb9da47410c34384e80f9198155d7c7f9a2724981ae296e3e1d2f97cbc8ca42"
+          },
+          {
+            "name": "animation.py",
+            "bytes": 9320,
+            "sha256": "sha256:684f3654d839b802b4b94d576673e3b36ac40800c7a9010f53d1027d9df29483"
+          },
+          {
+            "name": "animation_node.py",
+            "bytes": 7247,
+            "sha256": "sha256:d840648409511a6bd1748d9014ca1b5b303f60a1dee2dae9922c2af698543021"
+          },
+          {
+            "name": "animation_pointer.py",
+            "bytes": 37405,
+            "sha256": "sha256:eb1b32188394086b01f73f162118c33b65e906fba4f9c883f332e7af741e6a65"
+          },
+          {
+            "name": "animation_utils.py",
+            "bytes": 2346,
+            "sha256": "sha256:bbecf3076e1a5a14aa1a1d1362fd1c37e682d0ffa69a3ce66864c288264a9ba0"
+          },
+          {
+            "name": "animation_weight.py",
+            "bytes": 3590,
+            "sha256": "sha256:08a71e6e226e67abbcb8b233061799b5ac401a0fa9afdab7010d666e8f826855"
+          },
+          {
+            "name": "blender_gltf.py",
+            "bytes": 33218,
+            "sha256": "sha256:9598d4de7d0ae818dc8b0547b9d9e983c33597c29a028e432e8f934b9cb135a2"
+          },
+          {
+            "name": "camera.py",
+            "bytes": 3135,
+            "sha256": "sha256:5b00f3f6cc0b48d9cc62afa6ae4a3d1fd57d484de98f22c00c85034a97e50c60"
+          },
+          {
+            "name": "draco_compression_extension.py",
+            "bytes": 5563,
+            "sha256": "sha256:6c92253952e90ca59ec6e5e6bac8e7b9d937ca71db1a0afca3b36799c9e4a785"
+          },
+          {
+            "name": "image.py",
+            "bytes": 3049,
+            "sha256": "sha256:e01880acd058238366247adf8b42fcb7ea4e8898e7ebea9d03a198c7fbe1a509"
+          },
+          {
+            "name": "light.py",
+            "bytes": 5954,
+            "sha256": "sha256:f64b81d19326f83b413fdf2b98f39fe841704f5a7cc1bef50b000b68f29af8b5"
+          },
+          {
+            "name": "material.py",
+            "bytes": 3916,
+            "sha256": "sha256:5cf3ddf771f00fc2493d06b4792083f423e00742b46c735dd9c78c273ee40aa1"
+          },
+          {
+            "name": "material_utils.py",
+            "bytes": 5325,
+            "sha256": "sha256:917ec6db3e7d87c8aa9e1649280829d2ada23771e0a09e772509efdbfa2f4190"
+          },
+          {
+            "name": "mesh.py",
+            "bytes": 34897,
+            "sha256": "sha256:809519d2b00ccc17646f9747d4d8de8f518ecedd4d7c4e4ab498fc2f93b69978"
+          },
+          {
+            "name": "node.py",
+            "bytes": 13590,
+            "sha256": "sha256:1ae1b9339efc7f4137af9d7eaf31b2dc4ccd51da4e2324bc9d52871f3f815891"
+          },
+          {
+            "name": "pbrMetallicRoughness.py",
+            "bytes": 38816,
+            "sha256": "sha256:424d0dbb82c23cb09c8296e08302c499a63fc3932ee2b1e1df01fe128a9d465f"
+          },
+          {
+            "name": "scene.py",
+            "bytes": 4615,
+            "sha256": "sha256:8b277800b899de183e80b7cd1e32064075dce5dcd2df08a902e9fac98169a5d0"
+          },
+          {
+            "name": "texture.py",
+            "bytes": 9598,
+            "sha256": "sha256:793910607f00db6ff939dc018133c16426276e104bf92727383ad219c3ad413b"
+          },
+          {
+            "name": "vnode.py",
+            "bytes": 20461,
+            "sha256": "sha256:0d067cba15fa43e9690ee4e0644ede2d4104b6cf03e0e49d19acea6dc8a28866"
+          }
+        ]
+      },
+      {
+        "relativeDirectory": "io/com",
+        "moduleName": "io_scene_gltf2.io.com",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "constants.py",
+            "bytes": 4185,
+            "sha256": "sha256:a812f552ef90409f5cdb0965e23ac6c4fe7ade5de39bcfffbd57e462ea9355e6"
+          },
+          {
+            "name": "debug.py",
+            "bytes": 3783,
+            "sha256": "sha256:a0112a1488ce1520f6554f1c337494845ab0aea9b683a73b0b747505d6a2fa94"
+          },
+          {
+            "name": "draco.py",
+            "bytes": 2386,
+            "sha256": "sha256:9f72865287a520684a6fecf7f3ba99c8d2c884bb4cc15d3f468ad64321082196"
+          },
+          {
+            "name": "gltf2_io.py",
+            "bytes": 55198,
+            "sha256": "sha256:81473227ff16b6c95ef1674844d2cd681bd0955b897f31e15276c9a00c86e014"
+          },
+          {
+            "name": "gltf2_io_extensions.py",
+            "bytes": 1268,
+            "sha256": "sha256:3639475f9392fc1072bb8df66d5f0602a1494ebe229f69dfb723b569eead4c1a"
+          },
+          {
+            "name": "lights_punctual.py",
+            "bytes": 2961,
+            "sha256": "sha256:f8e00dbfaf5907baa44deb44c32bad7372b89784edc383c024d696652cfd2358"
+          },
+          {
+            "name": "path.py",
+            "bytes": 450,
+            "sha256": "sha256:bafcb71499fc534463880b80e9ddf8c5863f504fd341b9ec20d718a316d681ab"
+          },
+          {
+            "name": "variants.py",
+            "bytes": 1201,
+            "sha256": "sha256:6ea3c9b3cdad4bb8a6d486408327305cfe37ec0b86cc06858ade384832f983fb"
+          }
+        ]
+      },
+      {
+        "relativeDirectory": "io/exp",
+        "moduleName": "io_scene_gltf2.io.exp",
+        "initFileExists": false,
+        "directPythonFiles": [
+          {
+            "name": "binary_data.py",
+            "bytes": 1088,
+            "sha256": "sha256:9d0c2ac292e9ade8c4c58e4f61f632e91ad704d311f722df76636a792b1ebe75"
+          },
+          {
+            "name": "buffer.py",
+            "bytes": 1662,
+            "sha256": "sha256:8a8637aed5b1eb38238f0718c69957e7016138fe5e9aa8ae84404086071284fc"
+          },
+          {
+            "name": "draco.py",
+            "bytes": 6394,
+            "sha256": "sha256:783dea6179bae8ad0c1609faf4bdb2fbdff4ffad877e2900935c57ecfc887b3c"
+          },
+          {
+            "name": "export.py",
+            "bytes": 3285,
+            "sha256": "sha256:5245a27046ec1d2184366b8e8f138a3e827a883967ca4998f389a1378f7d4c52"
+          },
+          {
+            "name": "image_data.py",
+            "bytes": 1262,
+            "sha256": "sha256:38297bb31305693efb0a3c7128b83babde4bf40d528258802f6b6bbdd6c2836c"
+          },
+          {
+            "name": "user_extensions.py",
+            "bytes": 698,
+            "sha256": "sha256:e76dcf9607020e4024cdabce499e29832e8aba510abf0f6f5736104a7b550000"
+          }
+        ]
+      }
+    ]
+  },
+  "evidence": {
+    "plan.json": {
+      "bytes": 4838,
+      "sha256": "sha256:21d6f2428f1e3a64579c3dc5acade14a81d2f4e93367903d9606be80bd20bc4b"
+    },
+    "import-approval.json": {
+      "bytes": 1160,
+      "sha256": "sha256:861ad5a7d2e7cfe3943f26769215cf8eb69d1fbfd5fe396bf8a4589ad0c54fd5"
+    },
+    "import-reservation.json": {
+      "bytes": 855,
+      "sha256": "sha256:f336d45dd977e4f0919b142d060b67dd8ef9c45688328d889ef701528283e39f"
+    },
+    "import-launched.json": {
+      "bytes": 79,
+      "sha256": "sha256:851232af37f2919a16c82c46ad2619b41de7c0d0c77ac1596bcd014df2db1936"
+    },
+    "import-process.json": {
+      "bytes": 1260,
+      "sha256": "sha256:fe1217175a6e90adc938f26fb10e8294cc00ccefc6397e871593242850498ebe"
+    },
+    "import-native-failure.json": {
+      "bytes": 1472,
+      "sha256": "sha256:42516c7450cb39e9ca168682814d477e86c39cb46d001b5559b0d98462966b46"
+    },
+    "import-stdout.log": {
+      "bytes": 28,
+      "sha256": "sha256:37e1d2f152a0de9e763c8f947591fc6e587ab6dd9ae72b367c3e7c5b14ce3687"
+    },
+    "import-stderr.log": {
+      "bytes": 1462,
+      "sha256": "sha256:b82ef83a338527d999d64466af9c417301d00aec9f809afcf95567a1be98c0e7"
+    }
+  },
+  "inference": {
+    "mostLikelyCause": "Concrete-file guard rejects an importer namespace package. Installed blender/com directory lacks __init__.py while its child .py modules are in the pinned manifest.",
+    "notObserved": "Actual failing module __file__, __spec__, loader, __path__, __cached__, initial cache prefix and Python flags were not saved because validation raised during receipt construction.",
+    "confidence": "Strong static explanation, not a directly captured runtime attribute diagnosis"
+  },
+  "nextBoundedFix": "Separately review namespace-package-aware module provenance: retain raw module metadata before validation; accept a namespace only when spec/loader and every search location match explicitly pinned importer directories, keep all concrete module file/hash/cache checks, add synthetic ordinary/namespace/foreign-path controls, then freeze a new source/plan and separately authorize a new attempt. Do not retry C216.",
+  "sourceFilesModified": false,
+  "additionalNativeStarts": 0,
+  "sourceProgramRuns": 0,
+  "exports": 0
+}

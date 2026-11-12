@@ -1,0 +1,65 @@
+{
+  "schema": "ontokin.c216.independent-failure-review/0.1",
+  "recordedAtUtc": "2026-11-12T16:07:20.133328+00:00",
+  "reviewer": "root/native_review",
+  "decision": "STOP_AND_HANDOFF_FAILED_NATIVE_ATTEMPT",
+  "receivingGatePassed": false,
+  "sourceRevision": "2cb197ffe6047b13c9099f2987049ab0d1a29b2d",
+  "sourceTree": "499fac8f4b51fff9a936d907715ac8427cb273db",
+  "planSha256": "sha256:8899d0557a030c1ddf3ec6fba9f766295ce7004b93a77f8d18011d8e05e12bda",
+  "preExecutionReview": "PRE-EXECUTION-REVIEW.json",
+  "attempt": {
+    "phase": "import",
+    "ordinal": 1,
+    "outcome": "FAILED",
+    "exitCode": 19,
+    "elapsedSeconds": 2.3252033009994193,
+    "timedOut": false,
+    "groupStillExists": false,
+    "nativeStartConsumed": true,
+    "explicitProductGlbImportReached": false,
+    "saveReached": false,
+    "nativeCaptureReached": false,
+    "renderReached": false,
+    "reopenAttempted": false
+  },
+  "observedFailure": "Loaded importer module has unpinned origin: io_scene_gltf2.blender.com",
+  "observedStage": "initial importer module inventory before private cache/runtime-label checks and explicit GLB import",
+  "evidenceAudit": {
+    "path": "FAILURE-AUDIT.json",
+    "file": {
+      "bytes": 15934,
+      "sha256": "sha256:7951da9bf10b288d8b04968ae04a344336bc0bf9986d2162d407ee730914f040"
+    },
+    "checks": 47,
+    "passed": true,
+    "meaning": "Read-only source/failure/process/output-absence evidence checks; not native receiving acceptance"
+  },
+  "namespaceAssessment": {
+    "observedFilesystem": "Installed blender/com directory exists, has nine pinned Python children and no __init__.py. Fourteen installed importer directories fit this static namespace candidate pattern.",
+    "inference": "The concrete-file-only predicate likely rejected a legitimate Python namespace package.",
+    "notObserved": "Actual module __file__, __spec__, __loader__, __path__, cached attribute and initial native cache flags were not emitted. The error does not distinguish missing filename from an unpinned concrete path.",
+    "reviewOmission": "Prelaunch source review did not account for namespace package objects among already-loaded importer modules. The source was approved and the actual guard failed; this remains an explicit failed experiment, not a successful provenance check."
+  },
+  "nextBoundedAction": {
+    "objective": "Repair and independently review namespace-aware importer module provenance before any new native attempt",
+    "requirements": [
+      "Statically enumerate exact expected namespace directories and regular source modules under the pinned installed importer",
+      "Record raw module/source/spec/loader/cache/search-path observations before validating, so a guard failure retains its actual diagnostic inputs",
+      "Accept a namespace object only under an explicit supported rule for exact pinned package name and complete search paths/origins; reject extra paths, shadowed roots, wrong package/module types and bytecode-only or changed source",
+      "Keep file-backed descendant source hashes and stale-cache checks; do not skip namespace modules or loosen path/source validation globally",
+      "Use bounded CPU controls for valid file-backed/namespace representations and invalid origins/search paths/loader/cache states; these do not establish native success",
+      "Prepare new committed source and a fresh separately reviewed finite native plan. C216 attempt remains consumed and failed; no retry uses this old approval or schedule."
+    ]
+  },
+  "historicalResults": "C211 strict normal failure and original unrun receiving gates unchanged; C214 synthetic-only and C215 fixed false evidence fields unchanged",
+  "nativeStartsByReviewer": 0,
+  "sourceProgramsOrExportsByReviewer": 0,
+  "workerFrozen": true,
+  "rootRemaining": [
+    "Select honest held-source/publication disposition",
+    "Preserve all source/attempt/approval/prelaunch/namespace evidence and required history",
+    "Verify final package/offline restore and confirm final ZIP save",
+    "Stop after delivery"
+  ]
+}
