@@ -58,7 +58,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-No active integration lease. Owner `c214-source-normals-20261112` releases ownership after verified PR #161 merge `c4f9c4b97f5a599e5e4708ca69c8d8d1a68470c5` and its actual-main documentation/input checks. [C214 integration record](docs/engineering/source-normals-c214/evidence/publication/INTEGRATION.json). All implementation and review workers have finished. PR #155 stays held at its unchanged source and issue #154 remains blocked. This release grants no native execution. Reconcile live main, refs, ownership and unknown writes before the next bounded task. Final source and confirmed handoff delivery are recorded in the C214 handoff/recovery.
+Owner `c215-receiving-adapter-20261112` holds main integration for [C215 CPU receiving observation adapter and contract](https://github.com/Omegapy/OntoKin/issues/162), acquired from verified main `4ce61e61b7edc8cc9ab75f4f68fa40b22fc17a7a`. Acquired 2026-11-12T15:01:39.106853+00:00; expires 2026-11-12T15:31:39.106853+00:00. Scope: new isolated `docs/engineering/receiving-adapter-c215/`, related current navigation/STATUS, reviewed publication, recovery and handoff. Worker branch `work/c215-receiving-adapter` owns adapter/contract files; independent reviewer owns separate controls and evidence. CPU-only task: no Blender or held receiver change. C214 synthetic-only behavior stays unchanged; C211 original normal gate remains failed and PR #155 stays held. Other nonoverlapping branch work is allowed under AGENTS. Reconcile actual heads and outstanding writes before ownership transfer.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
