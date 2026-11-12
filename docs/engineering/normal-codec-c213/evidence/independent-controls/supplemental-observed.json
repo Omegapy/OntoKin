@@ -1,0 +1,220 @@
+{
+  "schema": "ontokin.c213.cpu-codec-observations/0.1",
+  "upstreamCommit": "32f5fdce0a0a571a39198edf8d7b5d719bf59f2c",
+  "caseInputSha256": "06239e2045b3e566cb25e89e56c62b4ee0c0c3246ce126ac57d093c46dc96136",
+  "caseCount": 11,
+  "acceptedCount": 0,
+  "rejectedCount": 11,
+  "rejectionsAreHarnessPolicy": true,
+  "sourceBindings": {
+    "codec_probe.cpp": "530362787d0112a1a227ee24460e226142a78603cafa25ab4df1d02372827f90",
+    "codec_exact.inc": "fc2b5deb6cf1272ea132671ce33c296f09ef1fa977aa44fe2737d6c56867832b",
+    "extract_codec.py": "da4efd7531815967caa705502d3a57057732945a2902a71437bfc561321248a3",
+    "run_probe.py": "ddd85bf0c7b5732a99b7893746e3b1178b86888dfdb3bb0cbbf9d33b79ae4033",
+    "SOURCE-BINDINGS.json": "28781632d0abd1f39afc2c24af763b60bb75a8fc23ff21e7abb323af2a2e8c88"
+  },
+  "selectedFunctionSha256": {
+    "unit_short_to_float": "4e3e8ec48dae1d83d4723b400a60712f196cf12861af16186fb05fc65056e37b",
+    "unit_float_to_short": "61fb8a8e8129816777e82ba6672ba3f09e78f6857621d78ad42ebe3b07fded9e",
+    "safe_acos_approx": "1438a812cc0c11f5ff08fafbb75fb699c36440671acd5beebd368e32a5802194",
+    "corner_space_custom_data_to_normal": "6781eae74cacd2ac5678f19fda9d499517c3ac4285ed739ccaf9ce5094173bf7",
+    "corner_space_custom_normal_to_data": "63cbcf8015b3f818f49cbcc17fd77b554e5cf91a019490cddb304e157aca6d5f"
+  },
+  "compiler": {
+    "command": [
+      "/usr/bin/g++",
+      "-std=c++17",
+      "-O0",
+      "-fno-fast-math",
+      "-ffp-contract=off",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "/workspace/scratch/0fee8b4c64ac/c213-codec-worker/docs/engineering/normal-codec-c213/codec_probe.cpp",
+      "-o",
+      "/workspace/scratch/0fee8b4c64ac/c213-independent-supplemental-build/codec_probe"
+    ],
+    "version": "g++ (Debian 14.2.0-19) 14.2.0\nCopyright (C) 2024 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+    "path": "/usr/bin/g++",
+    "executableSha256": "6b3696e4dcb85e1c949c732a02befa50e3983ecf94ce7e8e58d9d503b954b79d",
+    "probeSha256": "b39a0e2245f6e32dc73a652f480064086688edb2140d60a2660abe8f9147230d",
+    "flags": [
+      "-std=c++17",
+      "-O0",
+      "-fno-fast-math",
+      "-ffp-contract=off",
+      "-Wall",
+      "-Wextra",
+      "-Werror"
+    ]
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64",
+    "libc": [
+      "glibc",
+      "2.41"
+    ],
+    "floatBytes": 4,
+    "shortMax": 32767,
+    "FLT_EVAL_METHOD": 0,
+    "roundingMode": "FE_TONEAREST",
+    "roundingModeVerified": true,
+    "float32SubnormalParsingPreserved": true,
+    "float32SubnormalArithmeticPreserved": true
+  },
+  "precision": "Selected float32 operations with contraction and fast math disabled; double metrics are independent diagnostics",
+  "limitations": [
+    "Explicit supplied frames do not reproduce native fan construction, splitting or averaging",
+    "Unit mode feeds supplied float32 values directly; strict mode uses pinned upstream normalization first",
+    "No universal error bound or replacement approximation budget is established by finite rows",
+    "Installed C211 binary/source provenance and native frame/short values remain unresolved",
+    "This standalone scalar build is not bitwise attestation of the Blender executable or every platform libm"
+  ],
+  "nativeBlenderProcesses": 0,
+  "rows": [
+    {
+      "id": "missing_roundtrip_normal",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "harness_input_schema",
+      "detail": "operation requires explicit normal",
+      "probeProcessExecuted": false,
+      "codecEncoderExecuted": false,
+      "codecDecoderExecuted": false,
+      "inputNormalizationExecuted": false,
+      "standaloneHelperExecuted": null
+    },
+    {
+      "id": "missing_decode_shorts",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "harness_input_schema",
+      "detail": "operation requires explicit shorts",
+      "probeProcessExecuted": false,
+      "codecEncoderExecuted": false,
+      "codecDecoderExecuted": false,
+      "inputNormalizationExecuted": false,
+      "standaloneHelperExecuted": null
+    },
+    {
+      "id": "missing_normalize_normal",
+      "operation": "normalize",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "harness_input_schema",
+      "detail": "operation requires explicit normal",
+      "probeProcessExecuted": false,
+      "codecEncoderExecuted": false,
+      "codecDecoderExecuted": false,
+      "inputNormalizationExecuted": false,
+      "standaloneHelperExecuted": null
+    },
+    {
+      "id": "missing_quantize_value",
+      "operation": "quantize",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "harness_input_schema",
+      "detail": "operation requires explicit value",
+      "probeProcessExecuted": false,
+      "codecEncoderExecuted": false,
+      "codecDecoderExecuted": false,
+      "inputNormalizationExecuted": false,
+      "standaloneHelperExecuted": null
+    },
+    {
+      "id": "missing_acos_value",
+      "operation": "acos",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "harness_input_schema",
+      "detail": "operation requires explicit value",
+      "probeProcessExecuted": false,
+      "codecEncoderExecuted": false,
+      "codecDecoderExecuted": false,
+      "inputNormalizationExecuted": false,
+      "standaloneHelperExecuted": null
+    },
+    {
+      "id": "missing_frame",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "harness_input_schema",
+      "detail": "operation requires explicit frame",
+      "probeProcessExecuted": false,
+      "codecEncoderExecuted": false,
+      "codecDecoderExecuted": false,
+      "inputNormalizationExecuted": false,
+      "standaloneHelperExecuted": null
+    },
+    {
+      "id": "decode_boolean",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "harness_input_schema",
+      "detail": "decode shorts must be exact JSON integers in [-32768,32767]",
+      "probeProcessExecuted": false,
+      "codecEncoderExecuted": false,
+      "codecDecoderExecuted": false,
+      "inputNormalizationExecuted": false,
+      "standaloneHelperExecuted": null
+    },
+    {
+      "id": "decode_decimal_integer",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "harness_input_schema",
+      "detail": "decode shorts must be exact JSON integers in [-32768,32767]",
+      "probeProcessExecuted": false,
+      "codecEncoderExecuted": false,
+      "codecDecoderExecuted": false,
+      "inputNormalizationExecuted": false,
+      "standaloneHelperExecuted": null
+    },
+    {
+      "id": "decode_fraction",
+      "operation": "decode",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "harness_input_schema",
+      "detail": "decode shorts must be exact JSON integers in [-32768,32767]",
+      "probeProcessExecuted": false,
+      "codecEncoderExecuted": false,
+      "codecDecoderExecuted": false,
+      "inputNormalizationExecuted": false,
+      "standaloneHelperExecuted": null
+    },
+    {
+      "id": "normal_boolean",
+      "operation": "roundtrip",
+      "mode": "strict",
+      "status": "rejected",
+      "reason": "harness_input_schema",
+      "detail": "boolean is not a numeric input",
+      "probeProcessExecuted": false,
+      "codecEncoderExecuted": false,
+      "codecDecoderExecuted": false,
+      "inputNormalizationExecuted": false,
+      "standaloneHelperExecuted": null
+    },
+    {
+      "id": "zero_sentinel_nonzero",
+      "operation": "roundtrip",
+      "mode": "zero-sentinel",
+      "status": "rejected",
+      "reason": "diagnostic_requires_zero_normal",
+      "codecEncoderExecuted": false,
+      "codecDecoderExecuted": false,
+      "inputNormalizationExecuted": false,
+      "probeProcessExecuted": true,
+      "standaloneHelperExecuted": null
+    }
+  ]
+}

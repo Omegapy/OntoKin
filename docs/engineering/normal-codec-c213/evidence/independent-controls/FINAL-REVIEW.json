@@ -1,0 +1,112 @@
+{
+  "schema": "ontokin.c213.independent-final-review/0.1",
+  "reviewer": "boundary_controls",
+  "recordedAtUtc": "2026-11-12T13:49:39.380829+00:00",
+  "verdict": "APPROVE finite CPU characterization only",
+  "passed": true,
+  "reviewedCommit": "36afd901c099bdfb6ac12af3994140a15a19ab4c",
+  "initialImplementationCommit": "78646f86954ade5dac61cd50271c110ec73dd000",
+  "selectedSourceCommit": "32f5fdce0a0a571a39198edf8d7b5d719bf59f2c",
+  "predeclaredCaseCount": 212,
+  "predeclaredControlAssertions": 934,
+  "sourceExecutionAndSupplementalAssertions": 731,
+  "supplementalCaseCount": 11,
+  "acceptedPredeclaredCases": 182,
+  "rejectedPredeclaredCases": 30,
+  "supplementalCasesRejected": 11,
+  "initialOracleMismatch": {
+    "failedAssertions": 1,
+    "classification": "Reviewer expectation-domain error, not codec implementation failure",
+    "resolution": "Explicit ORACLE-CORRECTION.json accepts full int16 decoder domain including -32768; frozen corpus and original failed check remain unchanged"
+  },
+  "implementationCorrections": [
+    "Reject omitted required normal, shorts and scalar inputs instead of supplying defaults",
+    "Distinguish probe process execution from encoder/decoder/helper execution",
+    "Verify rounding mode and record subnormal parsing and arithmetic separately"
+  ],
+  "selectedArithmeticChangedByCorrections": false,
+  "finiteCounterexamples": [
+    {
+      "id": "canonical_shortcut_0",
+      "family": "azimuth_shortcut_counterexample",
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "decoderReferenceDifference": 1.7151244835361023e-15,
+      "unitLengthDrift": 8.881784197001252e-16,
+      "maximumComponentError": 0.009999833069741726,
+      "angularErrorRadians": 0.009999999822818679,
+      "originalStrictGateFailed": true
+    },
+    {
+      "id": "near_auto_component_cube",
+      "family": "near_auto_component_cube",
+      "encoded": [
+        0,
+        0
+      ],
+      "decoded": [
+        0,
+        0,
+        1
+      ],
+      "decoderReferenceDifference": 0.0,
+      "unitLengthDrift": 0.0,
+      "maximumComponentError": 9.000000136438757e-05,
+      "angularErrorRadians": 0.00012727922185580613,
+      "originalStrictGateFailed": true
+    },
+    {
+      "id": "azimuth_cos_0_1",
+      "family": "azimuth_threshold",
+      "encoded": [
+        32767,
+        0
+      ],
+      "decoded": [
+        1,
+        0,
+        -4.371138828673793e-08
+      ],
+      "decoderReferenceDifference": 1.7151244835361023e-15,
+      "unitLengthDrift": 8.881784197001252e-16,
+      "maximumComponentError": 0.014142955653369427,
+      "angularErrorRadians": 0.014143427182338051,
+      "originalStrictGateFailed": true
+    }
+  ],
+  "conclusion": "Pinned selected codec demonstrably exceeds the original 2e-6 promise on independent explicit valid frames. The finite controls do not establish a universal error bound or justify any replacement budget. A separately reviewed contract or source-preserving alternative must be selected before a native retry.",
+  "nativeBlenderProcesses": 0,
+  "receivingContractChanged": false,
+  "originalC211FailureRetained": true,
+  "nativeReplayClaimed": false,
+  "binarySourceAttestationClaimed": false,
+  "reviewedArtifacts": {
+    "cases.json": "fa2241d38866224fdbe4ea9f9a02a4f667c06df973ea59c67c02cb81adb00f1e",
+    "expectations.json": "8380c9fa6573beabd238582318610d19de94aa4d9cda680491f3546c33dbe5a7",
+    "PREDECLARATION.json": "4b4c33b28125b72a43889a34ea437a26ddd333a1e5f8ae56d78933ff1d3dbb2f",
+    "observed-initial.json": "633f240188cb184c335fadcb3b542d2d0311db11a7cc89046389b41a77902a38",
+    "checks-initial.json": "29657c68d11f77eed591946ef61b6d6dc7f716e52b797fd5337aab741c6d476e",
+    "ORACLE-CORRECTION.json": "6f22342f46b958294acd0407b9c5f749411dccfae8d656d0b56e98cd6f25dcc5",
+    "observed-final.json": "f932c099d5f2a36d10d6d955a2d4a2001737419e659dbc32fad455899fcadc57",
+    "checks-final.json": "3baa4acbbf337607c79096a164fdc7832e10aace8a2fb4d05855b4a90966ecdd",
+    "supplemental-cases.json": "06239e2045b3e566cb25e89e56c62b4ee0c0c3246ce126ac57d093c46dc96136",
+    "supplemental-observed.json": "488bd289417cd18da0f9893d019eecfa115ba7b555405b83f2d20f323d2ff7fa",
+    "source-review.json": "2ea8b7fdde403ce0af212c2e193f1f05ada00f99ef15d2197f64333c006dab49",
+    "check_results.py": "77553b9c27d06c946899c3a620a7750017c2ece1c764f5aa55b925e33f30f68f",
+    "review_source.py": "22f5dab7d15b295eed879798cb4b30985e5407eefb33ab6356305d299acfbcdc"
+  },
+  "remainingLimits": [
+    "Native fan construction, fan averaging and topology-dependent sharp-edge handling are not replayed",
+    "C211 native fan frames and encoded pairs are absent",
+    "Installed Blender executable source lineage remains unresolved",
+    "One scalar Linux x86-64 / CPython3.12.14 / g++14.2 / glibc2.41 environment only",
+    "No receiving import/render/save/reopen, full OntoKin regression, visual policy or general precision guarantee is established"
+  ]
+}

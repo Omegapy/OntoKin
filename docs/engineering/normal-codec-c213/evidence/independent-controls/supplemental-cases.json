@@ -1,0 +1,214 @@
+{
+  "schema": "ontokin.c213.supplemental-cases/0.1",
+  "declaredAtUtc": "2026-11-12T13:47:16.849635+00:00",
+  "timing": "After inspection of initial candidate 78646f86954ade5dac61cd50271c110ec73dd000; before executing corrected candidate",
+  "purpose": "Verify discovered missing-input defaults are removed and exact scalar/type refusal remains explicit",
+  "expectedStatusForEveryCase": "rejected",
+  "cases": [
+    {
+      "id": "missing_roundtrip_normal",
+      "operation": "roundtrip",
+      "frame": {
+        "lnor": [
+          0,
+          0,
+          1
+        ],
+        "ref": [
+          1,
+          0,
+          0
+        ],
+        "ortho": [
+          0,
+          1,
+          0
+        ],
+        "alpha": 1.5707963267948966,
+        "beta": 3.141592653589793
+      }
+    },
+    {
+      "id": "missing_decode_shorts",
+      "operation": "decode",
+      "frame": {
+        "lnor": [
+          0,
+          0,
+          1
+        ],
+        "ref": [
+          1,
+          0,
+          0
+        ],
+        "ortho": [
+          0,
+          1,
+          0
+        ],
+        "alpha": 1.5707963267948966,
+        "beta": 3.141592653589793
+      }
+    },
+    {
+      "id": "missing_normalize_normal",
+      "operation": "normalize"
+    },
+    {
+      "id": "missing_quantize_value",
+      "operation": "quantize"
+    },
+    {
+      "id": "missing_acos_value",
+      "operation": "acos"
+    },
+    {
+      "id": "missing_frame",
+      "operation": "roundtrip",
+      "normal": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "decode_boolean",
+      "operation": "decode",
+      "frame": {
+        "lnor": [
+          0,
+          0,
+          1
+        ],
+        "ref": [
+          1,
+          0,
+          0
+        ],
+        "ortho": [
+          0,
+          1,
+          0
+        ],
+        "alpha": 1.5707963267948966,
+        "beta": 3.141592653589793
+      },
+      "shorts": [
+        true,
+        0
+      ]
+    },
+    {
+      "id": "decode_decimal_integer",
+      "operation": "decode",
+      "frame": {
+        "lnor": [
+          0,
+          0,
+          1
+        ],
+        "ref": [
+          1,
+          0,
+          0
+        ],
+        "ortho": [
+          0,
+          1,
+          0
+        ],
+        "alpha": 1.5707963267948966,
+        "beta": 3.141592653589793
+      },
+      "shorts": [
+        1.0,
+        0
+      ]
+    },
+    {
+      "id": "decode_fraction",
+      "operation": "decode",
+      "frame": {
+        "lnor": [
+          0,
+          0,
+          1
+        ],
+        "ref": [
+          1,
+          0,
+          0
+        ],
+        "ortho": [
+          0,
+          1,
+          0
+        ],
+        "alpha": 1.5707963267948966,
+        "beta": 3.141592653589793
+      },
+      "shorts": [
+        1.000000000001,
+        0
+      ]
+    },
+    {
+      "id": "normal_boolean",
+      "operation": "roundtrip",
+      "frame": {
+        "lnor": [
+          0,
+          0,
+          1
+        ],
+        "ref": [
+          1,
+          0,
+          0
+        ],
+        "ortho": [
+          0,
+          1,
+          0
+        ],
+        "alpha": 1.5707963267948966,
+        "beta": 3.141592653589793
+      },
+      "normal": [
+        true,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "zero_sentinel_nonzero",
+      "operation": "roundtrip",
+      "frame": {
+        "lnor": [
+          0,
+          0,
+          1
+        ],
+        "ref": [
+          1,
+          0,
+          0
+        ],
+        "ortho": [
+          0,
+          1,
+          0
+        ],
+        "alpha": 1.5707963267948966,
+        "beta": 3.141592653589793
+      },
+      "mode": "zero-sentinel",
+      "normal": [
+        1,
+        0,
+        0
+      ]
+    }
+  ]
+}

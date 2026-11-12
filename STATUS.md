@@ -2,7 +2,17 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
-## C212 current result: strict normal contract retained
+## C213 current result: finite codec loss characterized
+
+The [C213 CPU characterization](docs/engineering/normal-codec-c213/README.md) implements the complete selected pinned Blender normal encoder/decoder with explicit independent frames and source-bound scalar float32 evaluation. Independent review approves 212 predeclared cases / 934 numerical assertions after one explicitly preserved decoder-domain oracle correction, 11 supplemental input refusals and 731 source/execution assertions. A separate 13-check source-fidelity audit passes. The original failed assertion remains retained.
+
+Explicit-frame shortcut cases lose up to `0.014142955653369427` in a normal component in this selected corpus. That observation is not a universal bound or a replay of C211. No replacement tolerance is adopted. C211's original `2e-6` gate remains failed, the receiver in draft PR #155 remains held, and no native process ran. Runtime, exporter, prior receiver and historical evidence are unchanged. [Results and limits](docs/engineering/normal-codec-c213/RESULTS.md)
+
+Implementation review binds local worker `36afd901c099bdfb6ac12af3994140a15a19ab4c`; publication is recorded separately after verified integration. Current ownership is stated in the main integration lease below. This finite experiment is not a full product regression or receiving pass.
+
+**Next action:** one [CPU-only exact source-normal payload and explicit loss-report prototype](docs/engineering/normal-codec-c213/NEXT-TASK.md), with a separately versioned proposed contract and independent controls. It must distinguish authoritative source directions from native shading observations. No new receiving attempt or arbitrary approximation budget is authorized. Finish C213's verified saved handoff and stop before that next task.
+
+## C212 preserved result: strict normal contract retained
 
 The bounded [C212 investigation and decision](docs/engineering/normal-fidelity-c212/README.md) rejects an unsupported tolerance increase and keeps the receiver held. A fresh GLB decoder reproduces C211's exact normal failure; thirteen synthetic CPU controls pass. Eight failing sphere instances reuse one source mesh, so their maximum is not an independent error bound. All 118 installed executable/importer file bindings match C211. Pinned upstream source supports a lossy native encoding/calculation mechanism; exact executable source provenance and causal replay remain unresolved.
 
@@ -10,7 +20,7 @@ The bounded [C212 investigation and decision](docs/engineering/normal-fidelity-c
 
 [PR #157](https://github.com/Omegapy/OntoKin/pull/157) merged at `e3bb16c21371c7472d6a8eb1e649ed356210db24`, tree `384d3e39d273d69f748064095f80d73e3754af9c`, equal to the reviewed candidate. Fresh actual-main documentation checks passed 29 preserved sources / 4,377 local links; exact analysis-input equality retains the thirteen-control results. The [integration record](docs/engineering/normal-fidelity-c212/evidence/publication/INTEGRATION.json) distinguishes this published decision from the still-failed receiving gate.
 
-**Next action:** one [CPU-only characterization of the pinned upstream normal codec](docs/engineering/normal-fidelity-c212/NEXT-CPU-PROBE.md) using explicit fan-frame inputs and independently declared boundary controls. Do not repeat the already completed raw remeasurement as a whole milestone, invent missing native fan values, or run another import. C212 publication is complete; finish its verified saved handoff and stop.
+**Successor disposition:** C213 completes the nominated CPU codec characterization above. Its finite counterexamples adopt no replacement budget and do not reconstruct missing native frames. C212 and its verified saved handoff remain complete; current work follows the C213 next-task boundary.
 
 ## C211 preserved result: Blender receiving proof failed/partial
 
@@ -20,7 +30,7 @@ The prototype remains held in [draft PR #155](https://github.com/Omegapy/OntoKin
 
 All 302 affected methods (275 existing + 27 new), the fresh 54-check source proof, exact after-artifact reproduction, two Khronos validations and 252 Three.js pose checks passed. The broader mandatory driver was interrupted at the stopping point: 1,476 observed passing methods and 3,205 real methods without outcomes; no full-suite pass. Historical failed regressions remain failed. [Independent failed review](docs/engineering/semantic-receiving-c211/evidence/review/FINAL-REVIEW.json)
 
-**Successor disposition:** C212 completes the normal-fidelity decision above while preserving this failure and tolerance. Its next CPU-only characterization must precede any separately reviewed correction or approximation policy. The second destination and matched authoring comparison remain later stages. C211 itself is closed at its saved handoff.
+**Successor disposition:** C212 completed the normal-fidelity decision, and C213 completed the nominated CPU characterization, while preserving this failure and tolerance. A separately reviewed source-preserving profile or justified approximation policy remains required before another receiving attempt. The second destination and matched authoring comparison remain later stages. C211 itself is closed at its saved handoff.
 
 ## C210 current milestone: semantic export and one constrained edit
 
@@ -32,7 +42,7 @@ The actual edit passed 54 workflow checks, all 275 affected tests (262 existing 
 
 The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method errors, seven failed-import placeholders and 221 real methods without outcomes, followed by the 900-second termination. Baseline reproductions identify unchanged fixture-copy and bytecode/cache incompatibilities. Root lease/evidence changes also tripped the wrapper's source-stability guard; the isolated immutable inputs match the candidate. The complete affected cohort passed. [Exact accounting and scoped integration rationale](docs/engineering/semantic-export-c210/REGRESSION.md) preserve the failed run without claiming a full regression pass.
 
-**C210 successor disposition:** C211 executed the selected one-build receiving proof and reached the failed/partial result above. C212 now records that decision; the next action is the bounded CPU-only codec characterization. The second target/source-traceability proof and matched direct-authoring comparison remain later stages. Unreal support and authoring advantage remain unestablished.
+**C210 successor disposition:** C211 executed the selected one-build receiving proof and reached the failed/partial result above. C212 records that decision and C213 completes the bounded CPU-only codec characterization; the current next action is the separately versioned source-normal payload/loss-report prototype. The second target/source-traceability proof and matched direct-authoring comparison remain later stages. Unreal support and authoring advantage remain unestablished.
 
 **Explicit deferral:** C209 job/0.2 retained-result compatibility, C201 wrapper/probe/coordinator/host sealing/readiness/admission, broad new syntax, general gameplay, a replacement real-time physics engine, new creature/vehicle/fluid systems, model training, MCP transport and simultaneous backends. Existing reference physics, geometry, materials and validated exports remain current within their profiles. The older universal world/simulation product requirement is superseded as a current completion criterion, not marked complete. Historical domains and exact prior goals remain linked in the decision.
 
