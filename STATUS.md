@@ -112,7 +112,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-No active integration lease. Owner `c219-root-709098f4e0fd` releases ownership after independently reviewed documentation-only PR #171 merged at `e886f2d6575034fd0c521eda5e21327c2aa5f70d` and fresh actual-main checks passed. Scientific and integration workers have finished; root completes only final handoff verification and confirmed save, then closes [scope issue #170](https://github.com/Omegapy/OntoKin/issues/170). Held PRs #155/#165/#167/#169 and all consumed native schedules remain unchanged. The next scope is planning-only; reconcile current refs and any outstanding writes before acquiring another lease.
+Owner `c220-root-6e98bd70835f` holds the integration lease for the [C220 second-target/source-traceability planning scope](https://github.com/Omegapy/OntoKin/issues/172). Acquired from observed main `09863061e43f7c0753625e041924c1e4a2f184b3`; expires **2026-11-12T19:12:51.000Z**. Reserved files: STATUS.md, GOAL.md, README.md, docs/README.md and docs/engineering/second-target-c220/. Independent workers own only separate audit/packaging files outside the repository. This scope permits documentation and read-only availability/provenance inspection only; no native/target/source/export/import/render execution. Held PRs #155/#165/#167/#169 and all consumed schedules remain unchanged.
 
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
