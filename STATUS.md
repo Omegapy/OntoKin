@@ -2,7 +2,15 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
-## C220 current result: second-target plan; execution held
+## C221 current result: CPU authority binding passed
+
+[C221/0.1.0](docs/engineering/second-target-c221/RESULTS.md) supplies an isolated standard-library checker for the eight fixed C220 input files and complete source mapping. Actual input admission passes two source units, 18 parts, 52 span occurrences over 16 distinct ranges, 54 accessor bindings, 7,800 triangle instances and 23,400 corner instances. The [contract](docs/engineering/second-target-c221/CONTRACT.md) separates immutable file admission, structural source joins and unimplemented numerical/destination claims.
+
+[Independent review](docs/engineering/second-target-c221/REVIEW.md) passed 39 controls and 337 static assertions; all 20 author methods pass without failures, errors or skips. Original worker source is `d16dde5b6017df2c37b2537ba4fa0a30ba46be09`, tree `998e4db5e3307849783acbd8f2b259c43a311af1`. Root publication and fresh resulting-main verification are tracked in [scope issue #174](https://github.com/Omegapy/OntoKin/issues/174). No product runtime, exporter, fixture, workflow or dependency changes. Historical failures and held PRs #155/#165/#167/#169 retain their meanings.
+
+All native/target/version/source/export/import/render starts and native scene writes remain zero. Godot build lineage, runtime/API behavior and a useful rendering route remain unresolved. This step completes source-input preparation only. The next bounded task is [CPU-only observation schema and corner correspondence](docs/engineering/second-target-c221/NEXT-TASK.md); the rest of C220 preparation and the second-target proof remain pending. Finish the verified saved C221 handoff, then stop.
+
+## C220 preserved result: second-target plan; execution held
 
 [C220/0.1.0](docs/engineering/second-target-c220/PLAN.md) selects the installed Godot 4.6.3 candidate by exact executable digest and binds the same accepted C210 GLB/source/semantic inputs plus C214 authority. The planned mapping enumerates all 18 parts and their source spans, definitions, keyed occurrences and geometry references. Numeric, material, semantic, cross-target, persistence, visual and resource/stop requirements are predeclared.
 
