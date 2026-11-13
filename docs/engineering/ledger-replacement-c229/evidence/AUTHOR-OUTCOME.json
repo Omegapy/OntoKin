@@ -1,0 +1,166 @@
+{
+  "schema": "ontokin.c229.author-outcome/0.1",
+  "outcome": "blocked_before_worker_script_execution",
+  "completed_scope": "Prepared/reviewed/preserved finite diagnosis; its sole launch attempt reached a concrete path-resolution blocker and stopped.",
+  "source_commit": "d578a30dab9a112895d2e3c09561a17866d9c464",
+  "source_tree": "080b9d00bc340dfd9728601147d11816fab4375d",
+  "original_c228_executed_source": "fc500331ce789eb6f9c1210ea4f3b394d45e507c",
+  "approved_plan_sha256": "4aeb4ad04f9abfbb1266910c9cfda13b921920a2f7faba1f2058a4c9bbb4a31c",
+  "approval_sha256": "00c71bfca4b947274c5faf46e592915af9aabeae1b523e8317d71ad04c49ee24",
+  "root_invocation": {
+    "working_directory": "/workspace/scratch/9d6b968559d5",
+    "argv": [
+      "python3",
+      "-IB",
+      "diagnosis-author/prepared/launch_diagnosis.py",
+      "--plan",
+      "diagnosis-author/prepared/RUN-PLAN.json",
+      "--approval",
+      "diagnosis-review/APPROVAL.json"
+    ],
+    "observation_basis": "Exact preserved root invocation record, launcher log, recorded relative child command and worker stderr.",
+    "evidence": "evidence/ROOT-INVOCATION.json"
+  },
+  "launch_result": {
+    "launcher_exit_code": 1,
+    "worker_start_attempts": 1,
+    "worker_processes_started": 1,
+    "worker_pid": 28,
+    "worker_exit_code": 2,
+    "worker_reaped": true,
+    "remaining_process_group": [],
+    "elapsed_seconds": 0.07998351000060211,
+    "timeout_reached": false,
+    "second_slot_started": false,
+    "schedule_consumed": true
+  },
+  "execution_counts": {
+    "worker_scripts_executed": 0,
+    "original_test_methods": 0,
+    "original_subtests": 0,
+    "observed_replacement_cases": 0,
+    "ledger_begin_calls": 0,
+    "reserve_calls": 0,
+    "native_starts": 0,
+    "aggregate_attempts": 0,
+    "automatic_retries": 0
+  },
+  "blocker": {
+    "type": "relative_child_harness_path_after_cwd_change",
+    "caller_plan_argument": "diagnosis-author/prepared/RUN-PLAN.json",
+    "constructed_harness_argument": "diagnosis-author/prepared/diagnose_replacement.py",
+    "worker_cwd": "d578a30dab9a112895d2e3c09561a17866d9c464 checkout at /workspace/scratch/a9488c5c1afa/restore-c228",
+    "resolved_missing_script": "/workspace/scratch/a9488c5c1afa/restore-c228/diagnosis-author/prepared/diagnose_replacement.py",
+    "diagnosis": "The caller supplied a relative plan path. The launcher used args.plan.parent directly for the child harness argument, then launched that relative argument with cwd set to the immutable source checkout. Python could not open the script and exited 2 before the worker code ran.",
+    "review_limit": "Static source/hash/finite-plan review did not bind and validate this caller invocation against the changed worker cwd. No launcher correction or second invocation was attempted."
+  },
+  "source_unchanged": true,
+  "source_clean_before_and_after": true,
+  "bound_source_files_compared": 9,
+  "inode_observations": null,
+  "missing_rejection_mechanism_established": false,
+  "static_hypothesis": "Stored device/inode identity can miss replacement when the original object is released and a recreated same-content object reuses those numbers. No C229 filesystem-case execution tested this hypothesis.",
+  "c228_status_preserved": {
+    "methods_run": 4662,
+    "passed_methods": 4661,
+    "failed_methods": 1,
+    "failed_replacement_subtests": 2,
+    "failed_method": "test_static_tray_admission_c201_ledger.LedgerControls.test_corrupt_replaced_aliased_or_missing_files_poison_live_capability",
+    "R02": "blocked",
+    "failure_cause": "unresolved"
+  },
+  "source_changes": {
+    "product": false,
+    "tests": false,
+    "fixtures": false,
+    "protocol": false,
+    "limits": false,
+    "frozen_plan_or_harness_after_launch": false
+  },
+  "next_scope": "Separately repair and verify launcher path resolution, then review a fresh finite CPU diagnosis with exact caller command, immutable inputs and a fresh one-use output directory. No ledger product repair is justified yet.",
+  "evidence": {
+    "harness/RUN-PLAN.json": {
+      "bytes": 11311,
+      "sha256": "4aeb4ad04f9abfbb1266910c9cfda13b921920a2f7faba1f2058a4c9bbb4a31c"
+    },
+    "harness/diagnose_replacement.py": {
+      "bytes": 14012,
+      "sha256": "c35dec8ced137cfac49ea5f093c5bd97aa3e47cfee50030f73497c226bd5f3a4"
+    },
+    "harness/launch_diagnosis.py": {
+      "bytes": 8733,
+      "sha256": "fe41b831ba44402c6cc798f555042893fbe4c4027e46c966ce728498b2e723fb"
+    },
+    "evidence/RUN-RESULT.json": {
+      "bytes": 4545,
+      "sha256": "6b092a8f36bd4374bc3a0123a188205c054caa2ef947cd267ad5caf564fd26c8"
+    },
+    "evidence/LAST-RUNNING.json": {
+      "bytes": 2465,
+      "sha256": "bccbcc0fb387f780519f0e21c4264da86b8de9c7dbd01177d007f7126a709cce"
+    },
+    "evidence/original-method.stderr.log": {
+      "bytes": 225,
+      "sha256": "6e8d94d0a29c4a45abc736eff27d2e0523a5bd0a4b4ca01840d3bd110fd353cf"
+    },
+    "evidence/original-method.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evidence/diagnosis-launcher.log": {
+      "bytes": 143,
+      "sha256": "259b872ef9f721dd6cb7762c48e760e3dd26798610c1f1b28a8f5b14faf76268"
+    },
+    "evidence/PLAN-APPROVAL.json": {
+      "bytes": 1640,
+      "sha256": "00c71bfca4b947274c5faf46e592915af9aabeae1b523e8317d71ad04c49ee24"
+    },
+    "evidence/PREEXECUTION-CHECKS.json": {
+      "bytes": 1226,
+      "sha256": "7f8d3edf21eaabadd350ec667fc8118aac3195b9a8048e977011fee6f7759363"
+    },
+    "evidence/STATIC-SOURCE-BINDINGS.json": {
+      "bytes": 3688,
+      "sha256": "0b63dce606e14330180e0f54aec407205679add2173429b405b07c46a37af1a4"
+    },
+    "evidence/OUTCOME-REVIEW.json": {
+      "bytes": 5210,
+      "sha256": "fc6763b6dffbad10b892f34329220fdda7042a5ff2451afdfd7041d6f9ffb1a6"
+    },
+    "evidence/OUTCOME-REVIEW.md": {
+      "bytes": 4020,
+      "sha256": "0851825bb7c648897a973593f2cb13cb3e5beafe2a7258be30e98ec825f713b5"
+    },
+    "evidence/ROOT-INVOCATION.json": {
+      "bytes": 731,
+      "sha256": "1f3bf3c1429e2a80203e77c5b03e111e372ac4ec3f694b5260405d3bd27e0c61"
+    },
+    "evidence/PLAN-REVIEW.md": {
+      "bytes": 4317,
+      "sha256": "0416aa04be2f8b9736f5c610f7bd341dff50d0ec7f91195ece8a91979bea4df5"
+    },
+    "evidence/PREPARATION-FEEDBACK.md": {
+      "bytes": 1915,
+      "sha256": "b709e04d9da0f2f8240701eeda5c4637f3d56487751a359a3e28db30c377f388"
+    },
+    "evidence/STATIC-REVIEW.md": {
+      "bytes": 4105,
+      "sha256": "74aa18bf6d872cafc905dcd0662a2799d3aa9f0a7051f68ddbf24760062991d1"
+    },
+    "evidence/HISTORICAL-SOURCE-EQUIVALENCE.json": {
+      "bytes": 3674,
+      "sha256": "d440de1f141c6ae89d9a8611428775ae65882ba0432f2f1269a8325a4f0feca9"
+    }
+  },
+  "limitations": [
+    "No original test result, inode allocation, file-descriptor lifetime, reservation or poisoning observation was produced.",
+    "No success of an unexecuted diagnostic or explanation of C228 failure may be inferred from approved preparation.",
+    "All earlier failed aggregates, nine recommendation records/41 criteria, held native drafts and consumed schedules remain unchanged."
+  ],
+  "independent_outcome_review": {
+    "path": "evidence/OUTCOME-REVIEW.json",
+    "checks": 15,
+    "new_product_executions": 0,
+    "meaning": "Independent raw-result reconciliation; no failed schedule replay"
+  }
+}

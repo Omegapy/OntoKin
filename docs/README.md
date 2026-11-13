@@ -4,6 +4,7 @@ Current validation preparation: [C225 exact readback prerequisites and three unc
 
 The [owner-directed C221 review tracker](engineering/review-integration-c221/README.md) retains R00 and all R01-R08 acceptance criteria. C222 completed R00 with confirmed delivery; [C223 completes the reviewed R01 validation-driver repair](engineering/local-validation-c223/README.md). R02 aggregate regression remains its separate follow-up.
 
+- [C229 CPU diagnosis blocker](engineering/ledger-replacement-c229/README.md): one worker could not open its script after a working-directory change; zero product tests/cases ran, with exact failure and next launcher-path qualification preserved.
 - [C228 aggregate regression result](engineering/aggregate-regression-c228/README.md): all 4,662 methods accounted, one ledger method with two replacement subtest failures, original A08 class success and the next bounded CPU diagnosis.
 - [C227 frozen A08 CPU diagnosis](engineering/torque-diagnosis-c227/README.md): reconciled implementation identity, original isolated setup success, separately profiled deadline and the next complete aggregate gate.
 - [C226 aggregate regression result](engineering/aggregate-regression-c226/README.md): complete 4,662-method accounting, one torque-artifact setup deadline error, preserved raw evidence and the next bounded diagnosis.

@@ -1,0 +1,17 @@
+{
+  "schema": "ontokin.c229.root-launch-invocation/0.1",
+  "cwd": "/workspace/scratch/9d6b968559d5",
+  "command": [
+    "python3",
+    "-IB",
+    "diagnosis-author/prepared/launch_diagnosis.py",
+    "--plan",
+    "diagnosis-author/prepared/RUN-PLAN.json",
+    "--approval",
+    "diagnosis-review/APPROVAL.json"
+  ],
+  "exitCode": 1,
+  "interpretation": "Root supplied relative paths. The launcher accepted them, hash-checked in the root cwd, then reused a relative harness path in its worker command with a different cwd. That worker could not open its script and exited 2 before execution. No retry is authorized.",
+  "sourceEvidence": "diagnosis-run/RESULT.json",
+  "stderrEvidence": "diagnosis-run/original-method.stderr.log"
+}
