@@ -182,7 +182,9 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-No active integration lease. Owner `c227-main-28482a5da524` releases ownership after independently reviewed PR #187 merged, the exact reviewed tree was observed on main, and fresh actual-main documentation checks passed. C227 completes its finite diagnosis: one original isolated setup succeeds and the separate profile reaches the unchanged deadline; the historical C226 cause remains unproven and R02 stays blocked. [Scope #186](https://github.com/Omegapy/OntoKin/issues/186) records final closure and the verified saved handoff. The next separately selected scope is one complete immutable default aggregate under original product limits. Held drafts #155/#165/#167/#169 and all consumed native schedules remain unchanged.
+Owner: `c228-main-a9488c5c1afa`. Scope: [C228 / issue #188](https://github.com/Omegapy/OntoKin/issues/188), documentation and evidence for the single completed default R02 aggregate. Branch: `work/c228-r02-aggregate`. Starting published main: `fc500331ce789eb6f9c1210ea4f3b394d45e507c`. Acquired at 2026-11-13T15:21:21.490563+00:00. Expires at 2026-11-13T15:51:21.490563+00:00.
+
+The selected attempt is finished: 4,661 methods passed, one method contains two failed replacement subtests, and all six later default commands passed. R02 remains blocked. This lease reserves main, this STATUS coordination section, docs/README.md, the review recommendation tracker, and docs/engineering/aggregate-regression-c228 for reviewed factual integration. No runtime repair, replay, native receiving or later feature is selected. Held drafts #155/#165/#167/#169 remain unchanged.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
