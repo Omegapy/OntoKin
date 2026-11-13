@@ -1,0 +1,32 @@
+{
+  "schema": "ontokin.c232.root-tool-receipt/0.1",
+  "provenance": "Exact input command structure and returned result transcribed from the root exec tool call after failure; original launcher streams were captured contemporaneously",
+  "toolResult": {
+    "chunk_id": "8f6ed5",
+    "wall_time_seconds": 0.024466923,
+    "exit_code": 1,
+    "original_token_count": 22,
+    "output": "Traceback (most recent call last):\n  File \"<stdin>\", line 7, in <module>\nAssertionError\n"
+  },
+  "gateBuilderFailedLine": 7,
+  "failedExpression": "assert z.read(str(approval)) == approval.read_bytes()",
+  "shellDependency": "newline; no set -e or && between builder and launcher",
+  "launcherArgv": [
+    "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+    "-I",
+    "-B",
+    "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/aggregate-author/run_aggregate.py",
+    "--plan",
+    "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/aggregate-author/prepared/RUN-PLAN.json",
+    "--approval",
+    "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/preflight-review/APPROVAL.json",
+    "--recovery-gate",
+    "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/aggregate-author/RECOVERY-GATE.json"
+  ],
+  "launcherStdout": "aggregate-author/launcher.stdout.log",
+  "launcherStderr": "aggregate-author/launcher.stderr.log",
+  "shortOrchestrationProcessIds": "not recorded",
+  "aggregateDriverStarts": 0,
+  "nativeTargetStarts": 0,
+  "retries": 0
+}
