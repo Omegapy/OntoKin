@@ -10,6 +10,8 @@ The different broad implementation digests are explained by the sole added `sema
 
 This is documentation, diagnostic harness and evidence only. No runtime, test, fixture, budget or authority behavior changes. The two-slot schedule is consumed; zero artifact-read test methods and zero aggregates ran. **R02 remains blocked.** [Next bounded scope](docs/engineering/torque-diagnosis-c227/NEXT-TASK.md): one fresh immutable default aggregate after exact prerequisite and finite-plan review, with complete outcome accounting. [Scope #186](https://github.com/Omegapy/OntoKin/issues/186) records publication and final saved delivery.
 
+[PR #187](https://github.com/Omegapy/OntoKin/pull/187) merged at `9e3cdcdefc706b182c242ed359196e8b8f6d9caa`, exactly matching independently reviewed tree `5a883585d135616ef6dfddb47309bb7ca5663149`. Fresh actual-main documentation checks passed 29 preserved sources / 4,758 local links. [Integration receipt](docs/engineering/torque-diagnosis-c227/evidence/INTEGRATION.json). The merged work branch is observed absent and the four held drafts remain unchanged. Final handoff verification and save remain separate delivery operations recorded in scope #186.
+
 ## C226 R02: complete aggregate accounting; torque export setup remains blocked
 
 [C226](docs/engineering/aggregate-regression-c226/RESULTS.md) completed one immutable default aggregate attempt from `3f17a523b5d5c435f71525a499d2f071ca6e4e96` on Linux x86-64 / CPython 3.12.14 with a predeclared 3,600-second command limit. Of 4,662 discovered methods, **4,649 passed and 13 did not run** because `TorqueArtifactReadTests.setUpClass` raised one separate error. No method failed, errored, skipped or timed out. The frozen A08 `seed-export` exceeded its unchanged 30,000-ms product deadline at `recording_export_readback`; the command ceiling was not reached. R02 remains **blocked**.
@@ -180,7 +182,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner `c227-main-28482a5da524` holds the bounded main integration lease for [scope #186](https://github.com/Omegapy/OntoKin/issues/186), branch `work/c227-a08-cpu-diagnosis`, starting from observed main `da007e1466c14812441bb8b18f8d2f8f01cbf1f6`. Acquired 2026-11-13T13:50:27.000Z; expires 2026-11-13T14:20:27.000Z. The reviewed two-slot CPU diagnosis is complete and its raw source/evidence is saved. Integration is limited to diagnosis documentation, harness/evidence, concise status/navigation and the existing recommendation tracker. Runtime, tests, fixtures, frozen limits and held branches remain unchanged. Independent nonoverlapping branch work may continue. Unknown operations must be reconciled before retry; release this lease after checked publication.
+No active integration lease. Owner `c227-main-28482a5da524` releases ownership after independently reviewed PR #187 merged, the exact reviewed tree was observed on main, and fresh actual-main documentation checks passed. C227 completes its finite diagnosis: one original isolated setup succeeds and the separate profile reaches the unchanged deadline; the historical C226 cause remains unproven and R02 stays blocked. [Scope #186](https://github.com/Omegapy/OntoKin/issues/186) records final closure and the verified saved handoff. The next separately selected scope is one complete immutable default aggregate under original product limits. Held drafts #155/#165/#167/#169 and all consumed native schedules remain unchanged.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
