@@ -1,0 +1,178 @@
+{
+  "schema": "ontokin.c231.independent-review/0.1",
+  "decision": "APPROVE_COMPONENT_ONLY",
+  "reviewer": "surviving_work_audit",
+  "author": "ledger_repair_author",
+  "reviewedUtc": "2026-11-13T21:10:30.519148+00:00",
+  "sourceCommit": "e9f811dbd0d32d16aea55ce90ca3615a138a3416",
+  "sourceTree": "e21381900f793a5fd30f9ef8fe2124d848e928c8",
+  "ledgerSha256": "1436c7f10c4ba35fae5d90e7a4201c3bf7d92315d2baa385dcbd8de89f807c03",
+  "sourceStatus": "",
+  "sourceUnchangedDuringIndependentExecution": true,
+  "scope": "In-place ledger original-file identity retention and explicit handle lifecycle; additive CPU controls and separately versioned contract",
+  "baselineDiscriminator": {
+    "sourceCommit": "099339f9b320a2c47a0ca2d275468c6e5f1b09e9",
+    "groups": 2,
+    "assertions": 7,
+    "outcome": "Both same-byte replacements incorrectly accepted under forced numeric identity reuse"
+  },
+  "independent": {
+    "groups": 17,
+    "assertions": 136,
+    "contextExitCases": 2,
+    "cleanupLockCases": 2,
+    "allPassed": true,
+    "productChildStarts": 0
+  },
+  "authorAffected": {
+    "methods": 307,
+    "existingMethods": 284,
+    "newMethods": 23,
+    "counts": {
+      "passed": 307,
+      "failed": 0,
+      "error": 0,
+      "skipped": 0,
+      "expected_failure": 0,
+      "unexpected_success": 0,
+      "unrun": 0,
+      "running": 0
+    },
+    "sourceUnchanged": true,
+    "interpretation": "Executed by author; source/result/log binding independently inspected, not claimed as a second reviewer execution"
+  },
+  "preservation": {
+    "protocolBindings": 42,
+    "inheritedLockedInputs": 301,
+    "inventoriesOverlap": true,
+    "historicalLedgerPinFiles": 33,
+    "historicalPinRecordLocations": 51,
+    "allMatch": true,
+    "originalWholeTestUnchanged": true,
+    "originalFailingMethodUnchanged": true,
+    "scopeOnlyThreePaths": true
+  },
+  "resolvedFindings": [
+    "C231-R1",
+    "C231-R2",
+    "C231-R3",
+    "C231-R4"
+  ],
+  "limits": [
+    "CPU Linux x86-64 CPython3.12.14 evidence only",
+    "No fresh full product aggregate; R02 remains blocked",
+    "No native application or native admission start",
+    "Automatic finalization is best effort under asynchronous interruption; explicit close is normal",
+    "Interrupted pre-close coordination preserves owned pins for later first close; uncertain os.close attempts are never retried",
+    "Directory identity behavior and external authority trust boundary unchanged",
+    "No support claimed for hostile same-thread callback fork or modified interpreter descriptor semantics"
+  ],
+  "integrationRemaining": "Root owns exact integration, applicable source/core/document checks, live lease and expected-head publication, saved handoff verification",
+  "evidence": [
+    {
+      "path": "independent_controls.py",
+      "sha256": "4598edfe60c6522326176026728b360710a8bd77f3aba97a7a0c29ac1222cd63",
+      "bytes": 15648
+    },
+    {
+      "path": "context_exit_probe.py",
+      "sha256": "0dd1870a474348a1a18966834887b650b0f1e75bb5b58192515a76938f2e2f07",
+      "bytes": 4149
+    },
+    {
+      "path": "cleanup_lock_probe.py",
+      "sha256": "69a22d6f49de3483d125ef8604aa76d970bc0c6c79669abd7f2875ee0ac8062c",
+      "bytes": 5994
+    },
+    {
+      "path": "baseline-discriminator-result.json",
+      "sha256": "d296fd470c8668c8b94be176b590b2b4bfdb62cdd7f3c376986a793fa9bea450",
+      "bytes": 1825
+    },
+    {
+      "path": "candidate-71e5-context-failure.json",
+      "sha256": "955a705f340719ce23cbbd6ca9667291599cbfea3347cbe68613298e79f69a8a",
+      "bytes": 1082
+    },
+    {
+      "path": "candidate-8e7-cleanup-lock-failure.json",
+      "sha256": "5478463612c2afd6e7d81e0ddb6831f75e13abbf1f72ec509197c19d2f3b7bd5",
+      "bytes": 1504
+    },
+    {
+      "path": "candidate-e9f-independent-result.json",
+      "sha256": "6ee37e8a931b07ed446557049d0b658081acc566dde640b101d16b795ec6645d",
+      "bytes": 3741
+    },
+    {
+      "path": "candidate-e9f-context-result.json",
+      "sha256": "b3f3962b9ffad7295c1a9089ce8028210c197f5dc9ca982295b077914c54bc8b",
+      "bytes": 1084
+    },
+    {
+      "path": "candidate-e9f-cleanup-lock-result.json",
+      "sha256": "64cfabb55276f46a48dc2f221e53a364a41d52a39ea37053dbe36014b0838d71",
+      "bytes": 1496
+    },
+    {
+      "path": "candidate-e9f-preservation.json",
+      "sha256": "a96e54f4785a266e785d6c3212005dff0281964494c8fbb6dfb540c18065f087",
+      "bytes": 9270
+    },
+    {
+      "path": "contract-audit.md",
+      "sha256": "a9460530788ad624e7e3cf50ef0227f1514509b1b59c57432cb1cb0846586055",
+      "bytes": 12720
+    },
+    {
+      "path": "contract-dependency-inventory.json",
+      "sha256": "040341bd176f1d592ec1939240a20617f173258578ca2937ef43b3185ff5b8ed",
+      "bytes": 11202
+    },
+    {
+      "path": "frozen-contract-inventory.json",
+      "sha256": "d6d135db4f87f5f692e35a98dbaf82848bbcbfefc39cb7885b2ce83b4008ee21",
+      "bytes": 17904
+    },
+    {
+      "path": "historical-protected-inputs-check.json",
+      "sha256": "e75eaa73eeabfd130142dbaf473da25594f480c2e6b274fa4754bc2db9a75f0a",
+      "bytes": 98837
+    },
+    {
+      "path": "historical-ledger-pin-records.json",
+      "sha256": "78ffc349abf502fdb4c4adf9ce9bf0f334c3ebc2b0728ab7b2a163293456f3b2",
+      "bytes": 33921
+    },
+    {
+      "path": "active-dependency-inventory.json",
+      "sha256": "fbe854bdd37e1dab349d5b91d77f82d3a6cb6abca4e7350c8622fb83c1d11e8a",
+      "bytes": 14794
+    },
+    {
+      "path": "../author/affected-run-03/RESULT.json",
+      "sha256": "2242ca853d646bed101917a67377bfb5f93e0d4afc2dfd80a2ef778570d11409",
+      "bytes": 40464
+    },
+    {
+      "path": "../author/affected-run-03/unittest.log",
+      "sha256": "ee86d95e91bd650791ed85b0181ef578ca41dbbc9daa13624e3ae56080fcab1b",
+      "bytes": 50837
+    },
+    {
+      "path": "../author/affected-run-03/source-before.json",
+      "sha256": "ce33f525b18af1bb4f5096e334e13b0e44aa60d44ae738c3c8de8910e3c972a3",
+      "bytes": 2485255
+    },
+    {
+      "path": "../author/affected-run-03/source-after.json",
+      "sha256": "ce33f525b18af1bb4f5096e334e13b0e44aa60d44ae738c3c8de8910e3c972a3",
+      "bytes": 2485255
+    },
+    {
+      "path": "../author/affected-run-03.stderr.log",
+      "sha256": "b6c6759211ca1215e2256d1b5b25299ab38c007935b87541c42dbf20ede713ed",
+      "bytes": 81
+    }
+  ]
+}

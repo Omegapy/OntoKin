@@ -153,12 +153,16 @@
         "https://github.com/Omegapy/OntoKin/issues/192",
         "../ledger-replacement-c230/evidence/OUTCOME-REVIEW.md",
         "../ledger-replacement-c230/evidence/INTEGRATION.json",
-        "https://github.com/Omegapy/OntoKin/pull/193"
+        "https://github.com/Omegapy/OntoKin/pull/193",
+        "../ledger-identity-c231/RESULTS.md",
+        "../ledger-identity-c231/REVIEW.md",
+        "../ledger-identity-c231/evidence/author/affected-run-03/RESULT.json",
+        "https://github.com/Omegapy/OntoKin/issues/194"
       ],
       "remainingLimits": [
-        "R02 remains blocked by one failed aggregate ledger method/two same-content replacement subtests.",
-        "C230 directly observed inode reuse bypass for the journal and reproduced both original failures; historical exact allocation and original marker sequence remain unknown.",
-        "No product repair or new aggregate ran; C229 and C230 schedules are consumed.",
+        "C231 checked repair passes all307 affected methods, but R02 still requires a fresh complete passing aggregate.",
+        "C228 remains the latest complete aggregate: one failed ledger method/two replacement subtests; historical outcomes are unchanged.",
+        "C229/C230 diagnoses are consumed; no new aggregate or native application ran in C231.",
         "C226 A08 deadline cause, sixteen external cases, other interpreters, optional roles and full release acceptance remain pending."
       ],
       "supersessionDecision": null,
@@ -343,7 +347,27 @@
           "independentReview": "../ledger-replacement-c229/evidence/OUTCOME-REVIEW.json",
           "scopeIssue": "https://github.com/Omegapy/OntoKin/issues/190"
         }
-      ]
+      ],
+      "currentRepair": {
+        "checkpoint": "C231",
+        "status": "checked_pending_integration",
+        "authorCommit": "e9f811dbd0d32d16aea55ce90ca3615a138a3416",
+        "authorTree": "e21381900f793a5fd30f9ef8fe2124d848e928c8",
+        "existingMethods": 284,
+        "additiveMethods": 23,
+        "passedMethods": 307,
+        "failedMethods": 0,
+        "erroredMethods": 0,
+        "skippedMethods": 0,
+        "unrunMethods": 0,
+        "independentControlGroups": 17,
+        "independentAssertions": 136,
+        "additionalRegressionCases": 4,
+        "aggregateRuns": 0,
+        "nativeStarts": 0,
+        "fullR02Accepted": false,
+        "nextAction": "One fresh complete immutable aggregate under a new reviewed finite plan"
+      }
     },
     {
       "id": "R03",

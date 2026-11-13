@@ -17,6 +17,7 @@ import re
 import stat
 import threading
 import uuid
+import weakref
 
 from .schedule import (LedgerError, ORDER, PROTOCOL_SHA256, SCHEDULE_ID,
                        SCHEDULE_SHA256, SLOTS, canonical, exact, validate_schedule)
@@ -29,6 +30,44 @@ STAGES = ("construction", "receiving", "node")
 OUTCOMES = ("passed", "failed", "timeout", "cancelled", "unknown")
 _SLOT_BY_NAME = {slot.name: slot for slot in SLOTS}
 _ZERO = "0" * 64
+_LIVE_LEDGERS = weakref.WeakSet()
+_FORK_LOCK = threading.RLock()
+
+
+def _close_pins(pins):
+    """Attempt every owned close once; an uncertain close must not be retried."""
+    errors = []
+    with _FORK_LOCK:
+        while pins:
+            name, fd = pins.popitem()
+            try:
+                os.close(fd)
+            except BaseException as exc:
+                errors.append((name, exc))
+    return errors
+
+
+def _before_fork():
+    _FORK_LOCK.acquire()
+
+
+def _after_fork_parent():
+    _FORK_LOCK.release()
+
+
+def _after_fork_child():
+    """The child owns no live capability and must not retain parent file pins."""
+    global _FORK_LOCK
+    _FORK_LOCK = threading.RLock()
+    for ledger in tuple(_LIVE_LEDGERS):
+        ledger._mutex = threading.RLock()
+        ledger._stopped = True
+        ledger._release_pins()
+
+
+if hasattr(os, "register_at_fork"):
+    os.register_at_fork(before=_before_fork, after_in_parent=_after_fork_parent,
+                        after_in_child=_after_fork_child)
 
 
 def _identity(info):
@@ -82,14 +121,21 @@ def _mutation(method):
     """An interruption cannot leave a stale live capability available to retry."""
     @wraps(method)
     def guarded(self, *args, **kwargs):
+        if not self._same_process():
+            raise LedgerError("STOPPED", "This capability cannot continue or resume", consumed=True)
         with self._mutex:
+            failure = None
             try:
                 return method(self, *args, **kwargs)
             except BaseException as exc:
+                failure = exc
                 self._stopped = True
                 if not isinstance(exc, LedgerError) or exc.code == "PERSISTENCE":
                     self._uncertain = True
                 raise
+            finally:
+                if self._stopped or self._complete:
+                    self._release_pins(propagate=failure is None)
     return guarded
 
 
@@ -137,46 +183,117 @@ class Ledger:
             "authority": str(authority), "output": str(output),
             "component_only": True, "native_readiness": False,
         }) + b"\n"
-        dirfd = os.open(authority, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        obj._pins = {}
+        obj._pin_finalizer = weakref.finalize(obj, _close_pins, obj._pins)
+        with _FORK_LOCK:
+            _LIVE_LEDGERS.add(obj)
         claimed = False
         try:
-            if _identity(os.fstat(dirfd)) != root_identity:
-                raise LedgerError("INTEGRITY", "Reservation authority changed")
-            for name in (MARKER, JOURNAL):
-                try:
-                    os.stat(name, dir_fd=dirfd, follow_symlinks=False)
-                except FileNotFoundError:
-                    continue
-                raise LedgerError("REPLAY", "The schedule already has reservation evidence", consumed=True)
-            fd = os.open(MARKER, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
-                         0o600, dir_fd=dirfd)
-            claimed = True
+            dirfd = os.open(authority, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
             try:
+                if _identity(os.fstat(dirfd)) != root_identity:
+                    raise LedgerError("INTEGRITY", "Reservation authority changed")
+                for name in (MARKER, JOURNAL):
+                    try:
+                        os.stat(name, dir_fd=dirfd, follow_symlinks=False)
+                    except FileNotFoundError:
+                        continue
+                    raise LedgerError("REPLAY", "The schedule already has reservation evidence", consumed=True)
+                with _FORK_LOCK:
+                    fd = os.open(MARKER, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                                 0o600, dir_fd=dirfd)
+                    obj._pins[MARKER] = fd
+                claimed = True
                 _write_all(fd, obj._marker)
                 os.fchmod(fd, 0o444)
                 os.fsync(fd)
                 obj._marker_identity = _identity(os.fstat(fd))
-            finally:
-                os.close(fd)
-            os.fsync(dirfd)
-            fd = os.open(JOURNAL, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
-                         0o600, dir_fd=dirfd)
-            try:
+                os.fsync(dirfd)
+                with _FORK_LOCK:
+                    fd = os.open(JOURNAL, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                                 0o600, dir_fd=dirfd)
+                    obj._pins[JOURNAL] = fd
                 os.fsync(fd)
                 obj._journal_identity = _identity(os.fstat(fd))
+                os.fsync(dirfd)
+            except LedgerError:
+                raise
+            except OSError as exc:
+                code = "REPLAY" if isinstance(exc, FileExistsError) else "PERSISTENCE"
+                raise LedgerError(code, "Reservation creation failed; preserve all partial evidence",
+                                  consumed=claimed or code == "REPLAY") from exc
             finally:
-                os.close(fd)
-            os.fsync(dirfd)
-        except LedgerError:
+                os.close(dirfd)
+            obj._append({"type": "INVOKED", "marker_sha256": hashlib.sha256(obj._marker).hexdigest()})
+        except BaseException:
+            obj._stopped = True
+            obj._release_pins()
             raise
-        except OSError as exc:
-            code = "REPLAY" if isinstance(exc, FileExistsError) else "PERSISTENCE"
-            raise LedgerError(code, "Reservation creation failed; preserve all partial evidence",
-                              consumed=claimed or code == "REPLAY") from exc
-        finally:
-            os.close(dirfd)
-        obj._append({"type": "INVOKED", "marker_sha256": hashlib.sha256(obj._marker).hexdigest()})
         return obj
+
+    def _release_pins(self, *, propagate=False):
+        try:
+            with _FORK_LOCK:
+                errors = _close_pins(self._pins)
+                self._pin_finalizer.detach()
+                _LIVE_LEDGERS.discard(self)
+        except BaseException:
+            self._stopped = self._uncertain = True
+            self._complete = False
+            if propagate:
+                raise
+            return
+        if errors:
+            self._stopped = self._uncertain = True
+            self._complete = False
+            if propagate:
+                for _, exc in errors:
+                    if not isinstance(exc, Exception):
+                        raise exc
+                raise LedgerError("PERSISTENCE", "File handle release is uncertain; continuation is forbidden",
+                                  consumed=True) from errors[0][1]
+
+    def _same_process(self):
+        if os.getpid() == self._pid:
+            return True
+        # Check before acquiring an RLock possibly held by a vanished parent thread.
+        self._mutex = threading.RLock()
+        self._stopped = True
+        self._release_pins()
+        return False
+
+    def _check_pins(self):
+        for name, identity in ((MARKER, self._marker_identity),
+                               (JOURNAL, self._journal_identity)):
+            fd = self._pins.get(name)
+            if fd is None:
+                raise LedgerError("INTEGRITY", "Reservation evidence changed or was replaced", consumed=True)
+            info = os.fstat(fd)
+            if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1 or _identity(info) != identity:
+                raise LedgerError("INTEGRITY", "Reservation evidence changed or was replaced", consumed=True)
+
+    def close(self):
+        """Dispose once without deleting evidence or granting any resume right."""
+        self._same_process()
+        with self._mutex:
+            if not self._stopped and not self._complete:
+                self._stopped = True
+                self._uncertain = True
+            self._release_pins(propagate=True)
+
+    def __enter__(self):
+        if not self._same_process():
+            raise LedgerError("STOPPED", "This capability cannot continue or resume", consumed=True)
+        with self._mutex:
+            self._check_live()
+        return self
+
+    def __exit__(self, exc_type, exc, traceback):
+        try:
+            self.close()
+        except BaseException:
+            if exc_type is None:
+                raise
 
     def _check_live(self):
         if self._stopped or self._complete or os.getpid() != self._pid:
@@ -199,8 +316,10 @@ class Ledger:
             dirfd = os.open(self._authority, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
             if _identity(os.fstat(dirfd)) != self._root_identity:
                 raise LedgerError("INTEGRITY", "Reservation authority changed", consumed=True)
+            self._check_pins()
             marker, marker_identity = _read_regular(dirfd, MARKER, 16384)
             journal, journal_identity = _read_regular(dirfd, JOURNAL, MAX_JOURNAL_BYTES)
+            self._check_pins()
             if (marker != self._marker or marker_identity != self._marker_identity
                     or journal != self._journal or journal_identity != self._journal_identity):
                 raise LedgerError("INTEGRITY", "Reservation evidence changed or was replaced", consumed=True)
@@ -352,6 +471,7 @@ class Ledger:
 
     def snapshot(self):
         """Report in-memory accounting, with no approval or native-result claim."""
+        self._same_process()
         with self._mutex:
             return {"invocation_id": self._invocation_id, "consumed": dict(self._counts),
                     "stopped": self._stopped, "ledger_complete": self._complete,
