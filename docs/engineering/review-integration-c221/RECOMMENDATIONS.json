@@ -3,7 +3,7 @@
   "baselineCommit": "bbf2bec6efeb537622475ae6727319e55af40ff6",
   "amendment": "C221 review integration, revision 1; package amendment, not a new development checkpoint",
   "ownerIntent": "Continue the existing C221 work and implement the review recommendations without losing either; deliver one integrated ZIP only.",
-  "statusMeaning": "R00/R01 remain completed within their recorded scopes. R02 remains blocked after the preserved C224 aggregate timeout; C225 completes exact readback-prerequisite preparation and three focused methods only. R03-R08 remain pending.",
+  "statusMeaning": "R00/R01 remain completed within their recorded scopes. R02 remains blocked after C226 completed its aggregate with 4649 passing methods, one separate class-setup error and 13 unrun methods. C224 timeout and C225 prerequisite/focused results remain unchanged. R03-R08 remain pending.",
   "immediateTask": "R02",
   "allowedStatuses": [
     "pending",
@@ -133,35 +133,52 @@
         "https://github.com/Omegapy/OntoKin/issues/180",
         "../readback-prerequisites-c225/RESULTS.md",
         "../readback-prerequisites-c225/evidence/OUTCOME.json",
-        "https://github.com/Omegapy/OntoKin/issues/182"
+        "https://github.com/Omegapy/OntoKin/issues/182",
+        "../aggregate-regression-c226/RESULTS.md",
+        "../aggregate-regression-c226/REVIEW.md",
+        "https://github.com/Omegapy/OntoKin/issues/184"
       ],
       "remainingLimits": [
-        "No complete aggregate pass is claimed unless every selected method completes successfully without skipped obligations",
-        "See exact current timeout/failure/skip/unrun counts and next action in C224; preserve original raw logs",
-        "Other interpreter, optional visual/force and release roles remain separate"
+        "R02 has no complete passing aggregate: C226 has one class-setup error and thirteen unrun methods",
+        "Diagnose frozen A08 seed-export under unchanged limits; reconcile current and historical implementation digests before claiming equivalence",
+        "C224 timeout and all earlier failures remain preserved; other interpreters, optional visual/dedicated force-agent and release roles remain separate"
       ],
       "supersessionDecision": null,
       "lastAttempt": {
-        "checkpoint": "C224",
-        "sourceCommit": "1530832e0ee566887a43ce6a5e5d374901a24860",
-        "sourceTree": "5fbf7b27f37955871fec5fbc35cf346db027b3aa",
+        "checkpoint": "C226",
+        "sourceCommit": "3f17a523b5d5c435f71525a499d2f071ca6e4e96",
+        "sourceTree": "324d7a23d67d0c23f5dfba968a63a5c12cb7bcff",
         "driverStatus": "failed",
-        "perCommandTimeoutSeconds": 900,
+        "perCommandTimeoutSeconds": 3600,
+        "driverDurationSeconds": 1523.21,
         "methodInventory": 4662,
         "methodCounts": {
-          "passed": 3451,
+          "passed": 4649,
           "failed": 0,
           "error": 0,
           "skipped": 0,
           "expected_failure": 0,
           "unexpected_success": 0,
           "failed_import": 0,
-          "timed_out": 1,
+          "timed_out": 0,
           "incomplete_observation": 0,
-          "unrun": 1210
+          "unrun": 13
         },
+        "classSetupErrorCount": 1,
         "completeAccounting": true,
-        "branch": "work/c224-r02-aggregate"
+        "sourceUnchanged": true,
+        "gitRevisionUnchanged": true,
+        "pendingExternalCaseCount": 16,
+        "branch": "work/c226-r02-aggregate",
+        "setupFailure": {
+          "class": "test_torque_artifact_reads.TorqueArtifactReadTests",
+          "stage": "recording_export_readback",
+          "code": "OKL-E-RESOURCE",
+          "reason": "execution_deadline_exceeded",
+          "productLimitMs": 30000,
+          "consumedOperations": 430069,
+          "operationLimit": 1000000
+        }
       },
       "prerequisitePreparation": {
         "checkpoint": "C225",
@@ -177,7 +194,32 @@
         "aggregateRuns": 0,
         "fullR02Accepted": false,
         "nextAction": "One fresh immutable default aggregate attempt with a predeclared justified longer command ceiling and complete inventory accounting"
-      }
+      },
+      "previousAttempts": [
+        {
+          "checkpoint": "C224",
+          "sourceCommit": "1530832e0ee566887a43ce6a5e5d374901a24860",
+          "sourceTree": "5fbf7b27f37955871fec5fbc35cf346db027b3aa",
+          "driverStatus": "failed",
+          "perCommandTimeoutSeconds": 900,
+          "methodInventory": 4662,
+          "methodCounts": {
+            "passed": 3451,
+            "failed": 0,
+            "error": 0,
+            "skipped": 0,
+            "expected_failure": 0,
+            "unexpected_success": 0,
+            "failed_import": 0,
+            "timed_out": 1,
+            "incomplete_observation": 0,
+            "unrun": 1210
+          },
+          "completeAccounting": true,
+          "branch": "work/c224-r02-aggregate"
+        }
+      ],
+      "nextAction": "One bounded CPU diagnosis of the frozen A08 seed-export setup deadline, starting with implementation identity reconciliation; no automatic aggregate retry"
     },
     {
       "id": "R03",

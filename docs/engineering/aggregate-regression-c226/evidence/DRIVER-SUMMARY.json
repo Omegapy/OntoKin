@@ -1,0 +1,666 @@
+{
+  "schema_version": "ontokin.local-checks/0.1",
+  "profile": "core",
+  "selected_roles": [
+    "core"
+  ],
+  "started_at": "2026-11-13T05:31:14.543589+00:00",
+  "status": "failed",
+  "source_root": "/workspace/scratch/af056d9eab72/r02-source",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "python_executable": "/workspace/scratch/af056d9eab72/r02-venv/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "architecture": "x86_64"
+  },
+  "git": {
+    "available": true,
+    "local_head": "3f17a523b5d5c435f71525a499d2f071ca6e4e96",
+    "local_tree": "324d7a23d67d0c23f5dfba968a63a5c12cb7bcff",
+    "tracked_worktree_status": "",
+    "untracked_source_files": [],
+    "head_is_base_revision": true,
+    "source_inventory_includes_untracked_files": true,
+    "remote_head_verified": false
+  },
+  "steps": [
+    {
+      "id": "unit-tests",
+      "argv": [
+        "/workspace/scratch/af056d9eab72/r02-venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/workspace",
+      "requires": [],
+      "started_at": "2026-11-13T05:31:29.291439+00:00",
+      "log": "logs/unit-tests.log",
+      "returncode": 1,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "status": "failed",
+      "test_execution": {
+        "tests_run": 4649,
+        "skipped": 0,
+        "expected_failures": 0,
+        "executed_without_skips": 4649,
+        "complete_regression_passed": false
+      },
+      "reports": [],
+      "finished_at": "2026-11-13T05:54:43.947684+00:00",
+      "duration_seconds": 1394.656,
+      "log_identity": {
+        "sha256": "sha256:746b49ab0e314b062f3d7dcfb95930d665b90777488708fd83f8ba009acf5b8b",
+        "bytes": 879289
+      }
+    },
+    {
+      "id": "source",
+      "argv": [
+        "/workspace/scratch/af056d9eab72/r02-venv/bin/python",
+        "-B",
+        "-m",
+        "ontokin",
+        "conformance",
+        "--output",
+        "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/reports/source.json"
+      ],
+      "cwd": "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/workspace",
+      "requires": [],
+      "started_at": "2026-11-13T05:54:43.951124+00:00",
+      "log": "logs/source.log",
+      "returncode": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/source.json",
+          "sha256": "sha256:710b6f9fc3fa2a2bb11a61c960ac67a01624d2a674f2cc9d9e2893325f7d5245",
+          "bytes": 230305,
+          "outcomes": {
+            "summary": {
+              "passed": 43,
+              "failed": 0,
+              "total": 43,
+              "assertions": 694,
+              "expected_valid": 12,
+              "expected_invalid_or_conflicting": 29,
+              "expected_unsupported": 2
+            }
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-13T05:54:44.774225+00:00",
+      "duration_seconds": 0.823,
+      "log_identity": {
+        "sha256": "sha256:2170d4ef2748ee42428750fc5034ac0909b750954ba0f0ce73dc2c7c7ea66895",
+        "bytes": 297
+      }
+    },
+    {
+      "id": "agent",
+      "argv": [
+        "/workspace/scratch/af056d9eab72/r02-venv/bin/python",
+        "-B",
+        "tools/run_agent_conformance.py",
+        "--output",
+        "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/reports/agent.json"
+      ],
+      "cwd": "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/workspace",
+      "requires": [],
+      "started_at": "2026-11-13T05:54:44.774983+00:00",
+      "log": "logs/agent.log",
+      "returncode": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/agent.json",
+          "sha256": "sha256:4333d320ecd6aa8109cf727138f7c4f9762074912545191f280089f5c8328425",
+          "bytes": 257724,
+          "outcomes": {
+            "summary": {
+              "total": 10,
+              "passed": 10,
+              "failed": 0
+            },
+            "implementation": {
+              "name": "ontokin-reference",
+              "version": "0.4.0",
+              "source_code_sha256": "sha256:920575745f5661c85c64cd6ff172812df82a9808fda3abb8cf55e16d66bb2d80"
+            }
+          },
+          "pending_cases": []
+        }
+      ],
+      "finished_at": "2026-11-13T05:54:45.593925+00:00",
+      "duration_seconds": 0.819,
+      "log_identity": {
+        "sha256": "sha256:f86d27aefbfacd520da3f8926e4b4d9ced99fce1a1d463d6a8e24766f3be75b3",
+        "bytes": 173
+      }
+    },
+    {
+      "id": "construction",
+      "argv": [
+        "/workspace/scratch/af056d9eab72/r02-venv/bin/python",
+        "-B",
+        "-m",
+        "tools.verify_construction_ci",
+        "--external-evidence",
+        "docs/engineering/construction-validation/external-gate.json",
+        "--output",
+        "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/reports/construction.json"
+      ],
+      "cwd": "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/workspace",
+      "requires": [],
+      "started_at": "2026-11-13T05:54:45.594677+00:00",
+      "log": "logs/construction.log",
+      "returncode": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/construction.json",
+          "sha256": "sha256:79c998a0ff223746448ceee78ab9b3aca7b2399cd5daecef826ae948bd332924",
+          "bytes": 184449,
+          "outcomes": {
+            "summary": {
+              "total": 20,
+              "passed": 19,
+              "failed": 0,
+              "pending": 1,
+              "all_adopted_cases_selected": true,
+              "case_gate_complete": false
+            },
+            "implementation": {
+              "name": "ontokin-reference",
+              "version": "0.4.0",
+              "source_code_sha256": "sha256:920575745f5661c85c64cd6ff172812df82a9808fda3abb8cf55e16d66bb2d80"
+            }
+          },
+          "pending_cases": [
+            {
+              "id": "C20",
+              "reasons": [
+                "The identified independent visual-delivery gate is pending."
+              ]
+            }
+          ]
+        }
+      ],
+      "finished_at": "2026-11-13T05:55:21.617292+00:00",
+      "duration_seconds": 36.022,
+      "log_identity": {
+        "sha256": "sha256:29bb3765634172308987cbdcf09ffbb2b69ca6196bebe18705123e0a7d8df6a3",
+        "bytes": 516
+      }
+    },
+    {
+      "id": "surface",
+      "argv": [
+        "/workspace/scratch/af056d9eab72/r02-venv/bin/python",
+        "-B",
+        "tools/run_surface_conformance.py",
+        "--allow-pending",
+        "--output",
+        "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/reports/surface.json"
+      ],
+      "cwd": "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/workspace",
+      "requires": [],
+      "started_at": "2026-11-13T05:55:21.618483+00:00",
+      "log": "logs/surface.log",
+      "returncode": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/surface.json",
+          "sha256": "sha256:5041314a00f7b277dc5a6a260e6e78188faea6288a5535660135922ef09a545c",
+          "bytes": 578740,
+          "outcomes": {
+            "summary": {
+              "total": 12,
+              "passed": 1,
+              "failed": 0,
+              "pending": 11,
+              "all_adopted_cases_selected": true,
+              "full_gate_complete": false
+            },
+            "implementation": {
+              "name": "ontokin-reference",
+              "version": "0.4.0",
+              "source_code_sha256": "sha256:920575745f5661c85c64cd6ff172812df82a9808fda3abb8cf55e16d66bb2d80"
+            }
+          },
+          "pending_cases": [
+            {
+              "id": "M01",
+              "reasons": [
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M02",
+              "reasons": [
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M03",
+              "reasons": [
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M04",
+              "reasons": [
+                "destination: No identified surface release evidence manifest was supplied.",
+                "workflow: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M05",
+              "reasons": [
+                "workflow: No identified surface release evidence manifest was supplied.",
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M06",
+              "reasons": [
+                "workflow: No identified surface release evidence manifest was supplied.",
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M07",
+              "reasons": [
+                "workflow: No identified surface release evidence manifest was supplied.",
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M08",
+              "reasons": [
+                "workflow: No identified surface release evidence manifest was supplied.",
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M09",
+              "reasons": [
+                "workflow: No identified surface release evidence manifest was supplied.",
+                "destination: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M11",
+              "reasons": [
+                "workflow: No identified surface release evidence manifest was supplied.",
+                "destination: No identified surface release evidence manifest was supplied.",
+                "browser: No identified surface release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "M12",
+              "reasons": [
+                "regression: No identified surface release evidence manifest was supplied.",
+                "ci: No identified surface release evidence manifest was supplied."
+              ]
+            }
+          ]
+        }
+      ],
+      "finished_at": "2026-11-13T05:55:42.158446+00:00",
+      "duration_seconds": 20.54,
+      "log_identity": {
+        "sha256": "sha256:47a337ffc16a5b86f5628a2fde2ae8f5fc2f9b38241e8411bb5369f439800f35",
+        "bytes": 266
+      }
+    },
+    {
+      "id": "impulse",
+      "argv": [
+        "/workspace/scratch/af056d9eab72/r02-venv/bin/python",
+        "-B",
+        "tools/run_impulse_conformance.py",
+        "--allow-pending",
+        "--output",
+        "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/reports/impulse.json"
+      ],
+      "cwd": "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/workspace",
+      "requires": [],
+      "started_at": "2026-11-13T05:55:42.159393+00:00",
+      "log": "logs/impulse.log",
+      "returncode": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "status": "passed",
+      "reports": [
+        {
+          "path": "reports/impulse.json",
+          "sha256": "sha256:dbbb1eb848ffcafafed05123aef5849fe8d7e9f598f35e9e568e9d4c84377006",
+          "bytes": 881802,
+          "outcomes": {
+            "summary": {
+              "total": 12,
+              "passed": 8,
+              "failed": 0,
+              "pending": 4,
+              "all_adopted_cases_selected": true,
+              "full_gate_complete": false
+            },
+            "implementation": {
+              "name": "ontokin-reference",
+              "version": "0.4.0",
+              "source_code_sha256": "sha256:920575745f5661c85c64cd6ff172812df82a9808fda3abb8cf55e16d66bb2d80"
+            }
+          },
+          "pending_cases": [
+            {
+              "id": "I07",
+              "reasons": [
+                "workflow: No identified impulse release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "I09",
+              "reasons": [
+                "workflow: No identified impulse release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "I11",
+              "reasons": [
+                "workflow: No identified impulse release evidence manifest was supplied.",
+                "destination: No identified impulse release evidence manifest was supplied.",
+                "browser: No identified impulse release evidence manifest was supplied."
+              ]
+            },
+            {
+              "id": "I12",
+              "reasons": [
+                "regression: No identified impulse release evidence manifest was supplied.",
+                "ci: No identified impulse release evidence manifest was supplied."
+              ]
+            }
+          ]
+        }
+      ],
+      "finished_at": "2026-11-13T05:56:28.521257+00:00",
+      "duration_seconds": 46.362,
+      "log_identity": {
+        "sha256": "sha256:82160c6e197af610b7f5228784d297908afc81d25f253f9bc2a114cdcbbf4dca",
+        "bytes": 157
+      }
+    },
+    {
+      "id": "documents",
+      "argv": [
+        "/workspace/scratch/af056d9eab72/r02-venv/bin/python",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/workspace",
+      "requires": [],
+      "started_at": "2026-11-13T05:56:28.523033+00:00",
+      "log": "logs/documents.log",
+      "returncode": 0,
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "status": "passed",
+      "reports": [],
+      "finished_at": "2026-11-13T05:56:30.293899+00:00",
+      "duration_seconds": 1.771,
+      "log_identity": {
+        "sha256": "sha256:3f91cb73f81126f44563768354154a2fbac26ef19cfe82c8fe8f3615262d9990",
+        "bytes": 6606
+      }
+    }
+  ],
+  "release_certified": false,
+  "full_product_conformance_certified": false,
+  "remote_checks_executed": false,
+  "limits": [
+    "This run checks one installed Python version; it is not the three-version matrix.",
+    "Pending external conformance attestations remain pending, including after full visual checks.",
+    "Generated captures require actual visual review; this runner does not supply that review."
+  ],
+  "source_inventory": {
+    "path": "source-before.json",
+    "sha256": "sha256:34f7759ea0282d17bfce3b7d8cb727487a6125f25af49cfbcf25a7dcc1b7475f",
+    "bytes": 3493427,
+    "inventory_sha256": "sha256:d10f50f4a88c74354d2c7a6d77b8d490b084cd00e825b27536531024cb6d4694",
+    "file_count": 15690,
+    "includes_untracked_source_files": true
+  },
+  "workspace_generated_exclusions": {
+    "files": [
+      "examples/agent/rejected-candidate.ok",
+      "examples/agent/repaired.ok",
+      "examples/agent/workflow.json",
+      "examples/construction/authoring.ok",
+      "examples/construction/hinges.ok",
+      "examples/construction/main.ok",
+      "examples/construction/program.bundle.json",
+      "examples/construction/program.files.json",
+      "examples/construction/rejected-candidate.ok",
+      "examples/construction/workflow.json",
+      "examples/visual/THREE-LICENSE.txt",
+      "examples/visual/demo-data.js",
+      "examples/visual/viewer.bundle.js"
+    ],
+    "patterns": [
+      "examples/{visual,agent,construction}/*.{glb,export.json,reference.json}"
+    ],
+    "scope": "Only the isolated workspace comparison; all original checkout example bytes are preserved and checked."
+  },
+  "workspace_storage": {
+    "path": "workspace-storage.json",
+    "sha256": "sha256:3fe3794771e6b1ccd619ab05b22532b0b4cca2f897a3e56e42cd0e88d9c3d3e0",
+    "bytes": 184,
+    "schema_version": "ontokin.storage-binding/0.1",
+    "profile": "engineering-archives/0.1",
+    "lfs_files": [],
+    "network_transfers": false,
+    "source_configuration_copied": false
+  },
+  "workspace_git": {
+    "available": true,
+    "local_head": "3f17a523b5d5c435f71525a499d2f071ca6e4e96",
+    "local_tree": "324d7a23d67d0c23f5dfba968a63a5c12cb7bcff",
+    "tracked_worktree_status": "",
+    "untracked_source_files": [],
+    "head_is_base_revision": true,
+    "source_inventory_includes_untracked_files": true,
+    "remote_head_verified": false,
+    "index_basis": "source_commit_tree",
+    "copied_worktree_changes_preserved": true,
+    "source_staging_preserved": false
+  },
+  "planned_steps": [
+    "unit-tests",
+    "source",
+    "agent",
+    "construction",
+    "surface",
+    "impulse",
+    "documents"
+  ],
+  "git_after": {
+    "available": true,
+    "local_head": "3f17a523b5d5c435f71525a499d2f071ca6e4e96",
+    "local_tree": "324d7a23d67d0c23f5dfba968a63a5c12cb7bcff",
+    "tracked_worktree_status": "",
+    "untracked_source_files": [],
+    "head_is_base_revision": true,
+    "source_inventory_includes_untracked_files": true,
+    "remote_head_verified": false
+  },
+  "git_revision_unchanged": true,
+  "source_unchanged": true,
+  "pending_external_cases": [
+    {
+      "step": "construction",
+      "report": "reports/construction.json",
+      "id": "C20",
+      "reasons": [
+        "The identified independent visual-delivery gate is pending."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M01",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M02",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M03",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M04",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied.",
+        "workflow: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M05",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M06",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M07",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M08",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M09",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M11",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied.",
+        "browser: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M12",
+      "reasons": [
+        "regression: No identified surface release evidence manifest was supplied.",
+        "ci: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I07",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I09",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I11",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied.",
+        "destination: No identified impulse release evidence manifest was supplied.",
+        "browser: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I12",
+      "reasons": [
+        "regression: No identified impulse release evidence manifest was supplied.",
+        "ci: No identified impulse release evidence manifest was supplied."
+      ]
+    }
+  ],
+  "not_executed_steps": [],
+  "finished_at": "2026-11-13T05:56:37.791131+00:00",
+  "duration_seconds": 1523.21,
+  "exit_code": 1
+}
