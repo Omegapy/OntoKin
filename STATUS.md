@@ -10,6 +10,8 @@ Root saved the approval before the reviewer added its final scope/process metada
 
 [Independent review](docs/engineering/aggregate-regression-c232/REVIEW.md) confirms the failure and unchanged clean source. **R02 remains blocked.** C228 remains the latest actually completed aggregate, with its original failure preserved; C231's checked repair remains intact. [Next bounded scope](docs/engineering/aggregate-regression-c232/NEXT-TASK.md): a fresh current-source aggregate after reviewer completion, exact saved approval verification and a separately successful recovery gate. Scope [#196](https://github.com/Omegapy/OntoKin/issues/196) records publication and saved delivery. All nine recommendations/41 criteria and held drafts remain. C231 delivery was independently confirmed and scope #194 is closed.
 
+[PR #197](https://github.com/Omegapy/OntoKin/pull/197) merged at `e21b2c8653d5efbcc7c3dbe54889190a7e4595b0`, exactly matching reviewed tree `df8da9a0973e7596a0ce62ba8506b0c44ad7b7f0`. Fresh actual-main documentation checks passed 29 preserved sources / 4,904 local links. [Integration receipt](docs/engineering/aggregate-regression-c232/evidence/INTEGRATION.json). The work branch was observed absent. Integration ownership is released; scope #196 remains open for verified saved handoff delivery.
+
 ## C231 R02 prerequisite: ledger identity repair checked
 
 [C231](docs/engineering/ledger-identity-c231/RESULTS.md) retains the original invocation-marker and journal file objects while a ledger capability is live. Same-content replacement cannot inherit their authority merely through recycled device/inode numbers. Existing path/content checks, nonblocking opens, poisoning, budgets and frozen bindings remain. Explicit cleanup handles terminal states, failures, disposal, interruption and fork boundaries.
@@ -230,7 +232,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c232-root-ed527c495b48`. Acquired 2026-11-13T22:02:42.107053+00:00; expires 2026-11-13T22:32:42.107053+00:00. Scope [#196](https://github.com/Omegapy/OntoKin/issues/196), branch `work/c232-aggregate-regression`, observed main `32f4c088010a35f67cbb19edb40b6e08875d37dc`. Reserved shared files: STATUS.md and the current recommendation tracker, for documentation/evidence publication and verified C232 handoff closure. The C232 launch failed before aggregate admission; no product or native retry is permitted. Checked source remains immutable in a separate checkout. Held drafts #155/#165/#167/#169 retain their recorded heads.
+Owner: none. The C232 lease `c232-root-ed527c495b48` is released after reviewed documentation/evidence PR #197 merged at `e21b2c8653d5efbcc7c3dbe54889190a7e4595b0` and actual-main checks passed. The work branch was observed absent. Scope #196 remains open only for verified saved handoff delivery. C232 is closed for execution after its pre-admission blocker; no aggregate or native retry is authorized. R02 remains blocked; held drafts #155/#165/#167/#169 remain unchanged.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
