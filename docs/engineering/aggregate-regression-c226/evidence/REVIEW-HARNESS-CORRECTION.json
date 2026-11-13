@@ -1,0 +1,22 @@
+{
+  "schema": "ontokin.c226.review-harness-correction/0.1",
+  "recordedAtUtc": "2026-11-13T05:57:41.828325+00:00",
+  "initialAssertion": "Observed method order must be a literal prefix of discovery inventory",
+  "observedResult": "False for a completed suite with a class-setup error; thirteen selected class methods are unrun in the middle of the inventory, and later classes legitimately execute",
+  "scope": "Independent read-only review script only; no product, driver, tests, fixtures, logs, primary parser, or expectations changed",
+  "correction": "Require the exact observed method order after explicitly accounted missing IDs, and require every unrun ID to be explained by the named failing setup class or a declared timeout suffix",
+  "preservedOriginals": [
+    {
+      "path": "independent_log_crosscheck.initial.py",
+      "sha256": "b2484578fc103171f946e33c642ffdf79142a16698edc0d7a4283f2dcdb0f57f"
+    },
+    {
+      "path": "INITIAL-RAW-LOG-CROSSCHECK.json",
+      "sha256": "33fe7104c4b1e8ff49a34e30164fa0a0b1a3c6cb6b58c079d51490d14c963cb2"
+    },
+    {
+      "path": "initial-raw-log-crosscheck.log",
+      "sha256": "bdd66f1846b8d6ff08490a6511b17f95ff05192afae3f5b884ee72fed7debea3"
+    }
+  ]
+}

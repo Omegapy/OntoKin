@@ -4,6 +4,8 @@ Current validation preparation: [C225 exact readback prerequisites and three unc
 
 The [owner-directed C221 review tracker](engineering/review-integration-c221/README.md) retains R00 and all R01-R08 acceptance criteria. C222 completed R00 with confirmed delivery; [C223 completes the reviewed R01 validation-driver repair](engineering/local-validation-c223/README.md). R02 aggregate regression remains its separate follow-up.
 
+- [C226 aggregate regression result](engineering/aggregate-regression-c226/README.md): complete 4,662-method accounting, one torque-artifact setup deadline error, preserved raw evidence and the next bounded diagnosis.
+
 ## Current engineering checkpoint
 
 Start with [current status and integration ownership](../STATUS.md), the [revised goal](../GOAL.md), and [C210 semantic export](engineering/semantic-export-c210/README.md). The [dated scope decision](engineering/semantic-export-c210/DECISION.md) adopts semantic object authoring and checked transport, explicitly defers the C209/C201 preparation sequence, and preserves earlier contracts and failed/unrun evidence. The [finite contract](engineering/semantic-export-c210/CONTRACT.md) reuses normalized records and the existing Agent/0.2 and GLB/0.2 paths. The [Unreal boundary](engineering/semantic-export-c210/UNREAL-INTEROP.md) separates conceptual mappings from support.

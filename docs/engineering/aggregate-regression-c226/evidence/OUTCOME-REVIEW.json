@@ -1,0 +1,539 @@
+{
+  "schema": "ontokin.c226.independent-aggregate-outcome-review/0.1",
+  "recordedAtUtc": "2026-11-13T05:59:28.932071+00:00",
+  "reviewer": "c226-state-outcome-review-af056d9eab72",
+  "reviewPassed": true,
+  "checks": {
+    "oneDeclaredAttemptFinished": true,
+    "actualCommandEqualsFrozenPlan": true,
+    "selectedDefaultCoreRoleOnly": true,
+    "allSevenStepsExecutedInDeclaredOrder": true,
+    "everyStepCommandEqualsDeclaredCommand": true,
+    "noValidationCommandTimeout": true,
+    "unchanged3600SecondPerCommandCeiling": true,
+    "inventoryFrozenBeforeLaunch": true,
+    "inventoryExactly4662Methods": true,
+    "completeMethodAccounting": true,
+    "rawCrosscheckPassed": true,
+    "exactThirteenSetupBlockedMethods": true,
+    "actualFailureCauseCaptured": true,
+    "sourceInventoriesExactlyEqual": true,
+    "sourceInventoryMatchesFrozenPlan": true,
+    "sourceRevisionAndTreeStable": true,
+    "declaredAggregateOutcomeRemainsFailed": true,
+    "retainedReadbackReviewPassed": true,
+    "reportedArtifactHashesMatch": true,
+    "noFullReleaseClaim": true,
+    "sixRemainingDefaultCommandsPassed": true,
+    "sixteenExternalCasesRemainPending": true,
+    "documentationPreservationPassed": true
+  },
+  "sourceCommit": "3f17a523b5d5c435f71525a499d2f071ca6e4e96",
+  "sourceTree": "324d7a23d67d0c23f5dfba968a63a5c12cb7bcff",
+  "sourceCheckoutClean": true,
+  "sourceFileCount": 15690,
+  "sourceInventorySha256": "sha256:d10f50f4a88c74354d2c7a6d77b8d490b084cd00e825b27536531024cb6d4694",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "python_executable": "/workspace/scratch/af056d9eab72/r02-venv/bin/python",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "architecture": "x86_64"
+  },
+  "verificationPackages": {
+    "Pillow": "13.0.0",
+    "jsonschema": "4.26.0",
+    "attrs": "26.1.0",
+    "jsonschema-specifications": "2025.9.1",
+    "referencing": "0.37.0",
+    "rpds-py": "2026.5.1",
+    "typing_extensions": "4.16.0"
+  },
+  "aggregateResult": "failed",
+  "r02Status": "blocked",
+  "attempts": 1,
+  "aggregateExitCode": 1,
+  "launcherDurationSeconds": 1523.324,
+  "driverDurationSeconds": 1523.21,
+  "perCommandCeilingSeconds": 3600,
+  "productSetupCeilingMs": 30000,
+  "methodInventory": 4662,
+  "methodCounts": {
+    "passed": 4649,
+    "failed": 0,
+    "error": 0,
+    "skipped": 0,
+    "expected_failure": 0,
+    "unexpected_success": 0,
+    "failed_import": 0,
+    "timed_out": 0,
+    "incomplete_observation": 0,
+    "unrun": 13
+  },
+  "methodAccountingComplete": true,
+  "fullMethodPass": false,
+  "classSetupErrorCount": 1,
+  "importErrorCount": 0,
+  "subtestOutcomeEvents": {},
+  "unrunMethodIds": [
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_close_defers_borrowed_connection_release_without_losing_fence",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_completed_close_cannot_be_followed_by_inflight_cache_publication",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_current_authority_is_rechecked_and_reopen_has_no_cached_grant",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_idle_handle_has_no_snapshot_and_services_observe_each_commit",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_nested_and_concurrent_contexts_keep_separate_transactions",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_original_callback_cannot_mutate_verified_proof_to_accept_corrupt_bytes",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_original_callbacks_cannot_replace_proof_from_any_request_stage",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_original_miss_and_equal_bytes_preserve_all_charges_and_callbacks",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_predecessor_store_and_schema_refusal_remain_unchanged",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_real_publication_exception_rolls_back_and_close_fences_identity",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_uncaught_cache_assignment_preserves_original_callback_exception",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_warm_proof_rereads_entire_blob_metadata_and_source",
+    "test_torque_artifact_reads.TorqueArtifactReadTests.test_warm_read_retains_cap_deadline_cancel_and_original_exception"
+  ],
+  "fixtureEvents": [
+    {
+      "line": 4558,
+      "display": "setUpClass (test_torque_artifact_reads.TorqueArtifactReadTests)",
+      "event": {
+        "status": "error",
+        "raw": "ERROR"
+      },
+      "text": "setUpClass (test_torque_artifact_reads.TorqueArtifactReadTests) ... ERROR"
+    }
+  ],
+  "setupError": {
+    "schema": "ontokin.c226.observed-setup-error/0.1",
+    "class": "test_torque_artifact_reads.TorqueArtifactReadTests",
+    "operation": "setUpClass",
+    "sourceLocation": "tests/test_torque_artifact_reads.py:55",
+    "rawAssertionLogLine": 4805,
+    "diagnosticCode": "OKL-E-RESOURCE",
+    "category": "resource_limit",
+    "stage": "recording_export_readback",
+    "budget": "max_elapsed_ms",
+    "budgetReason": "execution_deadline_exceeded",
+    "limit": 30000,
+    "diagnosticConsumedMs": 30000.029167999855,
+    "elapsedMs": 30000.90098099963,
+    "consumedOperations": 430069,
+    "requestId": "seed-export",
+    "programRevision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+    "entryRevision": "sha256:435c772d86ae9d43779d4a924daa9e4a287e55163a5c08cc655ed5c4e72d9a54",
+    "policyId": "sha256:7fa5c9e224d9ca55e4f34ffcfa6986574957acd3d5a9124c4408179913fe85fc",
+    "implementation": {
+      "name": "ontokin-reference",
+      "source_code_sha256": "sha256:920575745f5661c85c64cd6ff172812df82a9808fda3abb8cf55e16d66bb2d80",
+      "version": "0.4.0"
+    },
+    "rawLogSha256": "746b49ab0e314b062f3d7dcfb95930d665b90777488708fd83f8ba009acf5b8b",
+    "traceSha256": "535c2266821aff24130bbeb45789ddcdb8583aab0da49814ae0204146070ee59",
+    "meaning": "Product request wall-clock deadline in class setup. The separate 3600-second validation-command ceiling was not reached."
+  },
+  "steps": [
+    {
+      "id": "unit-tests",
+      "status": "failed",
+      "returncode": 1,
+      "duration_seconds": 1394.656,
+      "reason": null
+    },
+    {
+      "id": "source",
+      "status": "passed",
+      "returncode": 0,
+      "duration_seconds": 0.823,
+      "reason": null
+    },
+    {
+      "id": "agent",
+      "status": "passed",
+      "returncode": 0,
+      "duration_seconds": 0.819,
+      "reason": null
+    },
+    {
+      "id": "construction",
+      "status": "passed",
+      "returncode": 0,
+      "duration_seconds": 36.022,
+      "reason": null
+    },
+    {
+      "id": "surface",
+      "status": "passed",
+      "returncode": 0,
+      "duration_seconds": 20.54,
+      "reason": null
+    },
+    {
+      "id": "impulse",
+      "status": "passed",
+      "returncode": 0,
+      "duration_seconds": 46.362,
+      "reason": null
+    },
+    {
+      "id": "documents",
+      "status": "passed",
+      "returncode": 0,
+      "duration_seconds": 1.771,
+      "reason": null
+    }
+  ],
+  "conformanceSummaries": [
+    {
+      "step": "agent",
+      "summary": {
+        "total": 10,
+        "passed": 10,
+        "failed": 0
+      },
+      "fullProductConformanceCertified": false,
+      "path": "r02-run-01/reports/agent.json",
+      "sha256": "4333d320ecd6aa8109cf727138f7c4f9762074912545191f280089f5c8328425"
+    },
+    {
+      "step": "construction",
+      "summary": {
+        "total": 20,
+        "passed": 19,
+        "failed": 0,
+        "pending": 1,
+        "all_adopted_cases_selected": true,
+        "case_gate_complete": false
+      },
+      "fullProductConformanceCertified": false,
+      "path": "r02-run-01/reports/construction.json",
+      "sha256": "79c998a0ff223746448ceee78ab9b3aca7b2399cd5daecef826ae948bd332924"
+    },
+    {
+      "step": "impulse",
+      "summary": {
+        "total": 12,
+        "passed": 8,
+        "failed": 0,
+        "pending": 4,
+        "all_adopted_cases_selected": true,
+        "full_gate_complete": false
+      },
+      "fullProductConformanceCertified": false,
+      "path": "r02-run-01/reports/impulse.json",
+      "sha256": "dbbb1eb848ffcafafed05123aef5849fe8d7e9f598f35e9e568e9d4c84377006"
+    },
+    {
+      "step": "source",
+      "summary": {
+        "passed": 43,
+        "failed": 0,
+        "total": 43,
+        "assertions": 694,
+        "expected_valid": 12,
+        "expected_invalid_or_conflicting": 29,
+        "expected_unsupported": 2
+      },
+      "fullProductConformanceCertified": null,
+      "path": "r02-run-01/reports/source.json",
+      "sha256": "710b6f9fc3fa2a2bb11a61c960ac67a01624d2a674f2cc9d9e2893325f7d5245"
+    },
+    {
+      "step": "surface",
+      "summary": {
+        "total": 12,
+        "passed": 1,
+        "failed": 0,
+        "pending": 11,
+        "all_adopted_cases_selected": true,
+        "full_gate_complete": false
+      },
+      "fullProductConformanceCertified": false,
+      "path": "r02-run-01/reports/surface.json",
+      "sha256": "5041314a00f7b277dc5a6a260e6e78188faea6288a5535660135922ef09a545c"
+    }
+  ],
+  "pendingExternalCaseCount": 16,
+  "pendingExternalCases": [
+    {
+      "step": "construction",
+      "report": "reports/construction.json",
+      "id": "C20",
+      "reasons": [
+        "The identified independent visual-delivery gate is pending."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M01",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M02",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M03",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M04",
+      "reasons": [
+        "destination: No identified surface release evidence manifest was supplied.",
+        "workflow: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M05",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M06",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M07",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M08",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M09",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M11",
+      "reasons": [
+        "workflow: No identified surface release evidence manifest was supplied.",
+        "destination: No identified surface release evidence manifest was supplied.",
+        "browser: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "surface",
+      "report": "reports/surface.json",
+      "id": "M12",
+      "reasons": [
+        "regression: No identified surface release evidence manifest was supplied.",
+        "ci: No identified surface release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I07",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I09",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I11",
+      "reasons": [
+        "workflow: No identified impulse release evidence manifest was supplied.",
+        "destination: No identified impulse release evidence manifest was supplied.",
+        "browser: No identified impulse release evidence manifest was supplied."
+      ]
+    },
+    {
+      "step": "impulse",
+      "report": "reports/impulse.json",
+      "id": "I12",
+      "reasons": [
+        "regression: No identified impulse release evidence manifest was supplied.",
+        "ci: No identified impulse release evidence manifest was supplied."
+      ]
+    }
+  ],
+  "documentation": {
+    "sources": 29,
+    "localLinks": 4694,
+    "failures": []
+  },
+  "readback": {
+    "passed": true,
+    "assertions": 18613,
+    "numericRows": 6180,
+    "cases": [
+      {
+        "case": "Q01-positive",
+        "pid": 718,
+        "returncode": 0,
+        "probePassed": true,
+        "expectedProbePassed": true,
+        "numericRows": 2060,
+        "expectedNegativeRows": 0,
+        "processGroupAbsent": true,
+        "reaped": true,
+        "handlesClosed": true,
+        "durationSeconds": 0.28627390399969954
+      },
+      {
+        "case": "Q03-positive",
+        "pid": 726,
+        "returncode": 0,
+        "probePassed": true,
+        "expectedProbePassed": true,
+        "numericRows": 2060,
+        "expectedNegativeRows": 0,
+        "processGroupAbsent": true,
+        "reaped": true,
+        "handlesClosed": true,
+        "durationSeconds": 0.22477403500033688
+      },
+      {
+        "case": "Q01-changed-reference",
+        "pid": 734,
+        "returncode": 1,
+        "probePassed": false,
+        "expectedProbePassed": false,
+        "numericRows": 2060,
+        "expectedNegativeRows": 1,
+        "processGroupAbsent": true,
+        "reaped": true,
+        "handlesClosed": true,
+        "durationSeconds": 0.2189576920000036
+      }
+    ]
+  },
+  "reviewHarnessCorrection": "REVIEW-HARNESS-CORRECTION.json retains the original prefix-only review failure and its explicitly justified setup-gap correction; product inputs and expectations were unchanged.",
+  "bindings": [
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/RUN-EXECUTION.json",
+      "bytes": 1122,
+      "sha256": "24f275341f89a580a8f65846eb85ff0dada19a05c1e3cea7b0b10bcad3e2a008"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/run-preparation/RUN-PLAN.json",
+      "bytes": 2428,
+      "sha256": "43a13a54eb1fe9d36faece733ed9a2197ad796c9a678f5fe3b13ffc8c098f581"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/run-preparation/METHOD-INVENTORY.json",
+      "bytes": 3130218,
+      "sha256": "161529c03df9ad363c3b167ed197f4aceba771f8f110d528b1bd5f9ed13d5bf9"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/run-preparation/ENVIRONMENT.json",
+      "bytes": 1698,
+      "sha256": "58e306363ff502f317b3bc6553e05dde1455aec94c415a31db4cfab46beae36f"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/summary.json",
+      "bytes": 22363,
+      "sha256": "5e51e4363f4fe2fca9685201905fb8f29d00af149d1272166c024370af13bcf3"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/source-before.json",
+      "bytes": 3493427,
+      "sha256": "34f7759ea0282d17bfce3b7d8cb727487a6125f25af49cfbcf25a7dcc1b7475f"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/source-after.json",
+      "bytes": 3493427,
+      "sha256": "34f7759ea0282d17bfce3b7d8cb727487a6125f25af49cfbcf25a7dcc1b7475f"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/r02-run-01/logs/unit-tests.log",
+      "bytes": 879289,
+      "sha256": "746b49ab0e314b062f3d7dcfb95930d665b90777488708fd83f8ba009acf5b8b"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/state-outcome-review/outcome/METHOD-OUTCOMES.json",
+      "bytes": 3105554,
+      "sha256": "036b1858ea499e7c2cbc33c5adcdb3f93665adb4ad58ddafadcaedf517192a71"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/state-outcome-review/outcome/RAW-LOG-CROSSCHECK.json",
+      "bytes": 1600472,
+      "sha256": "b9c30c42b96bdb9ea7cc8d76c7fcfae5fe3d366461ba033eb7c7905349ad4237"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/state-outcome-review/outcome/READBACK-OUTCOME-REVIEW.json",
+      "bytes": 5349,
+      "sha256": "87e6cef8eb7469659b1d3bd3accef81959f6a7e06541a5baa398b0351cbfd037"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/state-outcome-review/outcome/REVIEW-HARNESS-CORRECTION.json",
+      "bytes": 1214,
+      "sha256": "39d203ea23bce7d7d34fb3bc3eb316b27ecbf2f2498d3196ef9c8d31c9e8da96"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/state-outcome-review/outcome/SETUP-ERROR.json",
+      "bytes": 5334,
+      "sha256": "adbfd502c023d11066137922def36f46790cfc553ee8d7b9af14b0eeb3bd2b7b"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/state-outcome-review/outcome/independent_log_crosscheck.py",
+      "bytes": 6277,
+      "sha256": "4c01fd545fc7f9af42fc55370fa437174c244115023dbade0d282028ef13bc74"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/handoff-next/evidence/state-outcome-review/outcome/audit_readback_outputs.py",
+      "bytes": 7257,
+      "sha256": "36aea8d6533c11c02cacf4d2c2d3fbf4c459289ddaf11e5a42527ed3f8825898"
+    },
+    {
+      "path": "/workspace/scratch/af056d9eab72/input/C225/evidence/c224/workers/test-accounting/reconcile_outcomes.py",
+      "bytes": 8080,
+      "sha256": "e8299aecbd6d86de9dd864381ecc420c12f1719f3a3e0fec68e0db96b09711b5"
+    }
+  ],
+  "testsOrNativeProcessesStartedByReview": 0,
+  "limitations": [
+    "Passing subtests are not separately enumerated by unittest verbose output; zero subtest outcome events means no recorded subtest failure/skip/error events, not zero subtests executed.",
+    "No aggregate or focused rerun was performed. This result does not replace the historical C224 timeout.",
+    "All results are from the declared Linux x86-64 CPython 3.12.14 environment; other supported interpreter versions were not executed here.",
+    "The optional visual and dedicated force-agent roles were not selected. Ordinary force-agent-related tests may still belong to default unittest discovery.",
+    "Six successful conformance/documentation commands do not resolve the sixteen external conformance cases or establish a full release.",
+    "Unchanged source and a known diagnostic identify the current blocker; they do not prove a performance cause or equality with any older full implementation fingerprint."
+  ],
+  "nextAction": "A separately bounded investigation/repair of the unchanged 30000-ms seed-export class setup, preserving resource limits and original failed evidence, before another independently declared full aggregate. Stop C226 at its verified saved handoff."
+}
