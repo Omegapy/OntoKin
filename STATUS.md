@@ -10,6 +10,8 @@ Exact author `e9f811dbd0d32d16aea55ce90ca3615a138a3416` passes all **307 affecte
 
 **R02 remains blocked until one fresh complete aggregate passes.** No aggregate or native application ran here. [Next bounded action](docs/engineering/ledger-identity-c231/NEXT-TASK.md): one new immutable aggregate with complete accounting. [Scope #194](https://github.com/Omegapy/OntoKin/issues/194) records root publication, resulting-main verification and saved delivery. All nine recommendations / 41 criteria and earlier failed or pending gates remain.
 
+[PR #195](https://github.com/Omegapy/OntoKin/pull/195) merged at `231caabacabaeca810acc8d75a081be3646b4a4b`, exactly matching reviewed tree `edd9b17f0e82599947bf01ab05da2b68ae02b74d`. Fresh actual-main checks pass all **307 methods** and 29 preserved sources / 4,874 local links with clean unchanged source. [Integration receipt](docs/engineering/ledger-identity-c231/evidence/INTEGRATION.json). The work branch was observed absent. Integration ownership is released; scope #194 remains open only for verified saved handoff delivery.
+
 ## C230 R02 diagnosis: journal inode reuse observed; ledger repair next
 
 [C230](docs/engineering/ledger-replacement-c230/RESULTS.md) fixes the separate diagnostic launcher's path handling and completes one reviewed two-worker CPU plan from exact `e19acb44784ba5654f24bd3d87fb7310249f6d05`. The unchanged original method reproduces both replacement failures: eight of ten subtests pass and two fail. A separately observed same-content journal replacement reuses its device/inode pair and incorrectly accepts a reservation. The marker observation and both held-descriptor controls get different identities, reject and subsequently return STOPPED. The uninstrumented original marker sequence and C228's exact allocation history remain unknown.
@@ -220,9 +222,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c231-root-fc511c141802`. Scope: [C231 ledger file-identity and resource-lifecycle repair](https://github.com/Omegapy/OntoKin/issues/194). Branch: `work/c231-ledger-identity`. Starting main: `099339f9b320a2c47a0ca2d275468c6e5f1b09e9`. Acquired at 2026-11-13T21:00:30.100339+00:00; expires at 2026-11-13T21:30:30.100339+00:00. Root owns main, shared STATUS/navigation/recommendation records and final integration. Author `ledger_repair_author` owns only ledger.py, additive C231 tests and the new C231 contract on `work/c231-ledger-author`; independent review and packaging use separate evidence directories.
-
-C230 delivery and exact offline source restoration are verified. This scope repairs the observed authority-file replacement bypass with explicit handle lifecycle and applicable focused checks, then delivers one verified saved handoff. R02 remains blocked until a later complete passing aggregate. Consumed C229/C230 diagnoses and native schedules remain closed; held drafts #155/#165/#167/#169 remain unchanged.
+Owner: none. The C231 lease `c231-root-fc511c141802` is released after checked PR #195 integration at `231caabacabaeca810acc8d75a081be3646b4a4b`. The work branch was observed absent. Scope #194 remains open only for verified saved handoff delivery. The ledger identity/lifecycle repair is complete within its focused scope; R02 remains blocked until a separately selected complete aggregate passes. No further product or native execution belongs to C231. Held drafts #155/#165/#167/#169 remain unchanged.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 

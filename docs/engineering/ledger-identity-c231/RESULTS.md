@@ -76,3 +76,22 @@ other interpreters and pending external roles retain their meanings.
 The [next task](NEXT-TASK.md) is one independently reviewed immutable aggregate
 with complete method/process accounting. Finish publication and one verified
 saved C231 handoff, then stop.
+
+## Published integration and actual main
+
+[PR #195](https://github.com/Omegapy/OntoKin/pull/195) merged published candidate
+`937fb460521f97da4ff7f55931a62ea9caea17f0` at
+`231caabacabaeca810acc8d75a081be3646b4a4b`, with exactly the independently
+reviewed tree `edd9b17f0e82599947bf01ab05da2b68ae02b74d`. This is distinct from
+the retained local author and integration candidate histories.
+
+Fresh checks on that actual main passed all 307 methods in 48.368 seconds, with
+zero failures/errors/skips/unrun methods and unchanged clean source. Its bounded
+CPU fork exited 0 and was reaped without timeout. Documentation preservation
+passed 29 sources / 4,874 local links. The work branch was observed absent. The
+[integration receipt](evidence/INTEGRATION.json) binds these results.
+
+This following documentation-only closure releases root ownership; its exact
+published revision and final saved ZIP are recorded in the final handoff and
+scope #194 after conditional publication. Archive/save completion cannot be
+claimed by this earlier sealed repository record.

@@ -22,3 +22,7 @@ reviewed candidate is integrated.
 Complete tracked-source inventories and all earlier attempts are retained in the
 saved handoff. [Evidence locations](evidence/EVIDENCE-LOCATIONS.json) map the two
 large external inventory files named by the original independent review.
+
+[PR #195](https://github.com/Omegapy/OntoKin/pull/195) is merged. Fresh actual-main
+checks pass all 307 methods; [the integration receipt](evidence/INTEGRATION.json)
+records exact published identities, cleanup and remaining delivery steps.
