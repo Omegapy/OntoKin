@@ -154,7 +154,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-No active integration lease. Owner `c224-main-adf4c50a85a5` releases ownership after independently reviewed PR #181 merged and fresh actual-main documentation checks passed. All product/runtime/test/fixture/workflow/lock inputs remain unchanged; R02 remains blocked by the recorded aggregate command timeout, with complete method accounting and exact next steps. Root completes only final handoff verification, offline restoration and confirmed save, then closes [scope issue #180](https://github.com/Omegapy/OntoKin/issues/180). The merged branch is eligible for retirement after its exact head/ancestry readback. Held PRs #155/#165/#167/#169 and consumed schedules remain unchanged. No additional feature or repair starts in this thread.
+Active integration owner `c225-main-77c7f4193edb` for [scope #182](https://github.com/Omegapy/OntoKin/issues/182), acquired from observed main `c76a7622dadb0bdd7cb514840ee1747aabe8eae7` at `2026-11-13T02:10:30.306082+00:00`, expires `2026-11-13T02:40:30.306082+00:00`. The bounded integration covers independently reviewed readback-prerequisite preparation evidence, its reproduction helper, and current STATUS/documentation navigation. The unchanged three-method CPU cohort passed on the observed base. No aggregate run, runtime/test/fixture/lock/workflow change or native schedule replay is authorized by this lease. Held PRs #155/#165/#167/#169 remain unchanged. Root will verify actual publication, release ownership and complete one saved C225 handoff.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
