@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C231 R02 prerequisite: ledger identity repair checked
+
+[C231](docs/engineering/ledger-identity-c231/RESULTS.md) retains the original invocation-marker and journal file objects while a ledger capability is live. Same-content replacement cannot inherit their authority merely through recycled device/inode numbers. Existing path/content checks, nonblocking opens, poisoning, budgets and frozen bindings remain. Explicit cleanup handles terminal states, failures, disposal, interruption and fork boundaries.
+
+Exact author `e9f811dbd0d32d16aea55ce90ca3615a138a3416` passes all **307 affected methods** (284 existing + 23 additive), with zero failures/errors/skips/unrun methods and unchanged clean source. Independent checks pass 17 groups / 136 assertions plus four exception/cleanup regression cases. The original test file is unchanged. Prior failed probes and superseded runs remain preserved.
+
+**R02 remains blocked until one fresh complete aggregate passes.** No aggregate or native application ran here. [Next bounded action](docs/engineering/ledger-identity-c231/NEXT-TASK.md): one new immutable aggregate with complete accounting. [Scope #194](https://github.com/Omegapy/OntoKin/issues/194) records root publication, resulting-main verification and saved delivery. All nine recommendations / 41 criteria and earlier failed or pending gates remain.
+
 ## C230 R02 diagnosis: journal inode reuse observed; ledger repair next
 
 [C230](docs/engineering/ledger-replacement-c230/RESULTS.md) fixes the separate diagnostic launcher's path handling and completes one reviewed two-worker CPU plan from exact `e19acb44784ba5654f24bd3d87fb7310249f6d05`. The unchanged original method reproduces both replacement failures: eight of ten subtests pass and two fail. A separately observed same-content journal replacement reuses its device/inode pair and incorrectly accepts a reservation. The marker observation and both held-descriptor controls get different identities, reject and subsequently return STOPPED. The uninstrumented original marker sequence and C228's exact allocation history remain unknown.

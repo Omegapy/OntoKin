@@ -1,0 +1,47 @@
+{
+  "schema": "ontokin.c231.review-findings/0.1",
+  "updatedUtc": "2026-11-13T21:10:30.518956+00:00",
+  "findings": [
+    {
+      "id": "C231-R1",
+      "type": "static-design",
+      "finding": "Concurrent fork can copy a retained descriptor between open and registration or pop and close",
+      "disposition": "resolved in final reviewed source; historical observations retained",
+      "evidence": "Author design/source review and messages; author fork control",
+      "resolvedInSource": "e9f811dbd0d32d16aea55ce90ca3615a138a3416"
+    },
+    {
+      "id": "C231-R2",
+      "type": "static-design",
+      "finding": "Terminal cleanup interruption could leave completion true and suppress interruption",
+      "disposition": "resolved in final reviewed source; historical observations retained",
+      "evidence": "Author cleanup controls and source review",
+      "resolvedInSource": "e9f811dbd0d32d16aea55ce90ca3615a138a3416"
+    },
+    {
+      "id": "C231-R3",
+      "type": "measured-defect",
+      "sourceCommit": "71e5e1722262ef5abe7e6169f539f63104dd8ee2",
+      "finding": "Exceptional context exit masks ValueError or KeyboardInterrupt body error when pin cleanup also fails",
+      "disposition": "resolved in final reviewed source; historical observations retained",
+      "result": "candidate-71e5-context-failure.json",
+      "testExitCode": 1,
+      "failedCases": 2,
+      "resultSha256": "955a705f340719ce23cbbd6ca9667291599cbfea3347cbe68613298e79f69a8a",
+      "resolvedInSource": "e9f811dbd0d32d16aea55ce90ca3615a138a3416"
+    },
+    {
+      "id": "C231-R4",
+      "type": "measured-defect",
+      "sourceCommit": "8e7e4fca361358a87fc34b722d4e558e2140ba12",
+      "finding": "Interrupted cleanup-lock acquisition consumes finalizer, leaks two pins, prevents later public close, and can mask an existing ORDER error without uncertainty",
+      "disposition": "resolved in final reviewed source; historical observations retained",
+      "result": "candidate-8e7-cleanup-lock-failure.json",
+      "testExitCode": 1,
+      "failedCases": 2,
+      "resultSha256": "5478463612c2afd6e7d81e0ddb6831f75e13abbf1f72ec509197c19d2f3b7bd5",
+      "resolvedInSource": "e9f811dbd0d32d16aea55ce90ca3615a138a3416"
+    }
+  ],
+  "approval": "APPROVE_COMPONENT_ONLY"
+}
