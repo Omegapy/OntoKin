@@ -1,0 +1,45 @@
+{
+  "schema": "ontokin.c228.ledger-failure-observation/0.1",
+  "recordedAtUtc": "2026-11-13T15:20:09.874917+00:00",
+  "failedMethodCount": 1,
+  "failedSubtestCount": 2,
+  "method": "test_static_tray_admission_c201_ledger.LedgerControls.test_corrupt_replaced_aliased_or_missing_files_poison_live_capability",
+  "subtestEvents": [
+    {
+      "status": "failed",
+      "raw": "FAIL",
+      "line": 3923,
+      "text": "  test_corrupt_replaced_aliased_or_missing_files_poison_live_capability (test_static_tray_admission_c201_ledger.LedgerControls.test_corrupt_replaced_aliased_or_missing_files_poison_live_capability) (name='C201-Q01-A01-A04-v0.1.0.invocation.json', mutation='replace') ... FAIL"
+    },
+    {
+      "status": "failed",
+      "raw": "FAIL",
+      "line": 3924,
+      "text": "  test_corrupt_replaced_aliased_or_missing_files_poison_live_capability (test_static_tray_admission_c201_ledger.LedgerControls.test_corrupt_replaced_aliased_or_missing_files_poison_live_capability) (name='C201-Q01-A01-A04-v0.1.0.ledger.jsonl', mutation='replace') ... FAIL"
+    }
+  ],
+  "actualAssertion": "LedgerError not raised",
+  "sourceFile": "tests/test_static_tray_admission_c201_ledger.py",
+  "sourceLine": 503,
+  "mutation": "replace",
+  "targets": [
+    "C201-Q01-A01-A04-v0.1.0.invocation.json",
+    "C201-Q01-A01-A04-v0.1.0.ledger.jsonl"
+  ],
+  "setupImportErrors": 0,
+  "rawTraceStartLine": 4814,
+  "rawLog": {
+    "path": "/workspace/scratch/a9488c5c1afa/aggregate-run/default/logs/unit-tests.log",
+    "bytes": 880211,
+    "sha256": "7fcd7085de4a1c3404cbc34138ef7f39e2f08305a71a204b69f9f82632a2f621"
+  },
+  "trace": {
+    "path": "LEDGER-FAILURE-TRACE.txt",
+    "bytes": 1594,
+    "sha256": "86e71de9b8c46159503a760a2afe079c170d745b365e056c6a2a1344fd31f6d0"
+  },
+  "interpretation": "The two replacement subtests expected rejection but no LedgerError was raised. They constitute one failed method. The current run does not establish the underlying cause.",
+  "scopeStopped": true,
+  "additionalProductRuns": 0,
+  "nextAction": "Separately bounded diagnosis of these two replacement-rejection failures using their exact immutable source and retained aggregate evidence; no repair or rerun in C228."
+}

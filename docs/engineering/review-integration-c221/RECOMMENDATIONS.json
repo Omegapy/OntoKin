@@ -3,7 +3,7 @@
   "baselineCommit": "bbf2bec6efeb537622475ae6727319e55af40ff6",
   "amendment": "C221 review integration, revision 1; package amendment, not a new development checkpoint",
   "ownerIntent": "Continue the existing C221 work and implement the review recommendations without losing either; deliver one integrated ZIP only.",
-  "statusMeaning": "R00/R01 remain completed within their recorded scopes. R02 stays blocked: C227 diagnoses the original A08 setup with one isolated success and a separate overhead-affected profile; no complete aggregate or artifact-read methods ran. C224/C225/C226 and all earlier outcomes remain unchanged. R03-R08 remain pending.",
+  "statusMeaning": "R00/R01 remain completed within their recorded scopes. R02 remains blocked: C228 accounts for 4,662 methods, 4,661 passed and one failed method with two same-content replacement subtest failures. Original A08 setup and all 13 read methods pass in the same aggregate. All prior outcomes remain unchanged; R03-R08 remain pending.",
   "immediateTask": "R02",
   "allowedStatuses": [
     "pending",
@@ -124,8 +124,8 @@
         "https://github.com/Omegapy/OntoKin/blob/bbf2bec6efeb537622475ae6727319e55af40ff6/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md"
       ],
       "status": "blocked",
-      "owner": null,
-      "branch": null,
+      "owner": "c228-main-a9488c5c1afa",
+      "branch": "work/c228-r02-aggregate",
       "implementationCommit": null,
       "evidence": [
         "../aggregate-regression-c224/RESULTS.md",
@@ -140,25 +140,30 @@
         "../torque-diagnosis-c227/RESULTS.md",
         "../torque-diagnosis-c227/REVIEW.md",
         "../torque-diagnosis-c227/evidence/MEASURED-SUMMARY.json",
-        "https://github.com/Omegapy/OntoKin/issues/186"
+        "https://github.com/Omegapy/OntoKin/issues/186",
+        "../aggregate-regression-c228/RESULTS.md",
+        "../aggregate-regression-c228/REVIEW.md",
+        "../aggregate-regression-c228/evidence/RESULT-SUMMARY.json",
+        "https://github.com/Omegapy/OntoKin/issues/188"
       ],
       "remainingLimits": [
-        "No complete passing R02 aggregate exists; C226 retains one setup error and thirteen unrun methods",
-        "Current isolated setup success does not establish historical cause or in-suite reliability; profiled costs are overhead-affected",
-        "All original limits, prior failures, other interpreters, sixteen external cases and optional visual/dedicated force-agent roles remain unchanged"
+        "R02 remains blocked by one failed ledger method containing two replacement subtest failures.",
+        "The cause of same-content replacement non-rejection is not established; no repair or second aggregate is selected.",
+        "Original A08 setup passed with all 13 methods in this aggregate; C226 failure and its unproven cause remain historical evidence.",
+        "Other interpreters, sixteen external cases, optional visual and dedicated force-agent roles, and full release acceptance remain pending."
       ],
       "supersessionDecision": null,
       "lastAttempt": {
-        "checkpoint": "C226",
-        "sourceCommit": "3f17a523b5d5c435f71525a499d2f071ca6e4e96",
-        "sourceTree": "324d7a23d67d0c23f5dfba968a63a5c12cb7bcff",
+        "checkpoint": "C228",
+        "sourceCommit": "fc500331ce789eb6f9c1210ea4f3b394d45e507c",
+        "sourceTree": "8eba004b6b08a00449663d868674c9fc8521469f",
         "driverStatus": "failed",
         "perCommandTimeoutSeconds": 3600,
-        "driverDurationSeconds": 1523.21,
+        "driverDurationSeconds": 1315.673,
         "methodInventory": 4662,
         "methodCounts": {
-          "passed": 4649,
-          "failed": 0,
+          "passed": 4661,
+          "failed": 1,
           "error": 0,
           "skipped": 0,
           "expected_failure": 0,
@@ -166,23 +171,19 @@
           "failed_import": 0,
           "timed_out": 0,
           "incomplete_observation": 0,
-          "unrun": 13
+          "unrun": 0
         },
-        "classSetupErrorCount": 1,
+        "failedSubtests": 2,
+        "classSetupErrorCount": 0,
         "completeAccounting": true,
         "sourceUnchanged": true,
         "gitRevisionUnchanged": true,
         "pendingExternalCaseCount": 16,
-        "branch": "work/c226-r02-aggregate",
-        "setupFailure": {
-          "class": "test_torque_artifact_reads.TorqueArtifactReadTests",
-          "stage": "recording_export_readback",
-          "code": "OKL-E-RESOURCE",
-          "reason": "execution_deadline_exceeded",
-          "productLimitMs": 30000,
-          "consumedOperations": 430069,
-          "operationLimit": 1000000
-        }
+        "branch": "work/c228-r02-aggregate",
+        "failedMethod": "test_static_tray_admission_c201_ledger.LedgerControls.test_corrupt_replaced_aliased_or_missing_files_poison_live_capability",
+        "failureMeaning": "Two same-content replacement subtests expected LedgerError at line 503; none was raised.",
+        "a08ArtifactReadMethodsPassed": 13,
+        "sixLaterDefaultCommandsPassed": true
       },
       "prerequisitePreparation": {
         "checkpoint": "C225",
@@ -221,9 +222,45 @@
           },
           "completeAccounting": true,
           "branch": "work/c224-r02-aggregate"
+        },
+        {
+          "checkpoint": "C226",
+          "sourceCommit": "3f17a523b5d5c435f71525a499d2f071ca6e4e96",
+          "sourceTree": "324d7a23d67d0c23f5dfba968a63a5c12cb7bcff",
+          "driverStatus": "failed",
+          "perCommandTimeoutSeconds": 3600,
+          "driverDurationSeconds": 1523.21,
+          "methodInventory": 4662,
+          "methodCounts": {
+            "passed": 4649,
+            "failed": 0,
+            "error": 0,
+            "skipped": 0,
+            "expected_failure": 0,
+            "unexpected_success": 0,
+            "failed_import": 0,
+            "timed_out": 0,
+            "incomplete_observation": 0,
+            "unrun": 13
+          },
+          "classSetupErrorCount": 1,
+          "completeAccounting": true,
+          "sourceUnchanged": true,
+          "gitRevisionUnchanged": true,
+          "pendingExternalCaseCount": 16,
+          "branch": "work/c226-r02-aggregate",
+          "setupFailure": {
+            "class": "test_torque_artifact_reads.TorqueArtifactReadTests",
+            "stage": "recording_export_readback",
+            "code": "OKL-E-RESOURCE",
+            "reason": "execution_deadline_exceeded",
+            "productLimitMs": 30000,
+            "consumedOperations": 430069,
+            "operationLimit": 1000000
+          }
         }
       ],
-      "nextAction": "One separately reviewed fresh immutable default R02 aggregate after exact prerequisites, with unchanged product limits and complete outcome accounting; no automatic repair or second attempt.",
+      "nextAction": "One separately reviewed bounded CPU diagnosis of same-content authority-file replacement invalidation, preserving the original rejection requirement and failed evidence; no repair, automatic retry or later feature in C228.",
       "lastDiagnosis": {
         "checkpoint": "C227",
         "sourceCommit": "da007e1466c14812441bb8b18f8d2f8f01cbf1f6",
@@ -417,8 +454,8 @@
       "supersessionDecision": null
     }
   ],
-  "continuationCheckpoint": "C227",
+  "continuationCheckpoint": "C228",
   "inputHandoff": "https://chatgpt.com/library/share/libfile_fde3_f-194c743a5d588191aeaf9f4bd2904be8_2ab2a24d43748191957f9bcc356b59de?account_id=personal",
-  "currentCheckpoint": "C227",
-  "prerequisiteReconciliation": "C227 verified the exact C226 ZIP, complete manifest, offline restored main/tree and 303 historical evidence files, live main/held work and released ownership. Current/historical implementation digests are reconciled; all 192 inherited modules and frozen torque inputs retain exact bytes."
+  "currentCheckpoint": "C228",
+  "prerequisiteReconciliation": "C228 verified the exact C227 ZIP and offline restored source/tree, all 303 historical files, live held work and released ownership. All seven hash-locked verification packages and 24 exact readback dependencies / 10 runtime bindings were recovered before discovery. Actual aggregate source stayed immutable."
 }
