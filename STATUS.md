@@ -162,7 +162,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-No active integration lease. Owner `c225-main-77c7f4193edb` releases ownership after independently reviewed PR #183 merged and fresh actual-main documentation checks passed. The exact retained prerequisites and three unchanged CPU methods pass; R02 remains blocked pending its separately bounded complete aggregate attempt. Root completes only C225 archive verification, offline restoration and confirmed save, then closes [scope #182](https://github.com/Omegapy/OntoKin/issues/182). The merged work branch is retired only after exact head/ancestry readback. Held PRs #155/#165/#167/#169 and closed native schedules remain unchanged. No additional feature or aggregate run starts here.
+Active owner `c226-main-af056d9eab72`, scope [#184](https://github.com/Omegapy/OntoKin/issues/184), acquired against observed main `3f17a523b5d5c435f71525a499d2f071ca6e4e96`. Expires **2026-11-13T06:28:27Z**. Root reserves main, this coordination section, current STATUS summary, docs navigation and the R02 recommendation status for the C226 documentation/evidence result only. The one immutable aggregate finished failed: the torque-artifact class setup exceeded its unchanged 30,000-ms export deadline; all remaining default commands passed. Independent whole-inventory review and result-document publication are closing. No repair, retry or further feature is part of this scope. Held drafts #155/#165/#167/#169 and consumed schedules remain unchanged.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
