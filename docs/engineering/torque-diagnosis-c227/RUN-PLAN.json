@@ -1,0 +1,43 @@
+{
+  "schema": "ontokin.c227.a08-diagnostic/0.1",
+  "scope": "Two sequential diagnostic invocations of original TorqueArtifactReadTests.setUpClass; no test methods, repair, aggregate, or native starts",
+  "sourceBaseline": "da007e1466c14812441bb8b18f8d2f8f01cbf1f6",
+  "sourceBaselineTree": "32ac0f19681ea90d8d2c55cc3e5e1daaeca4ae54",
+  "implementationDigest": "sha256:920575745f5661c85c64cd6ff172812df82a9808fda3abb8cf55e16d66bb2d80",
+  "programRevision": "sha256:b54065f44f34220abef40fa4615a12deb6ad11b7f0e613e4903b35bd7a68b8d7",
+  "productLimits": {
+    "max_operations": 1000000,
+    "max_elapsed_ms": 30000
+  },
+  "modes": [
+    "baseline",
+    "cprofile"
+  ],
+  "processTimeoutSeconds": 90,
+  "requiredFiles": {
+    "tests/test_torque_artifact_reads.py": "ffbe4585958bd4a120d7fcbc6c4ef89078d6281dba290a9142868b7829cf45f6",
+    "docs/language-design/torque-v0.1/freeze/agent/request-workflows.json": "038e568e8166420ec15b5f38a10811f224baa2c131387fe4d70f038f52bda4d4",
+    "docs/language-design/torque-v0.1/freeze/workflow-agent-base.files.json": "4c8a9775c218499bb4a8e3d63fa54973ca842c27d99c39988183441ac504a900"
+  },
+  "preconditions": [
+    "Independent byte-level implementation reconciliation retained",
+    "Approved plan and harness hashes plus exact execution source commit/tree",
+    "Clean worktree; protected product/test/freeze inputs exact to baseline; no product bytecode",
+    "Fresh output outside repository; one fresh store per slot",
+    "CPU-heavy independent work paused before execution"
+  ],
+  "stopConditions": [
+    "Any admission/input/source mismatch",
+    "Any unknown child outcome or unexpected non-deadline failure",
+    "Outer process timeout or process-group residue",
+    "Store capture, byte integrity, source stability, or original class cleanup failure",
+    "Two consumed slots: always close scope; no extra attempt"
+  ],
+  "interpretation": [
+    "Uninstrumented baseline reports original real-clock setup outcome",
+    "cProfile adds overhead; its timeout, progress, and timings are distinct observations",
+    "Profile costs localize executed functions but are not baseline percentages, comparable runtime, or proof of causal regression",
+    "recording_export_readback includes build, sampling, certification, encoding and readback; stage label alone does not locate the expensive function",
+    "Neither setup call runs the thirteen test methods or closes R02"
+  ]
+}
