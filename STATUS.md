@@ -10,6 +10,8 @@ Preparation passed 24 author inert controls, eight independent controls/88 asser
 
 **R02 remains blocked.** This plan is consumed. The [next bounded step](docs/engineering/ledger-replacement-c230/NEXT-TASK.md) is a narrow ledger file-identity repair with explicit resource lifecycle and deterministic replacement controls; a fresh complete aggregate follows the checked repair. All nine recommendations/41 criteria and earlier failed or pending gates remain. [Scope #192](https://github.com/Omegapy/OntoKin/issues/192) records publication and final saved delivery.
 
+[PR #193](https://github.com/Omegapy/OntoKin/pull/193) merged at `fed8cd041ddc84610fa4ad06cc4c16ec1de1bfd3`, exactly matching reviewed tree `b97cc8caf0920fabc1c265fdf75eb48cea9509dc`. Fresh actual-main documentation checks passed 29 preserved sources / 4,853 local links. [Integration receipt](docs/engineering/ledger-replacement-c230/evidence/INTEGRATION.json). The work branch was observed absent; verified saved handoff delivery remains in scope #192.
+
 ## C229 R02 diagnosis: launcher path failure before test execution
 
 [C229](docs/engineering/ledger-replacement-c229/RESULTS.md) prepared, independently reviewed and saved one finite CPU diagnosis from exact `d578a30dab9a112895d2e3c09561a17866d9c464`. Its sole launcher invocation attempted one Python worker, which exited **2 before opening its script**. Root supplied a relative plan path; the launcher derived a relative worker path and passed it to a child with a different working directory. The launcher stopped, exited 1 and consumed the plan. The second worker did not start. **Zero product methods, subtests, replacement cases, ledger calls, native starts or aggregates executed.**
@@ -210,7 +212,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c230-root-ad17c735596b`. Task: integrate the reviewed C230 launcher correction and completed finite CPU diagnosis evidence, then verify and save one successor handoff. Branch: `work/c230-ledger-diagnosis`; scope [#192](https://github.com/Omegapy/OntoKin/issues/192). Acquired against observed main `e19acb44784ba5654f24bd3d87fb7310249f6d05` at 2026-11-13T19:40:10.301669+00:00. Expires 2026-11-13T20:10:10.301669+00:00. Root owns shared STATUS/navigation/recommendation publication. Product diagnosis is complete and consumed; no further product, aggregate or native execution is authorized by this lease. C229 scope #190 is confirmed closed. Held drafts #155/#165/#167/#169 remain unchanged.
+Owner: none. The C230 lease `c230-root-ad17c735596b` is released after checked PR #193 integration at `fed8cd041ddc84610fa4ad06cc4c16ec1de1bfd3`. The work branch was observed absent. Scope #192 remains open only for verified saved handoff delivery. R02 remains blocked; the C230 diagnosis is complete and consumed, and a separately selected ledger identity repair is next. No additional product/aggregate/native execution belongs to this completed scope. Held drafts #155/#165/#167/#169 remain unchanged.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
