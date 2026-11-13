@@ -10,6 +10,8 @@ OntoKin is an AI-native semantic language and intermediate representation for co
 
 Completed outcome evidence is saved as C233 recovery version 4; its exact receipt is retained in the handoff. This publication adds documentation/evidence only. Scope [#198](https://github.com/Omegapy/OntoKin/issues/198) records integration and separately confirmed final handoff delivery. Finish that delivery and stop. The [next separate bounded scope](docs/engineering/aggregate-regression-c233/NEXT-TASK.md) is R07's CPU material-observation schema and parameter checker for the same 18 parts/two materials, with zero target starts. All nine recommendations/41 criteria and held drafts remain.
 
+[PR #199](https://github.com/Omegapy/OntoKin/pull/199) merged at `e047c23db2818ccca647127e7d8134ebf898203f`, exactly matching independently approved tree `47461ecef1a1ce71f39ac607333526399a42c57b`. Fresh actual-main documentation checks passed 29 preserved sources / 4,938 local links. [Integration receipt](docs/engineering/aggregate-regression-c233/evidence/INTEGRATION.json). The work branch was observed absent; integration ownership is released by this closure. Scope #198 remains open for verified saved handoff delivery.
+
 Current-state reconciliation: C232 scope #196 is closed with its exact saved ZIP receipt verified; its older delivery-pending text below is retained as a historical checkpoint. C228 is the previous complete failed aggregate; C233 is the latest complete aggregate. Historical sections below describe their own checkpoint states.
 
 ## C232 R02 preparation: stopped before aggregate admission
@@ -242,7 +244,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c233-root-1f37bfa2194c`. Acquired 2026-11-13T23:21:25.289845+00:00; expires 2026-11-13T23:51:25.289845+00:00. Scope [#198](https://github.com/Omegapy/OntoKin/issues/198), branch `work/c233-aggregate-regression`, observed main `3b3238b13797fecf290cd19169c6ee794739f095`. Reserved shared files: STATUS.md, GOAL.md, docs/README.md and the current recommendation tracker/navigation, for reviewed C233 documentation/evidence publication and verified handoff closure. The sole aggregate has finished with driver exit 0 and all seven commands passed; complete independent reconciliation accepted the scoped result in 46 checks; reviewed documentation publication and verified delivery are in progress. Checked source remains immutable in its separate checkout. No product repair, aggregate retry or native schedule belongs to C233. Held drafts #155/#165/#167/#169 remain unclaimed.
+Owner: `none`. C233 owner `c233-root-1f37bfa2194c` completed the reviewed documentation/evidence integration through [PR #199](https://github.com/Omegapy/OntoKin/pull/199), merge `e047c23db2818ccca647127e7d8134ebf898203f`, with exact approved tree equality and fresh actual-main preservation/link checks. This closure releases the lease. Scope [#198](https://github.com/Omegapy/OntoKin/issues/198) remains open only for final verified saved handoff delivery. The work branch was observed absent; held drafts #155/#165/#167/#169 remain unclaimed and unchanged. No product repair, aggregate retry or native schedule belongs to C233.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
