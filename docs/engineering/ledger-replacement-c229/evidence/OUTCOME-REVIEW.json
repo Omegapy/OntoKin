@@ -1,0 +1,116 @@
+{
+  "schema": "ontokin.c229.independent-outcome-review/0.1",
+  "decision": "ACCEPT_BLOCKER_RECORD_NO_RETRY",
+  "passed": true,
+  "diagnosis_completed": false,
+  "checks": {
+    "approved_plan_and_harness_unchanged": true,
+    "one_worker_attempt_only": true,
+    "worker_exited_two": true,
+    "worker_reaped_group_empty": true,
+    "root_exited_one": true,
+    "relative_harness_with_changed_cwd": true,
+    "script_open_failure_not_method_failure": true,
+    "no_observed_case_worker_or_report": true,
+    "no_worker_stdout": true,
+    "empty_unconsumed_fixture_root": true,
+    "fail_closed_missing_result": true,
+    "recorded_source_equal_and_clean": true,
+    "exact_source_identity_and_bindings": true,
+    "running_receipt_agrees": true,
+    "no_native_or_aggregate": true
+  },
+  "counts": {
+    "root_launcher_invocations": 1,
+    "python_worker_start_attempts": 1,
+    "python_workers_reaped": 1,
+    "product_method_executions": 0,
+    "product_subtest_executions": 0,
+    "observed_replacement_cases": 0,
+    "ledger_begin_calls": 0,
+    "reservation_calls": 0,
+    "native_starts": 0,
+    "aggregate_attempts": 0,
+    "automatic_retries": 0
+  },
+  "schedule": {
+    "consumed": true,
+    "original_method_slot": "worker-start attempt consumed; script-open failure before method execution",
+    "observed_cases_slot": "not started and not authorized to continue after blocker"
+  },
+  "source": {
+    "commit": "d578a30dab9a112895d2e3c09561a17866d9c464",
+    "tree": "080b9d00bc340dfd9728601147d11816fab4375d",
+    "before_after_equal": true,
+    "bound_source_files": 9
+  },
+  "mechanism": {
+    "root_invocation": "Root passed a relative --plan path from its turn workspace.",
+    "launcher_weakness": "Launcher used args.plan.parent without normalizing it to an absolute path, verified the relative harness in root cwd, then supplied that relative script argument to a Python child whose cwd was the immutable source checkout.",
+    "observed_failure": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3: can't open file '/workspace/scratch/a9488c5c1afa/restore-c228/diagnosis-author/prepared/diagnose_replacement.py': [Errno 2] No such file or directory",
+    "review_limitation": "The preexecution static review missed this root/worker working-directory boundary and did not require the actual outer command to use absolute paths.",
+    "ledger_hypothesis_observed": false,
+    "c228_historical_cause_established": false
+  },
+  "limitations": [
+    "No inode, descriptor-lifetime or real replacement observation was produced.",
+    "The static inode-reuse hypothesis remains untested by C229.",
+    "C228 still has one failed method/two replacement subtests; R02 remains blocked.",
+    "No product assertion, guard, poisoning expectation, source file or product limit was repaired or weakened."
+  ],
+  "next_action": "In a separately selected bounded scope, correct and qualify launcher path handling from an unrelated working directory without product execution, bind an explicit absolute outer invocation, independently review fresh source/plan/harness and save recovery, then permit only a newly authorized finite diagnostic schedule. Do not reuse this consumed attempt.",
+  "raw_evidence": [
+    {
+      "path": "diagnosis-run/RESULT.json",
+      "bytes": 4545,
+      "sha256": "6b092a8f36bd4374bc3a0123a188205c054caa2ef947cd267ad5caf564fd26c8"
+    },
+    {
+      "path": "diagnosis-run/RUNNING.json",
+      "bytes": 2465,
+      "sha256": "bccbcc0fb387f780519f0e21c4264da86b8de9c7dbd01177d007f7126a709cce"
+    },
+    {
+      "path": "diagnosis-run/original-method.stderr.log",
+      "bytes": 225,
+      "sha256": "6e8d94d0a29c4a45abc736eff27d2e0523a5bd0a4b4ca01840d3bd110fd353cf"
+    },
+    {
+      "path": "diagnosis-run/original-method.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "handoff-next/evidence/session/root-launch-invocation.json",
+      "bytes": 731,
+      "sha256": "1f3bf3c1429e2a80203e77c5b03e111e372ac4ec3f694b5260405d3bd27e0c61"
+    },
+    {
+      "path": "handoff-next/evidence/session/diagnosis-launcher.log",
+      "bytes": 143,
+      "sha256": "259b872ef9f721dd6cb7762c48e760e3dd26798610c1f1b28a8f5b14faf76268"
+    },
+    {
+      "path": "diagnosis-author/prepared/RUN-PLAN.json",
+      "bytes": 11311,
+      "sha256": "4aeb4ad04f9abfbb1266910c9cfda13b921920a2f7faba1f2058a4c9bbb4a31c"
+    },
+    {
+      "path": "diagnosis-review/APPROVAL.json",
+      "bytes": 1640,
+      "sha256": "00c71bfca4b947274c5faf46e592915af9aabeae1b523e8317d71ad04c49ee24"
+    },
+    {
+      "path": "diagnosis-author/prepared/launch_diagnosis.py",
+      "bytes": 8733,
+      "sha256": "fe41b831ba44402c6cc798f555042893fbe4c4027e46c966ce728498b2e723fb"
+    },
+    {
+      "path": "diagnosis-author/prepared/diagnose_replacement.py",
+      "bytes": 14012,
+      "sha256": "c35dec8ced137cfac49ea5f093c5bd97aa3e47cfee50030f73497c226bd5f3a4"
+    }
+  ],
+  "review_product_executions": 0,
+  "review_method": "Read actual raw process/error receipts, verify exact approved bytes, inspect empty fixture/result locations and compare source hashes; no product or harness rerun."
+}

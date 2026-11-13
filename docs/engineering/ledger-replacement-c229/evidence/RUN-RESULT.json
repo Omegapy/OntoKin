@@ -1,0 +1,76 @@
+{
+  "aggregate_attempts": 0,
+  "approval_sha256": "00c71bfca4b947274c5faf46e592915af9aabeae1b523e8317d71ad04c49ee24",
+  "completed": false,
+  "conclusion": "Finite observation only; original C228 failure and R02 remain unchanged",
+  "elapsed_seconds": 0.07998351000060211,
+  "error": {
+    "message": "Missing complete worker result; no further start",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/9d6b968559d5/diagnosis-author/prepared/launch_diagnosis.py\", line 119, in main\n    raise RuntimeError(\"Missing complete worker result; no further start\")\nRuntimeError: Missing complete worker result; no further start\n",
+    "type": "RuntimeError"
+  },
+  "metadata_git_starts_maximum": 4,
+  "native_starts": 0,
+  "plan_sha256": "4aeb4ad04f9abfbb1266910c9cfda13b921920a2f7faba1f2058a4c9bbb4a31c",
+  "schedule_consumed": true,
+  "schema": "ontokin.c229.finite-diagnosis-run/0.1",
+  "source_after": {
+    "commit": "d578a30dab9a112895d2e3c09561a17866d9c464",
+    "source_hashes": {
+      "docs/engineering/static-tray-admission-c201/ADMISSION.json": "f1bd2895cc448f5a1ecb6495814c261dfeba8fecab8ea266e274a35475386064",
+      "docs/engineering/static-tray-admission-c201/ADMISSION.md": "2dd7b250dae4afbbcc363a84f14590e7746016274db6c62e977761953572119b",
+      "docs/engineering/static-tray-admission-c201/LEDGER-C204.md": "63783407c039bb2398cecd87c4c22030b2984453286e960606b4016bacddeb45",
+      "docs/engineering/static-tray-admission-c201/evidence/ledger-c204/CONTRACT-AUDIT.md": "5673d6c7b39ecdea1fdfd8cf3c50e38302d8526b62bc24a68c2ae3e72e840ab5",
+      "docs/engineering/static-tray-admission-c201/evidence/ledger-c204/REVIEW.md": "5f1af8cdf42f6dae9d1518edfc3e61c042137a0c999181c6add25fdd10a4ad1e",
+      "prototypes/static_tray_admission_c201/__init__.py": "69aea6566b5a6efd53722925296b3c8405f09e8b99893a4d693dbfafda80fc08",
+      "prototypes/static_tray_admission_c201/ledger.py": "0b4cee3520ba7a0002ec6958b37511e4b541a9823c8a1bc955214ec132924243",
+      "prototypes/static_tray_admission_c201/schedule.py": "0999af91d55d3a37743692ea7678c49ca3b7c23e8d18c21bb17b3849c3f66422",
+      "tests/test_static_tray_admission_c201_ledger.py": "ea363ae96a8e8ed441da0992fca870047f81f4deabb528786bca9306d85c7b1f"
+    },
+    "status": "",
+    "tree": "080b9d00bc340dfd9728601147d11816fab4375d"
+  },
+  "source_before": {
+    "commit": "d578a30dab9a112895d2e3c09561a17866d9c464",
+    "source_hashes": {
+      "docs/engineering/static-tray-admission-c201/ADMISSION.json": "f1bd2895cc448f5a1ecb6495814c261dfeba8fecab8ea266e274a35475386064",
+      "docs/engineering/static-tray-admission-c201/ADMISSION.md": "2dd7b250dae4afbbcc363a84f14590e7746016274db6c62e977761953572119b",
+      "docs/engineering/static-tray-admission-c201/LEDGER-C204.md": "63783407c039bb2398cecd87c4c22030b2984453286e960606b4016bacddeb45",
+      "docs/engineering/static-tray-admission-c201/evidence/ledger-c204/CONTRACT-AUDIT.md": "5673d6c7b39ecdea1fdfd8cf3c50e38302d8526b62bc24a68c2ae3e72e840ab5",
+      "docs/engineering/static-tray-admission-c201/evidence/ledger-c204/REVIEW.md": "5f1af8cdf42f6dae9d1518edfc3e61c042137a0c999181c6add25fdd10a4ad1e",
+      "prototypes/static_tray_admission_c201/__init__.py": "69aea6566b5a6efd53722925296b3c8405f09e8b99893a4d693dbfafda80fc08",
+      "prototypes/static_tray_admission_c201/ledger.py": "0b4cee3520ba7a0002ec6958b37511e4b541a9823c8a1bc955214ec132924243",
+      "prototypes/static_tray_admission_c201/schedule.py": "0999af91d55d3a37743692ea7678c49ca3b7c23e8d18c21bb17b3849c3f66422",
+      "tests/test_static_tray_admission_c201_ledger.py": "ea363ae96a8e8ed441da0992fca870047f81f4deabb528786bca9306d85c7b1f"
+    },
+    "status": "",
+    "tree": "080b9d00bc340dfd9728601147d11816fab4375d"
+  },
+  "source_unchanged": true,
+  "worker_start_count": 1,
+  "worker_starts": [
+    {
+      "attempt_consumed": true,
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-IB",
+        "diagnosis-author/prepared/diagnose_replacement.py",
+        "original-method",
+        "--source",
+        "/workspace/scratch/a9488c5c1afa/restore-c228",
+        "--output",
+        "/workspace/scratch/9d6b968559d5/diagnosis-run/original-method",
+        "--scratch",
+        "/workspace/scratch/9d6b968559d5/diagnosis-run/tmp/original-method"
+      ],
+      "exit_code": 2,
+      "mode": "original-method",
+      "outcome": "exited",
+      "pgid": 28,
+      "pid": 28,
+      "reaped": true,
+      "remaining_process_group": [],
+      "timeout_seconds": 60
+    }
+  ]
+}
