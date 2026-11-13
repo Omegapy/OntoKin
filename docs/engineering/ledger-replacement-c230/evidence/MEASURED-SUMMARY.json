@@ -1,0 +1,429 @@
+{
+  "schema": "ontokin.c230.measured-summary/0.1",
+  "analysis_kind": "Read-only analysis of the completed single root-owned diagnosis; no rerun",
+  "source_commit": "e19acb44784ba5654f24bd3d87fb7310249f6d05",
+  "source_tree": "24a3af6da34dc5cce7e6813734fb65958791f712",
+  "source_unchanged": true,
+  "elapsed_seconds": 0.4072666889987886,
+  "plan_sha256": "17f895542e68f99d06ca6b3771049b180308e380762f8bdd972b3ed8f80fbcd9",
+  "approval_sha256": "cb16f268953c491e149835fa5d9a94e9b934d0cca2e9531d2db47c63fc6f868c",
+  "finite_diagnosis_completed": true,
+  "schedule_consumed": true,
+  "original_method_status": "failed with the two retained same-content replacement subtests",
+  "counts": {
+    "launcher_invocations": 1,
+    "worker_starts": 2,
+    "original_methods": 1,
+    "original_subtests": 10,
+    "original_subtests_passed": 8,
+    "original_subtests_failed": 2,
+    "observed_replacement_cases": 4,
+    "event_records": 16,
+    "retained_binary_files": 32,
+    "observed_ledger_begin_calls": 4,
+    "observed_first_reservations": 4,
+    "observed_poison_checks": 3,
+    "observed_reserve_calls": 7,
+    "original_ledger_begin_calls_control_flow_derived": 10,
+    "original_reserve_calls_control_flow_derived": 18,
+    "total_ledger_begin_calls_control_flow_derived": 14,
+    "total_reserve_calls_control_flow_derived": 25,
+    "counts_basis": "Observed case calls are reconstructed from four recorded before-mutation events, four first-reserve outcomes and three explicit poison outcomes. Original-method calls derive from the unchanged executed test control flow and ten complete subtest callbacks: ten begin/first-reserve calls and eight successful stopped() checks. Calls were not separately instrumented.",
+    "automatic_retries": 0,
+    "native_starts": 0,
+    "aggregate_attempts": 0,
+    "product_repairs": 0
+  },
+  "cases": [
+    {
+      "case": "marker-no-held-fd",
+      "retained_descriptor_control": false,
+      "old_device_inode": [
+        27,
+        4080869
+      ],
+      "recreated_device_inode": [
+        27,
+        4080853
+      ],
+      "unlinked_path_observed_absent": true,
+      "recreated_bytes_identical": true,
+      "device_inode_reused": false,
+      "first_reservation": "LedgerError",
+      "first_error_codes": [
+        "PERSISTENCE",
+        "INTEGRITY"
+      ],
+      "stopped_after_first": true,
+      "uncertain_after_first": true,
+      "poison_check": "LedgerError",
+      "poison_error_codes": [
+        "STOPPED"
+      ],
+      "reserve_calls_from_recorded_outcomes": 2,
+      "held_descriptor_closed": null
+    },
+    {
+      "case": "journal-no-held-fd",
+      "retained_descriptor_control": false,
+      "old_device_inode": [
+        27,
+        4080855
+      ],
+      "recreated_device_inode": [
+        27,
+        4080855
+      ],
+      "unlinked_path_observed_absent": true,
+      "recreated_bytes_identical": true,
+      "device_inode_reused": true,
+      "first_reservation": "returned",
+      "first_error_codes": [],
+      "stopped_after_first": false,
+      "uncertain_after_first": false,
+      "poison_check": "not_run",
+      "poison_error_codes": [],
+      "reserve_calls_from_recorded_outcomes": 1,
+      "held_descriptor_closed": null
+    },
+    {
+      "case": "marker-held-fd-control",
+      "retained_descriptor_control": true,
+      "old_device_inode": [
+        27,
+        4080874
+      ],
+      "recreated_device_inode": [
+        27,
+        4080858
+      ],
+      "unlinked_path_observed_absent": true,
+      "recreated_bytes_identical": true,
+      "device_inode_reused": false,
+      "first_reservation": "LedgerError",
+      "first_error_codes": [
+        "PERSISTENCE",
+        "INTEGRITY"
+      ],
+      "stopped_after_first": true,
+      "uncertain_after_first": true,
+      "poison_check": "LedgerError",
+      "poison_error_codes": [
+        "STOPPED"
+      ],
+      "reserve_calls_from_recorded_outcomes": 2,
+      "held_descriptor_closed": true
+    },
+    {
+      "case": "journal-held-fd-control",
+      "retained_descriptor_control": true,
+      "old_device_inode": [
+        27,
+        4080877
+      ],
+      "recreated_device_inode": [
+        27,
+        4080878
+      ],
+      "unlinked_path_observed_absent": true,
+      "recreated_bytes_identical": true,
+      "device_inode_reused": false,
+      "first_reservation": "LedgerError",
+      "first_error_codes": [
+        "PERSISTENCE",
+        "INTEGRITY"
+      ],
+      "stopped_after_first": true,
+      "uncertain_after_first": true,
+      "poison_check": "LedgerError",
+      "poison_error_codes": [
+        "STOPPED"
+      ],
+      "reserve_calls_from_recorded_outcomes": 2,
+      "held_descriptor_closed": true
+    }
+  ],
+  "mechanism_observed": "One no-held-descriptor journal case observed unlink, absence, identical-byte recreation with reused (st_dev, st_ino), then an accepted reservation without stopped/uncertain state. Unchanged source compares file bytes and numeric device/inode identity after closing creation descriptors; this new case establishes numeric identity reuse can evade replacement rejection.",
+  "causal_controls": "Both held-descriptor cases retained the old unlinked object with nlink=0, observed distinct recreated identities, rejected the first reservation with PERSISTENCE caused by INTEGRITY, and rejected the poison check with STOPPED. Marker no-held also received a distinct identity and rejected.",
+  "limits": [
+    "The original marker and journal subtests both reproduced missing rejection but recorded no inode sequence. Do not claim both original failures were directly observed as inode reuse.",
+    "C228 historical allocator/file-object sequence was not recorded and is not reconstructed. The new journal mechanism is a supported explanation class, not proof of each historical instance.",
+    "Instrumentation changes timing/allocation; held descriptors deliberately change object lifetime. Four finite cases do not establish reuse frequency or cross-platform behavior.",
+    "Product ledger source and test assertions remain unchanged. The finite diagnosis completed, but the tested method still failed and R02 remains blocked.",
+    "Native readiness/admission and broader regression/release gates remain unestablished."
+  ],
+  "next_recommended_scope": "Separately scope a narrow ledger authority-file identity repair with explicit handle lifecycle/cleanup and deterministic same-content replacement controls; preserve original rejection/poisoning assertions. Run only its applicable checks in that later scope. Aggregate retry remains later, after the repair has relevant evidence.",
+  "input_sha256": {
+    "RESULT.json": "c0772c4f238d9ef1bdbb8165398c120cab4db848880320335904bdd3b6939b20",
+    "original-method/result.json": "49ce1826547fca12d5f4e65cd56cac83570ae7591e7d768ebcc0ac00d8a6fb0d",
+    "original-method.stderr.log": "1f6f98ccfe3f9f2fcf6a15f3244bc9d813d1950cd5497495870cdc43a510bf4c",
+    "observed-cases/result.json": "707f7b0be0114a05b4721d83712056520d380b7338cf71b5b2eef111c52fb049",
+    "observed-cases/observations.jsonl": "8d6f55c2b20998bed7ff7730580059c3167b2431d28ac7082f5d3a58cc633263"
+  },
+  "read_only_consistency_checks": {
+    "count": 65,
+    "passed": true,
+    "details": [
+      {
+        "check": "finite plan completed and consumed",
+        "passed": true
+      },
+      {
+        "check": "two exited and reaped workers without group remnants",
+        "passed": true
+      },
+      {
+        "check": "worker exits preserve method failure and successful observations",
+        "passed": true
+      },
+      {
+        "check": "source before and after equal and clean",
+        "passed": true
+      },
+      {
+        "check": "nine source and contract files bound",
+        "passed": true
+      },
+      {
+        "check": "one original method and all ten subtests",
+        "passed": true
+      },
+      {
+        "check": "exactly two expected replacement failures",
+        "passed": true
+      },
+      {
+        "check": "no original errors skips or child starts",
+        "passed": true
+      },
+      {
+        "check": "original source method and filesystem operations unmodified",
+        "passed": true
+      },
+      {
+        "check": "original temporary fixtures cleaned",
+        "passed": true
+      },
+      {
+        "check": "all four observations complete",
+        "passed": true
+      },
+      {
+        "check": "sixteen complete event records",
+        "passed": true
+      },
+      {
+        "check": "marker-no-held-fd event and final report agree",
+        "passed": true
+      },
+      {
+        "check": "marker-no-held-fd unlinked absent then same bytes recreated",
+        "passed": true
+      },
+      {
+        "check": "marker-no-held-fd reported identity matches raw stats",
+        "passed": true
+      },
+      {
+        "check": "marker-no-held-fd descriptor inventory matches intervention",
+        "passed": true
+      },
+      {
+        "check": "marker-no-held-fd initial integrity refusal and stopped poison check",
+        "passed": true
+      },
+      {
+        "check": "marker-no-held-fd original event/binary C201-Q01-A01-A04-v0.1.0.invocation.json",
+        "passed": true
+      },
+      {
+        "check": "marker-no-held-fd original event/binary C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+        "passed": true
+      },
+      {
+        "check": "marker-no-held-fd recreated event/binary C201-Q01-A01-A04-v0.1.0.invocation.json",
+        "passed": true
+      },
+      {
+        "check": "marker-no-held-fd recreated event/binary C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+        "passed": true
+      },
+      {
+        "check": "marker-no-held-fd after-first-reserve event/binary C201-Q01-A01-A04-v0.1.0.invocation.json",
+        "passed": true
+      },
+      {
+        "check": "marker-no-held-fd after-first-reserve event/binary C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+        "passed": true
+      },
+      {
+        "check": "marker-no-held-fd first reservation accounting",
+        "passed": true
+      },
+      {
+        "check": "journal-no-held-fd event and final report agree",
+        "passed": true
+      },
+      {
+        "check": "journal-no-held-fd unlinked absent then same bytes recreated",
+        "passed": true
+      },
+      {
+        "check": "journal-no-held-fd reported identity matches raw stats",
+        "passed": true
+      },
+      {
+        "check": "journal-no-held-fd descriptor inventory matches intervention",
+        "passed": true
+      },
+      {
+        "check": "journal-no-held-fd accepted unchanged same identity and no false poison claim",
+        "passed": true
+      },
+      {
+        "check": "journal-no-held-fd original event/binary C201-Q01-A01-A04-v0.1.0.invocation.json",
+        "passed": true
+      },
+      {
+        "check": "journal-no-held-fd original event/binary C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+        "passed": true
+      },
+      {
+        "check": "journal-no-held-fd recreated event/binary C201-Q01-A01-A04-v0.1.0.invocation.json",
+        "passed": true
+      },
+      {
+        "check": "journal-no-held-fd recreated event/binary C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+        "passed": true
+      },
+      {
+        "check": "journal-no-held-fd after-first-reserve event/binary C201-Q01-A01-A04-v0.1.0.invocation.json",
+        "passed": true
+      },
+      {
+        "check": "journal-no-held-fd after-first-reserve event/binary C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+        "passed": true
+      },
+      {
+        "check": "journal-no-held-fd first reservation accounting",
+        "passed": true
+      },
+      {
+        "check": "marker-held-fd-control event and final report agree",
+        "passed": true
+      },
+      {
+        "check": "marker-held-fd-control unlinked absent then same bytes recreated",
+        "passed": true
+      },
+      {
+        "check": "marker-held-fd-control reported identity matches raw stats",
+        "passed": true
+      },
+      {
+        "check": "marker-held-fd-control descriptor inventory matches intervention",
+        "passed": true
+      },
+      {
+        "check": "marker-held-fd-control retained old object has zero links",
+        "passed": true
+      },
+      {
+        "check": "marker-held-fd-control initial integrity refusal and stopped poison check",
+        "passed": true
+      },
+      {
+        "check": "marker-held-fd-control original event/binary C201-Q01-A01-A04-v0.1.0.invocation.json",
+        "passed": true
+      },
+      {
+        "check": "marker-held-fd-control original event/binary C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+        "passed": true
+      },
+      {
+        "check": "marker-held-fd-control recreated event/binary C201-Q01-A01-A04-v0.1.0.invocation.json",
+        "passed": true
+      },
+      {
+        "check": "marker-held-fd-control recreated event/binary C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+        "passed": true
+      },
+      {
+        "check": "marker-held-fd-control after-first-reserve event/binary C201-Q01-A01-A04-v0.1.0.invocation.json",
+        "passed": true
+      },
+      {
+        "check": "marker-held-fd-control after-first-reserve event/binary C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+        "passed": true
+      },
+      {
+        "check": "marker-held-fd-control first reservation accounting",
+        "passed": true
+      },
+      {
+        "check": "journal-held-fd-control event and final report agree",
+        "passed": true
+      },
+      {
+        "check": "journal-held-fd-control unlinked absent then same bytes recreated",
+        "passed": true
+      },
+      {
+        "check": "journal-held-fd-control reported identity matches raw stats",
+        "passed": true
+      },
+      {
+        "check": "journal-held-fd-control descriptor inventory matches intervention",
+        "passed": true
+      },
+      {
+        "check": "journal-held-fd-control retained old object has zero links",
+        "passed": true
+      },
+      {
+        "check": "journal-held-fd-control initial integrity refusal and stopped poison check",
+        "passed": true
+      },
+      {
+        "check": "journal-held-fd-control original event/binary C201-Q01-A01-A04-v0.1.0.invocation.json",
+        "passed": true
+      },
+      {
+        "check": "journal-held-fd-control original event/binary C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+        "passed": true
+      },
+      {
+        "check": "journal-held-fd-control recreated event/binary C201-Q01-A01-A04-v0.1.0.invocation.json",
+        "passed": true
+      },
+      {
+        "check": "journal-held-fd-control recreated event/binary C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+        "passed": true
+      },
+      {
+        "check": "journal-held-fd-control after-first-reserve event/binary C201-Q01-A01-A04-v0.1.0.invocation.json",
+        "passed": true
+      },
+      {
+        "check": "journal-held-fd-control after-first-reserve event/binary C201-Q01-A01-A04-v0.1.0.ledger.jsonl",
+        "passed": true
+      },
+      {
+        "check": "journal-held-fd-control first reservation accounting",
+        "passed": true
+      },
+      {
+        "check": "all 32 retained binary hashes verify",
+        "passed": true
+      },
+      {
+        "check": "three rejected observations and one accepted observation",
+        "passed": true
+      },
+      {
+        "check": "both held descriptors closed",
+        "passed": true
+      }
+    ]
+  }
+}
