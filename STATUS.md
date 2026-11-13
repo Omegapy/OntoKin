@@ -10,6 +10,8 @@ The original A08 setup succeeded in this same aggregate and all thirteen artifac
 
 This increment records documentation and evidence. Runtime, tests, fixtures, locks, workflows and product limits remain unchanged. [Next bounded scope](docs/engineering/aggregate-regression-c228/NEXT-TASK.md): independently review one CPU diagnosis of same-content authority-file replacement invalidation before any repair or aggregate retry. The nine recommendation records and 41 criteria, earlier failures, held drafts and all consumed native schedules remain. [Scope #188](https://github.com/Omegapy/OntoKin/issues/188) records publication and final saved delivery.
 
+[PR #189](https://github.com/Omegapy/OntoKin/pull/189) merged at `ed23a7b2fa29b203d8e550167160c1be1e8ba56c`, exactly matching independently approved tree `090cc9023635c7fa33018e78f6cf03b9170187c3`. Fresh actual-main documentation checks passed 29 preserved sources / 4,795 local links. [Integration receipt](docs/engineering/aggregate-regression-c228/evidence/INTEGRATION.json). The finite aggregate result is published; R02 remains blocked.
+
 ## C227 R02 diagnosis: original setup passes in isolation; aggregate remains blocked
 
 [C227](docs/engineering/torque-diagnosis-c227/RESULTS.md) completes the reviewed two-slot CPU diagnosis from exact `da007e1466c14812441bb8b18f8d2f8f01cbf1f6` on Linux x86-64 / CPython 3.12.14. The unchanged original A08 export succeeds in **24.591 seconds / 452,627 operations**, publishing the exact historical 2,447,148-byte artifact. Its class setup takes 25.216 seconds. The separate overhead-affected cProfile attempt reaches the unchanged 30,000-ms deadline after 140,127 operations during frame sampling and authority checks, before encoding/readback. Both processes are reaped, stores and artifact bytes verify, and source remains unchanged during execution.
@@ -190,9 +192,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c228-main-a9488c5c1afa`. Scope: [C228 / issue #188](https://github.com/Omegapy/OntoKin/issues/188), documentation and evidence for the single completed default R02 aggregate. Branch: `work/c228-r02-aggregate`. Starting published main: `fc500331ce789eb6f9c1210ea4f3b394d45e507c`. Acquired at 2026-11-13T15:21:21.490563+00:00. Expires at 2026-11-13T15:51:21.490563+00:00.
-
-The selected attempt is finished: 4,661 methods passed, one method contains two failed replacement subtests, and all six later default commands passed. R02 remains blocked. This lease reserves main, this STATUS coordination section, docs/README.md, the review recommendation tracker, and docs/engineering/aggregate-regression-c228 for reviewed factual integration. No runtime repair, replay, native receiving or later feature is selected. Held drafts #155/#165/#167/#169 remain unchanged.
+Owner: none. The C228 lease `c228-main-a9488c5c1afa` is released after checked PR #189 integration. The work branch was observed absent after merge. Scope #188 remains open only for verified saved handoff delivery. R02 remains blocked, and the next finite CPU diagnosis has no owner or active execution authorization. Held drafts #155/#165/#167/#169 remain unchanged.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
