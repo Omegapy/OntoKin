@@ -192,7 +192,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none. The C228 lease `c228-main-a9488c5c1afa` is released after checked PR #189 integration. The work branch was observed absent after merge. Scope #188 remains open only for verified saved handoff delivery. R02 remains blocked, and the next finite CPU diagnosis has no owner or active execution authorization. Held drafts #155/#165/#167/#169 remain unchanged.
+Owner: `c229-main-9d6b968559d5`. Task: integrate the reviewed C229 diagnostic preparation and factual launcher-blocker record under [scope #190](https://github.com/Omegapy/OntoKin/issues/190). The single diagnostic attempt is consumed; no further product execution or repair is authorized in this scope. Acquired 2026-11-13T18:41:02.898859+00:00; expires 2026-11-13T19:11:02.898859+00:00. Expected starting main: `d578a30dab9a112895d2e3c09561a17866d9c464`. Branch: `work/c229-ledger-diagnosis`. Reserved shared files: STATUS.md, docs/README.md and docs/engineering/review-integration-c221/RECOMMENDATIONS.json; new evidence lives in docs/engineering/ledger-replacement-c229. Held drafts #155/#165/#167/#169 remain unchanged.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
