@@ -212,7 +212,9 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none. The C230 lease `c230-root-ad17c735596b` is released after checked PR #193 integration at `fed8cd041ddc84610fa4ad06cc4c16ec1de1bfd3`. The work branch was observed absent. Scope #192 remains open only for verified saved handoff delivery. R02 remains blocked; the C230 diagnosis is complete and consumed, and a separately selected ledger identity repair is next. No additional product/aggregate/native execution belongs to this completed scope. Held drafts #155/#165/#167/#169 remain unchanged.
+Owner: `c231-root-fc511c141802`. Scope: [C231 ledger file-identity and resource-lifecycle repair](https://github.com/Omegapy/OntoKin/issues/194). Branch: `work/c231-ledger-identity`. Starting main: `099339f9b320a2c47a0ca2d275468c6e5f1b09e9`. Acquired at 2026-11-13T21:00:30.100339+00:00; expires at 2026-11-13T21:30:30.100339+00:00. Root owns main, shared STATUS/navigation/recommendation records and final integration. Author `ledger_repair_author` owns only ledger.py, additive C231 tests and the new C231 contract on `work/c231-ledger-author`; independent review and packaging use separate evidence directories.
+
+C230 delivery and exact offline source restoration are verified. This scope repairs the observed authority-file replacement bypass with explicit handle lifecycle and applicable focused checks, then delivers one verified saved handoff. R02 remains blocked until a later complete passing aggregate. Consumed C229/C230 diagnoses and native schedules remain closed; held drafts #155/#165/#167/#169 remain unchanged.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
