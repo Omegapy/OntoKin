@@ -1,0 +1,38 @@
+{
+  "recorded_at_utc": "2026-11-13T02:08:29.896491+00:00",
+  "python_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+  "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "machine": "x86_64",
+  "approved_bindings": {
+    "restore_readback_prerequisites.py": "eed7a35d7e9faa82a6bef42e8c8ee05ee0f189195af2f60b07efee27022b497b",
+    "run_focused_cohort.py": "fcb2963d828f5ea446047916b48c52288eb00628998ead4b14884d05554d464b"
+  },
+  "source": "/workspace/scratch/77c7f4193edb/repo",
+  "root_go": "Approved helper and runner confirmed saved in C225 recovery version 3; one restoration and one exact three-method cohort authorized",
+  "commands": [
+    [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-IB",
+      "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/restore_readback_prerequisites.py",
+      "--repo",
+      "/workspace/scratch/77c7f4193edb/repo",
+      "--report",
+      "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/RESTORATION-RESULT.json",
+      "--apply"
+    ],
+    [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-B",
+      "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/run_focused_cohort.py",
+      "--repo",
+      "/workspace/scratch/77c7f4193edb/repo",
+      "--output",
+      "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/focused-cohort-01"
+    ]
+  ],
+  "cohort_environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "scope": "Restore exact retained prerequisites, then only the three unchanged ReadbackCPUControls methods. No aggregate or native schedule."
+}

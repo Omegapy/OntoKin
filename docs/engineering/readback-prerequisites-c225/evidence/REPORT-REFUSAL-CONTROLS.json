@@ -1,0 +1,104 @@
+{
+  "schema": "ontokin.c225.report-refusal-controls/0.1",
+  "helper_sha256": "eed7a35d7e9faa82a6bef42e8c8ee05ee0f189195af2f60b07efee27022b497b",
+  "checks": [
+    {
+      "case": "source_existing_file",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-IB",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/restore_readback_prerequisites.py",
+        "--repo",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/repo",
+        "--report",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/repo/sentinel.txt"
+      ],
+      "returncode": 1,
+      "stdout": "{\"passed\": false, \"error\": \"ValueError: Report must be outside the source repository\", \"report\": \"/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/repo/sentinel.txt\"}\n",
+      "stderr": "Refused unsafe report destination without writing it\n",
+      "passed": true
+    },
+    {
+      "case": "source_absent_file",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-IB",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/restore_readback_prerequisites.py",
+        "--repo",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/repo",
+        "--report",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/repo/new-report.json"
+      ],
+      "returncode": 1,
+      "stdout": "{\"passed\": false, \"error\": \"ValueError: Report must be outside the source repository\", \"report\": \"/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/repo/new-report.json\"}\n",
+      "stderr": "Refused unsafe report destination without writing it\n",
+      "passed": true
+    },
+    {
+      "case": "normalized_parent_traversal",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-IB",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/restore_readback_prerequisites.py",
+        "--repo",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/repo",
+        "--report",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/outside/../repo/sentinel.txt"
+      ],
+      "returncode": 1,
+      "stdout": "{\"passed\": false, \"error\": \"ValueError: Report must be outside the source repository\", \"report\": \"/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/repo/sentinel.txt\"}\n",
+      "stderr": "Refused unsafe report destination without writing it\n",
+      "passed": true
+    },
+    {
+      "case": "historical_dependencies",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-IB",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/restore_readback_prerequisites.py",
+        "--repo",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/repo",
+        "--report",
+        "/workspace/scratch/801d9d641f68/incoming-audit/work/prior-replay/evidence/c195-validation/receiving/new-report.json"
+      ],
+      "returncode": 1,
+      "stdout": "{\"passed\": false, \"error\": \"ValueError: Report must be outside restored dependencies\", \"report\": \"/workspace/scratch/801d9d641f68/incoming-audit/work/prior-replay/evidence/c195-validation/receiving/new-report.json\"}\n",
+      "stderr": "Refused unsafe report destination without writing it\n",
+      "passed": true
+    },
+    {
+      "case": "historical_host",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-IB",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/restore_readback_prerequisites.py",
+        "--repo",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/repo",
+        "--report",
+        "/workspace/scratch/801d9d641f68/c199-independent-preflight/HOST-RUNTIME-INVENTORY.json"
+      ],
+      "returncode": 1,
+      "stdout": "{\"passed\": false, \"error\": \"ValueError: Report cannot overwrite the historical HOST inventory\", \"report\": \"/workspace/scratch/801d9d641f68/c199-independent-preflight/HOST-RUNTIME-INVENTORY.json\"}\n",
+      "stderr": "Refused unsafe report destination without writing it\n",
+      "passed": true
+    },
+    {
+      "case": "symlink_report",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-IB",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/restore_readback_prerequisites.py",
+        "--repo",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/repo",
+        "--report",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/linked-report.json"
+      ],
+      "returncode": 1,
+      "stdout": "{\"passed\": false, \"error\": \"ValueError: Refusing symlink path component: /workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/linked-report.json\", \"report\": \"/workspace/scratch/77c7f4193edb/workers/prerequisite-review/c225-report-refusal-n67entz9/linked-report.json\"}\n",
+      "stderr": "Refused unsafe report destination without writing it\n",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "restores_or_tests_executed": false
+}
