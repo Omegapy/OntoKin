@@ -172,7 +172,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-No active integration lease. Owner `c226-main-af056d9eab72` releases ownership after independently reviewed PR #185 merged and fresh actual-main documentation checks passed. The complete aggregate result remains failed: 4,649 passing methods, thirteen unrun methods and one separate torque-artifact setup error. C226 closes at its verified saved handoff; [scope #184](https://github.com/Omegapy/OntoKin/issues/184) records the final source and delivery receipts. The next separately bounded task diagnoses the frozen A08 setup deadline under unchanged limits. Held drafts #155/#165/#167/#169 and consumed native schedules remain unchanged.
+Owner `c227-main-28482a5da524` holds the bounded main integration lease for [scope #186](https://github.com/Omegapy/OntoKin/issues/186), branch `work/c227-a08-cpu-diagnosis`, starting from observed main `da007e1466c14812441bb8b18f8d2f8f01cbf1f6`. Acquired 2026-11-13T13:50:27.000Z; expires 2026-11-13T14:20:27.000Z. The reviewed two-slot CPU diagnosis is complete and its raw source/evidence is saved. Integration is limited to diagnosis documentation, harness/evidence, concise status/navigation and the existing recommendation tracker. Runtime, tests, fixtures, frozen limits and held branches remain unchanged. Independent nonoverlapping branch work may continue. Unknown operations must be reconciled before retry; release this lease after checked publication.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
