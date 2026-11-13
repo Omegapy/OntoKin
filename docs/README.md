@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+Current R02 result: [C230 launcher correction and finite replacement diagnosis](engineering/ledger-replacement-c230/README.md) reproduced both original replacement failures and directly observed journal inode reuse bypassing rejection. The [next bounded step is a ledger identity repair](engineering/ledger-replacement-c230/NEXT-TASK.md); R02 remains blocked.
+
 Current validation preparation: [C225 exact readback prerequisites and three unchanged passing methods](engineering/readback-prerequisites-c225/RESULTS.md). Its [next action](engineering/readback-prerequisites-c225/NEXT-TASK.md) is one fresh immutable R02 aggregate attempt. [C224 complete timeout accounting](engineering/aggregate-regression-c224/RESULTS.md) and all later recommendations remain preserved.
 
 The [owner-directed C221 review tracker](engineering/review-integration-c221/README.md) retains R00 and all R01-R08 acceptance criteria. C222 completed R00 with confirmed delivery; [C223 completes the reviewed R01 validation-driver repair](engineering/local-validation-c223/README.md). R02 aggregate regression remains its separate follow-up.

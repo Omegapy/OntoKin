@@ -3,7 +3,7 @@
   "baselineCommit": "bbf2bec6efeb537622475ae6727319e55af40ff6",
   "amendment": "C221 review integration, revision 1; package amendment, not a new development checkpoint",
   "ownerIntent": "Continue the existing C221 work and implement the review recommendations without losing either; deliver one integrated ZIP only.",
-  "statusMeaning": "R00/R01 remain completed within their recorded scopes. R02 remains blocked: C228 accounts for 4,662 methods, 4,661 passed and one failed method with two replacement subtests. C229 reached a launcher path blocker before any product method/case; its finite plan is consumed. Earlier outcomes and all R03-R08 pending scopes remain unchanged.",
+  "statusMeaning": "R00/R01 remain completed within their recorded scopes. R02 remains blocked: C228 aggregate failed; C229 launcher blocker remains consumed; C230 repaired/qualified launcher paths and directly observed journal numeric-identity reuse permitting same-content replacement. A narrow ledger repair is next. R03-R08 retain their pending scopes.",
   "immediateTask": "R02",
   "allowedStatuses": [
     "pending",
@@ -124,8 +124,8 @@
         "https://github.com/Omegapy/OntoKin/blob/bbf2bec6efeb537622475ae6727319e55af40ff6/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md"
       ],
       "status": "blocked",
-      "owner": null,
-      "branch": null,
+      "owner": "c230-root-ad17c735596b",
+      "branch": "work/c230-ledger-diagnosis",
       "implementationCommit": null,
       "evidence": [
         "../aggregate-regression-c224/RESULTS.md",
@@ -147,14 +147,17 @@
         "https://github.com/Omegapy/OntoKin/issues/188",
         "../ledger-replacement-c229/RESULTS.md",
         "../ledger-replacement-c229/evidence/OUTCOME-REVIEW.md",
-        "https://github.com/Omegapy/OntoKin/issues/190"
+        "https://github.com/Omegapy/OntoKin/issues/190",
+        "../ledger-replacement-c230/RESULTS.md",
+        "../ledger-replacement-c230/evidence/MEASURED-SUMMARY.json",
+        "https://github.com/Omegapy/OntoKin/issues/192",
+        "../ledger-replacement-c230/evidence/OUTCOME-REVIEW.md"
       ],
       "remainingLimits": [
-        "R02 remains blocked by C228 one failed ledger method containing two same-content replacement subtest failures.",
-        "C229 attempted one worker that could not open its script; zero product tests or replacement cases executed and the plan is consumed.",
-        "Numeric inode reuse remains an untested static hypothesis; the historical file-object identity sequence is unavailable.",
-        "Original A08 setup passed with all 13 methods in C228; the C226 failure and its unproven cause remain historical evidence.",
-        "Other interpreters, sixteen external cases, optional visual and dedicated force-agent roles, and full release acceptance remain pending."
+        "R02 remains blocked by one failed aggregate ledger method/two same-content replacement subtests.",
+        "C230 directly observed inode reuse bypass for the journal and reproduced both original failures; historical exact allocation and original marker sequence remain unknown.",
+        "No product repair or new aggregate ran; C229 and C230 schedules are consumed.",
+        "C226 A08 deadline cause, sixteen external cases, other interpreters, optional roles and full release acceptance remain pending."
       ],
       "supersessionDecision": null,
       "lastAttempt": {
@@ -264,36 +267,32 @@
           }
         }
       ],
-      "nextAction": "Separately correct and qualify diagnostic launcher path handling, then independently review and save a fresh finite CPU diagnosis. No product repair or aggregate retry before actual diagnostic evidence; C229 stays consumed.",
+      "nextAction": "One narrowly scoped ledger identity repair with explicit resource lifecycle and deterministic replacement controls, preserving original assertions and applicable contracts; fresh complete aggregate follows its evidence.",
       "lastDiagnosis": {
-        "checkpoint": "C229",
-        "sourceCommit": "d578a30dab9a112895d2e3c09561a17866d9c464",
-        "sourceTree": "080b9d00bc340dfd9728601147d11816fab4375d",
-        "status": "blocked_before_worker_script_execution",
-        "workerStartAttempts": 1,
-        "workerExitCode": 2,
-        "launcherExitCode": 1,
-        "testMethodsExecuted": 0,
-        "subtestsExecuted": 0,
-        "replacementCasesExecuted": 0,
-        "ledgerBeginCalls": 0,
-        "reserveCalls": 0,
+        "checkpoint": "C230",
+        "sourceCommit": "e19acb44784ba5654f24bd3d87fb7310249f6d05",
+        "sourceTree": "24a3af6da34dc5cce7e6813734fb65958791f712",
+        "status": "finite_diagnosis_completed_mechanism_observed",
+        "workerStarts": 2,
+        "launcherExitCode": 0,
+        "testMethodsExecuted": 1,
+        "subtestsExecuted": 10,
+        "passedSubtests": 8,
+        "failedSubtests": 2,
+        "replacementCasesExecuted": 4,
+        "mechanismEstablishedFor": "New observed journal case; same content and reused device/inode accepted",
+        "historicalExactAllocationEstablished": false,
+        "sourceUnchanged": true,
+        "scheduleConsumed": true,
+        "productRepairs": 0,
         "aggregateAttempts": 0,
         "nativeStarts": 0,
         "automaticRetries": 0,
-        "sourceUnchanged": true,
-        "workerReaped": true,
-        "remainingObservedGroupMembers": [],
-        "secondWorkerStarted": false,
-        "scheduleConsumed": true,
-        "mechanismEstablished": false,
-        "blocker": "Relative caller plan path becomes a relative child harness argument under a changed working directory.",
-        "rootInvocation": "../ledger-replacement-c229/evidence/ROOT-INVOCATION.json",
-        "outcome": "../ledger-replacement-c229/evidence/RUN-RESULT.json",
-        "independentReview": "../ledger-replacement-c229/evidence/OUTCOME-REVIEW.json",
-        "scopeIssue": "https://github.com/Omegapy/OntoKin/issues/190"
+        "outcome": "../ledger-replacement-c230/evidence/MEASURED-SUMMARY.json",
+        "scopeIssue": "https://github.com/Omegapy/OntoKin/issues/192",
+        "independentOutcomeAssertions": 313
       },
-      "ownershipReleased": true,
+      "ownershipReleased": false,
       "previousDiagnoses": [
         {
           "checkpoint": "C227",
@@ -311,6 +310,34 @@
           "sourceUnchangedDuringExecution": true,
           "historicalFailureCauseEstablished": false,
           "scheduleConsumed": true
+        },
+        {
+          "checkpoint": "C229",
+          "sourceCommit": "d578a30dab9a112895d2e3c09561a17866d9c464",
+          "sourceTree": "080b9d00bc340dfd9728601147d11816fab4375d",
+          "status": "blocked_before_worker_script_execution",
+          "workerStartAttempts": 1,
+          "workerExitCode": 2,
+          "launcherExitCode": 1,
+          "testMethodsExecuted": 0,
+          "subtestsExecuted": 0,
+          "replacementCasesExecuted": 0,
+          "ledgerBeginCalls": 0,
+          "reserveCalls": 0,
+          "aggregateAttempts": 0,
+          "nativeStarts": 0,
+          "automaticRetries": 0,
+          "sourceUnchanged": true,
+          "workerReaped": true,
+          "remainingObservedGroupMembers": [],
+          "secondWorkerStarted": false,
+          "scheduleConsumed": true,
+          "mechanismEstablished": false,
+          "blocker": "Relative caller plan path becomes a relative child harness argument under a changed working directory.",
+          "rootInvocation": "../ledger-replacement-c229/evidence/ROOT-INVOCATION.json",
+          "outcome": "../ledger-replacement-c229/evidence/RUN-RESULT.json",
+          "independentReview": "../ledger-replacement-c229/evidence/OUTCOME-REVIEW.json",
+          "scopeIssue": "https://github.com/Omegapy/OntoKin/issues/190"
         }
       ]
     },
@@ -491,6 +518,6 @@
   ],
   "continuationCheckpoint": "C229",
   "inputHandoff": "https://chatgpt.com/library/share/libfile_fde3_f-194c743a5d588191aeaf9f4bd2904be8_2ab2a24d43748191957f9bcc356b59de?account_id=personal",
-  "currentCheckpoint": "C229",
+  "currentCheckpoint": "C230",
   "prerequisiteReconciliation": "C229 verified the exact C228 ZIP and fresh offline restored main/tree, 303 historical evidence files and inherited references; reconciled live held work and released ownership. Approved preparation was saved before the sole launch. The failed worker could not open its script; all nine bound source/contract files, Git identity and clean status remained unchanged."
 }

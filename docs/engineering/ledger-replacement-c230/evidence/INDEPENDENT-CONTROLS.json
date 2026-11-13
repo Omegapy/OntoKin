@@ -1,0 +1,188 @@
+{
+  "schema": "ontokin.c230.independent-inert-launcher-review/0.1",
+  "passed": true,
+  "controls": 8,
+  "assertions": 88,
+  "launcher_sha256": "2505d1c84cff16a1218130c9e9e7bdf26132272f3420fa88492cc03447306653",
+  "standin_sha256": "788fe23ebb5970f96a889fb666c4f087eab2823809f144d5bc2b7cbae6eb9574",
+  "script_sha256": "2b9358bf95817951b98813bf1f2a7363f51ab6f364b6c3a019d744f1143a7383",
+  "source_commit": "26b19bee833ddfe5e9ffba85092faa47de9b572c",
+  "source_tree": "de3cfbb6cccdd1aed598dd6453964e05c38832e1",
+  "source_status_after": "",
+  "cases": [
+    {
+      "case": "relative-caller-different-child-cwd",
+      "checks": {
+        "success_exit": true,
+        "two_starts": true,
+        "completed": true,
+        "source_unchanged": true,
+        "schedule_consumed": true,
+        "two_observations": true,
+        "exact_script_0": true,
+        "child_cwd_0": true,
+        "absolute_argv_paths_0": true,
+        "bytecode_disabled_0": true,
+        "no_product_0": true,
+        "exact_script_1": true,
+        "child_cwd_1": true,
+        "absolute_argv_paths_1": true,
+        "bytecode_disabled_1": true,
+        "no_product_1": true
+      },
+      "passed": true,
+      "returncode": 0,
+      "inert_worker_starts": 2,
+      "product_imports": 0,
+      "product_cases": 0
+    },
+    {
+      "case": "absolute-caller-unrelated-cwd",
+      "checks": {
+        "success_exit": true,
+        "two_starts": true,
+        "completed": true,
+        "source_unchanged": true,
+        "schedule_consumed": true,
+        "two_observations": true,
+        "exact_script_0": true,
+        "child_cwd_0": true,
+        "absolute_argv_paths_0": true,
+        "bytecode_disabled_0": true,
+        "no_product_0": true,
+        "exact_script_1": true,
+        "child_cwd_1": true,
+        "absolute_argv_paths_1": true,
+        "bytecode_disabled_1": true,
+        "no_product_1": true
+      },
+      "passed": true,
+      "returncode": 0,
+      "inert_worker_starts": 2,
+      "product_imports": 0,
+      "product_cases": 0
+    },
+    {
+      "case": "relative-embedded-source-output",
+      "checks": {
+        "success_exit": true,
+        "two_starts": true,
+        "completed": true,
+        "source_unchanged": true,
+        "schedule_consumed": true,
+        "two_observations": true,
+        "exact_script_0": true,
+        "child_cwd_0": true,
+        "absolute_argv_paths_0": true,
+        "bytecode_disabled_0": true,
+        "no_product_0": true,
+        "exact_script_1": true,
+        "child_cwd_1": true,
+        "absolute_argv_paths_1": true,
+        "bytecode_disabled_1": true,
+        "no_product_1": true
+      },
+      "passed": true,
+      "returncode": 0,
+      "inert_worker_starts": 2,
+      "product_imports": 0,
+      "product_cases": 0
+    },
+    {
+      "case": "missing-worker",
+      "checks": {
+        "prelaunch_refused": true,
+        "output_unclaimed": true,
+        "zero_inert_workers": true
+      },
+      "passed": true,
+      "returncode": 1,
+      "inert_worker_starts": 0,
+      "product_imports": 0,
+      "product_cases": 0
+    },
+    {
+      "case": "changed-worker-digest",
+      "checks": {
+        "prelaunch_refused": true,
+        "output_unclaimed": true,
+        "zero_inert_workers": true
+      },
+      "passed": true,
+      "returncode": 1,
+      "inert_worker_starts": 0,
+      "product_imports": 0,
+      "product_cases": 0
+    },
+    {
+      "case": "one-use-repeat-refused",
+      "checks": {
+        "success_exit": true,
+        "two_starts": true,
+        "completed": true,
+        "source_unchanged": true,
+        "schedule_consumed": true,
+        "two_observations": true,
+        "exact_script_0": true,
+        "child_cwd_0": true,
+        "absolute_argv_paths_0": true,
+        "bytecode_disabled_0": true,
+        "no_product_0": true,
+        "exact_script_1": true,
+        "child_cwd_1": true,
+        "absolute_argv_paths_1": true,
+        "bytecode_disabled_1": true,
+        "no_product_1": true,
+        "repeat_refused": true,
+        "repeat_output_unchanged": true
+      },
+      "passed": true,
+      "returncode": 0,
+      "inert_worker_starts": 2,
+      "product_imports": 0,
+      "product_cases": 0
+    },
+    {
+      "case": "first-worker-missing-result",
+      "checks": {
+        "failure_exit": true,
+        "one_start_only": true,
+        "second_never_observed": true,
+        "schedule_consumed": true,
+        "source_unchanged": true,
+        "completed_false": true,
+        "worker_reaped": true,
+        "group_empty": true
+      },
+      "passed": true,
+      "returncode": 1,
+      "inert_worker_starts": 1,
+      "product_imports": 0,
+      "product_cases": 0
+    },
+    {
+      "case": "first-worker-reported-child-attempt",
+      "checks": {
+        "failure_exit": true,
+        "one_start_only": true,
+        "second_never_observed": true,
+        "schedule_consumed": true,
+        "source_unchanged": true,
+        "completed_false": true,
+        "worker_reaped": true,
+        "group_empty": true
+      },
+      "passed": true,
+      "returncode": 1,
+      "inert_worker_starts": 1,
+      "product_imports": 0,
+      "product_cases": 0
+    }
+  ],
+  "actual_product_imports": 0,
+  "actual_product_methods": 0,
+  "actual_replacement_cases": 0,
+  "maximum_product_worker_starts_used": 0,
+  "inert_worker_starts": 10,
+  "note": "Synthetic shape reports are launcher evidence only. No actual OntoKin code is present in the fixture source."
+}
