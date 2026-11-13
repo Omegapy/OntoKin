@@ -123,13 +123,43 @@
         "https://github.com/Omegapy/OntoKin/blob/bbf2bec6efeb537622475ae6727319e55af40ff6/docs/engineering/semantic-export-c210/REGRESSION.md",
         "https://github.com/Omegapy/OntoKin/blob/bbf2bec6efeb537622475ae6727319e55af40ff6/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md"
       ],
-      "status": "pending",
+      "status": "blocked",
       "owner": null,
       "branch": null,
       "implementationCommit": null,
-      "evidence": [],
-      "remainingLimits": [],
-      "supersessionDecision": null
+      "evidence": [
+        "../aggregate-regression-c224/RESULTS.md",
+        "../aggregate-regression-c224/evidence/RESULT-SUMMARY.json",
+        "https://github.com/Omegapy/OntoKin/issues/180"
+      ],
+      "remainingLimits": [
+        "No complete aggregate pass is claimed unless every selected method completes successfully without skipped obligations",
+        "See exact current timeout/failure/skip/unrun counts and next action in C224; preserve original raw logs",
+        "Other interpreter, optional visual/force and release roles remain separate"
+      ],
+      "supersessionDecision": null,
+      "lastAttempt": {
+        "checkpoint": "C224",
+        "sourceCommit": "1530832e0ee566887a43ce6a5e5d374901a24860",
+        "sourceTree": "5fbf7b27f37955871fec5fbc35cf346db027b3aa",
+        "driverStatus": "failed",
+        "perCommandTimeoutSeconds": 900,
+        "methodInventory": 4662,
+        "methodCounts": {
+          "passed": 3451,
+          "failed": 0,
+          "error": 0,
+          "skipped": 0,
+          "expected_failure": 0,
+          "unexpected_success": 0,
+          "failed_import": 0,
+          "timed_out": 1,
+          "incomplete_observation": 0,
+          "unrun": 1210
+        },
+        "completeAccounting": true,
+        "branch": "work/c224-r02-aggregate"
+      }
     },
     {
       "id": "R03",
@@ -306,8 +336,8 @@
       "supersessionDecision": null
     }
   ],
-  "continuationCheckpoint": "C223",
+  "continuationCheckpoint": "C224",
   "inputHandoff": "https://chatgpt.com/library/share/libfile_fde3_f-194c743a5d588191aeaf9f4bd2904be8_2ab2a24d43748191957f9bcc356b59de?account_id=personal",
-  "currentCheckpoint": "C223",
-  "prerequisiteReconciliation": "C222 final ZIP, exact hash, complete directory, documented offline restore and issue176 closed delivery were freshly verified; R00 completed without repeating unchanged CPU checks."
+  "currentCheckpoint": "C224",
+  "prerequisiteReconciliation": "C223 complete final ZIP matches its Library identity, closed scope178, exact hash and all5600 members; R01 focused repair retained. C224 records one immutable aggregate attempt and complete outcome accounting; later tasks are not advanced."
 }

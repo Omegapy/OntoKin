@@ -1,5 +1,7 @@
 # OntoKin documentation guide
 
+Current validation result: [C224 aggregate regression and complete method accounting](engineering/aggregate-regression-c224/RESULTS.md). Its [next action](engineering/aggregate-regression-c224/NEXT-TASK.md) preserves unresolved R02 blockers and all later recommendations.
+
 The [owner-directed C221 review tracker](engineering/review-integration-c221/README.md) retains R00 and all R01-R08 acceptance criteria. C222 completed R00 with confirmed delivery; [C223 completes the reviewed R01 validation-driver repair](engineering/local-validation-c223/README.md). R02 aggregate regression remains its separate follow-up.
 
 ## Current engineering checkpoint

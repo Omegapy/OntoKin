@@ -2,6 +2,12 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C224 R02: aggregate outcome recorded with complete accounting
+
+[C224](docs/engineering/aggregate-regression-c224/RESULTS.md) ran the complete default seven-step local plan from immutable source `1530832e0ee566887a43ce6a5e5d374901a24860` after the exact seven-package preflight on Linux x86-64 / CPython 3.12.14. The per-command limit remained 900 seconds. Independent pre-run discovery recorded all 4,662 methods; [complete outcome accounting](docs/engineering/aggregate-regression-c224/evidence/METHOD-OUTCOMES-SUMMARY.json) records 3451 passing, 0 failed, 0 errored, 0 skipped, 1 timed-out and 1210 unrun methods. Setup/import and subtest events remain separately identified. The driver result is **failed**; R02 is **blocked**. Source and Git revision stability are True / True.
+
+This is a documentation/evidence increment. Runtime, tests, fixtures, workflows, locks, product budgets and original expectations remain unchanged. Historical failed aggregate results and the strict Blender normal gate remain failed. The optional visual and dedicated force-agent plans, other Python versions and actual Godot proof are separate, unexecuted roles. C223's final delivery is freshly confirmed, and R00/R01 remain completed within their scopes. All nine recommendations and 41 criteria remain. Follow the [exact R02 next action](docs/engineering/aggregate-regression-c224/NEXT-TASK.md); no repair or later feature begins in this thread. [Scope #180](https://github.com/Omegapy/OntoKin/issues/180) records publication and final saved handoff.
+
 ## C223 R01: validation input and bytecode repair passed focused checks
 
 [C223](docs/engineering/local-validation-c223/RESULTS.md) repairs the local driver's two recorded defects: the isolated input closure now includes all top-level fixtures, every planned Python command receives `-B`, and ordinary descendants inherit `PYTHONDONTWRITEBYTECODE=1`. Existing source-stability and frozen-reader cache guards, budgets, fixture bytes and expected outcomes remain intact.
