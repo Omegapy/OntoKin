@@ -1,0 +1,51 @@
+{
+  "rootWrapperReceipt": {
+    "rootPid": 5,
+    "launcherPid": 6,
+    "returncode": 0,
+    "startedAtUtc": "2026-11-13T23:00:18.033400+00:00",
+    "finishedAtUtc": "2026-11-13T23:19:52.420055+00:00",
+    "automaticRetries": 0
+  },
+  "supervisorDirectDriverReceipt": {
+    "pid": 32,
+    "returncode": 0,
+    "childReaped": true,
+    "startedAtUtc": "2026-11-13T23:00:19.636664+00:00",
+    "finishedAtUtc": "2026-11-13T23:19:51.225852+00:00"
+  },
+  "plannedCommandReceipts": 7,
+  "commandReceiptsWithExplicitPid": 0,
+  "explicitSyntheticReadbackReceipts": 3,
+  "readbackPids": [
+    726,
+    734,
+    742
+  ],
+  "sampledProcessIdentities": 67,
+  "sampledGroups": [
+    32,
+    119,
+    459,
+    726,
+    794,
+    801,
+    829,
+    830,
+    832,
+    845,
+    849,
+    908
+  ],
+  "nominalSamplingIntervalSeconds": 0.5,
+  "actualExhaustiveProcessCount": null,
+  "launchPidNamespaceId": null,
+  "cleanupEvidence": "Final supervisor observations and actual reader cleanup receipts recorded within the execution context",
+  "freshCrossCallProcessAbsenceProof": false,
+  "limitations": [
+    "New exec calls have separate/limited PID namespace visibility; later /proc absence cannot prove original execution-context cleanup.",
+    "Launch PID namespace ID was not captured before execution. PIDs are local to the actual launch context, not global host identities.",
+    "The earlier surviving-work audit observed no prior processes only within its observer visibility; it did not prove no external or inaccessible worker existed.",
+    "Sampling can miss short-lived children. Command outcomes, wrapper/driver receipts and reader receipts overlap; do not add them as an exhaustive total."
+  ]
+}

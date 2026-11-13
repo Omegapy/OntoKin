@@ -3,8 +3,8 @@
   "baselineCommit": "bbf2bec6efeb537622475ae6727319e55af40ff6",
   "amendment": "C221 review integration, revision 1; package amendment, not a new development checkpoint",
   "ownerIntent": "Continue the existing C221 work and implement the review recommendations without losing either; deliver one integrated ZIP only.",
-  "statusMeaning": "R00/R01 remain completed within their recorded scopes. R02 remains blocked: C228 aggregate failed; C229 launcher blocker remains consumed; C230 repaired/qualified launcher paths and directly observed journal numeric-identity reuse permitting same-content replacement. A narrow ledger repair is next. R03-R08 retain their pending scopes.",
-  "immediateTask": "R02",
+  "statusMeaning": "R00/R01 remain completed within their recorded scopes. C233 completes R02 for the default suite on Linux x86-64 / CPython 3.12.14: all 4,685 methods and seven commands passed with independent acceptance. C224/C226/C228 failures and C229/C230 diagnoses/C232 prelaunch blocker remain historical evidence. R03-R08 retain their pending scopes; one finite R07 CPU material-observation schema/checker step is next after verified C233 delivery.",
+  "immediateTask": "R07",
   "allowedStatuses": [
     "pending",
     "active",
@@ -123,7 +123,7 @@
         "https://github.com/Omegapy/OntoKin/blob/bbf2bec6efeb537622475ae6727319e55af40ff6/docs/engineering/semantic-export-c210/REGRESSION.md",
         "https://github.com/Omegapy/OntoKin/blob/bbf2bec6efeb537622475ae6727319e55af40ff6/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md"
       ],
-      "status": "blocked",
+      "status": "completed",
       "owner": null,
       "branch": null,
       "implementationCommit": null,
@@ -163,27 +163,32 @@
         "../aggregate-regression-c232/RESULTS.md",
         "../aggregate-regression-c232/REVIEW.md",
         "../aggregate-regression-c232/evidence/BLOCKER.json",
-        "../aggregate-regression-c232/evidence/INTEGRATION.json"
+        "../aggregate-regression-c232/evidence/INTEGRATION.json",
+        "../aggregate-regression-c233/RESULTS.md",
+        "../aggregate-regression-c233/REVIEW.md",
+        "../aggregate-regression-c233/evidence/RESULT-SUMMARY.json",
+        "../aggregate-regression-c233/evidence/OUTCOME-REVIEW.json",
+        "https://github.com/Omegapy/OntoKin/issues/198"
       ],
       "remainingLimits": [
-        "C232 never admitted an aggregate: all 4,685 methods and seven commands are unrun after a root preparation/command-sequencing failure. R02 remains blocked; no product defect is inferred.",
-        "C231 checked repair passes all 307 affected methods, but R02 still requires a fresh complete passing aggregate.",
-        "C228 remains the latest complete aggregate: one failed ledger method/two replacement subtests; historical outcomes are unchanged.",
-        "C229/C230 diagnoses are consumed; no new aggregate or native application ran in C231.",
-        "C226 A08 deadline cause, sixteen external cases, other interpreters, optional roles and full release acceptance remain pending."
+        "This is the selected default suite on Linux x86-64 / CPython 3.12.14; other interpreters/platforms, optional visual/dedicated roles and full release remain separate gates.",
+        "Sixteen external conformance cases remain pending.",
+        "C224/C226/C228 aggregate failures and C229/C230 diagnoses/C232 prelaunch blocker remain unchanged historical evidence; the exact historical C226 deadline cause remains unproven.",
+        "No native target ran in C233; original strict Blender normal failure, Godot build-lineage/rendering limits and held drafts remain.",
+        "No separate current A08 setup duration/artifact identity was retained; process receipts and sampling do not establish an exhaustive descendant count."
       ],
       "supersessionDecision": null,
       "lastAttempt": {
-        "checkpoint": "C228",
-        "sourceCommit": "fc500331ce789eb6f9c1210ea4f3b394d45e507c",
-        "sourceTree": "8eba004b6b08a00449663d868674c9fc8521469f",
-        "driverStatus": "failed",
+        "checkpoint": "C233",
+        "sourceCommit": "3b3238b13797fecf290cd19169c6ee794739f095",
+        "sourceTree": "1e8b44b92d64367c162732102285502491585999",
+        "driverStatus": "passed",
         "perCommandTimeoutSeconds": 3600,
-        "driverDurationSeconds": 1315.673,
-        "methodInventory": 4662,
+        "driverDurationSeconds": 1171.106,
+        "methodInventory": 4685,
         "methodCounts": {
-          "passed": 4661,
-          "failed": 1,
+          "passed": 4685,
+          "failed": 0,
           "error": 0,
           "skipped": 0,
           "expected_failure": 0,
@@ -193,17 +198,23 @@
           "incomplete_observation": 0,
           "unrun": 0
         },
-        "failedSubtests": 2,
+        "failedSubtests": 0,
         "classSetupErrorCount": 0,
         "completeAccounting": true,
         "sourceUnchanged": true,
         "gitRevisionUnchanged": true,
         "pendingExternalCaseCount": 16,
-        "branch": "work/c228-r02-aggregate",
-        "failedMethod": "test_static_tray_admission_c201_ledger.LedgerControls.test_corrupt_replaced_aliased_or_missing_files_poison_live_capability",
-        "failureMeaning": "Two same-content replacement subtests expected LedgerError at line 503; none was raised.",
+        "branch": "work/c233-aggregate-regression",
         "a08ArtifactReadMethodsPassed": 13,
-        "sixLaterDefaultCommandsPassed": true
+        "sixLaterDefaultCommandsPassed": true,
+        "independentOutcomeChecks": 46,
+        "independentRawLogConsistencyGroups": 13,
+        "readbackMethodsPassed": 3,
+        "readbackNumericRows": 6180,
+        "readbackAuditAssertions": 18613,
+        "planSha256": "3966ce2b09acefca6a99eaa336c937b6d0894bd7bd3abec3f8d41099d14817c9",
+        "independentOutcomeSha256": "d68e23b312555eaf690fa5a77043edf76aaea2ba37532adf868ed68cd92f76f5",
+        "scopeIssue": 198
       },
       "prerequisitePreparation": {
         "checkpoint": "C225",
@@ -278,9 +289,41 @@
             "consumedOperations": 430069,
             "operationLimit": 1000000
           }
+        },
+        {
+          "checkpoint": "C228",
+          "sourceCommit": "fc500331ce789eb6f9c1210ea4f3b394d45e507c",
+          "sourceTree": "8eba004b6b08a00449663d868674c9fc8521469f",
+          "driverStatus": "failed",
+          "perCommandTimeoutSeconds": 3600,
+          "driverDurationSeconds": 1315.673,
+          "methodInventory": 4662,
+          "methodCounts": {
+            "passed": 4661,
+            "failed": 1,
+            "error": 0,
+            "skipped": 0,
+            "expected_failure": 0,
+            "unexpected_success": 0,
+            "failed_import": 0,
+            "timed_out": 0,
+            "incomplete_observation": 0,
+            "unrun": 0
+          },
+          "failedSubtests": 2,
+          "classSetupErrorCount": 0,
+          "completeAccounting": true,
+          "sourceUnchanged": true,
+          "gitRevisionUnchanged": true,
+          "pendingExternalCaseCount": 16,
+          "branch": "work/c228-r02-aggregate",
+          "failedMethod": "test_static_tray_admission_c201_ledger.LedgerControls.test_corrupt_replaced_aliased_or_missing_files_poison_live_capability",
+          "failureMeaning": "Two same-content replacement subtests expected LedgerError at line 503; none was raised.",
+          "a08ArtifactReadMethodsPassed": 13,
+          "sixLaterDefaultCommandsPassed": true
         }
       ],
-      "nextAction": "One fresh immutable complete default aggregate from then-observed main. Finish and freeze reviewer files before saving; verify the final saved plan/approval and create its recovery gate in a separately successful operation before invoking the launcher once. C232 is closed without retry.",
+      "nextAction": "Finish coordinated C233 documentation publication and confirmed saved handoff, then stop. R02 needs no unchanged aggregate replay; the next separate selected task is the finite R07 CPU material-observation schema/checker.",
       "lastDiagnosis": {
         "checkpoint": "C230",
         "sourceCommit": "e19acb44784ba5654f24bd3d87fb7310249f6d05",
@@ -382,34 +425,68 @@
         "delivery": "pending verified final C231 handoff save"
       },
       "latestPreparationAttempt": {
-        "checkpoint": "C232",
-        "status": "blocked_before_aggregate_admission",
-        "sourceCommit": "32f4c088010a35f67cbb19edb40b6e08875d37dc",
-        "sourceTree": "42a668bc2118c9f7a219ed68b3dd0ce9ea452a61",
-        "scopeIssue": 196,
+        "checkpoint": "C233",
+        "status": "completed_before_one_admitted_aggregate",
         "discoveredMethods": 4685,
-        "unrunMethods": 4685,
-        "sourceFiles": 15907,
+        "sourceFiles": 15924,
         "bindings": 350,
-        "launcherInvocations": 1,
-        "launcherExitCode": 1,
-        "orchestrationPythonInvocations": 2,
-        "aggregateAttempts": 0,
-        "driverStarts": 0,
-        "productMethodsExecuted": 0,
-        "nativeStarts": 0,
+        "finalReviewerFrozenBeforeSave": true,
+        "savedRecoveryVersion": 1,
+        "savedRecoverySha256": "2b0db8cd8fa2035e1ee16b466025fe97c04fb21333c8b9c0b40da30869bddfed",
+        "savedExactApprovalVerified": true,
+        "recoveryGateBuiltSeparately": true,
+        "recoveryGateVerifiedSeparately": true,
+        "aggregateAttempts": 1,
         "automaticRetries": 0,
-        "outputReservationCreated": false,
-        "sourceUnchanged": true,
-        "originalC228AggregateUnchanged": true,
-        "cause": "Approval changed after recovery saving; root gate comparison failed, but newline-separated shell sequencing still invoked launcher without gate. It failed before admission.",
-        "planSha256": "5d06c19e9e10f1fe1a0e2eec16c7f660187d6024211000b0514940b579819576",
-        "savedApprovalSha256": "f69eb3f4e334bace2b37d3bff490e792adc73df3a5ff6cdce53e0eb18fd1e780",
-        "finalApprovalSha256": "0975dc5eeca15264ee2c3f95f53383b69cbe2dd0263c76b62a8d2a1745577b7d",
-        "publishedMerge": "e21b2c8653d5efbcc7c3dbe54889190a7e4595b0",
-        "publishedCandidate": "509dc4754894dd132c835126aee7ce17c63c4913",
-        "pullRequest": 197
-      }
+        "nativeStarts": 0,
+        "details": "../aggregate-regression-c233/evidence/RECOVERY-BINDINGS.json"
+      },
+      "historicalCurrentStates": [
+        {
+          "status": "blocked",
+          "remainingLimits": [
+            "C232 never admitted an aggregate: all 4,685 methods and seven commands are unrun after a root preparation/command-sequencing failure. R02 remains blocked; no product defect is inferred.",
+            "C231 checked repair passes all 307 affected methods, but R02 still requires a fresh complete passing aggregate.",
+            "C228 remains the latest complete aggregate: one failed ledger method/two replacement subtests; historical outcomes are unchanged.",
+            "C229/C230 diagnoses are consumed; no new aggregate or native application ran in C231.",
+            "C226 A08 deadline cause, sixteen external cases, other interpreters, optional roles and full release acceptance remain pending."
+          ],
+          "nextAction": "One fresh immutable complete default aggregate from then-observed main. Finish and freeze reviewer files before saving; verify the final saved plan/approval and create its recovery gate in a separately successful operation before invoking the launcher once. C232 is closed without retry."
+        }
+      ],
+      "checkedCommit": "3b3238b13797fecf290cd19169c6ee794739f095",
+      "completionScope": "One unchanged default aggregate on Linux x86-64 / CPython 3.12.14; publication and verified saved handoff tracked separately in scope198.",
+      "previousPreparationAttempts": [
+        {
+          "checkpoint": "C232",
+          "status": "blocked_before_aggregate_admission",
+          "sourceCommit": "32f4c088010a35f67cbb19edb40b6e08875d37dc",
+          "sourceTree": "42a668bc2118c9f7a219ed68b3dd0ce9ea452a61",
+          "scopeIssue": 196,
+          "discoveredMethods": 4685,
+          "unrunMethods": 4685,
+          "sourceFiles": 15907,
+          "bindings": 350,
+          "launcherInvocations": 1,
+          "launcherExitCode": 1,
+          "orchestrationPythonInvocations": 2,
+          "aggregateAttempts": 0,
+          "driverStarts": 0,
+          "productMethodsExecuted": 0,
+          "nativeStarts": 0,
+          "automaticRetries": 0,
+          "outputReservationCreated": false,
+          "sourceUnchanged": true,
+          "originalC228AggregateUnchanged": true,
+          "cause": "Approval changed after recovery saving; root gate comparison failed, but newline-separated shell sequencing still invoked launcher without gate. It failed before admission.",
+          "planSha256": "5d06c19e9e10f1fe1a0e2eec16c7f660187d6024211000b0514940b579819576",
+          "savedApprovalSha256": "f69eb3f4e334bace2b37d3bff490e792adc73df3a5ff6cdce53e0eb18fd1e780",
+          "finalApprovalSha256": "0975dc5eeca15264ee2c3f95f53383b69cbe2dd0263c76b62a8d2a1745577b7d",
+          "publishedMerge": "e21b2c8653d5efbcc7c3dbe54889190a7e4595b0",
+          "publishedCandidate": "509dc4754894dd132c835126aee7ce17c63c4913",
+          "pullRequest": 197
+        }
+      ]
     },
     {
       "id": "R03",
@@ -556,7 +633,9 @@
       "implementationCommit": null,
       "evidence": [],
       "remainingLimits": [],
-      "supersessionDecision": null
+      "supersessionDecision": null,
+      "nextAction": "After confirmed C233 handoff delivery, implement and independently review one separately versioned finite CPU material-observation schema and material-parameter checker for the existing 18 parts/two materials. Preserve C221/C222 admission, declared color transfer, exact associations and 0.000002 normalized-parameter limit; use independent synthetic controls and zero target/source-evaluation/export starts. Later R07 protocols remain pending.",
+      "nextScopeReference": "../aggregate-regression-c233/NEXT-TASK.md"
     },
     {
       "id": "R08",
@@ -586,10 +665,20 @@
       "supersessionDecision": null
     }
   ],
-  "continuationCheckpoint": "C232",
+  "continuationCheckpoint": "C233",
   "inputHandoff": "https://chatgpt.com/library/share/libfile_fde3_f-194c743a5d588191aeaf9f4bd2904be8_2ab2a24d43748191957f9bcc356b59de?account_id=personal",
-  "currentCheckpoint": "C232",
-  "prerequisiteReconciliation": "C230 verified the exact C229 ZIP and fresh offline restore at e19acb44784ba5654f24bd3d87fb7310249f6d05/tree24a3af6da34dc5cce7e6813734fb65958791f712, all303 original historical evidence files and inherited references. The corrected launcher passed harmless controls; exact independently approved preparation was durably saved before one completed two-worker diagnosis. Source identity/status and all nine inputs remained unchanged. The original two replacement failures reproduced, and one measured journal case directly observed numeric identity reuse evading rejection. PR193 merged the exact reviewed diagnostic tree; integration ownership is released. Final handoff save remains separately tracked by scope192.",
-  "currentInputHandoff": "https://chatgpt.com/library/share/libfile_fde3_f-7f4cb155c16881919bee6af0e428466f_2ab2a24d43748191957f9bcc356b59de?account_id=personal",
-  "inputHandoffMeaning": "Original review-amendment input, retained as historical provenance; currentInputHandoff identifies this continuation."
+  "currentCheckpoint": "C233",
+  "prerequisiteReconciliation": "C233 verified the supplied C232 ZIP, its manifest and fresh offline restore at 3b3238b13797fecf290cd19169c6ee794739f095/tree1e8b44b92d64367c162732102285502491585999, all 303 original historical evidence files and inherited references. Live main and the saved C232 delivery matched; scope196 is closed. Surviving work was reconciled without finding new unpublished product work. Final author/reviewer preparation was frozen and saved, exact saved/current bytes matched and recovery gate build/verification succeeded separately before the sole aggregate. All selected methods/commands passed with unchanged source and independently accepted accounting. Publication and final handoff delivery remain separately evidenced in scope198.",
+  "currentInputHandoff": "https://chatgpt.com/library/share/libfile_fde3_f-9a94ae75921c819196b9e3a2c1686cfb_2ab2a24d43748191957f9bcc356b59de?account_id=personal",
+  "inputHandoffMeaning": "Original review-amendment input, retained as historical provenance; currentInputHandoff identifies this continuation.",
+  "historicalTopLevelStates": [
+    {
+      "currentCheckpoint": "C232",
+      "continuationCheckpoint": "C232",
+      "statusMeaning": "R00/R01 remain completed within their recorded scopes. R02 remains blocked: C228 aggregate failed; C229 launcher blocker remains consumed; C230 repaired/qualified launcher paths and directly observed journal numeric-identity reuse permitting same-content replacement. A narrow ledger repair is next. R03-R08 retain their pending scopes.",
+      "immediateTask": "R02",
+      "prerequisiteReconciliation": "C230 verified the exact C229 ZIP and fresh offline restore at e19acb44784ba5654f24bd3d87fb7310249f6d05/tree24a3af6da34dc5cce7e6813734fb65958791f712, all303 original historical evidence files and inherited references. The corrected launcher passed harmless controls; exact independently approved preparation was durably saved before one completed two-worker diagnosis. Source identity/status and all nine inputs remained unchanged. The original two replacement failures reproduced, and one measured journal case directly observed numeric identity reuse evading rejection. PR193 merged the exact reviewed diagnostic tree; integration ownership is released. Final handoff save remains separately tracked by scope192.",
+      "currentInputHandoff": "https://chatgpt.com/library/share/libfile_fde3_f-7f4cb155c16881919bee6af0e428466f_2ab2a24d43748191957f9bcc356b59de?account_id=personal"
+    }
+  ]
 }
