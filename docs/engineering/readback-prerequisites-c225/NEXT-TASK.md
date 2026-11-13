@@ -1,0 +1,11 @@
+# Next bounded task: one immutable R02 aggregate continuation
+
+First verify the saved C225 handoff and its documented offline source restore, then reconcile actual main, branches/PRs, integration ownership, scope #182 and surviving unpublished work. Use the completed C225 prerequisite result without changing C224's original failed attempt or any recommendation criterion.
+
+1. Verify the exact retained readback inputs with the C225 helper. Apply restoration only if both original locations are absent and every required source/runtime binding passes. Preserve a concrete mismatch as a blocker; never fabricate host evidence or weaken the existing skip/hash guards.
+2. Prepare the exact seven-package verification environment required by OK-ENG-006. Use one immutable identified source checkout and a fresh evidence directory outside it. Record the complete actual method inventory, source hashes and environment before launch.
+3. Declare a justified longer per-command limit before starting. The proposed 3,600-second validation-command ceiling is supported by C224's 900-second timeout before all 4,662 methods finished and by the existing local policy's longer-run example. Keep all product evaluation budgets, fixtures, expectations, numerical tolerances and cache/source-stability guards unchanged.
+4. Run only the default core driver for that selected attempt: `PYTHONDONTWRITEBYTECODE=1 python -B tools/check_local.py --timeout 3600 --output-dir /absolute/fresh/external/r02-run-01`, using the prepared interpreter and its supported external-output options. Do not add optional visual or force-agent roles. Do not modify the checked source tree while the driver runs.
+5. Reconcile every method and setup/import/subtest/skip/timeout/unrun result against the saved inventory. A focused pass or stitched set of runs is not an aggregate pass. Stop on a concrete failure or blocker, preserve its evidence, and deliver one verified saved successor handoff.
+
+No aggregate run occurred in C225. Other Python versions, sixteen external conformance cases, the optional visual and dedicated force-agent plans, Godot receiving work, R03-R08 and any release qualification remain separate. Closed C199/C200/C201 schedules and held PRs #155/#165/#167/#169 remain unchanged.

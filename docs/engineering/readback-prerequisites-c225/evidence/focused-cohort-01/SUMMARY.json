@@ -1,0 +1,122 @@
+{
+  "schema": "ontokin.c225.focused-readback-cohort/0.1",
+  "tests_run": 3,
+  "passed_methods": [
+    "tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries",
+    "tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries",
+    "tests.test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference"
+  ],
+  "failures": [],
+  "errors": [],
+  "skips": [],
+  "expected_failures": [],
+  "unexpected_successes": [],
+  "subprocess_events": [
+    {
+      "event": "subprocess.Popen",
+      "sequence": 1,
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "--version"
+      ],
+      "cwd": "/workspace/scratch/77c7f4193edb/repo"
+    },
+    {
+      "event": "subprocess.Popen",
+      "sequence": 2,
+      "executable": "/usr/bin/ldd",
+      "argv": [
+        "/usr/bin/ldd",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node"
+      ],
+      "cwd": "/workspace/scratch/77c7f4193edb/repo"
+    },
+    {
+      "event": "subprocess.Popen",
+      "sequence": 3,
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "--no-addons",
+        "--max-old-space-size=256",
+        "--experimental-loader",
+        "/workspace/scratch/801d9d641f68/incoming-audit/work/prior-replay/evidence/c195-validation/receiving/tools/three_loader.mjs",
+        "/workspace/scratch/77c7f4193edb/repo/prototypes/static_tray_v01/readback.mjs",
+        "--job",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/focused-cohort-01/artifacts/Q01-positive/job.json"
+      ],
+      "cwd": "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/focused-cohort-01/artifacts/Q01-positive"
+    },
+    {
+      "event": "subprocess.Popen",
+      "sequence": 4,
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "--no-addons",
+        "--max-old-space-size=256",
+        "--experimental-loader",
+        "/workspace/scratch/801d9d641f68/incoming-audit/work/prior-replay/evidence/c195-validation/receiving/tools/three_loader.mjs",
+        "/workspace/scratch/77c7f4193edb/repo/prototypes/static_tray_v01/readback.mjs",
+        "--job",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/focused-cohort-01/artifacts/Q03-positive/job.json"
+      ],
+      "cwd": "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/focused-cohort-01/artifacts/Q03-positive"
+    },
+    {
+      "event": "subprocess.Popen",
+      "sequence": 5,
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "--no-addons",
+        "--max-old-space-size=256",
+        "--experimental-loader",
+        "/workspace/scratch/801d9d641f68/incoming-audit/work/prior-replay/evidence/c195-validation/receiving/tools/three_loader.mjs",
+        "/workspace/scratch/77c7f4193edb/repo/prototypes/static_tray_v01/readback.mjs",
+        "--job",
+        "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/focused-cohort-01/artifacts/Q01-changed-reference/job.json"
+      ],
+      "cwd": "/workspace/scratch/77c7f4193edb/workers/prerequisite-review/focused-cohort-01/artifacts/Q01-changed-reference"
+    }
+  ],
+  "source_after": {
+    "commit": "c76a7622dadb0bdd7cb514840ee1747aabe8eae7",
+    "tree": "445f66ac776477051121d80665b9109f94aa8207",
+    "git_status": "",
+    "files": {
+      "tests/test_static_tray_readback_v01.py": "2f0abd812aa668b7abf9e249315acdb9c0fd175adb59672ab1c454679d494394",
+      "tests/test_static_tray_reader_v01.py": "cb62893652f553d61d55a1d80b9855d16dda3d54a47a8914058b78b6cc6b6706",
+      "prototypes/static_tray_v01/__init__.py": "f63210895af2901371763f24f7ddb301c2a7c1f73f4133335ae85bbb559832e8",
+      "prototypes/static_tray_v01/canonical.py": "ce3f67349ade5af1d966ed0f1f240b264278c14f1f77c8ecc5cdeabb12ad6433",
+      "prototypes/static_tray_v01/cli.py": "cae6191d143509e29fdf9d550e00fc8d8f5f9c267b9420c7d8865a6941d937f0",
+      "prototypes/static_tray_v01/delivery-rules.json": "b96f29fa65a1f684a85d70dbc4df0db5fd981baadba61377a4142b2d70ff2de6",
+      "prototypes/static_tray_v01/errors.py": "ebd82d6945722f6ab896ddfd5763818432d3e53f8bd3aec1e9c5bfee5aa4300b",
+      "prototypes/static_tray_v01/export-settings.json": "4a148619a8d7cb0618a6b0b6fc3098ad9943cfc01cb061625ea3514b2eb865e4",
+      "prototypes/static_tray_v01/fixtures.py": "10f6f59488d2621b6f085683e34049954aa5b06dab6c66f5e4af02ab14e28bf6",
+      "prototypes/static_tray_v01/format_check.py": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447",
+      "prototypes/static_tray_v01/import-settings.json": "8ea29a41e898b0aee5f2479cbe42a49a7f9af271597dcf04e1c1ec61b1e5e050",
+      "prototypes/static_tray_v01/lifecycle.py": "7621b2cb40e7e23a770a2171ddd0e368b24744730084a5b088d2cc5d86214c51",
+      "prototypes/static_tray_v01/lifecycle_stub.py": "16902d9f0fd3c49b5052990592475bac18c26df5286da334f1fb294a3aacd432",
+      "prototypes/static_tray_v01/lock.py": "bb98718bcfcca82e7eabb310bccc51cbf2ab2903af5b0c203c673d56bebb47e0",
+      "prototypes/static_tray_v01/qualification.py": "611f85be0beb2e700075fc062521453bbc105e434eb060bf19d845a0bcae9bae",
+      "prototypes/static_tray_v01/readback.mjs": "156c988ffc478adafe59c495a07e0a48f5ac77c12829d85d147838578b523b4c",
+      "prototypes/static_tray_v01/receive_check.py": "9cde23fd1008491bc8dc87e4863cf1badda239157a693de27e7f4146a025168a",
+      "prototypes/static_tray_v01/receiver.py": "02dd0a479ba0849ac0433550daca6bba35dfce0d66a96daa603d0565ff3ceea1",
+      "prototypes/static_tray_v01/sources.py": "c785153c1b7a92441c59cbfae1daf7da4fbc6101e7c7e67a3da0c3b0bfdc546e",
+      "prototypes/static_tray_v01/store.py": "d0006497ff6fc13ff0b563cdb58445789cd1a26c489ac4ce2a84e77a03607bd0",
+      "prototypes/static_tray_v01/supervisor.py": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+      "prototypes/static_tray_v01/transaction.py": "4fc05f614189a5782023a6701195ddc631395d053172092c9ede9f30db360466",
+      "prototypes/static_tray_v01/worker.py": "2651bbcff9140f9e95c31388e7b9599af342caffc7ed1c1791f4657b75565302",
+      "tools/static_tray_reader_v01/README.md": "d944b9599b66f7a918e9558984b5c95343645de422a15991d4b6610ff0efb715",
+      "tools/static_tray_reader_v01/audit.py": "bea1cc6370997a4b0d1ee335569b920759e9022394001752eebe3336be02ede5",
+      "tools/static_tray_reader_v01/corrupt.py": "716824ef584e9ebf9f9065925018ab35185bf61d29f41eb14d32a7d360832b18",
+      "tools/static_tray_reader_v01/expected.py": "b677815b42bbd439c590091b7668acd14fea189bea659aefb52ea16c0f264e10",
+      "tools/static_tray_reader_v01/glb.py": "15e539c1c5225b8b6c2e8c42beec42a1e5fd00ce8bec1530c7c2dc04bf425774",
+      "tools/static_tray_reader_v01/reader.py": "4cd7be509bd286f482b1f34bfb9bbf574ae93e3970c89bbce13295320430f34c"
+    }
+  },
+  "source_unchanged": true,
+  "passed": true
+}

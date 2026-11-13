@@ -1,0 +1,136 @@
+{
+  "schema": "ontokin.c225.pre-execution-approval/0.1",
+  "reviewed_at_utc": "2026-11-13T02:07:19.921095+00:00",
+  "decision": "APPROVED_FOR_ONE_EXACT_PREREQUISITE_RESTORATION",
+  "approved_helper_sha256": "eed7a35d7e9faa82a6bef42e8c8ee05ee0f189195af2f60b07efee27022b497b",
+  "rejected_helper_sha256": "9f6f5d3b84b0d9776330241e24034993fff7dd06b2dbfd1d991ed7efec5e1f18",
+  "source_commit": "c76a7622dadb0bdd7cb514840ee1747aabe8eae7",
+  "source_tree": "445f66ac776477051121d80665b9109f94aa8207",
+  "source_bindings": {
+    "docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json": {
+      "sha256": "21fd6bad8738ed51d4ced8036a0fcde5dd046823f55f71de52b9b81df659ccd5",
+      "size_bytes": 19901,
+      "mode": "0o644"
+    },
+    "docs/engineering/ownership-recovery-c195/evidence/recorded-evidence.tar.xz": {
+      "sha256": "b1e54a6cfef133f7004b1988c90bc718fc954409843c2bcac3772d42e904a0c9",
+      "size_bytes": 2611764,
+      "mode": "0o644"
+    },
+    "docs/engineering/static-tray-qualification-c199/evidence/preflight/HOST-RUNTIME-INVENTORY.json": {
+      "sha256": "2ed86412f09c74f5d3fb038f50e6417872b8eace0f89d7f168c79923efb14994",
+      "size_bytes": 2706604,
+      "mode": "0o644"
+    },
+    "tests/test_static_tray_readback_v01.py": {
+      "sha256": "2f0abd812aa668b7abf9e249315acdb9c0fd175adb59672ab1c454679d494394",
+      "size_bytes": 9812,
+      "mode": "0o644"
+    },
+    "prototypes/static_tray_v01/format_check.py": {
+      "sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447",
+      "size_bytes": 15959,
+      "mode": "0o644"
+    },
+    "prototypes/static_tray_v01/readback.mjs": {
+      "sha256": "156c988ffc478adafe59c495a07e0a48f5ac77c12829d85d147838578b523b4c",
+      "size_bytes": 11537,
+      "mode": "0o644"
+    }
+  },
+  "dependency_files": 24,
+  "runtime_files": 10,
+  "runtime_aliases": 10,
+  "existing_target_state": "both absent",
+  "checks": [
+    {
+      "name": "input-provenance",
+      "kind": "independent read-only byte audit",
+      "passed": true,
+      "detail": "Exact committed C199 manifest, C195 archive and historical HOST hashes; source clean at c76a7622dadb0bdd7cb514840ee1747aabe8eae7"
+    },
+    {
+      "name": "dependency-closure",
+      "kind": "independent archive audit",
+      "passed": true,
+      "detail": "24 exact regular members, unique names, safe relative paths, exact package file set and byte/hash identities"
+    },
+    {
+      "name": "current-runtime",
+      "kind": "independent byte/mode/alias audit",
+      "passed": true,
+      "detail": "All 10 current Node/runtime/configuration file bindings and 10 aliases exactly match retained manifest"
+    },
+    {
+      "name": "historical-host-meaning",
+      "kind": "source review",
+      "passed": true,
+      "detail": "Original HOST copied verbatim; only two loader-configuration paths are consumed by build_manifest; no assertion that full historical inventory attests current machine"
+    },
+    {
+      "name": "existing-target-refusal",
+      "kind": "source review",
+      "passed": true,
+      "detail": "Exact existing file and directory sets accepted together; partial, mismatched, extra, nonregular or symlink states refuse before apply"
+    },
+    {
+      "name": "installation-nonreplacement",
+      "kind": "source review",
+      "passed": true,
+      "detail": "Private staging, full staged verification, target/ancestor checks, same-filesystem enforcement and Linux RENAME_NOREPLACE for each target"
+    },
+    {
+      "name": "failure-reconciliation",
+      "kind": "source review",
+      "passed": true,
+      "detail": "Pre-install receipt; per-install progress receipts; rollback only for targets installed by this invocation after exact identity check; partial unknown states refuse retry"
+    },
+    {
+      "name": "report-sink-repair",
+      "kind": "independent source review plus retained author refusal controls",
+      "passed": true,
+      "detail": "Original failure-sink flaw preserved. Revised helper validates raw symlink paths and normalized containment before setting report_safe; six author controls pass"
+    },
+    {
+      "name": "independent-dry-run",
+      "kind": "executed read-only helper invocation",
+      "passed": true,
+      "detail": "DRY_RUN_READY; both historical targets absent before and after; no apply requested; source remains clean"
+    },
+    {
+      "name": "scope-boundary",
+      "kind": "source review",
+      "passed": true,
+      "detail": "Helper subprocesses perform only Git identity/status reads; no Node/ldd/native/test calls. Current test/format_check/readback source hashes remain frozen"
+    }
+  ],
+  "restore_executed_by_reviewer": false,
+  "product_test_methods_executed_by_reviewer": 0,
+  "node_or_ldd_executed_by_reviewer": 0,
+  "native_starts": 0,
+  "remaining": [
+    "Root must invoke the exact reviewed helper once with --apply and external report then inspect its observed receipt",
+    "Only after successful exact restoration may root execute the unchanged three-method ReadbackCPUControls cohort in a fresh evidence directory",
+    "Preserve all logs and process outcomes; R02 aggregate regression remains pending"
+  ],
+  "approval_excludes": [
+    "Any changed helper or input bytes without review",
+    "Any native/trial schedule replay",
+    "Any product/test/fixture/guard/budget modifications",
+    "Full aggregate regression or later milestone"
+  ],
+  "approved_focused_runner_sha256": "fcb2963d828f5ea446047916b48c52288eb00628998ead4b14884d05554d464b",
+  "runner_review": {
+    "decision": "approved_for_exact_three_method_cohort_after_successful_restoration",
+    "source_review_only": true,
+    "executed": false,
+    "required_launch": [
+      "CPython 3.12.14",
+      "-B",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "fresh external --output directory",
+      "immutable identified --repo checkout"
+    ],
+    "process_evidence_limit": "subprocess.Popen audit events identify attempted launches; root must correlate them with complete stage results and cleanup evidence before claiming successful starts or cleanup"
+  }
+}
