@@ -232,7 +232,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none. The C232 lease `c232-root-ed527c495b48` is released after reviewed documentation/evidence PR #197 merged at `e21b2c8653d5efbcc7c3dbe54889190a7e4595b0` and actual-main checks passed. The work branch was observed absent. Scope #196 remains open only for verified saved handoff delivery. C232 is closed for execution after its pre-admission blocker; no aggregate or native retry is authorized. R02 remains blocked; held drafts #155/#165/#167/#169 remain unchanged.
+Owner: `c233-root-1f37bfa2194c`. Acquired 2026-11-13T23:21:25.289845+00:00; expires 2026-11-13T23:51:25.289845+00:00. Scope [#198](https://github.com/Omegapy/OntoKin/issues/198), branch `work/c233-aggregate-regression`, observed main `3b3238b13797fecf290cd19169c6ee794739f095`. Reserved shared files: STATUS.md, GOAL.md, docs/README.md and the current recommendation tracker/navigation, for reviewed C233 documentation/evidence publication and verified handoff closure. The sole aggregate has finished with driver exit 0 and all seven commands passed; complete independent reconciliation is required before acceptance/publication. Checked source remains immutable in its separate checkout. No product repair, aggregate retry or native schedule belongs to C233. Held drafts #155/#165/#167/#169 remain unclaimed.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
