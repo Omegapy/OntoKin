@@ -31,7 +31,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from tools.storage_identity import prepare_offline_workspace
 
-SOURCE_DIRS = ("ontokin", "tests", "tools", "docs", "examples", "schemas", "prototypes", "packaging", ".github")
+SOURCE_DIRS = ("ontokin", "tests", "tools", "docs", "examples", "fixtures", "schemas", "prototypes", "packaging", ".github")
 ROOT_FILES = ("pyproject.toml", "README.md", "AGENTS.md", "GOAL.md", "STATUS.md", "LICENSE", "LICENSE-CODE",
               "LICENSE-DOCS", ".gitignore", ".gitattributes", ".lfsconfig")
 IGNORED = {".git", "node_modules", "__pycache__", ".venv", "venv", ".tox", ".cache",
@@ -298,6 +298,8 @@ def build_plan(workspace: Path, output: Path, full: bool, python: str = sys.exec
     steps: list[Step] = []
     node = shutil.which("node") or "node"
     def add(id: str, argv: list, requires: tuple[str, ...] = (), report: Path | None = None) -> None:
+        if argv[0] == python:
+            argv = [python, "-B", *argv[1:]]
         steps.append(Step(id, tuple(map(str, argv)), requires, (report,) if report else ()))
     if force_agent:
         report = reports / "force-agent-tools.json"
@@ -394,6 +396,10 @@ def execute_step(step: Step, workspace: Path, output: Path, previous: dict, time
     log_path.parent.mkdir(parents=True, exist_ok=True)
     record = {"id": step.id, "argv": list(step.argv), "cwd": str(workspace), "requires": list(step.requires),
               "started_at": utc_now(), "log": log_path.relative_to(output).as_posix(), "returncode": None}
+    environment = git_environment(workspace)
+    # Unlike a parent-only -B flag, this also reaches ordinary Python descendants.
+    environment["PYTHONDONTWRITEBYTECODE"] = "1"
+    record["environment_overrides"] = {"PYTHONDONTWRITEBYTECODE": "1"}
     started = time.monotonic()
     with log_path.open("x", encoding="utf-8") as log:
         blocked = [name for name in step.requires if previous.get(name, {}).get("status") != "passed"]
@@ -403,7 +409,7 @@ def execute_step(step: Step, workspace: Path, output: Path, previous: dict, time
         else:
             try:
                 process = subprocess.Popen(step.argv, cwd=workspace, stdout=log, stderr=subprocess.STDOUT,
-                                           start_new_session=os.name == "posix", env=git_environment(workspace))
+                                           start_new_session=os.name == "posix", env=environment)
                 try:
                     record["returncode"] = process.wait(timeout=timeout)
                     record["status"] = "passed" if process.returncode == 0 else "failed"

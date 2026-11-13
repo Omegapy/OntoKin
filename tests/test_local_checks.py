@@ -2,6 +2,7 @@
 from contextlib import redirect_stderr, redirect_stdout
 import io
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -205,6 +206,109 @@ class LocalChecksTests(unittest.TestCase):
         self.assertEqual(summary["workspace_git"]["tracked_worktree_status"], "")
         for name in paths:
             self.assertEqual((self.output / "workspace" / name).read_bytes(), (self.root / name).read_bytes())
+
+    def test_declared_validation_input_roots_survive_inventory_and_copy(self):
+        directories = ("ontokin", "tests", "tools", "docs", "examples", "schemas", "prototypes",
+                       "packaging", ".github", "fixtures")
+        paths = [name + "/input.bin" for name in directories]
+        paths += ["pyproject.toml", "README.md", "AGENTS.md", "GOAL.md", "STATUS.md", "LICENSE",
+                  "LICENSE-CODE", "LICENSE-DOCS", ".gitignore", ".gitattributes", ".lfsconfig"]
+        for name in paths:
+            source = self.root / name
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_bytes(b"# input for " + name.encode("utf-8") + b"\n")
+        self.initialize_git(self.root)
+        code, summary = self.execute([])
+        self.assertEqual(code, 0, summary)
+        before = json.loads((self.output / "source-before.json").read_text())
+        recorded = {item["path"] for item in before["files"]}
+        self.assertTrue(set(paths) <= recorded, set(paths) - recorded)
+        self.assertEqual(checks.inventory(self.output / "workspace"), before)
+        self.assertEqual(summary["workspace_git"]["tracked_worktree_status"], "")
+        for name in paths:
+            self.assertEqual((self.output / "workspace" / name).read_bytes(), (self.root / name).read_bytes())
+
+    def test_top_level_fixture_can_be_read_by_isolated_child(self):
+        fixture = self.root / "fixtures/static_tray_v01/native/Q01/ontokin/source.json"
+        fixture.parent.mkdir(parents=True)
+        fixture.write_text('{"case": "Q01", "source": "main.ok"}\n', encoding="utf-8")
+        program = ("import json; from pathlib import Path; "
+                   "data=json.loads(Path('fixtures/static_tray_v01/native/Q01/ontokin/source.json').read_text()); "
+                   "assert data == {'case': 'Q01', 'source': 'main.ok'}")
+        code, summary = self.execute([self.command("read-top-level-fixture", program)])
+        self.assertEqual(code, 0, summary)
+        self.assertTrue(summary["source_unchanged"])
+        recorded = {item["path"] for item in json.loads((self.output / "source-before.json").read_text())["files"]}
+        self.assertIn(fixture.relative_to(self.root).as_posix(), recorded)
+
+    def test_fixture_mutation_invalidates_source_or_workspace_stability(self):
+        name = "fixtures/static_tray_v01/input.json"
+        fixture = self.root / name
+        fixture.parent.mkdir(parents=True)
+        for location in ("source", "workspace"):
+            with self.subTest(location=location):
+                fixture.write_text('{"original": true}\n', encoding="utf-8")
+                self.output = self.directory / ("evidence-" + location)
+                target = fixture if location == "source" else self.output / "workspace" / name
+                code, summary = self.execute([self.command("mutate-fixture",
+                    f"from pathlib import Path; Path({str(target)!r}).write_text('changed fixture')")])
+                self.assertEqual(code, 1, summary)
+                self.assertEqual(summary["steps"][0]["status"], "passed")
+                self.assertFalse(summary["source_unchanged"])
+                self.assertIn("changed", summary["error"])
+
+    def test_fixture_symlink_is_rejected_by_existing_source_guard(self):
+        external = self.directory / "external.json"
+        external.write_text('{"external": true}\n', encoding="utf-8")
+        fixtures = self.root / "fixtures"
+        fixtures.mkdir()
+        try:
+            (fixtures / "linked.json").symlink_to(external)
+        except OSError as error:
+            self.skipTest(f"Symbolic links are unavailable: {error}")
+        code, summary = self.execute([])
+        self.assertEqual(code, 1, summary)
+        self.assertIn("symbolic link", summary["error"])
+        self.assertEqual(external.read_text(), '{"external": true}\n')
+
+    def test_parent_only_no_bytecode_flag_does_not_protect_child_imports(self):
+        environment = dict(os.environ)
+        for name in ("PYTHONDONTWRITEBYTECODE", "PYTHONPYCACHEPREFIX"):
+            environment.pop(name, None)
+        program = ("import subprocess,sys; assert sys.dont_write_bytecode; "
+                   "subprocess.run([sys.executable,'-c','import ontokin'],check=True)")
+        subprocess.run([sys.executable, "-B", "-c", program], cwd=self.root, env=environment,
+                       check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        self.assertTrue(list((self.root / "ontokin/__pycache__").glob("*.pyc")))
+
+    def test_planned_python_commands_explicitly_disable_bytecode(self):
+        for full, force_agent in ((False, False), (True, False), (False, True), (True, True)):
+            with self.subTest(full=full, force_agent=force_agent):
+                steps = checks.build_plan(self.root, self.output, full, "selected-python", force_agent=force_agent)
+                python_steps = [step for step in steps if step.argv[0] == "selected-python"]
+                self.assertTrue(python_steps)
+                self.assertTrue(all(step.argv[1] == "-B" for step in python_steps), python_steps)
+
+    def test_planned_bytecode_flag_works_when_python_environment_is_ignored(self):
+        (self.root / "tests/test_bytecode.py").write_text(
+            "import sys,unittest\nimport ontokin\nclass Bytecode(unittest.TestCase):\n"
+            "    def test_disabled(self): self.assertTrue(sys.dont_write_bytecode)\n", encoding="utf-8")
+        selected = next(step for step in checks.build_plan(self.root, self.output, False) if step.id == "unit-tests")
+        step = checks.Step(selected.id, (selected.argv[0], "-E", *selected.argv[1:]))
+        code, summary = self.execute([step])
+        self.assertEqual(code, 0, summary)
+        self.assertEqual(summary["steps"][0]["test_execution"]["tests_run"], 1)
+        self.assertFalse(list((self.output / "workspace").rglob("*.pyc")))
+
+    def test_step_environment_prevents_child_and_grandchild_bytecode(self):
+        child = "import sys,ontokin; assert sys.dont_write_bytecode"
+        program = ("import subprocess,sys,ontokin; assert sys.dont_write_bytecode; "
+                   f"subprocess.run([sys.executable,'-c',{child!r}],check=True)")
+        with patch.dict(os.environ, {"PYTHONDONTWRITEBYTECODE": ""}):
+            code, summary = self.execute([self.command("nested-python", program)])
+        self.assertEqual(code, 0, summary)
+        self.assertFalse(list((self.output / "workspace").rglob("*.pyc")))
+        self.assertTrue(summary["source_unchanged"])
 
     def test_original_generated_inputs_and_new_json_sources_are_inventoried(self):
         manifest = self.root / "examples/visual/scene.files.json"

@@ -1,0 +1,74 @@
+{
+  "schema": "ontokin.c223.r01.independent-review-plan/0.1",
+  "created_utc": "2026-11-13 00:09:22 UTC",
+  "reviewer": "reconcile_remote/r01-review",
+  "baseline_commit": "3891869bb0c58a04d38b02bdfded226f924c21c2",
+  "baseline_root": "/tmp/ontokin-c222-final-restore-44c64028ec84",
+  "candidate_root": "/workspace/scratch/532e737a9a84/author",
+  "candidate_commit": "not-yet-observed",
+  "scope": "R01 only: input-copy/inventory closure and child-Python bytecode policy",
+  "source_basis": [
+    "docs/engineering/review-integration-c221/RECOMMENDATIONS.json:R01",
+    "docs/engineering/second-target-c222/NEXT-TASK.md",
+    "docs/engineering/semantic-export-c210/REGRESSION.md"
+  ],
+  "cases": [
+    {
+      "id": "I01",
+      "purpose": "Use all42 original top-level fixture files plus independently enumerated required source roots in a compact test repository. Actual inventory and prepare_workspace must include each exact fixture and every sentinel; baseline omits fixtures."
+    },
+    {
+      "id": "I02",
+      "purpose": "An actual child launched by execute_step reads a real frozen native fixture JSON by path and verifies bytes. Baseline must fail missing fixture, corrected driver must succeed."
+    },
+    {
+      "id": "I03",
+      "purpose": "Change a fixture in the original compact source during a successful child; corrected run must fail source stability. This mutation is only in a temporary control repository."
+    },
+    {
+      "id": "I04",
+      "purpose": "Change a copied fixture in isolated workspace; corrected run must reject immutable-input change while leaving original fixture intact."
+    },
+    {
+      "id": "I05",
+      "purpose": "Verify new untracked fixture inputs are inventoried and preserved. Reject fixture-root, nested-directory and file symlinks."
+    },
+    {
+      "id": "B01",
+      "purpose": "Under outer parent -B with bytecode environment absent, baseline actual child imports a local probe and writes pyc; corrected execute_step prevents it. Check both sys flag and filesystem."
+    },
+    {
+      "id": "B02",
+      "purpose": "Explicit caller PYTHONDONTWRITEBYTECODE=0 or empty cannot defeat corrected child policy; unrelated environment is retained."
+    },
+    {
+      "id": "B03",
+      "purpose": "A Python child starts an ordinary Python grandchild without forwarding -B; corrected inherited environment must prevent both caches."
+    },
+    {
+      "id": "B04",
+      "purpose": "Enumerate every real Python launch route from all four core/full and force-agent plan variants. Retain each actual interpreter-option prefix, substitute only a harmless local-import probe, and launch with actual execute_step. No real product/visual/force workflow is executed."
+    },
+    {
+      "id": "B05",
+      "purpose": "Using exact frozen independent-reader source in a small copied directory, import helper then guarded audit module. Baseline child cache creation reproduces rejection; corrected child succeeds without caches."
+    },
+    {
+      "id": "G01",
+      "purpose": "Seed existing __pycache__, .pyc, or .pyo beside exact reader copies; audit and corrupt entry scripts must still refuse before a deliberately poisonous helper can execute. Only --help parsing is requested."
+    },
+    {
+      "id": "G02",
+      "purpose": "Compare exact candidate diff and AST: only permitted driver/test paths change; timeout/kill, dependency blocking, test accounting, expected reports, source/Git stability, fixture bytes, frozen reader sources, generated exclusions, and plan order/arguments/dependencies remain intact except explicit child no-bytecode policy and fixture closure."
+    }
+  ],
+  "limits": {
+    "no_full_aggregate_regression": true,
+    "no_native_processes": true,
+    "no_product_source_evaluation": true,
+    "no_export_render_destination_or_scene_writes": true,
+    "no_full_checkout_duplication": true,
+    "synthetic_guard_mutations_confined_to_control_repositories": true,
+    "preserve_expected_baseline_failures_and_any_harness_failures": true
+  }
+}
