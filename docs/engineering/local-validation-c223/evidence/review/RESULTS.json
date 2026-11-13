@@ -1,0 +1,1477 @@
+{
+  "assertions": 548,
+  "candidate_commit": "7a72d489235a6bc880ffd6c9732591a94a0ae383",
+  "cases": [
+    {
+      "details": {
+        "baseline_commit": "3891869bb0c58a04d38b02bdfded226f924c21c2",
+        "candidate_commit": "7a72d489235a6bc880ffd6c9732591a94a0ae383",
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "/workspace/scratch/532e737a9a84/evidence/r01-review/review_r01.py"
+        ],
+        "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "files": {
+          "baseline": {
+            "tests/test_local_checks.py": "121428ece1f12f8ec5e82e72991b24972ca42e1c552614e316d5e20a0a24d71f",
+            "tools/check_local.py": "a6523bca37e595a9ac926041b84c1842273ef5d9233627258aa27485c0414bc8",
+            "tools/storage_identity.py": "ef4c51dbbb8866496abc612e5e8a97b6b5429173faa63e4b7f2742a5ca28d609"
+          },
+          "candidate": {
+            "tests/test_local_checks.py": "e6f687a2c70558bce2c897250f518ac0803a84c4a75c846724f61147f6a71559",
+            "tools/check_local.py": "840efc2ad093662153c2e67aa7b48286af57590907007f0352a710ccb25018f2",
+            "tools/storage_identity.py": "ef4c51dbbb8866496abc612e5e8a97b6b5429173faa63e4b7f2742a5ca28d609"
+          }
+        },
+        "outer_flag_dont_write_bytecode": 1,
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "duration_seconds": 0.05185503900429467,
+      "id": "binding",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "baseline": {
+          "all_selected_bytes_equal": true,
+          "expected_files": 63,
+          "inventory_files": 21,
+          "missing_files": [
+            "fixtures/static_tray_v01/CONTROL-CORPUS.json",
+            "fixtures/static_tray_v01/SOURCE-VALIDATION.json",
+            "fixtures/static_tray_v01/controls.zip",
+            "fixtures/static_tray_v01/evidence/initial-source-smoke.log",
+            "fixtures/static_tray_v01/evidence/source-smoke-02.log",
+            "fixtures/static_tray_v01/evidence/source-tests-01.log",
+            "fixtures/static_tray_v01/evidence/source-tests-02.log",
+            "fixtures/static_tray_v01/evidence/source-tests-additional-01.log",
+            "fixtures/static_tray_v01/evidence/source-tests-additional-02.log",
+            "fixtures/static_tray_v01/evidence/source-tests-additional-03.log",
+            "fixtures/static_tray_v01/evidence/source-tests-final.log",
+            "fixtures/static_tray_v01/evidence/source-tests-repair.log",
+            "fixtures/static_tray_v01/native/Q01/direct-python/main.py",
+            "fixtures/static_tray_v01/native/Q01/direct-python/source.json",
+            "fixtures/static_tray_v01/native/Q01/direct-python/tray.py",
+            "fixtures/static_tray_v01/native/Q01/ontokin/main.ok",
+            "fixtures/static_tray_v01/native/Q01/ontokin/source.json",
+            "fixtures/static_tray_v01/native/Q01/ontokin/tray.ok",
+            "fixtures/static_tray_v01/native/Q02/direct-python/main.py",
+            "fixtures/static_tray_v01/native/Q02/direct-python/source.json",
+            "fixtures/static_tray_v01/native/Q02/direct-python/tray.py",
+            "fixtures/static_tray_v01/native/Q02/ontokin/main.ok",
+            "fixtures/static_tray_v01/native/Q02/ontokin/source.json",
+            "fixtures/static_tray_v01/native/Q02/ontokin/tray.ok",
+            "fixtures/static_tray_v01/native/Q03/direct-python/main.py",
+            "fixtures/static_tray_v01/native/Q03/direct-python/source.json",
+            "fixtures/static_tray_v01/native/Q03/direct-python/tray.py",
+            "fixtures/static_tray_v01/native/Q03/ontokin/main.ok",
+            "fixtures/static_tray_v01/native/Q03/ontokin/source.json",
+            "fixtures/static_tray_v01/native/Q03/ontokin/tray.ok",
+            "fixtures/static_tray_v01/native/Q04/direct-python/main.py",
+            "fixtures/static_tray_v01/native/Q04/direct-python/source.json",
+            "fixtures/static_tray_v01/native/Q04/direct-python/tray.py",
+            "fixtures/static_tray_v01/native/Q04/ontokin/main.ok",
+            "fixtures/static_tray_v01/native/Q04/ontokin/source.json",
+            "fixtures/static_tray_v01/native/Q04/ontokin/tray.ok",
+            "fixtures/static_tray_v01/native/Q05/direct-python/main.py",
+            "fixtures/static_tray_v01/native/Q05/direct-python/source.json",
+            "fixtures/static_tray_v01/native/Q05/direct-python/tray.py",
+            "fixtures/static_tray_v01/native/Q05/ontokin/main.ok",
+            "fixtures/static_tray_v01/native/Q05/ontokin/source.json",
+            "fixtures/static_tray_v01/native/Q05/ontokin/tray.ok"
+          ]
+        },
+        "candidate": {
+          "all_selected_bytes_equal": true,
+          "expected_files": 63,
+          "inventory_files": 63,
+          "missing_files": []
+        }
+      },
+      "duration_seconds": 0.12608422199991765,
+      "id": "I01",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "baseline": {
+          "exit_code": 1,
+          "source_unchanged": true,
+          "step": {
+            "argv": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-c",
+              "from pathlib import Path; import hashlib; p=Path('fixtures/static_tray_v01/native/Q01/direct-python/source.json'); assert hashlib.sha256(p.read_bytes()).hexdigest()=='dee8a9f153bbf8220751059f508dcfdfa0501731cda5061dc45921a2248e4d4d'; print('actual frozen fixture bytes verified')"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/i02-baseline/output/workspace",
+            "duration_seconds": 0.064,
+            "finished_at": "2026-11-13T00:11:21.205528+00:00",
+            "id": "finite-probe",
+            "log": "logs/finite-probe.log",
+            "log_identity": {
+              "bytes": 638,
+              "sha256": "sha256:ab03e4c8b34e7e5d66edef1ea9f8f822c9c4d33cbd2bd6fbd12eb40c4426c0fe"
+            },
+            "reports": [],
+            "requires": [],
+            "returncode": 1,
+            "started_at": "2026-11-13T00:11:21.141274+00:00",
+            "status": "failed"
+          }
+        },
+        "candidate": {
+          "exit_code": 0,
+          "source_unchanged": true,
+          "step": {
+            "argv": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-c",
+              "from pathlib import Path; import hashlib; p=Path('fixtures/static_tray_v01/native/Q01/direct-python/source.json'); assert hashlib.sha256(p.read_bytes()).hexdigest()=='dee8a9f153bbf8220751059f508dcfdfa0501731cda5061dc45921a2248e4d4d'; print('actual frozen fixture bytes verified')"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/i02-candidate/output/workspace",
+            "duration_seconds": 0.032,
+            "environment_overrides": {
+              "PYTHONDONTWRITEBYTECODE": "1"
+            },
+            "finished_at": "2026-11-13T00:11:21.304406+00:00",
+            "id": "finite-probe",
+            "log": "logs/finite-probe.log",
+            "log_identity": {
+              "bytes": 37,
+              "sha256": "sha256:e30c363b95dd46b3d0b6e9ce3654957d17582b7255ec1919e34121ebede0bd7d"
+            },
+            "reports": [],
+            "requires": [],
+            "returncode": 0,
+            "started_at": "2026-11-13T00:11:21.272322+00:00",
+            "status": "passed"
+          }
+        }
+      },
+      "duration_seconds": 0.2168708829995012,
+      "id": "I02",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "baseline": {
+          "error": null,
+          "exit_code": 0,
+          "source_unchanged": true,
+          "step": {
+            "argv": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-c",
+              "from pathlib import Path; p=Path('/workspace/scratch/532e737a9a84/evidence/r01-review/controls/i03-baseline/source/fixtures/static_tray_v01/native/Q01/direct-python/source.json'); p.parent.mkdir(parents=True,exist_ok=True);p.write_text('controlled fixture mutation\\n')"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/i03-baseline/output/workspace",
+            "duration_seconds": 0.032,
+            "finished_at": "2026-11-13T00:11:21.386524+00:00",
+            "id": "finite-probe",
+            "log": "logs/finite-probe.log",
+            "log_identity": {
+              "bytes": 0,
+              "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "reports": [],
+            "requires": [],
+            "returncode": 0,
+            "started_at": "2026-11-13T00:11:21.354501+00:00",
+            "status": "passed"
+          }
+        },
+        "candidate": {
+          "error": "Source or verification inputs changed during this run.",
+          "exit_code": 1,
+          "source_unchanged": false,
+          "step": {
+            "argv": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-c",
+              "from pathlib import Path; p=Path('/workspace/scratch/532e737a9a84/evidence/r01-review/controls/i03-candidate/source/fixtures/static_tray_v01/native/Q01/direct-python/source.json'); p.parent.mkdir(parents=True,exist_ok=True);p.write_text('controlled fixture mutation\\n')"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/i03-candidate/output/workspace",
+            "duration_seconds": 0.032,
+            "environment_overrides": {
+              "PYTHONDONTWRITEBYTECODE": "1"
+            },
+            "finished_at": "2026-11-13T00:11:21.475349+00:00",
+            "id": "finite-probe",
+            "log": "logs/finite-probe.log",
+            "log_identity": {
+              "bytes": 0,
+              "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "reports": [],
+            "requires": [],
+            "returncode": 0,
+            "started_at": "2026-11-13T00:11:21.443199+00:00",
+            "status": "passed"
+          }
+        }
+      },
+      "duration_seconds": 0.16092733400000725,
+      "id": "I03",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "baseline": {
+          "error": null,
+          "exit_code": 0,
+          "source_unchanged": true,
+          "step": {
+            "argv": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-c",
+              "from pathlib import Path; p=Path('fixtures/static_tray_v01/native/Q01/direct-python/source.json'); p.parent.mkdir(parents=True,exist_ok=True);p.write_text('controlled fixture mutation\\n')"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/i04-baseline/output/workspace",
+            "duration_seconds": 0.032,
+            "finished_at": "2026-11-13T00:11:21.546188+00:00",
+            "id": "finite-probe",
+            "log": "logs/finite-probe.log",
+            "log_identity": {
+              "bytes": 0,
+              "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "reports": [],
+            "requires": [],
+            "returncode": 0,
+            "started_at": "2026-11-13T00:11:21.514033+00:00",
+            "status": "passed"
+          }
+        },
+        "candidate": {
+          "error": "Source or verification inputs changed during this run.",
+          "exit_code": 1,
+          "source_unchanged": false,
+          "step": {
+            "argv": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-c",
+              "from pathlib import Path; p=Path('fixtures/static_tray_v01/native/Q01/direct-python/source.json'); p.parent.mkdir(parents=True,exist_ok=True);p.write_text('controlled fixture mutation\\n')"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/i04-candidate/output/workspace",
+            "duration_seconds": 0.064,
+            "environment_overrides": {
+              "PYTHONDONTWRITEBYTECODE": "1"
+            },
+            "finished_at": "2026-11-13T00:11:21.668162+00:00",
+            "id": "finite-probe",
+            "log": "logs/finite-probe.log",
+            "log_identity": {
+              "bytes": 0,
+              "sha256": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "reports": [],
+            "requires": [],
+            "returncode": 0,
+            "started_at": "2026-11-13T00:11:21.603959+00:00",
+            "status": "passed"
+          }
+        }
+      },
+      "duration_seconds": 0.1995189119988936,
+      "id": "I04",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "commands": [
+          {
+            "argv": [
+              "git",
+              "init",
+              "--quiet",
+              "--template="
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/i05-untracked/source",
+            "returncode": 0,
+            "stderr": "",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "git",
+              "add",
+              "."
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/i05-untracked/source",
+            "returncode": 0,
+            "stderr": "",
+            "stdout": ""
+          },
+          {
+            "argv": [
+              "git",
+              "-c",
+              "user.name=Independent R01 review",
+              "-c",
+              "user.email=review@example.invalid",
+              "commit",
+              "--quiet",
+              "-m",
+              "Compact independent source"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/i05-untracked/source",
+            "returncode": 0,
+            "stderr": "",
+            "stdout": ""
+          }
+        ],
+        "refusals": [
+          {
+            "kind": "root",
+            "reason": "Source directory is a symbolic link: /workspace/scratch/532e737a9a84/evidence/r01-review/controls/i05-link-root/source/fixtures"
+          },
+          {
+            "kind": "directory",
+            "reason": "Source directory is a symbolic link: /workspace/scratch/532e737a9a84/evidence/r01-review/controls/i05-link-directory/source/fixtures/nested"
+          },
+          {
+            "kind": "file",
+            "reason": "Source file is a symbolic link: /workspace/scratch/532e737a9a84/evidence/r01-review/controls/i05-link-file/source/fixtures/payload"
+          }
+        ],
+        "untracked": "fixtures/static_tray_v01/independent-untracked.json"
+      },
+      "duration_seconds": 0.49843001500266837,
+      "id": "I05",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "baseline": {
+          "observed": {
+            "caches": [
+              "tools/__pycache__/probe_module.cpython-312.pyc"
+            ],
+            "dont_write_bytecode": false,
+            "env": null,
+            "flag": 0,
+            "sentinel": "retained"
+          },
+          "step": {
+            "argv": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-c",
+              "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b01-baseline/source",
+            "duration_seconds": 0.064,
+            "finished_at": "2026-11-13T00:11:22.252460+00:00",
+            "id": "probe",
+            "log": "logs/probe.log",
+            "log_identity": {
+              "bytes": 141,
+              "sha256": "sha256:0ec835c0746dc1c506ee75714de9f3de505fad0447a3825e1a411328b545167d"
+            },
+            "reports": [],
+            "requires": [],
+            "returncode": 0,
+            "started_at": "2026-11-13T00:11:22.188315+00:00",
+            "status": "passed"
+          }
+        },
+        "candidate": {
+          "observed": {
+            "caches": [],
+            "dont_write_bytecode": true,
+            "env": "1",
+            "flag": 1,
+            "sentinel": "retained"
+          },
+          "step": {
+            "argv": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-c",
+              "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b01-candidate/source",
+            "duration_seconds": 0.032,
+            "environment_overrides": {
+              "PYTHONDONTWRITEBYTECODE": "1"
+            },
+            "finished_at": "2026-11-13T00:11:22.288315+00:00",
+            "id": "probe",
+            "log": "logs/probe.log",
+            "log_identity": {
+              "bytes": 91,
+              "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+            },
+            "reports": [],
+            "requires": [],
+            "returncode": 0,
+            "started_at": "2026-11-13T00:11:22.256111+00:00",
+            "status": "passed"
+          }
+        }
+      },
+      "duration_seconds": 0.10355636200256413,
+      "id": "B01",
+      "status": "passed"
+    },
+    {
+      "details": [
+        {
+          "caller_value": "",
+          "observed": {
+            "caches": [],
+            "dont_write_bytecode": true,
+            "env": "1",
+            "flag": 1,
+            "sentinel": "retained"
+          },
+          "step": {
+            "argv": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-c",
+              "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b02-0/source",
+            "duration_seconds": 0.032,
+            "environment_overrides": {
+              "PYTHONDONTWRITEBYTECODE": "1"
+            },
+            "finished_at": "2026-11-13T00:11:22.324490+00:00",
+            "id": "probe",
+            "log": "logs/probe.log",
+            "log_identity": {
+              "bytes": 91,
+              "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+            },
+            "reports": [],
+            "requires": [],
+            "returncode": 0,
+            "started_at": "2026-11-13T00:11:22.292378+00:00",
+            "status": "passed"
+          }
+        },
+        {
+          "caller_value": "0",
+          "observed": {
+            "caches": [],
+            "dont_write_bytecode": true,
+            "env": "1",
+            "flag": 1,
+            "sentinel": "retained"
+          },
+          "step": {
+            "argv": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-c",
+              "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b02-1/source",
+            "duration_seconds": 0.032,
+            "environment_overrides": {
+              "PYTHONDONTWRITEBYTECODE": "1"
+            },
+            "finished_at": "2026-11-13T00:11:22.359836+00:00",
+            "id": "probe",
+            "log": "logs/probe.log",
+            "log_identity": {
+              "bytes": 91,
+              "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+            },
+            "reports": [],
+            "requires": [],
+            "returncode": 0,
+            "started_at": "2026-11-13T00:11:22.327810+00:00",
+            "status": "passed"
+          }
+        },
+        {
+          "caller_value": "1",
+          "observed": {
+            "caches": [],
+            "dont_write_bytecode": true,
+            "env": "1",
+            "flag": 1,
+            "sentinel": "retained"
+          },
+          "step": {
+            "argv": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-c",
+              "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b02-2/source",
+            "duration_seconds": 0.032,
+            "environment_overrides": {
+              "PYTHONDONTWRITEBYTECODE": "1"
+            },
+            "finished_at": "2026-11-13T00:11:22.394959+00:00",
+            "id": "probe",
+            "log": "logs/probe.log",
+            "log_identity": {
+              "bytes": 91,
+              "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+            },
+            "reports": [],
+            "requires": [],
+            "returncode": 0,
+            "started_at": "2026-11-13T00:11:22.362869+00:00",
+            "status": "passed"
+          }
+        }
+      ],
+      "duration_seconds": 0.1059389169968199,
+      "id": "B02",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "observed": {
+          "caches": [],
+          "dont_write_bytecode": true,
+          "env": "1",
+          "flag": 1,
+          "sentinel": "retained"
+        },
+        "step": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-c",
+            "import subprocess,sys; p=subprocess.run([sys.executable,'-c',\"import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))\"],capture_output=True,text=True);sys.stdout.write(p.stdout);sys.stderr.write(p.stderr);raise SystemExit(p.returncode)"
+          ],
+          "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b03-grandchild/source",
+          "duration_seconds": 0.064,
+          "environment_overrides": {
+            "PYTHONDONTWRITEBYTECODE": "1"
+          },
+          "finished_at": "2026-11-13T00:11:22.463539+00:00",
+          "id": "probe",
+          "log": "logs/probe.log",
+          "log_identity": {
+            "bytes": 91,
+            "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+          },
+          "reports": [],
+          "requires": [],
+          "returncode": 0,
+          "started_at": "2026-11-13T00:11:22.399356+00:00",
+          "status": "passed"
+        }
+      },
+      "duration_seconds": 0.06807451499480521,
+      "id": "B03",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "route_count": 18,
+        "routes": [
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "agent",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-00/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.501928+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.469692+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "agent-demo-build",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-01/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.537594+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.505369+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "construction",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-02/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.573135+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.541010+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "construction-demo-build",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-03/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.608543+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.576494+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "documents",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-04/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.643790+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.611663+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "force-agent-audit",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-05/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.679421+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.647337+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "force-agent-build",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-06/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.714897+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.682810+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "force-agent-tests",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-07/source",
+              "duration_seconds": 0.064,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.782464+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.718245+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "force-agent-tools",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-08/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.817713+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.785424+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "impulse",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-09/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.853602+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.821289+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "impulse-agent-build",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-10/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.888840+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.856568+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "prototype-build",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-11/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.923829+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.891680+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "source",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-12/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.958726+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.926739+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "surface",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-13/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:22.993763+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.961714+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "surface-agent-build",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-14/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:23.028799+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:22.996590+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "surface-native-build",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-15/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:23.064182+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:23.032061+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "unit-tests",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-16/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:23.099638+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:23.067440+00:00",
+              "status": "passed"
+            }
+          },
+          {
+            "actual_interpreter_prefix": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-B"
+            ],
+            "observed": {
+              "caches": [],
+              "dont_write_bytecode": true,
+              "env": "1",
+              "flag": 1,
+              "sentinel": "retained"
+            },
+            "planned_step": "visual-build",
+            "step": {
+              "argv": [
+                "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+                "-B",
+                "-c",
+                "import sys,os,json;from pathlib import Path;sys.path.insert(0,str(Path('tools').resolve()));import probe_module;print(json.dumps({'dont_write_bytecode':sys.dont_write_bytecode,'flag':sys.flags.dont_write_bytecode,'env':os.getenv('PYTHONDONTWRITEBYTECODE'),'sentinel':os.getenv('R01_INDEPENDENT_ENV_SENTINEL'),'caches':[str(p) for p in Path('tools').rglob('*.pyc')]}))"
+              ],
+              "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b04-route-17/source",
+              "duration_seconds": 0.032,
+              "environment_overrides": {
+                "PYTHONDONTWRITEBYTECODE": "1"
+              },
+              "finished_at": "2026-11-13T00:11:23.136211+00:00",
+              "id": "probe",
+              "log": "logs/probe.log",
+              "log_identity": {
+                "bytes": 91,
+                "sha256": "sha256:8eb127afbaa4ea8d9a5c75f69626421c8695a92c6c55175d095db28bc1edaa76"
+              },
+              "reports": [],
+              "requires": [],
+              "returncode": 0,
+              "started_at": "2026-11-13T00:11:23.104061+00:00",
+              "status": "passed"
+            }
+          }
+        ]
+      },
+      "duration_seconds": 0.6720510390005074,
+      "id": "B04",
+      "status": "passed"
+    },
+    {
+      "details": {
+        "baseline": {
+          "cache_paths": [
+            "reader/__pycache__/audit.cpython-312.pyc",
+            "reader/__pycache__/glb.cpython-312.pyc"
+          ],
+          "step": {
+            "argv": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-c",
+              "import sys;sys.path.insert(0,'reader');import glb;import audit;print('reader helper and guard imported')"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b05-baseline/source",
+            "duration_seconds": 0.032,
+            "finished_at": "2026-11-13T00:11:23.174311+00:00",
+            "id": "reader-imports",
+            "log": "logs/reader-imports.log",
+            "log_identity": {
+              "bytes": 350,
+              "sha256": "sha256:f09e24ab2e94fddc39c893bae8df966a69a84a1641427e26c4bdc27e7d5e9ccf"
+            },
+            "reports": [],
+            "requires": [],
+            "returncode": 1,
+            "started_at": "2026-11-13T00:11:23.142247+00:00",
+            "status": "failed"
+          }
+        },
+        "candidate": {
+          "cache_paths": [],
+          "step": {
+            "argv": [
+              "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+              "-c",
+              "import sys;sys.path.insert(0,'reader');import glb;import audit;print('reader helper and guard imported')"
+            ],
+            "cwd": "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/b05-candidate/source",
+            "duration_seconds": 0.064,
+            "environment_overrides": {
+              "PYTHONDONTWRITEBYTECODE": "1"
+            },
+            "finished_at": "2026-11-13T00:11:23.242817+00:00",
+            "id": "reader-imports",
+            "log": "logs/reader-imports.log",
+            "log_identity": {
+              "bytes": 33,
+              "sha256": "sha256:f6aac8d7c3137d19eac9622fbb4f8ffd5fa4871a9cbcb4625581b6e376e8b6c0"
+            },
+            "reports": [],
+            "requires": [],
+            "returncode": 0,
+            "started_at": "2026-11-13T00:11:23.178668+00:00",
+            "status": "passed"
+          }
+        }
+      },
+      "duration_seconds": 0.1054384029994253,
+      "id": "B05",
+      "status": "passed"
+    },
+    {
+      "details": [
+        {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-IB",
+            "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/g01-audit-py-__pycache__/audit.py",
+            "--help"
+          ],
+          "cache": "__pycache__",
+          "cwd": null,
+          "returncode": 1,
+          "script": "audit.py",
+          "stderr": "Traceback (most recent call last):\n  File \"/workspace/scratch/532e737a9a84/evidence/r01-review/controls/g01-audit-py-__pycache__/audit.py\", line 15, in <module>\n    raise ImportError(\"Unbound independent reader bytecode cache is forbidden\")\nImportError: Unbound independent reader bytecode cache is forbidden\n",
+          "stdout": ""
+        },
+        {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-IB",
+            "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/g01-audit-py-glb-pyc/audit.py",
+            "--help"
+          ],
+          "cache": "glb.pyc",
+          "cwd": null,
+          "returncode": 1,
+          "script": "audit.py",
+          "stderr": "Traceback (most recent call last):\n  File \"/workspace/scratch/532e737a9a84/evidence/r01-review/controls/g01-audit-py-glb-pyc/audit.py\", line 15, in <module>\n    raise ImportError(\"Unbound independent reader bytecode cache is forbidden\")\nImportError: Unbound independent reader bytecode cache is forbidden\n",
+          "stdout": ""
+        },
+        {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-IB",
+            "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/g01-audit-py-legacy-pyo/audit.py",
+            "--help"
+          ],
+          "cache": "legacy.pyo",
+          "cwd": null,
+          "returncode": 1,
+          "script": "audit.py",
+          "stderr": "Traceback (most recent call last):\n  File \"/workspace/scratch/532e737a9a84/evidence/r01-review/controls/g01-audit-py-legacy-pyo/audit.py\", line 15, in <module>\n    raise ImportError(\"Unbound independent reader bytecode cache is forbidden\")\nImportError: Unbound independent reader bytecode cache is forbidden\n",
+          "stdout": ""
+        },
+        {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-IB",
+            "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/g01-corrupt-py-__pycache__/corrupt.py",
+            "--help"
+          ],
+          "cache": "__pycache__",
+          "cwd": null,
+          "returncode": 1,
+          "script": "corrupt.py",
+          "stderr": "Traceback (most recent call last):\n  File \"/workspace/scratch/532e737a9a84/evidence/r01-review/controls/g01-corrupt-py-__pycache__/corrupt.py\", line 19, in <module>\n    raise ImportError(\"Unbound independent reader bytecode cache is forbidden\")\nImportError: Unbound independent reader bytecode cache is forbidden\n",
+          "stdout": ""
+        },
+        {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-IB",
+            "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/g01-corrupt-py-glb-pyc/corrupt.py",
+            "--help"
+          ],
+          "cache": "glb.pyc",
+          "cwd": null,
+          "returncode": 1,
+          "script": "corrupt.py",
+          "stderr": "Traceback (most recent call last):\n  File \"/workspace/scratch/532e737a9a84/evidence/r01-review/controls/g01-corrupt-py-glb-pyc/corrupt.py\", line 19, in <module>\n    raise ImportError(\"Unbound independent reader bytecode cache is forbidden\")\nImportError: Unbound independent reader bytecode cache is forbidden\n",
+          "stdout": ""
+        },
+        {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-IB",
+            "/workspace/scratch/532e737a9a84/evidence/r01-review/controls/g01-corrupt-py-legacy-pyo/corrupt.py",
+            "--help"
+          ],
+          "cache": "legacy.pyo",
+          "cwd": null,
+          "returncode": 1,
+          "script": "corrupt.py",
+          "stderr": "Traceback (most recent call last):\n  File \"/workspace/scratch/532e737a9a84/evidence/r01-review/controls/g01-corrupt-py-legacy-pyo/corrupt.py\", line 19, in <module>\n    raise ImportError(\"Unbound independent reader bytecode cache is forbidden\")\nImportError: Unbound independent reader bytecode cache is forbidden\n",
+          "stdout": ""
+        }
+      ],
+      "duration_seconds": 0.16888965800171718,
+      "id": "G01",
+      "status": "passed"
+    },
+    {
+      "duration_seconds": 0.0759203109992086,
+      "error": "{'argv': ['git', '-C', '/workspace/scratch/532e737a9a84/author', 'diff', '--name-only', '3f758d9fd5b26f861a97ef5c50568607de52bcbe', '7a72d489235a6bc880ffd6c9732591a94a0ae383'], 'cwd': None, 'returncode': 0, 'stdout': 'STATUS.md\\ntests/test_local_checks.py\\ntools/check_local.py\\n', 'stderr': ''}",
+      "id": "G02",
+      "status": "failed",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/532e737a9a84/evidence/r01-review/review_r01.py\", line 44, in case\n    details = function()\n              ^^^^^^^^^^\n  File \"/workspace/scratch/532e737a9a84/evidence/r01-review/review_r01.py\", line 387, in static_preservation\n    check(changed[\"stdout\"].splitlines() == [\"tests/test_local_checks.py\", \"tools/check_local.py\"], changed)\n  File \"/workspace/scratch/532e737a9a84/evidence/r01-review/review_r01.py\", line 39, in check\n    raise AssertionError(detail)\nAssertionError: {'argv': ['git', '-C', '/workspace/scratch/532e737a9a84/author', 'diff', '--name-only', '3f758d9fd5b26f861a97ef5c50568607de52bcbe', '7a72d489235a6bc880ffd6c9732591a94a0ae383'], 'cwd': None, 'returncode': 0, 'stdout': 'STATUS.md\\ntests/test_local_checks.py\\ntools/check_local.py\\n', 'stderr': ''}\n"
+    },
+    {
+      "details": {
+        "baseline_commit": "3891869bb0c58a04d38b02bdfded226f924c21c2",
+        "candidate_commit": "7a72d489235a6bc880ffd6c9732591a94a0ae383",
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "/workspace/scratch/532e737a9a84/evidence/r01-review/review_r01.py"
+        ],
+        "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "files": {
+          "baseline": {
+            "tests/test_local_checks.py": "121428ece1f12f8ec5e82e72991b24972ca42e1c552614e316d5e20a0a24d71f",
+            "tools/check_local.py": "a6523bca37e595a9ac926041b84c1842273ef5d9233627258aa27485c0414bc8",
+            "tools/storage_identity.py": "ef4c51dbbb8866496abc612e5e8a97b6b5429173faa63e4b7f2742a5ca28d609"
+          },
+          "candidate": {
+            "tests/test_local_checks.py": "e6f687a2c70558bce2c897250f518ac0803a84c4a75c846724f61147f6a71559",
+            "tools/check_local.py": "840efc2ad093662153c2e67aa7b48286af57590907007f0352a710ccb25018f2",
+            "tools/storage_identity.py": "ef4c51dbbb8866496abc612e5e8a97b6b5429173faa63e4b7f2742a5ca28d609"
+          }
+        },
+        "outer_flag_dont_write_bytecode": 1,
+        "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+        "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+      },
+      "duration_seconds": 0.03364333699573763,
+      "id": "binding-after",
+      "status": "passed"
+    }
+  ],
+  "limits": {
+    "destination_replays": 0,
+    "exports": 0,
+    "full_aggregate_regression": false,
+    "native_processes": 0,
+    "native_scene_writes": 0,
+    "product_source_evaluations": 0,
+    "renders": 0
+  },
+  "passed": false,
+  "schema": "ontokin.c223.r01.independent-controls/0.1"
+}

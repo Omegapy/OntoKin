@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C223 R01: validation input and bytecode repair passed focused checks
+
+[C223](docs/engineering/local-validation-c223/RESULTS.md) repairs the local driver's two recorded defects: the isolated input closure now includes all top-level fixtures, every planned Python command receives `-B`, and ordinary descendants inherit `PYTHONDONTWRITEBYTECODE=1`. Existing source-stability and frozen-reader cache guards, budgets, fixture bytes and expected outcomes remain intact.
+
+Author `7a72d489235a6bc880ffd6c9732591a94a0ae383` passes all 30 focused methods; the same controls produce 11 original assertion/subtest failures against the unchanged driver. Independent review passes 12 groups covering all 42 real fixture files, 18 Python launch prefixes, grandchildren and six retained cache refusals. [Review](docs/engineering/local-validation-c223/REVIEW.md). Coordinated publication and fresh actual-main checks remain pending at this candidate checkpoint.
+
+R00 is completed after fresh verification of C222's exact saved archive, complete offline restore and closed scope #176. The [nine-task tracker](docs/engineering/review-integration-c221/RECOMMENDATIONS.json) preserves all 41 criteria. R01 is the current bounded scope; after its verified saved handoff, [R02 aggregate regression](docs/engineering/local-validation-c223/NEXT-TASK.md) is next. Historical aggregate failures remain failed. No native starts, product-source evaluations, exports, imports, renders or scene writes ran. Stop after C223 delivery.
+
 ## C222 current result: CPU observation schema and exact correspondence passed
 
 [C222/0.1.0](docs/engineering/second-target-c222/RESULTS.md) supplies the finite observation format and geometry checker for the same 18-part fixture. C221 authority admission stays fixed. Exact positions and C220's predeclared winding conversion map all 7,800 triangles and 23,400 corners, with signed-zero canonicalization only. Names and normals cannot choose matches; malformed, missing, ambiguous, duplicate or extra geometry fails.
@@ -10,7 +18,7 @@ All 23 author controls and 49 independent public controls pass, plus ten ambigui
 
 [PR #177](https://github.com/Omegapy/OntoKin/pull/177) merged at `5db3643a1b881af1e8adfa2437d303458bcf449b`, with the exact independently reviewed tree. Fresh actual-main checks pass all 43 selected C221/C222 CPU methods, the complete independent corner map and 29 preserved sources / 4,621 links. [Verified integration record](docs/engineering/second-target-c222/evidence/INTEGRATION.json). The merged work branch is absent and the four held PRs remain unchanged.
 
-The [owner's review tracker](docs/engineering/review-integration-c221/README.md) retains all nine task records and criteria. R00 implementation is complete; its status stays active at archive seal until external delivery is confirmed. R01-R08 remain pending. After the verified C222 ZIP save, the next bounded action is [R01 validation-driver input/bytecode repair](docs/engineering/second-target-c222/NEXT-TASK.md), followed separately by R02 aggregate verification. R07 preserves the remaining second-target work. Stop after this handoff.
+The [owner's review tracker](docs/engineering/review-integration-c221/README.md) retains all nine task records and criteria. C223 freshly verified the exact final C222 ZIP and closed scope #176 delivery; R00 is completed. The separately selected R01 repair is recorded above. R02 aggregate verification and R03-R08 remain pending, including the R07 second-target chain. C222's original seal-time wording and delivery evidence remain in its preserved handoff.
 
 ## C221 current result: CPU authority binding passed
 
