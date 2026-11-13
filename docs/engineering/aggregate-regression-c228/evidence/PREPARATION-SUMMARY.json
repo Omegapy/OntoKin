@@ -1,0 +1,96 @@
+{
+  "schema": "ontokin.c228.aggregate-plan/0.1",
+  "recordedAtUtc": "2026-11-13T14:56:10.640100+00:00",
+  "source": {
+    "head": "fc500331ce789eb6f9c1210ea4f3b394d45e507c",
+    "tree": "8eba004b6b08a00449663d868674c9fc8521469f",
+    "status": ""
+  },
+  "sourcePath": "/workspace/scratch/a9488c5c1afa/OntoKin",
+  "sourceInventorySha256": "sha256:025df4334e738c1792da8dff124fa9a802571933abbd5446cd008e5c372f753c",
+  "sourceFileCount": 15764,
+  "methodInventorySha256": "5bcd70cef5bff134dbc3934b30bcc0f2662566d170d865f77dc6e3353e86381c",
+  "discoveredMethods": 4662,
+  "interpreter": "/workspace/scratch/a9488c5c1afa/r02-venv/bin/python",
+  "evidenceRoot": "/workspace/scratch/a9488c5c1afa/aggregate-run",
+  "cwd": "/workspace/scratch/a9488c5c1afa/OntoKin",
+  "argv": [
+    "/workspace/scratch/a9488c5c1afa/r02-venv/bin/python",
+    "-B",
+    "tools/check_local.py",
+    "--timeout",
+    "3600",
+    "--output-dir",
+    "/workspace/scratch/a9488c5c1afa/aggregate-run/default"
+  ],
+  "environmentOverrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "STATIC_TRAY_READBACK_CPU_OUTPUT": "/workspace/scratch/a9488c5c1afa/aggregate-run/readback",
+    "TMPDIR": "/workspace/scratch/a9488c5c1afa/aggregate-run/tmp"
+  },
+  "pathPrefix": "/workspace/scratch/a9488c5c1afa/r02-venv/bin",
+  "attemptsPermitted": 1,
+  "automaticRetryAllowed": false,
+  "perCommandTimeoutSeconds": 3600,
+  "outerTimeoutSeconds": 25800,
+  "productBudgetsChanged": false,
+  "plannedSteps": [
+    "unit-tests",
+    "source",
+    "agent",
+    "construction",
+    "surface",
+    "impulse",
+    "documents"
+  ],
+  "selectedRoles": [
+    "core"
+  ],
+  "scopeIssue": 188,
+  "justification": "C226 declared 3600 seconds per validation command after C224 hit 900 seconds; original product budgets stay unchanged. Outer failsafe is seven command ceilings plus 600 seconds for preparation and cleanup.",
+  "launcherSha256": "7e191b055bc5d3b4f2310b317b70761648f8e653218a5d3f994e7002234d435f",
+  "completePassConditions": [
+    "all inventoried methods pass together with zero skips or unexplained/unrun entries",
+    "no setup/import errors, duplicate starts, unclassified progress or count disagreement",
+    "all seven selected default commands pass in exact order",
+    "source and Git remain unchanged",
+    "process cleanup passes; broader roles and external pending cases retain their status"
+  ],
+  "stopRules": [
+    "No source/Git/status edits in executed tree during run",
+    "Ordinary failing steps preserve unchanged driver continuation",
+    "No retry, repair, focused cohort, optional role, native receiving or second milestone",
+    "Reconcile actual outcome and begin saved-handoff closure"
+  ],
+  "releaseClaim": false,
+  "summaryOnly": true,
+  "fullPlanBinding": {
+    "path": "aggregate-author/prepared/RUN-PLAN.json",
+    "bytes": 88215,
+    "sha256": "b28219d885fe0a3b9ba483e2186d6d662e635d55621347267a5880cb94dfb4d1"
+  },
+  "sourceInventoryBinding": {
+    "path": "aggregate-author/prepared/SOURCE-INVENTORY.json",
+    "bytes": 3509364,
+    "sha256": "51465ce167825be18d97d352fc48beeb881f198d2f2e8b6807988f123bb6da68"
+  },
+  "environmentBinding": {
+    "path": "aggregate-author/prepared/ENVIRONMENT.json",
+    "bytes": 3418,
+    "sha256": "1dd1aa22f62702ef09562d232afd3c8709f7ef691a02b0b92ded6dfa4caa9ca8"
+  },
+  "authorSyntheticControls": {
+    "schema": "ontokin.c228.aggregate-harness-controls/0.1",
+    "passed": true,
+    "testsRun": 11,
+    "errors": 0,
+    "failures": 0,
+    "productImports": 0,
+    "productDiscovery": 0,
+    "productTests": 0,
+    "nativeStarts": 0,
+    "launcherSha256": "7e191b055bc5d3b4f2310b317b70761648f8e653218a5d3f994e7002234d435f"
+  },
+  "independentSupervisorControlGroups": 4
+}
