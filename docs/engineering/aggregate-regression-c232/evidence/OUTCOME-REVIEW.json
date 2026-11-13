@@ -1,0 +1,279 @@
+{
+  "schema": "ontokin.c232.independent-outcome-review/0.1",
+  "recordedAtUtc": "2026-11-13T22:00:56.703840+00:00",
+  "passed": true,
+  "reviewMeaning": "Exact blocker is adequately established; this is not an aggregate pass",
+  "outcome": "blocked_before_aggregate_admission",
+  "source": {
+    "head": "32f4c088010a35f67cbb19edb40b6e08875d37dc",
+    "tree": "42a668bc2118c9f7a219ed68b3dd0ce9ea452a61",
+    "status": ""
+  },
+  "sourceFileCount": 15907,
+  "sourceInventorySha256": "sha256:a74f6e0c379778f7acdc03a2327f84e4fc7189fd7a2279a2139c74b2bbf2dfd5",
+  "planSha256": "5d06c19e9e10f1fe1a0e2eec16c7f660187d6024211000b0514940b579819576",
+  "approvalSha256": "0975dc5eeca15264ee2c3f95f53383b69cbe2dd0263c76b62a8d2a1745577b7d",
+  "savedApprovalSha256": "f69eb3f4e334bace2b37d3bff490e792adc73df3a5ff6cdce53e0eb18fd1e780",
+  "approvalDifferences": {
+    "added": [
+      "processObservationLimit",
+      "scopeIssue"
+    ],
+    "removed": [],
+    "changed": []
+  },
+  "launcherInvocations": 1,
+  "launcherExitCode": 1,
+  "driverStarts": 0,
+  "aggregateAttempts": 0,
+  "productMethodsExecuted": 0,
+  "inventoriedMethodsUnrun": 4685,
+  "nativeStarts": 0,
+  "outputReservationCreated": false,
+  "automaticRetries": 0,
+  "commands": [
+    {
+      "id": "unit-tests",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "status": "unrun",
+      "actualStart": false,
+      "reason": "launcher failed reading recovery gate before driver start"
+    },
+    {
+      "id": "source",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "-m",
+        "ontokin",
+        "conformance",
+        "--output",
+        "/workspace/scratch/ed527c495b48/aggregate-run/default/reports/source.json"
+      ],
+      "status": "unrun",
+      "actualStart": false,
+      "reason": "launcher failed reading recovery gate before driver start"
+    },
+    {
+      "id": "agent",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "tools/run_agent_conformance.py",
+        "--output",
+        "/workspace/scratch/ed527c495b48/aggregate-run/default/reports/agent.json"
+      ],
+      "status": "unrun",
+      "actualStart": false,
+      "reason": "launcher failed reading recovery gate before driver start"
+    },
+    {
+      "id": "construction",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "-m",
+        "tools.verify_construction_ci",
+        "--external-evidence",
+        "docs/engineering/construction-validation/external-gate.json",
+        "--output",
+        "/workspace/scratch/ed527c495b48/aggregate-run/default/reports/construction.json"
+      ],
+      "status": "unrun",
+      "actualStart": false,
+      "reason": "launcher failed reading recovery gate before driver start"
+    },
+    {
+      "id": "surface",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "tools/run_surface_conformance.py",
+        "--allow-pending",
+        "--output",
+        "/workspace/scratch/ed527c495b48/aggregate-run/default/reports/surface.json"
+      ],
+      "status": "unrun",
+      "actualStart": false,
+      "reason": "launcher failed reading recovery gate before driver start"
+    },
+    {
+      "id": "impulse",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "tools/run_impulse_conformance.py",
+        "--allow-pending",
+        "--output",
+        "/workspace/scratch/ed527c495b48/aggregate-run/default/reports/impulse.json"
+      ],
+      "status": "unrun",
+      "actualStart": false,
+      "reason": "launcher failed reading recovery gate before driver start"
+    },
+    {
+      "id": "documents",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "status": "unrun",
+      "actualStart": false,
+      "reason": "launcher failed reading recovery gate before driver start"
+    }
+  ],
+  "currentMatchingProcesses": [],
+  "processAccountingBasis": "Two orchestration Python invocations: gate builder then launcher. Root returned shell exit 1; its exact transcribed result and original launcher streams are retained. The launcher traceback stopped before source import, reservation, driver or child creation. Exact orchestration PIDs are unavailable and are not inferred. No admitted aggregate process receipt exists. Current process scan finds no matching launcher/driver.",
+  "codeControlFlowLines": {
+    "gateRead": 244,
+    "sourceImport": 258,
+    "reservation": 266,
+    "supervise": 272
+  },
+  "checksPassed": 23,
+  "checks": [
+    "unchanged exact plan",
+    "final approval frozen unchanged",
+    "retained final approval exact",
+    "retained saved approval exact",
+    "only two declared review annotations added",
+    "actual saved prelaunch archive matches build receipt",
+    "saved plan bytes exact",
+    "saved earlier approval bytes exact",
+    "recovery archive save succeeded at version 1",
+    "recovery gate absent",
+    "aggregate reservation/output absent",
+    "actual traceback stopped at absent gate read",
+    "launcher emitted no completion result",
+    "unchanged reviewed launcher code",
+    "trace precedes source import reservation and launch",
+    "entire checked source byte inventory unchanged",
+    "exact clean source Git identity unchanged",
+    "complete genuine inventory retained",
+    "all seven declared driver commands retained",
+    "no current matching launcher or aggregate driver process",
+    "root returned shell exit 1 has preserved exact transcription",
+    "root failure expression matches the saved/current approval mismatch",
+    "root invocation record distinguishes orchestration processes from zero aggregate/native starts"
+  ],
+  "productFailureInferred": false,
+  "aggregatePass": false,
+  "R02": "blocked",
+  "nextTask": "In a separate bounded thread, reconcile current main, prepare/review a fresh complete default aggregate, finish and freeze reviewers, confirm saving exact finalized plan and approval, build and verify the gate in a separate successful operation, then invoke the launcher at most once and hand off.",
+  "sourceAndEvidenceFiles": [
+    {
+      "path": "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/aggregate-author/prepared/RUN-PLAN.json",
+      "sha256": "5d06c19e9e10f1fe1a0e2eec16c7f660187d6024211000b0514940b579819576",
+      "bytes": 88741
+    },
+    {
+      "path": "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/preflight-review/APPROVAL.json",
+      "sha256": "0975dc5eeca15264ee2c3f95f53383b69cbe2dd0263c76b62a8d2a1745577b7d",
+      "bytes": 1971696
+    },
+    {
+      "path": "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/launch-blocker/SAVED-APPROVAL.json",
+      "sha256": "f69eb3f4e334bace2b37d3bff490e792adc73df3a5ff6cdce53e0eb18fd1e780",
+      "bytes": 1971354
+    },
+    {
+      "path": "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/launch-blocker/FINAL-APPROVAL.json",
+      "sha256": "0975dc5eeca15264ee2c3f95f53383b69cbe2dd0263c76b62a8d2a1745577b7d",
+      "bytes": 1971696
+    },
+    {
+      "path": "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/launch-blocker/BLOCKER.json",
+      "sha256": "747c3bdc82ba52e5fd3b4112f5307a461a95161ef24c39664c06243337f351fc",
+      "bytes": 1409
+    },
+    {
+      "path": "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/aggregate-author/run_aggregate.py",
+      "sha256": "7e191b055bc5d3b4f2310b317b70761648f8e653218a5d3f994e7002234d435f",
+      "bytes": 13974
+    },
+    {
+      "path": "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/aggregate-author/launcher.stderr.log",
+      "sha256": "d47955902d48a71157f0b1410e80cef8516053f6be2245d69b12423819fad698",
+      "bytes": 1107
+    },
+    {
+      "path": "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/aggregate-author/launcher.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "/workspace/scratch/ed527c495b48/recovery-c232/recovery-build-prelaunch.json",
+      "sha256": "52b03066c4b361279b83569dc68e4a2c4c5fc9d94f334ed8ec439998533d4849",
+      "bytes": 212
+    },
+    {
+      "path": "/workspace/scratch/ed527c495b48/recovery-c232/library-recovery-save-prelaunch.json",
+      "sha256": "381d3746e7d2070afd727ab60b64c7e4e6aa8224c42002d69150246fc4557bfe",
+      "bytes": 946
+    },
+    {
+      "path": "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/launch-blocker/ROOT-INVOCATION-RECORD.json",
+      "sha256": "6aef301a78fea6c13b5310c17e0907f512c58af445f6484512e7d72ecdfdb042",
+      "bytes": 1478
+    },
+    {
+      "path": "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/launch-blocker/ROOT-INVOCATION-NOTE.md",
+      "sha256": "618e747dd1cba44556f2b50de99fb795375096fb9d3a1720a93334d132e1b0ac",
+      "bytes": 1864
+    },
+    {
+      "path": "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/launch-blocker/gate-builder-returned-output.txt",
+      "sha256": "2c4cf6ee3fb84976c844e0c6002b84fb287a30845e628c228ba12ddf533560d9",
+      "bytes": 88
+    }
+  ],
+  "rootInvocationReceipt": {
+    "schema": "ontokin.c232.root-tool-receipt/0.1",
+    "provenance": "Exact input command structure and returned result transcribed from the root exec tool call after failure; original launcher streams were captured contemporaneously",
+    "toolResult": {
+      "chunk_id": "8f6ed5",
+      "wall_time_seconds": 0.024466923,
+      "exit_code": 1,
+      "original_token_count": 22,
+      "output": "Traceback (most recent call last):\n  File \"<stdin>\", line 7, in <module>\nAssertionError\n"
+    },
+    "gateBuilderFailedLine": 7,
+    "failedExpression": "assert z.read(str(approval)) == approval.read_bytes()",
+    "shellDependency": "newline; no set -e or && between builder and launcher",
+    "launcherArgv": [
+      "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+      "-I",
+      "-B",
+      "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/aggregate-author/run_aggregate.py",
+      "--plan",
+      "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/aggregate-author/prepared/RUN-PLAN.json",
+      "--approval",
+      "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/preflight-review/APPROVAL.json",
+      "--recovery-gate",
+      "/workspace/scratch/ed527c495b48/handoff-c232/evidence/c232/aggregate-author/RECOVERY-GATE.json"
+    ],
+    "launcherStdout": "aggregate-author/launcher.stdout.log",
+    "launcherStderr": "aggregate-author/launcher.stderr.log",
+    "shortOrchestrationProcessIds": "not recorded",
+    "aggregateDriverStarts": 0,
+    "nativeTargetStarts": 0,
+    "retries": 0
+  },
+  "orchestrationProcesses": {
+    "gateBuilderInvocations": 1,
+    "launcherInvocations": 1,
+    "recordedExactPids": false,
+    "unknownPids": "The two short orchestration PIDs were not recorded",
+    "source": "Retrospective exact transcription of root tool input/result, independently consistent with actual launcher streams and inspected control flow"
+  }
+}

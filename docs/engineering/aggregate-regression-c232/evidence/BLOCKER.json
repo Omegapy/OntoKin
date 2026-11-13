@@ -1,0 +1,23 @@
+{
+  "schema": "ontokin.c232.preexecution-blocker/0.1",
+  "status": "blocked_before_aggregate_admission",
+  "sourceCommit": "32f4c088010a35f67cbb19edb40b6e08875d37dc",
+  "planSha256": "5d06c19e9e10f1fe1a0e2eec16c7f660187d6024211000b0514940b579819576",
+  "savedPlanMatchesCurrent": true,
+  "savedApprovalSha256": "f69eb3f4e334bace2b37d3bff490e792adc73df3a5ff6cdce53e0eb18fd1e780",
+  "finalApprovalSha256": "0975dc5eeca15264ee2c3f95f53383b69cbe2dd0263c76b62a8d2a1745577b7d",
+  "finalApprovalMatchesSaved": false,
+  "recoveryGateExists": false,
+  "aggregateOutputExists": false,
+  "launcherInvocations": 1,
+  "launcherExitCode": 1,
+  "driverStarts": 0,
+  "productMethodsExecuted": 0,
+  "nativeStarts": 0,
+  "outputReservationCreated": false,
+  "automaticRetries": 0,
+  "cause": "Root attempted gate creation before checking the reviewer had finalized all approval bytes. The saved approval differed from final approval, causing the root gate assertion to fail. A newline-separated shell command still invoked the launcher; it exited while opening the absent gate before reservation or child creation.",
+  "disposition": "Stop execution in this scope; independently review exact blocker and preserve all preparation. Do not retry launcher or aggregate.",
+  "stderr": "handoff-c232/evidence/c232/aggregate-author/launcher.stderr.log",
+  "stdout": "handoff-c232/evidence/c232/aggregate-author/launcher.stdout.log"
+}

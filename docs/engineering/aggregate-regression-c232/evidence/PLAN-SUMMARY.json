@@ -1,0 +1,138 @@
+{
+  "schema": "ontokin.c232.prepared-plan-summary/0.1",
+  "source": {
+    "head": "32f4c088010a35f67cbb19edb40b6e08875d37dc",
+    "tree": "42a668bc2118c9f7a219ed68b3dd0ce9ea452a61",
+    "status": ""
+  },
+  "planSha256": "5d06c19e9e10f1fe1a0e2eec16c7f660187d6024211000b0514940b579819576",
+  "fullPlanBytes": 88741,
+  "fullPlanHandoffPath": "evidence/c232/aggregate-author/prepared/RUN-PLAN.json",
+  "sourceFileCount": 15907,
+  "sourceInventoryDigest": "sha256:a74f6e0c379778f7acdc03a2327f84e4fc7189fd7a2279a2139c74b2bbf2dfd5",
+  "sourceInventoryFileSha256": "a042d4e43b132350e04638700aa409d90086ce7dda00b3b61fd5b28fd7715aca",
+  "methodInventoryFileSha256": "ec707e7cee5e9f308daa948d597b0ef29629a6ef303c9c5b0b29b2168e17cd21",
+  "discoveredMethods": 4685,
+  "interpreter": "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+  "environmentHandoffPath": "evidence/c232/aggregate-author/prepared/ENVIRONMENT.json",
+  "selectedRoles": [
+    "core"
+  ],
+  "driverArgv": [
+    "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+    "-B",
+    "tools/check_local.py",
+    "--timeout",
+    "3600",
+    "--output-dir",
+    "/workspace/scratch/ed527c495b48/aggregate-run/default"
+  ],
+  "commands": [
+    {
+      "id": "unit-tests",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "requires": [],
+      "status": "unrun",
+      "actualStart": false
+    },
+    {
+      "id": "source",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "-m",
+        "ontokin",
+        "conformance",
+        "--output",
+        "/workspace/scratch/ed527c495b48/aggregate-run/default/reports/source.json"
+      ],
+      "requires": [],
+      "status": "unrun",
+      "actualStart": false
+    },
+    {
+      "id": "agent",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "tools/run_agent_conformance.py",
+        "--output",
+        "/workspace/scratch/ed527c495b48/aggregate-run/default/reports/agent.json"
+      ],
+      "requires": [],
+      "status": "unrun",
+      "actualStart": false
+    },
+    {
+      "id": "construction",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "-m",
+        "tools.verify_construction_ci",
+        "--external-evidence",
+        "docs/engineering/construction-validation/external-gate.json",
+        "--output",
+        "/workspace/scratch/ed527c495b48/aggregate-run/default/reports/construction.json"
+      ],
+      "requires": [],
+      "status": "unrun",
+      "actualStart": false
+    },
+    {
+      "id": "surface",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "tools/run_surface_conformance.py",
+        "--allow-pending",
+        "--output",
+        "/workspace/scratch/ed527c495b48/aggregate-run/default/reports/surface.json"
+      ],
+      "requires": [],
+      "status": "unrun",
+      "actualStart": false
+    },
+    {
+      "id": "impulse",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "tools/run_impulse_conformance.py",
+        "--allow-pending",
+        "--output",
+        "/workspace/scratch/ed527c495b48/aggregate-run/default/reports/impulse.json"
+      ],
+      "requires": [],
+      "status": "unrun",
+      "actualStart": false
+    },
+    {
+      "id": "documents",
+      "argv": [
+        "/workspace/scratch/ed527c495b48/r02-venv/bin/python",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "requires": [],
+      "status": "unrun",
+      "actualStart": false
+    }
+  ],
+  "perCommandTimeoutSeconds": 3600,
+  "outerTimeoutSeconds": 25800,
+  "productBudgetsChanged": false,
+  "attemptsPermittedBeforeBlocker": 1,
+  "automaticRetryAllowed": false,
+  "currentExecutionDisposition": "Closed for C232 execution after concrete blocker; no resumed launch authorized",
+  "recoveryUrl": "https://chatgpt.com/library?file_id=libfile_fde3_f-bd6b1e1099688191abb8f5f3ee6c77ed_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+}

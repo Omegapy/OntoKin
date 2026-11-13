@@ -1,6 +1,6 @@
 # OntoKin documentation guide
 
-Current R02 prerequisite: [C231 ledger file-identity and lifecycle repair](engineering/ledger-identity-c231/README.md) passes all 307 affected methods with independent replacement and cleanup controls. The [next bounded step is one fresh complete aggregate](engineering/ledger-identity-c231/NEXT-TASK.md); R02 remains blocked until that result passes. [C230 diagnosis](engineering/ledger-replacement-c230/README.md) and its consumed plan remain preserved.
+Current R02 result: [C232 stopped before aggregate admission](engineering/aggregate-regression-c232/RESULTS.md); all 4,685 discovered methods and seven commands remain unrun. The [next bounded step](engineering/aggregate-regression-c232/NEXT-TASK.md) requires completed reviewer files, exact saved approval verification and a separately successful recovery gate before one fresh aggregate. [C231 ledger repair](engineering/ledger-identity-c231/README.md) remains checked; R02 is still blocked.
 
 Current validation preparation: [C225 exact readback prerequisites and three unchanged passing methods](engineering/readback-prerequisites-c225/RESULTS.md). Its [next action](engineering/readback-prerequisites-c225/NEXT-TASK.md) is one fresh immutable R02 aggregate attempt. [C224 complete timeout accounting](engineering/aggregate-regression-c224/RESULTS.md) and all later recommendations remain preserved.
 

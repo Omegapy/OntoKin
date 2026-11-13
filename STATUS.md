@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C232 R02 preparation: stopped before aggregate admission
+
+[C232](docs/engineering/aggregate-regression-c232/RESULTS.md) prepared one complete default aggregate from exact `32f4c088010a35f67cbb19edb40b6e08875d37dc` on Linux x86-64 / CPython 3.12.14. Fresh discovery identified **4,685 methods**, and independent prelaunch review checked 15,907 source files and 350 bindings. No product method ran.
+
+Root saved the approval before the reviewer added its final scope/process metadata. The exact saved/current approval comparison then refused recovery-gate creation. Root's newline-separated shell sequence nevertheless invoked the launcher once; it exited **1** opening the absent gate, before output reservation or driver creation. All **4,685 methods and seven commands are unrun**. Two short orchestration Python programs ran; their PIDs were not recorded. No aggregate, native target or retry occurred, and no product defect is inferred.
+
+[Independent review](docs/engineering/aggregate-regression-c232/REVIEW.md) confirms the failure and unchanged clean source. **R02 remains blocked.** C228 remains the latest actually completed aggregate, with its original failure preserved; C231's checked repair remains intact. [Next bounded scope](docs/engineering/aggregate-regression-c232/NEXT-TASK.md): a fresh current-source aggregate after reviewer completion, exact saved approval verification and a separately successful recovery gate. Scope [#196](https://github.com/Omegapy/OntoKin/issues/196) records publication and saved delivery. All nine recommendations/41 criteria and held drafts remain. C231 delivery was independently confirmed and scope #194 is closed.
+
 ## C231 R02 prerequisite: ledger identity repair checked
 
 [C231](docs/engineering/ledger-identity-c231/RESULTS.md) retains the original invocation-marker and journal file objects while a ledger capability is live. Same-content replacement cannot inherit their authority merely through recycled device/inode numbers. Existing path/content checks, nonblocking opens, poisoning, budgets and frozen bindings remain. Explicit cleanup handles terminal states, failures, disposal, interruption and fork boundaries.
