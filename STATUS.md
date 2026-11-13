@@ -8,6 +8,8 @@ OntoKin is an AI-native semantic language and intermediate representation for co
 
 This completes prerequisite preparation only. R02 remains blocked pending [one fresh immutable aggregate attempt](docs/engineering/readback-prerequisites-c225/NEXT-TASK.md) with a justified longer validation-command ceiling. The historical C224 timeout and all nine recommendations / 41 criteria remain unchanged. Runtime, tests, fixtures, locks, workflows and product budgets are unchanged; no native schedule or aggregate ran. [Scope #182](https://github.com/Omegapy/OntoKin/issues/182) records publication and the final handoff.
 
+[PR #183](https://github.com/Omegapy/OntoKin/pull/183) merged at `5781fcab7a1078f6013f11d93156092de92da9c6`, exactly matching independently reviewed tree `e6e29d1d28de03145873c7d7075b4dc2a69cf28e`. Fresh resulting-main documentation checks passed 29 preserved sources / 4,693 local links. [Integration receipt](docs/engineering/readback-prerequisites-c225/evidence/INTEGRATION.json). This publishes the bounded preparation result; it does not close R02.
+
 ## C224 R02: aggregate outcome recorded with complete accounting
 
 [C224](docs/engineering/aggregate-regression-c224/RESULTS.md) ran the complete default seven-step local plan from immutable source `1530832e0ee566887a43ce6a5e5d374901a24860` after the exact seven-package preflight on Linux x86-64 / CPython 3.12.14. The per-command limit remained 900 seconds. Independent pre-run discovery recorded all 4,662 methods; [complete outcome accounting](docs/engineering/aggregate-regression-c224/evidence/METHOD-OUTCOMES-SUMMARY.json) records 3451 passing, 0 failed, 0 errored, 0 skipped, 1 timed-out and 1210 unrun methods. Setup/import and subtest events remain separately identified. The driver result is **failed**; R02 is **blocked**. Source and Git revision stability are True / True.
@@ -160,7 +162,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Active integration owner `c225-main-77c7f4193edb` for [scope #182](https://github.com/Omegapy/OntoKin/issues/182), acquired from observed main `c76a7622dadb0bdd7cb514840ee1747aabe8eae7` at `2026-11-13T02:10:30.306082+00:00`, expires `2026-11-13T02:40:30.306082+00:00`. The bounded integration covers independently reviewed readback-prerequisite preparation evidence, its reproduction helper, and current STATUS/documentation navigation. The unchanged three-method CPU cohort passed on the observed base. No aggregate run, runtime/test/fixture/lock/workflow change or native schedule replay is authorized by this lease. Held PRs #155/#165/#167/#169 remain unchanged. Root will verify actual publication, release ownership and complete one saved C225 handoff.
+No active integration lease. Owner `c225-main-77c7f4193edb` releases ownership after independently reviewed PR #183 merged and fresh actual-main documentation checks passed. The exact retained prerequisites and three unchanged CPU methods pass; R02 remains blocked pending its separately bounded complete aggregate attempt. Root completes only C225 archive verification, offline restoration and confirmed save, then closes [scope #182](https://github.com/Omegapy/OntoKin/issues/182). The merged work branch is retired only after exact head/ancestry readback. Held PRs #155/#165/#167/#169 and closed native schedules remain unchanged. No additional feature or aggregate run starts here.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
