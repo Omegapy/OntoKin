@@ -10,6 +10,8 @@ The attempted worker was reaped with no remaining process-group members observed
 
 **R02 remains blocked.** C228's 4,661 passing methods and one failed method with two replacement subtests remain the latest aggregate result. This increment preserves diagnostic source, documentation and the exact failed attempt; product guards, assertions, fixtures and budgets are unchanged. [Next bounded scope](docs/engineering/ledger-replacement-c229/NEXT-TASK.md): correct and qualify launcher path handling, then independently review and save a fresh finite CPU diagnosis. The C229 attempt cannot be resumed. [Scope #190](https://github.com/Omegapy/OntoKin/issues/190) records publication and final handoff delivery. All nine recommendations/41 criteria, held drafts and consumed native schedules remain.
 
+[PR #191](https://github.com/Omegapy/OntoKin/pull/191) merged at `1e985b416b89d5658363d08d65bbc8dfb205875d`, exactly matching reviewed tree `309cb50aa77091bd738fbece46823fcd6e5d85a6`. Fresh actual-main documentation checks passed 29 preserved sources / 4,833 local links. [Integration receipt](docs/engineering/ledger-replacement-c229/evidence/INTEGRATION.json). The merged work branch was observed absent; only final verified saved handoff delivery remains in scope #190.
+
 ## C228 R02: complete aggregate; ledger replacement rejection remains blocked
 
 [C228](docs/engineering/aggregate-regression-c228/RESULTS.md) completes one immutable default aggregate from exact `fc500331ce789eb6f9c1210ea4f3b394d45e507c` on Linux x86-64 / CPython 3.12.14. All **4,662 methods ran: 4,661 passed and one failed**. The single failed ledger method contains two failed same-content file-replacement subtests: the expected `LedgerError` was not raised after recreating either the invocation marker or journal. There were no method errors, skips, import/setup errors, timeouts or unrun methods. The cause is not established. **R02 remains blocked.**
@@ -200,7 +202,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c229-main-9d6b968559d5`. Task: integrate the reviewed C229 diagnostic preparation and factual launcher-blocker record under [scope #190](https://github.com/Omegapy/OntoKin/issues/190). The single diagnostic attempt is consumed; no further product execution or repair is authorized in this scope. Acquired 2026-11-13T18:41:02.898859+00:00; expires 2026-11-13T19:11:02.898859+00:00. Expected starting main: `d578a30dab9a112895d2e3c09561a17866d9c464`. Branch: `work/c229-ledger-diagnosis`. Reserved shared files: STATUS.md, docs/README.md and docs/engineering/review-integration-c221/RECOMMENDATIONS.json; new evidence lives in docs/engineering/ledger-replacement-c229. Held drafts #155/#165/#167/#169 remain unchanged.
+Owner: none. The C229 lease `c229-main-9d6b968559d5` is released after checked PR #191 integration. The work branch was observed absent after merge. Scope #190 remains open only for verified saved handoff delivery. R02 remains blocked; C229's sole diagnostic plan is consumed, with zero product methods/cases executed. A fresh launcher-path correction and reviewed finite diagnosis has no active owner or execution authority. Held drafts #155/#165/#167/#169 remain unchanged.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
