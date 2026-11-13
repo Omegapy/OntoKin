@@ -2,7 +2,7 @@
 
 The owner amended the completed C221 handoff to retain the current second-target work and add eight follow-up improvements. The [full tracker](RECOMMENDATIONS.json) preserves every task, acceptance criterion, dependency and evidence basis. Its baseline remains the published C221 revision.
 
-C222 completed **R00**, the CPU-only finite observation schema and exact corner-correspondence checker. Its exact final saved delivery was freshly verified in C223. C221 input admission stays fixed, and the remaining C220 second-target plan stays pending. [C223 selects R01](../local-validation-c223/README.md), the local validation input-copy and child-Python bytecode repair; publication and delivery are recorded separately.
+C222 completed **R00**, the CPU-only finite observation schema and exact corner-correspondence checker. Its exact final saved delivery was freshly verified in C223. C221 input admission stays fixed, and the remaining C220 second-target plan stays pending. [C223 completes the reviewed R01 repair](../local-validation-c223/README.md), covering local validation input copying and child-Python bytecode. Publication and fresh actual-main checks passed; the final handoff save is recorded externally after sealing.
 
 After the reviewed R01 repair and C223 handoff are delivered, the next thread selects **R02**, its separate aggregate-regression follow-up. R03-R06 cover visible examples, CLI diagnostics, focused profile metadata consolidation and installed first-use checks. R07 continues second-target preparation in bounded steps. R08 remains the matched direct-authoring comparison before broad investment. These recommendations are not extra R00 execution gates.
 

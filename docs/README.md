@@ -1,6 +1,6 @@
 # OntoKin documentation guide
 
-The [owner-directed C221 review tracker](engineering/review-integration-c221/README.md) retains R00 and all R01-R08 acceptance criteria. C222 completed R00 with confirmed delivery; [C223 selects R01 validation-driver repair](engineering/local-validation-c223/README.md). R02 aggregate regression remains its separate follow-up.
+The [owner-directed C221 review tracker](engineering/review-integration-c221/README.md) retains R00 and all R01-R08 acceptance criteria. C222 completed R00 with confirmed delivery; [C223 completes the reviewed R01 validation-driver repair](engineering/local-validation-c223/README.md). R02 aggregate regression remains its separate follow-up.
 
 ## Current engineering checkpoint
 
