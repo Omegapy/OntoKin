@@ -282,11 +282,11 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none. The C237 holder `c237-root-b6bae7409794` releases ownership through this documentation-only closure after verified PR #208 merge and passing actual-main checks. The lease was acquired at `2026-11-14T16:08:45.000Z`, with its original expiry `2026-11-14T16:38:45.000Z`; it was not extended.
+Owner: `c238-root-5f5d58a252d3`. Scope: [C238 CPU combined-observation envelope admission](https://github.com/Omegapy/OntoKin/issues/209). Acquired at `2026-11-14T17:17:32.000Z`; expires at `2026-11-14T17:47:32.000Z`. This lease protects main integration and the scoped shared STATUS/README/navigation updates. Independent nonoverlapping branch work remains allowed.
 
-The closure publishes through an observed-head conditional nonforce update from actual merge `769bc9b255e3e41ee8af837456f4116d07e789ff`. Scientific checker, contract, controls and dependency files remain identical to the checked source. [Integration evidence](docs/engineering/second-target-c237/evidence/INTEGRATION.json) records the exact reviewed, published and tested identities. [Scope #207](https://github.com/Omegapy/OntoKin/issues/207) remains open only for the verified saved handoff; its eventual delivery receipt supersedes this seal-time pending statement.
+Acquisition uses the observed main `c25170d3600ae2fdf8e0a17cfbcebc2b322a2e4b` through a conditional nonforce update. C237 delivery is confirmed by closed scope #207. C238's contract was published before implementation; checked scientific source remains on its own branch until review and integration. Actual-main checks and verified saved successor delivery remain pending.
 
-Preserve all four held native drafts, the separate scope #201 alternate and the base-only C234 branch. All nine recommendations/41 criteria and original failures retain their meaning. Native/version, source-evaluation, export, import, render, scene-write and aggregate starts remain zero. Before the next main write, inspect the actual main, outstanding work and coordination state, then acquire a new bounded lease.
+Preserve all four held native drafts, the separate scope #201 alternate and the base-only C234 branch. All nine recommendations/41 criteria and original failures retain their meaning. No native/version, source-evaluation, export, import, render, scene-write or aggregate starts belong to C238.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
