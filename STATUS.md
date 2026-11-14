@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C239 R07: combined CPU component checks
+
+[C239](docs/engineering/second-target-c239/RESULTS.md) runs the five existing component APIs on one verified private copy of all observation and original authority bytes. It derives and compares all 23,400 corner-map rows, preserving all 18 identities, 126 pose slots, 14 feature treatments, four retained files and both source units. Original tolerances and pass/loss/refusal meanings remain unchanged.
+
+Checked author `0d850f836e3f9ab4fe1f832b9e75db57501d49df` passed 29 C239 methods / 58 cases / 2,176,650 row assertions plus 206 unchanged prerequisite methods. Independent exact `5b4e97b346a0fc0a59ead859ca007e3a6e54d3ec` passed 53 API scenarios / 6,768,646 assertions plus 14 source/authority/CLI controls; its scientific bytes equal the final author candidate. [Review](docs/engineering/second-target-c239/REVIEW.md). Published scientific `d53e2f37101f7b989ee8a1be7130a5608bcadf9d` has exact checked tree `85734862971c4cff80f8ac8717d738a5f1604dd2`. Root holds the bounded integration lease below; actual-main checks and final saved delivery remain pending under [scope #211](https://github.com/Omegapy/OntoKin/issues/211).
+
+Both initial author fixture mistakes, the reviewer launcher failure, interrupted reviewer/input-verifier runs and unknown kill causes remain preserved. C238 delivery was reconciled to the exact supplied ZIP and closed scope #209. All historical source/evidence, nine recommendations / 41 criteria, held drafts and scope #201 alternate remain. R07 is pending; native/version/source/export/import/render/scene-write and aggregate starts remain zero. After confirmed delivery, the [next bounded task](docs/engineering/second-target-c239/NEXT-TASK.md) is native capture/execution preflight without a native start.
+
 ## C238 R07: CPU combined-observation envelope admission
 
 [C238](docs/engineering/second-target-c238/RESULTS.md) admits six actual observation members for the original 18-part fixture: geometry, materials, normals, poses, semantics and a complete declared corner map. Fresh C221 authority admission, exact raw-byte bindings, all 23,400 corner-map rows, 126 pose slots, complete source identities and cross-file dependencies are checked. Every component numerical/semantic result remains `NOT_RUN`; provenance labels remain untrusted.
@@ -290,11 +298,13 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none. The C238 holder `c238-root-5f5d58a252d3` releases ownership through this documentation-only closure after verified PR #210 merge and passing actual-main checks. The lease was acquired at `2026-11-14T17:17:32.000Z`, with its original expiry `2026-11-14T17:47:32.000Z`; it was not extended.
+Owner: `c239-root-3956723aded2`. Acquired at `2026-11-14T18:56:36.000Z`; expires at `2026-11-14T19:26:36.000Z`.
 
-The closure publishes through an observed-head conditional nonforce update from actual merge `cbed653208d4d9a4f1a669e94dc05fca4571d005`. Scientific checker, contract, controls and dependency files remain identical to the checked source. [Integration evidence](docs/engineering/second-target-c238/evidence/INTEGRATION.json) records reviewed, published and tested identities. [Scope #209](https://github.com/Omegapy/OntoKin/issues/209) remains open only for archive verification, fresh restoration and confirmed saved handoff; its later delivery receipt reconciles those outcomes. The merged work branch was observed absent.
+Scope: integrate the independently checked C239 combined CPU observation checker, run applicable checks on actual main, publish its evidence and release ownership. [Scope #211](https://github.com/Omegapy/OntoKin/issues/211) owns branch `work/c239-combined-cpu`. This lease protects main, shared STATUS/GOAL/README/navigation and C239 integration records; independent nonoverlapping work may continue under AGENTS.
 
-Preserve all four held native drafts, the separate scope #201 alternate and the base-only C234 branch. All nine recommendations/41 criteria and original failures retain their meaning. Native/version, source-evaluation, export, import, render, scene-write and aggregate starts remain zero. Inspect actual heads, outstanding work and ownership before acquiring the next bounded integration lease.
+Starting main is `f53c44ed6ef660c1a1ebc17af43e66e37b06d9fa`. Published scientific source `d53e2f37101f7b989ee8a1be7130a5608bcadf9d` has the exact tree of checked author `0d850f836e3f9ab4fe1f832b9e75db57501d49df`. All 235 author/prerequisite methods and 67 independent scenarios/guards passed within their recorded exact-source scopes. Actual-main checks and final saved delivery remain pending.
+
+Preserve all four held native drafts, the separate scope #201 alternate, the base-only C234 branch, all nine recommendations/41 criteria and original failures. No native/version, source-evaluation, export, import, render, scene-write or aggregate start belongs to this lease. Main updates must use the observed-head conditional nonforce path or protected PR merge. Release after the checked integration; do not extend ownership solely through status messages.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
