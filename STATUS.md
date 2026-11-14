@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C238 R07: CPU combined-observation envelope admission
+
+[C238](docs/engineering/second-target-c238/RESULTS.md) admits six actual observation members for the original 18-part fixture: geometry, materials, normals, poses, semantics and a complete declared corner map. Fresh C221 authority admission, exact raw-byte bindings, all 23,400 corner-map rows, 126 pose slots, complete source identities and cross-file dependencies are checked. Every component numerical/semantic result remains `NOT_RUN`; provenance labels remain untrusted.
+
+Exact author/reviewer source `cb662d9d2603085eea9c1f05513baeb7312a48b2` passes **38 C238 + 20 unchanged C221 methods**, with **161 author API/CLI cases**. Independent review passes **161 scenarios / 495,103 assertions**, fully auditing all **21 admitted reports / 491,400 map rows**. [Review](docs/engineering/second-target-c238/REVIEW.md). Published scientific source `70d81a918b13a4f49b87f85278476b9cf92fe71f` has the exact checked tree `0ab3d6915221897ee6da4c09f553443c6ef6dfe4`. Actual-main checks and verified saved delivery remain pending under [scope #209](https://github.com/Omegapy/OntoKin/issues/209).
+
+The initial offline restore was killed during historical Git checkout; its cause is unproven and the complete partial state is preserved. Source work used a verified clean checkout at the exact C237 revision. Final archive restoration is a separate required closure check. All nine recommendations/41 criteria, original strict Blender normal failure, four held drafts and scope #201 alternate remain. After confirmed C238 delivery, the [next bounded step](docs/engineering/second-target-c238/NEXT-TASK.md) is combined execution of the existing CPU component checks on one safely retained admitted member set. Native/source/export/import/render/scene-write and aggregate starts remain zero; R07 remains pending.
+
 ## C237 R07: finite CPU semantic retention checker integrated
 
 [C237](docs/engineering/second-target-c237/RESULTS.md) freshly admits original authority, compares all **18 part identities and 14 feature treatments**, and inspects **four retained files and both source units**. Complete semantic records keep ownership, placement, following, physical connections, motion authority and mass declarations separate. Provenance labels remain unattested; copied metadata or hash strings cannot establish native behavior or retained bytes.
