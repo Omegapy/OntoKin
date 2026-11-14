@@ -1,0 +1,115 @@
+{
+  "schema": "ontokin.c234.independent-review/0.1",
+  "decision": "ACCEPT_BOUNDED_CPU_MATERIAL_STEP",
+  "reviewer": "material_review",
+  "reviewedAtUtc": "2026-11-14T00:29:06.301766+00:00",
+  "observedBaseline": "4afb8d2d2d9a62bf1b5195b09c716607008e8a6c",
+  "finalAuthorCommit": "67b01548056ec5caf7bc5cd0c41fde8434c0ab0e",
+  "finalAuthorTree": "a66739b07cef506a080ec3061b1aaafec8b10ef2",
+  "independentlyExecutedCommit": "8c231cc01cb768e4e88c9ac05821594ec7f1ecc4",
+  "independentlyExecutedTree": "a796e13e0aa75ec514851ca9f2f8879a16035d63",
+  "eligibility": "Exact checker, contract and README bytes at final author commit equal independently executed checkpoint; only additive author test file changed after that execution source. Final test source independently inspected, with author execution separately evidenced. No unchanged control replay was required.",
+  "sourceFiles": [
+    {
+      "path": "docs/engineering/second-target-c234/CONTRACT.md",
+      "bytes": 10280,
+      "sha256": "b865a2dec808a3b32b1caaba7082b82e3e6542f7a08960e5f4dded64f790c583",
+      "identical_to_independently_executed_source": true
+    },
+    {
+      "path": "docs/engineering/second-target-c234/README.md",
+      "bytes": 1299,
+      "sha256": "a56f806ce271f1cf18b6f9d908bee01ec99e5bdab2cbbde1af87edeae0868d9f",
+      "identical_to_independently_executed_source": true
+    },
+    {
+      "path": "tools/second_target_c234/check_materials.py",
+      "bytes": 20025,
+      "sha256": "e68d212d4b5490c9e17466fb1a858a69a6d0764b0019cb4df265902bf0cabb13",
+      "identical_to_independently_executed_source": true
+    },
+    {
+      "path": "tools/second_target_c234/tests/run_controls.py",
+      "bytes": 20083,
+      "sha256": "1d6541c629af016a23076a2cab3146875e3861cc035c456b517211a96109c4ca",
+      "independent_review": "Complete source inspected; author execution separately recorded"
+    }
+  ],
+  "frozenPrerequisitesUnchanged": true,
+  "cumulativeChangeAdditiveOnly": true,
+  "checks": {
+    "independentPublicControls": 151,
+    "independentPassed": 151,
+    "independentFailed": 0,
+    "independentSourceUnchanged": true,
+    "independentControlDurationSeconds": 63.95592115600448,
+    "independentCornerMapRows": 23400,
+    "parts": 18,
+    "sourceMaterials": 2,
+    "parameterComponents": 108,
+    "exactModeChecks": 36,
+    "stageSeparationChecked": {
+      "fresh_authority_admission_refuses_changed_glb": "authority_admission",
+      "fresh_authority_admission_refuses_missing_comparison_input": "authority_admission",
+      "invalid_geometry_blocks_materials": "geometry_correspondence",
+      "valid_geometry_changed_bytes_stale_material_digest": "material_structure",
+      "unknown_color_storage_unknown": "material_structure",
+      "wrong_parameter_alpha_0.5": "material_comparison",
+      "wrong_parameter_cull_mode_front": "material_comparison",
+      "metallic_adjacent_float_outside": "material_comparison"
+    },
+    "authorMethods": {
+      "C234": 24,
+      "C221": 20,
+      "C222": 23
+    },
+    "authorTotalMethods": 67,
+    "authorFinalFailureErrorSkipCount": 0
+  },
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "independence": "Direct retained-GLB little-endian decoder; semantic identities from GLB extras checked against locked map; reversed vertex storage plus cyclic native-triangle layout; complete independent expected corner map; Decimal(64) color-transfer oracle; no author fixture, conversion or comparison helper imports",
+  "defectsFound": [],
+  "blockingFindings": [],
+  "initialReviewerOrchestrationFailures": {
+    "cloneAttempts": 2,
+    "controlRun01": "No checker import or controls; source missing after clone failure. Logs and capacity observation retained. No product failure inferred.",
+    "evidence": [
+      "CLONE-FAILURE.json",
+      "clone.log",
+      "clone-hardlink.log",
+      "run-01.log"
+    ]
+  },
+  "evidence": {
+    "controls": "run-02/RESULTS.json",
+    "controlLog": "run-02.log",
+    "fullMaterialReport": "run-02/baseline-report.json",
+    "untrustedLabelReport": "run-02/unattested-label-report.json",
+    "geometryReport": "c222-oracle-validation.json",
+    "oracle": "run-02/oracle.json",
+    "fixtureGenerator": "independent_oracle.py",
+    "publicControlSource": "run_independent_controls.py",
+    "sourceDiff": "candidate.diff"
+  },
+  "limits": {
+    "targetStarts": 0,
+    "nativeVersionStarts": 0,
+    "sourceEvaluations": 0,
+    "exports": 0,
+    "imports": 0,
+    "renders": 0,
+    "nativeSceneWrites": 0,
+    "nativeReceivingEvidence": false,
+    "nativeMappingAttestation": false,
+    "targetExecutionAuthorization": false,
+    "aggregateRerun": false,
+    "productReleaseClaim": false
+  },
+  "remainingGates": [
+    "Root coordinated publication and actual resulting-main verification",
+    "Root verified offline-restorable successor handoff and confirmed save",
+    "R07 normal-loss/pose/semantic/cross-target/observer/persistence/process/settings/rendering/build-lineage work remains separate",
+    "Original strict Blender normal failure and held prototypes remain unchanged"
+  ]
+}

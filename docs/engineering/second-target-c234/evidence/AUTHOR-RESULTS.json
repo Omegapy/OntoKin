@@ -1,0 +1,112 @@
+{
+  "schema": "ontokin.c234.author-result/0.1",
+  "recordedAtUtc": "2026-11-14T00:28:06.929768+00:00",
+  "outcome": "PASS_AFFECTED_CPU_CONTROLS_PENDING_INDEPENDENT_REVIEW_AND_INTEGRATION",
+  "source": {
+    "commit": "67b01548056ec5caf7bc5cd0c41fde8434c0ab0e",
+    "tree": "a66739b07cef506a080ec3061b1aaafec8b10ef2",
+    "baseline": "4afb8d2d2d9a62bf1b5195b09c716607008e8a6c",
+    "status": "",
+    "changedPaths": [
+      "A\tdocs/engineering/second-target-c234/CONTRACT.md",
+      "A\tdocs/engineering/second-target-c234/README.md",
+      "A\ttools/second_target_c234/check_materials.py",
+      "A\ttools/second_target_c234/tests/run_controls.py"
+    ],
+    "files": [
+      {
+        "path": "tools/second_target_c234/check_materials.py",
+        "bytes": 20025,
+        "sha256": "e68d212d4b5490c9e17466fb1a858a69a6d0764b0019cb4df265902bf0cabb13",
+        "mode": "0o644"
+      },
+      {
+        "path": "tools/second_target_c234/tests/run_controls.py",
+        "bytes": 20083,
+        "sha256": "1d6541c629af016a23076a2cab3146875e3861cc035c456b517211a96109c4ca",
+        "mode": "0o644"
+      },
+      {
+        "path": "docs/engineering/second-target-c234/CONTRACT.md",
+        "bytes": 10280,
+        "sha256": "b865a2dec808a3b32b1caaba7082b82e3e6542f7a08960e5f4dded64f790c583",
+        "mode": "0o644"
+      },
+      {
+        "path": "docs/engineering/second-target-c234/README.md",
+        "bytes": 1299,
+        "sha256": "a56f806ce271f1cf18b6f9d908bee01ec99e5bdab2cbbde1af87edeae0868d9f",
+        "mode": "0o644"
+      }
+    ],
+    "frozenInputsDiff": ""
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "checks": {
+    "c234Methods": 24,
+    "c221Methods": 20,
+    "c222Methods": 23,
+    "totalAffectedMethods": 67,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "documentation": "docs-check.log; 29 preserved sources; see exact local_links in log"
+  },
+  "checkRecords": [
+    "author-checks-01.json",
+    "author-checks-02.json"
+  ],
+  "preservedEarlierFailures": [
+    {
+      "source": "d5ca3c7c7acb29e87f1ce66f04db5b233f68156e",
+      "log": "c234-controls-01.log",
+      "meaning": "Author fixture helper used wrong nested semantic revision path; zero methods ran; corrected only test helper at 67b01548056ec5caf7bc5cd0c41fde8434c0ab0e"
+    },
+    {
+      "source": "d5ca3c7c7acb29e87f1ce66f04db5b233f68156e",
+      "log": "c221-controls.log",
+      "meaning": "Caller omitted required --report; argparse exit2; zero methods; corrected invocation recorded separately"
+    }
+  ],
+  "sample": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-IB",
+      "tools/second_target_c234/check_materials.py",
+      "--package-root",
+      "/workspace/scratch/829f8495208c/source_handoff",
+      "--geometry-observations",
+      "/workspace/scratch/829f8495208c/material-author/evidence/synthetic-geometry.json",
+      "--material-observations",
+      "/workspace/scratch/829f8495208c/material-author/evidence/synthetic-materials.json"
+    ],
+    "exitCode": 0,
+    "geometry": "synthetic-geometry.json",
+    "material": "synthetic-materials.json",
+    "report": "synthetic-material-report.json",
+    "result": "PASS_CPU_MATERIALS",
+    "numericComponents": 108,
+    "exactModeChecks": 36,
+    "maxAbsoluteError": 1.1102230246251565e-16
+  },
+  "limits": {
+    "nativeStarts": 0,
+    "sourceEvaluations": 0,
+    "exports": 0,
+    "imports": 0,
+    "renders": 0,
+    "nativeSceneWrites": 0,
+    "aggregateRuns": 0,
+    "actualTargetEvidence": false,
+    "originalNormalFailureUnchanged": true
+  },
+  "pending": [
+    "Independent review final freeze",
+    "Root current-main integration and resulting-main checks",
+    "Root verified saved handoff"
+  ],
+  "blockers": []
+}

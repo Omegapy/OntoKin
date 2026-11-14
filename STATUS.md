@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C234 R07: finite CPU material checker completed
+
+[C234](docs/engineering/second-target-c234/RESULTS.md) adds a separately versioned opt-in material-observation schema and checker for the original **18 parts/two materials**. Fresh C221 admission and C222 correspondence bind exact geometry and material associations. Raw values remain beside independently normalized values; the fixed sRGB conversion, linear alpha, **0.000002** limit and exact culling/transparency meaning are preserved.
+
+Author source `67b01548056ec5caf7bc5cd0c41fde8434c0ab0e` passes **67 affected methods** (24 new + 43 unchanged prerequisites). [Independent review](docs/engineering/second-target-c234/REVIEW.md) accepts **151 controls**, a complete 23,400-corner oracle, 108 numerical components and 36 exact mode checks. Checked source remained unchanged. Earlier author/reviewer startup errors and root's input-restore capacity failure remain preserved; they are separate from successful material checks.
+
+Source/evidence are confirmed saved in recovery version 2. Root completes coordinated publication, actual-main verification and saved handoff delivery under [scope #200](https://github.com/Omegapy/OntoKin/issues/200), then stops. The [next separate step](docs/engineering/second-target-c234/NEXT-TASK.md) is CPU normal-loss comparison. R07 as a whole remains pending. Native/source/export/import/render/scene-write starts are zero; existing runtime, frozen contracts, tolerances, held drafts and all nine recommendations/41 criteria remain. C233 scope #198 is closed with its exact final save verified; its seal-time pending text below is historical.
+
 ## C233 R02: complete default aggregate passed
 
 [C233](docs/engineering/aggregate-regression-c233/RESULTS.md) completes one immutable default aggregate from exact `3b3238b13797fecf290cd19169c6ee794739f095`, tree `1e8b44b92d64367c162732102285502491585999`, on Linux x86-64 / CPython 3.12.14. **All 4,685 methods and all seven default commands passed**, with zero failed, errored, skipped, timed-out or unrun methods and no fixture/import or failed-subtest events. The checked source remained unchanged, original product budgets were preserved and no retry occurred.
