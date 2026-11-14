@@ -25,8 +25,12 @@ The initial author fixture lookup failed before running a method, and a C221 com
 
 ## Scope, publication and stopping point
 
-This is an integrated-development candidate with an explicit opt-in entry; existing runtime, exporter, broad test discovery, workflows, frozen C220/C221/C222 contracts and product limits are unchanged. Applicable checks are the complete 67-method affected CPU cohort and documentation preservation/link checks. The consumed C233 aggregate is not rerun. Its 4,685-method pass remains evidence for its original checked revision and environment; 16 external cases and broader release gates remain pending.
+This is reviewed integrated development with an explicit opt-in entry; existing runtime, exporter, broad test discovery, workflows, frozen C220/C221/C222 contracts and product limits are unchanged. Applicable checks are the complete 67-method affected CPU cohort and documentation preservation/link checks. The consumed C233 aggregate is not rerun. Its 4,685-method pass remains evidence for its original checked revision and environment; 16 external cases and broader release gates remain pending.
 
 Native/version, source-evaluation, export, import, render and native-scene-write counts are **zero**. Native receiving evidence, mapping attestation and target-execution authorization remain false. This result establishes neither Godot behavior nor material appearance, normal fidelity, poses, persistence, a receiving promise or a release. The original strict Blender normal failure and held prototypes remain unchanged.
 
 Root owns coordinated publication, actual resulting-main checks and verified saved handoff delivery in [scope #200](https://github.com/Omegapy/OntoKin/issues/200). Exact published commits are recorded only after observed remote results. Complete that closure and stop. The [next separate bounded scope](NEXT-TASK.md) is CPU normal-loss comparison through the existing exact corner map; the rest of R07 remains pending.
+
+## Observed integration
+
+[PR #202](https://github.com/Omegapy/OntoKin/pull/202) merged the exact reviewed tree at `30eb45e279a1a8e53e40c70925bf65a10a1a2be7`. Fresh actual-main execution passed all 67 affected methods and documentation checks (29 original sources / 4,964 local links) with clean unchanged source. [The receipt](evidence/INTEGRATION.json) records identities and outcomes; final handoff delivery remains separately confirmed after sealing. The fresh offline input restore retry also passed. Concurrent scope #201 holds its distinct alternate; its frozen source/evidence are preserved separately and its checks are not transferred to this implementation.
