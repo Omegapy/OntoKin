@@ -93,3 +93,7 @@ one verified saved successor handoff, then stops. See the separately maintained
 [recovery bindings](evidence/RECOVERY-BINDINGS.json) and [next task](NEXT-TASK.md).
 Full raw author and independent evidence remains in the successor handoff at
 `evidence/c235/normal-author/` and `evidence/c235/normal-review/`.
+
+## Observed integration and resulting main
+
+[PR #204](https://github.com/Omegapy/OntoKin/pull/204) merged at `3838d191ba550d18450fe68e9ec49d8110ff5a42` with exact reviewed tree `95e84814241d84195687121a774b2a3829d68b1f`. Fresh execution on that actual merge passed all **98 affected methods** and **29 preserved sources / 4,994 local links**. Source remained clean and unchanged. The [integration receipt](evidence/INTEGRATION.json) and [actual-main results](evidence/ACTUAL-MAIN-RESULTS.json) retain those distinct observations. This documentation closure releases the bounded lease. Final ZIP verification, offline restore and confirmed save remain post-seal delivery operations under scope #203; the scientific outcome above does not substitute for them.
