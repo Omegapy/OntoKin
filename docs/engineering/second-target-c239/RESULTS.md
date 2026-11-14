@@ -42,6 +42,8 @@ The independent review retained an initial launcher import error before product 
 
 ## Integration and limits
 
-Scientific source is published on the owned work branch under [scope #211](https://github.com/Omegapy/OntoKin/issues/211). The integration candidate still requires review against the current leased main and fresh actual-main checks. Final archive verification, offline restoration and saved delivery are separate closure gates. Their exact observed results will be recorded after they occur.
+[PR #212](https://github.com/Omegapy/OntoKin/pull/212) merged at `1329d5b420f70f2b00f771788e9a50e2eb60ca93`, tree `c69cb2973afebffbcaf4926c11f51dc0df372f79`, exactly matching the independently reviewed publication tree. Fresh checks on that actual main passed all **235 affected methods**, including **29 C239 methods / 58 API and CLI cases / 2,176,650 row assertions**, all 206 prerequisite methods, and documentation preservation of 29 sources / 5,082 local links. Source and all eight original inputs remained unchanged; the checkout remained clean. [Integration receipt](evidence/INTEGRATION.json).
+
+This documentation closure releases integration ownership. The merged work branch was observed absent. Final archive verification, fresh offline restoration and confirmed saved delivery remain separate closure gates under [scope #211](https://github.com/Omegapy/OntoKin/issues/211); their exact observed results belong to the final delivery receipt.
 
 No native/version start, source evaluation, export, import, rendering, scene save/reopen or aggregate replay occurred. Synthetic and unattested-native declarations do not establish a Godot capture session, executable/build lineage, useful native images, persistence, two-target compatibility or full R07 acceptance. All original component profiles and the strict Blender normal failure remain unchanged. [Next bounded preparation](NEXT-TASK.md) is the native capture/execution preflight; it grants no native start.
