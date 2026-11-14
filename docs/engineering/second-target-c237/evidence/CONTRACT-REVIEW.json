@@ -1,0 +1,14 @@
+{
+  "schema": "ontokin.c237.independent-contract-review/0.1",
+  "reviewVersion": 2,
+  "reviewedAtUtc": "2026-11-14T15:55:04.493195+00:00",
+  "status": "APPROVED_FOR_IMPLEMENTATION",
+  "contractSha256": "303a198aee5d8bc120232dd6ff3d64e85bd1f8707bf7373460740d90660be526",
+  "previousApprovedSha256": "e48d17d651919beb81bfe4aad72a462ed61ea482ca5ff05c1d71e56a4b59dd4a",
+  "exactDeltaVerified": true,
+  "onlyChange": "Primitive comparison uses exact typed canonical JSON representations. In this new semantic-retention profile, float `-0.0` and `0.0` therefore differ and produce measured semantic loss; this does not change any geometry, normal, material or pose arithmetic rule or gate.",
+  "blockers": [],
+  "reason": "A typed canonical primitive comparison gives an explicit reproducible signed-zero retention rule. It is fixed before controls and changes no source-relative numeric gate. Prior schema approval remains applicable.",
+  "newControlRequired": "Change only one original float 0.0 to -0.0; expect admissible measured semantic-retention loss, full raw values and mismatch path. Existing numerical contracts stay untouched.",
+  "implementationControlsExecuted": false
+}
