@@ -1,0 +1,138 @@
+{
+  "schema": "ontokin.c236.actual-main-checks/0.1",
+  "startedAtUtc": "2026-11-14T04:26:03.408185+00:00",
+  "before": {
+    "commit": "6ff721689fcc52c24bf8129ccb6c84b258fd488c",
+    "tree": "69d6c157f350548d40e4911d978678d6b39fb0a5",
+    "status": "",
+    "authorFileHashes": {
+      "tools/second_target_c236/check_poses.py": "51864445f638a36ef5a93fd4bd58c07a416d342ce6e371a894f52f3af06bf584",
+      "tools/second_target_c236/tests/run_controls.py": "43ad0cf77bf0564c40bc84d550573436e7dda7c9412b435b5fbbf77038a1499f",
+      "docs/engineering/second-target-c236/CONTRACT.md": "6682250c6903817c01fd2d7e1844e3ed358722eab4f8815043db0d78bbb30ead"
+    }
+  },
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "checks": [
+    {
+      "name": "c236",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-IB",
+        "tools/second_target_c236/tests/run_controls.py",
+        "--package-root",
+        "/home/agent/ontokin-c236-db59de8d/input-c235"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 13.44513099300093,
+      "log": "c236.log",
+      "logSha256": "d503fcc3d230be95ba4e3b3d50bd812b8bf8f15205953bf8b031787d883c9cac",
+      "observedMethods": 37,
+      "expectedMethods": 37,
+      "passed": true
+    },
+    {
+      "name": "c221",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-IB",
+        "tools/second_target_c221/tests/run_controls.py",
+        "--package-root",
+        "/home/agent/ontokin-c236-db59de8d/input-c235",
+        "--report",
+        "/home/agent/ontokin-c236-db59de8d/handoff/evidence/c236/integration/actual-main/c221-report.json"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.7158171170012793,
+      "log": "c221.log",
+      "logSha256": "88d3072311a1f0df4038e1e4108b25fe04e7281e324b7f384c08f07656671e02",
+      "observedMethods": 20,
+      "expectedMethods": 20,
+      "passed": true
+    },
+    {
+      "name": "c222",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-IB",
+        "tools/second_target_c222/tests/run_controls.py",
+        "--package-root",
+        "/home/agent/ontokin-c236-db59de8d/input-c235"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 2.5205750569948577,
+      "log": "c222.log",
+      "logSha256": "0f0ce2b5a5b2029b045343891f9a877206f91337343deee97e89e86564e978f7",
+      "observedMethods": 23,
+      "expectedMethods": 23,
+      "passed": true
+    },
+    {
+      "name": "c234",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-IB",
+        "tools/second_target_c234/tests/run_controls.py",
+        "--package-root",
+        "/home/agent/ontokin-c236-db59de8d/input-c235"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 36.35174411999469,
+      "log": "c234.log",
+      "logSha256": "66bd14e564771a3dcb7ecca24a74dfbf7ef57449221bf03691e23b47603e0aa3",
+      "observedMethods": 24,
+      "expectedMethods": 24,
+      "passed": true
+    },
+    {
+      "name": "c235",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-IB",
+        "tools/second_target_c235/tests/run_controls.py",
+        "--package-root",
+        "/home/agent/ontokin-c236-db59de8d/input-c235",
+        "--report",
+        "/home/agent/ontokin-c236-db59de8d/handoff/evidence/c236/integration/actual-main/c235-report.json"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 68.74223464999523,
+      "log": "c235.log",
+      "logSha256": "5ce2a3fe004106e8e03c2c956751487d9f5aa90182451a067d0d4145a1d0503b",
+      "observedMethods": 31,
+      "expectedMethods": 31,
+      "passed": true
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-IB",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 1.0659818790009012,
+      "log": "documentation.log",
+      "logSha256": "1be76a9b4a0bc6f7ad1a69fd517a57f8429311ebdca0151572d771b4e44cdcc7",
+      "passed": true,
+      "sourcesVerified": 29,
+      "localLinks": 5019
+    }
+  ],
+  "nativeStarts": 0,
+  "sourceEvaluations": 0,
+  "aggregateRuns": 0,
+  "after": {
+    "commit": "6ff721689fcc52c24bf8129ccb6c84b258fd488c",
+    "tree": "69d6c157f350548d40e4911d978678d6b39fb0a5",
+    "status": "",
+    "authorFileHashes": {
+      "tools/second_target_c236/check_poses.py": "51864445f638a36ef5a93fd4bd58c07a416d342ce6e371a894f52f3af06bf584",
+      "tools/second_target_c236/tests/run_controls.py": "43ad0cf77bf0564c40bc84d550573436e7dda7c9412b435b5fbbf77038a1499f",
+      "docs/engineering/second-target-c236/CONTRACT.md": "6682250c6903817c01fd2d7e1844e3ed358722eab4f8815043db0d78bbb30ead"
+    }
+  },
+  "sourceUnchanged": true,
+  "passed": true,
+  "finishedAtUtc": "2026-11-14T04:28:06.275593+00:00"
+}

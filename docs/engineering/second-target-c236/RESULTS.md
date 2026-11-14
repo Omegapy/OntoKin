@@ -63,6 +63,12 @@ same 126 unique source pairs, including 40,824 matrix residuals and 4,536
 orientation ratios. Expected negative outcomes are successful controls, not
 claims that all deliberately changed observations meet accuracy limits.
 
+## Publication and actual-main verification
+
+[PR #206](https://github.com/Omegapy/OntoKin/pull/206) merged at `6ff721689fcc52c24bf8129ccb6c84b258fd488c`, with reviewed tree `69d6c157f350548d40e4911d978678d6b39fb0a5`. The independent publication review passed 64 checks. A fresh affected cohort on that actual merged revision passed all 135 methods; documentation verified 29 preserved sources and 5,019 local links. Source remained clean and unchanged. [Integration receipt](evidence/INTEGRATION.json) and [actual-main receipt](evidence/ACTUAL-MAIN-RESULTS.json) preserve the exact distinction between author, local reviewed and published revisions.
+
+This documentation closure releases the integration lease. The final archive, fresh offline restore and saved delivery remain separate required operations in scope #205; no save is inferred from a merged PR.
+
 ## Preservation and limits
 
 The input C235 archive and documented fresh restore passed. Initial scratch
