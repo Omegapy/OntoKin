@@ -290,11 +290,13 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none. The C238 holder `c238-root-5f5d58a252d3` releases ownership through this documentation-only closure after verified PR #210 merge and passing actual-main checks. The lease was acquired at `2026-11-14T17:17:32.000Z`, with its original expiry `2026-11-14T17:47:32.000Z`; it was not extended.
+Owner: `c239-root-3956723aded2`. Acquired at `2026-11-14T18:56:36.000Z`; expires at `2026-11-14T19:26:36.000Z`.
 
-The closure publishes through an observed-head conditional nonforce update from actual merge `cbed653208d4d9a4f1a669e94dc05fca4571d005`. Scientific checker, contract, controls and dependency files remain identical to the checked source. [Integration evidence](docs/engineering/second-target-c238/evidence/INTEGRATION.json) records reviewed, published and tested identities. [Scope #209](https://github.com/Omegapy/OntoKin/issues/209) remains open only for archive verification, fresh restoration and confirmed saved handoff; its later delivery receipt reconciles those outcomes. The merged work branch was observed absent.
+Scope: integrate the independently checked C239 combined CPU observation checker, run applicable checks on actual main, publish its evidence and release ownership. [Scope #211](https://github.com/Omegapy/OntoKin/issues/211) owns branch `work/c239-combined-cpu`. This lease protects main, shared STATUS/GOAL/README/navigation and C239 integration records; independent nonoverlapping work may continue under AGENTS.
 
-Preserve all four held native drafts, the separate scope #201 alternate and the base-only C234 branch. All nine recommendations/41 criteria and original failures retain their meaning. Native/version, source-evaluation, export, import, render, scene-write and aggregate starts remain zero. Inspect actual heads, outstanding work and ownership before acquiring the next bounded integration lease.
+Starting main is `f53c44ed6ef660c1a1ebc17af43e66e37b06d9fa`. Published scientific source `d53e2f37101f7b989ee8a1be7130a5608bcadf9d` has the exact tree of checked author `0d850f836e3f9ab4fe1f832b9e75db57501d49df`. All 235 author/prerequisite methods and 67 independent scenarios/guards passed within their recorded exact-source scopes. Actual-main checks and final saved delivery remain pending.
+
+Preserve all four held native drafts, the separate scope #201 alternate, the base-only C234 branch, all nine recommendations/41 criteria and original failures. No native/version, source-evaluation, export, import, render, scene-write or aggregate start belongs to this lease. Main updates must use the observed-head conditional nonforce path or protected PR merge. Release after the checked integration; do not extend ownership solely through status messages.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
