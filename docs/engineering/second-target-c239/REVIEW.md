@@ -1,0 +1,13 @@
+# C239 independent scientific review
+
+An independent worker in the same Linux environment constructed its own complete observations and expected correspondence from the original GLB, C214 normal payload, reference poses and semantic/source bytes. It did not use the author C239 fixtures as its oracle. Execution source was `5b4e97b346a0fc0a59ead859ca007e3a6e54d3ec`; [source equivalence](evidence/SOURCE-EQUIVALENCE.json) proves the scientific files are identical to final author `0d850f836e3f9ab4fe1f832b9e75db57501d49df`. The two commits remain distinct.
+
+The accepted review passed 53 API scenarios with 6,768,646 assertions and 14 additional source/import/fresh-authority/CLI controls, for 67 cases. There were no final failures or blocking product findings. [Exact summary](evidence/INDEPENDENT-REVIEW.json).
+
+Complete reached reports were checked across 889,200 derived-map rows, 725,400 normal rows (2,176,200 components), 4,158 pose rows, 3,564 material components, 1,188 material modes, 612 semantic part mappings, 476 feature treatments, 136 retained-file inspections and 68 source-unit inspections. Full reordered/split geometry, both declared origins, reserialization, individual/simultaneous losses, wrong complete maps, structural refusals, stale/corrupt/mixed inputs and snapshot mutation paths were covered. Wrong maps expose six row mismatches while preserving the original C235 refusal and simultaneous independent losses.
+
+Source-origin controls inspect actual transitive module origins, including C237's cached C221 import. A traced positive made nine actual fresh C221 admissions through public paths. Mutating authority before a new call refuses all component execution. Changed pinned source, caches, contract or a post-C222 source mutation refuses or invalidates reached reports and stops further execution. CLI JSON and exit classes 0/1/2 passed. No component subprocess/native start was observed in API execution.
+
+All source files and eight original authority inputs stayed unchanged. The review was limited to Linux x86-64 / CPython 3.12.14 and the contract's ordinary trusted-host boundary; hostile same-user runtime replacement is not attested. Native capture, build lineage, rendering, persistence, cross-target acceptance and R07 remain unestablished.
+
+Earlier reviewer setup failure and the interrupted exit 137 run remain separately preserved, including the unknown fourth outcome and exact partial stream/pending inputs. Full scripts, case ledgers, inputs and reports are in the handoff's `evidence/c239/independent/`; its frozen manifest identifies 42 required files / 13,177,925 bytes. No scientific report archive is re-encoded to hide a failure. Root owns publication review, actual-main checks and verified saved delivery.

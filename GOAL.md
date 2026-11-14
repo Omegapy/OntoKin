@@ -26,6 +26,8 @@ The older world-building ambition is preserved in the [pre-C210 goal](https://gi
 
 ## Staged roadmap and one current action
 
+Current R07 CPU increment: [C239](docs/engineering/second-target-c239/RESULTS.md) combines the existing geometry, material, normal, pose and semantic-retention checks on one verified private observation/authority snapshot. It compares all 23,400 declared corner rows with independently derived correspondence, with 235 affected methods and 67 independent scenarios/guards passing in their exact source scopes. This establishes finite CPU validation, not a native capture or full second-target proof. After confirmed C239 delivery, the [next bounded action](docs/engineering/second-target-c239/NEXT-TASK.md) is zero-start native capture/execution preflight with explicit build-lineage and rendering prerequisites. Original tolerances, the strict Blender normal failure, all held drafts and other recommendation/release obligations remain unchanged.
+
 1. Complete one experimental engine-neutral semantic export and constrained edit on an existing object, using the existing representation and GLB path. [C210 contract and proof](docs/engineering/semantic-export-c210/README.md)
 2. Select one actual receiving application and exact version, then execute and verify a small import with explicit loss reporting.
 3. Prove a second target and trace received parts back to the same authoritative source.

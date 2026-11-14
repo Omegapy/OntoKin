@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C239 R07: combined CPU component checks
+
+[C239](docs/engineering/second-target-c239/RESULTS.md) runs the five existing component APIs on one verified private copy of all observation and original authority bytes. It derives and compares all 23,400 corner-map rows, preserving all 18 identities, 126 pose slots, 14 feature treatments, four retained files and both source units. Original tolerances and pass/loss/refusal meanings remain unchanged.
+
+Checked author `0d850f836e3f9ab4fe1f832b9e75db57501d49df` passed 29 C239 methods / 58 cases / 2,176,650 row assertions plus 206 unchanged prerequisite methods. Independent exact `5b4e97b346a0fc0a59ead859ca007e3a6e54d3ec` passed 53 API scenarios / 6,768,646 assertions plus 14 source/authority/CLI controls; its scientific bytes equal the final author candidate. [Review](docs/engineering/second-target-c239/REVIEW.md). Published scientific `d53e2f37101f7b989ee8a1be7130a5608bcadf9d` has exact checked tree `85734862971c4cff80f8ac8717d738a5f1604dd2`. Root holds the bounded integration lease below; actual-main checks and final saved delivery remain pending under [scope #211](https://github.com/Omegapy/OntoKin/issues/211).
+
+Both initial author fixture mistakes, the reviewer launcher failure, interrupted reviewer/input-verifier runs and unknown kill causes remain preserved. C238 delivery was reconciled to the exact supplied ZIP and closed scope #209. All historical source/evidence, nine recommendations / 41 criteria, held drafts and scope #201 alternate remain. R07 is pending; native/version/source/export/import/render/scene-write and aggregate starts remain zero. After confirmed delivery, the [next bounded task](docs/engineering/second-target-c239/NEXT-TASK.md) is native capture/execution preflight without a native start.
+
 ## C238 R07: CPU combined-observation envelope admission
 
 [C238](docs/engineering/second-target-c238/RESULTS.md) admits six actual observation members for the original 18-part fixture: geometry, materials, normals, poses, semantics and a complete declared corner map. Fresh C221 authority admission, exact raw-byte bindings, all 23,400 corner-map rows, 126 pose slots, complete source identities and cross-file dependencies are checked. Every component numerical/semantic result remains `NOT_RUN`; provenance labels remain untrusted.

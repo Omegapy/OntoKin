@@ -1,0 +1,2416 @@
+{
+  "schema": "ontokin.c239.author-controls/0.1",
+  "passed": true,
+  "methods": 29,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "cases": 58,
+  "inspected_row_assertions": 2176650,
+  "elapsed_seconds": 241.89056331699248,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "source_commit": "0d850f836e3f9ab4fe1f832b9e75db57501d49df",
+  "source_tree": "85734862971c4cff80f8ac8717d738a5f1604dd2",
+  "source_files_before": {
+    "tools/second_target_c221/check_bindings.py": {
+      "bytes": 31854,
+      "sha256": "fff5569d31b3cd900385ac4b955dc5b30c8ee440ef16d8851b5a0ffb5d03aa4b"
+    },
+    "tools/second_target_c222/check_observations.py": {
+      "bytes": 18786,
+      "sha256": "1eab170204d8f02b5d281f7e67d7f649040a1c525884fcc17eadfed6c765b6b9"
+    },
+    "tools/second_target_c234/check_materials.py": {
+      "bytes": 20025,
+      "sha256": "e68d212d4b5490c9e17466fb1a858a69a6d0764b0019cb4df265902bf0cabb13"
+    },
+    "tools/second_target_c235/check_normals.py": {
+      "bytes": 20057,
+      "sha256": "15acd1e95b47a9f6f6eee6c3c28875883d3722b5071ec37a14b7c720a9e8773c"
+    },
+    "tools/second_target_c236/check_poses.py": {
+      "bytes": 27129,
+      "sha256": "51864445f638a36ef5a93fd4bd58c07a416d342ce6e371a894f52f3af06bf584"
+    },
+    "tools/second_target_c237/check_semantics.py": {
+      "bytes": 20819,
+      "sha256": "c5127c265eb247ebeb1e7625e57179fb839ba932967c48ed071d5b60afb3a0c0"
+    },
+    "tools/second_target_c238/check_envelope.py": {
+      "bytes": 40475,
+      "sha256": "76c87096d810236b58ac47a13ad58ab9eec558500104c6c96acf89f462deea83"
+    },
+    "tools/second_target_c239/check_combined.py": {
+      "bytes": 29284,
+      "sha256": "c7271264bb50e384361aed3430e9c99205365202bc988c129e249d021f0ec7f1"
+    },
+    "tools/second_target_c239/tests/run_controls.py": {
+      "bytes": 41218,
+      "sha256": "f24f7659746e292038f0488fbef88f1401f22534721cb270228aa8c7c18dfac6"
+    },
+    "docs/engineering/second-target-c239/CONTRACT.md": {
+      "bytes": 12183,
+      "sha256": "55f5faf99f47a6fc70472af4cc4d87c9184bc868b6b5de23e516820aec0ed933"
+    }
+  },
+  "source_files_after": {
+    "tools/second_target_c221/check_bindings.py": {
+      "bytes": 31854,
+      "sha256": "fff5569d31b3cd900385ac4b955dc5b30c8ee440ef16d8851b5a0ffb5d03aa4b"
+    },
+    "tools/second_target_c222/check_observations.py": {
+      "bytes": 18786,
+      "sha256": "1eab170204d8f02b5d281f7e67d7f649040a1c525884fcc17eadfed6c765b6b9"
+    },
+    "tools/second_target_c234/check_materials.py": {
+      "bytes": 20025,
+      "sha256": "e68d212d4b5490c9e17466fb1a858a69a6d0764b0019cb4df265902bf0cabb13"
+    },
+    "tools/second_target_c235/check_normals.py": {
+      "bytes": 20057,
+      "sha256": "15acd1e95b47a9f6f6eee6c3c28875883d3722b5071ec37a14b7c720a9e8773c"
+    },
+    "tools/second_target_c236/check_poses.py": {
+      "bytes": 27129,
+      "sha256": "51864445f638a36ef5a93fd4bd58c07a416d342ce6e371a894f52f3af06bf584"
+    },
+    "tools/second_target_c237/check_semantics.py": {
+      "bytes": 20819,
+      "sha256": "c5127c265eb247ebeb1e7625e57179fb839ba932967c48ed071d5b60afb3a0c0"
+    },
+    "tools/second_target_c238/check_envelope.py": {
+      "bytes": 40475,
+      "sha256": "76c87096d810236b58ac47a13ad58ab9eec558500104c6c96acf89f462deea83"
+    },
+    "tools/second_target_c239/check_combined.py": {
+      "bytes": 29284,
+      "sha256": "c7271264bb50e384361aed3430e9c99205365202bc988c129e249d021f0ec7f1"
+    },
+    "tools/second_target_c239/tests/run_controls.py": {
+      "bytes": 41218,
+      "sha256": "f24f7659746e292038f0488fbef88f1401f22534721cb270228aa8c7c18dfac6"
+    },
+    "docs/engineering/second-target-c239/CONTRACT.md": {
+      "bytes": 12183,
+      "sha256": "55f5faf99f47a6fc70472af4cc4d87c9184bc868b6b5de23e516820aec0ed933"
+    }
+  },
+  "original_inputs_before": {
+    "agent-results/namespace-repair/run-01/inputs/after.glb": {
+      "bytes": 185236,
+      "sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+    },
+    "agent-results/namespace-repair/run-01/inputs/after.program.bundle.json": {
+      "bytes": 4065,
+      "sha256": "83ca659aadd23d7ce09ebcd209c210efd69028ca6e51ebd70d69ec47f65098e4"
+    },
+    "agent-results/namespace-repair/run-01/inputs/after.semantic.json": {
+      "bytes": 191181,
+      "sha256": "1077eff813807c0b2058d35e2007c234b4d8c157f6dc0177f5a548924edd2c34"
+    },
+    "agent-results/namespace-repair/run-01/inputs/source-payload.json": {
+      "bytes": 431292,
+      "sha256": "6f959056d0d61e5c0aed32929673a50f040136abbeb201307961bc90ee73b743"
+    },
+    "agent-results/namespace-repair/run-01/inputs/after.reference.json": {
+      "bytes": 41761,
+      "sha256": "b8df15b2645caaa523a79116912ddbfb9db1eb293c2f1f6d3e190b212bcd8a55"
+    },
+    "agent-results/reopen-c218/run-01/reopen-details.json": {
+      "bytes": 574847,
+      "sha256": "8f5e17191e6fbaf65e9be752d9f754bb4010b04863643607cf0056f908df3212"
+    },
+    "workers/native-review/source-expectations.json": {
+      "bytes": 1027965,
+      "sha256": "537e27b11ab0a66b7bdcb2e4f293f294f58815c905df6699fcfc44842f2efbc3"
+    },
+    "agent-results/reopen-c218/run-01/reopen-observations.json": {
+      "bytes": 3488870,
+      "sha256": "85fbde69c91da380b145484621f7c79ee07c9cc486eb0ef9fe8423839c98663e"
+    }
+  },
+  "original_inputs_after": {
+    "agent-results/namespace-repair/run-01/inputs/after.glb": {
+      "bytes": 185236,
+      "sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+    },
+    "agent-results/namespace-repair/run-01/inputs/after.program.bundle.json": {
+      "bytes": 4065,
+      "sha256": "83ca659aadd23d7ce09ebcd209c210efd69028ca6e51ebd70d69ec47f65098e4"
+    },
+    "agent-results/namespace-repair/run-01/inputs/after.semantic.json": {
+      "bytes": 191181,
+      "sha256": "1077eff813807c0b2058d35e2007c234b4d8c157f6dc0177f5a548924edd2c34"
+    },
+    "agent-results/namespace-repair/run-01/inputs/source-payload.json": {
+      "bytes": 431292,
+      "sha256": "6f959056d0d61e5c0aed32929673a50f040136abbeb201307961bc90ee73b743"
+    },
+    "agent-results/namespace-repair/run-01/inputs/after.reference.json": {
+      "bytes": 41761,
+      "sha256": "b8df15b2645caaa523a79116912ddbfb9db1eb293c2f1f6d3e190b212bcd8a55"
+    },
+    "agent-results/reopen-c218/run-01/reopen-details.json": {
+      "bytes": 574847,
+      "sha256": "8f5e17191e6fbaf65e9be752d9f754bb4010b04863643607cf0056f908df3212"
+    },
+    "workers/native-review/source-expectations.json": {
+      "bytes": 1027965,
+      "sha256": "537e27b11ab0a66b7bdcb2e4f293f294f58815c905df6699fcfc44842f2efbc3"
+    },
+    "agent-results/reopen-c218/run-01/reopen-observations.json": {
+      "bytes": 3488870,
+      "sha256": "85fbde69c91da380b145484621f7c79ee07c9cc486eb0ef9fe8423839c98663e"
+    }
+  },
+  "native_starts": 0,
+  "aggregate_runs": 0,
+  "case_results": [
+    {
+      "case": "complete-synthetic",
+      "result": "PASS_CPU_COMBINED",
+      "result_class": "pass",
+      "error": null,
+      "report_bytes": 18226563,
+      "report_sha256": "9d6671f3aca4117d779cba7ba71e3ea7247a392a21b210f57facd13d1a5642aa",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "complete-unattested-native",
+      "result": "PASS_CPU_COMBINED",
+      "result_class": "pass",
+      "error": null,
+      "report_bytes": 18226762,
+      "report_sha256": "0f3621c008caf3294322d165646b136ec8332ef1a041f5de058df709a64a81d8",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "outer-keyed-order",
+      "result": "PASS_CPU_COMBINED",
+      "result_class": "pass",
+      "error": null,
+      "report_bytes": 18226563,
+      "report_sha256": "c34bef62ce4d581f5b27cb4a9187b765afac8be64855e077298f7a9d41236ea1",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "reserialized-rebound",
+      "result": "PASS_CPU_COMBINED",
+      "result_class": "pass",
+      "error": null,
+      "report_bytes": 18226598,
+      "report_sha256": "25f09791ddf351c71272d248f85cb80d2272554775e6784e767a5c323328bfc8",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "material-alpha",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18226913,
+      "report_sha256": "cb068ce49c508632f108401a4616c70bf3dfe15b8992262d3230c3d8054059d8",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "FAIL_CLOSED",
+          "classification": "measured_loss"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "material-cull_mode",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18226906,
+      "report_sha256": "7c61f2747e090f5012c8624169b80702d02979b755f156634c8573107257a60a",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "FAIL_CLOSED",
+          "classification": "measured_loss"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "normal-strict-loss",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18227226,
+      "report_sha256": "6eb717ce42e237d84b0eda7b5472431155b31d7ff1cc306600a173cd27c78548",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "FAIL_STRICT_NORMAL_LIMIT",
+          "classification": "measured_loss"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "normal-boundary-2e-06",
+      "result": "PASS_CPU_COMBINED",
+      "result_class": "pass",
+      "error": null,
+      "report_bytes": 18226753,
+      "report_sha256": "9581c36b4139ce00d172da3d02368ca756557433c848b40ac83e93a14ba6af05",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "normal-boundary-2.0000000000000003e-06",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18227376,
+      "report_sha256": "3a50f2f342895b26986dfa1a22fb675a1d2dd5f6b845c6ada89c407bac4c8978",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "FAIL_STRICT_NORMAL_LIMIT",
+          "classification": "measured_loss"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "pose-position",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18227437,
+      "report_sha256": "5f5f245e6b5030533a2a58acdf86121005e097bf3b6bbd6fe1ffd690486e15cf",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "FAIL_POSE_LIMIT",
+          "classification": "measured_loss"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "pose-time",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18227398,
+      "report_sha256": "37ca420159ea14835a19adca2de3e915d30bc7f99eed84f5c6f811ccf11a2a69",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "FAIL_POSE_LIMIT",
+          "classification": "measured_loss"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "pose-orientation",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18228576,
+      "report_sha256": "8189fcf9ad3b781acfe4ff5a0496afb1ba9b33417412a88ba1d556a6d944b545",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "FAIL_POSE_LIMIT",
+          "classification": "measured_loss"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "pose-scale",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18227307,
+      "report_sha256": "d8c5e991ff23f825368328099996a4dd0bb41341425bae550a16efb6b923cb57",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "FAIL_SCALE_PROFILE",
+          "classification": "profile_loss"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "matrix-structural-refusal",
+      "result": "FAIL_COMPONENT_REFUSAL",
+      "result_class": "structural_refusal",
+      "error": null,
+      "report_bytes": 17982528,
+      "report_sha256": "788b19b384ec03c7877cee66ae09c5582a609c946f12f1f436f351a9b720811b",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "FAIL_CLOSED",
+          "classification": "structural_refusal"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "semantic-feature-loss",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18227190,
+      "report_sha256": "860d1a3588fd7433f4982f88b3e414cf3e7986deb74a8541bcb03e47ed18ea4f",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "FAIL_MEASURED_SEMANTIC_RETENTION",
+          "classification": "measured_loss"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "retention-empty-program_bundle",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18222417,
+      "report_sha256": "65c0a3dfb42d52c22619af51805c314c8721e37cc79caa0293b63f381aa09cc3",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "FAIL_MEASURED_SEMANTIC_RETENTION",
+          "classification": "measured_loss"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "retention-empty-glb",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18226923,
+      "report_sha256": "b725e5284f2eae2963331d97936bc725aa2b14c338725a61546db5bd0ffccaee",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "FAIL_MEASURED_SEMANTIC_RETENTION",
+          "classification": "measured_loss"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "retention-empty-semantic_sidecar",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18226946,
+      "report_sha256": "993f81f927542e2a58081f757ef7ece525f92a88592f52b42caae0f811e543b0",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "FAIL_MEASURED_SEMANTIC_RETENTION",
+          "classification": "measured_loss"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "retention-empty-source_normal_payload",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18226951,
+      "report_sha256": "ed1bf7b8cec9aac75955ea236a0eba6475fa1a4e1b7e213bc3626f903e59cd20",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "FAIL_MEASURED_SEMANTIC_RETENTION",
+          "classification": "measured_loss"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "retained-reserialization",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18226975,
+      "report_sha256": "0d3e1c208106d8d6c3d8caef1890bc52484c3418562b1972b86d883d3c4a7228",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "FAIL_MEASURED_SEMANTIC_RETENTION",
+          "classification": "measured_loss"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "simultaneous-independent-losses",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18224246,
+      "report_sha256": "0f8acd883c35dabbf0d5c605fe27dcb4dd2df1723d027c51c8a02d0127d9d8ed",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "FAIL_CLOSED",
+          "classification": "measured_loss"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "FAIL_STRICT_NORMAL_LIMIT",
+          "classification": "measured_loss"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "FAIL_POSE_LIMIT",
+          "classification": "measured_loss"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "FAIL_MEASURED_SEMANTIC_RETENTION",
+          "classification": "measured_loss"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "wrong-map-with-independent-losses",
+      "result": "FAIL_COMPONENT_REFUSAL",
+      "result_class": "structural_refusal",
+      "error": null,
+      "report_bytes": 4158693,
+      "report_sha256": "e4a2bcde64ee552a4e8a3540d4dfd43aafbc51ab5d3931db7f30ac828042f934",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "FAIL_CLOSED",
+          "classification": "measured_loss"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "FAIL_CLOSED",
+          "classification": "structural_refusal"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "FAIL_POSE_LIMIT",
+          "classification": "measured_loss"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "FAIL_MEASURED_SEMANTIC_RETENTION",
+          "classification": "measured_loss"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "geometry-refusal-with-independent-losses",
+      "result": "FAIL_COMPONENT_REFUSAL",
+      "result_class": "structural_refusal",
+      "error": null,
+      "report_bytes": 2044856,
+      "report_sha256": "b57df70c08a2cb6a2ec4d7abbe17bc05589ff8a8970b692751a3ac3bc177b305",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "NO_COMPONENT_REPORT",
+          "classification": "structural_refusal"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "FAIL_CLOSED",
+          "classification": "structural_refusal"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "FAIL_CLOSED",
+          "classification": "structural_refusal"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "FAIL_POSE_LIMIT",
+          "classification": "measured_loss"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "FAIL_MEASURED_SEMANTIC_RETENTION",
+          "classification": "measured_loss"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "stale-envelope",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "IDENTITY",
+        "type": "CheckError",
+        "message": "Envelope authority: differs"
+      },
+      "report_bytes": 11988,
+      "report_sha256": "1586bb09072e4b8506c141b2bab7d3d24cdb3a733b533457aa2abc38a630cd07",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "mixed-origin",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "PROVENANCE",
+        "type": "CheckError",
+        "message": "poses: mixed declared origin: differs"
+      },
+      "report_bytes": 733498,
+      "report_sha256": "b91547bb56e2dc86374ce8a9d388318994957a4b5792f5d343f5c47d6107f405",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "swapped-identity",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "IDENTITY",
+        "type": "CheckError",
+        "message": "materials: element_id: differs"
+      },
+      "report_bytes": 721367,
+      "report_sha256": "48d089b9b6d26765a0ea8d49646abbff667b5a33d48c9ecdecec602a2edb6acf",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "raw-normal-mismatch",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "RAW_NORMAL_BINDING",
+        "type": "CheckError",
+        "message": "Copied normal: differs"
+      },
+      "report_bytes": 733372,
+      "report_sha256": "d1256eaddf807e72b0ee5190eadedeedccb0fda50af49e314033baeecb12d4cc",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "missing",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "MISSING_MEMBER",
+        "type": "CheckError",
+        "message": "geometry: file is absent"
+      },
+      "report_bytes": 12093,
+      "report_sha256": "8d37188e0beacece9a37a40eeb4582d140198335be99fb26528d88c60a31d245",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "corrupt",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "MEMBER_BINDING",
+        "type": "CheckError",
+        "message": "geometry: declared length differs"
+      },
+      "report_bytes": 12111,
+      "report_sha256": "050ded0a68968d3c35195a668a03304bb1ec3a3e157ebbc506aebdc08fbed4f2",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "wrong-length",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "MEMBER_BINDING",
+        "type": "CheckError",
+        "message": "geometry: declared length differs"
+      },
+      "report_bytes": 12111,
+      "report_sha256": "a0db9ae672b25f78cacc45f6e1702f56e4db64d18ce178b65284f9e5364f91c2",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "wrong-digest",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "MEMBER_BINDING",
+        "type": "CheckError",
+        "message": "geometry: declared digest differs"
+      },
+      "report_bytes": 12111,
+      "report_sha256": "dfd979c49083bd7daa18cfa22c7ce841480c97fa1200094b2f55fda6a210016a",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "missing-envelope-member",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "COUNT",
+        "type": "CheckError",
+        "message": "Members: incomplete inventory"
+      },
+      "report_bytes": 11986,
+      "report_sha256": "a93070d406b34ff812c8b0b1b9f9cd733d2f9d17e85ac7c849529a0ce9f74201",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "symlink-member",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "FILE",
+        "type": "CheckError",
+        "message": "geometry: unsafe or unreadable file"
+      },
+      "report_bytes": 12095,
+      "report_sha256": "2ad0122a89ce6338945cdefa469d04e31aa577ed7a0b8bc1a79da0934beeac89",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "symlink-ancestor",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "PATH",
+        "type": "CheckError",
+        "message": "Package root must contain only real directories"
+      },
+      "report_bytes": 11910,
+      "report_sha256": "4e1ebda2fda0d6599bb99bafc0efe958979dd8003e86be8555072dc73fc35a8c",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "fifo-member",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "FILE",
+        "type": "CheckError",
+        "message": "geometry: regular file required"
+      },
+      "report_bytes": 12087,
+      "report_sha256": "3b37ad7f8b7b85873e32d85e87934a9b45163f1107ffd5b6c1150eedc7b5147e",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "alias-member",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "MEMBER_BINDING",
+        "type": "CheckError",
+        "message": "normals: declared length differs"
+      },
+      "report_bytes": 12908,
+      "report_sha256": "125d4bedfa631b57d752817b13290a3de5db02c9d720bb65864e2c95c7a4272c",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "traversal",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "PATH",
+        "type": "CheckError",
+        "message": "Empty, dot or traversal path component"
+      },
+      "report_bytes": 11892,
+      "report_sha256": "f59c27e34bf57e68ecf811fa6e172c6b302be6cc231c96a013de1eacea0a4af1",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "duplicate-envelope-key",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "JSON",
+        "type": "CheckError",
+        "message": "Envelope: duplicate key"
+      },
+      "report_bytes": 11970,
+      "report_sha256": "f57e49055dd4bf946c1b2c967b30f7fedeeafcde6cd174205f551e5c8cfef35c",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "oversized-envelope",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "SIZE",
+        "type": "CheckError",
+        "message": "envelope: file exceeds byte limit"
+      },
+      "report_bytes": 11882,
+      "report_sha256": "c993124439d279e7121f290d8d87269f02c4b3a6e5b1bea80e07b7113d9dc7e2",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "nonfinite-envelope",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "JSON",
+        "type": "CheckError",
+        "message": "Envelope: nonfinite token"
+      },
+      "report_bytes": 11974,
+      "report_sha256": "268438d259593c5feaae2e90c638a159115713f972925e16edfd048fbf611987",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "cached-admission-is-not-a-path",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "SHAPE",
+        "type": "CheckError",
+        "message": "expected str, bytes or os.PathLike object, not dict"
+      },
+      "report_bytes": 11920,
+      "report_sha256": "446c3c937bb5c889b72482206887e38ba0476182c627ded1b331b4c5a6842d9b",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "original-changed-before-capture",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "capture",
+        "code": "MEMBER_BINDING",
+        "type": "CheckError",
+        "message": "geometry: declared length differs"
+      },
+      "report_bytes": 757539,
+      "report_sha256": "ab5ec1e35f1020363e458b9f2eee6cb79a5a3b273d196edafc38be1f3a74d782",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "external-changed-after-capture",
+      "result": "PASS_CPU_COMBINED",
+      "result_class": "pass",
+      "error": null,
+      "report_bytes": 18226563,
+      "report_sha256": "aaddee9a646615b787c7b19b445c79e30d13349077c893b7a0ef02151cedf96e",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "private-replacement",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "components",
+        "code": "SNAPSHOT_CHANGED",
+        "type": "Refusal",
+        "message": "Private directory metadata changed"
+      },
+      "report_bytes": 2216409,
+      "report_sha256": "8bb70d9ba9865608bfd51421f9e8c91d6578aa1124db06e2f0f385f60d410276",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "private-addition",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "components",
+        "code": "SNAPSHOT_INVENTORY",
+        "type": "Refusal",
+        "message": "Private file inventory changed"
+      },
+      "report_bytes": 2216407,
+      "report_sha256": "bca4ba27f4b53b260ca8efc24b1cd072ec98f6463110af88a38448d46c11b9f5",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "private-authority",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "components",
+        "code": "SNAPSHOT_CHANGED",
+        "type": "Refusal",
+        "message": "Private directory metadata changed"
+      },
+      "report_bytes": 2216409,
+      "report_sha256": "8bb70d9ba9865608bfd51421f9e8c91d6578aa1124db06e2f0f385f60d410276",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "stale-transitive-module-origin",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "source",
+        "code": "MODULE_ORIGIN",
+        "type": "Refusal",
+        "message": "C237.authority: loaded module is not the pinned local source"
+      },
+      "report_bytes": 1665,
+      "report_sha256": "7ec62acbcde4041a29d13579fbc943cabb8aceb0e697cc0f91eeb2e2694fe80b",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "unexpected-component-exception",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "components",
+        "code": "COMPONENT_EXCEPTION",
+        "type": "Refusal",
+        "message": "C234: unexpected RuntimeError: controlled unexpected error"
+      },
+      "report_bytes": 3608225,
+      "report_sha256": "8a05af2bb32f3a8d9445a2c3becefea4265060b6ef78bf5fec013c6d744d1d81",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "ERROR",
+          "result": "NO_COMPONENT_REPORT",
+          "classification": "structural_refusal"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "component-reported-binding-mismatch",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "components",
+        "code": "COMPONENT_BINDING",
+        "type": "Refusal",
+        "message": "C222: geometry differs from retained bytes"
+      },
+      "report_bytes": 2216531,
+      "report_sha256": "b4cae8618ebb7854c56eac471aad71e5a88996ee51dd2eb15982fab207a91100",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "fresh-authority-before-mutation",
+      "result": "PASS_CPU_COMBINED",
+      "result_class": "pass",
+      "error": null,
+      "report_bytes": 18226563,
+      "report_sha256": "ec6fc39aca4d00f69dd9b02370b5f262847362c42b6fb75fe83a9f0cc694f2ae",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "fresh-authority-after-mutation",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "stage": "admission",
+        "code": "HASH",
+        "type": "CheckError",
+        "message": "agent-results/namespace-repair/run-01/inputs/after.glb: SHA-256 differs"
+      },
+      "report_bytes": 8522,
+      "report_sha256": "e0e66399df44773e1824c24dad0f2cf964d098df014f092970be71658e307161",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "inherited-source",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "code": "SOURCE_PIN",
+        "message": "C235: inherited implementation differs from the predeclared source",
+        "stage": "source",
+        "type": "Refusal"
+      },
+      "report_bytes": 1668,
+      "report_sha256": "23534b0b0ad2f387724f1d5851e204c4e0e65045a7355a06cdc7c1742dc5c6f5",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "inherited-cache",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "code": "SOURCE_CACHE",
+        "message": "C235: preexisting bytecode cache is not an inspected source",
+        "stage": "source",
+        "type": "Refusal"
+      },
+      "report_bytes": 1663,
+      "report_sha256": "10b69b0e14b5a11c2621bd4c459b890c266cade56de79abe342712a333d2cc47",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "inherited-self-after-load",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "code": "SOURCE_CHANGED",
+        "message": "C239 source differs from its loaded source binding",
+        "stage": "source",
+        "type": "Refusal"
+      },
+      "report_bytes": 1656,
+      "report_sha256": "8f4209d1f35a41ec314f2e8e243007d5f0469e1c7ebef384d8d1d899aedfdee9",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "cli-pass",
+      "result": "PASS_CPU_COMBINED",
+      "result_class": "pass",
+      "error": null,
+      "report_bytes": 18226563,
+      "report_sha256": "ee139e2ded7df722a51dc3a40d566440c3efa772cf053ba1e85a6f27bf8836be",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_MATERIALS",
+          "classification": "pass"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "cli-loss",
+      "result": "FAIL_COMPONENT_LOSS",
+      "result_class": "measured_loss",
+      "error": null,
+      "report_bytes": 18226913,
+      "report_sha256": "c2e6120e1b363ba37586dfb1f36fd15cd331f13dd6c5c516afa2f306788d52c9",
+      "components": {
+        "C222": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_CORRESPONDENCE",
+          "classification": "pass"
+        },
+        "C234": {
+          "state": "EXECUTED",
+          "result": "FAIL_CLOSED",
+          "classification": "measured_loss"
+        },
+        "C235": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_NORMALS",
+          "classification": "pass"
+        },
+        "C236": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_POSES",
+          "classification": "pass"
+        },
+        "C237": {
+          "state": "EXECUTED",
+          "result": "PASS_CPU_SEMANTIC_RETENTION",
+          "classification": "pass"
+        }
+      },
+      "snapshot_valid": true
+    },
+    {
+      "case": "cli-refusal",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "code": "IDENTITY",
+        "message": "Envelope authority: differs",
+        "stage": "admission",
+        "type": "CheckError"
+      },
+      "report_bytes": 11988,
+      "report_sha256": "f28b47240903910217657ac0dc223581e0ca96d807b2d1c7b1160128fa119728",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    },
+    {
+      "case": "cli-arguments",
+      "result": "FAIL_CLOSED",
+      "result_class": "structural_refusal",
+      "error": {
+        "code": "ARGUMENT",
+        "message": "the following arguments are required: --package-root, --envelope",
+        "stage": "arguments"
+      },
+      "report_bytes": 1646,
+      "report_sha256": "839b7f523b4206fd428d00c2b194b331725308d7847477b4aedaf0d0b1701f02",
+      "components": {
+        "C222": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C234": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C235": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C236": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        },
+        "C237": {
+          "state": "NOT_RUN",
+          "result": "NOT_RUN",
+          "classification": "not_run"
+        }
+      },
+      "snapshot_valid": false
+    }
+  ],
+  "source_unchanged": true,
+  "original_inputs_unchanged": true
+}
