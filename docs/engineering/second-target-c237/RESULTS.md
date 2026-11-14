@@ -1,6 +1,6 @@
 # C237 result: finite semantic retention checks
 
-**Reviewed component; coordinated integration and final delivery are recorded separately.** C237 adds one opt-in standard-library checker, its finite [contract](CONTRACT.md), and controls. It changes no earlier runtime, exporter, fixture, dependency or numerical contract.
+**Integrated component; final handoff delivery is recorded separately.** C237 adds one opt-in standard-library checker, its finite [contract](CONTRACT.md), and controls. It changes no earlier runtime, exporter, fixture, dependency or numerical contract.
 
 ## What the checker establishes
 
@@ -29,6 +29,12 @@ Author and reviewer executed the same immutable source in this actual environmen
 
 Only the unchanged C221 checker is an implementation dependency, so the affected cohort contains C237 and C221. C234 materials, C235 normals, C236 poses and the C233 aggregate retain their original exact-source evidence; they were not replayed here. Full logs, negative inputs, reconstruction recipes, source snapshots and independent report archives are preserved in the self-contained handoff tracked by [scope #207](https://github.com/Omegapy/OntoKin/issues/207).
 
+## Actual-main integration
+
+[PR #208](https://github.com/Omegapy/OntoKin/pull/208) merged at `769bc9b255e3e41ee8af837456f4116d07e789ff`, with the exact independently approved publication tree `654938ab56d98154dc42f7eb6fce194de10e0a86`. A fresh run on that actual merged commit passed all 33 C237 and 20 C221 methods, recording 194 C237 cases. The documentation check passed 29 preserved sources and 5,038 local links. Source and original inputs remained unchanged; [integration evidence](evidence/INTEGRATION.json) includes commands, environment, timings and exact source identities.
+
+This subsequent documentation-only closure releases the bounded integration lease. Final archive integrity, a fresh documented offline restore and confirmed saved delivery remain separate operations under [scope #207](https://github.com/Omegapy/OntoKin/issues/207). Their final receipt identifies the published closure revision and saved ZIP without rewriting the tested source history.
+
 ## Preserved failed preparation
 
 The first committed C237 run passed 32 methods and had one author-test setup error: an ownership mutation test expected a string, while the original owner is a structured element-ID/path record. The final control mutates both fields. Checker and contract bytes were unchanged. An earlier C221 launcher invocation omitted its required report argument and exited 2 before tests; the corrected invocation and final 20-method run passed. Both original failures remain in the handoff, separate from the accepted immutable run.
@@ -39,4 +45,4 @@ The existing recovery-source and checkpoint items were initially saved and updat
 
 C237 validates reported treatment and inspected retained bytes. It does not attest actual import, native mapping, saved-scene retention, live constraints, action execution, physics, reconstruction, received numerical accuracy or full R07. This no_body fixture has declaration-derived zero represented mass; that is not a native measurement.
 
-All native/version, source-evaluation, export, import, render, scene-write and aggregate starts remain zero. The original strict Blender normal failure, consumed schedules, held drafts, separate scope #201 alternate, all nine recommendations and all 41 criteria retain their meaning. Complete coordinated publication, actual-main checks and verified saved handoff delivery, then stop. [The next scope](NEXT-TASK.md) has not started.
+All native/version, source-evaluation, export, import, render, scene-write and aggregate starts remain zero. The original strict Blender normal failure, consumed schedules, held drafts, separate scope #201 alternate, all nine recommendations and all 41 criteria retain their meaning. Coordinated publication and actual-main checks are complete. Finish verified saved handoff delivery, then stop. [The next scope](NEXT-TASK.md) has not started.
