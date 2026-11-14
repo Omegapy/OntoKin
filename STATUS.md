@@ -244,7 +244,7 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `none`. C233 owner `c233-root-1f37bfa2194c` completed the reviewed documentation/evidence integration through [PR #199](https://github.com/Omegapy/OntoKin/pull/199), merge `e047c23db2818ccca647127e7d8134ebf898203f`, with exact approved tree equality and fresh actual-main preservation/link checks. This closure releases the lease. Scope [#198](https://github.com/Omegapy/OntoKin/issues/198) remains open only for final verified saved handoff delivery. The work branch was observed absent; held drafts #155/#165/#167/#169 remain unclaimed and unchanged. No product repair, aggregate retry or native schedule belongs to C233.
+Owner: `c234-root-829f8495208c`. Acquired for the bounded C234 CPU material-checker integration and handoff under [scope #200](https://github.com/Omegapy/OntoKin/issues/200). Expires `2026-11-14T00:59:22.008233+00:00`. Observed parent is `4afb8d2d2d9a62bf1b5195b09c716607008e8a6c`. Root exclusively owns main integration, STATUS/GOAL/navigation/tracker updates and C234 publication evidence; independent material review and package maintenance retain their nonoverlapping file scopes. Author source and evidence are frozen; the author has transferred `work/c234-material-checker` to root. No native, source-evaluation, export, import or render start is authorized. Preserve held drafts #155/#165/#167/#169 and historical evidence. Reconcile actual heads and outstanding writes before any takeover.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
