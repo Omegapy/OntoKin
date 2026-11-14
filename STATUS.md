@@ -274,9 +274,11 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none. The C236 root lease is released after [PR #206](https://github.com/Omegapy/OntoKin/pull/206) merged the exact reviewed tree and all 135 affected methods plus documentation passed on actual main `6ff721689fcc52c24bf8129ccb6c84b258fd488c`. The original lease was acquired by `c236-root-db59de8d1494` at `2026-11-14T04:09:31.804241+00:00`, with expiry `2026-11-14T04:39:31.804241+00:00`; its exact published commit is `99709592f2e3df9f6d98527f7ccdd7b4d6c48f9e`. Root retains only final handoff verification and confirmed delivery in [scope #205](https://github.com/Omegapy/OntoKin/issues/205). No next development scope is acquired here.
+Owner: `c237-root-b6bae7409794`. Acquired at `2026-11-14T16:08:45.000Z`; expires at `2026-11-14T16:38:45.000Z`. Scope: integrate the independently reviewed finite C237 CPU semantic-retention checker in [PR #208](https://github.com/Omegapy/OntoKin/pull/208), verify actual main, publish the result and release ownership. [Scope #207](https://github.com/Omegapy/OntoKin/issues/207) tracks this bounded work and final handoff delivery.
 
-Preserve all four held native drafts, the separate scope #201 alternate and the base-only C234 branch. All nine recommendations/41 criteria and original failures retain their meaning. The [next task](docs/engineering/second-target-c236/NEXT-TASK.md) requires its own fresh live-state reconciliation and bounded ownership. No native/version/source-evaluation/export/import/render/scene-write or aggregate start is authorized by this closure.
+Acquisition uses an observed-head conditional nonforce update from `87ac72e78c4fcc30e1a5bd1de051ccabeb2d1474`. Exact author and independent execution source is `f6fea0606bbc0729c79e1a008e06d9c556549d9c`; published work-branch source `670d8f27b5b921ca136cecd5de7cc5e6cef34709` has the same reviewed tree. All 33 C237 and 20 unchanged C221 methods passed; independent review passed 223 API and three CLI scenarios. This lease does not claim integration or final delivery has already succeeded.
+
+Preserve all four held native drafts, the separate scope #201 alternate and the base-only C234 branch. All nine recommendations/41 criteria and original failures retain their meaning. Native/version, source-evaluation, export, import, render, scene-write and aggregate starts remain zero. The holder owns only main integration, STATUS coordination and the C237 publication/navigation files; independent nonoverlapping work remains allowed.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
