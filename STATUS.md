@@ -298,11 +298,13 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none.
+Owner: c240-security-02a7fe7a6326.
+Started: 2026-11-15T01:18:53.000Z.
+Expires: 2026-11-15T01:48:53.000Z.
+Task: [C240 security follow-up #213](https://github.com/Omegapy/OntoKin/issues/213), published source `6c66292b585044aa0175a1a32abab42b494500bf`, exact independently checked tree `c1f5b83fffd82b754b9160b9c70883b09b5995a8`.
+Reserved shared file: `STATUS.md`; main integration writes are serialized.
 
-C239 integration is complete through PR #212 at `1329d5b420f70f2b00f771788e9a50e2eb60ca93`; all 235 affected methods passed on that actual main. This documentation-only closure releases owner `c239-root-3956723aded2` after checked integration. The merged work branch was observed absent. [Scope #211](https://github.com/Omegapy/OntoKin/issues/211) remains open for final ZIP verification, a fresh offline restore and confirmed saved delivery, then stops.
-
-Preserve all four held native drafts, the separate scope #201 alternate, the base-only C234 branch, all nine recommendations/41 criteria and original failures. R07 and native capture/execution preparation remain pending. No native/version, source-evaluation, export, import, render, scene-write or aggregate start occurred in C239. A later integration must acquire its own observed-head lease under AGENTS.
+Only the scoped security documentation, actual-main focused checks and verified successor handoff belong to this lease. C241 owner `c241-root-7b71d9310a3c` independently owns its new native-preflight directory and branch; its work and all held branches remain unchanged. No native or aggregate start is authorized by this security scope.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
