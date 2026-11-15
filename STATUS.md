@@ -314,11 +314,16 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none.
+Owner: c243-root-1716ab7e536d.
+Scope: C243 zero-start node-index mapping/capture design; [scope #217](https://github.com/Omegapy/OntoKin/issues/217).
+Acquired from observed main: `73ef57f5a07db2c5eef5ef6dafd9305e1870f1b7`.
+Acquired at UTC: 2026-11-15T15:56:46.350Z.
+Expires at UTC: 2026-11-15T16:26:46.350Z.
+Reserved shared files: STATUS.md, GOAL.md, README.md and docs/README.md.
 
-C241 documentation integration is complete through PR #216 at `ed13228bbaa5c9e63652e855980ea4a099d6a890`; fresh actual-main documentation checks passed 29 preserved sources / 5,113 local links. This documentation closure releases owner `c241-root-7b71d9310a3c`. [Scope #214](https://github.com/Omegapy/OntoKin/issues/214) remains open only for final ZIP verification, fresh offline restoration and confirmed saved delivery, then stops.
+The C243 author owns only docs/engineering/second-target-c243/ on its isolated branch. Independent review and artifact packaging proceed in nonoverlapping scopes. This lease admits no Godot/version/import/render/save/reopen start or aggregate. Root will verify exact candidate checks, serialize integration, publish actual-main results, then release ownership before final archive delivery.
 
-C240 security source/evidence, all held native drafts, the separate scope #201 alternate, original evidence and unresolved acceptance gates remain preserved. No native/version/source-evaluation/export/import/render/save/reopen or aggregate start occurred in C241. The next zero-start mapping/capture design requires a new bounded scope and, before any shared main write, its own observed-head lease.
+C242 verified exact-archive restoration and confirmed saved delivery are reconciled; scope #214 is closed. Preserve all held drafts, original evidence, six C241 unpublished identities, scope #201 alternate and all unresolved acceptance gates.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
