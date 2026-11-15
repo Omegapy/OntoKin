@@ -1,0 +1,119 @@
+{
+  "schema": "ontokin.c246.native-facts-independent-static-review/0.1",
+  "recordedAtUtc": "2026-11-15T19:01:05.955765+00:00",
+  "disposition": "APPROVE_HELD_SOURCE_STATIC_ONLY",
+  "initialSourceSha256": "3b09e1dc6a10674b6b4ebdab72c6f90ad67eb35a8b393d6d3e0b2ccffff543cd",
+  "reviewedSourceSha256": "1fb4caeb9e36756c03b4cec0072c8a3a1decde0a554798c87a0895cf8ccd29f9",
+  "reviewedSourceBytes": 6582,
+  "sourcePath": "docs/engineering/second-target-c246/native_facts.gd",
+  "initialHold": "Capture record/error expansion could exceed MAX_VALUES",
+  "holdResolution": "First-error refusal, shared visited-record charge, stop/return across nested and outer loops; output byte/native allocation limits explicitly deferred",
+  "apiRevision": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+  "apiBindings": [
+    {
+      "file": "Object.xml",
+      "sha256": "7a4a7caa7da48ee674d6182c745695051053f8e87baebd4f61502a3d4e2b1e36",
+      "gitBlob": "c50afa39105b559d6913c9b09441e4c35b797196",
+      "url": "https://github.com/godotengine/godot/blob/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/Object.xml",
+      "exactToolContentAndGitBlob": true
+    },
+    {
+      "file": "Callable.xml",
+      "sha256": "7c9a7d0e7d731242e3356d527e767cfdae67a77b4f4143d5778f0bf521d65a78",
+      "gitBlob": "f52a403d41c60bab2631fa9bac1d7f8791fdee7f",
+      "url": "https://github.com/godotengine/godot/blob/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/Callable.xml",
+      "exactToolContentAndGitBlob": true
+    },
+    {
+      "file": "Signal.xml",
+      "sha256": "a7440c7660fad2be56420aaa4b512cb1aa0a59a4ffddb6482dd629d131abace5",
+      "gitBlob": "41c6776199abe3c02d87a011eb9c406570762a3f",
+      "url": "https://github.com/godotengine/godot/blob/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/Signal.xml",
+      "exactToolContentAndGitBlob": true
+    },
+    {
+      "file": "Node.xml",
+      "sha256": "1713bf6d076daf5a2015a366fe627a46bb98b7a628948c8f6245617c3ff00e16",
+      "gitBlob": "186fc4afb1103f87d7572b15af071b2974a22bc9",
+      "url": "https://github.com/godotengine/godot/blob/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/Node.xml",
+      "exactToolContentAndGitBlob": true
+    },
+    {
+      "file": "Resource.xml",
+      "sha256": "74e2e2614edc1a45efe3b3c82350dd73380dd0384b0e99d24c4a2b2e3bb234e0",
+      "gitBlob": "5f2527e3f62c061df8d210f970e03a11bbcd6e06",
+      "url": "https://github.com/godotengine/godot/blob/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/Resource.xml",
+      "exactToolContentAndGitBlob": true
+    },
+    {
+      "file": "@GlobalScope.xml",
+      "sha256": "b801863fa55c985af81d0e632d9d8a50f894d06481a68f75f97a2091a0f27c64",
+      "gitBlob": "c3a35e6adf55a644452daf9c2e5721806bb32e4e",
+      "url": "https://github.com/godotengine/godot/blob/35e80b3a8822a9df9be390814b62f44c0a9c69e8/doc/classes/@GlobalScope.xml",
+      "exactToolContentAndGitBlob": true
+    }
+  ],
+  "inspectionConditions": [
+    {
+      "name": "Queried API signatures and native property accessors",
+      "result": "PASS_STATIC",
+      "evidence": "selected-api.xml.json"
+    },
+    {
+      "name": "Connection field names signal/callable/flags",
+      "result": "PASS_STATIC"
+    },
+    {
+      "name": "Detached supported scalars and reconstructed containers",
+      "result": "PASS_STATIC"
+    },
+    {
+      "name": "Unsupported Variant and nonfinite float refusal",
+      "result": "PASS_STATIC"
+    },
+    {
+      "name": "Custom or invalid callable refusal before deeper interrogation",
+      "result": "PASS_STATIC"
+    },
+    {
+      "name": "Unexpected node script refusal before dynamic signal/property enumeration/getters",
+      "result": "PASS_STATIC"
+    },
+    {
+      "name": "Unexpected resource script refusal before resource metadata capture",
+      "result": "PASS_STATIC"
+    },
+    {
+      "name": "First-error record cap",
+      "result": "PASS_STATIC"
+    },
+    {
+      "name": "Visited-record budget and loop termination after refusal",
+      "result": "PASS_STATIC_CORRECTED"
+    },
+    {
+      "name": "String/native-allocation/hard-memory limits explicitly deferred",
+      "result": "PASS_SCOPE_HONESTY"
+    },
+    {
+      "name": "No importer/tree/save/render/invocation or object mutation APIs",
+      "result": "PASS_STATIC"
+    },
+    {
+      "name": "Phase-local identity facts explicitly not full C241 raw capture",
+      "result": "PASS_SCOPE_HONESTY"
+    }
+  ],
+  "nativeStarts": 0,
+  "gdscriptParserStarts": 0,
+  "productOrAggregateStarts": 0,
+  "runtimeBehaviorExecuted": false,
+  "callerPreconditions": "Overall reviewer confirms live exact-class nodes/root checked under declared frozen synchronous extension assumptions; outside this helper-only review",
+  "residualBlockers": [],
+  "limitations": [
+    "Static API/source reasoning only; GDScript parse/compile and native dispatch not executed",
+    "Record count does not bound strings, native API list allocations, process memory or final output bytes",
+    "Full raw native capture, persistence, geometry/material arrays and poses remain later gates",
+    "Caller lifetime and synchronous isolation assumptions are not native-attested"
+  ]
+}

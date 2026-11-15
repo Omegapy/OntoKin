@@ -1,0 +1,68 @@
+{
+  "schema": "ontokin.c246.author-result/0.1",
+  "recordedAtUtc": "2026-11-15T19:02:30.676447+00:00",
+  "scopeIssue": "https://github.com/Omegapy/OntoKin/issues/221",
+  "branch": "work/c246-held-observer",
+  "base": "69b67921ada560f1e7480d839af175bc87cb38af",
+  "checkpoint": "42a0d75c98dbef882713503d1747ddcfad608a48",
+  "checkedCommit": "55e7d2576dd29e65a22db79f2207303570e5a1e3",
+  "checkedTree": "62197aa149025af8c8e2b849af8f0b386203c433",
+  "worktreeClean": true,
+  "fileHashes": {
+    "docs/engineering/second-target-c246/BINDINGS.json": "c114f20b0cdee7045d12f73795778c713f093da51dfb6fa747138afd0dd87c38",
+    "docs/engineering/second-target-c246/NEXT-TASK.md": "037283040d24dcf2dab600a76231ec1a695794a759752bfb9f7a9043f507f871",
+    "docs/engineering/second-target-c246/README.md": "cdb5ae43d4cccb9a6ad4964aa30e527f2c2ccf0fcf8f1e339dee12ea5f0a713c",
+    "docs/engineering/second-target-c246/RESULTS.md": "fa7f158d60124bd7e4860f3851fed05773f00c6b3ddbcca80da1ebdfe53f05a5",
+    "docs/engineering/second-target-c246/inert_model.py": "5189b51f521026da572cc60b13636f300e1adbb164ce5a9cd2889d20986b2d67",
+    "docs/engineering/second-target-c246/native_facts.gd": "1fb4caeb9e36756c03b4cec0072c8a3a1decde0a554798c87a0895cf8ccd29f9",
+    "docs/engineering/second-target-c246/observer.gd": "e3f17f346b8e926c04e072e071ca27db7bddab1a0c14e68ee3e4871c4b1c5a60",
+    "docs/engineering/second-target-c246/registry.gd": "6da4d9d5ca973b0cd2c45547bca908aa29c344c934f9b97f4a43b09501fec535",
+    "docs/engineering/second-target-c246/session.gd": "6f7495fa36d9df0f885c9668dcf0b6556a39087e6d9f1c099babddeea629f9ad",
+    "docs/engineering/second-target-c246/test_inert_model.py": "119c1dea84981d18cc97f8369873b1c03208f84bfb7aba152c78c5b0fa21fff6",
+    "docs/engineering/second-target-c246/verify_bindings.py": "61e429890a35742fedbf630daecd9ebb85e91e6636a9347c715f77bdd8cef4c1"
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "checks": [
+    {
+      "command": "python3 docs/engineering/second-target-c246/test_inert_model.py",
+      "result": "PASS",
+      "methods": 47,
+      "log": "final-inert-tests.log"
+    },
+    {
+      "command": "python3 docs/engineering/second-target-c246/verify_bindings.py --package-root PACKAGE --output RESULT",
+      "result": "PASS",
+      "checks": 122,
+      "upstreamSources": 21,
+      "authorityDocuments": 9,
+      "resultFile": "final-bindings.json",
+      "overrideAuthorUpstream": "/workspace/scratch/78ec4444f33d/author-evidence/upstream",
+      "overrideReviewerUpstream": "/workspace/scratch/78ec4444f33d/independent-review/upstream"
+    },
+    {
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "PASS",
+      "sources": 29,
+      "sections": 233,
+      "links": 5197,
+      "resultFile": "final-documentation.json"
+    }
+  ],
+  "notRun": [
+    "Godot or other native process",
+    "GDScript parser/compilation",
+    "native callback/lifetime/metadata",
+    "product",
+    "aggregate",
+    "source export",
+    "import",
+    "render",
+    "save",
+    "reopen"
+  ],
+  "disposition": "HELD_SOURCE_ONLY; independent exact-commit review and root publication pending",
+  "next": "Separately bounded final native mesh-array source capture, zero native starts; see NEXT-TASK.md"
+}
