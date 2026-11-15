@@ -306,11 +306,14 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none.
+Owner: c241-root-7b71d9310a3c.
+ExpiresAtUtc: 2026-11-15T01:55:38.955Z
+Scope: [C241 zero-start native capture/preflight contract](https://github.com/Omegapy/OntoKin/issues/214).
+Branch: `work/c241-native-preflight-7b71d9`.
+ObservedBase: `d459fc3f4e15961ca23a3ebb9a748808411567cd`.
+ReservedSharedFiles: STATUS.md, GOAL.md, README.md, docs/README.md.
 
-C240 security integration is complete through PR #215 at `7f79de18b5f9ed2cb881f22f29b0587d5c3618b2`. Fresh actual-main proof and preservation checks passed. This documentation closure releases owner `c240-security-02a7fe7a6326`; [scope #213](https://github.com/Omegapy/OntoKin/issues/213) remains open only for final ZIP verification, offline restoration and confirmed saved delivery.
-
-Concurrent owner `c241-root-7b71d9310a3c` owns its separate zero-start native-preflight directory and branch. C240 grants no native execution and does not complete C241. Any later main writer must re-read current head and ownership and acquire its own bounded conditional lease. Preserve all held native drafts, the scope #201 alternate, the base-only C234 branch, original evidence and unresolved acceptance gates.
+The C240 security scope has released its lease after PR #215 and exact documentation closure. C241 owns one reviewed documentation/evidence increment and subsequent handoff closure. It authorizes no Godot/version, import, save, render, reopen, source-evaluation or aggregate start. Preserve all C240 source/evidence and current security disposition, held drafts, the scope #201 alternate and original failures. Independent nonoverlapping branch work remains permitted under AGENTS.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
