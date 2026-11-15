@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C241 R07: zero-start native capture/preflight contract
+
+[C241](docs/engineering/second-target-c241/RESULTS.md) specifies exact prospective loader settings, source-node mapping, original native capture before observer metadata, provenance, complete C238 projections and later process admission. Fresh static inspection confirms the same pinned Godot bytes. No native/version, source-evaluation, export, import, render, save, reopen or aggregate start occurred.
+
+The exact eight-file author source `7261a6f0829a5e5995f85d9407f458a3269febe5` passed all **14 independent static verification groups**, with unchanged inherited pins, original inputs and source. Its focused documentation check passed **29 preserved sources / 5,099 local links**. [Independent review](docs/engineering/second-target-c241/REVIEW.md). Publication/current-main checks and saved delivery remain tracked in [scope #214](https://github.com/Omegapy/OntoKin/issues/214).
+
+**R07 remains pending.** Native mapping lifetime, build lineage and a verified rendering route remain unresolved; observer/emitter code, frozen execution settings and hard resource enforcement are not implemented by this contract. [Next separate step](docs/engineering/second-target-c241/NEXT-TASK.md): one bounded zero-start mapping/capture design. Preserve the C239 finite CPU results, the strict Blender normal failure, all held drafts and nine recommendation records / 41 criteria.
+
 ## C240: GitGuardian source-identity false positive verified
 
 [C240 security review](docs/engineering/security-triage-c240/README.md) proves that incident 40091648 on PR #212 flags a preserved Git commit identifier. Recomputing the actual 259-byte commit object reproduces the reported value; the original C239 evidence remains byte-identical. This conclusion covers that finding only. GitGuardian dashboard disposition remains pending because the available tools cannot change the incident. [PR #212 explanation](https://github.com/Omegapy/OntoKin/pull/212#issuecomment-6887205471).
