@@ -1,0 +1,58 @@
+{
+  "schema": "ontokin.c249.independent-initial-findings/0.1",
+  "recordedAtUtc": "2026-11-15T22:56:10.291457+00:00",
+  "commit": "b2b8f98b2270df607a04c87536e7d6f44316b3bc",
+  "findings": [
+    {
+      "id": "C249-F01",
+      "severity": "must_fix",
+      "file": "docs/engineering/second-target-c249/animation_inventory.gd",
+      "line": 188,
+      "title": "Unsupported root NodePath reaches native resolver before validation",
+      "observed": "player.get_node_or_null(root_path) executes before the is_absolute/is_empty/subname checks. The supported scene is detached.",
+      "impact": "Pinned Node::get_node_or_null has ERR_FAIL_COND_V_MSG for an absolute path outside the tree, so the failure path produces an avoidable engine diagnostic before explicit capture refusal. This contradicts rejecting unsupported paths before lookup.",
+      "source": "Pinned node.cpp1892-1898; exact hash in API-RESEARCH-BINDINGS.json",
+      "required_change": "Record root_path first, reject absolute/empty/subname paths with a lookup omission marker, and call the native resolver only after shape admission; retain actual resolved root identity thereafter.",
+      "validation": "Static order check and independent synthetic resolver-trap control for invalid root paths; no native execution.",
+      "status": "CORRECTED_AND_INDEPENDENTLY_VERIFIED",
+      "correctedIn": "049e4878327bf4f1a02e5e95dfe028a6bb095506",
+      "finalEvidence": [
+        "ADVERSARIAL-FINAL.json",
+        "SOURCE-BOUNDARY-RESULT.json",
+        "FINAL-SOURCE-CONSISTENCY.json"
+      ]
+    },
+    {
+      "id": "C249-F02",
+      "severity": "must_fix",
+      "commit": "049e4878327bf4f1a02e5e95dfe028a6bb095506",
+      "file": "docs/engineering/second-target-c249/inert_model.py",
+      "title": "Settings metadata failure escapes instead of preserving refusal receipt",
+      "observed": "Facts.typed raises uncaught ValueError while building settings comprehension for NaN/Inf scalar settings or unsupported queue metadata. Independent194-case suite reproduces4failures.",
+      "impact": "No partial returned receipt and model differs from native refusal path.",
+      "required_change": "Capture settings incrementally, preserve prior raw settings and current failure marker, translate metadata failure to Refusal. Match source distinction between scalar _typed and queue Facts.typed.",
+      "correctionCandidate": "6d1b2cc8f9aef745ee29a60d183f38de3e294c40",
+      "evidence": [
+        "MODEL-INITIAL-EXCEPTIONS.json",
+        "ADVERSARIAL-INITIAL-049e487.json"
+      ],
+      "status": "CORRECTED_AND_INDEPENDENTLY_VERIFIED",
+      "correctedIn": "6d1b2cc8f9aef745ee29a60d183f38de3e294c40",
+      "finalEvidence": [
+        "ADVERSARIAL-FINAL.json",
+        "SOURCE-BOUNDARY-RESULT.json",
+        "FINAL-SOURCE-CONSISTENCY.json"
+      ]
+    }
+  ],
+  "other_observations": [
+    "Single C248 chain ownership and no double close correctly retained",
+    "Actual target ID association does not depend on source names or track order",
+    "RESET special key is explicitly refused",
+    "Detached scripted/queued/additional-mixer checks present",
+    "Final scene/resource rechecks and two inventories limit lasting drift claims",
+    "No native parse or runtime evidence claimed"
+  ],
+  "nativeStarts": 0,
+  "gdscriptParserStarts": 0
+}
