@@ -51,3 +51,9 @@ reviewed and integrated while those execution prerequisites remain blocked.
 After root confirms the verified saved handoff, stop. The [next separate
 step](NEXT-TASK.md) resolves one bounded zero-start native mapping/capture design
 question before implementing an observer.
+
+## Verified integration
+
+[PR #216](https://github.com/Omegapy/OntoKin/pull/216) merged at `ed13228bbaa5c9e63652e855980ea4a099d6a890`, exactly matching approved tree `a5765d3d434bb85606c0db09cbe9db20d04c1eab`. Independent author and publication reviews each passed 14 static verification groups within their stated scopes. Fresh actual-main documentation verification passed **29 preserved sources / 5,113 local links**, with a clean unchanged source. [Integration receipt](evidence/INTEGRATION.json) and [publication review](evidence/PUBLICATION-REVIEW.json).
+
+The new PR's GitGuardian check succeeded. C240's independently proved PR #212 commit-identifier false positive and pending original dashboard disposition remain separate. This documentation closure releases the C241 integration lease. [Scope #214](https://github.com/Omegapy/OntoKin/issues/214) remains open only for the final verified archive, fresh offline restoration and confirmed saved handoff; those later outcomes require their separate receipt.

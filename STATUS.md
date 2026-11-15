@@ -6,7 +6,7 @@ OntoKin is an AI-native semantic language and intermediate representation for co
 
 [C241](docs/engineering/second-target-c241/RESULTS.md) specifies exact prospective loader settings, source-node mapping, original native capture before observer metadata, provenance, complete C238 projections and later process admission. Fresh static inspection confirms the same pinned Godot bytes. No native/version, source-evaluation, export, import, render, save, reopen or aggregate start occurred.
 
-The exact eight-file author source `7261a6f0829a5e5995f85d9407f458a3269febe5` passed all **14 independent static verification groups**, with unchanged inherited pins, original inputs and source. Its focused documentation check passed **29 preserved sources / 5,099 local links**. [Independent review](docs/engineering/second-target-c241/REVIEW.md). Publication/current-main checks and saved delivery remain tracked in [scope #214](https://github.com/Omegapy/OntoKin/issues/214).
+The exact eight-file author source `7261a6f0829a5e5995f85d9407f458a3269febe5` passed all **14 independent static verification groups**, with unchanged inherited pins, original inputs and source. Its focused documentation check passed **29 preserved sources / 5,099 local links**. [Independent review](docs/engineering/second-target-c241/REVIEW.md). [PR #216](https://github.com/Omegapy/OntoKin/pull/216) merged at `ed13228bbaa5c9e63652e855980ea4a099d6a890`, exactly matching reviewed tree `a5765d3d434bb85606c0db09cbe9db20d04c1eab`. Fresh actual-main documentation checks passed **29 preserved sources / 5,113 local links**, with clean unchanged source. [Integration receipt](docs/engineering/second-target-c241/evidence/INTEGRATION.json). [Scope #214](https://github.com/Omegapy/OntoKin/issues/214) remains open for verified saved handoff delivery.
 
 **R07 remains pending.** Native mapping lifetime, build lineage and a verified rendering route remain unresolved; observer/emitter code, frozen execution settings and hard resource enforcement are not implemented by this contract. [Next separate step](docs/engineering/second-target-c241/NEXT-TASK.md): one bounded zero-start mapping/capture design. Preserve the C239 finite CPU results, the strict Blender normal failure, all held drafts and nine recommendation records / 41 criteria.
 
@@ -314,14 +314,11 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: c241-root-7b71d9310a3c.
-ExpiresAtUtc: 2026-11-15T01:55:38.955Z
-Scope: [C241 zero-start native capture/preflight contract](https://github.com/Omegapy/OntoKin/issues/214).
-Branch: `work/c241-native-preflight-7b71d9`.
-ObservedBase: `d459fc3f4e15961ca23a3ebb9a748808411567cd`.
-ReservedSharedFiles: STATUS.md, GOAL.md, README.md, docs/README.md.
+Owner: none.
 
-The C240 security scope has released its lease after PR #215 and exact documentation closure. C241 owns one reviewed documentation/evidence increment and subsequent handoff closure. It authorizes no Godot/version, import, save, render, reopen, source-evaluation or aggregate start. Preserve all C240 source/evidence and current security disposition, held drafts, the scope #201 alternate and original failures. Independent nonoverlapping branch work remains permitted under AGENTS.
+C241 documentation integration is complete through PR #216 at `ed13228bbaa5c9e63652e855980ea4a099d6a890`; fresh actual-main documentation checks passed 29 preserved sources / 5,113 local links. This documentation closure releases owner `c241-root-7b71d9310a3c`. [Scope #214](https://github.com/Omegapy/OntoKin/issues/214) remains open only for final ZIP verification, fresh offline restoration and confirmed saved delivery, then stops.
+
+C240 security source/evidence, all held native drafts, the separate scope #201 alternate, original evidence and unresolved acceptance gates remain preserved. No native/version/source-evaluation/export/import/render/save/reopen or aggregate start occurred in C241. The next zero-start mapping/capture design requires a new bounded scope and, before any shared main write, its own observed-head lease.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
