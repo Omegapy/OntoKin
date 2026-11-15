@@ -2,11 +2,11 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
-## C244 R07: capture-hook decision independently reviewed
+## C244 R07: capture-hook design adopted; native implementation pending
 
 [C244/0.2.0 adoption](docs/engineering/second-target-c244/ADOPTION.md) selects one observer-only callback and a live original-map / observed replacement-chain identity route for the original 18-node fixture. Both C220/C241 exceptions are explicit. The [proposal](docs/engineering/second-target-c244/DECISION.md) and inert test source remain unchanged; their historical draft wording is superseded only by the adoption record after verified integration.
 
-Two actual independent subagents approve the finite design and controls on `8264db6e36b0c6118cf5b7ab2e41724569f72d90`, tree `c62c61d0287d5d006d53f653a3df8267289d547c`. All 44 author methods and 319 independent cases pass, alongside nine pinned sources, six authority documents and the original GLB associations. [Review](docs/engineering/second-target-c244/REVIEW.md). [Results](docs/engineering/second-target-c244/RESULTS.md). PR #219 integration and actual-main validation are pending at this candidate stage under [scope #220](https://github.com/Omegapy/OntoKin/issues/220).
+Two actual independent subagents approve the finite design and controls on `8264db6e36b0c6118cf5b7ab2e41724569f72d90`, tree `c62c61d0287d5d006d53f653a3df8267289d547c`. All 44 author methods and 319 independent cases pass, alongside nine pinned sources, six authority documents and the original GLB associations. [Review](docs/engineering/second-target-c244/REVIEW.md). [Results](docs/engineering/second-target-c244/RESULTS.md). [PR #219](https://github.com/Omegapy/OntoKin/pull/219) merged at `91144a38d06d9a915ce5ba091a2f4aa253b22b87`, exactly matching reviewed tree `9465e632588b850cb8f987a401376e0e23ce14db`. Fresh actual-main checks pass 44 inert methods and the documentation preservation/link checker. [Integration receipt](docs/engineering/second-target-c244/evidence/integration/INTEGRATION.json). [Scope #220](https://github.com/Omegapy/OntoKin/issues/220) remains open only for verified saved handoff delivery.
 
 **R07 remains pending.** No observer/emitter/launcher or native behavior is implemented or established. Build lineage, diagnostic coverage, rendering, persistence, hard resource enforcement and reservation remain gates; all original failures and held drafts remain. After verified integration and saved delivery, the [next bounded step](docs/engineering/second-target-c244/NEXT-TASK.md) is held-source implementation of the narrow hook and external session registry, with zero native starts.
 
@@ -330,15 +330,11 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c245-review-c2bb141aae02`.
-Scope: [C245 review/integration #220](https://github.com/Omegapy/OntoKin/issues/220), closing [C244 PR #219](https://github.com/Omegapy/OntoKin/pull/219).
-Acquired from observed main: `6bf7b9b1d53a4d8181679bf7bd8f7b5147023c01`.
-Expires at: `2026-11-15T18:32:15.730Z` (UTC).
-Reserved shared files: `STATUS.md`, `GOAL.md`, `docs/README.md` and C244 review/adoption records.
+Owner: none.
 
-Independent design review approves the unchanged C244/0.2.0 draft. Independent controls pass all 44 author methods and 319 additional cases; focused documentation checks pass. The [durable review checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-1748fcdc9ea081918f20dd2508b378dc_2ab2a24d43748191957f9bcc356b59de&account_id=personal) retains exact source/evidence. This lease permits only reviewed adoption/integration, actual-main checks and closure. It does not authorize observer implementation or native/product/aggregate starts.
+C245 completed the independently reviewed C244 design integration through [PR #219](https://github.com/Omegapy/OntoKin/pull/219), actual merge `91144a38d06d9a915ce5ba091a2f4aa253b22b87`, tree `9465e632588b850cb8f987a401376e0e23ce14db`. Fresh actual-main controls and documentation checks pass with unchanged original source. This closure releases owner `c245-review-c2bb141aae02`. [Scope #220](https://github.com/Omegapy/OntoKin/issues/220) remains open only for exact successor ZIP verification, offline restoration and confirmed saved delivery, then stops.
 
-The previous C243 integration owner is released and its final handoff/scope #217 closure are reconciled. The previous C244 rerun owner explicitly stopped after the saved delivery. Preserve all held branches, local-only source identities, historical evidence and unresolved gates.
+The original C244 draft, every earlier unpublished source identity, held drafts, archive-only records, numerical limits and failures remain. The [next held-source hook/session component](docs/engineering/second-target-c244/NEXT-TASK.md) requires a separate bounded scope and its own integration lease before shared main writes. No native or product/aggregate execution was introduced.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 

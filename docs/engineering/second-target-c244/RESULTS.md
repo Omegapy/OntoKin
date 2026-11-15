@@ -34,9 +34,25 @@ explicitly stopped. The main lease was acquired by expected-head, nonforce updat
 from `6bf7b9b1d53a4d8181679bf7bd8f7b5147023c01` to
 `48425eb7217b7cc717995db014709f98d3d9bb40` and read back.
 
-At this candidate stage, branch publication, actual merge and resulting-main
-checks remain pending. They are not inferred from passing source checks.
-The integrator records their exact observed results before releasing the lease.
+PR #219 merged at `91144a38d06d9a915ce5ba091a2f4aa253b22b87`, tree
+`9465e632588b850cb8f987a401376e0e23ce14db`, exactly equal to the independently
+reviewed candidate. Published author `7c9bea6086dbe6bac67e3e25670d7d3411a58dcf`
+and reviewed local author `798284c58f27b7a52a0c0841802bfec57ca991d0` have that
+same tree. Remote main and the signed merge object were read back and verified.
+
+Fresh actual-main checks pass all **44 inert methods** and the documentation
+preservation/link checker. Source is clean and the original proposal/tests remain
+byte-identical. [Exact integration receipt](evidence/integration/INTEGRATION.json),
+[control log](evidence/integration/ACTUAL-MAIN-CONTROLS.log) and
+[documentation report](evidence/integration/DOCUMENTATION.json) retain the results.
+The work branch is observed absent; its head is retained in merge ancestry.
+Earlier local author identities remain separately labeled unpublished in the
+successor source descriptor, rather than being relabeled remote commits.
+
+The design adoption is therefore effective. This closure releases the integration
+lease after its verified expected-head publication. Scope #220 remains open only
+for verified final archive/restoration and confirmed saved delivery; no further
+feature work belongs to this conversation.
 
 ## Preserved limitations
 
@@ -53,10 +69,10 @@ save/reopen, product and aggregate starts are zero.
 
 The original C244 recursive restore exceeded its bound; the successful single-pass
 restore remains a distinct result. A temporary C245 recovery-save attempt failed
-during tool discovery before any upload began; the ordered retry succeeded. An
-initial local reconstruction assumed the wrong commit timezone and refused to
-write an object; reconstructing the observed offset reproduced the exact remote
-lease identity. These do not represent unknown remote writes or hidden test passes.
+during tool discovery before any upload began; the ordered retry succeeded. Local
+commit reconstruction initially assumed the wrong timezone, then stripped a
+signed merge signature terminal line. Each refused before writing an object;
+preserving the exact observed encodings reproduced both remote identities. These do not represent unknown remote writes or hidden test passes.
 
 Stop after exact successor ZIP verification, offline restoration, confirmed saved
 delivery and scope closure. [Next separate task](NEXT-TASK.md)
