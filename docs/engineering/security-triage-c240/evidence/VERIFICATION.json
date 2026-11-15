@@ -1,0 +1,82 @@
+{
+  "schema": "ontokin.security.false-positive-review/1",
+  "outcome": "CONFIRMED_GIT_OBJECT_ID_FALSE_POSITIVE",
+  "incident": 40091648,
+  "detector": "Generic High Entropy Secret",
+  "github_pr": 212,
+  "github_comment_id": 6882759299,
+  "flagged_commit": "676eecee857d5212d86340122f81b06f4c6791b1",
+  "path": "docs/engineering/second-target-c239/evidence/SOURCE-EQUIVALENCE.json",
+  "line": 4,
+  "json_key": "author_final_execution_commit",
+  "flagged_value_type": "Git SHA-1 commit object identifier",
+  "gitguardian_state_observed": "Triggered",
+  "github_check": {
+    "id": 132555866039,
+    "status": "completed",
+    "conclusion": "failure"
+  },
+  "github_pr_state": {
+    "state": "closed",
+    "merged": true,
+    "merge_commit": "1329d5b420f70f2b00f771788e9a50e2eb60ca93"
+  },
+  "live_main": "7dbc3300389820164cf7917e7299962df415962f",
+  "live_main_file_equals_flagged_revision": true,
+  "published_scientific_commit": {
+    "sha": "d53e2f37101f7b989ee8a1be7130a5608bcadf9d",
+    "tree": "85734862971c4cff80f8ac8717d738a5f1604dd2"
+  },
+  "proof": {
+    "repo": "Restored C239 source; see C240 handoff evidence for exact execution path",
+    "git_object_type": "commit",
+    "candidate_matches_report": true,
+    "candidate_hex_length": 40,
+    "commit_payload_bytes": 259,
+    "calculated_git_object_sha1": "0d850f836e3f9ab4fe1f832b9e75db57501d49df",
+    "object_sha1_matches": true,
+    "commit": "0d850f836e3f9ab4fe1f832b9e75db57501d49df",
+    "tree": "85734862971c4cff80f8ac8717d738a5f1604dd2",
+    "parents": [
+      "5b4e97b346a0fc0a59ead859ca007e3a6e54d3ec"
+    ],
+    "subject": "Correct C239 represented-boundary and detached-normal controls",
+    "source_equivalence_file_sha256": "abccc3f6ce0e85cd76782069a1a68f44dcd02ab362633810e5dde5dd41b969d5",
+    "source_equivalence_line4_key": "\"author_final_execution_commit\"",
+    "source_equivalence_line4_value_equals_git_object_id": true,
+    "live_main_reference_paths": [
+      "7dbc3300389820164cf7917e7299962df415962f:STATUS.md",
+      "7dbc3300389820164cf7917e7299962df415962f:docs/engineering/second-target-c239/RESULTS.md",
+      "7dbc3300389820164cf7917e7299962df415962f:docs/engineering/second-target-c239/REVIEW.md",
+      "7dbc3300389820164cf7917e7299962df415962f:docs/engineering/second-target-c239/evidence/AUTHOR-RESULT.json",
+      "7dbc3300389820164cf7917e7299962df415962f:docs/engineering/second-target-c239/evidence/AUTHOR-SUMMARY.json",
+      "7dbc3300389820164cf7917e7299962df415962f:docs/engineering/second-target-c239/evidence/INDEPENDENT-REVIEW.json",
+      "7dbc3300389820164cf7917e7299962df415962f:docs/engineering/second-target-c239/evidence/PREREQUISITE-RESULT.json",
+      "7dbc3300389820164cf7917e7299962df415962f:docs/engineering/second-target-c239/evidence/PREREQUISITE-REVISION-RECONCILIATION.json",
+      "7dbc3300389820164cf7917e7299962df415962f:docs/engineering/second-target-c239/evidence/SOURCE-EQUIVALENCE.json"
+    ],
+    "git_grep_return_code": 0
+  },
+  "boundaries": {
+    "repository_mutations": 0,
+    "external_messages": 0,
+    "dashboard_mutations": 0,
+    "credentials_tested": 0,
+    "annotation_read": "GitHub fetch denied annotations endpoint as unsupported",
+    "scanner_disposition": "Unchanged; requires authenticated GitGuardian dashboard or available GitHub skip action"
+  },
+  "source_urls": [
+    "https://github.com/Omegapy/OntoKin/pull/212#issuecomment-6882759299",
+    "https://github.com/Omegapy/OntoKin/commit/676eecee857d5212d86340122f81b06f4c6791b1#diff-6e1634c6445a73793313c85afae748d932e70b2288ffa49e6d0bae34e2d55670R4",
+    "https://api.github.com/repos/Omegapy/OntoKin/commits/676eecee857d5212d86340122f81b06f4c6791b1/check-runs",
+    "https://api.github.com/repos/Omegapy/OntoKin/git/commits/d53e2f37101f7b989ee8a1be7130a5608bcadf9d",
+    "https://docs.gitguardian.com/internal-monitoring/prevent/detect-secrets-in-real-time-in-github"
+  ],
+  "key_references": {
+    "query": "author_final_execution_commit",
+    "git_grep_return_code": 0,
+    "paths": [
+      "7dbc3300389820164cf7917e7299962df415962f:docs/engineering/second-target-c239/evidence/SOURCE-EQUIVALENCE.json"
+    ]
+  }
+}
