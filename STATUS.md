@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C244 R07: capture-hook decision independently reviewed
+
+[C244/0.2.0 adoption](docs/engineering/second-target-c244/ADOPTION.md) selects one observer-only callback and a live original-map / observed replacement-chain identity route for the original 18-node fixture. Both C220/C241 exceptions are explicit. The [proposal](docs/engineering/second-target-c244/DECISION.md) and inert test source remain unchanged; their historical draft wording is superseded only by the adoption record after verified integration.
+
+Two actual independent subagents approve the finite design and controls on `8264db6e36b0c6118cf5b7ab2e41724569f72d90`, tree `c62c61d0287d5d006d53f653a3df8267289d547c`. All 44 author methods and 319 independent cases pass, alongside nine pinned sources, six authority documents and the original GLB associations. [Review](docs/engineering/second-target-c244/REVIEW.md). [Results](docs/engineering/second-target-c244/RESULTS.md). PR #219 integration and actual-main validation are pending at this candidate stage under [scope #220](https://github.com/Omegapy/OntoKin/issues/220).
+
+**R07 remains pending.** No observer/emitter/launcher or native behavior is implemented or established. Build lineage, diagnostic coverage, rendering, persistence, hard resource enforcement and reservation remain gates; all original failures and held drafts remain. After verified integration and saved delivery, the [next bounded step](docs/engineering/second-target-c244/NEXT-TASK.md) is held-source implementation of the narrow hook and external session registry, with zero native starts.
+
 ## C243 R07: source-node mapping investigated; native capture blocked
 
 [C243](docs/engineering/second-target-c243/RESULTS.md) identifies the missing capture window in the prescribed Godot loader route. The exact fixture has 18 source nodes sharing five meshes. In the inspected default path, conversion replaces/deletes imported mesh nodes before the ordinary caller regains control; no safe live node-index association is established by the stored post-return map. This is a pinned-source finding, with installed-build lineage still unresolved. Godot was not run.
@@ -322,11 +330,15 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none.
+Owner: `c245-review-c2bb141aae02`.
+Scope: [C245 review/integration #220](https://github.com/Omegapy/OntoKin/issues/220), closing [C244 PR #219](https://github.com/Omegapy/OntoKin/pull/219).
+Acquired from observed main: `6bf7b9b1d53a4d8181679bf7bd8f7b5147023c01`.
+Expires at: `2026-11-15T18:32:15.730Z` (UTC).
+Reserved shared files: `STATUS.md`, `GOAL.md`, `docs/README.md` and C244 review/adoption records.
 
-C243 documentation integration is complete through [PR #218](https://github.com/Omegapy/OntoKin/pull/218) at `429ddcd9bf11d1f74964eece88f07872bec51711`, tree `b78a776fe39dd6409da049bbd6dafeaaeff7dff0`. Fresh actual-main checks passed 18 static groups and 29 preserved sources / 5,137 local links. This closure releases owner `c243-root-1716ab7e536d`. [Scope #217](https://github.com/Omegapy/OntoKin/issues/217) remains open only for final ZIP verification, complete offline restoration and confirmed saved delivery, then stops.
+Independent design review approves the unchanged C244/0.2.0 draft. Independent controls pass all 44 author methods and 319 additional cases; focused documentation checks pass. The [durable review checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-1748fcdc9ea081918f20dd2508b378dc_2ab2a24d43748191957f9bcc356b59de&account_id=personal) retains exact source/evidence. This lease permits only reviewed adoption/integration, actual-main checks and closure. It does not authorize observer implementation or native/product/aggregate starts.
 
-The exact local author `17fcc43f05134e2b97da0bb93559dc2c972c1860` remains separately preserved from published same-tree author `9da0ee2ade71ae1fc24b7bb8f328bd189e023892`. All earlier unpublished identities, held drafts, historical evidence and unresolved acceptance gates remain. The next zero-start capture-hook decision requires a separate bounded scope and its own integration lease before shared main writes. No native or product/aggregate execution was introduced.
+The previous C243 integration owner is released and its final handoff/scope #217 closure are reconciled. The previous C244 rerun owner explicitly stopped after the saved delivery. Preserve all held branches, local-only source identities, historical evidence and unresolved gates.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
