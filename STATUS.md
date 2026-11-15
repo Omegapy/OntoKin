@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C240: GitGuardian source-identity false positive verified
+
+[C240 security review](docs/engineering/security-triage-c240/README.md) proves that incident 40091648 on PR #212 flags a preserved Git commit identifier. Recomputing the actual 259-byte commit object reproduces the reported value; the original C239 evidence remains byte-identical. This conclusion covers that finding only. GitGuardian dashboard disposition remains pending because the available tools cannot change the incident. [PR #212 explanation](https://github.com/Omegapy/OntoKin/pull/212#issuecomment-6887205471).
+
+[PR #215](https://github.com/Omegapy/OntoKin/pull/215) merged published source `6c66292b585044aa0175a1a32abab42b494500bf` at `7f79de18b5f9ed2cb881f22f29b0587d5c3618b2`, exactly matching the reviewed merge tree `142506e47b2e7afa2a6cdb90c8f091f7fa0a00f7`. Independent review and fresh actual-main checks passed all seven object-proof checks plus 29 preserved sources / 5,087 local links. GitGuardian's new PR check passed. [Review](docs/engineering/security-triage-c240/evidence/REVIEW.json) and [integration receipt](docs/engineering/security-triage-c240/evidence/INTEGRATION.json) retain exact scopes.
+
+C239 saved delivery is reconciled and scope #211 is closed. [C240 scope #213](https://github.com/Omegapy/OntoKin/issues/213) now closes only its verified saved successor handoff. C241 independently owns the next zero-start native capture/preflight preparation; reconcile its active scope before proceeding. R07, native execution and the original strict Blender normal failure retain their existing states. No runtime, tolerance, workflow, scanner exclusion, native start or aggregate run changed in C240.
+
 ## C239 R07: combined CPU component checks
 
 [C239](docs/engineering/second-target-c239/RESULTS.md) runs the five existing component APIs on one verified private copy of all observation and original authority bytes. It derives and compares all 23,400 corner-map rows, preserving all 18 identities, 126 pose slots, 14 feature treatments, four retained files and both source units. Original tolerances and pass/loss/refusal meanings remain unchanged.
@@ -298,13 +306,11 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: c240-security-02a7fe7a6326.
-Started: 2026-11-15T01:18:53.000Z.
-Expires: 2026-11-15T01:48:53.000Z.
-Task: [C240 security follow-up #213](https://github.com/Omegapy/OntoKin/issues/213), published source `6c66292b585044aa0175a1a32abab42b494500bf`, exact independently checked tree `c1f5b83fffd82b754b9160b9c70883b09b5995a8`.
-Reserved shared file: `STATUS.md`; main integration writes are serialized.
+Owner: none.
 
-Only the scoped security documentation, actual-main focused checks and verified successor handoff belong to this lease. C241 owner `c241-root-7b71d9310a3c` independently owns its new native-preflight directory and branch; its work and all held branches remain unchanged. No native or aggregate start is authorized by this security scope.
+C240 security integration is complete through PR #215 at `7f79de18b5f9ed2cb881f22f29b0587d5c3618b2`. Fresh actual-main proof and preservation checks passed. This documentation closure releases owner `c240-security-02a7fe7a6326`; [scope #213](https://github.com/Omegapy/OntoKin/issues/213) remains open only for final ZIP verification, offline restoration and confirmed saved delivery.
+
+Concurrent owner `c241-root-7b71d9310a3c` owns its separate zero-start native-preflight directory and branch. C240 grants no native execution and does not complete C241. Any later main writer must re-read current head and ownership and acquire its own bounded conditional lease. Preserve all held native drafts, the scope #201 alternate, the base-only C234 branch, original evidence and unresolved acceptance gates.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
