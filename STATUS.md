@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C243 R07: source-node mapping investigated; native capture blocked
+
+[C243](docs/engineering/second-target-c243/RESULTS.md) identifies the missing capture window in the prescribed Godot loader route. The exact fixture has 18 source nodes sharing five meshes. In the inspected default path, conversion replaces/deletes imported mesh nodes before the ordinary caller regains control; no safe live node-index association is established by the stored post-return map. This is a pinned-source finding, with installed-build lineage still unresolved. Godot was not run.
+
+Exact authored commit `17fcc43f05134e2b97da0bb93559dc2c972c1860` passed all **18 static verification groups** and **29 preserved sources / 5,131 local links**. Independent review approved the same clean source and exact fixture joins. Published source `9da0ee2ade71ae1fc24b7bb8f328bd189e023892` has the identical tree `a52086d1a82d79b18ee7b6e0dead82f2775a3ac1`. [Review](docs/engineering/second-target-c243/REVIEW.md). [Scope #217](https://github.com/Omegapy/OntoKin/issues/217) owns current integration and final verified saved delivery.
+
+**R07 remains pending.** The [concrete callback/signal design](docs/engineering/second-target-c243/DESIGN.md) is unadopted: the [next separate decision](docs/engineering/second-target-c243/NEXT-TASK.md) must explicitly permit or reject its narrow observer extension and revise the forward/inverse map boundary. Native metadata must be captured before observer writes; external identity records do not repair Godot's stored map. No native/version/import/render/save/reopen, fixture regeneration, product run or aggregate occurred. Preserve the strict Blender normal failure, all held drafts and nine recommendations / 41 criteria. C242's exact-archive restoration and saved delivery are reconciled, and scope #214 is closed.
+
 ## C241 R07: zero-start native capture/preflight contract
 
 [C241](docs/engineering/second-target-c241/RESULTS.md) specifies exact prospective loader settings, source-node mapping, original native capture before observer metadata, provenance, complete C238 projections and later process admission. Fresh static inspection confirms the same pinned Godot bytes. No native/version, source-evaluation, export, import, render, save, reopen or aggregate start occurred.
