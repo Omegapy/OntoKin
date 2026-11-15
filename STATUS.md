@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C244 R07: capture-hook decision independently reviewed
+
+[C244/0.2.0 adoption](docs/engineering/second-target-c244/ADOPTION.md) selects one observer-only callback and a live original-map / observed replacement-chain identity route for the original 18-node fixture. Both C220/C241 exceptions are explicit. The [proposal](docs/engineering/second-target-c244/DECISION.md) and inert test source remain unchanged; their historical draft wording is superseded only by the adoption record after verified integration.
+
+Two actual independent subagents approve the finite design and controls on `8264db6e36b0c6118cf5b7ab2e41724569f72d90`, tree `c62c61d0287d5d006d53f653a3df8267289d547c`. All 44 author methods and 319 independent cases pass, alongside nine pinned sources, six authority documents and the original GLB associations. [Review](docs/engineering/second-target-c244/REVIEW.md). [Results](docs/engineering/second-target-c244/RESULTS.md). PR #219 integration and actual-main validation are pending at this candidate stage under [scope #220](https://github.com/Omegapy/OntoKin/issues/220).
+
+**R07 remains pending.** No observer/emitter/launcher or native behavior is implemented or established. Build lineage, diagnostic coverage, rendering, persistence, hard resource enforcement and reservation remain gates; all original failures and held drafts remain. After verified integration and saved delivery, the [next bounded step](docs/engineering/second-target-c244/NEXT-TASK.md) is held-source implementation of the narrow hook and external session registry, with zero native starts.
+
 ## C243 R07: source-node mapping investigated; native capture blocked
 
 [C243](docs/engineering/second-target-c243/RESULTS.md) identifies the missing capture window in the prescribed Godot loader route. The exact fixture has 18 source nodes sharing five meshes. In the inspected default path, conversion replaces/deletes imported mesh nodes before the ordinary caller regains control; no safe live node-index association is established by the stored post-return map. This is a pinned-source finding, with installed-build lineage still unresolved. Godot was not run.
