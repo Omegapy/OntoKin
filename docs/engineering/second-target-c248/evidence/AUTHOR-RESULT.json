@@ -1,0 +1,390 @@
+{
+  "schema": "ontokin.c248.author-result/0.1",
+  "recordedUtc": "2026-11-15T22:14:38.376116+00:00",
+  "scope": "One held native material-parameter snapshot for original 18 parts/two source materials; no native starts",
+  "repository": "Omegapy/OntoKin",
+  "branch": "author/c248-held-materials",
+  "base": "d965f4dc78aac617694687d620be5dc873a1bdbf",
+  "commit": "1f210e2afecb510370d4fdcf8640d691fc8abb30",
+  "tree": "bf25dc6c982eaf3099eba82dfd7828687a309f75",
+  "clean": true,
+  "priorCheckpoints": [
+    {
+      "commit": "01abd00e71cb0d2df162a76e360656b34abf782e",
+      "role": "initial held source; F01 later corrected; history preserved"
+    },
+    {
+      "commit": "a70f164f7eddb1c3d3674a9784d37d686a2f6082",
+      "role": "corrected program/model; independently reviewed immutable program bytes"
+    }
+  ],
+  "changedPaths": [
+    "docs/engineering/second-target-c248/BINDINGS.json",
+    "docs/engineering/second-target-c248/NEXT-TASK.md",
+    "docs/engineering/second-target-c248/README.md",
+    "docs/engineering/second-target-c248/RESULTS.md",
+    "docs/engineering/second-target-c248/inert_model.py",
+    "docs/engineering/second-target-c248/materials.gd",
+    "docs/engineering/second-target-c248/test_inert_model.py",
+    "docs/engineering/second-target-c248/verify_bindings.py"
+  ],
+  "files": {
+    "BINDINGS.json": {
+      "bytes": 11622,
+      "sha256": "60702261df4d669729e116a7fdfd7aba5d414b806c6cbab382a2cb9795864d93"
+    },
+    "NEXT-TASK.md": {
+      "bytes": 2488,
+      "sha256": "277c248c65ea8871bb9229b28335497452afac55db583fed3415532921f5d6e0"
+    },
+    "README.md": {
+      "bytes": 7594,
+      "sha256": "18594e90f15793b43ccb537b9549cf75ccb9abfab1baaa540443b7a478ed9749"
+    },
+    "RESULTS.md": {
+      "bytes": 3911,
+      "sha256": "fa7d4784bbeae732eeb00385054ba676e6de6672ca941d5983d7d5d37c5fafe2"
+    },
+    "inert_model.py": {
+      "bytes": 13778,
+      "sha256": "65612775db0076aee474ddcf52b0e4deb6e143384a3b36aa5c2ed46b8ad3de49"
+    },
+    "materials.gd": {
+      "bytes": 13536,
+      "sha256": "e93124f8698bf240b1dd1fe46a1ae7dc4231e735093e73585628e9cd9cb4d119"
+    },
+    "test_inert_model.py": {
+      "bytes": 17692,
+      "sha256": "1c34a0af511391bea5b8214e76d19deafae3657569f6ae1c3c1effca10d8eb91"
+    },
+    "verify_bindings.py": {
+      "bytes": 11169,
+      "sha256": "3247d264169ac8a8148e05f372c00c8ecc51127b66f3f22a905d9263bf61a9d5"
+    }
+  },
+  "environment": {
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "implementation": "CPython",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64"
+  },
+  "workingDirectory": "/workspace/scratch/13b3a8a484af/c248/author",
+  "commands": [
+    {
+      "name": "model",
+      "command": "python3 -B docs/engineering/second-target-c248/test_inert_model.py",
+      "exitCode": 0,
+      "result": "34 author methods passed",
+      "log": "model-tests-final.log"
+    },
+    {
+      "name": "bindings",
+      "command": "python3 -B docs/engineering/second-target-c248/verify_bindings.py --package-root /workspace/scratch/13b3a8a484af/final-c247-extracted --author-upstream /workspace/scratch/13b3a8a484af/c248/audit/author/upstream --review-upstream /workspace/scratch/13b3a8a484af/c248/audit/independent-review/upstream --output /workspace/scratch/13b3a8a484af/c248/audit/author/bindings-final.json",
+      "exitCode": 0,
+      "result": "183 checks; 17 pinned sources; 11 unchanged authority files",
+      "log": "bindings-final.log",
+      "structured": "bindings-final.json"
+    },
+    {
+      "name": "preservation",
+      "command": "python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "exitCode": 0,
+      "result": {
+        "status": "passed",
+        "scope": "documentation preservation and local navigation",
+        "sources": [
+          {
+            "source_id": "SRC-01",
+            "destination": ".gitignore",
+            "bytes": 9801,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-02",
+            "destination": "docs/language-design/foundations/diagrams/OntoKin_001_Architecture_Diagram.png",
+            "bytes": 213128,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-03",
+            "destination": "docs/language-design/foundations/diagrams/OntoKin_001_Architecture_Diagram.svg",
+            "bytes": 19058,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-04",
+            "destination": "docs/language-design/foundations/OK-001-project-vision-and-architecture.md",
+            "bytes": 22011,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-05",
+            "destination": "docs/maintenance/reorganization-2026-10-17/navigation-history.md",
+            "bytes": 315,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-06",
+            "destination": "docs/language-design/foundations/OK-002-language-foundations-and-minimal-specification.md",
+            "bytes": 16166,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-07",
+            "destination": "docs/maintenance/reorganization-2026-10-17/navigation-history.md",
+            "bytes": 315,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-08",
+            "destination": "docs/language-design/foundations/diagrams/OK-002-Figure-01-Authoring-to-Execution.png",
+            "bytes": 80345,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-09",
+            "destination": "docs/language-design/foundations/diagrams/OK-002-Figure-01-Authoring-to-Execution.svg",
+            "bytes": 8218,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-10",
+            "destination": "docs/language-design/foundations/diagrams/OK-002-Figure-02-Conceptual-Language-Core.png",
+            "bytes": 87853,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-11",
+            "destination": "docs/language-design/foundations/diagrams/OK-002-Figure-02-Conceptual-Language-Core.svg",
+            "bytes": 6270,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-12",
+            "destination": "docs/language-design/foundations/OK-003-compilation-and-runtime-architecture.html",
+            "bytes": 31038,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-13",
+            "destination": "docs/language-design/foundations/OK-003-compilation-and-runtime-architecture.md",
+            "bytes": 24497,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-14",
+            "destination": "docs/maintenance/reorganization-2026-10-17/navigation-history.md",
+            "bytes": 1138,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-15",
+            "destination": "docs/language-design/foundations/diagrams/OK-003-Figure-01-Compiler-and-Package.dot",
+            "bytes": 1242,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-16",
+            "destination": "docs/language-design/foundations/diagrams/OK-003-Figure-01-Compiler-and-Package.png",
+            "bytes": 53171,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-17",
+            "destination": "docs/language-design/foundations/diagrams/OK-003-Figure-01-Compiler-and-Package.svg",
+            "bytes": 7931,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-18",
+            "destination": "docs/language-design/foundations/diagrams/OK-003-Figure-02-Runtime-and-Renderer.dot",
+            "bytes": 1360,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-19",
+            "destination": "docs/language-design/foundations/diagrams/OK-003-Figure-02-Runtime-and-Renderer.png",
+            "bytes": 70865,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-20",
+            "destination": "docs/language-design/foundations/diagrams/OK-003-Figure-02-Runtime-and-Renderer.svg",
+            "bytes": 8760,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-21",
+            "destination": "docs/language-design/foundations/diagrams/OK-003-Figure-03-Backend-Choices.dot",
+            "bytes": 1304,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-22",
+            "destination": "docs/language-design/foundations/diagrams/OK-003-Figure-03-Backend-Choices.png",
+            "bytes": 46810,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-23",
+            "destination": "docs/language-design/foundations/diagrams/OK-003-Figure-03-Backend-Choices.svg",
+            "bytes": 6769,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-24",
+            "destination": "docs/language-design/OK-SEM-001-core-object-motion-and-physics-semantics.md",
+            "bytes": 69783,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-25",
+            "destination": "docs/product/OK-CAP-001-modeling-motion-and-object-structure.md",
+            "bytes": 30731,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-26",
+            "destination": "docs/product/OK-PRD-001-product-requirements.md",
+            "bytes": 184908,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-27",
+            "destination": "docs/maintenance/reorganization-2026-10-17/navigation-history.md",
+            "bytes": 5349,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-28",
+            "destination": "docs/maintenance/reorganization-2026-10-17/navigation-history.md",
+            "bytes": 1384,
+            "verified": true
+          },
+          {
+            "source_id": "SRC-29",
+            "destination": "docs/maintenance/reorganization-2026-10-17/navigation-history.md",
+            "bytes": 7217,
+            "verified": true
+          }
+        ],
+        "sections_verified": 233,
+        "registries": {
+          "SEM_rules": {
+            "count": 28,
+            "exact_rows_preserved": true
+          },
+          "SEM_behavior_checks": {
+            "count": 24,
+            "exact_rows_preserved": true
+          },
+          "CAP_requirements": {
+            "count": 18,
+            "exact_rows_preserved": true
+          },
+          "PRD_requirements": {
+            "count": 226,
+            "exact_rows_preserved": true,
+            "priorities": {
+              "MUST": 213,
+              "SHOULD": 13
+            }
+          },
+          "PRD_acceptance": {
+            "count": 22,
+            "exact_rows_preserved": true
+          },
+          "PRD_owner_intentions": {
+            "count": 16,
+            "exact_rows_preserved": true
+          }
+        },
+        "links": {
+          "documents": 1033,
+          "local_links": 5228,
+          "anchors": 97,
+          "external_skipped": 902
+        },
+        "baseline_commit": "2a2b394119229031db78162ab7b82897f4a0064e",
+        "repository": "Omegapy/OntoKin",
+        "source_count": 29,
+        "active_substantive_documents": 6,
+        "baseline_tree": {
+          "expected": "72aa56f6b74ff9e637fc0def3ba25acb7bd2bb43",
+          "reconstructed": "72aa56f6b74ff9e637fc0def3ba25acb7bd2bb43",
+          "source_files": 27
+        },
+        "sources_verified": 29,
+        "failures": []
+      },
+      "log": "preservation-final.log"
+    },
+    {
+      "name": "diff",
+      "command": "git diff d965f4dc78aac617694687d620be5dc873a1bdbf HEAD --check",
+      "exitCode": 0,
+      "log": "diff-check-final.log"
+    },
+    {
+      "name": "status",
+      "command": "git status --porcelain",
+      "exitCode": 0,
+      "result": "clean",
+      "log": "git-status-final.txt"
+    }
+  ],
+  "upstreamRevision": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+  "packageEvidenceRoot": "evidence/c248/author",
+  "originalInputPackage": "/workspace/scratch/13b3a8a484af/final-c247-extracted",
+  "failedAttempts": [
+    {
+      "kind": "source-path discovery",
+      "path": "scene/3d/geometry_instance_3d.cpp",
+      "result": "404",
+      "preserved": "retrieval/geometry_instance_3d.cpp.json",
+      "resolution": "actual GeometryInstance3D implementation retained as visual_instance_3d.cpp"
+    }
+  ],
+  "correctedFinding": {
+    "id": "C248-F01",
+    "detail": "Validate same captured script/next-pass reference, not later getter",
+    "correctionCommit": "a70f164f7eddb1c3d3674a9784d37d686a2f6082",
+    "evidence": "evidence/c248/independent-review/INITIAL-FINDINGS.json",
+    "controls": [
+      "test_recorded_script_cannot_be_excused_by_later_null_getter",
+      "test_recorded_next_pass_cannot_be_excused_by_later_null_getter"
+    ]
+  },
+  "reviewStatus": "Peer reports 285 cases / 3182 assertions on a70f164f; complete candidate documentation/checker review pending. Program hashes match. See independent evidence for final status.",
+  "starts": {
+    "godot": 0,
+    "versionProbe": 0,
+    "gdscriptParser": 0,
+    "nativeImport": 0,
+    "render": 0,
+    "saveReopen": 0,
+    "sourceExport": 0,
+    "product": 0,
+    "aggregate": 0
+  },
+  "strongestModeledPhase": "MATERIAL_PARAMETERS_CAPTURED_OTHER_RAW_PENDING",
+  "executionAdmission": false,
+  "nativeAcceptance": false,
+  "R07": "PENDING",
+  "limits": [
+    "Synthetic registry provides completed C247 receipts, not C246 event behavior",
+    "Python controls do not execute GDScript or emulate Godot",
+    "Primary-source pin is not installed-build attestation",
+    "Material IDs are first observed by C248, not matched against an earlier C247 ID",
+    "Typed raw storage and known raw mode values do not prove source fidelity or rendered appearance",
+    "Two complete equal reads do not prove atomicity against transient mutations",
+    "Native allocation, diagnostic, output, memory and process limits remain unestablished",
+    "No serialization, pose sampling, full envelope, native persistence or launcher implemented"
+  ],
+  "pending": [
+    "Exact complete-candidate independent documentation/binding review",
+    "Parent-owned recovery, remote publication, verified final handoff and Library save"
+  ],
+  "nextSeparateScope": "Held native animation selection and track inventory before any 126-pose sampling; zero native starts"
+}

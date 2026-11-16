@@ -1,0 +1,28 @@
+{
+  "source_commit": "a70f164f7eddb1c3d3674a9784d37d686a2f6082",
+  "first_run": "model-run-01/ADVERSARIAL-RESULT.json",
+  "first_log": "model-run-01.log",
+  "original_control_sha256": "295f95fd8a2fd5ea32e3c155cc302e3f4f321657e79e8185572da6b9c904e5bb",
+  "finding": "Four control-harness failures; no production finding established",
+  "corrections": [
+    {
+      "cases": [
+        "distinct native copies retain source association",
+        "partial refusal retains failing part 9",
+        "partial refusal retains failing part 17"
+      ],
+      "cause": "C247 fabricated fixture shares five MeshView resources across18nodes. Assigning a material through one node changes all nodes sharing that mesh; controls incorrectly assumed per-node mesh resources.",
+      "fix": "Clone the target mesh with a distinct synthetic identity and update its fabricated C246 final resource-binding fact before invoking unchanged C247."
+    },
+    {
+      "cases": [
+        "returned receipts detached across material and mesh components"
+      ],
+      "cause": "Control used a nonexistent arrays receipt key; inherited C247 receipt uses positions/normals/auxiliary_tangents/indices.",
+      "fix": "Mutate actual positions packed receipt field."
+    }
+  ],
+  "production_changes": false,
+  "new_model_source": false,
+  "rerun_reason": "changed independent test harness input; retain initial failed evidence"
+}

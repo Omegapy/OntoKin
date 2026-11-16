@@ -1,0 +1,28 @@
+{
+  "schema": "ontokin.c248.independent-initial-findings/0.1",
+  "source_commit": "01abd00e71cb0d2df162a76e360656b34abf782e",
+  "source_tree": "a2014adb18a76a2e4d2e33315501fe51710b9ee9",
+  "source_snapshot": "initial-c248-source/materials.gd",
+  "findings": [
+    {
+      "id": "C248-F01",
+      "severity": "correction_required_before_held_approval",
+      "status": "reported_to_author_and_integrator",
+      "location": "_material script and next_pass capture/validation",
+      "observation": "The source records _identity(material.get_script()) and _identity(native.next_pass), then validates fresh getter reads rather than those recorded identities.",
+      "consequence": "If native state changes between those reads, a completed receipt can include an already-observed unsupported non-null script or next_pass identity while the later getter used by the guard returns null. Repeating this pattern in both passes can leave equal receipts with unsupported captured facts.",
+      "requested_change": "Validate the same captured identity or local native reference used to construct it. Preserve the observed identity on refusal. Avoid adding extra getter reads.",
+      "evidence_kind": "static branch/data-flow analysis; native interleaving has not been executed or established",
+      "scope_limit": "This correction cannot establish atomicity. Concurrent changes between independent reads remain an explicit later admission limitation."
+    }
+  ],
+  "preliminary_non_findings": [
+    "Fresh private C247 composition preserves one registry close and does not accept caller-made receipts.",
+    "The material phase binds current node/mesh identity to C247 without pretending C247 recorded material identity.",
+    "Typed GeometryInstance3D.transparency is captured and required to be zero; no appearance/rendering claim follows.",
+    "Shared and copied material resources are allowed; a shared native identity may not span source material indices or inconsistent material facts.",
+    "Supported known culling and transparency enum values are preserved without numerical equivalence comparison."
+  ],
+  "gdscript_parser_run": false,
+  "native_run": false
+}
