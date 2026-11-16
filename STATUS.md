@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [GOAL](GOAL.md), [C252 priority decision](docs/engineering/review-integration-c252/DECISION.md), preserved [C210 boundary](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C255: reviewed offline observation checker; integration pending
+
+The [C255 checker](docs/engineering/localized-repair-c255/README.md) independently derives the frozen C253 meanings and seven-time motion, and checks inert records for V1/V2/N1. It covers all 18 objects, 34 sites and 126 poses, with geometry, locality, source/dependency bytes, provenance, rebuild records and rejected-edit preservation. A passing component result grants no artifact-reader, execution or real-trial qualification.
+
+The [independent review](docs/engineering/localized-repair-c255/REVIEW.md) approves corrected author `2ef850a235ad158dcb06dd956388015861765eb1`; published scientific `53e05111dfd967f070bdccce11b9432a4f567a19` has the identical tree. 31 authored methods and 134 independent component / 24 denominator / 10 authority / four CLI controls pass. Initial semantic-identity findings and two executed raw-orientation false acceptances are preserved with their corrections. [Results and limits](docs/engineering/localized-repair-c255/RESULTS.md).
+
+[PR #239](https://github.com/Omegapy/OntoKin/pull/239) remains pending integration and resulting-main checks. [Scope #238](https://github.com/Omegapy/OntoKin/issues/238) also requires exact archive verification, offline restoration and confirmed saved delivery. Finish that scope and stop. The [next separate action](docs/engineering/localized-repair-c255/NEXT-TASK.md) is a finite read-only GLB observation reader using existing artifacts. No reader or successor is implemented in C255. R07/R08, all C221 criteria, held C251 and the other held PRs, and original failures retain their states. Comparative advantage remains unproven.
+
 ## C253: localized-repair qualification protocol
 
 The [C253 protocol](docs/engineering/localized-repair-c253/README.md) binds three existing cases from one public keyed-rack family: a valid length edit, its related reverse and rejection of an incompatible-unit candidate. The corpus retains 18 identities, 16 unrelated objects, the original dependency closure, seven observation times and tolerances. It supports evaluator qualification; it is not an unseen multi-assembly benchmark. **Comparative advantage remains unproven.**
@@ -352,11 +360,23 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none.
+Owner: c255-root-c77bfdbfac37.
 
-C253 integrated the independently reviewed protocol through [PR #236](https://github.com/Omegapy/OntoKin/pull/236), actual merge `7eb8a7e094040c11b879718f2669965b1fd75958`, tree `701cf6ef84230d02c71605b4703fa366a9529efe`. Fresh actual-main manifest and documentation checks pass: 14 bound files, three cases, 29 preserved sources and 5,269 local links. This closure releases owner `c253-root-e1a4d3f4647a`; no other session inherits that lease.
+Scope: [C255 #238](https://github.com/Omegapy/OntoKin/issues/238), offline
+localized-repair checker and its verified handoff. Started 2026-11-16T22:21:01.623099+00:00;
+expires 2026-11-16T22:51:01.623099+00:00. This lease reserves main integration and
+STATUS, README, GOAL, AGENTS and documentation navigation for this scope.
+Independent held branches retain their owners and original states.
 
-[Scope #235](https://github.com/Omegapy/OntoKin/issues/235) remains open only for exact C253 archive verification, fresh offline restoration and confirmed saved delivery. The [durable recovery/delivery checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-ff6b12890a60819194a6c1f29f14b221_2ab2a24d43748191957f9bcc356b59de&account_id=personal) records later receipts. Finish that handoff and stop. The next separate scope is the [offline corpus/oracle component](docs/engineering/localized-repair-c253/NEXT-TASK.md); model trials, native route qualification and C251 sampling remain outside it.
+Scientific source is published on `work/c255-offline-oracle` at
+`53e05111dfd967f070bdccce11b9432a4f567a19`, with tree
+`ffc26d773ee426a7dc8d648a7792a5528ec93c16`; [PR #239](https://github.com/Omegapy/OntoKin/pull/239)
+is draft while exact independent approval and integration checks are completed.
+No native/model trial or C251 sampling is authorized by this lease.
+
+The earlier C253/C254 saved deliveries and closed scopes are reconciled.
+[Recovery checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-28bf60bfc8c081918e00e7babf72e3a8_2ab2a24d43748191957f9bcc356b59de&account_id=personal)
+records source, evidence and eventual delivery separately.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 

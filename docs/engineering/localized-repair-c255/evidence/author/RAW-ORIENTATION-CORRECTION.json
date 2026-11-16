@@ -1,0 +1,42 @@
+{
+  "schema": "ontokin.c255.author-correction/0.1",
+  "commit": "2ef850a235ad158dcb06dd956388015861765eb1",
+  "tree": "ffc26d773ee426a7dc8d648a7792a5528ec93c16",
+  "recordedAtUtc": "2026-11-16T22:17:25.606656+00:00",
+  "priorCommit": "2eb3f6f7c263dbb5f215ad87bc93a03010d789aa",
+  "finding": "Independent review executed two false-pass probes: admitted small uniform matrix residual biases raw trace angle and hides angle beyond original tolerance",
+  "correction": "After rejecting invalid raw scale/shear/reflection, compute bounded polar factor and its quaternion; compare its orientation independently to original angle bound; no widened physical tolerance",
+  "otherCorrection": "Artifact origins reject blank and control-character references",
+  "tests": {
+    "command": "python3 -IB docs/engineering/localized-repair-c255/test_oracle.py",
+    "methods": 31,
+    "result": "PASS",
+    "seconds": 9.56,
+    "log": "raw-orientation-fix-tests.log"
+  },
+  "files": [
+    {
+      "path": "docs/engineering/localized-repair-c255/CONTRACT.md",
+      "sha256": "e561b4bd2d63740aaf85100a2c8991b635fe399ba08e8a4961d4a2af38533211",
+      "bytes": 10632
+    },
+    {
+      "path": "docs/engineering/localized-repair-c255/README.md",
+      "sha256": "6ed92dc8f233acb9ab666fde410c4cacc70c920e72bdfac14101f176d0f479bb",
+      "bytes": 3617
+    },
+    {
+      "path": "docs/engineering/localized-repair-c255/oracle.py",
+      "sha256": "b7275bd40bd429397ce6db5608bc025493a5e92cfc378f70e05cc799f50ff593",
+      "bytes": 38765
+    },
+    {
+      "path": "docs/engineering/localized-repair-c255/test_oracle.py",
+      "sha256": "f8ee655e91120e41d6299f760e2f08283dbdb77b2c979ba6a48322d860f0fe06",
+      "bytes": 29034
+    }
+  ],
+  "reviewState": "Independent confirmation pending",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+}

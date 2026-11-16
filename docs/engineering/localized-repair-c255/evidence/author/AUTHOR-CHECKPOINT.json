@@ -1,0 +1,62 @@
+{
+  "schema": "ontokin.c255.author-checkpoint/0.1",
+  "recordedAtUtc": "2026-11-16T22:15:36.109691+00:00",
+  "commit": "2eb3f6f7c263dbb5f215ad87bc93a03010d789aa",
+  "tree": "f230414671d4cd2b54ebed5d9930d235ed2641b6",
+  "reviewState": "independent review pending",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "files": [
+    {
+      "path": "docs/engineering/localized-repair-c255/CONTRACT.md",
+      "bytes": 10333,
+      "sha256": "cc54bcf874803489243feec1b2a54a661c027460ecbcf03cd431051d60c21fbe"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c255/README.md",
+      "bytes": 3617,
+      "sha256": "6ed92dc8f233acb9ab666fde410c4cacc70c920e72bdfac14101f176d0f479bb"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c255/oracle.py",
+      "bytes": 37526,
+      "sha256": "8c2c6c75adfc2d61537c060ea03d87ada6f7b85940ccaf44b6b5d5b84ced7fd3"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c255/test_oracle.py",
+      "bytes": 27971,
+      "sha256": "4e4cb85a85254236e6357dd6109d583dfba2964058714839ff06a5a97fcc7615"
+    }
+  ],
+  "checks": [
+    {
+      "command": "python3 -IB docs/engineering/localized-repair-c255/test_oracle.py",
+      "result": "PASS",
+      "methods": 29,
+      "log": "checkpoint-tests.log"
+    },
+    {
+      "command": "python3 -IB docs/engineering/localized-repair-c253/verify_manifest.py",
+      "result": "PASS",
+      "boundFiles": 14,
+      "cases": 3,
+      "log": "corpus-check.json"
+    }
+  ],
+  "preservedEarlierChecks": [
+    {
+      "log": "initial-tests.log",
+      "result": "PASS",
+      "methods": 27
+    }
+  ],
+  "staticFindingsCorrectedBeforeCheckpoint": [
+    "Root identified matrix orientation secondary tolerance: raw orientation now independently checked against unchanged angle bound",
+    "Independent reviewer identified implicit origin identity/interface mismatch: corrected to @system/origin and rigid.origin; scene retains its two authored keys",
+    "Author added connectedness to the finite closed mesh topology check"
+  ],
+  "scope": "Inert independent semantic/geometry/pose/byte-record consistency for frozen V1/V2/N1 only",
+  "nativeStarts": 0,
+  "modelTrials": 0,
+  "productStarts": 0
+}

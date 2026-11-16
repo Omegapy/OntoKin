@@ -1,0 +1,36 @@
+{
+  "observedAtUtc": "2026-11-16T22:12:12.952095+00:00",
+  "reviewedFiles": [
+    {
+      "path": "OntoKin/docs/engineering/localized-repair-c255/oracle.py",
+      "sha256": "d23af214174a85c8dd968f0e67a20c59d45344e5ea435b1707bf16663b80672b",
+      "bytes": 37014
+    },
+    {
+      "path": "OntoKin/docs/engineering/localized-repair-c255/CONTRACT.md",
+      "sha256": "cc54bcf874803489243feec1b2a54a661c027460ecbcf03cd431051d60c21fbe",
+      "bytes": 10333
+    }
+  ],
+  "initialStaticFindings": [
+    {
+      "id": "R1",
+      "finding": "Implicit origin interface empty; adopted source requires rigid.origin. Site IDs omit reserved @system step.",
+      "authority": [
+        "OK-LANG-001 section 7.2",
+        "C210 CONTRACT sites and existing before.semantic.json corroboration"
+      ],
+      "status": "author notified; correction pending"
+    },
+    {
+      "id": "R2",
+      "finding": "Scene identity adds invented scene segment to two authored keys.",
+      "status": "author notified; correction pending"
+    },
+    {
+      "id": "ROOT-R3",
+      "finding": "Raw matrix angle could exceed inclusive oracle angle while staying within quaternion/matrix structural residual.",
+      "status": "root reported author fix; independent execution pending"
+    }
+  ]
+}

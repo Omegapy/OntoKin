@@ -1,0 +1,95 @@
+{
+  "schema": "ontokin.c255.independent-review/0.1",
+  "status": "APPROVED_WITH_EXPLICIT_COMPONENT_LIMITS",
+  "recordedAtUtc": "2026-11-16T22:20:24.436844+00:00",
+  "reviewedLocalCommit": "2ef850a235ad158dcb06dd956388015861765eb1",
+  "reviewedLocalTree": "ffc26d773ee426a7dc8d648a7792a5528ec93c16",
+  "reviewedWorktreeStatus": "",
+  "reviewedFiles": [
+    {
+      "path": "docs/engineering/localized-repair-c255/oracle.py",
+      "bytes": 38765,
+      "sha256": "b7275bd40bd429397ce6db5608bc025493a5e92cfc378f70e05cc799f50ff593"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c255/test_oracle.py",
+      "bytes": 29034,
+      "sha256": "f8ee655e91120e41d6299f760e2f08283dbdb77b2c979ba6a48322d860f0fe06"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c255/CONTRACT.md",
+      "bytes": 10632,
+      "sha256": "e561b4bd2d63740aaf85100a2c8991b635fe399ba08e8a4961d4a2af38533211"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c255/README.md",
+      "bytes": 3617,
+      "sha256": "6ed92dc8f233acb9ab666fde410c4cacc70c920e72bdfac14101f176d0f479bb"
+    }
+  ],
+  "basis": "Independent handwritten raw-source semantic/identity/geometry/kinematic construction; implementation expected_state and author fixtures not used to generate independent positive controls.",
+  "controlCounts": {
+    "component": 134,
+    "denominator": 24,
+    "frozenFileAuthority": 10,
+    "cli": 4
+  },
+  "mathematicalCoverage": {
+    "identitiesPerState": 18,
+    "sitesPerState": 34,
+    "followsPerState": 8,
+    "hingesPerState": 8,
+    "actionsPerState": 2,
+    "eventBlocksPerState": 1,
+    "poseSlotsPerState": 126,
+    "validLengthsM": [
+      0.65,
+      0.75
+    ],
+    "unrelatedObjectsIndividuallyMutated": 16
+  },
+  "resolvedFindings": [
+    {
+      "id": "R1",
+      "finding": "18 system origins had wrong interface and identity key path.",
+      "resolution": "Exact @system/origin IDs and rigid.origin interfaces; source contract pinned and independent positives pass."
+    },
+    {
+      "id": "R2",
+      "finding": "Scene key padded with invented scene segment.",
+      "resolution": "Exact authored module/scene pair retained."
+    },
+    {
+      "id": "ROOT-R3",
+      "finding": "Raw orientation could use quaternion/matrix structural allowance as extra angular tolerance.",
+      "resolution": "Raw orientation checked independently; original direct-angle regression retained."
+    },
+    {
+      "id": "R4",
+      "finding": "Two executable false acceptances: admitted matrix residual biased raw trace-angle estimate downward.",
+      "resolution": "Already-validated near-rigid raw matrix obtains bounded polar factor; its quaternion angle independently meets unchanged original limit. Both exact failing controls now reject. Inside-boundary residual controls still pass.",
+      "initialEvidence": "initial-polar-failure-results.json",
+      "correctedEvidence": "polar-fix-probe-results.json"
+    },
+    {
+      "id": "R5",
+      "finding": "Whitespace/control-only artifact locations are non-concrete.",
+      "resolution": "Author strengthened location predicate; three independent malformed-origin controls reject."
+    }
+  ],
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64"
+  },
+  "requiredRemainingChecks": "Root owns repository-wide applicable checks, current-head coordination/publication and final handoff save. This review does not claim those have completed.",
+  "limits": [
+    "Inert record consistency only; realTrialSuccess null, executionAllowed false, artifactReaderQualified false.",
+    "No native reader, artifact extraction, actual source build or clean rebuild was qualified.",
+    "Caller byte/origin/decision/history records are not authenticated; no actual promotion/transient-state history was observed.",
+    "One exposed frozen source family, two valid directions and one invalid edit; no comparative/model advantage evidence.",
+    "Finite 18-object/seven-time/primitive mesh checks; no continuous-motion, arbitrary surface, normal-fidelity or native tessellation guarantee.",
+    "Exact frozen OntoKin closure only; equivalent direct-route source decoders and native baseline seeds remain unqualified."
+  ],
+  "approvalRule": "Approval binds only listed exact file hashes. Changed approved bytes require appropriate independent delta review."
+}
