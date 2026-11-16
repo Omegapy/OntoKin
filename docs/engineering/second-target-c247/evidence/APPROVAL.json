@@ -1,0 +1,97 @@
+{
+  "schema": "ontokin.c247.independent-held-source-approval/0.1",
+  "status": "APPROVED_FOR_HELD_SOURCE_PUBLICATION_ONLY",
+  "sourceCommit": "58ac8c83880cb5dccd4f8d4a0d75098209dd593b",
+  "sourceTree": "6ffa45877e5e171764fc10b5c405cee0883ad890",
+  "baseHeldC246": "bf64092e65a2cdfdef8c7202728589aaaeeae9c8",
+  "sourceCleanBeforeAndAfter": true,
+  "changedFiles": [
+    "docs/engineering/second-target-c247/BINDINGS.json",
+    "docs/engineering/second-target-c247/NEXT-TASK.md",
+    "docs/engineering/second-target-c247/README.md",
+    "docs/engineering/second-target-c247/RESULTS.md",
+    "docs/engineering/second-target-c247/inert_model.py",
+    "docs/engineering/second-target-c247/mesh_arrays.gd",
+    "docs/engineering/second-target-c247/test_inert_model.py",
+    "docs/engineering/second-target-c247/verify_bindings.py"
+  ],
+  "reviewedFileHashes": [
+    {
+      "path": "docs/engineering/second-target-c247/BINDINGS.json",
+      "sha256": "6a1ab894a3c723d1ad22924678dc0242b81942bbefc197e8f3984cb70968f3b8",
+      "bytes": 9222
+    },
+    {
+      "path": "docs/engineering/second-target-c247/NEXT-TASK.md",
+      "sha256": "9b1f19b43d4acd585677d79b8d982d6bf97231da69a538dcd85eb0e1e002702f",
+      "bytes": 1451
+    },
+    {
+      "path": "docs/engineering/second-target-c247/README.md",
+      "sha256": "458b3f441f14f24ca5260e47fd42c36ab83da4b09c9bbd56f0be7cecbb7d425e",
+      "bytes": 6943
+    },
+    {
+      "path": "docs/engineering/second-target-c247/RESULTS.md",
+      "sha256": "3f14371573df4034c74a12f4f1e3c2f7b4d5bf29e82c7803481f9a6662638993",
+      "bytes": 3550
+    },
+    {
+      "path": "docs/engineering/second-target-c247/inert_model.py",
+      "sha256": "0677b7c3d1aa9e7529d41dc97b801f698aadf604a06e244865016abab003fab6",
+      "bytes": 14627
+    },
+    {
+      "path": "docs/engineering/second-target-c247/mesh_arrays.gd",
+      "sha256": "fca8a6dd3a89101131c8cedcc8740958386d2b7eb0fbf228b6dc0383779e0ad8",
+      "bytes": 12667
+    },
+    {
+      "path": "docs/engineering/second-target-c247/test_inert_model.py",
+      "sha256": "4da6c44523fcd6bf7095749fcaabbe5281ebf394fad0817a14b7fb84bc5ff516",
+      "bytes": 15251
+    },
+    {
+      "path": "docs/engineering/second-target-c247/verify_bindings.py",
+      "sha256": "046140bb9a116329e6fb1d2de8965e82fc4646ddbb0af282051418f1900e3ae3",
+      "bytes": 8939
+    }
+  ],
+  "checks": {
+    "independentAdversarialCases": 261,
+    "independentAdversarialAssertions": 2776,
+    "independentPrimarySourceFixtureChecks": 117,
+    "sourceAndDependenciesUnchangedDuringReview": true
+  },
+  "findings": {
+    "F01": "Reviewer initial return-type suspicion corrected by pinned analyzer inspection; explicit cast is clarity, not an established parser defect",
+    "F02": "Fixed: actual per-slot lengths and bounded packed values retained before cross-slot refusal; raw/slot cap omissions explicitly record type, size and cap"
+  },
+  "nativeStarts": 0,
+  "gdscriptParser": "NOT_RUN",
+  "executionAdmission": false,
+  "nativeAcceptance": false,
+  "R07": "PENDING",
+  "blockingSourceFindings": [],
+  "limits": [
+    "No Godot execution or GDScript parsing",
+    "CPU model is not native numeric codec, object lifetime or diagnostic behavior",
+    "No binary buffer decoding/fidelity measurement performed",
+    "Two equal reads do not prove atomicity against concurrent writes",
+    "API allocation can precede returned count checks; hard resource enforcement absent",
+    "Full serialization, material/pose capture, diagnostic coverage, build lineage and native admission remain separate"
+  ],
+  "evidence": [
+    "EXACT-REVIEW-SOURCE.json",
+    "ADVERSARIAL-RESULT.json",
+    "adversarial.log",
+    "adversarial_controls.py",
+    "SOURCE-BOUNDARY-RESULT-CORRECTED.json",
+    "verify_source_boundary.py",
+    "FIXTURE-LAYOUT.json",
+    "INITIAL-FINDINGS.json",
+    "INDEPENDENT-PRIMARY-SOURCES.json",
+    "SOURCE-MATERIALIZATION-CORRECTION.json",
+    "SNAPSHOT-RESTORE-MAP.json"
+  ]
+}

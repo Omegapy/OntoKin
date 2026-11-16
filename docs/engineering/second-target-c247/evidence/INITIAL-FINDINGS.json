@@ -1,0 +1,37 @@
+{
+  "schema": "ontokin.c247.initial-static-review/0.1",
+  "commit": "3d9255464fdd36a2786f71c36fa4cae20e6520b4",
+  "tree": "3d60038ebb80274337c8fc6f9087e484e32197e2",
+  "status": "CHANGES_REQUESTED_FOR_PARTIAL_CAPTURE_EVIDENCE",
+  "findings": [
+    {
+      "id": "F01",
+      "classification": "reviewer suspicion corrected; not established defect",
+      "initialConcern": "Mesh-typed value returned from ArrayMesh-typed function without explicit cast might be rejected by static analyzer",
+      "primarySourceResult": "Pinned gdscript_analyzer.cpp resolve_return allows reverse-compatible base-to-subclass return as unsafe; this does not establish parser failure. Explicit cast is defensive clarity only.",
+      "nativeParserRun": false
+    },
+    {
+      "id": "F02",
+      "classification": "concrete source evidence retention gap",
+      "location": "mesh_arrays.gd _surface packed-array validation before copies",
+      "finding": "On wrong supported-array length/type, current source retains slot type list but no actual per-slot lengths; bounded valid native arrays already read are discarded before refusal.",
+      "requestedCorrection": "Record actual slot lengths and bounded supported packed-array copies before cross-slot validation, while refusing unsupported types and excessive data. Preserve current partial row and prior successful records.",
+      "authorResponse": "Working source corrected; awaiting exact reviewed candidate"
+    }
+  ],
+  "positiveChecks": [
+    "Registry receipt is obtained internally from exact-state close_state; no supplied fabricated receipt API",
+    "Postreturn live root/final membership and C246 resource identities checked without stale loader maps",
+    "Shared resources are permitted while 18 node associations stay separate",
+    "Current format version and mesh_get_surface APIs are script-bound",
+    "Packed-array deep copy semantics independently verified in exact Dictionary/Variant source",
+    "Native normal/tangent reconstruction and auxiliary storage are explicitly distinguished from source fidelity",
+    "Original fixture/API boundary checks pass 117 assertions"
+  ],
+  "limitations": [
+    "No GDScript parsing or native execution",
+    "Latest corrected working source has not been reviewed at this checkpoint",
+    "Hard resource enforcement, complete diagnostics, installed lineage and atomicity remain unestablished"
+  ]
+}
