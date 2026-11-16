@@ -1,6 +1,20 @@
 # OntoKin development status
 
-OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [revised GOAL](GOAL.md), [C210 decision](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
+OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [GOAL](GOAL.md), [C252 priority decision](docs/engineering/review-integration-c252/DECISION.md), preserved [C210 boundary](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
+
+## C252: review priorities adopted; benchmark protocol next
+
+The owner's November 16 instruction selects [C252's decision](docs/engineering/review-integration-c252/DECISION.md) in place of the C251 native-sampling task. OntoKin retains semantic authoring and checked transport. The next investment gate is comparative evidence of correct localized edits, preservation, provenance and effort. **Comparative advantage remains unproven.**
+
+The root README is reduced from 462 to 100 lines, with detailed workflows in [focused user guides](docs/user-guide/README.md) and all 32 original root anchors retained. GOAL, AGENTS and the documentation index now point to the [C252 roadmap](docs/engineering/review-integration-c252/ROADMAP.md). The supplied review is preserved exactly; its proposed 20 percentage-point success gain or 30% effort reduction remain provisional planning thresholds.
+
+The [independent documentation review](docs/engineering/review-integration-c252/REVIEW.md) approves authored candidate `12c4c9a891465ea1916857d44e80d5cc8442fcc3`, tree `98a2db31db630d6005068b3b7ad56a73be04bb14`. Its documentation check passed 29 preserved sources, 233 sections and 5,215 local links. This is documentation evidence; no product, native, parser, model trial or aggregate run occurred. Final candidate publication and resulting-main checks remain pending until recorded below or in scope #233.
+
+**Next bounded action:** [freeze the localized-repair benchmark protocol and select existing fixtures](docs/engineering/review-integration-c252/NEXT-TASK.md), then deliver its own verified handoff. Define comparable OntoKin, Blender/Python and applicable OpenUSD routes, independent scoring, budgets and uncertainty before implementation or trials. C252 closes after its verified saved handoff; it does not start this successor.
+
+**Held work:** C246–C251 source remains in its separate draft PR chain through [#232](https://github.com/Omegapy/OntoKin/pull/232), head `c8566a273801e12700cc3500a4a03888a9d2673e`. No held PR is merged here. Native sampling and the remaining Godot R07 gates are deferred. The original strict Blender-normal failure and finite C219 acceptance with declared loss remain distinct. The nine C221 recommendations and 41 criteria remain intact; C252 changes only the stated ordering/dependency. R00–R02 retain their completed scopes, while R03–R08 retain their unmet obligations.
+
+The checkpoint sections below retain their historical results and next-task wording. They do not override C252. In particular, earlier delivery-pending text must be reconciled with its exact saved receipts and closed scopes, not treated as an active assignment.
 
 ## C244 R07: capture-hook design adopted; native implementation pending
 

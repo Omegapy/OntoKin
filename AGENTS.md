@@ -6,7 +6,7 @@ The owner authorizes autonomous technical development and repository stewardship
 
 At the start of a session, after compaction, and before choosing or closing a milestone:
 
-1. Read GOAL and [STATUS.md](STATUS.md). The [C210 scope decision](docs/engineering/semantic-export-c210/DECISION.md) governs current priorities; archived next-task instructions do not override it. Restate the current goal and next unmet acceptance gate to yourself.
+1. Read GOAL and [STATUS.md](STATUS.md). The [C252 priority decision](docs/engineering/review-integration-c252/DECISION.md) governs the next investment step while preserving the [C210 semantic-authoring boundary](docs/engineering/semantic-export-c210/DECISION.md); archived next-task instructions do not override it. The current successor is benchmark-protocol preparation, with C251 native sampling deferred. Restate the current goal and next unmet acceptance gate to yourself.
 2. Inspect repository status/tree, the actual GitHub head, the integration lease, and relevant CI. Do not treat a synthetic local snapshot commit as the remote head or discard existing work.
 3. Read the relevant specifications through [docs/README.md](docs/README.md), especially the adopted language rules and the active engineering contract. Historical proposals are not current implementation guarantees.
 4. Continue authorized useful work. Record genuine blockers and the concrete next action; do not silently replace the goal with an easier demonstration.
@@ -36,7 +36,7 @@ Use one branch per active bounded scope, normally at most three active work bran
 - A semantic change needs an explicit versioned specification decision, synchronized grammar/examples/diagnostics, and corresponding conformance evidence. Do not silently change expected outcomes to make tests pass.
 - Preserve historical product, semantic, foundation, diagram, and maintenance records. Do not rewrite preservation hashes or archival evidence to suppress a failure. Record new decisions and measured results separately.
 - Distinguish represented, constructed, evaluated, exported, and destination-validated results. Unsupported behavior, information loss, failed goals, and stale results must remain visible.
-- Keep the current GOAL scope and explicit current/deferred/superseded disposition of older domains in STATUS. C210 changes priorities, not adopted semantics or historical results. Completing a finite proof or release is not completing OntoKin or proving a destination integration.
+- Keep the current GOAL scope and explicit current/deferred/superseded disposition of older domains in STATUS. C210 and C252 change priorities, not adopted semantics or historical results. C252 explicitly advances localized-authoring comparison preparation ahead of further R07 work; it does not complete any unmet C221 criterion. Completing a finite proof or release is not completing OntoKin or proving a destination integration.
 - Runtime dependencies, architecture, and product limits are deliberate decisions. The current reference uses Python's standard library; a future change needs a concrete reason, dependency/provenance review, and relevant evidence. Installed dependency directories must not be committed.
 
 ## Verify the actual change
