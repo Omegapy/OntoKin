@@ -1,0 +1,1869 @@
+{
+  "schema": "ontokin.c255.independent-controls/0.1",
+  "oracleSha256": "d23af214174a85c8dd968f0e67a20c59d45344e5ea435b1707bf16663b80672b",
+  "basisSha256": "9c1c36a332ddd277e625af5f49c204ca1b6ae1e5a610e357a528c635629dce58",
+  "controlScriptSha256": "ef06c52077a2e1b49948f15a16bea259578a27c732d41fa009dd8f35629a1ecf",
+  "outcomes": [
+    {
+      "name": "independent-positive-V1",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "independent-positive-V2",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "independent-positive-N1",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "independent-positive-delivery",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "identity-pose-triangle-reordering",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "quaternion-sign-equivalence",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "legitimate-provenance-revision-artifact-changes",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "N1-positive-script_unit_validator",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "N1-positive-author_refusal",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "wrong-selected-length",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "TOLERANCE",
+          "detail": "length/value"
+        }
+      ]
+    },
+    {
+      "name": "wrong-shared-default",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "TOLERANCE",
+          "detail": "length/value"
+        }
+      ]
+    },
+    {
+      "name": "wrong-target-second-middle",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "TOLERANCE",
+          "detail": "source/size"
+        }
+      ]
+    },
+    {
+      "name": "selected-sphere-radius",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "TOLERANCE",
+          "detail": "source/radius"
+        }
+      ]
+    },
+    {
+      "name": "selected-sphere-motion",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "TOLERANCE",
+          "detail": "pose position"
+        }
+      ]
+    },
+    {
+      "name": "mass-tiny-nonzero",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/matter/own_mass_kg"
+        }
+      ]
+    },
+    {
+      "name": "aggregate-mass-tiny-nonzero",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/matter/aggregate_mass_kg"
+        }
+      ]
+    },
+    {
+      "name": "boolean-dimension",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "NUMBER",
+          "detail": "source/size"
+        }
+      ]
+    },
+    {
+      "name": "nan-source-dimension",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "NONFINITE",
+          "detail": "source/size"
+        }
+      ]
+    },
+    {
+      "name": "units-kg-as-length",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "length/unit"
+        }
+      ]
+    },
+    {
+      "name": "units-centimetres",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "units/length"
+        }
+      ]
+    },
+    {
+      "name": "wrong-world-handedness",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "frame/handedness"
+        }
+      ]
+    },
+    {
+      "name": "wrong-up-axis",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "frame/up"
+        }
+      ]
+    },
+    {
+      "name": "changed-appearance",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "changed-owner",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/owner"
+        }
+      ]
+    },
+    {
+      "name": "changed-definition",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/definitionId/4"
+        }
+      ]
+    },
+    {
+      "name": "changed-follow",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "follows/child"
+        }
+      ]
+    },
+    {
+      "name": "changed-hinge-axis",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "hinges/axis/0"
+        }
+      ]
+    },
+    {
+      "name": "changed-hinge-limit",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "hinges/limits_rad/0"
+        }
+      ]
+    },
+    {
+      "name": "changed-hinge-initial",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "hinges/initial_rad"
+        }
+      ]
+    },
+    {
+      "name": "changed-origin-interface",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "sites/interface"
+        }
+      ]
+    },
+    {
+      "name": "changed-site-position",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "sites/position_m/0"
+        }
+      ]
+    },
+    {
+      "name": "changed-action-velocity",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "actions/velocity_mps/1"
+        }
+      ]
+    },
+    {
+      "name": "changed-action-duration",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "actions/duration_s"
+        }
+      ]
+    },
+    {
+      "name": "changed-event-order",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "events/0/operations/0/action/2"
+        }
+      ]
+    },
+    {
+      "name": "changed-event-time",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "events/0/time_s"
+        }
+      ]
+    },
+    {
+      "name": "changed-duration",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "scene/duration_s"
+        }
+      ]
+    },
+    {
+      "name": "missing-identity",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "IDENTITY_SET",
+          "detail": "objects"
+        }
+      ]
+    },
+    {
+      "name": "extra-identity",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "IDENTITY_SET",
+          "detail": "objects"
+        }
+      ]
+    },
+    {
+      "name": "duplicate-identity",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "DUPLICATE_IDENTITY",
+          "detail": "objects"
+        }
+      ]
+    },
+    {
+      "name": "missing-site",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "IDENTITY_SET",
+          "detail": "sites"
+        }
+      ]
+    },
+    {
+      "name": "missing-time",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "POSE_COVERAGE",
+          "detail": "126 required rows"
+        }
+      ]
+    },
+    {
+      "name": "duplicate-time-identity",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "POSE_IDENTITY",
+          "detail": "missing/extra/duplicate slot"
+        }
+      ]
+    },
+    {
+      "name": "before-boundary-side",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "pose/side"
+        }
+      ]
+    },
+    {
+      "name": "nonfinite-position",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "NONFINITE",
+          "detail": "position"
+        }
+      ]
+    },
+    {
+      "name": "zero-quaternion",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "QUATERNION_NORM",
+          "detail": "raw unit quaternion"
+        }
+      ]
+    },
+    {
+      "name": "norm-2-quaternion",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "QUATERNION_NORM",
+          "detail": "raw unit quaternion"
+        }
+      ]
+    },
+    {
+      "name": "boolean-scale",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "NUMBER",
+          "detail": "pose/scale/0"
+        }
+      ]
+    },
+    {
+      "name": "tiny-explicit-scale",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "pose/scale/0"
+        }
+      ]
+    },
+    {
+      "name": "raw-reflection",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "RAW_REFLECTION",
+          "detail": "proper orientation"
+        }
+      ]
+    },
+    {
+      "name": "raw-scale",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "RAW_SCALE",
+          "detail": "unit column"
+        }
+      ]
+    },
+    {
+      "name": "raw-shear",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "RAW_SCALE",
+          "detail": "unit column"
+        }
+      ]
+    },
+    {
+      "name": "raw-homogeneous-row",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "raw affine last row/3"
+        }
+      ]
+    },
+    {
+      "name": "raw-translation-mismatch",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "TOLERANCE",
+          "detail": "raw/decomposed 11"
+        }
+      ]
+    },
+    {
+      "name": "raw-quaternion-matrix-mismatch",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "QUATERNION_NORM",
+          "detail": "raw unit quaternion"
+        }
+      ]
+    },
+    {
+      "name": "widened-observation-tolerance",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SHAPE",
+          "detail": "observation"
+        }
+      ]
+    },
+    {
+      "name": "correct-metadata-wrong-mesh",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "BOX_CORNER",
+          "detail": "actual local vertex at one required corner"
+        }
+      ]
+    },
+    {
+      "name": "missing-mesh",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "GEOMETRY_COVERAGE",
+          "detail": "all 18 geometries"
+        }
+      ]
+    },
+    {
+      "name": "nonfinite-vertex",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "NONFINITE",
+          "detail": "mesh vertex"
+        }
+      ]
+    },
+    {
+      "name": "boolean-mesh-index",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "MESH_INDEX",
+          "detail": "integer in-range triangle"
+        }
+      ]
+    },
+    {
+      "name": "collapsed-triangle",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "MESH_DEGENERATE",
+          "detail": "duplicate/collapsed face"
+        }
+      ]
+    },
+    {
+      "name": "duplicate-triangle",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "MESH_DEGENERATE",
+          "detail": "duplicate/collapsed face"
+        }
+      ]
+    },
+    {
+      "name": "reversed-triangle",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "MESH_ORIENTATION",
+          "detail": "outward finite surface"
+        }
+      ]
+    },
+    {
+      "name": "missing-triangle",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "MESH_TRIANGLES",
+          "detail": "existing finite tessellation"
+        }
+      ]
+    },
+    {
+      "name": "sphere-wrong-radius",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "TOLERANCE",
+          "detail": "sphere vertex radius"
+        }
+      ]
+    },
+    {
+      "name": "sphere-unused-vertex",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "MESH_UNUSED",
+          "detail": "every native vertex used"
+        }
+      ]
+    },
+    {
+      "name": "source-dependency-byte-changed",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SOURCE_BYTES",
+          "detail": "candidate source"
+        }
+      ]
+    },
+    {
+      "name": "source-dependency-missing",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SOURCE_CLOSURE",
+          "detail": "candidate source"
+        }
+      ]
+    },
+    {
+      "name": "source-undeclared-input",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SOURCE_CLOSURE",
+          "detail": "candidate source"
+        }
+      ]
+    },
+    {
+      "name": "source-kg-accepted",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SOURCE_BYTES",
+          "detail": "candidate source"
+        }
+      ]
+    },
+    {
+      "name": "stale-parent-revision",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "candidate parent"
+        }
+      ]
+    },
+    {
+      "name": "stale-accepted-revision",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "decision accepted revision"
+        }
+      ]
+    },
+    {
+      "name": "false-observation-acceptance",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "observed decision/acceptedRevision"
+        }
+      ]
+    },
+    {
+      "name": "source-hash-mismatch",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "source hashes/main.ok"
+        }
+      ]
+    },
+    {
+      "name": "artifact-hash-mismatch",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "artifact hashes/control.bin"
+        }
+      ]
+    },
+    {
+      "name": "origin-artifact-mismatch",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "ARTIFACT_BINDING",
+          "detail": "control.bin"
+        }
+      ]
+    },
+    {
+      "name": "origin-stale-program",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "origin/programRevision"
+        }
+      ]
+    },
+    {
+      "name": "origin-missing-location",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "TEXT",
+          "detail": "concrete artifact record location"
+        }
+      ]
+    },
+    {
+      "name": "hash-only-authority",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "FILE_BYTES",
+          "detail": "retained/artifacts/control.bin"
+        }
+      ]
+    },
+    {
+      "name": "empty-artifact-bytes",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "FILE_EMPTY",
+          "detail": "candidate artifacts/control.bin"
+        }
+      ]
+    },
+    {
+      "name": "rebuild-different-artifact",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "REBUILD_BYTES",
+          "detail": "fixed byte-exact artifact policy"
+        }
+      ]
+    },
+    {
+      "name": "rebuild-undeclared-input",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "declared rebuild input closure"
+        }
+      ]
+    },
+    {
+      "name": "rebuild-unclean-workspace",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "clean rebuild workspace observation"
+        }
+      ]
+    },
+    {
+      "name": "rebuild-different-semantic",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "TOLERANCE",
+          "detail": "source/size"
+        }
+      ]
+    },
+    {
+      "name": "rebuild-different-pose",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "TOLERANCE",
+          "detail": "pose position"
+        }
+      ]
+    },
+    {
+      "name": "rebuild-retroactive-normalization",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "rebuild policy"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/first",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/first.fingers[\"lower\"]",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/first.fingers[\"lower\"].blade",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/first.fingers[\"upper\"]",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/first.fingers[\"upper\"].blade",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/second",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/second.fingers[\"bottom\"]",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/second.fingers[\"bottom\"].blade",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/second.fingers[\"lower\"]",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/second.fingers[\"lower\"].blade",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/second.fingers[\"middle\"]",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/second.fingers[\"middle\"].blade",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/second.fingers[\"top\"]",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/second.fingers[\"top\"].blade",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/second.fingers[\"upper\"]",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "unrelated-object-preserved/second.fingers[\"upper\"].blade",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "objects/appearance/0"
+        }
+      ]
+    },
+    {
+      "name": "reference-position-inclusive",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "reference-angle-inclusive",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "reference-position-outside",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "TOLERANCE",
+          "detail": "pose position"
+        }
+      ]
+    },
+    {
+      "name": "reference-angle-outside",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "POSE_ROTATION",
+          "detail": "inclusive original angle"
+        }
+      ]
+    },
+    {
+      "name": "reference-raw-angle-independent-outside",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "RAW_ROTATION",
+          "detail": "original angle independently"
+        }
+      ]
+    },
+    {
+      "name": "delivery-position-inclusive",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "delivery-angle-inclusive",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "delivery-position-outside",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "TOLERANCE",
+          "detail": "pose position"
+        }
+      ]
+    },
+    {
+      "name": "delivery-angle-outside",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "POSE_ROTATION",
+          "detail": "inclusive original angle"
+        }
+      ]
+    },
+    {
+      "name": "delivery-raw-angle-independent-outside",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "RAW_ROTATION",
+          "detail": "original angle independently"
+        }
+      ]
+    },
+    {
+      "name": "delivery-time-inclusive",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "delivery-time-outside",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "POSE_TIME",
+          "detail": "original time/tolerance"
+        }
+      ]
+    },
+    {
+      "name": "reference-time-no-delivery-tolerance",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "POSE_TIME",
+          "detail": "original time/tolerance"
+        }
+      ]
+    },
+    {
+      "name": "source-dimension-inclusive-representable",
+      "expectedPass": true,
+      "actualPass": true,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": []
+    },
+    {
+      "name": "source-dimension-just-outside",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "TOLERANCE",
+          "detail": "source/size"
+        }
+      ]
+    },
+    {
+      "name": "N1-invalid-ever-accepted",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "invalid candidate promotion"
+        }
+      ]
+    },
+    {
+      "name": "N1-promoted",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "N1 rejection"
+        }
+      ]
+    },
+    {
+      "name": "N1-late-rejection-boundary",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "decision boundary"
+        }
+      ]
+    },
+    {
+      "name": "N1-no-diagnostic",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SHAPE",
+          "detail": "diagnostic"
+        }
+      ]
+    },
+    {
+      "name": "N1-harness-only-rejection",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "N1_ROUTE_REJECTION",
+          "detail": "harness-only protection earns no route detection"
+        }
+      ]
+    },
+    {
+      "name": "N1-retained-artifact-mutated",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "RETAINED_STATE",
+          "detail": "N1 exact accepted revision/source/dependency/artifact bytes"
+        }
+      ]
+    },
+    {
+      "name": "N1-retained-source-mutated",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SOURCE_BYTES",
+          "detail": "retained/sourceFiles"
+        }
+      ]
+    },
+    {
+      "name": "N1-retained-revision-mutated",
+      "expectedPass": false,
+      "actualPass": false,
+      "claimBoundary": true,
+      "passed": true,
+      "faults": [
+        {
+          "code": "SEMANTIC",
+          "detail": "decision accepted revision"
+        }
+      ]
+    },
+    {
+      "name": "missing-output-null",
+      "passed": true,
+      "actualPass": false,
+      "faults": [
+        {
+          "code": "SHAPE",
+          "detail": "observation"
+        }
+      ]
+    },
+    {
+      "name": "missing-output-empty",
+      "passed": true,
+      "actualPass": false,
+      "faults": [
+        {
+          "code": "SHAPE",
+          "detail": "observation"
+        }
+      ]
+    },
+    {
+      "name": "missing-output-array",
+      "passed": true,
+      "actualPass": false,
+      "faults": [
+        {
+          "code": "SHAPE",
+          "detail": "observation"
+        }
+      ]
+    }
+  ],
+  "accounting": [
+    {
+      "case": "V1",
+      "outcome": "missing_output",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 1,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "V1",
+      "outcome": "timeout",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 1,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "V1",
+      "outcome": "crash",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 1,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "V1",
+      "outcome": "infrastructure_incident",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 1,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": true,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "V1",
+      "outcome": "abstained",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 1,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "V1",
+      "outcome": "budget_exhausted",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 1,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "V1",
+      "outcome": "unavailable_before_start",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 0,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "V2",
+      "outcome": "missing_output",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 1,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "V2",
+      "outcome": "timeout",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 1,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "V2",
+      "outcome": "crash",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 1,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "V2",
+      "outcome": "infrastructure_incident",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 1,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": true,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "V2",
+      "outcome": "abstained",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 1,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "V2",
+      "outcome": "budget_exhausted",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 1,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "V2",
+      "outcome": "unavailable_before_start",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 0,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "N1",
+      "outcome": "missing_output",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 0,
+        "negativeDenominator": 1,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "N1",
+      "outcome": "timeout",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 0,
+        "negativeDenominator": 1,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "N1",
+      "outcome": "crash",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 0,
+        "negativeDenominator": 1,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "N1",
+      "outcome": "infrastructure_incident",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 0,
+        "negativeDenominator": 1,
+        "inertOutcomePass": false,
+        "infrastructureIncident": true,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "N1",
+      "outcome": "abstained",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 0,
+        "negativeDenominator": 1,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "N1",
+      "outcome": "budget_exhausted",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 0,
+        "negativeDenominator": 1,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "case": "N1",
+      "outcome": "unavailable_before_start",
+      "passed": true,
+      "result": {
+        "primaryDenominator": 0,
+        "negativeDenominator": 0,
+        "inertOutcomePass": false,
+        "infrastructureIncident": false,
+        "realTrialSuccess": null
+      }
+    },
+    {
+      "args": [
+        "V1",
+        true,
+        true,
+        "unavailable_before_start"
+      ],
+      "passed": true
+    },
+    {
+      "args": [
+        "V1",
+        false,
+        true,
+        "timeout"
+      ],
+      "passed": true
+    },
+    {
+      "args": [
+        "V1",
+        true,
+        false,
+        "timeout"
+      ],
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "seconds": 8.258163096998032,
+  "notClaimed": [
+    "native artifact extraction",
+    "real clean rebuild",
+    "caller authentication",
+    "real trial/model success",
+    "baseline qualification",
+    "advantage"
+  ]
+}

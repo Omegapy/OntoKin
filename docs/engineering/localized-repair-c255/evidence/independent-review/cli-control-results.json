@@ -1,0 +1,77 @@
+{
+  "oracleSha256": "b7275bd40bd429397ce6db5608bc025493a5e92cfc378f70e05cc799f50ff593",
+  "results": [
+    {
+      "case": "positive",
+      "exitCode": 0,
+      "result": {
+        "schema": "ontokin.c255.component-result/0.1",
+        "caseId": "V1",
+        "componentPass": true,
+        "faults": [],
+        "realTrialSuccess": null,
+        "executionAllowed": false,
+        "artifactReaderQualified": false,
+        "nativeStarts": 0,
+        "modelTrials": 0,
+        "observedObjects": 18,
+        "observedPoses": 126,
+        "claim": "inert record consistency only"
+      },
+      "passed": true,
+      "stderr": ""
+    },
+    {
+      "case": "hash-only-authority",
+      "exitCode": 1,
+      "result": {
+        "componentPass": false,
+        "faults": [
+          {
+            "code": "SHAPE",
+            "detail": "SHAPE: encoded bytes"
+          }
+        ],
+        "realTrialSuccess": null,
+        "executionAllowed": false
+      },
+      "passed": true,
+      "stderr": ""
+    },
+    {
+      "case": "duplicate-observation-key",
+      "exitCode": 1,
+      "result": {
+        "componentPass": false,
+        "faults": [
+          {
+            "code": "JSON_DUPLICATE",
+            "detail": "JSON_DUPLICATE: schema"
+          }
+        ],
+        "realTrialSuccess": null,
+        "executionAllowed": false
+      },
+      "passed": true,
+      "stderr": ""
+    },
+    {
+      "case": "nonfinite-observation",
+      "exitCode": 1,
+      "result": {
+        "componentPass": false,
+        "faults": [
+          {
+            "code": "NONFINITE",
+            "detail": "NONFINITE: NaN"
+          }
+        ],
+        "realTrialSuccess": null,
+        "executionAllowed": false
+      },
+      "passed": true,
+      "stderr": ""
+    }
+  ],
+  "passed": true
+}

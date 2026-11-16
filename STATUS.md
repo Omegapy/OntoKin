@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [GOAL](GOAL.md), [C252 priority decision](docs/engineering/review-integration-c252/DECISION.md), preserved [C210 boundary](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C255: reviewed offline observation checker; integration pending
+
+The [C255 checker](docs/engineering/localized-repair-c255/README.md) independently derives the frozen C253 meanings and seven-time motion, and checks inert records for V1/V2/N1. It covers all 18 objects, 34 sites and 126 poses, with geometry, locality, source/dependency bytes, provenance, rebuild records and rejected-edit preservation. A passing component result grants no artifact-reader, execution or real-trial qualification.
+
+The [independent review](docs/engineering/localized-repair-c255/REVIEW.md) approves corrected author `2ef850a235ad158dcb06dd956388015861765eb1`; published scientific `53e05111dfd967f070bdccce11b9432a4f567a19` has the identical tree. 31 authored methods and 134 independent component / 24 denominator / 10 authority / four CLI controls pass. Initial semantic-identity findings and two executed raw-orientation false acceptances are preserved with their corrections. [Results and limits](docs/engineering/localized-repair-c255/RESULTS.md).
+
+[PR #239](https://github.com/Omegapy/OntoKin/pull/239) remains pending integration and resulting-main checks. [Scope #238](https://github.com/Omegapy/OntoKin/issues/238) also requires exact archive verification, offline restoration and confirmed saved delivery. Finish that scope and stop. The [next separate action](docs/engineering/localized-repair-c255/NEXT-TASK.md) is a finite read-only GLB observation reader using existing artifacts. No reader or successor is implemented in C255. R07/R08, all C221 criteria, held C251 and the other held PRs, and original failures retain their states. Comparative advantage remains unproven.
+
 ## C253: localized-repair qualification protocol
 
 The [C253 protocol](docs/engineering/localized-repair-c253/README.md) binds three existing cases from one public keyed-rack family: a valid length edit, its related reverse and rejection of an incompatible-unit candidate. The corpus retains 18 identities, 16 unrelated objects, the original dependency closure, seven observation times and tolerances. It supports evaluator qualification; it is not an unseen multi-assembly benchmark. **Comparative advantage remains unproven.**

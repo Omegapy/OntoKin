@@ -26,7 +26,7 @@ The older world-building ambition is preserved in the [pre-C210 goal](https://gi
 
 ## Staged roadmap and one current action
 
-The [C253 protocol and corpus](docs/engineering/localized-repair-c253/README.md) bind three cases from one public keyed-rack family. They support qualification of a future evaluator, not an unseen comparison or general advantage claim. The next bounded task is to **qualify the offline corpus and oracle component**, using independent formulas and inert positive/adversarial observations. The [C253 next task](docs/engineering/localized-repair-c253/NEXT-TASK.md) fixes that stopping boundary. Native route qualification, runner orchestration, model trials and new evaluation assets remain separate scopes.
+The [C253 protocol and corpus](docs/engineering/localized-repair-c253/README.md) bind three cases from one public keyed-rack family. They support qualification of a future evaluator, not an unseen comparison or general advantage claim. The [C255 offline checker](docs/engineering/localized-repair-c255/README.md) is independently reviewed for inert source/semantic/geometry/pose consistency. Finish its verified integration and saved handoff, then [qualify one finite read-only GLB observation reader](docs/engineering/localized-repair-c255/NEXT-TASK.md) against actual existing artifact bytes. Native route qualification, runner orchestration, model trials and new evaluation assets remain separate scopes.
 
 The [C252 roadmap](docs/engineering/review-integration-c252/ROADMAP.md) establishes this order:
 

@@ -1,0 +1,120 @@
+{
+  "schema": "ontokin.c255.independent-authority-controls/0.1",
+  "oracleSha256": "b7275bd40bd429397ce6db5608bc025493a5e92cfc378f70e05cc799f50ff593",
+  "results": [
+    {
+      "name": "unchanged-corpus",
+      "expectedRejected": false,
+      "rejected": false,
+      "passed": true,
+      "fault": null
+    },
+    {
+      "name": "raw-source-byte-change",
+      "expectedRejected": true,
+      "rejected": true,
+      "passed": true,
+      "fault": {
+        "code": "CORPUS_SOURCE",
+        "detail": "start_065"
+      }
+    },
+    {
+      "name": "coordinated-source-manifest-tolerance-tamper",
+      "expectedRejected": true,
+      "rejected": true,
+      "passed": true,
+      "fault": {
+        "code": "CORPUS_AUTHORITY",
+        "detail": "docs/engineering/localized-repair-c253/corpus.json"
+      }
+    },
+    {
+      "name": "corpus-tolerance-change",
+      "expectedRejected": true,
+      "rejected": true,
+      "passed": true,
+      "fault": {
+        "code": "CORPUS_AUTHORITY",
+        "detail": "docs/engineering/localized-repair-c253/corpus.json"
+      }
+    },
+    {
+      "name": "frozen-authority-change-SCORING.md",
+      "expectedRejected": true,
+      "rejected": true,
+      "passed": true,
+      "fault": {
+        "code": "CORPUS_AUTHORITY",
+        "detail": "docs/engineering/localized-repair-c253/SCORING.md"
+      }
+    },
+    {
+      "name": "frozen-authority-change-PROTOCOL.md",
+      "expectedRejected": true,
+      "rejected": true,
+      "passed": true,
+      "fault": {
+        "code": "CORPUS_AUTHORITY",
+        "detail": "docs/engineering/localized-repair-c253/PROTOCOL.md"
+      }
+    },
+    {
+      "name": "frozen-authority-change-RUN-PLAN.json",
+      "expectedRejected": true,
+      "rejected": true,
+      "passed": true,
+      "fault": {
+        "code": "CORPUS_AUTHORITY",
+        "detail": "docs/engineering/localized-repair-c253/RUN-PLAN.json"
+      }
+    },
+    {
+      "name": "core-origin-contract-tamper",
+      "expectedRejected": true,
+      "rejected": true,
+      "passed": true,
+      "fault": {
+        "code": "CORPUS_AUTHORITY",
+        "detail": "docs/language-design/OK-LANG-001-core-language-specification.md"
+      }
+    },
+    {
+      "name": "corpus-input-symlink",
+      "expectedRejected": true,
+      "rejected": true,
+      "passed": true,
+      "fault": {
+        "code": "CORPUS_PATH",
+        "detail": "start_065"
+      }
+    },
+    {
+      "name": "missing-dependency",
+      "expectedRejected": true,
+      "rejected": true,
+      "passed": true,
+      "fault": {
+        "code": "CORPUS_PATH",
+        "detail": "hinges"
+      }
+    }
+  ],
+  "imports": [
+    "__future__",
+    "argparse",
+    "collections",
+    "dataclasses",
+    "hashlib",
+    "itertools",
+    "json",
+    "math",
+    "pathlib",
+    "sys",
+    "types"
+  ],
+  "standardLibraryOnly": true,
+  "prohibitedExecutionCalls": [],
+  "passed": true,
+  "limits": "Static import/execution inspection plus actual load tests. Does not prove caller isolation/authentication or native execution."
+}
