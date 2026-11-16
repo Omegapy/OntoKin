@@ -1,0 +1,194 @@
+# Independent scoring specification C253/0.1
+
+This specification is a contract for a later evaluator. C253 implements only
+static source-manifest verification. It scores no agent or native artifact.
+The [protocol](PROTOCOL.md) fixes the population and the
+[run plan](RUN-PLAN.json) fixes denominators, budgets and decision rules.
+
+## Oracle authority and independence
+
+The evaluator consumes the frozen neutral task, exact input identities,
+hand-derived equations below and actual delivered source/artifact bytes.
+It must not import the OntoKin parser, normalized model, evaluator, exporter,
+sidecar producer or a route's scaffold to calculate expected answers. Route
+code and submitted metadata are observations to check, not oracle authority.
+
+The existing construction
+[expected.json](../../language-design/construction-v0.1/01-keyed-rack/expected.json)
+is an independently derived historical reference. Its bytes and original
+tolerances remain fixed. The C210 `before.reference.json`, generated GLBs and
+semantic sidecars are corroborating evidence. They cannot be the sole expected
+answer. Before scoring any trial, a separate reviewer must approve an oracle
+implementation and its fault controls against the raw source and equations.
+
+The evaluator uses opaque attempt identifiers and freezes all component
+scores before the analysis stage joins route labels. File formats may reveal
+the route to a reader; this is limited masking, not complete evaluator
+blinding. Automated predicates and signed-off rules reduce discretion without
+claiming to remove all bias.
+
+## Exact semantic invariants
+
+Match objects using the full stable occurrence key, not list order, display
+name, geometry similarity or transient artifact indices. There must be exactly
+the 18 admitted identities, with no duplicate, missing or extra object. Verify
+definition identity and component reuse independently from occurrence identity.
+
+For V1/V2 only the selected finger length and the selected blade consequences
+may change. Preserve the complete pinned library, all other typed parameters,
+the ownership map, separate follows and hinges, hinge axes/limits/initial
+angles, appearances, zero matter, source duration, actions and event values.
+The selected blade base site moves locally to `(-L/2, 0, 0)` metres; its local
+dimensions are `(L, 0.08, 0.08)` metres. Every other site's semantic value stays
+unchanged. The selected finger's sphere radius remains 0.06 m.
+
+The first rack has three fingers at Y offsets -0.6, 0, 0.6 m. The second has
+five at -1.2, -0.6, 0, 0.6, 1.2 m. Their rack dimensions are respectively
+`(0.1, 1.8, 0.1)` and `(0.1, 3.0, 0.1)` m. Unselected blades are 0.6 m long.
+These constants follow directly from the bound `.ok` source and component
+library. Source-level dimensions compare within the original 1e-12 m limit;
+symbolic values, units, identities and relationship membership compare exactly.
+
+Preserve stable identity and meaning separately from revision-bound byte
+spans, source digests, accepted revision IDs, artifact offsets and regenerated
+output hashes. Required provenance changes after a valid edit do not permit
+an unrelated semantic edit. Hash equality is sufficient for unchanged raw
+files, but hash inequality alone does not prove semantic damage.
+
+## Independent motion and geometry equations
+
+For time `t` in [0, 2] seconds and selected length `L` in metres:
+
+```text
+theta(t) = (pi / 4) * min(t, 1)
+first rack center = (-1, 0.2*t, 0)
+first finger center at offset y = (-1, y + 0.2*t, 0)
+selected blade center = (-1 + L*cos(theta)/2, 0.2*t + L*sin(theta)/2, 0)
+selected blade rotation WXYZ = (cos(theta/2), 0, 0, sin(theta/2))
+unselected first blade center = (-0.7, y + 0.2*t, 0)
+second rack center = (1, 0, 0)
+second finger center at offset y = (1, y, 0)
+second blade center at offset y = (1.3, y, 0)
+```
+
+All other object rotations are identity. All scales remain one. Box corner
+positions derive from half-extents, these rotations and centers; a submitted
+bounding box alone cannot establish the right dimensions and orientation.
+For primitive spheres, check the declared radius and finite mesh envelope
+under the admitted existing tessellation contract. Do not demand identical
+triangle order or infer exact curved surfaces from a finite mesh.
+
+Observe all 18 objects at **0, 0.25, 0.5, 0.75, 1, 1.5 and 2 seconds**, using
+the original after-boundary convention: 126 poses per valid submission.
+The original reference-position component and orientation-angle limits are
+1e-9 m and 1e-9 rad where inspecting the reference evaluator. Delivered
+geometry/motion uses the unchanged finite delivery limits: 0.001 m position
+component, 0.001 rad rotation angle and 1e-6 s time. Canonical source primitive
+dimensions retain their 1e-12 m limit. Native mesh binary32 error is assessed
+at the delivery layer, not used to relax source meaning.
+
+Quaternion angle comparison is sign-invariant after a finite, nonzero norm
+check. Inspect raw transforms as well as decomposed values. Reject nonfinite
+values, zero quaternions, reflections, unintended scale/shear and duplicate
+time/identity records. Do not normalize an invalid artifact into a passing
+one. Seven-time success establishes only this finite sample, not arbitrary
+continuous motion or dynamics.
+
+## Evidence from actual artifacts
+
+Each qualified route reader must demonstrate that it traverses actual object,
+geometry, animation and metadata records in the submitted artifact. It must
+resolve units, frames and the required full identity map without substituting
+a synthetic record written by the author. Every extracted field carries the
+artifact hash and its concrete native path or buffer/node reference.
+
+For a route using GLB, read the real geometry attributes, transforms and time
+tracks. For native Blender or USD delivery, use a separately qualified reader
+at the exact recorded application/package version. Cross-check reader output
+with deliberately corrupted artifacts. If a trustworthy reader is unavailable,
+the route is not admitted; declaring JSON output compliant is insufficient.
+
+Equivalent relationship metadata may be authored directly by a native route,
+but the evaluator must compare it against independently decoded geometry and
+motion. An arbitrary JSON sidecar cannot establish a constraint's behavior.
+Hinges and follows are semantic declarations plus the specified finite baked
+motion here; live destination constraint solving is outside this claim.
+
+## Rebuild, revision and locality checks
+
+The external harness creates the accepted-state record from bytes it actually
+received and validated. Source/dependency/artifact hashes, model/settings,
+tool versions, immutable starting revision, candidate IDs and parent revision
+are recorded outside the author's editable directory. A submitted claim of
+acceptance is not authority. The same harness revision predicate applies to
+every route.
+
+Rebuild the final source in a fresh empty workspace with only the declared
+dependency closure and pinned tools. Require the same normalized semantic
+values and delivered measurements. Require byte identity for artifacts whose
+frozen route settings promise it; predeclare any native timestamp-only
+normalization before trials and retain raw bytes. Never whitelist a varying
+field after seeing a failed rebuild.
+
+Check all 16 unrelated objects, including the full second rack, against their
+starting semantics, dimensions and seven-time poses. Check the selected
+finger's unchanged sphere independently from its edited length declaration.
+Changing the shared library or global length to make one target correct is a
+locality failure, even if some siblings happen to look unchanged.
+
+## Scoring and denominator
+
+| Outcome | Rule |
+| --- | --- |
+| Valid final success | All required source, rebuild, edit, locality, identity, provenance and artifact checks pass within all budgets, without human correction. |
+| Valid first-pass success | The first submitted candidate meets the same full predicate. No submissions means false. |
+| N1 success | Reject the dimensionally invalid request at the declared validation boundary, retain its diagnostic and prove accepted source/dependencies/artifacts unchanged. Producing the 0.75 m answer instead is not success. |
+| Missing output, timeout, exhausted budget, abstention or crash | Unsuccessful attempted task; retain in its declared denominator. |
+| Infrastructure incident after attempt start | Retain as unsuccessful in the primary operational denominator and separately flag it. Report a sensitivity analysis without it, never replace the primary record. |
+| Route unavailable before admission | No attempted-task score. Report route/task coverage and reason separately; never score it as a competitor failure or a success. |
+| Invalid or corrupt evaluator result | Quarantine the entire affected comparison, retain all attempts and label analysis invalid pending a separately versioned correction. Do not hand-fix scores. |
+
+The primary endpoint is final success on V1/V2. N1 has its own denominator and
+is a semantic guardrail. Do not mix easy rejections into the valid-task success
+rate. Publish counts of eligible, started, completed, missing, failed and
+successful attempts. Once an admitted attempt is started, no later category
+change removes it. Secondary failure labels can overlap; the primary binary
+outcome cannot.
+
+**N1's exact boundary is the acceptance decision on staged candidate source,
+before replacing any accepted revision, source file or artifact.** Each route
+must return an explicit incompatible-dimension rejection and preserve the
+accepted bytes. Record whether that diagnostic came from its compiler,
+script/unit validator or an explicit author refusal. These are distinct
+mechanisms; none is silently called native type checking. A rejection produced
+only by the common harness records protected accepted state, but does not
+satisfy the route-rejection predicate. The shared transaction harness is a
+workflow safety control and earns no language-specific advantage credit.
+No dimensionally invalid candidate may enter accepted state temporarily.
+
+For each valid case/repetition pair, publish both pass / OntoKin only /
+baseline only / neither. Report requested-dimension error, collateral-change
+count, provenance failure and first/final success separately. A protocol-level
+unsupported baseline is an applicability limit, not proof of OntoKin advantage.
+
+## Required oracle controls before runner admission
+
+The next offline component must demonstrate acceptance of independently
+constructed correct 0.65 m and 0.75 m states and rejection of each listed
+fault. These are evaluator controls, not model attempts or invented fixtures:
+
+- Wrong target, wrong length, changed global/shared default, or changed sibling.
+- Kilograms accepted as metres; missing or changed dependency pin.
+- Missing/extra/duplicate identity or changed ownership/follow/hinge relation.
+- Correct metadata with wrong geometry, motion, units, reflection or scale.
+- Omitted time/object, nonfinite value, zero quaternion or a widened tolerance.
+- Stale accepted revision, source/artifact mismatch or falsely asserted acceptance.
+- Invalid candidate promoted, or rejected candidate that altered retained bytes.
+- A submission that rebuilds differently or depends on undeclared input.
+- Empty/missing output, timeout and infrastructure incident denominator handling.
+
+Positive controls must include quaternion sign equivalence and legitimate
+revision-bound provenance changes. Boundary controls exercise the original
+inclusive tolerances and just-outside values. Review the formulas and controls
+independently from their implementation. A large check count is not evidence
+that the chosen oracle is scientifically correct.

@@ -1,0 +1,231 @@
+{
+  "schema": "ontokin.c253.run-plan/0.1",
+  "protocolVersion": "C253/0.1",
+  "status": "FROZEN_QUALIFICATION_PLAN_EXECUTION_BLOCKED",
+  "population": {
+    "assemblyFamilies": 1,
+    "cases": [
+      "V1",
+      "V2",
+      "N1"
+    ],
+    "validCases": [
+      "V1",
+      "V2"
+    ],
+    "invalidCases": [
+      "N1"
+    ],
+    "publicPreviouslyExposed": true,
+    "advantageClaimEligible": false
+  },
+  "routeRoster": {
+    "intendedFirstPair": [
+      "ontokin",
+      "blender_python"
+    ],
+    "qualifiedRoutes": [],
+    "openusd_native": "Unavailable/unqualified in bounded metadata probes; report separately, never score as failure. Addition requires a pre-result protocol amendment."
+  },
+  "model": {
+    "provider": null,
+    "immutableSnapshotId": null,
+    "servingFingerprint": null,
+    "reasoningSetting": null,
+    "temperature": 0,
+    "topP": 1,
+    "seed": null,
+    "seedPolicy": "Do not invent provider seed support. Record actual support and per-call seed if available before admission.",
+    "singleModelForAllRoutes": true,
+    "freshContextPerAttempt": true,
+    "pinStatus": "BLOCKED: no executable immutable model snapshot has been selected or verified",
+    "requiredAdmission": "Pin one exact model snapshot, reasoning setting, provider parameters/support, tokenizer/usage semantics and tool schema. A hidden/current chat model identity is insufficient. Any unsupported setting requires a reviewed plan amendment before attempts."
+  },
+  "routeInputs": {
+    "neutralTaskSheetSha256": null,
+    "syntaxReferencePackSha256": {
+      "ontokin": null,
+      "blender_python": null,
+      "openusd_native": null
+    },
+    "equivalentStartingSourceSha256": {
+      "ontokin": "See corpus task closure",
+      "blender_python": null,
+      "openusd_native": null
+    },
+    "toolsAndDependencyClosure": {
+      "ontokin": null,
+      "blender_python": null,
+      "openusd_native": null
+    },
+    "artifactReaderIdentity": {
+      "ontokin": null,
+      "blender_python": null,
+      "openusd_native": null
+    },
+    "required": "Exact versions, binary/package/dependency hashes and verified starting-state equivalence are mandatory before route admission; historical identities alone are insufficient."
+  },
+  "design": {
+    "repetitionsPerCasePerRoute": 6,
+    "intendedAttemptsForTwoRoutes": 36,
+    "validAttemptsForTwoRoutes": 24,
+    "invalidAttemptsForTwoRoutes": 12,
+    "taskOrderByRepetition": [
+      [
+        "V1",
+        "V2",
+        "N1"
+      ],
+      [
+        "V2",
+        "N1",
+        "V1"
+      ],
+      [
+        "N1",
+        "V1",
+        "V2"
+      ],
+      [
+        "V1",
+        "V2",
+        "N1"
+      ],
+      [
+        "V2",
+        "N1",
+        "V1"
+      ],
+      [
+        "N1",
+        "V1",
+        "V2"
+      ]
+    ],
+    "routeOrderByRepetition": [
+      [
+        "ontokin",
+        "blender_python"
+      ],
+      [
+        "blender_python",
+        "ontokin"
+      ],
+      [
+        "ontokin",
+        "blender_python"
+      ],
+      [
+        "blender_python",
+        "ontokin"
+      ],
+      [
+        "ontokin",
+        "blender_python"
+      ],
+      [
+        "blender_python",
+        "ontokin"
+      ]
+    ],
+    "pairKey": [
+      "caseId",
+      "repetition"
+    ],
+    "attemptId": [
+      "protocolVersion",
+      "routeId",
+      "caseId",
+      "repetition"
+    ],
+    "parallelAttempts": false,
+    "randomization": "Deterministic balanced order, not randomized allocation. Retain order effects as a limitation.",
+    "crossAttemptState": "Fresh workspace and model context; no prior outputs, answers or grader state."
+  },
+  "budgets": {
+    "wallSecondsPerAttempt": 600,
+    "inputPlusOutputTokensPerAttempt": 32000,
+    "outputTokensPerAttempt": 8000,
+    "toolCallsPerAttempt": 24,
+    "candidateSubmissionsPerAttempt": 6,
+    "humanCorrections": 0,
+    "toolWallSecondsPerCall": 30,
+    "ontokinOperationsPerInvocation": 100000,
+    "ontokinTimeMsPerInvocation": 30000,
+    "networkInTrial": false,
+    "stopRule": "Stop at the first exhausted budget. Preserve unknown in-flight outcomes and reconcile accepted state; do not retry blindly or silently extend limits.",
+    "tokenAccounting": "Sum input tokens (including cached input exactly once) plus output tokens across all calls. Cache-read tokens are a subset of input, never added twice. Hidden reasoning tokens count once within provider-reported output. Retain input, cached-input and output separately. If complete consistent usage cannot be established, token efficiency is unscorable, not zero.",
+    "wallAccounting": "From dispatch of task/context to terminal submission or timeout; includes model, queue, tool and repair time. Setup/preflight excluded and separately reported.",
+    "toolAccounting": "Count every requested call including failures; fixed collector bookkeeping outside author access is reported separately."
+  },
+  "scoring": {
+    "primaryEndpoint": "Final end-to-end success proportion over all started valid V1/V2 attempts per admitted route",
+    "firstPass": "Same all-checks predicate on first submission",
+    "negativeEndpoint": "N1 rejection with exact accepted-state preservation; separate denominator",
+    "guardrails": [
+      "No required semantic loss",
+      "No collateral changes",
+      "No stale/mismatched provenance",
+      "No invalid candidate promoted"
+    ],
+    "recordAllAttempts": true,
+    "unavailableBeforeStart": "Coverage limitation, no outcome in attempted denominator",
+    "postStartFailure": "Count unsuccessful in primary operational denominator; retain cause",
+    "infrastructureSensitivity": "Secondary summary excludes only externally evidenced incidents; show both counts and keep primary unchanged",
+    "comparisonTable": [
+      "both_pass",
+      "ontokin_only",
+      "baseline_only",
+      "neither"
+    ],
+    "evaluatorMasking": "Opaque attempt IDs and locked component scores before route-label join; artifact formats may reveal route, so masking is partial.",
+    "invalidEditBoundary": "The staged candidate acceptance decision before any accepted revision/source/artifact replacement. Require an explicit incompatible-dimension rejection from the route/compiler/script/author, with diagnostic provenance classified; harness-only protection is insufficient for route detection credit. Retain all accepted bytes and no transient accepted invalid state."
+  },
+  "analysis": {
+    "primaryEstimand": "Difference in final valid-task success: OntoKin minus the qualified direct baseline, equal weight to V1 and V2 and their six repetition pairs; fixed-family descriptive estimate only in this corpus.",
+    "primaryInvestmentThresholdPercentagePoints": 20,
+    "thresholdRule": "For a later eligible multi-assembly study, the lower bound of the predeclared 95% cluster interval must be at least +0.20. Current qualification cases are ineligible, so no investment-advantage decision can pass.",
+    "primaryEfficiencyEndpoint": "Total input-plus-output model tokens per attempt under the exact accounting rule",
+    "efficiencySummary": "Report every attempt. For pairs where both routes succeed, report the median OntoKin/baseline token ratio and paired elapsed/token differences, plus the number and identity of excluded non-joint-success pairs. Never use this selected subset alone as a cost-benefit claim.",
+    "successNoninferiorityMarginPercentagePoints": 5,
+    "secondaryEffortTargetRelativeReduction": 0.3,
+    "secondaryEffortRule": "A prospective efficiency target requires success-difference lower95 bound >= -0.05 and joint-success token-ratio upper95 bound <= 0.70, with all semantic/provenance guardrails. It is secondary and cannot substitute for the unmet primary investment criterion. Current one-family public corpus cannot pass it as an advantage claim.",
+    "uncertainty": {
+      "currentQualification": "Publish exact paired counts, all six per-case outcomes, ranges and median token ratios. Population confidence interval is null with reason one public assembly family; do not bootstrap repeated tasks as independent assemblies or print zero-width population intervals.",
+      "laterEligibleStudy": "Requires a new unseen multi-assembly corpus and prospective sample-size/precision justification before attempts. Freeze its complete manifest and retain family clustering. For the specified prospective rule, use a paired two-stage percentile bootstrap: resample assembly families with replacement, then repetition indices within each sampled family while retaining all task/route pairs; compute equal-family-weight success difference; 20000 draws; Python random.Random seed 253; lower/upper empirical 2.5/97.5 percentiles using sorted index floor((B-1)*p). Report family count, all strata and missing data.",
+      "efficiencyInterval": "Use the same family/paired-repetition resamples for median joint-success token ratio. If joint-success pairs are absent or an interval is undefined, efficiency decision is inconclusive.",
+      "limits": "Bootstrap is a prespecified analysis choice, not proof of precision; public exposure, backend differences and few families remain limitations. The qualification corpus provides no population interval."
+    },
+    "multiplicity": "Only the success endpoint governs the primary investment criterion. Efficiency is secondary descriptive evidence with a noninferiority safeguard, not an alternative route to declaring the primary criterion passed. Any added baseline or confirmatory endpoint requires a pre-result amendment.",
+    "decisionStates": [
+      "qualification_not_executed",
+      "qualification_pass_or_faults_identified",
+      "advantage_inconclusive_ineligible_population",
+      "study_invalid_due_to_evaluator_fault"
+    ],
+    "guardrailRule": "Any accepted invalid state, collateral semantic damage or false provenance blocks an expansion recommendation regardless of aggregate score.",
+    "setupCost": "Report route scaffold/reference-pack/environment/oracle engineering time, tokens, tool cost and maintenance separately, with exact artifacts. No invented amortization denominator or dollar costs without observed prices."
+  },
+  "executionAdmission": {
+    "allowedInC253": false,
+    "blockingRequirements": [
+      "Independent protocol review",
+      "Qualified offline oracle with positive/boundary/adversarial controls",
+      "Qualified native artifact readers and minimal trial runner",
+      "Exact model snapshot/settings/usage semantics",
+      "Qualified Blender starting seed and complete runtime dependency bindings",
+      "Frozen exact route roster, equivalent task/reference-pack bindings and starting-state checks",
+      "For any advantage study: clean unseen multi-assembly corpus and prospective precision justification"
+    ],
+    "unknownInputPolicy": "Null is a blocker, never a wildcard or instruction to guess. Fill pins in a separate reviewed admission record; changes to budgets/order/endpoints require a versioned protocol amendment before outcomes.",
+    "nextScope": "Offline corpus/oracle observation component only; see NEXT-TASK.md"
+  },
+  "preservedLimits": {
+    "nativeStartsInC253": 0,
+    "modelTrialsInC253": 0,
+    "productStartsInC253": 0,
+    "historicalTolerances": "Unchanged; see corpus oracle and SCORING.md",
+    "R07": "PENDING",
+    "R08": "PENDING"
+  }
+}

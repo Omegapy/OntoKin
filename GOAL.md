@@ -26,7 +26,7 @@ The older world-building ambition is preserved in the [pre-C210 goal](https://gi
 
 ## Staged roadmap and one current action
 
-The next bounded task is to **freeze a localized-assembly-repair benchmark protocol and select existing eligible fixtures**. It prepares the research question, permitted edits, independent correctness checks, comparable routes and budgets, outcome measures and uncertainty rules before any trials. The [C252 next task](docs/engineering/review-integration-c252/NEXT-TASK.md) defines its completion condition. Runner implementation, model trials and new native work belong to separate scopes.
+The [C253 protocol and corpus](docs/engineering/localized-repair-c253/README.md) bind three cases from one public keyed-rack family. They support qualification of a future evaluator, not an unseen comparison or general advantage claim. The next bounded task is to **qualify the offline corpus and oracle component**, using independent formulas and inert positive/adversarial observations. The [C253 next task](docs/engineering/localized-repair-c253/NEXT-TASK.md) fixes that stopping boundary. Native route qualification, runner orchestration, model trials and new evaluation assets remain separate scopes.
 
 The [C252 roadmap](docs/engineering/review-integration-c252/ROADMAP.md) establishes this order:
 
