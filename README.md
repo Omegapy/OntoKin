@@ -50,7 +50,7 @@ See [core commands and failure results](docs/user-guide/core-and-cli.md) for eva
 
 ## Continue from the current checkpoint
 
-Read [GOAL.md](GOAL.md), [STATUS.md](STATUS.md) and [AGENTS.md](AGENTS.md) before choosing work. The [C252 roadmap](docs/engineering/review-integration-c252/ROADMAP.md) records priorities; the [next bounded task](docs/engineering/review-integration-c252/NEXT-TASK.md) is to freeze the localized-repair benchmark protocol and fixture selection. Runner implementation and trials follow in separately selected work.
+Read [GOAL.md](GOAL.md), [STATUS.md](STATUS.md) and [AGENTS.md](AGENTS.md) before choosing work. The [C252 roadmap](docs/engineering/review-integration-c252/ROADMAP.md) records priorities; the [C253 protocol](docs/engineering/localized-repair-c253/README.md) binds one public qualification family. The [next bounded task](docs/engineering/localized-repair-c253/NEXT-TASK.md) qualifies its offline oracle. Runner implementation, native qualification and trials remain separate.
 
 The previous C251 native-sampling task is deferred by the November 16 direction. Its source, evidence and unresolved gates remain preserved. Older checkpoint instructions do not authorize resuming it automatically. Existing release obligations, held drafts and historical failures retain their meanings.
 

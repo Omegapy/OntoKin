@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [GOAL](GOAL.md), [C252 priority decision](docs/engineering/review-integration-c252/DECISION.md), preserved [C210 boundary](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C253: localized-repair qualification protocol
+
+The [C253 protocol](docs/engineering/localized-repair-c253/README.md) binds three existing cases from one public keyed-rack family: a valid length edit, its related reverse and rejection of an incompatible-unit candidate. The corpus retains 18 identities, 16 unrelated objects, the original dependency closure, seven observation times and tolerances. It supports evaluator qualification; it is not an unseen multi-assembly benchmark. **Comparative advantage remains unproven.**
+
+The [scoring contract](docs/engineering/localized-repair-c253/SCORING.md) requires independent formulas, real artifact observations, source rebuild, provenance and complete failure accounting. The [run plan](docs/engineering/localized-repair-c253/RUN-PLAN.json) fixes paired order, repetitions, budgets and analysis while blocking execution on unqualified model, runner and route inputs. Independent review and exact executed checks are recorded in the [C253 results](docs/engineering/localized-repair-c253/RESULTS.md).
+
+**Next bounded action:** [qualify one offline corpus/oracle component](docs/engineering/localized-repair-c253/NEXT-TASK.md), using inert controls and no native or model execution. R07/R08, the strict Blender-normal failure, held C251 source and all nine C221 records / 41 criteria retain their states. The historical C252 and older next-task text below does not override this successor.
+
 ## C252: review priorities adopted; benchmark protocol next
 
 The owner's November 16 instruction selects [C252's decision](docs/engineering/review-integration-c252/DECISION.md) in place of the C251 native-sampling task. OntoKin retains semantic authoring and checked transport. The next investment gate is comparative evidence of correct localized edits, preservation, provenance and effort. **Comparative advantage remains unproven.**
