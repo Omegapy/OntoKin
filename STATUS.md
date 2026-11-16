@@ -330,7 +330,14 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none.
+Owner: `c252-review-priorities-20261116`.
+
+Task: C252 review-priority/documentation integration under [scope #233](https://github.com/Omegapy/OntoKin/issues/233).
+Acquired: `2026-11-16T16:46:48.768210+00:00`. Expires: `2026-11-16T17:16:48.768210+00:00`.
+Expected main at acquisition: `69b67921ada560f1e7480d839af175bc87cb38af`.
+Reserved shared files: `STATUS.md` and main integration; independent nonoverlapping work remains permitted.
+
+The C245 release record below is historical.
 
 C245 completed the independently reviewed C244 design integration through [PR #219](https://github.com/Omegapy/OntoKin/pull/219), actual merge `91144a38d06d9a915ce5ba091a2f4aa253b22b87`, tree `9465e632588b850cb8f987a401376e0e23ce14db`. Fresh actual-main controls and documentation checks pass with unchanged original source. This closure releases owner `c245-review-c2bb141aae02`. [Scope #220](https://github.com/Omegapy/OntoKin/issues/220) remains open only for exact successor ZIP verification, offline restoration and confirmed saved delivery, then stops.
 
