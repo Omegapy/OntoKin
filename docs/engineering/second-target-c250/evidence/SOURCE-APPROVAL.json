@@ -1,0 +1,95 @@
+{
+  "schema": "ontokin.c250.independent-source-approval/0.1",
+  "recordedAtUtc": "2026-11-16T01:09:13.395991+00:00",
+  "role": "independent source/API reviewer",
+  "reviewerTask": "/root/pose_api_review",
+  "disposition": "APPROVE_HELD_SOURCE_ONLY",
+  "commit": "553782d76e72f02758ce3cc1585c94fac2650aca",
+  "tree": "e633d173dc11e053306bb3a0a085c48e0c0197c9",
+  "base": "44edaf062f413f2496d2bbddf0811b315106cdc4",
+  "files": [
+    {
+      "path": "docs/engineering/second-target-c250/BINDINGS.json",
+      "bytes": 17520,
+      "sha256": "5625347113b7b054d5d8268fcc6d80e947e96ffb483ea7ede3e01e9d143277a5"
+    },
+    {
+      "path": "docs/engineering/second-target-c250/README.md",
+      "bytes": 4660,
+      "sha256": "7261c76302c9035280570b27e25a074fabd7cbf77037835f8ecc07d2a028c14a"
+    },
+    {
+      "path": "docs/engineering/second-target-c250/inert_model.py",
+      "bytes": 17893,
+      "sha256": "7a42ce47bc1928ad98ed77b950f7c7c32faee2549a475c815717ceea09c2acd0"
+    },
+    {
+      "path": "docs/engineering/second-target-c250/playback_preparation.gd",
+      "bytes": 18944,
+      "sha256": "4028e776b5e447d2fb531ff87f79a4119d64f2fdfbabdf35197b7886b09297bb"
+    },
+    {
+      "path": "docs/engineering/second-target-c250/test_inert_model.py",
+      "bytes": 18592,
+      "sha256": "c7ad691613f420687553ef0015f2de201c95e7102b2e92a445915bdc30729095"
+    },
+    {
+      "path": "docs/engineering/second-target-c250/verify_bindings.py",
+      "bytes": 9979,
+      "sha256": "5d8c7cdfd17b595f47262f3b92165c92365e4108c38280cfb0d8c7791e49d649"
+    }
+  ],
+  "staticChecks": 113,
+  "allStaticChecksPassed": true,
+  "manualReviewPassed": true,
+  "S01": "corrected; initial source/finding retained",
+  "unresolvedSourceFindings": [],
+  "READMEOnlyFollowup": {
+    "previouslyCheckedCommit": "251a9d1fa204f85061b3011665d551962e430651",
+    "changedPaths": [
+      "docs/engineering/second-target-c250/README.md"
+    ],
+    "fiveOtherFilesUnchanged": true
+  },
+  "independentModelReview": "Separate role; source review does not claim its outcome",
+  "sourceClean": true,
+  "checker": {
+    "path": "verify_source_api.py",
+    "sha256": "4f692c4c1f62044dd274c48d138c5bf7ad2985735e2bbfbc6f8f29facd4a7ce5"
+  },
+  "commands": [
+    [
+      "python3",
+      "-B",
+      "/workspace/scratch/6654b36bc902/handoff-work/evidence/c250/source-review/verify_source_api.py",
+      "--repo",
+      "/tmp/ontokin-c250-author",
+      "--revision",
+      "553782d76e72f02758ce3cc1585c94fac2650aca",
+      "--input-zip",
+      "/workspace/scratch/6654b36bc902/source-handoff/OntoKin/OntoKin_C249_Held_Animation_Inventory_Handoff_2026-11-15.zip",
+      "--package-overlay",
+      "/workspace/scratch/6654b36bc902/handoff-work",
+      "--output",
+      "/workspace/scratch/6654b36bc902/handoff-work/evidence/c250/source-review/STATIC-SOURCE-CHECKS.json"
+    ]
+  ],
+  "reviewerPreparationFailures": [
+    "REVIEWER-CHECKER-PREPARATION-FAILURE.json",
+    "REVIEWER-RECEIPT-PREPARATION-FAILURE.json"
+  ],
+  "nativeStarts": 0,
+  "parserStarts": 0,
+  "productStarts": 0,
+  "aggregateStarts": 0,
+  "nativeExecutionAdmission": false,
+  "R07": "PENDING",
+  "limits": [
+    "GDScript unparsed and unexecuted",
+    "Source/API review binds examined upstream, not installed build",
+    "Two intentional setter calls may include internal engine transitions",
+    "Readbacks detect lasting observed drift without atomicity or native lifetime guarantees",
+    "SceneTree attachment, all126poses, diagnostics, serialization, raw sealing, process limits and rendering remain pending",
+    "Stability covers only fields reread: mesh/material selectors and identities are rechecked, but earlier raw mesh arrays and material-parameter payloads are not recaptured; same-identity in-place payload drift remains outside this component."
+  ]
+}

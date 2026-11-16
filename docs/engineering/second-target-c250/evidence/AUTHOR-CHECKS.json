@@ -1,0 +1,62 @@
+{
+  "schema": "ontokin.c250.author-checks/0.1",
+  "observedUtc": "2026-11-16T01:07:20.436286+00:00",
+  "sourceCommit": "251a9d1fa204f85061b3011665d551962e430651",
+  "sourceTree": "c120e3ca66d7defbd1c38d4c8b1be7ab1c6553c2",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "worktreeBefore": "",
+  "commands": [
+    {
+      "name": "final-controls",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/engineering/second-target-c250/test_inert_model.py"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 2.690414281001722,
+      "stdout": "final-controls.stdout",
+      "stderr": "final-controls.stderr"
+    },
+    {
+      "name": "final-bindings",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/engineering/second-target-c250/verify_bindings.py",
+        "--package-root",
+        "/workspace/scratch/6eb13b9ce74f/final-extracted",
+        "--supplement-root",
+        "/workspace/scratch/6654b36bc902/handoff-work",
+        "--output",
+        "/workspace/scratch/6654b36bc902/handoff-work/evidence/c250/author/final-bindings.json"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.0973130830025184,
+      "stdout": "final-bindings.stdout",
+      "stderr": "final-bindings.stderr"
+    }
+  ],
+  "nativeStarts": 0,
+  "parserStarts": 0,
+  "productStarts": 0,
+  "aggregateStarts": 0,
+  "worktreeAfter": "",
+  "sourceCommitAfter": "251a9d1fa204f85061b3011665d551962e430651",
+  "sourceTreeAfter": "c120e3ca66d7defbd1c38d4c8b1be7ab1c6553c2",
+  "sourceFiles": {
+    "BINDINGS.json": "5625347113b7b054d5d8268fcc6d80e947e96ffb483ea7ede3e01e9d143277a5",
+    "README.md": "bfdf2ce3de8bf0dbf927ceffeb1186ab297b6d3bec4a3fe5a7d85b66f6b32160",
+    "inert_model.py": "7a42ce47bc1928ad98ed77b950f7c7c32faee2549a475c815717ceea09c2acd0",
+    "playback_preparation.gd": "4028e776b5e447d2fb531ff87f79a4119d64f2fdfbabdf35197b7886b09297bb",
+    "test_inert_model.py": "c7ad691613f420687553ef0015f2de201c95e7102b2e92a445915bdc30729095",
+    "verify_bindings.py": "5d8c7cdfd17b595f47262f3b92165c92365e4108c38280cfb0d8c7791e49d649"
+  },
+  "passed": true,
+  "limitations": [
+    "No GDScript parser/native behavior or installed build proof",
+    "All model state and mutation effects synthetic",
+    "Documentation link check awaits root-owned RESULTS.md and REVIEW.md publication records"
+  ]
+}
