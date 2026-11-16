@@ -344,11 +344,13 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none.
+Owner: `c253-root-e1a4d3f4647a`.
+Acquired UTC: 2026-11-16T19:39:50.704Z.
+Expires UTC: 2026-11-16T20:09:50.704Z.
 
-C252 integrated the reviewed documentation through [PR #234](https://github.com/Omegapy/OntoKin/pull/234), actual merge `89a328dbf461cc6a858f7d59ed6418e5174b0fa1`, tree `10d8a14e2ecc23c18c7d6013384817b33c4f0fad`. Fresh actual-main documentation checks passed with unchanged source. This closure releases owner `c252-review-priorities-20261116`; the next task requires a new bounded scope and ownership reconciliation.
+Bounded [scope #235](https://github.com/Omegapy/OntoKin/issues/235): integrate the independently reviewed localized-repair qualification protocol, exact existing-fixture bindings and narrow current-next-task documentation. Root branch: `work/c253-localized-repair-protocol`; starting main `ce19b8c313da9c87050dfa2a8ba4f32470fb1f6f`. Reserved shared files: STATUS, AGENTS, GOAL and documentation navigation. Handoff-only packaging remains separately reviewed. No model, native, product or aggregate execution belongs to this scope.
 
-[Scope #233](https://github.com/Omegapy/OntoKin/issues/233) remains open only for exact successor ZIP verification, offline restoration and confirmed saved delivery. The [durable recovery/delivery checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-594c50c41c348191babe889d8b59d93f_2ab2a24d43748191957f9bcc356b59de&account_id=personal) records post-freeze outcomes. Finish that handoff and stop. C251 sampling stays deferred; the [next separate scope](docs/engineering/review-integration-c252/NEXT-TASK.md) prepares the localized-repair benchmark protocol. Historical source, held drafts, failures and acceptance gates remain intact.
+C252 scope #233 is observed closed and its final handoff saved. The [C253 recovery checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-ff6b12890a60819194a6c1f29f14b221_2ab2a24d43748191957f9bcc356b59de&account_id=personal) preserves current source and evidence. Held C251 and older draft branches remain untouched. Release or meaningfully renew this lease after verified integration; final ZIP delivery remains a required closure step.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
