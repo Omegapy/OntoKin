@@ -360,20 +360,26 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none.
+Owner: `c255-reconcile-root-c77bfdbfac37`.
 
-C255 integrated its independently reviewed offline observation checker through
-[PR #239](https://github.com/Omegapy/OntoKin/pull/239), actual merge
-`8de50d0d4331dd3765f6778eb48212f879be032c`, tree
-`9e17cd2f46b9a06310da0e1854f914e33731f5c5`. Fresh actual-main component,
-corpus and documentation checks pass with unchanged approved scientific files.
-This documentation closure releases owner `c255-root-c77bfdbfac37`.
+Scope: [C255 branch reconciliation #240](https://github.com/Omegapy/OntoKin/issues/240).
+Starting main: `d36c991c6fe1763fa854a07ccfd729b3a0e3ffd5`.
+Acquired at: 2026-11-16T22:58:45.390543+00:00
+Expires at: 2026-11-16T23:28:45.390543+00:00
 
-[Scope #238](https://github.com/Omegapy/OntoKin/issues/238) remains open only
-for exact final archive verification, fresh offline restoration and confirmed
-saved handoff delivery. The [stable recovery/delivery checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-28bf60bfc8c081918e00e7babf72e3a8_2ab2a24d43748191957f9bcc356b59de&account_id=personal)
-records post-freeze results. Finish that handoff and stop. The next separate
-scope is the [read-only finite GLB reader](docs/engineering/localized-repair-c255/NEXT-TASK.md).
+The owner requested consolidation of all working branches into main and an
+amended C255 handoff. Three actual subagents in the hosted environment review
+the older receiver additions, the C246–C251 observer stack, and combined
+containment/history. This lease reserves main integration and shared status.
+Unrelated nonoverlapping work remains permitted under the coordination rules.
+
+Only reviewed experimental-source increments may integrate. Original failures,
+native execution holds, consumed schedules and C255 scientific bindings remain
+unchanged. No C256 reader or new model/native trial belongs to this scope.
+Archive-only C174 history is retained separately and is not a product merge.
+
+The prior C255 scope #238 is closed after its verified saved delivery; the
+original handoff remains available while this explicit amendment is prepared.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
