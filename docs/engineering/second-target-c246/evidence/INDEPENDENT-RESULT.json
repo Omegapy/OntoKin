@@ -1,0 +1,128 @@
+{
+  "schema": "ontokin.c246.independent-held-source-review/0.1",
+  "reviewed_at_utc": "2026-11-15T19:04:09.147949+00:00",
+  "disposition": "APPROVE_HELD_SOURCE_STATIC_AND_INERT_ONLY",
+  "reviewer": "surviving_work_audit",
+  "source_commit": "55e7d2576dd29e65a22db79f2207303570e5a1e3",
+  "source_tree": "62197aa149025af8c8e2b849af8f0b386203c433",
+  "source_status": "",
+  "files": {
+    "docs/engineering/second-target-c246/BINDINGS.json": {
+      "sha256": "c114f20b0cdee7045d12f73795778c713f093da51dfb6fa747138afd0dd87c38",
+      "bytes": 6207
+    },
+    "docs/engineering/second-target-c246/NEXT-TASK.md": {
+      "sha256": "037283040d24dcf2dab600a76231ec1a695794a759752bfb9f7a9043f507f871",
+      "bytes": 1630
+    },
+    "docs/engineering/second-target-c246/README.md": {
+      "sha256": "cdb5ae43d4cccb9a6ad4964aa30e527f2c2ccf0fcf8f1e339dee12ea5f0a713c",
+      "bytes": 5538
+    },
+    "docs/engineering/second-target-c246/RESULTS.md": {
+      "sha256": "fa7f158d60124bd7e4860f3851fed05773f00c6b3ddbcca80da1ebdfe53f05a5",
+      "bytes": 4903
+    },
+    "docs/engineering/second-target-c246/inert_model.py": {
+      "sha256": "5189b51f521026da572cc60b13636f300e1adbb164ce5a9cd2889d20986b2d67",
+      "bytes": 9849
+    },
+    "docs/engineering/second-target-c246/native_facts.gd": {
+      "sha256": "1fb4caeb9e36756c03b4cec0072c8a3a1decde0a554798c87a0895cf8ccd29f9",
+      "bytes": 6582
+    },
+    "docs/engineering/second-target-c246/observer.gd": {
+      "sha256": "e3f17f346b8e926c04e072e071ca27db7bddab1a0c14e68ee3e4871c4b1c5a60",
+      "bytes": 361
+    },
+    "docs/engineering/second-target-c246/registry.gd": {
+      "sha256": "6da4d9d5ca973b0cd2c45547bca908aa29c344c934f9b97f4a43b09501fec535",
+      "bytes": 2429
+    },
+    "docs/engineering/second-target-c246/session.gd": {
+      "sha256": "6f7495fa36d9df0f885c9668dcf0b6556a39087e6d9f1c099babddeea629f9ad",
+      "bytes": 9086
+    },
+    "docs/engineering/second-target-c246/test_inert_model.py": {
+      "sha256": "119c1dea84981d18cc97f8369873b1c03208f84bfb7aba152c78c5b0fa21fff6",
+      "bytes": 12950
+    },
+    "docs/engineering/second-target-c246/verify_bindings.py": {
+      "sha256": "61e429890a35742fedbf630daecd9ebb85e91e6636a9347c715f77bdd8cef4c1",
+      "bytes": 7026
+    }
+  },
+  "code_files": {
+    "docs/engineering/second-target-c246/inert_model.py": {
+      "sha256": "5189b51f521026da572cc60b13636f300e1adbb164ce5a9cd2889d20986b2d67",
+      "bytes": 9849
+    },
+    "docs/engineering/second-target-c246/native_facts.gd": {
+      "sha256": "1fb4caeb9e36756c03b4cec0072c8a3a1decde0a554798c87a0895cf8ccd29f9",
+      "bytes": 6582
+    },
+    "docs/engineering/second-target-c246/observer.gd": {
+      "sha256": "e3f17f346b8e926c04e072e071ca27db7bddab1a0c14e68ee3e4871c4b1c5a60",
+      "bytes": 361
+    },
+    "docs/engineering/second-target-c246/registry.gd": {
+      "sha256": "6da4d9d5ca973b0cd2c45547bca908aa29c344c934f9b97f4a43b09501fec535",
+      "bytes": 2429
+    },
+    "docs/engineering/second-target-c246/session.gd": {
+      "sha256": "6f7495fa36d9df0f885c9668dcf0b6556a39087e6d9f1c099babddeea629f9ad",
+      "bytes": 9086
+    },
+    "docs/engineering/second-target-c246/test_inert_model.py": {
+      "sha256": "119c1dea84981d18cc97f8369873b1c03208f84bfb7aba152c78c5b0fa21fff6",
+      "bytes": 12950
+    },
+    "docs/engineering/second-target-c246/verify_bindings.py": {
+      "sha256": "61e429890a35742fedbf630daecd9ebb85e91e6636a9347c715f77bdd8cef4c1",
+      "bytes": 7026
+    }
+  },
+  "independent_model": {
+    "cases": 730,
+    "assertions": 18357,
+    "passed": 730,
+    "failed": 0,
+    "result_path": "final-model-run/RESULT.json",
+    "runner_sha256": "89c2e59adf5b7f9526913d0ab944761148cbcd399e7453281361c0c475e33a08"
+  },
+  "binding_review": {
+    "checks": 122,
+    "pinned_sources": 21,
+    "authority_documents": 9,
+    "path": "FINAL-BINDING-REVIEW.json"
+  },
+  "native_facts_static_review": {
+    "reviewed_sha256": "1fb4caeb9e36756c03b4cec0072c8a3a1decde0a554798c87a0895cf8ccd29f9",
+    "report": "../native-facts-review/REVIEW.md",
+    "receipt": "../native-facts-review/FINAL-RESULT.json"
+  },
+  "resolved_findings": [
+    "B1 native JSON numeric type follows pinned double parser and retains exact raw type/value",
+    "B2 failed signals retire known originals before guard/edge refusal",
+    "B3 both outgoing and incoming connection snapshots retained before observer action",
+    "B4 shared snapshot traversal counter stops recursive/outer loops after bounded first refusal"
+  ],
+  "publication_editorial_correction": {
+    "file": "docs/engineering/second-target-c246/RESULTS.md",
+    "old": "no product/root replacement",
+    "new": "no product mesh root or synthetic-root replacement",
+    "owner": "root",
+    "scope": "Documentation only; 18 descendant product replacements are required and remain implemented"
+  },
+  "native_starts": 0,
+  "gdscript_parser_starts": 0,
+  "product_starts": 0,
+  "aggregate_starts": 0,
+  "limits": [
+    "Actual GDScript is neither parsed nor executed",
+    "Python model is a separate executable abstraction, not an interpreter or equivalence proof",
+    "Native callback, object lifetime, metadata, signal, cleanup and diagnostic truth unestablished",
+    "Installed build lineage, full raw mesh/material/pose capture, emitter, rendering, persistence, resource enforcement and reservation remain pending",
+    "Approval covers this held-source increment only; R07 and native admission remain pending"
+  ]
+}
