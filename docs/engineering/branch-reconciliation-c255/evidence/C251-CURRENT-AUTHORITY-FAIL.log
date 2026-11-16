@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/stacked-validation/docs/engineering/second-target-c251/verify_bindings.py", line 154, in <module>
+    main()
+  File "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/stacked-validation/docs/engineering/second-target-c251/verify_bindings.py", line 148, in main
+    result = verify(args.package_root, args.new_source_root)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/stacked-validation/docs/engineering/second-target-c251/verify_bindings.py", line 40, in verify
+    check('authority ' + row['path'], hashlib.sha256((REPO / row['path']).read_bytes()).hexdigest() == row['sha256'])
+  File "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/stacked-validation/docs/engineering/second-target-c251/verify_bindings.py", line 27, in check
+    raise ValueError(name)
+ValueError: authority AGENTS.md

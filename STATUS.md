@@ -2,6 +2,16 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [GOAL](GOAL.md), [C252 priority decision](docs/engineering/review-integration-c252/DECISION.md), preserved [C210 boundary](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C255 amendment: ten experimental-source PRs integrated
+
+The owner-authorized [branch reconciliation](docs/engineering/branch-reconciliation-c255/README.md) merged all ten reviewed experimental-source PRs into actual main `05aadeb008186b6644a2dbd67a2f7e5f2e23766d`, tree `55f86b06508e607cb6ea34af610668518171368d`. All 137 additions match their original heads; the four C255 scientific files and released runtime remain unchanged. [Exact integration receipts](docs/engineering/branch-reconciliation-c255/evidence/INTEGRATION.json).
+
+Three actual same-model subagents performed checks in the shared hosted environment. Fresh actual-main checks pass 31 C255 methods, 14 C253 bound files / three cases, and 29 preserved sources / 233 sections / 5,415 local links. The 68 older CPU and 212 stacked inert observations remain bound to exact unchanged source/inputs; no full aggregate rerun is claimed. C211's 27 CPU methods join default unittest discovery; receiver runtime stays opt-in. [Review and check scopes](docs/engineering/branch-reconciliation-c255/README.md#checks-and-independent-review).
+
+The observed inventory is **13 → 3 branches and ten → zero open PRs**. All ten merged working branches are absent. `archive/c174-model-research` is intentionally retained because complete offline ancestry is unavailable; it is index-only history, not product source. `work/c234-cpu-materials` remains at `4afb8d2d2d9a62bf1b5195b09c716607008e8a6c`: source is already retained and merged, but no supported authenticated deletion capability was available. The ineffective UI attempt was reconciled by API readback. [Concrete cleanup limitation](docs/engineering/branch-reconciliation-c255/evidence/CLEANUP-LIMITATION.json).
+
+C251 current-authority qualification remains **FAIL** on stale `AGENTS.md` and `GOAL.md` pins. Its separate historical pass, the strict normal-fidelity failure, native holds, consumed schedules and all unmet release gates retain their meanings. No C256, native or model run occurred. Scope [#238](https://github.com/Omegapy/OntoKin/issues/238) completed its original saved delivery. Scope [#240](https://github.com/Omegapy/OntoKin/issues/240) remains open for C234 cleanup and the **pending amended final ZIP**. Finish the verified saved amendment and stop; the [next-action record](docs/engineering/branch-reconciliation-c255/NEXT-TASK.md) keeps future scientific work separate. Earlier checkpoint sections below retain their historical outcomes.
+
 ## C255: offline observation checker integrated
 
 The [C255 checker](docs/engineering/localized-repair-c255/README.md) independently derives the frozen C253 meanings and seven-time motion, and checks inert records for V1/V2/N1. It covers all 18 objects, 34 sites and 126 poses, with geometry, locality, source/dependency bytes, provenance, rebuild records and rejected-edit preservation. A passing component result grants no artifact-reader, execution or real-trial qualification.
@@ -360,26 +370,24 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c255-reconcile-root-c77bfdbfac37`.
-
+Owner: none.
+State: RELEASED by this documentation closure.
+Previous owner: `c255-reconcile-root-c77bfdbfac37`.
 Scope: [C255 branch reconciliation #240](https://github.com/Omegapy/OntoKin/issues/240).
-Starting main: `d36c991c6fe1763fa854a07ccfd729b3a0e3ffd5`.
-Acquired at: 2026-11-16T22:58:45.390543+00:00
-Expires at: 2026-11-16T23:28:45.390543+00:00
 
-The owner requested consolidation of all working branches into main and an
-amended C255 handoff. Three actual subagents in the hosted environment review
-the older receiver additions, the C246–C251 observer stack, and combined
-containment/history. This lease reserves main integration and shared status.
-Unrelated nonoverlapping work remains permitted under the coordination rules.
+All ten reviewed experimental-source PRs merged into actual main
+`05aadeb008186b6644a2dbd67a2f7e5f2e23766d`, tree
+`55f86b06508e607cb6ea34af610668518171368d`.
+[Fresh actual-main checks](docs/engineering/branch-reconciliation-c255/evidence/ACTUAL-MAIN-CHECKS.json)
+passed within their stated scopes. This closure releases the bounded integration
+lease acquired at 2026-11-16T22:58:45.390543+00:00 and previously expiring at
+2026-11-16T23:28:45.390543+00:00.
 
-Only reviewed experimental-source increments may integrate. Original failures,
-native execution holds, consumed schedules and C255 scientific bindings remain
-unchanged. No C256 reader or new model/native trial belongs to this scope.
-Archive-only C174 history is retained separately and is not a product merge.
-
-The prior C255 scope #238 is closed after its verified saved delivery; the
-original handoff remains available while this explicit amendment is prepared.
+Scope #240 remains open: the C234 ref is not deleted because a supported
+authenticated deletion capability was unavailable, and the amended final ZIP
+still requires verified saved delivery. C174 archival retention is intentional.
+The [current handoff action](docs/engineering/branch-reconciliation-c255/NEXT-TASK.md)
+is to finish the amendment and stop; C256 remains separate and unstarted.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 

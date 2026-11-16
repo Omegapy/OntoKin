@@ -1,0 +1,141 @@
+{
+  "schema": "ontokin.c255.older-branches-validation-results/0.1",
+  "recordedAtUtc": "2026-11-16T22:56:52.955235+00:00",
+  "scope": 240,
+  "worker": "root/oracle_author",
+  "baseMain": "d36c991c6fe1763fa854a07ccfd729b3a0e3ffd5",
+  "candidateCommit": "bd0dc41ca9251d3672ada6218b6d8bb8169b632f",
+  "candidateTree": "e6077f42f27e72b1b6ef25bbb809159a65edc743",
+  "localValidationBranch": "validation/c255-older-branches",
+  "worktree": "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/older-validation",
+  "wholeWorktreeClean": true,
+  "sourceUnchangedDuringChecks": true,
+  "sourceCheck": "All32 additions equal exact original heads and every preexisting tracked path unchanged",
+  "published": false,
+  "remoteMutations": [],
+  "mainWorktreeMutations": [],
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "checks": [
+    {
+      "name": "c211",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_semantic_receiving_c211.py",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/older-validation",
+      "exitCode": 0,
+      "expectedMethods": 27,
+      "observedMethods": 27,
+      "seconds": 3.947,
+      "passed": true,
+      "log": "c211-fresh.log",
+      "logSha256": "d8ae172a0487603eae523f1cb01a9f2cfbfe8645088322a95c367032d620ec76"
+    },
+    {
+      "name": "c217",
+      "command": [
+        "python3",
+        "-IB",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/native-receiving-c217",
+        "-p",
+        "test_origin_guard.py",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/older-validation",
+      "exitCode": 0,
+      "expectedMethods": 15,
+      "observedMethods": 15,
+      "seconds": 0.365,
+      "passed": true,
+      "log": "c217-fresh.log",
+      "logSha256": "e4bfc26eb9bd5a91a3b93a4636fde021219b3a53155f85a35ec40ebbe866b5a1"
+    },
+    {
+      "name": "c218",
+      "command": [
+        "python3",
+        "-IB",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/native-reopen-c218",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/older-validation",
+      "exitCode": 0,
+      "expectedMethods": 26,
+      "observedMethods": 26,
+      "seconds": 0.339,
+      "passed": true,
+      "log": "c218-fresh.log",
+      "logSha256": "92116003bf7f2b0dbf14cc07861ed75f86884338a4290aa4cbe7cb4885a5cb39"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-IB",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/older-validation",
+      "exitCode": 0,
+      "passed": true,
+      "sourcesVerified": 29,
+      "localLinks": 5312,
+      "log": "documentation-fresh.log",
+      "logSha256": "12a73e902f5400f37d8839dec6e569c86800bd55c6f55f6004ce0c4737802759"
+    },
+    {
+      "name": "containment-and-retained-c216-bindings",
+      "command": [
+        "python3",
+        "-IB",
+        "/workspace/scratch/c77bfdbfac37/reconciliation-c255/evidence/older-branches/verify_older_candidate.py"
+      ],
+      "exitCode": 0,
+      "passed": true,
+      "log": "candidate-static-and-bindings.log",
+      "logSha256": "54dd6c5a88deb097f523bfe3d1db97c509f08f0ec3f9aeacafc10db3c0ce5df2",
+      "detailedResult": "CANDIDATE-STATIC-AND-C216-BINDINGS.json",
+      "retainedC216HistoricalMethods": 14,
+      "reexecutedC216HistoricalMethods": 0
+    }
+  ],
+  "freshCPUMethods": 68,
+  "retainedBoundC216HistoricalMethods": 14,
+  "executedNativeStarts": 0,
+  "productSourcePrograms": 0,
+  "modelTrials": 0,
+  "initialHarnessFailure": {
+    "record": "BINDING-AUDIT-HARNESS-CORRECTION.json",
+    "log": "candidate-static-and-bindings.initial-failure.log",
+    "source": "verify_older_candidate.initial.py",
+    "cause": "Audit-only workspace ancestor typo",
+    "productFailure": false,
+    "correctedRerun": "passed"
+  },
+  "eligibleForIndependentIntegrationReview": true,
+  "heldHistoricalFailuresUnchanged": [
+    "C211 strict2e-6 normal failure and original rendering failure; separate held correction remains historically unexecuted",
+    "C216 code19 namespace-origin refusal before import",
+    "C217/C218 finite native evidence does not establish lossless normals or general destination support",
+    "All historical native schedules remain consumed/closed"
+  ],
+  "nextAction": "Independent review of exact32-file candidate and evidence, then root integration via actual PR heads under lease; no C256 or native runs"
+}

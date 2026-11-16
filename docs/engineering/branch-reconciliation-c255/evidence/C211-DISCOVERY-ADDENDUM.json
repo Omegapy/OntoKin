@@ -1,0 +1,27 @@
+{
+  "schema": "ontokin.c255.combined-review-addendum/0.1",
+  "recordedAtUtc": "2026-11-16T23:08:15.549300+00:00",
+  "supersedesOnly": "REVIEW.json legacyRegressionInventory phrase: New C211 test is opt-in CPU validation",
+  "originalReviewSha256": "5a266f898ca99e4d7f0e058965ef190a8fe7c9957d060b116067792fbda52dc1",
+  "originalEvidenceManifestSha256": "3a3c83d69d376b11706af8cb386455ecfde6e7a41e6728bf0c71a45b4089c181",
+  "originalFrozenFilesUnchanged": true,
+  "correction": "The default tools/check_local.py unit-tests step uses unittest discover -s tests -v with default test*.py pattern. The new test_semantic_receiving_c211.py contributes 27 CPU methods to default test discovery. The native receiver runtime remains explicit opt-in.",
+  "defaultDiscoveryNewMethods": 27,
+  "prototypeRuntimeDefault": false,
+  "importSideEffects": {
+    "stdlibImportsOnlyPlusIsolatedValidation": true,
+    "testModuleImport": "Defines local ROOT and PROOF paths, helper functions and test class. Guarded unittest.main does not execute on discovery import.",
+    "validationModuleImport": "Reads two adjacent pinned JSON files into new module-local INPUTS and BUILD dictionaries; defines constants/functions/GlbReader. The package initializer contains only a docstring.",
+    "releasedRuntimeMutation": "No OntoKin/core/Agent/native module imported; no monkeypatch, environment, sys.path, global/nonlocal or module-registration mutation in inspected code. Ordinary Python import caching is not modified manually.",
+    "testExecution": "setUpClass reads the bound existing proof and builds class-owned synthetic fixtures. Rejection tests mutate deep copies. The changed-input test writes only within its TemporaryDirectory.",
+    "nativeProcessStart": false,
+    "concreteSharedStateInteractionRiskFound": false
+  },
+  "effectOnDecision": "Dormant-source integration approval unchanged; the default CPU regression cohort expands by 27 previously executed passing methods. No combined broad suite was executed, so no full-suite pass is claimed.",
+  "checksRunNow": "Static source/AST inspection and stdlib discovery signature only; no component or aggregate rerun",
+  "additionalTestRequirement": "None identified for this wording correction and static import review",
+  "nativeStarts": 0,
+  "sourceMutations": 0,
+  "priorEvidenceMutations": 0,
+  "evidence": "SOURCE-INSPECTION.json"
+}

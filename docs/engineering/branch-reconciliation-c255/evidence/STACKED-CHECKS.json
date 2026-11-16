@@ -1,0 +1,266 @@
+{
+  "schema": "ontokin.c255.stacked-observer-validation/0.1",
+  "recordedAtUtc": "2026-11-16T23:01:06.113958+00:00",
+  "agent": "/root/surviving_work_audit",
+  "environment": {
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "boundary": "Actual shared hosted Linux environment; isolated worktrees; no separate OS/machine claim"
+  },
+  "candidate": {
+    "recordedAtUtc": "2026-11-16T22:56:11.568691+00:00",
+    "workspace": "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/stacked-validation",
+    "commands": [
+      {
+        "command": [
+          "git",
+          "-C",
+          "/workspace/scratch/c77bfdbfac37/OntoKin",
+          "worktree",
+          "add",
+          "--detach",
+          "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/stacked-validation",
+          "d36c991c6fe1763fa854a07ccfd729b3a0e3ffd5"
+        ],
+        "exitCode": 0,
+        "log": "candidate-setup-0.log"
+      },
+      {
+        "command": [
+          "git",
+          "-C",
+          "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/stacked-validation",
+          "merge",
+          "--no-commit",
+          "--no-ff",
+          "c8566a273801e12700cc3500a4a03888a9d2673e"
+        ],
+        "exitCode": 0,
+        "log": "candidate-setup-1.log"
+      },
+      {
+        "command": [
+          "git",
+          "-C",
+          "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/stacked-validation",
+          "-c",
+          "user.name=OntoKin independent validation",
+          "-c",
+          "user.email=validation@ontokin.invalid",
+          "commit",
+          "-m",
+          "validation: combine C255 main with retained C246-C251 source"
+        ],
+        "exitCode": 0,
+        "log": "candidate-setup-2.log"
+      }
+    ],
+    "head": "aed604a3fc35fb5f8b7b70a1d5a318de0872d86b",
+    "tree": "491a9e69b67fbf5c2a89121db13782fcd4be2f5a",
+    "parents": [
+      "d36c991c6fe1763fa854a07ccfd729b3a0e3ffd5",
+      "c8566a273801e12700cc3500a4a03888a9d2673e"
+    ],
+    "status": "",
+    "publication": "local validation only; not remote or main"
+  },
+  "result": "Dormant experimental source integration supported; current-candidate C251 binding gate remains failed",
+  "componentResults": [
+    {
+      "component": "c246",
+      "modelTests": 47,
+      "modelOutcome": "PASS",
+      "modelExitCode": 0,
+      "modelLog": "c246-model.log",
+      "modelLogSha256": "c65c0190af431e63393c456e0ce15b109611ff59ef6430c2741986d1555c29b9",
+      "candidateBinding": {
+        "outcome": "PASS",
+        "count": 122,
+        "exitCode": 0,
+        "native": "NOT_RUN",
+        "log": "c246-bindings.log",
+        "report": "c246-bindings.json"
+      }
+    },
+    {
+      "component": "c247",
+      "modelTests": 34,
+      "modelOutcome": "PASS",
+      "modelExitCode": 0,
+      "modelLog": "c247-model.log",
+      "modelLogSha256": "b8dbc36d76d97c9a8356e92b748fbac74c0251608dfc06ebd867050c778acebd",
+      "candidateBinding": {
+        "outcome": "PASS",
+        "count": 147,
+        "exitCode": 0,
+        "native": "NOT_RUN",
+        "log": "c247-bindings.log",
+        "report": "c247-bindings.json"
+      }
+    },
+    {
+      "component": "c248",
+      "modelTests": 34,
+      "modelOutcome": "PASS",
+      "modelExitCode": 0,
+      "modelLog": "c248-model.log",
+      "modelLogSha256": "fe834bdde84f917064fbcbca51ecb5d75693bdd2cc546a14e7d29c59b98f9ada",
+      "candidateBinding": {
+        "outcome": "PASS",
+        "count": 183,
+        "exitCode": 0,
+        "native": "NOT_RUN",
+        "log": "c248-bindings.log",
+        "report": "c248-bindings.json"
+      }
+    },
+    {
+      "component": "c249",
+      "modelTests": 41,
+      "modelOutcome": "PASS",
+      "modelExitCode": 0,
+      "modelLog": "c249-model.log",
+      "modelLogSha256": "3b0f314f5372ca01c9882cd3a099534c96d0c3e384bf13742bc580043b99f5af",
+      "candidateBinding": {
+        "outcome": "PASS",
+        "count": 371,
+        "exitCode": 0,
+        "native": "NOT_RUN",
+        "log": "c249-bindings.log",
+        "report": "c249-bindings.json"
+      }
+    },
+    {
+      "component": "c250",
+      "modelTests": 22,
+      "modelOutcome": "PASS",
+      "modelExitCode": 0,
+      "modelLog": "c250-model.log",
+      "modelLogSha256": "21b3090af119a14c217880d2297a7107f9c890d7076c2683d2c4b64f85386a83",
+      "candidateBinding": {
+        "outcome": "PASS",
+        "count": 145,
+        "exitCode": 0,
+        "native": "NOT_RUN",
+        "log": "c250-bindings.log",
+        "report": "c250-bindings.json",
+        "inheritedC249": {
+          "passed": true,
+          "checks": 371,
+          "fixture": {
+            "animationCount": 1,
+            "sourceAnimationName": "KeyedRack: Demo",
+            "channels": 36,
+            "nodes": 18,
+            "sourceInputSamplesPerTrack": 121,
+            "durationSeconds": 2
+          }
+        }
+      }
+    },
+    {
+      "component": "c251",
+      "modelTests": 34,
+      "modelOutcome": "PASS",
+      "modelExitCode": 0,
+      "modelLog": "c251-model.log",
+      "modelLogSha256": "1c9a2b3d6bf94ecf0511415833d6b7646c2bcdc9649d00b38efda0ed10b23d6c",
+      "candidateBinding": {
+        "outcome": "FAIL",
+        "exitCode": 1,
+        "firstFailure": "authority AGENTS.md",
+        "additionalDriftFromIndependentHashAudit": "GOAL.md",
+        "log": "c251-bindings.log",
+        "report": null,
+        "disposition": "Preserved stale-authority refusal; experimental source containment only; no native authority"
+      }
+    }
+  ],
+  "modelTestsTotal": 212,
+  "documentation": {
+    "passed": true,
+    "sources": 29,
+    "sections": 233,
+    "links": {
+      "documents": 1079,
+      "local_links": 5402,
+      "anchors": 101,
+      "external_skipped": 931
+    },
+    "failures": [],
+    "log": "documentation.log"
+  },
+  "currentAuthorityAudit": {
+    "total": 75,
+    "matches": 73,
+    "mismatches": [
+      {
+        "component": "251",
+        "path": "AGENTS.md",
+        "expected": "15f4a8a7de7fbae54dfad7afc566499ef7e098740211b0216582645fd17d4952",
+        "actual": "05514b40a5edab03f8db89dbda47dd7d166babe61243332422a46f6800746768",
+        "matches": false
+      },
+      {
+        "component": "251",
+        "path": "GOAL.md",
+        "expected": "71377f88213521da391a62aa3dd181876b4e164c040498c7f07de558e906efef",
+        "actual": "6cb1e6bf45d0c760a6c0e4798f6f711f5492020cdc77307ed7b52270e4df504f",
+        "matches": false
+      }
+    ],
+    "record": "candidate-authority-drift.json"
+  },
+  "historicalC251Reproduction": {
+    "head": "c8566a273801e12700cc3500a4a03888a9d2673e",
+    "tree": "5d8d3dbed3d73e5dd5394111eb588aa9e8b094d4",
+    "exitCode": 0,
+    "passed": true,
+    "count": 208,
+    "inheritedC250": {
+      "passed": true,
+      "checks": 145,
+      "inheritedC249": {
+        "passed": true,
+        "checks": 371,
+        "fixture": {
+          "animationCount": 1,
+          "sourceAnimationName": "KeyedRack: Demo",
+          "channels": 36,
+          "nodes": 18,
+          "sourceInputSamplesPerTrack": 121,
+          "durationSeconds": 2
+        }
+      }
+    },
+    "native": "NOT_RUN",
+    "replacesCurrentFailure": false,
+    "commandRecord": "HISTORICAL-BINDING-REPRODUCTION.json",
+    "result": "c251-historical-bindings.json",
+    "log": "c251-historical-bindings.log"
+  },
+  "preservation": {
+    "record": "CANDIDATE-PRESERVATION.json",
+    "baselinePathsUnchanged": 16166,
+    "exactAddedFiles": 105,
+    "originalStackHeadsRetained": 6,
+    "defaultConsumerMatches": 0,
+    "workflowChanges": false,
+    "repoSourceEdits": false
+  },
+  "executions": {
+    "native": "NOT_RUN",
+    "gdscriptParser": "NOT_RUN",
+    "product": "NOT_RUN",
+    "modelTrials": "NOT_RUN",
+    "scheduleReplay": "NOT_RUN",
+    "workflowDispatch": "NOT_RUN"
+  },
+  "publication": "No remote write or main mutation by this agent",
+  "limits": [
+    "C251 authority must be freshly qualified in a later authorized scope",
+    "Source/lexical checks do not constitute complete static analysis or native acceptance",
+    "All historic native failures, deferred gates, and consumed schedules remain unchanged",
+    "Root owns combined-candidate validation and final integration/cleanup"
+  ]
+}

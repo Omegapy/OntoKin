@@ -1,0 +1,98 @@
+{
+  "schema": "ontokin.c255.actual-resulting-main-verification/0.1",
+  "recordedAtUtc": "2026-11-16T23:17:32.744789+00:00",
+  "agent": "/root/surviving_work_audit",
+  "commit": "05aadeb008186b6644a2dbd67a2f7e5f2e23766d",
+  "tree": "55f86b06508e607cb6ea34af610668518171368d",
+  "sourceIntegrationChecksPassed": true,
+  "currentC251AuthorityGate": "FAIL_PRESERVED",
+  "exactReviewedAdditions": 137,
+  "originalHeadsRetained": 10,
+  "baselinePaths": 16166,
+  "unchangedBaselinePaths": 16165,
+  "onlyChangedBaselinePath": "STATUS.md (exact reviewed lease)",
+  "checks": [
+    {
+      "id": "c255-component",
+      "command": [
+        "python3",
+        "-IB",
+        "docs/engineering/localized-repair-c255/test_oracle.py"
+      ],
+      "cwd": "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/resulting-main-validation",
+      "exitCode": 0,
+      "log": "c255-component.log",
+      "logSha256": "0df3269f3a8a1fe820ea3c7eb970861155416c46a2deac4b309c96534b39dd71",
+      "methods": 31
+    },
+    {
+      "id": "c253-corpus",
+      "command": [
+        "python3",
+        "-IB",
+        "docs/engineering/localized-repair-c253/verify_manifest.py"
+      ],
+      "cwd": "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/resulting-main-validation",
+      "exitCode": 0,
+      "log": "c253-corpus.json",
+      "logSha256": "959f75f4a7887a689e2cdff8b90d84d9d058b28ed35ca2c56555b5a9e6734393",
+      "boundFiles": 14,
+      "cases": 3,
+      "executionAllowed": false
+    },
+    {
+      "id": "documentation",
+      "command": [
+        "python3",
+        "-IB",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/resulting-main-validation",
+      "exitCode": 0,
+      "log": "documentation.json",
+      "logSha256": "7c71755285cc275331db602ebe07ce0f95c794e38614dbc6222630d57474f0fd",
+      "sources": 29,
+      "sections": 233,
+      "localLinks": 5415,
+      "failures": []
+    }
+  ],
+  "priorEligibleResults": {
+    "olderCPUMethods": 68,
+    "stackedInertMethods": 212,
+    "reexecuted": false,
+    "reuseBasis": "All reviewed source-union bytes unchanged except reviewed STATUS lease; complete 75 authority-input row equality also verified"
+  },
+  "documentationCountDifference": {
+    "previousCombinedLocalLinks": 5416,
+    "actualLocalLinks": 5415,
+    "cause": "Reviewed STATUS lease replaced prior closure text containing one local reader-task link",
+    "diff": "reviewed-union-to-actual-lease.diff"
+  },
+  "native": "NOT_RUN",
+  "modelTrials": "NOT_RUN",
+  "scheduleReplay": "NOT_RUN",
+  "C256": "NOT_IMPLEMENTED",
+  "workflowDispatch": "NOT_RUN",
+  "worktreeCleanAfter": true,
+  "remoteWrites": false,
+  "rootWorktreeEdits": false,
+  "pythonExecutable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+  "pythonVersion": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "sourceVerifierCommand": [
+    "python3",
+    "-IB",
+    "/workspace/scratch/c77bfdbfac37/reconciliation-c255/evidence/resulting-main/verify_resulting_main.py",
+    "--repo",
+    "/workspace/scratch/c77bfdbfac37/reconciliation-c255/workspaces/resulting-main-validation",
+    "--expected-sha",
+    "05aadeb008186b6644a2dbd67a2f7e5f2e23766d",
+    "--evidence-root",
+    "/workspace/scratch/c77bfdbfac37/reconciliation-c255/evidence"
+  ],
+  "sourceVerifierExitCode": 0,
+  "sourceVerification": "SOURCE-VERIFICATION.json",
+  "mergeReceipts": "MERGE-RECEIPT-VERIFICATION.json",
+  "scopeLimit": "Exact resulting-main source integration only; root owns later closure and final delivery"
+}
