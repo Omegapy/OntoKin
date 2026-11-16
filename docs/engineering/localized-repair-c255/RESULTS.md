@@ -73,3 +73,19 @@ native-source decoders, native seeds, model settings and unseen families remain
 unqualified. R07/R08, the strict Blender-normal failure, all nine C221 records
 and 41 criteria, and ten held PRs are unchanged. The [next separate reader
 scope](NEXT-TASK.md) begins only after C255 is delivered.
+
+## Verified integration
+
+PR #239 merged published candidate `97be6af8106b2ac3d901822f55fc62e87ff238e7`
+at `8de50d0d4331dd3765f6778eb48212f879be032c`, exactly matching the reviewed
+publication tree `9e17cd2f46b9a06310da0e1854f914e33731f5c5`. The signed merge
+object was reconstructed and verified before checkout. Fresh actual-main
+checks pass all 31 component methods, the 14-file/three-case manifest and
+29 preserved documentation sources / 5,295 local links, with a clean worktree.
+The approved four scientific file hashes remain exact. [Integration
+receipt](evidence/integration/INTEGRATION.json).
+
+This closure releases main ownership after those checks. Final archive,
+fresh restore and saved delivery occur after immutable package freeze and
+are reported through scope #238 and the stable recovery checkpoint. They do
+not start the reader successor or change the component's explicit limits.
