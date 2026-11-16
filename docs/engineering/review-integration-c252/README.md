@@ -12,6 +12,8 @@ work. It changes the order of work, not supported semantics or past results.
 | [Next task](NEXT-TASK.md) | One bounded benchmark-protocol and existing-fixture selection step. |
 | [Input report](INPUT-REPORT.md) | The owner's supplied review, retained byte for byte. |
 | [Baseline](BASELINE.json) | Exact observed main, held-source identity and input hashes. |
+| [Results](RESULTS.md) | Reviewed identities, actual integration checks and remaining closure. |
+| [Independent review](REVIEW.md) | Review of the authored documentation before STATUS integration. |
 | [Current status](../../../STATUS.md) | Integration ownership, publication and actual validation state. |
 
 ## What this step establishes

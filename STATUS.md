@@ -8,7 +8,7 @@ The owner's November 16 instruction selects [C252's decision](docs/engineering/r
 
 The root README is reduced from 462 to 100 lines, with detailed workflows in [focused user guides](docs/user-guide/README.md) and all 32 original root anchors retained. GOAL, AGENTS and the documentation index now point to the [C252 roadmap](docs/engineering/review-integration-c252/ROADMAP.md). The supplied review is preserved exactly; its proposed 20 percentage-point success gain or 30% effort reduction remain provisional planning thresholds.
 
-The [independent documentation review](docs/engineering/review-integration-c252/REVIEW.md) approves authored candidate `12c4c9a891465ea1916857d44e80d5cc8442fcc3`, tree `98a2db31db630d6005068b3b7ad56a73be04bb14`. Its documentation check passed 29 preserved sources, 233 sections and 5,215 local links. This is documentation evidence; no product, native, parser, model trial or aggregate run occurred. Final candidate publication and resulting-main checks remain pending until recorded below or in scope #233.
+The [independent documentation review](docs/engineering/review-integration-c252/REVIEW.md) approves authored candidate `12c4c9a891465ea1916857d44e80d5cc8442fcc3`, tree `98a2db31db630d6005068b3b7ad56a73be04bb14`. The final independently reviewed candidate `71b17d60e924d4bc9e8f3d997ec26020afa81cd3` published as `69ececdac384a45fd35225bc01a5d5d29d838c7a`. [PR #234](https://github.com/Omegapy/OntoKin/pull/234) merged at `89a328dbf461cc6a858f7d59ed6418e5174b0fa1`, exactly matching approved tree `10d8a14e2ecc23c18c7d6013384817b33c4f0fad`. Fresh candidate and resulting-main documentation checks passed 29 preserved sources and 5,221 local links with clean source. [Results](docs/engineering/review-integration-c252/RESULTS.md). This is documentation evidence; no product, native, parser, model trial or aggregate run occurred.
 
 **Next bounded action:** [freeze the localized-repair benchmark protocol and select existing fixtures](docs/engineering/review-integration-c252/NEXT-TASK.md), then deliver its own verified handoff. Define comparable OntoKin, Blender/Python and applicable OpenUSD routes, independent scoring, budgets and uncertainty before implementation or trials. C252 closes after its verified saved handoff; it does not start this successor.
 
@@ -344,18 +344,11 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c252-review-priorities-20261116`.
+Owner: none.
 
-Task: C252 review-priority/documentation integration under [scope #233](https://github.com/Omegapy/OntoKin/issues/233).
-Acquired: `2026-11-16T16:46:48.768210+00:00`. Expires: `2026-11-16T17:16:48.768210+00:00`.
-Expected main at acquisition: `69b67921ada560f1e7480d839af175bc87cb38af`.
-Reserved shared files: `STATUS.md` and main integration; independent nonoverlapping work remains permitted.
+C252 integrated the reviewed documentation through [PR #234](https://github.com/Omegapy/OntoKin/pull/234), actual merge `89a328dbf461cc6a858f7d59ed6418e5174b0fa1`, tree `10d8a14e2ecc23c18c7d6013384817b33c4f0fad`. Fresh actual-main documentation checks passed with unchanged source. This closure releases owner `c252-review-priorities-20261116`; the next task requires a new bounded scope and ownership reconciliation.
 
-The C245 release record below is historical.
-
-C245 completed the independently reviewed C244 design integration through [PR #219](https://github.com/Omegapy/OntoKin/pull/219), actual merge `91144a38d06d9a915ce5ba091a2f4aa253b22b87`, tree `9465e632588b850cb8f987a401376e0e23ce14db`. Fresh actual-main controls and documentation checks pass with unchanged original source. This closure releases owner `c245-review-c2bb141aae02`. [Scope #220](https://github.com/Omegapy/OntoKin/issues/220) remains open only for exact successor ZIP verification, offline restoration and confirmed saved delivery, then stops.
-
-The original C244 draft, every earlier unpublished source identity, held drafts, archive-only records, numerical limits and failures remain. The [next held-source hook/session component](docs/engineering/second-target-c244/NEXT-TASK.md) requires a separate bounded scope and its own integration lease before shared main writes. No native or product/aggregate execution was introduced.
+[Scope #233](https://github.com/Omegapy/OntoKin/issues/233) remains open only for exact successor ZIP verification, offline restoration and confirmed saved delivery. The [durable recovery/delivery checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-594c50c41c348191babe889d8b59d93f_2ab2a24d43748191957f9bcc356b59de&account_id=personal) records post-freeze outcomes. Finish that handoff and stop. C251 sampling stays deferred; the [next separate scope](docs/engineering/review-integration-c252/NEXT-TASK.md) prepares the localized-repair benchmark protocol. Historical source, held drafts, failures and acceptance gates remain intact.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
