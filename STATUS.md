@@ -6,7 +6,7 @@ OntoKin is an AI-native semantic language and intermediate representation for co
 
 The [C253 protocol](docs/engineering/localized-repair-c253/README.md) binds three existing cases from one public keyed-rack family: a valid length edit, its related reverse and rejection of an incompatible-unit candidate. The corpus retains 18 identities, 16 unrelated objects, the original dependency closure, seven observation times and tolerances. It supports evaluator qualification; it is not an unseen multi-assembly benchmark. **Comparative advantage remains unproven.**
 
-The [scoring contract](docs/engineering/localized-repair-c253/SCORING.md) requires independent formulas, real artifact observations, source rebuild, provenance and complete failure accounting. The [run plan](docs/engineering/localized-repair-c253/RUN-PLAN.json) fixes paired order, repetitions, budgets and analysis while blocking execution on unqualified model, runner and route inputs. Independent review and exact executed checks are recorded in the [C253 results](docs/engineering/localized-repair-c253/RESULTS.md).
+The [scoring contract](docs/engineering/localized-repair-c253/SCORING.md) requires independent formulas, real artifact observations, source rebuild, provenance and complete failure accounting. The [run plan](docs/engineering/localized-repair-c253/RUN-PLAN.json) fixes paired order, repetitions, budgets and analysis while blocking execution on unqualified model, runner and route inputs. Independent review approves the corrected protocol and its final metadata. [PR #236](https://github.com/Omegapy/OntoKin/pull/236) merged at `7eb8a7e094040c11b879718f2669965b1fd75958` with the exact reviewed tree. Fresh merged-main manifest and documentation checks pass. The [C253 results](docs/engineering/localized-repair-c253/RESULTS.md) retain the original eight verifier faults and their correction.
 
 **Next bounded action:** [qualify one offline corpus/oracle component](docs/engineering/localized-repair-c253/NEXT-TASK.md), using inert controls and no native or model execution. R07/R08, the strict Blender-normal failure, held C251 source and all nine C221 records / 41 criteria retain their states. The historical C252 and older next-task text below does not override this successor.
 
@@ -352,13 +352,11 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c253-root-e1a4d3f4647a`.
-Acquired UTC: 2026-11-16T19:39:50.704Z.
-Expires UTC: 2026-11-16T20:09:50.704Z.
+Owner: none.
 
-Bounded [scope #235](https://github.com/Omegapy/OntoKin/issues/235): integrate the independently reviewed localized-repair qualification protocol, exact existing-fixture bindings and narrow current-next-task documentation. Root branch: `work/c253-localized-repair-protocol`; starting main `ce19b8c313da9c87050dfa2a8ba4f32470fb1f6f`. Reserved shared files: STATUS, AGENTS, GOAL and documentation navigation. Handoff-only packaging remains separately reviewed. No model, native, product or aggregate execution belongs to this scope.
+C253 integrated the independently reviewed protocol through [PR #236](https://github.com/Omegapy/OntoKin/pull/236), actual merge `7eb8a7e094040c11b879718f2669965b1fd75958`, tree `701cf6ef84230d02c71605b4703fa366a9529efe`. Fresh actual-main manifest and documentation checks pass: 14 bound files, three cases, 29 preserved sources and 5,269 local links. This closure releases owner `c253-root-e1a4d3f4647a`; no other session inherits that lease.
 
-C252 scope #233 is observed closed and its final handoff saved. The [C253 recovery checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-ff6b12890a60819194a6c1f29f14b221_2ab2a24d43748191957f9bcc356b59de&account_id=personal) preserves current source and evidence. Held C251 and older draft branches remain untouched. Release or meaningfully renew this lease after verified integration; final ZIP delivery remains a required closure step.
+[Scope #235](https://github.com/Omegapy/OntoKin/issues/235) remains open only for exact C253 archive verification, fresh offline restoration and confirmed saved delivery. The [durable recovery/delivery checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-ff6b12890a60819194a6c1f29f14b221_2ab2a24d43748191957f9bcc356b59de&account_id=personal) records later receipts. Finish that handoff and stop. The next separate scope is the [offline corpus/oracle component](docs/engineering/localized-repair-c253/NEXT-TASK.md); model trials, native route qualification and C251 sampling remain outside it.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 

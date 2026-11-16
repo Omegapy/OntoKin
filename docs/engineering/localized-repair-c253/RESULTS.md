@@ -43,3 +43,22 @@ criteria and held C251 drafts retain their states. The root integrator must
 verify actual resulting main, release its lease and confirm the standalone
 handoff save. Final publication/closure receipts are retained in that handoff's
 `evidence/publication/` directory and durable recovery checkpoint.
+
+## Verified integration
+
+The final acceptance-record checkpoint was independently reviewed at local
+`621fe4e15bdc9aa330649dc019b65f882b88d093`, tree
+`701cf6ef84230d02c71605b4703fa366a9529efe`. It was published as
+`ff5d26340a17081ff6b4f8ef3395e0396d1e81f0`; its GitGuardian check passed
+and no workflow run was observed. PR #236 merged that candidate at
+`7eb8a7e094040c11b879718f2669965b1fd75958`, exactly matching the reviewed
+tree. The actual signed merge commit was independently reconstructed and its
+Git identity verified before checkout.
+
+Fresh actual-merge checks pass the static corpus verifier and documentation
+preservation/link check: 14 bound files, three cases, 29 preserved sources and
+5,269 local links. The full source stayed clean. These checks do not repeat or
+extend the earlier 20-control or formula observations; unchanged scientific
+inputs retain those exact approvals. A documentation-only closure releases
+integration ownership. Exact final ZIP, fresh restoration and saved-delivery
+receipts follow package freeze and are recorded in the handoff/recovery record.
