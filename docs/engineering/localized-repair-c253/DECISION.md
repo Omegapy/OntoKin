@@ -1,6 +1,6 @@
 # C253 decision: qualify the protocol before execution
 
-**State:** authored review candidate; independent acceptance pending.
+**State:** independently approved protocol and static source-binding increment; trial execution remains blocked.
 
 The three bound cases are sufficient to specify and qualify an offline oracle
 for one known keyed-rack family. They are insufficient for a clean comparative
@@ -15,11 +15,12 @@ margin; it cannot substitute for the primary criterion. No population interval
 or advantage decision is available from this one exposed family. These are
 research planning choices, not release criteria or measured results.
 
-After independent approval, proceed only to the [offline oracle and manifest
+Proceed only to the [offline oracle and manifest
 component](NEXT-TASK.md). Model execution, native route qualification, new
 evaluation families and a general runner remain separate scopes. Null model
 or environment pins block admission; a missing baseline is not a failed
 competitor. Existing C221 obligations and historical failures remain unchanged.
 
-The [independent review](REVIEW.md) and [executed results](RESULTS.md) will record
-the exact reviewed source and any correction before publication.
+The [independent review](REVIEW.md) and [executed results](RESULTS.md) record
+the corrected approved source, checks and limits. Publication is separate from
+trial admission.

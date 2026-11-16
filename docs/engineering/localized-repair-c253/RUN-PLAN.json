@@ -209,7 +209,6 @@
   "executionAdmission": {
     "allowedInC253": false,
     "blockingRequirements": [
-      "Independent protocol review",
       "Qualified offline oracle with positive/boundary/adversarial controls",
       "Qualified native artifact readers and minimal trial runner",
       "Exact model snapshot/settings/usage semantics",
@@ -218,7 +217,12 @@
       "For any advantage study: clean unseen multi-assembly corpus and prospective precision justification"
     ],
     "unknownInputPolicy": "Null is a blocker, never a wildcard or instruction to guess. Fill pins in a separate reviewed admission record; changes to budgets/order/endpoints require a versioned protocol amendment before outcomes.",
-    "nextScope": "Offline corpus/oracle observation component only; see NEXT-TASK.md"
+    "nextScope": "Offline corpus/oracle observation component only; see NEXT-TASK.md",
+    "protocolReview": {
+      "state": "approved",
+      "sourceCommit": "8c15fce161f7081fb9d73d07f86698dc74bad27a",
+      "scope": "Protocol and static source binding only; see REVIEW.md"
+    }
   },
   "preservedLimits": {
     "nativeStartsInC253": 0,

@@ -12,7 +12,12 @@ The root correction binds those task/plan relationships, rejects duplicate
 inventories and nonpositive budgets, fixes the threshold wording and identifies
 N1's staged pre-promotion boundary and diagnostic provenance. A common-harness
 rejection earns no language-specific detection claim. Independent delta review
-is pending; this record does not yet claim acceptance of the corrections.
+**approves** corrected commit `8c15fce161f7081fb9d73d07f86698dc74bad27a`,
+tree `42cdde35736fd6f4ab5071b774df8cd861ba6720`. All 20 adversarial
+controls now reject the named faults, and the unchanged positive manifest
+passes. The exact clean checkout passes 29 preserved documentation sources
+and 5,267 local links. The publication candidate
+`c46a1a21924dba2ef6b41864168d675f94cf48cf` has that identical tree.
 
 The reviewer independently recomputed 252 pose rows across both lengths and
 18 original geometry records. They agree with retained source expectations;
