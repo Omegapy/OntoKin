@@ -1,0 +1,20 @@
+{
+  "schema": "ontokin.c250.independent-source-findings/0.1",
+  "recordedAtUtc": "2026-11-16T01:04:42.112227+00:00",
+  "commit": "4f2bd9301cbbd8aea283316b2fd87643328825e2",
+  "sourceSha256": "8083e87ba8a3b4226e28236f669f123582a6f2624415b8748ff7ce21fc0d12ad",
+  "findings": [
+    {
+      "id": "S01",
+      "severity": "medium",
+      "status": "open",
+      "file": "docs/engineering/second-target-c250/playback_preparation.gd",
+      "function": "_boundary final control recheck",
+      "finding": "The final blocking-signals getter participates in refusal as an inline expression but its actual value is not retained. If final receiver count changes from zero to nonzero, the count is retained but the promised explicit Callable-payload omission is absent on this late refusal path.",
+      "consequence": "A late-refusal receipt can show the earlier blocking_signals=false without the newly observed true value, and can omit unsupported receiver payload without the documentation-promised omission marker.",
+      "requiredFix": "Retain typed final_blocking_signals before the final condition and use the retained value. When final receivers are nonempty retain an explicit final receiver payload omission marker. Mirror receipt behavior in the synthetic model and include a control for both late drifts."
+    }
+  ],
+  "nativeStarts": 0,
+  "parserStarts": 0
+}

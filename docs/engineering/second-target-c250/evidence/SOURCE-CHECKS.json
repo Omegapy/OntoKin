@@ -1,0 +1,988 @@
+{
+  "schema": "ontokin.c250.independent-static-source-review/0.1",
+  "commit": "553782d76e72f02758ce3cc1585c94fac2650aca",
+  "tree": "e633d173dc11e053306bb3a0a085c48e0c0197c9",
+  "base": "44edaf062f413f2496d2bbddf0811b315106cdc4",
+  "files": [
+    {
+      "path": "docs/engineering/second-target-c250/BINDINGS.json",
+      "bytes": 17520,
+      "sha256": "5625347113b7b054d5d8268fcc6d80e947e96ffb483ea7ede3e01e9d143277a5"
+    },
+    {
+      "path": "docs/engineering/second-target-c250/README.md",
+      "bytes": 4660,
+      "sha256": "7261c76302c9035280570b27e25a074fabd7cbf77037835f8ecc07d2a028c14a"
+    },
+    {
+      "path": "docs/engineering/second-target-c250/inert_model.py",
+      "bytes": 17893,
+      "sha256": "7a42ce47bc1928ad98ed77b950f7c7c32faee2549a475c815717ceea09c2acd0"
+    },
+    {
+      "path": "docs/engineering/second-target-c250/playback_preparation.gd",
+      "bytes": 18944,
+      "sha256": "4028e776b5e447d2fb531ff87f79a4119d64f2fdfbabdf35197b7886b09297bb"
+    },
+    {
+      "path": "docs/engineering/second-target-c250/test_inert_model.py",
+      "bytes": 18592,
+      "sha256": "c7ad691613f420687553ef0015f2de201c95e7102b2e92a445915bdc30729095"
+    },
+    {
+      "path": "docs/engineering/second-target-c250/verify_bindings.py",
+      "bytes": 9979,
+      "sha256": "5d8c7cdfd17b595f47262f3b92165c92365e4108c38280cfb0d8c7791e49d649"
+    }
+  ],
+  "checks": [
+    {
+      "name": "only additive C250 paths",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "exact upstream revision",
+      "passed": true,
+      "actual": "35e80b3a8822a9df9be390814b62f44c0a9c69e8",
+      "expected": "35e80b3a8822a9df9be390814b62f44c0a9c69e8"
+    },
+    {
+      "name": "primary bytes and Git blob: Animation.xml",
+      "passed": true,
+      "actual": [
+        35669,
+        "1109c669de43b07e7bd8b3c19efd8f10f88972a76a15e32a347873cd8fe62297",
+        "bc83de1bbe6ccd26d9f7705c062d84e7752903bb"
+      ],
+      "expected": [
+        35669,
+        "1109c669de43b07e7bd8b3c19efd8f10f88972a76a15e32a347873cd8fe62297",
+        "bc83de1bbe6ccd26d9f7705c062d84e7752903bb"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: AnimationLibrary.xml",
+      "passed": true,
+      "actual": [
+        3525,
+        "6e2dd566c266fb7060179c31ec9cb7e1d4befa8a55f774f861f22238b0d98cb7",
+        "51588a605261dcc890ad6055a57653c4dfecb906"
+      ],
+      "expected": [
+        3525,
+        "6e2dd566c266fb7060179c31ec9cb7e1d4befa8a55f774f861f22238b0d98cb7",
+        "51588a605261dcc890ad6055a57653c4dfecb906"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: AnimationMixer.xml",
+      "passed": true,
+      "actual": [
+        24643,
+        "d5e4c27654ebe575ba28d6ea7fa0423da378f4e4f32f4b52dad30f3a6650cda8",
+        "1c5ffec3d5aa35f212d228bbada3bb005ff4f7ee"
+      ],
+      "expected": [
+        24643,
+        "d5e4c27654ebe575ba28d6ea7fa0423da378f4e4f32f4b52dad30f3a6650cda8",
+        "1c5ffec3d5aa35f212d228bbada3bb005ff4f7ee"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: AnimationPlayer.xml",
+      "passed": true,
+      "actual": [
+        23074,
+        "fd81b72814e46d04635056c0a8c7c214fae0b19a970b080225e3a6037c370631",
+        "db5433e4fa9165a99957766bc9aa870d1250a94e"
+      ],
+      "expected": [
+        23074,
+        "fd81b72814e46d04635056c0a8c7c214fae0b19a970b080225e3a6037c370631",
+        "db5433e4fa9165a99957766bc9aa870d1250a94e"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: NodePath.xml",
+      "passed": true,
+      "actual": [
+        12079,
+        "f918578e5aeb2be5e0d106cc97a01f2b82cc9832fc641fdcfc1a844772b31aef",
+        "6279914e6e9e250cb5cff42d0bae7a9a3df0c8cc"
+      ],
+      "expected": [
+        12079,
+        "f918578e5aeb2be5e0d106cc97a01f2b82cc9832fc641fdcfc1a844772b31aef",
+        "6279914e6e9e250cb5cff42d0bae7a9a3df0c8cc"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: StringName.xml",
+      "passed": true,
+      "actual": [
+        64612,
+        "b7584a5ccff1513d0a35d7a9777170e1f74fbb86f3b0aad1ea8a4dbadda2bd17",
+        "a93d6dbc46e01abfe1c365e9ac79ea9747305a3e"
+      ],
+      "expected": [
+        64612,
+        "b7584a5ccff1513d0a35d7a9777170e1f74fbb86f3b0aad1ea8a4dbadda2bd17",
+        "a93d6dbc46e01abfe1c365e9ac79ea9747305a3e"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: animation.cpp",
+      "passed": true,
+      "actual": [
+        224218,
+        "fe91afedca6284401919a59f9a9e5479f419ef11f72a7ae1284f6113f598e601",
+        "d8845f0a802f35d62a65b9a160e57abad190dcd4"
+      ],
+      "expected": [
+        224218,
+        "fe91afedca6284401919a59f9a9e5479f419ef11f72a7ae1284f6113f598e601",
+        "d8845f0a802f35d62a65b9a160e57abad190dcd4"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: animation.h",
+      "passed": true,
+      "actual": [
+        26651,
+        "87d9841fa8125313ca99f0ac0f78be222b3c96faaf0fefa18e37a11b00664e52",
+        "71bc1ec6a3278208ab966bd61d3dcc51af621f88"
+      ],
+      "expected": [
+        26651,
+        "87d9841fa8125313ca99f0ac0f78be222b3c96faaf0fefa18e37a11b00664e52",
+        "71bc1ec6a3278208ab966bd61d3dcc51af621f88"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: animation_library.cpp",
+      "passed": true,
+      "actual": [
+        8398,
+        "e75bee5ac06672c9831e240f30d137c5251850bf0e8a39e654a0cb3dbb785dca",
+        "8e2042a4ebec92bc12a74e51b64b134cc04f8b6b"
+      ],
+      "expected": [
+        8398,
+        "e75bee5ac06672c9831e240f30d137c5251850bf0e8a39e654a0cb3dbb785dca",
+        "8e2042a4ebec92bc12a74e51b64b134cc04f8b6b"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: animation_mixer.cpp",
+      "passed": true,
+      "actual": [
+        94866,
+        "500ed6d99d2954502adf04157098b2ae184f3643e97818860efb0d75eb9be7c8",
+        "0b8728195c80b0762eb37565fde92367b7699aa5"
+      ],
+      "expected": [
+        94866,
+        "500ed6d99d2954502adf04157098b2ae184f3643e97818860efb0d75eb9be7c8",
+        "0b8728195c80b0762eb37565fde92367b7699aa5"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: animation_mixer.h",
+      "passed": true,
+      "actual": [
+        17831,
+        "6c5f4af4fbffd790f4e7c0c78f93245384c1f7824262d2d4e03d9e82a0f13e5c",
+        "21b76e7cd7ff5661a3a428b02e495a52b4e58d01"
+      ],
+      "expected": [
+        17831,
+        "6c5f4af4fbffd790f4e7c0c78f93245384c1f7824262d2d4e03d9e82a0f13e5c",
+        "21b76e7cd7ff5661a3a428b02e495a52b4e58d01"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: animation_player.cpp",
+      "passed": true,
+      "actual": [
+        42900,
+        "a3fa30b96ac54f87865d965e93316a70b2e1b1a905446bd18dc70eb651b467ae",
+        "c988633c0895e0404547c188cc804463536df523"
+      ],
+      "expected": [
+        42900,
+        "a3fa30b96ac54f87865d965e93316a70b2e1b1a905446bd18dc70eb651b467ae",
+        "c988633c0895e0404547c188cc804463536df523"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: @GlobalScope.xml",
+      "passed": true,
+      "actual": [
+        155554,
+        "b801863fa55c985af81d0e632d9d8a50f894d06481a68f75f97a2091a0f27c64",
+        "c3a35e6adf55a644452daf9c2e5721806bb32e4e"
+      ],
+      "expected": [
+        155554,
+        "b801863fa55c985af81d0e632d9d8a50f894d06481a68f75f97a2091a0f27c64",
+        "c3a35e6adf55a644452daf9c2e5721806bb32e4e"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: GLTFState.xml",
+      "passed": true,
+      "actual": [
+        22420,
+        "329f9b11c1fbb70f8b8bb626d99b3825398da17e384df24f1ee7b5049f4be5bd",
+        "628cfbde5a019ab518e62cdc32c10b2c12e2bd98"
+      ],
+      "expected": [
+        22420,
+        "329f9b11c1fbb70f8b8bb626d99b3825398da17e384df24f1ee7b5049f4be5bd",
+        "628cfbde5a019ab518e62cdc32c10b2c12e2bd98"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: Node.xml",
+      "passed": true,
+      "actual": [
+        100430,
+        "1713bf6d076daf5a2015a366fe627a46bb98b7a628948c8f6245617c3ff00e16",
+        "186fc4afb1103f87d7572b15af071b2974a22bc9"
+      ],
+      "expected": [
+        100430,
+        "1713bf6d076daf5a2015a366fe627a46bb98b7a628948c8f6245617c3ff00e16",
+        "186fc4afb1103f87d7572b15af071b2974a22bc9"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: Object.xml",
+      "passed": true,
+      "actual": [
+        57783,
+        "7a4a7caa7da48ee674d6182c745695051053f8e87baebd4f61502a3d4e2b1e36",
+        "c50afa39105b559d6913c9b09441e4c35b797196"
+      ],
+      "expected": [
+        57783,
+        "7a4a7caa7da48ee674d6182c745695051053f8e87baebd4f61502a3d4e2b1e36",
+        "c50afa39105b559d6913c9b09441e4c35b797196"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: Resource.xml",
+      "passed": true,
+      "actual": [
+        13923,
+        "74e2e2614edc1a45efe3b3c82350dd73380dd0384b0e99d24c4a2b2e3bb234e0",
+        "5f2527e3f62c061df8d210f970e03a11bbcd6e06"
+      ],
+      "expected": [
+        13923,
+        "74e2e2614edc1a45efe3b3c82350dd73380dd0384b0e99d24c4a2b2e3bb234e0",
+        "5f2527e3f62c061df8d210f970e03a11bbcd6e06"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: GeometryInstance3D.xml",
+      "passed": true,
+      "actual": [
+        15815,
+        "9178119e1617b504d64515c12ee167dbf6bb7bc584808037b3c255dc2d552900",
+        "d55a8c6cf4dbd9bd921dfc0e4de015657830ae6c"
+      ],
+      "expected": [
+        15815,
+        "9178119e1617b504d64515c12ee167dbf6bb7bc584808037b3c255dc2d552900",
+        "d55a8c6cf4dbd9bd921dfc0e4de015657830ae6c"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: mesh_instance_3d.cpp",
+      "passed": true,
+      "actual": [
+        35891,
+        "cce59c34d842172b4e31b71664c5c881b2883452e8f4332f7fa854a5bad29308",
+        "e44c955a6aaeaf65ce31212bfe319a63827152ba"
+      ],
+      "expected": [
+        35891,
+        "cce59c34d842172b4e31b71664c5c881b2883452e8f4332f7fa854a5bad29308",
+        "e44c955a6aaeaf65ce31212bfe319a63827152ba"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: Mesh.xml",
+      "passed": true,
+      "actual": [
+        22059,
+        "6a22a4e945f19482a9ca07d0008d762c1f7efdae6aafa7cb07477266066140dc",
+        "048f971017fd8db84bf22a6949938d2f6765b748"
+      ],
+      "expected": [
+        22059,
+        "6a22a4e945f19482a9ca07d0008d762c1f7efdae6aafa7cb07477266066140dc",
+        "048f971017fd8db84bf22a6949938d2f6765b748"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: MeshInstance3D.xml",
+      "passed": true,
+      "actual": [
+        8975,
+        "8c573cf20dd894be38d029ac1de0e797736afd89cd2c9e13ca3533c4c35dfb69",
+        "edf6f0dd16c9034e0fdeffa6aaeee320a5be2823"
+      ],
+      "expected": [
+        8975,
+        "8c573cf20dd894be38d029ac1de0e797736afd89cd2c9e13ca3533c4c35dfb69",
+        "edf6f0dd16c9034e0fdeffa6aaeee320a5be2823"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: gltf_document.cpp",
+      "passed": true,
+      "actual": [
+        298566,
+        "a33185acc304524e99302244a652c295e9f201fcf9e8269223ea2e8df6fe803e",
+        "563d53d8b6dd9fb06c4b20ba226b0ec78a99ffae"
+      ],
+      "expected": [
+        298566,
+        "a33185acc304524e99302244a652c295e9f201fcf9e8269223ea2e8df6fe803e",
+        "563d53d8b6dd9fb06c4b20ba226b0ec78a99ffae"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: node.cpp",
+      "passed": true,
+      "actual": [
+        130367,
+        "8dab5a0fa28d1194c890585e2a361388a3a9cfff1a59822f74868a4e2b0c7ce0",
+        "d723df77185ac685c97fb42f63b90b01f874063f"
+      ],
+      "expected": [
+        130367,
+        "8dab5a0fa28d1194c890585e2a361388a3a9cfff1a59822f74868a4e2b0c7ce0",
+        "d723df77185ac685c97fb42f63b90b01f874063f"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: Basis.xml",
+      "passed": true,
+      "actual": [
+        26868,
+        "dc1b56d84a7809e8a31bab48df192004eab0ecfbbae2704138e2947a3daeb35c",
+        "55aa6ffc191229a0bcc86d773eb701f4d7e1b15d"
+      ],
+      "expected": [
+        26868,
+        "dc1b56d84a7809e8a31bab48df192004eab0ecfbbae2704138e2947a3daeb35c",
+        "55aa6ffc191229a0bcc86d773eb701f4d7e1b15d"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: Node3D.xml",
+      "passed": true,
+      "actual": [
+        27737,
+        "c49543af0c463d165e585120e475b6a97fa5ca131ad9b23a2c39ae6726bcc878",
+        "a3f0ee971b7ffaeafca8b9e253d668e754b45558"
+      ],
+      "expected": [
+        27737,
+        "c49543af0c463d165e585120e475b6a97fa5ca131ad9b23a2c39ae6726bcc878",
+        "a3f0ee971b7ffaeafca8b9e253d668e754b45558"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: Transform3D.xml",
+      "passed": true,
+      "actual": [
+        17576,
+        "d1d4cf9cd3c59fd7ff934cdeed63479950225b3917723da45dfd8357d71d0c8e",
+        "702509b054af22530e561f74f015389907b27125"
+      ],
+      "expected": [
+        17576,
+        "d1d4cf9cd3c59fd7ff934cdeed63479950225b3917723da45dfd8357d71d0c8e",
+        "702509b054af22530e561f74f015389907b27125"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: node_3d.cpp",
+      "passed": true,
+      "actual": [
+        54888,
+        "df1809e637b2a6d01b7df96fa878bdd61ce2a6cfbc5a31c0c0ac0eb8802a1497",
+        "67cde94a31cd02b699a233cc40a3728036775f66"
+      ],
+      "expected": [
+        54888,
+        "df1809e637b2a6d01b7df96fa878bdd61ce2a6cfbc5a31c0c0ac0eb8802a1497",
+        "67cde94a31cd02b699a233cc40a3728036775f66"
+      ]
+    },
+    {
+      "name": "primary bytes and Git blob: node_3d.h",
+      "passed": true,
+      "actual": [
+        14195,
+        "52e8375b71f0a627588975a9c47dcbee57dce99f661252184428667ecc402e48",
+        "af7c53c94f2b3be63e58ea1ab241ca4be5909575"
+      ],
+      "expected": [
+        14195,
+        "52e8375b71f0a627588975a9c47dcbee57dce99f661252184428667ecc402e48",
+        "af7c53c94f2b3be63e58ea1ab241ca4be5909575"
+      ]
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c220/PLAN.md",
+      "passed": true,
+      "actual": "1181b7a5939d0c566c777aeb8715f045fc9a15ab0d1b999e8ad6c71d68399f1c",
+      "expected": "1181b7a5939d0c566c777aeb8715f045fc9a15ab0d1b999e8ad6c71d68399f1c"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c220/PLAN.md",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c220/evidence/INPUT-BINDINGS.json",
+      "passed": true,
+      "actual": "6ce256ab7cfd9690665b7577e7bb9e3aca952c9b73e5e017b30dcded1d053625",
+      "expected": "6ce256ab7cfd9690665b7577e7bb9e3aca952c9b73e5e017b30dcded1d053625"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c220/evidence/INPUT-BINDINGS.json",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c220/evidence/PART-MAP.json",
+      "passed": true,
+      "actual": "f8911b5d846114fe525ab753b78a16f665bd7a43775ecfce2e656d17eb1419ed",
+      "expected": "f8911b5d846114fe525ab753b78a16f665bd7a43775ecfce2e656d17eb1419ed"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c220/evidence/PART-MAP.json",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c236/CONTRACT.md",
+      "passed": true,
+      "actual": "6682250c6903817c01fd2d7e1844e3ed358722eab4f8815043db0d78bbb30ead",
+      "expected": "6682250c6903817c01fd2d7e1844e3ed358722eab4f8815043db0d78bbb30ead"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c236/CONTRACT.md",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c241/CONTRACT.md",
+      "passed": true,
+      "actual": "7c6106c9265e2692adefa22b56cb8fb02112ef59fab4cfadffc3dc6e066b5ce9",
+      "expected": "7c6106c9265e2692adefa22b56cb8fb02112ef59fab4cfadffc3dc6e066b5ce9"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c241/CONTRACT.md",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c244/ADOPTION.md",
+      "passed": true,
+      "actual": "8aeed16cc513b4477cbd5b878053a4b102acba49b60675a53521753918c955f4",
+      "expected": "8aeed16cc513b4477cbd5b878053a4b102acba49b60675a53521753918c955f4"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c244/ADOPTION.md",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c246/registry.gd",
+      "passed": true,
+      "actual": "6da4d9d5ca973b0cd2c45547bca908aa29c344c934f9b97f4a43b09501fec535",
+      "expected": "6da4d9d5ca973b0cd2c45547bca908aa29c344c934f9b97f4a43b09501fec535"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c246/registry.gd",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c246/native_facts.gd",
+      "passed": true,
+      "actual": "1fb4caeb9e36756c03b4cec0072c8a3a1decde0a554798c87a0895cf8ccd29f9",
+      "expected": "1fb4caeb9e36756c03b4cec0072c8a3a1decde0a554798c87a0895cf8ccd29f9"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c246/native_facts.gd",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c247/mesh_arrays.gd",
+      "passed": true,
+      "actual": "fca8a6dd3a89101131c8cedcc8740958386d2b7eb0fbf228b6dc0383779e0ad8",
+      "expected": "fca8a6dd3a89101131c8cedcc8740958386d2b7eb0fbf228b6dc0383779e0ad8"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c247/mesh_arrays.gd",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c247/inert_model.py",
+      "passed": true,
+      "actual": "0677b7c3d1aa9e7529d41dc97b801f698aadf604a06e244865016abab003fab6",
+      "expected": "0677b7c3d1aa9e7529d41dc97b801f698aadf604a06e244865016abab003fab6"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c247/inert_model.py",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c248/materials.gd",
+      "passed": true,
+      "actual": "e93124f8698bf240b1dd1fe46a1ae7dc4231e735093e73585628e9cd9cb4d119",
+      "expected": "e93124f8698bf240b1dd1fe46a1ae7dc4231e735093e73585628e9cd9cb4d119"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c248/materials.gd",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c248/inert_model.py",
+      "passed": true,
+      "actual": "65612775db0076aee474ddcf52b0e4deb6e143384a3b36aa5c2ed46b8ad3de49",
+      "expected": "65612775db0076aee474ddcf52b0e4deb6e143384a3b36aa5c2ed46b8ad3de49"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c248/inert_model.py",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c248/BINDINGS.json",
+      "passed": true,
+      "actual": "60702261df4d669729e116a7fdfd7aba5d414b806c6cbab382a2cb9795864d93",
+      "expected": "60702261df4d669729e116a7fdfd7aba5d414b806c6cbab382a2cb9795864d93"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c248/BINDINGS.json",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c249/animation_inventory.gd",
+      "passed": true,
+      "actual": "6679f7f3be054aac58e1ba3acf77f1752752ff27f7e9b5a058fb1c46ac824622",
+      "expected": "6679f7f3be054aac58e1ba3acf77f1752752ff27f7e9b5a058fb1c46ac824622"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c249/animation_inventory.gd",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c249/inert_model.py",
+      "passed": true,
+      "actual": "8d41ccf351f114cc67abbab4ec885f76d47579f624366e7f849aafa1fa60fd7b",
+      "expected": "8d41ccf351f114cc67abbab4ec885f76d47579f624366e7f849aafa1fa60fd7b"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c249/inert_model.py",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c249/BINDINGS.json",
+      "passed": true,
+      "actual": "86f1ca921c4fa7b094be83f71df6967f4469cc1cb268ed9dd8d4dd8fbcfcf312",
+      "expected": "86f1ca921c4fa7b094be83f71df6967f4469cc1cb268ed9dd8d4dd8fbcfcf312"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c249/BINDINGS.json",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "authority pin: docs/engineering/second-target-c249/NEXT-TASK.md",
+      "passed": true,
+      "actual": "57866d2429b7f992531102a4a2cf4166cf3d605fdbe9d022054490d51004b3df",
+      "expected": "57866d2429b7f992531102a4a2cf4166cf3d605fdbe9d022054490d51004b3df"
+    },
+    {
+      "name": "authority unchanged from base: docs/engineering/second-target-c249/NEXT-TASK.md",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "public method: is_blocking_signals",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "public method: get_signal_connection_list",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "public method: is_processing_internal",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "public method: is_physics_processing_internal",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "public method: is_animation_active",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "public property: callback_mode_process",
+      "passed": true,
+      "actual": [
+        "get_callback_mode_process",
+        "set_callback_mode_process"
+      ],
+      "expected": [
+        "get_callback_mode_process",
+        "set_callback_mode_process"
+      ]
+    },
+    {
+      "name": "public property: assigned_animation",
+      "passed": true,
+      "actual": [
+        "get_assigned_animation",
+        "set_assigned_animation"
+      ],
+      "expected": [
+        "get_assigned_animation",
+        "set_assigned_animation"
+      ]
+    },
+    {
+      "name": "public property: current_animation_position",
+      "passed": true,
+      "actual": [
+        "get_current_animation_position",
+        ""
+      ],
+      "expected": [
+        "get_current_animation_position",
+        ""
+      ]
+    },
+    {
+      "name": "public property: current_animation_length",
+      "passed": true,
+      "actual": [
+        "get_current_animation_length",
+        ""
+      ],
+      "expected": [
+        "get_current_animation_length",
+        ""
+      ]
+    },
+    {
+      "name": "public animation-active binding",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "MANUAL enum is 2",
+      "passed": true,
+      "actual": "2",
+      "expected": "2"
+    },
+    {
+      "name": "detached global transform failure source",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "one owned C249 capture call",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "fresh C249 reader before capture",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "repeat-use guard before owned capture",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "complete prior receipt retained",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "exactly one manual setter",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "exactly one assignment setter",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "only two player setter kinds",
+      "passed": true,
+      "actual": [
+        "set_assigned_animation",
+        "set_callback_mode_process"
+      ],
+      "expected": [
+        "set_assigned_animation",
+        "set_callback_mode_process"
+      ]
+    },
+    {
+      "name": "no deferred or corrective native call: seek",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "no deferred or corrective native call: advance",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "no deferred or corrective native call: play",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "no deferred or corrective native call: stop",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "no deferred or corrective native call: pause",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "no deferred or corrective native call: add_child",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "no deferred or corrective native call: remove_child",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "no deferred or corrective native call: reparent",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "no deferred or corrective native call: get_global_transform",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "no deferred or corrective native call: set_active",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "no global-transform property read",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "no unbound is_valid call",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "expected state copies original",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "expected delta keys",
+      "passed": true,
+      "actual": [
+        "assigned_animation",
+        "callback_mode_process"
+      ],
+      "expected": [
+        "assigned_animation",
+        "callback_mode_process"
+      ]
+    },
+    {
+      "name": "stage compares complete settings",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "stage compares complete inventory",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "track bound remains 36",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "track loop remains bounded",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "unsupported path rejected before lookup",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "compression rejected before key count",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "partial boundary inventory retained",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "final signal count retained",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "final blocked-signals value retained",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "final signal omission explicit",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "first assigned-only reads guarded",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "final position retained",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "final length retained",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "both mutation records retained before calls",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "no registry consumption in precursor",
+      "passed": true,
+      "actual": [
+        "failure_receipts"
+      ],
+      "expected": [
+        "failure_receipts"
+      ]
+    },
+    {
+      "name": "no await scheduling gap",
+      "passed": true,
+      "actual": true,
+      "expected": true
+    }
+  ],
+  "passed": true,
+  "nativeStarts": 0,
+  "gdscriptParserStarts": 0,
+  "productStarts": 0,
+  "aggregateStarts": 0,
+  "meaning": "Static pin, public-API, scope and source-structure checks; separate manual review is required. These checks do not execute GDScript or establish installed behavior."
+}

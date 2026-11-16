@@ -1,0 +1,216 @@
+{
+  "sourceCommit": "4f2bd9301cbbd8aea283316b2fd87643328825e2",
+  "passed": false,
+  "scenarios": [
+    {
+      "scenario": "late_blocking_signals",
+      "checks": {
+        "refused": true,
+        "one_registry_close": true,
+        "one_setter_attempt": true,
+        "retained_mutation": true,
+        "observed_final_blocking_signals_retained": false
+      },
+      "passed": false,
+      "phase": "REFUSED",
+      "errors": [
+        "manual-control readback refused; changes retained"
+      ],
+      "mutation_outcome": "REFUSED_AFTER_ATTEMPT",
+      "after_errors": [
+        "control or signal drift at mutation boundary"
+      ],
+      "after_control": {
+        "player": {
+          "type": 24,
+          "instance_id": 7000,
+          "class": "AnimationPlayer"
+        },
+        "internal_idle": {
+          "type": 1,
+          "value": false
+        },
+        "internal_physics": {
+          "type": 1,
+          "value": false
+        },
+        "blocking_signals": {
+          "type": 1,
+          "value": false
+        },
+        "assignment_signal_connection_count": 0,
+        "animation_active": {
+          "type": 1,
+          "value": false
+        },
+        "omitted": [
+          "position and length require an assigned playback pointer"
+        ],
+        "final_assignment_signal_connection_count": 0,
+        "final_internal_idle": {
+          "type": 1,
+          "value": false
+        },
+        "final_internal_physics": {
+          "type": 1,
+          "value": false
+        },
+        "final_animation_active": {
+          "type": 1,
+          "value": false
+        }
+      },
+      "after_inventory_keys": [
+        "animation",
+        "animation_count",
+        "animation_key",
+        "library",
+        "library_count",
+        "library_key",
+        "library_list_count",
+        "next_animation",
+        "player",
+        "player_animation",
+        "player_animation_count",
+        "player_animation_key",
+        "scene",
+        "self_blend_time",
+        "source_animation_index",
+        "source_association",
+        "track_count",
+        "tracks"
+      ],
+      "actual_player_blocking_signals": true,
+      "actual_signal_receiver_count": 0,
+      "actual_first_child_class": "MeshInstance3D"
+    },
+    {
+      "scenario": "late_signal_receiver",
+      "checks": {
+        "refused": true,
+        "one_registry_close": true,
+        "one_setter_attempt": true,
+        "retained_mutation": true,
+        "actual_final_count_retained": true,
+        "final_callable_omission_explicit": false
+      },
+      "passed": false,
+      "phase": "REFUSED",
+      "errors": [
+        "manual-control readback refused; changes retained"
+      ],
+      "mutation_outcome": "REFUSED_AFTER_ATTEMPT",
+      "after_errors": [
+        "control or signal drift at mutation boundary"
+      ],
+      "after_control": {
+        "player": {
+          "type": 24,
+          "instance_id": 7000,
+          "class": "AnimationPlayer"
+        },
+        "internal_idle": {
+          "type": 1,
+          "value": false
+        },
+        "internal_physics": {
+          "type": 1,
+          "value": false
+        },
+        "blocking_signals": {
+          "type": 1,
+          "value": false
+        },
+        "assignment_signal_connection_count": 0,
+        "animation_active": {
+          "type": 1,
+          "value": false
+        },
+        "omitted": [
+          "position and length require an assigned playback pointer"
+        ],
+        "final_assignment_signal_connection_count": 1,
+        "final_internal_idle": {
+          "type": 1,
+          "value": false
+        },
+        "final_internal_physics": {
+          "type": 1,
+          "value": false
+        },
+        "final_animation_active": {
+          "type": 1,
+          "value": false
+        }
+      },
+      "after_inventory_keys": [
+        "animation",
+        "animation_count",
+        "animation_key",
+        "library",
+        "library_count",
+        "library_key",
+        "library_list_count",
+        "next_animation",
+        "player",
+        "player_animation",
+        "player_animation_count",
+        "player_animation_key",
+        "scene",
+        "self_blend_time",
+        "source_animation_index",
+        "source_association",
+        "track_count",
+        "tracks"
+      ],
+      "actual_player_blocking_signals": false,
+      "actual_signal_receiver_count": 1,
+      "actual_first_child_class": "MeshInstance3D"
+    },
+    {
+      "scenario": "partial_final_scene",
+      "checks": {
+        "refused": true,
+        "one_registry_close": true,
+        "one_setter_attempt": true,
+        "retained_mutation": true,
+        "partial_final_scene_retained": false
+      },
+      "passed": false,
+      "phase": "REFUSED",
+      "errors": [
+        "manual-control readback refused; changes retained"
+      ],
+      "mutation_outcome": "REFUSED_AFTER_ATTEMPT",
+      "after_errors": [
+        "unsupported scene member or additional mixer"
+      ],
+      "after_control": {},
+      "after_inventory_keys": [
+        "animation",
+        "animation_count",
+        "animation_key",
+        "library",
+        "library_count",
+        "library_key",
+        "library_list_count",
+        "next_animation",
+        "player",
+        "player_animation",
+        "player_animation_count",
+        "player_animation_key",
+        "scene",
+        "self_blend_time",
+        "source_animation_index",
+        "source_association",
+        "track_count",
+        "tracks"
+      ],
+      "actual_player_blocking_signals": false,
+      "actual_signal_receiver_count": 0,
+      "actual_first_child_class": "Node3D"
+    }
+  ],
+  "nativeStarts": 0,
+  "parserStarts": 0
+}
