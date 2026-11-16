@@ -1,0 +1,124 @@
+{
+  "schema": "ontokin.c249.independent-review-approval/0.1",
+  "recordedAtUtc": "2026-11-15T23:05:46.477539+00:00",
+  "status": "APPROVED_HELD_SOURCE_ONLY",
+  "approved": true,
+  "scope": "One fresh owned C248 chain followed by finite native animation resource selection and36-track inventory, with zero native starts",
+  "authorCommit": "feb5efe78c8c748fc51f455a59619a82ec5652d0",
+  "authorTree": "79b6988d2695a59b9fe7856b3e4fb476758d44f4",
+  "baseCommit": "bc235deca57c032fdd9a3b310274f1c130631e0e",
+  "exactSourceManifest": "EXACT-REVIEW-SOURCE.json",
+  "sourceFiles": [
+    {
+      "path": "docs/engineering/second-target-c249/BINDINGS.json",
+      "bytes": 15161,
+      "sha256": "86f1ca921c4fa7b094be83f71df6967f4469cc1cb268ed9dd8d4dd8fbcfcf312"
+    },
+    {
+      "path": "docs/engineering/second-target-c249/NEXT-TASK.md",
+      "bytes": 2073,
+      "sha256": "57866d2429b7f992531102a4a2cf4166cf3d605fdbe9d022054490d51004b3df"
+    },
+    {
+      "path": "docs/engineering/second-target-c249/README.md",
+      "bytes": 8105,
+      "sha256": "2a31c8aac5a03011a920920a115aa11686446304164ab4468401e9f5ffa2245c"
+    },
+    {
+      "path": "docs/engineering/second-target-c249/RESULTS.md",
+      "bytes": 4830,
+      "sha256": "dca434c5d452868966012e9713564969a94f17b534e679220bf0cb496dc27126"
+    },
+    {
+      "path": "docs/engineering/second-target-c249/animation_inventory.gd",
+      "bytes": 18861,
+      "sha256": "6679f7f3be054aac58e1ba3acf77f1752752ff27f7e9b5a058fb1c46ac824622"
+    },
+    {
+      "path": "docs/engineering/second-target-c249/inert_model.py",
+      "bytes": 22165,
+      "sha256": "8d41ccf351f114cc67abbab4ec885f76d47579f624366e7f849aafa1fa60fd7b"
+    },
+    {
+      "path": "docs/engineering/second-target-c249/test_inert_model.py",
+      "bytes": 13843,
+      "sha256": "5084210fea2cbdb5698ec8cffc0d81a6d363b69b47847019a6bb037fe7f73854"
+    },
+    {
+      "path": "docs/engineering/second-target-c249/verify_bindings.py",
+      "bytes": 15349,
+      "sha256": "5736550986df8c9f1e4723628c56080474c2832c90eb07ebee8c1493cd8459c8"
+    }
+  ],
+  "testedModelCommit": "6d1b2cc8f9aef745ee29a60d183f38de3e294c40",
+  "testedCodeEquality": [
+    {
+      "path": "docs/engineering/second-target-c249/animation_inventory.gd",
+      "equal": true,
+      "sha256": "6679f7f3be054aac58e1ba3acf77f1752752ff27f7e9b5a058fb1c46ac824622",
+      "bytes": 18861
+    },
+    {
+      "path": "docs/engineering/second-target-c249/inert_model.py",
+      "equal": true,
+      "sha256": "8d41ccf351f114cc67abbab4ec885f76d47579f624366e7f849aafa1fa60fd7b",
+      "bytes": 22165
+    },
+    {
+      "path": "docs/engineering/second-target-c249/test_inert_model.py",
+      "equal": true,
+      "sha256": "5084210fea2cbdb5698ec8cffc0d81a6d363b69b47847019a6bb037fe7f73854",
+      "bytes": 13843
+    }
+  ],
+  "checks": {
+    "independentModelCases": 197,
+    "independentModelAssertions": 3133,
+    "independentSourceApiChecks": 210,
+    "independentSourceConsistencyChecks": 40,
+    "primarySources": 23,
+    "authorityDependencies": 13,
+    "authorModelMethodsObservedInEvidence": 41,
+    "authorBindingChecksObservedInEvidence": 371
+  },
+  "findings": {
+    "C249-F01": "corrected and verified",
+    "C249-F02": "corrected and verified",
+    "unresolvedInScope": []
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "machine": "x86_64"
+  },
+  "evidence": [
+    "ADVERSARIAL-INITIAL-049e487.json",
+    "ADVERSARIAL-CORRECTED-6d1b2cc.json",
+    "ADVERSARIAL-FINAL.json",
+    "SOURCE-BOUNDARY-RESULT.json",
+    "FINAL-SOURCE-CONSISTENCY.json",
+    "INITIAL-FINDINGS.json",
+    "CONTROL-CORRECTIONS.json",
+    "EXACT-REVIEW-SOURCE.json",
+    "SNAPSHOT-RESTORE-MAP.json"
+  ],
+  "nativeStarts": 0,
+  "gdscriptParserStarts": 0,
+  "productStarts": 0,
+  "aggregateStarts": 0,
+  "approvedFor": "Reviewable held source publication and handoff packaging only",
+  "notApprovedFor": [
+    "merge as native-validated implementation",
+    "native execution or R07 completion"
+  ],
+  "limitations": [
+    "Held source and synthetic Python model only; no Godot parsing, version probe or native execution",
+    "Single-animation source association is conditional on exact original input and pinned importer route; no public GLTFAnimation/native Animation pointer attestation",
+    "Synthetic resolver, metadata and lifetime inputs do not prove native NodePath behavior, engine diagnostics, memory safety or installed-build lineage",
+    "Model composes unchanged C248/C247; registry is the C247 synthetic completed-receipt provider and C246 callback events are not executed",
+    "No actual playback assignment, automatic-advancement disabling, key time/value read, seek, 126-pose observation or numerical comparison",
+    "Two reads and final membership/lookups detect lasting observed changes; no atomicity or transient concurrent-mutation claim",
+    "Hard process/resource/output limits, raw sealing, serialization, rendering, persistence, launcher/reservation and execution admission remain pending",
+    "R07 remains pending; strict Blender-normal failure and all inherited evidence retain their meanings"
+  ]
+}
