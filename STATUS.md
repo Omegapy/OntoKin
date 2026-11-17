@@ -8,7 +8,7 @@ The [C260 contract](docs/engineering/localized-repair-c260/README.md) defines a 
 
 The supported observation profile uses six signed basis axes and literal deg/rad angles with exact canonical comparison. Source-only interface/size compatibility is explicit; site poses, combined motion authority and world behavior remain unqualified. The fixed-input inspection binds twelve files, 37 byte witnesses and sixteen joint rows across both endpoints. The [28-group implementation control plan](docs/engineering/localized-repair-c260/CONTROL-PLAN.md) is UNRUN: this increment contains no hinge reader. [Results, independent review and integration evidence](docs/engineering/localized-repair-c260/RESULTS.md) record actual scope and limits.
 
-Complete the reviewed contract's documentation/preservation checks, guarded integration and verified saved handoff under [scope247](https://github.com/Omegapy/OntoKin/issues/247), then stop. Its [separate next task](docs/engineering/localized-repair-c260/NEXT-TASK.md) is finite reader implementation. Earlier component bytes, C253/C255 mathematics, runtime, fixtures and manual-only hosted workflows remain unchanged. C234 is already merged but awaits user deletion under [#240](https://github.com/Omegapy/OntoKin/issues/240). Fresh audit finds C174's former archive branch absent; its known commit remains API-accessible, but complete historical graph retention is unestablished. Earlier branch-preservation wording below describes previous observations.
+[PR248](https://github.com/Omegapy/OntoKin/pull/248) is verified merged at `56460d67e8f914814c6ae957f717e0920a152d79`, exact approved tree `46ebb950453012fe827dfdf072fa00d18327940a`. Fresh actual-main checks pass 29 preserved sources/233 sections/5,561 links and the C253 fourteen-file/three-case manifest. The completed branch is automatically deleted and both published heads remain in main ancestry. [Integration receipts](docs/engineering/localized-repair-c260/evidence/integration/INTEGRATION.json) separate this source closure from later archive/restore/save outcomes. Finish only the verified saved handoff under [scope247](https://github.com/Omegapy/OntoKin/issues/247), then stop. Its [separate next task](docs/engineering/localized-repair-c260/NEXT-TASK.md) is finite reader implementation. Earlier component bytes, C253/C255 mathematics, runtime, fixtures and manual-only hosted workflows remain unchanged. C234 is already merged but awaits user deletion under [#240](https://github.com/Omegapy/OntoKin/issues/240). Fresh audit finds C174's former archive branch absent; its known commit remains API-accessible, but complete historical graph retention is unestablished. Earlier branch-preservation wording below describes previous observations.
 
 ## C258: finite explicit-follow observation component
 
@@ -408,16 +408,17 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c260-root-a827454f4cb7-20261117`.
-State: ACTIVE only after this expected-main nonforce acquisition is published and independently read back.
+Owner: none. Previous owner: `c260-root-a827454f4cb7-20261117`.
+State: RELEASED after verified C260 contract integration and both resulting-main checks; effective only when this closure is conditionally published and read back.
 Scope: [C260 finite hinge-observation contract #247](https://github.com/Omegapy/OntoKin/issues/247).
-Acquired at: 2026-11-17T19:54:08Z; expires at: 2026-11-17T20:24:08Z.
-Observed starting main: `003b3a7827486405c3d00f039c1c9746c9be75fc`.
-Reserved shared files: `STATUS.md`, `AGENTS.md`, `GOAL.md`, `docs/README.md`, and C260 integration records.
+Acquired at: 2026-11-17T19:54:08Z; previous expiry: 2026-11-17T20:24:08Z.
+Release recorded at: 2026-11-17T20:07:55Z.
+Observed integrated main: `56460d67e8f914814c6ae957f717e0920a152d79`.
+Reserved shared files: none after verified publication.
 
-This lease covers review and integration of the bounded C260 declaration-observation contract, applicable documentation checks, and exact evidence closure. Independent nonoverlapping branch work remains permitted. Root will release ownership after actual-main verification and complete only archive/restore/saved delivery afterward. No reader implementation, native execution or model trial belongs to this scope.
+PR248 merged with expected head `f80dc7d333a94c111290749dec3438c66e206f26` and exact independently approved tree. Fresh actual-main documentation and C253 manifest checks pass. The completed branch is absent and both published heads remain in main ancestry. The [integration receipt](docs/engineering/localized-repair-c260/evidence/integration/INTEGRATION.json) records these outcomes. Source contract preparation is complete; no hinge-reader implementation is authorized by this closure.
 
-C259's stable checkpoint version 7 confirms complete C258 restore/save and scope245 closure. The original main lease was released; no interrupted main write remains unknown. C234 is still merged and awaits user cleanup under issue240. Fresh live/API inspection finds the former C174 archive branch absent. Its historical commit is API-accessible, but complete graph retention remains unestablished; preserve those observations without claiming an offline archive.
+Root completes only final archive/restore/saved delivery under scope247, recording post-freeze outcomes in the [stable checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-c9ea2e8c19588191aabb2d5d746af988_2ab2a24d43748191957f9bcc356b59de&account_id=personal), then stops. Subsequent main writers must acquire a new verified lease. C234 remains merged awaiting user cleanup; C174's former branch is absent and complete historical graph retention remains unestablished.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 

@@ -51,6 +51,19 @@ relocation index; no historical hash or approved contract content changed. The
 [initial check and full log](evidence/integration/candidate-first/documentation.json)
 remain preserved.
 
+## Verified source integration
+
+[PR248](https://github.com/Omegapy/OntoKin/pull/248) is merged at
+`56460d67e8f914814c6ae957f717e0920a152d79`, with the exact approved tree
+`46ebb950453012fe827dfdf072fa00d18327940a`. Fresh checks on this clean actual
+main pass 29 preserved sources, 233 sections and 5,561 links, plus the unchanged
+C253 manifest: 14 files/three cases. The completed work branch is absent after
+GitHub automatic deletion; both published heads remain in main ancestry.
+[Exact integration receipt](evidence/integration/INTEGRATION.json),
+[actual-main checks](evidence/integration/actual-main-checks/) and
+[101-assertion integration review](evidence/integration/integration-review/REVIEW.md)
+retain the source bindings, full logs and corrected wording finding.
+
 ## Integration and delivery gate
 
 Applicable checks are the unchanged C253 corpus manifest and documentation
@@ -75,7 +88,8 @@ Earlier branch-retention text describes historical observations.
 
 ## Remaining work
 
-Complete this contract's integration and verified saved handoff, then stop.
+Source integration and its actual-main checks are complete. Finish only the
+verified saved handoff under scope247, then stop.
 The [next separate scope](NEXT-TASK.md) implements the finite read-only observer
 and executes its independent planned controls. Full semantic records, site/world
 motion, revision authenticity, invalid-edit atomicity, clean rebuilds, native
