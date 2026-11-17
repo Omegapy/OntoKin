@@ -408,17 +408,17 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none. Previous owner: `c260-root-a827454f4cb7-20261117`.
-State: RELEASED after verified C260 contract integration and both resulting-main checks; effective only when this closure is conditionally published and read back.
-Scope: [C260 finite hinge-observation contract #247](https://github.com/Omegapy/OntoKin/issues/247).
-Acquired at: 2026-11-17T19:54:08Z; previous expiry: 2026-11-17T20:24:08Z.
-Release recorded at: 2026-11-17T20:07:55Z.
-Observed integrated main: `56460d67e8f914814c6ae957f717e0920a152d79`.
-Reserved shared files: none after verified publication.
+Owner: `c261-root-2a9a7d092213-20261117`.
+State: ACTIVE only after conditional publication and exact readback.
+Scope: [C261 finite raw GLB hinge reader #249](https://github.com/Omegapy/OntoKin/issues/249).
+Acquired at: 2026-11-17T22:48:49Z; expires at: 2026-11-17T23:18:49Z.
+Observed main: `cac72425fbe19db216d9548679dcdaaaad4f0fe8`.
+Owned branch: `work/c261-glb-hinge-reader`.
+Reserved shared files: STATUS.md, AGENTS.md, GOAL.md and docs/README.md for this bounded integration.
 
-PR248 merged with expected head `f80dc7d333a94c111290749dec3438c66e206f26` and exact independently approved tree. Fresh actual-main documentation and C253 manifest checks pass. The completed branch is absent and both published heads remain in main ancestry. The [integration receipt](docs/engineering/localized-repair-c260/evidence/integration/INTEGRATION.json) records these outcomes. Source contract preparation is complete; no hinge-reader implementation is authorized by this closure.
+C260 contract and independent-review delivery are confirmed complete; scope247 is closed. Root coordinates the C261 raw artifact interface, independent controls, applicable focused checks, guarded PR integration, resulting-main verification and one saved handoff. Source interpretation, field comparison, historical admission, native execution and release qualification remain outside this scope. C234 remains merged awaiting supported deletion or explicit user cleanup. C174's complete historical graph retention remains unestablished.
 
-Root completes only final archive/restore/saved delivery under scope247, recording post-freeze outcomes in the [stable checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-c9ea2e8c19588191aabb2d5d746af988_2ab2a24d43748191957f9bcc356b59de&account_id=personal), then stops. Subsequent main writers must acquire a new verified lease. C234 remains merged awaiting user cleanup; C174's former branch is absent and complete historical graph retention remains unestablished.
+The [C261 recovery checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-eb31ecb86780819181acc596a215ddc4_2ab2a24d43748191957f9bcc356b59de&account_id=personal) records durable source/evidence and any unknown outcome. Reconcile actual refs and issue249 before retrying an interrupted write. Release this lease after source integration and resulting-main checks; delivery does not require retaining exclusive source ownership.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
