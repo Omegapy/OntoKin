@@ -8,7 +8,7 @@ The [C256 reader](docs/engineering/localized-repair-c256/README.md) traverses th
 
 Independent review approves scientific author `97e8942071502044cb3baedac71622c151e52283`, with reader SHA-256 `5993d1a9ca1cbccd4518ed6f113238d18f6b71ba02befd59900b93fe47ef6e6a`. All 29 authored methods and 95 independent controls pass; a separate static review approves the corrected exception and resource limits. The original four malformed-metadata failures and the subsequent corrections remain preserved. [Results and exact review scope](docs/engineering/localized-repair-c256/RESULTS.md).
 
-[Scope #241](https://github.com/Omegapy/OntoKin/issues/241) closes only after reviewed source integration, fresh resulting-main checks, offline handoff restoration and confirmed saved delivery. Source publication and delivery outcomes are recorded separately from candidate checks. Finish that scope and stop at its [next-task boundary](docs/engineering/localized-repair-c256/NEXT-TASK.md). The C253 corpus and C255 checker are unchanged; released runtime, fixtures, schemas and manual-only hosted workflows remain unchanged. No complete aggregate, native run, source rebuild or model trial is claimed.
+[PR #242](https://github.com/Omegapy/OntoKin/pull/242) is verified merged at `6c497c666a301f3da74b04181d6bff62e61380e8`, with exact reviewed tree `620325c63d424de574b5ccfbb5f6a0162f8ca537`. Fresh actual-main checks pass 29 reader methods, 31 C255 methods, C253 14 files/three cases, and 29 preserved documentation sources/5,459 links. The work branch was automatically deleted and its absence verified. [Integration and branch receipt](docs/engineering/localized-repair-c256/evidence/integration/INTEGRATION.json). [Scope #241](https://github.com/Omegapy/OntoKin/issues/241) remains open only for verified offline handoff restoration and saved delivery. Finish that scope and stop at its [next-task boundary](docs/engineering/localized-repair-c256/NEXT-TASK.md). The C253 corpus and C255 checker are unchanged; released runtime, fixtures, schemas and manual-only hosted workflows remain unchanged. No complete aggregate, native run, source rebuild or model trial is claimed.
 
 C255's reconciled final ZIP is confirmed saved as version 1; the pending-save wording in its historical sections below describes package freeze. Scope [#240](https://github.com/Omegapy/OntoKin/issues/240#issuecomment-6932955581) now remains open only for `work/c234-cpu-materials` deletion. That exact branch is already merged and retained; supported authenticated deletion is unavailable. Keep `archive/c174-model-research` as an explicitly justified archive. The strict normal-fidelity failure, unresolved R07/R08 work and C251 current-authority refusal remain unchanged.
 
@@ -380,25 +380,14 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c256-root-da3bfd223c61`.
-State: ACTIVE.
+Owner: none.
+State: RELEASED by C256 documentation closure.
+Previous owner: `c256-root-da3bfd223c61`.
 Scope: [C256 finite GLB reader #241](https://github.com/Omegapy/OntoKin/issues/241).
-Acquired: 2026-11-17T03:37:19Z.
-Expires: 2026-11-17T04:07:19Z.
-Observed base: `9b9d72e0b411f5f84dd815638edcf364488d26c4`.
-Reserved shared files: STATUS.md, AGENTS.md, GOAL.md, README.md and docs/README.md.
 
-Author branch `work/c256-glb-reader` owns only
-`docs/engineering/localized-repair-c256/`; independent hosted workers review
-actual-byte geometry, sampled poses and successor preservation. Main integration
-remains conditional on exact-source independent review and applicable checks.
-No native or model execution is part of this scope.
+PR #242 merged at `6c497c666a301f3da74b04181d6bff62e61380e8` with the exact reviewed tree. Fresh reader, C255, C253 and documentation checks pass on that observed main. [Executed integration evidence](docs/engineering/localized-repair-c256/evidence/integration/INTEGRATION.json). The C256 work branch is absent; author histories remain preserved separately. This closure releases the lease acquired at 2026-11-17T03:37:19Z and previously expiring at 2026-11-17T04:07:19Z.
 
-C255 final amended delivery is confirmed by saved version 1 and
-[scope #240's delivery record](https://github.com/Omegapy/OntoKin/issues/240#issuecomment-6932955581).
-The historical pending-save wording above describes its package-freeze state.
-Scope #240 remains open only because `work/c234-cpu-materials` still needs
-supported authenticated deletion. The C174 archive remains intentionally retained.
+Scope #241 now requires only final package verification, fresh offline restoration and confirmed saved delivery. C234's already-merged branch remains a separate authenticated-deletion blocker under #240; C174 remains a justified historical archive. Complete this handoff and stop. The next semantic-observation component is a separate, unstarted scope.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 

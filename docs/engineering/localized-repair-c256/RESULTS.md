@@ -62,3 +62,7 @@ semantic graph, accepted revision, rebuild or trial state changes. These
 checks qualify only finite geometry/pose reading and source identity
 association. Full semantic observation, external revision authority, R07/R08,
 normal fidelity and comparative advantage retain their prior limits.
+
+## Verified integration
+
+[PR #242](https://github.com/Omegapy/OntoKin/pull/242) merged as `6c497c666a301f3da74b04181d6bff62e61380e8`, exactly matching reviewed tree `620325c63d424de574b5ccfbb5f6a0162f8ca537`. Fresh resulting-main checks passed 29 reader methods, 31 unchanged C255 methods, C253's 14 files/three cases and documentation preservation. The C256 work branch was verified absent after automatic deletion. [Integration receipt](evidence/integration/INTEGRATION.json) and [actual-main checks](evidence/integration/CHECKS.json) distinguish these observations from the earlier independent review. Final handoff restoration and saving remain separate delivery gates.
