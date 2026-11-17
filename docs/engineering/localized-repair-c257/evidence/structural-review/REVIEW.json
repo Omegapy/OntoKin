@@ -1,0 +1,111 @@
+{
+  "approvedCommit": "499a19d030a06609564390877a596d53dc015a7a",
+  "approvedReaderBytes": 35942,
+  "approvedReaderSha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1",
+  "checks": [
+    {
+      "detail": "Owner edges use containing occurrence only. Lexer offsets are byte spans of actual UTF-8 source; module/scene/declaration/definition keys remain separate.",
+      "name": "source containment and origins",
+      "result": "PASS_STATIC"
+    },
+    {
+      "detail": "Exactly main.ok and hinges.ok, pinned import bytes, leaf library; class resolution uses actual declaring module and declared visibility. Closure manifest and program revision derive from supplied bytes.",
+      "name": "module and closure binding",
+      "result": "PASS_STATIC"
+    },
+    {
+      "detail": "Raw claims remain untrusted. Comparison checks complete identity coverage, all three owner copies, actual source spans including exact integer types, class identities and duplicate source authority fields.",
+      "name": "artifact provenance",
+      "result": "PASS_STATIC"
+    },
+    {
+      "detail": "Byte/token/definition/key/object/depth limits precede material expansion. Fixed file reads check exact size before at-most-size-plus-one read. GLB chunk traversal advances at least eight bytes and is bounded by the four-MiB input cap.",
+      "name": "resource boundary",
+      "result": "PASS_STATIC"
+    },
+    {
+      "detail": "Only listed standard-library imports; no product parser/evaluator, subprocess/model/native execution, rebuild, C255 semantics or C256 identity helper imports. Outputs deny execution and full semantic/trial qualification.",
+      "name": "no execution authority",
+      "result": "PASS_STATIC"
+    },
+    {
+      "detail": "Original deterministic overlong ordinary path escaped as OSError errno36. Same exact recipe now raises Fault(IO, OSError). CLI had already caught OSError; fix closes API normalization only.",
+      "name": "public I/O refusal",
+      "result": "PASS_TARGETED_CORRECTION"
+    }
+  ],
+  "evidence": {
+    "PLAN.md": {
+      "bytes": 2011,
+      "sha256": "ced053d4e6102a52b223533899dfbd97a1b589950ce458fb8da8931edb5abbca"
+    },
+    "probe_public_io.py": {
+      "bytes": 2413,
+      "sha256": "e887ccabfaa2a359969f6f490092c76aecf167640bc2a14a38698f0b34589343"
+    },
+    "public-io-corrected.json": {
+      "bytes": 778,
+      "sha256": "08b8d826c216aa2cf8659b330f0ec44cd1f58e6480f54e1d26b068061ae72a4b"
+    },
+    "public-io-original.json": {
+      "bytes": 954,
+      "sha256": "9ab9cc7c2fdb222ede01541f74b225895b845264e3f5912c2e177623f8be7abf"
+    },
+    "reviewed-reader-corrections.diff": {
+      "bytes": 7629,
+      "sha256": "0b60ec1d5a5c91cf675470e78339b8fbd0d0c0c8fd9b29e27f88d025a0acbea3"
+    }
+  },
+  "exactCommittedBytesVerified": true,
+  "findings": [
+    {
+      "correctedEvidence": "public-io-corrected.json",
+      "correction": "public() normalizes OSError to Fault(IO, exception type) before general structure normalization",
+      "id": "C257-STATIC-IO-01",
+      "originalEvidence": "public-io-original.json",
+      "scopeExpansion": false,
+      "status": "RESOLVED"
+    }
+  ],
+  "immutableReaderByteIdentityVerified": true,
+  "immutableReviewPath": "/workspace/scratch/da3bfd223c61/c257-review-final/docs/engineering/localized-repair-c257/ownership.py",
+  "imports": [
+    "__future__",
+    "argparse",
+    "dataclasses",
+    "hashlib",
+    "json",
+    "pathlib",
+    "re",
+    "struct"
+  ],
+  "inputLimits": {
+    "bytesPerSource": 65536,
+    "definitionsPerModule": 32,
+    "glbBytes": 4194304,
+    "identityComponents": 32,
+    "jsonChunkBytes": 2097152,
+    "jsonIntegerLexemeChars": 64,
+    "keysPerLiteral": 64,
+    "maxZeroLengthGLBChunkHeaders": 524286,
+    "objects": 128,
+    "sourceFiles": 2,
+    "syntaxDepth": 32,
+    "textScalars": 512,
+    "tokensPerSource": 8192
+  },
+  "nonClaims": [
+    "No numerical/semantic test rerun by this reviewer",
+    "No complete source-validity or glTF validation",
+    "No runtime/native/model/build/release qualification",
+    "No claim that uncommitted documentation is frozen",
+    "No final handoff validation in this review"
+  ],
+  "originalCommit": "055d1e83f33586e488a35961d29f405b2884beea",
+  "originalReaderSha256": "e346ef94038ef0ac8908588a261311c566f00ee512fda4284ae832bf09714c6c",
+  "remainingBlockers": [],
+  "reviewer": "restore_packaging independent worker",
+  "schema": "ontokin.c257.independent-static-review/0.1",
+  "scope": "structural, provenance, resources, public refusal; separate independent worker owns numerical/semantic mutations",
+  "status": "APPROVED_EXACT_CODE"
+}

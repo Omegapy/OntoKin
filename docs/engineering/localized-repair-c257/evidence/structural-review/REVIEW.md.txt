@@ -1,0 +1,65 @@
+# C257 independent structural review
+
+**Approved exact reader bytes:** commit
+`499a19d030a06609564390877a596d53dc015a7a`, SHA-256
+`c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1`.
+The working reader was checked byte-for-byte against that Git object. No source
+files were edited by this reviewer. Numerical and semantic mutation review is
+owned by the separate independent reviewer.
+
+## Finding and correction
+
+The original reader at `055d1e83f33586e488a35961d29f405b2884beea`
+(SHA-256 `e346ef94038ef0ac8908588a261311c566f00ee512fda4284ae832bf09714c6c`)
+let an ordinary file-system error escape from its public historical endpoint
+API. Calling `read_bound_endpoint` with the deterministic nonexistent path
+`"/tmp/ontokin-c257-static-probe-" + "x" * 5000` raised `OSError`, errno 36,
+instead of the reader's explicit `Fault` refusal. The CLI already caught this
+exception separately; the gap concerned direct API callers.
+
+The author added a dedicated `OSError` normalization to `Fault("IO", ...)` and
+one narrow regression method. The same independent probe now returns
+`Fault` with code `IO` and the bounded detail `OSError`. The original failure,
+its exact input recipe and hash, the passing corrected result, and the complete
+reviewed code delta are retained. No path was created by the probe.
+
+## Structural assessment
+
+The observer derives ownership only from source containment. It retains UTF-8
+byte origins and distinguishes occurrence identity from definition identity.
+Class resolution follows the actual declaring module and visibility. It accepts
+only the two supplied bounded source byte strings, binds the leaf import to its
+actual hash, and derives the canonical manifest and program revision from them.
+Generated collections add no intermediate object to the owner graph.
+
+Raw artifact observations remain untrusted. Comparison checks every admitted
+owner representation, full identity coverage, source spans, strict integer span
+types, class identity and repeated source authority fields. The separate
+historical entry point additionally requires the fixed original sizes and hashes.
+No transform, follow, hinge or display-name field supplies an owner.
+
+The implementation has finite source bytes, tokens, syntax depth, definitions,
+literal keys, object expansion, identity components and GLB bytes. Historical
+reads check exact sizes before reading at most one extra byte. The GLB reader
+collects headers before checking that exactly two chunks exist, but each loop
+advances at least eight bytes under a 4 MiB input cap. At most 524,286 zero-length
+headers can be visited. This is finite; this review found no unbounded traversal
+and did not expand the accepted format or add an unrelated parser requirement.
+
+All imports are Python standard library modules. No product evaluator,
+C255 expected semantics, C256 identity helper, external process, model or native
+execution is invoked. Outputs explicitly withhold complete source validity,
+complete C255 semantics, execution permission and trial qualification.
+
+## Evidence and limits
+
+`REVIEW.json` records exact inputs, limits, import inventory, finding disposition
+and evidence hashes. `probe_public_io.py`, `public-io-original.json`,
+`public-io-corrected.json` and `reviewed-reader-corrections.diff` preserve the
+reproduction and correction. The parent review plan remains in `PLAN.md`.
+
+There are no remaining structural blockers for the exact approved reader.
+This is a static review plus one targeted correction probe, not a rerun of the
+numerical/semantic suite. It does not qualify unobserved source expressions,
+complete glTF validity, runtime execution, a build or release. Final documentation
+freeze, integration and handoff validation remain the parent's responsibility.

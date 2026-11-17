@@ -1,0 +1,99 @@
+diff --git a/docs/engineering/localized-repair-c257/ownership.py b/docs/engineering/localized-repair-c257/ownership.py
+index b396b16a..71fb5550 100644
+--- a/docs/engineering/localized-repair-c257/ownership.py
++++ b/docs/engineering/localized-repair-c257/ownership.py
+@@ -82,6 +82,8 @@ def public(call):
+         return call()
+     except Fault:
+         raise
++    except OSError as exc:
++        raise Fault("IO", type(exc).__name__) from exc
+     except (KeyError, IndexError, TypeError, AttributeError, ValueError, UnicodeError,
+             struct.error, OverflowError, RecursionError) as exc:
+         raise Fault("STRUCTURE", type(exc).__name__) from exc
+@@ -293,7 +295,7 @@ def parse_module(raw, filename):
+     seen_ownership, definition_keys = set(), set()
+     while not stream.done():
+         start = stream.tokens[stream.index]
+-        visibility = stream.pop().value if stream.peek() in ("public", "private") else "private"
++        visibility = stream.pop().value if stream.peek() in ("public", "private") else "public"
+         if stream.peek() == "import":
+             stream.pop("import"); alias = stream.name(); stream.key(); stream.pop("from")
+             package = stream.pop(kind="string"); stream.pop("version"); version = stream.pop(kind="string")
+@@ -481,8 +483,12 @@ def _source(sources):
+     for root in entry["scene"]["roots"]:
+         expand(root, entry, [entry["key"], entry["scene"]["key"], root["key"]], root["name"], None, [],
+                [entry["keyOrigin"], entry["scene"]["keyOrigin"], root["keyOrigin"]])
++    source_units = {unit["source_id"]: dict(unit, module_name=modules[unit["filename"]]["name"],
++                                          module_key=modules[unit["filename"]]["key"])
++                    for unit in manifest["units"]}
+     return {"schema": SCHEMA, "kind": "source-ownership", "programRevision": revision,
+             "sourceManifest": manifest, "sourceHashes": {name: digest(raw) for name, raw in sources.items()},
++            "sourceUnits": source_units, "moduleName": entry["name"], "sceneName": entry["scene"]["name"],
+             "records": records, "objectCount": len(records), "rootCount": sum(x["ownerId"] is None for x in records),
+             "edgeCount": sum(x["ownerId"] is not None for x in records), "sourceValidityQualified": False,
+             "completeC255Semantic": False, "executionAllowed": False, "realTrialSuccess": None,
+@@ -517,7 +523,8 @@ def _artifact(raw):
+     document = glb_document(raw)
+     nodes = document["nodes"]
+     require(type(nodes) is list and 0 < len(nodes) <= MAX_OBJECTS, "NODE_LIMIT", "bounded nodes")
+-    program = document["extras"]["ontokin"]["program"]
++    top_meta = document["extras"]["ontokin"]
++    program = top_meta["program"]
+     revision = string(program["revision"], "program revision")
+     require(re.fullmatch(r"sha256:[0-9a-f]{64}", revision), "PROGRAM_ID", revision)
+     occurrences = program["occurrences"]
+@@ -550,6 +557,17 @@ def _artifact(raw):
+     require(paths == set(occurrences), "OCCURRENCE_COVERAGE", "nodes and program occurrences")
+     return {"schema": SCHEMA, "kind": "untrusted-artifact-ownership", "artifactSha256": digest(raw),
+             "artifactBytes": len(raw), "programRevision": revision, "sourceManifest": program["manifest"],
++            "sourceUnits": program["sources"], "entrySourceId": program["entry_source_id"],
++            "entrySourceIdClaim": top_meta["source"]["entry_source_id"],
++            "entryRevisionClaim": top_meta["source"]["entry_revision"],
++            "moduleName": top_meta["module"], "sceneName": top_meta["scene"], "profileName": top_meta["profile"],
++            "sourceAuthorityOrigins": {"sourceUnits": "/extras/ontokin/program/sources",
++                "entrySourceId": "/extras/ontokin/program/entry_source_id",
++                "entrySourceIdClaim": "/extras/ontokin/source/entry_source_id",
++                "entryRevisionClaim": "/extras/ontokin/source/entry_revision",
++                "moduleName": "/extras/ontokin/module", "sceneName": "/extras/ontokin/scene",
++                "profileName": "/extras/ontokin/profile", "sourceManifest": "/extras/ontokin/program/manifest",
++                "programRevision": "/extras/ontokin/program/revision"},
+             "records": records, "ownershipVerified": False, "completeC255Semantic": False,
+             "executionAllowed": False, "realTrialSuccess": None, "historicalInputsBound": False,
+             "transformHierarchyUsedAsOwnership": False, "limits": LIMITS.copy()}
+@@ -563,6 +581,11 @@ def _compare(sources, raw):
+     source, artifact = _source(sources), _artifact(raw)
+     require(artifact["programRevision"] == source["programRevision"]
+             and artifact["sourceManifest"] == source["sourceManifest"], "SOURCE_ARTIFACT_BINDING", "program and complete manifest")
++    require(artifact["sourceUnits"] == source["sourceUnits"] and artifact["entrySourceId"] == "entry"
++            and artifact["entrySourceIdClaim"] == "entry"
++            and artifact["entryRevisionClaim"] == "sha256:"+source["sourceHashes"]["main.ok"]
++            and artifact["moduleName"] == source["moduleName"] and artifact["sceneName"] == source["sceneName"]
++            and artifact["profileName"] == "construction-0.1", "SOURCE_METADATA_BINDING", "duplicate source authority fields")
+     expected = {tuple(row["id"]): row for row in source["records"]}
+     actual = {tuple(row["id"]): row for row in artifact["records"]}
+     require(set(actual) == set(expected), "IDENTITY_COVERAGE", "complete occurrence identities")
+@@ -578,12 +601,14 @@ def _compare(sources, raw):
+         for label in ("sourceMapping", "programOccurrence"):
+             mapping = got[label]
+             require(mapping["path"] == wanted["path"] and mapping["element_id"] == wanted["id"]
+-                    and mapping["definition_id"] == wanted["definitionId"], "IDENTITY_MAPPING", wanted["path"])
++                    and mapping["definition_id"] == wanted["definitionId"]
++                    and mapping["class_id"] == "/".join(wanted["definitionId"]), "IDENTITY_MAPPING", wanted["path"])
+             for kind in ("declaration", "definition"):
+                 observed, measured = mapping[kind], wanted["origin"][kind]
+                 require(observed["filename"] == measured["file"]
+                         and observed["source_id"] == ("entry" if measured["file"] == "main.ok"
+                                                        else "package:"+PACKAGE+"@"+VERSION)
++                        and type(observed["start_byte"]) is int and type(observed["end_byte"]) is int
+                         and observed["start_byte"] == measured["startByte"]
+                         and observed["end_byte"] == measured["endByteExclusive"]
+                         and observed["source_revision"] == "sha256:"+source["sourceHashes"][measured["file"]],
+@@ -594,6 +619,7 @@ def _compare(sources, raw):
+     return {"schema": SCHEMA, "kind": "source-artifact-ownership-comparison", "ownershipConsistent": True,
+             "sourceAssociationVerified": True, "programRevision": source["programRevision"],
+             "sourceHashes": source["sourceHashes"], "artifactSha256": artifact["artifactSha256"],
++            "sourceAuthorityOrigins": artifact["sourceAuthorityOrigins"],
+             "records": verified, "objectCount": source["objectCount"], "rootCount": source["rootCount"],
+             "edgeCount": source["edgeCount"], "historicalInputsBound": False, "sourceValidityQualified": False,
+             "completeC255Semantic": False, "executionAllowed": False, "realTrialSuccess": None,

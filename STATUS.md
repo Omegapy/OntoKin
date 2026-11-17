@@ -2,6 +2,16 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [GOAL](GOAL.md), [C252 priority decision](docs/engineering/review-integration-c252/DECISION.md), preserved [C210 boundary](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C257: finite ownership observation component
+
+The [C257 reader](docs/engineering/localized-repair-c257/README.md) derives immediate lifecycle ownership from the authoritative `.ok` declarations and independently checks owner claims in actual GLB metadata. Both original endpoints have 18 objects, two ownership roots and 16 ownership edges, although all 18 GLB objects are scene roots. Four API boundaries keep source facts, untrusted artifact claims, source/artifact consistency and exact historical admission separate. Following, hinges, complete source validity, full C255 semantics, accepted revisions and rebuilds remain unqualified.
+
+Scientific author `499a19d030a06609564390877a596d53dc015a7a` passes 23 authored methods and 107 independent controls. A separate structural review approves corrected public I/O refusals and the bounded authority/input handling. Independent supported containment changes produce 12 objects and ten ownership edges. The original visibility, duplicate-identity/source claims, floating-span and public-I/O findings remain preserved. [Results and review scope](docs/engineering/localized-repair-c257/RESULTS.md). Fresh focused checks on that exact scientific commit pass C256's 29 methods, C255's 31 methods and the C253 14-file/three-case manifest.
+
+[Scope #243](https://github.com/Omegapy/OntoKin/issues/243) still requires reviewed source integration, fresh resulting-main checks, verified offline restoration and confirmed saved delivery. The integrator holds the bounded lease below; no successor feature has started. C256's final ZIP and complete restore are verified, and [scope #241](https://github.com/Omegapy/OntoKin/issues/241) is closed. Historical C256 pending-delivery text below records its earlier package freeze.
+
+`work/c234-cpu-materials` remains an already-merged branch awaiting authenticated deletion under [#240](https://github.com/Omegapy/OntoKin/issues/240). Keep `archive/c174-model-research` until complete historical graph retention is established. Frozen C253/C255 mathematics, earlier runtime and workflows, the strict normal-fidelity failure, unresolved R07/R08 and C251 current-authority refusal retain their states.
+
 ## C256: finite geometry and sampled-motion reader
 
 The [C256 reader](docs/engineering/localized-repair-c256/README.md) traverses the existing C210 GLB bytes for local triangle geometry and 126 rigid poses across 18 objects at seven times, separately for each before/after endpoint. Its raw measurements, exact-source identity associations and historical artifact admission have distinct trust boundaries. Full semantic observations, revision authenticity, clean rebuild evidence and real trial success remain unqualified.

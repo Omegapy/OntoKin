@@ -1,0 +1,1901 @@
+{
+  "baselineMain": "23b1d2b5abafde6a5826827c30bc1bbf8552ff8e",
+  "endpoints": [
+    {
+      "allOwnershipClaimsAgreeWithIndependentSource": true,
+      "artifactBytes": 185276,
+      "artifactPath": "/workspace/scratch/da3bfd223c61/OntoKin/docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "artifactSha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534",
+      "chunks": [
+        {
+          "contentByte": 20,
+          "contentBytes": 103860,
+          "headerByte": 12,
+          "type": "JSON"
+        },
+        {
+          "contentByte": 103888,
+          "contentBytes": 81388,
+          "headerByte": 103880,
+          "type": "BIN\u0000"
+        }
+      ],
+      "endpoint": "before",
+      "glbSceneRootCount": 18,
+      "nodeCount": 18,
+      "observedProgramRevision": "sha256:8f9d976568e2a9fa39573e3fb90f616529097241a098b21d4eb22eabe4b7032f",
+      "programRevisionQualification": "metadata label recorded; no accepted-revision authority inferred",
+      "records": [
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "object first @ \"first\": Rack {\n        placement = pose(world, vec3(-1[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        fingers[\"middle\"].length = 0.65[m];\n    }",
+              "end_byte": 1058,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+              "start_byte": 902
+            },
+            "definition": {
+              "actualText": "public class Rack @ \"rack\" {\n    public param mounts @ \"mounts\": Keyed<Vec3<Length>> = mech.three_mounts(0.6[m]);\n    public param finger_length @ \"finger-length\": Length = 0.6[m];\n    geometry = box(vec3(0.1[m], 0.6[m] * real(len(self.mounts)), 0.1[m]));\n    appearance = rgba(0.45, 0.45, 0.5, 1);\n    public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }\n}",
+              "end_byte": 794,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+              "start_byte": 300
+            }
+          },
+          "definitionId": [
+            "entry",
+            "keyed-rack",
+            "definitions",
+            "rack"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first"
+          ],
+          "mappingOwnerOrigin": "/nodes/0/extras/ontokin/source_mapping/owner_path",
+          "node": 0,
+          "nodeOwnerOrigin": "/nodes/0/extras/ontokin/owner",
+          "ownerId": null,
+          "ownerPath": null,
+          "path": "first",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first/owner_path",
+          "sourceBaselinePathComponents": [
+            "first"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "object second @ \"second\": Rack {\n        placement = pose(world, vec3(1[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        mounts = keyed<Vec3<Length>> {\n            \"bottom\": vec3(0[m], -1.2[m], 0[m]),\n            \"lower\": vec3(0[m], -0.6[m], 0[m]),\n            \"middle\": vec3(0[m], 0[m], 0[m]),\n            \"upper\": vec3(0[m], 0.6[m], 0[m]),\n            \"top\": vec3(0[m], 1.2[m], 0[m])\n        };\n    }",
+              "end_byte": 1460,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+              "start_byte": 1063
+            },
+            "definition": {
+              "actualText": "public class Rack @ \"rack\" {\n    public param mounts @ \"mounts\": Keyed<Vec3<Length>> = mech.three_mounts(0.6[m]);\n    public param finger_length @ \"finger-length\": Length = 0.6[m];\n    geometry = box(vec3(0.1[m], 0.6[m] * real(len(self.mounts)), 0.1[m]));\n    appearance = rgba(0.45, 0.45, 0.5, 1);\n    public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }\n}",
+              "end_byte": 794,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+              "start_byte": 300
+            }
+          },
+          "definitionId": [
+            "entry",
+            "keyed-rack",
+            "definitions",
+            "rack"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second"
+          ],
+          "mappingOwnerOrigin": "/nodes/1/extras/ontokin/source_mapping/owner_path",
+          "node": 1,
+          "nodeOwnerOrigin": "/nodes/1/extras/ontokin/owner",
+          "ownerId": null,
+          "ownerPath": null,
+          "path": "second",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second/owner_path",
+          "sourceBaselinePathComponents": [
+            "second"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "lower"
+          ],
+          "mappingOwnerOrigin": "/nodes/2/extras/ontokin/source_mapping/owner_path",
+          "node": 2,
+          "nodeOwnerOrigin": "/nodes/2/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "first"
+          ],
+          "ownerPath": "first",
+          "path": "first.fingers[\"lower\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first.fingers[\"lower\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "first",
+            "fingers",
+            "lower"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "lower",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/3/extras/ontokin/source_mapping/owner_path",
+          "node": 3,
+          "nodeOwnerOrigin": "/nodes/3/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "lower"
+          ],
+          "ownerPath": "first.fingers[\"lower\"]",
+          "path": "first.fingers[\"lower\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first.fingers[\"lower\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "first",
+            "fingers",
+            "lower",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "middle"
+          ],
+          "mappingOwnerOrigin": "/nodes/4/extras/ontokin/source_mapping/owner_path",
+          "node": 4,
+          "nodeOwnerOrigin": "/nodes/4/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "first"
+          ],
+          "ownerPath": "first",
+          "path": "first.fingers[\"middle\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first.fingers[\"middle\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "first",
+            "fingers",
+            "middle"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "middle",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/5/extras/ontokin/source_mapping/owner_path",
+          "node": 5,
+          "nodeOwnerOrigin": "/nodes/5/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "middle"
+          ],
+          "ownerPath": "first.fingers[\"middle\"]",
+          "path": "first.fingers[\"middle\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first.fingers[\"middle\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "first",
+            "fingers",
+            "middle",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "upper"
+          ],
+          "mappingOwnerOrigin": "/nodes/6/extras/ontokin/source_mapping/owner_path",
+          "node": 6,
+          "nodeOwnerOrigin": "/nodes/6/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "first"
+          ],
+          "ownerPath": "first",
+          "path": "first.fingers[\"upper\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first.fingers[\"upper\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "first",
+            "fingers",
+            "upper"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "upper",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/7/extras/ontokin/source_mapping/owner_path",
+          "node": 7,
+          "nodeOwnerOrigin": "/nodes/7/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "upper"
+          ],
+          "ownerPath": "first.fingers[\"upper\"]",
+          "path": "first.fingers[\"upper\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first.fingers[\"upper\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "first",
+            "fingers",
+            "upper",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "bottom"
+          ],
+          "mappingOwnerOrigin": "/nodes/8/extras/ontokin/source_mapping/owner_path",
+          "node": 8,
+          "nodeOwnerOrigin": "/nodes/8/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second"
+          ],
+          "ownerPath": "second",
+          "path": "second.fingers[\"bottom\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"bottom\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "bottom"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "bottom",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/9/extras/ontokin/source_mapping/owner_path",
+          "node": 9,
+          "nodeOwnerOrigin": "/nodes/9/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "bottom"
+          ],
+          "ownerPath": "second.fingers[\"bottom\"]",
+          "path": "second.fingers[\"bottom\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"bottom\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "bottom",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "lower"
+          ],
+          "mappingOwnerOrigin": "/nodes/10/extras/ontokin/source_mapping/owner_path",
+          "node": 10,
+          "nodeOwnerOrigin": "/nodes/10/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second"
+          ],
+          "ownerPath": "second",
+          "path": "second.fingers[\"lower\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"lower\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "lower"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "lower",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/11/extras/ontokin/source_mapping/owner_path",
+          "node": 11,
+          "nodeOwnerOrigin": "/nodes/11/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "lower"
+          ],
+          "ownerPath": "second.fingers[\"lower\"]",
+          "path": "second.fingers[\"lower\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"lower\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "lower",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "middle"
+          ],
+          "mappingOwnerOrigin": "/nodes/12/extras/ontokin/source_mapping/owner_path",
+          "node": 12,
+          "nodeOwnerOrigin": "/nodes/12/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second"
+          ],
+          "ownerPath": "second",
+          "path": "second.fingers[\"middle\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"middle\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "middle"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "middle",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/13/extras/ontokin/source_mapping/owner_path",
+          "node": 13,
+          "nodeOwnerOrigin": "/nodes/13/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "middle"
+          ],
+          "ownerPath": "second.fingers[\"middle\"]",
+          "path": "second.fingers[\"middle\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"middle\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "middle",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "top"
+          ],
+          "mappingOwnerOrigin": "/nodes/14/extras/ontokin/source_mapping/owner_path",
+          "node": 14,
+          "nodeOwnerOrigin": "/nodes/14/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second"
+          ],
+          "ownerPath": "second",
+          "path": "second.fingers[\"top\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"top\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "top"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "top",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/15/extras/ontokin/source_mapping/owner_path",
+          "node": 15,
+          "nodeOwnerOrigin": "/nodes/15/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "top"
+          ],
+          "ownerPath": "second.fingers[\"top\"]",
+          "path": "second.fingers[\"top\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"top\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "top",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "upper"
+          ],
+          "mappingOwnerOrigin": "/nodes/16/extras/ontokin/source_mapping/owner_path",
+          "node": 16,
+          "nodeOwnerOrigin": "/nodes/16/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second"
+          ],
+          "ownerPath": "second",
+          "path": "second.fingers[\"upper\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"upper\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "upper"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "upper",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/17/extras/ontokin/source_mapping/owner_path",
+          "node": 17,
+          "nodeOwnerOrigin": "/nodes/17/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "upper"
+          ],
+          "ownerPath": "second.fingers[\"upper\"]",
+          "path": "second.fingers[\"upper\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"upper\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "upper",
+            "blade"
+          ]
+        }
+      ],
+      "sourceHashes": {
+        "hinges.ok": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+        "main.ok": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+      },
+      "sourceOwnerlessRoots": 2,
+      "sourceOwnershipEdges": 16
+    },
+    {
+      "allOwnershipClaimsAgreeWithIndependentSource": true,
+      "artifactBytes": 185236,
+      "artifactPath": "/workspace/scratch/da3bfd223c61/OntoKin/docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+      "artifactSha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8",
+      "chunks": [
+        {
+          "contentByte": 20,
+          "contentBytes": 103820,
+          "headerByte": 12,
+          "type": "JSON"
+        },
+        {
+          "contentByte": 103848,
+          "contentBytes": 81388,
+          "headerByte": 103840,
+          "type": "BIN\u0000"
+        }
+      ],
+      "endpoint": "after",
+      "glbSceneRootCount": 18,
+      "nodeCount": 18,
+      "observedProgramRevision": "sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082",
+      "programRevisionQualification": "metadata label recorded; no accepted-revision authority inferred",
+      "records": [
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "object first @ \"first\": Rack {\n        placement = pose(world, vec3(-1[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        fingers[\"middle\"].length = 0.75[m];\n    }",
+              "end_byte": 1058,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "start_byte": 902
+            },
+            "definition": {
+              "actualText": "public class Rack @ \"rack\" {\n    public param mounts @ \"mounts\": Keyed<Vec3<Length>> = mech.three_mounts(0.6[m]);\n    public param finger_length @ \"finger-length\": Length = 0.6[m];\n    geometry = box(vec3(0.1[m], 0.6[m] * real(len(self.mounts)), 0.1[m]));\n    appearance = rgba(0.45, 0.45, 0.5, 1);\n    public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }\n}",
+              "end_byte": 794,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "start_byte": 300
+            }
+          },
+          "definitionId": [
+            "entry",
+            "keyed-rack",
+            "definitions",
+            "rack"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first"
+          ],
+          "mappingOwnerOrigin": "/nodes/0/extras/ontokin/source_mapping/owner_path",
+          "node": 0,
+          "nodeOwnerOrigin": "/nodes/0/extras/ontokin/owner",
+          "ownerId": null,
+          "ownerPath": null,
+          "path": "first",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first/owner_path",
+          "sourceBaselinePathComponents": [
+            "first"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "object second @ \"second\": Rack {\n        placement = pose(world, vec3(1[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        mounts = keyed<Vec3<Length>> {\n            \"bottom\": vec3(0[m], -1.2[m], 0[m]),\n            \"lower\": vec3(0[m], -0.6[m], 0[m]),\n            \"middle\": vec3(0[m], 0[m], 0[m]),\n            \"upper\": vec3(0[m], 0.6[m], 0[m]),\n            \"top\": vec3(0[m], 1.2[m], 0[m])\n        };\n    }",
+              "end_byte": 1460,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "start_byte": 1063
+            },
+            "definition": {
+              "actualText": "public class Rack @ \"rack\" {\n    public param mounts @ \"mounts\": Keyed<Vec3<Length>> = mech.three_mounts(0.6[m]);\n    public param finger_length @ \"finger-length\": Length = 0.6[m];\n    geometry = box(vec3(0.1[m], 0.6[m] * real(len(self.mounts)), 0.1[m]));\n    appearance = rgba(0.45, 0.45, 0.5, 1);\n    public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }\n}",
+              "end_byte": 794,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "start_byte": 300
+            }
+          },
+          "definitionId": [
+            "entry",
+            "keyed-rack",
+            "definitions",
+            "rack"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second"
+          ],
+          "mappingOwnerOrigin": "/nodes/1/extras/ontokin/source_mapping/owner_path",
+          "node": 1,
+          "nodeOwnerOrigin": "/nodes/1/extras/ontokin/owner",
+          "ownerId": null,
+          "ownerPath": null,
+          "path": "second",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second/owner_path",
+          "sourceBaselinePathComponents": [
+            "second"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "lower"
+          ],
+          "mappingOwnerOrigin": "/nodes/2/extras/ontokin/source_mapping/owner_path",
+          "node": 2,
+          "nodeOwnerOrigin": "/nodes/2/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "first"
+          ],
+          "ownerPath": "first",
+          "path": "first.fingers[\"lower\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first.fingers[\"lower\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "first",
+            "fingers",
+            "lower"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "lower",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/3/extras/ontokin/source_mapping/owner_path",
+          "node": 3,
+          "nodeOwnerOrigin": "/nodes/3/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "lower"
+          ],
+          "ownerPath": "first.fingers[\"lower\"]",
+          "path": "first.fingers[\"lower\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first.fingers[\"lower\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "first",
+            "fingers",
+            "lower",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "middle"
+          ],
+          "mappingOwnerOrigin": "/nodes/4/extras/ontokin/source_mapping/owner_path",
+          "node": 4,
+          "nodeOwnerOrigin": "/nodes/4/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "first"
+          ],
+          "ownerPath": "first",
+          "path": "first.fingers[\"middle\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first.fingers[\"middle\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "first",
+            "fingers",
+            "middle"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "middle",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/5/extras/ontokin/source_mapping/owner_path",
+          "node": 5,
+          "nodeOwnerOrigin": "/nodes/5/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "middle"
+          ],
+          "ownerPath": "first.fingers[\"middle\"]",
+          "path": "first.fingers[\"middle\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first.fingers[\"middle\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "first",
+            "fingers",
+            "middle",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "upper"
+          ],
+          "mappingOwnerOrigin": "/nodes/6/extras/ontokin/source_mapping/owner_path",
+          "node": 6,
+          "nodeOwnerOrigin": "/nodes/6/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "first"
+          ],
+          "ownerPath": "first",
+          "path": "first.fingers[\"upper\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first.fingers[\"upper\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "first",
+            "fingers",
+            "upper"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "upper",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/7/extras/ontokin/source_mapping/owner_path",
+          "node": 7,
+          "nodeOwnerOrigin": "/nodes/7/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "first",
+            "fingers",
+            "upper"
+          ],
+          "ownerPath": "first.fingers[\"upper\"]",
+          "path": "first.fingers[\"upper\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/first.fingers[\"upper\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "first",
+            "fingers",
+            "upper",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "bottom"
+          ],
+          "mappingOwnerOrigin": "/nodes/8/extras/ontokin/source_mapping/owner_path",
+          "node": 8,
+          "nodeOwnerOrigin": "/nodes/8/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second"
+          ],
+          "ownerPath": "second",
+          "path": "second.fingers[\"bottom\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"bottom\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "bottom"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "bottom",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/9/extras/ontokin/source_mapping/owner_path",
+          "node": 9,
+          "nodeOwnerOrigin": "/nodes/9/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "bottom"
+          ],
+          "ownerPath": "second.fingers[\"bottom\"]",
+          "path": "second.fingers[\"bottom\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"bottom\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "bottom",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "lower"
+          ],
+          "mappingOwnerOrigin": "/nodes/10/extras/ontokin/source_mapping/owner_path",
+          "node": 10,
+          "nodeOwnerOrigin": "/nodes/10/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second"
+          ],
+          "ownerPath": "second",
+          "path": "second.fingers[\"lower\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"lower\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "lower"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "lower",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/11/extras/ontokin/source_mapping/owner_path",
+          "node": 11,
+          "nodeOwnerOrigin": "/nodes/11/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "lower"
+          ],
+          "ownerPath": "second.fingers[\"lower\"]",
+          "path": "second.fingers[\"lower\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"lower\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "lower",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "middle"
+          ],
+          "mappingOwnerOrigin": "/nodes/12/extras/ontokin/source_mapping/owner_path",
+          "node": 12,
+          "nodeOwnerOrigin": "/nodes/12/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second"
+          ],
+          "ownerPath": "second",
+          "path": "second.fingers[\"middle\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"middle\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "middle"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "middle",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/13/extras/ontokin/source_mapping/owner_path",
+          "node": 13,
+          "nodeOwnerOrigin": "/nodes/13/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "middle"
+          ],
+          "ownerPath": "second.fingers[\"middle\"]",
+          "path": "second.fingers[\"middle\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"middle\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "middle",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "top"
+          ],
+          "mappingOwnerOrigin": "/nodes/14/extras/ontokin/source_mapping/owner_path",
+          "node": 14,
+          "nodeOwnerOrigin": "/nodes/14/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second"
+          ],
+          "ownerPath": "second",
+          "path": "second.fingers[\"top\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"top\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "top"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "top",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/15/extras/ontokin/source_mapping/owner_path",
+          "node": 15,
+          "nodeOwnerOrigin": "/nodes/15/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "top"
+          ],
+          "ownerPath": "second.fingers[\"top\"]",
+          "path": "second.fingers[\"top\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"top\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "top",
+            "blade"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts {\n        parent_frame = self.frame;\n        mount_offset = offset;\n        length = self.finger_length;\n    }",
+              "end_byte": 792,
+              "filename": "main.ok",
+              "source_id": "entry",
+              "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+              "start_byte": 603
+            },
+            "definition": {
+              "actualText": "public class Finger @ \"finger\" {\n    public param parent_frame @ \"parent-frame\": FrameRef = world;\n    public param mount_offset @ \"mount-offset\": Vec3<Length> = vec3(0[m], 0[m], 0[m]);\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = sphere(0.06[m]);\n    appearance = self.tint;\n    public follow mounting @ \"mounting\" {\n        parent = self.parent_frame;\n        child = self;\n        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));\n    }\n    public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n    private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }\n    public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }\n    public method bend_to @ \"bend-to\"(angle: Angle, duration: Time) -> Action {\n        return tween(self.flex, angle, duration);\n    }\n}",
+              "end_byte": 1910,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 743
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "finger"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "upper"
+          ],
+          "mappingOwnerOrigin": "/nodes/16/extras/ontokin/source_mapping/owner_path",
+          "node": 16,
+          "nodeOwnerOrigin": "/nodes/16/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second"
+          ],
+          "ownerPath": "second",
+          "path": "second.fingers[\"upper\"]",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"upper\"]/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "upper"
+          ]
+        },
+        {
+          "actualSourceSpans": {
+            "declaration": {
+              "actualText": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+              "end_byte": 1565,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 1466
+            },
+            "definition": {
+              "actualText": "private class Blade @ \"blade\" {\n    public param length @ \"length\": Length = 0.6[m];\n    public param tint @ \"tint\": Color = rgba(0.2, 0.6, 0.9, 1);\n    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));\n    appearance = self.tint;\n    public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }\n}",
+              "end_byte": 741,
+              "filename": "hinges.ok",
+              "source_id": "package:example.hinges@1.0.0",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+              "start_byte": 325
+            }
+          },
+          "definitionId": [
+            "package",
+            "example.hinges",
+            "hinges",
+            "definitions",
+            "blade"
+          ],
+          "id": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "upper",
+            "blade"
+          ],
+          "mappingOwnerOrigin": "/nodes/17/extras/ontokin/source_mapping/owner_path",
+          "node": 17,
+          "nodeOwnerOrigin": "/nodes/17/extras/ontokin/owner",
+          "ownerId": [
+            "keyed-rack",
+            "demo",
+            "second",
+            "fingers",
+            "upper"
+          ],
+          "ownerPath": "second.fingers[\"upper\"]",
+          "path": "second.fingers[\"upper\"].blade",
+          "programOwnerOrigin": "/extras/ontokin/program/occurrences/second.fingers[\"upper\"].blade/owner_path",
+          "sourceBaselinePathComponents": [
+            "second",
+            "fingers",
+            "upper",
+            "blade"
+          ]
+        }
+      ],
+      "sourceHashes": {
+        "hinges.ok": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+        "main.ok": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+      },
+      "sourceOwnerlessRoots": 2,
+      "sourceOwnershipEdges": 16
+    }
+  ],
+  "method": "Direct GLB chunk/JSON traversal joined to independent original source witnesses; no producer sidecar or project module",
+  "schema": "ontokin.c257.independent-artifact-baseline/1"
+}
