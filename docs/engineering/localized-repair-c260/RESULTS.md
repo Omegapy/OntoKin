@@ -42,8 +42,8 @@ and original findings remain preserved. No frozen language semantics changed.
 
 The author link-check path-normalization failure and the reviewer's initial
 object-order assumption failure remain separate from corrected successful
-inspection. The full original scripts/logs are retained in the author/review
-evidence directories. Neither failure is reported as a product defect.
+inspection. Available inspection scripts, failure records and recorded logs are retained
+in the author/review evidence directories. Neither failure is reported as a product defect.
 
 The first integration candidate failed six relative-link checks inside the preserved
 first-draft copies. Those original bytes now use `.source` suffixes with an exact
