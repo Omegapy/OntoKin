@@ -380,14 +380,16 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none.
-State: RELEASED by C256 documentation closure.
-Previous owner: `c256-root-da3bfd223c61`.
-Scope: [C256 finite GLB reader #241](https://github.com/Omegapy/OntoKin/issues/241).
+Owner: `c257-root-da3bfd223c61-20261117`.
+State: ACTIVE for C257 integration and handoff closure.
+Scope: [C257 finite ownership reader #243](https://github.com/Omegapy/OntoKin/issues/243).
+Acquired at: 2026-11-17T14:14:10Z.
+Expires at: 2026-11-17T14:44:10Z.
+Observed base: `23b1d2b5abafde6a5826827c30bc1bbf8552ff8e`.
 
-PR #242 merged at `6c497c666a301f3da74b04181d6bff62e61380e8` with the exact reviewed tree. Fresh reader, C255, C253 and documentation checks pass on that observed main. [Executed integration evidence](docs/engineering/localized-repair-c256/evidence/integration/INTEGRATION.json). The C256 work branch is absent; author histories remain preserved separately. This closure releases the lease acquired at 2026-11-17T03:37:19Z and previously expiring at 2026-11-17T04:07:19Z.
+The ownership-only scientific reader at `499a19d030a06609564390877a596d53dc015a7a` passes 23 authored methods, 107 independent controls and structural review. Existing C256/C255/C253 focused checks pass. Source author owns only `docs/engineering/localized-repair-c257/`; this integrator reserves shared README, GOAL, AGENTS, STATUS and documentation-index changes, reviewed PR integration, resulting-main verification and delivery closure. No successor feature is reserved or started.
 
-Scope #241 now requires only final package verification, fresh offline restoration and confirmed saved delivery. C234's already-merged branch remains a separate authenticated-deletion blocker under #240; C174 remains a justified historical archive. Complete this handoff and stop. The next semantic-observation component is a separate, unstarted scope.
+C256's saved handoff, complete restore and scope #241 closure are verified. C234's already-merged branch remains the explicit deletion blocker under #240; C174 remains a justified historical archive. This lease changes no scientific acceptance or released behavior.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
