@@ -1,0 +1,267 @@
+# C260 finite hinge-declaration observation contract
+
+**Version: 0.1.0.** Contract identifier:
+`ontokin.c260.hinge-declarations/0.1`.
+This document specifies a later read-only observation component. C260 itself
+contains no implementation. Independent review and publication receipts are
+separate from the contract's behavioral requirements.
+
+## 1. Purpose and governing meaning
+
+Observe the **declared** hinge kind, ordered site endpoints, axis, closed limits
+and initial coordinate for the frozen C253 public keyed-rack family. Derive
+these facts from actual supplied `.ok` bytes and separately read the actual GLB
+joint rows. A successful comparison establishes agreement of these fields and
+their source/object associations only.
+
+The adopted [core specification](../../language-design/OK-LANG-001-core-language-specification.md)
+sections 5.3, 6.1 and 7.2–7.4 govern units, identity, sites and joints. The
+[construction specification](../../language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md)
+governs pinned modules, keyed occurrences and GLB/0.2 source associations.
+[OK-ENG-002](../OK-ENG-002-3d-scene-animation-export-and-visual-validation.md)
+section 5 distinguishes preserved relationship metadata from baked motion.
+The [C210 transport contract](../semantic-export-c210/CONTRACT.md) does not make
+its producer sidecar an independent source of hinge truth.
+
+This is a deliberately smaller observation profile than the language. Refusing
+a valid but unsupported expression means **not observed under this profile**;
+it does not redefine that expression as invalid OntoKin. No language or exporter
+semantics, C253/C255 formulas, or prior tolerance is changed.
+
+## 2. Four distinct authority boundaries
+
+These names describe the required future interfaces; they are not callable
+APIs delivered by C260.
+
+| Interface | Permitted result |
+| --- | --- |
+| `observe_source_hinges(source_files)` | Source-derived hinge occurrences and definitions, ordered endpoint site associations, literal values and exact byte witnesses. No artifact agreement or historical admission. |
+| `observe_glb_hinges(raw)` | Untrusted joint rows, object/source-map claims and actual JSON pointers. No independent source truth or accepted-revision claim. |
+| `compare_hinges(source_files, raw)` | Complete set agreement for supported hinge fields after source/program/object association. Source-derived site records remain distinct from artifact path claims. |
+| `read_bound_endpoint(repo, endpoint)` | The same comparison after exact original source and GLB size/hash admission for `before` or `after`. |
+
+The first three interfaces must permit supported changed inputs. They must not
+hardcode the original eight joints, names, values or original hashes. Changed
+dependency bytes require an updated exact import digest and corresponding
+program/source claims. Only the fourth interface labels the original historical
+inputs as admitted. No interface grants execution or release authority.
+
+The exact [input bindings](INPUTS.json) identify the existing C257 lexical,
+module and bounded occurrence utilities that may be reused read-only. Their
+ownership results cannot supply a hinge, site endpoint, axis, limit or initial
+value. Reuse must preserve their exact input binding and refusal behavior;
+additional source joint/site and artifact association checks belong to the new
+component. Calling an ownership/follow comparator is not independent hinge
+derivation. Product parsers/evaluators/exporters, C255 expected records, producer
+sidecars and sampled poses must not supply expected hinge fields.
+
+## 3. Supported source declarations and associations
+
+### 3.1 Module and occurrence context
+
+Admit exactly the supplied entry `main.ok` and pinned leaf
+`example.hinges@1.0.0` source `hinges.ok`, both `construction-0.1`. Resolve classes
+through the actual import alias and declaring module. Definitions with omitted
+module visibility follow the adopted public default. Private imported classes
+are inaccessible; a private ordinary part inside its defining class remains
+accessible there.
+
+Use the C257 bounded occurrence subset: scene root objects, ordinary parts, and
+keyed generated parts over a direct owner keyed parameter. Membership comes
+from a direct typed keyed literal or a helper that directly returns one, using
+the final direct owner override before the class default. Each observed keyed
+input must contain 1–64 keys, retaining C257's nonempty finite subset. An empty
+typed keyed value is language-valid but unsupported here. Keys and occurrence
+containment determine identity; generator order does not. Numeric keyed values
+and helper arguments do not supply hinge fields. Nested/per-key overrides of
+membership are unsupported and refuse. Other original length overrides remain
+unobserved because this profile does not evaluate endpoint poses or geometry.
+
+Reject duplicate relevant names/keys, reserved implicit-member collisions and
+shadowing of predefined names used by this resolver. In particular, authored
+members cannot substitute for `self`, `frame` or `origin`, or turn the observed
+`vec3`/`range` constructors into user calls. An ambiguous source is never
+resolved by declaration order or fixture similarity.
+
+### 3.2 Hinge declaration
+
+Every joint in an instantiated class must be an explicitly public or private
+`joint NAME @ "KEY": hinge` declaration with exactly one assignment each for
+`parent`, `child`, `axis`, `limits` and `initial`. There are no optional defaults
+for these five fields. Duplicate/missing/extra fields refuse. Scene-level
+joints, another joint kind, inheritance, relation overrides and joint syntax in
+an unsupported position refuse. Uninstantiated definitions are not qualified;
+the observer is not a complete source-validity checker.
+
+The hinge occurrence ID is its owning object occurrence ID followed by its
+literal member key. Its definition ID is the owning class definition ID followed
+by that key. These namespaces are distinct. A reused class produces separate
+hinge occurrences that share a definition. Record the literal name/key,
+defining source/hash/span, owning occurrence/class, generation witnesses and
+the actual source expressions for all five fields.
+
+### 3.3 Ordered site endpoints
+
+Support `self.SITE` and `self.PART.SITE`, where `PART` is one directly declared
+ordinary part and the terminal name denotes an explicitly declared site.
+Resolve each token in its actual lexical class and module. A private current
+class part can be traversed by that class; a terminal site on another class
+must be public. A site on `self` may be private. Reject arbitrary object
+references, keyed traversal inside the endpoint expression, deeper chains,
+aliases/parameters/computed `SiteRef` values and implicit `origin` endpoints in
+this finite subset. The language may support some of these separately.
+
+Retain the parent/child order. The endpoints must belong to two distinct object
+occurrences. A site occurrence ID is its actual owning object ID followed by
+the site's literal key; its definition ID extends its defining class ID.
+Part names, site names and stable keys are separately resolved. A dotted
+display path, a shared suffix or the joint's owning object alone is insufficient
+to identify a site. Legal keys containing dots, underscores or hyphens remain
+opaque literal keys.
+
+Endpoint sites must have the three declared assignments `pose`, `interface`
+and `size` exactly once. For the limited source compatibility check, `interface`
+is a nonempty literal string and `size` is a nonnegative literal Length in m,
+cm or mm. Require exact equality of both endpoints' interface strings and
+canonical sizes. Record these as **source-only** compatibility facts. Computed
+or parameterized interface/size forms refuse. The `pose` expression is retained
+as a byte witness but is not evaluated. Its frame, orientation, offset and
+time independence remain unqualified by this component, including the existing
+`-self.length / 2` child-site offset.
+
+## 4. Literal values and numerical policy
+
+### 4.1 Axis subset
+
+`axis` must be `vec3` of three signed dimensionless numeric literals. After
+canonical binary64 conversion, admit exactly one component equal to +1 or -1
+and the other two equal to zero. This covers the six signed coordinate basis
+axes and both original endpoints. Parent-site axes provide the reference frame;
+no world-axis value is inferred.
+
+Every admitted axis has norm exactly one, so the language's normalization is
+the identity operation. **Do not canonicalize axis sign.** Reversing an axis
+without transforming the coordinate convention changes the declared field.
+Zero, nonunit and nonbasis vectors refuse; a normalized nonbasis vector may
+be valid in OntoKin but is outside this observer. General normalization and
+its rounding policy require a later version, not an implicit extension.
+
+### 4.2 Angles and site sizes
+
+`limits` must be `range(LOW, HIGH)` and `initial` one signed Angle literal. Only
+`deg` and `rad` suffixes are supported. Parameters, even typed Angle parameters,
+references, arithmetic, calls other than the named constructors, conditionals
+and computed bounds refuse. The baseline contains only these literals, so no
+parameter dependency is silently substituted by its original value.
+
+Combine the exact decimal literal with the exact unit factor and round once
+to canonical binary64, ties to even. `rad` has factor one; `deg` has factor
+`Pi64/180`, with `Pi64` the exact binary64 value
+`0x1.921fb54442d18p+1`. Use the represented binary64 Pi64, not mathematical pi
+or a library approximation. Length factors are exactly 1, 1/100 and 1/1000 for
+m, cm and mm. Apply unary sign without another arithmetic rounding. All
+canonical values must be finite. Positive and negative zero compare equally.
+
+Require `LOW <= HIGH` and `LOW <= initial <= HIGH` on the canonical values.
+Boundaries are inclusive and a zero-width range is admitted. No epsilon widens
+a limit. Original ±45 degrees become ±`0x1.921fb54442d18p-1` radians, and the
+initial 0 radians is exactly zero.
+
+Source/artifact comparison uses **exact canonical numeric equality** for this
+literal/basis subset. Artifact JSON numbers represent canonical radians for
+limits/initial and dimensionless axis components. JSON integers and floats may
+represent numbers; booleans, strings, nonfinite values and wrong shapes refuse.
+Do not normalize, round again, change sign, sort limits or clamp an artifact
+value. This policy introduces no tolerance for general computed hinges and
+makes no exporter-wide error guarantee. The C258 quaternion allowance is
+unrelated and must not be borrowed for axes or angles.
+
+## 5. Actual artifact fields and comparison
+
+Read the exact GLB JSON chunk under `ontokin.glb/0.2`, schema `0.2` and profile
+`construction-0.1`. Each `/extras/ontokin/joints/i` row has exactly `path`,
+`element_id`, `kind`, `parent_site`, `child_site`, `axis`, `limits` and `initial`.
+`kind` must be `hinge`; axis is a three-number tuple, limits a two-number tuple
+and initial a number. In the raw artifact interface, these remain claims.
+
+Before comparison, bind actual source hashes/imports and the canonical program
+manifest/revision to `/extras/ontokin/source`, `/extras/ontokin/program`, the
+complete object occurrence table and each corresponding object node's
+`source_mapping`, `class_name`, `element_id`, `path` and `program_revision`.
+Repeated source, class, key, revision and byte-span claims must agree. Source
+byte bounds are integers, never booleans or fractional numbers, and must match
+the actual declarations. Node order and joint-row order do not define identity.
+
+Associate each joint through the complete source-derived owning object and
+class mapping, its full occurrence ID and its independently rendered path.
+Require an exact one-to-one set: no missing, extra or duplicated joint IDs or
+paths. The owning object must exist exactly once in the full object mapping.
+Associate each artifact endpoint path with one complete source-derived site
+path on its independently mapped owning object. Do not split a path on dots
+or discard quoted key boundaries. Compare endpoint order and all numerical
+fields without fitting to motion samples.
+
+The actual artifacts have **no direct site table, joint definition ID, joint
+source span, site definition ID or site source span**. An artifact endpoint is
+a path claim, not an embedded site definition. Source-based associations must
+be labeled derived; the absent artifact fields must remain absent. The axis
+frame is the parent-site convention, not a separately encoded frame field.
+Endpoint site poses, interface/size copies and joint-coordinate evolution are
+not directly observed from this GLB. No source-derived value may be presented
+as a direct artifact measurement.
+
+## 6. Bounds and refusal behavior
+
+Preserve the inherited two-file closure, 65,536 bytes/8,192 tokens per source,
+32 nesting levels, 32 definitions per module, 128 objects and 1–64 unique keys
+per literal keyed input. Add at most 128 hinge rows and 256 distinct referenced
+sites. Authored declaration and keyed-input keys must satisfy the adopted ASCII
+grammar `[A-Za-z0-9][A-Za-z0-9._-]{0,63}`; reject invalid or longer keys before
+identity expansion. This validation is required in addition to inherited
+generic string checks. Other consumed nonempty text and serialized identity
+components have a resource cap of 512 Unicode scalar values without control or
+surrogate characters; that cap does not enlarge the authored stable-key domain.
+Identity arrays have at most 32 components. Recursive containment, duplicate
+identities and ambiguous bindings refuse.
+
+Admit at most 4 MiB GLB with exactly one JSON chunk of at most 2 MiB followed
+by one BIN chunk, aligned lengths and an exact GLB 2 header. Reject duplicate
+JSON keys. Before numeric allocation/conversion, bound each numeric lexeme to
+64 characters and its explicit exponent to [-400, 400]. Nonzero values after
+the selected unit factor must have adjusted decimal exponent in [-324, 308];
+zero still obeys the explicit-exponent bound. Nonfinite canonical results
+refuse. These limits apply to all numerical fields consumed by this profile.
+
+Raw interfaces consume supplied `bytes` only. The historical file interface
+checks expected size before bounded reads and SHA-256, rejects symbolic-link
+files/ancestors, and refuses paths outside the supplied repository. Missing
+files, symlink loops, permission errors, malformed UTF-8/JSON/GLB, recursion,
+overflow and unsupported source forms become explicit typed refusals. No
+network lookup, ambient module, fallback parser, partial success or silently
+omitted row can complete a failed observation.
+
+Refusal categories must distinguish malformed/contradictory input, supported
+field disagreement, historical byte mismatch, resource limit, unsupported
+source form and I/O failure. They are observer outcomes, not substituted
+OntoKin compiler diagnostics. A failed comparison retains its input identities
+and reason without emitting a qualified hinge set.
+
+## 7. Required qualification and nonclaims
+
+The [control plan](CONTROL-PLAN.md) is mandatory for a later implementation and
+remains unrun in C260. Independent review must derive expected values without
+the observer, vary source and metadata separately, include supported paired
+changes and distinguish missing direct provenance from source associations.
+Retain every failed attempt and exact checked source/input hashes.
+
+A successful finite result does not validate site poses, endpoint world
+alignment, combined follow/joint pose authority, physical modes, joint cycles,
+action admission or motion. It does not imply complete source/glTF validity,
+complete C255 semantic records, accepted revisions, invalid-edit atomicity,
+clean rebuild equivalence, native behavior, model-trial success or comparative
+advantage. Unrelated metadata may remain unobserved; no pass endorses it.
+
+After contract review, applicable documentation checks and integration, create
+and verify one saved handoff and stop. Implementing this contract is the next
+separate bounded scope. Further source-expression support needs an explicit
+versioned amendment and new independent controls before it is claimed.
