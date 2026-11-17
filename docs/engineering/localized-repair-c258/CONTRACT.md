@@ -1,0 +1,153 @@
+# C258 finite explicit-follow observation contract
+
+Status: the finite contract was independently approved at commit
+`4cc41b0586e433caa4c70d5f819cad781d649a89` before implementation. The approved
+original bytes and receipt are retained in the [contract evidence](evidence/contract-review/APPROVAL.json).
+The [results](RESULTS.md) identify the subsequently reviewed implementation.
+C258 changes no language semantics or predecessor files. The inputs are the
+same two-source C210 public family bound by C253.
+
+## One observation component
+
+Derive explicit follow declarations and constant offsets independently from
+actual `.ok` source, then compare actual GLB follow metadata. A follow defines
+the child's frame from the stated parent frame and rigid offset. Ownership,
+glTF transform hierarchy and a mechanical connection are different relations.
+
+The [adopted frame/follow rules](../../language-design/OK-LANG-001-core-language-specification.md)
+and [construction scope/identity rules](../../language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md)
+govern interpretation. No product parser/evaluator, C255 expected answers or
+producer sidecar supplies these observations.
+
+| API | Authority |
+| --- | --- |
+| `observe_source_follows(source_files)` | Source-derived full relation/child/definition associations, resolved parent frame, constant offset and exact UTF-8 byte witnesses. |
+| `observe_glb_follows(raw)` | Untrusted follow rows and relevant typed node-property claims, with actual JSON pointers. |
+| `compare_follows(source_files, raw)` | Full source/artifact association and agreement of the supported follow fields. |
+| `read_bound_endpoint(repo, endpoint)` | The same comparison after exact original source and artifact size/hash admission. |
+
+The first three APIs can inspect supported changed inputs. They do not label
+them historical artifacts. The historical API admits only the original before
+and after bytes. All unsupported source forms and contradictory/malformed
+claims produce typed refusals; no expected value is inserted to fill a gap.
+
+## Supported source forms
+
+Reuse the frozen C257 lexical/module and bounded source/identity utilities at
+SHA-256 `c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1` as an
+explicit read-only dependency. Its ownership results do not supply follow
+parent, child or offset values. The new observer reads follow blocks and their
+actual parameter/generator dependencies independently.
+
+Admit explicitly public/private class-member follows with exactly parent, child
+and offset assignments. Parameters and parts retain their required explicit
+visibility; omitted module definition visibility follows the adopted public
+default. Enforce unique names/keys, no predefined-symbol shadowing, and private
+parameter access at every used default/initializer boundary.
+The child is the current instance (`self`). A parent is `world`, the current
+lexical instance frame, or a declared FrameRef parameter resolved from its
+default or direct ordinary/generated-part initializer. The rigid offset is
+`pose(frame, position, quat(...))`; its resolved frame must be the exact parent
+frame. No string-prefix similarity substitutes for frame identity.
+
+Positions are `Vec3<Length>` parameters, generated keyed-value binders or
+`vec3` of signed supported length values. Lengths use m, cm or mm literals;
+the original helper's one Length parameter may supply signed vector components.
+The helper must directly return a typed literal keyed-vector value and be
+called with a supported literal Length. Keyed membership and values use the
+owner's final direct input override before the class default. Source order and
+lexical display names do not replace stable keys.
+
+Follow-affecting nested/per-key overrides are outside this finite profile and
+must refuse. Unrelated original length overrides remain unobserved as such.
+The reader must not silently ignore an override of any dependency that it does
+use. Class/module visibility, declared parameter types and initializer lexical
+scope remain mandatory. A missing initializer assignment uses the actual
+supported class default, never an expected fixture value.
+
+Literal quaternion arguments are dimensionless finite canonical numeric
+values. Admit the adopted norm condition `abs(norm(q)-1) <= 1e-12`; reject
+invalid tuples before normalization. Derive normalized canonical-sign WXYZ
+projections independently. Do not infer an offset rotation from sampled motion.
+
+No general expression evaluator is introduced. Unsupported arithmetic/calls,
+conditionals, sites-as-parent, arbitrary reference traversal, inheritance,
+time-varying offsets and child references other than `self` refuse. Checks
+needed to admit the followed child are limited to prescribed/no_body defaults
+or supported explicit declarations and absence of authored child placement.
+This does not qualify general physical or motion-authority semantics.
+
+## Numeric comparison policy
+
+Convert supported decimal lengths and exact m/cm/mm factors as rationals, then
+round once to binary64. Unary sign introduces no additional arithmetic error;
+translation comparison is exact canonical-value equality in this subset.
+
+Check quaternion constructor eligibility using exact squared sums `S` of the
+canonical binary64 arguments and exact rational bounds `(1 +/- 1e-12)^2`.
+For each component, the magnitude to project is `abs(q_i) / sqrt(S)`.
+Use 100-digit Decimal arithmetic only to propose a binary64 candidate, then
+prove its rounding interval with exact Fraction comparisons. Compare
+`q_i^2 / S` with the squares of the exact midpoints between that candidate and
+its adjacent binary64 values. Midpoint equality selects the value with the
+even significand. Handle zero and the minimum subnormal explicitly; retain
+the original component sign, then apply the adopted canonical quaternion sign.
+The candidate and its two immediate neighbours are the complete bounded search.
+If none has a proven interval, return a typed projection refusal. Decimal
+precision alone never establishes a successful projection. Every accepted
+source component is therefore verified as round-to-nearest, ties-to-even.
+
+Artifact comparison uses an explicit **C258 comparison policy**, not a proved
+exporter error bound: the unmodified finite WXYZ components must agree with
+one common sign of the source result within eight ULPs of each nonzero source
+component. Zero source components require exact zero. Compare differences and
+the ULP budget as exact rational values to avoid another boundary rounding.
+Independently admit the raw artifact norm under the same 1e-12 condition;
+never normalize or repair the artifact tuple. The allowance admits small
+projection differences for this observation policy without certifying the
+arithmetic of any exporter implementation. Record the policy and exact-source
+projection method in every result. C253/C255 formulas and tolerances are unchanged.
+
+## Actual artifact association
+
+Read `/extras/ontokin/follows` fields `path`, `element_id`, `parent_frame`,
+`child_object`, `offset_position_m` and `offset_rotation_wxyz` directly from
+the actual GLB JSON chunk. Compare complete relation IDs, full associated child
+IDs/classes and exact source/program bindings. Resolve object frame paths by
+the validated full object mapping, without splitting dotted literal keys.
+Relevant typed node FrameRef/Vec3 parameter copies must also agree.
+Only the directly used child parameter copies are qualified here; parent keyed
+property dumps, artifact body/motion fields and joint-wide authority are not.
+
+The GLB has no direct follow-definition table or follow source-span authority.
+Those artifact fields remain absent. A source-derived relation definition and
+its byte span can be associated through the validated child/class and actual
+relation member key, but must never be reported as directly read from artifact
+metadata. Offset coordinates refer to `parent_frame` by the transport contract;
+there is no separate encoded offset-frame field to fabricate.
+
+## Limits, checks and nonclaims
+
+Inherit C257's two-file closure, 65,536 bytes and 8,192 tokens per source,
+32 nesting levels, 128 objects, 64 keys per input, 4 MiB GLB and 2 MiB JSON
+limits. Add a maximum of 128 follows, 64 helper calls, 4,096 expression steps
+and 64 characters per numeric lexeme. Before Decimal/Fraction construction or
+powers of ten, bound the explicit decimal exponent to [-400, 400] and the
+nonzero adjusted exponent after the m/cm/mm factor to [-324, 308]. Zero also
+has to pass the explicit-exponent bound. Unsupported exponents refuse rather
+than allocating arbitrarily large integers or silently rounding them away.
+Reject repeated relation identities,
+ambiguous declarations, duplicate incoming follows and follow-graph cycles.
+Bound reads before allocation/hash where applicable and normalize structural,
+numeric, recursion and I/O errors as explicit refusals.
+
+Independent review must exercise actual source/metadata changes, exact frame
+identity and lexical scope, unit conversions and quaternion validity, identities
+and source bindings, absent/extra/duplicate rows, relevant repeated claims,
+unsupported forms, and resource/refusal paths. Original failures stay retained.
+
+This component does not produce complete C255 semantic records, prove complete
+source/glTF validity, observe hinges, execute world motion or establish accepted
+revisions, clean rebuilds, invalid-edit atomicity, native/model trials or
+comparative advantage. After its own reviewed integration and verified saved
+handoff, stop. Do not begin hinge work in this scope.

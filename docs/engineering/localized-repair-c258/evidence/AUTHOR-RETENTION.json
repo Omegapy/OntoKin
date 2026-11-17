@@ -1,0 +1,52 @@
+{
+  "schema": "ontokin.c258.author-retention/0.1",
+  "scope": "Exact first-smoke, contract review and four author attempts; later independent reviews retained separately.",
+  "firstSmoke": {
+    "sourceCommit": "85b2d309ac94e8f084fe275a198b7cd333b1ce0f",
+    "location": "first-smoke/IMPLEMENTATION-CHECKPOINT-01.json"
+  },
+  "attempts": [
+    {
+      "location": "author-checks/attempt-01",
+      "executedHead": "85b2d309ac94e8f084fe275a198b7cd333b1ce0f",
+      "uncommittedTests": true,
+      "subsequentIdenticalCommittedInputs": "5878608ba1431826bce18763e27a834c674ec94b",
+      "outcome": "26 methods passed"
+    },
+    {
+      "location": "author-checks/attempt-02",
+      "executedHead": "b8ed1559f279a179c8b5ebaf84f63d5173fafdbf",
+      "uncommittedTests": false,
+      "outcome": "26 passed, 1 failed test assertion; actual typed refusal was C257_UNSUPPORTED_MEMBER instead of expected CLASS_FIELD; production correctly refused"
+    },
+    {
+      "location": "author-checks/attempt-03",
+      "executedHead": "1dfe9d022d0774e311a873ee5eb7a8ba33aab3be",
+      "uncommittedTests": false,
+      "outcome": "27 methods passed; only assertion correction since previous attempt"
+    },
+    {
+      "location": "author-checks/attempt-04 (logical paths resolved in EVIDENCE-LOCATIONS.json)",
+      "executedHead": "2bca9f7d2cba8996043bbfeae0c2855def5d7076",
+      "uncommittedTests": false,
+      "outcome": "28 methods passed; only filesystem RuntimeError normalization and symlink regression since prior scientific candidate"
+    }
+  ],
+  "replay": "Restore each identified Git commit in an isolated hosted worktree, then execute its recorded command. Copied reader/test scripts bind exact executed bytes and are not standalone relocated programs because the pinned dependency is repository-relative.",
+  "archivalNames": [
+    {
+      "originalAuditRelativePath": "contract-review/CONTRACT.md",
+      "retainedPath": "contract-review/CONTRACT.md.txt",
+      "bytes": 8080,
+      "sha256": "fb32e2a626b1a4c0d55e9dce752f6deff00923f7e1d7aa11f0e7a77f2ed5497a",
+      "reason": "Exact historical bytes retained as text; original repository-relative links remain evidence and are not relocated active navigation."
+    },
+    {
+      "originalAuditRelativePath": "contract-review/attempt-02/CONTRACT.md",
+      "retainedPath": "contract-review/attempt-02/CONTRACT.md.txt",
+      "bytes": 9416,
+      "sha256": "e099e66daf6b498523010eff5eb0556eee59633f2a05d8211d196f717e24cf1d",
+      "reason": "Exact historical bytes retained as text; original repository-relative links remain evidence and are not relocated active navigation."
+    }
+  ]
+}

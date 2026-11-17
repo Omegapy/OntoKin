@@ -1,0 +1,59 @@
+diff --git a/docs/engineering/localized-repair-c258/CONTRACT.md b/docs/engineering/localized-repair-c258/CONTRACT.md
+index c20280f5..8f2c8dd7 100644
+--- a/docs/engineering/localized-repair-c258/CONTRACT.md
++++ b/docs/engineering/localized-repair-c258/CONTRACT.md
+@@ -80,16 +80,30 @@ Convert supported decimal lengths and exact m/cm/mm factors as rationals, then
+ round once to binary64. Unary sign introduces no additional arithmetic error;
+ translation comparison is exact canonical-value equality in this subset.
+ 
+-Check quaternion constructor eligibility using exact squared sums of canonical
+-binary64 arguments and exact squared bounds `(1 +/- 1e-12)^2`. Normalize with
+-100-digit Decimal arithmetic, then project to binary64 and canonical sign.
+-Compare the artifact's unmodified finite WXYZ components with either sign of
+-the source result, allowing at most eight ULPs per nonzero component and exact
+-zero components. This small allowance covers separately rounded squares,
+-three additions, a square root and division in a binary64 projection route;
+-it does not permit normalizing an invalid artifact quaternion. Independently
+-check the raw artifact norm before comparison. Record the allowance in every
+-result; preserve C253/C255 formulas and tolerances unchanged.
++Check quaternion constructor eligibility using exact squared sums `S` of the
++canonical binary64 arguments and exact rational bounds `(1 +/- 1e-12)^2`.
++For each component, the magnitude to project is `abs(q_i) / sqrt(S)`.
++Use 100-digit Decimal arithmetic only to propose a binary64 candidate, then
++prove its rounding interval with exact Fraction comparisons. Compare
++`q_i^2 / S` with the squares of the exact midpoints between that candidate and
++its adjacent binary64 values. Midpoint equality selects the value with the
++even significand. Handle zero and the minimum subnormal explicitly; retain
++the original component sign, then apply the adopted canonical quaternion sign.
++The candidate and its two immediate neighbours are the complete bounded search.
++If none has a proven interval, return a typed projection refusal. Decimal
++precision alone never establishes a successful projection. Every accepted
++source component is therefore verified as round-to-nearest, ties-to-even.
++
++Artifact comparison uses an explicit **C258 comparison policy**, not a proved
++exporter error bound: the unmodified finite WXYZ components must agree with
++one common sign of the source result within eight ULPs of each nonzero source
++component. Zero source components require exact zero. Compare differences and
++the ULP budget as exact rational values to avoid another boundary rounding.
++Independently admit the raw artifact norm under the same 1e-12 condition;
++never normalize or repair the artifact tuple. The allowance admits small
++projection differences for this observation policy without certifying the
++arithmetic of any exporter implementation. Record the policy and exact-source
++projection method in every result. C253/C255 formulas and tolerances are unchanged.
+ 
+ ## Actual artifact association
+ 
+@@ -114,7 +128,12 @@ there is no separate encoded offset-frame field to fabricate.
+ Inherit C257's two-file closure, 65,536 bytes and 8,192 tokens per source,
+ 32 nesting levels, 128 objects, 64 keys per input, 4 MiB GLB and 2 MiB JSON
+ limits. Add a maximum of 128 follows, 64 helper calls, 4,096 expression steps
+-and 64 characters per numeric lexeme. Reject repeated relation identities,
++and 64 characters per numeric lexeme. Before Decimal/Fraction construction or
++powers of ten, bound the explicit decimal exponent to [-400, 400] and the
++nonzero adjusted exponent after the m/cm/mm factor to [-324, 308]. Zero also
++has to pass the explicit-exponent bound. Unsupported exponents refuse rather
++than allocating arbitrarily large integers or silently rounding them away.
++Reject repeated relation identities,
+ ambiguous declarations, duplicate incoming follows and follow-graph cycles.
+ Bound reads before allocation/hash where applicable and normalize structural,
+ numeric, recursion and I/O errors as explicit refusals.

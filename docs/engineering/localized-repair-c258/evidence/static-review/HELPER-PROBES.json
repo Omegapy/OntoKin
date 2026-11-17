@@ -1,0 +1,94 @@
+{
+  "cases": [
+    {
+      "case": "missing",
+      "code": "DEPENDENCY",
+      "detail": "DEPENDENCY: frozen C257 file size/path",
+      "exceptionType": "Fault",
+      "expected": "Fault DEPENDENCY",
+      "helperBytes": null,
+      "helperOpenCount": 0,
+      "helperReadSizes": [],
+      "helperSha256": null,
+      "inputRecipe": {
+        "helper": "missing",
+        "readerSha256": "aea52fc143378ecc8a8237b732fd68ba4647958d04c75e3a086db1e2f51e9225"
+      },
+      "passed": true
+    },
+    {
+      "case": "same-size-wrong-hash",
+      "code": "DEPENDENCY",
+      "detail": "DEPENDENCY: frozen C257 bytes",
+      "exceptionType": "Fault",
+      "expected": "Fault DEPENDENCY",
+      "helperBytes": 35942,
+      "helperOpenCount": 1,
+      "helperReadSizes": [
+        35943
+      ],
+      "helperSha256": "a1747dc8dc69b0384c01e26168746d758baf38819e4628b3ba86d4c71718ec91",
+      "inputRecipe": {
+        "helper": "same-size-wrong-hash",
+        "readerSha256": "aea52fc143378ecc8a8237b732fd68ba4647958d04c75e3a086db1e2f51e9225"
+      },
+      "passed": true
+    },
+    {
+      "case": "one-byte-oversized",
+      "code": "DEPENDENCY",
+      "detail": "DEPENDENCY: frozen C257 file size/path",
+      "exceptionType": "Fault",
+      "expected": "Fault DEPENDENCY",
+      "helperBytes": 35943,
+      "helperOpenCount": 0,
+      "helperReadSizes": [],
+      "helperSha256": "6f2837a658185b0ba2e4b1514da288c509f29d38ab71ed319964b489e7132761",
+      "inputRecipe": {
+        "helper": "one-byte-oversized",
+        "readerSha256": "aea52fc143378ecc8a8237b732fd68ba4647958d04c75e3a086db1e2f51e9225"
+      },
+      "passed": true
+    },
+    {
+      "case": "symlink",
+      "code": "DEPENDENCY",
+      "detail": "DEPENDENCY: frozen C257 file size/path",
+      "exceptionType": "Fault",
+      "expected": "Fault DEPENDENCY",
+      "helperBytes": 35942,
+      "helperOpenCount": 0,
+      "helperReadSizes": [],
+      "helperSha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1",
+      "inputRecipe": {
+        "helper": "symlink",
+        "readerSha256": "aea52fc143378ecc8a8237b732fd68ba4647958d04c75e3a086db1e2f51e9225"
+      },
+      "passed": true
+    },
+    {
+      "approvedHelperLoaded": true,
+      "case": "exact-pinned",
+      "expected": "load approved helper",
+      "helperBytes": 35942,
+      "helperOpenCount": 1,
+      "helperReadSizes": [
+        35943
+      ],
+      "helperSha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1",
+      "inputRecipe": {
+        "helper": "exact-pinned",
+        "readerSha256": "aea52fc143378ecc8a8237b732fd68ba4647958d04c75e3a086db1e2f51e9225"
+      },
+      "passed": true
+    }
+  ],
+  "commit": "1dfe9d022d0774e311a873ee5eb7a8ba33aab3be",
+  "helperSha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1",
+  "numericOrSemanticControlsExecuted": false,
+  "passed": true,
+  "preservation": "Exact reader/helper and changed helper inputs retained; temporary layouts are fully reproduced by this script.",
+  "projectSourceEdits": false,
+  "readerSha256": "aea52fc143378ecc8a8237b732fd68ba4647958d04c75e3a086db1e2f51e9225",
+  "schema": "ontokin.c258.static-helper-admission-probes/0.1"
+}
