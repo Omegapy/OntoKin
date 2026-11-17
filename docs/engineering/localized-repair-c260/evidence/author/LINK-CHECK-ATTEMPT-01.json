@@ -1,0 +1,7 @@
+{
+  "status": "FAILED_INSPECTION_PATH_CHECK",
+  "error": "AssertionError for CONTRACT.md ../../language-design/OK-LANG-001-core-language-specification.md",
+  "cause": "The one-off check constructed an existing-repository path through the not-yet-created localized-repair-c260 directory, without normalizing .. before is_file. The target document exists.",
+  "remedy": "Normalize the candidate path using resolve(strict=False) before checking the existing target. No contract or repository source edit is required.",
+  "meaning": "Author inspection-script failure only; no product method executed. Original failed attempt retained."
+}

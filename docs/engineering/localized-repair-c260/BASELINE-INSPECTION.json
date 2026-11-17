@@ -1,0 +1,1508 @@
+{
+  "schema": "ontokin.c260.baseline-design-inspection/0.1",
+  "sourceRevision": "003b3a7827486405c3d00f039c1c9746c9be75fc",
+  "sourceTree": "325c7e50b42000e7c2976e3dd8c3babcec2649ba",
+  "purpose": "Fixed input inspection supporting contract review; not a candidate reader or product qualification.",
+  "sourceWitnesses": {
+    "libraryModule": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 15,
+      "endByteExclusive": 40,
+      "text": "module Hinges @ \"hinges\";",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "fingerClass": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 743,
+      "endByteExclusive": 775,
+      "text": "public class Finger @ \"finger\" {",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "bladeClass": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 325,
+      "endByteExclusive": 356,
+      "text": "private class Blade @ \"blade\" {",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "jointDeclaration": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 1570,
+      "endByteExclusive": 1772,
+      "text": "public joint flex @ \"flex\": hinge {\n        parent = self.pivot;\n        child = self.blade.base;\n        axis = vec3(0, 0, 1);\n        limits = range(-45[deg], 45[deg]);\n        initial = 0[rad];\n    }",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "parentExpression": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 1614,
+      "endByteExclusive": 1634,
+      "text": "parent = self.pivot;",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "childExpression": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 1643,
+      "endByteExclusive": 1667,
+      "text": "child = self.blade.base;",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "axisExpression": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 1676,
+      "endByteExclusive": 1697,
+      "text": "axis = vec3(0, 0, 1);",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "limitsExpression": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 1706,
+      "endByteExclusive": 1740,
+      "text": "limits = range(-45[deg], 45[deg]);",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "initialExpression": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 1749,
+      "endByteExclusive": 1766,
+      "text": "initial = 0[rad];",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "parentSite": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 1295,
+      "endByteExclusive": 1461,
+      "text": "public site pivot @ \"pivot\" {\n        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "childSite": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 563,
+      "endByteExclusive": 739,
+      "text": "public site base @ \"base\" {\n        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));\n        interface = \"hinged.part\";\n        size = 0[m];\n    }",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "childPart": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 1466,
+      "endByteExclusive": 1565,
+      "text": "private part blade @ \"blade\": Blade {\n        length = self.length;\n        tint = self.tint;\n    }",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "helperKeyLower": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 193,
+      "endByteExclusive": 228,
+      "text": "\"lower\": vec3(0[m], -spacing, 0[m])",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "helperKeyMiddle": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 238,
+      "endByteExclusive": 270,
+      "text": "\"middle\": vec3(0[m], 0[m], 0[m])",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "helperKeyUpper": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "sourceSha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+      "startByte": 280,
+      "endByteExclusive": 314,
+      "text": "\"upper\": vec3(0[m], spacing, 0[m])",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "beforeEntryModule": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "sourceSha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "startByte": 15,
+      "endByteExclusive": 47,
+      "text": "module KeyedRack @ \"keyed-rack\";",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "beforeScene": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "sourceSha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "startByte": 796,
+      "endByteExclusive": 817,
+      "text": "scene Demo @ \"demo\" {",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "beforeFirstRoot": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "sourceSha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "startByte": 902,
+      "endByteExclusive": 932,
+      "text": "object first @ \"first\": Rack {",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "beforeSecondRoot": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "sourceSha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "startByte": 1063,
+      "endByteExclusive": 1095,
+      "text": "object second @ \"second\": Rack {",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "beforeGenerator": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "sourceSha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "startByte": 603,
+      "endByteExclusive": 681,
+      "text": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "beforeDefaultMembership": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "sourceSha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "startByte": 333,
+      "endByteExclusive": 413,
+      "text": "public param mounts @ \"mounts\": Keyed<Vec3<Length>> = mech.three_mounts(0.6[m]);",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "beforeSecondKeyBottom": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "sourceSha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "startByte": 1222,
+      "endByteExclusive": 1231,
+      "text": "\"bottom\":",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "beforeSecondKeyLower": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "sourceSha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "startByte": 1271,
+      "endByteExclusive": 1279,
+      "text": "\"lower\":",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "beforeSecondKeyMiddle": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "sourceSha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "startByte": 1319,
+      "endByteExclusive": 1328,
+      "text": "\"middle\":",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "beforeSecondKeyUpper": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "sourceSha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "startByte": 1365,
+      "endByteExclusive": 1373,
+      "text": "\"upper\":",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "beforeSecondKeyTop": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "sourceSha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "startByte": 1412,
+      "endByteExclusive": 1418,
+      "text": "\"top\":",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "afterEntryModule": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "sourceSha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+      "startByte": 15,
+      "endByteExclusive": 47,
+      "text": "module KeyedRack @ \"keyed-rack\";",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "afterScene": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "sourceSha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+      "startByte": 796,
+      "endByteExclusive": 817,
+      "text": "scene Demo @ \"demo\" {",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "afterFirstRoot": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "sourceSha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+      "startByte": 902,
+      "endByteExclusive": 932,
+      "text": "object first @ \"first\": Rack {",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "afterSecondRoot": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "sourceSha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+      "startByte": 1063,
+      "endByteExclusive": 1095,
+      "text": "object second @ \"second\": Rack {",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "afterGenerator": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "sourceSha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+      "startByte": 603,
+      "endByteExclusive": 681,
+      "text": "public parts fingers @ \"fingers\": mech.Finger for (key, offset) in self.mounts",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "afterDefaultMembership": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "sourceSha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+      "startByte": 333,
+      "endByteExclusive": 413,
+      "text": "public param mounts @ \"mounts\": Keyed<Vec3<Length>> = mech.three_mounts(0.6[m]);",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "afterSecondKeyBottom": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "sourceSha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+      "startByte": 1222,
+      "endByteExclusive": 1231,
+      "text": "\"bottom\":",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "afterSecondKeyLower": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "sourceSha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+      "startByte": 1271,
+      "endByteExclusive": 1279,
+      "text": "\"lower\":",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "afterSecondKeyMiddle": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "sourceSha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+      "startByte": 1319,
+      "endByteExclusive": 1328,
+      "text": "\"middle\":",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "afterSecondKeyUpper": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "sourceSha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+      "startByte": 1365,
+      "endByteExclusive": 1373,
+      "text": "\"upper\":",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    },
+    "afterSecondKeyTop": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "sourceSha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+      "startByte": 1412,
+      "endByteExclusive": 1418,
+      "text": "\"top\":",
+      "selectedOccurrence": 0,
+      "matchingOccurrences": 1
+    }
+  },
+  "independentSourceRows": [
+    {
+      "path": "first.fingers[\"lower\"].flex",
+      "elementId": [
+        "keyed-rack",
+        "demo",
+        "first",
+        "fingers",
+        "lower",
+        "flex"
+      ],
+      "definitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "flex"
+      ],
+      "owningOccurrenceId": [
+        "keyed-rack",
+        "demo",
+        "first",
+        "fingers",
+        "lower"
+      ],
+      "owningClassDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger"
+      ],
+      "kind": "hinge",
+      "parentSitePath": "first.fingers[\"lower\"].pivot",
+      "parentSiteId": [
+        "keyed-rack",
+        "demo",
+        "first",
+        "fingers",
+        "lower",
+        "pivot"
+      ],
+      "parentSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "pivot"
+      ],
+      "childSitePath": "first.fingers[\"lower\"].blade.base",
+      "childSiteId": [
+        "keyed-rack",
+        "demo",
+        "first",
+        "fingers",
+        "lower",
+        "blade",
+        "base"
+      ],
+      "childSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "blade",
+        "base"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "axisFrame": "parent-site",
+      "limitsRad": [
+        -0.7853981633974483,
+        0.7853981633974483
+      ],
+      "initialRad": 0.0,
+      "sourceOnlySiteCompatibility": {
+        "interface": "hinged.part",
+        "sizeM": 0.0
+      },
+      "derivation": "Read joint/site/member keys from actual hinges.ok; expand three helper keys for first and five direct override keys for second; no product/expected module imported."
+    },
+    {
+      "path": "first.fingers[\"middle\"].flex",
+      "elementId": [
+        "keyed-rack",
+        "demo",
+        "first",
+        "fingers",
+        "middle",
+        "flex"
+      ],
+      "definitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "flex"
+      ],
+      "owningOccurrenceId": [
+        "keyed-rack",
+        "demo",
+        "first",
+        "fingers",
+        "middle"
+      ],
+      "owningClassDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger"
+      ],
+      "kind": "hinge",
+      "parentSitePath": "first.fingers[\"middle\"].pivot",
+      "parentSiteId": [
+        "keyed-rack",
+        "demo",
+        "first",
+        "fingers",
+        "middle",
+        "pivot"
+      ],
+      "parentSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "pivot"
+      ],
+      "childSitePath": "first.fingers[\"middle\"].blade.base",
+      "childSiteId": [
+        "keyed-rack",
+        "demo",
+        "first",
+        "fingers",
+        "middle",
+        "blade",
+        "base"
+      ],
+      "childSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "blade",
+        "base"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "axisFrame": "parent-site",
+      "limitsRad": [
+        -0.7853981633974483,
+        0.7853981633974483
+      ],
+      "initialRad": 0.0,
+      "sourceOnlySiteCompatibility": {
+        "interface": "hinged.part",
+        "sizeM": 0.0
+      },
+      "derivation": "Read joint/site/member keys from actual hinges.ok; expand three helper keys for first and five direct override keys for second; no product/expected module imported."
+    },
+    {
+      "path": "first.fingers[\"upper\"].flex",
+      "elementId": [
+        "keyed-rack",
+        "demo",
+        "first",
+        "fingers",
+        "upper",
+        "flex"
+      ],
+      "definitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "flex"
+      ],
+      "owningOccurrenceId": [
+        "keyed-rack",
+        "demo",
+        "first",
+        "fingers",
+        "upper"
+      ],
+      "owningClassDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger"
+      ],
+      "kind": "hinge",
+      "parentSitePath": "first.fingers[\"upper\"].pivot",
+      "parentSiteId": [
+        "keyed-rack",
+        "demo",
+        "first",
+        "fingers",
+        "upper",
+        "pivot"
+      ],
+      "parentSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "pivot"
+      ],
+      "childSitePath": "first.fingers[\"upper\"].blade.base",
+      "childSiteId": [
+        "keyed-rack",
+        "demo",
+        "first",
+        "fingers",
+        "upper",
+        "blade",
+        "base"
+      ],
+      "childSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "blade",
+        "base"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "axisFrame": "parent-site",
+      "limitsRad": [
+        -0.7853981633974483,
+        0.7853981633974483
+      ],
+      "initialRad": 0.0,
+      "sourceOnlySiteCompatibility": {
+        "interface": "hinged.part",
+        "sizeM": 0.0
+      },
+      "derivation": "Read joint/site/member keys from actual hinges.ok; expand three helper keys for first and five direct override keys for second; no product/expected module imported."
+    },
+    {
+      "path": "second.fingers[\"bottom\"].flex",
+      "elementId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "bottom",
+        "flex"
+      ],
+      "definitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "flex"
+      ],
+      "owningOccurrenceId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "bottom"
+      ],
+      "owningClassDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger"
+      ],
+      "kind": "hinge",
+      "parentSitePath": "second.fingers[\"bottom\"].pivot",
+      "parentSiteId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "bottom",
+        "pivot"
+      ],
+      "parentSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "pivot"
+      ],
+      "childSitePath": "second.fingers[\"bottom\"].blade.base",
+      "childSiteId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "bottom",
+        "blade",
+        "base"
+      ],
+      "childSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "blade",
+        "base"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "axisFrame": "parent-site",
+      "limitsRad": [
+        -0.7853981633974483,
+        0.7853981633974483
+      ],
+      "initialRad": 0.0,
+      "sourceOnlySiteCompatibility": {
+        "interface": "hinged.part",
+        "sizeM": 0.0
+      },
+      "derivation": "Read joint/site/member keys from actual hinges.ok; expand three helper keys for first and five direct override keys for second; no product/expected module imported."
+    },
+    {
+      "path": "second.fingers[\"lower\"].flex",
+      "elementId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "lower",
+        "flex"
+      ],
+      "definitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "flex"
+      ],
+      "owningOccurrenceId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "lower"
+      ],
+      "owningClassDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger"
+      ],
+      "kind": "hinge",
+      "parentSitePath": "second.fingers[\"lower\"].pivot",
+      "parentSiteId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "lower",
+        "pivot"
+      ],
+      "parentSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "pivot"
+      ],
+      "childSitePath": "second.fingers[\"lower\"].blade.base",
+      "childSiteId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "lower",
+        "blade",
+        "base"
+      ],
+      "childSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "blade",
+        "base"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "axisFrame": "parent-site",
+      "limitsRad": [
+        -0.7853981633974483,
+        0.7853981633974483
+      ],
+      "initialRad": 0.0,
+      "sourceOnlySiteCompatibility": {
+        "interface": "hinged.part",
+        "sizeM": 0.0
+      },
+      "derivation": "Read joint/site/member keys from actual hinges.ok; expand three helper keys for first and five direct override keys for second; no product/expected module imported."
+    },
+    {
+      "path": "second.fingers[\"middle\"].flex",
+      "elementId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "middle",
+        "flex"
+      ],
+      "definitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "flex"
+      ],
+      "owningOccurrenceId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "middle"
+      ],
+      "owningClassDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger"
+      ],
+      "kind": "hinge",
+      "parentSitePath": "second.fingers[\"middle\"].pivot",
+      "parentSiteId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "middle",
+        "pivot"
+      ],
+      "parentSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "pivot"
+      ],
+      "childSitePath": "second.fingers[\"middle\"].blade.base",
+      "childSiteId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "middle",
+        "blade",
+        "base"
+      ],
+      "childSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "blade",
+        "base"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "axisFrame": "parent-site",
+      "limitsRad": [
+        -0.7853981633974483,
+        0.7853981633974483
+      ],
+      "initialRad": 0.0,
+      "sourceOnlySiteCompatibility": {
+        "interface": "hinged.part",
+        "sizeM": 0.0
+      },
+      "derivation": "Read joint/site/member keys from actual hinges.ok; expand three helper keys for first and five direct override keys for second; no product/expected module imported."
+    },
+    {
+      "path": "second.fingers[\"upper\"].flex",
+      "elementId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "upper",
+        "flex"
+      ],
+      "definitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "flex"
+      ],
+      "owningOccurrenceId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "upper"
+      ],
+      "owningClassDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger"
+      ],
+      "kind": "hinge",
+      "parentSitePath": "second.fingers[\"upper\"].pivot",
+      "parentSiteId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "upper",
+        "pivot"
+      ],
+      "parentSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "pivot"
+      ],
+      "childSitePath": "second.fingers[\"upper\"].blade.base",
+      "childSiteId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "upper",
+        "blade",
+        "base"
+      ],
+      "childSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "blade",
+        "base"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "axisFrame": "parent-site",
+      "limitsRad": [
+        -0.7853981633974483,
+        0.7853981633974483
+      ],
+      "initialRad": 0.0,
+      "sourceOnlySiteCompatibility": {
+        "interface": "hinged.part",
+        "sizeM": 0.0
+      },
+      "derivation": "Read joint/site/member keys from actual hinges.ok; expand three helper keys for first and five direct override keys for second; no product/expected module imported."
+    },
+    {
+      "path": "second.fingers[\"top\"].flex",
+      "elementId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "top",
+        "flex"
+      ],
+      "definitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "flex"
+      ],
+      "owningOccurrenceId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "top"
+      ],
+      "owningClassDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger"
+      ],
+      "kind": "hinge",
+      "parentSitePath": "second.fingers[\"top\"].pivot",
+      "parentSiteId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "top",
+        "pivot"
+      ],
+      "parentSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "finger",
+        "pivot"
+      ],
+      "childSitePath": "second.fingers[\"top\"].blade.base",
+      "childSiteId": [
+        "keyed-rack",
+        "demo",
+        "second",
+        "fingers",
+        "top",
+        "blade",
+        "base"
+      ],
+      "childSiteDefinitionId": [
+        "package",
+        "example.hinges",
+        "hinges",
+        "definitions",
+        "blade",
+        "base"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "axisFrame": "parent-site",
+      "limitsRad": [
+        -0.7853981633974483,
+        0.7853981633974483
+      ],
+      "initialRad": 0.0,
+      "sourceOnlySiteCompatibility": {
+        "interface": "hinged.part",
+        "sizeM": 0.0
+      },
+      "derivation": "Read joint/site/member keys from actual hinges.ok; expand three helper keys for first and five direct override keys for second; no product/expected module imported."
+    }
+  ],
+  "actualArtifacts": {
+    "before": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534",
+      "bytes": 185276,
+      "jointRows": [
+        {
+          "pointer": "/extras/ontokin/joints/0",
+          "value": {
+            "path": "first.fingers[\"lower\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "first",
+              "fingers",
+              "lower",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "first.fingers[\"lower\"].pivot",
+            "child_site": "first.fingers[\"lower\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/1",
+          "value": {
+            "path": "first.fingers[\"middle\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "first",
+              "fingers",
+              "middle",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "first.fingers[\"middle\"].pivot",
+            "child_site": "first.fingers[\"middle\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/2",
+          "value": {
+            "path": "first.fingers[\"upper\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "first",
+              "fingers",
+              "upper",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "first.fingers[\"upper\"].pivot",
+            "child_site": "first.fingers[\"upper\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/3",
+          "value": {
+            "path": "second.fingers[\"bottom\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "second",
+              "fingers",
+              "bottom",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "second.fingers[\"bottom\"].pivot",
+            "child_site": "second.fingers[\"bottom\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/4",
+          "value": {
+            "path": "second.fingers[\"lower\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "second",
+              "fingers",
+              "lower",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "second.fingers[\"lower\"].pivot",
+            "child_site": "second.fingers[\"lower\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/5",
+          "value": {
+            "path": "second.fingers[\"middle\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "second",
+              "fingers",
+              "middle",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "second.fingers[\"middle\"].pivot",
+            "child_site": "second.fingers[\"middle\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/6",
+          "value": {
+            "path": "second.fingers[\"top\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "second",
+              "fingers",
+              "top",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "second.fingers[\"top\"].pivot",
+            "child_site": "second.fingers[\"top\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/7",
+          "value": {
+            "path": "second.fingers[\"upper\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "second",
+              "fingers",
+              "upper",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "second.fingers[\"upper\"].pivot",
+            "child_site": "second.fingers[\"upper\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        }
+      ],
+      "jointCount": 8,
+      "objectNodeCount": 18,
+      "sourceBindingPointers": [
+        "/extras/ontokin/source",
+        "/extras/ontokin/program"
+      ],
+      "programRevision": "sha256:8f9d976568e2a9fa39573e3fb90f616529097241a098b21d4eb22eabe4b7032f",
+      "directSiteTablePresent": false,
+      "jointDefinitionFieldsPresent": false,
+      "jointSourceSpanFieldsPresent": false,
+      "note": "Endpoint site paths are direct artifact claims; site identities/definitions are source associations, not artifact site records."
+    },
+    "after": {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+      "sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8",
+      "bytes": 185236,
+      "jointRows": [
+        {
+          "pointer": "/extras/ontokin/joints/0",
+          "value": {
+            "path": "first.fingers[\"lower\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "first",
+              "fingers",
+              "lower",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "first.fingers[\"lower\"].pivot",
+            "child_site": "first.fingers[\"lower\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/1",
+          "value": {
+            "path": "first.fingers[\"middle\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "first",
+              "fingers",
+              "middle",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "first.fingers[\"middle\"].pivot",
+            "child_site": "first.fingers[\"middle\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/2",
+          "value": {
+            "path": "first.fingers[\"upper\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "first",
+              "fingers",
+              "upper",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "first.fingers[\"upper\"].pivot",
+            "child_site": "first.fingers[\"upper\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/3",
+          "value": {
+            "path": "second.fingers[\"bottom\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "second",
+              "fingers",
+              "bottom",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "second.fingers[\"bottom\"].pivot",
+            "child_site": "second.fingers[\"bottom\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/4",
+          "value": {
+            "path": "second.fingers[\"lower\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "second",
+              "fingers",
+              "lower",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "second.fingers[\"lower\"].pivot",
+            "child_site": "second.fingers[\"lower\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/5",
+          "value": {
+            "path": "second.fingers[\"middle\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "second",
+              "fingers",
+              "middle",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "second.fingers[\"middle\"].pivot",
+            "child_site": "second.fingers[\"middle\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/6",
+          "value": {
+            "path": "second.fingers[\"top\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "second",
+              "fingers",
+              "top",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "second.fingers[\"top\"].pivot",
+            "child_site": "second.fingers[\"top\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        },
+        {
+          "pointer": "/extras/ontokin/joints/7",
+          "value": {
+            "path": "second.fingers[\"upper\"].flex",
+            "element_id": [
+              "keyed-rack",
+              "demo",
+              "second",
+              "fingers",
+              "upper",
+              "flex"
+            ],
+            "kind": "hinge",
+            "parent_site": "second.fingers[\"upper\"].pivot",
+            "child_site": "second.fingers[\"upper\"].blade.base",
+            "axis": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "limits": [
+              -0.7853981633974483,
+              0.7853981633974483
+            ],
+            "initial": 0.0
+          }
+        }
+      ],
+      "jointCount": 8,
+      "objectNodeCount": 18,
+      "sourceBindingPointers": [
+        "/extras/ontokin/source",
+        "/extras/ontokin/program"
+      ],
+      "programRevision": "sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082",
+      "directSiteTablePresent": false,
+      "jointDefinitionFieldsPresent": false,
+      "jointSourceSpanFieldsPresent": false,
+      "note": "Endpoint site paths are direct artifact claims; site identities/definitions are source associations, not artifact site records."
+    }
+  },
+  "numericDerivation": {
+    "pi64": "0x1.921fb54442d18p+1",
+    "angle": "round_binary64(exact_decimal(45) * exact_binary64(Pi64) / 180)",
+    "angleHex": "0x1.921fb54442d18p-1",
+    "signedBasisAxisNormalization": "identity; no sign canonicalization"
+  },
+  "executedChecks": {
+    "inputFileBindings": 12,
+    "sourceWitnesses": 37,
+    "artifactJointRows": 16,
+    "sourceDistinctJointOccurrences": 8,
+    "matchingC253Bindings": 5
+  },
+  "implementationQualification": false,
+  "futureControlPlanExecuted": false
+}
