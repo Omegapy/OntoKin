@@ -1,0 +1,303 @@
+#!/usr/bin/env python3
+"""Independent C261 raw-artifact controls; expected claims come from direct JSON bytes."""
+from __future__ import annotations
+import copy, hashlib, importlib.util, json, math, platform, struct, sys, traceback
+from pathlib import Path
+
+REPO = Path(sys.argv[1]).resolve()
+OUT = Path(sys.argv[2]).resolve()
+OUT.mkdir(parents=True, exist_ok=True)
+MODULE = REPO / "docs/engineering/localized-repair-c261/hinge_glb.py"
+PROOF = REPO / "docs/engineering/semantic-export-c210/evidence/proof"
+RAW = (PROOF / "before.glb").read_bytes()
+AFTER = (PROOF / "after.glb").read_bytes()
+JLEN = struct.unpack_from("<I", RAW, 12)[0]
+BIN = RAW[28 + JLEN:]
+BASE = json.loads(RAW[20:20 + JLEN])
+ROWS = []
+ASSERTIONS = 0
+SOURCE_HASH = hashlib.sha256(MODULE.read_bytes()).hexdigest()
+spec = importlib.util.spec_from_file_location("c261_independently_reviewed", MODULE)
+sut = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = sut
+spec.loader.exec_module(sut)
+
+def sha(value):
+    return hashlib.sha256(value).hexdigest()
+
+def ensure(condition, detail):
+    global ASSERTIONS
+    ASSERTIONS += 1
+    if not condition:
+        raise AssertionError(detail)
+
+def encode_json(raw_json, binary=BIN):
+    raw_json += b" " * (-len(raw_json) % 4)
+    binary += b"\0" * (-len(binary) % 4)
+    total = 28 + len(raw_json) + len(binary)
+    return struct.pack("<III", 0x46546C67, 2, total) + struct.pack("<II", len(raw_json), 0x4E4F534A) + raw_json + struct.pack("<II", len(binary), 0x004E4942) + binary
+
+def encode(doc):
+    return encode_json(json.dumps(doc, separators=(",", ":"), ensure_ascii=True, allow_nan=True).encode())
+
+def changed(fn):
+    doc = copy.deepcopy(BASE)
+    fn(doc)
+    return encode(doc)
+
+def meta(doc):
+    return doc["extras"]["ontokin"]
+
+def joint(doc):
+    return meta(doc)["joints"][0]
+
+def independent_doc(raw):
+    n = struct.unpack_from("<I", raw, 12)[0]
+    return json.loads(raw[20:20+n])
+
+def numeric_signature(value):
+    if isinstance(value, float):
+        return ("float", value.hex())
+    if isinstance(value, list):
+        return [numeric_signature(x) for x in value]
+    if isinstance(value, dict):
+        return {k:numeric_signature(v) for k,v in value.items()}
+    return value
+
+def audit(raw, report):
+    doc = independent_doc(raw)
+    expected = meta(doc)["joints"]
+    ensure(type(report) is dict, "public result is dict")
+    ensure(report.get("schema") == "ontokin.c261.glb-hinge-observation/0.1", "versioned result schema")
+    ensure(report.get("kind") == "untrusted-artifact-hinges", "raw observation explicitly untrusted")
+    ensure(report.get("artifactSha256") == sha(raw) and report.get("artifactBytes") == len(raw), "exact supplied artifact identity")
+    for flag in ("historicalInputsBound", "sourceAgreementVerified", "completeC255Semantic", "executionAllowed"):
+        ensure(report.get(flag) is False, "qualification remains false: " + flag)
+    ensure(len(report["records"]) == len(expected), "all actual rows retained")
+    for i,(record,row) in enumerate(zip(report["records"], expected)):
+        ensure(record["claims"] == row, "complete exact actual joint row " + str(i))
+        ensure(numeric_signature(record["claims"]) == numeric_signature(row), "numbers/signs retained " + str(i))
+        ensure(set(row) <= set(record["origins"]), "each consumed joint field has its actual pointer")
+        for field in row:
+            ensure(record["origins"][field] == "/extras/ontokin/joints/" + str(i) + "/" + field, "actual field pointer")
+        for field,tail in (("limitLow","limits/0"),("limitHigh","limits/1")):
+            if field in record["origins"]:
+                ensure(record["origins"][field] == "/extras/ontokin/joints/" + str(i) + "/" + tail, "actual component pointer")
+        ensure(set(record["claims"]) == {"path","element_id","kind","parent_site","child_site","axis","limits","initial"}, "no fabricated direct provenance")
+    ensure(len(report["objects"]) == len(doc["nodes"]), "all actual object nodes retained")
+    for index,record in enumerate(report["objects"]):
+        actual = doc["nodes"][index]["extras"]["ontokin"]
+        claims = {key: actual[key] for key in ("path","element_id","class_name","program_revision","source_mapping")}
+        claims["program_occurrence"] = meta(doc)["program"]["occurrences"][actual["path"]]
+        ensure(record["node"] == index and record["claims"] == claims, "complete actual object claim")
+        ensure(set(record["origins"]) == set(claims), "object origins cover exact claim fields")
+        for key,value in claims.items():
+            pointer = record["origins"][key]
+            target = doc
+            for token in pointer.split("/")[1:]:
+                token = token.replace("~1","/").replace("~0","~")
+                target = target[int(token)] if isinstance(target,list) else target[token]
+            ensure(target == value, "object claim pointer resolves to its own raw value")
+    source = report["sourceClaims"]
+    ensure(source["source"] == meta(doc)["source"], "complete source metadata claim")
+    expected_program = {key:meta(doc)["program"][key] for key in ("revision","entry_source_id","manifest","sources")}
+    ensure(source["program"] == expected_program, "exact declared program excerpt")
+    ensure(report["sourceOrigins"]["source"] == "/extras/ontokin/source", "exact source metadata pointer")
+    for key in expected_program:
+        ensure(report["sourceOrigins"]["program"][key] == "/extras/ontokin/program/"+key, "exact excerpt field pointer")
+    ensure(report["directSiteTableObserved"] is False and report["jointDefinitionOrSpanObserved"] is False, "no unsupported direct authority observed")
+    return report
+
+def case(name, raw, accept, group, extra=None, code=None):
+    start = ASSERTIONS
+    row = {"name":name,"group":group,"expected":"accept" if accept else "refuse","bytes":len(raw) if isinstance(raw,bytes) else None,"sha256":sha(raw) if isinstance(raw,bytes) else None}
+    try:
+        try:
+            result = sut.observe_glb_hinges(raw)
+        except sut.Fault as error:
+            row["observed"] = "refuse"
+            row["code"] = error.code
+            row["pointer"] = getattr(error, "pointer", None)
+            ensure(not accept, "unexpected typed refusal: " + str(error))
+            ensure(error.code in {"MALFORMED","RESOURCE_LIMIT","UNSUPPORTED"}, "typed category")
+            if code:
+                ensure(error.code == code, "precise refusal category")
+            ensure(not hasattr(error, "records"), "no partial qualified records on failure")
+        else:
+            row["observed"] = "accept"
+            ensure(accept, "unexpected acceptance")
+            audit(raw, result)
+            if extra:
+                extra(result)
+        row["passed"] = True
+    except Exception as error:
+        row["passed"] = False
+        row["failure"] = type(error).__name__ + ": " + str(error)
+        row["trace"] = traceback.format_exc(limit=3)
+    row["assertions"] = ASSERTIONS - start
+    ROWS.append(row)
+
+def set_joint(field, value):
+    return changed(lambda doc: joint(doc).__setitem__(field, value))
+
+def numeric_raw(token, wide=False):
+    doc = copy.deepcopy(BASE)
+    j = joint(doc)
+    j["initial"] = "__NUMERIC_TOKEN__"
+    if wide:
+        j["limits"] = [0, "__NUMERIC_TOKEN__"]
+    js = json.dumps(doc,separators=(",",":"),ensure_ascii=True)
+    return encode_json(js.replace('"__NUMERIC_TOKEN__"', token).encode())
+
+def counts(count):
+    doc = copy.deepcopy(BASE)
+    seed = meta(doc)["joints"][0]
+    items = []
+    for i in range(count):
+        row = copy.deepcopy(seed)
+        row["path"] = "invented.hinge" + str(i)
+        row["element_id"] = ["opaque", "hinge" + str(i)]
+        items.append(row)
+    meta(doc)["joints"] = items
+    return encode(doc)
+
+def objects_count(count):
+    doc = copy.deepcopy(BASE)
+    seed = doc["nodes"][0]
+    nodes = []
+    for i in range(count):
+        node = copy.deepcopy(seed)
+        claim = node["extras"]["ontokin"]
+        claim["path"] = "invented" + str(i)
+        claim["element_id"] = ["opaque", "node" + str(i)]
+        nodes.append(node)
+    doc["nodes"] = nodes
+    return encode(doc)
+
+case("original-before", RAW, True, "H01/raw")
+case("original-after", AFTER, True, "H01/raw")
+case("artifact-initial-only", set_joint("initial",0.125), True, "H03/raw")
+for field,value in [("limits",[-0.5,0.6]),("limits",[-2,3]),("initial",-0.0)]:
+    case("supported-field-"+field+"-"+repr(value),set_joint(field,value),True,"H05,H07/raw")
+for low,high,initial in [(-1,2,-1),(-1,2,2),(0,0,0),(-0.0,0.0,-0.0)]:
+    case("inclusive-range-"+repr((low,high,initial)), changed(lambda d,l=low,h=high,i=initial:joint(d).update(limits=[l,h],initial=i)),True,"H06/raw")
+for low,high,initial in [(1,-1,0),(0,1,-math.ulp(0.0)),(0,1,math.nextafter(1.0,math.inf))]:
+    case("invalid-range-"+repr((low,high,initial)),changed(lambda d,l=low,h=high,i=initial:joint(d).update(limits=[l,h],initial=i)),False,"H06/raw")
+for index in range(3):
+    for sign in (-1,1):
+        v=[0,0,0];v[index]=sign
+        case("basis-"+repr(v),set_joint("axis",v),True,"H08/raw")
+for value in ([0,0,0],[0,0,2],[0.6,0.8,0],[math.ulp(0.0),0,1],[0,0],[0,0,1,0],[False,0,1],["0",0,1],[None,0,1],{"x":0},None):
+    case("axis-refusal-"+repr(value),set_joint("axis",value),False,"H10/raw")
+for field,values in [("initial",[True,None,"0",[],{},float("nan"),float("inf"),float("-inf")]),("limits",[[False,1],[0,"1"],[0,1,2],[0],[None,1],None,{}])]:
+    for value in values:
+        case("numeric-shape-"+field+"-"+repr(value),set_joint(field,value),False,"H10,H24/raw")
+case("joint-order",changed(lambda d:meta(d)["joints"].reverse()),True,"H21/raw")
+case("node-order",changed(lambda d:d["nodes"].reverse()),True,"H21/raw")
+case("ordered-endpoint-swap",changed(lambda d:joint(d).update(parent_site=joint(d)["child_site"],child_site=joint(d)["parent_site"])),True,"H14/raw-only")
+case("opaque-site-key-punctuation",changed(lambda d:joint(d).update(parent_site='rig.parts["dot.key_-"].pivot',child_site='rig.parts["dot.key_-"].blade.base')),True,"H19/raw")
+case("opaque-path-slash-tilde",set_joint("path","invented/hinge~claim"),True,"H27/raw")
+case("changed-occurrence-id",set_joint("element_id",["other","ID.with-dots","other_key"]),True,"H27/raw")
+for count in (0,1,127,128):
+    case("changed-joint-count-"+str(count),counts(count),True,"H21,H27/raw")
+case("joint-count-129",counts(129),False,"H24/raw",code="RESOURCE_LIMIT")
+case("duplicate-joint-row",changed(lambda d:meta(d)["joints"].append(copy.deepcopy(joint(d)))),False,"H21/raw")
+case("duplicate-joint-id",changed(lambda d:meta(d)["joints"][1].__setitem__("element_id",joint(d)["element_id"])),False,"H21/raw")
+case("duplicate-joint-path",changed(lambda d:meta(d)["joints"][1].__setitem__("path",joint(d)["path"])),False,"H21/raw")
+for field in BASE["extras"]["ontokin"]["joints"][0]:
+    case("missing-joint-field-"+field,changed(lambda d,f=field:joint(d).pop(f)),False,"H17/raw")
+case("extra-joint-field",changed(lambda d:joint(d).__setitem__("definition_id",["fabricated"])),False,"H17,H23/raw")
+case("wrong-joint-kind",set_joint("kind","slider"),False,"H16/raw")
+for value in (None,{},1,"joints"):
+    case("joint-array-type-"+repr(value),changed(lambda d,v=value:meta(d).__setitem__("joints",v)),False,"H24/raw")
+for value in (None,[],1,"joint"):
+    case("joint-row-type-"+repr(value),changed(lambda d,v=value:meta(d)["joints"].__setitem__(0,v)),False,"H24/raw")
+for field in ("path","parent_site","child_site"):
+    for value in ("",None,True,["x"],"x"*513,"x\x1f","x\ud800"):
+        case("text-"+field+"-"+repr(value)[:30],set_joint(field,value),False,"H24/raw")
+    case("text-scalar-boundary-"+field,set_joint(field,"\U0001f989"*512),True,"H24/raw-boundary")
+for value in ([],None,"identity",[1],[""],["a"]*33,["x"*513],["x\udfff"]):
+    case("identity-shape-"+repr(value)[:40],set_joint("element_id",value),False,"H24/raw")
+case("identity-32-components",set_joint("element_id",["a"]*32),True,"H24/raw-boundary")
+for field,value in [("target_contract","ontokin.glb/0.1"),("schema_version","0.1"),("profile","core-0.1")]:
+    case("wrong-"+field,changed(lambda d,f=field,v=value:meta(d).__setitem__(f,v)),False,"H24/raw")
+case("missing-joints",changed(lambda d:meta(d).pop("joints")),False,"H24/raw")
+for field in ("source","program"):
+    case("metadata-type-"+field,changed(lambda d,f=field:meta(d).__setitem__(f,[])),False,"H24/raw")
+case("stale-entry-revision-untrusted",changed(lambda d:meta(d)["source"].__setitem__("entry_revision","sha256:"+"0"*64)),True,"H22/raw-only")
+case("stale-program-revision-untrusted",changed(lambda d:meta(d)["program"].__setitem__("revision","sha256:"+"1"*64)),True,"H22/raw-only")
+case("changed-untrusted-provenance",changed(lambda d:meta(d)["program"].__setitem__("provenance","I claim approval")),True,"H22,H23/raw-only")
+for container in ("meta","program"):
+    case("unsupported-direct-site-table-"+container,changed(lambda d,c=container:(meta(d) if c=="meta" else meta(d)["program"]).__setitem__("sites",{})),False,"H23/raw",code="UNSUPPORTED")
+case("unqualified-empty-source-map",changed(lambda d:d["nodes"][0]["extras"]["ontokin"].__setitem__("source_mapping",{})),True,"H22/raw-only")
+case("unqualified-empty-manifest",changed(lambda d:meta(d)["program"].__setitem__("manifest",{})),True,"H22/raw-only")
+def punctuated_occurrence(doc):
+    old = doc["nodes"][0]["extras"]["ontokin"]["path"]
+    new = "opaque/~object"
+    doc["nodes"][0]["extras"]["ontokin"]["path"] = new
+    claims = meta(doc)["program"]["occurrences"]
+    claims[new] = claims.pop(old)
+case("json-pointer-escaping",changed(punctuated_occurrence),True,"H23,H27/raw")
+case("unrelated-follow-change",changed(lambda d:meta(d).__setitem__("follows",[])),True,"H20/raw")
+case("unrelated-motion-change",changed(lambda d:meta(d).__setitem__("boundary_states",[])),True,"H28/raw")
+case("duplicate-object-identity",changed(lambda d:d["nodes"][1]["extras"]["ontokin"].__setitem__("element_id",d["nodes"][0]["extras"]["ontokin"]["element_id"])),False,"H21/raw")
+case("duplicate-object-path",changed(lambda d:d["nodes"][1]["extras"]["ontokin"].__setitem__("path",d["nodes"][0]["extras"]["ontokin"]["path"])),False,"H21/raw")
+case("objects-129",objects_count(129),False,"H24/raw",code="RESOURCE_LIMIT")
+for field,value in [("path",None),("element_id",[True]),("class_name",[]),("source_mapping",None),("program_revision",[])]:
+    case("object-shape-"+field,changed(lambda d,f=field,v=value:d["nodes"][0]["extras"]["ontokin"].__setitem__(f,v)),False,"H24/raw")
+for field,value in [("start_byte",True),("start_byte",1.5),("start_byte",-1),("end_byte",False),("end_byte",1.5),("end_byte",-1)]:
+    case("span-shape-"+field+"-"+repr(value),changed(lambda d,f=field,v=value:d["nodes"][0]["extras"]["ontokin"]["source_mapping"]["declaration"].__setitem__(f,v)),False,"H22,H24/raw")
+case("reversed-span",changed(lambda d:d["nodes"][0]["extras"]["ontokin"]["source_mapping"]["declaration"].update(start_byte=10,end_byte=9)),False,"H22,H24/raw")
+for field in ("element_id","definition_id","collection_id","collection_definition_id"):
+    for value in (None,True,"not-an-array",[1]):
+        case("nested-identity-"+field+"-"+repr(value),changed(lambda d,f=field,v=value:d["nodes"][0]["extras"]["ontokin"]["source_mapping"].__setitem__(f,v)),False,"H22,H24/raw")
+case("nullable-declaration-definition-id",changed(lambda d:d["nodes"][0]["extras"]["ontokin"]["source_mapping"].__setitem__("declaration_definition_id",None)),True,"H22/raw")
+case("bad-declaration-definition-id",changed(lambda d:d["nodes"][0]["extras"]["ontokin"]["source_mapping"].__setitem__("declaration_definition_id",True)),False,"H22,H24/raw")
+for raw in (b"",RAW[:11],RAW[:-1],RAW+b"\0"):
+    case("bad-glb-length-"+str(len(raw)),raw,False,"H24/raw")
+for offset,value in ((0,0),(4,1),(8,len(RAW)-4),(8,len(RAW)+4),(12,JLEN-1),(16,0),(20+JLEN,len(BIN)-1),(24+JLEN,0)):
+    raw=bytearray(RAW);struct.pack_into("<I",raw,offset,value)
+    case("bad-header-"+str(offset)+"-"+str(value),bytes(raw),False,"H24/raw")
+case("missing-bin",struct.pack("<III",0x46546C67,2,20+JLEN)+RAW[12:20+JLEN],False,"H24/raw")
+extra=RAW+struct.pack("<II",0,0x004E4942);extra=extra[:8]+struct.pack("<I",len(extra))+extra[12:]
+case("extra-bin-chunk",extra,False,"H24/raw")
+for js in (b"[]",b"null",b"0",b'"text"',b'{"x":}',b'{} {}',b'{"a":1,"a":2}',rb'{"a":1,"\u0061":2}',b'{"a":"\xff"}'):
+    case("bad-json-"+repr(js),encode_json(js),False,"H24/raw")
+js=json.dumps(BASE,separators=(",",":"),ensure_ascii=True).encode()
+case("duplicate-joint-key",encode_json(js.replace(b'"initial":0.0',b'"initial":0.0,"initial":0.0',1)),False,"H24/raw")
+case("duplicate-ignored-key",encode_json(b'{"ignored":0,"ignored":1,'+js[1:]),False,"H24/raw")
+case("json-null-padding",encode_json(js+b"\0"),False,"H24/raw")
+case("invalid-utf8",encode_json(js.replace(b'"KeyedRack"',b'"\xff"',1)),False,"H24/raw")
+deep=0
+for _ in range(40):deep=[deep]
+case("json-depth",changed(lambda d:d.__setitem__("extra",deep)),False,"H24/raw",code="RESOURCE_LIMIT")
+case("json-byte-cap",encode_json(js+b" "*(2*1024*1024+4-len(js))),False,"H24/raw",code="RESOURCE_LIMIT")
+case("glb-byte-cap",encode_json(js,b"\0"*(4*1024*1024)),False,"H24/raw",code="RESOURCE_LIMIT")
+case("json-exact-cap",encode_json(js+b" "*(2*1024*1024-len(js))),True,"H24/raw-boundary")
+for token,accept,wide in [
+ ("0e400",True,False),("0e-400",True,False),("0e401",False,False),("0e-401",False,False),
+ ("1e-324",True,False),("5e-324",True,False),("1e-325",False,False),("1e308",True,True),
+ ("1e309",False,True),("1.7976931348623157e308",True,True),("1.7976931348623159e308",False,True),
+ ("1."+"0"*62,True,True),("1."+"0"*63,False,True),("0."+"0"*63,False,False),
+ ("1e99999999999999999999999999999999999999999999999999999999999999999",False,True),
+ ("-0.0",True,False),("NaN",False,False),("Infinity",False,False),("-Infinity",False,False)
+]:
+    case("numeric-token-"+token[:24]+"-length-"+str(len(token)),numeric_raw(token,wide),accept,"H25/raw")
+for value in (None,True,0,"GLB",bytearray(RAW),memoryview(RAW)):
+    case("argument-type-"+type(value).__name__,value,False,"H24/raw")
+# Mutation of a previous returned value must not affect a fresh read.
+try:
+    first=sut.observe_glb_hinges(RAW)
+    first["records"][0]["claims"]["axis"][0]=888
+    case("repeated-call-isolation",RAW,True,"H27/raw")
+except Exception as error:
+    ROWS.append({"name":"repeated-call-isolation-preparation","passed":False,"failure":repr(error)})
+ensure(hashlib.sha256(MODULE.read_bytes()).hexdigest()==SOURCE_HASH,"implementation unchanged during independent controls")
+report={"schema":"ontokin.c261.independent-raw-review/0.1","implementationPath":str(MODULE.relative_to(REPO)),"implementationSha256":SOURCE_HASH,"python":sys.version,"platform":platform.platform(),"originalInputs":[{"name":"before.glb","sha256":sha(RAW),"bytes":len(RAW)},{"name":"after.glb","sha256":sha(AFTER),"bytes":len(AFTER)}],"controls":ROWS,"controlCount":len(ROWS),"assertionCount":ASSERTIONS,"passed":all(x["passed"] for x in ROWS),"failures":sum(not x["passed"] for x in ROWS),"qualification":"Partial C260 H-group raw-artifact subcases only; source/comparison/historical interfaces unimplemented"}
+(OUT/"RESULTS.json").write_text(json.dumps(report,ensure_ascii=True,separators=(",",":"))+"\n")
+print(json.dumps({k:report[k] for k in ("controlCount","assertionCount","passed","failures","implementationSha256")}))
+for row in ROWS:
+    if not row["passed"]:
+        print(json.dumps({k:row.get(k) for k in ("name","expected","observed","failure","code")}))
+raise SystemExit(0 if report["passed"] else 1)
+

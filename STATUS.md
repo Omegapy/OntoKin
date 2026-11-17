@@ -2,6 +2,14 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [GOAL](GOAL.md), [C252 priority decision](docs/engineering/review-integration-c252/DECISION.md), preserved [C210 boundary](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C261: bounded raw GLB hinge observation
+
+The [C261 reader](docs/engineering/localized-repair-c261/README.md) implements only the raw artifact interface under the C260 contract. It reads hinge fields and their exact JSON pointers, while object/source/program claims remain untrusted. Both original artifacts yield eight hinge rows and eighteen object records. Source derivation, source/artifact comparison and historical admission remain unfinished; no complete C260 H group is qualified.
+
+The corrected reader passes 28 authored methods and 217 independent controls / 17,124 assertions on hosted Linux/CPython 3.12.14. Published scientific commit `a877b0a3b75595c66c321cf515c7138391af5ba2` has the same tree as independently reviewed local `2c1ecf0649cc891fe0544eace2aab7ce9779bad5`. Fresh predecessor checks pass C255 31, C256 29, C257 23 and C258 28 methods, plus the C253 manifest. [Results and preserved findings](docs/engineering/localized-repair-c261/RESULTS.md) distinguish execution from unrun gates.
+
+[PR250](https://github.com/Omegapy/OntoKin/pull/250) is the current integration candidate under [scope249](https://github.com/Omegapy/OntoKin/issues/249). Complete reviewed integration, resulting-main checks and one verified saved handoff, then stop. The [next source-observer step](docs/engineering/localized-repair-c261/NEXT-TASK.md) is separate. C260 delivery is verified complete and scope247 is closed. Earlier sections retain their historical observations. C234 remains already merged and awaiting deletion; C174's former archive branch is absent and complete historical graph retention remains unestablished.
+
 ## C260: finite hinge-declaration observation contract
 
 The [C260 contract](docs/engineering/localized-repair-c260/README.md) defines a bounded independent comparison of actual `.ok` hinge declarations and GLB joint fields. A hinge is a mechanical relation between two named sites, with an axis, angular limits and an initial coordinate. Source occurrences/definitions, ordered endpoint site associations and actual artifact claims remain distinct. The original artifacts each contain eight joint rows but no direct site table or hinge/site definition and span records.

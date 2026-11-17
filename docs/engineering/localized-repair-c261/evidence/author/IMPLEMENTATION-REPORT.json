@@ -1,0 +1,105 @@
+{
+  "schema": "ontokin.c261.authored-report/0.1",
+  "scope": "raw GLB hinge interface only",
+  "repositoryHeadObservedAfterChecks": "2c1ecf0649cc891fe0544eace2aab7ce9779bad5",
+  "candidateTrackedCommit": null,
+  "sourceState": "Initial scientific commit dab3ce21ceb88012990be27bcfa4943633fcfbbd retained; subsequent reader/test diagnostic-pointer correction awaits integrator commit and clean-source check.",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "files": {
+    "docs/engineering/localized-repair-c261/NEXT-TASK.md": {
+      "bytes": 1641,
+      "sha256": "e35589532b452cfe1bbbac6ab44f2acec7ebba6f4c53d0c63d20d075b6e85772"
+    },
+    "docs/engineering/localized-repair-c261/test_hinge_glb.py": {
+      "bytes": 12861,
+      "sha256": "6296c165e7e0a38983b68d270ccfc0fa5f3320abee019ba5b2cdd8fb08b63e8d"
+    },
+    "docs/engineering/localized-repair-c261/CONTROL-COVERAGE.md": {
+      "bytes": 3640,
+      "sha256": "50dfcc0c33dc4309dc8334c7f0527c4130f0f3e068f9d8d037056c65eea20994"
+    },
+    "docs/engineering/localized-repair-c261/hinge_glb.py": {
+      "bytes": 14036,
+      "sha256": "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08"
+    },
+    "docs/engineering/localized-repair-c261/README.md": {
+      "bytes": 7132,
+      "sha256": "bc2a38b41f2ea2817d603d0d1e44279c5b59e61f96a520b0bcb5a3069ff133d4"
+    }
+  },
+  "inputArtifacts": {
+    "before.glb": {
+      "sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534",
+      "bytes": 185276
+    },
+    "after.glb": {
+      "sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8",
+      "bytes": 185236
+    }
+  },
+  "runs": [
+    {
+      "log": "authored-run-01.log",
+      "methods": 25,
+      "failures": 1,
+      "cause": "test helper used None as both default marker and intended invalid input; current reader rejected actual None correctly",
+      "sourceSnapshot": "authored-test-run-01.py"
+    },
+    {
+      "log": "authored-run-02.log",
+      "methods": 26,
+      "failures": 0
+    },
+    {
+      "log": "authored-run-03.log",
+      "methods": 26,
+      "failures": 0
+    },
+    {
+      "log": "authored-run-04.log",
+      "methods": 27,
+      "failures": 0,
+      "sourceSha256": "bad680dd396ba7aa3aeb8762032879f970d1d9528b8220db45d9cda9f5eeed36",
+      "testSha256": "2bae38a760b97541a38b7ff5c3e65132bbcbd7a95435842538da9583a735d434"
+    },
+    {
+      "log": "authored-run-05.log",
+      "methods": 28,
+      "failures": 0,
+      "sourceSha256": "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08",
+      "testSha256": "6296c165e7e0a38983b68d270ccfc0fa5f3320abee019ba5b2cdd8fb08b63e8d"
+    }
+  ],
+  "documentationCheck": {
+    "log": "documentation-run-01.log",
+    "returnCode": 0,
+    "meaning": "before latest nested-identity documentation refinement; root final documentation check required"
+  },
+  "reviewCorrections": [
+    {
+      "finding": "Ambiguous direct-site absence flag if actual added site table present",
+      "action": "Refuse explicit /extras/ontokin/sites or /extras/ontokin/program/sites as UNSUPPORTED",
+      "beforeSnapshot": "reader-before-site-review.py"
+    },
+    {
+      "finding": "Program excerpt origin pointed to broader container",
+      "action": "Per-key program pointers now resolve exactly to retained values"
+    },
+    {
+      "finding": "Nested identity shape ambiguous in untrusted source maps",
+      "action": "Bound known identity field arrays when present; sparse maps explicitly unqualified"
+    },
+    {
+      "finding": "Final self-review: a malformed program-occurrence span used a synthetic node refusal pointer",
+      "action": "Validate node claims and program-occurrence claims separately at actual JSON locations",
+      "beforeSnapshot": "reader-before-diagnostic-pointer.py",
+      "testBeforeSnapshot": "authored-test-before-diagnostic-pointer.py"
+    }
+  ],
+  "remaining": [
+    "independent controls and exact candidate review",
+    "integrator clean-source checks/publication/merge/closure",
+    "whole source/compare/historical interfaces and all unexecuted portions of C260 plan"
+  ]
+}
