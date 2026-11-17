@@ -390,18 +390,19 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none.
-State: RELEASED after C257 reviewed source integration and actual-main verification.
-Previous owner: `c257-root-da3bfd223c61-20261117`.
-Closure prepared at: 2026-11-17T14:36:31.326721+00:00. Lease release becomes effective only when this closure is verified on live main.
-Scope: [C257 finite ownership reader #243](https://github.com/Omegapy/OntoKin/issues/243).
-Acquired at: 2026-11-17T14:14:10Z.
-Expires at: 2026-11-17T14:44:10Z.
-Observed base: `23b1d2b5abafde6a5826827c30bc1bbf8552ff8e`.
+Owner: `c258-root-da3bfd223c61-20261117`.
+State: ACTIVE for C258 finite explicit-follow source integration and resulting-main verification.
+Scope: [C258 finite follow reader #245](https://github.com/Omegapy/OntoKin/issues/245).
+Acquired at: 2026-11-17T16:30:42Z.
+Expires at: 2026-11-17T17:00:42Z.
+Observed base: `9b9d06d99e55fa9cf4d42e74d07505e98840c2b1`.
+Reserved shared files: STATUS.md, AGENTS.md, GOAL.md, README.md and docs/README.md.
 
-The reviewed C257 ownership source is integrated through PR #244, with fresh resulting-main checks and verified automatic work-branch deletion. This evidence-only closure records those results and releases the lease. No implementation ownership or successor feature is reserved. Archive verification, offline restoration and confirmed saved delivery remain under scope #243 without further product changes.
+The author owns only the new C258 observer directory. The root integrator owns shared navigation, exact-source review reconciliation, PR publication/merge, resulting-main checks and branch lifecycle. Independent reviewers write their own evidence. This lease begins only if the conditional update from the observed base is verified on live main.
 
-C256's saved handoff, complete restore and scope #241 closure are verified. C234's already-merged branch remains the explicit deletion blocker under #240; C174 remains a justified historical archive. This lease changes no scientific acceptance or released behavior.
+The reviewed source at `2bca9f7d2cba8996043bbfeae0c2855def5d7076` passes 28 authored methods and 119 independent controls. Its source, earlier failures and author history are preserved in [progress recovery version 5](https://chatgpt.com/library?file_id=libfile_fde3_f-618b79ae7df4819191e0a601fd1f5450_2ab2a24d43748191957f9bcc356b59de&account_id=personal). Exact final review records, complete evidence import and final integration candidate remain required before merging.
+
+C257 delivery and scope243 closure were independently reconciled before this new explicitly requested continuation. C234 remains an already-merged branch awaiting supported authenticated deletion under issue240; C174 remains a justified historical archive. No native run, source rebuild, model trial or released behavior changes are authorized by this lease.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
