@@ -1,0 +1,55 @@
+diff --git a/docs/engineering/localized-repair-c258/follows.py b/docs/engineering/localized-repair-c258/follows.py
+index 09ec49a1..ab4cb5e3 100644
+--- a/docs/engineering/localized-repair-c258/follows.py
++++ b/docs/engineering/localized-repair-c258/follows.py
+@@ -58,10 +58,19 @@ def require(condition, code, detail):
+         raise Fault(code, detail)
+ 
+ 
++def resolve_path(path):
++    try:
++        return path.resolve()
++    except RuntimeError as exc:
++        # Python 3.12 uses RuntimeError for a filesystem symlink loop.
++        # Restrict this conversion to resolution, not arbitrary reader bugs.
++        raise Fault("IO", "Path.resolve: "+type(exc).__name__) from exc
++
++
+ def dependency():
+     global _DEPENDENCY
+     if _DEPENDENCY is None:
+-        path = Path(__file__).resolve().parent.parent / "localized-repair-c257/ownership.py"
++        path = resolve_path(Path(__file__)).parent.parent / "localized-repair-c257/ownership.py"
+         require(path.is_file() and not path.is_symlink() and path.stat().st_size == DEPENDENCY_BYTES,
+                 "DEPENDENCY", "frozen C257 file size/path")
+         with path.open("rb") as handle:
+@@ -651,10 +660,10 @@ def read_bound_endpoint(repo, endpoint):
+     def run():
+         d = dependency()
+         require(endpoint in d.PINS, "ENDPOINT", "before or after")
+-        root = Path(repo).resolve()
++        root = resolve_path(Path(repo))
+         def read(name, size, sha):
+             path = root/d.PROOF/name
+-            require(path.is_file() and not path.is_symlink() and path.resolve().is_relative_to(root), "INPUT_PATH", name)
++            require(path.is_file() and not path.is_symlink() and resolve_path(path).is_relative_to(root), "INPUT_PATH", name)
+             require(path.stat().st_size == size, "INPUT_SIZE", name)
+             with path.open("rb") as handle:
+                 raw = handle.read(size+1)
+diff --git a/docs/engineering/localized-repair-c258/test_follows.py b/docs/engineering/localized-repair-c258/test_follows.py
+index 1c4f4eeb..0b3bc7c3 100644
+--- a/docs/engineering/localized-repair-c258/test_follows.py
++++ b/docs/engineering/localized-repair-c258/test_follows.py
+@@ -405,6 +405,12 @@ class FollowTests(unittest.TestCase):
+             target.write_bytes(target.read_bytes().replace(b"three_mounts(0.6[m])", b"three_mounts(0.5[m])"))
+             self.refused(lambda: reader.read_bound_endpoint(temp, "before"), "HISTORICAL_BINDING")
+ 
++    def test_self_referential_repository_symlink_has_typed_io_refusal(self):
++        with tempfile.TemporaryDirectory() as temp:
++            loop = Path(temp)/"loop"
++            loop.symlink_to("loop")
++            self.refused(lambda: reader.read_bound_endpoint(loop, "before"), "IO")
++
+     def test_hinge_and_world_motion_remain_unqualified(self):
+         s = library_edit(sources(), b"axis = vec3(0, 0, 1)", b"axis = vec3(1, 0, 0)")
+         rows = reader.compare_follows(s, rebind(s))

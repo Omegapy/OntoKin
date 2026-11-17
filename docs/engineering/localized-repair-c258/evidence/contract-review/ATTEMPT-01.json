@@ -1,0 +1,96 @@
+{
+  "candidateCommit": "2ba3af2221406fb6eba8d0510d06617afc9be676",
+  "candidateTree": "de3fddd75ee47619d2b2bdd328a911a1a297234f",
+  "files": [
+    {
+      "path": "docs/engineering/localized-repair-c258/CONTRACT.md",
+      "bytes": 8080,
+      "sha256": "fb32e2a626b1a4c0d55e9dce752f6deff00923f7e1d7aa11f0e7a77f2ed5497a"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c258/FIELD-ORIGINS.md",
+      "bytes": 2078,
+      "sha256": "71275300842a0e7461f5102ee405be3ec60be276b1c44a0cb02419872814d0af"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c258/INPUTS.json",
+      "bytes": 3944,
+      "sha256": "7cd15c28506c5e69f0cfe83b1082939062b5c1eccbd67cbe0975e182eef2ed53"
+    }
+  ],
+  "boundInputChecks": [
+    {
+      "path": "docs/language-design/OK-LANG-001-core-language-specification.md",
+      "size_match": true,
+      "sha256_match": true
+    },
+    {
+      "path": "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "size_match": true,
+      "sha256_match": true
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/CONTRACT.md",
+      "size_match": true,
+      "sha256_match": true
+    },
+    {
+      "path": "docs/engineering/localized-repair-c253/corpus.json",
+      "size_match": true,
+      "sha256_match": true
+    },
+    {
+      "path": "docs/engineering/localized-repair-c257/NEXT-TASK.md",
+      "size_match": true,
+      "sha256_match": true
+    },
+    {
+      "path": "docs/engineering/localized-repair-c257/ownership.py",
+      "size_match": true,
+      "sha256_match": true
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "size_match": true,
+      "sha256_match": true
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "size_match": true,
+      "sha256_match": true
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "size_match": true,
+      "sha256_match": true
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "size_match": true,
+      "sha256_match": true
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+      "size_match": true,
+      "sha256_match": true
+    }
+  ],
+  "result": "CORRECTION_REQUIRED",
+  "blockers": [
+    {
+      "id": "NUMERIC-CLAIM-01",
+      "finding": "Eight ULPs are asserted to cover a binary64 normalization route without an explicit error bound. Listing operations does not establish the bound, especially at subnormal and rounding boundaries. 100-digit Decimal also does not alone prove correctly rounded projection for every tuple.",
+      "required": "Supply defensible scoped error analysis, explicitly describe a finite comparison policy without the unproved guarantee and bound reference approximation, or narrow admitted quaternion profile."
+    }
+  ],
+  "approvedBoundaryPoints": [
+    "Four separate authority APIs",
+    "Source lexical scope and actual selected keyed inputs",
+    "Explicit relevant nested/per-key override refusals",
+    "Exact rational unit literal conversion then one binary64 rounding",
+    "Actual child typed property duplicate checks",
+    "Missing direct artifact relation provenance stated",
+    "No ownership-derived follows, C255 expected imports, product parser or sidecar"
+  ],
+  "pending": "Corrected contract review; implementation not reviewed."
+}

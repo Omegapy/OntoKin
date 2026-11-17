@@ -1,0 +1,38 @@
+diff --git a/docs/engineering/localized-repair-c258/follows.py b/docs/engineering/localized-repair-c258/follows.py
+index c555f2e6..09ec49a1 100644
+--- a/docs/engineering/localized-repair-c258/follows.py
++++ b/docs/engineering/localized-repair-c258/follows.py
+@@ -39,6 +39,9 @@ PREDEFINED = set(("self world static prescribed dynamic disabled Object Int Real
+ RESERVED = set(("ontokin module profile requires class extends public private param derive override method "
+     "fn let return part parts site joint follow scene object action at sequence start pause resume stop "
+     "release using incoming assert if then else and or not true false import from version digest for in keyed").split())
++WRITABLE_INSTANCE_FIELDS = {"role", "geometry", "appearance", "physical", "motion", "collision",
++                            "placement", "velocity", "omega"}
++IMPLICIT_INSTANCE_MEMBERS = WRITABLE_INSTANCE_FIELDS | {"frame", "origin"}
+ KEY = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,63}\Z")
+ NUMERAL = re.compile(r"(0|[1-9][0-9]*)(?:\.([0-9]+))?(?:[eE]([+-]?[0-9]+))?\Z")
+ _DEPENDENCY = None
+@@ -284,10 +287,13 @@ class Source:
+                 statement = stream.statement(); groups = d.split_top(statement, "=")
+                 require(len(groups) == 2 and len(groups[0]) == 1, "CLASS_FIELD", "simple declaration")
+                 field = groups[0][0].value
++                require(visibility is None and field in WRITABLE_INSTANCE_FIELDS,
++                        "CLASS_FIELD", "writable built-in instance field required")
+                 require(field not in builtins, "DUPLICATE_FIELD", field)
+                 builtins[field] = {"rhs": groups[1], "origin": d.origin(statement, "class field")}
+                 continue
+             check_name(name); check_key(key)
++            require(name not in IMPLICIT_INSTANCE_MEMBERS, "INSTANCE_MEMBER_COLLISION", name)
+             require(name not in names and key not in keys, "NAMESPACE", definition["name"])
+             names.add(name); keys.add(key)
+         return {"definition": definition, "parameters": parameters, "follows": follows, "builtins": builtins}
+@@ -307,6 +313,9 @@ class Source:
+         for row in context["decl"]["assignments"]:
+             if len(row["lhs"]) == 1:
+                 name = row["lhs"][0].value
++                require(row["lhs"][0].kind == "id" and
++                        name in (context["class"]["parameters"].keys() | WRITABLE_INSTANCE_FIELDS),
++                        "INITIALIZER_TARGET", "declared parameter or writable built-in required")
+                 require(name not in result, "DUPLICATE_ASSIGNMENT", name)
+                 result[name] = row
+         return result

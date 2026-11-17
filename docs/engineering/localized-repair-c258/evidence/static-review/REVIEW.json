@@ -1,0 +1,98 @@
+{
+  "cleanWorktree": true,
+  "codeAssessment": {
+    "aggregateExpressionAndHelperBudgets": true,
+    "allPathResolveCallsInsideNarrowWrapper": true,
+    "boundedExponentAdmissionBeforeConstruction": true,
+    "boundedSourcesAndArtifacts": true,
+    "explicitNonqualificationPreserved": true,
+    "helperBytes": 35942,
+    "helperMaxReadBytes": 35943,
+    "pinnedHelperBeforeExecution": true,
+    "productImportsOrProcessNetworkModelNativeRebuildRoutesFound": false,
+    "rawAndComparedAuthoritySeparated": true,
+    "sourceAndArtifactOriginsSeparated": true,
+    "standardLibraryImportsOnly": true
+  },
+  "evidenceSummary": "REVIEW.md",
+  "finding": {
+    "correctedApi": "Fault IO",
+    "correctedCli": "exit 1; REFUSED/IO JSON; empty stderr",
+    "correctedProbe": "SYMLINK-LOOP-CORRECTED.json",
+    "correctionCommit": "2bca9f7d2cba8996043bbfeae0c2855def5d7076",
+    "correctionDiff": "reviewed-io-correction.diff",
+    "fixtureLifecycle": "SYMLINK-FIXTURE-LIFECYCLE.json",
+    "id": "C258-STATIC-IO-01",
+    "inputRecipeSha256": "d0445f0b899e14e2aa64e1e9c4667053b626fe37586675cba63f6b4dc90887b6",
+    "originalCommit": "1dfe9d022d0774e311a873ee5eb7a8ba33aab3be",
+    "originalException": "RuntimeError from Path.resolve on a self-referential symlink",
+    "originalFailure": "SYMLINK-LOOP-ORIGINAL.json",
+    "originalReaderSha256": "aea52fc143378ecc8a8237b732fd68ba4647958d04c75e3a086db1e2f51e9225",
+    "status": "RESOLVED_AND_RECHECKED"
+  },
+  "frozenAtUtc": "2026-11-17T16:30:24.979285+00:00",
+  "imports": [
+    "__future__",
+    "argparse",
+    "decimal",
+    "fractions",
+    "hashlib",
+    "json",
+    "math",
+    "pathlib",
+    "re",
+    "struct",
+    "sys",
+    "types"
+  ],
+  "independentlyExecutedFinalControls": {
+    "allPassed": true,
+    "helperAdmissionCases": 5,
+    "helperReport": "FINAL-HELPER-PROBES.json",
+    "symlinkInputRecipes": 1,
+    "symlinkReport": "SYMLINK-LOOP-CORRECTED.json",
+    "symlinkSurfaces": [
+      "public API",
+      "CLI"
+    ]
+  },
+  "integrityManifest": "MANIFEST-SHA256.json",
+  "reviewedCommit": "2bca9f7d2cba8996043bbfeae0c2855def5d7076",
+  "reviewedFiles": [
+    {
+      "bytes": 37435,
+      "repositoryPath": "docs/engineering/localized-repair-c258/follows.py",
+      "sha256": "397413d7c403693a349075711bc3dd77fab863d200b06a979cec2f0112114937"
+    },
+    {
+      "bytes": 25109,
+      "repositoryPath": "docs/engineering/localized-repair-c258/test_follows.py",
+      "sha256": "4056a2c8dd866d10311165b0fcdda51a67014c82d7abd22961d7a6fded8ace0b"
+    },
+    {
+      "bytes": 9416,
+      "repositoryPath": "docs/engineering/localized-repair-c258/CONTRACT.md",
+      "sha256": "e099e66daf6b498523010eff5eb0556eee59633f2a05d8211d196f717e24cf1d"
+    },
+    {
+      "bytes": 2078,
+      "repositoryPath": "docs/engineering/localized-repair-c258/FIELD-ORIGINS.md",
+      "sha256": "71275300842a0e7461f5102ee405be3ec60be276b1c44a0cb02419872814d0af"
+    },
+    {
+      "bytes": 35942,
+      "repositoryPath": "docs/engineering/localized-repair-c257/ownership.py",
+      "sha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1"
+    }
+  ],
+  "reviewedTree": "f14f27adc531a1de1d532b050fdbc5d134166024",
+  "schema": "ontokin.c258.independent-structural-review/0.1",
+  "scopeLimits": [
+    "No numerical or source/artifact semantic mutation controls executed by this reviewer.",
+    "No claim of full source/glTF validity, complete C255 semantics, joint union, execution, rebuild, real trial or release qualification.",
+    "Author and semantic-review suites remain separately owned; repository integration and final handoff verification remain parent-owned."
+  ],
+  "sourceEdits": false,
+  "status": "APPROVED_FINITE_STRUCTURAL_SCOPE",
+  "unresolvedBlockers": []
+}
