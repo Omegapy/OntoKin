@@ -1,0 +1,79 @@
+{
+  "schema": "ontokin.c256.structural-review/0.1",
+  "status": "CHANGES_REQUESTED",
+  "reviewedFiles": {
+    "reader.py": {
+      "bytes": 33919,
+      "sha256": "7acb03816b2d7def718ad6abc95a34f7af5338ab90f2dded824743f87e786cf9"
+    },
+    "CONTRACT.md": {
+      "bytes": 4145,
+      "sha256": "e4fc10e2e35cf5e31d33f9e03ace623ca3a2e2df1235db638d0e7357da41ab9e"
+    }
+  },
+  "reviewKind": "Static parser, resource-boundary and provenance review; no reader code executed",
+  "imports": [
+    "__future__",
+    "argparse",
+    "bisect",
+    "hashlib",
+    "json",
+    "math",
+    "pathlib",
+    "re",
+    "struct",
+    "sys"
+  ],
+  "nativeOrModelStarts": 0,
+  "sourceEdits": [],
+  "findings": [
+    {
+      "id": "SR-01",
+      "severity": "blocking robustness",
+      "status": "ATTRIBUTE_ERROR_FIX_OBSERVED; VALUE_ERROR_AND_CONTROLS_PENDING",
+      "location": "reader.py:_profile and _public",
+      "finding": "Malformed dictionary-shaped metadata can escape as AttributeError rather than the declared Fault refusal; asset=[] is a direct example. A JSON integer beyond the Python digit limit can raise ValueError outside the normalized exception list.",
+      "recommendedAction": "Enforce required object types or normalize parser/structure exceptions into Fault without claiming acceptance; add concrete refusal controls."
+    },
+    {
+      "id": "SR-02",
+      "severity": "resource boundary",
+      "status": "SENT_TO_AUTHOR",
+      "location": "reader.py:read_bound_endpoint.read and _associate",
+      "finding": "Bound file reads allocate the complete file before size or hash admission, and source-map hashing lacks a size precheck. The 4MiB parser ceiling therefore does not cap bound-file I/O allocation.",
+      "recommendedAction": "Use bounded reads plus source byte-length admission before hashing, and preserve exact hash binding."
+    },
+    {
+      "id": "SR-03",
+      "severity": "resource boundary",
+      "status": "SENT_TO_AUTHOR",
+      "location": "reader.py:_GLB.accessor and _tracks",
+      "finding": "Different accessor IDs can alias the same binary ranges yet allocate separately decoded value lists; input byte ceiling alone does not control expanded scalar count. Animation count<=4096 is checked after decoding the accessor count permitted up to100000.",
+      "recommendedAction": "Add an explicit cumulative decoded-component budget and role-specific pre-decode counts suitable for this finite family.",
+      "observedEndpointBounds": {
+        "accessors": 52,
+        "maximumAccessorCount": 2880,
+        "sumAccessorComponents": 21859
+      },
+      "stressExecutionPerformed": false
+    }
+  ],
+  "positiveFindings": [
+    "Only Python standard-library imports and pure calculations/local reads are present; no product import, subprocess, native launch, model call or rebuild path appears.",
+    "Raw measurement explicitly labels artifact metadata untrusted; source association and historical byte qualification are distinct entry points.",
+    "Geometry and pose origins identify artifact digest, accessor/view offsets, sampled raw values and derived matrix operation.",
+    "Contract keeps ownership, physical/semantic parameters, revision acceptance, rebuild, atomicity, native routes and trial scores outside qualification.",
+    "Header/chunk sizes, table counts, accessor ranges/alignment, numeric finiteness, strict channel coverage and quaternion admission are checked."
+  ],
+  "unchangedHistoricalLimits": "Not evaluated; this review does not qualify C255 numerical predicates, native routes, general glTF validity or model trials.",
+  "initialReviewedReader": {
+    "sha256": "6e7cce4fc2b40d3e1a2bf119f9d6c2ce4d5ec95f83de739ae270ed528768b1a8",
+    "bytes": 33903,
+    "path": "initial-reviewed-reader.py",
+    "retentionMethod": "Reconstructed by reversing the one AttributeError exception-list insertion in captured subsequent source; exact SHA256 matches the source observed during initial static review."
+  },
+  "subsequentCapturedReader": {
+    "bytes": 33919,
+    "sha256": "7acb03816b2d7def718ad6abc95a34f7af5338ab90f2dded824743f87e786cf9"
+  }
+}

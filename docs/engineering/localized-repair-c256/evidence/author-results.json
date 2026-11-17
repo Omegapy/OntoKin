@@ -1,0 +1,64 @@
+{
+  "schema": "ontokin.c256.author-results/0.1",
+  "observedBase": "9b9d72e0b411f5f84dd815638edcf364488d26c4",
+  "testedSourceCommittedAs": "97e8942071502044cb3baedac71622c151e52283",
+  "readerSha256": "5993d1a9ca1cbccd4518ed6f113238d18f6b71ba02befd59900b93fe47ef6e6a",
+  "testSha256": "08423e68be15490f2ca7b1bebf5d424251812c3a94dfcdd80073d1abb4ebd340",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "command": "python3 -IB docs/engineering/localized-repair-c256/test_reader.py",
+  "runs": [
+    {
+      "testedBytesCommittedAs": "cd3ba6b45cc7f4db73bc74033c8c69a8029c67d2",
+      "methods": 25,
+      "exitCode": 0,
+      "seconds": 0.966,
+      "log": "author/tests-initial.log"
+    },
+    {
+      "testedBytesCommittedAs": "8fd3d6b636b93729e7a5f855f2a2175066329d40",
+      "methods": 26,
+      "exitCode": 0,
+      "seconds": 1.088,
+      "log": "author/tests-corrected.log"
+    },
+    {
+      "testedBytesCommittedAs": "97e8942071502044cb3baedac71622c151e52283",
+      "methods": 29,
+      "exitCode": 0,
+      "seconds": 1.201,
+      "log": "author/tests-resource-corrected.log"
+    }
+  ],
+  "sourceIdentityMeaning": "Author commands preceded their source commits; tested byte identities were then committed as listed. Independent reviewer reran final clean committed source.",
+  "initialCli": {
+    "command": "python3 -IB docs/engineering/localized-repair-c256/reader.py --repo . --endpoint before",
+    "output": "author/before-initial.json",
+    "geometryRecords": 18,
+    "poseRecords": 126,
+    "exitCode": 0
+  },
+  "qualification": "finite partial geometry, sampled-transform and frozen-source identity reader only",
+  "nativeStarts": 0,
+  "modelTrials": 0,
+  "remaining": [
+    "Full semantic observation",
+    "Revision authority and invalid-edit atomicity",
+    "Clean rebuild evidence",
+    "Native/model/baseline qualification and comparison",
+    "Published-main and handoff delivery outcomes recorded separately"
+  ],
+  "documentation": {
+    "status": "passed",
+    "sources": 29,
+    "sections": 233,
+    "links": {
+      "documents": 1096,
+      "local_links": 5455,
+      "anchors": 102,
+      "external_skipped": 945
+    },
+    "report": "author/documentation-final.json",
+    "sourceState": "Final component Markdown and evidence bytes in author worktree before final evidence-only commit"
+  }
+}
