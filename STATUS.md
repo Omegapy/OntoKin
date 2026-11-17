@@ -400,17 +400,16 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none. Previous owner: `c258-root-78ebb05e03a4-20261117`.
-State: RELEASED after verified C258 integration and all six resulting-main checks; this release takes effect only when this closure commit is conditionally published and read back.
-Scope: [C258 finite follow reader #245](https://github.com/Omegapy/OntoKin/issues/245).
-Acquired at: 2026-11-17T18:00:52Z; previous expiry: 2026-11-17T18:30:52Z.
-Release recorded at: 2026-11-17T18:09:49Z.
-Observed integrated main: `a52f70a10d6ebb5228d17987aeda7edf334ff46d`.
-Reserved shared files: none after verified publication.
+Owner: `c260-root-a827454f4cb7-20261117`.
+State: ACTIVE only after this expected-main nonforce acquisition is published and independently read back.
+Scope: [C260 finite hinge-observation contract #247](https://github.com/Omegapy/OntoKin/issues/247).
+Acquired at: 2026-11-17T19:54:08Z; expires at: 2026-11-17T20:24:08Z.
+Observed starting main: `003b3a7827486405c3d00f039c1c9746c9be75fc`.
+Reserved shared files: `STATUS.md`, `AGENTS.md`, `GOAL.md`, `docs/README.md`, and C260 integration records.
 
-The resumed branch was merged through PR246 with expected head `233711ea107dc04a60fadcc05174bb834ced40eb`. The exact resulting tree matches the independently approved continuation; all original scientific inputs and evidence remain unchanged. GitHub automatically deleted the branch, with both published heads retained in main ancestry. The prior expired lease and its reconciliation remain preserved in the recovery handoff and Git history.
+This lease covers review and integration of the bounded C260 declaration-observation contract, applicable documentation checks, and exact evidence closure. Independent nonoverlapping branch work remains permitted. Root will release ownership after actual-main verification and complete only archive/restore/saved delivery afterward. No reader implementation, native execution or model trial belongs to this scope.
 
-[Integration evidence](docs/engineering/localized-repair-c258/evidence/integration/INTEGRATION.json) records the source, checks and branch disposition. Final archive/restore/save verification is later delivery work tracked in [the stable checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-8aee875737988191a6e2513216afdda4_2ab2a24d43748191957f9bcc356b59de&account_id=personal) and issue245. No additional repository integration or successor feature is part of this closure. C234 is already merged and awaits user cleanup; C174 remains a justified historical archive. Subsequent main writers must acquire a new verified lease.
+C259's stable checkpoint version 7 confirms complete C258 restore/save and scope245 closure. The original main lease was released; no interrupted main write remains unknown. C234 is still merged and awaits user cleanup under issue240. Fresh live/API inspection finds the former C174 archive branch absent. Its historical commit is API-accessible, but complete graph retention remains unestablished; preserve those observations without claiming an offline archive.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
