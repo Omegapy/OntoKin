@@ -66,6 +66,4 @@ failures and the exact reviewed source. [INPUTS.json](INPUTS.json) retains input
 hashes and the unchanged language-contract references. The next separately
 scoped task is described in [NEXT-TASK.md](NEXT-TASK.md).
 
-Integration, actual-main verification, branch cleanup and the saved successor
-handoff remain the main agent's responsibilities. A reader commit alone does
-not prove those operations occurred.
+PR #244 is verified merged, fresh resulting-main checks pass and automatic work-branch deletion is verified. [Integration evidence](evidence/integration/INTEGRATION.json) records exact source and branch identities. The verified offline handoff and saved delivery remain pending at this source freeze; scope #243 and the stable recovery checkpoint record closure. No successor feature starts in this increment.

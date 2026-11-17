@@ -8,7 +8,7 @@ The [C257 reader](docs/engineering/localized-repair-c257/README.md) derives imme
 
 Scientific author `499a19d030a06609564390877a596d53dc015a7a` passes 23 authored methods and 107 independent controls. A separate structural review approves corrected public I/O refusals and the bounded authority/input handling. Independent supported containment changes produce 12 objects and ten ownership edges. The original visibility, duplicate-identity/source claims, floating-span and public-I/O findings remain preserved. [Results and review scope](docs/engineering/localized-repair-c257/RESULTS.md). Fresh focused checks on that exact scientific commit pass C256's 29 methods, C255's 31 methods and the C253 14-file/three-case manifest.
 
-[Scope #243](https://github.com/Omegapy/OntoKin/issues/243) still requires reviewed source integration, fresh resulting-main checks, verified offline restoration and confirmed saved delivery. The integrator holds the bounded lease below; no successor feature has started. C256's final ZIP and complete restore are verified, and [scope #241](https://github.com/Omegapy/OntoKin/issues/241) is closed. Historical C256 pending-delivery text below records its earlier package freeze.
+[PR #244](https://github.com/Omegapy/OntoKin/pull/244) is verified merged at `d4ef12b2a62d2bc7d9cb4daa40172351461b70c0` with exact reviewed tree `0dc9462a55f7b3d48337d0506cb43215b87f0d87`. Fresh actual-main checks pass 23 C257 methods, 29 C256 methods, 31 C255 methods, C253 14 files/three cases and 29 preserved documentation sources/233 sections/5,484 local links. The completed C257 branch was automatically deleted and its absence verified. [Integration and branch receipt](docs/engineering/localized-repair-c257/evidence/integration/INTEGRATION.json). [Scope #243](https://github.com/Omegapy/OntoKin/issues/243) remains open only for verified offline handoff restoration and confirmed saved delivery; finish that closure and stop. No successor feature has started. C256's final ZIP and complete restore are verified, and [scope #241](https://github.com/Omegapy/OntoKin/issues/241) is closed. Historical C256 pending-delivery text below records its earlier package freeze.
 
 `work/c234-cpu-materials` remains an already-merged branch awaiting authenticated deletion under [#240](https://github.com/Omegapy/OntoKin/issues/240). Keep `archive/c174-model-research` until complete historical graph retention is established. Frozen C253/C255 mathematics, earlier runtime and workflows, the strict normal-fidelity failure, unresolved R07/R08 and C251 current-authority refusal retain their states.
 
@@ -390,14 +390,16 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c257-root-da3bfd223c61-20261117`.
-State: ACTIVE for C257 integration and handoff closure.
+Owner: none.
+State: RELEASED after C257 reviewed source integration and actual-main verification.
+Previous owner: `c257-root-da3bfd223c61-20261117`.
+Closure prepared at: 2026-11-17T14:36:31.326721+00:00. Lease release becomes effective only when this closure is verified on live main.
 Scope: [C257 finite ownership reader #243](https://github.com/Omegapy/OntoKin/issues/243).
 Acquired at: 2026-11-17T14:14:10Z.
 Expires at: 2026-11-17T14:44:10Z.
 Observed base: `23b1d2b5abafde6a5826827c30bc1bbf8552ff8e`.
 
-The ownership-only scientific reader at `499a19d030a06609564390877a596d53dc015a7a` passes 23 authored methods, 107 independent controls and structural review. Existing C256/C255/C253 focused checks pass. Source author owns only `docs/engineering/localized-repair-c257/`; this integrator reserves shared README, GOAL, AGENTS, STATUS and documentation-index changes, reviewed PR integration, resulting-main verification and delivery closure. No successor feature is reserved or started.
+The reviewed C257 ownership source is integrated through PR #244, with fresh resulting-main checks and verified automatic work-branch deletion. This evidence-only closure records those results and releases the lease. No implementation ownership or successor feature is reserved. Archive verification, offline restoration and confirmed saved delivery remain under scope #243 without further product changes.
 
 C256's saved handoff, complete restore and scope #241 closure are verified. C234's already-merged branch remains the explicit deletion blocker under #240; C174 remains a justified historical archive. This lease changes no scientific acceptance or released behavior.
 
