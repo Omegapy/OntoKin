@@ -1,0 +1,47 @@
+{
+  "schema": "ontokin.c256.structural-review-correction/0.1",
+  "status": "APPROVED_STATIC_SCOPE",
+  "sourceCommit": "97e8942071502044cb3baedac71622c151e52283",
+  "sourceFiles": [
+    {
+      "path": "docs/engineering/localized-repair-c256/reader.py",
+      "bytes": 34692,
+      "sha256": "5993d1a9ca1cbccd4518ed6f113238d18f6b71ba02befd59900b93fe47ef6e6a"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c256/CONTRACT.md",
+      "bytes": 4748,
+      "sha256": "898fb97adcb0b75cb00e5668a81703520545f1f713339ffe6e8136d684b3cf5b"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c256/test_reader.py",
+      "bytes": 19978,
+      "sha256": "08423e68be15490f2ca7b1bebf5d424251812c3a94dfcdd80073d1abb4ebd340"
+    }
+  ],
+  "sourceMatchesCommit": true,
+  "readerExecutedByThisReviewer": false,
+  "newTestsExecutedByThisReviewer": false,
+  "authoredCheckClaim": "Author reported29 methods passing; independent numerical/identity reviewer owns execution verification.",
+  "findingDisposition": {
+    "SR-01": {
+      "status": "RESOLVED_STATIC",
+      "reason": "AttributeError and ValueError are normalized to Fault STRUCTURE after preserving existing Fault values. Concrete malformed-asset and5000-digit integer controls are present."
+    },
+    "SR-02": {
+      "status": "RESOLVED_STATIC",
+      "reason": "Exact historical byte sizes are checked before size+1 bounded reads and checked again before hashing. Exact source lengths are checked before source digests."
+    },
+    "SR-03": {
+      "status": "RESOLVED_STATIC",
+      "reason": "Role-specific count admission precedes loops;200000 scalar-component aggregate is charged before decoding each new cached accessor key, bounding aliased and cross-role decoding. Alias-amplification control explicitly expects DECODE_LIMIT."
+    }
+  },
+  "remainingBlockers": [],
+  "approvalBoundary": "Static parser exception/resource/provenance correction review only. Does not replace independent numerical/identity tests, source integration checks, final archive validation or offline restore.",
+  "preservedLimits": [
+    "No product import/rebuild/native/model start introduced",
+    "No broad glTF support or comparative trial qualification",
+    "Seven-time measurement and finite source association remain the declared scope"
+  ]
+}

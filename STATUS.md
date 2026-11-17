@@ -2,6 +2,16 @@
 
 OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [GOAL](GOAL.md), [C252 priority decision](docs/engineering/review-integration-c252/DECISION.md), preserved [C210 boundary](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
 
+## C256: finite geometry and sampled-motion reader
+
+The [C256 reader](docs/engineering/localized-repair-c256/README.md) traverses the existing C210 GLB bytes for local triangle geometry and 126 rigid poses across 18 objects at seven times, separately for each before/after endpoint. Its raw measurements, exact-source identity associations and historical artifact admission have distinct trust boundaries. Full semantic observations, revision authenticity, clean rebuild evidence and real trial success remain unqualified.
+
+Independent review approves scientific author `97e8942071502044cb3baedac71622c151e52283`, with reader SHA-256 `5993d1a9ca1cbccd4518ed6f113238d18f6b71ba02befd59900b93fe47ef6e6a`. All 29 authored methods and 95 independent controls pass; a separate static review approves the corrected exception and resource limits. The original four malformed-metadata failures and the subsequent corrections remain preserved. [Results and exact review scope](docs/engineering/localized-repair-c256/RESULTS.md).
+
+[Scope #241](https://github.com/Omegapy/OntoKin/issues/241) closes only after reviewed source integration, fresh resulting-main checks, offline handoff restoration and confirmed saved delivery. Source publication and delivery outcomes are recorded separately from candidate checks. Finish that scope and stop at its [next-task boundary](docs/engineering/localized-repair-c256/NEXT-TASK.md). The C253 corpus and C255 checker are unchanged; released runtime, fixtures, schemas and manual-only hosted workflows remain unchanged. No complete aggregate, native run, source rebuild or model trial is claimed.
+
+C255's reconciled final ZIP is confirmed saved as version 1; the pending-save wording in its historical sections below describes package freeze. Scope [#240](https://github.com/Omegapy/OntoKin/issues/240#issuecomment-6932955581) now remains open only for `work/c234-cpu-materials` deletion. That exact branch is already merged and retained; supported authenticated deletion is unavailable. Keep `archive/c174-model-research` as an explicitly justified archive. The strict normal-fidelity failure, unresolved R07/R08 work and C251 current-authority refusal remain unchanged.
+
 ## C255 amendment: ten experimental-source PRs integrated
 
 The owner-authorized [branch reconciliation](docs/engineering/branch-reconciliation-c255/README.md) merged all ten reviewed experimental-source PRs into actual main `05aadeb008186b6644a2dbd67a2f7e5f2e23766d`, tree `55f86b06508e607cb6ea34af610668518171368d`. All 137 additions match their original heads; the four C255 scientific files and released runtime remain unchanged. [Exact integration receipts](docs/engineering/branch-reconciliation-c255/evidence/INTEGRATION.json).
