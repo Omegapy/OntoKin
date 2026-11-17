@@ -1,0 +1,15 @@
+# Exact C258 continuation candidate review
+
+Approved candidate `80372672906021f2ccbeea95f62a018903d1f837`, tree `ca849419b448a50255fff76da26f51920e7af990`. It has parents `039b6f425afc590d609511d936c88d5b43564035` (published C258) and `3eaf74ce3b6965e682163979c077a4f5bf164b2c` (new acquired main lease).
+
+Thirty independent checks pass. The candidate differs from the previously approved published source only inside the existing STATUS integration-lease section. Every other path retains identical Git mode, object type and blob identity. The entire C253, C255, C256, C257 and C258 subtrees remain exact. The current cumulative scope against new main remains 137 new C258 files and the same five shared documents, with no deletions. No scientific data, historical review, component manifest, implementation, runtime or workflow bytes changed.
+
+The candidate's lease block equals the acquired main lease block. It correctly names the new owner, observed prior main, thirty-minute expiry, existing branch and issue245 scope. It distinguishes expiry from explicit release and limits the continuation to C258 integration and handoff closure. The separate recorded inventory supports the fourteen clean product-worktree observation; historical Git fixtures were excluded. The process observation is qualified to prior workspace working directories and does not claim global worker cessation. C234 cleanup and C174 archival retention remain explicit.
+
+Independent fresh GitHub readback observed new main at `3eaf74ce3b6965e682163979c077a4f5bf164b2c`. This source review does not independently attest every client-side detail of the root's update call. It verifies the intended lease commit, its sole parent, scoped STATUS delta and actual resulting main.
+
+Root's fresh documentation execution is bound to this exact candidate commit/tree. The receipt and complete log hashes match, the checker bytes match, source was clean and unchanged, return code was zero, and the log reports 29 preserved sources and 5,519 local links with no failures. Those receipt/log bytes are copied beside this review. No scientific test was repeated by this reviewer; the preceding 646-input verification and historical scientific/structural approvals remain eligible because all their inputs are unchanged.
+
+Approval covers this exact candidate for the next protected/expected-head PR integration gate. It does not claim candidate publication, a PR merge, resulting-main execution, branch deletion, standalone archive restoration or saved delivery. After actual merge, execute the six required checks identified in the parent review. Evidence-only closure needs its own fresh documentation check. Stop after confirmed integrated C258 handoff delivery.
+
+The reviewer initially counted thirteen product worktrees by omitting the nested C257 validation checkout. The corrected filter includes the explicitly inventoried path and confirms fourteen clean product worktrees. The initial failed reviewer control is preserved separately; candidate source was unchanged.

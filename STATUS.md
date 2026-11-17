@@ -8,7 +8,7 @@ The [C258 reader](docs/engineering/localized-repair-c258/README.md) independentl
 
 Scientific candidate `2bca9f7d2cba8996043bbfeae0c2855def5d7076` passes 28 authored methods and 119 independent controls. Separate structural review approves the corrected public path-resolution refusal and five dependency-admission controls. The original implicit-member collision, symlink-loop exception and authored/reviewer fixture failures remain preserved. Source quaternion projection uses exact rounding proofs; its eight-ULP artifact comparison is an explicit local observation policy, not an exporter-error guarantee. [Results and exact evidence](docs/engineering/localized-repair-c258/RESULTS.md).
 
-The reviewed candidate awaits publication through the existing `work/c258-follow-reader` branch, PR integration and fresh actual-main checks. [Scope #245](https://github.com/Omegapy/OntoKin/issues/245) also requires a fresh complete offline handoff restore and confirmed saved delivery. Complete that closure and stop. C257's saved ZIP, delivery companion, recovery version 8 and scope243 closure were reconciled before this explicitly requested continuation; historical delivery-pending text below describes its earlier freeze.
+[PR #246](https://github.com/Omegapy/OntoKin/pull/246) is verified merged at `a52f70a10d6ebb5228d17987aeda7edf334ff46d`, with exact reviewed tree `ca849419b448a50255fff76da26f51920e7af990`. Fresh actual-main checks pass 28 C258, 23 C257, 29 C256 and 31 C255 methods, the C253 14-file/three-task manifest and 29 preserved sources/233 sections/5,519 local links. GitHub automatically deleted the completed C258 branch; its absence and history retention are verified. [Integration evidence and delivery state](docs/engineering/localized-repair-c258/INTEGRATION.md) separates this source closure from later archive/restore/save operations. Read [scope #245](https://github.com/Omegapy/OntoKin/issues/245) and its linked recovery checkpoint for their actual outcome before retrying. Stop after saved delivery; the [next bounded contract step](docs/engineering/localized-repair-c258/INTEGRATED-NEXT-TASK.md) belongs to a separate conversation. C257 delivery and scope243 closure are reconciled; historical delivery-pending text below describes earlier freezes.
 
 Hinges, complete C255 semantic records, authentic revisions, invalid-edit atomicity, clean rebuilds, native/model trials and comparative advantage remain unqualified. C253/C255 mathematics, C256 measurements, C257 ownership and released runtime/workflows remain unchanged. `work/c234-cpu-materials` is already merged but still awaits supported deletion under [#240](https://github.com/Omegapy/OntoKin/issues/240). Keep `archive/c174-model-research` until complete historical graph retention is established. The strict normal-fidelity failure, unresolved R07/R08 and C251 current-authority refusal retain their states.
 
@@ -400,19 +400,17 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c258-root-78ebb05e03a4-20261117`.
-State: ACTIVE for continuation of C258 integration, resulting-main checks and handoff closure.
+Owner: none. Previous owner: `c258-root-78ebb05e03a4-20261117`.
+State: RELEASED after verified C258 integration and all six resulting-main checks; this release takes effect only when this closure commit is conditionally published and read back.
 Scope: [C258 finite follow reader #245](https://github.com/Omegapy/OntoKin/issues/245).
-Acquired at: 2026-11-17T18:00:52Z.
-Expires at: 2026-11-17T18:30:52Z.
-Observed base: `a323347c8427a21538e5c6675f05d955f8d30d0a`.
-Reserved shared files: STATUS.md, AGENTS.md, GOAL.md, README.md and docs/README.md.
+Acquired at: 2026-11-17T18:00:52Z; previous expiry: 2026-11-17T18:30:52Z.
+Release recorded at: 2026-11-17T18:09:49Z.
+Observed integrated main: `a52f70a10d6ebb5228d17987aeda7edf334ff46d`.
+Reserved shared files: none after verified publication.
 
-This continuation resumes existing branch `work/c258-follow-reader` at `039b6f425afc590d609511d936c88d5b43564035`. Its tree `6e5e3c8792f726a94a22d2ed23a5b80361ab3cd6` equals approved local candidate `d2c9c31f829e6d3aa890c637cfdc1accc0ee26c0`. The [verified C258 recovery handoff](https://chatgpt.com/library?file_id=libfile_fde3_f-8a1faacc7ee08191be12ac85971622b4_2ab2a24d43748191957f9bcc356b59de&account_id=personal) preserves distinct author history and all prior failures. The [continuation recovery checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-8aee875737988191a6e2513216afdda4_2ab2a24d43748191957f9bcc356b59de&account_id=personal) tracks this bounded integration.
+The resumed branch was merged through PR246 with expected head `233711ea107dc04a60fadcc05174bb834ced40eb`. The exact resulting tree matches the independently approved continuation; all original scientific inputs and evidence remain unchanged. GitHub automatically deleted the branch, with both published heads retained in main ancestry. The prior expired lease and its reconciliation remain preserved in the recovery handoff and Git history.
 
-Previous owner `c258-root-da3bfd223c61-20261117` expired at 2026-11-17T17:00:42Z without an observed explicit release. Before takeover, current main and all branches/PRs were reconciled, the published C258 tree was verified, all 14 accessible product worktrees were clean, and no process working from either prior workspace was observed. This does not assert that lease expiry proves worker cessation. No unresolved completed source write or PR/merge was found; read the destination again before retrying any uncertain operation.
-
-This ownership starts only after the nonforce conditional update from the observed main is verified. The root integrator owns shared documentation reconciliation, exact-candidate review, PR publication/merge, resulting-main checks, evidence retention, explicit lease release and saved handoff closure. Independent reviewers write separate evidence. Do not start a successor feature. C234 remains already merged and awaits user cleanup under issue240; C174 remains a retained historical archive. Native runs, source rebuilds, model trials and released behavior changes are outside this scope.
+[Integration evidence](docs/engineering/localized-repair-c258/evidence/integration/INTEGRATION.json) records the source, checks and branch disposition. Final archive/restore/save verification is later delivery work tracked in [the stable checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-8aee875737988191a6e2513216afdda4_2ab2a24d43748191957f9bcc356b59de&account_id=personal) and issue245. No additional repository integration or successor feature is part of this closure. C234 is already merged and awaits user cleanup; C174 remains a justified historical archive. Subsequent main writers must acquire a new verified lease.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
