@@ -85,3 +85,5 @@ Site poses/world alignment, full C255 semantics, revision/rebuild authority,
 native/model comparisons, the normal-fidelity failure, R07/R08 and C251's
 current-authority limitation remain unchanged. The [next task](NEXT-TASK.md)
 starts only in a separate continuation.
+
+[Verified source integration and actual-main checks](INTEGRATION.md) now record the completed merge and branch deletion. The candidate-only wording above preserves its earlier observation; final saved delivery remains independently recorded.

@@ -8,7 +8,7 @@ The [C261 reader](docs/engineering/localized-repair-c261/README.md) implements o
 
 The corrected reader passes 28 authored methods and 217 independent controls / 17,124 assertions on hosted Linux/CPython 3.12.14. Published scientific commit `a877b0a3b75595c66c321cf515c7138391af5ba2` has the same tree as independently reviewed local `2c1ecf0649cc891fe0544eace2aab7ce9779bad5`. Fresh predecessor checks pass C255 31, C256 29, C257 23 and C258 28 methods, plus the C253 manifest. [Results and preserved findings](docs/engineering/localized-repair-c261/RESULTS.md) distinguish execution from unrun gates.
 
-[PR250](https://github.com/Omegapy/OntoKin/pull/250) is the current integration candidate under [scope249](https://github.com/Omegapy/OntoKin/issues/249). Complete reviewed integration, resulting-main checks and one verified saved handoff, then stop. The [next source-observer step](docs/engineering/localized-repair-c261/NEXT-TASK.md) is separate. C260 delivery is verified complete and scope247 is closed. Earlier sections retain their historical observations. C234 remains already merged and awaiting deletion; C174's former archive branch is absent and complete historical graph retention remains unestablished.
+[PR250](https://github.com/Omegapy/OntoKin/pull/250) is verified merged at `f2c175e22ce5f17f063b6de6d7ea9da7788b9040`, exact reviewed tree `80cacbcfea9dc1d0eb0f67dd4f52433cb64fde3a`. Fresh actual-main C261, documentation/preservation and C253 manifest checks pass. GitHub automatically deleted the completed branch; absence and both published heads in main ancestry are verified. [Integration receipts](docs/engineering/localized-repair-c261/INTEGRATION.md) record source closure. Finish only the verified saved handoff under [scope249](https://github.com/Omegapy/OntoKin/issues/249), then stop. The [next source-observer step](docs/engineering/localized-repair-c261/NEXT-TASK.md) is separate. C260 delivery is verified complete and scope247 is closed. Earlier sections retain their historical observations. C234 remains already merged and awaiting deletion; C174's former archive branch is absent and complete historical graph retention remains unestablished.
 
 ## C260: finite hinge-declaration observation contract
 
@@ -416,17 +416,17 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: `c261-root-2a9a7d092213-20261117`.
-State: ACTIVE only after conditional publication and exact readback.
+Owner: none. Previous owner: `c261-root-2a9a7d092213-20261117`.
+State: RELEASED after verified C261 source integration and actual-main checks; effective only when this closure is conditionally published and read back.
 Scope: [C261 finite raw GLB hinge reader #249](https://github.com/Omegapy/OntoKin/issues/249).
-Acquired at: 2026-11-17T22:48:49Z; expires at: 2026-11-17T23:18:49Z.
-Observed main: `cac72425fbe19db216d9548679dcdaaaad4f0fe8`.
-Owned branch: `work/c261-glb-hinge-reader`.
-Reserved shared files: STATUS.md, AGENTS.md, GOAL.md and docs/README.md for this bounded integration.
+Acquired at: 2026-11-17T22:48:49Z; previous expiry: 2026-11-17T23:18:49Z.
+Release recorded at: 2026-11-17T23:06:27.966149+00:00.
+Observed integrated main: `f2c175e22ce5f17f063b6de6d7ea9da7788b9040`.
+Reserved shared files: none after verified publication.
 
-C260 contract and independent-review delivery are confirmed complete; scope247 is closed. Root coordinates the C261 raw artifact interface, independent controls, applicable focused checks, guarded PR integration, resulting-main verification and one saved handoff. Source interpretation, field comparison, historical admission, native execution and release qualification remain outside this scope. C234 remains merged awaiting supported deletion or explicit user cleanup. C174's complete historical graph retention remains unestablished.
+PR250 merged with expected head `538344242322599753513f76e07e67950a633b08` and exact independently approved tree. Fresh actual-main C261, documentation and C253 manifest checks pass. The completed branch is absent and both published heads remain in main ancestry. The [integration receipt](docs/engineering/localized-repair-c261/evidence/integration/INTEGRATION.json) separates source closure from delivery.
 
-The [C261 recovery checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-eb31ecb86780819181acc596a215ddc4_2ab2a24d43748191957f9bcc356b59de&account_id=personal) records durable source/evidence and any unknown outcome. Reconcile actual refs and issue249 before retrying an interrupted write. Release this lease after source integration and resulting-main checks; delivery does not require retaining exclusive source ownership.
+Root completes only final archive/source-replay/saved delivery under scope249, updating the [stable checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-eb31ecb86780819181acc596a215ddc4_2ab2a24d43748191957f9bcc356b59de&account_id=personal), then stops. A subsequent source writer must acquire a new verified lease and reconcile that delivery first. C234 remains merged awaiting user cleanup; C174's former branch is absent and complete historical graph retention remains unestablished.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
