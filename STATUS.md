@@ -370,24 +370,25 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none.
-State: RELEASED by this documentation closure.
-Previous owner: `c255-reconcile-root-c77bfdbfac37`.
-Scope: [C255 branch reconciliation #240](https://github.com/Omegapy/OntoKin/issues/240).
+Owner: `c256-root-da3bfd223c61`.
+State: ACTIVE.
+Scope: [C256 finite GLB reader #241](https://github.com/Omegapy/OntoKin/issues/241).
+Acquired: 2026-11-17T03:37:19Z.
+Expires: 2026-11-17T04:07:19Z.
+Observed base: `9b9d72e0b411f5f84dd815638edcf364488d26c4`.
+Reserved shared files: STATUS.md, AGENTS.md, GOAL.md, README.md and docs/README.md.
 
-All ten reviewed experimental-source PRs merged into actual main
-`05aadeb008186b6644a2dbd67a2f7e5f2e23766d`, tree
-`55f86b06508e607cb6ea34af610668518171368d`.
-[Fresh actual-main checks](docs/engineering/branch-reconciliation-c255/evidence/ACTUAL-MAIN-CHECKS.json)
-passed within their stated scopes. This closure releases the bounded integration
-lease acquired at 2026-11-16T22:58:45.390543+00:00 and previously expiring at
-2026-11-16T23:28:45.390543+00:00.
+Author branch `work/c256-glb-reader` owns only
+`docs/engineering/localized-repair-c256/`; independent hosted workers review
+actual-byte geometry, sampled poses and successor preservation. Main integration
+remains conditional on exact-source independent review and applicable checks.
+No native or model execution is part of this scope.
 
-Scope #240 remains open: the C234 ref is not deleted because a supported
-authenticated deletion capability was unavailable, and the amended final ZIP
-still requires verified saved delivery. C174 archival retention is intentional.
-The [current handoff action](docs/engineering/branch-reconciliation-c255/NEXT-TASK.md)
-is to finish the amendment and stop; C256 remains separate and unstarted.
+C255 final amended delivery is confirmed by saved version 1 and
+[scope #240's delivery record](https://github.com/Omegapy/OntoKin/issues/240#issuecomment-6932955581).
+The historical pending-save wording above describes its package-freeze state.
+Scope #240 remains open only because `work/c234-cpu-materials` still needs
+supported authenticated deletion. The C174 archive remains intentionally retained.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
