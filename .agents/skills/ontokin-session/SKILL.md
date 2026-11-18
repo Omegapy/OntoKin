@@ -65,6 +65,10 @@ requests for routine reversible steps.
 
 ## Resume after an interruption
 
+Save a durable checkpoint early, after material phases and before long work.
+Follow the required session ZIP contract in
+[HANDOFF.md](../../../docs/workflow/HANDOFF.md). Do not depend on automatic
+compaction, a remaining-context estimate or an advance thread-limit warning.
 Use [SESSION.md](../../../docs/workflow/templates/SESSION.md) to retain the
 read-set, capabilities, owner, code/evidence identities, unknown operations,
 and next action. After an uncertain write, inspect the remote refs and exact

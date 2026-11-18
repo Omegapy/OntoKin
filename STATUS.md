@@ -11,31 +11,26 @@ tools own rendering, general simulation and gameplay. [GOAL](GOAL.md), the
 
 ## Current workflow and next action
 
-C263 implements the owner's GitHub-owned browser-chat workflow under
-[scope252](https://github.com/Omegapy/OntoKin/issues/252). It is integrated and
-verified through [PR253](https://github.com/Omegapy/OntoKin/pull/253). Start with
-[CHATGPT-START-HERE](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json)
-and the completed [C263 task record](docs/workflow/tasks/C263/task.json).
+C264 implements the owner's clarification that every bounded browser development
+or recovery scope requires a verified session ZIP saved in the existing OntoKin
+Library folder. [Scope254](https://github.com/Omegapy/OntoKin/issues/254),
+[requirements](docs/workflow/tasks/C264/REQUIREMENTS.md) and
+[plan](docs/workflow/tasks/C264/PLAN.md) identify this documentation/delivery scope.
+Use [CHATGPT-START-HERE](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json),
+the [two prompts](docs/workflow/BROWSER-PROMPTS.md) and
+[handoff contract](docs/workflow/HANDOFF.md). Integration and saved delivery are
+separate gates. C264 remains in progress until both are verified.
 
-Implementation: `1856d92d1c5e8f6e13cfc3e90bdf7b98bc1ab2b5`.
-Verified merge/main: `96bf12e4747722282767033ddb18f4d55532fc51`;
-tree: `4cb8eb96b9b2c553b4014e61cbf4e078cb2b17c4`.
-Fresh resulting-main workflow checks and all 28 tests pass; documentation
-preserves 29 sources and 233 sections with 5,497 local links checked. Twelve
-independent controls and a fresh-chat recovery exercise also passed within
-their documented scope. [Integration receipt](docs/engineering/browser-workflow-c263/INTEGRATION.json)
-records exact evidence and branch cleanup. Later closure metadata is a separate
-commit; always recheck live main before work.
+C263's GitHub-owned workflow remains integrated through
+[PR253](https://github.com/Omegapy/OntoKin/pull/253); its exact checks and limits
+remain in the [integration record](docs/engineering/browser-workflow-c263/INTEGRATION.json).
+The later C264 requirement changes future delivery, not historical C263 evidence.
 
-**Current action: wait for the owner's next direction.** No task is active.
-The completed `work/c263-browser-workflow` branch was automatically deleted;
-absence and candidate retention in main ancestry were verified. No user branch
-deletion is pending.
-
-The queued scientific action is one bounded source-side hinge observer under
+The queued scientific action remains one bounded source-side hinge observer under
 [C260](docs/engineering/localized-repair-c260/CONTRACT.md) and
 [C261's next-task contract](docs/engineering/localized-repair-c261/NEXT-TASK.md).
-It is not part of C263 and must not start automatically after this delivery.
+It is outside C264. Stop after this scope and its saved handoff, then wait for
+owner direction; a later continuation prompt can select one bounded next step.
 
 ## Product state and remaining gates
 
@@ -88,8 +83,9 @@ remain incomplete. Numerical checks do not certify occluded/unresolvable views.
 
 ## Branches and historical handoff
 
-The final integration inventory contains only main. C263's PR is merged and its
-completed workflow branch is deleted. C234 was already merged and its branch was deleted;
+The starting C264 inventory contained only main and no open PRs. The active
+C264 branch is `work/c264-required-browser-handoffs`; preserve it while work is
+unfinished. C263's PR is merged and its completed workflow branch is deleted. C234 was already merged and its branch was deleted;
 scope240 is closed. C261's completed branch is also absent. No historical user
 branch-deletion request remains. Recheck live inventory before any cleanup.
 C174's former archive branch is absent; complete historical graph retention
@@ -97,7 +93,7 @@ remains unestablished.
 
 The [C262 migration record](docs/engineering/browser-workflow-c263/MIGRATION.md)
 retains the archive, delivery checkpoint and exact source identities. GitHub is
-the normal operational handoff. Full historical offline restoration remains
+the current operational state; C264 also requires a saved session ZIP. Full historical offline restoration remains
 subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease

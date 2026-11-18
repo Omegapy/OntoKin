@@ -80,7 +80,11 @@ integration as blocked rather than claiming completion from a branch pass.
 4. Release or renew integration ownership at a substantive checkpoint. Report
    changed behavior, actual checks, integration and branch disposition, remaining
    limits, and the stable continuation entry.
-5. Stop at the bounded milestone. A future ZIP is optional unless the current
-   user request explicitly requires one; when required, verify and save that
-   exact archive before claiming delivery. Do not replace a still-open earlier
-   ZIP obligation with a new documentation-only completion claim.
+5. Create, verify and save the required browser-session ZIP under
+   [HANDOFF.md](../../../docs/workflow/HANDOFF.md). Record its confirmed saved
+   identity, size and hash in the external delivery receipt before marking the
+   task complete. A merged implementation with delivery outstanding remains
+   incomplete. Preserve early recovery checkpoints and actual unpublished work.
+   Keep historical archives intact and state the online session package boundary.
+   Stop after the bounded scope and saved delivery. Do not replace a still-open
+   ZIP obligation with a documentation-only completion claim.

@@ -1,0 +1,211 @@
+{
+  "schema_version": 1,
+  "id": "C264",
+  "title": "Required browser handoffs and continuation/recovery prompts",
+  "intent": "Preserve required saved ZIP delivery after each bounded browser scope while keeping GitHub as current source authority and making interruptions recoverable.",
+  "status": "review",
+  "owner": "c264-root-c3681d8a01ea",
+  "branch": "work/c264-required-browser-handoffs",
+  "base_sha": "727cc298cd9862f53684061a34e9e41a8ec8cd06",
+  "requirements": [
+    {
+      "id": "R01",
+      "description": "Provide separate complete browser continuation and interrupted-thread recovery prompts.",
+      "acceptance": "Both prompts retain one bounded scope and required saved ZIP delivery.",
+      "status": "done",
+      "evidence": [
+        "docs/workflow/prompts/CONTINUE.md",
+        "docs/workflow/prompts/RECOVER.md"
+      ]
+    },
+    {
+      "id": "R02",
+      "description": "Reconcile current GitHub authority with supplied handoffs and actual capabilities.",
+      "acceptance": "Prompts require explicit pinned reads, actual refs/ownership, current plan and available tools.",
+      "status": "done",
+      "evidence": [
+        "CHATGPT-START-HERE.md",
+        "docs/workflow/PROTOCOL.md"
+      ]
+    },
+    {
+      "id": "R03",
+      "description": "Preserve progress before an unpredictable thread interruption.",
+      "acceptance": "Early durable checkpoints and meaningful-phase updates include actual partial work and unknown operations.",
+      "status": "done",
+      "evidence": [
+        "docs/workflow/HANDOFF.md",
+        "docs/workflow/templates/SESSION.md"
+      ]
+    },
+    {
+      "id": "R04",
+      "description": "Complete integration and branch lifecycle accurately.",
+      "acceptance": "Finished reviewed scope merges with verified main; unfinished branches persist; deletion is verified or explicitly pending.",
+      "status": "done",
+      "evidence": [
+        "docs/workflow/PROTOCOL.md",
+        "docs/workflow/prompts/RECOVER.md"
+      ]
+    },
+    {
+      "id": "R05",
+      "description": "Make confirmed saved handoff delivery a completion gate.",
+      "acceptance": "Current instructions require verified session ZIP and actual Library identity before task completion.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R06",
+      "description": "Preserve historical archive semantics and material.",
+      "acceptance": "C262 bytes/hash remain unchanged; new session ZIP declares online scope and external historical dependency.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/browser-handoff-c264/DECISION.md",
+        "docs/engineering/browser-handoff-c264/evidence/preservation.json"
+      ]
+    },
+    {
+      "id": "R07",
+      "description": "Provide downloadable reusable prompts and one usable new session ZIP.",
+      "acceptance": "Saved files include prompts, checkpoint, next action, recovery state, frozen workflow snapshots, manifest and evidence.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R08",
+      "description": "Verify and stop without scientific scope expansion.",
+      "acceptance": "Documentation and workflow checks plus independent review pass; no product files, fixtures, budgets or hosted workflows change.",
+      "status": "not_done",
+      "evidence": []
+    }
+  ],
+  "plan": [
+    {
+      "id": "P01",
+      "title": "Record clarified requirements and inspect authoritative sources",
+      "requirements": [
+        "R01",
+        "R02",
+        "R06"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/workflow/tasks/C264/REQUIREMENTS.md",
+        "docs/workflow/tasks/C264/PLAN.md"
+      ],
+      "verification": [
+        "Read current GitHub workflow and C262 root controls; resolve the existing Library folder"
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "Write both prompts and align current delivery and recovery instructions",
+      "requirements": [
+        "R01",
+        "R02",
+        "R03",
+        "R04",
+        "R05"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/workflow/BROWSER-PROMPTS.md",
+        "docs/workflow/HANDOFF.md"
+      ],
+      "verification": [
+        "Independent review of ordinary continuation, crash recovery and delivery-only recovery"
+      ]
+    },
+    {
+      "id": "P03",
+      "title": "Verify workflow documentation and preserved boundaries",
+      "requirements": [
+        "R03",
+        "R04",
+        "R05",
+        "R06",
+        "R08"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/browser-handoff-c264/RESULTS.md"
+      ],
+      "verification": [
+        "python3 tools/chat_workflow.py check --json",
+        "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+        "Independent prompt/package inspection"
+      ]
+    },
+    {
+      "id": "P04",
+      "title": "Integrate the reviewed instructions and verify actual main",
+      "requirements": [
+        "R04",
+        "R08"
+      ],
+      "status": "in_progress",
+      "artifacts": [
+        "docs/engineering/browser-handoff-c264/INTEGRATION.json"
+      ],
+      "verification": [
+        "Observe exact merge, recheck current main and completed-branch absence"
+      ]
+    },
+    {
+      "id": "P05",
+      "title": "Create and save session handoff and prompts, record delivery and stop",
+      "requirements": [
+        "R05",
+        "R06",
+        "R07",
+        "R08"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/browser-handoff-c264/DELIVERY.json"
+      ],
+      "verification": [
+        "Verify exact ZIP member manifest, extraction, frozen GitHub files and saved artifact identity"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "workflow structure",
+      "command": "python3 tools/chat_workflow.py check --json",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/browser-handoff-c264/evidence/candidate-workflow-check.json"
+      ]
+    },
+    {
+      "name": "documentation preservation",
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/browser-handoff-c264/evidence/candidate-documentation.json"
+      ]
+    },
+    {
+      "name": "independent documentation review",
+      "command": "Read-only independent review of six continuation/recovery/delivery scenarios",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/browser-handoff-c264/REVIEW.md",
+        "docs/engineering/browser-handoff-c264/evidence/review-bindings.json"
+      ]
+    }
+  ],
+  "completion": {
+    "implementation_commit": null,
+    "merge_commit": null,
+    "pull_request": null,
+    "branch_disposition": "active",
+    "evidence": []
+  },
+  "next_action": "Implement clarified workflow and prompts, verify and integrate them, then save the required session handoff before closure."
+}

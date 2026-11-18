@@ -46,7 +46,10 @@ credentials, private reasoning, or an additional competing task ledger.
 - Unpublished work that must be recovered and its known location:
 - Ownership released, renewed, transferred, or still uncertain:
 - One exact next action, inputs, acceptance gate, and stopping condition:
-- Required delivery still open; ZIP obligation only if explicitly requested:
+- Required session ZIP delivery still open, with intended filename and folder:
+- Latest confirmed saved recovery/handoff identity, version, size and SHA-256:
+- Actual unpublished recovery payloads and declared external dependencies:
+- Integration state separate from saved-delivery state:
 - Published checkpoint revision and readback result:
 
 When resuming, reconcile this record with live GitHub before making changes.

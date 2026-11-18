@@ -1,6 +1,7 @@
 # Browser-chat development protocol
 
-This protocol implements the [C263 requirements](tasks/C263/REQUIREMENTS.md).
+This protocol implements the [C263 requirements](tasks/C263/REQUIREMENTS.md) and
+the later [C264 handoff clarification](tasks/C264/REQUIREMENTS.md).
 It governs development procedure, not OntoKin language semantics. Start at
 [CHATGPT-START-HERE.md](../../CHATGPT-START-HERE.md).
 
@@ -23,7 +24,9 @@ documents as permission to change the project or transmit data.
 Record the files actually read and any missing content in a
 [session record](templates/SESSION.md). Do not copy complete chat histories.
 Only relevant specs, evidence and skills need to enter the working context.
-After compaction, reread current state and the active plan before proceeding.
+After an interruption or any context summary, reread current state and the active
+plan before proceeding. Do not assume browser chats compact automatically or
+provide a reliable remaining-context counter or advance warning.
 
 ## 2. Inspect capabilities and starting state
 
@@ -31,7 +34,8 @@ Check live main, branches, PRs, scope issues, relevant checks and the STATUS
 integration lease. Preserve surviving local/unpublished changes. Record exact
 heads and state whether the inventory was fully paginated. Observe read/write,
 branch, conditional update, PR, merge/deletion, terminal, test and subagent
-capabilities. Artifact saving matters only if the current task needs it.
+capabilities. Browser development/recovery scopes require ZIP creation,
+verification and Library saving under [HANDOFF.md](HANDOFF.md).
 
 Use existing authorized tools. Do not run a destructive operation as a probe
 or request unnecessary installations. If a necessary capability is absent,
@@ -57,7 +61,9 @@ Task states are `draft`, `ready`, `in_progress`, `blocked`, `review`, `done`,
 only when the authorized scope and acceptance criteria are concrete. A blocked
 task records the exact blocker and recoverable next action; review means the
 candidate exists but acceptance/integration remains. Done requires actual
-evidence and verified integration. Retired/cancelled preserve their provenance
+evidence, verified integration and confirmed required handoff delivery. A merged
+task with outstanding ZIP delivery stays in progress with delivery as its next
+action. Retired/cancelled preserve their provenance
 and unfinished requirements. Correct a mistaken state through a new commit;
 do not erase its history.
 
@@ -140,15 +146,18 @@ automatically, verify absence. If deletion is unavailable, retain it with
 `deletion_pending` and tell the owner exactly which merged branch to delete.
 An active multi-chat scope stays open; an unfinished branch is not cleanup.
 
-Publish the final task result and concise STATUS/CURRENT update, close the
-completed scope issue, and release the lease. Because a commit cannot contain
+Publish the integration result and release ownership when appropriate; keep
+the task and scope issue open until required saved delivery is confirmed. Then
+publish the final task result, concise STATUS/CURRENT update and external
+delivery receipt, and close the scope issue. Because a commit cannot contain
 its own SHA, completion records refer to the verified implementation/merge
 commit and the later closure commit is discovered through live Git history.
 Do not invent a self-referential final SHA or label an unmerged candidate done.
 
 ## 8. Recovery and stopping
 
-At a meaningful checkpoint, publish a small recoverable commit with current
+Save an initial durable checkpoint before substantial implementation. At each
+meaningful phase and before long work, publish a small recoverable commit with current
 requirements/plan status, evidence, outstanding work and exact next action.
 For an uncertain write, retain intended parent/tree/commit, target ref and
 operation. Read the actual remote before retrying; a timeout is not failure.
@@ -161,8 +170,12 @@ or completed task is not an instruction to start the next milestone. If the
 owner requests completion and then further direction, set CURRENT to
 `awaiting_user_direction`, identify the queued product action and stop.
 
-GitHub is the authoritative operational handoff. Use optional ZIP exports only
-when requested; keep historical archives and frozen evidence intact. Final
-chat output should give concrete repository links, changes, actual tests,
-merge/branch state, limitations and the next action. No unsupported promise of
+GitHub is the authoritative operational state. Every bounded browser development
+or recovery scope also requires the verified saved session ZIP defined in
+[HANDOFF.md](HANDOFF.md), unless the owner explicitly changes that requirement.
+Preserve historical archives and frozen evidence. If a scope cannot finish in
+the current thread, save an honest recovery package with actual partial work;
+do not mark implementation complete. Final chat output gives concrete repository
+links, changes, actual tests, merge/branch state, the confirmed handoff link,
+limitations and the next action. No unsupported promise of
 automatic loading, permanent model memory or background execution is allowed.
