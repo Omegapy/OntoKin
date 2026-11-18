@@ -102,17 +102,15 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-Owner: none. Previous owner: `c263-root-c3681d8a01ea`.
-State: RELEASED after verified C263 source integration and actual-main checks;
-effective when this closure is conditionally published and read back.
-Scope: [C263 browser workflow #252](https://github.com/Omegapy/OntoKin/issues/252).
-Acquired at: 2026-11-18T20:35:57Z; previous expiry: 2026-11-18T21:05:57Z.
-Release recorded at: 2026-11-18T20:40:00.167430+00:00.
-Observed integrated main: `96bf12e4747722282767033ddb18f4d55532fc51`.
-Reserved shared files: none after verified publication.
-
-A future integrator must reconcile current refs, completed scope and any unknown
-writes, then acquire a new bounded expected-head lease before shared writes.
+Owner: `c264-root-c3681d8a01ea`.
+State: HELD for C264 required browser handoff guidance and delivery.
+Scope: [C264 browser handoffs #254](https://github.com/Omegapy/OntoKin/issues/254).
+Acquired at: 2026-11-18T21:43:50.000Z; expiry: 2026-11-18T22:13:50.000Z.
+Observed main before acquisition: `727cc298cd9862f53684061a34e9e41a8ec8cd06`.
+Reserved shared files: STATUS.md, CHATGPT-START-HERE.md, AGENTS.md, README.md,
+current workflow guidance/registry/checkpoint and C264 task/evidence records.
+Independent nonoverlapping branch work may continue. Reconcile actual refs and
+unknown operations before taking over; expiry alone does not prove inactivity.
 
 ## Historical status
 
