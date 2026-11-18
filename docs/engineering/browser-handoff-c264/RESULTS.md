@@ -26,3 +26,13 @@ blocking findings; the minor navigation finding was corrected and reread. See
 [REVIEW.md](REVIEW.md). Actual-main rechecks, archive verification and confirmed
 save remain separate required gates. No package save is claimed by this candidate
 record. The final integration and delivery receipts identify later outcomes.
+
+## Actual-main verification
+
+The reviewed candidate merged through PR255 at
+`df18c6ee8721f20923b80841fccf495ea65735f9`, with the reviewed tree unchanged.
+Fresh workflow and documentation checks passed on that actual main; 29 original
+sources, 233 sections and 5,539 local links were verified. The completed branch
+was automatically deleted and its candidate remains in main ancestry.
+[INTEGRATION.json](INTEGRATION.json) records these observations. Saved artifact
+delivery is still pending in this checkpoint.

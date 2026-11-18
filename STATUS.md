@@ -19,7 +19,11 @@ Library folder. [Scope254](https://github.com/Omegapy/OntoKin/issues/254),
 Use [CHATGPT-START-HERE](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json),
 the [two prompts](docs/workflow/BROWSER-PROMPTS.md) and
 [handoff contract](docs/workflow/HANDOFF.md). Integration and saved delivery are
-separate gates. C264 remains in progress until both are verified.
+separate gates. C264 instructions are integrated through
+[PR255](https://github.com/Omegapy/OntoKin/pull/255), merge
+`df18c6ee8721f20923b80841fccf495ea65735f9`. Actual-main workflow and documentation
+checks passed. The completed implementation branch is deleted and retained in
+main ancestry. C264 remains in progress while verified saved delivery is pending.
 
 C263's GitHub-owned workflow remains integrated through
 [PR253](https://github.com/Omegapy/OntoKin/pull/253); its exact checks and limits
@@ -83,9 +87,10 @@ remain incomplete. Numerical checks do not certify occluded/unresolvable views.
 
 ## Branches and historical handoff
 
-The starting C264 inventory contained only main and no open PRs. The active
-C264 branch is `work/c264-required-browser-handoffs`; preserve it while work is
-unfinished. C263's PR is merged and its completed workflow branch is deleted. C234 was already merged and its branch was deleted;
+The starting C264 inventory contained only main and no open PRs. The completed
+C264 implementation branch `work/c264-required-browser-handoffs` was automatically
+deleted after PR255 merged; live inventory again contains only main. Required
+artifact delivery remains open. C263's PR is merged and its completed workflow branch is deleted. C234 was already merged and its branch was deleted;
 scope240 is closed. C261's completed branch is also absent. No historical user
 branch-deletion request remains. Recheck live inventory before any cleanup.
 C174's former archive branch is absent; complete historical graph retention
