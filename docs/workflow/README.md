@@ -10,7 +10,9 @@ The agent reads current instructions and the live checkpoint, checks what its
 tools can actually do, and selects the scope authorized by your request. It
 records requirements and a plan, implements the change, verifies it and updates
 GitHub. Independent workers can help when available. Completed approved work
-is integrated into main and the work branch is resolved.
+is integrated into main and the work branch is resolved. The agent then verifies
+and saves the required browser-session ZIP under [HANDOFF.md](HANDOFF.md).
+Use the separate [continuation and recovery prompts](BROWSER-PROMPTS.md).
 
 A task can span several chats. The next chat resumes the same task and branch
 after checking their current state. It does not create another branch simply
@@ -23,10 +25,12 @@ checks GitHub before repeating it.
 | --- | --- |
 | [STATUS.md](../../STATUS.md) | Short current project state, product limits and main integration ownership. |
 | [CURRENT.json](CURRENT.json) | Pointer to the active/latest task and explicit next-action disposition. |
-| [tasks](tasks/C263/task.json) | Requirements, plan, evidence and completion record for each named scope. |
+| [Current task pointer](CURRENT.json) | Locates the active/latest task's requirements, plan, evidence and completion record. |
 | [Registry](registry.json) | Required reads and the small set of reusable repository skills. |
 | [ROLE.md](../../ROLE.md) | Director, worker and reviewer accountability. |
 | [PROTOCOL.md](PROTOCOL.md) | Startup, execution, recovery, verification and integration rules. |
+| [HANDOFF.md](HANDOFF.md) | Required saved session ZIP, early checkpoints and confirmed delivery. |
+| [Browser prompts](BROWSER-PROMPTS.md) | Copyable normal continuation and interrupted-thread recovery prompts. |
 | [Memory](memory.json) | Source-backed decisions, constraints and lessons; current instructions retain authority. |
 | [Knowledge guide](KNOWLEDGE.md) | Project vocabulary, relationships and documented capability boundaries. |
 
@@ -60,7 +64,7 @@ make no network calls:
 python3 tools/chat_workflow.py check
 python3 tools/chat_workflow.py brief --json
 python3 tools/chat_workflow.py lookup "hinge"
-python3 tools/chat_workflow.py new-task C264 --title "Selected scope" --intent "Owner's request"
+python3 tools/chat_workflow.py new-task C265 --title "Selected scope" --intent "Owner's request"
 ```
 
 `check` checks record structure, references and completion fields. It cannot
@@ -82,8 +86,10 @@ starts from current GitHub main. Full historical offline restoration remains a
 separate operation with its original archive contract; this workflow does not
 claim to replace or rerun it. See the [migration record](../engineering/browser-workflow-c263/MIGRATION.md).
 
-A new ZIP is needed only when explicitly requested for export or offline
-recovery. It must identify its source revision and preserve the obligations
-appropriate to the requested archive. The older requirement to save a ZIP at
-every checkpoint is superseded for ordinary browser-chat development by the
-owner's November 18 GitHub workflow direction.
+The owner later clarified on November 18 that each bounded browser development
+or recovery scope must still produce a verified ZIP saved in the existing
+OntoKin Library folder. [C264](tasks/C264/REQUIREMENTS.md) records this prospective
+change; C263's original migration record remains historical. The new session ZIP
+is for online continuation against GitHub, with explicit historical dependencies.
+It is not a complete offline source archive. Keep C262 unchanged and preserve its
+full restoration contract. Integration alone does not complete required delivery.

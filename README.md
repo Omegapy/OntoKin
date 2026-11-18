@@ -52,7 +52,7 @@ See [core commands and failure results](docs/user-guide/core-and-cli.md) for eva
 
 ## Continue development in a browser chat
 
-Use [CHATGPT-START-HERE.md](CHATGPT-START-HERE.md). It contains one reusable new-chat prompt, the explicit reading order and recovery instructions. The [workflow guide](docs/workflow/README.md) explains how requirements, plans, roles, skills, project memory and evidence stay in GitHub. A previous chat or new handoff ZIP is not needed for ordinary continuation. Read the [current checkpoint](docs/workflow/CURRENT.json) and [STATUS](STATUS.md) before selecting work.
+Use [CHATGPT-START-HERE.md](CHATGPT-START-HERE.md) and the [continuation/recovery prompts](docs/workflow/BROWSER-PROMPTS.md). The [workflow guide](docs/workflow/README.md) explains how requirements, plans, roles, skills, project memory and evidence stay in GitHub. Each bounded browser development or recovery scope also delivers a verified session ZIP under the [handoff contract](docs/workflow/HANDOFF.md). Read the supplied ZIP, [current checkpoint](docs/workflow/CURRENT.json) and [STATUS](STATUS.md) before selecting work; reconcile saved observations with live GitHub.
 
 The workflow checks what the current session can actually do. Repository instructions do not install browser tools or guarantee automatic loading. Agents explicitly read the required files, use available subagents, verify the actual change, integrate completed work and resolve its branch.
 

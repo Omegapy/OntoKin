@@ -4,6 +4,9 @@ For development through successive ChatGPT browser threads, start with
 [CHATGPT-START-HERE](../CHATGPT-START-HERE.md) and the [workflow guide](workflow/README.md).
 The [C263 requirements](workflow/tasks/C263/REQUIREMENTS.md) and
 [implementation plan](workflow/tasks/C263/PLAN.md) describe the GitHub-owned workflow.
+The later [C264 clarification](workflow/tasks/C264/REQUIREMENTS.md) retains required
+saved browser handoffs; use the [two prompts](workflow/BROWSER-PROMPTS.md) and
+[handoff contract](workflow/HANDOFF.md).
 
 
 ## Current engineering checkpoint
