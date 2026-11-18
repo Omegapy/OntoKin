@@ -1,0 +1,151 @@
+{
+  "schema": "ontokin.c265.docs-and-packaging-preflight/1",
+  "reviewer": "/root/independent_review",
+  "observed_at": "2026-11-18T22:36:00.710212+00:00",
+  "scope": "Read-only project/staging review; authorized narrow edits to two scratch session helpers only",
+  "verdict": "staged scientific bytes approved; helper metadata corrections verified; final publication/integration/ZIP/save gates remain pending",
+  "staged_science": {
+    "docs/engineering/localized-repair-c265/source_hinges.py": {
+      "bytes": 37570,
+      "sha256": "04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31abbf9e",
+      "stage_worktree_equality": true,
+      "approved_hash_equality": true
+    },
+    "docs/engineering/localized-repair-c265/test_source_hinges.py": {
+      "bytes": 42875,
+      "sha256": "467be9b930a77d6a82b56154c483f92747d554b354a5380687748b4e1a40821a",
+      "stage_worktree_equality": true,
+      "approved_hash_equality": true
+    }
+  },
+  "readset": [
+    {
+      "path": "/workspace/scratch/b4cbf4ea8454/run_checks.py",
+      "bytes": 4136,
+      "sha256": "bfba68470d0ee44fba0ba95816cf41cea1112ee92d7f7533ec56f159aa37227c"
+    },
+    {
+      "path": "/workspace/scratch/b4cbf4ea8454/build_handoff.py",
+      "bytes": 15520,
+      "sha256": "2c57c775213d6d10cb2e5802bd72b5ef29e3de44eabcabb91636834843805d5d"
+    },
+    {
+      "path": "/workspace/scratch/b4cbf4ea8454/OntoKin/docs/workflow/HANDOFF.md",
+      "bytes": 8354,
+      "sha256": "f5cab03d4ce87b14a3590669574d535dc7d6ee46d78849f2aab554c0e38647e7"
+    },
+    {
+      "path": "/workspace/scratch/b4cbf4ea8454/OntoKin/docs/workflow/tasks/C265/REQUIREMENTS.md",
+      "bytes": 3130,
+      "sha256": "e3c1231510a835a3748a6667c013bb6c75877aaa12f2ca4d0cb58692fab5fe3b"
+    },
+    {
+      "path": "/workspace/scratch/b4cbf4ea8454/OntoKin/docs/workflow/tasks/C265/PLAN.md",
+      "bytes": 2572,
+      "sha256": "df5c961cbda068d8ed3cd2c278700f2c6715f6615891cbb56564acad5dee59fa"
+    },
+    {
+      "path": "/workspace/scratch/b4cbf4ea8454/OntoKin/docs/workflow/tasks/C265/task.json",
+      "bytes": 8796,
+      "sha256": "e2c7338263299853995d37d0796dfccb9a58b6bcb857daeb692cb61af744e8aa"
+    },
+    {
+      "path": "/workspace/scratch/b4cbf4ea8454/publish/candidate01/files/docs/engineering/localized-repair-c265/README.md",
+      "bytes": 3666,
+      "sha256": "bca96b26ca7d34fe57350bb5b8499623db72ee90e6fc37fefda9af6485297da3"
+    },
+    {
+      "path": "/workspace/scratch/b4cbf4ea8454/publish/candidate01/files/docs/engineering/localized-repair-c265/RESULTS.md",
+      "bytes": 4621,
+      "sha256": "a2cdf516498d8a00153c2cdd1902353599e7d8152f041f04177422c78193e4e5"
+    },
+    {
+      "path": "/workspace/scratch/b4cbf4ea8454/publish/candidate01/files/docs/engineering/localized-repair-c265/REVIEW.md",
+      "bytes": 1373,
+      "sha256": "89bf2094a776be8c3ef5d228940b1c89310c8a707927ad901742f4309ae58dc6"
+    },
+    {
+      "path": "/workspace/scratch/b4cbf4ea8454/publish/candidate01/files/docs/engineering/localized-repair-c265/NEXT-TASK.md",
+      "bytes": 2189,
+      "sha256": "56da055a661c63e66eec25ec5eba91f711074d048e7e55e18b7bece2ced63f29"
+    }
+  ],
+  "checks": [
+    {
+      "case": "run_checks.py_syntax",
+      "passed": true
+    },
+    {
+      "case": "build_handoff.py_syntax",
+      "passed": true
+    },
+    {
+      "case": "report_not_started",
+      "passed": true
+    },
+    {
+      "case": "report_partial_pass",
+      "passed": true
+    },
+    {
+      "case": "report_all_pass",
+      "passed": true
+    },
+    {
+      "case": "report_completed_failure",
+      "passed": true
+    },
+    {
+      "case": "manifest_exact",
+      "passed": true,
+      "expected_refusal": false
+    },
+    {
+      "case": "manifest_wrong_revision",
+      "passed": true,
+      "expected_refusal": true
+    },
+    {
+      "case": "manifest_wrong_inventory",
+      "passed": true,
+      "expected_refusal": true
+    },
+    {
+      "case": "manifest_payload_mismatch",
+      "passed": true,
+      "expected_refusal": true
+    },
+    {
+      "case": "immutable_staging_manifest",
+      "passed": true,
+      "files": 476
+    },
+    {
+      "case": "current_online_pin_preserves_c262",
+      "passed": true
+    }
+  ],
+  "all_checks_passed": true,
+  "resolved_findings": [
+    "Historical dependency online-source pin now follows the frozen C265 revision; C262 archives metadata is preserved.",
+    "Extracted manifest is parsed and checked for source revision, exact intended inventory, uniqueness and actual extracted payload hashes.",
+    "Partial check-runner results cannot claim aggregate success; planned/completed/remaining checks are explicit.",
+    "Exact builder/check-runner helpers and consumed package-state/historical inputs are included as manifest-bound session recovery payloads with usage instructions.",
+    "Checkpoint includes plan-step state and explicit branch heads, and package freeze requires the observed main revision to match the selected revision.",
+    "Existing archive and extraction paths cannot be silently reused."
+  ],
+  "documentation_corrections_owned_by_director": [
+    "Correct RUN-NOTES run06 bare-CR discovery attribution to source_observer_design, with independent review of the guard/refusal/CRLF.",
+    "Reconcile R05 acceptance status with completion of the still-required candidate regression gate."
+  ],
+  "not_run": [
+    "Scientific suites were not rerun in this docs audit.",
+    "No production package was built or uploaded by the reviewer.",
+    "Live main/merge/ownership/deletion readback is the Director integration gate."
+  ],
+  "write_scope": [
+    "/workspace/scratch/b4cbf4ea8454/run_checks.py",
+    "/workspace/scratch/b4cbf4ea8454/build_handoff.py",
+    "/workspace/scratch/b4cbf4ea8454/c265-docs-review.json"
+  ]
+}

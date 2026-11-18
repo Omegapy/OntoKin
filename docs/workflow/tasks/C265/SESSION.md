@@ -39,3 +39,9 @@ Reviewed source/test bytes are published at `1e5b1c368fabc51ce22be6916aca6464f71
 The candidate passes nine complete check groups, 188 methods, fourteen corpus bindings, workflow and documentation checks. Independent approval applies to its exact unchanged source/test hashes. R05 was marked done in the first implementation record before its candidate regression gate; this checkpoint supplies that previously outstanding evidence. No prior partial run is treated as a completed aggregate.
 
 The early recovery file is confirmed at version 2; later recovery and final delivery supersede its remaining-work list. Next action is expected-head PR merge under the verified lease, actual-main checks, branch disposition and saved ZIP. All implementation workers are idle with no pending mutations.
+
+## Integrated and checked checkpoint
+
+PR257 merged at `d602adee52bd5913dc86fdb3a29e2c4c653a4ed9`, with expected branch head `fcddb02132be04d499127a704e181d632211df41` and unchanged observed base. The authentic signed merge object was reconstructed and its exact Git SHA verified; this is object identity, not independent cryptographic signature verification. Live main/PR readback confirms integration. The reviewed head is retained in ancestry, automatic branch deletion is verified, only main remains, and no open PR or active worker mutation remains. Fresh actual-main checks passed all nine groups and 188 methods plus fourteen corpus bindings. GitGuardian passed; hosted workflow count is zero.
+
+Lease renewal is recorded at this substantive integration checkpoint and becomes active after conditional publication/readback of this record. Delivery is the sole remaining C265 gate. Freeze the later observed main, verify/save the ZIP and prompts, then publish its external receipt, release the lease and close scope256. No next scientific task has started.

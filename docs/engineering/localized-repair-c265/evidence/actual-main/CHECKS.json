@@ -1,0 +1,365 @@
+{
+  "source_commit": "d602adee52bd5913dc86fdb3a29e2c4c653a4ed9",
+  "source_tree": "d03815ee76488681b17a9feaaeeac776b047758b",
+  "dirty_status": "",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "provider": "assistant hosted Linux workspace; not the owner computer and not GitHub Actions",
+  "started_at": "2026-11-18T22:37:10.205617+00:00",
+  "input_files": [
+    {
+      "path": "docs/engineering/localized-repair-c253/verify_manifest.py",
+      "bytes": 11266,
+      "sha256": "61b55930e1a88780b170ccf4f7865fe0b172ef4c11f7957419c97fa1e823a051"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c255/oracle.py",
+      "bytes": 38765,
+      "sha256": "b7275bd40bd429397ce6db5608bc025493a5e92cfc378f70e05cc799f50ff593"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c255/test_oracle.py",
+      "bytes": 29034,
+      "sha256": "f8ee655e91120e41d6299f760e2f08283dbdb77b2c979ba6a48322d860f0fe06"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c256/reader.py",
+      "bytes": 34692,
+      "sha256": "5993d1a9ca1cbccd4518ed6f113238d18f6b71ba02befd59900b93fe47ef6e6a"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c256/test_reader.py",
+      "bytes": 19978,
+      "sha256": "08423e68be15490f2ca7b1bebf5d424251812c3a94dfcdd80073d1abb4ebd340"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c257/ownership.py",
+      "bytes": 35942,
+      "sha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c257/test_ownership.py",
+      "bytes": 21351,
+      "sha256": "ca6cb8e33185030d01e64505a613e260d7be6a1b95c0571b61645f6cf4cfaf65"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c258/follows.py",
+      "bytes": 37435,
+      "sha256": "397413d7c403693a349075711bc3dd77fab863d200b06a979cec2f0112114937"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c258/test_follows.py",
+      "bytes": 25109,
+      "sha256": "4056a2c8dd866d10311165b0fcdda51a67014c82d7abd22961d7a6fded8ace0b"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c261/hinge_glb.py",
+      "bytes": 14036,
+      "sha256": "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c261/test_hinge_glb.py",
+      "bytes": 12861,
+      "sha256": "6296c165e7e0a38983b68d270ccfc0fa5f3320abee019ba5b2cdd8fb08b63e8d"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c265/source_hinges.py",
+      "bytes": 37570,
+      "sha256": "04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31abbf9e"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c265/test_source_hinges.py",
+      "bytes": 42875,
+      "sha256": "467be9b930a77d6a82b56154c483f92747d554b354a5380687748b4e1a40821a"
+    }
+  ],
+  "planned_checks": [
+    {
+      "name": "c253-corpus",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "docs/engineering/localized-repair-c253/verify_manifest.py"
+      ]
+    },
+    {
+      "name": "c255-oracle",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c255",
+        "-p",
+        "test_oracle.py",
+        "-v"
+      ]
+    },
+    {
+      "name": "c256-reader",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c256",
+        "-p",
+        "test_reader.py",
+        "-v"
+      ]
+    },
+    {
+      "name": "c257-ownership",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c257",
+        "-p",
+        "test_ownership.py",
+        "-v"
+      ]
+    },
+    {
+      "name": "c258-follows",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c258",
+        "-p",
+        "test_follows.py",
+        "-v"
+      ]
+    },
+    {
+      "name": "c261-glb-hinges",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c261",
+        "-p",
+        "test_hinge_glb.py",
+        "-v"
+      ]
+    },
+    {
+      "name": "c265-source-hinges",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c265",
+        "-p",
+        "test_source_hinges.py",
+        "-v"
+      ]
+    },
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ]
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "c253-corpus",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "docs/engineering/localized-repair-c253/verify_manifest.py"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "seconds": 0.11761,
+      "methods": null,
+      "log": "docs/engineering/localized-repair-c265/evidence/actual-main/c253-corpus.log",
+      "log_sha256": "959f75f4a7887a689e2cdff8b90d84d9d058b28ed35ca2c56555b5a9e6734393"
+    },
+    {
+      "name": "c255-oracle",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c255",
+        "-p",
+        "test_oracle.py",
+        "-v"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "seconds": 10.777335,
+      "methods": 31,
+      "log": "docs/engineering/localized-repair-c265/evidence/actual-main/c255-oracle.log",
+      "log_sha256": "8828c64764bfdd8aacec247f22c6742fe4162762e7861e5061980cc0e4fcc2fd"
+    },
+    {
+      "name": "c256-reader",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c256",
+        "-p",
+        "test_reader.py",
+        "-v"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "seconds": 1.568226,
+      "methods": 29,
+      "log": "docs/engineering/localized-repair-c265/evidence/actual-main/c256-reader.log",
+      "log_sha256": "b1054a98dab6734fbb82bee0d93ae0d1e2a7b1cf0082f495282d4c526dfca57f"
+    },
+    {
+      "name": "c257-ownership",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c257",
+        "-p",
+        "test_ownership.py",
+        "-v"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "seconds": 0.594457,
+      "methods": 23,
+      "log": "docs/engineering/localized-repair-c265/evidence/actual-main/c257-ownership.log",
+      "log_sha256": "914b880afd4102f315de04e209629567482c415d73d2963a51b166311432f274"
+    },
+    {
+      "name": "c258-follows",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c258",
+        "-p",
+        "test_follows.py",
+        "-v"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "seconds": 1.326312,
+      "methods": 28,
+      "log": "docs/engineering/localized-repair-c265/evidence/actual-main/c258-follows.log",
+      "log_sha256": "461c99c53a84e619a567f480b2a65f516d67cfdc84ec455eef44a62a0a884872"
+    },
+    {
+      "name": "c261-glb-hinges",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c261",
+        "-p",
+        "test_hinge_glb.py",
+        "-v"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "seconds": 1.11129,
+      "methods": 28,
+      "log": "docs/engineering/localized-repair-c265/evidence/actual-main/c261-glb-hinges.log",
+      "log_sha256": "ae631b6572b0e7bad2d518734bc075de908359357d57842f02c1abdd55de87c8"
+    },
+    {
+      "name": "c265-source-hinges",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c265",
+        "-p",
+        "test_source_hinges.py",
+        "-v"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "seconds": 2.910448,
+      "methods": 49,
+      "log": "docs/engineering/localized-repair-c265/evidence/actual-main/c265-source-hinges.log",
+      "log_sha256": "4082856b1106c9c5c53db279b43c0da4bf70fb6f21d33d8e65d96e1daf704530"
+    },
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "seconds": 0.071022,
+      "methods": null,
+      "log": "docs/engineering/localized-repair-c265/evidence/actual-main/workflow.log",
+      "log_sha256": "526e87fad242cf2efe0073b7cab61abacdc94504fb71d59c271921931784ab3d"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "seconds": 2.264594,
+      "methods": null,
+      "log": "docs/engineering/localized-repair-c265/evidence/actual-main/documentation.log",
+      "log_sha256": "0897134dc59d47448c74a0a763d48f91219c9e5ca5fd6ec68036271a8372e70e"
+    }
+  ],
+  "planned_check_count": 9,
+  "completed_check_count": 9,
+  "complete": true,
+  "remaining_checks": [],
+  "passed": true
+}

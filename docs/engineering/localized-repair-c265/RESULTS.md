@@ -77,3 +77,7 @@ increment; historical failed and unrun obligations retain their states.
 Candidate `1e5b1c368fabc51ce22be6916aca6464f71f97cf` passes all nine applicable check groups: 188 methods (C255 31, C256 29, C257 23, C258 28, C261 28, C265 49), fourteen C253 corpus bindings, workflow validation and documentation preservation. Exact commands, environment, read-set and logs are in [candidate checks](evidence/candidate/CHECKS.json). Independent review hashes equal the published source/test bytes.
 
 Exact tree reconstruction detected newline translation in six evidence files in the initial publication. The byte-preserving correction is part of this candidate; both commits and the failed verification remain in [publication recovery](evidence/publication/NEWLINE-RECOVERY.json). No scientific code changed during this correction. Integration, actual-main verification and saved delivery remain outstanding.
+
+## Verified integration
+
+[PR257](https://github.com/Omegapy/OntoKin/pull/257) merged at `d602adee52bd5913dc86fdb3a29e2c4c653a4ed9`; its tree equals the reviewed PR head. Fresh resulting-main checks pass all nine groups, 188 methods and fourteen corpus bindings. Workflow/documentation checks pass. GitGuardian passed on the PR head; no GitHub Actions workflow was run. The completed scope branch was automatically deleted and its exact head is retained in the merge. Live inventory contains only main. See [integration](INTEGRATION.json) and [actual-main checks](evidence/actual-main/CHECKS.json). Required saved handoff delivery remains pending at this checkpoint.

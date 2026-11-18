@@ -3,7 +3,7 @@
   "id": "C265",
   "title": "Independent source hinge-declaration observer",
   "intent": "Derive bounded hinge declaration facts and ordered site identities directly from supplied source bytes as the next dependency of localized-authoring comparison.",
-  "status": "review",
+  "status": "in_progress",
   "owner": "c265-root-b4cbf4ea8454",
   "branch": "work/c265-source-hinge-observer",
   "base_sha": "82c998eb17a12cc0dfa04bad45fe728e82764704",
@@ -69,8 +69,11 @@
       "id": "R06",
       "description": "Integrate reviewed work, verify main and resolve the completed scope branch.",
       "acceptance": "Conditional ownership and expected-head merge are read back; targeted actual-main checks pass; exact branch is deleted after retention verification or explicitly deletion_pending.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c265/INTEGRATION.json",
+        "docs/engineering/localized-repair-c265/evidence/actual-main/CHECKS.json"
+      ]
     },
     {
       "id": "R07",
@@ -144,7 +147,7 @@
       "requirements": [
         "R06"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c265/INTEGRATION.json"
       ],
@@ -159,7 +162,7 @@
         "R07",
         "R06"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c265/DELIVERY.json"
       ],
@@ -195,16 +198,28 @@
       "evidence": [
         "docs/engineering/localized-repair-c265/evidence/candidate/CHECKS.json"
       ]
+    },
+    {
+      "name": "actual-main verification and completed branch disposition",
+      "command": "Fresh C253/C255/C256/C257/C258/C261/C265 cohorts plus workflow/documentation checks on verified merge; live branch inventory and retained ancestry",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c265/INTEGRATION.json",
+        "docs/engineering/localized-repair-c265/evidence/actual-main/CHECKS.json"
+      ]
     }
   ],
   "completion": {
     "implementation_commit": "1e5b1c368fabc51ce22be6916aca6464f71f97cf",
-    "merge_commit": null,
-    "pull_request": null,
-    "branch_disposition": "active",
-    "evidence": []
+    "merge_commit": "d602adee52bd5913dc86fdb3a29e2c4c653a4ed9",
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/257",
+    "branch_disposition": "deleted",
+    "evidence": [
+      "docs/engineering/localized-repair-c265/INTEGRATION.json"
+    ]
   },
-  "next_action": "Merge the reviewed candidate through expected-head PR integration under the verified main lease; verify actual main and branch disposition, then freeze and save the required handoff.",
+  "next_action": "Delivery only: freeze the observed integrated checkpoint, verify exact ZIP and fresh extraction, save ZIP and prompts, publish successful receipt, close C265 and stop.",
   "delivery": {
     "required": true,
     "kind": "browser-session",
