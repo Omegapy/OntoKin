@@ -1,0 +1,21 @@
+# C265 session checkpoint
+
+## Starting state and read-set
+
+Observed at 2026-11-18T22:12:26.665604+00:00; owner `c265-root-b4cbf4ea8454`. Live GitHub main is `82c998eb17a12cc0dfa04bad45fe728e82764704`, tree `0e10185c42fa6f17e074fd658432ddb5272ca9d4`. Source C264 ZIP SHA-256 `6a297e28a435664ba09f3cbe64a95e96978a97264964c576b647cc985cc55dd7`, 116956 bytes: CRC and all 52 manifest payloads passed. Its pre-save checkpoint is reconciled with live C264 done status and confirmed receipt. Only main existed, no open PRs, prior lease released. Historical open issues134/154 retain unrelated gates.
+
+Explicit connector reads at that main revision: AGENTS, GOAL, STATUS, ROLE, workflow registry, CURRENT, PROTOCOL, HANDOFF, all three registry skill files, C264 task/requirements/plan and receipt, C261 NEXT-TASK and C260 CONTRACT. Current main entrypoint was also read through the connector. The authentic cached Git checkout matches this revision; C260 INPUTS/FIELD-ORIGINS/CONTROL-PLAN and governing engineering policies are read locally from those same Git bytes. Only root AGENTS exists; no nested instruction files. No required information gap is known.
+
+Original surviving checkout was clean with no commits outside current main ancestry; its old local branch labels are historical, not remote active work. Work now uses a separate clone. No existing unique unpublished work was displaced.
+
+## Capabilities and workers
+
+Observed GitHub reads and authorized issue/branch writes work. Conditional nonforce ref update and expected-head PR merge are available; they will be verified when used. Repository automatic branch deletion is enabled. No direct delete-ref connector is exposed; if automatic deletion does not occur, record deletion_pending rather than invent success. Terminal, Python, authentic Git history, subagents, ZIP reading/writing and Library materialization are available. Required saving tools are available; this task's successful save is not yet established.
+
+Actual independent agents: `/root/reconcile_state` completed read-only live/local reconciliation; `/root/source_observer_design` assessed the source boundary. Subsequent implementation/control/review assignments are recorded at the next checkpoint. All agents inherit the parent model through full-history forks; no model override or external runner was requested. Root owns all publication and integration.
+
+## Progress, recovery and stopping condition
+
+Requirements and plan are recorded before substantial implementation. No source implementation exists yet. No unknown remote operation or unresolved earlier worker write is known. Checkpoint all new bytes on the scope branch after meaningful implementation and before long verification. No old runtime/evidence hashes are rewritten.
+
+Next action: implement `observe_source_hinges(source_files)` and independently specified controls under unchanged C260; then run applicable cohorts, obtain independent review and merge only after acceptance. Required saved handoff remains pending. Stop after verified integration, branch disposition and saved delivery; do not begin comparison or historical admission.

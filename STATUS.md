@@ -11,34 +11,22 @@ tools own rendering, general simulation and gameplay. [GOAL](GOAL.md), the
 
 ## Current workflow and next action
 
-C264 implements the owner's clarification that every bounded browser development
-or recovery scope requires a verified session ZIP saved in the existing OntoKin
-Library folder. [Scope254](https://github.com/Omegapy/OntoKin/issues/254),
-[requirements](docs/workflow/tasks/C264/REQUIREMENTS.md) and
-[plan](docs/workflow/tasks/C264/PLAN.md) identify this documentation/delivery scope.
-Use [CHATGPT-START-HERE](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json),
-the [two prompts](docs/workflow/BROWSER-PROMPTS.md) and
-[handoff contract](docs/workflow/HANDOFF.md). Integration and saved delivery are
-separate gates. C264 instructions are integrated through
-[PR255](https://github.com/Omegapy/OntoKin/pull/255), merge
-`df18c6ee8721f20923b80841fccf495ea65735f9`. Actual-main workflow and documentation
-checks passed. The completed implementation branch is deleted and retained in
-main ancestry. Required saved delivery is complete: the verified session ZIP and
-both downloadable prompt formats have confirmed saved identities. See the
-[delivery receipt](docs/engineering/browser-handoff-c264/DELIVERY.json) and
-[latest handoff](docs/workflow/CURRENT.json). All eight requirements and five
-plan steps are done. **Wait for owner direction; no task is active.**
+C265 selects the queued source hinge-declaration observer under unchanged C260.
+[Scope256](https://github.com/Omegapy/OntoKin/issues/256),
+[requirements](docs/workflow/tasks/C265/REQUIREMENTS.md) and
+[plan](docs/workflow/tasks/C265/PLAN.md) define one source-only interface.
+Branch: `work/c265-source-hinge-observer`. Requirements are published before implementation.
+Next action: independently derive source hinge declarations and execute source
+controls; comparison, historical admission and site-pose evaluation remain
+outside this scope. Stop after reviewed integration, branch disposition and
+confirmed saved browser-session handoff.
 
-C263's GitHub-owned workflow remains integrated through
-[PR253](https://github.com/Omegapy/OntoKin/pull/253); its exact checks and limits
-remain in the [integration record](docs/engineering/browser-workflow-c263/INTEGRATION.json).
-The later C264 requirement changes future delivery, not historical C263 evidence.
-
-The queued scientific action remains one bounded source-side hinge observer under
-[C260](docs/engineering/localized-repair-c260/CONTRACT.md) and
-[C261's next-task contract](docs/engineering/localized-repair-c261/NEXT-TASK.md).
-It is outside C264. Stop after this scope and its saved handoff, then wait for
-owner direction; a later continuation prompt can select one bounded next step.
+C264 is complete: [PR255](https://github.com/Omegapy/OntoKin/pull/255), merge
+`df18c6ee8721f20923b80841fccf495ea65735f9`, deleted implementation branch and
+[confirmed saved delivery](docs/engineering/browser-handoff-c264/DELIVERY.json).
+Its frozen ZIP predates the final receipt; live GitHub resolves that boundary.
+Use [CHATGPT-START-HERE](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json)
+and the [handoff contract](docs/workflow/HANDOFF.md) throughout this scope.
 
 ## Product state and remaining gates
 
@@ -107,17 +95,14 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-Owner: none. Previous owner: `c264-root-c3681d8a01ea`.
-State: RELEASED after verified C264 integration and confirmed saved handoff;
-effective when this closure is conditionally published and read back.
-Scope: [C264 browser handoffs #254](https://github.com/Omegapy/OntoKin/issues/254).
-Acquired at: 2026-11-18T21:43:50.000Z; previous expiry: 2026-11-18T22:13:50.000Z.
-Release recorded at: 2026-11-18T21:56:42.527216+00:00.
-Observed main before closure: `9d31b3dce6655e30db480605a169942610f64275`.
-Reserved shared files: none after verified publication.
-
-Reconcile current refs and any unknown operations before acquiring a new
-bounded expected-head lease. Expiry alone does not prove another writer stopped.
+Owner: `c265-root-b4cbf4ea8454`.
+State: acquisition becomes active only after conditional publication and readback.
+Scope: [C265 source hinge observer #256](https://github.com/Omegapy/OntoKin/issues/256).
+Acquired at: 2026-11-18T22:12:26.665604+00:00; expires at: 2026-11-18T22:42:26.665604+00:00.
+Observed main before acquisition: `82c998eb17a12cc0dfa04bad45fe728e82764704`.
+Reserved shared files: STATUS.md, docs/workflow/CURRENT.json and C265 task/evidence records.
+Only this Director may publish main integration state during the verified lease.
+Renew only at substantive checkpoints; expiry alone is not proof of inactivity.
 
 ## Historical status
 
