@@ -23,3 +23,11 @@ Next action: implement `observe_source_hinges(source_files)` and independently s
 ## Baseline verification checkpoint
 
 C255 31, C256 29, C257 23, C258 28 and C261 28 methods passed (139 total). Workflow and documentation checks passed. C253 first failed before source verification because the shallow checkout lacked its historical commit; the exact-object restoration and passing rerun are separately retained. All twelve C260 input pins match current bytes. Source-only implementation/control work is still in progress.
+
+## Implementation and review checkpoint
+
+Final source SHA-256 `04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31abbf9e`; tests `467be9b930a77d6a82b56154c483f92747d554b354a5380687748b4e1a40821a`. Independent controls pass49 methods with189 public API calls and no skipped tests or leaked host exceptions. Separate focused review reports45 controls and9 exact boundary/dependency checks passed. Review acceptance record and Director publication/checks remain next gates. All earlier scientific candidates and test failures are retained; unsupported bare-CR line-comment termination is explicit, with LF/CRLF retained.
+
+Learning checkpoint: superseded the stale unfinished-source interface memory and updated the capability navigation from observed C265 results; comparison/historical admission remain unresolved. No model training, automatic learning or product semantic change is implied.
+
+The recovery file was saved successfully as `libfile_fde3_f-5332a18cc1e08191bff7853d6adb8753_2ab2a24d43748191957f9bcc356b59de`, latest recorded version1 before this scientific checkpoint. Reconcile newer GitHub commits and saved recovery versions after an interruption.

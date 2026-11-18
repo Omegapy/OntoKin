@@ -1,0 +1,724 @@
+"""Independent source controls for C265, derived from C260 and source bytes.
+
+No expected hinge field comes from an implementation helper, product compiler,
+exporter, producer metadata, GLB, or C260 baseline answer table.  This suite
+calls only the observer's public interface and public Fault type.  The fixture
+editor below changes supplied bytes and repins the companion module explicitly.
+"""
+
+from __future__ import annotations
+
+import argparse
+import datetime
+import decimal
+import hashlib
+import importlib.util
+import io
+import json
+import math
+from pathlib import Path
+import platform
+import re
+import sys
+import unittest
+
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]
+PROOF = ROOT / "docs/engineering/semantic-export-c210/evidence/proof"
+READER_PATH = HERE / "source_hinges.py"
+DEPENDENCY_PATH = ROOT / "docs/engineering/localized-repair-c257/ownership.py"
+INPUT_BYTES = {path: path.read_bytes() for path in (READER_PATH, Path(__file__), DEPENDENCY_PATH)}
+spec = importlib.util.spec_from_file_location("c265_independent_subject", READER_PATH)
+reader = importlib.util.module_from_spec(spec)
+sys.modules[spec.name] = reader
+exec(compile(INPUT_BYTES[READER_PATH], str(READER_PATH), "exec"), reader.__dict__)
+
+OBSERVATIONS = []
+FAULT_CODES = {"MALFORMED", "UNSUPPORTED_SOURCE_FORM", "RESOURCE_LIMIT", "INPUT_BINDING", "IO_ERROR"}
+TRUTH_FLAGS = (
+    "sourceAgreementVerified", "historicalInputsBound", "sitePosesEvaluated",
+    "completeC255Semantic", "sourceValidityQualified", "executionAllowed",
+)
+PIVOT = b"public site pivot"
+BLADE = b"private part blade"
+JOINT = b"public joint flex"
+
+
+def digest(value):
+    return hashlib.sha256(value).hexdigest()
+
+
+def source_bundle(endpoint="before"):
+    return {"main.ok": (PROOF / (endpoint + ".main.ok")).read_bytes(),
+            "hinges.ok": (PROOF / "hinges.ok").read_bytes()}
+
+
+def repin(bundle):
+    result = dict(bundle)
+    result["main.ok"], count = re.subn(
+        rb'digest "sha256:[a-f0-9]{64}"',
+        b'digest "sha256:' + digest(result["hinges.ok"]).encode() + b'"',
+        result["main.ok"], count=1)
+    assert count == 1, "Independent fixture must retain one import digest"
+    return result
+
+
+def library_edit(bundle, old, new, count=1):
+    result = dict(bundle)
+    assert old in result["hinges.ok"], old
+    result["hinges.ok"] = result["hinges.ok"].replace(old, new, count)
+    return repin(result)
+
+
+def main_edit(bundle, old, new, count=1):
+    result = dict(bundle)
+    assert old in result["main.ok"], old
+    result["main.ok"] = result["main.ok"].replace(old, new, count)
+    return result
+
+
+def block_span(raw, marker):
+    """Locate a known fixture declaration, respecting quoted braces."""
+    beginning = raw.index(marker)
+    cursor = raw.index(b"{", beginning)
+    depth, quoted, escaped = 0, False, False
+    for pos in range(cursor, len(raw)):
+        char = raw[pos]
+        if quoted:
+            if escaped:
+                escaped = False
+            elif char == 92:
+                escaped = True
+            elif char == 34:
+                quoted = False
+        elif char == 34:
+            quoted = True
+        elif char == 123:
+            depth += 1
+        elif char == 125:
+            depth -= 1
+            if not depth:
+                return beginning, pos + 1
+    raise AssertionError("Fixture block is unbalanced")
+
+
+def replace_block(bundle, filename, marker, replacement):
+    result = dict(bundle)
+    start, end = block_span(result[filename], marker)
+    result[filename] = result[filename][:start] + replacement + result[filename][end:]
+    return repin(result) if filename == "hinges.ok" else result
+
+
+def field_change(bundle, field, expression):
+    originals = {
+        "parent": b"self.pivot", "child": b"self.blade.base",
+        "axis": b"vec3(0, 0, 1)", "limits": b"range(-45[deg], 45[deg])",
+        "initial": b"0[rad]",
+    }
+    return library_edit(bundle, field.encode() + b" = " + originals[field] + b";",
+                        field.encode() + b" = " + expression + b";")
+
+
+def replace_helper_keys(bundle, keys):
+    entries = [json.dumps(key, ensure_ascii=False).encode() + b": vec3(0[m], 0[m], 0[m])" for key in keys]
+    replacement = b"keyed<Vec3<Length>> {" + b",\n".join(entries) + b"}"
+    result = replace_block(bundle, "hinges.ok", b"keyed<Vec3<Length>>", replacement)
+    if keys and "middle" not in keys:
+        result = main_edit(result, b'fingers["middle"]', b"fingers[" + json.dumps(keys[0], ensure_ascii=False).encode() + b"]", count=-1)
+    return result
+
+
+def baseline_ids(first_keys=("lower", "middle", "upper"), second_keys=("bottom", "lower", "middle", "upper", "top")):
+    return {("keyed-rack", "demo", root, "fingers", key, "flex")
+            for root, keys in (("first", first_keys), ("second", second_keys)) for key in keys}
+
+
+def canonical_decimal(token, unit):
+    """Independent high precision decimal reference, never an observer helper."""
+    with decimal.localcontext() as context:
+        context.prec = 1000
+        value = decimal.Decimal(token)
+        if unit == "deg":
+            value *= decimal.Decimal.from_float(float.fromhex("0x1.921fb54442d18p+1"))
+            value /= decimal.Decimal(180)
+        elif unit == "cm":
+            value /= decimal.Decimal(100)
+        elif unit == "mm":
+            value /= decimal.Decimal(1000)
+        elif unit not in ("rad", "m"):
+            raise AssertionError(unit)
+        return float(value)
+
+
+def field_projection(observation):
+    return {tuple(row["id"]): (row["axis"], row["limits"], row["initial"],
+                               row["parentSiteId"], row["childSiteId"])
+            for row in observation["records"]}
+
+
+class SourceHingeControls(unittest.TestCase):
+    def observe(self, bundle):
+        identities = {str(name): {"sha256": digest(raw), "bytes": len(raw)}
+                      for name, raw in bundle.items() if isinstance(raw, bytes)} if isinstance(bundle, dict) else {}
+        entry = {"test": self.id(), "inputs": identities}
+        OBSERVATIONS.append(entry)
+        try:
+            result = reader.observe_source_hinges(bundle)
+        except reader.Fault as fault:
+            entry.update(outcome="refused", code=fault.code, detail=str(fault))
+            raise
+        except Exception as error:
+            entry.update(outcome="HOST_EXCEPTION", exception=type(error).__name__, detail=str(error))
+            raise
+        entry.update(outcome="observed", hingeCount=result.get("hingeCount"), siteCount=result.get("siteCount"))
+        return result
+
+    def refused(self, bundle, codes=None):
+        with self.assertRaises(reader.Fault) as context:
+            self.observe(bundle)
+        fault = context.exception
+        self.assertIn(fault.code, set(codes) if codes else FAULT_CODES)
+        self.assertFalse(getattr(fault, "records", None), "Refusal must not carry a qualified hinge set")
+        self.assertIsInstance(fault.sourceHashes, dict)
+        self.assertIsInstance(fault.sourceBytes, dict)
+        if isinstance(bundle, dict):
+            for name, raw in bundle.items():
+                if isinstance(name, str) and isinstance(raw, bytes) and name in ("main.ok", "hinges.ok"):
+                    self.assertEqual(len(raw), fault.sourceBytes.get(name))
+                    if len(raw) <= 65536:
+                        self.assertEqual(digest(raw), fault.sourceHashes.get(name))
+                    elif name in fault.sourceHashes:
+                        self.assertEqual(digest(raw), fault.sourceHashes[name])
+        return fault
+
+    def assert_values(self, result, axis=(0.0, 0.0, 1.0), limits=None, initial=0.0):
+        limits = (-float.fromhex("0x1.921fb54442d18p-1"), float.fromhex("0x1.921fb54442d18p-1")) if limits is None else limits
+        for row in result["records"]:
+            self.assertEqual(list(axis), row["axis"])
+            self.assertEqual(list(limits), row["limits"])
+            self.assertEqual(initial, row["initial"])
+            self.assertEqual("hinge", row["kind"])
+
+    def assert_unqualified(self, result):
+        for key in TRUTH_FLAGS:
+            self.assertIs(False, result[key], key)
+        for key in ("acceptedRevision", "nativeVerified", "trialQualified", "worldAlignmentVerified"):
+            self.assertFalse(result.get(key), key)
+
+    def witness_bytes(self, witness, bundle):
+        self.assertIn(witness["file"], bundle)
+        raw = bundle[witness["file"]]
+        self.assertEqual(digest(raw), witness["sha256"])
+        self.assertIs(type(witness["startByte"]), int)
+        self.assertIs(type(witness["endByteExclusive"]), int)
+        self.assertLessEqual(0, witness["startByte"])
+        self.assertLess(witness["startByte"], witness["endByteExclusive"])
+        self.assertLessEqual(witness["endByteExclusive"], len(raw))
+        return raw[witness["startByte"]:witness["endByteExclusive"]]
+
+    def test_h01_both_original_source_endpoints(self):
+        for endpoint in ("before", "after"):
+            with self.subTest(endpoint=endpoint):
+                bundle = source_bundle(endpoint)
+                result = self.observe(bundle)
+                self.assertEqual("ontokin.c265.source-hinge-observation/0.1", result["schema"])
+                self.assertEqual("source-hinges", result["kind"])
+                self.assertEqual(8, result["hingeCount"])
+                self.assertEqual(16, result["siteCount"])
+                self.assertEqual(18, len(result["objects"]))
+                self.assertEqual(baseline_ids(), {tuple(row["id"]) for row in result["records"]})
+                self.assertEqual({("package", "example.hinges", "hinges", "definitions", "finger", "flex")},
+                                 {tuple(row["definitionId"]) for row in result["records"]})
+                self.assertEqual({name: digest(raw) for name, raw in bundle.items()}, result["sourceHashes"])
+                self.assert_values(result)
+                self.assert_unqualified(result)
+
+    def test_h01_complete_associations_are_independently_derived(self):
+        result = self.observe(source_bundle())
+        for row in result["records"]:
+            owner = row["id"][:-1]
+            root, key = owner[2], owner[4]
+            path = root + '.fingers[' + json.dumps(key) + ']'
+            self.assertEqual(owner, row["ownerId"])
+            self.assertEqual(path + ".flex", row["path"])
+            self.assertEqual(owner + ["pivot"], row["parentSiteId"])
+            self.assertEqual(owner + ["blade", "base"], row["childSiteId"])
+            self.assertEqual(path + ".pivot", row["parentSite"]["path"])
+            self.assertEqual(path + ".blade.base", row["childSite"]["path"])
+            self.assertEqual(owner, row["parentSite"]["objectId"])
+            self.assertEqual(owner + ["blade"], row["childSite"]["objectId"])
+            self.assertEqual(["package", "example.hinges", "hinges", "definitions", "finger", "pivot"], row["parentSite"]["definitionId"])
+            self.assertEqual(["package", "example.hinges", "hinges", "definitions", "blade", "base"], row["childSite"]["definitionId"])
+            for endpoint in (row["parentSite"], row["childSite"]):
+                self.assertEqual("hinged.part", endpoint["interface"])
+                self.assertEqual(0.0, endpoint["sizeM"])
+                self.assertIs(False, endpoint["poseEvaluated"])
+
+    def test_h01_utf8_byte_witnesses_are_exact(self):
+        bundle = library_edit(source_bundle(), b"module Hinges", "// π and 🦉 precede declarations\nmodule Hinges".encode())
+        result = self.observe(bundle)
+        field_expressions = {"parent": b"self.pivot", "child": b"self.blade.base", "axis": b"vec3(0, 0, 1)", "limits": b"range(-45[deg], 45[deg])", "initial": b"0[rad]"}
+        for row in result["records"]:
+            origin = row["sourceOrigins"]
+            self.assertIn(b'joint flex @ "flex": hinge', self.witness_bytes(origin["declaration"], bundle))
+            self.assertEqual(b"flex", self.witness_bytes(origin["name"], bundle))
+            self.assertIn(b"flex", self.witness_bytes(origin["key"], bundle))
+            for name, expected in field_expressions.items():
+                self.assertEqual(expected, self.witness_bytes(origin["fields"][name]["expression"], bundle))
+                self.assertIn(name.encode() + b" = " + expected, self.witness_bytes(origin["fields"][name]["assignment"], bundle))
+            for site in (row["parentSite"], row["childSite"]):
+                self.assertIn(b"site ", self.witness_bytes(site["sourceOrigins"]["declaration"], bundle))
+                for name in ("pose", "interface", "size"):
+                    self.witness_bytes(site["sourceOrigins"]["fields"][name]["expression"], bundle)
+
+    def test_h02_h04_initial_changes_follow_bytes(self):
+        for literal, expected in ((b"0.125[rad]", 0.125), (b"-0.25[rad]", -0.25), (b"15[deg]", canonical_decimal("15", "deg"))):
+            with self.subTest(literal=literal):
+                bundle = field_change(source_bundle(), "initial", literal)
+                result = self.observe(bundle)
+                self.assert_values(result, initial=expected)
+                self.assert_unqualified(result)
+                self.assertNotEqual(source_bundle()["main.ok"], bundle["main.ok"])
+
+    def test_h05_each_ordered_limit_changes_independently(self):
+        for literal, expected in ((b"range(-30[deg], 45[deg])", (canonical_decimal("-30", "deg"), canonical_decimal("45", "deg"))),
+                                  (b"range(-45[deg], 1[rad])", (canonical_decimal("-45", "deg"), 1.0)),
+                                  (b"range(-0.125[rad], 0.25[rad])", (-0.125, 0.25))):
+            with self.subTest(literal=literal):
+                self.assert_values(self.observe(field_change(source_bundle(), "limits", literal)), limits=expected)
+
+    def test_h06_inclusive_boundaries_and_zero_width(self):
+        cases = ((b"range(-1[rad], 1[rad])", b"-1[rad]", (-1.0, 1.0), -1.0),
+                 (b"range(-1[rad], 1[rad])", b"1[rad]", (-1.0, 1.0), 1.0),
+                 (b"range(0.125[rad], 0.125[rad])", b"0.125[rad]", (0.125, 0.125), 0.125),
+                 (b"range(-0[rad], 0[rad])", b"-0[deg]", (0.0, 0.0), 0.0))
+        for limits, initial, expected_limits, expected_initial in cases:
+            with self.subTest(limits=limits, initial=initial):
+                bundle = field_change(field_change(source_bundle(), "limits", limits), "initial", initial)
+                self.assert_values(self.observe(bundle), limits=expected_limits, initial=expected_initial)
+
+    def test_h06_reversed_or_outside_limits_refuse_without_clamping(self):
+        for limits, initial in ((b"range(1[rad], -1[rad])", b"0[rad]"),
+                                (b"range(0[rad], 1[rad])", b"-0.0000000000000001[rad]"),
+                                (b"range(0[rad], 1[rad])", b"1.0000000000000002[rad]")):
+            with self.subTest(limits=limits, initial=initial):
+                self.refused(field_change(field_change(source_bundle(), "limits", limits), "initial", initial), {"MALFORMED"})
+
+    def test_h07_pi64_single_round_literals_and_ties(self):
+        cases = (("0.1", "deg"), ("-45", "deg"), ("180", "deg"), ("0.7853981633974483", "rad"),
+                 ("1.00000000000000011102230246251565404236316680908203125", "rad"),
+                 ("1.00000000000000033306690738754696212708950042724609375", "rad"))
+        for token, unit in cases:
+            with self.subTest(token=token, unit=unit):
+                bundle = field_change(source_bundle(), "limits", b"range(-4[rad], 4[rad])")
+                bundle = field_change(bundle, "initial", (token + "[" + unit + "]").encode())
+                expected = canonical_decimal(token, unit)
+                self.assert_values(self.observe(bundle), limits=(-4.0, 4.0), initial=expected)
+
+    def test_h07_adjacent_binary64_is_observed_distinctly(self):
+        result = self.observe(field_change(source_bundle(), "initial", b"0.10000000000000002[rad]"))
+        self.assert_values(result, initial=math.nextafter(0.1, math.inf))
+        self.assertNotEqual(0.1, result["records"][0]["initial"])
+
+    def test_h08_six_signed_basis_axes_preserve_sign(self):
+        for index in range(3):
+            for sign in (-1, 1):
+                axis = [0, 0, 0]
+                axis[index] = sign
+                literal = ("vec3(" + ", ".join(map(str, axis)) + ")").encode()
+                with self.subTest(axis=axis):
+                    self.assert_values(self.observe(field_change(source_bundle(), "axis", literal)), axis=axis)
+
+    def test_h09_nonbasis_and_invalid_axes_refuse(self):
+        for literal, codes in ((b"vec3(0, 0, 0)", {"MALFORMED"}),
+                               (b"vec3(0, 0, 2)", {"MALFORMED"}),
+                               (b"vec3(0.6, 0.8, 0)", {"UNSUPPORTED_SOURCE_FORM"}),
+                               (b"vec3(0, 0.0000000000000001, 1)", {"UNSUPPORTED_SOURCE_FORM"}),
+                               (b"vec3(0, 1)", None), (b"vec3(true, 0, 1)", None),
+                               (b"vec3(0[m], 0, 1)", {"UNSUPPORTED_SOURCE_FORM"})):
+            with self.subTest(literal=literal):
+                self.refused(field_change(source_bundle(), "axis", literal), codes)
+
+    def test_h11_computed_numeric_fields_refuse(self):
+        cases = (("axis", b"vec3(0, 0, self.length)"), ("axis", b"vec3(0, 0, 1 + 0)"),
+                 ("axis", b"unit(vec3(0, 0, 1))"), ("limits", b"range(-45[deg], 45[deg] + 0[rad])"),
+                 ("limits", b"self.bounds"), ("initial", b"self.start_angle"),
+                 ("initial", b"0[rad] + 0[rad]"), ("initial", b"if true then 0[rad] else 0[rad]"))
+        for field, expression in cases:
+            with self.subTest(field=field, expression=expression):
+                bundle = field_change(source_bundle(), field, expression)
+                bundle = library_edit(bundle, b'public class Finger @ "finger" {', b'public class Finger @ "finger" {\n public param start_angle @ "start-angle": Angle = 0[rad];')
+                self.refused(bundle, {"UNSUPPORTED_SOURCE_FORM"})
+
+    def test_h12_joint_name_and_key_are_separate(self):
+        renamed = library_edit(source_bundle(), b'joint flex @ "flex"', b'joint rotate @ "flex"')
+        result = self.observe(renamed)
+        self.assertEqual(baseline_ids(), {tuple(row["id"]) for row in result["records"]})
+        for row in result["records"]:
+            self.assertEqual("rotate", row["name"])
+            self.assertEqual("flex", row["key"])
+            self.assertTrue(row["path"].endswith(".rotate"))
+        rekeyed = library_edit(source_bundle(), b'joint flex @ "flex"', b'joint flex @ "hinge.v2_-"')
+        result = self.observe(rekeyed)
+        for row in result["records"]:
+            self.assertTrue(row["path"].endswith(".flex"))
+            self.assertEqual("hinge.v2_-", row["id"][-1])
+            self.assertEqual("hinge.v2_-", row["definitionId"][-1])
+
+    def test_h12_alias_root_module_and_class_changes(self):
+        bundle = source_bundle()
+        bundle = main_edit(bundle, b"import mech @", b"import mechanics2 @")
+        bundle = main_edit(bundle, b"mech.", b"mechanics2.", count=-1)
+        bundle = main_edit(bundle, b'module KeyedRack @ "keyed-rack"', b'module RenamedRack @ "rack.v2"')
+        bundle = main_edit(bundle, b'object first @ "first"', b'object leading @ "first"')
+        bundle = library_edit(bundle, b'module Hinges @ "hinges"', b'module RenamedHinges @ "hinges.v2"')
+        bundle = library_edit(bundle, b'class Finger @ "finger"', b'class Finger @ "digit-v2"')
+        result = self.observe(bundle)
+        self.assertEqual(8, result["hingeCount"])
+        for row in result["records"]:
+            self.assertEqual("rack.v2", row["id"][0])
+            self.assertEqual(["package", "example.hinges", "hinges.v2", "definitions", "digit-v2", "flex"], row["definitionId"])
+            if row["id"][2] == "first":
+                self.assertTrue(row["path"].startswith("leading.fingers["))
+
+    def test_h13_endpoint_names_keys_and_part_names_are_independent(self):
+        bundle = library_edit(source_bundle(), b'site pivot @ "pivot"', b'site anchor @ "pivot.key"')
+        bundle = library_edit(bundle, b"parent = self.pivot;", b"parent = self.anchor;")
+        bundle = library_edit(bundle, b'site base @ "base"', b'site foot @ "foot-key"')
+        bundle = library_edit(bundle, b'part blade @ "blade"', b'part lever @ "blade.key"')
+        bundle = library_edit(bundle, b"child = self.blade.base;", b"child = self.lever.foot;")
+        result = self.observe(bundle)
+        for row in result["records"]:
+            self.assertEqual(row["ownerId"] + ["pivot.key"], row["parentSiteId"])
+            self.assertEqual(row["ownerId"] + ["blade.key", "foot-key"], row["childSiteId"])
+            self.assertTrue(row["parentSite"]["path"].endswith(".anchor"))
+            self.assertTrue(row["childSite"]["path"].endswith(".lever.foot"))
+            self.assertEqual("foot-key", row["childSite"]["definitionId"][-1])
+
+    def test_h13_missing_endpoint_name_cannot_guess_from_key(self):
+        bundle = library_edit(source_bundle(), b'site pivot @ "pivot"', b'site anchor @ "pivot"')
+        self.refused(bundle)
+
+    def test_h14_endpoint_order_is_preserved(self):
+        bundle = field_change(source_bundle(), "parent", b"self.blade.base")
+        bundle = field_change(bundle, "child", b"self.pivot")
+        result = self.observe(bundle)
+        for row in result["records"]:
+            self.assertEqual(row["ownerId"] + ["blade", "base"], row["parentSiteId"])
+            self.assertEqual(row["ownerId"] + ["pivot"], row["childSiteId"])
+        self.assert_values(result)
+
+    def test_h14_same_object_endpoints_refuse(self):
+        self.refused(field_change(source_bundle(), "child", b"self.pivot"), {"MALFORMED"})
+        self.refused(field_change(source_bundle(), "parent", b"self.blade.base"), {"MALFORMED"})
+
+    def test_h15_private_own_site_and_part_are_allowed(self):
+        bundle = library_edit(source_bundle(), b"public site pivot", b"private site pivot")
+        self.assert_values(self.observe(bundle))
+
+    def test_h15_external_private_site_and_imported_class_refuse(self):
+        self.refused(library_edit(source_bundle(), b"public site base", b"private site base"))
+        self.refused(library_edit(source_bundle(), b"public class Finger", b"private class Finger"))
+
+    def test_h15_omitted_class_visibility_defaults_public(self):
+        self.assert_values(self.observe(library_edit(source_bundle(), b"public class Finger", b"class Finger")))
+
+    def test_h16_unsupported_endpoint_expression_forms(self):
+        for expression in (b"self.origin", b'self.blade["part"].base', b"self.blade.nested.base", b"another.pivot", b"self.ref", b"site(self.pivot)"):
+            with self.subTest(expression=expression):
+                self.refused(field_change(source_bundle(), "parent", expression), {"UNSUPPORTED_SOURCE_FORM", "MALFORMED"})
+
+    def test_h16_nonhinge_scene_joint_and_inheritance_refuse(self):
+        self.refused(library_edit(source_bundle(), b'joint flex @ "flex": hinge', b'joint flex @ "flex": fixed'), {"UNSUPPORTED_SOURCE_FORM"})
+        start, end = block_span(source_bundle()["hinges.ok"], JOINT)
+        declaration = source_bundle()["hinges.ok"][start:end]
+        bundle = main_edit(source_bundle(), b'scene Demo @ "demo" {', b'scene Demo @ "demo" {\n' + declaration)
+        self.refused(bundle, {"UNSUPPORTED_SOURCE_FORM"})
+        bundle = library_edit(source_bundle(), b'class Finger @ "finger" {', b'class Finger @ "finger" extends Blade {')
+        self.refused(bundle, {"UNSUPPORTED_SOURCE_FORM"})
+
+    def test_h16_relation_override_and_nested_joint_refuse(self):
+        bundle = main_edit(source_bundle(), b'object first @ "first": Rack {', b'object first @ "first": Rack {\n fingers["middle"].flex.initial = 0[rad];')
+        self.refused(bundle, {"UNSUPPORTED_SOURCE_FORM"})
+        start, end = block_span(source_bundle()["hinges.ok"], JOINT)
+        declaration = source_bundle()["hinges.ok"][start:end]
+        bundle = library_edit(source_bundle(), b"return tween(self.flex, angle, duration);", declaration + b"\nreturn tween(self.flex, angle, duration);")
+        self.refused(bundle, {"UNSUPPORTED_SOURCE_FORM"})
+
+    def test_h17_joint_fields_must_occur_exactly_once(self):
+        for field, expression in (("parent", b"self.pivot"), ("child", b"self.blade.base"), ("axis", b"vec3(0, 0, 1)"),
+                                  ("limits", b"range(-45[deg], 45[deg])"), ("initial", b"0[rad]")):
+            assignment = field.encode() + b" = " + expression + b";"
+            for replacement in (b"", assignment + b"\n" + assignment):
+                with self.subTest(field=field, replacement=replacement):
+                    self.refused(library_edit(source_bundle(), assignment, replacement))
+        self.refused(library_edit(source_bundle(), b"initial = 0[rad];", b"initial = 0[rad];\n unexpected = 1;"))
+
+    def test_h17_duplicate_names_keys_and_reserved_members_refuse(self):
+        start, end = block_span(source_bundle()["hinges.ok"], JOINT)
+        declaration = source_bundle()["hinges.ok"][start:end]
+        cases = [library_edit(source_bundle(), declaration, declaration + b"\n" + declaration),
+                 library_edit(source_bundle(), b'joint flex @ "flex"', b'joint pivot @ "flex"'),
+                 library_edit(source_bundle(), b'joint flex @ "flex"', b'joint flex @ "pivot"')]
+        for name in (b"self", b"origin", b"frame", b"vec3", b"range"):
+            cases.append(library_edit(source_bundle(), b'public class Finger @ "finger" {', b'public class Finger @ "finger" {\n public param ' + name + b' @ "shadow-' + name + b'": Real = 1;'))
+        for index, bundle in enumerate(cases):
+            with self.subTest(case=index):
+                self.refused(bundle)
+
+    def test_h17_missing_joint_visibility_refuses(self):
+        self.refused(library_edit(source_bundle(), b"public joint flex", b"joint flex"))
+
+    def test_h18_site_required_fields_and_compatibility_refuse(self):
+        cases = ((b'interface = "hinged.part";', b""),
+                 (b'interface = "hinged.part";', b'interface = "";'),
+                 (b'interface = "hinged.part";', b'interface = "different";'),
+                 (b'interface = "hinged.part";', b"interface = self.interface_name;"),
+                 (b'interface = "hinged.part";', b'interface = "hinged.part"; interface = "hinged.part";'),
+                 (b"size = 0[m];", b""), (b"size = 0[m];", b"size = -1[mm];"),
+                 (b"size = 0[m];", b"size = 1[mm];"), (b"size = 0[m];", b"size = self.length;"),
+                 (b"size = 0[m];", b"size = 0[m] + 0[m];"),
+                 (b"size = 0[m];", b"size = 0[m]; size = 0[m];"),
+                 (b"size = 0[m];", b"size = 0[m]; unexpected = 1;"))
+        for old, new in cases:
+            with self.subTest(new=new):
+                self.refused(library_edit(source_bundle(), old, new))
+        bundle = library_edit(source_bundle(), b"pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));", b"")
+        self.refused(bundle)
+        original_pose = b"pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));"
+        self.refused(library_edit(source_bundle(), original_pose, original_pose + b"\n" + original_pose))
+
+    def test_h18_exact_length_conversion_and_pose_nonclaim(self):
+        bundle = library_edit(source_bundle(), b"size = 0[m];", b"size = 12[cm];")
+        bundle = library_edit(bundle, b"size = 0[m];", b"size = 120[mm];")
+        result = self.observe(bundle)
+        for site in result["sites"]:
+            self.assertEqual(canonical_decimal("12", "cm"), site["sizeM"])
+            self.assertIs(False, site["poseEvaluated"])
+        self.assert_unqualified(result)
+
+    def test_h19_actual_nonempty_membership_sets_and_opaque_keys(self):
+        for keys in (("upper", "lower", "middle"), ("lower", "middle"), ("lower", "middle", "upper", "extra"), ("arm.part", "under_score", "hy-phen")):
+            with self.subTest(keys=keys):
+                result = self.observe(replace_helper_keys(source_bundle(), keys))
+                self.assertEqual(baseline_ids(first_keys=keys), {tuple(row["id"]) for row in result["records"]})
+                for row in result["records"]:
+                    key = row["id"][4]
+                    self.assertIn('[' + json.dumps(key) + ']', row["path"])
+
+    def test_h19_final_owner_override_controls_membership(self):
+        bundle = main_edit(source_bundle(), b'object first @ "first": Rack {',
+                           b'object first @ "first": Rack {\n mounts = keyed<Vec3<Length>> {"only": vec3(0[m], 0[m], 0[m])};')
+        bundle = main_edit(bundle, b'fingers["middle"]', b'fingers["only"]', count=-1)
+        result = self.observe(bundle)
+        self.assertEqual(baseline_ids(first_keys=("only",)), {tuple(row["id"]) for row in result["records"]})
+
+    def test_h19_empty_duplicate_and_invalid_keys_refuse(self):
+        self.refused(replace_helper_keys(source_bundle(), ()), {"UNSUPPORTED_SOURCE_FORM"})
+        for keys in (("dup", "dup"), ("é",), ('bad"quote',), ("-leading",), ("a" * 65,), ("with space",)):
+            with self.subTest(keys=keys):
+                self.refused(replace_helper_keys(source_bundle(), keys))
+        for key in ("é", "-bad", "a" * 65):
+            with self.subTest(member_key=key):
+                self.refused(library_edit(source_bundle(), b'joint flex @ "flex"', b'joint flex @ ' + json.dumps(key, ensure_ascii=False).encode()))
+
+    def test_h19_boundary_64_key_input_and_65_refusal(self):
+        bundle = replace_block(source_bundle(), "hinges.ok", JOINT, b"")
+        bundle = replace_block(bundle, "hinges.ok", BLADE, b"")
+        valid = self.observe(replace_helper_keys(bundle, tuple("k" + str(index) for index in range(64))))
+        self.assertEqual(0, valid["hingeCount"])
+        self.assertEqual(0, valid["siteCount"])
+        self.refused(replace_helper_keys(bundle, tuple("k" + str(index) for index in range(65))), {"RESOURCE_LIMIT"})
+
+    def test_h19_nested_membership_override_refuses(self):
+        bundle = main_edit(source_bundle(), b'fingers["middle"].length = 0.65[m];', b'fingers["middle"].mounts = keyed<Vec3<Length>> {"new": vec3(0[m], 0[m], 0[m])};')
+        self.refused(bundle, {"UNSUPPORTED_SOURCE_FORM"})
+
+    def test_h20_h28_unrelated_geometry_length_pose_motion_do_not_supply_hinges(self):
+        original = field_projection(self.observe(source_bundle()))
+        edits = ((b"geometry = sphere(0.06[m]);", b"geometry = sphere(0.09[m]);"),
+                 (b"Length = 0.6[m];", b"Length = 99[m];"),
+                 (b"parent = self.parent_frame;", b"parent = world;"),
+                 (b"return tween(self.flex, angle, duration);", b"return unrelated_action(angle, duration);"),
+                 (b"pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));", b"pose = unobserved_pose(self.length, unknown_name);"))
+        for old, new in edits:
+            with self.subTest(new=new):
+                result = self.observe(library_edit(source_bundle(), old, new))
+                self.assertEqual(original, field_projection(result))
+                self.assert_unqualified(result)
+        result = self.observe(main_edit(source_bundle(), b'fingers["middle"].length = 0.65[m];', b'fingers["middle"].length = 123[m];'))
+        self.assertEqual(original, field_projection(result))
+        relocated = replace_block(source_bundle(), "hinges.ok", BLADE, b"")
+        relocated = library_edit(relocated, b"private class Blade", b"public class Blade")
+        relocated = main_edit(relocated, b'public class Rack @ "rack" {', b'public class Rack @ "rack" {\n public part blade @ "blade": mech.Blade {}')
+        self.refused(relocated, {"MALFORMED"})
+
+    def test_h22_import_digest_must_bind_actual_companion_bytes(self):
+        bundle = source_bundle()
+        bundle["hinges.ok"] += b"\n// changed bytes\n"
+        self.refused(bundle, {"INPUT_BINDING"})
+        result = self.observe(repin(bundle))
+        self.assert_values(result)
+        self.assertEqual(digest(bundle["hinges.ok"]), result["sourceHashes"]["hinges.ok"])
+
+    def test_h22_canonical_program_identity_comes_from_actual_bytes(self):
+        for changed in (False, True):
+            with self.subTest(changed=changed):
+                bundle = source_bundle()
+                if changed:
+                    bundle = field_change(bundle, "initial", b"0.2[rad]")
+                manifest = {
+                    "schema_version": "ontokin.bundle/0.1", "entry_source_id": "entry",
+                    "units": [
+                        {"source_id": "entry", "package_id": None, "version": None,
+                         "filename": "main.ok", "source_revision": "sha256:" + digest(bundle["main.ok"])},
+                        {"source_id": "package:example.hinges@1.0.0", "package_id": "example.hinges", "version": "1.0.0",
+                         "filename": "hinges.ok", "source_revision": "sha256:" + digest(bundle["hinges.ok"])},
+                    ],
+                }
+                canonical = json.dumps(manifest, sort_keys=True, ensure_ascii=False, separators=(",", ":"), allow_nan=False).encode()
+                expected_revision = "sha256:" + digest(b"ontokin.bundle/0.1\0" + canonical)
+                result = self.observe(bundle)
+                self.assertEqual(manifest, result["sourceManifest"])
+                self.assertEqual(expected_revision, result["programRevision"])
+                reversed_result = self.observe(dict(reversed(list(bundle.items()))))
+                self.assertEqual(expected_revision, reversed_result["programRevision"])
+
+    def test_h22_wrong_package_version_and_profiles_refuse(self):
+        for old, new in ((b'from "example.hinges"', b'from "unbound.package"'),
+                         (b'version "1.0.0"', b'version "2.0.0"'),
+                         (b'profile "construction-0.1"', b'profile "other"')):
+            with self.subTest(new=new):
+                self.refused(main_edit(source_bundle(), old, new))
+
+    def test_h24_exact_source_closure_and_bytes_only(self):
+        good = source_bundle()
+        for bundle in (None, [], "main.ok", {}, {"main.ok": good["main.ok"]},
+                       {**good, "extra.ok": b""}, {**good, "main.ok": good["main.ok"].decode()},
+                       {**good, "hinges.ok": bytearray(good["hinges.ok"])}):
+            with self.subTest(input_type=type(bundle).__name__, keys=list(bundle) if isinstance(bundle, dict) else None):
+                self.refused(bundle)
+
+    def test_h24_malformed_utf8_and_truncations_do_not_leak_host_exceptions(self):
+        for filename in ("main.ok", "hinges.ok"):
+            for raw in (b"\xff", b"\xed\xa0\x80", b"\x00", b"", b"{", b'"unterminated', b"/* unterminated"):
+                with self.subTest(filename=filename, raw=repr(raw)):
+                    bundle = source_bundle()
+                    bundle[filename] = raw
+                    self.refused(bundle)
+
+    def test_h24_source_bytes_tokens_depth_and_definitions_are_bounded(self):
+        bundle = source_bundle()
+        bundle["main.ok"] = b" " * 65537
+        self.refused(bundle, {"RESOURCE_LIMIT"})
+        bundle = source_bundle()
+        bundle["main.ok"] += b";" * 8193
+        self.refused(bundle, {"RESOURCE_LIMIT"})
+        bundle = source_bundle()
+        bundle["main.ok"] += b"(" * 33 + b")" * 33
+        self.refused(bundle, {"RESOURCE_LIMIT"})
+        bundle = source_bundle()
+        bundle["hinges.ok"] += b"\n" + b"\n".join(('public class Extra' + str(index) + ' @ "extra-' + str(index) + '" {}').encode() for index in range(31))
+        self.refused(repin(bundle), {"RESOURCE_LIMIT"})
+
+    def test_h24_object_and_hinge_rows_are_bounded(self):
+        self.refused(replace_helper_keys(source_bundle(), tuple("k" + str(index) for index in range(64))), {"RESOURCE_LIMIT"})
+        start, end = block_span(source_bundle()["hinges.ok"], JOINT)
+        declaration = source_bundle()["hinges.ok"][start:end]
+        additions = b"\n".join(declaration.replace(b'flex @ "flex"', ('extra' + str(index) + ' @ "extra-' + str(index) + '"').encode()) for index in range(16))
+        bundle = library_edit(source_bundle(), declaration, declaration + b"\n" + additions)
+        self.refused(bundle, {"RESOURCE_LIMIT"})
+
+    def test_h24_exact_hinge_and_site_row_limits_are_admitted(self):
+        bundle = replace_block(source_bundle(), "main.ok", b"object second", b"")
+        for marker, name in ((b"public site pivot", b"pivot"), (b"public site base", b"base")):
+            start, end = block_span(bundle["hinges.ok"], marker)
+            declaration = bundle["hinges.ok"][start:end]
+            replacement = b"\n".join(declaration.replace(name, name + str(index).encode()) for index in range(4))
+            bundle = replace_block(bundle, "hinges.ok", marker, replacement)
+        start, end = block_span(bundle["hinges.ok"], JOINT)
+        declaration = bundle["hinges.ok"][start:end]
+        replacement = b"\n".join(declaration.replace(b'flex @ "flex"', ('flex' + str(index) + ' @ "flex-' + str(index) + '"').encode())
+                                  .replace(b"self.pivot", b"self.pivot" + str(index).encode())
+                                  .replace(b"self.blade.base", b"self.blade.base" + str(index).encode()) for index in range(4))
+        bundle = replace_block(bundle, "hinges.ok", JOINT, replacement)
+        bundle = replace_helper_keys(bundle, tuple("key" + str(index) for index in range(32)))
+        result = self.observe(bundle)
+        self.assertEqual(128, result["hingeCount"])
+        self.assertEqual(256, result["siteCount"])
+        self.assertEqual(128, len({tuple(row["id"]) for row in result["records"]}))
+        self.assertEqual(256, len({tuple(row["id"]) for row in result["sites"]}))
+
+    def test_h24_recursive_containment_and_consumed_text_refuse(self):
+        self.refused(library_edit(source_bundle(), b'part blade @ "blade": Blade', b'part blade @ "blade": Finger'))
+        for interface in ("x" * 513, "bad\u0001control", "bad\ud800surrogate"):
+            with self.subTest(interface_length=len(interface)):
+                bundle = library_edit(source_bundle(), b'interface = "hinged.part";', b"interface = " + json.dumps(interface).encode() + b";", count=-1)
+                self.refused(bundle)
+
+    def test_h25_numeric_lexeme_and_explicit_exponent_limits(self):
+        for literal in (b"0." + b"0" * 63 + b"[rad]", b"0e401[rad]", b"0e-401[rad]", b"1e401[rad]", b"1e-401[rad]"):
+            with self.subTest(literal=literal):
+                self.refused(field_change(source_bundle(), "initial", literal), {"RESOURCE_LIMIT"})
+
+    def test_h25_adjusted_exponent_overflow_and_underflow(self):
+        for literal, codes in ((b"1e-325[rad]", {"RESOURCE_LIMIT"}), (b"1e-323[deg]", {"RESOURCE_LIMIT"}),
+                               (b"1e309[rad]", {"RESOURCE_LIMIT"}), (b"1.8e308[rad]", {"MALFORMED", "RESOURCE_LIMIT"})):
+            with self.subTest(literal=literal):
+                self.refused(field_change(source_bundle(), "initial", literal), codes)
+        for literal, expected in ((b"1e-324[rad]", 0.0), (b"5e-324[rad]", float.fromhex("0x0.0000000000001p-1022")), (b"0e400[rad]", 0.0), (b"0e-400[rad]", 0.0)):
+            with self.subTest(literal=literal):
+                self.assert_values(self.observe(field_change(source_bundle(), "initial", literal)), initial=expected)
+
+    def test_h25_adjusted_exponent_applies_after_unit_factor(self):
+        bundle = field_change(source_bundle(), "limits", b"range(-1e309[deg], 1e309[deg])")
+        result = self.observe(bundle)
+        expected = canonical_decimal("1e309", "deg")
+        self.assert_values(result, limits=(-expected, expected))
+        bundle = library_edit(source_bundle(), b"size = 0[m];", b"size = 1e310[mm];", count=-1)
+        result = self.observe(bundle)
+        for site in result["sites"]:
+            self.assertEqual(1e307, site["sizeM"])
+
+    def test_h27_changed_supported_inputs_never_gain_historical_authority(self):
+        bundle = field_change(source_bundle(), "initial", b"0.2[rad]")
+        bundle = replace_helper_keys(bundle, ("alpha", "beta"))
+        result = self.observe(bundle)
+        self.assertEqual(7, result["hingeCount"])
+        self.assert_values(result, initial=0.2)
+        self.assert_unqualified(result)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--evidence-dir", type=Path, help="Fresh output directory; existing paths refuse to prevent overwriting runs")
+    arguments = parser.parse_args()
+    suite = unittest.defaultTestLoader.loadTestsFromTestCase(SourceHingeControls)
+    log = io.StringIO()
+    result = unittest.TextTestRunner(stream=log, verbosity=2).run(suite)
+    output = log.getvalue()
+    sys.stdout.write(output)
+    if arguments.evidence_dir:
+        arguments.evidence_dir.mkdir(parents=True, exist_ok=False)
+        (arguments.evidence_dir / "unittest.log").write_text(output)
+        for path in (READER_PATH, Path(__file__)):
+            (arguments.evidence_dir / (path.name + ".txt")).write_bytes(INPUT_BYTES[path])
+        summary = {
+            "schema": "ontokin.c265.independent-source-controls/0.1",
+            "createdUTC": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            "command": [sys.executable, *sys.argv],
+            "python": sys.version, "platform": platform.platform(), "machine": platform.machine(),
+            "inputs": {str(path.relative_to(ROOT)): {"sha256": digest(raw), "bytes": len(raw)}
+                       for path, raw in INPUT_BYTES.items()},
+            "testsRun": result.testsRun, "failures": len(result.failures), "errors": len(result.errors),
+            "skipped": len(result.skipped), "passed": result.wasSuccessful(),
+            "observations": OBSERVATIONS,
+            "coverageBoundary": "Source portions only; artifact comparison, historical admission, full source validity, endpoint poses, native execution and model trials are not run or qualified.",
+        }
+        (arguments.evidence_dir / "results.json").write_text(json.dumps(summary, indent=2) + "\n")
+    return 0 if result.wasSuccessful() else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

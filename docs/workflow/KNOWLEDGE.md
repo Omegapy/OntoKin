@@ -21,7 +21,7 @@ be checked against those sources before it is applied.
 | Language meaning and adopted profiles | [Specification index](../README.md) | Separate adopted contracts from proposals and measured implementation support. |
 | Source-authoritative object repair | [GOAL](../../GOAL.md) and [Agent contracts](../engineering/OK-AGENT-001-ai-agent-authoring-and-inspection-interface.md) | Supported behavior depends on the named source/Agent/export profile. |
 | Localized-repair qualification | [C253 protocol](../engineering/localized-repair-c253/README.md) | A public qualification family does not demonstrate a general authoring advantage. |
-| Hinge declarations and observation boundaries | [C260 contract](../engineering/localized-repair-c260/CONTRACT.md) and [C261 reader](../engineering/localized-repair-c261/README.md) | Raw metadata claims, independent source facts, comparison and historical admission are separate. |
+| Hinge declarations and observation boundaries | [C260 contract](../engineering/localized-repair-c260/CONTRACT.md), [C261 reader](../engineering/localized-repair-c261/README.md) and [C265 source observer](../engineering/localized-repair-c265/README.md) | Raw metadata claims, independent source facts, comparison and historical admission are separate. |
 | Verification and integration | [AGENTS](../../AGENTS.md), [OK-ENG-006](../engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md), and [OK-ENG-009](../engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md) | Applicable checks and resulting-main evidence govern an increment; a merge alone is not a full release. |
 | Browser-chat operation | [Entry point](../../CHATGPT-START-HERE.md), [Director role](../../ROLE.md), and [protocol](PROTOCOL.md) | Repository instructions do not create execution tools or platform permissions. |
 
@@ -46,10 +46,10 @@ means a governing procedure or contract exists, not that this session has
 executed it. `partial` identifies a bounded implementation whose broader
 obligations remain open. `unimplemented` and `deferred` remain visible.
 
-The initial hinge records preserve the C261 boundary: raw artifact observation
-exists, while independent source hinge observation, comparison and historical
-admission remain separate unfinished work. This workflow milestone performs
-no new physics, native-engine, or model trial.
+Current hinge records distinguish C261 raw artifact observation and C265
+independent source observation from the unfinished source/artifact comparison
+and historical admission interfaces. Site poses remain unevaluated. Neither
+component establishes physical, native-engine or model-trial validity.
 
 ## Maintain useful knowledge
 

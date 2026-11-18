@@ -1,0 +1,782 @@
+{
+  "schema": "ontokin.c265.independent-review-controls/1",
+  "reviewer": "/root/independent_review",
+  "observed_at": "2026-11-18T22:20:38.546789+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "implementation_sha256": "e33b33e6e61ad416531bab1b1335b072cb72a7563e79d31022943bde4415fb75",
+  "control_sha256": "83c72f67673aa66f84c156945e7a0b5cf6e6d7c49d901098cb10d9f717bb4f8e",
+  "cases": 43,
+  "passed": 43,
+  "failed": 0,
+  "results": [
+    {
+      "case": "original_before",
+      "expected": "pass",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "pass",
+      "passed": true,
+      "checked_witnesses": 1060
+    },
+    {
+      "case": "original_after",
+      "expected": "pass",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "pass",
+      "passed": true,
+      "checked_witnesses": 1060
+    },
+    {
+      "case": "quoted_vec3_constructor",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "a818f5c64a96a5d56d2969fea894795d1b71cc2e6597dbfc9a2995416e574653"
+        },
+        "hinges.ok": {
+          "bytes": 1913,
+          "sha256": "a608fb7740c8d00067dfc0647d57aa5488178c40f8eccc0433cd7b708f34f830"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: literal vec3 constructor required"
+    },
+    {
+      "case": "quoted_range_constructor",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "7ff99e0f88ff35666faea131d468c470fd639cee345d841caa2dec27499b102d"
+        },
+        "hinges.ok": {
+          "bytes": 1913,
+          "sha256": "97fe55647f1e58748655345ff2575a696cc80711c1ea74af49247c4dbf9d1e99"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: literal range constructor required"
+    },
+    {
+      "case": "quoted_self",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "e5743fa37ba1f56f27f37f52c513b6623a8c6368aca5c69c12232a6cd2542bae"
+        },
+        "hinges.ok": {
+          "bytes": 1913,
+          "sha256": "268009b6a8b8e861230795ae46033d4db545369e936b0bbd66b1ce2cdb6a4089"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: endpoint must be a lexical self path"
+    },
+    {
+      "case": "quoted_part",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "659edf6fd79a42985aced721980f7e44328f192c2ed883beaf092f2d63a87e85"
+        },
+        "hinges.ok": {
+          "bytes": 1913,
+          "sha256": "ff60dfec7db79d20ce3633ae899bfdd3a0f0172c35994633e61bfee373e2a5a5"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: C257 SOURCE_SYNTAX: expected id at hinges.ok:1656"
+    },
+    {
+      "case": "quoted_site",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "958ed73caf1a356ab8a3cd1088ed0c7cf45a375968e6e9d1d2576bb71b8f4d43"
+        },
+        "hinges.ok": {
+          "bytes": 1913,
+          "sha256": "097eb79bfe26ffeb23cc6e9f08d285fe8211bb9c1b8c78ee8a3ddb7f3f678dcb"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: C257 SOURCE_SYNTAX: expected id at hinges.ok:1628"
+    },
+    {
+      "case": "quoted_joint_kind",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "e2fa3647b98ba643de49da4c5369a91c79e578140d5b0bf3698a53b41593e31e"
+        },
+        "hinges.ok": {
+          "bytes": 1913,
+          "sha256": "59212f4e6b8f066d30b0a6413c5336b195991253168ce69bc1020b6e1cbeb1dc"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: only literal hinge joint declarations are supported"
+    },
+    {
+      "case": "quoted_unit",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "4a6ee96c017898c7d1f53efecf52dccf31cef5bae8e773d63a9d5d1e2b6e34ac"
+        },
+        "hinges.ok": {
+          "bytes": 1913,
+          "sha256": "2c1a846e6828e8e5e838a411558e3ec8bd1a3d8c8c199dff674e4e1af5b96931"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: C257 SOURCE_SYNTAX: expected id at hinges.ok:1761"
+    },
+    {
+      "case": "quoted_field",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "1c0c445b0a83ad7eed4beb2ce1c6e9870189d9dfb58596a8f4f5c607bc0b3e68"
+        },
+        "hinges.ok": {
+          "bytes": 1913,
+          "sha256": "b8e778ebcede0c2366cc030460e720c52510a8f47394c0124fd042b330e415c4"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: simple field assignment required"
+    },
+    {
+      "case": "quoted_assignment_operator",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "50fd97a9bf7e3328b6ce0946a3b72a2c229421de30f2a58ab8b52fef8b853599"
+        },
+        "hinges.ok": {
+          "bytes": 1913,
+          "sha256": "79588b39c2a9e1c40ff93d51df56c3d8e7a50b1b4bf03c327d97722103fe7fc3"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: simple field assignment required"
+    },
+    {
+      "case": "nested_joint_in_method",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "0bee9b4ca05e5fe21e7691a451912f00cf27d430321e2103329ad7fef5df1026"
+        },
+        "hinges.ok": {
+          "bytes": 2068,
+          "sha256": "4689894e1712524e893e82563835f25792fdb76d4b2623417b6ab1df0b2aa80d"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: joint syntax in unsupported position"
+    },
+    {
+      "case": "constructor_member_shadow",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "da03359819823797af51d19bfadc8732ef15d0f9c51102285a41f0f9665419e0"
+        },
+        "hinges.ok": {
+          "bytes": 1914,
+          "sha256": "5de7f0263e7d4829bb2693822f297ea6ce571ed03736700d1547d86f43804b96"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: declaration shadows predefined or reserved name: vec3"
+    },
+    {
+      "case": "implicit_origin_member_key",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "7bedd3f34cf5a74810e0755ea3715534adb1d2882035f73c53802de415a29329"
+        },
+        "hinges.ok": {
+          "bytes": 1912,
+          "sha256": "78a75bcb2a414ea7f9d5f7b00b3be8922704fea564bb5e242c2369abca11672e"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: implicit instance member collision"
+    },
+    {
+      "case": "implicit_frame_member_key",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "dee1a0c748396e389b5a49195476fb13e46c24214a4fea5dc4f73260a4177c59"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "87c0f941aaf9ed54bf1e3a71b3226e198a0fdc6f65afc7b620f68d56eeb45140"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: implicit instance member collision"
+    },
+    {
+      "case": "joint_part_key_collision",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "e0fd66e689d0fd7bef83747e792244fa6c8ad90ffe712557ab16d05923fec1ba"
+        },
+        "hinges.ok": {
+          "bytes": 1912,
+          "sha256": "5dab1c74b3b46cd91d351f22fd5ea5a73c58a6c5de7b8bff5041f0a21bfba90e"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: duplicate class member name or key"
+    },
+    {
+      "case": "part_site_field_override",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "d0376fff7e8b13605b10428aeb9c4add2088e5b90a098ef8e5216efba862268a"
+        },
+        "hinges.ok": {
+          "bytes": 1930,
+          "sha256": "c50fc5f8610a4a481e94d81a3ed00d95117c33891f258289f1d9f00e68153516"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: relation or site overrides are unsupported"
+    },
+    {
+      "case": "quoted_helper_return",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "6837e3d74be23b73db32254fd7307a4c59bbd87b9970f98b268c2d0aea8820b1"
+        },
+        "hinges.ok": {
+          "bytes": 1913,
+          "sha256": "195be71d6b771534a57bce076dcbefa05ea6a9905b33bcb52dc8030863cc1bc7"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: C257 SOURCE_SYNTAX: expected id at hinges.ok:156"
+    },
+    {
+      "case": "nested_joint_initial_override",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1713,
+          "sha256": "ba1375556610977ac9d79f3416768e347986f0417307d8e7030b1e9e127a756f"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: relation or site overrides are unsupported"
+    },
+    {
+      "case": "nested_site_size_override",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1709,
+          "sha256": "855dc8fae185935d073aa01aa73690ed3722dcfe681ae7ef231180a6ae2dd0f4"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: relation or site overrides are unsupported"
+    },
+    {
+      "case": "deep_site_interface_override",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1728,
+          "sha256": "32501231e0057954a65f449ea901647c6bbf1f3537fd2bf9d421d3e2022b4f70"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: relation or site overrides are unsupported"
+    },
+    {
+      "case": "direct_joint_override",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1723,
+          "sha256": "3db491064c7ae98e2361091a727888f641c761c9b507511bc65d63e7de675dc4"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: relation or site overrides are unsupported"
+    },
+    {
+      "case": "direct_site_override",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1722,
+          "sha256": "6aabefc082f83d4ea7a5c5377903ba5b4dc70adc3e7f6c1d54f6e31fda2095b1"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: relation or site overrides are unsupported"
+    },
+    {
+      "case": "nested_constructor_shadow_binder",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1709,
+          "sha256": "91b29a5cce773417bc0ff7ac287dabec99475bde89404d33fc78099f0227757a"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: declaration shadows predefined or reserved name: vec3"
+    },
+    {
+      "case": "nested_self_shadow_binder",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1709,
+          "sha256": "69316e60da9b8d620bd6554103c31962ce89da60ce3cd641c2847027222b7e70"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: declaration shadows predefined or reserved name: self"
+    },
+    {
+      "case": "invalid_authored_import_key",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1706,
+          "sha256": "c622a24a0600e5add66a0cf759738992495572d41c888733476238c1ae0a300c"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: stable key outside adopted ASCII domain"
+    },
+    {
+      "case": "import_definition_key_collision",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1703,
+          "sha256": "4fc3fe5070bdbe2b85b53012f1e6b86d0723bf0e0c33e21c72744720ff054492"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: duplicate name or declaration key in module"
+    },
+    {
+      "case": "scene_root_action_name_collision",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1709,
+          "sha256": "0c10ff7b8defb485fe233d7e72dd7cd269a1704077c3d48c4a468aa4293adc8d"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: duplicate name or declaration key in scene"
+    },
+    {
+      "case": "scene_root_action_key_collision",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1709,
+          "sha256": "0d11c7460c0ce89849d7c17c7e15c725758a4da2b8c64878f73046929b951101"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: duplicate name or declaration key in scene"
+    },
+    {
+      "case": "nested_joint_in_action_body",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1865,
+          "sha256": "5620ae51baccdbd0645e24fcee4c19399d2d410f3ff6b29b7cc97bf997d14929"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: joint syntax in unsupported position"
+    },
+    {
+      "case": "quoted_membership_type",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1710,
+          "sha256": "7ee90bc99a60fc3895c92e01df0814b7c935cdf74dede2c6992e062a12a85d22"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: type syntax requires identifiers and type punctuation"
+    },
+    {
+      "case": "quoted_membership_type_separator",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1710,
+          "sha256": "aff39e1c699786db85399509fc98080958bdadaa25d64741a58e2808864e08d8"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: type syntax requires identifiers and type punctuation"
+    },
+    {
+      "case": "quoted_helper_call_opening",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1710,
+          "sha256": "a9ebf315d897ee6b29ee4e6dd7dbbc11990902fc73af8f268b01d1b297ac3944"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: C257 SOURCE_BALANCE: main.ok byte 413"
+    },
+    {
+      "case": "constructor_import_alias_shadow",
+      "expected": "refuse",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1711,
+          "sha256": "b738f700b38af14bd6080feb6d98a3871a3f5eb8a26a42a515245bd403eb03a2"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: declaration shadows predefined or reserved name: range"
+    },
+    {
+      "case": "same_site_keys_on_distinct_classes",
+      "expected": "pass",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "1b946e1ac172cf91ac9747b65471d7229de23ccc8d61f1b6acf5474d24f7d113"
+        },
+        "hinges.ok": {
+          "bytes": 1912,
+          "sha256": "e85d34f341a8d4f7802e81baca4529000debf020a84ec0b3d5a24ff805b396a7"
+        }
+      },
+      "actual": "pass",
+      "passed": true,
+      "checked_witnesses": 1060
+    },
+    {
+      "case": "nontrivial_unevaluated_pose",
+      "expected": "pass",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "67f9de96fe466c1e7d5ae36f8053137c34cfcfb81a2caa8bb87340dfea815aed"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "f23b949bfab1871bebb5dba06cd9a0a9a7803b6e9cf6106df0ddc60727bdabf2"
+        }
+      },
+      "actual": "pass",
+      "passed": true,
+      "checked_witnesses": 1060
+    },
+    {
+      "case": "joint_spelling_in_string_data",
+      "expected": "pass",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "2dadd63a1cd299f07b8b3acd7b043e3f045156a05038c85dbe68ac7fa9c44f91"
+        },
+        "hinges.ok": {
+          "bytes": 1899,
+          "sha256": "ffc5ea626bb633d1bdbb1a51920c8885bdfc0287a3e3e1188fc9f630840ea816"
+        }
+      },
+      "actual": "pass",
+      "passed": true,
+      "checked_witnesses": 1060
+    },
+    {
+      "case": "unicode_comment_shift",
+      "expected": "pass",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "6ae543895eee6b53a0f48fcee42e82280b8c8d63853590b6c8be7cf7b6b34656"
+        },
+        "hinges.ok": {
+          "bytes": 1935,
+          "sha256": "433593020b9976c4e9c3e077f3dc117e3315194dbaf67f79b49ddcf7676a6061"
+        }
+      },
+      "actual": "pass",
+      "passed": true,
+      "checked_witnesses": 1060
+    },
+    {
+      "case": "invalid_nonunit_axis",
+      "expected": "refuse:MALFORMED",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "17d6afb998d77e881e9531333520b49f2656041856410a727350d1be8e7d5f00"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "374f18b4f04b36e5571919534779eaf224302bf066f2ebf51ce9562f49d7871c"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: hinge axis outside adopted unit-norm domain"
+    },
+    {
+      "case": "invalid_short_axis",
+      "expected": "refuse:MALFORMED",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "b726cb860b18ea7dc4d5e2c58944d734cca2c6271ce4eeba858d55d19039bdbd"
+        },
+        "hinges.ok": {
+          "bytes": 1913,
+          "sha256": "63e9ce0eba8c0633742f6b0b7fabc9f3263439d71f1288c349563431140dd4b1"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: hinge axis outside adopted unit-norm domain"
+    },
+    {
+      "case": "valid_unsupported_nonbasis_axis",
+      "expected": "refuse:UNSUPPORTED_SOURCE_FORM",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "9fb893b906f415ba3c76571e81a7b1d33cac8070e6403d2fe784fc06f8ee8ac6"
+        },
+        "hinges.ok": {
+          "bytes": 1915,
+          "sha256": "9459ef4570bd03cd6b7c39b9e8aba6197c331bc0e03f459998fbbef67534b3a0"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: axis outside the six signed basis vectors"
+    },
+    {
+      "case": "valid_unsupported_nearunit_axis",
+      "expected": "refuse:UNSUPPORTED_SOURCE_FORM",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "02778fdf57407e441658905ea5e48cdaec1778ff34db01fb709ca6f274bb4a54"
+        },
+        "hinges.ok": {
+          "bytes": 1925,
+          "sha256": "afa754d3b5f9bf6805f2566ea4ab4249976c9c72d3a0490077c664a7f0ff45ea"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "UNSUPPORTED_SOURCE_FORM: axis outside the six signed basis vectors"
+    },
+    {
+      "case": "invalid_axis_outside_unit_condition",
+      "expected": "refuse:MALFORMED",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "e8288961c3cc9d30799857a50b3d8d4e0a6da0b5fc06419a2aa6feed7d39825f"
+        },
+        "hinges.ok": {
+          "bytes": 1920,
+          "sha256": "09581b33baab05950f6f51b61c3efae068f23c0978bcbb2e14b8d8de65e181e0"
+        }
+      },
+      "actual": "refuse",
+      "passed": true,
+      "code": "MALFORMED",
+      "detail": "MALFORMED: hinge axis outside adopted unit-norm domain"
+    }
+  ]
+}

@@ -56,7 +56,7 @@ Use [CHATGPT-START-HERE.md](CHATGPT-START-HERE.md) and the [continuation/recover
 
 The workflow checks what the current session can actually do. Repository instructions do not install browser tools or guarantee automatic loading. Agents explicitly read the required files, use available subagents, verify the actual change, integrate completed work and resolve its branch.
 
-C261's raw GLB hinge reader and C262's historical handoff are complete in their bounded scopes. The source-side hinge observer under the unchanged C260 contract remains separately queued. Source/artifact comparison, historical admission, full semantics, native/model trials and comparative advantage remain unqualified. The [C252 roadmap](docs/engineering/review-integration-c252/ROADMAP.md) governs product priorities; the older C251 native-sampling task stays deferred. Current user direction selects the next scope.
+C261's raw GLB hinge reader and C262's historical handoff are complete in their bounded scopes. [C265](docs/engineering/localized-repair-c265/README.md) adds the bounded independent source hinge observer under unchanged C260, including ordered endpoint identities, literal values and exact byte witnesses; site poses stay unevaluated. Its [task record](docs/workflow/tasks/C265/task.json) identifies actual verification, integration and saved-delivery state. Source/artifact comparison, historical admission, full semantics, native/model trials and comparative advantage remain unqualified. The [C252 roadmap](docs/engineering/review-integration-c252/ROADMAP.md) governs product priorities; the older C251 native-sampling task stays deferred. Current user direction selects the next scope.
 
 ## Start reading
 

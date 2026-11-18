@@ -1,0 +1,121 @@
+#!/usr/bin/env python3
+"""Independent exact resource and dependency boundaries for the C265 public API."""
+from __future__ import annotations
+
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import platform
+import sys
+
+
+def digest(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def load(path, name):
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def sources(library, classes=0, root_name="root"):
+    header = ('ontokin "0.2";\nmodule Boundary @ "boundary";\n'
+              'profile "construction-0.1";\n'
+              'import mech @ "mechanics" from "example.hinges" version "1.0.0" '
+              'digest "sha256:' + digest(library) + '";\n')
+    declarations = []
+    for index in range(classes):
+        child = f"C{index + 1}" if index + 1 < classes else "mech.Finger"
+        declarations.append(f'public class C{index} @ "c{index}" {{ public part p @ "p": {child} {{ }} }}\n')
+    root_type = "C0" if classes else "mech.Finger"
+    scene = f'scene Demo @ "demo" {{ object {root_name} @ "root": {root_type} {{ }} }}\n'
+    return {"main.ok": (header + "".join(declarations) + scene).encode(), "hinges.ok": library}
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--repo", type=Path, default=Path(__file__).resolve().parents[5])
+    parser.add_argument("--out", type=Path, required=True)
+    args = parser.parse_args()
+    args.out.mkdir(parents=True, exist_ok=False)
+    source_path = args.repo / "docs/engineering/localized-repair-c265/source_hinges.py"
+    dependency = (args.repo / "docs/engineering/localized-repair-c257/ownership.py").read_bytes()
+    candidate = source_path.read_bytes()
+    controls = Path(__file__).read_bytes()
+    (args.out / "source_hinges.py.snapshot").write_bytes(candidate)
+    (args.out / "boundary_controls.py.snapshot").write_bytes(controls)
+    (args.out / "ownership.py.snapshot").write_bytes(dependency)
+    proof = args.repo / "docs/engineering/semantic-export-c210/evidence/proof"
+    library = (proof / "hinges.ok").read_bytes()
+    original = {"main.ok": (proof / "before.main.ok").read_bytes(), "hinges.ok": library}
+    module = load(source_path, "c265_review_boundaries")
+    cases = [
+        ("site_identity_32_components", "pass", sources(library, classes=27), module, 1),
+        ("site_identity_33_components", "RESOURCE_LIMIT", sources(library, classes=28), module, 1),
+        ("site_path_512_scalars", "pass", sources(library, root_name="r" * 501), module, 1),
+        ("site_path_513_scalars", "RESOURCE_LIMIT", sources(library, root_name="r" * 502), module, 1),
+    ]
+    for mode in ("exact", "missing", "wrong_size", "wrong_hash", "symlink"):
+        box = args.out / "dependency_copies" / mode
+        candidate_copy = box / "localized-repair-c265/source_hinges.py"
+        dependency_copy = box / "localized-repair-c257/ownership.py"
+        candidate_copy.parent.mkdir(parents=True)
+        dependency_copy.parent.mkdir(parents=True)
+        candidate_copy.write_bytes(candidate)
+        if mode == "exact":
+            dependency_copy.write_bytes(dependency)
+        elif mode == "wrong_size":
+            dependency_copy.write_bytes(dependency + b"\n")
+        elif mode == "wrong_hash":
+            dependency_copy.write_bytes(bytes([dependency[0] ^ 1]) + dependency[1:])
+        elif mode == "symlink":
+            target = dependency_copy.with_name("exact.py.snapshot")
+            target.write_bytes(dependency)
+            dependency_copy.symlink_to(target.name)
+        dependent = load(candidate_copy, "c265_review_dependency_" + mode)
+        cases.append(("dependency_" + mode, "pass" if mode == "exact" else "INPUT_BINDING", original, dependent, 8))
+    results = []
+    for name, expected, files, module, hinges in cases:
+        directory = args.out / "inputs" / name
+        directory.mkdir(parents=True)
+        for filename, raw in files.items():
+            (directory / filename).write_bytes(raw)
+        row = {"case": name, "expected": expected,
+               "inputs": {n: {"bytes": len(b), "sha256": digest(b)} for n, b in files.items()}}
+        try:
+            report = module.observe_source_hinges(files)
+            row.update(actual="pass", hingeCount=report["hingeCount"],
+                       siteCount=report["siteCount"], passed=expected == "pass" and report["hingeCount"] == hinges)
+            if expected == "pass":
+                row["max_site_id_components"] = max(len(site["id"]) for site in report["sites"])
+                row["max_site_path_scalars"] = max(len(site["path"]) for site in report["sites"])
+        except module.Fault as exc:
+            row.update(actual=exc.code, detail=str(exc), passed=expected == exc.code)
+            row["partial_records_exposed"] = hasattr(exc, "records")
+            row["passed"] = row["passed"] and not row["partial_records_exposed"]
+        except Exception as exc:
+            row.update(actual="unexpected_exception", detail=repr(exc), passed=False)
+        results.append(row)
+    report = {"schema": "ontokin.c265.independent-review-boundaries/1",
+              "reviewer": "/root/independent_review", "observed_at": datetime.now(timezone.utc).isoformat(),
+              "python": sys.version, "platform": platform.platform(),
+              "implementation_sha256": digest(candidate), "control_sha256": digest(controls),
+              "dependency_sha256": digest(dependency), "cases": len(results),
+              "passed": sum(row["passed"] for row in results), "failed": sum(not row["passed"] for row in results),
+              "results": results}
+    (args.out / "RESULTS.json").write_text(json.dumps(report, indent=2) + "\n")
+    print(json.dumps({key: report[key] for key in ("implementation_sha256", "control_sha256", "cases", "passed", "failed")}, indent=2))
+    for row in results:
+        if not row["passed"]:
+            print(json.dumps(row, indent=2))
+    return bool(report["failed"])
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

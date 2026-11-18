@@ -1,0 +1,331 @@
+{
+  "schema": "ontokin.c265.independent-control-coverage/0.1",
+  "reviewer": "/root/reconcile_state",
+  "candidateSource": {
+    "sha256": "04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31abbf9e",
+    "bytes": 37570
+  },
+  "testFile": {
+    "sha256": "467be9b930a77d6a82b56154c483f92747d554b354a5380687748b4e1a40821a",
+    "bytes": 42875
+  },
+  "latestRun": "run-06/results.json",
+  "testsRun": 49,
+  "observerCalls": 189,
+  "outcomes": {
+    "observed": 62,
+    "refused": 127
+  },
+  "zeroHostExceptions": true,
+  "independence": "Expected values/associations derive from adopted contracts and actual source bytes. Only public observe_source_hinges and Fault are consumed; no product compiler/evaluator/exporter, artifact, baseline answer table or implementation internals supply expected answers.",
+  "numericReference": "decimal.Decimal with 1000-digit context and exact Decimal.from_float(Pi64), then one float conversion; expected identity arrays and field paths are explicit source-derived values.",
+  "sourceOnlyGroupsExercised": [
+    "H06",
+    "H09",
+    "H11",
+    "H15",
+    "H16",
+    "H17",
+    "H18",
+    "H19"
+  ],
+  "fullC260FourInterfaceQualification": false,
+  "controls": [
+    {
+      "id": "H01",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h01_both_original_source_endpoints",
+        "test_h01_complete_associations_are_independently_derived",
+        "test_h01_utf8_byte_witnesses_are_exact"
+      ],
+      "observedSourceCoverage": "Both frozen source endpoints yield 8 hinges,16 sites,18 objects; complete independently specified occurrence/definition/site associations and UTF-8 byte witnesses.",
+      "remainingBoundary": "Original GLB observations, source/artifact agreement and historical admission are not exercised."
+    },
+    {
+      "id": "H02",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h02_h04_initial_changes_follow_bytes"
+      ],
+      "observedSourceCoverage": "Changed supported source initial values are independently calculated and observed after exact import repinning.",
+      "remainingBoundary": "Artifact unchanged-value observation and disagreement detection require the future comparison interface."
+    },
+    {
+      "id": "H03",
+      "disposition": "not_run_other_interface",
+      "testMethods": [],
+      "observedSourceCoverage": "No source-only assertion applies.",
+      "remainingBoundary": "Artifact-only mutations and historical admission are outside this source API."
+    },
+    {
+      "id": "H04",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h02_h04_initial_changes_follow_bytes"
+      ],
+      "observedSourceCoverage": "Changed source initial, import digest and canonical program identity are observed without historical authority.",
+      "remainingBoundary": "Paired artifact agreement and historical refusal are not exercised."
+    },
+    {
+      "id": "H05",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h05_each_ordered_limit_changes_independently"
+      ],
+      "observedSourceCoverage": "Both ordered source limits independently change, including mixed supported units.",
+      "remainingBoundary": "Artifact-only and paired limit changes are not exercised."
+    },
+    {
+      "id": "H06",
+      "disposition": "source_only_control_exercised",
+      "testMethods": [
+        "test_h06_inclusive_boundaries_and_zero_width",
+        "test_h06_reversed_or_outside_limits_refuse_without_clamping"
+      ],
+      "observedSourceCoverage": "Both inclusive endpoints, zero-width ranges, negative zero, reversed limits and adjacent out-of-range coordinates are checked.",
+      "remainingBoundary": "No artifact comparison is claimed."
+    },
+    {
+      "id": "H07",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h07_pi64_single_round_literals_and_ties",
+        "test_h07_adjacent_binary64_is_observed_distinctly"
+      ],
+      "observedSourceCoverage": "High-precision decimal reference checks Pi64 conversion, exact ties, signed values, negative zero and adjacent binary64 source values.",
+      "remainingBoundary": "Artifact mismatch refusal remains unrun."
+    },
+    {
+      "id": "H08",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h08_six_signed_basis_axes_preserve_sign"
+      ],
+      "observedSourceCoverage": "All six signed basis axes are observed exactly with sign retained.",
+      "remainingBoundary": "Paired source/artifact axis reversal remains unrun."
+    },
+    {
+      "id": "H09",
+      "disposition": "source_only_control_exercised",
+      "testMethods": [
+        "test_h09_nonbasis_and_invalid_axes_refuse"
+      ],
+      "observedSourceCoverage": "Zero and nonunit invalid axes refuse as MALFORMED; valid unit nonbasis axes refuse as UNSUPPORTED_SOURCE_FORM; wrong arity/type/unit also refuse.",
+      "remainingBoundary": "No normalization or broader axis support is claimed."
+    },
+    {
+      "id": "H10",
+      "disposition": "not_run_other_interface",
+      "testMethods": [],
+      "observedSourceCoverage": "No source-only assertion applies.",
+      "remainingBoundary": "Artifact JSON shape/type/nonfinite mutations are outside this source API."
+    },
+    {
+      "id": "H11",
+      "disposition": "source_only_control_exercised",
+      "testMethods": [
+        "test_h11_computed_numeric_fields_refuse"
+      ],
+      "observedSourceCoverage": "Computed or parameterized axis, ordered bounds and initial values refuse, including an Angle parameter with baseline-equivalent default.",
+      "remainingBoundary": "No expression evaluator or parameter substitution is qualified."
+    },
+    {
+      "id": "H12",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h12_joint_name_and_key_are_separate",
+        "test_h12_alias_root_module_and_class_changes"
+      ],
+      "observedSourceCoverage": "Joint lexical name and key changes affect paths and IDs separately; import aliases, entry/leaf module keys and owning class keys are varied.",
+      "remainingBoundary": "Paired artifact association is unrun."
+    },
+    {
+      "id": "H13",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h13_endpoint_names_keys_and_part_names_are_independent",
+        "test_h13_missing_endpoint_name_cannot_guess_from_key"
+      ],
+      "observedSourceCoverage": "Site names, keys and owning part names/keys are changed independently; stale lexical endpoints refuse instead of guessing from stable keys.",
+      "remainingBoundary": "Source/artifact endpoint comparison remains unrun."
+    },
+    {
+      "id": "H14",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h14_endpoint_order_is_preserved",
+        "test_h14_same_object_endpoints_refuse"
+      ],
+      "observedSourceCoverage": "Endpoint order remains exact; same-object endpoints refuse; moved ownership cannot supply another lexical class's missing part.",
+      "remainingBoundary": "Artifact path misbinding controls remain unrun."
+    },
+    {
+      "id": "H15",
+      "disposition": "source_only_control_exercised",
+      "testMethods": [
+        "test_h15_private_own_site_and_part_are_allowed",
+        "test_h15_external_private_site_and_imported_class_refuse",
+        "test_h15_omitted_class_visibility_defaults_public"
+      ],
+      "observedSourceCoverage": "Private own sites and private ordinary parts are allowed; private external sites and private imported classes refuse; omitted class visibility is public.",
+      "remainingBoundary": "No visibility outside the finite profile is qualified."
+    },
+    {
+      "id": "H16",
+      "disposition": "source_only_control_exercised",
+      "testMethods": [
+        "test_h16_unsupported_endpoint_expression_forms",
+        "test_h16_nonhinge_scene_joint_and_inheritance_refuse",
+        "test_h16_relation_override_and_nested_joint_refuse"
+      ],
+      "observedSourceCoverage": "Origin, keyed/deeper/computed/foreign endpoints, scene joints, nonhinge relations, inheritance, nested joint declarations and relation overrides refuse.",
+      "remainingBoundary": "No broader valid source form is admitted."
+    },
+    {
+      "id": "H17",
+      "disposition": "source_only_control_exercised",
+      "testMethods": [
+        "test_h17_joint_fields_must_occur_exactly_once",
+        "test_h17_duplicate_names_keys_and_reserved_members_refuse",
+        "test_h17_missing_joint_visibility_refuses"
+      ],
+      "observedSourceCoverage": "Each joint field is omitted/duplicated; extra fields, duplicate declarations/name/key collisions, reserved members and constructor shadowing refuse.",
+      "remainingBoundary": "Separate reviewer additionally exercises module/scene namespace and token-kind bypasses."
+    },
+    {
+      "id": "H18",
+      "disposition": "source_only_control_exercised",
+      "testMethods": [
+        "test_h18_site_required_fields_and_compatibility_refuse",
+        "test_h18_exact_length_conversion_and_pose_nonclaim"
+      ],
+      "observedSourceCoverage": "Required site fields, duplicates/extras, empty/computed/incompatible interfaces and negative/computed/incompatible sizes refuse; exact cm/mm equivalence passes with poses unevaluated.",
+      "remainingBoundary": "Site pose geometry, orientation and world alignment are not evaluated."
+    },
+    {
+      "id": "H19",
+      "disposition": "source_only_control_exercised",
+      "testMethods": [
+        "test_h19_actual_nonempty_membership_sets_and_opaque_keys",
+        "test_h19_final_owner_override_controls_membership",
+        "test_h19_private_membership_default_and_external_override",
+        "test_h19_empty_duplicate_and_invalid_keys_refuse",
+        "test_h19_boundary_64_key_input_and_65_refusal",
+        "test_h19_nested_membership_override_refuses"
+      ],
+      "observedSourceCoverage": "Reorder/insert/delete keys, direct final owner override, opaque dot/underscore/hyphen keys,64-key admission,65-key refusal, empty/duplicate/invalid keys and nested membership overrides are checked. Private direct owner membership remains available within its declaring class; an external direct override of that private parameter refuses.",
+      "remainingBoundary": "Changed valid fixtures retain a length override and action reference to an actual surviving key; invalid stale-key fixtures from run 01 are retained."
+    },
+    {
+      "id": "H20",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h20_h28_unrelated_geometry_length_pose_motion_do_not_supply_hinges"
+      ],
+      "observedSourceCoverage": "Unrelated geometry,length,follow and action/pose expressions do not provide hinge values; relocating child ownership refuses on the explicit lexical endpoint obligation.",
+      "remainingBoundary": "Other component semantics and artifact ownership/follow/motion metadata are not qualified."
+    },
+    {
+      "id": "H21",
+      "disposition": "not_run_other_interface",
+      "testMethods": [],
+      "observedSourceCoverage": "No source-only artifact-set assertion applies.",
+      "remainingBoundary": "Joint/object row cardinality, source-map and artifact source-span comparison are future interface controls."
+    },
+    {
+      "id": "H22",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h22_import_digest_must_bind_actual_companion_bytes",
+        "test_h22_canonical_program_identity_comes_from_actual_bytes",
+        "test_h22_wrong_package_version_and_profiles_refuse"
+      ],
+      "observedSourceCoverage": "Actual source hashes/import pins and canonical bundle manifest/revision are checked; changed source order does not change identity; stale digest/package/version/profile refuse.",
+      "remainingBoundary": "Repeated artifact source/node/definition claims are not exercised."
+    },
+    {
+      "id": "H23",
+      "disposition": "not_run_other_interface",
+      "testMethods": [],
+      "observedSourceCoverage": "No artifact fields are produced by this source API.",
+      "remainingBoundary": "Absence of direct artifact site/definition/span fields is an artifact/comparison control."
+    },
+    {
+      "id": "H24",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h24_exact_source_closure_and_bytes_only",
+        "test_h24_malformed_utf8_and_truncations_do_not_leak_host_exceptions",
+        "test_h24_source_bytes_tokens_depth_and_definitions_are_bounded",
+        "test_h24_object_and_hinge_rows_are_bounded",
+        "test_h24_exact_hinge_and_site_row_limits_are_admitted",
+        "test_h24_recursive_containment_and_consumed_text_refuse"
+      ],
+      "observedSourceCoverage": "Exact two-byte-file closure, malformed UTF-8/truncation,source bytes/tokens/depth/definitions,object/hinge limits,128 hinges/256 sites at the bound,recursion and consumed-text limits are checked with typed no-leak refusals.",
+      "remainingBoundary": "GLB structural limits and I/O admission are not exercised; separate reviewer covers deep identity and lexical bypasses. The separate reviewer reproduced and verifies the precise bare-CR comment omission guard; this broad suite was rerun unchanged after that guard."
+    },
+    {
+      "id": "H25",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h25_numeric_lexeme_and_explicit_exponent_limits",
+        "test_h25_adjusted_exponent_overflow_and_underflow",
+        "test_h25_adjusted_exponent_applies_after_unit_factor"
+      ],
+      "observedSourceCoverage": "Lexeme length, explicit exponents, adjusted exponent after unit factor, overflow refusal, permitted subnormal/zero underflow and exact upper/lower finite examples are checked.",
+      "remainingBoundary": "Artifact numeric tokens are outside this API."
+    },
+    {
+      "id": "H26",
+      "disposition": "not_run_other_interface",
+      "testMethods": [],
+      "observedSourceCoverage": "No historical file I/O interface is delivered.",
+      "remainingBoundary": "Filesystem path/symlink/permission admission controls are not run."
+    },
+    {
+      "id": "H27",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h27_changed_supported_inputs_never_gain_historical_authority"
+      ],
+      "observedSourceCoverage": "Supported changed sources remain observable with false historical/agreement/source-validity/native/execution qualifications.",
+      "remainingBoundary": "Changed raw artifacts and the comparison interface remain separate."
+    },
+    {
+      "id": "H28",
+      "disposition": "source_portion_exercised",
+      "testMethods": [
+        "test_h20_h28_unrelated_geometry_length_pose_motion_do_not_supply_hinges"
+      ],
+      "observedSourceCoverage": "Unevaluated nontrivial site pose, geometry and motion edits preserve observed declaration fields while all related truth flags remain false.",
+      "remainingBoundary": "No successful field observation claims physical/world alignment or complete C255 validity."
+    }
+  ],
+  "runRetention": [
+    "run-01/results.json",
+    "run-01/unittest.log",
+    "run-01/test_source_hinges.py.txt",
+    "run-01/source_hinges.py.txt",
+    "run-02/results.json",
+    "run-02/unittest.log",
+    "run-02/test_source_hinges.py.txt",
+    "run-02/source_hinges.py.txt",
+    "run-03/results.json",
+    "run-03/unittest.log",
+    "run-03/test_source_hinges.py.txt",
+    "run-03/source_hinges.py.txt",
+    "run-04/results.json",
+    "run-04/unittest.log",
+    "run-04/test_source_hinges.py.txt",
+    "run-04/source_hinges.py.txt",
+    "run-05/results.json",
+    "run-05/unittest.log",
+    "run-05/test_source_hinges.py.txt",
+    "run-05/source_hinges.py.txt",
+    "run-06/results.json",
+    "run-06/unittest.log",
+    "run-06/test_source_hinges.py.txt",
+    "run-06/source_hinges.py.txt"
+  ]
+}
