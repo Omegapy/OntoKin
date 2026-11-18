@@ -11,15 +11,17 @@ tools own rendering, general simulation and gameplay. [GOAL](GOAL.md), the
 
 ## Current workflow and next action
 
-C265 selects the queued source hinge-declaration observer under unchanged C260.
+C265 implements the independent source hinge-declaration observer under unchanged C260.
 [Scope256](https://github.com/Omegapy/OntoKin/issues/256),
-[requirements](docs/workflow/tasks/C265/REQUIREMENTS.md) and
-[plan](docs/workflow/tasks/C265/PLAN.md) define one source-only interface.
-Branch: `work/c265-source-hinge-observer`. Requirements are published before implementation.
-Next action: independently derive source hinge declarations and execute source
-controls; comparison, historical admission and site-pose evaluation remain
-outside this scope. Stop after reviewed integration, branch disposition and
-confirmed saved browser-session handoff.
+[requirements](docs/workflow/tasks/C265/REQUIREMENTS.md),
+[plan](docs/workflow/tasks/C265/PLAN.md) and
+[results](docs/engineering/localized-repair-c265/RESULTS.md) define its one source-only interface.
+Branch: `work/c265-source-hinge-observer`. The exact reviewed candidate passes 188
+methods, fourteen source corpus bindings, workflow and documentation checks.
+Next action: expected-head PR integration, actual-main verification, branch
+disposition and confirmed saved browser-session handoff. Stop after delivery.
+Source/artifact comparison, historical admission and site-pose evaluation remain
+outside this scope.
 
 C264 is complete: [PR255](https://github.com/Omegapy/OntoKin/pull/255), merge
 `df18c6ee8721f20923b80841fccf495ea65735f9`, deleted implementation branch and
@@ -40,7 +42,9 @@ fields and exact JSON pointers, with source/program claims untrusted.
 actual evidence. PR250 merged at `f2c175e22ce5f17f063b6de6d7ea9da7788b9040`.
 C261 source integration and C262 saved delivery are complete.
 
-Source derivation, source/artifact comparison, historical endpoint admission,
+C265 derives finite source hinge declarations independently; its byte witnesses
+and literal numeric profile do not evaluate site poses or certify full source validity.
+Source/artifact comparison, historical endpoint admission,
 complete C260 H groups, site/world behavior, authentic revisions, invalid-edit
 atomicity qualification, clean rebuilds, native routes and comparative model
 trials remain unqualified. No general authoring advantage has been established.
@@ -96,11 +100,11 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 ## Main integration lease
 
 Owner: `c265-root-b4cbf4ea8454`.
-State: acquisition becomes active only after conditional publication and readback.
+State: active; conditional acquisition was published and read back at `38abfd44437958bd513e00a9e07115059dcc626c`.
 Scope: [C265 source hinge observer #256](https://github.com/Omegapy/OntoKin/issues/256).
 Acquired at: 2026-11-18T22:12:26.665604+00:00; expires at: 2026-11-18T22:42:26.665604+00:00.
 Observed main before acquisition: `82c998eb17a12cc0dfa04bad45fe728e82764704`.
-Reserved shared files: STATUS.md, docs/workflow/CURRENT.json and C265 task/evidence records.
+Reserved shared files: STATUS.md, docs/workflow/CURRENT.json, AGENTS.md, GOAL.md, README.md, workflow knowledge/memory and C265 task/evidence records.
 Only this Director may publish main integration state during the verified lease.
 Renew only at substantive checkpoints; expiry alone is not proof of inactivity.
 

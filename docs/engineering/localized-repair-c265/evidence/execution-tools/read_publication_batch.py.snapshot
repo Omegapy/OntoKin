@@ -1,0 +1,7 @@
+from pathlib import Path
+import json,sys
+stage=Path(sys.argv[1]);index=int(sys.argv[2]);offset=int(sys.argv[3])
+entries=json.loads((stage/'manifest.json').read_text())['batches'][index]
+data=json.dumps([{'path':e['path'],'mode':'100644','type':'blob','content':(stage/'files'/e['path']).read_bytes().decode('utf-8')} for e in entries])
+end=offset+45000
+print(json.dumps({'chunk':data[offset:end],'next':end if end<len(data) else None,'length':len(data)}))

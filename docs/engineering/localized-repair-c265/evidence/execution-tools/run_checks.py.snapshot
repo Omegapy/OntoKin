@@ -1,0 +1,52 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import subprocess, json, sys, time, platform, hashlib, re
+
+repo=Path('/workspace/scratch/b4cbf4ea8454/OntoKin')
+phase=sys.argv[1]
+out=repo/'docs/engineering/localized-repair-c265/evidence'/phase
+out.mkdir(parents=True,exist_ok=False)
+checks=[
+ ('c253-corpus',[sys.executable,'docs/engineering/localized-repair-c253/verify_manifest.py']),
+ ('c255-oracle',[sys.executable,'-B','-m','unittest','discover','-s','docs/engineering/localized-repair-c255','-p','test_oracle.py','-v']),
+ ('c256-reader',[sys.executable,'-B','-m','unittest','discover','-s','docs/engineering/localized-repair-c256','-p','test_reader.py','-v']),
+ ('c257-ownership',[sys.executable,'-B','-m','unittest','discover','-s','docs/engineering/localized-repair-c257','-p','test_ownership.py','-v']),
+ ('c258-follows',[sys.executable,'-B','-m','unittest','discover','-s','docs/engineering/localized-repair-c258','-p','test_follows.py','-v']),
+ ('c261-glb-hinges',[sys.executable,'-B','-m','unittest','discover','-s','docs/engineering/localized-repair-c261','-p','test_hinge_glb.py','-v']),
+ ('workflow',[sys.executable,'tools/chat_workflow.py','check','--json']),
+ ('documentation',[sys.executable,'docs/maintenance/reorganization-2026-10-17/verify_reorganization.py'])
+]
+if (repo/'docs/engineering/localized-repair-c265/test_source_hinges.py').exists() and phase!='baseline':
+ checks.insert(6,('c265-source-hinges',[sys.executable,'-B','-m','unittest','discover','-s','docs/engineering/localized-repair-c265','-p','test_source_hinges.py','-v']))
+identity={'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip(),'source_tree':subprocess.check_output(['git','rev-parse','HEAD^{tree}'],cwd=repo,text=True).strip(),'dirty_status':subprocess.check_output(['git','status','--porcelain'],cwd=repo,text=True),'python':sys.version,'platform':platform.platform(),'provider':'assistant hosted Linux workspace; not the owner computer and not GitHub Actions','started_at':datetime.now(timezone.utc).isoformat()}
+readset=[]
+for folder in ['localized-repair-c253','localized-repair-c255','localized-repair-c256','localized-repair-c257','localized-repair-c258','localized-repair-c261','localized-repair-c265']:
+ for p in sorted((repo/'docs/engineering'/folder).glob('*.py')):
+  b=p.read_bytes();readset.append({'path':str(p.relative_to(repo)),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()})
+identity['input_files']=readset
+identity['planned_checks']=[{'name':name,'command':command} for name,command in checks]
+results=[]
+def save_report():
+ complete=len(results)==len(checks)
+ report={**identity,'checks':results,'planned_check_count':len(checks),
+         'completed_check_count':len(results),'complete':complete,
+         'remaining_checks':[name for name,_ in checks[len(results):]],
+         'passed':complete and all(x['result']=='passed' for x in results)}
+ (out/'CHECKS.json').write_text(json.dumps(report,indent=2)+'\n')
+ return report
+save_report()
+for name,command in checks:
+ start=time.monotonic();status='not_run';code=None
+ try:
+  r=subprocess.run(command,cwd=repo,capture_output=True,text=True,timeout=180)
+  output=r.stdout+r.stderr;code=r.returncode;status='passed' if code==0 else 'failed'
+ except subprocess.TimeoutExpired as exc:
+  output=str(exc.stdout or '')+'\n'+str(exc.stderr or '')+'\nTIMEOUT after 180 seconds';status='failed'
+ log=out/(name+'.log');log.write_text(output)
+ counts=re.findall(r'Ran (\d+) tests?',output)
+ result={'name':name,'command':command,'result':status,'exit_code':code,'seconds':round(time.monotonic()-start,6),'methods':int(counts[-1]) if counts else None,'log':str(log.relative_to(repo)),'log_sha256':hashlib.sha256(log.read_bytes()).hexdigest()}
+ results.append(result);print(name,status,'methods='+str(result['methods']),flush=True)
+ save_report()
+report=save_report()
+print('RESULT',json.dumps({'passed':report['passed'],'complete':report['complete'],'checks':len(results),'planned_checks':len(checks),'total_methods':sum(x['methods'] or 0 for x in results)}),flush=True)
+raise SystemExit(0 if report['passed'] else 1)

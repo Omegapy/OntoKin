@@ -1,0 +1,183 @@
+{
+  "schema": "ontokin.c265.independent-review-boundaries/1",
+  "reviewer": "/root/independent_review",
+  "observed_at": "2026-11-18T22:24:59.217877+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "implementation_sha256": "04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31abbf9e",
+  "control_sha256": "21235f8747c67a6333e0072d87fc605704ef5132533b10a80ea4b3d3429ad00b",
+  "dependency_sha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1",
+  "cases": 9,
+  "passed": 9,
+  "failed": 0,
+  "results": [
+    {
+      "case": "site_identity_32_components",
+      "expected": "pass",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1817,
+          "sha256": "525b7f52f00cf28982a53effbb953699e68ccb89de4bc490d73d3437db7a5f1b"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "pass",
+      "hingeCount": 1,
+      "siteCount": 2,
+      "passed": true,
+      "max_site_id_components": 32,
+      "max_site_path_scalars": 69
+    },
+    {
+      "case": "site_identity_33_components",
+      "expected": "RESOURCE_LIMIT",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1875,
+          "sha256": "7d2bcb2e6ec2e540e97882e1e993f1c382e9baaecd3bb014877b4e5e15f3e1a2"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "RESOURCE_LIMIT",
+      "detail": "RESOURCE_LIMIT: identity exceeds 32 components",
+      "passed": true,
+      "partial_records_exposed": false
+    },
+    {
+      "case": "site_path_512_scalars",
+      "expected": "pass",
+      "inputs": {
+        "main.ok": {
+          "bytes": 778,
+          "sha256": "595dec57b7c8f194fb639cd00a75f63dda717b362eaccf856b39cdc62d23a364"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "pass",
+      "hingeCount": 1,
+      "siteCount": 2,
+      "passed": true,
+      "max_site_id_components": 5,
+      "max_site_path_scalars": 512
+    },
+    {
+      "case": "site_path_513_scalars",
+      "expected": "RESOURCE_LIMIT",
+      "inputs": {
+        "main.ok": {
+          "bytes": 779,
+          "sha256": "fa8194a74aa363d5446f004109483cc6a67a9ea32e4dac8ce7d90d681db576bc"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "RESOURCE_LIMIT",
+      "detail": "RESOURCE_LIMIT: text exceeds 512 scalars: site path",
+      "passed": true,
+      "partial_records_exposed": false
+    },
+    {
+      "case": "dependency_exact",
+      "expected": "pass",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "pass",
+      "hingeCount": 8,
+      "siteCount": 16,
+      "passed": true,
+      "max_site_id_components": 7,
+      "max_site_path_scalars": 35
+    },
+    {
+      "case": "dependency_missing",
+      "expected": "INPUT_BINDING",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "INPUT_BINDING",
+      "detail": "INPUT_BINDING: C257 dependency path",
+      "passed": true,
+      "partial_records_exposed": false
+    },
+    {
+      "case": "dependency_wrong_size",
+      "expected": "INPUT_BINDING",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "INPUT_BINDING",
+      "detail": "INPUT_BINDING: C257 dependency size",
+      "passed": true,
+      "partial_records_exposed": false
+    },
+    {
+      "case": "dependency_wrong_hash",
+      "expected": "INPUT_BINDING",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "INPUT_BINDING",
+      "detail": "INPUT_BINDING: C257 dependency bytes",
+      "passed": true,
+      "partial_records_exposed": false
+    },
+    {
+      "case": "dependency_symlink",
+      "expected": "INPUT_BINDING",
+      "inputs": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "actual": "INPUT_BINDING",
+      "detail": "INPUT_BINDING: C257 dependency path",
+      "passed": true,
+      "partial_records_exposed": false
+    }
+  ]
+}

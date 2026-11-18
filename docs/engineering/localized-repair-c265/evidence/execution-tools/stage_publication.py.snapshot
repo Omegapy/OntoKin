@@ -1,0 +1,34 @@
+from pathlib import Path
+import subprocess, json, hashlib, sys
+
+repo=Path('/workspace/scratch/b4cbf4ea8454/OntoKin')
+name=sys.argv[1]
+stage=Path('/workspace/scratch/b4cbf4ea8454/publish')/name
+stage.mkdir(parents=True,exist_ok=False)
+if len(sys.argv)>2:
+ paths=json.loads(Path(sys.argv[2]).read_text())
+else:
+ changed=subprocess.check_output(['git','diff','--name-only','HEAD'],cwd=repo,text=True).splitlines()
+ untracked=subprocess.check_output(['git','ls-files','--others','--exclude-standard'],cwd=repo,text=True).splitlines()
+ ignored=[str(p.relative_to(repo)) for p in (repo/'docs/engineering/localized-repair-c265').rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc']
+ paths=sorted(set(changed+untracked+ignored))
+head_files={}
+for row in subprocess.check_output(['git','ls-tree','-r','-z','HEAD'],cwd=repo).split(b'\0'):
+ if row:
+  metadata,name=row.split(b'\t',1);head_files[name.decode()]=metadata.decode().split()[2]
+entries=[]
+for relative in paths:
+ p=repo/relative
+ if not p.is_file() or p.is_symlink():raise RuntimeError('Expected regular file '+relative)
+ raw=p.read_bytes();raw.decode('utf-8')
+ blob=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
+ if head_files.get(relative)==blob:continue
+ q=stage/'files'/relative;q.parent.mkdir(parents=True,exist_ok=True);q.write_bytes(raw)
+ entries.append({'path':relative,'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'git_blob':hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()})
+batches=[];batch=[];size=0
+for entry in entries:
+ if batch and size+entry['bytes']>110000:batches.append(batch);batch=[];size=0
+ batch.append(entry);size+=entry['bytes']
+if batch:batches.append(batch)
+(stage/'manifest.json').write_text(json.dumps({'entries':entries,'batches':batches,'parent':subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip()},indent=2)+'\n')
+print(json.dumps({'stage':str(stage),'files':len(entries),'bytes':sum(e['bytes'] for e in entries),'batches':len(batches)}))

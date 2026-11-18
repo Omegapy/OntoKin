@@ -1,0 +1,56 @@
+ontokin "0.2";
+module Hinges @ "hinges";
+profile "construction-0.1";
+
+public fn three_mounts @ "three-mounts"(spacing: Length) -> Keyed<Vec3<Length>> {
+    return keyed<Vec3<Length>> {
+        "lower": vec3(0[m], -spacing, 0[m]),
+        "middle": vec3(0[m], 0[m], 0[m]),
+        "upper": vec3(0[m], spacing, 0[m])
+    };
+}
+
+private class Blade @ "blade" {
+    public param length @ "length": Length = 0.6[m];
+    public param tint @ "tint": Color = rgba(0.2, 0.6, 0.9, 1);
+    geometry = box(vec3(self.length, 0.08[m], 0.08[m]));
+    appearance = self.tint;
+    public site base @ "base" {
+        pose = pose(self.frame, vec3(-self.length / 2, 0[m], 0[m]), quat(1, 0, 0, 0));
+        interface = "hinged.part";
+        size = 0[m];
+    }
+}
+
+public class Finger @ "finger" {
+    public param parent_frame @ "parent-frame": FrameRef = world;
+    public param mount_offset @ "mount-offset": Vec3<Length> = vec3(0[m], 0[m], 0[m]);
+    public param length @ "length": Length = 0.6[m];
+    public param tint @ "tint": Color = rgba(0.2, 0.6, 0.9, 1);
+    geometry = sphere(0.06[m]);
+    appearance = self.tint;
+    public follow mounting @ "mounting" {
+        parent = self.parent_frame;
+        child = self;
+        offset = pose(self.parent_frame, self.mount_offset, quat(1, 0, 0, 0));
+    }
+    public site pivot @ "pivot" {
+        pose = pose(self.frame, vec3(0[m], 0[m], 0[m]), quat(1, 0, 0, 0));
+        interface = "hinged.part";
+        size = 0[m];
+    }
+    private part blade @ "blade": Blade {
+        length = self.length;
+        tint = self.tint;
+    }
+    public joint flex @ "flex": hinge {
+        parent = self.pivot;
+        child = self.blade.base;
+        axis = vec3(0, 0, 1);
+        limits = range(-45[deg], 45[deg]);
+        initial = 0[rad];
+    }
+    public method bend_to @ "bend-to"(angle: Angle, duration: Time) -> Action {
+        return tween(self.flex, angle, duration);
+    }
+}

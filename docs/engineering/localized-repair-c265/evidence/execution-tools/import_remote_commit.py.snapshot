@@ -1,0 +1,97 @@
+"""Reproduce a remote Git commit exactly; a SHA mismatch prevents all writes.
+
+GitHub verification payload/signature preserve signed commit headers, including
+original actor timezones. Unsigned API metadata loses those offsets, so the
+existing observed -0700 assumption remains explicit and fail-closed.
+"""
+import argparse
+from datetime import datetime
+import hashlib
+import json
+from pathlib import Path
+import re
+import subprocess
+
+REPO = Path('/workspace/scratch/b4cbf4ea8454/OntoKin')
+UNSIGNED_TIMEZONE = '-0700'
+
+
+def object_sha(raw):
+    return hashlib.sha1(b'commit ' + str(len(raw)).encode('ascii') + b'\0' + raw).hexdigest()
+
+
+def signed_candidates(verification):
+    payload = verification.get('payload')
+    signature = verification.get('signature')
+    if not isinstance(payload, str) or not isinstance(signature, str) or not signature:
+        raise RuntimeError('Signed commit needs both exact verification.payload and verification.signature')
+    payload, signature = payload.encode('utf-8'), signature.encode('utf-8')
+    if b'\r' in signature or b'\n\n' not in payload:
+        raise RuntimeError('Unsupported signed payload/signature encoding')
+    header_end = payload.index(b'\n\n') + 1
+    positions = [header_end]
+    offset = 0
+    for line in payload[:header_end].splitlines(keepends=True):
+        offset += len(line)
+        if line.startswith(b'gpgsig '):
+            raise RuntimeError('Verification payload unexpectedly retains a gpgsig header')
+        if line.startswith(b'committer ') and offset not in positions:
+            positions.append(offset)
+    # GitHub retains a terminal signature LF as an empty continuation line
+    # Also accept the conventional header without that terminal empty line
+    # Neither candidate is written unless its complete object hash matches
+    signatures = [signature]
+    if signature.endswith(b'\n'):
+        signatures.append(signature[:-1])
+    for sig in signatures:
+        header = b'gpgsig ' + sig.replace(b'\n', b'\n ') + b'\n'
+        for position in positions:
+            yield payload[:position] + header + payload[position:]
+
+
+def unsigned_candidates(data):
+    def actor(label):
+        value = data[label]
+        date = datetime.fromisoformat(value['date'].replace('Z', '+00:00'))
+        return f"{label} {value['name']} <{value['email']}> {int(date.timestamp())} {UNSIGNED_TIMEZONE}\n"
+    body = ('tree ' + data['tree']['sha'] + '\n' +
+            ''.join('parent ' + p['sha'] + '\n' for p in data['parents']) +
+            actor('author') + actor('committer') + '\n' + data['message'])
+    for suffix in ('', '\n'):
+        yield (body + suffix).encode('utf-8')
+
+
+def reconstruct(data):
+    expected = data['sha']
+    if not isinstance(expected, str) or re.fullmatch(r'[0-9a-f]{40}', expected) is None:
+        raise RuntimeError('An exact SHA-1 remote commit identity is required')
+    verification = data.get('verification') or {}
+    signed = verification.get('signature') is not None or verification.get('payload') is not None
+    candidates = signed_candidates(verification) if signed else unsigned_candidates(data)
+    for raw in candidates:
+        if object_sha(raw) == expected:
+            return raw, 'signed-verification-payload' if signed else 'unsigned-api-metadata'
+    raise RuntimeError('API commit could not be reproduced exactly; no local object or ref changed')
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('json_path')
+    parser.add_argument('--verify-only', action='store_true', help='check exact bytes without writing Git')
+    args = parser.parse_args()
+    data = json.loads(Path(args.json_path).read_text())
+    raw, route = reconstruct(data)
+    expected = data['sha']
+    if args.verify_only:
+        print('Verified exact remote commit', expected, route, len(raw), 'bytes; no Git write')
+        return
+    # This write stores only the already verified exact object and never moves refs
+    actual = subprocess.check_output(['git', 'hash-object', '-w', '-t', 'commit', '--stdin'],
+                                     cwd=REPO, input=raw).decode().strip()
+    if actual != expected:
+        raise RuntimeError('Git object-format/hash mismatch; no ref changed')
+    print('Imported exact remote commit', actual, route)
+
+
+if __name__ == '__main__':
+    main()

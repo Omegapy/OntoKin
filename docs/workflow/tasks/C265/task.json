@@ -3,7 +3,7 @@
   "id": "C265",
   "title": "Independent source hinge-declaration observer",
   "intent": "Derive bounded hinge declaration facts and ordered site identities directly from supplied source bytes as the next dependency of localized-authoring comparison.",
-  "status": "in_progress",
+  "status": "review",
   "owner": "c265-root-b4cbf4ea8454",
   "branch": "work/c265-source-hinge-observer",
   "base_sha": "82c998eb17a12cc0dfa04bad45fe728e82764704",
@@ -13,36 +13,57 @@
       "id": "R01",
       "description": "Derive source hinge declarations independently from exactly supplied source bytes.",
       "acceptance": "Only the exactly bound C257 lexical/module/occurrence utilities may be reused; no product compiler, evaluator, exporter, artifact values or baseline answers supply hinge facts.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c265/RESULTS.md",
+        "docs/engineering/localized-repair-c265/REVIEW.md",
+        "docs/engineering/localized-repair-c265/evidence/independent-controls/CONTROL-COVERAGE.json"
+      ]
     },
     {
       "id": "R02",
       "description": "Resolve complete occurrence, definition and ordered site endpoint identities with byte witnesses.",
       "acceptance": "Support the C260 finite class/ordinary/keyed occurrence subset, changed names and keys, lexical visibility and opaque stable keys; reject ambiguity and unsupported joint positions or relation overrides.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c265/RESULTS.md",
+        "docs/engineering/localized-repair-c265/REVIEW.md",
+        "docs/engineering/localized-repair-c265/evidence/independent-controls/CONTROL-COVERAGE.json"
+      ]
     },
     {
       "id": "R03",
       "description": "Implement the declared exact literal numeric and endpoint compatibility policy.",
       "acceptance": "Six signed basis axes, one-round Pi64 deg/rad and exact m/cm/mm conversion, inclusive closed limits, source-only equal interface/size and explicitly unevaluated pose expressions.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c265/RESULTS.md",
+        "docs/engineering/localized-repair-c265/REVIEW.md",
+        "docs/engineering/localized-repair-c265/evidence/independent-controls/CONTROL-COVERAGE.json"
+      ]
     },
     {
       "id": "R04",
       "description": "Enforce bounded input, typed refusal and no false qualification.",
       "acceptance": "C260 source limits and numeric bounds, exact C257 dependency binding, changed-input support and no partial qualified set; historical/artifact/site-pose/native/trial qualification remains false or absent.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c265/RESULTS.md",
+        "docs/engineering/localized-repair-c265/REVIEW.md",
+        "docs/engineering/localized-repair-c265/evidence/independent-controls/CONTROL-COVERAGE.json"
+      ]
     },
     {
       "id": "R05",
       "description": "Execute independent controls and applicable regression/review on exact inputs.",
       "acceptance": "Source portions of H01/H02/H04-H09/H11-H20/H22/H24/H25/H27/H28 are mapped explicitly; artifact/comparison/admission portions remain unrun. Retain failed attempts and input hashes.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c265/RESULTS.md",
+        "docs/engineering/localized-repair-c265/REVIEW.md",
+        "docs/engineering/localized-repair-c265/evidence/independent-controls/CONTROL-COVERAGE.json",
+        "docs/engineering/localized-repair-c265/evidence/candidate/CHECKS.json"
+      ]
     },
     {
       "id": "R06",
@@ -89,7 +110,7 @@
         "R04",
         "R05"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c265/source_hinges.py",
         "docs/engineering/localized-repair-c265/test_source_hinges.py"
@@ -108,7 +129,7 @@
         "R04",
         "R05"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c265/RESULTS.md",
         "docs/engineering/localized-repair-c265/REVIEW.md"
@@ -123,7 +144,7 @@
       "requirements": [
         "R06"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c265/INTEGRATION.json"
       ],
@@ -147,15 +168,43 @@
       ]
     }
   ],
-  "checks": [],
+  "checks": [
+    {
+      "name": "independent source controls",
+      "command": "python3 docs/engineering/localized-repair-c265/test_source_hinges.py --evidence-dir docs/engineering/localized-repair-c265/evidence/independent-controls/run-06",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c265/evidence/independent-controls/run-06/results.json"
+      ]
+    },
+    {
+      "name": "independent code review and adversarial boundary controls",
+      "command": "Independent review of exact final source/test bytes;45 public API controls and9 boundary/dependency controls",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c265/evidence/review/REVIEW.json"
+      ]
+    },
+    {
+      "name": "candidate applicable regression and documentation checks",
+      "command": "Complete C253/C255/C256/C257/C258/C261/C265 cohorts plus workflow/documentation checks",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c265/evidence/candidate/CHECKS.json"
+      ]
+    }
+  ],
   "completion": {
-    "implementation_commit": null,
+    "implementation_commit": "1e5b1c368fabc51ce22be6916aca6464f71f97cf",
     "merge_commit": null,
     "pull_request": null,
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Implement the bounded source observer and independent source controls, then publish and review exact bytes.",
+  "next_action": "Merge the reviewed candidate through expected-head PR integration under the verified main lease; verify actual main and branch disposition, then freeze and save the required handoff.",
   "delivery": {
     "required": true,
     "kind": "browser-session",
