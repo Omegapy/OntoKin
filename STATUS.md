@@ -11,19 +11,24 @@ tools own rendering, general simulation and gameplay. [GOAL](GOAL.md), the
 
 ## Current workflow and next action
 
-C265's independent source hinge-declaration observer is integrated through
-[PR257](https://github.com/Omegapy/OntoKin/pull/257), merge `d602adee52bd5913dc86fdb3a29e2c4c653a4ed9`.
-Fresh actual-main checks pass 188 methods, fourteen corpus bindings, workflow
-and documentation validation. Independent review passed 45 focused and nine
-boundary controls. [Results](docs/engineering/localized-repair-c265/RESULTS.md)
-and [integration](docs/engineering/localized-repair-c265/INTEGRATION.json) bind
-the evidence. The completed `work/c265-source-hinge-observer` branch is deleted;
-only main remains. [Scope256](https://github.com/Omegapy/OntoKin/issues/256) stays
-open because the required verified saved handoff is still pending.
+C265 is complete: its independent source hinge-declaration observer is integrated
+through [PR257](https://github.com/Omegapy/OntoKin/pull/257), merge `d602adee52bd5913dc86fdb3a29e2c4c653a4ed9`.
+Fresh resulting-main checks pass 188 methods, fourteen corpus bindings, workflow
+and documentation validation. Independent review passes 45 focused and nine
+boundary controls. The completed `work/c265-source-hinge-observer` branch is
+deleted and only main remains.
 
-Next action: finish C265 ZIP verification, confirmed save and external receipt,
-then close the scope and stop. Source/artifact comparison, historical admission
-and site-pose evaluation remain outside this scope.
+The verified [C265 browser-session handoff](https://chatgpt.com/library?file_id=libfile_fde3_f-c38fb51308808191ae60017ab6de1fde_2ab2a24d43748191957f9bcc356b59de&account_id=personal) and both standalone prompts are saved.
+[Delivery receipt](docs/engineering/localized-repair-c265/DELIVERY.json),
+[package review](docs/engineering/localized-repair-c265/PACKAGE-REVIEW.md),
+[results](docs/engineering/localized-repair-c265/RESULTS.md) and
+[integration](docs/engineering/localized-repair-c265/INTEGRATION.json) retain the
+exact identities and evidence. The ZIP intentionally freezes before its save;
+the later external receipt resolves that boundary.
+
+Next action: wait for new owner direction. A later Prompt 1 can select one
+bounded source/artifact comparison step under unchanged C260. Historical
+admission, site-pose evaluation and wider qualification remain separate.
 
 C264 is complete: [PR255](https://github.com/Omegapy/OntoKin/pull/255), merge
 `df18c6ee8721f20923b80841fccf495ea65735f9`, deleted implementation branch and
@@ -101,15 +106,10 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-Owner: `c265-root-b4cbf4ea8454`.
-State: active; conditional acquisition was published and read back at `38abfd44437958bd513e00a9e07115059dcc626c`.
-Scope: [C265 source hinge observer #256](https://github.com/Omegapy/OntoKin/issues/256).
-Acquired at: 2026-11-18T22:12:26.665604+00:00; expires at: 2026-11-18T23:08:35.287496+00:00.
-Renewed at substantive integration checkpoint: 2026-11-18T22:38:35.287496+00:00.
-Observed main before acquisition: `82c998eb17a12cc0dfa04bad45fe728e82764704`.
-Reserved shared files: STATUS.md, docs/workflow/CURRENT.json, AGENTS.md, GOAL.md, README.md, workflow knowledge/memory and C265 task/evidence records.
-Only this Director may publish main integration state during the verified lease.
-Renew only at substantive checkpoints; expiry alone is not proof of inactivity.
+State: released after C265 verified integration, completed-branch disposition
+and confirmed saved delivery. Previous owner: `c265-root-b4cbf4ea8454`.
+Released at: 2026-11-18T22:45:24.529208+00:00. No active integration owner is retained.
+Acquire a new expected-head conditional lease before the next shared main write.
 
 ## Historical status
 

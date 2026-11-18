@@ -3,7 +3,7 @@
   "id": "C265",
   "title": "Independent source hinge-declaration observer",
   "intent": "Derive bounded hinge declaration facts and ordered site identities directly from supplied source bytes as the next dependency of localized-authoring comparison.",
-  "status": "in_progress",
+  "status": "done",
   "owner": "c265-root-b4cbf4ea8454",
   "branch": "work/c265-source-hinge-observer",
   "base_sha": "82c998eb17a12cc0dfa04bad45fe728e82764704",
@@ -79,8 +79,11 @@
       "id": "R07",
       "description": "Deliver a verified saved browser-session handoff and stop.",
       "acceptance": "Required controls, prompts, frozen snapshots, evidence and manifest pass exact ZIP and fresh-extraction verification; confirmed new Library identity is recorded externally before completion. C262 remains unchanged.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c265/DELIVERY.json",
+        "docs/engineering/localized-repair-c265/PACKAGE-REVIEW.md"
+      ]
     }
   ],
   "plan": [
@@ -162,7 +165,7 @@
         "R07",
         "R06"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c265/DELIVERY.json"
       ],
@@ -208,6 +211,25 @@
         "docs/engineering/localized-repair-c265/INTEGRATION.json",
         "docs/engineering/localized-repair-c265/evidence/actual-main/CHECKS.json"
       ]
+    },
+    {
+      "name": "exact session ZIP and independent recovery audit",
+      "command": "CRC, safe paths, duplicate/inventory checks, extracted manifest, all545 payload hashes,531 Git snapshots and14 copied root links; independent fresh extraction",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c265/evidence/session-archive-verification.json",
+        "docs/engineering/localized-repair-c265/evidence/c265-final-package-review.json"
+      ]
+    },
+    {
+      "name": "confirmed saved handoff and standalone prompts",
+      "command": "Create three files in existing OntoKin folder and inspect each returned saved identity/version/size",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c265/DELIVERY.json"
+      ]
     }
   ],
   "completion": {
@@ -216,14 +238,21 @@
     "pull_request": "https://github.com/Omegapy/OntoKin/pull/257",
     "branch_disposition": "deleted",
     "evidence": [
-      "docs/engineering/localized-repair-c265/INTEGRATION.json"
+      "docs/engineering/localized-repair-c265/INTEGRATION.json",
+      "docs/engineering/localized-repair-c265/DELIVERY.json"
     ]
   },
-  "next_action": "Delivery only: freeze the observed integrated checkpoint, verify exact ZIP and fresh extraction, save ZIP and prompts, publish successful receipt, close C265 and stop.",
+  "next_action": "Wait for a new owner direction. Prompt 1 with this saved ZIP can select one bounded C260 source/artifact comparison step; historical admission remains separate. C265 is complete.",
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "pending",
-    "folder": "OntoKin"
+    "status": "complete",
+    "folder": "OntoKin",
+    "receipt": "docs/engineering/localized-repair-c265/DELIVERY.json",
+    "archive": "https://chatgpt.com/library?file_id=libfile_fde3_f-c38fb51308808191ae60017ab6de1fde_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "library_file_id": "libfile_fde3_f-c38fb51308808191ae60017ab6de1fde_2ab2a24d43748191957f9bcc356b59de",
+    "version": 0,
+    "sha256": "ccc52acdb490efd143a3edfff0b16ddcfa17cd97b3f52b91c48a49cc94e3ce9e",
+    "bytes": 1305617
   }
 }

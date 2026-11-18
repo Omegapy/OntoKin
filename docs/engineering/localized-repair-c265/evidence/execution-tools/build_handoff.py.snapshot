@@ -1,0 +1,144 @@
+"""Freeze one online session handoff from an observed, verified Git revision."""
+from pathlib import Path, PurePosixPath
+from datetime import datetime, timezone
+import hashlib, json, subprocess, zipfile, shutil, sys, re, posixpath
+
+repo=Path('/workspace/scratch/b4cbf4ea8454/OntoKin')
+state=json.loads(Path('/workspace/scratch/b4cbf4ea8454/state.json').read_text())
+revision=sys.argv[1]
+assert state['main']==revision,'Refresh the observed main identity before freezing'
+for name in ['implementation_commit','merge_commit','pull_request','branch',
+             'branch_head','branch_disposition','verification_summary']:
+ assert state.get(name),'Missing integrated-state input: '+name
+target=Path('/workspace/scratch/b4cbf4ea8454/deliverables/c265-v2')
+target.mkdir(parents=True,exist_ok=True)
+payload=target/'session-files'
+assert not payload.exists(),'Freeze into a fresh directory'
+payload.mkdir()
+def git(*args): return subprocess.check_output(['git',*args],cwd=repo)
+assert git('rev-parse',revision).decode().strip()==revision
+tree=git('rev-parse',revision+'^{tree}').decode().strip()
+def write(path,content):
+ p=payload/path;p.parent.mkdir(parents=True,exist_ok=True)
+ p.write_text(content if isinstance(content,str) else json.dumps(content,indent=2)+'\n')
+def snap(path):
+ b=git('show',revision+':'+path);p=payload/'repository'/path;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
+ return {'package_path':'repository/'+path,'repository_path':path,'commit':revision,'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest(),'git_blob':git('rev-parse',revision+':'+path).decode().strip()}
+def root_document(path):
+ """Preserve copied Markdown context when moving a document to ZIP root."""
+ content=git('show',revision+':'+path).decode()
+ origin=posixpath.dirname('repository/'+path)
+ def replace(match):
+  dest=match.group(1)
+  if dest.startswith(('#','/')) or re.match(r'^[A-Za-z][A-Za-z0-9+.-]*:',dest):
+   return match.group(0)
+  mapped=posixpath.normpath(posixpath.join(origin,dest))
+  assert mapped.startswith('repository/'), 'Relative document link escaped snapshot: '+dest
+  return ']('+mapped+')'
+ return re.sub(r'\]\(([^\s)]+)\)',replace,content)
+required=['CHATGPT-START-HERE.md','AGENTS.md','GOAL.md','STATUS.md','ROLE.md','docs/workflow/registry.json','docs/workflow/CURRENT.json','docs/workflow/PROTOCOL.md','docs/workflow/HANDOFF.md','docs/workflow/BROWSER-PROMPTS.md','docs/workflow/prompts/CONTINUE.md','docs/workflow/prompts/RECOVER.md','docs/workflow/memory.json','docs/workflow/knowledge.json','docs/workflow/KNOWLEDGE.md']
+registry=json.loads(git('show',revision+':docs/workflow/registry.json'))
+required += [r['path'] for r in registry['skills']]
+required += git('ls-tree','-r','--name-only',revision,'docs/workflow/tasks/C265','docs/engineering/localized-repair-c265').decode().splitlines()
+required += ['docs/engineering/localized-repair-c260/CONTRACT.md','docs/engineering/localized-repair-c260/INPUTS.json','docs/engineering/localized-repair-c260/FIELD-ORIGINS.md','docs/engineering/localized-repair-c260/CONTROL-PLAN.md','docs/engineering/localized-repair-c261/CONTROL-COVERAGE.md','docs/engineering/localized-repair-c261/hinge_glb.py','docs/engineering/localized-repair-c257/ownership.py','docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md','docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md']
+bindings=[snap(p) for p in sorted(set(required))]
+write('REPOSITORY-SNAPSHOT.json',{'schema':'ontokin.browser-session-snapshot/1','commit':revision,'tree':tree,'files':bindings})
+current=json.loads(git('show',revision+':docs/workflow/CURRENT.json'))
+task=json.loads(git('show',revision+':docs/workflow/tasks/C265/task.json'))
+write('PROMPT-1-CONTINUE.md',git('show',revision+':docs/workflow/prompts/CONTINUE.md').decode())
+write('PROMPT-2-RECOVER.md',git('show',revision+':docs/workflow/prompts/RECOVER.md').decode())
+historical_input=Path('/workspace/scratch/b4cbf4ea8454/inputs/c264/HISTORICAL-DEPENDENCIES.json').read_bytes()
+historical=json.loads(historical_input)
+historical_archives=json.dumps(historical['archives'],sort_keys=True)
+historical['online_source']['pinned_snapshot_commit']=revision
+assert json.dumps(historical['archives'],sort_keys=True)==historical_archives
+write('HISTORICAL-DEPENDENCIES.json',historical)
+recovery=payload/'recovery';recovery.mkdir()
+helper=Path(__file__).resolve()
+(recovery/'build_handoff.py').write_bytes(helper.read_bytes())
+(recovery/'run_checks.py').write_bytes(helper.with_name('run_checks.py').read_bytes())
+(recovery/'HISTORICAL-DEPENDENCIES.input.json').write_bytes(historical_input)
+package_state_keys=['main','implementation_commit','merge_commit','pull_request','branch',
+                    'branch_head','branch_disposition','branches','owner','lease_expiry',
+                    'verification_summary','limits']
+write('recovery/PACKAGE-STATE.json',{name:state[name] for name in package_state_keys})
+write('recovery/README.md','''# Session recovery tools
+
+These are the exact session packaging and check-runner helpers, retained as
+recovery inputs. They are not product source or a claim of offline restoration.
+PACKAGE-STATE.json contains only the project metadata consumed at package freeze;
+HISTORICAL-DEPENDENCIES.input.json preserves the original input used by the builder.
+The root manifest binds every included helper and input to its exact bytes.
+
+Before any reuse, reconcile live GitHub ownership, task and delivery state.
+The helpers contain original workspace paths. Point their repository, state,
+historical-input and output paths at the recovered workspace; preserve the
+frozen source revision and use a fresh output directory and a distinct ZIP
+filename. Do not overwrite a delivered archive. Recover other tracked inputs
+from the pinned Git revision. Run the check helper only for gates still needed;
+its CHECKS.json records planned, completed and remaining checks.
+
+For delivery-only recovery, first reconcile the saved file and external receipt.
+The original verified ZIP can be saved without rebuilding if its exact hash and
+delivery state are known. A material input or recovery-instruction change requires
+a newly verified package. These helpers do not save files to Library or create
+a successful delivery receipt.
+''')
+recovery_bindings=[]
+for p in sorted(recovery.iterdir()):
+ b=p.read_bytes();recovery_bindings.append({'package_path':str(p.relative_to(payload)),
+   'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest(),
+   'source_kind':'session-created recovery helper or exact consumed input; not a Git snapshot'})
+receipt='https://github.com/Omegapy/OntoKin/blob/main/docs/engineering/localized-repair-c265/DELIVERY.json'
+checkpoint={'schema':'ontokin.browser-session-handoff/1','task':'C265','package_kind':'online_browser_session','full_offline_source_archive':False,'created_at':datetime.now(timezone.utc).isoformat(),'repository':'https://github.com/Omegapy/OntoKin','observed_main':revision,'observed_main_tree':tree,'implementation_commit':state['implementation_commit'],'merge_commit':state['merge_commit'],'pull_request':state['pull_request'],'scope_issue':'https://github.com/Omegapy/OntoKin/issues/256','scope':'Independent bounded source hinge-declaration observer only under unchanged C260','active_branch':None,'active_branch_head':None,'completed_implementation_branch':state['branch'],'completed_branch_head':state['branch_head'],'branch_disposition':state['branch_disposition'],'remote_branch_inventory':state['branches'],'integration_state':'integrated_verified','task_state_at_freeze':task['status'],'delivery_state':'save_pending','external_delivery_receipt':receipt,'integration_owner_at_freeze':state['owner'],'lease_expiry_at_freeze':state['lease_expiry'],'completed_plan_steps':[x['id'] for x in task['plan'] if x['status']=='done'],'outstanding_plan_steps':[x['id'] for x in task['plan'] if x['status']!='done'],'completed_requirements':[x['id'] for x in task['requirements'] if x['status']=='done'],'outstanding_requirements':[x['id'] for x in task['requirements'] if x['status']!='done'],'verification':state['verification_summary'],'unique_unpublished_repository_code':[],'unique_unpublished_code':[row for row in recovery_bindings if row['package_path'].endswith('.py')],'recovery_payloads':recovery_bindings,'known_uncertain_operations_at_freeze':[],'next_action':'Read live C265 task and delivery receipt. If delivery remains open, finish only it. If complete, use a new continuation prompt to select the next bounded C260 source/artifact comparison step.','queued_scientific_option':'Independent source/artifact comparison, with complete identity and provenance association under unchanged C260; historical admission remains separate.','limits':state['limits']}
+write('CHECKPOINT.json',checkpoint)
+write('README-START-HERE.md',f'''# OntoKin C265 browser-session handoff\n\nThis is a **browser-session handoff for online GitHub continuation**. It contains\nthe selected workflow, task, source component and evidence snapshots. It is not\na complete offline repository restoration archive. The original C262 archive\nremains separately identified and unchanged.\n\n## Reading order\n\n1. Read CHECKPOINT.json, HANDOFF.md, NEXT-TASK.md and RECOVERY-STATUS.md.\n2. Use PROMPT-1-CONTINUE.md for normal continuation or PROMPT-2-RECOVER.md after\n   an interruption, supplying this ZIP's confirmed saved link.\n3. Open https://github.com/Omegapy/OntoKin/blob/main/CHATGPT-START-HERE.md through\n   the GitHub connection and explicitly read its required files at observed main.\n4. Reconcile this frozen checkpoint with live refs, task state, ownership and receipt.\n\n## Recorded state\n\nC265's source-only observer is integrated through {state['pull_request']},\nmerge `{state['merge_commit']}`. Branch disposition: **{state['branch_disposition']}**.\nThe frozen read-set is commit `{revision}`, tree `{tree}`.\nREPOSITORY-SNAPSHOT.json binds every snapshot to its exact commit, path and hash.\nUse GitHub for additional product sources, fixtures or tests.\nThe recovery/ directory contains the exact session helpers and consumed metadata;\nits README explains path adaptation and delivery-only recovery.\n\nThe ZIP freezes before its own upload. Its delivery state is therefore\n`save_pending`. The later external receipt at {receipt}\nresolves that boundary. A completed live task and saved receipt supersede the\nfrozen pending observation without recursively rebuilding this ZIP. An absent\nreceipt alone does not prove an upload failed.\n\n## Evidence and limits\n\nThe source observer reads declared hinges and endpoint associations from supplied\nbytes. It does not compare artifacts, admit historical endpoints, evaluate site\nposes, certify accepted revisions or establish physical/comparative validity.\nHISTORICAL-DEPENDENCIES.json retains C262's identity, size and hash. Ordinary\nonline continuation does not require reconstructing that historical archive.\nMANIFEST-SHA256.json covers every payload file except itself. Verify all declared\npaths, byte counts and hashes after fresh extraction.\n''')
+write('HANDOFF.md',root_document('docs/engineering/localized-repair-c265/RESULTS.md')+f'\n## Frozen delivery boundary\n\nPublished snapshot: `{revision}`. Integration is verified; this ZIP save remains pending at freeze. Reconcile the later [delivery receipt]({receipt}). Stop after one new bounded authorized scope and its saved successor handoff.\n')
+write('NEXT-TASK.md',root_document('docs/engineering/localized-repair-c265/NEXT-TASK.md')+f'\n## First reconcile this package\n\nRead the live C265 task and [external receipt]({receipt}) before starting. If delivery remains incomplete, finish only C265 delivery/closure. This frozen ZIP cannot contain its own future save identity.\n')
+write('RECOVERY-STATUS.md',f'''# C265 recovery state at package freeze\n\n- Source and verification are integrated at `{state['merge_commit']}`.\n- Frozen read-set: `{revision}`.\n- Completed implementation branch: `{state['branch']}`, disposition `{state['branch_disposition']}`.\n- No unique unpublished repository code, active worker writes, running validation\n  process or uncertain remote write is known at freeze. Project evidence is committed.\n- Exact session helpers and their consumed package-state inputs are included under\n  recovery/ and bound by the manifest; they are not repository product code.\n- Remaining: verify this ZIP, save it and standalone prompts, publish the actual\n  delivery receipt, close C265 and release the lease.\n- The ownership observation is historical. Read live STATUS and refs before any\n  shared write; an expired lease does not prove another writer stopped.\n\nIf save was interrupted, reconcile the actual saved file identity and\n{receipt} before retrying. Preserve newer partial work before replacing it.\nDo not repeat implementation that is already integrated or start comparison\nwhile C265 delivery remains unfinished. The separate C262 archive retains its\noriginal historical recovery role. Complete C174 graph retention is unestablished.\n''')
+members=[]
+for p in sorted(payload.rglob('*')):
+ if p.is_file():
+  b=p.read_bytes();members.append({'path':str(p.relative_to(payload)),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()})
+write('MANIFEST-SHA256.json',{'schema':'ontokin.browser-session-manifest/1','task':'C265','source_commit':revision,'excluded_self':'MANIFEST-SHA256.json','files':members})
+archive=target/'OntoKin_C265_Source_Hinge_Browser_Handoff_2026-11-18_v2.zip'
+assert not archive.exists(),'Do not replace an existing handoff archive'
+fresh=target/'fresh-extraction'
+assert not fresh.exists(),'Verify into a fresh extraction directory'
+with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
+ for p in sorted(payload.rglob('*')):
+  if p.is_file():z.write(p,str(p.relative_to(payload)))
+fresh.mkdir()
+with zipfile.ZipFile(archive) as z:
+ assert z.testzip() is None
+ names=z.namelist();assert len(names)==len(set(names))
+ for n in names:assert not PurePosixPath(n).is_absolute() and '..' not in PurePosixPath(n).parts and '\\' not in n
+ assert set(names)=={x['path'] for x in members}|{'MANIFEST-SHA256.json'}
+ z.extractall(fresh)
+extracted_manifest=json.loads((fresh/'MANIFEST-SHA256.json').read_bytes())
+assert extracted_manifest['schema']=='ontokin.browser-session-manifest/1'
+assert extracted_manifest['task']=='C265'
+assert extracted_manifest['source_commit']==revision
+assert extracted_manifest['excluded_self']=='MANIFEST-SHA256.json'
+declared=extracted_manifest['files']
+assert declared==members,'Extracted manifest differs from the frozen intended inventory'
+declared_paths=[row['path'] for row in declared]
+assert len(declared_paths)==len(set(declared_paths))
+assert set(names)==set(declared_paths)|{'MANIFEST-SHA256.json'}
+for row in declared:
+ b=(fresh/row['path']).read_bytes();assert len(b)==row['bytes'] and hashlib.sha256(b).hexdigest()==row['sha256']
+for row in bindings:
+ assert (fresh/row['package_path']).read_bytes()==git('show',row['commit']+':'+row['repository_path'])
+root_links=0
+for name in ['HANDOFF.md','NEXT-TASK.md']:
+ for dest in re.findall(r'\]\(([^\s)]+)\)',(fresh/name).read_text()):
+  if dest.startswith('#') or re.match(r'^[A-Za-z][A-Za-z0-9+.-]*:',dest):continue
+  relative=dest.split('#',1)[0]
+  assert (fresh/relative).is_file(), 'Missing copied-document link: '+dest
+  root_links+=1
+raw=archive.read_bytes()
+verification={'schema':'ontokin.browser-session-verification/1','passed':True,'task':'C265','source_revision':revision,'source_tree':tree,'archive_name':archive.name,'archive_bytes':len(raw),'archive_sha256':hashlib.sha256(raw).hexdigest(),'payload_files':len(members),'repository_snapshots':len(bindings),'recovery_payload_files':len(recovery_bindings),'zip_crc':'passed','safe_paths':'passed','unique_names':'passed','exact_inventory':'passed','extracted_manifest':'passed','fresh_extraction_hashes':'passed','pinned_repository_equality':'passed','copied_root_markdown_links':{'checked':root_links,'result':'passed'},'full_offline_restore':'not_run; online session format','checked_at':datetime.now(timezone.utc).isoformat()}
+(target/'session-archive-verification.json').write_text(json.dumps(verification,indent=2)+'\n')
+for n,new in [('PROMPT-1-CONTINUE.md','OntoKin_C265_Prompt_1_Continue.md'),('PROMPT-2-RECOVER.md','OntoKin_C265_Prompt_2_Recover.md')]:
+ shutil.copyfile(payload/n,target/new)
+print(json.dumps(verification,indent=2))

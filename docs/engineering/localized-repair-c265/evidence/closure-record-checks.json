@@ -1,0 +1,22 @@
+{
+  "source_parent": "070d18b7a5f663f51a22ecc147ce8be5290c3e0c",
+  "checks": [
+    {
+      "command": "python3 tools/chat_workflow.py check --json",
+      "result": "passed",
+      "evidence": "closure-workflow-check.json",
+      "sha256": "526e87fad242cf2efe0073b7cab61abacdc94504fb71d59c271921931784ab3d"
+    },
+    {
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "passed",
+      "evidence": "closure-documentation-check.json",
+      "sha256": "19089c41994429d15b5bddf120b93013f5abb9fc40dcb4a9a0f9a643392a1736"
+    }
+  ],
+  "scientific_input_equality": {
+    "files": 13,
+    "result": "passed",
+    "reference": "actual-main/CHECKS.json"
+  }
+}
