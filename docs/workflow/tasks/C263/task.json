@@ -3,7 +3,7 @@
   "id": "C263",
   "title": "GitHub-owned workflow for ChatGPT browser development",
   "intent": "Make successive ChatGPT browser threads recover and develop OntoKin from explicit GitHub-owned instructions, task state, skills and evidence.",
-  "status": "review",
+  "status": "done",
   "owner": "c263-root-c3681d8a01ea",
   "branch": "work/c263-browser-workflow",
   "base_sha": "bbe30e2f5863d743bd2393466341511b4924ad9d",
@@ -91,8 +91,11 @@
       "id": "R09",
       "description": "Integrate completed work and resolve its branch.",
       "acceptance": "Verify PR/main result and head retention, then confirm deletion or give the owner the exact safe-to-delete branch.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/browser-workflow-c263/INTEGRATION.json",
+        "docs/workflow/CURRENT.json"
+      ]
     },
     {
       "id": "R10",
@@ -158,8 +161,11 @@
       "id": "R16",
       "description": "Finish one bounded workflow delivery and stop.",
       "acceptance": "Current state records completion, links to evidence and waits for user direction; the scientific next task remains a separately selectable scope.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/browser-workflow-c263/INTEGRATION.json",
+        "docs/workflow/CURRENT.json"
+      ]
     }
   ],
   "plan": [
@@ -271,7 +277,7 @@
         "R09",
         "R16"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/browser-workflow-c263/INTEGRATION.json"
       ],
@@ -330,17 +336,24 @@
     {
       "name": "resulting-main verification",
       "command": "After actual merge, read back main and rerun relevant checks",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/browser-workflow-c263/INTEGRATION.json",
+        "docs/engineering/browser-workflow-c263/evidence/main/workflow-check.json",
+        "docs/engineering/browser-workflow-c263/evidence/main/workflow-tests.log",
+        "docs/engineering/browser-workflow-c263/evidence/main/documentation-check.json"
+      ]
     }
   ],
   "completion": {
-    "implementation_commit": null,
-    "merge_commit": null,
-    "pull_request": null,
-    "branch_disposition": "active",
-    "evidence": []
+    "implementation_commit": "1856d92d1c5e8f6e13cfc3e90bdf7b98bc1ab2b5",
+    "merge_commit": "96bf12e4747722282767033ddb18f4d55532fc51",
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/253",
+    "branch_disposition": "deleted",
+    "evidence": [
+      "docs/engineering/browser-workflow-c263/INTEGRATION.json"
+    ]
   },
-  "next_action": "Publish reviewed candidate, acquire the integration lease, merge and verify resulting main, resolve the completed branch and publish closure; then wait."
+  "next_action": "Wait for owner direction. The source hinge observer is a separately queued scientific scope and must not start automatically."
 }

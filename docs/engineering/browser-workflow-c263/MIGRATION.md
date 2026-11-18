@@ -58,8 +58,8 @@ current workflow/cleanup pointer correction, not a semantic or release change.
 
 ## Handoff after this scope
 
-The final C263 task record will identify the verified candidate, actual merge,
-checks and branch disposition. CURRENT will have no active task and will wait
+The final C263 task record identifies the verified candidate, actual merge,
+checks and branch disposition. CURRENT has no active task and waits
 for owner direction. The separately queued scientific action remains the
 source-side hinge observer under the unchanged C260 contract. Completing this
 workflow does not qualify source/artifact comparison, historical admission,

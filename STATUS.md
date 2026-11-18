@@ -12,16 +12,25 @@ tools own rendering, general simulation and gameplay. [GOAL](GOAL.md), the
 ## Current workflow and next action
 
 C263 implements the owner's GitHub-owned browser-chat workflow under
-[scope252](https://github.com/Omegapy/OntoKin/issues/252). Start with
+[scope252](https://github.com/Omegapy/OntoKin/issues/252). It is integrated and
+verified through [PR253](https://github.com/Omegapy/OntoKin/pull/253). Start with
 [CHATGPT-START-HERE](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json)
-and the [C263 task record](docs/workflow/tasks/C263/task.json).
-The candidate passed focused verification and independent review on `work/c263-browser-workflow`; main integration is in progress.
-The owner requested completion of this workflow, then a stop for further direction.
+and the completed [C263 task record](docs/workflow/tasks/C263/task.json).
 
-Starting main: `bbe30e2f5863d743bd2393466341511b4924ad9d`;
-tree: `aa192e047a7e7ddfd8e0436b5bae31f32bcb554a`.
-Live state must be rechecked before resuming. The final task record will bind
-published implementation, merge, actual checks and branch disposition.
+Implementation: `1856d92d1c5e8f6e13cfc3e90bdf7b98bc1ab2b5`.
+Verified merge/main: `96bf12e4747722282767033ddb18f4d55532fc51`;
+tree: `4cb8eb96b9b2c553b4014e61cbf4e078cb2b17c4`.
+Fresh resulting-main workflow checks and all 28 tests pass; documentation
+preserves 29 sources and 233 sections with 5,497 local links checked. Twelve
+independent controls and a fresh-chat recovery exercise also passed within
+their documented scope. [Integration receipt](docs/engineering/browser-workflow-c263/INTEGRATION.json)
+records exact evidence and branch cleanup. Later closure metadata is a separate
+commit; always recheck live main before work.
+
+**Current action: wait for the owner's next direction.** No task is active.
+The completed `work/c263-browser-workflow` branch was automatically deleted;
+absence and candidate retention in main ancestry were verified. No user branch
+deletion is pending.
 
 The queued scientific action is one bounded source-side hinge observer under
 [C260](docs/engineering/localized-repair-c260/CONTRACT.md) and
@@ -79,8 +88,8 @@ remain incomplete. Numerical checks do not certify occluded/unresolvable views.
 
 ## Branches and historical handoff
 
-The starting live inventory contained only main and no open PRs. C263 created
-one owned workflow branch. C234 was already merged and its branch was deleted;
+The final integration inventory contains only main. C263's PR is merged and its
+completed workflow branch is deleted. C234 was already merged and its branch was deleted;
 scope240 is closed. C261's completed branch is also absent. No historical user
 branch-deletion request remains. Recheck live inventory before any cleanup.
 C174's former archive branch is absent; complete historical graph retention
@@ -93,17 +102,17 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-Owner: `c263-root-c3681d8a01ea`.
-State: ACTIVE; acquired for reviewed C263 workflow integration.
+Owner: none. Previous owner: `c263-root-c3681d8a01ea`.
+State: RELEASED after verified C263 source integration and actual-main checks;
+effective when this closure is conditionally published and read back.
 Scope: [C263 browser workflow #252](https://github.com/Omegapy/OntoKin/issues/252).
-Acquired at: 2026-11-18T20:35:57Z; expires at: 2026-11-18T21:05:57.000Z.
-Observed main before acquisition: `bbe30e2f5863d743bd2393466341511b4924ad9d`.
-Reserved shared files: STATUS.md, AGENTS.md, GOAL.md, README.md, docs/README.md and C263 workflow/integration records.
+Acquired at: 2026-11-18T20:35:57Z; previous expiry: 2026-11-18T21:05:57Z.
+Release recorded at: 2026-11-18T20:40:00.167430+00:00.
+Observed integrated main: `96bf12e4747722282767033ddb18f4d55532fc51`.
+Reserved shared files: none after verified publication.
 
-Only this verified lease holder may update main and shared integration fields.
-The candidate is independently reviewed; integration and resulting-main checks
-remain to execute. Reconcile actual refs before retrying any unknown write.
-
+A future integrator must reconcile current refs, completed scope and any unknown
+writes, then acquire a new bounded expected-head lease before shared writes.
 
 ## Historical status
 

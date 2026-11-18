@@ -57,3 +57,19 @@ The video was examined only through its public metadata/description/chapters;
 no transcript or full viewing is claimed. The shared Sys4AI files informed the
 workflow, but their unsupplied desktop/services/advanced knowledge packages
 were not imported. See [SOURCES.md](SOURCES.md) for the evidence boundary.
+
+## Verified main integration
+
+[PR253](https://github.com/Omegapy/OntoKin/pull/253) merged the reviewed candidate
+at `96bf12e4747722282767033ddb18f4d55532fc51`, with exactly the reviewed tree
+`4cb8eb96b9b2c553b4014e61cbf4e078cb2b17c4`. A clean checkout of that actual main
+passed the workflow check, all 28 tests and the documentation checker again.
+The latter checked 5,497 local links and preserved all 29 sources/233 sections.
+The [main logs](evidence/main/documentation-check.json) and
+[integration receipt](INTEGRATION.json) retain these observations.
+
+GitHub automatically deleted `work/c263-browser-workflow`. Branch inventory
+confirmed only main, and the exact candidate is retained in main ancestry.
+The new entry file was fetched successfully from the merged revision.
+No protected product path changed. The final checkpoint sets no active task
+and waits for owner direction; no new product milestone was started.
