@@ -416,17 +416,16 @@ The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method err
 
 ## Main integration lease
 
-Owner: none. Previous owner: `c261-root-2a9a7d092213-20261117`.
-State: RELEASED after verified C261 source integration and actual-main checks; effective only when this closure is conditionally published and read back.
-Scope: [C261 finite raw GLB hinge reader #249](https://github.com/Omegapy/OntoKin/issues/249).
-Acquired at: 2026-11-17T22:48:49Z; previous expiry: 2026-11-17T23:18:49Z.
-Release recorded at: 2026-11-17T23:06:27.966149+00:00.
-Observed integrated main: `f2c175e22ce5f17f063b6de6d7ea9da7788b9040`.
-Reserved shared files: none after verified publication.
+Owner: `c263-root-c3681d8a01ea`.
+State: ACTIVE; acquired for reviewed C263 workflow integration.
+Scope: [C263 browser workflow #252](https://github.com/Omegapy/OntoKin/issues/252).
+Acquired at: 2026-11-18T20:35:57Z; expires at: 2026-11-18T21:05:57.000Z.
+Observed main before acquisition: `bbe30e2f5863d743bd2393466341511b4924ad9d`.
+Reserved shared files: STATUS.md, AGENTS.md, GOAL.md, README.md, docs/README.md and C263 workflow/integration records.
 
-PR250 merged with expected head `538344242322599753513f76e07e67950a633b08` and exact independently approved tree. Fresh actual-main C261, documentation and C253 manifest checks pass. The completed branch is absent and both published heads remain in main ancestry. The [integration receipt](docs/engineering/localized-repair-c261/evidence/integration/INTEGRATION.json) separates source closure from delivery.
-
-Root completes only final archive/source-replay/saved delivery under scope249, updating the [stable checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-eb31ecb86780819181acc596a215ddc4_2ab2a24d43748191957f9bcc356b59de&account_id=personal), then stops. A subsequent source writer must acquire a new verified lease and reconcile that delivery first. C234 remains merged awaiting user cleanup; C174's former branch is absent and complete historical graph retention remains unestablished.
+Only this verified lease holder may update main and shared integration fields.
+The candidate is independently reviewed; integration and resulting-main checks
+remain to execute. Reconcile actual refs before retrying any unknown write.
 
 ## C209 entry bindings integrated; job/0.2 result compatibility pending
 
