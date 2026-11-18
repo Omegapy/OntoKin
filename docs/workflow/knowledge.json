@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "terms": [
+    {
+      "id": "ontokin",
+      "term": "OntoKin",
+      "definition": "An AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects.",
+      "authority": [
+        "GOAL.md"
+      ],
+      "status": "current"
+    },
+    {
+      "id": "accepted-source",
+      "term": "Accepted .ok source",
+      "definition": "The accepted program text and pinned dependencies that authoritatively define supported object meaning and source identity.",
+      "authority": [
+        "GOAL.md",
+        "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md"
+      ],
+      "status": "current"
+    },
+    {
+      "id": "semantic-ir",
+      "term": "Semantic intermediate representation",
+      "definition": "Structured normalized records between accepted source and destination tools that preserve declared object meaning within supported contracts.",
+      "authority": [
+        "GOAL.md"
+      ],
+      "status": "current"
+    },
+    {
+      "id": "ownership",
+      "term": "Ownership",
+      "definition": "The structural parent/child relationship between objects, distinct from following and a mechanical connection.",
+      "authority": [
+        "GOAL.md",
+        "docs/engineering/localized-repair-c257/README.md"
+      ],
+      "status": "current"
+    },
+    {
+      "id": "follow",
+      "term": "Follow",
+      "definition": "An explicit relationship defining a child frame from a parent frame and a constant rigid offset within the selected observation profile.",
+      "authority": [
+        "docs/engineering/localized-repair-c258/README.md"
+      ],
+      "status": "current"
+    },
+    {
+      "id": "hinge",
+      "term": "Hinge declaration",
+      "definition": "A mechanical relation naming two ordered endpoint sites, a signed basis axis, angular limits and an initial coordinate within C260.",
+      "authority": [
+        "docs/engineering/localized-repair-c260/CONTRACT.md"
+      ],
+      "status": "current"
+    },
+    {
+      "id": "artifact-claim",
+      "term": "Artifact claim",
+      "definition": "A field read from an artifact, with its exact location, whose asserted source meaning is not independently verified by extraction alone.",
+      "authority": [
+        "docs/engineering/localized-repair-c261/README.md"
+      ],
+      "status": "current"
+    },
+    {
+      "id": "source-observation",
+      "term": "Source observation",
+      "definition": "Facts independently derived from supplied source bytes under the selected observation contract, separate from artifact metadata claims.",
+      "authority": [
+        "docs/engineering/localized-repair-c260/CONTRACT.md"
+      ],
+      "status": "current"
+    },
+    {
+      "id": "qualification",
+      "term": "Qualification",
+      "definition": "Evidence that a named evaluator or capability satisfies its selected finite contract; a component pass does not establish broader product or comparative success.",
+      "authority": [
+        "docs/engineering/localized-repair-c253/README.md",
+        "docs/engineering/localized-repair-c261/CONTROL-COVERAGE.md"
+      ],
+      "status": "current"
+    },
+    {
+      "id": "integration",
+      "term": "Development integration",
+      "definition": "Admission of a reviewed bounded increment to actual main after its applicable checks, with resulting-main verification and explicit limitations.",
+      "authority": [
+        "docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md"
+      ],
+      "status": "current"
+    },
+    {
+      "id": "release",
+      "term": "Finite release",
+      "definition": "Acceptance of a named supported scope after its complete adopted release obligations, distinct from a development branch merge or a partial demonstration.",
+      "authority": [
+        "GOAL.md",
+        "docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md"
+      ],
+      "status": "current"
+    },
+    {
+      "id": "checkpoint",
+      "term": "Work checkpoint",
+      "definition": "A durable record of scope, code identity, executed tests, unmet gates, ownership and the exact continuation action.",
+      "authority": [
+        "AGENTS.md"
+      ],
+      "status": "current"
+    }
+  ],
+  "relationships": [
+    {
+      "subject": "ontokin",
+      "relation": "uses_authoritative",
+      "object": "accepted-source",
+      "source": "GOAL.md"
+    },
+    {
+      "subject": "ontokin",
+      "relation": "provides",
+      "object": "semantic-ir",
+      "source": "GOAL.md"
+    },
+    {
+      "subject": "accepted-source",
+      "relation": "defines",
+      "object": "hinge",
+      "source": "docs/engineering/localized-repair-c260/CONTRACT.md"
+    },
+    {
+      "subject": "ownership",
+      "relation": "is_distinct_from",
+      "object": "follow",
+      "source": "docs/engineering/localized-repair-c258/README.md"
+    },
+    {
+      "subject": "follow",
+      "relation": "is_distinct_from",
+      "object": "hinge",
+      "source": "docs/engineering/localized-repair-c258/README.md"
+    },
+    {
+      "subject": "accepted-source",
+      "relation": "is_not_authenticated_by",
+      "object": "source-observation",
+      "source": "docs/engineering/localized-repair-c260/CONTRACT.md"
+    },
+    {
+      "subject": "artifact-claim",
+      "relation": "does_not_establish",
+      "object": "source-observation",
+      "source": "docs/engineering/localized-repair-c261/README.md"
+    },
+    {
+      "subject": "integration",
+      "relation": "is_distinct_from",
+      "object": "release",
+      "source": "docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md"
+    },
+    {
+      "subject": "checkpoint",
+      "relation": "records_evidence_for",
+      "object": "integration",
+      "source": "AGENTS.md"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "source-authoring",
+      "name": "Versioned source authoring and repair",
+      "description": "Create, inspect and atomically revise accepted source through explicitly versioned Agent interfaces.",
+      "status": "documented",
+      "sources": [
+        "GOAL.md",
+        "docs/engineering/OK-AGENT-001-ai-agent-authoring-and-inspection-interface.md"
+      ],
+      "limits": "Support is profile-specific. This map is navigation and does not rerun or extend any release evidence."
+    },
+    {
+      "id": "raw-hinge-observation",
+      "name": "Raw GLB hinge observation",
+      "description": "Extract C261 hinge metadata claims and their actual JSON pointers from bounded GLB bytes.",
+      "status": "partial",
+      "sources": [
+        "docs/engineering/localized-repair-c261/README.md",
+        "docs/engineering/localized-repair-c261/RESULTS.md"
+      ],
+      "limits": "Untrusted artifact interface only; no source agreement, accepted revision, complete C260 H group, or execution authority."
+    },
+    {
+      "id": "source-hinge-observation",
+      "name": "Independent source hinge observation",
+      "description": "Derive hinge declarations and endpoint associations from supplied source bytes under C260.",
+      "status": "unimplemented",
+      "sources": [
+        "docs/engineering/localized-repair-c261/NEXT-TASK.md",
+        "docs/engineering/localized-repair-c260/CONTRACT.md"
+      ],
+      "limits": "Queued separately from C261 and the browser workflow; source-only compatibility and unevaluated site poses remain explicit."
+    },
+    {
+      "id": "hinge-source-artifact-comparison",
+      "name": "Hinge source/artifact comparison",
+      "description": "Compare independent source facts with actual artifact claims using the frozen C260 rules.",
+      "status": "unimplemented",
+      "sources": [
+        "docs/engineering/localized-repair-c260/CONTRACT.md",
+        "docs/engineering/localized-repair-c261/CONTROL-COVERAGE.md"
+      ],
+      "limits": "Must still verify complete sets, repeated provenance, declarations/spans and endpoint associations; raw metadata extraction is insufficient."
+    },
+    {
+      "id": "hinge-historical-admission",
+      "name": "Historical hinge input admission",
+      "description": "Admit the exact historical source and artifact inputs through the separate C260 boundary.",
+      "status": "unimplemented",
+      "sources": [
+        "docs/engineering/localized-repair-c260/CONTRACT.md",
+        "docs/engineering/localized-repair-c261/NEXT-TASK.md"
+      ],
+      "limits": "A raw reader artifact hash does not establish historical source binding or an authentic accepted revision."
+    },
+    {
+      "id": "localized-repair-qualification",
+      "name": "Localized-repair evaluator qualification",
+      "description": "Qualify inert observations for the public keyed-rack family through the C253 protocol and bounded observation components.",
+      "status": "partial",
+      "sources": [
+        "docs/engineering/localized-repair-c253/README.md",
+        "docs/engineering/localized-repair-c255/README.md",
+        "docs/engineering/localized-repair-c261/CONTROL-COVERAGE.md"
+      ],
+      "limits": "Complete semantic, source/rebuild, native/model trial and comparative-benefit claims are not established by component results."
+    },
+    {
+      "id": "local-validation",
+      "name": "Local development validation",
+      "description": "Execute proportionate repository checks and retain revision-bound evidence in the available assistant workspace.",
+      "status": "documented",
+      "sources": [
+        "AGENTS.md",
+        "docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md"
+      ],
+      "limits": "Requires actual execution tools. Missing compatibility, external roles and unrun visual checks remain unverified; no automatic or paid hosted jobs."
+    },
+    {
+      "id": "planar-reach",
+      "name": "Reusable planar reach actions",
+      "description": "Retain the adopted finite two-hinge reach profile and its outstanding release obligations.",
+      "status": "deferred",
+      "sources": [
+        "GOAL.md",
+        "docs/language-design/planar-reach-v0.1/ADOPTION.md"
+      ],
+      "limits": "Incomplete reference profile; further work requires a selected semantic-authoring or interoperability need."
+    }
+  ]
+}
