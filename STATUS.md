@@ -1,594 +1,165 @@
 # OntoKin development status
 
-OntoKin is an AI-native semantic language and intermediate representation for constructing, inspecting, validating, repairing and transporting physically meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units, relationships, physical declarations and source identity. Engines and specialist tools own rendering, general simulation and gameplay. The [GOAL](GOAL.md), [C252 priority decision](docs/engineering/review-integration-c252/DECISION.md), preserved [C210 boundary](docs/engineering/semantic-export-c210/DECISION.md) and [coordination rules](AGENTS.md) govern current work.
-
-## C261: bounded raw GLB hinge observation
-
-The [C261 reader](docs/engineering/localized-repair-c261/README.md) implements only the raw artifact interface under the C260 contract. It reads hinge fields and their exact JSON pointers, while object/source/program claims remain untrusted. Both original artifacts yield eight hinge rows and eighteen object records. Source derivation, source/artifact comparison and historical admission remain unfinished; no complete C260 H group is qualified.
-
-The corrected reader passes 28 authored methods and 217 independent controls / 17,124 assertions on hosted Linux/CPython 3.12.14. Published scientific commit `a877b0a3b75595c66c321cf515c7138391af5ba2` has the same tree as independently reviewed local `2c1ecf0649cc891fe0544eace2aab7ce9779bad5`. Fresh predecessor checks pass C255 31, C256 29, C257 23 and C258 28 methods, plus the C253 manifest. [Results and preserved findings](docs/engineering/localized-repair-c261/RESULTS.md) distinguish execution from unrun gates.
-
-[PR250](https://github.com/Omegapy/OntoKin/pull/250) is verified merged at `f2c175e22ce5f17f063b6de6d7ea9da7788b9040`, exact reviewed tree `80cacbcfea9dc1d0eb0f67dd4f52433cb64fde3a`. Fresh actual-main C261, documentation/preservation and C253 manifest checks pass. GitHub automatically deleted the completed branch; absence and both published heads in main ancestry are verified. [Integration receipts](docs/engineering/localized-repair-c261/INTEGRATION.md) record source closure. Finish only the verified saved handoff under [scope249](https://github.com/Omegapy/OntoKin/issues/249), then stop. The [next source-observer step](docs/engineering/localized-repair-c261/NEXT-TASK.md) is separate. C260 delivery is verified complete and scope247 is closed. Earlier sections retain their historical observations. C234 remains already merged and awaiting deletion; C174's former archive branch is absent and complete historical graph retention remains unestablished.
-
-## C260: finite hinge-declaration observation contract
-
-The [C260 contract](docs/engineering/localized-repair-c260/README.md) defines a bounded independent comparison of actual `.ok` hinge declarations and GLB joint fields. A hinge is a mechanical relation between two named sites, with an axis, angular limits and an initial coordinate. Source occurrences/definitions, ordered endpoint site associations and actual artifact claims remain distinct. The original artifacts each contain eight joint rows but no direct site table or hinge/site definition and span records.
-
-The supported observation profile uses six signed basis axes and literal deg/rad angles with exact canonical comparison. Source-only interface/size compatibility is explicit; site poses, combined motion authority and world behavior remain unqualified. The fixed-input inspection binds twelve files, 37 byte witnesses and sixteen joint rows across both endpoints. The [28-group implementation control plan](docs/engineering/localized-repair-c260/CONTROL-PLAN.md) is UNRUN: this increment contains no hinge reader. [Results, independent review and integration evidence](docs/engineering/localized-repair-c260/RESULTS.md) record actual scope and limits.
-
-[PR248](https://github.com/Omegapy/OntoKin/pull/248) is verified merged at `56460d67e8f914814c6ae957f717e0920a152d79`, exact approved tree `46ebb950453012fe827dfdf072fa00d18327940a`. Fresh actual-main checks pass 29 preserved sources/233 sections/5,561 links and the C253 fourteen-file/three-case manifest. The completed branch is automatically deleted and both published heads remain in main ancestry. [Integration receipts](docs/engineering/localized-repair-c260/evidence/integration/INTEGRATION.json) separate this source closure from later archive/restore/save outcomes. Finish only the verified saved handoff under [scope247](https://github.com/Omegapy/OntoKin/issues/247), then stop. Its [separate next task](docs/engineering/localized-repair-c260/NEXT-TASK.md) is finite reader implementation. Earlier component bytes, C253/C255 mathematics, runtime, fixtures and manual-only hosted workflows remain unchanged. C234 is already merged but awaits user deletion under [#240](https://github.com/Omegapy/OntoKin/issues/240). Fresh audit finds C174's former archive branch absent; its known commit remains API-accessible, but complete historical graph retention is unestablished. Earlier branch-preservation wording below describes previous observations.
-
-## C258: finite explicit-follow observation component
-
-The [C258 reader](docs/engineering/localized-repair-c258/README.md) independently derives explicit follow parents, children and constant rigid offsets from authoritative source, then compares actual GLB metadata. A follow defines a child frame from a parent frame and offset; ownership and a mechanical connection are different relations. Both original endpoints yield eight follows. Four API boundaries separate source facts, untrusted artifact claims, consistency and exact historical byte admission. The artifacts have no direct follow-definition or source-span fields; those absences remain explicit.
-
-Scientific candidate `2bca9f7d2cba8996043bbfeae0c2855def5d7076` passes 28 authored methods and 119 independent controls. Separate structural review approves the corrected public path-resolution refusal and five dependency-admission controls. The original implicit-member collision, symlink-loop exception and authored/reviewer fixture failures remain preserved. Source quaternion projection uses exact rounding proofs; its eight-ULP artifact comparison is an explicit local observation policy, not an exporter-error guarantee. [Results and exact evidence](docs/engineering/localized-repair-c258/RESULTS.md).
-
-[PR #246](https://github.com/Omegapy/OntoKin/pull/246) is verified merged at `a52f70a10d6ebb5228d17987aeda7edf334ff46d`, with exact reviewed tree `ca849419b448a50255fff76da26f51920e7af990`. Fresh actual-main checks pass 28 C258, 23 C257, 29 C256 and 31 C255 methods, the C253 14-file/three-task manifest and 29 preserved sources/233 sections/5,519 local links. GitHub automatically deleted the completed C258 branch; its absence and history retention are verified. [Integration evidence and delivery state](docs/engineering/localized-repair-c258/INTEGRATION.md) separates this source closure from later archive/restore/save operations. Read [scope #245](https://github.com/Omegapy/OntoKin/issues/245) and its linked recovery checkpoint for their actual outcome before retrying. Stop after saved delivery; the [next bounded contract step](docs/engineering/localized-repair-c258/INTEGRATED-NEXT-TASK.md) belongs to a separate conversation. C257 delivery and scope243 closure are reconciled; historical delivery-pending text below describes earlier freezes.
-
-Hinges, complete C255 semantic records, authentic revisions, invalid-edit atomicity, clean rebuilds, native/model trials and comparative advantage remain unqualified. C253/C255 mathematics, C256 measurements, C257 ownership and released runtime/workflows remain unchanged. `work/c234-cpu-materials` is already merged but still awaits supported deletion under [#240](https://github.com/Omegapy/OntoKin/issues/240). Keep `archive/c174-model-research` until complete historical graph retention is established. The strict normal-fidelity failure, unresolved R07/R08 and C251 current-authority refusal retain their states.
-
-## C257: finite ownership observation component
-
-The [C257 reader](docs/engineering/localized-repair-c257/README.md) derives immediate lifecycle ownership from the authoritative `.ok` declarations and independently checks owner claims in actual GLB metadata. Both original endpoints have 18 objects, two ownership roots and 16 ownership edges, although all 18 GLB objects are scene roots. Four API boundaries keep source facts, untrusted artifact claims, source/artifact consistency and exact historical admission separate. Following, hinges, complete source validity, full C255 semantics, accepted revisions and rebuilds remain unqualified.
-
-Scientific author `499a19d030a06609564390877a596d53dc015a7a` passes 23 authored methods and 107 independent controls. A separate structural review approves corrected public I/O refusals and the bounded authority/input handling. Independent supported containment changes produce 12 objects and ten ownership edges. The original visibility, duplicate-identity/source claims, floating-span and public-I/O findings remain preserved. [Results and review scope](docs/engineering/localized-repair-c257/RESULTS.md). Fresh focused checks on that exact scientific commit pass C256's 29 methods, C255's 31 methods and the C253 14-file/three-case manifest.
-
-[PR #244](https://github.com/Omegapy/OntoKin/pull/244) is verified merged at `d4ef12b2a62d2bc7d9cb4daa40172351461b70c0` with exact reviewed tree `0dc9462a55f7b3d48337d0506cb43215b87f0d87`. Fresh actual-main checks pass 23 C257 methods, 29 C256 methods, 31 C255 methods, C253 14 files/three cases and 29 preserved documentation sources/233 sections/5,484 local links. The completed C257 branch was automatically deleted and its absence verified. [Integration and branch receipt](docs/engineering/localized-repair-c257/evidence/integration/INTEGRATION.json). [Scope #243](https://github.com/Omegapy/OntoKin/issues/243) remains open only for verified offline handoff restoration and confirmed saved delivery; finish that closure and stop. No successor feature has started. C256's final ZIP and complete restore are verified, and [scope #241](https://github.com/Omegapy/OntoKin/issues/241) is closed. Historical C256 pending-delivery text below records its earlier package freeze.
-
-`work/c234-cpu-materials` remains an already-merged branch awaiting authenticated deletion under [#240](https://github.com/Omegapy/OntoKin/issues/240). Keep `archive/c174-model-research` until complete historical graph retention is established. Frozen C253/C255 mathematics, earlier runtime and workflows, the strict normal-fidelity failure, unresolved R07/R08 and C251 current-authority refusal retain their states.
-
-## C256: finite geometry and sampled-motion reader
-
-The [C256 reader](docs/engineering/localized-repair-c256/README.md) traverses the existing C210 GLB bytes for local triangle geometry and 126 rigid poses across 18 objects at seven times, separately for each before/after endpoint. Its raw measurements, exact-source identity associations and historical artifact admission have distinct trust boundaries. Full semantic observations, revision authenticity, clean rebuild evidence and real trial success remain unqualified.
-
-Independent review approves scientific author `97e8942071502044cb3baedac71622c151e52283`, with reader SHA-256 `5993d1a9ca1cbccd4518ed6f113238d18f6b71ba02befd59900b93fe47ef6e6a`. All 29 authored methods and 95 independent controls pass; a separate static review approves the corrected exception and resource limits. The original four malformed-metadata failures and the subsequent corrections remain preserved. [Results and exact review scope](docs/engineering/localized-repair-c256/RESULTS.md).
-
-[PR #242](https://github.com/Omegapy/OntoKin/pull/242) is verified merged at `6c497c666a301f3da74b04181d6bff62e61380e8`, with exact reviewed tree `620325c63d424de574b5ccfbb5f6a0162f8ca537`. Fresh actual-main checks pass 29 reader methods, 31 C255 methods, C253 14 files/three cases, and 29 preserved documentation sources/5,459 links. The work branch was automatically deleted and its absence verified. [Integration and branch receipt](docs/engineering/localized-repair-c256/evidence/integration/INTEGRATION.json). [Scope #241](https://github.com/Omegapy/OntoKin/issues/241) remains open only for verified offline handoff restoration and saved delivery. Finish that scope and stop at its [next-task boundary](docs/engineering/localized-repair-c256/NEXT-TASK.md). The C253 corpus and C255 checker are unchanged; released runtime, fixtures, schemas and manual-only hosted workflows remain unchanged. No complete aggregate, native run, source rebuild or model trial is claimed.
-
-C255's reconciled final ZIP is confirmed saved as version 1; the pending-save wording in its historical sections below describes package freeze. Scope [#240](https://github.com/Omegapy/OntoKin/issues/240#issuecomment-6932955581) now remains open only for `work/c234-cpu-materials` deletion. That exact branch is already merged and retained; supported authenticated deletion is unavailable. Keep `archive/c174-model-research` as an explicitly justified archive. The strict normal-fidelity failure, unresolved R07/R08 work and C251 current-authority refusal remain unchanged.
-
-## C255 amendment: ten experimental-source PRs integrated
-
-The owner-authorized [branch reconciliation](docs/engineering/branch-reconciliation-c255/README.md) merged all ten reviewed experimental-source PRs into actual main `05aadeb008186b6644a2dbd67a2f7e5f2e23766d`, tree `55f86b06508e607cb6ea34af610668518171368d`. All 137 additions match their original heads; the four C255 scientific files and released runtime remain unchanged. [Exact integration receipts](docs/engineering/branch-reconciliation-c255/evidence/INTEGRATION.json).
-
-Three actual same-model subagents performed checks in the shared hosted environment. Fresh actual-main checks pass 31 C255 methods, 14 C253 bound files / three cases, and 29 preserved sources / 233 sections / 5,415 local links. The 68 older CPU and 212 stacked inert observations remain bound to exact unchanged source/inputs; no full aggregate rerun is claimed. C211's 27 CPU methods join default unittest discovery; receiver runtime stays opt-in. [Review and check scopes](docs/engineering/branch-reconciliation-c255/README.md#checks-and-independent-review).
-
-The observed inventory is **13 → 3 branches and ten → zero open PRs**. All ten merged working branches are absent. `archive/c174-model-research` is intentionally retained because complete offline ancestry is unavailable; it is index-only history, not product source. `work/c234-cpu-materials` remains at `4afb8d2d2d9a62bf1b5195b09c716607008e8a6c`: source is already retained and merged, but no supported authenticated deletion capability was available. The ineffective UI attempt was reconciled by API readback. [Concrete cleanup limitation](docs/engineering/branch-reconciliation-c255/evidence/CLEANUP-LIMITATION.json).
-
-C251 current-authority qualification remains **FAIL** on stale `AGENTS.md` and `GOAL.md` pins. Its separate historical pass, the strict normal-fidelity failure, native holds, consumed schedules and all unmet release gates retain their meanings. No C256, native or model run occurred. Scope [#238](https://github.com/Omegapy/OntoKin/issues/238) completed its original saved delivery. Scope [#240](https://github.com/Omegapy/OntoKin/issues/240) remains open for C234 cleanup and the **pending amended final ZIP**. Finish the verified saved amendment and stop; the [next-action record](docs/engineering/branch-reconciliation-c255/NEXT-TASK.md) keeps future scientific work separate. Earlier checkpoint sections below retain their historical outcomes.
-
-## C255: offline observation checker integrated
-
-The [C255 checker](docs/engineering/localized-repair-c255/README.md) independently derives the frozen C253 meanings and seven-time motion, and checks inert records for V1/V2/N1. It covers all 18 objects, 34 sites and 126 poses, with geometry, locality, source/dependency bytes, provenance, rebuild records and rejected-edit preservation. A passing component result grants no artifact-reader, execution or real-trial qualification.
-
-The [independent review](docs/engineering/localized-repair-c255/REVIEW.md) approves corrected author `2ef850a235ad158dcb06dd956388015861765eb1`; published scientific `53e05111dfd967f070bdccce11b9432a4f567a19` has the identical tree. 31 authored methods and 134 independent component / 24 denominator / 10 authority / four CLI controls pass. Initial semantic-identity findings and two executed raw-orientation false acceptances are preserved with their corrections. [Results and limits](docs/engineering/localized-repair-c255/RESULTS.md).
-
-[PR #239](https://github.com/Omegapy/OntoKin/pull/239) merged at `8de50d0d4331dd3765f6778eb48212f879be032c`, tree `9e17cd2f46b9a06310da0e1854f914e33731f5c5`, exactly matching the reviewed publication. Fresh actual-main checks pass 31 component methods, 14 bound corpus files / three cases, and 29 preserved documentation sources / 5,295 local links. [Integration receipt](docs/engineering/localized-repair-c255/evidence/integration/INTEGRATION.json). [Scope #238](https://github.com/Omegapy/OntoKin/issues/238) also requires exact archive verification, offline restoration and confirmed saved delivery. Finish that scope and stop. The [next separate action](docs/engineering/localized-repair-c255/NEXT-TASK.md) is a finite read-only GLB observation reader using existing artifacts. No reader or successor is implemented in C255. R07/R08, all C221 criteria, held C251 and the other held PRs, and original failures retain their states. Comparative advantage remains unproven.
-
-## C253: localized-repair qualification protocol
-
-The [C253 protocol](docs/engineering/localized-repair-c253/README.md) binds three existing cases from one public keyed-rack family: a valid length edit, its related reverse and rejection of an incompatible-unit candidate. The corpus retains 18 identities, 16 unrelated objects, the original dependency closure, seven observation times and tolerances. It supports evaluator qualification; it is not an unseen multi-assembly benchmark. **Comparative advantage remains unproven.**
-
-The [scoring contract](docs/engineering/localized-repair-c253/SCORING.md) requires independent formulas, real artifact observations, source rebuild, provenance and complete failure accounting. The [run plan](docs/engineering/localized-repair-c253/RUN-PLAN.json) fixes paired order, repetitions, budgets and analysis while blocking execution on unqualified model, runner and route inputs. Independent review approves the corrected protocol and its final metadata. [PR #236](https://github.com/Omegapy/OntoKin/pull/236) merged at `7eb8a7e094040c11b879718f2669965b1fd75958` with the exact reviewed tree. Fresh merged-main manifest and documentation checks pass. The [C253 results](docs/engineering/localized-repair-c253/RESULTS.md) retain the original eight verifier faults and their correction.
-
-**Next bounded action:** [qualify one offline corpus/oracle component](docs/engineering/localized-repair-c253/NEXT-TASK.md), using inert controls and no native or model execution. R07/R08, the strict Blender-normal failure, held C251 source and all nine C221 records / 41 criteria retain their states. The historical C252 and older next-task text below does not override this successor.
-
-## C252: review priorities adopted; benchmark protocol next
-
-The owner's November 16 instruction selects [C252's decision](docs/engineering/review-integration-c252/DECISION.md) in place of the C251 native-sampling task. OntoKin retains semantic authoring and checked transport. The next investment gate is comparative evidence of correct localized edits, preservation, provenance and effort. **Comparative advantage remains unproven.**
-
-The root README is reduced from 462 to 100 lines, with detailed workflows in [focused user guides](docs/user-guide/README.md) and all 32 original root anchors retained. GOAL, AGENTS and the documentation index now point to the [C252 roadmap](docs/engineering/review-integration-c252/ROADMAP.md). The supplied review is preserved exactly; its proposed 20 percentage-point success gain or 30% effort reduction remain provisional planning thresholds.
-
-The [independent documentation review](docs/engineering/review-integration-c252/REVIEW.md) approves authored candidate `12c4c9a891465ea1916857d44e80d5cc8442fcc3`, tree `98a2db31db630d6005068b3b7ad56a73be04bb14`. The final independently reviewed candidate `71b17d60e924d4bc9e8f3d997ec26020afa81cd3` published as `69ececdac384a45fd35225bc01a5d5d29d838c7a`. [PR #234](https://github.com/Omegapy/OntoKin/pull/234) merged at `89a328dbf461cc6a858f7d59ed6418e5174b0fa1`, exactly matching approved tree `10d8a14e2ecc23c18c7d6013384817b33c4f0fad`. Fresh candidate and resulting-main documentation checks passed 29 preserved sources and 5,221 local links with clean source. [Results](docs/engineering/review-integration-c252/RESULTS.md). This is documentation evidence; no product, native, parser, model trial or aggregate run occurred.
-
-**Next bounded action:** [freeze the localized-repair benchmark protocol and select existing fixtures](docs/engineering/review-integration-c252/NEXT-TASK.md), then deliver its own verified handoff. Define comparable OntoKin, Blender/Python and applicable OpenUSD routes, independent scoring, budgets and uncertainty before implementation or trials. C252 closes after its verified saved handoff; it does not start this successor.
-
-**Held work:** C246–C251 source remains in its separate draft PR chain through [#232](https://github.com/Omegapy/OntoKin/pull/232), head `c8566a273801e12700cc3500a4a03888a9d2673e`. No held PR is merged here. Native sampling and the remaining Godot R07 gates are deferred. The original strict Blender-normal failure and finite C219 acceptance with declared loss remain distinct. The nine C221 recommendations and 41 criteria remain intact; C252 changes only the stated ordering/dependency. R00–R02 retain their completed scopes, while R03–R08 retain their unmet obligations.
-
-The checkpoint sections below retain their historical results and next-task wording. They do not override C252. In particular, earlier delivery-pending text must be reconciled with its exact saved receipts and closed scopes, not treated as an active assignment.
-
-## C244 R07: capture-hook design adopted; native implementation pending
-
-[C244/0.2.0 adoption](docs/engineering/second-target-c244/ADOPTION.md) selects one observer-only callback and a live original-map / observed replacement-chain identity route for the original 18-node fixture. Both C220/C241 exceptions are explicit. The [proposal](docs/engineering/second-target-c244/DECISION.md) and inert test source remain unchanged; their historical draft wording is superseded only by the adoption record after verified integration.
-
-Two actual independent subagents approve the finite design and controls on `8264db6e36b0c6118cf5b7ab2e41724569f72d90`, tree `c62c61d0287d5d006d53f653a3df8267289d547c`. All 44 author methods and 319 independent cases pass, alongside nine pinned sources, six authority documents and the original GLB associations. [Review](docs/engineering/second-target-c244/REVIEW.md). [Results](docs/engineering/second-target-c244/RESULTS.md). [PR #219](https://github.com/Omegapy/OntoKin/pull/219) merged at `91144a38d06d9a915ce5ba091a2f4aa253b22b87`, exactly matching reviewed tree `9465e632588b850cb8f987a401376e0e23ce14db`. Fresh actual-main checks pass 44 inert methods and the documentation preservation/link checker. [Integration receipt](docs/engineering/second-target-c244/evidence/integration/INTEGRATION.json). [Scope #220](https://github.com/Omegapy/OntoKin/issues/220) remains open only for verified saved handoff delivery.
-
-**R07 remains pending.** No observer/emitter/launcher or native behavior is implemented or established. Build lineage, diagnostic coverage, rendering, persistence, hard resource enforcement and reservation remain gates; all original failures and held drafts remain. After verified integration and saved delivery, the [next bounded step](docs/engineering/second-target-c244/NEXT-TASK.md) is held-source implementation of the narrow hook and external session registry, with zero native starts.
-
-## C243 R07: source-node mapping investigated; native capture blocked
-
-[C243](docs/engineering/second-target-c243/RESULTS.md) identifies the missing capture window in the prescribed Godot loader route. The exact fixture has 18 source nodes sharing five meshes. In the inspected default path, conversion replaces/deletes imported mesh nodes before the ordinary caller regains control; no safe live node-index association is established by the stored post-return map. This is a pinned-source finding, with installed-build lineage still unresolved. Godot was not run.
-
-Exact authored commit `17fcc43f05134e2b97da0bb93559dc2c972c1860` passed all **18 static verification groups** and **29 preserved sources / 5,131 local links**. Independent review approved the same clean source and exact fixture joins. Published source `9da0ee2ade71ae1fc24b7bb8f328bd189e023892` has the identical tree `a52086d1a82d79b18ee7b6e0dead82f2775a3ac1`. [Review](docs/engineering/second-target-c243/REVIEW.md). [PR #218](https://github.com/Omegapy/OntoKin/pull/218) merged at `429ddcd9bf11d1f74964eece88f07872bec51711`, exactly matching reviewed tree `b78a776fe39dd6409da049bbd6dafeaaeff7dff0`. Fresh actual-main checks passed all **18 static groups** and **29 preserved sources / 5,137 local links**, with clean unchanged source. [Integration receipt](docs/engineering/second-target-c243/evidence/INTEGRATION.json). [Scope #217](https://github.com/Omegapy/OntoKin/issues/217) remains open only for verified saved handoff delivery.
-
-**R07 remains pending.** The [concrete callback/signal design](docs/engineering/second-target-c243/DESIGN.md) is unadopted: the [next separate decision](docs/engineering/second-target-c243/NEXT-TASK.md) must explicitly permit or reject its narrow observer extension and revise the forward/inverse map boundary. Native metadata must be captured before observer writes; external identity records do not repair Godot's stored map. No native/version/import/render/save/reopen, fixture regeneration, product run or aggregate occurred. Preserve the strict Blender normal failure, all held drafts and nine recommendations / 41 criteria. C242's exact-archive restoration and saved delivery are reconciled, and scope #214 is closed.
-
-## C241 R07: zero-start native capture/preflight contract
-
-[C241](docs/engineering/second-target-c241/RESULTS.md) specifies exact prospective loader settings, source-node mapping, original native capture before observer metadata, provenance, complete C238 projections and later process admission. Fresh static inspection confirms the same pinned Godot bytes. No native/version, source-evaluation, export, import, render, save, reopen or aggregate start occurred.
-
-The exact eight-file author source `7261a6f0829a5e5995f85d9407f458a3269febe5` passed all **14 independent static verification groups**, with unchanged inherited pins, original inputs and source. Its focused documentation check passed **29 preserved sources / 5,099 local links**. [Independent review](docs/engineering/second-target-c241/REVIEW.md). [PR #216](https://github.com/Omegapy/OntoKin/pull/216) merged at `ed13228bbaa5c9e63652e855980ea4a099d6a890`, exactly matching reviewed tree `a5765d3d434bb85606c0db09cbe9db20d04c1eab`. Fresh actual-main documentation checks passed **29 preserved sources / 5,113 local links**, with clean unchanged source. [Integration receipt](docs/engineering/second-target-c241/evidence/INTEGRATION.json). [Scope #214](https://github.com/Omegapy/OntoKin/issues/214) closed after C242 confirmed exact-archive restoration and saved delivery.
-
-**R07 remains pending.** Native mapping lifetime, build lineage and a verified rendering route remain unresolved; observer/emitter code, frozen execution settings and hard resource enforcement are not implemented by this contract. [Next separate step](docs/engineering/second-target-c241/NEXT-TASK.md): one bounded zero-start mapping/capture design. Preserve the C239 finite CPU results, the strict Blender normal failure, all held drafts and nine recommendation records / 41 criteria.
-
-## C240: GitGuardian source-identity false positive verified
-
-[C240 security review](docs/engineering/security-triage-c240/README.md) proves that incident 40091648 on PR #212 flags a preserved Git commit identifier. Recomputing the actual 259-byte commit object reproduces the reported value; the original C239 evidence remains byte-identical. This conclusion covers that finding only. GitGuardian dashboard disposition remains pending because the available tools cannot change the incident. [PR #212 explanation](https://github.com/Omegapy/OntoKin/pull/212#issuecomment-6887205471).
-
-[PR #215](https://github.com/Omegapy/OntoKin/pull/215) merged published source `6c66292b585044aa0175a1a32abab42b494500bf` at `7f79de18b5f9ed2cb881f22f29b0587d5c3618b2`, exactly matching the reviewed merge tree `142506e47b2e7afa2a6cdb90c8f091f7fa0a00f7`. Independent review and fresh actual-main checks passed all seven object-proof checks plus 29 preserved sources / 5,087 local links. GitGuardian's new PR check passed. [Review](docs/engineering/security-triage-c240/evidence/REVIEW.json) and [integration receipt](docs/engineering/security-triage-c240/evidence/INTEGRATION.json) retain exact scopes.
-
-C239 saved delivery is reconciled and scope #211 is closed. [C240 scope #213](https://github.com/Omegapy/OntoKin/issues/213) now closes only its verified saved successor handoff. C241 independently owns the next zero-start native capture/preflight preparation; reconcile its active scope before proceeding. R07, native execution and the original strict Blender normal failure retain their existing states. No runtime, tolerance, workflow, scanner exclusion, native start or aggregate run changed in C240.
-
-## C239 R07: combined CPU component checks
-
-[C239](docs/engineering/second-target-c239/RESULTS.md) runs the five existing component APIs on one verified private copy of all observation and original authority bytes. It derives and compares all 23,400 corner-map rows, preserving all 18 identities, 126 pose slots, 14 feature treatments, four retained files and both source units. Original tolerances and pass/loss/refusal meanings remain unchanged.
-
-Checked author `0d850f836e3f9ab4fe1f832b9e75db57501d49df` passed 29 C239 methods / 58 cases / 2,176,650 row assertions plus 206 unchanged prerequisite methods. Independent exact `5b4e97b346a0fc0a59ead859ca007e3a6e54d3ec` passed 53 API scenarios / 6,768,646 assertions plus 14 source/authority/CLI controls; its scientific bytes equal the final author candidate. [Review](docs/engineering/second-target-c239/REVIEW.md). Published scientific `d53e2f37101f7b989ee8a1be7130a5608bcadf9d` has exact checked tree `85734862971c4cff80f8ac8717d738a5f1604dd2`. [PR #212](https://github.com/Omegapy/OntoKin/pull/212) merged at `1329d5b420f70f2b00f771788e9a50e2eb60ca93`, exactly matching reviewed tree `c69cb2973afebffbcaf4926c11f51dc0df372f79`. Fresh actual-main checks passed all **235 affected methods / 58 C239 cases** and **29 preserved sources / 5,082 local links**, with clean unchanged source and original inputs. [Integration receipt](docs/engineering/second-target-c239/evidence/INTEGRATION.json). This closure releases ownership; final archive verification, offline restoration and saved delivery remain pending under [scope #211](https://github.com/Omegapy/OntoKin/issues/211).
-
-Both initial author fixture mistakes, the reviewer launcher failure, interrupted reviewer/input-verifier runs and unknown kill causes remain preserved. C238 delivery was reconciled to the exact supplied ZIP and closed scope #209. All historical source/evidence, nine recommendations / 41 criteria, held drafts and scope #201 alternate remain. R07 is pending; native/version/source/export/import/render/scene-write and aggregate starts remain zero. After confirmed delivery, the [next bounded task](docs/engineering/second-target-c239/NEXT-TASK.md) is native capture/execution preflight without a native start.
-
-## C238 R07: CPU combined-observation envelope admission
-
-[C238](docs/engineering/second-target-c238/RESULTS.md) admits six actual observation members for the original 18-part fixture: geometry, materials, normals, poses, semantics and a complete declared corner map. Fresh C221 authority admission, exact raw-byte bindings, all 23,400 corner-map rows, 126 pose slots, complete source identities and cross-file dependencies are checked. Every component numerical/semantic result remains `NOT_RUN`; provenance labels remain untrusted.
-
-Exact author/reviewer source `cb662d9d2603085eea9c1f05513baeb7312a48b2` passes **38 C238 + 20 unchanged C221 methods**, with **161 author API/CLI cases**. Independent review passes **161 scenarios / 495,103 assertions**, fully auditing all **21 admitted reports / 491,400 map rows**. [Review](docs/engineering/second-target-c238/REVIEW.md). Published scientific source `70d81a918b13a4f49b87f85278476b9cf92fe71f` has the exact checked tree `0ab3d6915221897ee6da4c09f553443c6ef6dfe4`. [PR #210](https://github.com/Omegapy/OntoKin/pull/210) merged at `cbed653208d4d9a4f1a669e94dc05fca4571d005`, matching the reviewed tree `3348723d2a0d5fa551cf7259c6fae7e1ce34ea40`. Fresh actual-main checks passed all **58 affected methods / 161 C238 cases** and **29 preserved sources / 5,059 local links**, with clean unchanged source and inputs. [Integration receipt](docs/engineering/second-target-c238/evidence/INTEGRATION.json). This documentation closure releases ownership; [scope #209](https://github.com/Omegapy/OntoKin/issues/209) remains open only for verified saved handoff delivery.
-
-The initial offline restore was killed during historical Git checkout; its cause is unproven and the complete partial state is preserved. Source work used a verified clean checkout at the exact C237 revision. Final archive restoration is a separate required closure check. All nine recommendations/41 criteria, original strict Blender normal failure, four held drafts and scope #201 alternate remain. After confirmed C238 delivery, the [next bounded step](docs/engineering/second-target-c238/NEXT-TASK.md) is combined execution of the existing CPU component checks on one safely retained admitted member set. Native/source/export/import/render/scene-write and aggregate starts remain zero; R07 remains pending.
-
-## C237 R07: finite CPU semantic retention checker integrated
-
-[C237](docs/engineering/second-target-c237/RESULTS.md) freshly admits original authority, compares all **18 part identities and 14 feature treatments**, and inspects **four retained files and both source units**. Complete semantic records keep ownership, placement, following, physical connections, motion authority and mass declarations separate. Provenance labels remain unattested; copied metadata or hash strings cannot establish native behavior or retained bytes.
-
-Exact author and independent source `f6fea0606bbc0729c79e1a008e06d9c556549d9c` passes **33 C237 methods plus 20 unchanged C221 methods**, with **194 author cases**. Independent review passes **223 API and three CLI scenarios / 28,956 assertions**, fully auditing all 149 admissible reports. Source and all eight original inputs remain unchanged on Linux x86-64 / CPython 3.12.14. [Review](docs/engineering/second-target-c237/REVIEW.md). Published branch source `670d8f27b5b921ca136cecd5de7cc5e6cef34709` has the exact tested tree `8501075174f7208be67b73444dc6a8cc09bbe430`. [PR #208](https://github.com/Omegapy/OntoKin/pull/208) merged at `769bc9b255e3e41ee8af837456f4116d07e789ff`, exactly matching independently reviewed tree `654938ab56d98154dc42f7eb6fce194de10e0a86`. Fresh actual-main checks passed all **53 affected methods / 194 C237 cases** and **29 preserved sources / 5,038 local links**, with clean unchanged source. [Integration receipt](docs/engineering/second-target-c237/evidence/INTEGRATION.json). This closure releases integration ownership; root completes only archive verification, offline restore and confirmed saved handoff delivery under [scope #207](https://github.com/Omegapy/OntoKin/issues/207), then stops.
-
-An immutable checked-source recovery ZIP is confirmed saved. Earlier recovery replacement conflicts and the two author preparation errors remain preserved. The C236 delivery, exact package and fresh offline restore are reconciled: 389 retained refs, 303 historical files, clean source and no external object store or network. All nine recommendations/41 criteria, original strict Blender normal failure, four held drafts and scope #201 alternate remain. R07 remains pending; all native/source/export/import/render/scene-write and aggregate starts are zero. After verified delivery, the [next separate scope](docs/engineering/second-target-c237/NEXT-TASK.md) is CPU admission of one combined observation envelope.
-
-## C236 R07: finite CPU pose checker integrated
-
-[C236](docs/engineering/second-target-c236/RESULTS.md) compares all **126 object/time poses** with original retained source samples after fresh authority admission. Raw matrices, translations, quaternions and scales remain explicit. The original inclusive 0.001 m maximum-component position, 0.001 rad sign-invariant orientation and 0.000001 s time gates remain unchanged. A separately predeclared 2^-20 structural matrix envelope and exact-unit-scale profile are reported distinctly; neither proves native compatibility.
-
-Exact author/reviewer source `8bbc4ff12cc19e372e9d4808b2c6e8b084b1677e` passes **135 affected methods** and **85 independent public scenarios**. Independent review audits all 126 rows in each of 36 admissible reports. Checked source remains clean and unchanged on Linux x86-64 / CPython 3.12.14. [Review](docs/engineering/second-target-c236/REVIEW.md). Source and frozen scientific evidence were confirmed saved in recovery ZIP version 4 before publication. [PR #206](https://github.com/Omegapy/OntoKin/pull/206) merged at `6ff721689fcc52c24bf8129ccb6c84b258fd488c`, exactly matching reviewed tree `69d6c157f350548d40e4911d978678d6b39fb0a5`. Fresh actual-main checks passed all **135 affected methods** and **29 preserved sources / 5,019 local links**, with clean unchanged source. [Integration receipt](docs/engineering/second-target-c236/evidence/INTEGRATION.json). This closure releases integration ownership; root completes only verified saved handoff delivery under [scope #205](https://github.com/Omegapy/OntoKin/issues/205), then stops. The [next separate task](docs/engineering/second-target-c236/NEXT-TASK.md) is CPU semantic treatment and explicit loss. R07 remains pending; all native/source/export/import/render/scene-write and aggregate starts are zero.
-
-C235 final delivery is reconciled against the supplied ZIP and closed scope #203. Fresh input integrity and offline restore passed after preserved capacity/SIGKILL preparation failures; the kill cause remains unproven. All nine recommendations/41 criteria, original strict Blender failure, held drafts and the separate scope #201 alternate remain unchanged.
-
-## C235 R07: finite CPU normal-loss checker integrated
-
-[C235](docs/engineering/second-target-c235/RESULTS.md) compares all **23,400 instance corners / 70,200 components** with original C214 binary32 surface directions after fresh C221 admission and C222 geometry-only correspondence. It binds exact geometry/normal observation bytes and the complete corner map. Raw values remain explicit; the unchanged inclusive **0.000002** component limit uses exact rational differences before any angular-only normalization. Structural rejection and measured strict-gate failure remain distinct.
-
-Exact author and independent source `ece41537fc4e954c89af94dce071d2731c8164f5` passes **98 affected methods** (31 new + 67 unchanged prerequisites) and **78 independent scenario groups**. Eighteen independent scenarios verify every report row. Both executions preserve a clean unchanged source on Linux x86-64 / CPython 3.12.14. [Review](docs/engineering/second-target-c235/REVIEW.md) records the separate roles and optional unexecuted descriptor-metadata injection; no complete native or platform claim follows.
-
-Accepted source/evidence and the recovery checkpoint are confirmed saved at version 3. [PR #204](https://github.com/Omegapy/OntoKin/pull/204) merged at `3838d191ba550d18450fe68e9ec49d8110ff5a42`, exactly matching reviewed tree `95e84814241d84195687121a774b2a3829d68b1f`. Fresh actual-main checks passed all **98 affected methods** and **29 preserved sources / 4,994 local links**, with clean unchanged source. [Integration receipt](docs/engineering/second-target-c235/evidence/INTEGRATION.json). This closure releases integration ownership; root completes only the verified saved handoff under [scope #203](https://github.com/Omegapy/OntoKin/issues/203), then stops. [Next separate bounded step](docs/engineering/second-target-c235/NEXT-TASK.md): CPU comparison of all 126 object poses. R07 remains pending. No aggregate, native/version, source-evaluation, export, import, render or native scene write occurred; C234 materials, original strict Blender normal failure and all nine recommendations/41 criteria remain unchanged.
-
-Starting-state reconciliation confirms C234 scope #200 closed with the exact supplied ZIP saved; scope #201 closed holding its separate alternate. Its leftover base-only branch is preserved after the prior failed cleanup. Fresh C234 archive verification and documented offline restore pass, including all 303 original historical evidence files and 359 predecessor references. Current-source observations supersede older seal-time delivery-pending statements without changing their historical records.
-
-## C234 R07: finite CPU material checker completed
-
-[C234](docs/engineering/second-target-c234/RESULTS.md) adds a separately versioned opt-in material-observation schema and checker for the original **18 parts/two materials**. Fresh C221 admission and C222 correspondence bind exact geometry and material associations. Raw values remain beside independently normalized values; the fixed sRGB conversion, linear alpha, **0.000002** limit and exact culling/transparency meaning are preserved.
-
-Author source `67b01548056ec5caf7bc5cd0c41fde8434c0ab0e` passes **67 affected methods** (24 new + 43 unchanged prerequisites). [Independent review](docs/engineering/second-target-c234/REVIEW.md) accepts **151 controls**, a complete 23,400-corner oracle, 108 numerical components and 36 exact mode checks. Checked source remained unchanged. Earlier author/reviewer startup errors and root's input-restore capacity failure remain preserved; they are separate from successful material checks.
-
-Source/evidence are confirmed saved in recovery version 2. Root completes coordinated publication, actual-main verification and saved handoff delivery under [scope #200](https://github.com/Omegapy/OntoKin/issues/200), then stops. The [next separate step](docs/engineering/second-target-c234/NEXT-TASK.md) is CPU normal-loss comparison. R07 as a whole remains pending. Native/source/export/import/render/scene-write starts are zero; existing runtime, frozen contracts, tolerances, held drafts and all nine recommendations/41 criteria remain. C233 scope #198 is closed with its exact final save verified; its seal-time pending text below is historical.
-
-[PR #202](https://github.com/Omegapy/OntoKin/pull/202) merged at `30eb45e279a1a8e53e40c70925bf65a10a1a2be7`, exactly matching reviewed tree `6389e9f48ba9e4b999b64866493d23fe21851202`. Fresh actual-main checks passed all **67 affected methods** and **29 preserved sources / 4,964 local links**, with clean unchanged source. [Integration receipt](docs/engineering/second-target-c234/evidence/INTEGRATION.json). The work branch is observed absent. The capacity-corrected fresh input restore passed, including 303 original historical evidence files and all 352 predecessor references. Scope #200 remains open for verified saved handoff delivery.
-
-Concurrent [scope #201](https://github.com/Omegapy/OntoKin/issues/201) explicitly holds its distinct local alternate `1fa9c35da6a0df181f266a9d4123eac3d06b6ef1` without main writes or lease acquisition. Its source and frozen evidence are preserved separately in the handoff; its test results are not attributed to this implementation. Its branch remains owned by that session. No alternate implementation is merged automatically.
-
-## C233 R02: complete default aggregate passed
-
-[C233](docs/engineering/aggregate-regression-c233/RESULTS.md) completes one immutable default aggregate from exact `3b3238b13797fecf290cd19169c6ee794739f095`, tree `1e8b44b92d64367c162732102285502491585999`, on Linux x86-64 / CPython 3.12.14. **All 4,685 methods and all seven default commands passed**, with zero failed, errored, skipped, timed-out or unrun methods and no fixture/import or failed-subtest events. The checked source remained unchanged, original product budgets were preserved and no retry occurred.
-
-[Independent review](docs/engineering/aggregate-regression-c233/REVIEW.md) accepted 46 outcome checks and 13 raw-log consistency groups. All 13 A08 artifact-read methods and the formerly failing ledger replacement method passed in this aggregate. The three CPU readback controls passed with 6,180 numerical rows / 18,613 audit assertions. **R02 is completed for this selected default suite and environment.** Sixteen external conformance cases, other interpreters/platforms, optional visual/dedicated roles and full release acceptance remain separate. Prior failed attempts retain their original meanings.
-
-Completed outcome evidence is saved as C233 recovery version 4; its exact receipt is retained in the handoff. This publication adds documentation/evidence only. Scope [#198](https://github.com/Omegapy/OntoKin/issues/198) records integration and separately confirmed final handoff delivery. Finish that delivery and stop. The [next separate bounded scope](docs/engineering/aggregate-regression-c233/NEXT-TASK.md) is R07's CPU material-observation schema and parameter checker for the same 18 parts/two materials, with zero target starts. All nine recommendations/41 criteria and held drafts remain.
-
-[PR #199](https://github.com/Omegapy/OntoKin/pull/199) merged at `e047c23db2818ccca647127e7d8134ebf898203f`, exactly matching independently approved tree `47461ecef1a1ce71f39ac607333526399a42c57b`. Fresh actual-main documentation checks passed 29 preserved sources / 4,938 local links. [Integration receipt](docs/engineering/aggregate-regression-c233/evidence/INTEGRATION.json). The work branch was observed absent; integration ownership is released by this closure. Scope #198 remains open for verified saved handoff delivery.
-
-Current-state reconciliation: C232 scope #196 is closed with its exact saved ZIP receipt verified; its older delivery-pending text below is retained as a historical checkpoint. C228 is the previous complete failed aggregate; C233 is the latest complete aggregate. Historical sections below describe their own checkpoint states.
-
-## C232 R02 preparation: stopped before aggregate admission
-
-[C232](docs/engineering/aggregate-regression-c232/RESULTS.md) prepared one complete default aggregate from exact `32f4c088010a35f67cbb19edb40b6e08875d37dc` on Linux x86-64 / CPython 3.12.14. Fresh discovery identified **4,685 methods**, and independent prelaunch review checked 15,907 source files and 350 bindings. No product method ran.
-
-Root saved the approval before the reviewer added its final scope/process metadata. The exact saved/current approval comparison then refused recovery-gate creation. Root's newline-separated shell sequence nevertheless invoked the launcher once; it exited **1** opening the absent gate, before output reservation or driver creation. All **4,685 methods and seven commands are unrun**. Two short orchestration Python programs ran; their PIDs were not recorded. No aggregate, native target or retry occurred, and no product defect is inferred.
-
-[Independent review](docs/engineering/aggregate-regression-c232/REVIEW.md) confirms the failure and unchanged clean source. **R02 remains blocked.** C228 remains the latest actually completed aggregate, with its original failure preserved; C231's checked repair remains intact. [Next bounded scope](docs/engineering/aggregate-regression-c232/NEXT-TASK.md): a fresh current-source aggregate after reviewer completion, exact saved approval verification and a separately successful recovery gate. Scope [#196](https://github.com/Omegapy/OntoKin/issues/196) records publication and saved delivery. All nine recommendations/41 criteria and held drafts remain. C231 delivery was independently confirmed and scope #194 is closed.
-
-[PR #197](https://github.com/Omegapy/OntoKin/pull/197) merged at `e21b2c8653d5efbcc7c3dbe54889190a7e4595b0`, exactly matching reviewed tree `df8da9a0973e7596a0ce62ba8506b0c44ad7b7f0`. Fresh actual-main documentation checks passed 29 preserved sources / 4,904 local links. [Integration receipt](docs/engineering/aggregate-regression-c232/evidence/INTEGRATION.json). The work branch was observed absent. Integration ownership is released; scope #196 remains open for verified saved handoff delivery.
-
-## C231 R02 prerequisite: ledger identity repair checked
-
-[C231](docs/engineering/ledger-identity-c231/RESULTS.md) retains the original invocation-marker and journal file objects while a ledger capability is live. Same-content replacement cannot inherit their authority merely through recycled device/inode numbers. Existing path/content checks, nonblocking opens, poisoning, budgets and frozen bindings remain. Explicit cleanup handles terminal states, failures, disposal, interruption and fork boundaries.
-
-Exact author `e9f811dbd0d32d16aea55ce90ca3615a138a3416` passes all **307 affected methods** (284 existing + 23 additive), with zero failures/errors/skips/unrun methods and unchanged clean source. Independent checks pass 17 groups / 136 assertions plus four exception/cleanup regression cases. The original test file is unchanged. Prior failed probes and superseded runs remain preserved.
-
-**R02 remains blocked until one fresh complete aggregate passes.** No aggregate or native application ran here. [Next bounded action](docs/engineering/ledger-identity-c231/NEXT-TASK.md): one new immutable aggregate with complete accounting. [Scope #194](https://github.com/Omegapy/OntoKin/issues/194) records root publication, resulting-main verification and saved delivery. All nine recommendations / 41 criteria and earlier failed or pending gates remain.
-
-[PR #195](https://github.com/Omegapy/OntoKin/pull/195) merged at `231caabacabaeca810acc8d75a081be3646b4a4b`, exactly matching reviewed tree `edd9b17f0e82599947bf01ab05da2b68ae02b74d`. Fresh actual-main checks pass all **307 methods** and 29 preserved sources / 4,874 local links with clean unchanged source. [Integration receipt](docs/engineering/ledger-identity-c231/evidence/INTEGRATION.json). The work branch was observed absent. Integration ownership is released; scope #194 remains open only for verified saved handoff delivery.
-
-## C230 R02 diagnosis: journal inode reuse observed; ledger repair next
-
-[C230](docs/engineering/ledger-replacement-c230/RESULTS.md) fixes the separate diagnostic launcher's path handling and completes one reviewed two-worker CPU plan from exact `e19acb44784ba5654f24bd3d87fb7310249f6d05`. The unchanged original method reproduces both replacement failures: eight of ten subtests pass and two fail. A separately observed same-content journal replacement reuses its device/inode pair and incorrectly accepts a reservation. The marker observation and both held-descriptor controls get different identities, reject and subsequently return STOPPED. The uninstrumented original marker sequence and C228's exact allocation history remain unknown.
-
-Preparation passed 24 author inert controls, eight independent controls/88 assertions and 29 binding checks. Exact approved bytes were saved before the sole 0.407266689-second invocation. Source/tree/status and nine bound inputs remained unchanged; both workers were reaped with no observed remaining process-group members. Independent outcome review passed 313 read-only assertions. No ledger repair, aggregate, native start or retry occurred. [Measured evidence](docs/engineering/ledger-replacement-c230/evidence/MEASURED-SUMMARY.json).
-
-**R02 remains blocked.** This plan is consumed. The [next bounded step](docs/engineering/ledger-replacement-c230/NEXT-TASK.md) is a narrow ledger file-identity repair with explicit resource lifecycle and deterministic replacement controls; a fresh complete aggregate follows the checked repair. All nine recommendations/41 criteria and earlier failed or pending gates remain. [Scope #192](https://github.com/Omegapy/OntoKin/issues/192) records publication and final saved delivery.
-
-[PR #193](https://github.com/Omegapy/OntoKin/pull/193) merged at `fed8cd041ddc84610fa4ad06cc4c16ec1de1bfd3`, exactly matching reviewed tree `b97cc8caf0920fabc1c265fdf75eb48cea9509dc`. Fresh actual-main documentation checks passed 29 preserved sources / 4,853 local links. [Integration receipt](docs/engineering/ledger-replacement-c230/evidence/INTEGRATION.json). The work branch was observed absent; verified saved handoff delivery remains in scope #192.
-
-## C229 R02 diagnosis: launcher path failure before test execution
-
-[C229](docs/engineering/ledger-replacement-c229/RESULTS.md) prepared, independently reviewed and saved one finite CPU diagnosis from exact `d578a30dab9a112895d2e3c09561a17866d9c464`. Its sole launcher invocation attempted one Python worker, which exited **2 before opening its script**. Root supplied a relative plan path; the launcher derived a relative worker path and passed it to a child with a different working directory. The launcher stopped, exited 1 and consumed the plan. The second worker did not start. **Zero product methods, subtests, replacement cases, ledger calls, native starts or aggregates executed.**
-
-The attempted worker was reaped with no remaining process-group members observed. Source commit/tree, clean status and all nine bound files remained unchanged. [Independent review](docs/engineering/ledger-replacement-c229/evidence/OUTCOME-REVIEW.md) reconciles fifteen evidence checks and records the caller error, launcher path defect and preexecution review miss. Numeric inode reuse remains an untested static hypothesis; this attempt establishes no mechanism for C228's replacement failures.
-
-**R02 remains blocked.** C228's 4,661 passing methods and one failed method with two replacement subtests remain the latest aggregate result. This increment preserves diagnostic source, documentation and the exact failed attempt; product guards, assertions, fixtures and budgets are unchanged. [Next bounded scope](docs/engineering/ledger-replacement-c229/NEXT-TASK.md): correct and qualify launcher path handling, then independently review and save a fresh finite CPU diagnosis. The C229 attempt cannot be resumed. [Scope #190](https://github.com/Omegapy/OntoKin/issues/190) records publication and final handoff delivery. All nine recommendations/41 criteria, held drafts and consumed native schedules remain.
-
-[PR #191](https://github.com/Omegapy/OntoKin/pull/191) merged at `1e985b416b89d5658363d08d65bbc8dfb205875d`, exactly matching reviewed tree `309cb50aa77091bd738fbece46823fcd6e5d85a6`. Fresh actual-main documentation checks passed 29 preserved sources / 4,833 local links. [Integration receipt](docs/engineering/ledger-replacement-c229/evidence/INTEGRATION.json). The merged work branch was observed absent; only final verified saved handoff delivery remains in scope #190.
-
-## C228 R02: complete aggregate; ledger replacement rejection remains blocked
-
-[C228](docs/engineering/aggregate-regression-c228/RESULTS.md) completes one immutable default aggregate from exact `fc500331ce789eb6f9c1210ea4f3b394d45e507c` on Linux x86-64 / CPython 3.12.14. All **4,662 methods ran: 4,661 passed and one failed**. The single failed ledger method contains two failed same-content file-replacement subtests: the expected `LedgerError` was not raised after recreating either the invocation marker or journal. There were no method errors, skips, import/setup errors, timeouts or unrun methods. The cause is not established. **R02 remains blocked.**
-
-The original A08 setup succeeded in this same aggregate and all thirteen artifact-read methods passed; no isolated C227 timing or artifact measurement is reused. All six later default commands passed, with sixteen external conformance cases still pending. [Independent review](docs/engineering/aggregate-regression-c228/REVIEW.md) verifies all 350 preparation bindings, unchanged source/Git identity, complete process cleanup, and the three readback controls with 6,180 numerical rows. The single attempt took 1,316.231 seconds under the predeclared 3,600-second per-command ceiling and original product limits.
-
-This increment records documentation and evidence. Runtime, tests, fixtures, locks, workflows and product limits remain unchanged. [Next bounded scope](docs/engineering/aggregate-regression-c228/NEXT-TASK.md): independently review one CPU diagnosis of same-content authority-file replacement invalidation before any repair or aggregate retry. The nine recommendation records and 41 criteria, earlier failures, held drafts and all consumed native schedules remain. [Scope #188](https://github.com/Omegapy/OntoKin/issues/188) records publication and final saved delivery.
-
-[PR #189](https://github.com/Omegapy/OntoKin/pull/189) merged at `ed23a7b2fa29b203d8e550167160c1be1e8ba56c`, exactly matching independently approved tree `090cc9023635c7fa33018e78f6cf03b9170187c3`. Fresh actual-main documentation checks passed 29 preserved sources / 4,795 local links. [Integration receipt](docs/engineering/aggregate-regression-c228/evidence/INTEGRATION.json). The finite aggregate result is published; R02 remains blocked.
-
-## C227 R02 diagnosis: original setup passes in isolation; aggregate remains blocked
-
-[C227](docs/engineering/torque-diagnosis-c227/RESULTS.md) completes the reviewed two-slot CPU diagnosis from exact `da007e1466c14812441bb8b18f8d2f8f01cbf1f6` on Linux x86-64 / CPython 3.12.14. The unchanged original A08 export succeeds in **24.591 seconds / 452,627 operations**, publishing the exact historical 2,447,148-byte artifact. Its class setup takes 25.216 seconds. The separate overhead-affected cProfile attempt reaches the unchanged 30,000-ms deadline after 140,127 operations during frame sampling and authority checks, before encoding/readback. Both processes are reaped, stores and artifact bytes verify, and source remains unchanged during execution.
-
-The different broad implementation digests are explained by the sole added `semantic_export.py` module; all 192 inherited modules and frozen torque inputs retain their exact bytes. That module is not imported in either observed process. The historical C226 deadline's attributable cause remains unproven; profile costs are not baseline percentages or proof of a regression. Earlier rejected guard shortcuts remain rejected. [Independent review](docs/engineering/torque-diagnosis-c227/REVIEW.md).
-
-This is documentation, diagnostic harness and evidence only. No runtime, test, fixture, budget or authority behavior changes. The two-slot schedule is consumed; zero artifact-read test methods and zero aggregates ran. **R02 remains blocked.** [Next bounded scope](docs/engineering/torque-diagnosis-c227/NEXT-TASK.md): one fresh immutable default aggregate after exact prerequisite and finite-plan review, with complete outcome accounting. [Scope #186](https://github.com/Omegapy/OntoKin/issues/186) records publication and final saved delivery.
-
-[PR #187](https://github.com/Omegapy/OntoKin/pull/187) merged at `9e3cdcdefc706b182c242ed359196e8b8f6d9caa`, exactly matching independently reviewed tree `5a883585d135616ef6dfddb47309bb7ca5663149`. Fresh actual-main documentation checks passed 29 preserved sources / 4,758 local links. [Integration receipt](docs/engineering/torque-diagnosis-c227/evidence/INTEGRATION.json). The merged work branch is observed absent and the four held drafts remain unchanged. Final handoff verification and save remain separate delivery operations recorded in scope #186.
-
-## C226 R02: complete aggregate accounting; torque export setup remains blocked
-
-[C226](docs/engineering/aggregate-regression-c226/RESULTS.md) completed one immutable default aggregate attempt from `3f17a523b5d5c435f71525a499d2f071ca6e4e96` on Linux x86-64 / CPython 3.12.14 with a predeclared 3,600-second command limit. Of 4,662 discovered methods, **4,649 passed and 13 did not run** because `TorqueArtifactReadTests.setUpClass` raised one separate error. No method failed, errored, skipped or timed out. The frozen A08 `seed-export` exceeded its unchanged 30,000-ms product deadline at `recording_export_readback`; the command ceiling was not reached. R02 remains **blocked**.
-
-All six later default commands passed; sixteen external conformance cases remain pending. Source bytes and Git identity stayed unchanged. The three readback controls passed within this same aggregate; independent review verifies their 6,180 numerical rows and actual cleanup receipts. [Independent review](docs/engineering/aggregate-regression-c226/REVIEW.md) accounts for the complete inventory and preserves its own corrected review-harness mistake. The diagnostic/program/policy/limits match older evidence, but the implementation digest differs; historical performance equivalence is unproven.
-
-This is a documentation/evidence-only integration. Runtime, tests, fixtures, locks, workflows and product budgets remain unchanged. All nine recommendation records and 41 acceptance criteria remain; current R02 evidence and status are updated. Historical failures, the strict Blender normal gate and Godot limits remain visible. [Next bounded action](docs/engineering/aggregate-regression-c226/NEXT-TASK.md): diagnose the frozen A08 setup deadline under unchanged limits, starting with implementation identity reconciliation. No repair or aggregate retry occurs in C226. [Scope #184](https://github.com/Omegapy/OntoKin/issues/184) records publication and the verified final handoff.
-
-[PR #185](https://github.com/Omegapy/OntoKin/pull/185) merged at `193b80b832356e15b53f766bed0eea9aa0c2eb99`, exactly matching approved tree `5a51285b4c5e1b40d9de9fd1a5d005e381904109`. Fresh actual-main documentation checks passed 29 preserved sources / 4,722 local links. [Integration receipt](docs/engineering/aggregate-regression-c226/evidence/INTEGRATION.json). The finite attempt is recorded; R02 remains blocked and all pending roles remain pending.
-
-## C225 R02 preparation: exact readback prerequisites restored
-
-[C225](docs/engineering/readback-prerequisites-c225/RESULTS.md) recovers all 24 exact retained readback dependency files and the original historical host inventory. All ten required current runtime bindings match. One execution of the three unchanged CPU readback methods passed with zero failures, errors or skips on `c76a7622dadb0bdd7cb514840ee1747aabe8eae7`; the source remained clean and unchanged. Independent review reconciles actual reader process receipts and all 6,180 recorded numeric comparisons. [Review](docs/engineering/readback-prerequisites-c225/REVIEW.md).
-
-This completes prerequisite preparation only. R02 remains blocked pending [one fresh immutable aggregate attempt](docs/engineering/readback-prerequisites-c225/NEXT-TASK.md) with a justified longer validation-command ceiling. The historical C224 timeout and all nine recommendations / 41 criteria remain unchanged. Runtime, tests, fixtures, locks, workflows and product budgets are unchanged; no native schedule or aggregate ran. [Scope #182](https://github.com/Omegapy/OntoKin/issues/182) records publication and the final handoff.
-
-[PR #183](https://github.com/Omegapy/OntoKin/pull/183) merged at `5781fcab7a1078f6013f11d93156092de92da9c6`, exactly matching independently reviewed tree `e6e29d1d28de03145873c7d7075b4dc2a69cf28e`. Fresh resulting-main documentation checks passed 29 preserved sources / 4,693 local links. [Integration receipt](docs/engineering/readback-prerequisites-c225/evidence/INTEGRATION.json). This publishes the bounded preparation result; it does not close R02.
-
-## C224 R02: aggregate outcome recorded with complete accounting
-
-[C224](docs/engineering/aggregate-regression-c224/RESULTS.md) ran the complete default seven-step local plan from immutable source `1530832e0ee566887a43ce6a5e5d374901a24860` after the exact seven-package preflight on Linux x86-64 / CPython 3.12.14. The per-command limit remained 900 seconds. Independent pre-run discovery recorded all 4,662 methods; [complete outcome accounting](docs/engineering/aggregate-regression-c224/evidence/METHOD-OUTCOMES-SUMMARY.json) records 3451 passing, 0 failed, 0 errored, 0 skipped, 1 timed-out and 1210 unrun methods. Setup/import and subtest events remain separately identified. The driver result is **failed**; R02 is **blocked**. Source and Git revision stability are True / True.
-
-This is a documentation/evidence increment. Runtime, tests, fixtures, workflows, locks, product budgets and original expectations remain unchanged. Historical failed aggregate results and the strict Blender normal gate remain failed. The optional visual and dedicated force-agent plans, other Python versions and actual Godot proof are separate, unexecuted roles. C223's final delivery is freshly confirmed, and R00/R01 remain completed within their scopes. All nine recommendations and 41 criteria remain. Follow the [exact R02 next action](docs/engineering/aggregate-regression-c224/NEXT-TASK.md); no repair or later feature begins in this thread. [Scope #180](https://github.com/Omegapy/OntoKin/issues/180) records publication and final saved handoff.
-
-[PR #181](https://github.com/Omegapy/OntoKin/pull/181) merged the documentation/evidence record at `16bda25a08375a491a60dd5911757c12aa92f32a`, exactly matching reviewed tree `db683e01d765d365048b4147bcb9e0e076574960`. Fresh actual-main documentation checks passed 29 preserved sources / 4,672 local links. [Integration receipt](docs/engineering/aggregate-regression-c224/evidence/INTEGRATION.json). This publishes the blocked aggregate result without altering executable inputs or claiming a full regression pass.
-
-## C223 R01: validation input and bytecode repair passed focused checks
-
-[C223](docs/engineering/local-validation-c223/RESULTS.md) repairs the local driver's two recorded defects: the isolated input closure now includes all top-level fixtures, every planned Python command receives `-B`, and ordinary descendants inherit `PYTHONDONTWRITEBYTECODE=1`. Existing source-stability and frozen-reader cache guards, budgets, fixture bytes and expected outcomes remain intact.
-
-Author `7a72d489235a6bc880ffd6c9732591a94a0ae383` passes all 30 focused methods; the same controls produce 11 original assertion/subtest failures against the unchanged driver. Independent review passes 12 groups covering all 42 real fixture files, 18 Python launch prefixes, grandchildren and six retained cache refusals. [Review](docs/engineering/local-validation-c223/REVIEW.md). [PR #179](https://github.com/Omegapy/OntoKin/pull/179) merged at `dfff965666771df5c850ac5d4f4954044da21bb1`, exactly matching the independently reviewed tree. Fresh actual-main checks pass all 30 methods and 29 preserved sources / 4,651 local links; the worktree is clean. [Integration receipt](docs/engineering/local-validation-c223/evidence/INTEGRATION.json).
-
-R00 is completed after fresh verification of C222's exact saved archive, complete offline restore and closed scope #176. The [nine-task tracker](docs/engineering/review-integration-c221/RECOMMENDATIONS.json) preserves all 41 criteria. R01 is completed within its focused scope; after the verified C223 saved handoff, [R02 aggregate regression](docs/engineering/local-validation-c223/NEXT-TASK.md) is next. Historical aggregate failures remain failed. No native starts, product-source evaluations, exports, imports, renders or scene writes ran. Stop after C223 delivery.
-
-## C222 current result: CPU observation schema and exact correspondence passed
-
-[C222/0.1.0](docs/engineering/second-target-c222/RESULTS.md) supplies the finite observation format and geometry checker for the same 18-part fixture. C221 authority admission stays fixed. Exact positions and C220's predeclared winding conversion map all 7,800 triangles and 23,400 corners, with signed-zero canonicalization only. Names and normals cannot choose matches; malformed, missing, ambiguous, duplicate or extra geometry fails.
-
-All 23 author controls and 49 independent public controls pass, plus ten ambiguity/winding controls and six static conditions. Nine accepted synthetic variants received complete 23,400-row correspondence checks. [Contract](docs/engineering/second-target-c222/CONTRACT.md), [independent review](docs/engineering/second-target-c222/REVIEW.md). Native labels remain untrusted. No Godot behavior, numerical normal/material/pose fidelity, native persistence or full release is established; all native/version/source/export/import/render starts and scene writes remain zero.
-
-[PR #177](https://github.com/Omegapy/OntoKin/pull/177) merged at `5db3643a1b881af1e8adfa2437d303458bcf449b`, with the exact independently reviewed tree. Fresh actual-main checks pass all 43 selected C221/C222 CPU methods, the complete independent corner map and 29 preserved sources / 4,621 links. [Verified integration record](docs/engineering/second-target-c222/evidence/INTEGRATION.json). The merged work branch is absent and the four held PRs remain unchanged.
-
-The [owner's review tracker](docs/engineering/review-integration-c221/README.md) retains all nine task records and criteria. C223 freshly verified the exact final C222 ZIP and closed scope #176 delivery; R00 is completed. The separately selected R01 repair is recorded above. R02 aggregate verification and R03-R08 remain pending, including the R07 second-target chain. C222's original seal-time wording and delivery evidence remain in its preserved handoff.
-
-## C221 current result: CPU authority binding passed
-
-[C221/0.1.0](docs/engineering/second-target-c221/RESULTS.md) supplies an isolated standard-library checker for the eight fixed C220 input files and complete source mapping. Actual input admission passes two source units, 18 parts, 52 span occurrences over 16 distinct ranges, 54 accessor bindings, 7,800 triangle instances and 23,400 corner instances. The [contract](docs/engineering/second-target-c221/CONTRACT.md) separates immutable file admission, structural source joins and unimplemented numerical/destination claims.
-
-[Independent review](docs/engineering/second-target-c221/REVIEW.md) passed 39 controls and 337 static assertions; all 20 author methods pass without failures, errors or skips. Original worker source is `d16dde5b6017df2c37b2537ba4fa0a30ba46be09`, tree `998e4db5e3307849783acbd8f2b259c43a311af1`. [PR #175](https://github.com/Omegapy/OntoKin/pull/175) merged at `315e9a915c8681bb13b0fe0e5f84ffeb3c2b8a0f`, tree `dd4456259c27c8d526fd59c5a93a8aec4b410757`, exactly matching the reviewed candidate. Fresh actual-main checks pass authority admission, all 20 author methods, and 29 preserved sources / 4,595 local links. All 15,597 existing non-navigation entries remain exact. [Verified integration record](docs/engineering/second-target-c221/evidence/INTEGRATION.json). No product runtime, exporter, fixture, workflow or dependency changes. Historical failures and held PRs #155/#165/#167/#169 retain their meanings.
-
-All native/target/version/source/export/import/render starts and native scene writes remain zero. Godot build lineage, runtime/API behavior and a useful rendering route remain unresolved. This step completes source-input preparation only. The next bounded task is [CPU-only observation schema and corner correspondence](docs/engineering/second-target-c221/NEXT-TASK.md); the rest of C220 preparation and the second-target proof remain pending. Finish the verified saved C221 handoff, then stop.
-
-## C220 preserved result: second-target plan; execution held
-
-[C220/0.1.0](docs/engineering/second-target-c220/PLAN.md) selects the installed Godot 4.6.3 candidate by exact executable digest and binds the same accepted C210 GLB/source/semantic inputs plus C214 authority. The planned mapping enumerates all 18 parts and their source spans, definitions, keyed occurrences and geometry references. Numeric, material, semantic, cross-target, persistence, visual and resource/stop requirements are predeclared.
-
-The executable exists; its upstream build lineage is unresolved because its embedded commit-like value differs from the observed official tag. This shell has no confirmed rendering surface. Runtime/API behavior and useful images remain unverified. C220 is planning and read-only availability inspection only: zero target/native/source/export/import/render starts or scene writes. The original strict normal failure and all historical failed/unrun gates remain unchanged. [Planning status and limitations](docs/engineering/second-target-c220/evidence/PLANNING-STATUS.json).
-
-[Independent review](docs/engineering/second-target-c220/REVIEW.md) passed 9,499 static source assertions, 14 contract conditions, 25 target conditions and seven final delta checks. The missing raw Blender observation binding was corrected and preserved. [PR #173](https://github.com/Omegapy/OntoKin/pull/173) merged at `0c5f4510672d6ff61a5865bb4be8ed52880154f1`, tree `d9be713ddf17ffc9081bf43be624973a09ceb721`, exactly matching the reviewed candidate. Fresh resulting-main documentation checks passed 29 preserved sources / 4,559 local links. Integration review passed 24 checks; all 15,584 existing non-navigation entries remained exact. [Verified integration record](docs/engineering/second-target-c220/evidence/INTEGRATION.json). **Current closure:** deliver the verified saved C220 handoff and stop. The next thread may perform only [CPU-only Godot observer/checker and protocol preparation](docs/engineering/second-target-c220/NEXT-TASK.md), with no target start. Full second-target execution remains blocked on reviewed source and evidenced capabilities; Unreal support and the matched direct-authoring comparison remain unrun.
-
-## C219 preserved result: precise finite Blender receiving promise accepted
-
-[C219/0.1.0](docs/engineering/receiving-decision-c219/DECISION.md) accepts the one-fixture, one-build promise from C217/C218: exact retained source authority, independently checked native geometry and measured shading loss, useful inspected views, and exact persistence of observed native values through the specified save/reopen. Its requirement table binds all 18 objects, 7,800 triangles, 23,400 corners and 126 poses. This is an experimental feasibility decision; it does not establish a general or production importer.
-
-The original strict source-normal gate remains **FAILED** at maximum component difference `0.0001531541347503662` versus unchanged `2e-6`. No new normal, correspondence or shading tolerance is adopted. C215's automatic acceptance/provenance flags remain false. Retained source and mapped semantic metadata do not establish live native physics or actions. Held PRs #155/#165/#167/#169 remain unchanged; no prototype or runtime source is integrated. [Exact evidence bindings](docs/engineering/receiving-decision-c219/evidence/BINDINGS.json).
-
-C218's completed delivery is reconciled from the exact saved input ZIP, current package verification, documented offline restore and closed issue #168. C219 uses preserved observations and starts no native process, source program, import/export or renderer. Original failed regressions and every broader failed, unknown or unrun claim remain visible in the [decision](docs/engineering/receiving-decision-c219/DECISION.md).
-
-[PR #171](https://github.com/Omegapy/OntoKin/pull/171) merged the documentation-only decision at `e886f2d6575034fd0c521eda5e21327c2aa5f70d`, tree `00bfe5cacb3c0568e162da3ecce8a314101c1dda`, exactly matching the reviewed candidate. Fresh actual-main documentation checks pass 29 preserved sources / 4,533 local links. Independent review passed 22 decision conditions and 18 integration checks; all 15,575 existing non-navigation entries remain unchanged. [Integration record](docs/engineering/receiving-decision-c219/evidence/publication/INTEGRATION.json).
-
-C219 delivery is confirmed by the exact saved ZIP, fresh input verification/offline restore and closed [scope issue #170](https://github.com/Omegapy/OntoKin/issues/170). Its queued planning step is the current C220 scope above; consumed native schedules remain closed.
-
-## C218 preserved result: saved-scene reopen persistence passed
-
-[C218](docs/engineering/native-reopen-c218/RESULTS.md) completed one independently reviewed reopening of C217's exact saved Blender scene with automatic scripts disabled. The process exited 0 after 9.911 seconds, with no timeout or remaining process group. All 18 objects, 7,800 triangles, 23,400 corner observations and 126 poses were retained. Complete numerical comparison with C217 found zero changed normal, position or pose values; two useful planned images were reviewed. The original scene bytes remain unchanged. The one-start schedule is consumed and closed.
-
-The original strict normal gate remains **FAILED**: maximum source-normal component difference `0.0001531541347503662` exceeds unchanged `2e-6`. Exact saved-scene persistence preserves native values that already contain measured loss. No new tolerance, broader receiving acceptance or full release is claimed. [Measured summary and independent evidence](docs/engineering/native-reopen-c218/evidence/MEASURED-SUMMARY.json).
-
-Executed local observer `efd5002a8dd955a4fb59c96920b0263e35e01a25` and held published source `15c369134cf8ae42d092823aeab9348c9861adfd` have the same tree, but remain distinct Git identities. The nine prototype files stay outside main in [draft PR #169](https://github.com/Omegapy/OntoKin/pull/169). Earlier held PRs #155/#165/#167 remain unchanged. The documentation/evidence result is published at `4a8fea791840e3cf18010c0c9ee12ffc24f3a1ef`, tree `9f8267deb4ddcda4eae6d4c2082aa82b4fec5dc9`, exactly equal to the independently reviewed candidate. Fresh actual-main checks passed 29 preserved sources / 4,518 local links; all 15,561 non-navigation baseline entries remain exact. [Integration record](docs/engineering/native-reopen-c218/evidence/publication/INTEGRATION.json).
-
-**Successor disposition:** C218 final delivery is confirmed in closed [issue #168](https://github.com/Omegapy/OntoKin/issues/168) and independently reverified by C219. C219 above completes the separately versioned finite decision from those observations. C218 historical findings and its closed one-start schedule remain unchanged.
-
-## C217 preserved result: namespace repair and native import/capture passed
-
-[C217](docs/engineering/native-receiving-c217/RESULTS.md) completed one independently reviewed Blender 4.3.2 import/save/capture attempt in 14.217 seconds, exit 0, with no timeout or observed process-group residue. The corrected guard records raw module metadata before classification and accepts only pinned namespace directories while retaining exact concrete-source/cache checks. Actual C217 metadata confirms the selected package is a contained namespace; C216's unrecorded attributes remain unknown.
-
-Independent audits cover all 18 objects, 7,800 triangles, 23,400 corners and 126 poses, with zero missing/ambiguous/invalid correspondence. One native scene and both useful images were produced and reviewed. The maximum normal component difference remains `0.0001531541347503662`; the original `2e-6` gate stays **FAILED**. Saved-scene reopen remains **UNRUN**, and complete receiving acceptance is not established. [Independent result](docs/engineering/native-receiving-c217/evidence/FINAL-IMPORT-REVIEW.md)
-
-Actually executed local source `6af212204d58fbac2a98f3cded44facd67c52528` and published held source `55ce9f34a14cbf3d954332244c9e9a6800ed93fb` share tree `50cd8c97290130fc97945e74c51332bd507e91eb` but retain distinct identities. Prototype source is held in [draft PR #167](https://github.com/Omegapy/OntoKin/pull/167); main receives result documentation/evidence only. Original held PRs #155/#165 and all historical failures remain unchanged.
-
-The documentation/evidence result is published at `7ddb286bb39b3f6d093e03f3f7a306dbc5d539cb`, tree `acacf5aa2b3a208f486453099acd4c9eba1ba109`, exactly equal to the independently reviewed candidate. Fresh actual-main checks pass 29 preserved sources / 4,505 local links, with all 15,539 non-navigation baseline entries unchanged and all eight prototype files absent. [Integration receipt](docs/engineering/native-receiving-c217/evidence/publication/INTEGRATION.json).
-
-**Successor disposition:** C218 completed the separately reviewed one-start reopen above. C217's original source, saved scene, normal failure and consumed schedule remain unchanged.
-
-## C216 preserved result: native start failed before product import
-
-[C216](docs/engineering/native-receiving-c216/RESULTS.md) reviewed one finite Blender capture/save/reopen plan. Its first actual start failed in the initial loaded-importer origin guard for `io_scene_gltf2.blender.com`, exiting with code 19 after 2.325 seconds; the process group was absent. No product GLB import, save, native corner/pose/material capture, render or reopen occurred. One start was consumed and no retry was attempted.
-
-Prelaunch source review passed 12 static findings, 385 input-binding assertions and 14 CPU controls. The installed module directory has no `__init__.py`, supporting a namespace-package explanation, but actual runtime file/loader/spec/search paths were not recorded before the guard raised. The exact executed source is local `2cb197ffe6047b13c9099f2987049ab0d1a29b2d`; identical tree `499fac8f4b51fff9a936d907715ac8427cb273db` is published as held `53a6e3169edf944180120a14b10ae09fc471cfc8` in [draft PR #165](https://github.com/Omegapy/OntoKin/pull/165). Main receives documentation/evidence only. C211's strict normal failure and held PR #155 remain unchanged; C214/C215 grant no new native acceptance.
-
-The documentation/evidence result is published at `5c0dda90cd01ce5e45b12dcfc6615614fe1f64eb`, tree `de22d4ef35b128b955298300df0232f5ad089457`, exactly equal to the independently reviewed candidate. Fresh actual-main checks pass 29 preserved sources / 4,485 local links; all 1,244 protected files and all 15,523 non-navigation baseline tracked files remain exact. [Integration record](docs/engineering/native-receiving-c216/evidence/publication/INTEGRATION.json). No prototype source was merged.
-
-**Successor disposition:** C217 completed the namespace repair and one separately reviewed import/save/capture step below its own finite plan. C216's failed start and missing raw attributes remain unchanged. Its consumed plan must not be replayed. Saved-scene reopen, second-target traceability and the matched authoring comparison remain later gates.
-
-## C215 preserved result: CPU receiving observation adapter and proposed contract
-
-The [C215 CPU adapter](docs/engineering/receiving-adapter-c215/README.md) maps Blender-format triangle corners to C214's exact source normals using source identity, positions and winding. Independent byte locks bind receiver and importer source, build record, settings and scene. The [proposed profile](docs/engineering/receiving-adapter-c215/CONTRACT.md) distinguishes observed, missing, ambiguous and invalid corners and reports component/angular loss. It establishes no native provenance, shading fidelity, receiving acceptance or new tolerance.
-
-Five proof checks pass across all 18 synthetic objects / 7,800 triangles / 23,400 corners, with actual CLI/API output equality and safe existing-output refusal. Independent review checks 35 executable groups / 234,467 successful assertions and five source requirements. [Results and limits](docs/engineering/receiving-adapter-c215/RESULTS.md). Original harness/setup failures and their narrow corrections remain preserved. C214's synthetic-only behavior and C211's original strict `2e-6` failure remain unchanged; PR #155 stays held. No Blender, source program or exporter ran.
-
-[PR #163](https://github.com/Omegapy/OntoKin/pull/163) merged at `d9361ba6c5b05ccdb30ca4dd440eec343c2d0aa5`, tree `bb5a2527d31986dded69eccbf129bf5dcb16e70c`, exactly equal to the reviewed candidate. Fresh actual-main checks pass 29 preserved sources / 4,465 links and all 1,244 protected hashes. [Integration receipt](docs/engineering/receiving-adapter-c215/evidence/publication/INTEGRATION.json).
-
-C215's verified handoff was saved and scope issue #162 closed. C216 attempted the separately reviewed native step above and stopped before import. C215's CPU-only result and all unmet native save/reopen/visual gates retain their meaning.
-
-## C214 preserved result: exact source-normal payload and synthetic loss report
-
-The [C214 CPU prototype](docs/engineering/source-normals-c214/README.md) preserves all 3,024 source-corner float32 normal triples from the exact accepted C210 source/artifact/sidecar. Explicit instance mapping covers 18 objects and 23,400 observation corners. Its separately versioned [proposed profile](docs/engineering/source-normals-c214/CONTRACT.md) strictly validates source, mesh/primitive/corner, winding and direction identities. Synthetic loss reports retain missing/invalid observations and component/angular differences; native observation labels are refused.
-
-All eleven CPU proof checks and 31 predeclared independent controls / 52,957 assertions pass. Exact synthetic copies still report native fidelity and receiving evidence as false; no approximation tolerance is adopted. [Results and limits](docs/engineering/source-normals-c214/RESULTS.md). The original one-link documentation failure and corrected result remain preserved in the C214 handoff. Production/runtime/exporter/receiver/workflow files and original evidence remain unchanged. This finite CPU result is not a full regression or receiving pass.
-
-[PR #161](https://github.com/Omegapy/OntoKin/pull/161) merged at `c4f9c4b97f5a599e5e4708ca69c8d8d1a68470c5`, tree `b2d0ade1102312f4bdf2679548ff08e9124f4b42`, exactly equal to the reviewed candidate. Fresh actual-main documentation checks passed 29 preserved sources / 4,443 local links; all 1,053 protected input hashes remain exact. [Integration receipt](docs/engineering/source-normals-c214/evidence/publication/INTEGRATION.json).
-
-C214's handoff was saved and its scope issue closed. Its [successor instructions](docs/engineering/source-normals-c214/NEXT-TASK.md) are implemented by the bounded C215 CPU adapter above. C214/0.1 remains synthetic-only. C211's original `2e-6` gate remains failed, PR #155 stays held, and save/reopen/visual gates remain unrun.
-
-## C213 preserved result: finite codec loss characterized
-
-The [C213 CPU characterization](docs/engineering/normal-codec-c213/README.md) implements the complete selected pinned Blender normal encoder/decoder with explicit independent frames and source-bound scalar float32 evaluation. Independent review approves 212 predeclared cases / 934 numerical assertions after one explicitly preserved decoder-domain oracle correction, 11 supplemental input refusals and 731 source/execution assertions. A separate 13-check source-fidelity audit passes. The original failed assertion remains retained.
-
-Explicit-frame shortcut cases lose up to `0.014142955653369427` in a normal component in this selected corpus. That observation is not a universal bound or a replay of C211. No replacement tolerance is adopted. C211's original `2e-6` gate remains failed, the receiver in draft PR #155 remains held, and no native process ran. Runtime, exporter, prior receiver and historical evidence are unchanged. [Results and limits](docs/engineering/normal-codec-c213/RESULTS.md)
-
-[PR #159](https://github.com/Omegapy/OntoKin/pull/159) merged at `4e45172c97e22e03c1f04dca1a740fdcd43751ed`, tree `565a2f807872ac6a68fac1875adab426b1f706e7`, exactly equal to the reviewed candidate. Fresh actual-main documentation checks passed 29 preserved sources / 4,416 local links; exact implementation/input equality retains the independent numerical evidence. [Integration receipt](docs/engineering/normal-codec-c213/evidence/publication/INTEGRATION.json). This finite experiment is not a full product regression or receiving pass.
-
-**Successor disposition:** C214 completes the nominated CPU source-normal payload/loss-report prototype above. This does not change C213's finite results, the original C211 strict failure or the need for a separately reviewed receiving contract and execution plan.
-
-## C212 preserved result: strict normal contract retained
-
-The bounded [C212 investigation and decision](docs/engineering/normal-fidelity-c212/README.md) rejects an unsupported tolerance increase and keeps the receiver held. A fresh GLB decoder reproduces C211's exact normal failure; thirteen synthetic CPU controls pass. Eight failing sphere instances reuse one source mesh, so their maximum is not an independent error bound. All 118 installed executable/importer file bindings match C211. Pinned upstream source supports a lossy native encoding/calculation mechanism; exact executable source provenance and causal replay remain unresolved.
-
-[Decision C212/0.1.0](docs/engineering/normal-fidelity-c212/DECISION.md) adopts no replacement numeric budget and changes no receiver, runtime, exporter, original contract or historical evidence. No Blender process ran. The original `2e-6` gate remains failed, draft PR #155 remains held, and issue #154 remains blocked. C212's documentation/evidence increment and its own checks do not establish a complete receiving proof or full regression pass.
-
-[PR #157](https://github.com/Omegapy/OntoKin/pull/157) merged at `e3bb16c21371c7472d6a8eb1e649ed356210db24`, tree `384d3e39d273d69f748064095f80d73e3754af9c`, equal to the reviewed candidate. Fresh actual-main documentation checks passed 29 preserved sources / 4,377 local links; exact analysis-input equality retains the thirteen-control results. The [integration record](docs/engineering/normal-fidelity-c212/evidence/publication/INTEGRATION.json) distinguishes this published decision from the still-failed receiving gate.
-
-**Successor disposition:** C213 completes the nominated CPU codec characterization above. Its finite counterexamples adopt no replacement budget and do not reconstruct missing native frames. C212 and its verified saved handoff remain complete; current work follows the C213 next-task boundary.
-
-## C211 preserved result: Blender receiving proof failed/partial
-
-The selected one-build receiving proof reached a concrete blocker and stopped. [C211 results](docs/engineering/semantic-receiving-c211/RESULTS.md) preserve one actual Blender 4.3.2 import. All 18 objects, 7,800 triangle positions/winding, 126 sampled poses, actual materials and native GLB object extras passed independent comparisons. Split normals failed on 7,088 triangle instances across eight sphere objects: maximum component error `0.0001531541347503662` exceeds the unchanged `0.000002` limit. Rendering separately failed because OpenImageDenoise is unavailable. Native save/reopen and visual inspection were not reached; no second import occurred.
-
-The prototype remains held in [draft PR #155](https://github.com/Omegapy/OntoKin/pull/155) at `cdae8b582a37e37f76f142f07039ba74cedc08ad`, tree `2b2254ae2787a183fda0883fac39b91d2934f9f2`. That head includes an unexecuted denoising correction; it cannot resolve normal fidelity. Actual execution used local `66f1940c4c99f52dfdea835445cdc380498815f7`. Main receives documentation/evidence only, with no receiver product merge. [Scope issue #154](https://github.com/Omegapy/OntoKin/issues/154) remains blocked and open for explicit continuation.
-
-All 302 affected methods (275 existing + 27 new), the fresh 54-check source proof, exact after-artifact reproduction, two Khronos validations and 252 Three.js pose checks passed. The broader mandatory driver was interrupted at the stopping point: 1,476 observed passing methods and 3,205 real methods without outcomes; no full-suite pass. Historical failed regressions remain failed. [Independent failed review](docs/engineering/semantic-receiving-c211/evidence/review/FINAL-REVIEW.json)
-
-**Successor disposition:** C212 completed the normal-fidelity decision, and C213 completed the nominated CPU characterization, while preserving this failure and tolerance. A separately reviewed source-preserving profile or justified approximation policy remains required before another receiving attempt. The second destination and matched authoring comparison remain later stages. C211 itself is closed at its saved handoff.
-
-## C210 current milestone: semantic export and one constrained edit
-
-**Integrated experimental proof; actual-main checks passed.** Starting published main was `94dee707c148b7a545e43d4de0d601642c5fa3e8`; its complete C209 package and offline restore passed. [Scope ownership](https://github.com/Omegapy/OntoKin/issues/152), [results](docs/engineering/semantic-export-c210/RESULTS.md) and [integration state](docs/engineering/semantic-export-c210/evidence/INTEGRATION.json) bind the exact source and evidence. The explicit semantic sidecar reuses existing normalized construction, Agent/0.2 and GLB/0.2; no prior runtime module changed.
-
-The actual edit passed 54 workflow checks, all 275 affected tests (262 existing and 13 new), 68 independent controls, both Khronos validations, 252 Three.js and 252 browser pose comparisons, and four inspected captures. All 18 IDs, 16 unrelated object records and the full eleven-object sibling are preserved. The invalid edit preserves accepted source and artifacts; the same accepted revision regenerates identical finite output.
-
-[PR #153](https://github.com/Omegapy/OntoKin/pull/153) merged at `adfb43c5ab1d7750abfa5e5c74ab62e18a6879e7`, tree `918e398081a70e199e3ae0e29cdea559363397ce`, exactly matching the reviewed publication. Fresh checks on that actual main passed all **275 affected methods**, **43 core cases / 694 assertions**, and **29 preserved sources / 4,318 local links**. The complete checkout remained clean. Exact executable-input equality preserves eligibility of the independent artifact/browser evidence. The work branch was observed absent after merge, with its history retained in merge ancestry. This is integrated development, not a full release.
-
-The broad local attempt remains **FAILED**: 4,342 passing methods, 91 method errors, seven failed-import placeholders and 221 real methods without outcomes, followed by the 900-second termination. Baseline reproductions identify unchanged fixture-copy and bytecode/cache incompatibilities. Root lease/evidence changes also tripped the wrapper's source-stability guard; the isolated immutable inputs match the candidate. The complete affected cohort passed. [Exact accounting and scoped integration rationale](docs/engineering/semantic-export-c210/REGRESSION.md) preserve the failed run without claiming a full regression pass.
-
-**C210 successor disposition:** C211 executed the selected one-build receiving proof and reached the failed/partial result above. C212 records that decision and C213 completes the bounded CPU-only codec characterization; the current next action is the separately versioned source-normal payload/loss-report prototype. The second target/source-traceability proof and matched direct-authoring comparison remain later stages. Unreal support and authoring advantage remain unestablished.
-
-**Explicit deferral:** C209 job/0.2 retained-result compatibility, C201 wrapper/probe/coordinator/host sealing/readiness/admission, broad new syntax, general gameplay, a replacement real-time physics engine, new creature/vehicle/fluid systems, model training, MCP transport and simultaneous backends. Existing reference physics, geometry, materials and validated exports remain current within their profiles. The older universal world/simulation product requirement is superseded as a current completion criterion, not marked complete. Historical domains and exact prior goals remain linked in the decision.
-
-## Main integration lease
-
-Owner: none. Previous owner: `c261-root-2a9a7d092213-20261117`.
-State: RELEASED after verified C261 source integration and actual-main checks; effective only when this closure is conditionally published and read back.
-Scope: [C261 finite raw GLB hinge reader #249](https://github.com/Omegapy/OntoKin/issues/249).
-Acquired at: 2026-11-17T22:48:49Z; previous expiry: 2026-11-17T23:18:49Z.
-Release recorded at: 2026-11-17T23:06:27.966149+00:00.
-Observed integrated main: `f2c175e22ce5f17f063b6de6d7ea9da7788b9040`.
-Reserved shared files: none after verified publication.
-
-PR250 merged with expected head `538344242322599753513f76e07e67950a633b08` and exact independently approved tree. Fresh actual-main C261, documentation and C253 manifest checks pass. The completed branch is absent and both published heads remain in main ancestry. The [integration receipt](docs/engineering/localized-repair-c261/evidence/integration/INTEGRATION.json) separates source closure from delivery.
-
-Root completes only final archive/source-replay/saved delivery under scope249, updating the [stable checkpoint](https://chatgpt.com/library?file_id=libfile_fde3_f-eb31ecb86780819181acc596a215ddc4_2ab2a24d43748191957f9bcc356b59de&account_id=personal), then stops. A subsequent source writer must acquire a new verified lease and reconcile that delivery first. C234 remains merged awaiting user cleanup; C174's former branch is absent and complete historical graph retention remains unestablished.
-
-## C209 entry bindings integrated; job/0.2 result compatibility pending
-
-The separate [C209 job/0.2 component](docs/engineering/static-tray-admission-c201/READBACK-ENTRIES-C209.md) binds exact Validator, Three.js, GLTFLoader and package metadata files, versions, roles and declared dependency relationships. Its CPU import mapping rejects ambient lookup. Existing C208 job/0.1 behavior remains unchanged. All process, readiness and admission flags stay false; actual Node resolution and installed-package compatibility remain unverified.
-
-Independent review approved exact component `d5d02cfadfcd549d527e7699224ff07aa389d4be` after 42 controls. Candidate `39ab1d752eab1e00f95a75dade818831e9c6e7cf` passed all 284 C201 methods, 78 source/compiler methods and 43 core cases / 694 assertions. All 605 reviewed hashes, 301 historical input bindings and four frozen protocol documents remain exact. [Source-bound evidence and limits](docs/engineering/static-tray-admission-c201/evidence/entries-c209/README.md)
-
-[PR #151](https://github.com/Omegapy/OntoKin/pull/151) merged at `dcb1ac9b0a579b09294968a27fdd68a22762f620` with the exact reviewed publication tree. Fresh actual-main checks passed all 284 C201 methods in one clean batch, 43 core cases / 694 assertions, 605 reviewed input bindings and 29 preserved sources / 4,282 local links. [Integration receipt](docs/engineering/static-tray-admission-c201/evidence/entries-c209/INTEGRATION.json). C209 originally nominated CPU-only job/0.2 result compatibility; C210 now defers it together with executable wrapper/probe, coordinator, real host/dependency sealing, native readiness and admission. C208's original main timeout and separate pass remain unchanged with cause unproven. The inherited failed full regression remains visible below. No Node, native, receiving, lifecycle or timed-author starts occurred.
-
-## C200 integrated; finite qualification retained
-
-C200 merged through [PR #137](https://github.com/Omegapy/OntoKin/pull/137) at
-`2b2f3e7de7595099ad5f9e0176c5596220c0c2dc`, tree
-`7e1ab341160cf5b86807e8ffec2cc3bb7b47db92`, equal to the independently reviewed
-publication. Its historical executed source remains
-`62b2316cc3f88db187f69fbd7fdb2cf0997a97de`. All twelve C200 transactions were
-accepted, with twelve receiving and actual-delivery checks, nine controls and
-twelve reviewed images. Historical final review passed 16,645 checks and the
-separate numeric review passed 497,809 assertions.
-[Measured result](docs/engineering/static-tray-exporter-c200/RESULTS.md)
-
-Fresh actual-main checks passed 107 focused methods, ten protocol controls,
-43 core cases with 694 assertions and documentation preservation of 29 sources
-and 4,106 local links. All 301 locked inputs remained exact. The earlier
-47-method compiler pass was reused after input equality checks. These are
-separate counts, with no new native, receiving, Node, lifecycle or author run.
-[Integration receipt](docs/engineering/static-tray-exporter-c200/evidence/publication-c203/INTEGRATION.json)
-
-C199's failed first construction remains preserved; the combined historical
-construction count is thirteen. Both C199 and C200 schedules are closed. The
-original coordinator's pending-review `qualified=false` and later independent
-`qualified=true` remain separate unchanged receipts. All nine preparation-log
-candidates missing from the supplied handoff were subsequently recovered from
-original paths; eight stream hashes remain new recovery bindings.
-
-GitGuardian returned neutral because the publication PR was too large to scan;
-no security pass is claimed. The former C200 branch was observed absent after
-merge, with history retained in merge ancestry and no explicit deletion by
-this session. Earlier checkpoints remain in the
-[verbatim historical status archive](docs/engineering/static-tray-exporter-c200/evidence/publication-c203/STATUS-before-C203.md.txt).
-Its relative links originally resolved from the repository root.
-
-## C204 ledger component integrated; C201 coordinator pending
-
-The [C201 schedule and reservation ledger](docs/engineering/static-tray-admission-c201/LEDGER-C204.md)
-is implemented as an isolated control component. Independent review approved exact local
-commit `7861e2d0d7ed940cdf2be4b4fe98dbde3e8c373d` for this boundary only.
-Its fixed A01/D01/D03/A02/A03/A04 order, persistent one-use receipt, stage reservations,
-failed/unknown stopping and interruption handling passed 36 focused methods and six
-independent CPU controls. Source/compiler checks passed 78 methods; core conformance
-passed 43 cases / 694 assertions. All 301 historical locked inputs and four approved
-C201 protocol documents remain unchanged. [Review and evidence](docs/engineering/static-tray-admission-c201/evidence/ledger-c204/REVIEW.md)
-
-[PR #141](https://github.com/Omegapy/OntoKin/pull/141) merged the component at
-`ac0c9b5b9135d33bb4b6b27d75ae1dc1897ea4da`. Fresh resulting-main checks passed
-36 ledger methods, 43 core cases / 694 assertions and documentation preservation
-of 29 original sources and 4,141 local links. The 78 source/compiler methods and
-six independent controls remain eligible through exact input equality.
-[Integration receipt](docs/engineering/static-tray-admission-c201/evidence/ledger-c204/INTEGRATION.json)
-
-The component starts no children and grants no execution approval. Its recorded
-cleanup, promotion and delivery results are caller observations, not validation of
-actual outputs. A fixed trusted authority root must be bound by the future executable
-lock. Complete coordinator implementation, transaction/readback compatibility,
-current-host sealing, independent readiness and native admission remain pending.
-[Remaining implementation](docs/engineering/static-tray-admission-c201/IMPLEMENTATION-NEXT.md)
-
-C205 adds the separate input-binding validator described below. Transaction/readback
-integration and actual process orchestration remain pending. C201 still has zero
-native, receiver and actual-delivery Node starts. Its eventual sole invocation permits at most four of each, counting
-failed or unknown starts, with zero timed authors and retries. The C199/C200
-schedules stay closed. Protocol-document approval and this component review do not
-constitute native readiness or family admission.
-
-## C205 input-binding validator integrated; orchestration pending
-
-The separate [C201 executable input-binding validator](docs/engineering/static-tray-admission-c201/INPUT-LOCK-C205.md)
-rejects mismatched protocol, schedule, source/dependency bytes, roles, commands,
-clean environments, writable paths, durable reservation authority and independent
-approval bindings. It reads actual files and starts no children. Trusted facts must
-come from independently retained sealing/review infrastructure; this component does
-not authenticate a reviewer, discover the complete host closure or grant readiness.
-
-Independent review approved exact local commit
-`28bf6d74f651b22acc0ee5a4154dcd21b861c81b` for this boundary only. All 72 dedicated
-methods and 23 independent controls passed. Review corrected dependency traversal,
-alternate-path ancestry, clean-launch compatibility and host namespace handling.
-Existing checks passed 36 ledger and 78 source/compiler methods, 43 core cases /
-694 assertions, and all 301 historical inputs plus four frozen protocol documents.
-[Review and evidence](docs/engineering/static-tray-admission-c201/evidence/input-lock-c205/README.md)
-
-[PR #143](https://github.com/Omegapy/OntoKin/pull/143) merged at
-`759a91f65331e69491524db06c86ae411ecd3f80`, with the exact local publication tree.
-Fresh actual-main checks passed all 108 component/ledger methods, 43 core cases /
-694 assertions and documentation preservation of 29 sources and 4,166 local links.
-The 78 source/compiler methods and 23 independent controls remain eligible through
-exact input equality. [Integration receipt](docs/engineering/static-tray-admission-c201/evidence/input-lock-c205/INTEGRATION.json)
-
-C206 adds the separate transaction/accepted-source component below. Full
-readback and coordinator integration,
-real host/dependency and alias sealing, durable trusted bootstrap, independent
-native readiness and the sole four/four/four invocation remain pending. No native,
-receiving, Node, lifecycle or timed-author start occurred in this increment.
-
-## C206 transaction component integrated; original cwd block resolved by C207
-
-The separate [C201 transaction and accepted-source component](docs/engineering/static-tray-admission-c201/TRANSACTION-C206.md) resolves actual retained baseline source and dependencies, validates complete construction/receiving/receipt closures, and conditionally promotes an accepted pointer. Pre-commit rejection preserves the prior pointer; post-replacement interruption reports UNKNOWN. It starts no children and does not advance the coordinator ledger.
-
-Independent review approved local commit `afa0a9d40ab0ffbf88e6540bbb685d889a67d391` for fixture-only preparation. All 47 new methods, 108 existing C201 methods, 22 independent controls and 78 source/compiler methods passed. Core conformance passed 43 cases / 694 assertions; all 301 historical inputs and four protocol documents remained exact. [Review and evidence](docs/engineering/static-tray-admission-c201/evidence/transaction-c206/README.md)
-
-C206 originally rejected production bindings with `C201-NATIVE-CWD` because the C205 launch plan required repository cwd while the qualified supervisor and worker required the stage output directory. C207 below resolves that mismatch in the C201 bindings. The historical worker/supervisor remain unchanged. Readback, actual process provenance/deadlines, full coordinator, trusted bootstrap/host sealing, native readiness and admission remain pending. This increment has zero native, receiving, Node, lifecycle or timed-author starts.
-
-The exact original C205 `final-tests.log`, already present in the previous handoff, is restored as tracked evidence to repair its existing documentation link. The original failed documentation check and byte-binding record are retained. Repaired documentation verification passed 29 preserved sources and 4,199 local links. [PR #145](https://github.com/Omegapy/OntoKin/pull/145) merged at `6573597a699ed90920a9cea3e17250bce5babbdc` with the exact local publication tree. Fresh actual-main checks passed all 155 C201 methods, 43 core cases / 694 assertions and 29 preserved documentation sources / 4,199 local links. All 56 independent bindings and complete product/test prefixes matched. [Integration receipt](docs/engineering/static-tray-admission-c201/evidence/transaction-c206/INTEGRATION.json)
-
-## C207 working-directory alignment integrated; readback remains pending
-
-The [C207 contract](docs/engineering/static-tray-admission-c201/WORKING-DIRECTORIES-C207.md) binds every planned command cwd to its own stage output directory. Construction/receiving jobs and supervisor receipts must agree with that same path. Wrong or changed paths/commands reject before acceptance. The former blanket `C201-NATIVE-CWD` purpose block is removed; validated production-shaped fixture records still confer no native authorization, current-host approval or admission.
-
-Independent review approved exact local candidate `bd9fbf1487e557b9c21baf1d39e7b9cb818d4773` for this component only. All 171 C201 methods, 29 independent controls, 78 source/compiler methods and 43 core cases / 694 assertions passed. All 36 reviewed bindings, 301 historical inputs and four frozen protocol documents remain exact. [Review and evidence](docs/engineering/static-tray-admission-c201/evidence/cwd-c207/README.md)
-
-C208 below adds the separate readback job/result binding component. The Node cwd is consistently planned, while executable dependency-entry mapping and the C201 probe/wrapper roles remain unimplemented. Complete coordinator/process provenance/deadlines, trusted bootstrap, real host/dependency/alias sealing, independent native readiness and actual admission remain pending. No C201 native, receiving, Node, lifecycle or timed-author process started. [PR #147](https://github.com/Omegapy/OntoKin/pull/147) merged at `d952254d5e63602e6d11c696e62ae8965d57c78e` with the exact reviewed publication tree. Fresh actual-main checks passed all 171 C201 methods, 43 core cases / 694 assertions and documentation preservation of 29 sources / 4,233 links. [Integration receipt](docs/engineering/static-tray-admission-c201/evidence/cwd-c207/INTEGRATION.json)
-
-## C208 readback binding integrated; executable job remains pending
-
-The separate [C208 component](docs/engineering/static-tray-admission-c201/READBACK-BINDING-C208.md) binds actual accepted source/transaction closures, GLB and audit bytes to exact jobs, output inventories, check options and process observations. It checks Khronos issue consistency and all 2,060 required Q01 numeric rows from supplied Three.js observations. Failed or unknown checks preserve the accepted pointer and stop that binding session. Returned evidence grants no execution, next-slot, readiness or admission authority.
-
-Independent review approved local candidate `a645731147e4ce95ddaab8132c5a261cc3a9f44a` for this boundary only. All 223 C201 methods, 63 independent controls, 78 source/compiler methods and 43 core cases / 694 assertions passed. All 66 reviewed input bindings, 301 historical locked inputs and four frozen protocol documents remain exact. [Review and evidence](docs/engineering/static-tray-admission-c201/evidence/readback-c208/README.md)
-
-[PR #149](https://github.com/Omegapy/OntoKin/pull/149) merged at `f8e397405b432d7a63464b136431d15a009c38df` with the exact publication tree. The first actual-main C201 batch remains FAILED: 222 methods passed and one synthetic four-slot setup hit the unchanged three-second promotion limit. The affected method passed separately with identical source/limits; all 223 methods have successful observations across two runs, not one clean batch. The cause is unproven. Independent review retained component approval with this timing limitation. Core passed 43 cases / 694 assertions; documentation preserved 29 sources and 4,258 links. [Integration and original failure](docs/engineering/static-tray-admission-c201/evidence/readback-c208/INTEGRATION.json)
-
-The former C208 next step was the versioned job extension completed by C209 for exact lock-bound validator, Three.js and GLTFLoader entry points; further C201 preparation is now deferred. The current job is preparation data, not an executable probe contract. Actual wrapper/probe, complete coordinator/process provenance, real host sealing, native readiness and admission remain pending. No C201 native, receiving, Node, lifecycle or timed-author process started.
+OntoKin is an AI-native semantic language and intermediate representation for
+constructing, inspecting, validating, repairing and transporting physically
+meaningful 3D objects. Accepted `.ok` source owns named parts, dimensions/units,
+relationships, physical declarations and source identity. Engines and specialist
+tools own rendering, general simulation and gameplay. [GOAL](GOAL.md), the
+[C252 decision](docs/engineering/review-integration-c252/DECISION.md), the
+[C210 boundary](docs/engineering/semantic-export-c210/DECISION.md) and
+[AGENTS](AGENTS.md) govern current work.
+
+## Current workflow and next action
+
+C263 implements the owner's GitHub-owned browser-chat workflow under
+[scope252](https://github.com/Omegapy/OntoKin/issues/252). Start with
+[CHATGPT-START-HERE](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json)
+and the [C263 task record](docs/workflow/tasks/C263/task.json).
+The candidate passed focused verification and independent review on `work/c263-browser-workflow`; main integration is in progress.
+The owner requested completion of this workflow, then a stop for further direction.
+
+Starting main: `bbe30e2f5863d743bd2393466341511b4924ad9d`;
+tree: `aa192e047a7e7ddfd8e0436b5bae31f32bcb554a`.
+Live state must be rechecked before resuming. The final task record will bind
+published implementation, merge, actual checks and branch disposition.
+
+The queued scientific action is one bounded source-side hinge observer under
+[C260](docs/engineering/localized-repair-c260/CONTRACT.md) and
+[C261's next-task contract](docs/engineering/localized-repair-c261/NEXT-TASK.md).
+It is not part of C263 and must not start automatically after this delivery.
+
+## Product state and remaining gates
+
+The reference package remains **0.4.0**. Existing released profiles retain their
+named evidence; integrated experimental components are not full releases.
+C255's inert checker, C256 geometry/pose reader, C257 ownership reader and C258
+explicit-follow reader remain bounded components. C261 adds only raw GLB hinge
+fields and exact JSON pointers, with source/program claims untrusted.
+[C261 results](docs/engineering/localized-repair-c261/RESULTS.md) and
+[integration](docs/engineering/localized-repair-c261/INTEGRATION.md) identify
+actual evidence. PR250 merged at `f2c175e22ce5f17f063b6de6d7ea9da7788b9040`.
+C261 source integration and C262 saved delivery are complete.
+
+Source derivation, source/artifact comparison, historical endpoint admission,
+complete C260 H groups, site/world behavior, authentic revisions, invalid-edit
+atomicity qualification, clean rebuilds, native routes and comparative model
+trials remain unqualified. No general authoring advantage has been established.
+C251 native sampling remains deferred; its current-authority binding failures
+remain recorded. C201 native admission and C209 job/0.2 compatibility are also
+deferred. C199/C200 schedules remain closed.
+
+Existing geometry, materials, source editing and finite validated exports retain
+their supported profiles. General gameplay, a replacement physics engine,
+broad syntax, creature/vehicle/fluid systems, model training, MCP transport,
+new terrain/building systems, live-engine behavior and simultaneous new
+backends remain deferred unless a demonstrated need selects them. The older
+world-engine ambition is superseded as the current completion criterion, not
+marked complete. [GOAL](GOAL.md) retains the complete domain disposition.
 
 ## Verification and remaining limits
 
-The inherited full regression remains **FAILED**: **4,239 distinct passing
-methods and thirteen torque-read methods NOT RUN** after the unchanged
-30,000 ms setup timeout. A newly introduced or worsened legacy failure blocks
-integration. Local checks follow [OK-ENG-006](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md);
-no hosted pass or full regression pass is inferred from a focused check.
+The historical full regression remains **FAILED**: 4,239 distinct passing
+methods and thirteen torque-read methods NOT RUN after the unchanged 30,000 ms
+setup timeout. The separate [C233 default aggregate](docs/engineering/aggregate-regression-c233/RESULTS.md)
+passed on its recorded inputs; it does not turn that earlier failure into a
+pass. Newly introduced or worsened failures block integration.
 
-The fixed N05/N06 views cannot resolve the minimum-size tray. N07/N08 hide the
-right interior/proxy. Numerical receiving checks passed, but hidden or
-unresolvable surfaces are not visually certified. C200 establishes its finite
-static mapping and recorded deliveries. General contact, live destination
-physics, actual-Blender cancellation behavior, external compatibility and
-sixteen external roles, comparative authoring advantage and full release remain
-unestablished. [Evidence preservation](docs/engineering/static-tray-exporter-c200/evidence/publication-c203/PRESERVATION.md)
+C263 verification is limited to workflow tooling, evidence/record checks and
+documentation preservation. It does not rerun native experiments or certify
+product releases. Use [OK-ENG-006](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md):
+fresh assistant-workspace checks by default, hosted workflows manual-only with
+default-false opt-in, no new paid execution requirement.
 
-The earlier broader product ambitions remain uncompleted and classified by C210: typed algorithms and reusable
-libraries; composite rigid assets, materials, forces and contacts; mechanisms
-and vehicles; articulated creature bodies, skin deformation and purposeful
-movement; flight and swimming; vegetation and wind; terrain and buildings;
-liquids and deformable solids; appearance and textures; animation transitions,
-live engines, scale and performance. Each expansion needs its named contract,
-bounded tests and destination evidence. Finite tray qualification does not
-complete those domains or the planned direct-tool comparison. The revised goal prioritizes semantic authoring and checked transport; new domain expansion requires a demonstrated need.
+Source identities, units/frames, separate ownership/following/connections, one
+motion authority, mass accounting and honest state transfer remain mandatory.
+Ordinary execution budgets stay 100,000 operations and 30,000 ms. The original
+strict normal-fidelity failure and finite Blender shading loss remain visible;
+Godot R07, Unreal support, external compatibility and broad destination claims
+remain incomplete. Numerical checks do not certify occluded/unresolvable views.
 
-Keep stable source revisions and part identities, declared units/frames,
-separate ownership/following/connections, one motion authority, represented
-mass and honest state transfer. Ordinary execution defaults remain 100,000
-operations and 30,000 ms; explicit larger requests require current host
-authority. Original fixtures, tolerances, budgets, gates and prior releases
-retain their meanings. Historical checkpoints and complete release records
-remain available through the archive and [GOAL](GOAL.md).
+## Branches and historical handoff
 
+The starting live inventory contained only main and no open PRs. C263 created
+one owned workflow branch. C234 was already merged and its branch was deleted;
+scope240 is closed. C261's completed branch is also absent. No historical user
+branch-deletion request remains. Recheck live inventory before any cleanup.
+C174's former archive branch is absent; complete historical graph retention
+remains unestablished.
+
+The [C262 migration record](docs/engineering/browser-workflow-c263/MIGRATION.md)
+retains the archive, delivery checkpoint and exact source identities. GitHub is
+the normal operational handoff. Full historical offline restoration remains
+subject to the original archive contract; no fresh C263 restoration is claimed.
+
+## Main integration lease
+
+Owner: `c263-root-c3681d8a01ea`.
+State: ACTIVE; acquired for reviewed C263 workflow integration.
+Scope: [C263 browser workflow #252](https://github.com/Omegapy/OntoKin/issues/252).
+Acquired at: 2026-11-18T20:35:57Z; expires at: 2026-11-18T21:05:57.000Z.
+Observed main before acquisition: `bbe30e2f5863d743bd2393466341511b4924ad9d`.
+Reserved shared files: STATUS.md, AGENTS.md, GOAL.md, README.md, docs/README.md and C263 workflow/integration records.
+
+Only this verified lease holder may update main and shared integration fields.
+The candidate is independently reviewed; integration and resulting-main checks
+remain to execute. Reconcile actual refs before retrying any unknown write.
+
+
+## Historical status
+
+The exact earlier status text is preserved in
+[STATUS-before-C263.md.txt](docs/engineering/browser-workflow-c263/STATUS-before-C263.md.txt),
+with [byte/hash bindings](docs/engineering/browser-workflow-c263/PRESERVATION.json).
+The following original anchors remain for old incoming links. Their detailed
+historical results are in that preserved record and linked engineering evidence.
+
+<a id="c200-integrated-finite-qualification-retained"></a>
+<a id="c204-ledger-component-integrated-c201-coordinator-pending"></a>
+<a id="c205-input-binding-validator-integrated-orchestration-pending"></a>
+<a id="c206-transaction-component-integrated-original-cwd-block-resolved-by-c207"></a>
+<a id="c207-working-directory-alignment-integrated-readback-remains-pending"></a>
+<a id="c208-readback-binding-integrated-executable-job-remains-pending"></a>
+<a id="c209-entry-bindings-integrated-job02-result-compatibility-pending"></a>
+<a id="c210-current-milestone-semantic-export-and-one-constrained-edit"></a>
+<a id="c211-preserved-result-blender-receiving-proof-failedpartial"></a>
+<a id="c212-preserved-result-strict-normal-contract-retained"></a>
+<a id="c213-preserved-result-finite-codec-loss-characterized"></a>
+<a id="c214-preserved-result-exact-source-normal-payload-and-synthetic-loss-report"></a>
+<a id="c215-preserved-result-cpu-receiving-observation-adapter-and-proposed-contract"></a>
+<a id="c216-preserved-result-native-start-failed-before-product-import"></a>
+<a id="c217-preserved-result-namespace-repair-and-native-importcapture-passed"></a>
+<a id="c218-preserved-result-saved-scene-reopen-persistence-passed"></a>
+<a id="c219-preserved-result-precise-finite-blender-receiving-promise-accepted"></a>
+<a id="c220-preserved-result-second-target-plan-execution-held"></a>
+<a id="c221-current-result-cpu-authority-binding-passed"></a>
+<a id="c222-current-result-cpu-observation-schema-and-exact-correspondence-passed"></a>
+<a id="c223-r01-validation-input-and-bytecode-repair-passed-focused-checks"></a>
+<a id="c224-r02-aggregate-outcome-recorded-with-complete-accounting"></a>
+<a id="c225-r02-preparation-exact-readback-prerequisites-restored"></a>
+<a id="c226-r02-complete-aggregate-accounting-torque-export-setup-remains-blocked"></a>
+<a id="c227-r02-diagnosis-original-setup-passes-in-isolation-aggregate-remains-blocked"></a>
+<a id="c228-r02-complete-aggregate-ledger-replacement-rejection-remains-blocked"></a>
+<a id="c229-r02-diagnosis-launcher-path-failure-before-test-execution"></a>
+<a id="c230-r02-diagnosis-journal-inode-reuse-observed-ledger-repair-next"></a>
+<a id="c231-r02-prerequisite-ledger-identity-repair-checked"></a>
+<a id="c232-r02-preparation-stopped-before-aggregate-admission"></a>
+<a id="c233-r02-complete-default-aggregate-passed"></a>
+<a id="c234-r07-finite-cpu-material-checker-completed"></a>
+<a id="c235-r07-finite-cpu-normal-loss-checker-integrated"></a>
+<a id="c236-r07-finite-cpu-pose-checker-integrated"></a>
+<a id="c237-r07-finite-cpu-semantic-retention-checker-integrated"></a>
+<a id="c238-r07-cpu-combined-observation-envelope-admission"></a>
+<a id="c239-r07-combined-cpu-component-checks"></a>
+<a id="c240-gitguardian-source-identity-false-positive-verified"></a>
+<a id="c241-r07-zero-start-native-capturepreflight-contract"></a>
+<a id="c243-r07-source-node-mapping-investigated-native-capture-blocked"></a>
+<a id="c244-r07-capture-hook-design-adopted-native-implementation-pending"></a>
+<a id="c252-review-priorities-adopted-benchmark-protocol-next"></a>
+<a id="c253-localized-repair-qualification-protocol"></a>
+<a id="c255-amendment-ten-experimental-source-prs-integrated"></a>
+<a id="c255-offline-observation-checker-integrated"></a>
+<a id="c256-finite-geometry-and-sampled-motion-reader"></a>
+<a id="c257-finite-ownership-observation-component"></a>
+<a id="c258-finite-explicit-follow-observation-component"></a>
+<a id="c260-finite-hinge-declaration-observation-contract"></a>
+<a id="c261-bounded-raw-glb-hinge-observation"></a>

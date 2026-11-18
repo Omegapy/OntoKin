@@ -3,7 +3,7 @@
   "id": "C263",
   "title": "GitHub-owned workflow for ChatGPT browser development",
   "intent": "Make successive ChatGPT browser threads recover and develop OntoKin from explicit GitHub-owned instructions, task state, skills and evidence.",
-  "status": "in_progress",
+  "status": "review",
   "owner": "c263-root-c3681d8a01ea",
   "branch": "work/c263-browser-workflow",
   "base_sha": "bbe30e2f5863d743bd2393466341511b4924ad9d",
@@ -12,57 +12,80 @@
       "id": "R01",
       "description": "GitHub holds the operational workflow and current checkpoint.",
       "acceptance": "One stable entry URL and reusable prompt locate the current task without a ZIP or prior chat.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "CHATGPT-START-HERE.md",
+        "docs/workflow/README.md"
+      ]
     },
     {
       "id": "R02",
       "description": "Read instructions explicitly at an observed revision.",
       "acceptance": "Entry instructions require AGENTS, GOAL, STATUS, ROLE, current task and selected skills; distinguish Codex discovery from browser behavior.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "CHATGPT-START-HERE.md",
+        "docs/engineering/browser-workflow-c263/COLD-START.md"
+      ]
     },
     {
       "id": "R03",
       "description": "Use capabilities actually available in the session.",
       "acceptance": "Record read/write/merge/test/subagent access; unavailable tools produce precise limits, never fictional execution or a universal browser restriction.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/PROTOCOL.md",
+        "docs/engineering/browser-workflow-c263/COLD-START.md"
+      ]
     },
     {
       "id": "R04",
       "description": "Give one Director accountability and bounded worker roles.",
       "acceptance": "Assignments identify owner, inputs, write scope, evidence and stop condition; one verified owner integrates main.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "ROLE.md",
+        "docs/workflow/templates/WORKER.md"
+      ]
     },
     {
       "id": "R05",
       "description": "Extract intent into traceable requirements.",
       "acceptance": "Each requirement has a stable ID, observable acceptance and evidence; user changes revise scope explicitly.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/tasks/C263/REQUIREMENTS.md"
+      ]
     },
     {
       "id": "R06",
       "description": "Maintain a durable implementation plan.",
       "acceptance": "Every requirement maps to a plan step with outputs, verification and status; completion cannot leave an in-scope requirement unaccounted for.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/tasks/C263/PLAN.md",
+        "tools/chat_workflow.py"
+      ]
     },
     {
       "id": "R07",
       "description": "Recover work across chats and unknown write outcomes.",
       "acceptance": "Reconcile live refs/PRs/lease with checkpoint; resume the existing scope; record unpublished work and retry only after readback.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/PROTOCOL.md",
+        "docs/engineering/browser-workflow-c263/COLD-START.md"
+      ]
     },
     {
       "id": "R08",
       "description": "Record actual verification and honest completion.",
       "acceptance": "Changes have revision-specific checks and review; unrun/failed checks remain visible; structural checks do not certify live GitHub or product semantics.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/browser-workflow-c263/REVIEW.md",
+        "docs/engineering/browser-workflow-c263/RESULTS.md"
+      ]
     },
     {
       "id": "R09",
@@ -75,43 +98,61 @@
       "id": "R10",
       "description": "Retain project memory and lessons with evidence.",
       "acceptance": "Read-only retrieval exposes source and applicability; completion considers a deduplicated lesson; opt-outs are respected and historical memory cannot overrule current instructions.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/memory.json",
+        ".agents/skills/ontokin-learning/SKILL.md"
+      ]
     },
     {
       "id": "R11",
       "description": "Provide source-backed project knowledge navigation.",
       "acceptance": "Terms, typed relationships and capability limits link to adopted sources; the map does not introduce new OntoKin semantics or an inference engine.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/knowledge.json",
+        "docs/workflow/KNOWLEDGE.md"
+      ]
     },
     {
       "id": "R12",
       "description": "Load reusable repository skills only when relevant.",
       "acceptance": "A registry names each skill, trigger and path; skill files are explicitly read and are not represented as installed browser features.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/registry.json",
+        ".agents/skills/ontokin-session/SKILL.md"
+      ]
     },
     {
       "id": "R13",
       "description": "Supply small executable workflow tools and a browser-only route.",
       "acceptance": "Standard-library check, brief, lookup and draft-task creation work; connector-only sessions can follow the same records manually without claiming unrun tests.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "tools/chat_workflow.py",
+        "tests/test_chat_workflow.py",
+        "docs/workflow/README.md"
+      ]
     },
     {
       "id": "R14",
       "description": "Preserve OntoKin's product and operational constraints.",
       "acceptance": "Product source, fixtures, budgets, frozen evidence and manual-only hosted workflows remain unchanged; current documentation keeps earlier failures and deferred domains visible.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/browser-workflow-c263/PRESERVATION.json",
+        "docs/engineering/browser-workflow-c263/evidence/documentation-check.json"
+      ]
     },
     {
       "id": "R15",
       "description": "Ground the adaptation in the supplied sources.",
       "acceptance": "Source register distinguishes inspected files, official documentation, verified video metadata and missing implementation/transcript evidence.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/browser-workflow-c263/SOURCES.md"
+      ]
     },
     {
       "id": "R16",
@@ -135,7 +176,7 @@
         "docs/workflow/tasks/C263/PLAN.md"
       ],
       "verification": [
-        "See PLAN.md for the concrete acceptance procedure"
+        "Read supplied reference files and C262 root controls; compare live main/tree/issue251 closure"
       ]
     },
     {
@@ -149,14 +190,15 @@
         "R14",
         "R16"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "CHATGPT-START-HERE.md",
         "docs/workflow/PROTOCOL.md",
         "STATUS.md"
       ],
       "verification": [
-        "See PLAN.md for the concrete acceptance procedure"
+        "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+        "Fresh-chat exercise from CHATGPT-START-HERE.md"
       ]
     },
     {
@@ -168,7 +210,7 @@
         "R11",
         "R12"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "ROLE.md",
         "docs/workflow/registry.json",
@@ -176,7 +218,8 @@
         "docs/workflow/knowledge.json"
       ],
       "verification": [
-        "See PLAN.md for the concrete acceptance procedure"
+        "python3 tools/chat_workflow.py check --json",
+        "Inspect skill links and source-backed memory/knowledge records"
       ]
     },
     {
@@ -187,13 +230,14 @@
         "R08",
         "R13"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "tools/chat_workflow.py",
         "tests/test_chat_workflow.py"
       ],
       "verification": [
-        "See PLAN.md for the concrete acceptance procedure"
+        "python3 -m unittest discover -s tests -p test_chat_workflow.py -v",
+        "Run brief, lookup and new-task including cancellation controls"
       ]
     },
     {
@@ -210,12 +254,14 @@
         "R13",
         "R14"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/browser-workflow-c263/RESULTS.md"
       ],
       "verification": [
-        "See PLAN.md for the concrete acceptance procedure"
+        "Independent tooling review and twelve disposable-fixture controls",
+        "Fresh-chat recovery exercise",
+        "Recheck exact STATUS preservation"
       ]
     },
     {
@@ -230,11 +276,65 @@
         "docs/engineering/browser-workflow-c263/INTEGRATION.json"
       ],
       "verification": [
-        "See PLAN.md for the concrete acceptance procedure"
+        "Read actual PR merge and main SHA; rerun workflow tests/check and documentation checker on resulting main",
+        "Verify branch absence and history retention; publish closure and wait"
       ]
     }
   ],
-  "checks": [],
+  "checks": [
+    {
+      "name": "workflow structure",
+      "command": "python3 tools/chat_workflow.py check --json",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/browser-workflow-c263/evidence/workflow-check.json"
+      ]
+    },
+    {
+      "name": "workflow tests",
+      "command": "python3 -m unittest discover -s tests -p test_chat_workflow.py -v",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/browser-workflow-c263/evidence/workflow-tests.log"
+      ]
+    },
+    {
+      "name": "documentation preservation",
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/browser-workflow-c263/evidence/documentation-check.json"
+      ]
+    },
+    {
+      "name": "independent review",
+      "command": "Independent artifact inspection and twelve fixture controls",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/browser-workflow-c263/REVIEW.md"
+      ]
+    },
+    {
+      "name": "fresh-chat exercise",
+      "command": "Isolated worker reads entry and recovers current scope with live read-only observations",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/browser-workflow-c263/COLD-START.md"
+      ]
+    },
+    {
+      "name": "resulting-main verification",
+      "command": "After actual merge, read back main and rerun relevant checks",
+      "result": "not_run",
+      "required": true,
+      "evidence": []
+    }
+  ],
   "completion": {
     "implementation_commit": null,
     "merge_commit": null,
@@ -242,5 +342,5 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Complete implementation, independent verification and authorized integration; then wait for owner direction."
+  "next_action": "Publish reviewed candidate, acquire the integration lease, merge and verify resulting main, resolve the completed branch and publish closure; then wait."
 }

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "repository": "Omegapy/OntoKin",
+  "entrypoint": "CHATGPT-START-HERE.md",
+  "required_reads": [
+    "CHATGPT-START-HERE.md",
+    "AGENTS.md",
+    "GOAL.md",
+    "STATUS.md",
+    "ROLE.md",
+    "docs/workflow/registry.json",
+    "docs/workflow/CURRENT.json",
+    "docs/workflow/PROTOCOL.md"
+  ],
+  "skills": [
+    {
+      "id": "ontokin-session",
+      "path": ".agents/skills/ontokin-session/SKILL.md",
+      "when": "Start or resume repository development, including after interruption or context compaction."
+    },
+    {
+      "id": "ontokin-delivery",
+      "path": ".agents/skills/ontokin-delivery/SKILL.md",
+      "when": "Implement, verify, review, integrate or close a bounded repository task."
+    },
+    {
+      "id": "ontokin-learning",
+      "path": ".agents/skills/ontokin-learning/SKILL.md",
+      "when": "Retrieve project knowledge or consider a source-backed lesson after substantive work; honor capture opt-outs."
+    }
+  ],
+  "task_root": "docs/workflow/tasks",
+  "memory": "docs/workflow/memory.json",
+  "knowledge": "docs/workflow/knowledge.json",
+  "current": "docs/workflow/CURRENT.json"
+}

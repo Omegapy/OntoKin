@@ -48,11 +48,15 @@ python3 -m ontokin check docs/language-design/core-v0.1/01-independent-parts.ok
 
 See [core commands and failure results](docs/user-guide/core-and-cli.md) for evaluation, exact time boundaries, exit codes and optional installation. Examples requiring later profiles name them explicitly; default Agent/0.1 and GLB/0.1 contracts remain unchanged.
 
-## Continue from the current checkpoint
+<a id="continue-from-current-checkpoint"></a>
 
-Read [GOAL.md](GOAL.md), [STATUS.md](STATUS.md) and [AGENTS.md](AGENTS.md) before choosing work. The [C252 roadmap](docs/engineering/review-integration-c252/ROADMAP.md) records priorities; the [C253 protocol](docs/engineering/localized-repair-c253/README.md) binds one public qualification family. The [C255 checker](docs/engineering/localized-repair-c255/README.md) checks inert observations, the [C256 reader](docs/engineering/localized-repair-c256/README.md) measures actual GLB geometry/poses, and the [C257 reader](docs/engineering/localized-repair-c257/README.md) independently derives source ownership. The [C258 follow reader](docs/engineering/localized-repair-c258/README.md) derives explicit follow parents, children and constant offsets and checks corresponding artifact metadata. These finite components retain separate authority boundaries. Hinge observations, complete semantics, revision authority and clean rebuilds remain [qualification work](docs/engineering/localized-repair-c258/INTEGRATED-NEXT-TASK.md). Runner implementation, native qualification and trials remain separate.
+## Continue development in a browser chat
 
-The previous C251 native-sampling task is deferred by the November 16 direction. Its source, evidence and unresolved gates remain preserved. Older checkpoint instructions do not authorize resuming it automatically. Existing release obligations, held drafts and historical failures retain their meanings.
+Use [CHATGPT-START-HERE.md](CHATGPT-START-HERE.md). It contains one reusable new-chat prompt, the explicit reading order and recovery instructions. The [workflow guide](docs/workflow/README.md) explains how requirements, plans, roles, skills, project memory and evidence stay in GitHub. A previous chat or new handoff ZIP is not needed for ordinary continuation. Read the [current checkpoint](docs/workflow/CURRENT.json) and [STATUS](STATUS.md) before selecting work.
+
+The workflow checks what the current session can actually do. Repository instructions do not install browser tools or guarantee automatic loading. Agents explicitly read the required files, use available subagents, verify the actual change, integrate completed work and resolve its branch.
+
+C261's raw GLB hinge reader and C262's historical handoff are complete in their bounded scopes. The source-side hinge observer under the unchanged C260 contract remains separately queued. Source/artifact comparison, historical admission, full semantics, native/model trials and comparative advantage remain unqualified. The [C252 roadmap](docs/engineering/review-integration-c252/ROADMAP.md) governs product priorities; the older C251 native-sampling task stays deferred. Current user direction selects the next scope.
 
 ## Start reading
 
@@ -88,6 +92,8 @@ Read [AGENTS.md](AGENTS.md) for branch ownership and integration rules. For docu
 ```sh
 python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py
 ```
+
+Workflow records additionally use `python3 tools/chat_workflow.py check`.
 
 Runtime work uses [the local validation policy](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md) and the affected contracts. [Verification details](docs/user-guide/development-and-scope.md#verification) explain the existing local driver, optional visual checks and environment limits. A test result covers only its recorded inputs and executed roles.
 

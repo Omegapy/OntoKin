@@ -1,0 +1,89 @@
+# Develop OntoKin through browser chats
+
+Use [CHATGPT-START-HERE.md](../../CHATGPT-START-HERE.md) for each new ChatGPT
+thread. It contains a reusable prompt and the explicit reading order. The
+GitHub repository holds current work; the chat provides the working session.
+
+## What happens in a session
+
+The agent reads current instructions and the live checkpoint, checks what its
+tools can actually do, and selects the scope authorized by your request. It
+records requirements and a plan, implements the change, verifies it and updates
+GitHub. Independent workers can help when available. Completed approved work
+is integrated into main and the work branch is resolved.
+
+A task can span several chats. The next chat resumes the same task and branch
+after checking their current state. It does not create another branch simply
+because the conversation changed. If the previous operation timed out, it
+checks GitHub before repeating it.
+
+## Where information lives
+
+| File or directory | Purpose |
+| --- | --- |
+| [STATUS.md](../../STATUS.md) | Short current project state, product limits and main integration ownership. |
+| [CURRENT.json](CURRENT.json) | Pointer to the active/latest task and explicit next-action disposition. |
+| [tasks](tasks/C263/task.json) | Requirements, plan, evidence and completion record for each named scope. |
+| [Registry](registry.json) | Required reads and the small set of reusable repository skills. |
+| [ROLE.md](../../ROLE.md) | Director, worker and reviewer accountability. |
+| [PROTOCOL.md](PROTOCOL.md) | Startup, execution, recovery, verification and integration rules. |
+| [Memory](memory.json) | Source-backed decisions, constraints and lessons; current instructions retain authority. |
+| [Knowledge guide](KNOWLEDGE.md) | Project vocabulary, relationships and documented capability boundaries. |
+
+The task's `task.json` is the status/acceptance record. Its requirements and plan
+Markdown explain the work. STATUS summarizes the project and lease; CURRENT
+points to the task. These records have distinct jobs, so a second competing
+task ledger is unnecessary. [Templates](templates/SESSION.md) help capture
+session observations without saving entire conversations.
+
+## When capabilities differ
+
+| Available in this chat | Supported route |
+| --- | --- |
+| GitHub read/write plus a terminal | Edit in a temporary checkout, run relevant checks and publish through authorized GitHub operations. |
+| GitHub read/write without a terminal | Read and edit through the connector. Inspect records manually, but mark execution checks `not_run`; use actual available verification evidence before claiming completion. |
+| GitHub read only | Inspect/review and prepare the exact change or recovery instructions. Repository publication remains blocked until a write-capable session is available. |
+| Subagent tools | Delegate independent work with bounded ownership and review the returned artifacts. |
+| No subagent tools | Work sequentially and identify self-review. Do not claim a separate worker ran. |
+
+The browser's product surface and available connections determine capabilities.
+Instructions in GitHub do not install a tool, create permissions, change the
+selected model or guarantee automatic file discovery. Report an observed
+restriction precisely; do not infer that all browser chats share it.
+
+## Small offline tools
+
+Use Python 3.11 or later from a checkout. The tools use the standard library and
+make no network calls:
+
+```sh
+python3 tools/chat_workflow.py check
+python3 tools/chat_workflow.py brief --json
+python3 tools/chat_workflow.py lookup "hinge"
+python3 tools/chat_workflow.py new-task C264 --title "Selected scope" --intent "Owner's request"
+```
+
+`check` checks record structure, references and completion fields. It cannot
+prove that evidence is scientifically correct or that a branch was merged.
+`brief` summarizes the saved checkpoint and local checkout. `lookup` finds
+actual memory/knowledge entries with their sources and status. `new-task`
+creates local draft task, requirements and plan files and refuses to overwrite an existing task. It does not
+publish, select the task in CURRENT or authorize work. Review and commit a
+draft through the normal branch procedure when that scope is authorized.
+
+In a connector-only session, use the same JSON records directly and follow the
+manual acceptance checks in the protocol. Do not claim that the CLI ran.
+
+## Historical handoffs
+
+C262 remains a preserved historical archive. Its code baseline and source
+integration were reconciled with GitHub before this migration. Ordinary work
+starts from current GitHub main. Full historical offline restoration remains a
+separate operation with its original archive contract; this workflow does not
+claim to replace or rerun it. See the [migration record](../engineering/browser-workflow-c263/MIGRATION.md).
+
+A new ZIP is needed only when explicitly requested for export or offline
+recovery. It must identify its source revision and preserve the obligations
+appropriate to the requested archive. The older requirement to save a ZIP at
+every checkpoint is superseded for ordinary browser-chat development by the
+owner's November 18 GitHub workflow direction.

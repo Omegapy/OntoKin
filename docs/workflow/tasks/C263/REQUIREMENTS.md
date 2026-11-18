@@ -1,6 +1,6 @@
 # C263 requirements: development through browser chats
 
-Status: implementation in progress. [Task record](task.json) tracks acceptance.
+The [task record](task.json) tracks current status and acceptance.
 
 ## Intent and scope
 
