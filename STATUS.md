@@ -23,7 +23,11 @@ separate gates. C264 instructions are integrated through
 [PR255](https://github.com/Omegapy/OntoKin/pull/255), merge
 `df18c6ee8721f20923b80841fccf495ea65735f9`. Actual-main workflow and documentation
 checks passed. The completed implementation branch is deleted and retained in
-main ancestry. C264 remains in progress while verified saved delivery is pending.
+main ancestry. Required saved delivery is complete: the verified session ZIP and
+both downloadable prompt formats have confirmed saved identities. See the
+[delivery receipt](docs/engineering/browser-handoff-c264/DELIVERY.json) and
+[latest handoff](docs/workflow/CURRENT.json). All eight requirements and five
+plan steps are done. **Wait for owner direction; no task is active.**
 
 C263's GitHub-owned workflow remains integrated through
 [PR253](https://github.com/Omegapy/OntoKin/pull/253); its exact checks and limits
@@ -90,7 +94,7 @@ remain incomplete. Numerical checks do not certify occluded/unresolvable views.
 The starting C264 inventory contained only main and no open PRs. The completed
 C264 implementation branch `work/c264-required-browser-handoffs` was automatically
 deleted after PR255 merged; live inventory again contains only main. Required
-artifact delivery remains open. C263's PR is merged and its completed workflow branch is deleted. C234 was already merged and its branch was deleted;
+artifact delivery is complete. C263's PR is merged and its completed workflow branch is deleted. C234 was already merged and its branch was deleted;
 scope240 is closed. C261's completed branch is also absent. No historical user
 branch-deletion request remains. Recheck live inventory before any cleanup.
 C174's former archive branch is absent; complete historical graph retention
@@ -103,15 +107,17 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-Owner: `c264-root-c3681d8a01ea`.
-State: HELD for C264 required browser handoff guidance and delivery.
+Owner: none. Previous owner: `c264-root-c3681d8a01ea`.
+State: RELEASED after verified C264 integration and confirmed saved handoff;
+effective when this closure is conditionally published and read back.
 Scope: [C264 browser handoffs #254](https://github.com/Omegapy/OntoKin/issues/254).
-Acquired at: 2026-11-18T21:43:50.000Z; expiry: 2026-11-18T22:13:50.000Z.
-Observed main before acquisition: `727cc298cd9862f53684061a34e9e41a8ec8cd06`.
-Reserved shared files: STATUS.md, CHATGPT-START-HERE.md, AGENTS.md, README.md,
-current workflow guidance/registry/checkpoint and C264 task/evidence records.
-Independent nonoverlapping branch work may continue. Reconcile actual refs and
-unknown operations before taking over; expiry alone does not prove inactivity.
+Acquired at: 2026-11-18T21:43:50.000Z; previous expiry: 2026-11-18T22:13:50.000Z.
+Release recorded at: 2026-11-18T21:56:42.527216+00:00.
+Observed main before closure: `9d31b3dce6655e30db480605a169942610f64275`.
+Reserved shared files: none after verified publication.
+
+Reconcile current refs and any unknown operations before acquiring a new
+bounded expected-head lease. Expiry alone does not prove another writer stopped.
 
 ## Historical status
 

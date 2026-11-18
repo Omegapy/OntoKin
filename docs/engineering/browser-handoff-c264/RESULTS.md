@@ -36,3 +36,16 @@ sources, 233 sections and 5,539 local links were verified. The completed branch
 was automatically deleted and its candidate remains in main ancestry.
 [INTEGRATION.json](INTEGRATION.json) records these observations. Saved artifact
 delivery is still pending in this checkpoint.
+
+## Saved session handoff
+
+The final session ZIP has 53 members and 52 manifest entries. Fresh extraction,
+all hashes/sizes, safe paths, CRCs and 43 pinned Git snapshot comparisons passed.
+The independent fresh-session audit reached the same counts and recovered the
+correct delivery-only continuation boundary. The archive is 116,956 bytes.
+
+All three requested outputs (ZIP, Markdown prompts and plain-text prompts) have
+confirmed saves in the existing OntoKin folder. [DELIVERY.json](DELIVERY.json)
+records exact returned identities, versions, sizes and hashes. Its later receipt
+resolves the frozen package's deliberately pending save state. No C262 bytes
+were changed and no new scientific product work began.

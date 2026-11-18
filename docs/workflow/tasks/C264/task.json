@@ -3,7 +3,7 @@
   "id": "C264",
   "title": "Required browser handoffs and continuation/recovery prompts",
   "intent": "Preserve required saved ZIP delivery after each bounded browser scope while keeping GitHub as current source authority and making interruptions recoverable.",
-  "status": "in_progress",
+  "status": "done",
   "owner": "c264-root-c3681d8a01ea",
   "branch": "work/c264-required-browser-handoffs",
   "base_sha": "727cc298cd9862f53684061a34e9e41a8ec8cd06",
@@ -53,8 +53,11 @@
       "id": "R05",
       "description": "Make confirmed saved handoff delivery a completion gate.",
       "acceptance": "Current instructions require verified session ZIP and actual Library identity before task completion.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/HANDOFF.md",
+        "docs/engineering/browser-handoff-c264/DELIVERY.json"
+      ]
     },
     {
       "id": "R06",
@@ -70,8 +73,11 @@
       "id": "R07",
       "description": "Provide downloadable reusable prompts and one usable new session ZIP.",
       "acceptance": "Saved files include prompts, checkpoint, next action, recovery state, frozen workflow snapshots, manifest and evidence.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/browser-handoff-c264/DELIVERY.json",
+        "docs/engineering/browser-handoff-c264/PACKAGE-REVIEW.md"
+      ]
     },
     {
       "id": "R08",
@@ -166,7 +172,7 @@
         "R07",
         "R08"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/browser-handoff-c264/DELIVERY.json"
       ],
@@ -214,6 +220,25 @@
         "docs/engineering/browser-handoff-c264/evidence/main-workflow-check.json",
         "docs/engineering/browser-handoff-c264/evidence/main-documentation.json"
       ]
+    },
+    {
+      "name": "session ZIP verification and cold-start audit",
+      "command": "Exact ZIP manifest/CRC/safe-path checks, fresh extraction, 43 pinned Git file comparisons and independent fresh-session audit",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/browser-handoff-c264/evidence/session-archive-verification.json",
+        "docs/engineering/browser-handoff-c264/PACKAGE-REVIEW.md"
+      ]
+    },
+    {
+      "name": "confirmed saved delivery",
+      "command": "Save ordered ZIP, Markdown and text files in the existing OntoKin folder; inspect each returned result and retained identity",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/browser-handoff-c264/DELIVERY.json"
+      ]
     }
   ],
   "completion": {
@@ -222,15 +247,19 @@
     "pull_request": "https://github.com/Omegapy/OntoKin/pull/255",
     "branch_disposition": "deleted",
     "evidence": [
-      "docs/engineering/browser-handoff-c264/INTEGRATION.json"
+      "docs/engineering/browser-handoff-c264/INTEGRATION.json",
+      "docs/engineering/browser-handoff-c264/DELIVERY.json"
     ]
   },
-  "next_action": "C264 implementation is integrated and its branch deleted. Create, verify and save the session ZIP and downloadable prompts, publish actual delivery receipt, close task and stop.",
+  "next_action": "Wait for owner direction. A later continuation prompt can select one bounded approved next step. Source-side hinge observation remains separately queued under C260.",
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "pending",
+    "status": "complete",
     "folder": "OntoKin",
-    "receipt": "docs/engineering/browser-handoff-c264/DELIVERY.json"
+    "receipt": "docs/engineering/browser-handoff-c264/DELIVERY.json",
+    "archive": "https://chatgpt.com/library?file_id=libfile_fde3_f-e5f37c374668819186ba840080f78e26_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "sha256": "6a297e28a435664ba09f3cbe64a95e96978a97264964c576b647cc985cc55dd7",
+    "bytes": 116956
   }
 }
