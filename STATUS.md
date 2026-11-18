@@ -106,10 +106,11 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-State: released after C265 verified integration, completed-branch disposition
-and confirmed saved delivery. Previous owner: `c265-root-b4cbf4ea8454`.
-Released at: 2026-11-18T22:45:24.529208+00:00. No active integration owner is retained.
-Acquire a new expected-head conditional lease before the next shared main write.
+State: held for C266 reviewed source/program/object binding integration and saved delivery.
+Owner: `c266-root-2593880e88fd`. Scope: [issue258](https://github.com/Omegapy/OntoKin/issues/258).
+Acquired at: 2026-11-18T23:07:36.068Z. Expires at: 2026-11-18T23:37:36.068Z.
+Reserved: main, STATUS integration fields, CURRENT, root navigation and C266 delivery/task closure.
+Observed parent: `7818de1f17e379df50680cb94347ce86bcabb8a5`. Independent workers remain confined to their assigned C266 files.
 
 ## Historical status
 
