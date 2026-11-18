@@ -39,3 +39,7 @@ The Director owns task records, documentation, evidence integration, Git index, 
 This isolated standard-library engineering observer is not imported by the product and changes no released runtime machinery. The complete affected regression inventory is the C253 input audit and C255/C256/C257/C258/C261/C265/C266 component cohorts, plus workflow and documentation preservation. Full product aggregate, native/visual checks, source exports, hosted workflows and other Python compatibility roles are not applicable to this increment and remain not-run, with prior failures unchanged. If shared product machinery changes, revise scope and execute its complete inherited obligations first.
 
 After implementation and each substantive verification/integration stage, publish a recoverable checkpoint and refresh the saved recovery file. Preserve failed attempts and unknown operation identities. Stop only after verified integration, branch disposition and confirmed saved handoff receipt.
+
+## Interrupted-session recovery
+
+The November 18 Prompt 2 resumes this same scope and branch under Director `c266-recovery-31766bc15fec`. The former owner and original base above remain historical provenance. Published implementation and controls at `e808af1403411960ebf360aa4588c9e358d2035a` are preserved unchanged. P03–P05 remain the authorized work; no new comparator implementation is selected. See [RECOVERY.md](RECOVERY.md).
