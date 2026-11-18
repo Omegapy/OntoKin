@@ -43,3 +43,9 @@ Library materialization succeeded for the supplied archive; existing OntoKin fol
 ## Ownership and recovery
 
 Scope issue 258 and work/c266-hinge-input-binding were created at the observed base. Main lease is released from C265; no C266 shared main write is authorized until a verified conditional lease is acquired. Initial code implementation has not started. No unknown write or running product test exists. Next: publish these exact requirements/plan and save the recoverable checkpoint, then assign implementation and controls. Final delivery remains pending.
+
+## Published scope checkpoint
+
+Requirements and plan published as `3a505073bbc35cd665de0af15ff2f696f6b28544`, tree `653df3f4ba9a84162d2b21b8adc8ba53be840870`; branch ref read back. Local staged tree matched and the exact remote commit object was reconstructed with hash verification (the API normalizes dates to UTC; the original commit offset is -0700). An initial +0000 reconstruction did not match and left local refs unchanged; no remote retry occurred.
+
+Early recovery save succeeded: [OntoKin_C266_Recovery_2026-11-18.json](https://chatgpt.com/library?file_id=libfile_fde3_f-614b6ef24cd88191ac1c895a0d83c30a_2ab2a24d43748191957f9bcc356b59de&account_id=personal), version 0. The implementation and independent control workers started only after the published plan. No C266 main lease has yet been acquired.
