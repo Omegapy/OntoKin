@@ -43,8 +43,7 @@ public class Finger @ "finger" {
         length = self.length;
         tint = self.tint;
     }
-    // hidden by inherited LF-only comment lexing
-    public joint hidden @ "hidden": hinge { parent = self.pivot; child = self.blade.base; axis = vec3(0,0,1); limits = range(-45[deg],45[deg]); initial = 0[rad]; }
+    // hidden by inherited LF-only comment lexing    public joint hidden @ "hidden": hinge { parent = self.pivot; child = self.blade.base; axis = vec3(0,0,1); limits = range(-45[deg],45[deg]); initial = 0[rad]; }
     public joint flex @ "flex": hinge {
         parent = self.pivot;
         child = self.blade.base;
