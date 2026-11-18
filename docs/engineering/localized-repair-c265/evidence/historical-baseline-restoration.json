@@ -1,0 +1,25 @@
+{
+  "schema": "ontokin.c265.baseline-recovery/0.1",
+  "time": "2026-11-18T22:16:41.903934+00:00",
+  "starting_checkout_shallow": true,
+  "failed_attempt": "docs/engineering/localized-repair-c265/evidence/baseline/c253-corpus.log",
+  "cause": "Historical baseline commit missing from shallow local object store; verifier did not execute its source checks.",
+  "correction": "Fetched exact GitHub git/commits and necessary git/trees metadata through connector; reconstructed raw Git objects and required SHA equality before storing. Existing bound blobs already present. No repository file or expected pin changed.",
+  "commit": "ce19b8c313da9c87050dfa2a8ba4f32470fb1f6f",
+  "trees": [
+    "ffb6a1761c43c44a4b145946e9e3045fbd5c4bb4",
+    "e602b0284288e6187a2682c80bb688aef337cfbb",
+    "d9ae518dd2108d14645f9f5711f9075166c9d6cc",
+    "b0add0a320ee8770758406fd2c4aa4874c3b0f5a",
+    "910c625f4b10b46abbfcf76cf69452f4122205ef",
+    "f10b21c5406d052a34c76fac8847a21cc1e7735d",
+    "ff02f0da88f32fc12c6594e6c347ef373bc9b166",
+    "b912ebf4453af27f272203973654a6de486daafc",
+    "8a7cec34de8236e5f88c48028e4673d78ab1d893"
+  ],
+  "rerun_command": "python3 docs/engineering/localized-repair-c253/verify_manifest.py",
+  "rerun_result": "passed",
+  "bound_files": 14,
+  "result": "docs/engineering/localized-repair-c265/evidence/c253-after-object-restoration.json",
+  "limits": "This restores only the objects needed for this corpus check; does not establish complete historical graph retention or C174."
+}
