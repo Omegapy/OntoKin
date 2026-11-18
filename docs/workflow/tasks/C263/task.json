@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "id": "C263",
+  "title": "GitHub-owned workflow for ChatGPT browser development",
+  "intent": "Make successive ChatGPT browser threads recover and develop OntoKin from explicit GitHub-owned instructions, task state, skills and evidence.",
+  "status": "in_progress",
+  "owner": "c263-root-c3681d8a01ea",
+  "branch": "work/c263-browser-workflow",
+  "base_sha": "bbe30e2f5863d743bd2393466341511b4924ad9d",
+  "requirements": [
+    {
+      "id": "R01",
+      "description": "GitHub holds the operational workflow and current checkpoint.",
+      "acceptance": "One stable entry URL and reusable prompt locate the current task without a ZIP or prior chat.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R02",
+      "description": "Read instructions explicitly at an observed revision.",
+      "acceptance": "Entry instructions require AGENTS, GOAL, STATUS, ROLE, current task and selected skills; distinguish Codex discovery from browser behavior.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R03",
+      "description": "Use capabilities actually available in the session.",
+      "acceptance": "Record read/write/merge/test/subagent access; unavailable tools produce precise limits, never fictional execution or a universal browser restriction.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R04",
+      "description": "Give one Director accountability and bounded worker roles.",
+      "acceptance": "Assignments identify owner, inputs, write scope, evidence and stop condition; one verified owner integrates main.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R05",
+      "description": "Extract intent into traceable requirements.",
+      "acceptance": "Each requirement has a stable ID, observable acceptance and evidence; user changes revise scope explicitly.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R06",
+      "description": "Maintain a durable implementation plan.",
+      "acceptance": "Every requirement maps to a plan step with outputs, verification and status; completion cannot leave an in-scope requirement unaccounted for.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R07",
+      "description": "Recover work across chats and unknown write outcomes.",
+      "acceptance": "Reconcile live refs/PRs/lease with checkpoint; resume the existing scope; record unpublished work and retry only after readback.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R08",
+      "description": "Record actual verification and honest completion.",
+      "acceptance": "Changes have revision-specific checks and review; unrun/failed checks remain visible; structural checks do not certify live GitHub or product semantics.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R09",
+      "description": "Integrate completed work and resolve its branch.",
+      "acceptance": "Verify PR/main result and head retention, then confirm deletion or give the owner the exact safe-to-delete branch.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R10",
+      "description": "Retain project memory and lessons with evidence.",
+      "acceptance": "Read-only retrieval exposes source and applicability; completion considers a deduplicated lesson; opt-outs are respected and historical memory cannot overrule current instructions.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R11",
+      "description": "Provide source-backed project knowledge navigation.",
+      "acceptance": "Terms, typed relationships and capability limits link to adopted sources; the map does not introduce new OntoKin semantics or an inference engine.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R12",
+      "description": "Load reusable repository skills only when relevant.",
+      "acceptance": "A registry names each skill, trigger and path; skill files are explicitly read and are not represented as installed browser features.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R13",
+      "description": "Supply small executable workflow tools and a browser-only route.",
+      "acceptance": "Standard-library check, brief, lookup and draft-task creation work; connector-only sessions can follow the same records manually without claiming unrun tests.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R14",
+      "description": "Preserve OntoKin's product and operational constraints.",
+      "acceptance": "Product source, fixtures, budgets, frozen evidence and manual-only hosted workflows remain unchanged; current documentation keeps earlier failures and deferred domains visible.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R15",
+      "description": "Ground the adaptation in the supplied sources.",
+      "acceptance": "Source register distinguishes inspected files, official documentation, verified video metadata and missing implementation/transcript evidence.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R16",
+      "description": "Finish one bounded workflow delivery and stop.",
+      "acceptance": "Current state records completion, links to evidence and waits for user direction; the scientific next task remains a separately selectable scope.",
+      "status": "not_done",
+      "evidence": []
+    }
+  ],
+  "plan": [
+    {
+      "id": "P01",
+      "title": "Reconcile sources and write requirements and plan",
+      "requirements": [
+        "R05",
+        "R15"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/workflow/tasks/C263/REQUIREMENTS.md",
+        "docs/workflow/tasks/C263/PLAN.md"
+      ],
+      "verification": [
+        "See PLAN.md for the concrete acceptance procedure"
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "Implement startup, current state and recovery",
+      "requirements": [
+        "R01",
+        "R02",
+        "R03",
+        "R07",
+        "R14",
+        "R16"
+      ],
+      "status": "in_progress",
+      "artifacts": [
+        "CHATGPT-START-HERE.md",
+        "docs/workflow/PROTOCOL.md",
+        "STATUS.md"
+      ],
+      "verification": [
+        "See PLAN.md for the concrete acceptance procedure"
+      ]
+    },
+    {
+      "id": "P03",
+      "title": "Implement reusable skills, roles, memory and knowledge",
+      "requirements": [
+        "R04",
+        "R10",
+        "R11",
+        "R12"
+      ],
+      "status": "in_progress",
+      "artifacts": [
+        "ROLE.md",
+        "docs/workflow/registry.json",
+        "docs/workflow/memory.json",
+        "docs/workflow/knowledge.json"
+      ],
+      "verification": [
+        "See PLAN.md for the concrete acceptance procedure"
+      ]
+    },
+    {
+      "id": "P04",
+      "title": "Implement offline workflow tooling",
+      "requirements": [
+        "R06",
+        "R08",
+        "R13"
+      ],
+      "status": "in_progress",
+      "artifacts": [
+        "tools/chat_workflow.py",
+        "tests/test_chat_workflow.py"
+      ],
+      "verification": [
+        "See PLAN.md for the concrete acceptance procedure"
+      ]
+    },
+    {
+      "id": "P05",
+      "title": "Verify independently and correct defects",
+      "requirements": [
+        "R02",
+        "R03",
+        "R06",
+        "R07",
+        "R08",
+        "R10",
+        "R12",
+        "R13",
+        "R14"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/browser-workflow-c263/RESULTS.md"
+      ],
+      "verification": [
+        "See PLAN.md for the concrete acceptance procedure"
+      ]
+    },
+    {
+      "id": "P06",
+      "title": "Integrate into main, close scope and stop",
+      "requirements": [
+        "R09",
+        "R16"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/browser-workflow-c263/INTEGRATION.json"
+      ],
+      "verification": [
+        "See PLAN.md for the concrete acceptance procedure"
+      ]
+    }
+  ],
+  "checks": [],
+  "completion": {
+    "implementation_commit": null,
+    "merge_commit": null,
+    "pull_request": null,
+    "branch_disposition": "active",
+    "evidence": []
+  },
+  "next_action": "Complete implementation, independent verification and authorized integration; then wait for owner direction."
+}
