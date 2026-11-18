@@ -1,0 +1,57 @@
+{
+  "initial_commit": "ea44b6de62d648d4a97607c5a9997d2844c09f82",
+  "initial_remote_tree": "a001c843f712ead83a8094d9fcb8ae400452aa20",
+  "verification_result": "failed: reconstructed frozen tree c216a0382820d773be7ccc5d1c0cd0bcff6538ae did not equal remote tree",
+  "cause": "Publication batch helper used universal-newline text reading, changing six preserved CR/CRLF evidence payloads. Code and test bytes were unchanged.",
+  "affected_files": [
+    {
+      "path": "docs/engineering/localized-repair-c265/evidence/implementation-attempts/bare-cr-omission/hinges.ok",
+      "bytes": 2125,
+      "normalized_bytes": 2125,
+      "sha256": "74c4eb54621124baf98857c20f912b55ad0de160d0a7d060d311aec2d2c12f40",
+      "CR": 1
+    },
+    {
+      "path": "docs/engineering/localized-repair-c265/evidence/review/bare-cr-omission/hinges.ok",
+      "bytes": 2125,
+      "normalized_bytes": 2125,
+      "sha256": "74c4eb54621124baf98857c20f912b55ad0de160d0a7d060d311aec2d2c12f40",
+      "CR": 1
+    },
+    {
+      "path": "docs/engineering/localized-repair-c265/evidence/review/crlf-candidate5/main.ok",
+      "bytes": 1753,
+      "normalized_bytes": 1708,
+      "sha256": "4fb27b3a88b5184807924532f62c5b56ebca8903cb2c595d73cb13c3d56986a6",
+      "CR": 45
+    },
+    {
+      "path": "docs/engineering/localized-repair-c265/evidence/review/run-04/inputs/bare_cr_comment_hidden_joint/hinges.ok",
+      "bytes": 2083,
+      "normalized_bytes": 2083,
+      "sha256": "09a02de55cae92c4c4c98cb61819caf67daac04f6842d384d78160833141dbb5",
+      "CR": 1
+    },
+    {
+      "path": "docs/engineering/localized-repair-c265/evidence/review/run-04/inputs/ordinary_crlf_comment/hinges.ok",
+      "bytes": 1967,
+      "normalized_bytes": 1911,
+      "sha256": "e693b523228ce415c6af65269679f194cfcd7c99846b60b301bd501c277baeef",
+      "CR": 56
+    },
+    {
+      "path": "docs/engineering/localized-repair-c265/evidence/review/run-04/inputs/ordinary_crlf_comment/main.ok",
+      "bytes": 1753,
+      "normalized_bytes": 1708,
+      "sha256": "15acb24b2d649728bbcbb359d6f98165f46cd278f8688051142fa92d3c569c49",
+      "CR": 45
+    }
+  ],
+  "correction": "Decode original UTF-8 bytes without newline translation, republish six files. Original commit remains in history.",
+  "corrected_commit": "1e5b1c368fabc51ce22be6916aca6464f71f97cf",
+  "corrected_tree": "c216a0382820d773be7ccc5d1c0cd0bcff6538ae",
+  "corrected_tree_verified_equal_to_frozen_stage": true,
+  "scientific_source_sha256": "04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31abbf9e",
+  "test_sha256": "467be9b930a77d6a82b56154c483f92747d554b354a5380687748b4e1a40821a",
+  "recorded_at": "2026-11-18T22:34:29.795118+00:00"
+}

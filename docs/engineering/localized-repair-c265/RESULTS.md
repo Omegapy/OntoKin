@@ -25,7 +25,7 @@ The [source observation receipt](evidence/source-observations/RECEIPT.json) bind
 the two full returned source reports to the final implementation.
 
 Independent review approves these exact source/test hashes. The reviewer
-passed45 focused controls plus9 boundary/dependency checks, with no unresolved
+passed 45 focused controls plus 9 boundary/dependency checks, with no unresolved
 mandatory finding. See the [review receipt](REVIEW.md).
 
 ## Preserved findings and scope limits
@@ -71,3 +71,9 @@ component suite is not an integration or saved-delivery claim. Full product
 regression, source execution/rebuild, visual/native checks, compatibility on
 other Python versions, model trials and hosted CI are not run for this isolated
 increment; historical failed and unrun obligations retain their states.
+
+## Published candidate verification
+
+Candidate `1e5b1c368fabc51ce22be6916aca6464f71f97cf` passes all nine applicable check groups: 188 methods (C255 31, C256 29, C257 23, C258 28, C261 28, C265 49), fourteen C253 corpus bindings, workflow validation and documentation preservation. Exact commands, environment, read-set and logs are in [candidate checks](evidence/candidate/CHECKS.json). Independent review hashes equal the published source/test bytes.
+
+Exact tree reconstruction detected newline translation in six evidence files in the initial publication. The byte-preserving correction is part of this candidate; both commits and the failed verification remain in [publication recovery](evidence/publication/NEWLINE-RECOVERY.json). No scientific code changed during this correction. Integration, actual-main verification and saved delivery remain outstanding.

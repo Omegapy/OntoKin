@@ -61,7 +61,8 @@
       "evidence": [
         "docs/engineering/localized-repair-c265/RESULTS.md",
         "docs/engineering/localized-repair-c265/REVIEW.md",
-        "docs/engineering/localized-repair-c265/evidence/independent-controls/CONTROL-COVERAGE.json"
+        "docs/engineering/localized-repair-c265/evidence/independent-controls/CONTROL-COVERAGE.json",
+        "docs/engineering/localized-repair-c265/evidence/candidate/CHECKS.json"
       ]
     },
     {
@@ -128,7 +129,7 @@
         "R04",
         "R05"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c265/RESULTS.md",
         "docs/engineering/localized-repair-c265/REVIEW.md"
@@ -143,7 +144,7 @@
       "requirements": [
         "R06"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c265/INTEGRATION.json"
       ],
@@ -189,19 +190,21 @@
     {
       "name": "candidate applicable regression and documentation checks",
       "command": "Complete C253/C255/C256/C257/C258/C261/C265 cohorts plus workflow/documentation checks",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/localized-repair-c265/evidence/candidate/CHECKS.json"
+      ]
     }
   ],
   "completion": {
-    "implementation_commit": null,
+    "implementation_commit": "1e5b1c368fabc51ce22be6916aca6464f71f97cf",
     "merge_commit": null,
     "pull_request": null,
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Publish frozen scientific candidate, execute candidate checks and inspect final independent review; integrate only after all applicable gates, then save required handoff.",
+  "next_action": "Merge the reviewed candidate through expected-head PR integration under the verified main lease; verify actual main and branch disposition, then freeze and save the required handoff.",
   "delivery": {
     "required": true,
     "kind": "browser-session",

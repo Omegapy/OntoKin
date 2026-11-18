@@ -38,7 +38,7 @@ execution, pose evaluation, native application or model trial was run.
 | 03 | 48 methods; 1 failure | On the revised implementation, the new ownership relocation fixture correctly refused an unavailable direct ordinary part as `UNSUPPORTED_SOURCE_FORM`. The test had overrequired `MALFORMED`; C260 H20 permits this structural refusal. The assertion now allows either explicit structural category. |
 | 04 | 48 methods passed; zero skips | The candidate 3 bytes and their exact test snapshot passed. Later review identified the private membership access boundary and required a focused correction. |
 | 05 | 49 methods passed; zero skips | Candidate 4 passed the complete suite, including private owner membership default admission and external private-parameter override refusal. |
-| 06 | 49 methods passed; zero skips | The unchanged suite passed candidate 5 after the separate reviewer demonstrated the pinned lexer bare-CR comment omission and the implementer added a precise unsupported-form refusal. The reviewer owns the targeted guard case. |
+| 06 | 49 methods passed; zero skips | The unchanged suite passed candidate 5 after the implementer demonstrated the pinned lexer bare-CR comment omission and added a precise unsupported-form refusal. Independent review exercised the targeted refusal and ordinary CRLF cases. |
 
 Each run retains its original log, source/input hashes and exact test/observer
 snapshots. Run 02's test snapshot was reconstructed from the retained run 01

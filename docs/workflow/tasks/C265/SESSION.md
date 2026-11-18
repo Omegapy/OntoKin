@@ -31,3 +31,11 @@ Final source SHA-256 `04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31
 Learning checkpoint: superseded the stale unfinished-source interface memory and updated the capability navigation from observed C265 results; comparison/historical admission remain unresolved. No model training, automatic learning or product semantic change is implied.
 
 The recovery file was saved successfully as `libfile_fde3_f-5332a18cc1e08191bff7853d6adb8753_2ab2a24d43748191957f9bcc356b59de`, latest recorded version1 before this scientific checkpoint. Reconcile newer GitHub commits and saved recovery versions after an interruption.
+
+## Published candidate checkpoint
+
+Reviewed source/test bytes are published at `1e5b1c368fabc51ce22be6916aca6464f71f97cf`; tree `c216a0382820d773be7ccc5d1c0cd0bcff6538ae`. Initial publication `ea44b6de62d648d4a97607c5a9997d2844c09f82` changed six CR/CRLF evidence payloads through text newline translation. The verification caught the mismatch before candidate testing; the next commit restores all exact bytes. The full frozen stage now reproduces the remote tree. The failed comparison and both identities are retained in evidence/publication/NEWLINE-RECOVERY.json. Use byte reads when publishing byte-sensitive fixtures.
+
+The candidate passes nine complete check groups, 188 methods, fourteen corpus bindings, workflow and documentation checks. Independent approval applies to its exact unchanged source/test hashes. R05 was marked done in the first implementation record before its candidate regression gate; this checkpoint supplies that previously outstanding evidence. No prior partial run is treated as a completed aggregate.
+
+The early recovery file is confirmed at version 2; later recovery and final delivery supersede its remaining-work list. Next action is expected-head PR merge under the verified lease, actual-main checks, branch disposition and saved ZIP. All implementation workers are idle with no pending mutations.
