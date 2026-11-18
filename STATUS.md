@@ -11,31 +11,25 @@ tools own rendering, general simulation and gameplay. [GOAL](GOAL.md), the
 
 ## Current workflow and next action
 
-C265 is complete: its independent source hinge-declaration observer is integrated
-through [PR257](https://github.com/Omegapy/OntoKin/pull/257), merge `d602adee52bd5913dc86fdb3a29e2c4c653a4ed9`.
-Fresh resulting-main checks pass 188 methods, fourteen corpus bindings, workflow
-and documentation validation. Independent review passes 45 focused and nine
-boundary controls. The completed `work/c265-source-hinge-observer` branch is
-deleted and only main remains.
+C266 implements the bounded source/program/object provenance binding prerequisite
+for the C260 hinge comparator. [Scope258](https://github.com/Omegapy/OntoKin/issues/258),
+[task](docs/workflow/tasks/C266/task.json), [requirements](docs/workflow/tasks/C266/REQUIREMENTS.md)
+and [plan](docs/workflow/tasks/C266/PLAN.md) own this active scope.
+The new authored controls pass 34 methods / 748 expected outcomes; separate
+independent review approves 87 distinct controls on the exact implementation.
+Candidate regression, integration, resulting-main checks and saved delivery
+remain distinct gates. Hinge values, joint sets and endpoints are not compared.
 
-The verified [C265 browser-session handoff](https://chatgpt.com/library?file_id=libfile_fde3_f-c38fb51308808191ae60017ab6de1fde_2ab2a24d43748191957f9bcc356b59de&account_id=personal) and both standalone prompts are saved.
-[Delivery receipt](docs/engineering/localized-repair-c265/DELIVERY.json),
-[package review](docs/engineering/localized-repair-c265/PACKAGE-REVIEW.md),
-[results](docs/engineering/localized-repair-c265/RESULTS.md) and
-[integration](docs/engineering/localized-repair-c265/INTEGRATION.json) retain the
-exact identities and evidence. The ZIP intentionally freezes before its save;
-the later external receipt resolves that boundary.
+Next action: finish only C266 through verified integration and its required
+saved handoff. After completion, wait for a new continuation before selecting
+full hinge comparison. Historical admission remains a separate interface.
 
-Next action: wait for new owner direction. A later Prompt 1 can select one
-bounded source/artifact comparison step under unchanged C260. Historical
-admission, site-pose evaluation and wider qualification remain separate.
-
-C264 is complete: [PR255](https://github.com/Omegapy/OntoKin/pull/255), merge
-`df18c6ee8721f20923b80841fccf495ea65735f9`, deleted implementation branch and
-[confirmed saved delivery](docs/engineering/browser-handoff-c264/DELIVERY.json).
-Its frozen ZIP predates the final receipt; live GitHub resolves that boundary.
-Use [CHATGPT-START-HERE](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json)
-and the [handoff contract](docs/workflow/HANDOFF.md) throughout this scope.
+C265 is complete through [PR257](https://github.com/Omegapy/OntoKin/pull/257),
+merge `d602adee52bd5913dc86fdb3a29e2c4c653a4ed9`; its completed branch is deleted
+and [verified saved v2 delivery](docs/engineering/localized-repair-c265/DELIVERY.json)
+remains unchanged. C264 required-session delivery and C263 workflow integration
+also remain complete. Use [CHATGPT-START-HERE](CHATGPT-START-HERE.md),
+[CURRENT](docs/workflow/CURRENT.json) and the [handoff contract](docs/workflow/HANDOFF.md).
 
 ## Product state and remaining gates
 
@@ -51,7 +45,7 @@ C261 source integration and C262 saved delivery are complete.
 
 C265 derives finite source hinge declarations independently; its byte witnesses
 and literal numeric profile do not evaluate site poses or certify full source validity.
-Source/artifact comparison, historical endpoint admission,
+C266 binds retained source/program/object provenance only. Hinge-field/set/endpoint comparison, historical endpoint admission,
 complete C260 H groups, site/world behavior, authentic revisions, invalid-edit
 atomicity qualification, clean rebuilds, native routes and comparative model
 trials remain unqualified. No general authoring advantage has been established.
@@ -106,10 +100,11 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-State: released after C265 verified integration, completed-branch disposition
-and confirmed saved delivery. Previous owner: `c265-root-b4cbf4ea8454`.
-Released at: 2026-11-18T22:45:24.529208+00:00. No active integration owner is retained.
-Acquire a new expected-head conditional lease before the next shared main write.
+State: held for C266 reviewed source/program/object binding integration and saved delivery.
+Owner: `c266-root-2593880e88fd`. Scope: [issue258](https://github.com/Omegapy/OntoKin/issues/258).
+Acquired at: 2026-11-18T23:07:36.068Z. Expires at: 2026-11-18T23:37:36.068Z.
+Reserved: main, STATUS integration fields, CURRENT, root navigation and C266 delivery/task closure.
+Observed parent: `7818de1f17e379df50680cb94347ce86bcabb8a5`. Independent workers remain confined to their assigned C266 files.
 
 ## Historical status
 

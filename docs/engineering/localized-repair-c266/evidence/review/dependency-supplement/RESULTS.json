@@ -1,0 +1,167 @@
+{
+  "schema": "ontokin.c266.independent-dependency-review/0.1",
+  "purpose": "Recheck every exact dependency after an already successful in-process call",
+  "implementationSha256": "68849dbe3339c158eac7ec43fb1defcbd2993c37c6a0a5ee813d2da71fb03dda",
+  "scriptSha256": "a206431a5717dc69bc5b4306ab84f8f446b6f79a0556bec1775a8094ec86507a",
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "inputPins": {
+    "before.main.ok": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+    "hinges.ok": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+    "before.glb": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+  },
+  "dependencyPins": {
+    "localized-repair-c266/hinge_binding.py": {
+      "sha256": "68849dbe3339c158eac7ec43fb1defcbd2993c37c6a0a5ee813d2da71fb03dda",
+      "bytes": 17639
+    },
+    "localized-repair-c265/source_hinges.py": {
+      "sha256": "04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31abbf9e",
+      "bytes": 37570
+    },
+    "localized-repair-c261/hinge_glb.py": {
+      "sha256": "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08",
+      "bytes": 14036
+    },
+    "localized-repair-c257/ownership.py": {
+      "sha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1",
+      "bytes": 35942
+    }
+  },
+  "checks": 5,
+  "passed": true,
+  "results": [
+    {
+      "name": "same_size_c265_after_success",
+      "dependency": "localized-repair-c265/source_hinges.py",
+      "mutation": "same-size",
+      "originalSha256": "04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31abbf9e",
+      "originalBytes": 37570,
+      "firstCall": {
+        "outcome": "accepted",
+        "objectCount": 18,
+        "inputBindingVerified": true
+      },
+      "mutatedSha256": "d8699b43a6d35fd1c7dc6144b6b1557259e62b42935b58e4700be16c0820534e",
+      "mutatedBytes": 37570,
+      "secondCall": {
+        "outcome": "refused",
+        "exception": "Fault",
+        "code": "INPUT_BINDING",
+        "detail": "INPUT_BINDING: : pinned dependency bytes: localized-repair-c265/source_hinges.py",
+        "sourceHashes": {
+          "main.ok": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+          "hinges.ok": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        },
+        "artifactSha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+      },
+      "passed": true
+    },
+    {
+      "name": "same_size_c261_after_success",
+      "dependency": "localized-repair-c261/hinge_glb.py",
+      "mutation": "same-size",
+      "originalSha256": "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08",
+      "originalBytes": 14036,
+      "firstCall": {
+        "outcome": "accepted",
+        "objectCount": 18,
+        "inputBindingVerified": true
+      },
+      "mutatedSha256": "8c84a03b4d60cd7a7179499e7fe73bcc1173d78464a7cc99857e246c13a7cb76",
+      "mutatedBytes": 14036,
+      "secondCall": {
+        "outcome": "refused",
+        "exception": "Fault",
+        "code": "INPUT_BINDING",
+        "detail": "INPUT_BINDING: : pinned dependency bytes: localized-repair-c261/hinge_glb.py",
+        "sourceHashes": {
+          "main.ok": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+          "hinges.ok": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        },
+        "artifactSha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+      },
+      "passed": true
+    },
+    {
+      "name": "same_size_c257_after_success",
+      "dependency": "localized-repair-c257/ownership.py",
+      "mutation": "same-size",
+      "originalSha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1",
+      "originalBytes": 35942,
+      "firstCall": {
+        "outcome": "accepted",
+        "objectCount": 18,
+        "inputBindingVerified": true
+      },
+      "mutatedSha256": "7074bebd1b601933b1f3915061979a563cfed919266e36c0f099c7bfe16e4792",
+      "mutatedBytes": 35942,
+      "secondCall": {
+        "outcome": "refused",
+        "exception": "Fault",
+        "code": "INPUT_BINDING",
+        "detail": "INPUT_BINDING: : pinned dependency bytes: localized-repair-c257/ownership.py",
+        "sourceHashes": {
+          "main.ok": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+          "hinges.ok": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        },
+        "artifactSha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+      },
+      "passed": true
+    },
+    {
+      "name": "missing_c261_after_success",
+      "dependency": "localized-repair-c261/hinge_glb.py",
+      "mutation": "missing",
+      "originalSha256": "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08",
+      "originalBytes": 14036,
+      "firstCall": {
+        "outcome": "accepted",
+        "objectCount": 18,
+        "inputBindingVerified": true
+      },
+      "targetAbsentBeforeSecondCall": true,
+      "secondCall": {
+        "outcome": "refused",
+        "exception": "Fault",
+        "code": "INPUT_BINDING",
+        "detail": "INPUT_BINDING: : missing pinned dependency: localized-repair-c261/hinge_glb.py",
+        "sourceHashes": {
+          "main.ok": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+          "hinges.ok": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        },
+        "artifactSha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+      },
+      "passed": true
+    },
+    {
+      "name": "symlink_c257_after_success",
+      "dependency": "localized-repair-c257/ownership.py",
+      "mutation": "symlink",
+      "originalSha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1",
+      "originalBytes": 35942,
+      "firstCall": {
+        "outcome": "accepted",
+        "objectCount": 18,
+        "inputBindingVerified": true
+      },
+      "symlinkTarget": "ownership.same_bytes.py",
+      "symlinkTargetSha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1",
+      "targetSymlinkBeforeSecondCall": true,
+      "secondCall": {
+        "outcome": "refused",
+        "exception": "Fault",
+        "code": "INPUT_BINDING",
+        "detail": "INPUT_BINDING: : symlink in pinned dependency path",
+        "sourceHashes": {
+          "main.ok": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+          "hinges.ok": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        },
+        "artifactSha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+      },
+      "passed": true
+    }
+  ],
+  "realCheckoutUnchanged": true,
+  "existingReviewArchiveModified": false
+}

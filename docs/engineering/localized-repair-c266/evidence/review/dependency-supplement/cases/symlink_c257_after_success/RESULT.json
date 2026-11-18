@@ -1,0 +1,27 @@
+{
+  "name": "symlink_c257_after_success",
+  "dependency": "localized-repair-c257/ownership.py",
+  "mutation": "symlink",
+  "originalSha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1",
+  "originalBytes": 35942,
+  "firstCall": {
+    "outcome": "accepted",
+    "objectCount": 18,
+    "inputBindingVerified": true
+  },
+  "symlinkTarget": "ownership.same_bytes.py",
+  "symlinkTargetSha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1",
+  "targetSymlinkBeforeSecondCall": true,
+  "secondCall": {
+    "outcome": "refused",
+    "exception": "Fault",
+    "code": "INPUT_BINDING",
+    "detail": "INPUT_BINDING: : symlink in pinned dependency path",
+    "sourceHashes": {
+      "main.ok": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+      "hinges.ok": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    "artifactSha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+  },
+  "passed": true
+}

@@ -49,3 +49,9 @@ Scope issue 258 and work/c266-hinge-input-binding were created at the observed b
 Requirements and plan published as `3a505073bbc35cd665de0af15ff2f696f6b28544`, tree `653df3f4ba9a84162d2b21b8adc8ba53be840870`; branch ref read back. Local staged tree matched and the exact remote commit object was reconstructed with hash verification (the API normalizes dates to UTC; the original commit offset is -0700). An initial +0000 reconstruction did not match and left local refs unchanged; no remote retry occurred.
 
 Early recovery save succeeded: [OntoKin_C266_Recovery_2026-11-18.json](https://chatgpt.com/library?file_id=libfile_fde3_f-614b6ef24cd88191ac1c895a0d83c30a_2ab2a24d43748191957f9bcc356b59de&account_id=personal), version 0. The implementation and independent control workers started only after the published plan. No C266 main lease has yet been acquired.
+
+## Implementation and integration preparation
+
+Implementation checkpoint `5454bfeb2c27aed0af23fb4dd363638ffbb10b07`, tree `ed135ff772032fde5bde96e9bfaf465971c80afe`, was read back on the scope branch. Source hash `68849dbe3339c158eac7ec43fb1defcbd2993c37c6a0a5ee813d2da71fb03dda`. C266 main lease acquired by expected-head nonforce update at `f9702f867823b4cf6c00bc1d5580bfbfb6a093e0`, tree `ee827f5a155e25c0dc34719ad2d491ec1d70a25f`, and STATUS read back. Owner c266-root-2593880e88fd; expiry 2026-11-18T23:37:36.068Z. The candidate will retain the lease commit as an additional parent before integration.
+
+Final independent authored controls pass 34 methods / 748 expected API outcomes (28 bindings, 720 typed refusals). Run-01's two positive-fixture construction errors are retained; implementation did not change. Initial separate reviewer controls pass 83 cases; final review and broader applicable checks remain pending. Early recovery version 1 is saved at the same identity.
