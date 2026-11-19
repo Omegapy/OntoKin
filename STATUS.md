@@ -11,14 +11,14 @@ tools own rendering, general simulation and gameplay. [GOAL](GOAL.md), the
 
 ## Current workflow and next action
 
-C267 is active under [issue260](https://github.com/Omegapy/OntoKin/issues/260)
-on `work/c267-hinge-comparison`. It implements the finite C260 source/artifact
-hinge-field, complete joint-set and ordered-endpoint comparator after C266's
-input binding. [Requirements](docs/workflow/tasks/C267/REQUIREMENTS.md) and
-[plan](docs/workflow/tasks/C267/PLAN.md) define its bounded acceptance.
-Implementation and independent review pass, with eleven candidate check groups and
-247 methods. Integration, fresh actual-main checks and saved delivery remain open.
-Historical endpoint admission is a separate queued interface.
+C267 is integrated through [PR261](https://github.com/Omegapy/OntoKin/pull/261),
+merge `7174e6796b38bac3fa83e6412e0944512d137434`, after exact independent review.
+The finite comparator checks source/GLB hinge fields, complete joint sets and
+ordered endpoints under unchanged C260. Its completed branch is automatically
+deleted with retained ancestry verified. Required fresh actual-main checks and
+saved delivery remain pending; issue260 and the parent task stay open.
+[Integration checkpoint](docs/engineering/localized-repair-c267/INTEGRATION.json).
+Historical endpoint admission remains a separate queued interface.
 
 C266 is complete through [PR259](https://github.com/Omegapy/OntoKin/pull/259),
 merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`, with ten passing actual-main
@@ -100,10 +100,10 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-State: active C267 finalization.
+State: active C267 finalization; reviewed integration complete, main checks and delivery pending.
 Owner: `c267-final-e1562410a291`. Scope: [issue260](https://github.com/Omegapy/OntoKin/issues/260), [PR261](https://github.com/Omegapy/OntoKin/pull/261).
 Observed parent: `007d4fdbf0119e75eff555c0681e28bf3a86bf75`; acquired by expected-head conditional update after live reconciliation.
-Expires at: 2026-11-19T03:24:19.340Z.
+Expires at: 2026-11-19T03:35:08.851367+00:00.
 Reserved shared paths: STATUS.md integration coordination, CURRENT.json, C267 task and integration/delivery evidence; candidate branch `work/c267-hinge-comparison`.
 This session resumes only finalization: reconcile the reviewed candidate, conditional integration, fresh affected main checks, safe branch disposition and verified saved handoff/receipt. No product expansion.
 Reviewed branch head observed: `ff1659a508d30a60fa6ca2d9214779dd7bcf1262`. Its saved recovery reports no unknown writes or active workers; older external ephemeral work cannot be exhaustively inspected. The prior lease is not restored.

@@ -51,3 +51,7 @@ The bounded main lease was conditionally acquired and exact STATUS read back. Br
 | Final delivery | Pending | Freeze, verify, save, external receipt, close, stop |
 
 This is a finalization phase under the current PROTOCOL, not a new implementation milestone. First unplanned expansion ends the phase with a verified partial handoff. Full product, native/visual/model and additional Python compatibility checks remain outside the qualified cohort.
+
+## Integration checkpoint
+
+PR261 merged by expected-head merge at `7174e6796b38bac3fa83e6412e0944512d137434`, with the exact reviewed candidate tree and both expected parents. The candidate head is retained in main ancestry. Fully paginated live branch readback confirms automatic deletion of `work/c267-hinge-comparison`. The main lease is renewed at this substantive checkpoint. Fresh main checks and final delivery remain pending; issue260 stays open.
