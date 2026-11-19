@@ -55,3 +55,10 @@ saved bundle restores unpublished commit `74bba31a23f4acbda4484159576ae21c024664
 all ten candidate logs are restored and checked against their receipts. P03 is
 reused only with the final independent identity audit. Publish the preserved
 evidence, complete P04/P05, then stop. See [final recovery](RECOVERY-CLOSURE.md).
+
+## Integration gate complete
+
+P04/R07 are complete through PR259, merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`.
+All ten fresh main groups, 222 methods and fourteen corpus bindings pass.
+The exact completed head is retained as a merge parent and its branch is absent.
+Only P05/R08 saved delivery and closure remain.

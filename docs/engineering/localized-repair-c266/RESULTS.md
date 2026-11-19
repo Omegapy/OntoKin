@@ -29,3 +29,16 @@ After verified integration and saved delivery, a new continuation may select com
 The published recovery checkpoint `4986089edbd4443b05ef091d06bf4df55dfcdfa9`, tree `f0240182b44a91e9db362f43ae90d6005b397c3b`, passes all ten required groups on CPython 3.12.14 / Linux x86-64. C255/C256/C257/C258/C261/C265/C266 pass 31/29/23/28/28/49/34 methods respectively, 222 total with zero failures, errors or skips. C253 verifies fourteen exact historical bindings; workflow and documentation preservation pass. C266 again returns all 748 expected outcomes: 28 bindings and 720 typed refusals. [Candidate checks](evidence/candidate/CHECKS.json) retain commands, interpreter digest, exact input hashes, logs and full per-call evidence. No product/native/export/model workflow ran.
 
 [Recovery review](evidence/recovery-review/REVIEW.md) independently verifies unchanged implementation/pinned inputs, all retained control input archives, 87 final reviewer controls and five dependency-pin experiments. Earlier fixture errors and the recovery auditor's corrected nonbyte-artifact assumption remain visible. No candidate source changed during recovery. The reviewed implementation is reused only through verified exact byte equality. Integration and saved delivery remain open at this candidate checkpoint.
+
+## Verified resulting main
+
+[PR259](https://github.com/Omegapy/OntoKin/pull/259) merged at `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`.
+Its tree equals reviewed candidate `665d344a118ac2f6689e13dbafdff99b480a02d3`. Fresh
+[actual-main checks](evidence/actual-main/CHECKS.json) pass all ten groups:
+222 methods, fourteen corpus bindings, workflow and documentation validation.
+The C266 run has 748 expected outcomes: 28 bindings and 720 typed refusals.
+All recorded inputs remain unchanged during execution. GitGuardian passed on
+the candidate; no hosted workflow ran. The completed branch was automatically
+deleted, its exact head remains a merge parent, and live inventory contains
+only main. [Integration receipt](INTEGRATION.json) retains the exact facts.
+Required saved handoff delivery remains pending at this checkpoint.

@@ -11,19 +11,17 @@ tools own rendering, general simulation and gameplay. [GOAL](GOAL.md), the
 
 ## Current workflow and next action
 
-C266 implements the bounded source/program/object provenance binding prerequisite
-for the C260 hinge comparator. [Scope258](https://github.com/Omegapy/OntoKin/issues/258),
-[task](docs/workflow/tasks/C266/task.json), [requirements](docs/workflow/tasks/C266/REQUIREMENTS.md)
-and [plan](docs/workflow/tasks/C266/PLAN.md) own this active scope.
-The new authored controls pass 34 methods / 748 expected outcomes; separate
-independent review approves 87 distinct controls on the exact implementation.
-Candidate regression passes all 10 declared groups: 222 methods, fourteen corpus
-bindings and workflow/documentation validation. Integration, resulting-main
-checks and saved delivery remain open. Hinge values, joint sets and endpoints are not compared.
+C266's source/program/object provenance binding prerequisite is integrated
+through [PR259](https://github.com/Omegapy/OntoKin/pull/259), merge
+`395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`. Fresh actual-main checks pass ten groups,
+222 methods and fourteen corpus bindings, with unchanged verification inputs.
+The [integration receipt](docs/engineering/localized-repair-c266/INTEGRATION.json)
+retains review, evidence and verified automatic deletion of the completed
+`work/c266-hinge-input-binding` branch. Only main remains.
 
-Next action: finish only C266 through verified integration and its required
-saved handoff. After completion, wait for a new continuation before selecting
-full hinge comparison. Historical admission remains a separate interface.
+Next action: finish only C266's verified saved ZIP/prompts and external receipt,
+then close the task and wait for new owner direction. Hinge values, joint sets
+and endpoints remain unqualified; historical admission stays separate.
 
 C265 is complete through [PR257](https://github.com/Omegapy/OntoKin/pull/257),
 merge `d602adee52bd5913dc86fdb3a29e2c4c653a4ed9`; its completed branch is deleted

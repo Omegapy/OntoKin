@@ -3,7 +3,7 @@
   "id": "C266",
   "title": "Source/program/object provenance binding for hinge comparison",
   "intent": "Establish whether source and artifact object-provenance inputs belong together before comparing hinge fields.",
-  "status": "review",
+  "status": "in_progress",
   "owner": "c266-final-bb514ffca344-4",
   "branch": "work/c266-hinge-input-binding",
   "base_sha": "7818de1f17e379df50680cb94347ce86bcabb8a5",
@@ -75,8 +75,11 @@
       "id": "R07",
       "description": "Integrate and verify main and completed branch disposition.",
       "acceptance": "Acquire verified bounded lease, expected-head PR merge, read actual merge/main, rerun applicable checks, retain branch ancestry and verify deletion or record exact deletion_pending.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c266/INTEGRATION.json",
+        "docs/engineering/localized-repair-c266/evidence/actual-main/CHECKS.json"
+      ]
     },
     {
       "id": "R08",
@@ -148,7 +151,7 @@
       "requirements": [
         "R07"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c266/INTEGRATION.json"
       ],
@@ -163,7 +166,7 @@
         "R08",
         "R07"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c266/DELIVERY.json"
       ],
@@ -195,12 +198,15 @@
   ],
   "completion": {
     "implementation_commit": "5454bfeb2c27aed0af23fb4dd363638ffbb10b07",
-    "merge_commit": null,
-    "pull_request": null,
-    "branch_disposition": "active",
-    "evidence": []
+    "merge_commit": "395c68be3f4c497fad2a1a41f0fc7c3a68fbc821",
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/259",
+    "branch_disposition": "deleted",
+    "evidence": [
+      "docs/engineering/localized-repair-c266/INTEGRATION.json",
+      "docs/engineering/localized-repair-c266/evidence/actual-main/CHECKS.json"
+    ]
   },
-  "next_action": "Integrate the published reviewed C266 candidate, run the one required actual-main cohort, verify branch disposition, save the final handoff and external receipt, then stop.",
+  "next_action": "Freeze and verify the C266 browser-session ZIP, save it and both prompts, publish external delivery receipt, close scope and release lease. Stop; no new milestone.",
   "delivery": {
     "required": true,
     "kind": "browser-session",
