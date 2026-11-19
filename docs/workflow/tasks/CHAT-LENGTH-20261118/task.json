@@ -3,7 +3,7 @@
   "id": "CHAT-LENGTH-20261118",
   "title": "Keep browser development sessions bounded and recoverable",
   "intent": "Replace continuation and recovery prompts to reduce accumulated chat content and save before interruption",
-  "status": "in_progress",
+  "status": "review",
   "owner": "browser-length-root-e2dfdb529a6f",
   "branch": "work/browser-chat-length-20261118",
   "base_sha": "6122bd272c3f5b960ed5c1d6434ebf5f7f9b4020",
@@ -12,27 +12,36 @@
       "id": "R01",
       "description": "Short replacement prompts",
       "acceptance": "Replace both prompts; retain normal continuation versus interruption recovery and preserve live authority and all acceptance gates",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/REVIEW.md",
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/CANDIDATE-FILES.json"
+      ]
     },
     {
       "id": "R02",
       "description": "Bound session and delegation",
       "acceptance": "Define one planned phase per fresh chat, actual bounded workers with minimal supplied context, compact reports and saved evidence; do not promise unlimited context or automatic new chats",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/REVIEW.md",
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/CANDIDATE-FILES.json"
+      ]
     },
     {
       "id": "R03",
       "description": "Durable recovery and honest completion",
       "acceptance": "Require an early confirmed recovery ZIP and phase checkpoints; planned partial handoff does not mark the parent task done; preserve exact unknown-write reconciliation and external receipts",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/REVIEW.md",
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/CANDIDATE-FILES.json"
+      ]
     },
     {
       "id": "R04",
       "description": "Verification and publication",
-      "acceptance": "Independent review, workflow validation and documentation preservation pass; publish an isolated branch and PR without altering another active integration lease",
+      "acceptance": "Independent review, workflow validation and documentation preservation pass; publish an isolated branch and PR. Integrate only after live reconciliation and acquisition of a valid expected-head lease; verify actual main and branch disposition while preserving C267 product scope and state",
       "status": "not_done",
       "evidence": []
     },
@@ -52,7 +61,7 @@
         "R01",
         "R04"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/workflow/tasks/CHAT-LENGTH-20261118/SESSION.md"
       ],
@@ -68,7 +77,7 @@
         "R02",
         "R03"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/workflow/prompts/CONTINUE.md",
         "docs/workflow/prompts/RECOVER.md",
@@ -80,16 +89,17 @@
     },
     {
       "id": "P03",
-      "title": "Verify and publish isolated work",
+      "title": "Verify, publish and integrate isolated documentation when ownership permits",
       "requirements": [
         "R04"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/workflow/tasks/CHAT-LENGTH-20261118/RESULTS.md"
       ],
       "verification": [
-        "Run workflow and documentation preservation checks; inspect remote branch and PR"
+        "Run workflow and documentation preservation checks; independently review exact documents",
+        "Read live main, prior owner and C267 refs; acquire conditional lease only when permitted; merge expected PR head and verify actual main"
       ]
     },
     {
@@ -107,20 +117,40 @@
       ]
     }
   ],
-  "checks": [],
+  "checks": [
+    {
+      "name": "candidate-workflow",
+      "command": "python3 tools/chat_workflow.py check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/evidence/candidate-workflow.log"
+      ]
+    },
+    {
+      "name": "candidate-documentation-preservation",
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/evidence/candidate-preservation.json"
+      ]
+    }
+  ],
   "completion": {
     "implementation_commit": null,
     "merge_commit": null,
-    "pull_request": null,
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/262",
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Replace both prompts and synchronize session boundaries, then review, verify and save reusable files",
+  "next_action": "Integrate reviewed documentation after verified lease acquisition, run actual-main checks, then save final prompts and handoff",
   "delivery": {
     "required": true,
     "kind": "browser-session",
     "status": "pending",
     "folder": "OntoKin",
     "receipt": null
-  }
+  },
+  "scope_issue": "https://github.com/Omegapy/OntoKin/pull/262"
 }

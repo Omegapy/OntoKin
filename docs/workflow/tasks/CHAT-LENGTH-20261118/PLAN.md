@@ -10,9 +10,9 @@ Requirements: R01, R04. Verification: Observe current main and active C267 scope
 
 Requirements: R01, R02, R03. Verification: Independent content review and exact changed-file inspection.
 
-## P03. Verify and publish isolated work
+## P03. Verify, publish and integrate isolated documentation when ownership permits
 
-Requirements: R04. Verification: Run workflow and documentation preservation checks; inspect remote branch and PR.
+Requirements: R04. Verification: Run workflow and documentation preservation checks; inspect remote branch and PR. Acquire integration ownership only after the current owner has released or expired and live reconciliation is complete; merge the reviewed head conditionally and recheck actual main. Preserve C267 state and unknown work.
 
 ## P04. Save reusable prompts and recovery handoff
 

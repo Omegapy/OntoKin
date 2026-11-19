@@ -1,8 +1,10 @@
 # Required browser-session handoff
 
-The owner's [C264 clarification](tasks/C264/REQUIREMENTS.md) requires a verified
-handoff ZIP saved in ChatGPT Library at the end of each bounded browser-chat
-task. GitHub holds current code, instructions and task state. The ZIP supplies
+The owner's [C264 clarification](tasks/C264/REQUIREMENTS.md) requires verified
+handoff ZIPs saved in ChatGPT Library. The [conversation-length repair](tasks/CHAT-LENGTH-20261118/REQUIREMENTS.md)
+requires delivery at each declared browser phase, including planned partial
+handoffs within unfinished tasks. GitHub holds current instructions, code and
+task state. The ZIP supplies
 a portable session checkpoint for the next chat. Use the
 [continuation and recovery prompts](BROWSER-PROMPTS.md) with this contract.
 
@@ -10,8 +12,10 @@ a portable session checkpoint for the next chat. Use the
 
 A thread can end before a final response. Do not depend on automatic context
 compaction, an advance warning, a remaining-message estimate or a final chance
-to save. Create an early durable checkpoint after reconciling the starting
-state and selecting the authorized scope. Update it after meaningful phases:
+to save. After reconciling the starting state and selecting the authorized phase,
+create, verify and confirm an early recovery ZIP before substantial work or a
+long operation. A GitHub checkpoint alone does not satisfy this early saved-file
+gate. Refresh durable checkpoints at phase changes:
 requirements and plan, implementation, verification/review, integration and
 delivery. Checkpoint before a long operation or a handoff between workers.
 
@@ -23,8 +27,8 @@ partial work and failed results. Identify unresolved workers, processes and
 writes; record the intended target, parent/tree/commit or operation identity
 needed to reconcile them. A timeout does not prove failure.
 
-Save an early recovery file when important work cannot yet be recovered from
-GitHub. After an interruption, reconcile live refs, the task, ownership, saved
+Include important work that cannot yet be recovered from GitHub in the saved
+recovery payload. After an interruption, reconcile live refs, the task, ownership, saved
 files and unknown operations before retrying. Resume the unfinished scope and
 branch. If implementation is already integrated, finish only the outstanding
 verification, cleanup or delivery steps; do not start the next milestone.
@@ -34,10 +38,9 @@ verification, cleanup or delivery steps; do not start the next milestone.
 After an interruption, resume from the first unmet gate in the existing task.
 Keep one concise phase table with each completed gate's exact revision and
 evidence path, the remaining action and any unknown write. Required startup
-reads remain mandatory; read them once at the observed revision and reopen only
-changed or newly relevant material. Keep bulk logs, patches, inventories and
-API responses in files. Worker reports should give verdicts, counts, identities,
-unresolved findings and evidence paths.
+reads remain mandatory; read them once at the observed revision without loading
+duplicate archived and remote copies. Follow the common context and worker
+controls in [PROTOCOL section 4](PROTOCOL.md#4-implement-delegate-and-bound-the-session).
 
 Reuse completed candidate results only after checking exact implementation,
 dependency, fixture, test, command and applicable environment identities.
@@ -47,10 +50,13 @@ files with the staged payload, including files excluded by ignore rules.
 Do not repeat a diagnosed unavailable publication method; use an authorized
 alternative with conditional updates, or record the concrete blocker.
 
-Once implementation and review pass, enter a finalization-only phase:
+A finalization phase selected after implementation and review pass covers only
 integration, resulting-main verification, branch disposition, package/save and
-external receipt. Preserve exact unpublished bytes before a long operation.
-Freeze the verified package once; its later save receipt belongs outside it.
+external receipt. Completing an implementation/review phase does not authorize
+continuing into finalization in the same thread. Preserve exact unpublished bytes before a long operation.
+At a declared phase checkpoint or first unplanned expansion, save a partial
+handoff and stop; the parent task retains its outstanding gates. Freeze the
+verified package once; its later save receipt belongs outside it.
 Rebuild only for a material payload or recovery-instruction change. These
 procedures reduce repetition and improve recovery; they do not guarantee that
 the host will warn before a thread limit or that a thread cannot end.
@@ -82,9 +88,9 @@ Use these exact root filenames so both reusable prompts have a stable entry.
 | File | Required meaning |
 | --- | --- |
 | `README-START-HERE.md` | Package type, reading order, current GitHub entry point, source revision, external dependencies and recovery limits. |
-| `CHECKPOINT.json` | Task and scope; observed main SHA/tree and time; active branch/head, PR and issue; integration ownership; completed/incomplete steps; evidence; delivery state; exact next action. |
+| `CHECKPOINT.json` | Task, scope and session phase; observed main SHA/tree and time; active branch/head, PR and issue; integration ownership; completed/incomplete steps; evidence; delivery state; exact next action. Distinguish session handoff from parent completion. |
 | `HANDOFF.md` | Changes and decisions, requirements/plan progress, actual verification and review, failures, unrun checks, limits and remaining work. |
-| `NEXT-TASK.md` | One authorized continuation or explicit wait for user direction, with inputs, acceptance condition and stopping point. A queued suggestion is not automatic authority to start. |
+| `NEXT-TASK.md` | First unmet gate and one authorized next phase, or explicit wait for user direction, with inputs, acceptance condition and stopping point. A queued suggestion is not authority to leave an active scope. |
 | `RECOVERY-STATUS.md` | Partial work and its durable location, unresolved operations/workers, required readbacks, blockers and outstanding delivery. State explicitly when none are known. |
 | `PROMPT-1-CONTINUE.md` | Complete reusable normal continuation prompt. |
 | `PROMPT-2-RECOVER.md` | Complete reusable interrupted-thread recovery prompt, including delivery-only recovery. |
@@ -95,7 +101,8 @@ Include a frozen repository read-set under `repository/`, preserving repository
 relative paths. Include `CHATGPT-START-HERE.md`, `AGENTS.md`, `GOAL.md`,
 `STATUS.md`, `ROLE.md`, the workflow registry, protocol, current checkpoint,
 handoff contract, reusable prompts, active/latest task with requirements and
-plan, and the full selected skill files. Identify every snapshot's Git commit
+plan, and the full selected skill files. Copy verified bytes without rereading
+unchanged snapshots into the conversation. Identify every snapshot's Git commit
 and path. Include further specifications only when the next action needs them;
 otherwise link to their exact GitHub revision and identify that dependency.
 
@@ -137,18 +144,23 @@ Keep these observations distinct. **Integrated** means the reviewed change is
 on actual main with the applicable verification recorded. **Delivered** means
 the verified handoff ZIP has a confirmed Library save. **Complete** requires
 both, plus the task's remaining acceptance and branch-lifecycle obligations.
-An unfinished branch stays recoverable across chats. A completed merged branch
+Saving a planned partial handoff completes only the session's delivery. Keep
+the parent task `in_progress` or `review`, its scope issue open and its branch
+recoverable until all parent gates pass. A planned pause is not a blocker.
+A completed merged branch
 is deleted after safe retention checks, or explicitly recorded as
 `deletion_pending` with the exact user action when deletion tools are absent.
 
 A ZIP cannot contain its own future save receipt. Its frozen checkpoint may
 therefore say `save_pending` and point to the task's external delivery record.
-After the save succeeds, publish that receipt, update current task state,
-release integration ownership and close the scope as appropriate. This later
+After the save succeeds, publish that receipt, update the task's actual phase
+and gate state, and release integration ownership as appropriate. Close the
+scope only when all parent acceptance gates pass. This later
 receipt/closure commit does not require recursively rebuilding the ZIP. The
 next chat reads live GitHub to reconcile that deliberate boundary. A material
 change to the packaged work or recovery instructions does require a newly
 verified package and an updated delivery record.
 
-After delivering one bounded scope, report its result and stop. Do not spend
-the remaining thread on another milestone.
+After delivering the declared phase, report its result and stop. Continue the
+same unfinished task in a fresh parent chat; do not spend the remaining thread
+on another phase or milestone.

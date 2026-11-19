@@ -1,49 +1,39 @@
 # Prompts for successive browser chats
 
-Use one of these complete prompts at the start of a new ChatGPT browser thread:
+Use one complete prompt in a fresh ChatGPT browser thread and replace its
+bracketed inputs.
 
 | Situation | Prompt |
 | --- | --- |
-| Continue through one bounded next step and deliver its handoff | [Prompt 1: continue development](prompts/CONTINUE.md) |
-| Recover an interrupted thread or finish a missing delivery | [Prompt 2: recover interrupted work](prompts/RECOVER.md) |
+| Continue one declared phase; resume the active scope before selecting queued work | [Prompt 1: continue development](prompts/CONTINUE.md) |
+| Reconcile an interruption and resume its first unmet gate | [Prompt 2: recover interrupted work](prompts/RECOVER.md) |
 
-Copy the selected prompt and replace its bracketed inputs. Prompt 1 needs the
-latest successfully saved ZIP link. A task override is optional; leaving it
-blank authorizes selecting the next bounded step from current approved work.
-Prompt 2 needs the last complete ZIP and, when available, a newer recovery file
-and a brief description of the interruption. It resumes the remaining scope.
+Prompt 1 takes the latest successfully saved ZIP and an optional task or phase
+override. A blank override resumes an active authorized scope; only when none
+is active does it authorize selecting the next bounded step from approved work.
+Prompt 2 takes the last complete ZIP, any newer recovery file and a brief
+interruption description. It never authorizes another milestone.
 
-The repository [entry point](../../CHATGPT-START-HERE.md) loads current
-instructions. GitHub holds current code and work state. Both prompts require
-a verified session ZIP saved in the existing `OntoKin` Library folder before
-completion. The [handoff contract](HANDOFF.md) defines its contents, verification
-and delivery evidence. Each saved ZIP includes copies named
-`PROMPT-1-CONTINUE.md` and `PROMPT-2-RECOVER.md`.
+The [entry point](../../CHATGPT-START-HERE.md) loads current instructions.
+[PROTOCOL section 4](PROTOCOL.md#4-implement-delegate-and-bound-the-session) owns
+the common context controls: one phase per chat, applicable instructions read
+once, bounded workers with fresh context when supported, compact reports and
+detailed evidence in files. Subagents do not reset the parent conversation.
+These procedures assume no token meter, advance length warning or automatic
+new-chat creation.
 
-Save recoverable progress early and after meaningful stages. These procedures
-do not depend on automatic conversation compaction or advance warning that a
-thread will end. They cannot guarantee that an unexpected interruption occurs
-after a save.
+Both prompts require a confirmed early recovery ZIP before substantial or long
+work and a verified saved handoff at the declared phase stop. A partial handoff
+can finish the session while the parent task stays `in_progress` or `review`.
+A planned pause is not a blocker. Continue that task in a fresh parent chat.
+Only all acceptance, integration and delivery gates establish task completion.
 
-The session ZIP supports online continuation from GitHub. Preserve the C262
-archive separately for its historical evidence and original offline recovery
-contract. A smaller session ZIP does not replace that archive or claim to
-contain all historical source material.
+[HANDOFF.md](HANDOFF.md) defines the required contents, exact verification,
+Library save and external receipt. Each ZIP includes `PROMPT-1-CONTINUE.md` and
+`PROMPT-2-RECOVER.md`. Preserve unique unpublished bytes and unknown operations;
+freeze once and do not rebuild just to add the later save receipt.
 
-These updated replacement prompts implement the owner's November 18, 2026
-clarification in [C264](tasks/C264/REQUIREMENTS.md). They preserve separate
-continuation and recovery workflows; the complete earlier prompt wording was
-not available for a line-by-line edit.
-
-## Repeated-interruption closure discipline
-
-For either prompt, resume the first unmet gate after live reconciliation. Read
-required instructions at the observed revision, keep full logs and bulk API
-results in files, and ask workers for compact evidence summaries. Reuse a
-completed candidate check only after verifying its exact inputs and applicable
-environment; execute required checks on resulting main. Explicitly retain
-receipt-listed ignored logs. Preserve exact unpublished bytes at phase changes.
-After implementation and review pass, finish only integration, main checks,
-branch disposition and saved delivery. Freeze once and record the later save
-receipt externally; do not rebuild solely to insert that receipt. No reliable
-thread-length warning or fixed message budget is assumed.
+Session ZIPs support online continuation. Keep the separate C262 archive and
+its historical offline recovery obligations unchanged. The [C264 clarification](tasks/C264/REQUIREMENTS.md)
+retains its saved-delivery requirement; the [conversation-length repair](tasks/CHAT-LENGTH-20261118/REQUIREMENTS.md)
+adds explicit phase stops and worker context controls without changing product scope.

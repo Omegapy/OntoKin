@@ -1,0 +1,31 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "base_sha": "6122bd272c3f5b960ed5c1d6434ebf5f7f9b4020",
+  "source_files": "docs/workflow/tasks/CHAT-LENGTH-20261118/CANDIDATE-FILES.json",
+  "checks": [
+    {
+      "command": "python3 tools/chat_workflow.py check",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "docs/workflow/tasks/CHAT-LENGTH-20261118/evidence/candidate-workflow.log"
+    },
+    {
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "exit_code": 0,
+      "result": "passed",
+      "sources_verified": 29,
+      "log": "docs/workflow/tasks/CHAT-LENGTH-20261118/evidence/candidate-preservation.json"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "result": "passed"
+    }
+  ],
+  "limits": [
+    "Documentation and structural consistency only; no proof of future browser length behavior",
+    "No product, physics, native, export or hosted CI runs needed for unchanged runtime"
+  ],
+  "independent_review": "docs/workflow/tasks/CHAT-LENGTH-20261118/REVIEW.md"
+}

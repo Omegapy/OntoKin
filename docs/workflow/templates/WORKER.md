@@ -11,10 +11,12 @@ An assignment document does not prove that a worker was launched.
 - Assigning Director and actual worker identity:
 - Role and required role/procedure paths:
 - One bounded objective:
-- Completion criteria and stopping condition:
+- Session phase, completion criteria and stopping condition:
 - Actual subagent capability and launch receipt:
 - Model/settings inheritance evidence, if required and available:
-- Independence requirement and context supplied:
+- Context mode (fresh/no inherited history when supported), and actual independence:
+- Applicable current user instructions supplied explicitly:
+- Full governing instructions to read for this assignment:
 
 ## Inputs and ownership
 
@@ -39,6 +41,9 @@ An assignment document does not prove that a worker was launched.
 
 ## Worker return
 
+Return at most about 250 words. Save detailed evidence in identified files and
+include only the facts the Director needs to decide the next action.
+
 - Actual changed paths and artifact identities:
 - Executed checks, environment, observed outcomes, and evidence paths:
 - Requirement coverage and unmet criteria:
@@ -49,4 +54,6 @@ An assignment document does not prove that a worker was launched.
 
 Return evidence to the Director. Do not update canonical task state, CURRENT,
 STATUS, memory, or another worker's branch without a specific write assignment.
-Do not treat a bounded worker result as whole-project completion.
+Do not launch child workers or repeat global startup/delivery unless assigned.
+Do not treat a bounded worker result as whole-project completion or a reset of
+the parent conversation.
