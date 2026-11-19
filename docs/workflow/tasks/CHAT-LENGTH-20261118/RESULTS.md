@@ -26,3 +26,7 @@ C267 and its branch/PR remain independent. The prior lease was observed with exp
 ## Recovery
 
 EARLY-RECOVERY.json records a confirmed initial ZIP. The final archive and both reusable prompts will be saved with a separate delivery receipt. This scope does not replace C267's outstanding product handoff or C262's historical archive.
+
+## Verified main integration
+
+PR262 merged at `992a7afee6e1c01a983ccc69bdbbf1dbf35d4006`. The eight independently reviewed document hashes match actual main. Fresh workflow and documentation preservation checks passed on that revision, with 29 preserved sources and no failures. The merged work branch is absent from the complete branch inventory, and its exact head is retained as a merge parent. C267 remains open on its unchanged branch. Final saved delivery and lease release remain pending.

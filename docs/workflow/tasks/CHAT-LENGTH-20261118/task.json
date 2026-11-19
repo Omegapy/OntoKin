@@ -3,7 +3,7 @@
   "id": "CHAT-LENGTH-20261118",
   "title": "Keep browser development sessions bounded and recoverable",
   "intent": "Replace continuation and recovery prompts to reduce accumulated chat content and save before interruption",
-  "status": "review",
+  "status": "in_progress",
   "owner": "browser-length-root-e2dfdb529a6f",
   "branch": "work/browser-chat-length-20261118",
   "base_sha": "6122bd272c3f5b960ed5c1d6434ebf5f7f9b4020",
@@ -42,8 +42,10 @@
       "id": "R04",
       "description": "Verification and publication",
       "acceptance": "Independent review, workflow validation and documentation preservation pass; publish an isolated branch and PR. Integrate only after live reconciliation and acquisition of a valid expected-head lease; verify actual main and branch disposition while preserving C267 product scope and state",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/INTEGRATION.json"
+      ]
     },
     {
       "id": "R05",
@@ -93,7 +95,7 @@
       "requirements": [
         "R04"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/workflow/tasks/CHAT-LENGTH-20261118/RESULTS.md"
       ],
@@ -108,7 +110,7 @@
       "requirements": [
         "R05"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/workflow/tasks/CHAT-LENGTH-20261118/DELIVERY.json"
       ],
@@ -135,16 +137,36 @@
       "evidence": [
         "docs/workflow/tasks/CHAT-LENGTH-20261118/evidence/candidate-preservation.json"
       ]
+    },
+    {
+      "name": "main-workflow",
+      "command": "python3 tools/chat_workflow.py check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/evidence/main-workflow.log"
+      ]
+    },
+    {
+      "name": "main-preservation",
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/evidence/main-preservation.json"
+      ]
     }
   ],
   "completion": {
-    "implementation_commit": null,
-    "merge_commit": null,
+    "implementation_commit": "6712cfb544f283c42db753693bf1ca3711199ea6",
+    "merge_commit": "992a7afee6e1c01a983ccc69bdbbf1dbf35d4006",
     "pull_request": "https://github.com/Omegapy/OntoKin/pull/262",
-    "branch_disposition": "active",
-    "evidence": []
+    "branch_disposition": "deleted",
+    "evidence": [
+      "docs/workflow/tasks/CHAT-LENGTH-20261118/INTEGRATION.json"
+    ]
   },
-  "next_action": "Integrate reviewed documentation after verified lease acquisition, run actual-main checks, then save final prompts and handoff",
+  "next_action": "Create and verify the final handoff, confirm the three saved deliverables, publish the external receipt and release the integration lease",
   "delivery": {
     "required": true,
     "kind": "browser-session",
