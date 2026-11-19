@@ -87,7 +87,7 @@
         "R03",
         "R04"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c268/endpoint_reader.py",
         "docs/engineering/localized-repair-c268/test_endpoint_reader.py"
@@ -103,7 +103,7 @@
         "R04",
         "R05"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c268/RESULTS.md",
         "docs/engineering/localized-repair-c268/REVIEW.json"
@@ -141,15 +141,33 @@
       ]
     }
   ],
-  "checks": [],
+  "checks": [
+    {
+      "name": "independent historical reader controls",
+      "command": "python3 -B docs/engineering/localized-repair-c268/test_endpoint_reader.py --evidence-dir evidence/control-author/run-03",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c268/evidence/control-author/run-03/results.json",
+        "docs/engineering/localized-repair-c268/CONTROL-COVERAGE.md"
+      ]
+    },
+    {
+      "name": "identified full affected candidate cohort",
+      "command": "python3 -B docs/engineering/localized-repair-c268/evidence/run_checks.py --repo IDENTIFIED_CHECKOUT --phase candidate --output NEW_EVIDENCE --c268-methods 34",
+      "result": "not_run",
+      "required": true,
+      "evidence": []
+    }
+  ],
   "completion": {
-    "implementation_commit": null,
+    "implementation_commit": "8a2fc5708e60e620987db3d1db33c01456833bda",
     "merge_commit": null,
-    "pull_request": null,
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/266",
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Complete independent controls and exact-candidate review, then execute affected cohort before integration",
+  "next_action": "Publish independent controls, run identified full affected candidate cohort and finish exact-candidate review",
   "session_phase": {
     "id": "C268-historical-endpoint-20261119",
     "starting_main": "b2ca38875bd7b43b85011bbc671ee9fee1682441",
@@ -159,7 +177,8 @@
     "acceptance": "R01-R07 complete with actual integration/main checks and confirmed final saved handoff",
     "stopping_point": "Stop after confirmed final delivery, or first unplanned scope expansion with honest partial handoff; no next phase",
     "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c268/EARLY-RECOVERY-RECEIPT.json"
+    "early_receipt": "docs/engineering/localized-repair-c268/EARLY-RECOVERY-RECEIPT.json",
+    "implementation_checkpoint": "8a2fc5708e60e620987db3d1db33c01456833bda"
   },
   "delivery": {
     "required": true,
