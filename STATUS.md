@@ -4,7 +4,7 @@
 
 ## Current workflow and next action
 
-C268 is active: exact historical endpoint admission under unchanged C260. [Requirements](docs/workflow/tasks/C268/REQUIREMENTS.md), [plan](docs/workflow/tasks/C268/PLAN.md), [scope265](https://github.com/Omegapy/OntoKin/issues/265). Implementation and qualification are pending; confirm early recovery before code work.
+C268 is active: exact historical endpoint admission under unchanged C260. [Requirements](docs/workflow/tasks/C268/REQUIREMENTS.md), [plan](docs/workflow/tasks/C268/PLAN.md), [scope265](https://github.com/Omegapy/OntoKin/issues/265). Early recovery is confirmed; the published implementation and independent controls passed the identified candidate cohort (12 groups, 281 methods, 14 bindings). Independent final review, integration/main checks and saved delivery remain.
 
 C267 is complete within its finite declaration-comparison scope. Implementation integrated through [PR261](https://github.com/Omegapy/OntoKin/pull/261), merge `7174e6796b38bac3fa83e6412e0944512d137434`; branch deletion and retained ancestry are verified. Recorded integration checks passed **11 groups, 247 methods, 14 corpus bindings**, CPython **3.12.14 / Linux**. This delivery-only phase independently verified exact evidence eligibility, passed fresh documentation/workflow checks, and saved the verified handoff. See the [delivery receipt](docs/engineering/localized-repair-c267/DELIVERY.json), [independent audit](docs/engineering/localized-repair-c267/evidence/delivery-20261118/EVIDENCE-REVIEW.md) and [integration checkpoint](docs/engineering/localized-repair-c267/INTEGRATION.json).
 
@@ -37,8 +37,9 @@ C264's recorded starting inventory had only main/no open PRs; after PR255, `work
 ## Main integration lease
 
 State: held for C268 scope publication, integration and delivery.
-Owner: `c268-root-c7dae94da130`. Acquired at UTC: 2026-11-19T14:12:24.197517+00:00. Expires at UTC: 2026-11-19T14:42:24.197517+00:00.
-Expected main at acquisition: `b2ca38875bd7b43b85011bbc671ee9fee1682441`. Reserved paths: STATUS.md, docs/workflow/CURRENT.json, docs/workflow/tasks/C268/, docs/engineering/localized-repair-c268/. Independent workers own only their assigned new files. Acquisition is valid only after successful expected-head update and readback.
+Owner: `c268-root-c7dae94da130`. Acquired at UTC: 2026-11-19T14:12:24.197517+00:00. Expires at UTC: 2026-11-19T14:58:39.000Z.
+Renewed at UTC: 2026-11-19T14:28:39Z after independent controls and the clean 12-group/281-method candidate checkpoint `734789521f82248d39b623c33aae9d3284ab4bce`; PR266 remains under independent review.
+Expected main at acquisition: `b2ca38875bd7b43b85011bbc671ee9fee1682441`. Reserved paths: STATUS.md, docs/workflow/CURRENT.json, docs/workflow/tasks/C268/, docs/engineering/localized-repair-c268/, docs/workflow/memory.json, docs/workflow/knowledge.json and docs/README.md. Independent workers own only their assigned new files. Acquisition is valid only after successful expected-head update and readback.
 
 ## Historical status
 
