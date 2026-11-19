@@ -1,0 +1,41 @@
+{
+  "schema": "ontokin.c266.fourth-recovery-metadata/1",
+  "recorded_at": "2026-11-19T01:27:56.349704+00:00",
+  "base_commit": "66b1613c480723c0b2045c1fa0891a81ab5658c0",
+  "passed": true,
+  "checks": [
+    {
+      "command": "python3 -B tools/chat_workflow.py check --json",
+      "exit_code": 0,
+      "output": "workflow.json"
+    },
+    {
+      "command": "python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "exit_code": 0,
+      "output": "documentation.json"
+    }
+  ],
+  "changed_inputs": [
+    {
+      "path": "STATUS.md",
+      "bytes": 11283,
+      "sha256": "456091e38e14e878a6eb30fb24f82d7c3a849aa32175435f6078e334bde051ff"
+    },
+    {
+      "path": "docs/workflow/CURRENT.json",
+      "bytes": 2511,
+      "sha256": "e9536c820aac913f0ed85db2ef1d8b48629f6f1966aca5102817106c133f6ed9"
+    },
+    {
+      "path": "docs/workflow/tasks/C266/task.json",
+      "bytes": 8689,
+      "sha256": "b289a5406c4ef8016b15df65cfaef9789a10d27d9c55da4b32edde4ac8a6b7d0"
+    },
+    {
+      "path": "docs/workflow/tasks/C266/RECOVERY-CLOSURE.md",
+      "bytes": 5065,
+      "sha256": "abaaff9677b25e81ab619890056e25d4a0a7b1c8c9322ce3e57f7f269198adce"
+    }
+  ],
+  "scientific_inputs": "unchanged from independent final recovery audit; actual-main cohort remains required"
+}

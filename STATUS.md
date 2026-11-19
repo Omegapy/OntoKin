@@ -101,11 +101,11 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-State: held for final recovery of C266 integration and saved delivery.
-Owner: `c266-recovery-bb514ffca344`. Scope: [issue258](https://github.com/Omegapy/OntoKin/issues/258).
-Acquired at: 2026-11-19T00:27:06.000Z. Expires at: 2026-11-19T00:57:06.000Z.
+State: held for C266 final integration, actual-main verification and saved delivery.
+Owner: `c266-final-bb514ffca344-4`. Scope: [issue258](https://github.com/Omegapy/OntoKin/issues/258).
+Acquired at: 2026-11-19T01:27:06.000Z. Expires at: 2026-11-19T01:57:06.000Z.
 Reserved: main, STATUS integration fields, CURRENT, root navigation and C266 delivery/task closure.
-Observed parent: `5c73d079ebcc829214540a1e793ebbb54e56dfba`. The owner requested recovery after repeated thread exhaustion. Live main and scope branch remain unchanged; the verified saved bundle preserves unpublished commit `74bba31a23f4acbda4484159576ae21c024664ce` and all ten candidate logs. No unknown remote write was found. The prior lease expired at 2026-11-19T00:26:56.461979+00:00; this conditional transfer follows explicit recovery authorization and ref reconciliation, not expiry alone.
+Observed parent: `4da657bb3e9e15f0d9ed8124d159716f4102b134`. The owner's fourth recovery request resumes only remaining C266 gates. The previous lease expired at 2026-11-19T00:57:06.000Z. Live main was unchanged; the complete recovered candidate and audits are now published at `66b1613c480723c0b2045c1fa0891a81ab5658c0`. The final candidate tree was verified against the staged recovery tree before conditional branch publication. No unknown ref write remains.
 
 ## Historical status
 

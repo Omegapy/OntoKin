@@ -1,6 +1,6 @@
 # C266 final recovery and closure
 
-The owner requested recovery after a third thread-length interruption. This
+The owner requested recovery after repeated thread-length interruptions. This
 scope resumes C266 P04/P05 and records concrete measures to reduce repetition.
 No new scientific interface or milestone is selected.
 
@@ -62,3 +62,19 @@ with expected-head writes. The final ZIP does not need to contain its own
 future upload receipt. No exact host context limit or guaranteed prevention is
 claimed. Full product/native/model checks and historical failed/unrun gates
 retain their prior dispositions.
+
+## Fourth recovery continuation
+
+The owner confirmed a fourth interruption while finalization was pending.
+Main remained at `4da657bb3e9e15f0d9ed8124d159716f4102b134`. All 54 recovered
+publication paths already had their exact blobs in GitHub; their reconstructed
+tree `7c7d60b15265ef29acb0a0a4ef62036bdba39ad4` matched the staged tree.
+Conditional branch publication `66b1613c480723c0b2045c1fa0891a81ab5658c0`
+now durably retains the full recovery, ten logs and final independent audit.
+No blob upload or candidate scientific check was repeated. Required main files
+were fetched at that observed main revision; the source, task and skills remain
+the previously inspected bytes. Only the operational lease had changed.
+
+Final owner: `c266-final-bb514ffca344-4`. Lease commit: `0251951ea8cae23b1792d6d0c68ad2e69dd0e0b7`. Expiry: `2026-11-19T01:57:06.000Z`.
+Remaining: expected-head merge, fresh actual-main checks, branch disposition,
+verified saved ZIP/prompts, external receipt and stop.
