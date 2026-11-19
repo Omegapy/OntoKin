@@ -1,0 +1,370 @@
+{
+  "schema_version": 1,
+  "reviewer": "/root/compress_workflow",
+  "author": "/root/compress_goals",
+  "review_type": "Independent tool review; reviewer did not edit tool/tests",
+  "time_utc": "2026-11-19T15:48:02.710956+00:00",
+  "requirements": [
+    "R06",
+    "START optional-reader claim"
+  ],
+  "scope": "Frozen experimental bytes; tool is deferred from active workflow by Director decision.",
+  "verdict": "No remaining correctness blocker found in executed scope",
+  "blockers": [],
+  "candidate_files": [
+    {
+      "path": "tools/startup_context.py",
+      "bytes": 26030,
+      "sha256": "a5eccf81f399176bf7c237982bdaa33537e54e784f6fdbe5bb933b17321acde8"
+    },
+    {
+      "path": "tests/test_startup_context.py",
+      "bytes": 16429,
+      "sha256": "75c09cdb935ac05a202e223639d6962e90a920363ca45a3ffc7e8a1df0996d5f"
+    }
+  ],
+  "governing_inputs": [
+    {
+      "path": "CHATGPT-START-HERE.md",
+      "sha256": "f0698dbcd703651db9a4dbc475264e1471d59fb9c10ab1ca552b1b82d681ebd4"
+    },
+    {
+      "path": "docs/workflow/tasks/STARTUP-COMPACT-20261119/REQUIREMENTS.md",
+      "sha256": "f6f8d288a93158590fdbb86fdc79c3480d2960c9d05c75359e4645c02845d22e"
+    }
+  ],
+  "source_ref_exercised": "7ff41e071fb694dadf1ba256b13168e1a4083926",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "independent_check_groups": [
+    {
+      "name": "Real pinned cohort, exact byte reconstruction and expansion",
+      "passed": true,
+      "details": {
+        "ref": "7ff41e071fb694dadf1ba256b13168e1a4083926",
+        "packet_sha256": "11696fc579d47e0384d645e530961612dc9557627d2a355eb140069f28c0b7e9",
+        "packet_bytes": 75514,
+        "source_count": 15,
+        "sources": [
+          {
+            "path": "CHATGPT-START-HERE.md",
+            "bytes": 2810,
+            "sha256": "397179dc28be7b755c7d96923459cc0adde2feef0914a9843df6384227410089",
+            "oracle": "archived base bytes"
+          },
+          {
+            "path": "AGENTS.md",
+            "bytes": 8271,
+            "sha256": "e60cd7d221aafe1a5a35a44a28c7541fe16749b3db603f5def34aa0d6bd9f50f",
+            "oracle": "archived base bytes"
+          },
+          {
+            "path": "GOAL.md",
+            "bytes": 12386,
+            "sha256": "9256b77ed78e4a27a2b76c9f9c45f970de93b9bf98e4a8d7f1d1241b4624562c",
+            "oracle": "archived base bytes"
+          },
+          {
+            "path": "STATUS.md",
+            "bytes": 10687,
+            "sha256": "63510e9d093bc2f208a5dba28d5a39c3de9bb82bb36dc84a5196538c5bb2dbfc",
+            "oracle": "archived base bytes"
+          },
+          {
+            "path": "ROLE.md",
+            "bytes": 1744,
+            "sha256": "917bf126943193de88d059771a7b6553a5dc41d02770859b544ffcf191ff9175",
+            "oracle": "archived base bytes"
+          },
+          {
+            "path": "docs/workflow/registry.json",
+            "bytes": 1172,
+            "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536",
+            "oracle": "unchanged protected working source"
+          },
+          {
+            "path": "docs/workflow/CURRENT.json",
+            "bytes": 2475,
+            "sha256": "e78150ac07c0a879d9c18fd449390382199b6d35636ee8b3f662f1e6caf5faa2",
+            "oracle": "unchanged protected working source"
+          },
+          {
+            "path": "docs/workflow/PROTOCOL.md",
+            "bytes": 12342,
+            "sha256": "72ee4b363619ef62a38642420b9581389435597adbce728e8f5ee536ca803880",
+            "oracle": "archived base bytes"
+          },
+          {
+            "path": "docs/workflow/HANDOFF.md",
+            "bytes": 6952,
+            "sha256": "84827c5a9ef2113c161e7356cfd9a82ad792dd0a10d7eb86ce1a4bdf5d8e089a",
+            "oracle": "archived base bytes"
+          },
+          {
+            "path": "docs/workflow/tasks/C268/task.json",
+            "bytes": 6966,
+            "sha256": "f62a3ebf686f630bcd912eb56dbec1f50a83191c0db8be58944ea90ab908831c",
+            "oracle": "unchanged protected working source"
+          },
+          {
+            "path": "docs/workflow/tasks/C268/REQUIREMENTS.md",
+            "bytes": 3580,
+            "sha256": "6244d41ce510b2fbd07d076090e8f758375374d44b7e182f7a1f627d323ecf86",
+            "oracle": "unchanged protected working source"
+          },
+          {
+            "path": "docs/workflow/tasks/C268/PLAN.md",
+            "bytes": 2565,
+            "sha256": "64f3f6b94360612a7deab43b3a48b7e933bc11f77a42330e7478b9b40524901b",
+            "oracle": "unchanged protected working source"
+          },
+          {
+            "path": ".agents/skills/ontokin-session/SKILL.md",
+            "bytes": 1400,
+            "sha256": "1c5ff15651da466999c0122aa3bd442b40e87a4d3a0cd67e619e9d23cdf01c1a",
+            "oracle": "archived base bytes"
+          },
+          {
+            "path": ".agents/skills/ontokin-delivery/SKILL.md",
+            "bytes": 1390,
+            "sha256": "f90c4ddf62de8d3a07c4d077a72da9fe01d3e1e2a45867bfa6d86f2b54bca8ed",
+            "oracle": "archived base bytes"
+          },
+          {
+            "path": ".agents/skills/ontokin-learning/SKILL.md",
+            "bytes": 2524,
+            "sha256": "c9c106168e3b3e7aecb322249c2de74b909a842d6d2d4c66d9b3cdf432498cad",
+            "oracle": "archived base bytes"
+          }
+        ],
+        "expanded_zero_aliases": true,
+        "report_accounts_for_entire_packet": true
+      },
+      "seconds": 0.3822
+    },
+    {
+      "name": "Synthetic exact-text and deterministic glossary control",
+      "passed": true,
+      "details": {
+        "definitions": 1,
+        "unicode_crlf_tabs_literal_section_and_no_final_newline": true,
+        "empty_file": true,
+        "deterministic": true
+      },
+      "seconds": 0.0028
+    },
+    {
+      "name": "Omitted/added/reordered cohort, same-length tamper, stale expected ref and missing Git file",
+      "passed": true,
+      "details": {
+        "rejections": [
+          "packet source cohort omitted, added or reordered paths",
+          "packet source cohort omitted, added or reordered paths",
+          "packet source cohort omitted, added or reordered paths",
+          "packet decoded source bytes differ from Git: AGENTS.md",
+          "packet REF differs from the explicitly expected commit",
+          "missing Git files at 7ff41e071fb694dadf1ba256b13168e1a4083926: definitely-missing-startup-review.md"
+        ]
+      },
+      "seconds": 0.1143
+    },
+    {
+      "name": "Explicit omit-entry assertion and live-versus-local evidence limits",
+      "passed": true,
+      "details": {
+        "omit_entry_assertion_cannot_prove_prior_read": true,
+        "entry_omission_without_assertion_rejected": "packet source cohort omitted, added or reordered paths",
+        "local_git_only_limits_explicit": true
+      },
+      "seconds": 0.0722
+    },
+    {
+      "name": "Malformed definitions, aliases, headers, lengths, UTF-8, truncation and trailing bytes",
+      "passed": true,
+      "details": {
+        "rejections": [
+          "empty or recursive/colliding glossary definition",
+          "duplicate glossary definition",
+          "empty or recursive/colliding glossary definition",
+          "unknown glossary symbol: §999",
+          "missing END or trailing packet bytes",
+          "missing or oversized packet header",
+          "unknown packet format or altered reader rules",
+          "unknown packet format or altered reader rules",
+          "invalid GLOSSARY header",
+          "truncated value or wrong byte length",
+          "expanded byte length mismatch: notes/λ.md",
+          "encoded source: invalid UTF-8"
+        ]
+      },
+      "seconds": 0.0006
+    },
+    {
+      "name": "Malformed metadata types, duplicate keys, excessive depth and integer length",
+      "passed": true,
+      "details": {
+        "rejections": [
+          "invalid task selector",
+          "invalid task selector",
+          "invalid task selector",
+          "invalid task selector",
+          "independent malformed JSON: duplicate JSON key x",
+          "independent malformed JSON: JSON nesting exceeds 64 levels",
+          "independent malformed JSON: invalid JSON"
+        ]
+      },
+      "seconds": 0.0003
+    },
+    {
+      "name": "Unsafe and README paths plus source alias collisions",
+      "passed": true,
+      "details": {
+        "rejections": [
+          {
+            "path": "/x.md",
+            "error": "unsafe repository path: '/x.md'"
+          },
+          {
+            "path": "../x.md",
+            "error": "unsafe repository path: '../x.md'"
+          },
+          {
+            "path": "a/../x.md",
+            "error": "unsafe repository path: 'a/../x.md'"
+          },
+          {
+            "path": "./x.md",
+            "error": "unsafe repository path: './x.md'"
+          },
+          {
+            "path": "a//x.md",
+            "error": "unsafe repository path: 'a//x.md'"
+          },
+          {
+            "path": "a\\x.md",
+            "error": "unsafe repository path: 'a\\\\x.md'"
+          },
+          {
+            "path": "a:x.md",
+            "error": "unsafe repository path: 'a:x.md'"
+          },
+          {
+            "path": "a?x.md",
+            "error": "unsafe repository path: 'a?x.md'"
+          },
+          {
+            "path": "a[x].md",
+            "error": "unsafe repository path: 'a[x].md'"
+          },
+          {
+            "path": "a\u0000x.md",
+            "error": "unsafe repository path: 'a\\x00x.md'"
+          },
+          {
+            "path": "README.md",
+            "error": "README files are excluded: README.md"
+          },
+          {
+            "path": "docs/readme-extra.txt",
+            "error": "README files are excluded: docs/readme-extra.txt"
+          },
+          {
+            "path": "a/§000.md",
+            "error": "reserved alias collision in path: a/§000.md"
+          },
+          {
+            "path": "source body",
+            "error": "ok.md: reserved alias collision; use direct source reads"
+          }
+        ],
+        "safe_unicode_path_accepted": true
+      },
+      "seconds": 0.0001
+    },
+    {
+      "name": "Oversized expansion is rejected before substitution",
+      "passed": true,
+      "details": {
+        "error": "expanded byte length exceeds file limit",
+        "substitution_was_not_reached": true
+      },
+      "seconds": 0.0004
+    },
+    {
+      "name": "Bounded regular-file input, FIFO/device rejection, README CLI exclusion and exclusive output",
+      "passed": true,
+      "details": {
+        "rejections": [
+          "packet input must be a regular file",
+          "packet input must be a regular file",
+          "packet exceeds byte limit",
+          "startup_context: [Errno 17] File exists: '/tmp/ontokin-packet-independent-qei7jgeg/existing.txt'. Use direct reads at the observed GitHub revision; no instructions may be skipped.",
+          "startup_context: README files cannot be packet inputs. Use direct reads at the observed GitHub revision; no instructions may be skipped.",
+          "startup_context: README files cannot be packet outputs. Use direct reads at the observed GitHub revision; no instructions may be skipped."
+        ],
+        "existing_output_preserved": true,
+        "new_verified_output_created": true
+      },
+      "seconds": 0.0917
+    },
+    {
+      "name": "Tool source access remains local and read-only",
+      "passed": true,
+      "details": {
+        "observed_git_operations": [
+          "cat-file",
+          "ls-tree"
+        ],
+        "calls": 9,
+        "no_direct_git_or_remote_operations_by_reviewer": true
+      },
+      "seconds": 0.0244
+    }
+  ],
+  "findings_and_corrections": [
+    {
+      "id": "PACKET-F01",
+      "origin": "Author expansion-guard work independently inspected by reviewer",
+      "initial_condition": "Expansion was materialized before the decoded-length limit check.",
+      "correction": "Preflight expanded UTF-8 size before substitution.",
+      "status": "resolved; independent guard trap confirmed substitution is not reached for oversized input"
+    },
+    {
+      "id": "PACKET-F02",
+      "origin": "Independent reviewer and author metadata review",
+      "initial_condition": "Malformed selector types and deep/overlong-integer JSON could bypass normalized PacketError rejection.",
+      "correction": "Explicit selector type check, 64-level JSON preflight and ValueError/RecursionError wrapping.",
+      "status": "resolved; independent malformed-input cases passed",
+      "history": "Author evidence retains an earlier failed deep-JSON test and its correction."
+    },
+    {
+      "id": "PACKET-F03",
+      "origin": "Independent reviewer",
+      "initial_condition": "stat size followed by read_bytes did not bound device/FIFO or growing-file reads. No unbounded device read was executed.",
+      "correction": "Nonblocking descriptor open, regular-file fstat check and read(MAX_PACKET + 1).",
+      "status": "resolved; independent device/FIFO/size controls passed"
+    }
+  ],
+  "author_test_evidence": {
+    "path": "docs/engineering/startup-compact-20261119/PACKET-IMPLEMENTATION.md",
+    "sha256": "c807fcac5c03de90d84385cbbf3ee02f84ff27c9ebc2bf7b6db27eb69ae50be2",
+    "reported_result": "23 focused tests passed; reviewer read tests/evidence, did not rerun author suite"
+  },
+  "efficiency": {
+    "disposition": "Director deferred active integration based on reported savings below 3%.",
+    "independent_token_measurement": "Not performed; no tokenizer savings claim from this review.",
+    "overhead_observation": "Report source_bytes equals selected source payload total; packet_bytes includes complete preamble, metadata, glossary, framing and payload. Previously read entry cost must be added for whole-startup comparisons."
+  },
+  "limits": [
+    "Pinned local Git byte equivalence is not proof of current live GitHub head.",
+    "omit-entry is a caller assertion and cannot prove prior reading.",
+    "Nested AGENTS and scope specifications require separate reads.",
+    "Adversarial checks cover listed cases, not exhaustive parser correctness or universal performance.",
+    "No integration, remote action or release claim."
+  ],
+  "final_hash_recheck": "Both frozen tool/test hashes unchanged after independent checks",
+  "reproduction_command": "python3 -B /tmp/ontokin_packet_independent_review.py",
+  "independent_check_program": "from pathlib import Path\nimport contextlib,datetime,hashlib,importlib.util,io,json,os,platform,re,sys,tempfile,time\nfrom unittest import mock\nroot=Path('/workspace/scratch/9c7a0c0e0469/OntoKin')\nbase=root/'docs/engineering/startup-compact-20261119'\ntool=root/'tools/startup_context.py';tests=root/'tests/test_startup_context.py'\nsha=lambda b:hashlib.sha256(b).hexdigest()\nexpected_tool='a5eccf81f399176bf7c237982bdaa33537e54e784f6fdbe5bb933b17321acde8'\nexpected_tests='75c09cdb935ac05a202e223639d6962e90a920363ca45a3ffc7e8a1df0996d5f'\nassert sha(tool.read_bytes())==expected_tool\nassert sha(tests.read_bytes())==expected_tests\nsys.dont_write_bytecode=True\nspec=importlib.util.spec_from_file_location('independent_packet_review',tool)\nm=importlib.util.module_from_spec(spec);sys.modules[spec.name]=m;spec.loader.exec_module(m)\nref='7ff41e071fb694dadf1ba256b13168e1a4083926'\nresults=[];state={}\ndef check(name,fn):\n start=time.monotonic()\n try:detail=fn();results.append({'name':name,'passed':True,'details':detail,'seconds':round(time.monotonic()-start,4)})\n except Exception as exc:results.append({'name':name,'passed':False,'exception':type(exc).__name__,'message':str(exc),'seconds':round(time.monotonic()-start,4)})\ndef reject(fn,contains=None):\n try:fn()\n except m.PacketError as exc:\n  message=str(exc)\n  if contains:assert contains in message,(contains,message)\n  return message\n raise AssertionError('Malformed input was accepted')\ndef real_roundtrip():\n raw,report=m.build_packet(root,ref)\n sources,verified=m.verify_packet(raw,root,ref)\n paths=['CHATGPT-START-HERE.md','AGENTS.md','GOAL.md','STATUS.md','ROLE.md','docs/workflow/registry.json','docs/workflow/CURRENT.json','docs/workflow/PROTOCOL.md','docs/workflow/HANDOFF.md']\n paths += ['docs/workflow/tasks/C268/'+n for n in ['task.json','REQUIREMENTS.md','PLAN.md']]\n paths += ['.agents/skills/'+n+'/SKILL.md' for n in ['ontokin-session','ontokin-delivery','ontokin-learning']]\n assert list(sources.files)==paths\n oracle=[]\n for path in paths:\n  archived=base/'before'/(path+'.txt')\n  expected=archived.read_bytes() if archived.exists() else (root/path).read_bytes()\n  assert sources.files[path]==expected,path\n  oracle.append({'path':path,'bytes':len(expected),'sha256':sha(expected),'oracle':'archived base bytes' if archived.exists() else 'unchanged protected working source'})\n expanded=m.serialize(sources,[],sources.files);decoded,count=m.decode_packet(expanded)\n assert count==0 and decoded.files==sources.files\n assert report['source_bytes']==sum(map(len,sources.files.values()))\n assert report['packet_bytes']==len(raw)\n state.update(raw=raw,sources=sources,report=report)\n return {'ref':ref,'packet_sha256':sha(raw),'packet_bytes':len(raw),'source_count':len(paths),'sources':oracle,'expanded_zero_aliases':True,'report_accounts_for_entire_packet':True}\ncheck('Real pinned cohort, exact byte reconstruction and expansion',real_roundtrip)\nmeta={'task':'TEST','task_selector':'active_task','skills':['test-skill'],'entrypoint':'START.md','omit_entry':False,'entry_read_at_ref':None}\nfixture=m.Sources('a'*40,meta,{'notes/λ.md':('α 中文\\r\\nRepeat literal source text and all boundaries. §1 literal; \\t'*8+'no final newline').encode(),'empty.md':b''})\ndef exact_text():\n glossary,encoded=m.compress(fixture.files)\n raw=m.serialize(fixture,glossary,encoded);decoded,count=m.decode_packet(raw)\n assert decoded.files==fixture.files and count>0\n assert (glossary,encoded)==m.compress(fixture.files)\n return {'definitions':count,'unicode_crlf_tabs_literal_section_and_no_final_newline':True,'empty_file':True,'deterministic':True}\ncheck('Synthetic exact-text and deterministic glossary control',exact_text)\ndef cohort_controls():\n s=state['sources'];errors=[]\n for files in [dict(list(s.files.items())[1:]),dict(reversed(list(s.files.items()))),dict(s.files,**{'EXTRA.md':b'extra'})]:\n  altered=m.Sources(s.ref,s.metadata.copy(),files)\n  errors.append(reject(lambda:m.verify_packet(m.serialize(altered,[],files),root,ref),'cohort'))\n encoded=s.files.copy();encoded['AGENTS.md']=b'!'+encoded['AGENTS.md'][1:]\n tampered=m.serialize(s,[],encoded);m.decode_packet(tampered)\n errors.append(reject(lambda:m.verify_packet(tampered,root,ref),'source bytes differ'))\n errors.append(reject(lambda:m.verify_packet(state['raw'],root,'0'*40),'expected commit'))\n errors.append(reject(lambda:m.GitSource(root,ref).read_many(['definitely-missing-startup-review.md']),'missing Git files'))\n return {'rejections':errors}\ncheck('Omitted/added/reordered cohort, same-length tamper, stale expected ref and missing Git file',cohort_controls)\ndef omission_and_limits():\n store=m.GitSource(root,ref);s=m.select_sources(store,True)\n assert 'CHATGPT-START-HERE.md' not in s.files and 'CHATGPT-START-HERE.md' not in store.cache\n raw=m.serialize(s,[],s.files);_,report=m.verify_packet(raw,root,ref)\n assert s.metadata['entry_read_at_ref']=='REF'\n assert 'live GitHub head' in report['limits'] and 'prior entry reading' in report['limits'] and 'extra scope reads' in report['limits']\n assert report['token_count']=='not measured; bytes are not model tokens'\n s.metadata.update(omit_entry=False,entry_read_at_ref=None)\n error=reject(lambda:m.verify_packet(m.serialize(s,[],s.files),root,ref),'cohort')\n return {'omit_entry_assertion_cannot_prove_prior_read':True,'entry_omission_without_assertion_rejected':error,'local_git_only_limits_explicit':True}\ncheck('Explicit omit-entry assertion and live-versus-local evidence limits',omission_and_limits)\ndef malformed():\n raw=m.serialize(fixture,[],fixture.files)\n bad=[]\n for glossary in [[''],['abc','abc'],['§000']]:\n  bad.append(reject(lambda:m.decode_packet(m.serialize(fixture,glossary,fixture.files))))\n unknown=dict(fixture.files);unknown['notes/λ.md']='§999'.encode();bad.append(reject(lambda:m.decode_packet(m.serialize(fixture,[],unknown))))\n for damaged in [raw+b'trailing',raw[:-1],raw[:100],b'X'+raw[1:],raw.replace(b'\\nGLOSSARY 0\\n',b'\\nGLOSSARY -1\\n',1)]:\n  bad.append(reject(lambda:m.decode_packet(damaged)))\n marker=raw.index(b'META ');end=raw.index(b'\\n',marker);size=int(raw[marker+5:end])\n bad.append(reject(lambda:m.decode_packet(raw[:marker]+f'META {size+1}'.encode()+raw[end:])))\n wrong=dict(fixture.files);wrong['notes/λ.md']=b'x';bad.append(reject(lambda:m.decode_packet(m.serialize(fixture,[],wrong))))\n nonutf=dict(fixture.files);nonutf['notes/λ.md']=b'\\xff';bad.append(reject(lambda:m.decode_packet(m.serialize(fixture,[],nonutf))))\n return {'rejections':bad}\ncheck('Malformed definitions, aliases, headers, lengths, UTF-8, truncation and trailing bytes',malformed)\ndef metadata():\n errors=[]\n for selector in [[],{},17,None]:\n  altered=m.Sources(fixture.ref,dict(meta,task_selector=selector),fixture.files)\n  errors.append(reject(lambda:m.decode_packet(m.serialize(altered,[],altered.files))))\n for blob in [b'{\"x\":1,\"x\":2}',b'{\"x\":'+b'['*2000+b'0'+b']'*2000+b'}',b'{\"x\":'+b'9'*5000+b'}']:\n  errors.append(reject(lambda:m.json_object(blob,'independent malformed JSON')))\n return {'rejections':errors}\ncheck('Malformed metadata types, duplicate keys, excessive depth and integer length',metadata)\ndef paths():\n bad=['/x.md','../x.md','a/../x.md','./x.md','a//x.md','a\\\\x.md','a:x.md','a?x.md','a[x].md','a\\x00x.md','README.md','docs/readme-extra.txt','a/§000.md']\n errors=[{'path':path,'error':reject(lambda:m.safe_path(path))} for path in bad]\n assert m.safe_path('notes/λ name.md')=='notes/λ name.md'\n errors.append({'path':'source body','error':reject(lambda:m.compress({'ok.md':'literal §123'.encode()}),'collision')})\n return {'rejections':errors,'safe_unicode_path_accepted':True}\ncheck('Unsafe and README paths plus source alias collisions',paths)\ndef expansion():\n bad=dict(fixture.files);bad['notes/λ.md']=('§000'*1000).encode()\n raw=m.serialize(fixture,['x'*10_000],bad);pattern=m.SYMBOL\n class NoSubstitution:\n  def search(self,*a,**k):return pattern.search(*a,**k)\n  def finditer(self,*a,**k):return pattern.finditer(*a,**k)\n  def sub(self,*a,**k):raise AssertionError('Expansion materialized before limit rejection')\n with mock.patch.object(m,'SYMBOL',NoSubstitution()):error=reject(lambda:m.decode_packet(raw),'expanded byte length')\n return {'error':error,'substitution_was_not_reached':True}\ncheck('Oversized expansion is rejected before substitution',expansion)\ndef input_and_cli():\n with tempfile.TemporaryDirectory(prefix='ontokin-packet-independent-') as directory:\n  td=Path(directory);packet=td/'packet.txt';packet.write_bytes(state['raw'])\n  fifo=td/'fifo';os.mkfifo(fifo)\n  errors=[reject(lambda:m.read_packet(Path(os.devnull)),'regular file'),reject(lambda:m.read_packet(fifo),'regular file')]\n  excessive=td/'excessive';excessive.write_bytes(b'x'*101)\n  with mock.patch.object(m,'MAX_PACKET',100):errors.append(reject(lambda:m.read_packet(excessive),'byte limit'))\n  sentinel=td/'existing.txt';sentinel.write_bytes(b'preserve exact existing output')\n  requests=[['--verify',str(packet),'--ref',ref,'--output',str(sentinel)],['--verify',str(td/'README.packet')],['--verify',str(packet),'--output',str(td/'README-new.txt')]]\n  for args in requests:\n   stream=io.StringIO()\n   with contextlib.redirect_stderr(stream):code=m.main(['--root',str(root)]+args)\n   assert code==2 and 'direct reads' in stream.getvalue()\n   errors.append(stream.getvalue().strip())\n  assert sentinel.read_bytes()==b'preserve exact existing output'\n  assert not (td/'README-new.txt').exists()\n  output=td/'verified.json';assert m.main(['--root',str(root),'--verify',str(packet),'--ref',ref,'--output',str(output)])==0\n  assert json.loads(output.read_text())['verified'] is True\n  return {'rejections':errors,'existing_output_preserved':True,'new_verified_output_created':True}\ncheck('Bounded regular-file input, FIFO/device rejection, README CLI exclusion and exclusive output',input_and_cli)\ndef read_only_source():\n store=m.GitSource(root,ref);calls=[];actual=store.run\n def observed(*args,**kwargs):calls.append(list(args));return actual(*args,**kwargs)\n with mock.patch.object(store,'run',side_effect=observed):m.select_sources(store)\n assert all(call[0] in {'ls-tree','cat-file'} for call in calls)\n assert 'GIT_NO_LAZY_FETCH=\"1\"' in tool.read_text() and '--no-replace-objects' in tool.read_text()\n return {'observed_git_operations':sorted({call[0] for call in calls}),'calls':len(calls),'no_direct_git_or_remote_operations_by_reviewer':True}\ncheck('Tool source access remains local and read-only',read_only_source)\nassert sha(tool.read_bytes())==expected_tool\nassert sha(tests.read_bytes())==expected_tests\nfindings=[\n {'id':'PACKET-F01','origin':'Author expansion-guard work independently inspected by reviewer','initial_condition':'Expansion was materialized before the decoded-length limit check.','correction':'Preflight expanded UTF-8 size before substitution.','status':'resolved; independent guard trap confirmed substitution is not reached for oversized input'},\n {'id':'PACKET-F02','origin':'Independent reviewer and author metadata review','initial_condition':'Malformed selector types and deep/overlong-integer JSON could bypass normalized PacketError rejection.','correction':'Explicit selector type check, 64-level JSON preflight and ValueError/RecursionError wrapping.','status':'resolved; independent malformed-input cases passed','history':'Author evidence retains an earlier failed deep-JSON test and its correction.'},\n {'id':'PACKET-F03','origin':'Independent reviewer','initial_condition':'stat size followed by read_bytes did not bound device/FIFO or growing-file reads. No unbounded device read was executed.','correction':'Nonblocking descriptor open, regular-file fstat check and read(MAX_PACKET + 1).','status':'resolved; independent device/FIFO/size controls passed'}]\npassed=all(x['passed'] for x in results)\nreport={'schema_version':1,'reviewer':'/root/compress_workflow','author':'/root/compress_goals','review_type':'Independent tool review; reviewer did not edit tool/tests','time_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'requirements':['R06','START optional-reader claim'],'scope':'Frozen experimental bytes; tool is deferred from active workflow by Director decision.','verdict':'No remaining correctness blocker found in executed scope' if passed else 'Blocking independent check failures remain','blockers':[x for x in results if not x['passed']],'candidate_files':[{'path':str(path.relative_to(root)),'bytes':path.stat().st_size,'sha256':sha(path.read_bytes())} for path in [tool,tests]],'governing_inputs':[{'path':str(path.relative_to(root)),'sha256':sha(path.read_bytes())} for path in [root/'CHATGPT-START-HERE.md',root/'docs/workflow/tasks/STARTUP-COMPACT-20261119/REQUIREMENTS.md']],'source_ref_exercised':ref,'environment':{'python':sys.version,'platform':platform.platform()},'independent_check_groups':results,'findings_and_corrections':findings,'author_test_evidence':{'path':'docs/engineering/startup-compact-20261119/PACKET-IMPLEMENTATION.md','sha256':sha((base/'PACKET-IMPLEMENTATION.md').read_bytes()),'reported_result':'23 focused tests passed; reviewer read tests/evidence, did not rerun author suite'},'efficiency':{'disposition':'Director deferred active integration based on reported savings below 3%.','independent_token_measurement':'Not performed; no tokenizer savings claim from this review.','overhead_observation':'Report source_bytes equals selected source payload total; packet_bytes includes complete preamble, metadata, glossary, framing and payload. Previously read entry cost must be added for whole-startup comparisons.'},'limits':['Pinned local Git byte equivalence is not proof of current live GitHub head.','omit-entry is a caller assertion and cannot prove prior reading.','Nested AGENTS and scope specifications require separate reads.','Adversarial checks cover listed cases, not exhaustive parser correctness or universal performance.','No integration, remote action or release claim.'],'final_hash_recheck':'Both frozen tool/test hashes unchanged after independent checks','reproduction_command':'python3 -B /tmp/ontokin_packet_independent_review.py','independent_check_program':Path(__file__).read_text()}\n(base/'PACKET-REVIEW.json').write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\\n')\nlines=['# Independent review of the optional startup packet','',report['verdict']+'. The Director deferred this experimental helper from the active workflow; this review does not recommend deployment or claim token savings.','','## Candidate and scope','',f'- Reviewer: `{report[\"reviewer\"]}`; author: `{report[\"author\"]}`.',f'- Tool SHA-256: `{expected_tool}`.',f'- Test SHA-256: `{expected_tests}`.',f'- Exercised source revision: `{ref}`.','- Full tool and test source inspected; final tool/test hashes rechecked unchanged.','- Required claims: R06 and the optional-reader paragraph in START.','','## Independent checks','',f'{sum(x[\"passed\"] for x in results)}/{len(results)} independent check groups passed. Exact inputs, observed rejection messages, source identities and reproducible check program are in [PACKET-REVIEW.json](PACKET-REVIEW.json).','']\nfor item in results:lines.append('- '+item['name']+': '+('passed' if item['passed'] else 'FAILED')+'.')\nlines+=['','## Findings and corrections','']\nfor finding in findings:lines.append('- **'+finding['id']+'**: '+finding['initial_condition']+' '+finding['correction']+' Status: '+finding['status']+'.')\nlines+=['','The author retained an earlier failed deep-JSON test in [implementation evidence](PACKET-IMPLEMENTATION.md). Its final 23-test result is author evidence; the independent groups above were executed separately.','','## Meaning and limits','','The helper reconstructs the selected local Git blobs and checks metadata, ordered cohort and every source byte. Its rejection paths prescribe direct reads. It does not observe live GitHub head, prove that an omitted entry was already read, or replace nested/scope-specific instructions.','', 'The report counts the whole packet, including glossary and framing. Whole-startup token comparisons must also count the already-read entry. No tokenizer was run by this reviewer. The Director deferred active integration on reported savings below 3%.','','No Git refs, index, remote state, procedure documents or source/test files were changed by this review.']\n(base/'PACKET-REVIEW.md').write_text('\\n'.join(lines)+'\\n')\nprint(json.dumps({'passed_groups':sum(x['passed'] for x in results),'total_groups':len(results),'blockers':report['blockers'],'tool_sha256':expected_tool,'tests_sha256':expected_tests,'review_files':['PACKET-REVIEW.json','PACKET-REVIEW.md'],'disposition':'experimental; deferred by Director'}))\n"
+}
