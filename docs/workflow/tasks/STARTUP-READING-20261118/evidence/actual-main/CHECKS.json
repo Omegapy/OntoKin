@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "source_commit": "e7096a21e018f10e4d51b74cb5360c66eab4598a",
+  "source_tree": "9e9bda588c5f576e2cd4e4e2e57f13b23aad0ef8",
+  "checked_at_utc": "2026-11-19T03:46:49.528825+00:00",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": "docs/workflow/tasks/STARTUP-READING-20261118/evidence/actual-main/workflow.log",
+      "log_sha256": "3e03eb55367e8451135023a604d20c11db28eb999d4b14ed38b04481f7eb0554"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": "docs/workflow/tasks/STARTUP-READING-20261118/evidence/actual-main/documentation.log",
+      "log_sha256": "5f7c3f61a241a1b194fe148edcecd759e534bd48b7721111dc95759f6dd4ba11"
+    },
+    {
+      "name": "preservation",
+      "command": [
+        "python3",
+        "/workspace/scratch/e2dfdb529a6f/verify_startup_compression.py",
+        "/workspace/scratch/e2dfdb529a6f/OntoKin_startup_compression"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": "docs/workflow/tasks/STARTUP-READING-20261118/evidence/actual-main/preservation.log",
+      "log_sha256": "529bd32f899f348ce9e48260f1e6e86518ba8b8e61e0aca87ea5553f1fca38d1"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "result": "passed",
+      "exit_code": 0,
+      "evidence": "docs/workflow/tasks/STARTUP-READING-20261118/evidence/actual-main/whitespace.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "retained_ancestry_verified": true,
+  "reviewed_source_hashes": "All 15 measured file hashes match METRICS.json; protected CURRENT/registry/C267 files equal baseline",
+  "not_run": [
+    "Product runtime/native/compatibility/hosted CI: documentation-only scope."
+  ]
+}

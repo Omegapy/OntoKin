@@ -21,3 +21,7 @@ Requirements: R05. Verification: ZIP manifest and extraction; confirmed save ide
 Project editor owns AGENTS, GOAL and STATUS prose; STATUS lease bytes stay unchanged while another owner holds it. Workflow editor owns START, ROLE, PROTOCOL, HANDOFF and the three project-owned skill bodies. Director owns archives, measurements, task records, integration and delivery. Independent reviewer owns only its assigned evidence file. All Git/index/remote writes remain with the Director.
 
 If main advances, preserve current observations and reapply only the reviewed compression. Do not restore old C267 state, old integration ownership or stale delivery claims.
+
+## Verified integration checkpoint
+
+P01–P03 complete. PR263 merged reviewed source at `e7096a21e018f10e4d51b74cb5360c66eab4598a`; all four actual-main check groups passed and ancestry/automatic branch deletion were verified. P04 is the remaining gate: verify/freeze/save the session ZIP, publish its external receipt, close this task and release ownership. No further product work is selected.

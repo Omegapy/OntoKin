@@ -3,7 +3,7 @@
   "id": "STARTUP-READING-20261118",
   "title": "Compress startup reading without losing meaning",
   "intent": "Reduce repeated startup prose and load historical detail only when relevant",
-  "status": "review",
+  "status": "in_progress",
   "owner": "startup-reading-root-e2dfdb529a6f",
   "branch": "work/startup-reading-20261118",
   "base_sha": "ee509d5d7ce3a4c0fb61cdb9e2668575e3af370d",
@@ -101,7 +101,7 @@
         "R04",
         "R05"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/startup-reading-20261118/REVIEW.md",
         "docs/engineering/startup-reading-20261118/METRICS.json",
@@ -117,7 +117,7 @@
       "requirements": [
         "R05"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/workflow/tasks/STARTUP-READING-20261118/DELIVERY.json"
       ],
@@ -154,17 +154,56 @@
         "docs/engineering/startup-reading-20261118/PRESERVATION-CHECKS.json",
         "docs/engineering/startup-reading-20261118/REVIEW.md"
       ]
+    },
+    {
+      "name": "actual-main-workflow",
+      "command": "python3 tools/chat_workflow.py check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/workflow/tasks/STARTUP-READING-20261118/evidence/actual-main/workflow.log"
+      ]
+    },
+    {
+      "name": "actual-main-documentation",
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/workflow/tasks/STARTUP-READING-20261118/evidence/actual-main/documentation.log"
+      ]
+    },
+    {
+      "name": "actual-main-preservation",
+      "command": "python3 /workspace/scratch/e2dfdb529a6f/verify_startup_compression.py /workspace/scratch/e2dfdb529a6f/OntoKin_startup_compression",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/workflow/tasks/STARTUP-READING-20261118/evidence/actual-main/preservation.log"
+      ]
+    },
+    {
+      "name": "actual-main-whitespace",
+      "command": "git diff --check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/workflow/tasks/STARTUP-READING-20261118/evidence/actual-main/whitespace.log"
+      ]
     }
   ],
   "completion": {
     "implementation_commit": "93c9a6eacbe8600b725e458ea64b9bf7acc8e298",
-    "merge_commit": null,
+    "merge_commit": "e7096a21e018f10e4d51b74cb5360c66eab4598a",
     "pull_request": "https://github.com/Omegapy/OntoKin/pull/263",
-    "branch_disposition": "active",
+    "branch_disposition": "deleted",
     "evidence": [
       "docs/engineering/startup-reading-20261118/REVIEW.md",
-      "docs/engineering/startup-reading-20261118/CHECKS.json"
-    ]
+      "docs/engineering/startup-reading-20261118/CHECKS.json",
+      "docs/workflow/tasks/STARTUP-READING-20261118/INTEGRATION.json",
+      "docs/workflow/tasks/STARTUP-READING-20261118/evidence/actual-main/CHECKS.json"
+    ],
+    "completed_branch_head": "53482fe8bf0d6dce2df7c4cef3c743ce7c3fc4f1"
   },
   "delivery": {
     "required": true,
@@ -173,5 +212,5 @@
     "folder": "OntoKin",
     "receipt": null
   },
-  "next_action": "Conditionally merge the independently reviewed candidate, verify resulting main and branch disposition, then freeze/save handoff and publish receipt"
+  "next_action": "Freeze and verify the browser-session ZIP, confirm saved identity, publish external receipt, close this documentation task and release the lease; do not expand C267"
 }
