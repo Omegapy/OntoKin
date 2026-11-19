@@ -98,12 +98,13 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-State: active C267 integration acquisition.
-Owner: `c267-root-ad39e933f0f3`. Scope: [issue260](https://github.com/Omegapy/OntoKin/issues/260).
-Observed parent: `47681b1e4c442a580910dba1fc5a823dc86ee6b0`. Acquired by expected-head conditional update.
-Expires at: 2026-11-19T02:20:13.455553+00:00.
-Reserved shared paths: STATUS.md, docs/workflow/CURRENT.json, C267 task/evidence and selected memory records.
-C266 is complete. C267 implements one finite hinge comparison; historical admission remains separate.
+State: active documentation integration.
+Owner: `browser-length-root-e2dfdb529a6f`. Scope: [PR262](https://github.com/Omegapy/OntoKin/pull/262).
+Observed parent: `6122bd272c3f5b960ed5c1d6434ebf5f7f9b4020`. Acquired by expected-head conditional update after live reconciliation.
+Expires at: 2026-11-19T02:55:25.000Z.
+Reserved shared paths: STATUS.md integration coordination, the PR262 workflow/prompt files and CHAT-LENGTH-20261118 task evidence.
+The prior C267 lease expired at 2026-11-19T02:20:13.455553+00:00. Its branch head remains `ff1659a508d30a60fa6ca2d9214779dd7bcf1262` and PR261 is open; expiry is not treated as proof that its worker stopped.
+C267 product work, CURRENT, task evidence and unpublished work remain outside this scope. This lease covers the independent browser-prompt repair only.
 
 ## Historical status
 
