@@ -36,9 +36,12 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: released at UTC: 2026-11-19T16:21:41.819983+00:00. Owner: none; reserved paths: none.
-Last holder: `startup-compact-9c7a0c0e0469`; [startup compression delivery](docs/engineering/startup-compact-20261119/DELIVERY.json) complete, PR267 merged, final handoff and both prompts saved. Acquisition/renewal/release evidence: [COORDINATION](docs/engineering/startup-compact-20261119/COORDINATION.json).
-C268 remains active and untouched on `work/c268-historical-endpoint` at `b799b7462bdc6a04464a2f903cec8dcabd659fa1`; its next integrator must reconcile live state and acquire a new lease.
+State: held. Owner: `c268-final-ee457d84062e`.
+Acquired UTC: `2026-11-19T17:47:05.000Z`; expires UTC: `2026-11-19T18:17:05.000Z`.
+Reserved: STATUS/CURRENT, workflow memory/knowledge and C268 integration/delivery/task records.
+Scope: finish reviewed C268 candidate, conditional integration, actual-main checks and verified saved handoff; no next milestone.
+Expected acquisition parent: `409ef18e0cb992ad1ab771c1258e989d5ef1c765`; corrected candidate: `e6f55b73fa71953aa648bcd34711a6796a7346b6`.
+[Coordination](docs/engineering/localized-repair-c268/evidence/finalization-20261119/COORDINATION.json). Prior startup-compression lease was released; unknown writes reconciled.
 
 ## Historical status
 
