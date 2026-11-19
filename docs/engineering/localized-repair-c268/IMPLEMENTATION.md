@@ -5,8 +5,8 @@ Director-owned checkout. This is an implementation candidate; independent
 controls, exact-candidate review, affected regression, integration and saved
 delivery are separate gates.
 
-The candidate [endpoint_reader.py](endpoint_reader.py) is 14,883 bytes with
-SHA-256 `f615f14f5d4bcee3a3ecdb20466fd60b0a04df2dcd13095d993baf20b1430086`.
+The corrected candidate [endpoint_reader.py](endpoint_reader.py) is 14,914 bytes
+with SHA-256 `a7bb1f67398a54922e647d6d43062f89acb32c6e05a2fc653f5c30160f888157`.
 No predecessor source, fixture, contract, workflow state or Git index was
 changed by this worker.
 
@@ -54,7 +54,9 @@ every public call. Paths in this table are relative to `docs/engineering/`.
 ## Public behavior and supported paths
 
 `read_bound_endpoint(repo, endpoint)` accepts an exact built-in string endpoint
-equal to `before` or `after`. It accepts a root as a built-in `str` or the native
+equal to `before` or `after`. The exact type and length of five or six characters
+are checked before dictionary membership can hash the selector. It accepts a
+root as a built-in `str` or the native
 concrete `pathlib.Path` type (`PosixPath` on the tested host). Absolute roots and
 roots relative to the process's current working directory are supported.
 Byte paths, file descriptors, custom path-like objects, `PurePath` and type
@@ -181,8 +183,10 @@ failure after historical capture retains all three input identities.
 [check_candidate.py](evidence/implementation/check_candidate.py) is
 implementation-author smoke/parity evidence, not independently authored
 qualification. Its [RESULTS.json](evidence/implementation/RESULTS.json) records
-the exact candidate and dependency hashes, command, interpreter, platform,
-observed source head and outcomes.
+the preceding candidate `f615f14f5d4bcee3a3ecdb20466fd60b0a04df2dcd13095d993baf20b1430086`
+and dependency hashes, command, interpreter, platform, observed source head and
+outcomes. This earlier passing evidence is preserved unchanged; the corrected
+candidate has the separate focused run below.
 
 Command:
 
@@ -219,6 +223,47 @@ smoke program is 5,748 bytes, SHA-256
 `57c1db791078f49b6a85af2fc4489d6e8d9fd12911e5e5bea1a4526adae1a663`.
 The result receipt is SHA-256
 `5c842d1e86a6f31a76fb7e7d11eb5fb6c335a130519754351d2c3dc8faab2a81`.
+
+### Independent-review correction: endpoint selector length
+
+Reviewer `/root/state_audit` identified a mandatory R02 finding after the
+preceding candidate was published. Its type guard was followed immediately by
+dictionary membership. For a newly supplied very long built-in string,
+membership could compute a hash across the whole selector before rejecting it.
+The earlier passing smoke did not challenge this work bound.
+
+The sole reader change adds `len(endpoint) not in (5, 6)` between the exact
+string-type guard and membership. Python string length is checked without
+scanning the string, and every subsequent membership check is now bounded to
+five or six characters. Unsupported selectors still raise `ENDPOINT`; admitted
+endpoint behavior is unchanged.
+
+The [reviewed source snapshot](evidence/implementation/endpoint-length-fix/endpoint_reader.py.before.txt)
+preserves the preceding 14,883-byte reader and its exact SHA-256
+`f615f14f5d4bcee3a3ecdb20466fd60b0a04df2dcd13095d993baf20b1430086`.
+The [previous report](evidence/implementation/endpoint-length-fix/IMPLEMENTATION.md.before.txt)
+is also retained, SHA-256
+`a8ac8b18769fa74d8d942b5cca8a7c66fe9e62dfbdc600fdf965abf0b2739cbe`.
+No previous result receipt or independent test was overwritten or modified.
+
+The [focused smoke program](evidence/implementation/endpoint-length-fix/smoke.py)
+ran against the corrected candidate at observed head
+`734789521f82248d39b623c33aae9d3284ab4bce`:
+
+`PYTHONDONTWRITEBYTECODE=1 python3 docs/engineering/localized-repair-c268/evidence/implementation/endpoint-length-fix/smoke.py`
+
+Its [new receipt](evidence/implementation/endpoint-length-fix/RESULTS.json)
+records four passing checks and zero failures: exact source-delta verification,
+both original endpoints, and refusal of a 1,000,001-character selector before
+any file open. Both endpoints retain eight hinges, sixteen sites and one shared
+definition, with accepted-revision and execution flags false. This is focused
+implementation evidence; the separate control author owns verification that
+the oversized selector never reaches the membership operation itself.
+
+The focused smoke program is 3,714 bytes, SHA-256
+`16971c48eba45e21fbc8f3bdca83e3221f105631683859d592cf09c19ddad574`.
+Its new receipt is 1,883 bytes, SHA-256
+`1d45eba314f937b575630552b4e201da577eeeee7c7e8c1d90214589c3c72b09`.
 
 Independent controls own symlink/race/FIFO/permission/read-failure/dependency
 mutation and changed-input coverage under R04. The Director owns the complete

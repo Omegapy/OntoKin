@@ -1,9 +1,9 @@
 # C268 independent historical endpoint controls
 
-The independent control author implemented and executed 34 `unittest` methods
-against the candidate reader. The [final author run](evidence/control-author/run-03/results.json)
-passed with **130 API calls: 120 historical-reader calls and 10 raw-interface
-calls**. Outcomes were 12 historical admissions, 9 raw successes and 109 typed
+The independent control author implemented and executed 35 `unittest` methods
+against the candidate reader. The [final author run](evidence/control-author/run-04/results.json)
+passed with **131 API calls: 121 historical-reader calls and 10 raw-interface
+calls**. Outcomes were 12 historical admissions, 9 raw successes and 110 typed
 refusals. There were no failures, errors, skips or untyped exceptions. Checked
 implementation, test, fixture and dependency bytes stayed unchanged during the
 run. This is candidate control evidence; independent review, affected-cohort
@@ -53,6 +53,7 @@ artifact checks prevent the changed entry source from masking those refusals.
 | R03/R04, H04/H27 | Same-size paired axis and different-size paired initial recipes; raw API historical flags remain false; historical entry, leaf and GLB checks each refuse | A supported changed comparison does not grant historical admission |
 | R02/R04, H26 | Missing source/leaf/GLB, missing repository root, short/long declared sizes and same-size changed hashes for both endpoints | Typed whole-input refusals, bounded available identities, no qualified partial set |
 | R02/R04, H26 | Symlink leaves, fixed-path ancestor, repository root and ancestor above it; self-referential file/directory loops; traversal, invalid selectors/types, path-length/component limits | Invalid selector/root controls deny filesystem calls; no ambient fallback |
+| R02/R04, H26 | A 100,006-character built-in endpoint string with a pin-membership spy that fails if called | The explicit selector length bound runs before dictionary membership/hash work; no timing threshold is used |
 | R02/R04, H26 | Directory leaves; endpoint and dependency FIFOs with no writer | FIFO probes run in separate processes with five-second deadlines; both returned typed refusals without hanging |
 | R02/R04, H26 | Real mode-000 permission denial plus explicitly injected `EACCES` at open/read; injected `EIO` at stat/read | Author runtime actually denied the mode-000 file at effective UID 1000; injections are separately labeled |
 | R02/R04, H26 | No payload reads for declared wrong sizes or sparse inputs beyond inherited source/GLB ceilings | The controller derives sparse-input hashes from deterministic zero-byte recipes without reading those files |
@@ -75,7 +76,7 @@ python3 -B docs/engineering/localized-repair-c268/test_endpoint_reader.py --evid
 ```
 
 Standard discovery is also supported and was
-[executed successfully](evidence/control-author/discovery-01/RESULTS.json):
+[executed successfully on the 34-method predecessor](evidence/control-author/discovery-01/RESULTS.json):
 
 ```sh
 python3 -B -m unittest discover -s docs/engineering/localized-repair-c268 -p test_endpoint_reader.py -v
@@ -95,9 +96,19 @@ directories and FIFOs have explicit reconstruction recipes.
 | --- | --- | --- |
 | [run-01](evidence/control-author/run-01/results.json) | 34 methods; 108 calls; 12 test errors | Control-author mistake: a pose witness was assumed to contain text. Its actual byte-offset representation was retained. The correction slices the supplied bytes; it changes no expected source meaning or reader behavior. |
 | [run-02](evidence/control-author/run-02/results.json) | 34 methods; 128 calls; pass, zero skips | Corrected witness check; complete historical and dependency controls passed. |
-| [run-03](evidence/control-author/run-03/results.json) | 34 methods; 130 calls; pass, zero skips | Final suite adds direct raw-field assertions, sparse recipe hashes, bounded invalid-root cases and actual C267 refusal translation. |
-| [discovery-01](evidence/control-author/discovery-01/RESULTS.json) | 34 methods; pass, zero skips | Standard discovery compatibility on the same final code; discovery does not export the detailed API call ledger. |
+| [run-03](evidence/control-author/run-03/results.json) | 34 methods; 130 calls; pass, zero skips | The pre-review suite adds direct raw-field assertions, sparse recipe hashes, bounded invalid-root cases and actual C267 refusal translation. |
+| [discovery-01](evidence/control-author/discovery-01/RESULTS.json) | 34 methods; pass, zero skips | Standard discovery compatibility on the run-03 code; discovery does not export the detailed API call ledger. |
+| [run-04](evidence/control-author/run-04/results.json) | 35 methods; 131 calls; pass, zero skips | Adds one focused control for the reviewer's mandatory R02 finding: reject an overlong selector before pin-table membership. All prior assertions remain. |
 
-The original failed run and intermediate passing run remain unchanged. No
+The independent reviewer found that the earlier reader hashed an unbounded
+endpoint string during pin-table membership. The implementer added an exact
+string length guard before that lookup, preserving the `ENDPOINT` refusal.
+The new control replaces the pin table with a membership spy that raises if
+touched, then supplies a long built-in string. The corrected reader refuses
+without consulting the spy or accessing files. The
+[additive author update](evidence/control-author/AUTHOR-UPDATE-01.md) identifies
+the exact revised code and run.
+
+The original failed run and intermediate passing runs remain unchanged. No
 implementation, predecessor, historical fixture or contract was edited by the
 control author.

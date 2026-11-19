@@ -45,3 +45,11 @@ The complete affected cohort is the C253 corpus and C255/C256/C257/C258/C261/C26
 Stop after confirmed final delivery, or first unplanned scope expansion with honest partial handoff; no next phase. Parent stays in_progress or review until every gate passes. A partial handoff is session delivery only.
 
 Reviewer continuity: `/root/state_audit` launched with fresh context for startup, then retained that context for follow-up early-package and candidate review. Implementation/control workers launched separately with fresh contexts. No worker is represented as reset between follow-ups.
+
+## Recovery phase — C268 P03, November 19
+
+The interrupted implementation is already published at `734789521f82248d39b623c33aae9d3284ab4bce`. Its exact 12-group/281-method cohort was recovered from the previous workspace. A mandatory endpoint-length guard correction and independent 35-method controls were staged but unpublished. Preserve and resume these exact bytes.
+
+Current owner: `c268-recovery-8bd47a4cbab7`. Starting main: `7ff41e071fb694dadf1ba256b13168e1a4083926`. Confirmed recovery and unpublished-work ZIP receipts are under `evidence/recovery-20261119/`. The previous main lease is honored until expiry; this phase has no integration authority without a new verified lease.
+
+Acceptance: verify the fixed immutable candidate, independently review R01–R05, publish the P03 evidence checkpoint, and save a verified partial handoff with an external receipt. Stop before P04 integration and P05 parent closure. Retain the existing branch, draft PR266 and open issue265. Any remaining finding stays explicit; do not start another phase.

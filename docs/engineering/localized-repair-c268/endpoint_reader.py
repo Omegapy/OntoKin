@@ -260,7 +260,7 @@ def read_bound_endpoint(repo, endpoint):
     """
     observed = {}
     try:
-        if type(endpoint) is not str or endpoint not in PINS:
+        if type(endpoint) is not str or len(endpoint) not in (5, 6) or endpoint not in PINS:
             raise Fault("ENDPOINT", "endpoint must be exactly before or after", "/endpoint", reason="ENDPOINT")
         _platform()
         captured, admission = {}, {}

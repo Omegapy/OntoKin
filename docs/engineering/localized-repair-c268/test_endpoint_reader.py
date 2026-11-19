@@ -493,6 +493,20 @@ class EndpointReaderControls(unittest.TestCase):
                      mock.patch.object(reader.os, "stat", side_effect=AssertionError("Invalid selector inspected a file")):
                     self.refuse(selector, label="invalid selector " + type(selector).__name__, code="ENDPOINT", reason="ENDPOINT")
 
+    def test_overlong_endpoint_refuses_before_pin_lookup(self):
+        class ForbiddenPinLookup:
+            def __contains__(self, key):
+                raise AssertionError("Overlong selector reached the pin lookup")
+        selector = "before" + "x" * 100000
+        self.events.append({"operation": "PINS membership spy", "selectorCharacters": len(selector),
+                            "recipe": "literal before followed by 100000 ASCII x characters",
+                            "sha256": fixtures.digest(selector.encode()), "lookupMustRemainUncalled": True})
+        with mock.patch.object(reader, "PINS", ForbiddenPinLookup()), \
+             mock.patch.object(reader.os, "open", side_effect=AssertionError("Overlong selector accessed a file")), \
+             mock.patch.object(reader.os, "stat", side_effect=AssertionError("Overlong selector inspected a file")):
+            self.refuse(selector, label="overlong built-in string rejected before pin membership",
+                        code="ENDPOINT", reason="ENDPOINT")
+
     def test_escape_invalid_root_types_and_resource_bounds_access_no_files(self):
         class HostilePath:
             def __fspath__(self):
