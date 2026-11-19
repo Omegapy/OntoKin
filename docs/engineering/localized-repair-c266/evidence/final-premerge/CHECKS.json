@@ -1,0 +1,22 @@
+{
+  "schema": "ontokin.c266.final-premerge-metadata/1",
+  "recorded_at": "2026-11-19T00:30:49.379603+00:00",
+  "base_commit": "74bba31a23f4acbda4484159576ae21c024664ce",
+  "tracked_metadata_edits": true,
+  "candidate_reuse_review": "docs/engineering/localized-repair-c266/evidence/final-recovery-audit/AUDIT.json",
+  "checks": [
+    {
+      "command": "python3 -B tools/chat_workflow.py check --json",
+      "exit_code": 0,
+      "passed": true,
+      "output": "workflow.json"
+    },
+    {
+      "command": "python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "exit_code": 0,
+      "passed": true,
+      "output": "documentation.json"
+    }
+  ],
+  "limits": "Metadata checks only; implementation and candidate scientific evidence are unchanged and independently audited; actual-main cohort remains required."
+}

@@ -1,0 +1,3 @@
+# C266 evidence-backed knowledge update
+
+The Director read the existing memory/knowledge records before adding a narrow C266 finding. `memory-c266-input-binding` supersedes the earlier incomplete-interface pointer while retaining that record as superseded. It documents why two matching artifact maps do not establish source truth and why complete keyed-entry spans matter. The C266 control suite and independent recovery review support those claims. The knowledge map adds the implemented input-association component as partial; full hinge comparison and historical admission remain unimplemented. No user data, transcript, automatic learning or broader scientific claim is stored.

@@ -1,0 +1,12 @@
+{
+  "status": "failed_auditor_assumption",
+  "error": "AttributeError: 'str' object has no attribute 'get'",
+  "cause": "Deliberate nonbyte source input controls contain descriptive strings instead of byte-identity objects",
+  "script": {
+    "path": "audit_candidate_attempt_01.py.txt",
+    "bytes": 12719,
+    "sha256": "bad7ccec00aae372723bdb6f084f50856d7f45ffa277a2eee2793752a3d6c47e"
+  },
+  "product_code_changed": false,
+  "correction": "Inspect byte identity only when the recorded value is a dictionary with a snapshot"
+}
