@@ -1,0 +1,139 @@
+{
+  "checked_at_utc": "2026-11-19T03:42:15.470105+00:00",
+  "base_revision": "ee509d5d7ce3a4c0fb61cdb9e2668575e3af370d",
+  "observed_main_lease_commit": "22311a34ba6358b6d0a2b9cca916dc007e71b090",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "checks": [
+    {
+      "name": "archive, anchor, link, unchanged metadata/state",
+      "command": "python3 /workspace/scratch/e2dfdb529a6f/verify_startup_compression.py /workspace/scratch/e2dfdb529a6f/OntoKin_startup_compression",
+      "result": "passed",
+      "assertions": 45,
+      "evidence": "PRESERVATION-CHECKS.json"
+    },
+    {
+      "name": "workflow structure",
+      "command": "python3 tools/chat_workflow.py check",
+      "result": "passed",
+      "evidence": "workflow-check.log"
+    },
+    {
+      "name": "documentation preservation and navigation",
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "passed",
+      "source_count": 29,
+      "sections_verified": 233,
+      "evidence": "documentation-check.log"
+    },
+    {
+      "name": "whitespace",
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "not_run": [
+    "Runtime, product, native destination, compatibility and hosted CI checks: no product or execution changes in this editorial scope."
+  ],
+  "review": {
+    "result": "passed",
+    "candidate_commit": "93c9a6eacbe8600b725e458ea64b9bf7acc8e298",
+    "reviewer": "/root/compression_review",
+    "obligation_groups": 48,
+    "read_only_scenarios": 8,
+    "findings_resolved": 4,
+    "evidence": "REVIEW.md"
+  },
+  "files": [
+    {
+      "path": "CHATGPT-START-HERE.md",
+      "sha256": "397179dc28be7b755c7d96923459cc0adde2feef0914a9843df6384227410089",
+      "bytes": 2810
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "e60cd7d221aafe1a5a35a44a28c7541fe16749b3db603f5def34aa0d6bd9f50f",
+      "bytes": 8271
+    },
+    {
+      "path": "GOAL.md",
+      "sha256": "9256b77ed78e4a27a2b76c9f9c45f970de93b9bf98e4a8d7f1d1241b4624562c",
+      "bytes": 12386
+    },
+    {
+      "path": "STATUS.md",
+      "sha256": "94a03383295199f6930bcd9321eb3b1effcf055b658af2c4f0942ee3981e00dd",
+      "bytes": 10376
+    },
+    {
+      "path": "ROLE.md",
+      "sha256": "917bf126943193de88d059771a7b6553a5dc41d02770859b544ffcf191ff9175",
+      "bytes": 1744
+    },
+    {
+      "path": "docs/workflow/registry.json",
+      "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536",
+      "bytes": 1172
+    },
+    {
+      "path": "docs/workflow/CURRENT.json",
+      "sha256": "d282341e1d67ab7b642531487061d22388ae6218155e985f2acfad72ab4eaad3",
+      "bytes": 2452
+    },
+    {
+      "path": "docs/workflow/PROTOCOL.md",
+      "sha256": "72ee4b363619ef62a38642420b9581389435597adbce728e8f5ee536ca803880",
+      "bytes": 12342
+    },
+    {
+      "path": "docs/workflow/HANDOFF.md",
+      "sha256": "84827c5a9ef2113c161e7356cfd9a82ad792dd0a10d7eb86ce1a4bdf5d8e089a",
+      "bytes": 6952
+    },
+    {
+      "path": ".agents/skills/ontokin-session/SKILL.md",
+      "sha256": "1c5ff15651da466999c0122aa3bd442b40e87a4d3a0cd67e619e9d23cdf01c1a",
+      "bytes": 1400
+    },
+    {
+      "path": ".agents/skills/ontokin-delivery/SKILL.md",
+      "sha256": "f90c4ddf62de8d3a07c4d077a72da9fe01d3e1e2a45867bfa6d86f2b54bca8ed",
+      "bytes": 1390
+    },
+    {
+      "path": ".agents/skills/ontokin-learning/SKILL.md",
+      "sha256": "c9c106168e3b3e7aecb322249c2de74b909a842d6d2d4c66d9b3cdf432498cad",
+      "bytes": 2524
+    },
+    {
+      "path": "docs/workflow/tasks/C267/task.json",
+      "sha256": "f9bf17718668ab70719e49fae98b1a58bd10e5b5522c406e43498eee5b031dcc",
+      "bytes": 10050
+    },
+    {
+      "path": "docs/workflow/tasks/C267/REQUIREMENTS.md",
+      "sha256": "38cf5b2d4109840db5da42d1fcf6303eb40cebfba954a6e71d49b1cd5fda6aef",
+      "bytes": 4896
+    },
+    {
+      "path": "docs/workflow/tasks/C267/PLAN.md",
+      "sha256": "4995263fb2d7f893a7298453937b615d76027711a1328b004ed0e62912e1c708",
+      "bytes": 4030
+    }
+  ],
+  "prior_candidate": "evidence/pre-review/",
+  "remote_checks_observed": {
+    "candidate": "93c9a6eacbe8600b725e458ea64b9bf7acc8e298",
+    "commit_status_contexts": 0,
+    "check_runs": [
+      {
+        "name": "GitGuardian Security Checks",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "note": "Observed only; no hosted execution was requested."
+  }
+}
