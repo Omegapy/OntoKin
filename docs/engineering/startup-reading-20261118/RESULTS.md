@@ -18,7 +18,7 @@ CURRENT, registry, C267 task/evidence and product code are unchanged. This scope
 
 ## Verification
 
-Static preservation checks: 45 passed. Workflow structure passed. Documentation preservation/navigation passed: 29 sources and 233 preserved sections; no failures. Whitespace check passed. Independent obligation review and eight read-only scenarios are recorded in REVIEW.md when completed. No claim of formal semantic equivalence or a guaranteed conversation-length reduction is made.
+Static preservation checks: 45 passed. Workflow structure passed. Documentation preservation/navigation passed: 29 sources and 233 preserved sections; no failures. Whitespace check passed. Independent review passed 48 obligation groups and eight read-only scenarios after four findings were resolved; exact candidate identities and limits are recorded in REVIEW.md. No claim of formal semantic equivalence or a guaranteed conversation-length reduction is made.
 
 ## Recovery and next use
 

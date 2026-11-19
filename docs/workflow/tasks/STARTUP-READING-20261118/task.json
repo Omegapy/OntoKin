@@ -3,7 +3,7 @@
   "id": "STARTUP-READING-20261118",
   "title": "Compress startup reading without losing meaning",
   "intent": "Reduce repeated startup prose and load historical detail only when relevant",
-  "status": "in_progress",
+  "status": "review",
   "owner": "startup-reading-root-e2dfdb529a6f",
   "branch": "work/startup-reading-20261118",
   "base_sha": "ee509d5d7ce3a4c0fb61cdb9e2668575e3af370d",
@@ -12,29 +12,44 @@
       "id": "R01",
       "description": "Preserve operative meaning",
       "acceptance": "Retain every operative rule, exception, permission boundary, state distinction, budget and evidence gate in the required read set; route detailed historical material to exact preserved text and authoritative contracts when relevant",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/startup-reading-20261118/MAP-PROJECT.md",
+        "docs/engineering/startup-reading-20261118/MAP-WORKFLOW.md",
+        "docs/engineering/startup-reading-20261118/REVIEW.md"
+      ]
     },
     {
       "id": "R02",
       "description": "Reduce startup text",
       "acceptance": "Measure words and UTF-8 bytes per file and for identical required/read-skill/task cohorts before and after; target about half the repeated prose while prioritizing meaning over a numeric quota",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/startup-reading-20261118/METRICS.json",
+        "docs/engineering/startup-reading-20261118/RESULTS.md"
+      ]
     },
     {
       "id": "R03",
       "description": "Protect concurrent state and history",
       "acceptance": "Preserve original bytes, source identities, incoming anchors and skill triggers; no product code, semantics, C267 task/evidence or CURRENT changes; STATUS coordination changes only under a valid owned lease",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/startup-reading-20261118/PRESERVATION.json",
+        "docs/engineering/startup-reading-20261118/PRESERVATION-CHECKS.json",
+        "docs/engineering/startup-reading-20261118/REVIEW.md"
+      ]
     },
     {
       "id": "R04",
       "description": "Verify content and structure",
       "acceptance": "Independent old/new obligation review and read-only recovery/ownership scenarios; execute workflow and documentation-preservation checks, archive equality, anchor/link and unchanged skill-frontmatter checks",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/startup-reading-20261118/CHECKS.json",
+        "docs/engineering/startup-reading-20261118/PRESERVATION-CHECKS.json",
+        "docs/engineering/startup-reading-20261118/REVIEW.md"
+      ]
     },
     {
       "id": "R05",
@@ -111,13 +126,45 @@
       ]
     }
   ],
-  "checks": [],
+  "checks": [
+    {
+      "name": "candidate-workflow",
+      "command": "python3 tools/chat_workflow.py check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/startup-reading-20261118/workflow-check.log"
+      ]
+    },
+    {
+      "name": "candidate-documentation",
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/startup-reading-20261118/documentation-check.log"
+      ]
+    },
+    {
+      "name": "preservation and independent content review",
+      "command": "Exact-byte, anchor/link and metadata checks; independent 48-group review and eight read-only scenarios",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/startup-reading-20261118/PRESERVATION-CHECKS.json",
+        "docs/engineering/startup-reading-20261118/REVIEW.md"
+      ]
+    }
+  ],
   "completion": {
-    "implementation_commit": null,
+    "implementation_commit": "93c9a6eacbe8600b725e458ea64b9bf7acc8e298",
     "merge_commit": null,
     "pull_request": "https://github.com/Omegapy/OntoKin/pull/263",
     "branch_disposition": "active",
-    "evidence": []
+    "evidence": [
+      "docs/engineering/startup-reading-20261118/REVIEW.md",
+      "docs/engineering/startup-reading-20261118/CHECKS.json"
+    ]
   },
   "delivery": {
     "required": true,
@@ -126,5 +173,5 @@
     "folder": "OntoKin",
     "receipt": null
   },
-  "next_action": "Complete independent obligation review; resolve findings, integrate the exact candidate, verify actual main, then save final handoff and receipt"
+  "next_action": "Conditionally merge the independently reviewed candidate, verify resulting main and branch disposition, then freeze/save handoff and publish receipt"
 }
