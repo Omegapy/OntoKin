@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "id": "CHAT-LENGTH-20261118",
+  "title": "Keep browser development sessions bounded and recoverable",
+  "intent": "Replace continuation and recovery prompts to reduce accumulated chat content and save before interruption",
+  "status": "in_progress",
+  "owner": "browser-length-root-e2dfdb529a6f",
+  "branch": "work/browser-chat-length-20261118",
+  "base_sha": "6122bd272c3f5b960ed5c1d6434ebf5f7f9b4020",
+  "requirements": [
+    {
+      "id": "R01",
+      "description": "Short replacement prompts",
+      "acceptance": "Replace both prompts; retain normal continuation versus interruption recovery and preserve live authority and all acceptance gates",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R02",
+      "description": "Bound session and delegation",
+      "acceptance": "Define one planned phase per fresh chat, actual bounded workers with minimal supplied context, compact reports and saved evidence; do not promise unlimited context or automatic new chats",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R03",
+      "description": "Durable recovery and honest completion",
+      "acceptance": "Require an early confirmed recovery ZIP and phase checkpoints; planned partial handoff does not mark the parent task done; preserve exact unknown-write reconciliation and external receipts",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R04",
+      "description": "Verification and publication",
+      "acceptance": "Independent review, workflow validation and documentation preservation pass; publish an isolated branch and PR without altering another active integration lease",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R05",
+      "description": "Reusable delivery",
+      "acceptance": "Save verified replacement prompts, explanation and recovery ZIP in the existing OntoKin folder and record actual identities; stop without product work",
+      "status": "not_done",
+      "evidence": []
+    }
+  ],
+  "plan": [
+    {
+      "id": "P01",
+      "title": "Reconcile and preserve initial scope",
+      "requirements": [
+        "R01",
+        "R04"
+      ],
+      "status": "in_progress",
+      "artifacts": [
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/SESSION.md"
+      ],
+      "verification": [
+        "Observe current main and active C267 scope; save initial recovery"
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "Rewrite and synchronize workflow rules",
+      "requirements": [
+        "R01",
+        "R02",
+        "R03"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/workflow/prompts/CONTINUE.md",
+        "docs/workflow/prompts/RECOVER.md",
+        "docs/workflow/PROTOCOL.md"
+      ],
+      "verification": [
+        "Independent content review and exact changed-file inspection"
+      ]
+    },
+    {
+      "id": "P03",
+      "title": "Verify and publish isolated work",
+      "requirements": [
+        "R04"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/RESULTS.md"
+      ],
+      "verification": [
+        "Run workflow and documentation preservation checks; inspect remote branch and PR"
+      ]
+    },
+    {
+      "id": "P04",
+      "title": "Save reusable prompts and recovery handoff",
+      "requirements": [
+        "R05"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/workflow/tasks/CHAT-LENGTH-20261118/DELIVERY.json"
+      ],
+      "verification": [
+        "Verify archive manifest/extraction and confirmed saved identities"
+      ]
+    }
+  ],
+  "checks": [],
+  "completion": {
+    "implementation_commit": null,
+    "merge_commit": null,
+    "pull_request": null,
+    "branch_disposition": "active",
+    "evidence": []
+  },
+  "next_action": "Replace both prompts and synchronize session boundaries, then review, verify and save reusable files",
+  "delivery": {
+    "required": true,
+    "kind": "browser-session",
+    "status": "pending",
+    "folder": "OntoKin",
+    "receipt": null
+  }
+}
