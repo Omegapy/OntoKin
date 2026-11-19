@@ -1,0 +1,1381 @@
+{
+  "schema_version": 1,
+  "reviewer": "/root/startup_audit",
+  "review_kind": "independent_substantive_editorial_review",
+  "baseline_revision": "7ff41e071fb694dadf1ba256b13168e1a4083926",
+  "candidate_identity": "working-tree file SHA-256 identities below; no commit identity claimed",
+  "reviewed_at_utc": "2026-11-19T15:59:15.567801+00:00",
+  "verdict": "Accept final eleven-document editorial content and narrowly authorized navigation-only readout change after resolved F01-F03; no unresolved material finding. Overall publication/integration/verification/delivery gates belong to Director.",
+  "scope": "Final eleven rewritten Markdown files: seven core, three repository skills, BROWSER-PROMPTS. No active glossary reader. All required-source obligations reviewed jointly; source metadata/navigation identifiers preserved.",
+  "counts": {
+    "documents": 11,
+    "baseline_obligation_groups": 156,
+    "original_archive_files": 11,
+    "protected_readmes": 284,
+    "status_anchors": 50,
+    "skills_with_exact_frontmatter": 3,
+    "baseline_bytes": 62888,
+    "candidate_bytes": 58175,
+    "baseline_words": 6920,
+    "candidate_words": 5690,
+    "routine_readout_bytes_for_edited_cohort": 54592,
+    "navigation_only_omitted_bytes": 3583
+  },
+  "findings": [
+    {
+      "id": "F01",
+      "severity": "required wording correction",
+      "path": ".agents/skills/ontokin-learning/SKILL.md",
+      "original": "Discussion alone grants no publication authority",
+      "first_candidate": "Discussion grants no publication authority",
+      "first_candidate_sha256": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de",
+      "reason": "Dropping alone broadens the prohibition and obscures the distinction between discussion by itself and explicit scoped authorization.",
+      "resolution": "Director restored alone; reviewer reread the full ownership paragraph and confirmed opt-outs, existing milestone authority and canonical-writer boundary remain.",
+      "status": "resolved",
+      "resolved_candidate_sha256": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de"
+    },
+    {
+      "id": "F02",
+      "severity": "explicit-state preservation correction",
+      "detected_by": "Director preservation checker; confirmed by independent reviewer",
+      "path": "docs/workflow/BROWSER-PROMPTS.md",
+      "reason": "First candidate routed parent states through mandatory HANDOFF but omitted original inline literals in_progress and review from the guide; initial preservation check recorded failure.",
+      "resolution": "Director added: A partial handoff leaves the parent in_progress or review. Reviewer reread full guide and confirmed both direct state names plus mandatory session/parent gates.",
+      "status": "resolved",
+      "resolved_candidate_sha256": "62e0eb4de4d1b90d390d8bb119c65b987d881b161a0b53b6646b46369ee3852b",
+      "initial_check": "docs/engineering/startup-compact-20261119/PRESERVATION-CHECKS-initial.json",
+      "updated_check": "docs/engineering/startup-compact-20261119/PRESERVATION-CHECKS.json"
+    },
+    {
+      "id": "F03",
+      "severity": "required evidence-field preservation correction",
+      "path": "AGENTS.md; docs/workflow/PROTOCOL.md",
+      "reason": "During final AGENTS consolidation, its previous explicit verification-settings field was omitted from the routed evidence list, and the then-current PROTOCOL5 did not name settings either. Commands/environment alone did not preserve the separate field.",
+      "resolution": "PROTOCOL5 now explicitly requires durable actual source revision/input hashes, environment(interpreter/platform), command, verification settings, artifacts, outcome, logs, relevant remote CI and limits. Reviewer reread full final AGENTS/PROTOCOL/HANDOFF jointly.",
+      "status": "resolved",
+      "resolved_candidate_sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad"
+    }
+  ],
+  "documents": {
+    "CHATGPT-START-HERE.md": {
+      "baseline_sha256": "397179dc28be7b755c7d96923459cc0adde2feef0914a9843df6384227410089",
+      "candidate_sha256": "99a69a4cfa633fb515ca08725b43b6193051249c279a4b31a9412d56e6593ce0",
+      "baseline_bytes": 2810,
+      "candidate_bytes": 2665,
+      "baseline_words": 327,
+      "candidate_words": 295,
+      "archive_path": "docs/engineering/startup-compact-20261119/before/CHATGPT-START-HERE.md.txt",
+      "archive_matches_source_bytes": true,
+      "archive_size_hash_matches_manifest": true,
+      "headings_same": true,
+      "explicit_anchors_same": true,
+      "frontmatter_same": true,
+      "missing_command_literals": [],
+      "missing_link_targets": [],
+      "coverage": [
+        {
+          "id": "D01-01",
+          "requirement": "GitHub holds current instructions/work/evidence; HANDOFF defines saved browser-session ZIP and live reconciliation; use complete continuation/recovery prompts including delivery-only recovery.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D01-02",
+          "requirement": "Director observes actual main via GitHub and retains full commit SHA; read START, AGENTS, GOAL, STATUS, ROLE, registry, CURRENT, PROTOCOL and HANDOFF in full at that same revision.",
+          "candidate_coverage": "preserved_with_explicit_authorized_navigation_readout_exception",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading.",
+          "candidate_location": "Required startup step1; exact navigation-only boundary recorded below"
+        },
+        {
+          "id": "D01-03",
+          "requirement": "Retain verified read-set; read each once; reopen only changed, missing or newly relevant text. Snippets, assumed snapshots and duplicate archived/remote copies cannot substitute.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D01-04",
+          "requirement": "Follow CURRENT to active task or latest if none active; read task.json, requirements, plan, full selected registry SKILL.md, applicable nested AGENTS and scope-required specs; record missing/truncated text.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D01-05",
+          "requirement": "Reconcile live branches, PRs, scope issues, integration ownership, relevant checks and surviving local work against checkpoint.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D01-06",
+          "requirement": "Record actual read/write, branches/PRs, conditional update, merge/deletion, terminal/test, subagent, ZIP creation/verification and Library-save capabilities; missing required capability is concrete blocker; procedures confer neither tools nor permissions.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D01-07",
+          "requirement": "Declare authorized scope, ONE phase, starting revision, acceptance checkpoint, stopping point and material limits; confirm early recovery ZIP BEFORE substantial/long work.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D01-08",
+          "requirement": "Explicit repository loading, Codex discovery and installed ChatGPT skills are separate host features; connector/manual procedure is permitted.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D01-09",
+          "requirement": "PROTOCOL section 4 governs workers/phase limits; HANDOFF governs saved delivery; optional brief/check/lookup helpers navigate/check structure only, never contact GitHub/prove remote actions.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D01-10",
+          "requirement": "Retain human guide and C263 migration links.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        }
+      ],
+      "review_state": "accepted_editorial_content; separately recorded readout/ownership changes as specified"
+    },
+    "AGENTS.md": {
+      "baseline_sha256": "e60cd7d221aafe1a5a35a44a28c7541fe16749b3db603f5def34aa0d6bd9f50f",
+      "candidate_sha256": "ce0fef82308e1c329dcf0514c99e81e89c340bbb550cf0cdcdb589599ae42822",
+      "baseline_bytes": 8271,
+      "candidate_bytes": 7068,
+      "baseline_words": 988,
+      "candidate_words": 745,
+      "archive_path": "docs/engineering/startup-compact-20261119/before/AGENTS.md.txt",
+      "archive_matches_source_bytes": true,
+      "archive_size_hash_matches_manifest": true,
+      "headings_same": true,
+      "explicit_anchors_same": true,
+      "frontmatter_same": true,
+      "missing_command_literals": [],
+      "missing_link_targets": [],
+      "coverage": [
+        {
+          "id": "D02-01",
+          "requirement": "Owner authorizes autonomous technical development/repository stewardship toward GOAL through implementation/verification/reviewable publication in selected scope; no legal ownership, wider platform or outside-project authority.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-02",
+          "requirement": "Recenter at session start, after compaction, before selecting/closing milestones: full START path and selected skills; reconcile current user direction, actual state, adopted contracts; identify goal and first unmet gate.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-03",
+          "requirement": "Inspect working tree, ACTUAL GitHub head, lease, relevant CI; preserve work; synthetic snapshot is not remote head. Read applicable specs via docs/README, especially adopted language/active contract; historical proposals are not guarantees.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-04",
+          "requirement": "Continue authorized useful work, record real blockers/exact next actions; never replace unmet goal with easier demonstration.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-05",
+          "requirement": "ROLE/PROTOCOL govern task/plan/workers/evidence/memory/phases; records do not invoke named TRD/plan skills or native Tasks; knowledge is evidence-backed context, not authority.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading.",
+          "mandatory_source_note": "AGENTS retains unique requirements and routes repeated operative detail to required PROTOCOL sections1/4/5/7/8; source requirements remain mandatory, not optional archives."
+        },
+        {
+          "id": "D02-06",
+          "requirement": "GitHub checkpoint and verified ZIP separate gates; early recovery, selected phase, verified handoff, STOP; no compaction/warning assumption; read-only questions do not automatically create scope/ZIP duty.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-07",
+          "requirement": "Full PROTOCOL §7 coordination rules; nonoverlap branches may implement/test/publish during another lease; only verified holder writes main/protected shared state with observed-head conditional/nonforce or protected merge plus readback/checks.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading.",
+          "mandatory_source_note": "AGENTS retains unique requirements and routes repeated operative detail to required PROTOCOL sections1/4/5/7/8; source requirements remain mandatory, not optional archives."
+        },
+        {
+          "id": "D02-08",
+          "requirement": "Normally roughly 30-minute leases; expiry does not prove stopped writer; preserve others; routine authorization needs no repeated permission; unavailable conditional write blocks only that operation.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-09",
+          "requirement": "OK-ENG-009 integration distinct from finite release; explicit experimental source/Agent/destination bindings can remain incomplete, with legacy defaults/behavior/diagnostics/budgets/release gates preserved; new/worse legacy failures block integration.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-10",
+          "requirement": "One branch per active bounded scope, normally at most THREE; checkpoint=commit; exact provenance/durable history/PR dispositions/head checks before deletion; never merge/use index-only archive commit for development.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-11",
+          "requirement": "Keep STATUS concise, detailed evidence immutable; report exact completed branch when authorized deletion unavailable.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading.",
+          "mandatory_source_note": "AGENTS retains unique requirements and routes repeated operative detail to required PROTOCOL sections1/4/5/7/8; source requirements remain mandatory, not optional archives."
+        },
+        {
+          "id": "D02-12",
+          "requirement": ".ok authoritative and GOAL invariants/budgets/completion intact; semantic change needs explicit versioned decision plus synchronized grammar/examples/diagnostics/conformance; never change expectations just to pass.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-13",
+          "requirement": "Preserve product/semantic/foundation/diagram/maintenance history, archival hashes and failed evidence; new decisions/results separately. Distinguish represented/constructed/evaluated/exported/destination-validated; disclose unsupported/loss/failure/stale.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading.",
+          "mandatory_source_note": "AGENTS retains unique requirements and routes repeated operative detail to required PROTOCOL sections1/4/5/7/8; source requirements remain mandatory, not optional archives."
+        },
+        {
+          "id": "D02-14",
+          "requirement": "STATUS preserves GOAL current/deferred/superseded domains; C210/C252 priority changes do not change semantics/history; C252 does not complete C221; finite success is not entire product/untested destination.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-15",
+          "requirement": "Deliberate runtime dependency/architecture/limit decisions; changing standard-library reference needs concrete reason/dependency-provenance review/evidence; never commit installed dependency dirs.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading.",
+          "mandatory_source_note": "AGENTS retains unique requirements and routes repeated operative detail to required PROTOCOL sections1/4/5/7/8; source requirements remain mandatory, not optional archives."
+        },
+        {
+          "id": "D02-16",
+          "requirement": "No-payment/OK-ENG-006: fresh relevant checks in assistant hosted workspace; never wait for hosted CI, retry blocked jobs, or enable paid execution to proceed. Inspect older branches' workflow diffs; manual-only, default-false opt-in; NEVER push/PR/scheduled. Actions disablement only if observed.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-17",
+          "requirement": "Docs-only EXCEPTION explicit: focused documentation + applicable workflow validation. Routine non-doc changes check_local.py; --full visual after pinned tools. Runtime normally unittest discover + conformance. Preserve every exact command and output path.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-18",
+          "requirement": "Agent/0.5 pinned packages, --force-agent exact dependencies/zero-skip/fresh source/independent audit, optionally --full, neither release closure. Exporter/viewer fresh source-to-GLB, independent Khronos/Three.js and visual OK-ENG-002. Agent interface ACTUAL failure/retry cases, not schemas.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-19",
+          "requirement": "Durable actual revision/input hashes/environment/commands/settings/artifacts/logs/results/remote CI/limits; retain Git source identity in isolated workspaces including external evidence paths.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading.",
+          "mandatory_source_note": "AGENTS retains unique requirements and routes repeated operative detail to required PROTOCOL sections1/4/5/7/8; source requirements remain mandatory, not optional archives.",
+          "finding_resolution": "F03: verification settings, artifacts and relevant remote CI explicitly present in mandatory PROTOCOL5 durable evidence list."
+        },
+        {
+          "id": "D02-20",
+          "requirement": "Core run only executed Python/roles; unperformed compatibility/attestations/visual remain pending. Local driver neither release certificate nor historical CI replacement. Offline inert recordings are not native apps; structure neither merge nor scientific validity.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-21",
+          "requirement": "Real subagent tools/verified supported inheritance; no external different-model runner required, invented workers/settings or claims of untested destinations/universal numerical accuracy/unrun benchmarks/jobs/product coverage from small corpus.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-22",
+          "requirement": "Authorized integrator publishes actual result/next gate in STATUS. Brief factual checkpoints; action between; bounded calls/small verified commits rather than silent unrelated batch/filler.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D02-23",
+          "requirement": "Unknown writes preserve intended parent/tree/commit; inspect actual refs/files/lease before retry; timeout neither termination nor failure; reconcile concurrent/completed work; never blindly replay/force old tree; PROTOCOL §8 release/renew, no guaranteed response stream.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        }
+      ],
+      "review_state": "accepted_editorial_content; separately recorded readout/ownership changes as specified"
+    },
+    "GOAL.md": {
+      "baseline_sha256": "9256b77ed78e4a27a2b76c9f9c45f970de93b9bf98e4a8d7f1d1241b4624562c",
+      "candidate_sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc",
+      "baseline_bytes": 12386,
+      "candidate_bytes": 11740,
+      "baseline_words": 1212,
+      "candidate_words": 985,
+      "archive_path": "docs/engineering/startup-compact-20261119/before/GOAL.md.txt",
+      "archive_matches_source_bytes": true,
+      "archive_size_hash_matches_manifest": true,
+      "headings_same": true,
+      "explicit_anchors_same": true,
+      "frontmatter_same": true,
+      "missing_command_literals": [],
+      "missing_link_targets": [],
+      "coverage": [
+        {
+          "id": "D03-01",
+          "requirement": "Semantic authoring adopted November 11, 2026; November 16 C252 keeps C210 boundary but advances comparison before receivers. STATUS owns results/next gates, AGENTS coordination/preservation.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-02",
+          "requirement": "Mission: AI-native semantic language/intermediate representation to construct/inspect/validate/repair/transport physically meaningful 3D; preserve named parts/relations/dimensions-units/physical declarations/constraints/source identity; reuse normalized records.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-03",
+          "requirement": "Accepted .ok authoritative; preserve language/classes/libraries/identities/pins/provenance/bounds/revision-safe edits/geometry/materials/validated exports. Agents inspect parts/edit supported params/reject invalid without accepted loss/regenerate checked artifacts; ordinary playback no per-frame model call.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-04",
+          "requirement": "Engines/specialists render/general simulate/gameplay, OntoKin object meaning/checked mappings, destinations runtime; engine-neutral GLB/Blender; Unreal Scene Graph/Verse intended targets with conceptual-vs-implemented boundary.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-05",
+          "requirement": "Five capabilities preserve exact semantics: stable reusable assemblies/distinct occurrence provenance; quantities-placement/source-and-delivered constraints; ownership/placement/following/connection/motion authority distinct/count matter once; atomic localized repair/unrelated parts preserved; checked source/dependency/artifact references/loss/destination evidence.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-06",
+          "requirement": "Finite reference physics useful. All explicitly listed domains deferred UNLESS demonstrated authoring/interoperability need selects them; keep exact domain inventory. Existing geometry/material/texture/recording named profiles and unresolved obligations remain.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-07",
+          "requirement": "Pre-C210 goal/PRD/capability links retain old ambitions; unimplemented domains deferred, not complete; all-historical-world-engine implementation superseded as present completion criterion.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-08",
+          "requirement": "STATUS/CURRENT own current scope/component states/next action; stop after verified saved handoff. C253 THREE cases ONE public keyed-rack family qualifies evaluator only, not unseen/general advantage; C260 unchanged; historical admission separate queued interface.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-09",
+          "requirement": "All broader unmet gates retain exact inventory: complete semantics/site-world/authentic revisions/invalid-edit atomicity/clean rebuild/native routes/comparative trials.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-10",
+          "requirement": "C252 four-step order: frozen protocol/fixtures + minimal runner qualification then SEPARATELY approved pilot; evidence selects ONE bounded receiving/OpenUSD objective, OpenUSD-native baseline assessment not exporter; external-asset control only if earlier evidence justifies; narrow supported claim or scope reduction.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-11",
+          "requirement": "Supersedes C210 second-target-first only, not receiver evidence for cross-target claims; C221 R08 pending, localized prep precedes more R07; R00-R02 completed scopes/R03-R07 unmet; ALL NINE recommendations/41 criteria; C210/C219 finite evidence; failures/C233 specific history retained; old next task cannot override C252.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-12",
+          "requirement": "Comparative advantage UNPROVEN; same agent matched local edits/unrelated meaning/invalid recovery/provenance; one repair/valid GLB/test count insufficient.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-13",
+          "requirement": "C180/C252 compare Blender/Python and assess OpenUSD-native same supported task; pin model/settings/info/tools/outputs/budgets; unseen variants/repeats/failures denominator; distinguish related edits; reusable setup/maintenance vs task cost; disclose exporter/backend before attributing gains.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-14",
+          "requirement": "Predeclare success/unintended-change/invalid handling/identity-provenance/transport loss/ONE efficiency metric; suggested 20 PERCENTAGE-POINT success gain OR 30% effort reduction at non-inferior success are PROVISIONAL investment thresholds, not adopted standard/release/result; select endpoint/margin/sample-repetitions/uncertainty BEFORE trials.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-15",
+          "requirement": "Investment needs demonstrated benefit OR explicitly selected bounded experiment dependency; mature no-benefit comparison requires documented scope reduction including schema+provenance/validation option; inconclusive pilot neither general success/failure; invest supported families/semantics; physical independent references/destination actual observations.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-16",
+          "requirement": "Invariants exact: stable identities/revisions/units/frames; separate ownership/following/connections; ONE motion authority; represented mass/honest release/state transfer; expose defaults/approximation/unsupported/loss. Failed edit preserves accepted source/artifacts; failed eval cannot validate later state; adopted rules until explicit versioned change.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-17",
+          "requirement": "Ordinary source execution 100,000 operations AND 30,000 ms; explicit larger requests current host authority; animation duration separate; original fixture/cancellation/atomicity/other ceilings unchanged.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-18",
+          "requirement": "OK-ENG-009 reviewed experimental increments not whole feature release; finite named profiles predetermined positive/boundary/negative/composition/edit fixtures/source-artifact/protocol failure-retry/applicable numerical-visual-compatibility roles per ENG006; new/worsened failures block; old failed/unrun visible.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-19",
+          "requirement": "Product acceptance needs adopted semantic-authoring/checked-transport evidence AND investment decision; demo/metadata/untested destination/solver insufficient; exact release scopes and incomplete profiles retained.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-20",
+          "requirement": "Before changing OR claiming an affected profile, MUST read FULL affected section in preserved original GOAL and linked contracts/evidence; preserve exact historical detail route.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-21",
+          "requirement": "Agent 0.3.0, ontokin.agent/0.1, A01-A10 finite revision-safe discovery/edit/inspect/eval/cancel/source-export-repair; linked protocol/identity/budget/failure-retry/unchanged-sibling evidence.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-22",
+          "requirement": "Construction experimental 0.4.0 LANG002/AGENT002 C01-C20 pinned definitions/bounded identifiable parts; earlier 0.1/core-0.1 intact; finite construction not whole product.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-23",
+          "requirement": "Surface LANG003 v0.2, 0.3/surface-0.1, M01-M12 bounded loft/keyed sections/PBR/rigid placement/native Agent; geometry adds no matter/motion authority; retain every unproved domain.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-24",
+          "requirement": "Impulse LANG004 source/Agent/GLB 0.4, I01-I12 instantaneous world-momentum free homogeneous spheres/ordered release/atomic rollback; ONLY instantaneous PHY-008 closed; continuous force/torque/contact/general dynamics/product remain open.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-25",
+          "requirement": "Force LANG005 explicit Agent/GLB 0.5, F01-F12 finite additive world force sphere COM/exact clocks-order-anchors/rollback/valid prefixes; torque/contact/general/deformables/live/benefit/domains open.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-26",
+          "requirement": "Reach LANG006/0.1.0 adopted but incomplete/deferred until need; source0.6/planar-reach-0.1 Agent/GLB0.6, UNCHANGED41-case corpus, all supplements/source/protocol/numerical/destination/browser/compatibility/inherited obligations; integration18 contract adoption/checks not runtime/benefit/product; frozen draft vs separate adoption.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D03-27",
+          "requirement": "Future exterior-model/mechanism/controller must select representative investment-priority task and predeclare limits/failures/evidence BEFORE implementation/backend selection.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        }
+      ],
+      "review_state": "accepted_editorial_content; separately recorded readout/ownership changes as specified"
+    },
+    "STATUS.md": {
+      "baseline_sha256": "63510e9d093bc2f208a5dba28d5a39c3de9bb82bb36dc84a5196538c5bb2dbfc",
+      "candidate_sha256": "ef3b632faff5c86d91ea05190fecda58e52034cb0419451a7e4ee83b405e7ef0",
+      "baseline_bytes": 10687,
+      "candidate_bytes": 10403,
+      "baseline_words": 789,
+      "candidate_words": 711,
+      "archive_path": "docs/engineering/startup-compact-20261119/before/STATUS.md.txt",
+      "archive_matches_source_bytes": true,
+      "archive_size_hash_matches_manifest": true,
+      "headings_same": true,
+      "explicit_anchors_same": true,
+      "frontmatter_same": true,
+      "missing_command_literals": [],
+      "missing_link_targets": [],
+      "coverage": [
+        {
+          "id": "D04-01",
+          "requirement": "Dynamic status must preserve baseline exact facts unless separately authorized/reconciled update; GOAL/C252/C210/AGENTS govern domain/preservation.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-02",
+          "requirement": "C268 ACTIVE exact historical admission under UNCHANGED C260; req/plan/issue265; early recovery confirmed; identified published candidate 12 groups/281 methods/14 bindings; final independent review/integration/main/saved delivery REMAIN.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-03",
+          "requirement": "C267 finite declaration-comparison complete; PR261 merge7174e6796b38bac3fa83e6412e0944512d137434; deleted branch/retained ancestry verified; integration11 groups247 methods14 bindings CPython3.12.14/Linux; exact evidence audit/fresh doc-workflow/saved handoff and all links.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-04",
+          "requirement": "C266 PR259 merge395c68be3f4c497fad2a1a41f0fc7c3a68fbc821 complete,10 main groups222 methods14 bindings, branch deleted/saved delivery unchanged; C265/C264/C263 recorded scopes complete.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-05",
+          "requirement": "November19 continuation selected C268 and stops one-phase saved handoff; retain START/CURRENT/HANDOFF direction; do not reinterpret as authorization for compression task to own C268.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-06",
+          "requirement": "Reference package0.4.0; named release evidence, experimental integration != release.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-07",
+          "requirement": "C255 inert/C256 geometry-pose/C257 ownership/C258 explicit-follow bounded complete saved handoffs; C260 contract delivered; C261 raw GLB hinge fields/JSON pointers source/program UNTRUSTED, PR250/f2c175e22ce5f17f063b6de6d7ea9da7788b9040; C261 source+C262 delivery complete.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-08",
+          "requirement": "C265 INDEPENDENTLY derives finite declarations/ORDERED site associations from supplied source, witnesses/literals certify neither site pose nor full source validity; C266 retained provenance ONLY; C267 finite field/set/ordered-endpoint agreement AFTER that binding.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-09",
+          "requirement": "Keep exact unqualified gates: historical admission/fullC260H/site-world/authentic revisions/invalid-edit atomicity/clean rebuild/native routes/comparative; no general advantage. C251 native/C201 admission/C209 job0.2 deferred; C199/C200 schedules CLOSED; old profiles supported; GOAL deferred/superseded domains.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-10",
+          "requirement": "Historical full regression FAILED:4,239 distinct passes,13 torque-read NOT RUN, unchanged30,000ms setup timeout. C233 recorded-input default aggregate does NOT repair history; new/worse blocks.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-11",
+          "requirement": "C244/C251 integrated WITHOUT GDScript parsing/native run; C251 current authority FAILED TWO stale AGENTS/GOAL bindings; historical pass not current qualification; strict-normal failure/shading loss visible; save/reopen != lossless normals.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-12",
+          "requirement": "GodotR07/Unreal/external compatibility/broad destination incomplete; numerical check cannot certify occluded/unresolvable views.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-13",
+          "requirement": "C263 workflow/records/preservation checks not native experiments/product release; ENG006 fresh assistant workspace/manual-only default-false/no paid; GOAL invariants100,000ops/30,000ms.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-14",
+          "requirement": "Historical branch inventories/deletions remain HISTORICAL: C264 main/no PR before and after PR255 auto-delete work/c264-required-browser-handoffs; C263/C234/C261 absent,scope240closed,no historical deletion request; RECHECK live before cleanup; C174 absent archive branch != complete graph.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-15",
+          "requirement": "C262 migration archive/delivery/source IDs retained; GitHub operational state plus C264 ZIP duty; historical offline original contract/no fresh C263 restoration claim.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D04-16",
+          "requirement": "Preserve exact Main integration lease bytes while owned by C268. Any future ownership replacement requires separate verified authority/readback; do not call a changed lease byte-identical.",
+          "candidate_coverage": "separate_authorized_lease_transition",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading.",
+          "candidate_location": "Main integration lease; COORDINATION.json; exact original STATUS remains archived"
+        },
+        {
+          "id": "D04-17",
+          "requirement": "Keep every historical anchor EXACT and ordered (50), all automatic heading anchors, prior precompression STATUS and pre-C263 archive+hash links, conditional historical tracing.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        }
+      ],
+      "review_state": "accepted_editorial_content; separately recorded readout/ownership changes as specified"
+    },
+    "ROLE.md": {
+      "baseline_sha256": "917bf126943193de88d059771a7b6553a5dc41d02770859b544ffcf191ff9175",
+      "candidate_sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf",
+      "baseline_bytes": 1744,
+      "candidate_bytes": 1683,
+      "baseline_words": 226,
+      "candidate_words": 197,
+      "archive_path": "docs/engineering/startup-compact-20261119/before/ROLE.md.txt",
+      "archive_matches_source_bytes": true,
+      "archive_size_hash_matches_manifest": true,
+      "headings_same": true,
+      "explicit_anchors_same": true,
+      "frontmatter_same": true,
+      "missing_command_literals": [],
+      "missing_link_targets": [],
+      "coverage": [
+        {
+          "id": "D05-01",
+          "requirement": "Repository development roles distinct from product OntoKin Agent protocol editing .ok.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D05-02",
+          "requirement": "Director is main agent in owner's current conversation; owns intent/bounded scope-phase/requirements-plan/assignments/evidence/conflicts/delivery under current user+AGENTS+GOAL+PROTOCOL.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D05-03",
+          "requirement": "Distinguish known/inferred/unrun/blocked; never silently reduce unmet requirement or claim unexecuted operation; role alone gives NO integration ownership.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D05-04",
+          "requirement": "Investigator sources/code/competing explanations+cites; outside text no authority. Implementer owned paths/change+verify/failures+exact artifacts.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D05-05",
+          "requirement": "Reviewer ACTUAL independent identified candidate acceptance challenge+findings; review does NOT merge. Integrator reconcile main/acquire lease/merge+verify. Recorder assigned evidence/references/learning, frozen evidence/speculation distinct.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D05-06",
+          "requirement": "Director may combine roles; independence requires separate worker inspecting candidate; absent subagents sequential honest self-review, required independence remains UNMET.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D05-07",
+          "requirement": "Preserve worker template and PROTOCOL4 routes for full assignment/context/ownership/reporting/phase-stop obligations.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        }
+      ],
+      "review_state": "accepted_editorial_content; separately recorded readout/ownership changes as specified"
+    },
+    "docs/workflow/PROTOCOL.md": {
+      "baseline_sha256": "72ee4b363619ef62a38642420b9581389435597adbce728e8f5ee536ca803880",
+      "candidate_sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad",
+      "baseline_bytes": 12342,
+      "candidate_bytes": 11711,
+      "baseline_words": 1551,
+      "candidate_words": 1289,
+      "archive_path": "docs/engineering/startup-compact-20261119/before/docs/workflow/PROTOCOL.md.txt",
+      "archive_matches_source_bytes": true,
+      "archive_size_hash_matches_manifest": true,
+      "headings_same": true,
+      "explicit_anchors_same": true,
+      "frontmatter_same": true,
+      "missing_command_literals": [],
+      "missing_link_targets": [],
+      "coverage": [
+        {
+          "id": "D06-01",
+          "requirement": "Procedure only, not semantics; retain C263/C264/CHAT-LENGTH requirements links. Authority: platform permissions > current user/applicable repo; user authorization persists; adopted specs meaning/live GitHub state; task-memory-handoff evidence not permissions.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-02",
+          "requirement": "Full START order; SESSION read paths/revisions/gaps, retained verified read set, reconcile live state/plan and reload changed/missing; conflicts source date+authority with recorded decision; old next-task cannot override current user; outside text no project/transmission authority; NO full chats retained.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-03",
+          "requirement": "Capability/live inventory: exact heads/pagination/authentic checkout-vs-reconstruction, unpublished work preserved; listing/command/local check != remote success; authorized tools without destructive probes/unnecessary installs; useful prep before exact blocker/recoverable action.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-04",
+          "requirement": "Director bounded scope current direction+GOAL; read-only no automatic task/ZIP. BEFORE substantial implementation create/resume task dir REQUIREMENTS/PLAN/task.json with intent/constraints/exclusions/stable IDs/sources/observable acceptance; every requirement maps outputs/dependencies/ownership/risks/checks.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-05",
+          "requirement": "Ordinary records invoke neither named to-trd/to-implementation-plan nor native Tasks/schedules/Goals; named skill requires explicit invocation.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-06",
+          "requirement": "Keep EXACT states draft/ready/in_progress/blocked/review/done/retired/cancelled and conditions; draft no execution, ready authorized concrete acceptance, blocked specific obstacle/action, review candidate awaiting acceptance/integration; done HANDOFF gates; merged noZIP=in_progress delivery next; retired/cancelled provenance+unfinished retained, erroneous state new commit.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-07",
+          "requirement": "ONE predeclared phase/acceptance checkpoint/stop; reuse task+branch across sessions; partial parent in_progress/review, planned pause != blocker; CURRENT active/latest, STATUS lease, no competing ledgers; user steering updates requirements/plan BEFORE implementation.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-08",
+          "requirement": "One branch/scope commits checkpoints; ROLE/template; normally TWO/THREE actual useful workers within capacity; prefer fork_turns=none when supported, supply current constraints/full applicable instructions/exact inputs/owned paths/dependencies/checks/stop.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-09",
+          "requirement": "Director global startup; child repeats startup/delivery ONLY assigned; actual inherited model no invented tools/reviewers/settings; NO nested fanout or assumed parent reset.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-10",
+          "requirement": "Separate scopes worktrees/branches; disjoint shared-checkout paths one Director commits/publishes; never race index/status/lease/others' files; actual worker IDs/dispositions; detailed evidence files, about<=250-word report verdict/artifacts-identities/checks/blockers/next; Director inspects; stop/handoff actual jobs at phase end.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-11",
+          "requirement": "Bound returned fields/excerpts; full logs/patches/inventories/API responses files; surface failures/unknowns; no waiver reads/source/checks.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-12",
+          "requirement": "STOP declared checkpoint or FIRST unplanned expansion, honest partial handoff/fresh parent; never SECOND phase in thread. Later finalization ONLY integration/resulting-main/branch/delivery; no assumed compaction,/compact,new-chat,warning/counter. Reversible assumptions; ask genuine ambiguity/authority/platform approval only after useful prep; continue authorized work/factual updates.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-13",
+          "requirement": "Inspect actual changes+requirement evidence; AGENTS/adopted contracts/ENG006; exact revision/input hashes/command/interpreter-platform/outcome/logs/limits, pass/fail/notrun; retain failures/interruptions.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-14",
+          "requirement": "Reuse evidence ONLY exact implementation/dependency/fixture/test/command/applicable-environment identities; changed input affected checks; resulting MAIN applicable FRESH checks.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-15",
+          "requirement": "Required independent review identity/candidate/criteria; resolve mandatory findings/re-review affected; self-review cannot close. Before evidence commit compare receipt-listed vs staged payload INCLUDING ignored files.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-16",
+          "requirement": "Workflow-record check; tool changes focused tests; doc/navigation exact reorganization check; no-terminal manual fields/refs with executable NOT RUN; structure/cites/SHA-shape prove neither support/existence/live integration/broad capability.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-17",
+          "requirement": "Memory/knowledge source-backed recall no semantics/authority/automatic memory-training-background; recheck current originals; before substantive verified closure learning supported finding OR skip reason, opt-outs/ownership.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-18",
+          "requirement": "ENG009 integration/history/PR/branch; normally<=THREE active work branches; distinct worker/branch from observed SHA; PR/issue owner/files-features/dependencies/checks/next; resume reconcile ownership; new branch ONLY distinct scope.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-19",
+          "requirement": "EVERY substantial branch checkpoint and reviewable PR: exact code/head SHA, actual changed files, EXECUTED tests/OBSERVED results, CI/evidence, known failures, unmet gates, exact handoff action.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-20",
+          "requirement": "Live lease protects main/STATUS integration/reserved shared, not all dev; nonoverlap branches implement/test/commit/push/PR; no other's branch/reserved/shared-release/pinned evidence/competingSTATUS; coordinate overlaps preserve published+unpublished; schedule/branch != running worker.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-21",
+          "requirement": "ONLY verified lease holder writes main/shared integration; DISTINCT owner token per worker/session; after release/expiry inspect STATUS/heads/unknown writes/CI then verified expected-head CAS acquire; normally~30min, honor existing expiry unless release; renew only meaningful implementation/verification checkpoint+new expiry, never just status; expiry not stopped, reconcile unknowns first.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-22",
+          "requirement": "Review against CURRENT main/dependencies/conflicts; conditional NONFORCE update or protected expected-head PR; read actual merge/tree then fresh applicable main checks; exact implementation/PR/main/evidence/limits; no force/disable-check/widen authority; conditional unavailable blocks operation only; branch pass/unrelated merge cannot close unverified milestone.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-23",
+          "requirement": "Before delete completed branch verify retained history/integration/latest head/no active ownership/unknown writes/dependents; immediate head recheck+observe result/autoabsence; unavailable deletion_pending+EXACT merged branch/action; unfinished retained.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-24",
+          "requirement": "Reopen published checkpoint exact revision; publish integration/release-renew owner; issue stays open until all acceptance+saved delivery; then result/conciseSTATUS-CURRENT/external receipt/close; cite actual implementation/merge, discover closure via live history no self-SHA; integration != release.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-25",
+          "requirement": "After reconcile+phase, create/verify/CONFIRM early ZIP BEFORE substantial/long work; missing save BLOCKER, attempt/GitHub insufficient. Checkpoint phase changes/long ops/worker handoffs unique actual bytes/failures/unresolved jobs-writes; concise phase table exact completed revision/evidence/remaining/unknown.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-26",
+          "requirement": "Unknown write preserves intended parent/tree/commit/target ref/operation identity; read remote BEFORE retry; reconcile already-existing intended commit no replay; safe merge/rebase unrelated advance no overwrite; timeout not failure, absent API evidence not no unpublished work; diagnosed unavailable method no repeat, authorized conditional alternative or blocker.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-27",
+          "requirement": "Resume active authorized first unmet gate/existing branch incl delivery-only; queued work ONLY no active scope OR owner redirects. awaiting_user_direction without NEW scope completion/queued+STOP; full continuation selects one next only no active; owner asks complete-then-direction -> CURRENT awaiting_user_direction and STOP.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D06-28",
+          "requirement": "Every bounded dev/recovery phase requires verified saved ZIP UNLESS owner changes requirement; preserve archives/frozen evidence; final concrete repo links/changes/actual checks/merge-branch/confirmed handoff/limits/next then STOP.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        }
+      ],
+      "review_state": "accepted_editorial_content; separately recorded readout/ownership changes as specified"
+    },
+    "docs/workflow/HANDOFF.md": {
+      "baseline_sha256": "84827c5a9ef2113c161e7356cfd9a82ad792dd0a10d7eb86ce1a4bdf5d8e089a",
+      "candidate_sha256": "d87e35055bbba590a4c6b738aba239030315fdade5a6ac2e618a83be48342bac",
+      "baseline_bytes": 6952,
+      "candidate_bytes": 6065,
+      "baseline_words": 885,
+      "candidate_words": 688,
+      "archive_path": "docs/engineering/startup-compact-20261119/before/docs/workflow/HANDOFF.md.txt",
+      "archive_matches_source_bytes": true,
+      "archive_size_hash_matches_manifest": true,
+      "headings_same": true,
+      "explicit_anchors_same": true,
+      "frontmatter_same": true,
+      "missing_command_literals": [],
+      "missing_link_targets": [],
+      "coverage": [
+        {
+          "id": "D07-01",
+          "requirement": "C264 and length repair require verified Library-saved ZIP per declared phase incl partial; GitHub current operational state, complete reusable continuation/recovery prompts.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D07-02",
+          "requirement": "PROTOCOL8 early confirmed recovery/checkpoints/unknown writes; actual unpublished bytes in committed checkpoint/patch/bundle/saved recovery, temp path/prose insufficient; include work absent GitHub, failed results, unresolved workers/processes/writes; reconcile refs/task/ownership/saves/unknown BEFORE same scope/delivery recovery.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading.",
+          "candidate_location": "Mandatory PROTOCOL section8, paragraphs1-4: actual unique bytes, unrecoverable work, failures, unresolved workers/processes/jobs/writes, durable recovery forms, phase table and live reconciliation"
+        },
+        {
+          "id": "D07-03",
+          "requirement": "PROTOCOL4 ONE phase;5 exact reuse+staged payload;8 phase table. Full startup once observed revision; verified package freeze ONCE, save receipt EXTERNAL; rebuild ONLY material payload or recovery instruction changes; no thread warning/final save chance guarantee.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D07-04",
+          "requirement": "README/checkpoint identifies browser-session handoff for ONLINE GitHub, usable without preceding chat; external inputs/limits, NOT full offline restoration.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D07-05",
+          "requirement": "C262 UNCHANGED; HISTORICAL-DEPENDENCIES exact stable LibraryID/link/bytes/SHA256 from CURRENT; may need historical restore, ordinary continuation no rebuild/embed; C263 migration boundary; links NOT complete backup; separately requested offline successor original aliases/bytes/modes/hashes/source refs/verification.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D07-06",
+          "requirement": "Keep ALL NINE root filenames and ALL row field obligations exactly; parsed table retained separately in audit source clauses.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D07-07",
+          "requirement": "Under repository preserve relative frozen START/AGENTS/GOAL/STATUS/ROLE/registry/CURRENT/PROTOCOL/HANDOFF/prompts/active-or-latest task+req-plan/full selected skills; each commit/path; verified copies no reread unchanged; next-action extra specs included or exact-revision links.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D07-08",
+          "requirement": "Unique unpublished recovery bytes base revision/apply instructions; concise verification/review evidence OR durable public inspected-revision links; FAILED/INCOMPLETE retained; exclude credentials/private reasoning/full chats; snapshots stale -> live reconcile.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D07-09",
+          "requirement": "Verify required files/checkpoint observed state/executable next inputs; pass/fail/notrun. ZIP integrity/safe relative paths/duplicate names/EXACT inventory; final FRESH extraction EVERY size/hash/frozen declared source; no whole-history restore/product claim.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D07-10",
+          "requirement": "Freeze actual filename/bytes/SHA EXTERNALLY; save existing OntoKin folder+observe result; preserve previous handoffs/immutable archives with DISTINCT task/checkpoint filenames.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D07-11",
+          "requirement": "External GitHub receipt saved identity/link/known version/archive/source revision/verification/save outcome; user confirmed handoff link AND downloadable prompt files.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D07-12",
+          "requirement": "UNKNOWN save inspect EXACT operation/file BEFORE retry; local creation/proposed folder/upload attempt != delivery; failed/unavailable preserve work and blocked/pending honesty, no availability/completion claim.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D07-13",
+          "requirement": "Integrated=reviewed actual main+applicable checks; Delivered=verified ZIP confirmed save; Complete=BOTH+ALL acceptance+branch gates. Partial only session, parent in_progress/review/open issue/recoverable branch/remaining gates; planned pause not blocked; deletion_pending exact action under P7.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D07-14",
+          "requirement": "Future receipt cannot be inside frozenZIP: save_pending/external route valid; after confirmed save receipt/actual phase-gates/owner release appropriate; close ONLY all parent gates; later receipt/closure does NOT force rebuild, live reconcile; material payload/recovery change NEW verified package+receipt.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D07-15",
+          "requirement": "Deliver phase report and STOP; unfinished resumes FRESH parent.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        }
+      ],
+      "review_state": "accepted_editorial_content; separately recorded readout/ownership changes as specified"
+    },
+    ".agents/skills/ontokin-session/SKILL.md": {
+      "baseline_sha256": "1c5ff15651da466999c0122aa3bd442b40e87a4d3a0cd67e619e9d23cdf01c1a",
+      "candidate_sha256": "4ce5917b05f94b1676e81102cc8518371e509dc8ac4a4f6bcfdf3881faacfc13",
+      "baseline_bytes": 1400,
+      "candidate_bytes": 1346,
+      "baseline_words": 166,
+      "candidate_words": 152,
+      "archive_path": "docs/engineering/startup-compact-20261119/before/.agents/skills/ontokin-session/SKILL.md.txt",
+      "archive_matches_source_bytes": true,
+      "archive_size_hash_matches_manifest": true,
+      "headings_same": true,
+      "explicit_anchors_same": true,
+      "frontmatter_same": true,
+      "missing_command_literals": [],
+      "missing_link_targets": [],
+      "coverage": [
+        {
+          "id": "D08-01",
+          "requirement": "Preserve EXACT frontmatter name/description trigger text; start/resume browser including compaction/interruption/older ZIP, explicit current GitHub loading/live reconciliation/ONE authorized bounded scope.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D08-02",
+          "requirement": "Complete START+PROTOCOL1-3 if not already read at observed revision; reuse verified read-set/gaps SESSION; procedure installs NO skill/tool/permission.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D08-03",
+          "requirement": "Resume matching authorized task OR distinct scope under PROTOCOL; optional exact new-task command scaffolds only; actual requirements/plan/ownership BEFORE work, no execution proof; ROLE+worker/verify/integrate rules.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D08-04",
+          "requirement": "Recovery PROTOCOL8+HANDOFF unknown reconciliation/bytes/confirmed recovery-delivery; finish via delivery skill; STOP declared phase.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        }
+      ],
+      "review_state": "accepted_editorial_content; separately recorded readout/ownership changes as specified"
+    },
+    ".agents/skills/ontokin-delivery/SKILL.md": {
+      "baseline_sha256": "f90c4ddf62de8d3a07c4d077a72da9fe01d3e1e2a45867bfa6d86f2b54bca8ed",
+      "candidate_sha256": "7b7300a46e4f966314b74707a414f5fc72425c8eab4464cf12b20def9697529e",
+      "baseline_bytes": 1390,
+      "candidate_bytes": 1277,
+      "baseline_words": 164,
+      "candidate_words": 143,
+      "archive_path": "docs/engineering/startup-compact-20261119/before/.agents/skills/ontokin-delivery/SKILL.md.txt",
+      "archive_matches_source_bytes": true,
+      "archive_size_hash_matches_manifest": true,
+      "headings_same": true,
+      "explicit_anchors_same": true,
+      "frontmatter_same": true,
+      "missing_command_literals": [],
+      "missing_link_targets": [],
+      "coverage": [
+        {
+          "id": "D09-01",
+          "requirement": "Preserve EXACT frontmatter name/description triggers for implement/review/verify/integrate/close authorized milestone, durable req-plan/publication/verified continuation.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D09-02",
+          "requirement": "Use required AGENTS/ROLE/PROTOCOL/HANDOFF; missing applicable text FULL; no unchanged duplicate reread.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D09-03",
+          "requirement": "P3-4 requirement coverage/plan/owned scope/bounded workers; design defects back to Director, NEVER silently reduce acceptance.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D09-04",
+          "requirement": "P5+AGENTS change checks; mandatory review findings resolved on ACTUAL CURRENT artifacts/evidence.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D09-05",
+          "requirement": "P7 adopted integration policy; integration/release/unresolved gates DISTINCT.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D09-06",
+          "requirement": "Learning capture OR skip rationale; published checkpoint/branch-owner disposition/verified ZIP+external receipt; STOP phase; merged code OR docs not substitute for outstanding delivery.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        }
+      ],
+      "review_state": "accepted_editorial_content; separately recorded readout/ownership changes as specified"
+    },
+    ".agents/skills/ontokin-learning/SKILL.md": {
+      "baseline_sha256": "c9c106168e3b3e7aecb322249c2de74b909a842d6d2d4c66d9b3cdf432498cad",
+      "candidate_sha256": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de",
+      "baseline_bytes": 2524,
+      "candidate_bytes": 2478,
+      "baseline_words": 289,
+      "candidate_words": 279,
+      "archive_path": "docs/engineering/startup-compact-20261119/before/.agents/skills/ontokin-learning/SKILL.md.txt",
+      "archive_matches_source_bytes": true,
+      "archive_size_hash_matches_manifest": true,
+      "headings_same": true,
+      "explicit_anchors_same": true,
+      "frontmatter_same": true,
+      "missing_command_literals": [],
+      "missing_link_targets": [],
+      "coverage": [
+        {
+          "id": "D10-01",
+          "requirement": "Preserve EXACT frontmatter name/description trigger: evidence-backed lessons after substantive verified work or explicit learning; source applicability/authorized durable records; NO automatic cross-session learning.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D10-02",
+          "requirement": "Use PROTOCOL/memory/knowledge+direct relevant sources; recheck CURRENT authority before recalled conclusions.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D10-03",
+          "requirement": "Optional lookup command else JSON+guide; retrieval NO write authority or automatic memory.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D10-04",
+          "requirement": "After substantive verified work assess reusable decisions/lessons/constraints/questions; SKIP acknowledgments/read-only/duplicates/speculation/unsupported assertions; nothing useful VALID.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D10-05",
+          "requirement": "Applicability/limits exact inputs+environments only, no generalized language/physics/destination/comparative claim; current decisions/historical observations/proposals/unresolved distinct.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D10-06",
+          "requirement": "Respect opt-outs; discussion alone NO publication authority; existing scoped milestone may authorize evidence-backed notes without repeated permission; ONLY assigned canonical writer edits memory, others evidence/scoped proposals via Director.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D10-07",
+          "requirement": "Search IDs/summaries, stable ID/kind/status/concise summary/scope/date. EXACT evidence; immutable commits for byte observations, live specs current authority not old results.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D10-08",
+          "requirement": "Supported NEW info only; replaced records retained superseded+supersedes, historical for still-valid old contexts.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D10-09",
+          "requirement": "Exclude credentials/personal data/transcripts/private reasoning; executable workflowcheck+diff+authorized conditional publication.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "D10-10",
+          "requirement": "Knowledge definitions/capabilities ONLY with authoritative source; NEVER rewrite adopted semantics; stale sources open questions naming next reconciliation.",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        }
+      ],
+      "review_state": "accepted_editorial_content; separately recorded readout/ownership changes as specified"
+    },
+    "docs/workflow/BROWSER-PROMPTS.md": {
+      "baseline_sha256": "9329152893801326aefb14843d3626f0dc02defd510fc56d930f598cc3f09009",
+      "candidate_sha256": "62e0eb4de4d1b90d390d8bb119c65b987d881b161a0b53b6646b46369ee3852b",
+      "baseline_bytes": 2382,
+      "candidate_bytes": 1739,
+      "baseline_words": 323,
+      "candidate_words": 206,
+      "archive_path": "docs/engineering/startup-compact-20261119/before/docs/workflow/BROWSER-PROMPTS.md.txt",
+      "archive_matches_source_bytes": true,
+      "archive_size_hash_matches_manifest": true,
+      "headings_same": true,
+      "explicit_anchors_same": true,
+      "frontmatter_same": true,
+      "missing_command_literals": [],
+      "missing_link_targets": [],
+      "coverage": [
+        {
+          "id": "B01",
+          "requirement": "Use one COMPLETE prompt in a FRESH ChatGPT browser thread and replace bracketed inputs.",
+          "candidate_location": "Opening sentence",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "B02",
+          "requirement": "Continue ONE declared phase, resume active before queued; interruption recovery resumes first unmet gate.",
+          "candidate_location": "Situation table",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "B03",
+          "requirement": "Prompt1 latest SUCCESSFULLY SAVED ZIP plus optional task/phase override; blank resumes active AUTHORIZED scope; ONLY with none active select next bounded approved work.",
+          "candidate_location": "Prompt1 table row",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "B04",
+          "requirement": "Prompt2 LAST COMPLETE ZIP, any NEWER recovery file, brief interruption description; NEVER authorizes another milestone.",
+          "candidate_location": "Prompt2 table row",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "B05",
+          "requirement": "Entry loads CURRENT instructions; PROTOCOL4 governs one phase, applicable reads once, bounded workers/fresh context where supported, compact reports/file evidence; children do NOT reset parent.",
+          "candidate_location": "Required full PROTOCOL4/HANDOFF; PROTOCOL4 paragraphs1-4; HANDOFF bounded recovery; START retained read-set",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "B06",
+          "requirement": "No assumed token meter, advance length warning or automatic new-chat creation.",
+          "candidate_location": "Assume-no sentence",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "B07",
+          "requirement": "CONFIRMED early recovery before substantial/long work; verified saved final at declared stop; partial delivers session while parent in_progress/review; planned pause NOT blocker; fresh parent; completion requires ALL acceptance/integration/delivery gates.",
+          "candidate_location": "Required full HANDOFF; HANDOFF progress and Integrated-delivered-complete; PROTOCOL4/8; planned-pause sentence",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "B08",
+          "requirement": "HANDOFF exact contents/verification/Library-save/external receipt; ZIP includes both exact PROMPT filenames; preserve UNIQUE unpublished bytes/unknown operations; freeze once, no future-receipt rebuild.",
+          "candidate_location": "Required full HANDOFF and final paragraph",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        },
+        {
+          "id": "B09",
+          "requirement": "Online session continuation, separate C262/historical offline obligations UNCHANGED; C264 saved-delivery/length-repair phase and worker controls do NOT change product scope.",
+          "candidate_location": "Required full HANDOFF boundary; BROWSER final paragraph",
+          "candidate_coverage": "preserved",
+          "review_method": "Final substantive required-source-set reading; exact numbers/negations/conditions retained; unchanged hashes reused only after earlier complete reading."
+        }
+      ],
+      "review_state": "accepted_editorial_content; separately recorded readout/ownership changes as specified"
+    }
+  },
+  "protected_state": {
+    "readme_inventory_matches_manifest": true,
+    "readme_mismatches": [],
+    "registry_CURRENT_C268_changed_paths": [],
+    "original_archive_verification": [
+      {
+        "path": "CHATGPT-START-HERE.md",
+        "archive_matches_baseline": true,
+        "manifest_matches": true
+      },
+      {
+        "path": "AGENTS.md",
+        "archive_matches_baseline": true,
+        "manifest_matches": true
+      },
+      {
+        "path": "GOAL.md",
+        "archive_matches_baseline": true,
+        "manifest_matches": true
+      },
+      {
+        "path": "STATUS.md",
+        "archive_matches_baseline": true,
+        "manifest_matches": true
+      },
+      {
+        "path": "ROLE.md",
+        "archive_matches_baseline": true,
+        "manifest_matches": true
+      },
+      {
+        "path": "docs/workflow/PROTOCOL.md",
+        "archive_matches_baseline": true,
+        "manifest_matches": true
+      },
+      {
+        "path": "docs/workflow/HANDOFF.md",
+        "archive_matches_baseline": true,
+        "manifest_matches": true
+      },
+      {
+        "path": "docs/workflow/BROWSER-PROMPTS.md",
+        "archive_matches_baseline": true,
+        "manifest_matches": true
+      },
+      {
+        "path": ".agents/skills/ontokin-session/SKILL.md",
+        "archive_matches_baseline": true,
+        "manifest_matches": true
+      },
+      {
+        "path": ".agents/skills/ontokin-delivery/SKILL.md",
+        "archive_matches_baseline": true,
+        "manifest_matches": true
+      },
+      {
+        "path": ".agents/skills/ontokin-learning/SKILL.md",
+        "archive_matches_baseline": true,
+        "manifest_matches": true
+      }
+    ],
+    "status_lease": "Only separately recorded acquisition/renewal excluded from editorial equivalence. Exact former lease remains in before image; later release requires recorded state change. Reviewer does not independently certify remote lease actions."
+  },
+  "interpretation_boundaries": [
+    "Current authority, adopted meaning, actual-state reconciliation, selected task and full selected skills remain mandatory. The only new readout exclusion is exactly the empty STATUS navigation lines described separately.",
+    "AGENTS and HANDOFF deduplicate through already mandatory full PROTOCOL; BROWSER/delivery likewise require full governing text. No unique active obligation is deferred only to optional archives.",
+    "Final PROTOCOL5 preserves every original durable-evidence field, including verification settings/artifacts/relevant remote CI. Final PROTOCOL8 absorbs all original HANDOFF recovery obligations without weakening requirements.",
+    "GOAL mandatory affected-profile original-section/linked-contract reading remains as in baseline; all current boundaries, exact budgets, provisional thresholds, nonclaims and acceptance gates are inline.",
+    "All slash-separated enumerations were checked as retaining each member; conditional alternatives, temporal order, exceptions, and AND/OR investment/budget/completion boundaries remain.",
+    "STATUS C268 state is preserved; compression does not close, requalify or take over product work. Lease updates are separately recorded operational changes.",
+    "Exact originals guarantee recoverability of original wording; finite independent editorial review is not a formal proof of every possible future interpretation or broader product validity.",
+    "Byte/word/readout counts are narrow measurements, not exact ChatGPT token capacity or guaranteed extra conversation length."
+  ],
+  "remaining_gates": [
+    "Director applicable checks and actual resulting-main verification",
+    "Authorized integration/branch/lease disposition",
+    "Verified saved handoff and external receipt; overall task closure"
+  ],
+  "supporting_checks": {
+    "initial_preservation_check": {
+      "path": "docs/engineering/startup-compact-20261119/PRESERVATION-CHECKS-initial.json",
+      "checks": 344,
+      "passed": false,
+      "failure": "BROWSER inline literals in_progress/review"
+    },
+    "updated_preservation_check": {
+      "path": "docs/engineering/startup-compact-20261119/PRESERVATION-CHECKS.json",
+      "checks": 344,
+      "passed": true
+    },
+    "reviewer_independent_checks": "Eleven exact originals against git baseline, all baseline README paths byte equality, source heading/link/command/anchor/frontmatter comparison, unchanged CURRENT/C268 diff. Tool implementation audit still pending."
+  },
+  "review_iteration": 2,
+  "prior_review": {
+    "json": "docs/engineering/startup-compact-20261119/REVIEW-01.json",
+    "json_sha256": "40ab9b89d82c17b5d0b70887702c76d1f4c08c92590642832b140e0fb371481b",
+    "markdown": "docs/engineering/startup-compact-20261119/REVIEW-01.md",
+    "markdown_sha256": "d5ce7dddadc7ac8e01dbb30e5e95b25c29fc6199e79a6ef4f2f3a50de6c383f8",
+    "preserved_exactly": true
+  },
+  "authorized_representation_change": {
+    "change": "Routine model readout may omit ONLY STATUS lines consisting wholly of empty HTML navigation anchors; no prose/headings/rules/state/evidence references may be omitted.",
+    "source": "User requested more efficient representation/communication without information loss; START step1 records narrow method.",
+    "anchor_line_count": 50,
+    "anchor_bytes": 3583,
+    "anchor_identity_and_order_unchanged": true,
+    "full_source_and_snapshot_retention": "All50 anchors remain byte-for-byte in STATUS and its preserved source; handoff snapshots still preserve complete files.",
+    "read_conditions": "Record exclusion in read-set; load anchors for history/link work; changed/missing/newly relevant reading still applies.",
+    "equivalence_boundary": "This is an intentional authorized reading-procedure change, not a claim that the previous unqualified read-every-line instruction remained identical. No project rule or factual/evidence content was removed."
+  },
+  "discarded_reader_experiment": {
+    "deployment": "Not active; tools/startup_context.py absent and START has no reader instruction.",
+    "treatment": "Experimental bytes/reviews/tests retained separately as historical evidence; not a requirement or blocker for final editorial acceptance. This review does not certify the experiment."
+  },
+  "scenario_review": [
+    {
+      "id": "SC01",
+      "scenario": "Concurrent lease/C268 unfinished",
+      "result": "Preserved: own bounded independent scope, protected shared paths, actual conditional holder-only integration; C268 gate/state unaffected."
+    },
+    {
+      "id": "SC02",
+      "scenario": "Documentation-only edit",
+      "result": "Preserved explicit docs/workflow exception and all exact commands; applicable tool-change checks remain if tools change."
+    },
+    {
+      "id": "SC03",
+      "scenario": "Unknown write or save",
+      "result": "Preserved operation/parent/tree/commit identity, live reconciliation before retry, no inferred failure/replay/false delivery."
+    },
+    {
+      "id": "SC04",
+      "scenario": "Changed evidence inputs",
+      "result": "Preserved exact implementation/dependency/fixture/test/command/environment reuse, settings/actual evidence fields, affected re-review/checks, fresh main."
+    },
+    {
+      "id": "SC05",
+      "scenario": "Parent unfinished at phase boundary",
+      "result": "Preserved partial verified save, in_progress/review/open issue/recoverable branch; no false blocker; stop/fresh parent."
+    },
+    {
+      "id": "SC06",
+      "scenario": "Independent worker unavailable",
+      "result": "Preserved honest self-review and unmet actual-independent gate; roles/tools cannot be invented."
+    },
+    {
+      "id": "SC07",
+      "scenario": "Affected old release or full offline restoration",
+      "result": "Preserved mandatory historical-profile full reading and separate offline restoration contract; finite results not whole-product claims."
+    },
+    {
+      "id": "SC08",
+      "scenario": "Empty navigation versus real content in STATUS",
+      "result": "Only complete empty anchor lines omitted, recorded in read-set and loaded for history/link work. All prose/headings/state/rules/evidence still read; all source bytes retained."
+    }
+  ]
+}

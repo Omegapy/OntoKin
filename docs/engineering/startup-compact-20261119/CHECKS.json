@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "observed_at_utc": "2026-11-19T16:04:10.869535+00:00",
+  "base_commit": "a0a0bb10f38f57ef8e199bf58d5f5bda52c9eea8",
+  "source_state": "authentic checkout with staged reviewed documentation; exact active document hashes below, resulting remote identity recorded by INTEGRATION.json",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "active_document_hashes": [
+    {
+      "path": "CHATGPT-START-HERE.md",
+      "sha256": "99a69a4cfa633fb515ca08725b43b6193051249c279a4b31a9412d56e6593ce0"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "ce0fef82308e1c329dcf0514c99e81e89c340bbb550cf0cdcdb589599ae42822"
+    },
+    {
+      "path": "GOAL.md",
+      "sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc"
+    },
+    {
+      "path": "STATUS.md",
+      "sha256": "ef3b632faff5c86d91ea05190fecda58e52034cb0419451a7e4ee83b405e7ef0"
+    },
+    {
+      "path": "ROLE.md",
+      "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf"
+    },
+    {
+      "path": "docs/workflow/PROTOCOL.md",
+      "sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad"
+    },
+    {
+      "path": "docs/workflow/HANDOFF.md",
+      "sha256": "d87e35055bbba590a4c6b738aba239030315fdade5a6ac2e618a83be48342bac"
+    },
+    {
+      "path": "docs/workflow/BROWSER-PROMPTS.md",
+      "sha256": "62e0eb4de4d1b90d390d8bb119c65b987d881b161a0b53b6646b46369ee3852b"
+    },
+    {
+      "path": ".agents/skills/ontokin-session/SKILL.md",
+      "sha256": "4ce5917b05f94b1676e81102cc8518371e509dc8ac4a4f6bcfdf3881faacfc13"
+    },
+    {
+      "path": ".agents/skills/ontokin-delivery/SKILL.md",
+      "sha256": "7b7300a46e4f966314b74707a414f5fc72425c8eab4464cf12b20def9697529e"
+    },
+    {
+      "path": ".agents/skills/ontokin-learning/SKILL.md",
+      "sha256": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de"
+    }
+  ],
+  "checks": [
+    {
+      "name": "preservation",
+      "command": "python3 docs/engineering/startup-compact-20261119/verify_preservation.py",
+      "status": "passed",
+      "checks": 344,
+      "evidence": "docs/engineering/startup-compact-20261119/PRESERVATION-CHECKS.json"
+    },
+    {
+      "name": "workflow",
+      "command": "python3 tools/chat_workflow.py check",
+      "status": "passed",
+      "log": "docs/engineering/startup-compact-20261119/evidence/candidate/workflow.log"
+    },
+    {
+      "name": "documentation",
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "status": "passed",
+      "sources": 29,
+      "sections": 233,
+      "failures": [],
+      "log": "docs/engineering/startup-compact-20261119/evidence/candidate/documentation.log"
+    },
+    {
+      "name": "workflow_tests",
+      "command": "python3 -m unittest discover -s tests -p 'test_chat_workflow.py' -v",
+      "status": "passed",
+      "tests": 28,
+      "log": "docs/engineering/startup-compact-20261119/evidence/candidate/workflow-tests.log"
+    },
+    {
+      "name": "whitespace",
+      "command": "git diff --cached --check",
+      "status": "passed"
+    }
+  ],
+  "independent_review": "docs/engineering/startup-compact-20261119/REVIEW.json",
+  "unrun": [
+    "full product regression",
+    "native execution",
+    "visual export validation",
+    "multi-interpreter compatibility"
+  ],
+  "limits": "Documentation-only scope; no product qualification or automatic chat-capacity guarantee",
+  "corrected_record_failure": {
+    "kind": "task check schema",
+    "before": "docs/engineering/startup-compact-20261119/evidence/candidate/task-check-schema-before.json",
+    "failure_log": "docs/engineering/startup-compact-20261119/evidence/candidate/workflow-record-initial-failure.log",
+    "correction": "Recorded command/result/required fields required by existing workflow schema; validation rerun before publication"
+  }
+}

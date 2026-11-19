@@ -1,48 +1,23 @@
 # Start OntoKin in a ChatGPT browser chat
 
-Stable entry for **Omegapy/OntoKin**. GitHub holds current instructions, work and
-evidence; [HANDOFF.md](docs/workflow/HANDOFF.md) defines the required saved
-browser-session ZIP and its reconciliation with live GitHub.
+Entry: **Omegapy/OntoKin**. GitHub owns current instructions/work/evidence; [HANDOFF](docs/workflow/HANDOFF.md) governs saved browser-session ZIPs and live reconciliation.
 
 ## Prompt to use in a new chat
 
-Use the complete [continuation or interrupted-thread recovery prompt](docs/workflow/BROWSER-PROMPTS.md).
-Recovery includes delivery-only work after implementation has merged.
+Use the full [continuation or recovery prompt](docs/workflow/BROWSER-PROMPTS.md); recovery includes delivery after implementation merges.
 
 ## Required startup
 
-1. The Director observes actual `main` through GitHub and retains its full commit
-   SHA. At that same revision, read this file, [AGENTS](AGENTS.md), [GOAL](GOAL.md),
-   [STATUS](STATUS.md), [ROLE](ROLE.md), [registry](docs/workflow/registry.json),
-   [CURRENT](docs/workflow/CURRENT.json), [PROTOCOL](docs/workflow/PROTOCOL.md) and
-   [HANDOFF](docs/workflow/HANDOFF.md) in full. Retain the read-set; read each once
-   and reopen only changed, missing or newly relevant text. Search snippets,
-   assumed snapshots and duplicate archived/remote copies do not replace this read.
-2. Follow CURRENT to the active task, or latest task when none is active. Read
-   its `task.json`, requirements and plan, full selected registry `SKILL.md`
-   files, and nested `AGENTS.md` governing edited paths. Read additional source
-   specifications as the scope requires. Record missing or truncated required text.
-3. Reconcile live branches, PRs, scope issues, integration ownership, relevant
-   checks and surviving local work with the saved checkpoint.
-4. Record actual repository read/write, branch/PR, conditional-update,
-   merge/deletion, terminal/test, subagent, ZIP creation/verification and Library
-   saving capabilities. A missing required capability is a concrete blocker;
-   repository procedures supply neither tools nor permissions.
-5. Declare the authorized scope, one phase, starting revision, acceptance
-   checkpoint, stopping point and material limits under PROTOCOL. Confirm the
-   early recovery ZIP before substantial or long work.
+1. Director: observe actual GitHub `main`; retain its full SHA. At that revision read this file, [AGENTS](AGENTS.md), [GOAL](GOAL.md), [STATUS](STATUS.md), [ROLE](ROLE.md), [registry](docs/workflow/registry.json), [CURRENT](docs/workflow/CURRENT.json), [PROTOCOL](docs/workflow/PROTOCOL.md), [HANDOFF](docs/workflow/HANDOFF.md) **in full, once**, except STATUS lines consisting only of empty HTML `a` elements with only an `id` attribute: keep these navigation identifiers unchanged in the file; load them only for history/link work. Exclude no prose, heading, rule, state or evidence reference. Record that exclusion in the read-set; reopen only changed, missing or newly relevant text. Snippets, assumed snapshots and duplicate archive/remote copies cannot substitute.
+2. Follow CURRENT to active task, else latest task. Read `task.json`, requirements, plan, full selected registry `SKILL.md` files and nested `AGENTS.md` governing edits. Read scope-required specifications; record missing/truncated required text.
+3. Reconcile saved checkpoint with live branches, PRs, scope issues, integration ownership, relevant checks and surviving local work.
+4. Record actual capabilities: repository read/write; branches/PRs; conditional updates; merge/deletion; terminal/tests; subagents; ZIP creation/verification; Library saving. A missing required capability blocks that action; procedures grant no tools/permissions.
+5. Under PROTOCOL, declare authorized scope, one phase, starting revision, acceptance checkpoint, stop and material limits. Confirm early recovery ZIP before substantial/long work.
 
-Repository instructions and skills require explicit loading; browser chats,
-Codex discovery and installed ChatGPT skills are separate host features.
-These procedures can also be followed manually through a connector.
+Explicitly load repository instructions/skills. Browser chats, Codex discovery and installed ChatGPT skills are separate host features; a connector can support manual execution.
 
 ## Work and finish
 
-Follow [PROTOCOL section 4](docs/workflow/PROTOCOL.md#4-implement-delegate-and-bound-the-session)
-for workers and phase limits, and HANDOFF for saved delivery. Optional local
-helpers `python3 tools/chat_workflow.py brief`, `check` and `lookup QUERY` provide
-navigation/structural checks; they neither contact GitHub nor prove remote actions.
+Use [PROTOCOL §4](docs/workflow/PROTOCOL.md#4-implement-delegate-and-bound-the-session) for workers/phase limits; HANDOFF for saved delivery. Optional local `python3 tools/chat_workflow.py brief`, `check`, `lookup QUERY` navigate/check structure; they neither contact GitHub nor prove remote actions.
 
-See the [human guide](docs/workflow/README.md) for capability fallbacks and the
-[C263 migration record](docs/engineering/browser-workflow-c263/MIGRATION.md) for
-preserved historical C262 evidence.
+[Human guide](docs/workflow/README.md): capability fallbacks. [C263 migration](docs/engineering/browser-workflow-c263/MIGRATION.md): preserved C262 evidence.
