@@ -197,6 +197,24 @@
       "evidence": [
         "docs/engineering/localized-repair-c267/evidence/actual-main/CHECKS.json"
       ]
+    },
+    {
+      "name": "delivery-only independent existing evidence eligibility",
+      "command": "Audit exact historical/current input/output and dependency hashes, saved byte witnesses, review identity, merge tree/ancestry and live branch disposition",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c267/evidence/delivery-20261118/EVIDENCE-REVIEW.json"
+      ]
+    },
+    {
+      "name": "fresh delivery-record workflow and documentation",
+      "command": "python3 -B tools/chat_workflow.py check; python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py; git diff --check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c267/evidence/delivery-20261118/fresh-main/CHECKS.json"
+      ]
     }
   ],
   "next_action": "Freeze and verify final browser-session handoff, confirm save, publish external receipt and close C267; then stop",
@@ -236,7 +254,8 @@
     "early_save_confirmed": true,
     "early_receipt": "docs/engineering/localized-repair-c267/evidence/delivery-20261118/EARLY-RECOVERY-RECEIPT.json",
     "branch_state": "Existing implementation branch already merged/deleted; receipt-only main checkpoints under a fresh conditional lease",
-    "parent_task_status": "in_progress"
+    "parent_task_status": "in_progress",
+    "acceptance_checkpoint_progress": "Existing R01-R06 evidence independently reverified and fresh metadata checks passed; final ZIP verification/save/receipt/closure remain"
   },
   "session_phase_history": [
     {

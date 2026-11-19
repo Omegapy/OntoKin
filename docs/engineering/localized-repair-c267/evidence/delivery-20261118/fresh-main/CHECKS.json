@@ -1,0 +1,53 @@
+{
+  "source_revision": "68296728e281bfca430985eb924e6fc091697c09",
+  "source_tree": "d9954f2e730b941a9cebd7591ff851e5146374da",
+  "working_tree": "",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "started_at_utc": "2026-11-19T04:14:42.476327+00:00",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "workflow.log",
+      "bytes": 147,
+      "sha256": "3e03eb55367e8451135023a604d20c11db28eb999d4b14ed38b04481f7eb0554"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "started_at_utc": "2026-11-19T04:14:42.574537+00:00",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "documentation.log",
+      "bytes": 6608,
+      "sha256": "6defaa72c3b838b063645a518b07c7d54ef5cec8cc484f9e45a8b4af686dcb32"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_at_utc": "2026-11-19T04:14:45.049679+00:00",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "whitespace.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scope": "Fresh documentation/workflow checks on delivery-only coordination records; no product cohort rerun claimed"
+}

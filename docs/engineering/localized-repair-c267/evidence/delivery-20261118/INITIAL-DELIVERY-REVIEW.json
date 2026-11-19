@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "reviewer": "/root/delivery_review",
+  "director": "c267-delivery-24545fba506f",
+  "review_scope": "C267 R07/P05 online handoff and receipt-only closure",
+  "status": "initial_review_complete_awaiting_final_candidate",
+  "checked_at_utc": "2026-11-19T04:17:03.566673+00:00",
+  "source_zip": {
+    "filename": "OntoKin_Startup_Compression_Handoff_2026-11-18.zip",
+    "bytes": 186129,
+    "sha256": "446b3b58e9d913af85014982ec741928b5833d490a0c7d9cb33695062639ac3d",
+    "payload_entries": 76,
+    "archive_members": 77,
+    "all_payload_sizes_sha256_and_fresh_extraction": "passed",
+    "declared_source_identities": 70,
+    "sources_directly_byte_compared": 62,
+    "remaining_sources_verified_by_recomputed_blob_hash_and_commit_tree_path": 8,
+    "historical_blob_absence_resolved": true,
+    "external_saved_receipt_matches": true
+  },
+  "early_recovery": {
+    "filename": "OntoKin_C267_Delivery_Early_Recovery_2026-11-18.zip",
+    "bytes": 69203,
+    "sha256": "58bbaecc9ae30a0e9a832ad7c32a877d240bd5585f756fed556d248cb9b15822",
+    "payload_entries": 34,
+    "archive_members": 35,
+    "source_files_verified": 23,
+    "verdict": "passed",
+    "save_record_matches": true,
+    "library_file_id": "libfile_fde3_f-3d2ccea7e53c81918f5647ed9a7afd97_2ab2a24d43748191957f9bcc356b59de",
+    "version": 0
+  },
+  "findings": [],
+  "observations": [
+    {
+      "id": "O01",
+      "severity": "informational",
+      "finding": "Eight initial git-show failures reflect historical blobs omitted from the local partial checkout. Each exact commit/path resolves to the same Git blob ID recomputed from the ZIP file; no source byte discrepancy is established. Raw errors preserved.",
+      "evidence": "session/delivery-review/source-identity-mismatches.json"
+    },
+    {
+      "id": "O02",
+      "severity": "informational",
+      "finding": "Compression package freezes before its receipt and concise-prompt PR; early recovery correctly uses newer 2cb08b0 snapshots. The source ZIP must remain unchanged."
+    }
+  ],
+  "required_final_gates": [
+    {
+      "gate": "Frozen archive",
+      "required": "Nine exact root files; online GitHub continuation type; revision/tree/time and external limits; complete source snapshots, active task/plan and selected skills.",
+      "state": "awaiting_final_candidate"
+    },
+    {
+      "gate": "Source provenance",
+      "required": "Every frozen source file must map to declared commit/path; compare actual bytes or Git tree object identity and payload SHA-256. Root prompts must equal declared source copies.",
+      "state": "awaiting_final_candidate"
+    },
+    {
+      "gate": "Archive verification",
+      "required": "CRC, safe relative paths, no duplicates or symlinks, manifest exact inventory excluding itself, all sizes/hashes and fresh extraction.",
+      "state": "awaiting_final_candidate"
+    },
+    {
+      "gate": "Truthful checkpoint",
+      "required": "R01-R06/P01-P04 retained evidence; R07/P05 and parent remain incomplete at freeze, save_pending is explicit, current lease and remaining receipt/closure work are stated.",
+      "state": "awaiting_final_candidate"
+    },
+    {
+      "gate": "Recovery usability",
+      "required": "Reading order, exact first unmet action, inputs, acceptance and stopping point; unique unpublished bytes and failures retained; unknown operations/workers explicitly identified.",
+      "state": "awaiting_final_candidate"
+    },
+    {
+      "gate": "Historical boundary",
+      "required": "C262 identity, bytes and SHA-256 equal CURRENT, unchanged archive; preserve C263 migration boundary; no full offline restoration or product qualification claim.",
+      "state": "awaiting_final_candidate"
+    },
+    {
+      "gate": "External saved delivery",
+      "required": "Freeze once; confirmed OntoKin save with archive bytes/hash, Library identity/link/version; downloadable prompts; save outcome remains external to frozen ZIP.",
+      "state": "pending_root_action"
+    },
+    {
+      "gate": "Closure",
+      "required": "Publish external GitHub receipt; applicable fresh documentation/workflow checks; independent findings resolved; parent done only after all gates, issue closed and lease released; stop.",
+      "state": "pending_root_action"
+    },
+    {
+      "gate": "Learning",
+      "required": "Director records evidence-backed learning capture or skip rationale; read-only reviewer proposes no memory changes.",
+      "state": "pending_root_action"
+    }
+  ],
+  "owned_artifacts": [
+    "session/delivery-review.md",
+    "session/delivery-review.json",
+    "session/delivery-review/initial-verification.json",
+    "session/delivery-review/source-identity-mismatches.json",
+    "session/delivery-review/verify_archives.py"
+  ],
+  "limits": [
+    "No remote, index, repository, Library or canonical task mutations by reviewer.",
+    "Early saved identity confirmed from supplied successful operation record, without separate Library lookup.",
+    "Final candidate and post-save closure not reviewed yet.",
+    "No product tests run; existing product evidence assigned to separate reviewer."
+  ]
+}
