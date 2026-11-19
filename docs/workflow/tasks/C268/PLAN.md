@@ -43,3 +43,5 @@ The complete affected cohort is the C253 corpus and C255/C256/C257/C258/C261/C26
 ## Stop
 
 Stop after confirmed final delivery, or first unplanned scope expansion with honest partial handoff; no next phase. Parent stays in_progress or review until every gate passes. A partial handoff is session delivery only.
+
+Reviewer continuity: `/root/state_audit` launched with fresh context for startup, then retained that context for follow-up early-package and candidate review. Implementation/control workers launched separately with fresh contexts. No worker is represented as reset between follow-ups.
