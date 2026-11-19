@@ -4,11 +4,13 @@
 
 ## Current workflow and next action
 
+C268 is active: exact historical endpoint admission under unchanged C260. [Requirements](docs/workflow/tasks/C268/REQUIREMENTS.md), [plan](docs/workflow/tasks/C268/PLAN.md), [scope265](https://github.com/Omegapy/OntoKin/issues/265). Implementation and qualification are pending; confirm early recovery before code work.
+
 C267 is complete within its finite declaration-comparison scope. Implementation integrated through [PR261](https://github.com/Omegapy/OntoKin/pull/261), merge `7174e6796b38bac3fa83e6412e0944512d137434`; branch deletion and retained ancestry are verified. Recorded integration checks passed **11 groups, 247 methods, 14 corpus bindings**, CPython **3.12.14 / Linux**. This delivery-only phase independently verified exact evidence eligibility, passed fresh documentation/workflow checks, and saved the verified handoff. See the [delivery receipt](docs/engineering/localized-repair-c267/DELIVERY.json), [independent audit](docs/engineering/localized-repair-c267/evidence/delivery-20261118/EVIDENCE-REVIEW.md) and [integration checkpoint](docs/engineering/localized-repair-c267/INTEGRATION.json).
 
 C266 is complete: [PR259](https://github.com/Omegapy/OntoKin/pull/259), merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`, **10 passing main groups, 222 methods, 14 bindings**; branch deleted, [saved delivery](docs/engineering/localized-repair-c266/DELIVERY.json) unchanged. C265/C264/C263 are complete within recorded scopes.
 
-Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json) and [HANDOFF](docs/workflow/HANDOFF.md). **C267 delivery is complete; stop this phase.** Historical endpoint admission remains separately queued for a new continuation.
+Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json) and [HANDOFF](docs/workflow/HANDOFF.md). C267 delivery is complete. The November 19 continuation selects C268 historical endpoint admission; stop after its one-phase verified saved handoff.
 
 ## Product state and remaining gates
 
@@ -34,9 +36,9 @@ C264's recorded starting inventory had only main/no open PRs; after PR255, `work
 
 ## Main integration lease
 
-State: released after verified C267 saved delivery and external receipt publication.
-Owner: none. Reserved paths: none.
-Completed scope: C267 R07/P05 delivery-only recovery. The implementation branch was already merged and deleted; no new branch was created. The [delivery receipt](docs/engineering/localized-repair-c267/DELIVERY.json), [coordination history](docs/engineering/localized-repair-c267/evidence/delivery-20261118/COORDINATION.json) and [task record](docs/workflow/tasks/C267/task.json) retain the exact identities, reviews and checks. Reconcile live state before acquiring any new lease.
+State: held for C268 scope publication, integration and delivery.
+Owner: `c268-root-c7dae94da130`. Acquired at UTC: 2026-11-19T14:12:24.197517+00:00. Expires at UTC: 2026-11-19T14:42:24.197517+00:00.
+Expected main at acquisition: `b2ca38875bd7b43b85011bbc671ee9fee1682441`. Reserved paths: STATUS.md, docs/workflow/CURRENT.json, docs/workflow/tasks/C268/, docs/engineering/localized-repair-c268/. Independent workers own only their assigned new files. Acquisition is valid only after successful expected-head update and readback.
 
 ## Historical status
 

@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "id": "C268",
+  "title": "Historical hinge endpoint admission",
+  "intent": "Bind original source and GLB bytes before finite declaration comparison",
+  "status": "in_progress",
+  "owner": "c268-root-c7dae94da130",
+  "branch": "work/c268-historical-endpoint",
+  "base_sha": "b2ca38875bd7b43b85011bbc671ee9fee1682441",
+  "scope_issue": "https://github.com/Omegapy/OntoKin/issues/265",
+  "requirements": [
+    {
+      "id": "R01",
+      "description": "Historical identity",
+      "acceptance": "Admit only before/after endpoints from unchanged C260 INPUTS and matching C253 pins. Require exact size and SHA-256 for the selected main.ok, shared hinges.ok and GLB before calling the comparator. No alternate file, sidecar, network or ambient fallback.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R02",
+      "description": "Safe bounded file access",
+      "acceptance": "Reject symbolic-link files and ancestors, repository escape, invalid endpoint, missing/permission/nonregular files and short/growing/wrong-sized or wrong-hash bytes. Check size before bounded reads; return typed refusals with bounded available identities and no qualified partial set. Preserve inherited resource bounds.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R03",
+      "description": "Comparison and authority",
+      "acceptance": "Invoke exact pinned C267 comparator on captured bytes only after admission. Preserve comparison results, source-only/absent-artifact authority and all physical/execution nonclaims. Only this wrapper may affirm historicalInputsBound for original bytes; first three interfaces and supported changed raw inputs stay unchanged.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R04",
+      "description": "Independent controls",
+      "acceptance": "Independently exercise both original endpoints, missing/changed-size/same-size-changed source and GLB, symlinks/ancestors/loops/escape, permission and nonregular paths, bounded read failures, dependency mutation and refusal propagation. Include raw changed-input versus historical admission controls for H01/H03/H04/H26/H27. Record actual coverage without claiming full H-group qualification. Original endpoints must each yield eight hinges, one shared joint definition and sixteen endpoint sites.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R05",
+      "description": "Verification and independent review",
+      "acceptance": "Execute the complete affected C253/C255/C256/C257/C258/C261/C265/C266/C267/C268 cohort plus workflow/documentation checks on identified bytes. Obtain separate exact-candidate review, resolve mandatory findings, preserve failed attempts and all unrun roles.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R06",
+      "description": "Integration and branch lifecycle",
+      "acceptance": "Use verified expected-head lease and conditional nonforce publication/expected-head PR merge; read back actual main and execute affected checks, retain reviewed history and verify branch disposition. New/worsened legacy failures block integration.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R07",
+      "description": "Saved delivery",
+      "acceptance": "Verify exact manifest, safe ZIP inventory, fresh extraction and source snapshots; save final online browser-session handoff and prompt files in existing OntoKin folder, publish separate receipt, complete task only after every gate, release ownership and stop. Preserve C262 unchanged.",
+      "status": "not_done",
+      "evidence": []
+    }
+  ],
+  "plan": [
+    {
+      "id": "P01",
+      "title": "Scope and early recovery",
+      "requirements": [
+        "R01",
+        "R02",
+        "R03"
+      ],
+      "status": "in_progress",
+      "artifacts": [
+        "docs/workflow/tasks/C268/REQUIREMENTS.md",
+        "docs/workflow/tasks/C268/PLAN.md",
+        "docs/engineering/localized-repair-c268/EARLY-RECOVERY-RECEIPT.json"
+      ],
+      "verification": [
+        "Pinned startup, live reconciliation and confirmed early save"
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "Reader and independent controls",
+      "requirements": [
+        "R01",
+        "R02",
+        "R03",
+        "R04"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c268/endpoint_reader.py",
+        "docs/engineering/localized-repair-c268/test_endpoint_reader.py"
+      ],
+      "verification": [
+        "Positive and adversarial independent controls"
+      ]
+    },
+    {
+      "id": "P03",
+      "title": "Affected checks and exact review",
+      "requirements": [
+        "R04",
+        "R05"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c268/RESULTS.md",
+        "docs/engineering/localized-repair-c268/REVIEW.json"
+      ],
+      "verification": [
+        "Complete affected cohort and independent review"
+      ]
+    },
+    {
+      "id": "P04",
+      "title": "Integration and actual main",
+      "requirements": [
+        "R06"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c268/INTEGRATION.json"
+      ],
+      "verification": [
+        "Conditional merge, fresh affected main checks, retained ancestry and branch disposition"
+      ]
+    },
+    {
+      "id": "P05",
+      "title": "Verified saved handoff and closure",
+      "requirements": [
+        "R07"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c268/DELIVERY.json"
+      ],
+      "verification": [
+        "ZIP/extraction/source verification, confirmed save, external receipt and closure"
+      ]
+    }
+  ],
+  "checks": [],
+  "completion": {
+    "implementation_commit": null,
+    "merge_commit": null,
+    "pull_request": null,
+    "branch_disposition": "active",
+    "evidence": []
+  },
+  "next_action": "Confirm early recovery save, then implement and independently test the historical reader",
+  "session_phase": {
+    "id": "C268-historical-endpoint-20261119",
+    "starting_main": "b2ca38875bd7b43b85011bbc671ee9fee1682441",
+    "owner": "c268-root-c7dae94da130",
+    "declared_at_utc": "2026-11-19T14:12:24.197517+00:00",
+    "scope": "Implement, independently verify/review and integrate the finite historical endpoint reader; save verified delivery and stop",
+    "acceptance": "R01-R07 complete with actual integration/main checks and confirmed final saved handoff",
+    "stopping_point": "Stop after confirmed final delivery, or first unplanned scope expansion with honest partial handoff; no next phase",
+    "early_save_confirmed": false
+  },
+  "delivery": {
+    "required": true,
+    "kind": "browser-session",
+    "status": "pending",
+    "folder": "OntoKin"
+  }
+}
