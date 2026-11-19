@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "expected_parent": "6751f468fab959db18504bb4a25c39b6b72725a2",
+  "checked_at_utc": "2026-11-19T03:51:41.822858+00:00",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "evidence": "docs/workflow/tasks/STARTUP-READING-20261118/evidence/closure/workflow.log"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "evidence": "docs/workflow/tasks/STARTUP-READING-20261118/evidence/closure/documentation.log"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "evidence": "docs/workflow/tasks/STARTUP-READING-20261118/evidence/closure/whitespace.log"
+    }
+  ],
+  "reviewed_nonlease_instructions_and_protected_state_unchanged": true,
+  "limitation": "Closure metadata and lease disposition; substantive actual-main evidence remains pinned to the integration commit."
+}

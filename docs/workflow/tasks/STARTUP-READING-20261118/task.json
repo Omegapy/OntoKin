@@ -3,7 +3,7 @@
   "id": "STARTUP-READING-20261118",
   "title": "Compress startup reading without losing meaning",
   "intent": "Reduce repeated startup prose and load historical detail only when relevant",
-  "status": "in_progress",
+  "status": "done",
   "owner": "startup-reading-root-e2dfdb529a6f",
   "branch": "work/startup-reading-20261118",
   "base_sha": "ee509d5d7ce3a4c0fb61cdb9e2668575e3af370d",
@@ -55,8 +55,13 @@
       "id": "R05",
       "description": "Publish and deliver",
       "acceptance": "Publish an isolated reviewed change, conditionally integrate after live ownership reconciliation, verify actual main and branch disposition, save a verified handoff and external receipt, then stop",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/tasks/STARTUP-READING-20261118/INTEGRATION.json",
+        "docs/workflow/tasks/STARTUP-READING-20261118/evidence/actual-main/CHECKS.json",
+        "docs/workflow/tasks/STARTUP-READING-20261118/HANDOFF-VERIFICATION.json",
+        "docs/workflow/tasks/STARTUP-READING-20261118/DELIVERY.json"
+      ]
     }
   ],
   "plan": [
@@ -117,7 +122,7 @@
       "requirements": [
         "R05"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/workflow/tasks/STARTUP-READING-20261118/DELIVERY.json"
       ],
@@ -201,16 +206,18 @@
       "docs/engineering/startup-reading-20261118/REVIEW.md",
       "docs/engineering/startup-reading-20261118/CHECKS.json",
       "docs/workflow/tasks/STARTUP-READING-20261118/INTEGRATION.json",
-      "docs/workflow/tasks/STARTUP-READING-20261118/evidence/actual-main/CHECKS.json"
+      "docs/workflow/tasks/STARTUP-READING-20261118/evidence/actual-main/CHECKS.json",
+      "docs/workflow/tasks/STARTUP-READING-20261118/HANDOFF-VERIFICATION.json",
+      "docs/workflow/tasks/STARTUP-READING-20261118/DELIVERY.json"
     ],
     "completed_branch_head": "53482fe8bf0d6dce2df7c4cef3c743ce7c3fc4f1"
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "pending",
+    "status": "saved",
     "folder": "OntoKin",
-    "receipt": null
+    "receipt": "docs/workflow/tasks/STARTUP-READING-20261118/DELIVERY.json"
   },
-  "next_action": "Freeze and verify the browser-session ZIP, confirm saved identity, publish external receipt, close this documentation task and release the lease; do not expand C267"
+  "next_action": "This documentation task is complete. Stop this phase. In a fresh chat reconcile live state; CURRENT retains C267 final saved delivery as the first unmet product gate."
 }

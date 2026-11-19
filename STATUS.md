@@ -34,13 +34,10 @@ C264's recorded starting inventory had only main/no open PRs; after PR255, `work
 
 ## Main integration lease
 
-State: active startup-reading compression; C267 delivery remains pending separately.
-Owner: `startup-reading-root-e2dfdb529a6f`. Scope: [PR263](https://github.com/Omegapy/OntoKin/pull/263), documentation compression only.
-Observed parent: `ee509d5d7ce3a4c0fb61cdb9e2668575e3af370d`; acquisition uses an expected-head conditional update after live reconciliation.
-Expires at: 2026-11-19T04:07:42.000Z.
-Reserved shared paths: STATUS integration coordination and the ten startup instruction documents. CURRENT and C267 task/evidence are unchanged by this scope.
-Reconciled 2026-11-19 03:37:42 UTC: main, branch inventory, open PRs and C267 integration/task evidence. PR261 is merged and its branch absent; only main and this scope's branch remain. The prior C267 lease expired at 2026-11-19T03:35:08.851367+00:00; expiry alone is not proof of worker termination. No unresolved writes or recoverable branch were observed; external ephemeral work cannot be exhaustively inspected.
-Preserve C267's verified integration and outstanding delivery. Exact prior coordination is archived in `docs/engineering/startup-reading-20261118/before/STATUS.md.txt`; reconciliation evidence is in this scope's task record.
+State: released after PR263 integration, actual-main checks and confirmed saved delivery.
+Owner: none. Reserved paths: none.
+Completed scope: `STARTUP-READING-20261118`; branch deleted. The [task record](docs/workflow/tasks/STARTUP-READING-20261118/task.json), [coordination history](docs/workflow/tasks/STARTUP-READING-20261118/COORDINATION.json) and [delivery receipt](docs/workflow/tasks/STARTUP-READING-20261118/DELIVERY.json) retain exact identities and evidence.
+C267's verified integration and outstanding saved delivery remain unchanged; [CURRENT](docs/workflow/CURRENT.json) retains that active product task.
 
 ## Historical status
 
