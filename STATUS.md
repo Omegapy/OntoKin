@@ -34,10 +34,12 @@ C264's recorded starting inventory had only main/no open PRs; after PR255, `work
 
 ## Main integration lease
 
-State: released after PR263 integration, actual-main checks and confirmed saved delivery.
-Owner: none. Reserved paths: none.
-Completed scope: `STARTUP-READING-20261118`; branch deleted. The [task record](docs/workflow/tasks/STARTUP-READING-20261118/task.json), [coordination history](docs/workflow/tasks/STARTUP-READING-20261118/COORDINATION.json) and [delivery receipt](docs/workflow/tasks/STARTUP-READING-20261118/DELIVERY.json) retain exact identities and evidence.
-C267's verified integration and outstanding saved delivery remain unchanged; [CURRENT](docs/workflow/CURRENT.json) retains that active product task.
+State: held for C267 saved-delivery finalization only.
+Owner: `c267-delivery-24545fba506f`.
+Acquired: 2026-11-19T04:13:41.652787+00:00. Expires: 2026-11-19T04:43:41.652787+00:00.
+Starting main: `2cb08b08077806fd21e7eeaac373efc3e4501720`.
+Reserved paths: `STATUS.md`, `docs/workflow/CURRENT.json`, `docs/workflow/tasks/C267/`, and `docs/engineering/localized-repair-c267/evidence/delivery-20261118/` plus the new C267 delivery receipt.
+The implementation is already merged through PR261 and its branch is deleted. This lease covers verified delivery records and closure; it authorizes no new product implementation. Early recovery is confirmed saved; [phase record](docs/engineering/localized-repair-c267/evidence/delivery-20261118/PHASE.json) and [early receipt](docs/engineering/localized-repair-c267/evidence/delivery-20261118/EARLY-RECOVERY-RECEIPT.json) retain recovery.
 
 ## Historical status
 
