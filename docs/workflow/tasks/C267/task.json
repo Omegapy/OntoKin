@@ -63,8 +63,11 @@
       "id": "R06",
       "description": "Integration and lifecycle",
       "acceptance": "Acquire a bounded lease with expected-head conditional update, merge reviewed PR with expected head, read back actual main, execute applicable fresh main checks, verify retained ancestry and branch deletion or exact deletion_pending.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c267/INTEGRATION.json",
+        "docs/engineering/localized-repair-c267/ACTUAL-MAIN.md"
+      ]
     },
     {
       "id": "R07",
@@ -134,7 +137,7 @@
       "requirements": [
         "R06"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c267/INTEGRATION.json"
       ],
@@ -149,7 +152,7 @@
         "R07",
         "R06"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c267/DELIVERY.json"
       ],
@@ -185,9 +188,18 @@
       "evidence": [
         "docs/engineering/localized-repair-c267/evidence/finalization/FINALIZATION-REVIEW.json"
       ]
+    },
+    {
+      "name": "fresh actual-main affected cohort",
+      "command": "python3 -B docs/engineering/localized-repair-c267/evidence/run_checks.py --repo /workspace/scratch/e1562410a291/OntoKin --phase actual-main --output /workspace/scratch/e1562410a291/evidence/main --c267-methods 25",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c267/evidence/actual-main/CHECKS.json"
+      ]
     }
   ],
-  "next_action": "Run fresh affected actual-main cohort, retain results, then freeze/verify/save handoff and publish external receipt; stop",
+  "next_action": "Freeze and verify final browser-session handoff, confirm save, publish external receipt and close C267; then stop",
   "delivery": {
     "required": true,
     "kind": "browser-session",
@@ -228,6 +240,7 @@
       "new milestone"
     ],
     "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c267/evidence/finalization/EARLY-RECOVERY-RECEIPT.json"
+    "early_receipt": "docs/engineering/localized-repair-c267/evidence/finalization/EARLY-RECOVERY-RECEIPT.json",
+    "acceptance_checkpoint_progress": "Integration, fresh main checks and branch disposition complete; final saved delivery remains"
   }
 }

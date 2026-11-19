@@ -55,3 +55,7 @@ This is a finalization phase under the current PROTOCOL, not a new implementatio
 ## Integration checkpoint
 
 PR261 merged by expected-head merge at `7174e6796b38bac3fa83e6412e0944512d137434`, with the exact reviewed candidate tree and both expected parents. The candidate head is retained in main ancestry. Fully paginated live branch readback confirms automatic deletion of `work/c267-hinge-comparison`. The main lease is renewed at this substantive checkpoint. Fresh main checks and final delivery remain pending; issue260 stays open.
+
+## Fresh actual-main gate passed
+
+The separate verification worker completed the unchanged runner on `fe86962641eb76630c2f6055e431209b59cf1ad6`: eleven groups, 247 methods, fourteen corpus bindings, no failures/errors/skips. Source stayed clean and 139 inputs were unchanged. All 23 output hashes and both control input ZIPs were verified. [Actual-main evidence](../../../engineering/localized-repair-c267/evidence/actual-main/CHECKS.json) and [integration](../../../engineering/localized-repair-c267/INTEGRATION.json) now discharge R06/P04. R07/P05 remain open for the final freeze, save, receipt and closure. All workers have returned; no unknown remote write or active validation process remains.

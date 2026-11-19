@@ -1,0 +1,765 @@
+{
+  "schema": "ontokin.c267.main-checks-worker/0.1",
+  "worker": "/root/main_checks",
+  "phase": "finalization",
+  "status": "passed-complete",
+  "prepared_at": "2026-11-19T02:59:53.365055+00:00",
+  "ownership": {
+    "writes": [
+      "evidence/main/",
+      "audit/main-checks-worker.json"
+    ],
+    "repository_edits": false,
+    "git_mutations": false,
+    "remote_writes": false,
+    "nested_workers": false
+  },
+  "authorization": "One C267 finalization phase; integrate reviewed candidate, required fresh main checks, branch disposition and saved ZIP; no new product work; C262 unchanged. Director owns integration and delivery.",
+  "read_set": [
+    {
+      "path": "instructions/AGENTS.md",
+      "bytes": 15847,
+      "sha256": "f13c390d000cd28af555747985c68811d8cf92bd19f8e5e7d681e82a99f0b657"
+    },
+    {
+      "path": "instructions/ROLE.md",
+      "bytes": 3615,
+      "sha256": "a689bc001da2d8f355ada24ea20aff619797afa209de1d524995401ea0a6ea83"
+    },
+    {
+      "path": "instructions/docs/workflow/PROTOCOL.md",
+      "bytes": 13992,
+      "sha256": "20c35f1386bc50c41afa05ccccd44442ff6e77eab87fbb2e083405676cc2c0a8"
+    },
+    {
+      "path": "instructions/docs/workflow/registry.json",
+      "bytes": 1172,
+      "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536"
+    },
+    {
+      "path": "instructions/.agents/skills/ontokin-session/SKILL.md",
+      "bytes": 4427,
+      "sha256": "0014775c185a2472cf35830c81b354dce0a2c1db335066567fe934dae93bf339"
+    },
+    {
+      "path": "instructions/.agents/skills/ontokin-delivery/SKILL.md",
+      "bytes": 5047,
+      "sha256": "a1e4f78ac3349ab40bb9df13523fb7d54046109d7f5103979b6e8d756a3fd2e4"
+    },
+    {
+      "path": "instructions/docs/workflow/tasks/C267/PLAN.md",
+      "bytes": 3040,
+      "sha256": "8cb89d1ad1b317ef65ed3d436d3b15e28532c253962fcaea77bc283b3e71ec15"
+    },
+    {
+      "path": "instructions/docs/workflow/tasks/C267/REQUIREMENTS.md",
+      "bytes": 4896,
+      "sha256": "38cf5b2d4109840db5da42d1fcf6303eb40cebfba954a6e71d49b1cd5fda6aef"
+    },
+    {
+      "path": "instructions/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "bytes": 13604,
+      "sha256": "274f989927ca3de0fa1506f579e6872ac30ffca33df7b95ee7f23c4e1d2e62b2"
+    },
+    {
+      "path": "instructions/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "bytes": 11426,
+      "sha256": "a037c8584f5bd94beea9bbb83079c437de90556a9d3ec8ec6295f6c93e459a45"
+    },
+    {
+      "path": "OntoKin/docs/workflow/tasks/C267/PLAN.md",
+      "bytes": 4030,
+      "sha256": "4995263fb2d7f893a7298453937b615d76027711a1328b004ed0e62912e1c708"
+    },
+    {
+      "path": "OntoKin/docs/workflow/tasks/C267/REQUIREMENTS.md",
+      "bytes": 4896,
+      "sha256": "38cf5b2d4109840db5da42d1fcf6303eb40cebfba954a6e71d49b1cd5fda6aef"
+    },
+    {
+      "path": "OntoKin/docs/engineering/localized-repair-c267/evidence/run_checks.py",
+      "bytes": 12918,
+      "sha256": "4604a7b722ef1bc1099e1710a27cfb2212d144e035fe7383d869b6b43bb8b8b3"
+    }
+  ],
+  "read_gaps": [],
+  "candidate_commit": "ff1659a508d30a60fa6ca2d9214779dd7bcf1262",
+  "candidate_runner": {
+    "path": "docs/engineering/localized-repair-c267/evidence/run_checks.py",
+    "bytes": 12918,
+    "sha256": "4604a7b722ef1bc1099e1710a27cfb2212d144e035fe7383d869b6b43bb8b8b3",
+    "working_bytes_equal_committed": true
+  },
+  "candidate_checks": {
+    "identity": {
+      "path": "OntoKin/docs/engineering/localized-repair-c267/evidence/candidate/CHECKS.json",
+      "bytes": 80392,
+      "sha256": "181465e92fbe206210a8cb8f19afab81f306e6293b52003c0fe4e1b9d3c29d50"
+    },
+    "source_before": {
+      "commit": "1f369cb49f95f7df220ff91c78caa090dcbf2fcc",
+      "tree": "9ba7433a56ac71bd65831ed200dbd5009b19386d",
+      "tracked_dirty_status": "",
+      "all_dirty_status": "",
+      "shallow_checkout": false
+    },
+    "source_after": {
+      "commit": "1f369cb49f95f7df220ff91c78caa090dcbf2fcc",
+      "tree": "9ba7433a56ac71bd65831ed200dbd5009b19386d",
+      "tracked_dirty_status": "",
+      "all_dirty_status": "",
+      "shallow_checkout": false
+    },
+    "passed": true,
+    "complete": true,
+    "input_identity_unchanged": true
+  },
+  "expected": {
+    "groups": 11,
+    "methods": 247,
+    "corpus_bindings": 14,
+    "corpus_tasks": 3,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "expected_failures": 0,
+    "methods_by_group": {
+      "c253-corpus": null,
+      "c255-oracle": 31,
+      "c256-reader": 29,
+      "c257-ownership": 23,
+      "c258-follows": 28,
+      "c261-hinge_glb": 28,
+      "c265-source_hinges": 49,
+      "c266-binding": 34,
+      "c267-comparison": 25,
+      "workflow": null,
+      "documentation": null
+    },
+    "c266_calls": {
+      "api": 748,
+      "bound": 28,
+      "typed_refusals": 720
+    },
+    "candidate_c267_calls": {
+      "api": 123,
+      "agreement": 35,
+      "typed_refusals": 88
+    }
+  },
+  "execution_plan": {
+    "source": "Wait for Director supplied actual merge SHA and immutable checkout; independently verify clean matching HEAD/tree and unchanged committed runner before running.",
+    "command": [
+      "python3",
+      "-B",
+      "/workspace/scratch/e1562410a291/OntoKin/docs/engineering/localized-repair-c267/evidence/run_checks.py",
+      "--repo",
+      "/workspace/scratch/e1562410a291/OntoKin",
+      "--phase",
+      "actual-main",
+      "--output",
+      "/workspace/scratch/e1562410a291/evidence/main",
+      "--c267-methods",
+      "25"
+    ],
+    "runner_modifications": false,
+    "timeout_seconds_per_check": 300,
+    "environment_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "candidate_planned_checks": [
+      {
+        "name": "c253-corpus",
+        "expected_methods": null,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "docs/engineering/localized-repair-c253/verify_manifest.py"
+        ]
+      },
+      {
+        "name": "c255-oracle",
+        "expected_methods": 31,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "docs/engineering/localized-repair-c255",
+          "-p",
+          "test_oracle.py",
+          "-v"
+        ]
+      },
+      {
+        "name": "c256-reader",
+        "expected_methods": 29,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "docs/engineering/localized-repair-c256",
+          "-p",
+          "test_reader.py",
+          "-v"
+        ]
+      },
+      {
+        "name": "c257-ownership",
+        "expected_methods": 23,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "docs/engineering/localized-repair-c257",
+          "-p",
+          "test_ownership.py",
+          "-v"
+        ]
+      },
+      {
+        "name": "c258-follows",
+        "expected_methods": 28,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "docs/engineering/localized-repair-c258",
+          "-p",
+          "test_follows.py",
+          "-v"
+        ]
+      },
+      {
+        "name": "c261-hinge_glb",
+        "expected_methods": 28,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "docs/engineering/localized-repair-c261",
+          "-p",
+          "test_hinge_glb.py",
+          "-v"
+        ]
+      },
+      {
+        "name": "c265-source_hinges",
+        "expected_methods": 49,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "docs/engineering/localized-repair-c265",
+          "-p",
+          "test_source_hinges.py",
+          "-v"
+        ]
+      },
+      {
+        "name": "c266-binding",
+        "expected_methods": 34,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "docs/engineering/localized-repair-c266/test_hinge_binding.py",
+          "--evidence-dir",
+          "/workspace/scratch/ad39e933f0f3/evidence/candidate/c266-controls"
+        ]
+      },
+      {
+        "name": "c267-comparison",
+        "expected_methods": 25,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "docs/engineering/localized-repair-c267/test_hinge_compare.py",
+          "--evidence-dir",
+          "/workspace/scratch/ad39e933f0f3/evidence/candidate/c267-controls"
+        ]
+      },
+      {
+        "name": "workflow",
+        "expected_methods": null,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "tools/chat_workflow.py",
+          "check",
+          "--json"
+        ]
+      },
+      {
+        "name": "documentation",
+        "expected_methods": null,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+        ]
+      }
+    ],
+    "preservation": "Retain all actual outcomes, source/input identities, control inputs, logs and failures; never overwrite a failed attempt."
+  },
+  "available_environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "not_run": [
+    "full product aggregate",
+    "source conformance/export",
+    "native/visual/model trials",
+    "other Python compatibility",
+    "hosted workflows"
+  ],
+  "limits": [
+    "C267 finite declaration comparison only; historical admission and full H groups remain unqualified",
+    "Historical failures unchanged; this cohort is not a full product release",
+    "Tracked Git tree and explicit inputs bind verification; untracked evidence is disclosed"
+  ],
+  "blockers": [],
+  "next_action": "Director inspects evidence, publishes the verified main result, and completes authorized branch disposition and saved handoff. No additional tests or product work are assigned.",
+  "execution_started_at": "2026-11-19T03:06:02.247761+00:00",
+  "actual_main": {
+    "source_before": {
+      "commit": "fe86962641eb76630c2f6055e431209b59cf1ad6",
+      "tree": "88c5ca6ae3c2d16c3351f41e8e8ad66d9caebc9b",
+      "all_dirty_status": "",
+      "branch": "HEAD"
+    },
+    "director_observed_remote_commit": "fe86962641eb76630c2f6055e431209b59cf1ad6",
+    "director_observed_remote_tree": "88c5ca6ae3c2d16c3351f41e8e8ad66d9caebc9b",
+    "implementation_merge": "7174e6796b38bac3fa83e6412e0944512d137434",
+    "runner_sha256": "4604a7b722ef1bc1099e1710a27cfb2212d144e035fe7383d869b6b43bb8b8b3",
+    "source_after": {
+      "commit": "fe86962641eb76630c2f6055e431209b59cf1ad6",
+      "tree": "88c5ca6ae3c2d16c3351f41e8e8ad66d9caebc9b",
+      "all_dirty_status": ""
+    }
+  },
+  "changed_previously_read_candidate_files": [],
+  "execution_finished_at": "2026-11-19T03:07:28.120511+00:00",
+  "audit_finished_at": "2026-11-19T03:07:51.146362+00:00",
+  "actual_execution": {
+    "command": [
+      "python3",
+      "-B",
+      "/workspace/scratch/e1562410a291/OntoKin/docs/engineering/localized-repair-c267/evidence/run_checks.py",
+      "--repo",
+      "/workspace/scratch/e1562410a291/OntoKin",
+      "--phase",
+      "actual-main",
+      "--output",
+      "/workspace/scratch/e1562410a291/evidence/main",
+      "--c267-methods",
+      "25"
+    ],
+    "working_directory": "/workspace/scratch/e1562410a291",
+    "exit_code": 0,
+    "report_identity": {
+      "path": "evidence/main/CHECKS.json",
+      "bytes": 82680,
+      "sha256": "2e074c1ac1d8ef830cff65bcd1cf431bf5432801b18a383b690e8860822908db"
+    },
+    "environment": {
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "version_info": [
+        3,
+        12,
+        14,
+        "final",
+        0
+      ],
+      "implementation": "CPython",
+      "cache_tag": "cpython-312",
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "resolved_executable": {
+        "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "bytes": 30894944,
+        "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7"
+      },
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "uname": [
+        "Linux",
+        "224efdd57f4b",
+        "6.18.57",
+        "#1 SMP Tue Oct 20 21:56:04 UTC 2026",
+        "x86_64",
+        ""
+      ],
+      "python_build": [
+        "main",
+        "Aug 25 2026 14:00:49"
+      ],
+      "python_compiler": "Clang 22.1.3 ",
+      "runtime_bundle_version": "26.1117.11355",
+      "environment_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      }
+    },
+    "source_before": {
+      "commit": "fe86962641eb76630c2f6055e431209b59cf1ad6",
+      "tree": "88c5ca6ae3c2d16c3351f41e8e8ad66d9caebc9b",
+      "tracked_dirty_status": "",
+      "all_dirty_status": "",
+      "shallow_checkout": false
+    },
+    "source_after": {
+      "commit": "fe86962641eb76630c2f6055e431209b59cf1ad6",
+      "tree": "88c5ca6ae3c2d16c3351f41e8e8ad66d9caebc9b",
+      "tracked_dirty_status": "",
+      "all_dirty_status": "",
+      "shallow_checkout": false
+    },
+    "input_identity_unchanged": true,
+    "input_file_count": 139,
+    "output_files": [
+      {
+        "path": "c253-corpus.log",
+        "bytes": 430,
+        "sha256": "959f75f4a7887a689e2cdff8b90d84d9d058b28ed35ca2c56555b5a9e6734393"
+      },
+      {
+        "path": "c255-oracle.log",
+        "bytes": 4032,
+        "sha256": "110991c49b6b441aa34242168717d1b8bdfd74d2b70b4615c643371ff56d9349"
+      },
+      {
+        "path": "c256-reader.log",
+        "bytes": 3954,
+        "sha256": "33c310abdde80d69ad24217f068ca6420790588b34e88311e2ed61e8ddcb5ce5"
+      },
+      {
+        "path": "c257-ownership.log",
+        "bytes": 3342,
+        "sha256": "ab18f66eee16fc4e65f822131847e1c778a97d9aa8aadc84a55462a51fdd5d1c"
+      },
+      {
+        "path": "c258-follows.log",
+        "bytes": 3815,
+        "sha256": "afa1bde151c770ed68fde14b714b1f013258563e397c6bb39c9dec2557cdd69f"
+      },
+      {
+        "path": "c261-hinge_glb.log",
+        "bytes": 3485,
+        "sha256": "d15b6205c2913c993d3754fb6fb0aa0d37bdcda2b9eb1021a1359f3b59527be3"
+      },
+      {
+        "path": "c265-source_hinges.log",
+        "bytes": 7411,
+        "sha256": "96a49b12749119065f8d37dedff98d6bf1b80c54904165036e47c7a7a44297cf"
+      },
+      {
+        "path": "c266-binding.log",
+        "bytes": 4759,
+        "sha256": "ba19ddedbb0e4199ae6da8c79b8fe26633948b44e5184cd0239c54770cfd323f"
+      },
+      {
+        "path": "c266-controls/checked-code/binding_control_fixtures.py",
+        "bytes": 17102,
+        "sha256": "fc675e5da709a1f67892d929d90701833a62dd55f6fd0b9798b1c95496fca983"
+      },
+      {
+        "path": "c266-controls/checked-code/hinge_binding.py",
+        "bytes": 17639,
+        "sha256": "68849dbe3339c158eac7ec43fb1defcbd2993c37c6a0a5ee813d2da71fb03dda"
+      },
+      {
+        "path": "c266-controls/checked-code/test_hinge_binding.py",
+        "bytes": 29777,
+        "sha256": "582adecab5975b922ce123851f6b76b7d86e2947664d79818055c19e4ed3c26b"
+      },
+      {
+        "path": "c266-controls/inputs.zip",
+        "bytes": 1659474,
+        "sha256": "a013683b9b144f35c371d4b33544c5e3c107a1d29730b9afeed36ca444f94145"
+      },
+      {
+        "path": "c266-controls/results.json",
+        "bytes": 1203359,
+        "sha256": "8c5c88925d1c365c8e82bdf598a7017d8bcce873ac4c6c2b09af31ab96856623"
+      },
+      {
+        "path": "c266-controls/unittest.txt",
+        "bytes": 4666,
+        "sha256": "19345e3fd9b86a94c8073e6e9d7826874822efd8aeae035cdb3b4cb4601b5fe3"
+      },
+      {
+        "path": "c267-comparison.log",
+        "bytes": 3866,
+        "sha256": "6a7dc4a474028eb631cb07e3d841a9688ebae6b90f58e00d7dc309044895cf49"
+      },
+      {
+        "path": "c267-controls/checked-code/comparison_control_fixtures.py",
+        "bytes": 8620,
+        "sha256": "c107fae79ef28303fc9db63f7f8b9aec4041190e4caf8338742a180b073fcb3f"
+      },
+      {
+        "path": "c267-controls/checked-code/hinge_compare.py",
+        "bytes": 12382,
+        "sha256": "f98b9eab7a7f0cc75afa26eab0b672356d7e3275e3d713d16df214e68e69d71d"
+      },
+      {
+        "path": "c267-controls/checked-code/test_hinge_compare.py",
+        "bytes": 34659,
+        "sha256": "b7b7bd749eae6266d48f32b99d52631b9bbeddc606bd5f8d4e2ba9802786e3b7"
+      },
+      {
+        "path": "c267-controls/inputs.zip",
+        "bytes": 321902,
+        "sha256": "03019732a5b88e4be1fbf68fe9cb9019ff32b31d542958cfc98a962fa617d8e0"
+      },
+      {
+        "path": "c267-controls/results.json",
+        "bytes": 195656,
+        "sha256": "2a3bbf5a28d22ed7ef828ae4313d474dbc1a2d8b4bfe4fca2c071963c6ee9cfa"
+      },
+      {
+        "path": "c267-controls/unittest.txt",
+        "bytes": 3736,
+        "sha256": "c7d8bf94dc78f57d7a3f6836ab7314c3a6eed148df3fdb011df0abdf0974b86f"
+      },
+      {
+        "path": "documentation.log",
+        "bytes": 6608,
+        "sha256": "b2427ef2362e0c543098d8e8dfd61df4af9726104f68ea7bcd6324bd19d4234c"
+      },
+      {
+        "path": "workflow.log",
+        "bytes": 184,
+        "sha256": "974e108b5315e1588e678fd9d4d9cf85abe057722bfb709f1b3b72b3c6ba6f91"
+      }
+    ],
+    "all_output_hashes_rechecked": true,
+    "all_input_hashes_rechecked_after_execution": true,
+    "control_archives_crc_verified": true,
+    "groups": 11,
+    "methods": 247,
+    "corpus_bindings": 14,
+    "corpus_tasks": 3,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "expected_failures": 0,
+    "groups_summary": [
+      {
+        "name": "c253-corpus",
+        "result": "passed",
+        "exit_code": 0,
+        "methods": null,
+        "failure": null,
+        "assertions": {
+          "exit_zero": true,
+          "corpus_identity": true,
+          "same_source_commit_tree": true,
+          "tracked_source_remains_clean": true
+        }
+      },
+      {
+        "name": "c255-oracle",
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 31,
+        "failure": null,
+        "assertions": {
+          "exit_zero": true,
+          "expected_method_count": true,
+          "zero_failures_errors_skips_expected_failures": true,
+          "same_source_commit_tree": true,
+          "tracked_source_remains_clean": true
+        }
+      },
+      {
+        "name": "c256-reader",
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 29,
+        "failure": null,
+        "assertions": {
+          "exit_zero": true,
+          "expected_method_count": true,
+          "zero_failures_errors_skips_expected_failures": true,
+          "same_source_commit_tree": true,
+          "tracked_source_remains_clean": true
+        }
+      },
+      {
+        "name": "c257-ownership",
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 23,
+        "failure": null,
+        "assertions": {
+          "exit_zero": true,
+          "expected_method_count": true,
+          "zero_failures_errors_skips_expected_failures": true,
+          "same_source_commit_tree": true,
+          "tracked_source_remains_clean": true
+        }
+      },
+      {
+        "name": "c258-follows",
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 28,
+        "failure": null,
+        "assertions": {
+          "exit_zero": true,
+          "expected_method_count": true,
+          "zero_failures_errors_skips_expected_failures": true,
+          "same_source_commit_tree": true,
+          "tracked_source_remains_clean": true
+        }
+      },
+      {
+        "name": "c261-hinge_glb",
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 28,
+        "failure": null,
+        "assertions": {
+          "exit_zero": true,
+          "expected_method_count": true,
+          "zero_failures_errors_skips_expected_failures": true,
+          "same_source_commit_tree": true,
+          "tracked_source_remains_clean": true
+        }
+      },
+      {
+        "name": "c265-source_hinges",
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 49,
+        "failure": null,
+        "assertions": {
+          "exit_zero": true,
+          "expected_method_count": true,
+          "zero_failures_errors_skips_expected_failures": true,
+          "same_source_commit_tree": true,
+          "tracked_source_remains_clean": true
+        }
+      },
+      {
+        "name": "c266-binding",
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 34,
+        "failure": null,
+        "assertions": {
+          "exit_zero": true,
+          "expected_method_count": true,
+          "zero_failures_errors_skips_expected_failures": true,
+          "retained_controls_zero_failures_errors_skips": true,
+          "complete_expected_calls": true,
+          "same_source_commit_tree": true,
+          "tracked_source_remains_clean": true
+        }
+      },
+      {
+        "name": "c267-comparison",
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 25,
+        "failure": null,
+        "assertions": {
+          "exit_zero": true,
+          "expected_method_count": true,
+          "zero_failures_errors_skips_expected_failures": true,
+          "independent_controls_zero_failures_errors_skips": true,
+          "control_inputs_stable": true,
+          "control_call_accounting": true,
+          "same_source_commit_tree": true,
+          "tracked_source_remains_clean": true
+        }
+      },
+      {
+        "name": "workflow",
+        "result": "passed",
+        "exit_code": 0,
+        "methods": null,
+        "failure": null,
+        "assertions": {
+          "exit_zero": true,
+          "workflow_structure": true,
+          "same_source_commit_tree": true,
+          "tracked_source_remains_clean": true
+        }
+      },
+      {
+        "name": "documentation",
+        "result": "passed",
+        "exit_code": 0,
+        "methods": null,
+        "failure": null,
+        "assertions": {
+          "exit_zero": true,
+          "preservation_and_links": true,
+          "same_source_commit_tree": true,
+          "tracked_source_remains_clean": true
+        }
+      }
+    ],
+    "controls": {
+      "c266": {
+        "passed": true,
+        "testMethods": 34,
+        "apiCalls": 748,
+        "typedRefusals": 720,
+        "failures": [],
+        "errors": [],
+        "skipped": [],
+        "positive_calls": 28,
+        "input_archive_members": 741,
+        "inputs_identity": {
+          "path": "evidence/main/c266-controls/inputs.zip",
+          "bytes": 1659474,
+          "sha256": "a013683b9b144f35c371d4b33544c5e3c107a1d29730b9afeed36ca444f94145"
+        },
+        "results_identity": {
+          "path": "evidence/main/c266-controls/results.json",
+          "bytes": 1203359,
+          "sha256": "8c5c88925d1c365c8e82bdf598a7017d8bcce873ac4c6c2b09af31ab96856623"
+        }
+      },
+      "c267": {
+        "passed": true,
+        "testMethods": 25,
+        "apiCalls": 123,
+        "typedRefusals": 88,
+        "failures": [],
+        "errors": [],
+        "skipped": [],
+        "positive_calls": 35,
+        "input_archive_members": 210,
+        "inputs_identity": {
+          "path": "evidence/main/c267-controls/inputs.zip",
+          "bytes": 321902,
+          "sha256": "03019732a5b88e4be1fbf68fe9cb9019ff32b31d542958cfc98a962fa617d8e0"
+        },
+        "results_identity": {
+          "path": "evidence/main/c267-controls/results.json",
+          "bytes": 195656,
+          "sha256": "2a3bbf5a28d22ed7ef828ae4313d474dbc1a2d8b4bfe4fca2c071963c6ee9cfa"
+        }
+      }
+    }
+  }
+}

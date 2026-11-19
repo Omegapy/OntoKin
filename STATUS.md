@@ -15,8 +15,9 @@ C267 is integrated through [PR261](https://github.com/Omegapy/OntoKin/pull/261),
 merge `7174e6796b38bac3fa83e6412e0944512d137434`, after exact independent review.
 The finite comparator checks source/GLB hinge fields, complete joint sets and
 ordered endpoints under unchanged C260. Its completed branch is automatically
-deleted with retained ancestry verified. Required fresh actual-main checks and
-saved delivery remain pending; issue260 and the parent task stay open.
+deleted with retained ancestry verified. Fresh actual-main checks passed all 11 groups, 247 methods and 14 corpus
+bindings on CPython 3.12.14 / Linux. Required saved delivery remains pending;
+issue260 and the parent task stay open.
 [Integration checkpoint](docs/engineering/localized-repair-c267/INTEGRATION.json).
 Historical endpoint admission remains a separate queued interface.
 
@@ -100,7 +101,7 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-State: active C267 finalization; reviewed integration complete, main checks and delivery pending.
+State: active C267 finalization; integration and main checks verified, delivery pending.
 Owner: `c267-final-e1562410a291`. Scope: [issue260](https://github.com/Omegapy/OntoKin/issues/260), [PR261](https://github.com/Omegapy/OntoKin/pull/261).
 Observed parent: `007d4fdbf0119e75eff555c0681e28bf3a86bf75`; acquired by expected-head conditional update after live reconciliation.
 Expires at: 2026-11-19T03:35:08.851367+00:00.
