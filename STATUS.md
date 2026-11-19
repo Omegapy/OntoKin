@@ -36,12 +36,12 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: held. Owner: `c268-final-ee457d84062e`.
-Acquired UTC: `2026-11-19T17:47:05.000Z`; expires UTC: `2026-11-19T18:17:05.000Z`.
+State: held. Owner: `c268-recover-ec7099ae5111`.
+Acquired UTC: `2026-11-19T22:08:12.759674+00:00`; expires UTC: `2026-11-19T22:38:12.759674+00:00`.
 Reserved: STATUS/CURRENT, workflow memory/knowledge and C268 integration/delivery/task records.
-Scope: finish reviewed C268 candidate, conditional integration, actual-main checks and verified saved handoff; no next milestone.
-Expected acquisition parent: `409ef18e0cb992ad1ab771c1258e989d5ef1c765`; corrected candidate: `e6f55b73fa71953aa648bcd34711a6796a7346b6`.
-[Coordination](docs/engineering/localized-repair-c268/evidence/finalization-20261119/COORDINATION.json). Prior startup-compression lease was released; unknown writes reconciled.
+Scope: recover accepted C268 evidence, conditional integration, actual-main checks and verified saved handoff; no next milestone.
+Expected acquisition parent: `4370e54b93f65f01d1b5f3176562e3eb49f79b75`; corrected candidate: `e6f55b73fa71953aa648bcd34711a6796a7346b6`.
+[Coordination](docs/engineering/localized-repair-c268/evidence/recovery-finalization-20261119/COORDINATION.json). Prior lease expired; local checkpoint and all unknown outcomes reconciled.
 
 ## Historical status
 
