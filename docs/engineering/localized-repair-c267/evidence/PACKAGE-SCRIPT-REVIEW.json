@@ -1,0 +1,44 @@
+{
+  "schema": "ontokin.c267.package-script-review/1",
+  "reviewer": "/root/controls",
+  "reviewed_at": "2026-11-19T01:58:09.633516+00:00",
+  "verdict": "ready_for_exact_package_review",
+  "checked_inputs": {
+    "session_tools/build_handoff.py": {
+      "bytes": 21786,
+      "sha256": "201ea9379188c1a753510cc89a33b399b3cd3d06c2405c6db7250a97bab3efa8"
+    },
+    "session_tools/verify_handoff.py": {
+      "bytes": 12354,
+      "sha256": "0347202392c15f5a8d54361307f60978469571f319895c81ce5882cfb62da503"
+    },
+    "session_tools/PACKAGE-STATE.example.json": {
+      "bytes": 4172,
+      "sha256": "8ed9a7a55f2e275a38bcd303d2fe98a981159a8638391a8a4cf78d9d572cfdd0"
+    },
+    "OntoKin/docs/workflow/HANDOFF.md": {
+      "bytes": 9946,
+      "sha256": "d79e8c8ce9c16e237ac1305d97411ad9e82abec95af29fa8919106591665be12"
+    }
+  },
+  "material_script_findings": [],
+  "required_final_state_corrections": [
+    "Early recovery archive contains partial C267 control source; it is not the separately committed legacy C266 unpublished evidence."
+  ],
+  "verified_design": [
+    "Exact required root filenames and complete prompts",
+    "Safe canonical ZIP member paths, duplicate names and regular-file-only checks",
+    "Complete size/SHA-256 manifest and fresh extraction",
+    "Every repository snapshot compared with actual commit/path/blob/mode",
+    "Original C262 archive remains separately registered and omitted",
+    "C266 source handoff identity bound to actual recorded delivery",
+    "No future save receipt or self-referential archive hash inside package",
+    "Only R07/P05 delivery may remain open at freeze",
+    "Recovery payload hashes retained with exact consumed state and helper bytes"
+  ],
+  "limits": [
+    "No final ZIP exists in this review; no archive or delivery claim yet",
+    "Live main/PR/branch/lease must be independently observed for final state",
+    "Source mode assertion checks ZIP header mode equality, not extractall restoration; no selected executable source files observed"
+  ]
+}

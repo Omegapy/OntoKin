@@ -1,0 +1,26 @@
+{
+  "source_revision": "241abfe81be4e539070a848084d664c8f8672207",
+  "tree": "5fb7d71297c2319f6e739824b61e82d4608b4042",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": "python3 -B tools/chat_workflow.py check --json",
+      "exit_code": 0,
+      "result": "passed",
+      "output": "docs/engineering/localized-repair-c267/evidence/finalization/published-workflow.json",
+      "bytes": 184,
+      "sha256": "974e108b5315e1588e678fd9d4d9cf85abe057722bfb709f1b3b72b3c6ba6f91"
+    },
+    {
+      "name": "preservation",
+      "command": "python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "exit_code": 0,
+      "result": "passed",
+      "output": "docs/engineering/localized-repair-c267/evidence/finalization/published-preservation.json",
+      "bytes": 6608,
+      "sha256": "dc531b8880cc1efd1bb1a0e12f3644750115ee8dfacfff13965de8bb4df6a057"
+    }
+  ],
+  "passed": true,
+  "limits": "Workflow structure and documentation preservation; no product reexecution"
+}

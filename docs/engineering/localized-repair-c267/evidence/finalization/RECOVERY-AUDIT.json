@@ -1,0 +1,435 @@
+{
+  "schema": "ontokin.c267.startup-recovery-audit/1",
+  "task": "C267",
+  "auditor": "/root/recovery_audit",
+  "scope": "Read-only archive/startup audit; scientific comparator review is outside scope",
+  "recorded_at": "2026-11-19T02:51:25.585Z",
+  "read_set": [
+    "instructions/AGENTS.md",
+    "instructions/ROLE.md",
+    "instructions/docs/workflow/PROTOCOL.md",
+    "instructions/docs/workflow/HANDOFF.md",
+    "instructions/docs/workflow/tasks/C267/REQUIREMENTS.md",
+    "instructions/docs/workflow/tasks/C267/PLAN.md",
+    "instructions/docs/workflow/tasks/C267/task.json",
+    "instructions/STATUS.md",
+    "instructions/docs/workflow/CURRENT.json",
+    "instructions/READ-SET.json",
+    "startup_observations/recovery.json"
+  ],
+  "live_observations": {
+    "parent_observed_main": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+    "main_status_blob": "2c41d90fd86582b957f28a5210bcfe587b9c1e1d",
+    "main_status_matches_frozen_read_set": true,
+    "branches": [
+      "main",
+      "work/c267-hinge-comparison"
+    ],
+    "branch_pagination": "complete: second page empty with null cursor",
+    "pr": {
+      "number": 261,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "head": "work/c267-hinge-comparison",
+      "head_sha": "ff1659a508d30a60fa6ca2d9214779dd7bcf1262",
+      "reported_base_sha": "6122bd272c3f5b960ed5c1d6434ebf5f7f9b4020",
+      "url": "https://github.com/Omegapy/OntoKin/pull/261"
+    },
+    "issue": {
+      "number": 260,
+      "state": "open",
+      "comments": 0,
+      "url": "https://github.com/Omegapy/OntoKin/issues/260"
+    },
+    "issue_comments": [],
+    "integration_lease": "Prompt repair explicitly released its lease; previous C267 lease is not restored"
+  },
+  "candidate_file_readbacks": [
+    {
+      "path": "docs/engineering/localized-repair-c267/comparison_control_fixtures.py",
+      "git_blob_sha": "d8327ca58cb6993b353df7faad0c2eeec020115d",
+      "encoding": "utf-8",
+      "content_chars": 8620,
+      "ref": "ff1659a508d30a60fa6ca2d9214779dd7bcf1262"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c267/test_hinge_compare.py",
+      "git_blob_sha": "b43fc8b800491ec5a63490654d663ba53e885300",
+      "encoding": "utf-8",
+      "content_chars": 34659,
+      "ref": "ff1659a508d30a60fa6ca2d9214779dd7bcf1262"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c267/evidence/startup/legacy-c266-wip.zip",
+      "git_blob_sha": "3b2956fdf52d133ae0f5e8650970aae9f6106ec5",
+      "encoding": "base64",
+      "content_chars": 65706,
+      "ref": "ff1659a508d30a60fa6ca2d9214779dd7bcf1262"
+    }
+  ],
+  "known_remote_unknowns_from_recovery": [],
+  "former_ephemeral_workspace": "Not available; no claim that unknown unpublished work is absent. Saved C267 record reports no unknown operations/workers.",
+  "failures_and_limits": [
+    {
+      "operation": "Initial source-manifest introspection",
+      "result": "failed",
+      "error": "KeyError path because prompt archive uses member/repository_path schema",
+      "resolution": "Subsequent verifier handles both declared source-map schemas; no source data altered."
+    }
+  ],
+  "next_action": "Director completes current early saved recovery gate, verifies exact candidate evidence identities, reconciles current main without reverting prompt changes, acquires fresh expected-head lease, integrates and runs fresh main checks; then branch disposition, verified final save/receipt and stop.",
+  "archives": [
+    {
+      "path": "source_handoffs/OntoKin/OntoKin_Browser_Prompt_Fix_2026-11-18.zip",
+      "bytes": 98545,
+      "sha256": "026cd82c117438e95367aac91d062a51e4412f633a15503a5b4458d94f90beb8",
+      "member_count": 48,
+      "manifest_payload_count": 47,
+      "zip_crc_bad_member": null,
+      "unsafe_paths": [],
+      "duplicate_names": [],
+      "symlinks": [],
+      "missing_payload": [],
+      "extra_payload": [],
+      "fresh_extraction_mismatches": [],
+      "materialized_directory_mismatches": [],
+      "integrity_passed": true,
+      "required_handoff_roots_missing": [],
+      "package_type": "online browser-session handoff",
+      "declared_source_revision": "957bb4d6bdd7e8922c8fabdb313334846bc2d930",
+      "declared_source_tree": "65467dab93d232fe9dd49bc6f038aaab8180284a",
+      "source_map_exact_inventory": true,
+      "source_map_hash_mismatches": [],
+      "repository_snapshots": 36,
+      "source_git_revalidation": "not run in this startup audit: repository checkout not yet available; prior delivered archive records its source verification",
+      "checkpoint": {
+        "task": "CHAT-LENGTH-20261118",
+        "observed_main": "957bb4d6bdd7e8922c8fabdb313334846bc2d930",
+        "observed_main_tree": "65467dab93d232fe9dd49bc6f038aaab8180284a",
+        "source_revision": "957bb4d6bdd7e8922c8fabdb313334846bc2d930",
+        "merge_commit": "992a7afee6e1c01a983ccc69bdbbf1dbf35d4006",
+        "branch_disposition": "deleted",
+        "next_action": "Read the external DELIVERY.json. If confirmed, this prompt scope is complete; use the new prompts with the latest development handoff in a fresh chat. If absent or uncertain, reconcile the exact save and finish only this delivery."
+      }
+    },
+    {
+      "path": "source_handoffs/OntoKin/OntoKin_C266_Input_Binding_Handoff_2026-11-18.zip",
+      "bytes": 7336504,
+      "sha256": "8540ac67af254b87321c851d762750d82fa02eb213e571ec4c6533c98a954726",
+      "member_count": 179,
+      "manifest_payload_count": 178,
+      "zip_crc_bad_member": null,
+      "unsafe_paths": [],
+      "duplicate_names": [],
+      "symlinks": [],
+      "missing_payload": [],
+      "extra_payload": [],
+      "fresh_extraction_mismatches": [],
+      "materialized_directory_mismatches": [],
+      "integrity_passed": true,
+      "required_handoff_roots_missing": [],
+      "package_type": "online browser-session handoff",
+      "declared_source_revision": "4e9828392420fc2bdbf7688dd1951877d03f022c",
+      "repository_snapshots": 163,
+      "source_git_revalidation": "not run in this startup audit: repository checkout not yet available; prior delivered archive records its source verification",
+      "checkpoint": {
+        "task": "C266",
+        "observed_main": "4e9828392420fc2bdbf7688dd1951877d03f022c",
+        "observed_main_tree": "171175482c8d2da715a5a0b05c1cb96eda96a29c",
+        "merge_commit": "395c68be3f4c497fad2a1a41f0fc7c3a68fbc821",
+        "delivery_state": "save_pending",
+        "task_state_at_freeze": "in_progress",
+        "branch_disposition": "deleted_automatically_verified",
+        "next_action": "Reconcile live C266 delivery receipt. If pending, finish only save/receipt/closure. If complete, stop until a new continuation request."
+      }
+    },
+    {
+      "path": "source_handoffs/OntoKin/OntoKin_C267_Early_Recovery_Payload_2026-11-18.zip",
+      "bytes": 12536,
+      "sha256": "b7673076c65d9df2cdde5a7a1ccd47bf913b6165f45941023ce544b27aeda2c8",
+      "member_count": 4,
+      "manifest_payload_count": 3,
+      "zip_crc_bad_member": null,
+      "unsafe_paths": [],
+      "duplicate_names": [],
+      "symlinks": [],
+      "missing_payload": [],
+      "extra_payload": [],
+      "fresh_extraction_mismatches": [],
+      "materialized_directory_mismatches": [],
+      "integrity_passed": true,
+      "required_handoff_roots_missing": [
+        "CHECKPOINT.json",
+        "HANDOFF.md",
+        "HISTORICAL-DEPENDENCIES.json",
+        "NEXT-TASK.md",
+        "PROMPT-1-CONTINUE.md",
+        "PROMPT-2-RECOVER.md",
+        "README-START-HERE.md",
+        "RECOVERY-STATUS.md"
+      ],
+      "package_type": "early WIP payload; not a complete browser-session handoff",
+      "repository_snapshots": 0,
+      "source_git_revalidation": "not run in this startup audit: repository checkout not yet available; prior delivered archive records its source verification"
+    }
+  ],
+  "saved_recovery": {
+    "library_file_id": "libfile_fde3_f-6c4a05d9c50c8191ab373d4ea47f71ae_2ab2a24d43748191957f9bcc356b59de",
+    "version": "1",
+    "size_bytes": 2747,
+    "recorded_at": "2026-11-19T02:00:40.745892+00:00",
+    "stage": "verified candidate; finalization only",
+    "branch": "work/c267-hinge-comparison",
+    "branch_head": "ff1659a508d30a60fa6ca2d9214779dd7bcf1262",
+    "observed_main": "6122bd272c3f5b960ed5c1d6434ebf5f7f9b4020",
+    "lease_expiry": "2026-11-19T02:20:13.455553+00:00",
+    "unknown_operations": [],
+    "active_workers": {},
+    "payload_identity_matches": true
+  },
+  "wip_reconciliation": [
+    {
+      "saved_path": "unpublished-controls/comparison_control_fixtures.py",
+      "bytes": 8620,
+      "sha256": "c107fae79ef28303fc9db63f7f8b9aec4041190e4caf8338742a180b073fcb3f",
+      "git_blob_sha": "d8327ca58cb6993b353df7faad0c2eeec020115d",
+      "candidate_blob_sha": "d8327ca58cb6993b353df7faad0c2eeec020115d",
+      "identical_to_candidate": true,
+      "preservation": "Retain exact early ZIP as immutable historical WIP; do not apply over reviewed candidate."
+    },
+    {
+      "saved_path": "unpublished-controls/test_hinge_compare.py",
+      "bytes": 33088,
+      "sha256": "01bb2785dd5505e3c9160c76b45097db0a0ed6a02ede7ff8ffae47db7f7f7311",
+      "git_blob_sha": "f5978782fc47c36990b96e7907e59fb9ce9bbfeb",
+      "candidate_blob_sha": "b43fc8b800491ec5a63490654d663ba53e885300",
+      "identical_to_candidate": false,
+      "preservation": "Retain exact early ZIP as immutable historical WIP; do not apply over reviewed candidate."
+    }
+  ],
+  "legacy_c266_wip": {
+    "candidate_commit": "ff1659a508d30a60fa6ca2d9214779dd7bcf1262",
+    "path": "docs/engineering/localized-repair-c267/evidence/startup/legacy-c266-wip.zip",
+    "bytes": 48469,
+    "sha256": "4c214e90d73b45030d09205914cbcb238a50f9136111a19d26d3cb1444c8d3d5",
+    "git_blob_sha": "3b2956fdf52d133ae0f5e8650970aae9f6106ec5",
+    "remote_blob_matches": true,
+    "zip_crc_bad_member": null,
+    "members": [
+      "README.md",
+      "LOCAL-WORKTREE-AUDIT.json",
+      "RECOVERABILITY.json",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/RESULTS.md",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/REVIEW.md",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/evidence/second-recovery/C265-ARCHIVE-AUDIT.json",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/evidence/second-recovery/READ-SET.json",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/evidence/second-recovery/RECON.json",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/evidence/second-recovery/SAVED-RECOVERY-v3.json",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/evidence/second-recovery/SUPPLIED-RECOVERY-v2.json",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/evidence/second-recovery/candidate-audit/README.md",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/evidence/second-recovery/candidate-audit/RECOVERED-EVIDENCE-AUDIT-attempt01.json",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/evidence/second-recovery/candidate-audit/RECOVERED-EVIDENCE-AUDIT.json",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/evidence/second-recovery/candidate-audit/audit_recovered_checks.py",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/evidence/second-recovery/review/AUDIT.json",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/evidence/second-recovery/review/REVIEW.md",
+      "historical/530500a7d93f/docs/engineering/localized-repair-c266/evidence/second-recovery/review/audit_recovered_candidate.py",
+      "historical/530500a7d93f/docs/workflow/tasks/C266/PLAN.md",
+      "historical/530500a7d93f/docs/workflow/tasks/C266/RECOVERY.md",
+      "historical/530500a7d93f/docs/workflow/tasks/C266/task.json",
+      "historical/2593880e88fd/docs/engineering/localized-repair-c266/evidence/candidate/CHECKS.json",
+      "MANIFEST-SHA256.json"
+    ],
+    "purpose": "Inert preservation of exact historical C266 metadata; do not restore stale coordination fields."
+  },
+  "instructions_bindings": [
+    {
+      "path": "CHATGPT-START-HERE.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "e7eba5d27dad409fc11a6301863d2a8766af091b",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "AGENTS.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "601214c14afc3ba82f1a4e5b5ae405ea3662a1da",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "GOAL.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "5c195ee5b3fd52e81c7b5050368dff87a89dca03",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "STATUS.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "2c41d90fd86582b957f28a5210bcfe587b9c1e1d",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "ROLE.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "7c9b916501bcfa6e4a52c789f320fe1533cad803",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/workflow/registry.json",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "545e0619847b2fd767b93dfd0c81dd5a1f055a99",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/workflow/CURRENT.json",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "7c31ec3036bae63c31e46c79a9c7ee0b21de210c",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/workflow/PROTOCOL.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "b1479dd34db0072e9071427b56aea4a5449c095d",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/workflow/HANDOFF.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "b657fff9e42392112279a981a587d5b5181217c1",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": ".agents/skills/ontokin-session/SKILL.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "225158d464d4aeb046c64c167defe538c72dea0c",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": ".agents/skills/ontokin-delivery/SKILL.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "42e42ca1e5c2ab2af1327669f409a9cea6a76bd4",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": ".agents/skills/ontokin-learning/SKILL.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "a70e488dc55a09fe2a800fdb6946a6dfa22bf815",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "5fd35d5e3b4dd061c6258f1cd4f039e9cd0727b9",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "8ff5b738e19f150d5c37948437bfe265d35505f7",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/workflow/BROWSER-PROMPTS.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "7d0f575a1c188d2deb78e9631b099521a6c4dc39",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/workflow/tasks/C267/task.json",
+      "commit": "ff1659a508d30a60fa6ca2d9214779dd7bcf1262",
+      "expected_blob": "9833bb51bed4ee9ba03186c81b55efd4cb7e7cf2",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/workflow/tasks/C267/REQUIREMENTS.md",
+      "commit": "ff1659a508d30a60fa6ca2d9214779dd7bcf1262",
+      "expected_blob": "a280e280c2d2e60a8d18143d821b570efac828d5",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/workflow/tasks/C267/PLAN.md",
+      "commit": "ff1659a508d30a60fa6ca2d9214779dd7bcf1262",
+      "expected_blob": "6e869041794f0ab4138b3ac991ec164fa6a86160",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/workflow/prompts/CONTINUE.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "395362e1019f72c1de80965c71231f246bc67748",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/workflow/prompts/RECOVER.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "8f163ff43ce11bf554898393279a93600d6c6ec8",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/workflow/templates/SESSION.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "2dbf22cf9a3cc9d39523867e711aaad7005e5eeb",
+      "present": true,
+      "blob_matches": true
+    },
+    {
+      "path": "docs/workflow/templates/WORKER.md",
+      "commit": "007d4fdbf0119e75eff555c0681e28bf3a86bf75",
+      "expected_blob": "352bce9f8cdd10fa64f1d83d49dd0c6bda7730cc",
+      "present": true,
+      "blob_matches": true
+    }
+  ],
+  "c262": {
+    "library_file_id": "libfile_fde3_f-99755ba096208191b599cd0087fa0a19_2ab2a24d43748191957f9bcc356b59de",
+    "bytes": 532260846,
+    "sha256": "b8af544f730a4d1f741d47b56eb3fcf76147ed392a9ebb020f3d966f2f305c90",
+    "all_three_records_agree": true,
+    "archive_read_or_modified": false,
+    "full_historical_restore_revalidated": false
+  },
+  "reconciliation_required": [
+    "Saved C267 recovery and PR body cite main 6122bd... and owner c267-root-ad39e933f0f3 lease expiry 02:20; actual observed main 007d4f... contains later prompt repair and explicit lease release. Acquire a fresh conditional lease; never restore archived lease text.",
+    "Current main STATUS and CURRENT still describe implementation/review as pending, while exact candidate task marks P01-P03 and R01-R05 done. Reconcile current records using verified candidate evidence, without reimplementing completed work.",
+    "Current main prompt repair and delivery closure are newer than candidate base; integration must retain all later workflow documents and saved-delivery receipt. PR mergeable true is a live metadata observation, not proof of safe resulting contents.",
+    "C267 early test_hinge_compare.py differs from reviewed candidate; preserve its archive as historical unaccepted WIP, never overwrite candidate with it.",
+    "The C267 early payload has only three content files and a manifest. It is not the required nine-root browser-session handoff; current finalization needs its own verified early handoff and final handoff.",
+    "PR reported base SHA remains 6122bd...; use freshly observed main head and conditional mutation, not that stale display value."
+  ],
+  "evidence_reuse_requirements": [
+    "Check exact candidate implementation, dependency, fixture, test, harness command and applicable interpreter/platform identities before reusing candidate or independent-review results.",
+    "Compare every receipt-listed input and output against actual Git/staged payload; include ignored files and retain failed attempts.",
+    "Candidate and review equality does not replace required fresh resulting-main component/workflow/preservation checks.",
+    "Only main integrator may update STATUS integration coordination; issue260 stays open until branch disposition and confirmed final saved delivery/receipt.",
+    "Completed branch deletion requires rechecked head, durable retention and no active owner/dependent work; unavailable deletion is exact deletion_pending, never cleanup of unfinished/unknown branches."
+  ],
+  "blockers": [],
+  "pending_director_gates": [
+    "new phase early recovery ZIP saved and confirmed",
+    "exact candidate evidence reuse verification",
+    "fresh lease and safe current-main integration",
+    "fresh actual-main checks",
+    "branch disposition",
+    "verified final ZIP, confirmed save, external receipt and closure"
+  ],
+  "verdict": "Archive integrity and saved-recovery identity checks pass; no startup corruption blocker found. Proceed only through listed finalization gates.",
+  "finished_at": "2026-11-19T02:52:23.456415+00:00"
+}

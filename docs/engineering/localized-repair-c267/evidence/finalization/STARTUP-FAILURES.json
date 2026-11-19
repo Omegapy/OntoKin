@@ -1,0 +1,31 @@
+{
+  "failures": [
+    {
+      "operation": "initial GitHub fetch_commit",
+      "result": "INVALID_ARGUMENT from wrong argument names; no mutation",
+      "resolution": "Read current schema; corrected read succeeded"
+    },
+    {
+      "operation": "initial Library list",
+      "result": "INVALID_ARGUMENT from path instead of library_path; no mutation",
+      "resolution": "Read current schema; corrected listing succeeded"
+    },
+    {
+      "operation": "initial output projection",
+      "result": "Overlarge registry/commit output and partial GOAL output",
+      "resolution": "Required truncated GOAL section re-read from stored exact response; instruction read-set complete"
+    },
+    {
+      "operation": "premature local status while no-checkout hydration was running",
+      "result": "Reported absent files before checkout completed; no deletion/write action",
+      "resolution": "Checkout finished at expected candidate; clean tracked/untracked status confirmed"
+    },
+    {
+      "operation": "local instruction snapshot writing",
+      "result": "One extra trailing newline in 18 snapshots",
+      "resolution": "Removed only the extra byte; all Git blob IDs matched; no repository/source alteration"
+    }
+  ],
+  "unknown_remote_writes": [],
+  "unresolved_failure": null
+}
