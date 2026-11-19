@@ -11,30 +11,23 @@ tools own rendering, general simulation and gameplay. [GOAL](GOAL.md), the
 
 ## Current workflow and next action
 
-C266's source/program/object provenance binding prerequisite is integrated
-through [PR259](https://github.com/Omegapy/OntoKin/pull/259), merge
-`395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`. Fresh actual-main checks pass ten groups,
-222 methods and fourteen corpus bindings, with unchanged verification inputs.
-The [integration receipt](docs/engineering/localized-repair-c266/INTEGRATION.json)
-retains review, evidence and verified automatic deletion of the completed
-`work/c266-hinge-input-binding` branch. Only main remains.
+C267 is active under [issue260](https://github.com/Omegapy/OntoKin/issues/260)
+on `work/c267-hinge-comparison`. It implements the finite C260 source/artifact
+hinge-field, complete joint-set and ordered-endpoint comparator after C266's
+input binding. [Requirements](docs/workflow/tasks/C267/REQUIREMENTS.md) and
+[plan](docs/workflow/tasks/C267/PLAN.md) define its bounded acceptance.
+Implementation, independent review, integration and saved delivery remain open.
+Historical endpoint admission is a separate queued interface.
 
-The verified [C266 session handoff](https://chatgpt.com/library?file_id=libfile_fde3_f-f8f7afe884748191be8014ddce2f0f41_2ab2a24d43748191957f9bcc356b59de&account_id=personal) and both standalone prompts
-are saved. [Delivery receipt](docs/engineering/localized-repair-c266/DELIVERY.json),
-[package verification](docs/engineering/localized-repair-c266/PACKAGE-VERIFICATION.json)
-and [independent package review](docs/engineering/localized-repair-c266/PACKAGE-REVIEW.md)
-confirm 178 payload files and 163 exact Git snapshots. C266 is complete.
+C266 is complete through [PR259](https://github.com/Omegapy/OntoKin/pull/259),
+merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`, with ten passing actual-main
+groups, 222 methods and fourteen corpus bindings. Its completed branch is
+deleted and [saved delivery](docs/engineering/localized-repair-c266/DELIVERY.json)
+remains unchanged. C265, C264 and C263 are also complete in their recorded scopes.
 
-Next action: wait for new owner direction. A later continuation may select
-one bounded hinge-field/set/endpoint comparison step; historical admission
-remains a separate interface. No next milestone was started.
-
-C265 is complete through [PR257](https://github.com/Omegapy/OntoKin/pull/257),
-merge `d602adee52bd5913dc86fdb3a29e2c4c653a4ed9`; its completed branch is deleted
-and [verified saved v2 delivery](docs/engineering/localized-repair-c265/DELIVERY.json)
-remains unchanged. C264 required-session delivery and C263 workflow integration
-also remain complete. Use [CHATGPT-START-HERE](CHATGPT-START-HERE.md),
-[CURRENT](docs/workflow/CURRENT.json) and the [handoff contract](docs/workflow/HANDOFF.md).
+Use [CHATGPT-START-HERE](CHATGPT-START-HERE.md),
+[CURRENT](docs/workflow/CURRENT.json) and [HANDOFF](docs/workflow/HANDOFF.md).
+Stop after C267's verified saved handoff; do not start historical admission.
 
 ## Product state and remaining gates
 
@@ -105,12 +98,12 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-State: released after verified C266 integration, branch disposition and saved delivery.
-Former owner: `c266-final-bb514ffca344-4`. Released at: 2026-11-19T01:39:01.627310+00:00.
-Completed scope: [issue258](https://github.com/Omegapy/OntoKin/issues/258).
-The exact implementation head is retained in merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`.
-No active repository writer, unknown ref operation or remaining C266 gate is known.
-Future work must reconcile current main and acquire its own conditional lease.
+State: active C267 integration acquisition.
+Owner: `c267-root-ad39e933f0f3`. Scope: [issue260](https://github.com/Omegapy/OntoKin/issues/260).
+Observed parent: `47681b1e4c442a580910dba1fc5a823dc86ee6b0`. Acquired by expected-head conditional update.
+Expires at: 2026-11-19T02:20:13.455553+00:00.
+Reserved shared paths: STATUS.md, docs/workflow/CURRENT.json, C267 task/evidence and selected memory records.
+C266 is complete. C267 implements one finite hinge comparison; historical admission remains separate.
 
 ## Historical status
 
