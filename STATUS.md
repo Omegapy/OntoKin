@@ -36,10 +36,9 @@ C264's recorded starting inventory had only main/no open PRs; after PR255, `work
 
 ## Main integration lease
 
-State: held for C268 scope publication, integration and delivery.
-Owner: `c268-root-c7dae94da130`. Acquired at UTC: 2026-11-19T14:12:24.197517+00:00. Expires at UTC: 2026-11-19T14:58:39.000Z.
-Renewed at UTC: 2026-11-19T14:28:39Z after independent controls and the clean 12-group/281-method candidate checkpoint `734789521f82248d39b623c33aae9d3284ab4bce`; PR266 remains under independent review.
-Expected main at acquisition: `b2ca38875bd7b43b85011bbc671ee9fee1682441`. Reserved paths: STATUS.md, docs/workflow/CURRENT.json, docs/workflow/tasks/C268/, docs/engineering/localized-repair-c268/, docs/workflow/memory.json, docs/workflow/knowledge.json and docs/README.md. Independent workers own only their assigned new files. Acquisition is valid only after successful expected-head update and readback.
+State: held for the owner's startup-instruction compression request; C268 work remains separate and untouched.
+Owner: `startup-compact-9c7a0c0e0469`. Acquired at UTC: 2026-11-19T15:20:05.261617+00:00. Expires at UTC: 2026-11-19T15:50:05.261617+00:00.
+Expected main at acquisition: `7ff41e071fb694dadf1ba256b13168e1a4083926`. Reserved paths: STATUS.md, docs/workflow/tasks/STARTUP-COMPACT-20261119/, docs/engineering/startup-compact-20261119/ and the explicitly assigned startup instruction files. CURRENT and C268 task/evidence remain unchanged. Prior C268 lease expired at 2026-11-19T14:58:39.000Z; its published branch and saved recovery remain available. Only a successful expected-head update and readback establishes this lease.
 
 ## Historical status
 
