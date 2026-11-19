@@ -57,6 +57,19 @@
       "relevant_ci_runs": 0,
       "unknown_writes": "none; final save outcome recovered; no retry performed"
     },
-    "verification": "Pending conditional acquisition and readback; later closure record must identify actual commit"
+    "verification": "Successful expected-head update from 46485a6019648045d5a41d8a9254c7e84eab3128 and exact main readback",
+    "commit": "93dab01407cec3fbc13aec37e723f0828cf3453f",
+    "tree": "a4b646ba3302aa2ac1ab530fc5d5c342f7d9d6ec"
+  },
+  "release": {
+    "at": "2026-11-19T16:21:41.819983+00:00",
+    "owner": "startup-compact-9c7a0c0e0469",
+    "expected_main": "93dab01407cec3fbc13aec37e723f0828cf3453f",
+    "prior_live_lease_text": "## Main integration lease\n\nState: held for confirmed delivery receipt and closure of the owner's startup-instruction compression request; C268 remains separate and untouched.\nOwner: `startup-compact-9c7a0c0e0469`. Acquired at UTC: 2026-11-19T16:19:47.897029+00:00. Expires at UTC: 2026-11-19T16:49:47.897029+00:00.\nCheckpoint: PR267 merged and resulting main verified; final handoff independently verified and saved with both prompts. Previous lease expired at 2026-11-19T16:17:22.743233+00:00; reconciled unchanged live main, retained C268 branch, merged PR, deleted compression branch and no outstanding unknown writes before reacquisition.\nExpected main at acquisition: `46485a6019648045d5a41d8a9254c7e84eab3128`. Reserved paths: STATUS.md, docs/workflow/tasks/STARTUP-COMPACT-20261119/ and docs/engineering/startup-compact-20261119/. CURRENT and C268 task/evidence remain unchanged. Only a successful expected-head update and readback establishes this lease.\n\n",
+    "reason": "All scoped requirements, actual integration/main checks, final package independent review and three confirmed saves complete",
+    "delivery_receipt": "docs/engineering/startup-compact-20261119/DELIVERY.json",
+    "reserved_paths": [],
+    "c268_preserved": true,
+    "publication_boundary": "Release becomes live when this closure commit is conditionally published and read back; actual closure SHA is discoverable in Git history, not invented inside its own payload"
   }
 }

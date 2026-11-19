@@ -3,7 +3,7 @@
   "id": "STARTUP-COMPACT-20261119",
   "title": "Compact browser startup instructions without information loss",
   "intent": "Owner explicitly redirects this session to shorten startup Markdown except README; keep original meaning and exact recoverability",
-  "status": "in_progress",
+  "status": "done",
   "owner": "startup-compact-9c7a0c0e0469",
   "branch": "work/startup-compact-20261119",
   "base_sha": "7ff41e071fb694dadf1ba256b13168e1a4083926",
@@ -50,8 +50,13 @@
       "id": "R05",
       "description": "Publication and delivery",
       "acceptance": "Publish reviewed scoped changes using conditional nonforce integration after reconciling prior lease/unknown writes. Preserve active C268 work/state. Verify/save final handoff with external receipt and report exact next action.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/startup-compact-20261119/INTEGRATION.json",
+        "docs/engineering/startup-compact-20261119/DELIVERY.json",
+        "docs/engineering/startup-compact-20261119/FINAL-PACKAGE-VERIFICATION.json",
+        "docs/engineering/startup-compact-20261119/REVIEW-CORRECTIONS.json"
+      ]
     },
     {
       "id": "R06",
@@ -117,7 +122,7 @@
       "requirements": [
         "R05"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/startup-compact-20261119/DELIVERY.json"
       ],
@@ -181,10 +186,15 @@
     "evidence": [
       "docs/engineering/startup-compact-20261119/INTEGRATION.json",
       "docs/engineering/startup-compact-20261119/REVIEW.json",
-      "docs/engineering/startup-compact-20261119/evidence/main/CHECKS.json"
-    ]
+      "docs/engineering/startup-compact-20261119/evidence/main/CHECKS.json",
+      "docs/engineering/startup-compact-20261119/DELIVERY.json",
+      "docs/engineering/startup-compact-20261119/FINAL-PACKAGE-VERIFICATION.json",
+      "docs/engineering/startup-compact-20261119/REVIEW-CORRECTIONS.json"
+    ],
+    "all_requirements_satisfied": true,
+    "completed_at_utc": "2026-11-19T16:21:41.819983+00:00"
   },
-  "next_action": "Verify and save final startup-compression handoff; publish external receipt, close task and release lease",
+  "next_action": "Start a fresh chat using the saved handoff and continuation prompt; reconcile live C268 branch, review state, saved recovery and first unmet gate. Startup compression is complete.",
   "session_phase": {
     "id": "STARTUP-COMPACT-20261119",
     "starting_main": "7ff41e071fb694dadf1ba256b13168e1a4083926",
@@ -199,8 +209,15 @@
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "pending",
-    "folder": "OntoKin"
+    "status": "saved",
+    "folder": "OntoKin",
+    "receipt": "docs/engineering/startup-compact-20261119/DELIVERY.json",
+    "artifacts": [
+      "libfile_fde3_f-c655f11e8fb48191b6c381812c9fd463_2ab2a24d43748191957f9bcc356b59de",
+      "libfile_fde3_f-a2c3e7dedb008191bb98f1bb61b5a6b0_2ab2a24d43748191957f9bcc356b59de",
+      "libfile_fde3_f-6c8c6e04bd5081919f49213aa9abc0dd_2ab2a24d43748191957f9bcc356b59de"
+    ],
+    "packaged_git_revision": "46485a6019648045d5a41d8a9254c7e84eab3128"
   },
   "method_decisions": [
     {

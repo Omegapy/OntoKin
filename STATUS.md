@@ -10,7 +10,7 @@ C267 complete within finite declaration comparison: [PR261](https://github.com/O
 
 C266 complete: [PR259](https://github.com/Omegapy/OntoKin/pull/259), merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`; **10 passing main groups, 222 methods, 14 bindings**; branch deleted; [saved delivery](docs/engineering/localized-repair-c266/DELIVERY.json) unchanged. C265/C264/C263 complete within recorded scopes.
 
-Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json), [HANDOFF](docs/workflow/HANDOFF.md). C267 delivery complete; November 19 continuation selected C268 historical endpoint admission. Stop after its one-phase verified saved handoff. Separate owner-requested startup compression does not complete or alter C268.
+Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json), [HANDOFF](docs/workflow/HANDOFF.md). C267 delivery complete; November 19 continuation selected C268 historical endpoint admission. Stop after its one-phase verified saved handoff. Owner-requested startup compression is delivered; C268 remains unchanged.
 
 ## Product state and remaining gates
 
@@ -36,10 +36,9 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: held for confirmed delivery receipt and closure of the owner's startup-instruction compression request; C268 remains separate and untouched.
-Owner: `startup-compact-9c7a0c0e0469`. Acquired at UTC: 2026-11-19T16:19:47.897029+00:00. Expires at UTC: 2026-11-19T16:49:47.897029+00:00.
-Checkpoint: PR267 merged and resulting main verified; final handoff independently verified and saved with both prompts. Previous lease expired at 2026-11-19T16:17:22.743233+00:00; reconciled unchanged live main, retained C268 branch, merged PR, deleted compression branch and no outstanding unknown writes before reacquisition.
-Expected main at acquisition: `46485a6019648045d5a41d8a9254c7e84eab3128`. Reserved paths: STATUS.md, docs/workflow/tasks/STARTUP-COMPACT-20261119/ and docs/engineering/startup-compact-20261119/. CURRENT and C268 task/evidence remain unchanged. Only a successful expected-head update and readback establishes this lease.
+State: released at UTC: 2026-11-19T16:21:41.819983+00:00. Owner: none; reserved paths: none.
+Last holder: `startup-compact-9c7a0c0e0469`; [startup compression delivery](docs/engineering/startup-compact-20261119/DELIVERY.json) complete, PR267 merged, final handoff and both prompts saved. Acquisition/renewal/release evidence: [COORDINATION](docs/engineering/startup-compact-20261119/COORDINATION.json).
+C268 remains active and untouched on `work/c268-historical-endpoint` at `b799b7462bdc6a04464a2f903cec8dcabd659fa1`; its next integrator must reconcile live state and acquire a new lease.
 
 ## Historical status
 

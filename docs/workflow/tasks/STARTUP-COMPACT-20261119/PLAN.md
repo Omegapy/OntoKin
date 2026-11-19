@@ -23,3 +23,5 @@ Director owns task/evidence, Git publication, lease and packaging. Disjoint writ
 Checks: exact before-image and README hashes; links/anchors; obligation coverage; before/after size and available-tokenizer counts; workflow and documentation verification on candidate and actual main. No runtime changes or broad product qualification. Stop after saved handoff; a partial phase retains unmet gates.
 
 A reversible packet experiment belongs to this phase and is preserved with 23 focused tests and independent review; it is excluded from active startup after measured low savings. Final production change is documentation only: compact records and mandatory-source deduplication, plus explicit omission of empty STATUS navigation-anchor lines from routine readout. Anchor bytes remain unchanged and required for history/link work. Full-file and readout metrics remain separate.
+
+Completion: P01–P04 and R01–R06 are done. PR267 is merged; the verified final handoff and both prompts are saved. See `docs/engineering/startup-compact-20261119/DELIVERY.json` for exact source, artifact identities, frozen-boundary clarification and next use. C268 remains unchanged.

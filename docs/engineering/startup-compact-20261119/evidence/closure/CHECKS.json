@@ -1,0 +1,53 @@
+{
+  "source_parent": "93dab01407cec3fbc13aec37e723f0828cf3453f",
+  "candidate": "Closure working tree; payload hashes below bind checked documentation/task/receipt state. Actual resulting main must be read back and checked before reporting completion.",
+  "observed_at_utc": "2026-11-19T16:22:17.215967+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "checks": [
+    {
+      "name": "preservation",
+      "command": [
+        "python3",
+        "docs/engineering/startup-compact-20261119/verify_preservation.py"
+      ],
+      "returncode": 0,
+      "log": "docs/engineering/startup-compact-20261119/evidence/closure/preservation.log",
+      "log_sha256": "cdbae5c6a8b18ea07c00cc2e4c446e4dbf6b841e782dc91eccbbd1bfbb644504"
+    },
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "returncode": 0,
+      "log": "docs/engineering/startup-compact-20261119/evidence/closure/workflow.log",
+      "log_sha256": "27e66beadc761fcafcf57c2307e2b145d314e467eeaab98947ccb7ddc975449a"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "returncode": 0,
+      "log": "docs/engineering/startup-compact-20261119/evidence/closure/documentation.log",
+      "log_sha256": "39fc94e97e4ee28257afc3e36ef100a252b6c24dcb84c20f8103f568c5b3ca67"
+    }
+  ],
+  "passed": true,
+  "scope": "Closure metadata, saved receipt, review identity correction, task state and lease release. Existing implementation/main review and tests remain linked; no product implementation changes.",
+  "checked_payload_sha256": {
+    "STATUS.md": "6fab300456c641972595d1eeda874c0550ead3c339f455d11805fa5d601b9d32",
+    "docs/workflow/tasks/STARTUP-COMPACT-20261119/task.json": "42468db15c5befc060a2ca2f8024b5f083872b140bd74ce9c0116c1922343dd2",
+    "docs/workflow/tasks/STARTUP-COMPACT-20261119/PLAN.md": "2262f26f72c3b0d8875bf713a5657f2cd40684f4dbe194612cb76582d208afd9",
+    "docs/engineering/startup-compact-20261119/COORDINATION.json": "53d6c1c0339dc5488f110a10abb239f78c557d6a0f9eed6ea5864ed5e5e0e406",
+    "docs/engineering/startup-compact-20261119/DELIVERY.json": "f5590459e8a52a16f907a405550c5c2c42a18d8c4b1b3a0ef9ef4be7d78b355c",
+    "docs/engineering/startup-compact-20261119/REVIEW.json": "32d04dc09d5f752c949c0a372e8a5c2378ad12a61dfd846948458dace7f88bd9",
+    "docs/engineering/startup-compact-20261119/REVIEW-CORRECTIONS.json": "db4150387321c6964ad08b1a89e885a0f8664a30440ea557ac0baebae5056462",
+    "docs/engineering/startup-compact-20261119/FINAL-PACKAGE-VERIFICATION.json": "ad916141f8ec4c0a0ae80acb1e052d1ee6da79bb8840afed3729bfe51512b3da",
+    "docs/engineering/startup-compact-20261119/RESULTS.md": "fc0b3c0fa35119ed5718a46d5df92397d11436c62da05ae60330f15494acb8f8"
+  }
+}

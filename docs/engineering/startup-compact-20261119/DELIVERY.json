@@ -1,6 +1,86 @@
 {
   "schema_version": 1,
-  "status": "pending",
-  "kind": "delivery",
-  "next_action": "Complete actual gate and replace this explicit pending record; no success claimed"
+  "status": "saved",
+  "task": "STARTUP-COMPACT-20261119",
+  "kind": "online_browser_session",
+  "saved_at_utc": "2026-11-19T16:16:08.070114+00:00",
+  "receipt_recorded_at_utc": "2026-11-19T16:21:41.819983+00:00",
+  "packaged_git_revision": "46485a6019648045d5a41d8a9254c7e84eab3128",
+  "packaged_git_tree": "30f85d3a38c1ff5ea6138ad9ba91bbd75ec233a8",
+  "implementation_commit": "8c3a32de825f688d1de0f97491a70ee16c1eb0fa",
+  "merge_commit": "e22e60dbba4b3483d0325b0d2d2794ed4b067946",
+  "pull_request": "https://github.com/Omegapy/OntoKin/pull/267",
+  "artifacts": [
+    {
+      "name": "OntoKin_Startup_Compression_Handoff_2026-11-19.zip",
+      "kind": "browser_session_zip",
+      "status": "saved",
+      "library_file_id": "libfile_fde3_f-c655f11e8fb48191b6c381812c9fd463_2ab2a24d43748191957f9bcc356b59de",
+      "version_id": "0",
+      "size_bytes": 290419,
+      "sha256": "9ddf215d854c40712de986c1ffbaeccffc1e389fc50a3598a5985a685d1514af",
+      "saved_at_utc": "2026-11-19T16:16:07.956779+00:00",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-c655f11e8fb48191b6c381812c9fd463_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+    },
+    {
+      "name": "OntoKin_Continue_After_Startup_Compression.md",
+      "kind": "continuation_prompt",
+      "status": "saved",
+      "library_file_id": "libfile_fde3_f-a2c3e7dedb008191bb98f1bb61b5a6b0_2ab2a24d43748191957f9bcc356b59de",
+      "version_id": "0",
+      "size_bytes": 1646,
+      "sha256": "c33e9d1afcd587925a188308a3d02e14f8ce6dd8a8a5f26338291863886753ab",
+      "saved_at_utc": "2026-11-19T16:16:07.936561+00:00",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-a2c3e7dedb008191bb98f1bb61b5a6b0_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+    },
+    {
+      "name": "OntoKin_Recover_After_Startup_Compression.md",
+      "kind": "recovery_prompt",
+      "status": "saved",
+      "library_file_id": "libfile_fde3_f-6c8c6e04bd5081919f49213aa9abc0dd_2ab2a24d43748191957f9bcc356b59de",
+      "version_id": "0",
+      "size_bytes": 1872,
+      "sha256": "3303d3d3a2d9956bc385f7e87f6262bbd18229bea856f2ec25b469cc2901d5a8",
+      "saved_at_utc": "2026-11-19T16:16:08.070114+00:00",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-6c8c6e04bd5081919f49213aa9abc0dd_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+    }
+  ],
+  "verification": {
+    "independent_package_review": "docs/engineering/startup-compact-20261119/FINAL-PACKAGE-VERIFICATION.json",
+    "passed": true,
+    "check_groups": 26,
+    "manifest_payload_entries": 84,
+    "repository_snapshots": 76,
+    "packaged_revision_checks": "docs/engineering/startup-compact-20261119/evidence/main/CHECKS.json",
+    "review_corrections": "docs/engineering/startup-compact-20261119/REVIEW-CORRECTIONS.json",
+    "historical_metadata_qualification": "Frozen REVIEW.json F01 first_candidate_sha256 was captured after concurrent correction and therefore identifies the corrected candidate. Live review sets the unavailable independently frozen pre-correction hash to null; the external correction preserves the original value and its actual meaning. Final instruction bytes and editorial acceptance are unaffected."
+  },
+  "save_outcome_reconciliation": {
+    "result": "All three saves confirmed individually by helper-written file ID/version attributes and matching Library filename, size, version and creation-time metadata",
+    "retry_performed": false,
+    "reason": "Final upload output was unavailable after context truncation; successful outcomes recovered before any further mutation"
+  },
+  "branch_disposition": {
+    "branch": "work/startup-compact-20261119",
+    "status": "deleted",
+    "verified": true,
+    "retained_by_merge": "e22e60dbba4b3483d0325b0d2d2794ed4b067946"
+  },
+  "frozen_boundary": "ZIP freezes source 46485a6019648045d5a41d8a9254c7e84eab3128 before confirmed save, external receipt, review metadata correction, task closure and lease release. Its pending delivery/held lease snapshots are historical. Read this live external receipt and current STATUS/task before acting; do not rebuild the ZIP to insert future closure SHAs. Discover actual closure revision through Git history.",
+  "parent_acceptance": {
+    "all_startup_compression_requirements_satisfied": true,
+    "startup_compression_task_complete": true,
+    "c268_completion_claimed": false,
+    "c268_current_task_and_evidence_unchanged": true,
+    "c268_branch": "work/c268-historical-endpoint",
+    "c268_branch_sha": "b799b7462bdc6a04464a2f903cec8dcabd659fa1"
+  },
+  "next_action": "Start a fresh chat using the saved handoff and continuation prompt; reconcile live C268 branch, review state, saved recovery and first unmet gate. Startup compression is complete.",
+  "limits": [
+    "Online browser-session handoff, not full offline restoration.",
+    "Token counts measure the frozen reviewed candidate with tiktoken 0.12.0/o200k_base; not the live ChatGPT context counter or a guarantee against conversation limits.",
+    "Existing product/native/visual/compatibility qualifications and C268 unfinished work are unchanged.",
+    "All 11 original instruction files remain byte-exact in the preservation archive; finite semantic review is not a formal proof of every possible interpretation."
+  ],
+  "closure_candidate_checks": "docs/engineering/startup-compact-20261119/evidence/closure/CHECKS.json"
 }
