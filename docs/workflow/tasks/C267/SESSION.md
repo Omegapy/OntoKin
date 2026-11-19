@@ -23,3 +23,9 @@ No implementation check has yet passed. No release or historical endpoint admiss
 Scope checkpoint `6122bd272c3f5b960ed5c1d6434ebf5f7f9b4020` was created with the GitHub connection, installed on both scope branch and main by nonforce expected-head updates, and read back. The STATUS lease is held by c267-root-ad39e933f0f3 until 2026-11-19T02:20:13.455553+00:00. Terminal Git reads work; HTTPS push lacks credentials, so all publication uses the GitHub connection. No further terminal push attempts are planned.
 
 Initial comparator is checkpointed before acceptance testing. Its author performed original before/after, field-mismatch and reorder development probes; these are not independent qualification. Independent controls and exact-candidate review remain pending. Older unpublished metadata is retained under evidence/startup/legacy-c266-wip.zip.
+
+Early recovery and partial control bytes were saved successfully. [Returned identities](../../../engineering/localized-repair-c267/evidence/startup/EARLY-RECOVERY-SAVE.json) bind the exact saved items. Comparator checkpoint: `2d47c608a953dc0d2ffb09b67e0ce6f720b205eb`.
+
+## Independent control checkpoint
+
+Independent author `/root/controls` completed 25 methods and 123 API cases: 35 agreements and 88 expected typed refusals, zero failures/errors/skips. Three actual passing control-author runs are retained. The comparator remains exactly 12,382 bytes, SHA-256 f98b9eab7a7f0cc75afa26eab0b672356d7e3275e3d713d16df214e68e69d71d. A separate reviewer is checking composition and dependency refresh; complete candidate regression remains pending.

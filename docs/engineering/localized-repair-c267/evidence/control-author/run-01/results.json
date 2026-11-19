@@ -1,0 +1,4696 @@
+{
+  "schema": "ontokin.c267.independent-comparison-controls/0.1",
+  "startedAt": "2026-11-19T01:52:13.824448+00:00",
+  "completedAt": "2026-11-19T01:52:22.879474+00:00",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "/workspace/scratch/ad39e933f0f3/OntoKin/docs/engineering/localized-repair-c267/test_hinge_compare.py",
+    "--evidence-dir",
+    "/workspace/scratch/ad39e933f0f3/evidence/c267-controls/run-01"
+  ],
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "machine": "x86_64",
+  "implementationAndControlInputs": {
+    "docs/engineering/localized-repair-c267/hinge_compare.py": {
+      "bytes": 12382,
+      "sha256": "f98b9eab7a7f0cc75afa26eab0b672356d7e3275e3d713d16df214e68e69d71d"
+    },
+    "docs/engineering/localized-repair-c267/test_hinge_compare.py": {
+      "bytes": 33088,
+      "sha256": "01bb2785dd5505e3c9160c76b45097db0a0ed6a02ede7ff8ffae47db7f7f7311"
+    },
+    "docs/engineering/localized-repair-c267/comparison_control_fixtures.py": {
+      "bytes": 8620,
+      "sha256": "c107fae79ef28303fc9db63f7f8b9aec4041190e4caf8338742a180b073fcb3f"
+    },
+    "docs/engineering/localized-repair-c266/binding_control_fixtures.py": {
+      "bytes": 17102,
+      "sha256": "fc675e5da709a1f67892d929d90701833a62dd55f6fd0b9798b1c95496fca983"
+    },
+    "docs/engineering/localized-repair-c266/hinge_binding.py": {
+      "bytes": 17639,
+      "sha256": "68849dbe3339c158eac7ec43fb1defcbd2993c37c6a0a5ee813d2da71fb03dda"
+    },
+    "docs/engineering/localized-repair-c265/source_hinges.py": {
+      "bytes": 37570,
+      "sha256": "04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31abbf9e"
+    },
+    "docs/engineering/localized-repair-c261/hinge_glb.py": {
+      "bytes": 14036,
+      "sha256": "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08"
+    },
+    "docs/engineering/localized-repair-c257/ownership.py": {
+      "bytes": 35942,
+      "sha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1"
+    }
+  },
+  "inputCodeStableDuringRun": true,
+  "testMethods": 23,
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "passed": true,
+  "apiCalls": 121,
+  "agreementCalls": 34,
+  "typedRefusals": 87,
+  "cases": [
+    {
+      "case": "__main__.HingeComparisonControls.test_absent_direct_provenance_and_unobserved_metadata",
+      "label": "unobserved metadata remains outside finite agreement",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 36648,
+        "sha256": "e774574dc33de07a8405de94cb94c3f5be4068f09ccb32c091036291a900809e",
+        "snapshot": "inputs.zip!e774574dc33de07a8405de94cb94c3f5be4068f09ccb32c091036291a900809e.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_absent_direct_provenance_and_unobserved_metadata",
+      "label": "unsupported direct-site metadata",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 36660,
+        "sha256": "091aac4e03fbc6ee1a1cd8da300b156b977e2e6fb7b1b0fe9a03777d66da48df",
+        "snapshot": "inputs.zip!091aac4e03fbc6ee1a1cd8da300b156b977e2e6fb7b1b0fe9a03777d66da48df.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "UNSUPPORTED_ARTIFACT_FORM",
+      "detail": "direct site table is outside this raw profile",
+      "pointer": "/extras/ontokin/sites",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "091aac4e03fbc6ee1a1cd8da300b156b977e2e6fb7b1b0fe9a03777d66da48df",
+      "artifactBytes": 36660
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_binding_failure_cannot_be_hidden_by_equal_hinges",
+      "label": "equal hinges with bad provenance entry",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "21023a5b8396c7d64033ffd4abee818011e3b4df46c7c811641c1a2a94065a18",
+        "snapshot": "inputs.zip!21023a5b8396c7d64033ffd4abee818011e3b4df46c7c811641c1a2a94065a18.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "claim differs from independently derived source",
+      "pointer": "/extras/ontokin/source/entry_revision",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "21023a5b8396c7d64033ffd4abee818011e3b4df46c7c811641c1a2a94065a18",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_binding_failure_cannot_be_hidden_by_equal_hinges",
+      "label": "equal hinges with bad provenance program",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "7ae72003ebf96806ba0340e8fbc1c72a24e3f4df510907ac946bed9a2b822751",
+        "snapshot": "inputs.zip!7ae72003ebf96806ba0340e8fbc1c72a24e3f4df510907ac946bed9a2b822751.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "claim differs from independently derived source",
+      "pointer": "/extras/ontokin/program/revision",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "7ae72003ebf96806ba0340e8fbc1c72a24e3f4df510907ac946bed9a2b822751",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_binding_failure_cannot_be_hidden_by_equal_hinges",
+      "label": "equal hinges with bad provenance class",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35272,
+        "sha256": "aad600e1d68352ae4e26eee3d5e86c720354c146611a54ceb915264acb010ed8",
+        "snapshot": "inputs.zip!aad600e1d68352ae4e26eee3d5e86c720354c146611a54ceb915264acb010ed8.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "claim differs from independently derived source",
+      "pointer": "/nodes/0/extras/ontokin/class_name",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "aad600e1d68352ae4e26eee3d5e86c720354c146611a54ceb915264acb010ed8",
+      "artifactBytes": 35272
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_binding_failure_cannot_be_hidden_by_equal_hinges",
+      "label": "equal hinges with bad provenance span",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "2a844cfc6accf8a11d22338207635a08024598e9bc48430735baba90a671286f",
+        "snapshot": "inputs.zip!2a844cfc6accf8a11d22338207635a08024598e9bc48430735baba90a671286f.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "claim differs from independently derived source",
+      "pointer": "/extras/ontokin/program/occurrences/first.fingers[\"lower\"]/definition/start_byte",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "2a844cfc6accf8a11d22338207635a08024598e9bc48430735baba90a671286f",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_binding_failure_cannot_be_hidden_by_equal_hinges",
+      "label": "equal hinges with bad provenance missing_object",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 33948,
+        "sha256": "c52cd840eeff5b3486a21221b6b37a619b25f7bc673b11520b0218056890fa29",
+        "snapshot": "inputs.zip!c52cd840eeff5b3486a21221b6b37a619b25f7bc673b11520b0218056890fa29.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "node and occurrence path sets differ",
+      "pointer": "/extras/ontokin/program/occurrences",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "c52cd840eeff5b3486a21221b6b37a619b25f7bc673b11520b0218056890fa29",
+      "artifactBytes": 33948
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_binding_failure_cannot_be_hidden_by_equal_hinges",
+      "label": "equal hinges with bad provenance duplicate_object",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 36244,
+        "sha256": "0f4791178d89e1b51cf4b46d596c781c0001682a8b48490f9d7cb15538d2a637",
+        "snapshot": "inputs.zip!0f4791178d89e1b51cf4b46d596c781c0001682a8b48490f9d7cb15538d2a637.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "duplicate object identity or path",
+      "pointer": "/nodes/12/extras/ontokin",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "0f4791178d89e1b51cf4b46d596c781c0001682a8b48490f9d7cb15538d2a637",
+      "artifactBytes": 36244
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_binding_failure_cannot_be_hidden_by_equal_hinges",
+      "label": "source-only stale pin and program binding",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1199,
+          "sha256": "95816f0e06568f3160ef056fd65c7d51965517692b4f8b62a3616ae307764b2a",
+          "snapshot": "inputs.zip!95816f0e06568f3160ef056fd65c7d51965517692b4f8b62a3616ae307764b2a.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "C257 IMPORT_BINDING: supplied library pin",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "95816f0e06568f3160ef056fd65c7d51965517692b4f8b62a3616ae307764b2a"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1199
+      },
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_complete_joint_set_and_duplicate_rows",
+      "label": "complete joint set remove_one",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35000,
+        "sha256": "faac4d073c04fb31e99c8454cd02234f9dc977ec698e0d91b586f036dfe4d830",
+        "snapshot": "inputs.zip!faac4d073c04fb31e99c8454cd02234f9dc977ec698e0d91b586f036dfe4d830.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "complete source and artifact joint identity sets differ",
+      "pointer": "/extras/ontokin/joints",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "faac4d073c04fb31e99c8454cd02234f9dc977ec698e0d91b586f036dfe4d830",
+      "artifactBytes": 35000
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_complete_joint_set_and_duplicate_rows",
+      "label": "complete joint set remove_all",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 33792,
+        "sha256": "329a98f6252f65c64ef4edc51272493e912901aebdb0cc012200da15f1b233c1",
+        "snapshot": "inputs.zip!329a98f6252f65c64ef4edc51272493e912901aebdb0cc012200da15f1b233c1.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "complete source and artifact joint identity sets differ",
+      "pointer": "/extras/ontokin/joints",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "329a98f6252f65c64ef4edc51272493e912901aebdb0cc012200da15f1b233c1",
+      "artifactBytes": 33792
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_complete_joint_set_and_duplicate_rows",
+      "label": "complete joint set extra",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35604,
+        "sha256": "bb306ceadbd2614b9a504730df5f452b17b605f9c3bd0cd3c4deaac3ec8b3d73",
+        "snapshot": "inputs.zip!bb306ceadbd2614b9a504730df5f452b17b605f9c3bd0cd3c4deaac3ec8b3d73.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "complete source and artifact joint identity sets differ",
+      "pointer": "/extras/ontokin/joints",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "bb306ceadbd2614b9a504730df5f452b17b605f9c3bd0cd3c4deaac3ec8b3d73",
+      "artifactBytes": 35604
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_complete_joint_set_and_duplicate_rows",
+      "label": "complete joint set wrong_owner",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35304,
+        "sha256": "73244d6b7e9f0f20cd14f872cdf99de4854f7528c459f5847fe6a247e424acb8",
+        "snapshot": "inputs.zip!73244d6b7e9f0f20cd14f872cdf99de4854f7528c459f5847fe6a247e424acb8.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "complete source and artifact joint identity sets differ",
+      "pointer": "/extras/ontokin/joints",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "73244d6b7e9f0f20cd14f872cdf99de4854f7528c459f5847fe6a247e424acb8",
+      "artifactBytes": 35304
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_complete_joint_set_and_duplicate_rows",
+      "label": "complete joint set duplicate_id",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "fd75aaddd934ea1a2195a5a79600cf2fdd07cf8182c1771811ab4149f4aed6b8",
+        "snapshot": "inputs.zip!fd75aaddd934ea1a2195a5a79600cf2fdd07cf8182c1771811ab4149f4aed6b8.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "duplicate joint identity or path",
+      "pointer": "/extras/ontokin/joints/1",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "fd75aaddd934ea1a2195a5a79600cf2fdd07cf8182c1771811ab4149f4aed6b8",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_complete_joint_set_and_duplicate_rows",
+      "label": "complete joint set duplicate_path",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "3af65cc46c016b517f6df463f9b613fc97f7846346a31983c85a2f80c1122907",
+        "snapshot": "inputs.zip!3af65cc46c016b517f6df463f9b613fc97f7846346a31983c85a2f80c1122907.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "duplicate joint identity or path",
+      "pointer": "/extras/ontokin/joints/1",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "3af65cc46c016b517f6df463f9b613fc97f7846346a31983c85a2f80c1122907",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_computed_source_fields_do_not_use_baseline_values",
+      "label": "computed source_initial",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1187,
+          "sha256": "5ff616fb1f475cf06f996a31029a9e0f702d4e20d5403e51ff771413977c9300",
+          "snapshot": "inputs.zip!5ff616fb1f475cf06f996a31029a9e0f702d4e20d5403e51ff771413977c9300.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "43dd2139bb2d352fa922d20a9d1d536e1351de26fa83eaacb750e1dcfc36c00e",
+          "snapshot": "inputs.zip!43dd2139bb2d352fa922d20a9d1d536e1351de26fa83eaacb750e1dcfc36c00e.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "44007de80d75c14f4f20adab4d8b9bef418aacc8a2e49f8561c07319f5078907",
+        "snapshot": "inputs.zip!44007de80d75c14f4f20adab4d8b9bef418aacc8a2e49f8561c07319f5078907.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "computed literal expression is unsupported",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "43dd2139bb2d352fa922d20a9d1d536e1351de26fa83eaacb750e1dcfc36c00e",
+        "hinges.ok": "5ff616fb1f475cf06f996a31029a9e0f702d4e20d5403e51ff771413977c9300"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1187
+      },
+      "artifactSha256": "44007de80d75c14f4f20adab4d8b9bef418aacc8a2e49f8561c07319f5078907",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_computed_source_fields_do_not_use_baseline_values",
+      "label": "computed source_limits",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1187,
+          "sha256": "cb64e7ff71956b87314f3130b28bf13a29b9109f1f0ccbb15b9712e3d3e9fa33",
+          "snapshot": "inputs.zip!cb64e7ff71956b87314f3130b28bf13a29b9109f1f0ccbb15b9712e3d3e9fa33.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "7411f48fc7500f2edf931e059cda15279e7fd11c3521a0a62be1d7efcb3c5a90",
+          "snapshot": "inputs.zip!7411f48fc7500f2edf931e059cda15279e7fd11c3521a0a62be1d7efcb3c5a90.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "e8fe9b2cadc893c0fa78adc753037760eb63bc27a735ce902195e055a5de7d9f",
+        "snapshot": "inputs.zip!e8fe9b2cadc893c0fa78adc753037760eb63bc27a735ce902195e055a5de7d9f.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "computed literal expression is unsupported",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "7411f48fc7500f2edf931e059cda15279e7fd11c3521a0a62be1d7efcb3c5a90",
+        "hinges.ok": "cb64e7ff71956b87314f3130b28bf13a29b9109f1f0ccbb15b9712e3d3e9fa33"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1187
+      },
+      "artifactSha256": "e8fe9b2cadc893c0fa78adc753037760eb63bc27a735ce902195e055a5de7d9f",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_computed_source_fields_do_not_use_baseline_values",
+      "label": "computed source_axis",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1182,
+          "sha256": "f5911c18248889b23bb7ac8aa2e7d50e49740b872dfe4dcb4c0272e512855af8",
+          "snapshot": "inputs.zip!f5911c18248889b23bb7ac8aa2e7d50e49740b872dfe4dcb4c0272e512855af8.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "06cb88b7d0b90797d4b3875846a1057a1735e826def4517a897ab1a90dc251a6",
+          "snapshot": "inputs.zip!06cb88b7d0b90797d4b3875846a1057a1735e826def4517a897ab1a90dc251a6.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "477239fdb6b516a631ebd77c742ae1fdc5788543d32b65ce1f421b62878d503a",
+        "snapshot": "inputs.zip!477239fdb6b516a631ebd77c742ae1fdc5788543d32b65ce1f421b62878d503a.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "computed literal expression is unsupported",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "06cb88b7d0b90797d4b3875846a1057a1735e826def4517a897ab1a90dc251a6",
+        "hinges.ok": "f5911c18248889b23bb7ac8aa2e7d50e49740b872dfe4dcb4c0272e512855af8"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1182
+      },
+      "artifactSha256": "477239fdb6b516a631ebd77c742ae1fdc5788543d32b65ce1f421b62878d503a",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_dependencies_are_admitted_each_call_and_symlinks_refuse",
+      "label": "exact isolated dependency bytes",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_dependencies_are_admitted_each_call_and_symlinks_refuse",
+      "label": "same-size changed dependency localized-repair-c266/hinge_binding.py",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "pinned dependency bytes: localized-repair-c266/hinge_binding.py",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_dependencies_are_admitted_each_call_and_symlinks_refuse",
+      "label": "same-size changed dependency localized-repair-c265/source_hinges.py",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "pinned dependency bytes: localized-repair-c265/source_hinges.py",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_dependencies_are_admitted_each_call_and_symlinks_refuse",
+      "label": "same-size changed dependency localized-repair-c261/hinge_glb.py",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "pinned dependency bytes: localized-repair-c261/hinge_glb.py",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_dependencies_are_admitted_each_call_and_symlinks_refuse",
+      "label": "same-size changed dependency localized-repair-c257/ownership.py",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "pinned dependency bytes: localized-repair-c257/ownership.py",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_dependencies_are_admitted_each_call_and_symlinks_refuse",
+      "label": "missing pinned dependency",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "missing pinned dependency: localized-repair-c266/hinge_binding.py",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_dependencies_are_admitted_each_call_and_symlinks_refuse",
+      "label": "symbolic-link pinned dependency",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "symlink in pinned dependency path",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_each_limit_source_artifact_and_paired_changes",
+      "label": "source-only limit 0",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "4a405fb0f89ad4b85a02a9e4b26c4d48a4315c8d9f13b163ee81429edf835586",
+          "snapshot": "inputs.zip!4a405fb0f89ad4b85a02a9e4b26c4d48a4315c8d9f13b163ee81429edf835586.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "b110c047ec2a0c4e869b3a62605dfb34df8f927092519c29b78aea22344a9e27",
+          "snapshot": "inputs.zip!b110c047ec2a0c4e869b3a62605dfb34df8f927092519c29b78aea22344a9e27.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "8ea21217cbb9289c705ecc2e7727d98f8d8a8be5fbdc60b48c5a40d98cd5ab1c",
+        "snapshot": "inputs.zip!8ea21217cbb9289c705ecc2e7727d98f8d8a8be5fbdc60b48c5a40d98cd5ab1c.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/limits",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 1118,
+        "endByteExclusive": 1143,
+        "role": "field expression: limits",
+        "sha256": "4a405fb0f89ad4b85a02a9e4b26c4d48a4315c8d9f13b163ee81429edf835586"
+      },
+      "sourceHashes": {
+        "main.ok": "b110c047ec2a0c4e869b3a62605dfb34df8f927092519c29b78aea22344a9e27",
+        "hinges.ok": "4a405fb0f89ad4b85a02a9e4b26c4d48a4315c8d9f13b163ee81429edf835586"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1179
+      },
+      "artifactSha256": "8ea21217cbb9289c705ecc2e7727d98f8d8a8be5fbdc60b48c5a40d98cd5ab1c",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_each_limit_source_artifact_and_paired_changes",
+      "label": "artifact-only limit 0",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35280,
+        "sha256": "2988cf6a07e0264f2d39429cadd237785cb9c186d4104ab816f80399a9c12049",
+        "snapshot": "inputs.zip!2988cf6a07e0264f2d39429cadd237785cb9c186d4104ab816f80399a9c12049.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/limits",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 1118,
+        "endByteExclusive": 1142,
+        "role": "field expression: limits",
+        "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "2988cf6a07e0264f2d39429cadd237785cb9c186d4104ab816f80399a9c12049",
+      "artifactBytes": 35280
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_each_limit_source_artifact_and_paired_changes",
+      "label": "paired limit 0",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "4a405fb0f89ad4b85a02a9e4b26c4d48a4315c8d9f13b163ee81429edf835586",
+          "snapshot": "inputs.zip!4a405fb0f89ad4b85a02a9e4b26c4d48a4315c8d9f13b163ee81429edf835586.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "b110c047ec2a0c4e869b3a62605dfb34df8f927092519c29b78aea22344a9e27",
+          "snapshot": "inputs.zip!b110c047ec2a0c4e869b3a62605dfb34df8f927092519c29b78aea22344a9e27.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35220,
+        "sha256": "91d21de9351e7176156b31feca9b7c9d6de52bfe051143a2485f75027259a9be",
+        "snapshot": "inputs.zip!91d21de9351e7176156b31feca9b7c9d6de52bfe051143a2485f75027259a9be.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_each_limit_source_artifact_and_paired_changes",
+      "label": "source-only limit 1",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "b7cd791552323959d8bffd9cb24110d7780240e82ec679e05fd0134bfe48a71e",
+          "snapshot": "inputs.zip!b7cd791552323959d8bffd9cb24110d7780240e82ec679e05fd0134bfe48a71e.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "b13fc4cb96112e3b1b5be3852995cef58fbd6325fd8b755c06e8261c4b68c31e",
+          "snapshot": "inputs.zip!b13fc4cb96112e3b1b5be3852995cef58fbd6325fd8b755c06e8261c4b68c31e.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "a2ecca82f83ff5ed0fb6c76847b07f2c9b35d7f7f29d0b79c525f0be47bcf1c8",
+        "snapshot": "inputs.zip!a2ecca82f83ff5ed0fb6c76847b07f2c9b35d7f7f29d0b79c525f0be47bcf1c8.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/limits",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 1118,
+        "endByteExclusive": 1143,
+        "role": "field expression: limits",
+        "sha256": "b7cd791552323959d8bffd9cb24110d7780240e82ec679e05fd0134bfe48a71e"
+      },
+      "sourceHashes": {
+        "main.ok": "b13fc4cb96112e3b1b5be3852995cef58fbd6325fd8b755c06e8261c4b68c31e",
+        "hinges.ok": "b7cd791552323959d8bffd9cb24110d7780240e82ec679e05fd0134bfe48a71e"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1179
+      },
+      "artifactSha256": "a2ecca82f83ff5ed0fb6c76847b07f2c9b35d7f7f29d0b79c525f0be47bcf1c8",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_each_limit_source_artifact_and_paired_changes",
+      "label": "artifact-only limit 1",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35280,
+        "sha256": "02a951a2517119bfafe4c3507f415ee5b8656b4717519065a9d5549c0fc6320c",
+        "snapshot": "inputs.zip!02a951a2517119bfafe4c3507f415ee5b8656b4717519065a9d5549c0fc6320c.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/limits",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 1118,
+        "endByteExclusive": 1142,
+        "role": "field expression: limits",
+        "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "02a951a2517119bfafe4c3507f415ee5b8656b4717519065a9d5549c0fc6320c",
+      "artifactBytes": 35280
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_each_limit_source_artifact_and_paired_changes",
+      "label": "paired limit 1",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "b7cd791552323959d8bffd9cb24110d7780240e82ec679e05fd0134bfe48a71e",
+          "snapshot": "inputs.zip!b7cd791552323959d8bffd9cb24110d7780240e82ec679e05fd0134bfe48a71e.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "b13fc4cb96112e3b1b5be3852995cef58fbd6325fd8b755c06e8261c4b68c31e",
+          "snapshot": "inputs.zip!b13fc4cb96112e3b1b5be3852995cef58fbd6325fd8b755c06e8261c4b68c31e.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35220,
+        "sha256": "39f4a9d9415c8007069a7d21e6e6c0d08d49a02ba0736e9def03c97c96f8e8d2",
+        "snapshot": "inputs.zip!39f4a9d9415c8007069a7d21e6e6c0d08d49a02ba0736e9def03c97c96f8e8d2.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_endpoint_access_and_unsupported_forms",
+      "label": "private own site and private own part public external site",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "c833b493fc396618d11910cb3d9f0eefc17cfa6197b9c9a474bb7960ee82f321",
+          "snapshot": "inputs.zip!c833b493fc396618d11910cb3d9f0eefc17cfa6197b9c9a474bb7960ee82f321.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "48c17252892ca7278e862b19db7b5974e955f359c3201805b83ab5b6c22858fb",
+          "snapshot": "inputs.zip!48c17252892ca7278e862b19db7b5974e955f359c3201805b83ab5b6c22858fb.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "18d2aef6c523c0a4a698fc5914278c7e2d09fa4df3c46665d4e7804fb1168c7d",
+        "snapshot": "inputs.zip!18d2aef6c523c0a4a698fc5914278c7e2d09fa4df3c46665d4e7804fb1168c7d.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_endpoint_access_and_unsupported_forms",
+      "label": "endpoint/source form private site base @ \"base\"",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "01fb8e1e5e040c1279003629d9dc99b66e1769ce475f9175281fb24fe54a51f9",
+          "snapshot": "inputs.zip!01fb8e1e5e040c1279003629d9dc99b66e1769ce475f9175281fb24fe54a51f9.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "06ec9a57063b65e5f93c9ef320cc053387710dd6ced9003d759dee2ea5aec4e0",
+          "snapshot": "inputs.zip!06ec9a57063b65e5f93c9ef320cc053387710dd6ced9003d759dee2ea5aec4e0.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "9ec6eef4709db896870b38f8a2914d2bb27d4c9f49f0e77f5820a7f16dfe017e",
+        "snapshot": "inputs.zip!9ec6eef4709db896870b38f8a2914d2bb27d4c9f49f0e77f5820a7f16dfe017e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "private external endpoint site",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "06ec9a57063b65e5f93c9ef320cc053387710dd6ced9003d759dee2ea5aec4e0",
+        "hinges.ok": "01fb8e1e5e040c1279003629d9dc99b66e1769ce475f9175281fb24fe54a51f9"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1179
+      },
+      "artifactSha256": "9ec6eef4709db896870b38f8a2914d2bb27d4c9f49f0e77f5820a7f16dfe017e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_endpoint_access_and_unsupported_forms",
+      "label": "endpoint/source form parent = self.origin;",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "bd94345c94f95e6e87cddfeda096cad69cc6c94f76262f0de1b7fc9c4b06f169",
+          "snapshot": "inputs.zip!bd94345c94f95e6e87cddfeda096cad69cc6c94f76262f0de1b7fc9c4b06f169.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "d2fb18a4411b24512aae23581b6422211381557367e2b754cf78b70779a2f392",
+          "snapshot": "inputs.zip!d2fb18a4411b24512aae23581b6422211381557367e2b754cf78b70779a2f392.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "54a7e11a0b670d13a1f0671f3f6878b3ee30772667b8569da536f66cc0f79121",
+        "snapshot": "inputs.zip!54a7e11a0b670d13a1f0671f3f6878b3ee30772667b8569da536f66cc0f79121.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "implicit site endpoint unsupported",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "d2fb18a4411b24512aae23581b6422211381557367e2b754cf78b70779a2f392",
+        "hinges.ok": "bd94345c94f95e6e87cddfeda096cad69cc6c94f76262f0de1b7fc9c4b06f169"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1179
+      },
+      "artifactSha256": "54a7e11a0b670d13a1f0671f3f6878b3ee30772667b8569da536f66cc0f79121",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_endpoint_access_and_unsupported_forms",
+      "label": "endpoint/source form child = self.blade[\"x\"].base;",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1183,
+          "sha256": "95a0d6b47064e1da859818058187600439de9989665e7df3667ded026234184f",
+          "snapshot": "inputs.zip!95a0d6b47064e1da859818058187600439de9989665e7df3667ded026234184f.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "c0bc76b5c3bdcf1febff9356fe3250a46cd6311c71b3f944fea0b9162e676d4f",
+          "snapshot": "inputs.zip!c0bc76b5c3bdcf1febff9356fe3250a46cd6311c71b3f944fea0b9162e676d4f.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "7677adf9ee8c9bbff1c420bc65382497eb248ed1f149069720cbfb3358131d2e",
+        "snapshot": "inputs.zip!7677adf9ee8c9bbff1c420bc65382497eb248ed1f149069720cbfb3358131d2e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "keyed or computed endpoint unsupported",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "c0bc76b5c3bdcf1febff9356fe3250a46cd6311c71b3f944fea0b9162e676d4f",
+        "hinges.ok": "95a0d6b47064e1da859818058187600439de9989665e7df3667ded026234184f"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1183
+      },
+      "artifactSha256": "7677adf9ee8c9bbff1c420bc65382497eb248ed1f149069720cbfb3358131d2e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_endpoint_access_and_unsupported_forms",
+      "label": "endpoint/source form child = self.blade.child.base;",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1184,
+          "sha256": "1086b50be057595a85558ed46f64aa9b4f15f2c285a830f489ffa294e5104f2d",
+          "snapshot": "inputs.zip!1086b50be057595a85558ed46f64aa9b4f15f2c285a830f489ffa294e5104f2d.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "a47d43f6b0b7adcc7b0daf491c022790f9b1d01ae44f0874740ce17058a32d70",
+          "snapshot": "inputs.zip!a47d43f6b0b7adcc7b0daf491c022790f9b1d01ae44f0874740ce17058a32d70.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "5374756f40c32090d401b163b28bf0652f285c06978e0d923339543be8829efe",
+        "snapshot": "inputs.zip!5374756f40c32090d401b163b28bf0652f285c06978e0d923339543be8829efe.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "deeper endpoint chain unsupported",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "a47d43f6b0b7adcc7b0daf491c022790f9b1d01ae44f0874740ce17058a32d70",
+        "hinges.ok": "1086b50be057595a85558ed46f64aa9b4f15f2c285a830f489ffa294e5104f2d"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1184
+      },
+      "artifactSha256": "5374756f40c32090d401b163b28bf0652f285c06978e0d923339543be8829efe",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_endpoint_access_and_unsupported_forms",
+      "label": "endpoint/source form joint flex @ \"flex\": slider",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "ae2f833d76fbf052a16ab5de266f32ffb9f891055147ef5de35e591584b3e083",
+          "snapshot": "inputs.zip!ae2f833d76fbf052a16ab5de266f32ffb9f891055147ef5de35e591584b3e083.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "1e33ee16a74fb41f54f8855149b909ac6f883116bae7265ab987430b16e9fc3e",
+          "snapshot": "inputs.zip!1e33ee16a74fb41f54f8855149b909ac6f883116bae7265ab987430b16e9fc3e.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "c04d7bf0913e12b07a12a46e9334602a92779e7403d1ecddfa36f543c88edbfb",
+        "snapshot": "inputs.zip!c04d7bf0913e12b07a12a46e9334602a92779e7403d1ecddfa36f543c88edbfb.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "only literal hinge joint declarations are supported",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "1e33ee16a74fb41f54f8855149b909ac6f883116bae7265ab987430b16e9fc3e",
+        "hinges.ok": "ae2f833d76fbf052a16ab5de266f32ffb9f891055147ef5de35e591584b3e083"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1179
+      },
+      "artifactSha256": "c04d7bf0913e12b07a12a46e9334602a92779e7403d1ecddfa36f543c88edbfb",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_exact_deg_rad_negative_zero_and_adjacent_values",
+      "label": "exact literal 45[deg]",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "1bf2f336abe77fcc62d64d48bccf9f5c9a6b9341fea5a4401b97aa0d1290d6a1",
+          "snapshot": "inputs.zip!1bf2f336abe77fcc62d64d48bccf9f5c9a6b9341fea5a4401b97aa0d1290d6a1.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "a17d0864135712e2d0b97a13691baaf5aadf8f3154b9f3fe21a997c0606e5da7",
+          "snapshot": "inputs.zip!a17d0864135712e2d0b97a13691baaf5aadf8f3154b9f3fe21a997c0606e5da7.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35380,
+        "sha256": "c84fedfdad8c14e8edd38fae34f522f7f5c5674a707e806991e38c77aadd307f",
+        "snapshot": "inputs.zip!c84fedfdad8c14e8edd38fae34f522f7f5c5674a707e806991e38c77aadd307f.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_exact_deg_rad_negative_zero_and_adjacent_values",
+      "label": "exact literal 0.7853981633974483[rad]",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1195,
+          "sha256": "71f1fdd8172a2cbab9bc519a9ddd2becbb8fa729e00efd2184f21d75cc566bac",
+          "snapshot": "inputs.zip!71f1fdd8172a2cbab9bc519a9ddd2becbb8fa729e00efd2184f21d75cc566bac.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "d77640e840b3cf4e72352655df93ea5217c42067ccc456a75a17fd94a170d0d5",
+          "snapshot": "inputs.zip!d77640e840b3cf4e72352655df93ea5217c42067ccc456a75a17fd94a170d0d5.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35380,
+        "sha256": "f6548b294270e056703a2e639f163bb76dda0d8d4807f919d240ee64c40ee453",
+        "snapshot": "inputs.zip!f6548b294270e056703a2e639f163bb76dda0d8d4807f919d240ee64c40ee453.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_exact_deg_rad_negative_zero_and_adjacent_values",
+      "label": "exact literal -0[deg]",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "4e556d8d2bdce567f8501cbd99fe7754ee2dfec3e4c834b729c80eda794b96ab",
+          "snapshot": "inputs.zip!4e556d8d2bdce567f8501cbd99fe7754ee2dfec3e4c834b729c80eda794b96ab.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "5feaa1bc8d34af18b3e26dc16509e8e0874a33686e22214234e1975d88b630c7",
+          "snapshot": "inputs.zip!5feaa1bc8d34af18b3e26dc16509e8e0874a33686e22214234e1975d88b630c7.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35312,
+        "sha256": "0546bdc36c6c19f7fb9d7dc8eb1f1fcf5a34053882f261d35c2de84d457b0dee",
+        "snapshot": "inputs.zip!0546bdc36c6c19f7fb9d7dc8eb1f1fcf5a34053882f261d35c2de84d457b0dee.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_exact_deg_rad_negative_zero_and_adjacent_values",
+      "label": "exact literal 0.1[deg]",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1180,
+          "sha256": "c5a3c7a9dc09fdbb9e36e4ca1edb1084fc565d58b7cca496dbe88e96340fc3ad",
+          "snapshot": "inputs.zip!c5a3c7a9dc09fdbb9e36e4ca1edb1084fc565d58b7cca496dbe88e96340fc3ad.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "28e71fef722f4f7c05f09abaed62f3bf7aef872048545dc51c7cff7e20678a4b",
+          "snapshot": "inputs.zip!28e71fef722f4f7c05f09abaed62f3bf7aef872048545dc51c7cff7e20678a4b.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35396,
+        "sha256": "a3948acc6d81f6cb5580fa49d687e451160f1e7210fe1e5613c8f46366ff61b9",
+        "snapshot": "inputs.zip!a3948acc6d81f6cb5580fa49d687e451160f1e7210fe1e5613c8f46366ff61b9.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_exact_deg_rad_negative_zero_and_adjacent_values",
+      "label": "adjacent binary64 initial 0x0.0000000000001p-1022",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35300,
+        "sha256": "91f8aded3fedf16886e17e4d706af39ace0446f7e379e05e026589088876f9c0",
+        "snapshot": "inputs.zip!91f8aded3fedf16886e17e4d706af39ace0446f7e379e05e026589088876f9c0.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/initial",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 1162,
+        "endByteExclusive": 1168,
+        "role": "field expression: initial",
+        "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "91f8aded3fedf16886e17e4d706af39ace0446f7e379e05e026589088876f9c0",
+      "artifactBytes": 35300
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_exact_deg_rad_negative_zero_and_adjacent_values",
+      "label": "adjacent binary64 initial 0x1.0000000000001p-2",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1181,
+          "sha256": "87b66aa3c153992d07071dc82be2d2e0da99e74e449da0f7a55a9b4f4b131c10",
+          "snapshot": "inputs.zip!87b66aa3c153992d07071dc82be2d2e0da99e74e449da0f7a55a9b4f4b131c10.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "c43b708b001e7419a4c35c686c875d66b06c92a57b01310059a05fb57415974a",
+          "snapshot": "inputs.zip!c43b708b001e7419a4c35c686c875d66b06c92a57b01310059a05fb57415974a.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35324,
+        "sha256": "cd943a1b7f467b28618c4916776c7857b2ed787e24c9fe6e78573e2dba146523",
+        "snapshot": "inputs.zip!cd943a1b7f467b28618c4916776c7857b2ed787e24c9fe6e78573e2dba146523.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/initial",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 1162,
+        "endByteExclusive": 1171,
+        "role": "field expression: initial",
+        "sha256": "87b66aa3c153992d07071dc82be2d2e0da99e74e449da0f7a55a9b4f4b131c10"
+      },
+      "sourceHashes": {
+        "main.ok": "c43b708b001e7419a4c35c686c875d66b06c92a57b01310059a05fb57415974a",
+        "hinges.ok": "87b66aa3c153992d07071dc82be2d2e0da99e74e449da0f7a55a9b4f4b131c10"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1181
+      },
+      "artifactSha256": "cd943a1b7f467b28618c4916776c7857b2ed787e24c9fe6e78573e2dba146523",
+      "artifactBytes": 35324
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_inclusive_boundary_zero_width_and_invalid_ranges",
+      "label": "closed boundary -1 1 -1",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1177,
+          "sha256": "85f565390461797d11ebdcf6e6cd940dd04c448b5dff97bae303ba95843601dc",
+          "snapshot": "inputs.zip!85f565390461797d11ebdcf6e6cd940dd04c448b5dff97bae303ba95843601dc.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "c0f6116a297eceb9b581935e5179166ad0f62916462110551f31bbee28b449c4",
+          "snapshot": "inputs.zip!c0f6116a297eceb9b581935e5179166ad0f62916462110551f31bbee28b449c4.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35132,
+        "sha256": "3ff9f51a32123d876979e13ca39845ba6f1832f46b4fbff124aefa1fe1962fa4",
+        "snapshot": "inputs.zip!3ff9f51a32123d876979e13ca39845ba6f1832f46b4fbff124aefa1fe1962fa4.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_inclusive_boundary_zero_width_and_invalid_ranges",
+      "label": "closed boundary -1 1 1",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1176,
+          "sha256": "a549e6cce004338805be0cd431127877284b9c76f6942a87b89b41c2431bdc08",
+          "snapshot": "inputs.zip!a549e6cce004338805be0cd431127877284b9c76f6942a87b89b41c2431bdc08.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "10354c4edfac47bd8e7d01c82735b0ec6aeb23161d5023994d85a1423f9440c5",
+          "snapshot": "inputs.zip!10354c4edfac47bd8e7d01c82735b0ec6aeb23161d5023994d85a1423f9440c5.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35124,
+        "sha256": "c137a5a051d5a59f3fefbf187e6fe1bb8aa2b2dc5d1fe9560ec626191f55f2c6",
+        "snapshot": "inputs.zip!c137a5a051d5a59f3fefbf187e6fe1bb8aa2b2dc5d1fe9560ec626191f55f2c6.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_inclusive_boundary_zero_width_and_invalid_ranges",
+      "label": "closed boundary 0 0 0",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1175,
+          "sha256": "6581781144178066c564031a37ae145185c2b4c1867c163fc180112f4424ccd1",
+          "snapshot": "inputs.zip!6581781144178066c564031a37ae145185c2b4c1867c163fc180112f4424ccd1.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "0f32b7185e215265e540db43e8986a287ddbda9c8f9aab992301959355a731f1",
+          "snapshot": "inputs.zip!0f32b7185e215265e540db43e8986a287ddbda9c8f9aab992301959355a731f1.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35120,
+        "sha256": "a2b828665bee9ab52e31b9a97438254cd94fa736228d62acc415ef10a0c69342",
+        "snapshot": "inputs.zip!a2b828665bee9ab52e31b9a97438254cd94fa736228d62acc415ef10a0c69342.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_inclusive_boundary_zero_width_and_invalid_ranges",
+      "label": "closed boundary 0.25 0.25 0.25",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1184,
+          "sha256": "48841839497c9488a358f429a026a73a05577276b10dc561f9c76d9de58d053e",
+          "snapshot": "inputs.zip!48841839497c9488a358f429a026a73a05577276b10dc561f9c76d9de58d053e.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "4edfa8a490894ce447db4e8428afa73a3e5e8233b94a80c3cc128f215812c0d1",
+          "snapshot": "inputs.zip!4edfa8a490894ce447db4e8428afa73a3e5e8233b94a80c3cc128f215812c0d1.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35164,
+        "sha256": "1310cb17a49acdf0b58683f60db12a79d64f194fcde76f8e0d5779c4ed677088",
+        "snapshot": "inputs.zip!1310cb17a49acdf0b58683f60db12a79d64f194fcde76f8e0d5779c4ed677088.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_inclusive_boundary_zero_width_and_invalid_ranges",
+      "label": "invalid source closed range",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1176,
+          "sha256": "b1ccdadf67555438f68aa8f8c01cdfd24d5507baf35c8e311003143de4f21cd5",
+          "snapshot": "inputs.zip!b1ccdadf67555438f68aa8f8c01cdfd24d5507baf35c8e311003143de4f21cd5.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "fc65d303dd2858397d088ff05fc0cd7b56493d1307d0f6627d982b4c4ab7de4a",
+          "snapshot": "inputs.zip!fc65d303dd2858397d088ff05fc0cd7b56493d1307d0f6627d982b4c4ab7de4a.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "b6d477d11402a21f29d8d309e40058dcfc51598b46e8ec3f1f94dcef9ec693d0",
+        "snapshot": "inputs.zip!b6d477d11402a21f29d8d309e40058dcfc51598b46e8ec3f1f94dcef9ec693d0.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "reversed limits or initial outside inclusive limits",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "fc65d303dd2858397d088ff05fc0cd7b56493d1307d0f6627d982b4c4ab7de4a",
+        "hinges.ok": "b1ccdadf67555438f68aa8f8c01cdfd24d5507baf35c8e311003143de4f21cd5"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1176
+      },
+      "artifactSha256": "b6d477d11402a21f29d8d309e40058dcfc51598b46e8ec3f1f94dcef9ec693d0",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_inclusive_boundary_zero_width_and_invalid_ranges",
+      "label": "invalid source closed range",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1180,
+          "sha256": "d4fb1050dc137d4a9928e0381f5863c2586a720a255de828694d9f4c9802efa0",
+          "snapshot": "inputs.zip!d4fb1050dc137d4a9928e0381f5863c2586a720a255de828694d9f4c9802efa0.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "bb4db5c47342d065cc47ec35ad8443e030211f6daaa7ee77b3cea34f466d10d8",
+          "snapshot": "inputs.zip!bb4db5c47342d065cc47ec35ad8443e030211f6daaa7ee77b3cea34f466d10d8.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "5c2df4d2c8c75aa04aa32a57eb8eabf8464cca058e3b66d0921346e665bb8e0a",
+        "snapshot": "inputs.zip!5c2df4d2c8c75aa04aa32a57eb8eabf8464cca058e3b66d0921346e665bb8e0a.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "reversed limits or initial outside inclusive limits",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "bb4db5c47342d065cc47ec35ad8443e030211f6daaa7ee77b3cea34f466d10d8",
+        "hinges.ok": "d4fb1050dc137d4a9928e0381f5863c2586a720a255de828694d9f4c9802efa0"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1180
+      },
+      "artifactSha256": "5c2df4d2c8c75aa04aa32a57eb8eabf8464cca058e3b66d0921346e665bb8e0a",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_inclusive_boundary_zero_width_and_invalid_ranges",
+      "label": "invalid artifact closed range",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35260,
+        "sha256": "2ab8f999bfff63273137d713f2080bee31d495207dae8442d2e0c6cdfb5b1945",
+        "snapshot": "inputs.zip!2ab8f999bfff63273137d713f2080bee31d495207dae8442d2e0c6cdfb5b1945.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "reversed limits or initial outside closed range",
+      "pointer": "/extras/ontokin/joints/0",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "2ab8f999bfff63273137d713f2080bee31d495207dae8442d2e0c6cdfb5b1945",
+      "artifactBytes": 35260
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_inclusive_boundary_zero_width_and_invalid_ranges",
+      "label": "invalid artifact closed range",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35264,
+        "sha256": "ed1082c4b1dbdb6b86c56fe42f77b397125665109df204bcb8937ad4a91a4f33",
+        "snapshot": "inputs.zip!ed1082c4b1dbdb6b86c56fe42f77b397125665109df204bcb8937ad4a91a4f33.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "reversed limits or initial outside closed range",
+      "pointer": "/extras/ontokin/joints/0",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "ed1082c4b1dbdb6b86c56fe42f77b397125665109df204bcb8937ad4a91a4f33",
+      "artifactBytes": 35264
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_initial_source_artifact_and_paired_changes",
+      "label": "source-only initial with rebound provenance",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1181,
+          "sha256": "87b66aa3c153992d07071dc82be2d2e0da99e74e449da0f7a55a9b4f4b131c10",
+          "snapshot": "inputs.zip!87b66aa3c153992d07071dc82be2d2e0da99e74e449da0f7a55a9b4f4b131c10.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "c43b708b001e7419a4c35c686c875d66b06c92a57b01310059a05fb57415974a",
+          "snapshot": "inputs.zip!c43b708b001e7419a4c35c686c875d66b06c92a57b01310059a05fb57415974a.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "1f315611c5ba7a78c0eed1a16373cc59c2900f971bb7555de18a1f1fd22aec07",
+        "snapshot": "inputs.zip!1f315611c5ba7a78c0eed1a16373cc59c2900f971bb7555de18a1f1fd22aec07.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/initial",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 1162,
+        "endByteExclusive": 1171,
+        "role": "field expression: initial",
+        "sha256": "87b66aa3c153992d07071dc82be2d2e0da99e74e449da0f7a55a9b4f4b131c10"
+      },
+      "sourceHashes": {
+        "main.ok": "c43b708b001e7419a4c35c686c875d66b06c92a57b01310059a05fb57415974a",
+        "hinges.ok": "87b66aa3c153992d07071dc82be2d2e0da99e74e449da0f7a55a9b4f4b131c10"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1181
+      },
+      "artifactSha256": "1f315611c5ba7a78c0eed1a16373cc59c2900f971bb7555de18a1f1fd22aec07",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_initial_source_artifact_and_paired_changes",
+      "label": "artifact-only initial",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35300,
+        "sha256": "8d0d90c3c999ccc97e84fa8dad53836550d6aa957dee683c1fd351b933c492a5",
+        "snapshot": "inputs.zip!8d0d90c3c999ccc97e84fa8dad53836550d6aa957dee683c1fd351b933c492a5.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/initial",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 1162,
+        "endByteExclusive": 1168,
+        "role": "field expression: initial",
+        "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "8d0d90c3c999ccc97e84fa8dad53836550d6aa957dee683c1fd351b933c492a5",
+      "artifactBytes": 35300
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_initial_source_artifact_and_paired_changes",
+      "label": "paired initial",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1181,
+          "sha256": "87b66aa3c153992d07071dc82be2d2e0da99e74e449da0f7a55a9b4f4b131c10",
+          "snapshot": "inputs.zip!87b66aa3c153992d07071dc82be2d2e0da99e74e449da0f7a55a9b4f4b131c10.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "c43b708b001e7419a4c35c686c875d66b06c92a57b01310059a05fb57415974a",
+          "snapshot": "inputs.zip!c43b708b001e7419a4c35c686c875d66b06c92a57b01310059a05fb57415974a.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35312,
+        "sha256": "526f84b66a8a8cb59dd55d453379f860d1bc5d42320a2b56f3c5087563132297",
+        "snapshot": "inputs.zip!526f84b66a8a8cb59dd55d453379f860d1bc5d42320a2b56f3c5087563132297.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_joint_name_and_key_have_separate_authority",
+      "label": "joint lexical rename retains key",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1182,
+          "sha256": "c87bdae517ba63137ec559f9d3c892f57bfbd329ce1aba7da374e21a565acb04",
+          "snapshot": "inputs.zip!c87bdae517ba63137ec559f9d3c892f57bfbd329ce1aba7da374e21a565acb04.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "2f123762d44cb184cb835ed35b0a49846afd1b7dc5fcd48ec6717a5d95278382",
+          "snapshot": "inputs.zip!2f123762d44cb184cb835ed35b0a49846afd1b7dc5fcd48ec6717a5d95278382.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35316,
+        "sha256": "816d3ce0aad500d1fa92cf0325442d98a1c9a0abec9df1bdad2e92c56e0d5789",
+        "snapshot": "inputs.zip!816d3ce0aad500d1fa92cf0325442d98a1c9a0abec9df1bdad2e92c56e0d5789.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_joint_name_and_key_have_separate_authority",
+      "label": "joint key change retains name",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1188,
+          "sha256": "d19bc6202c399895aba6679e31dbf0358197fed231103218ebfcd1ce7a85dcc5",
+          "snapshot": "inputs.zip!d19bc6202c399895aba6679e31dbf0358197fed231103218ebfcd1ce7a85dcc5.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "4e7e19369fe970801e1b9a38baf4f7fbce39e842c20013a18822cb04cac3e2a0",
+          "snapshot": "inputs.zip!4e7e19369fe970801e1b9a38baf4f7fbce39e842c20013a18822cb04cac3e2a0.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35344,
+        "sha256": "857352b66db7a5c6d08272ec3e54c5fab789ae20d491795c0f6b3fa2d81189fb",
+        "snapshot": "inputs.zip!857352b66db7a5c6d08272ec3e54c5fab789ae20d491795c0f6b3fa2d81189fb.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_joint_name_and_key_have_separate_authority",
+      "label": "source joint change with stale artifact path",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1182,
+          "sha256": "c87bdae517ba63137ec559f9d3c892f57bfbd329ce1aba7da374e21a565acb04",
+          "snapshot": "inputs.zip!c87bdae517ba63137ec559f9d3c892f57bfbd329ce1aba7da374e21a565acb04.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "2f123762d44cb184cb835ed35b0a49846afd1b7dc5fcd48ec6717a5d95278382",
+          "snapshot": "inputs.zip!2f123762d44cb184cb835ed35b0a49846afd1b7dc5fcd48ec6717a5d95278382.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35312,
+        "sha256": "ca4afff96f117ab0f56d1520e0f628564ea9286fcd7b0f3b4e1e3423859b2db1",
+        "snapshot": "inputs.zip!ca4afff96f117ab0f56d1520e0f628564ea9286fcd7b0f3b4e1e3423859b2db1.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "complete source and artifact joint path sets differ",
+      "pointer": "/extras/ontokin/joints",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "2f123762d44cb184cb835ed35b0a49846afd1b7dc5fcd48ec6717a5d95278382",
+        "hinges.ok": "c87bdae517ba63137ec559f9d3c892f57bfbd329ce1aba7da374e21a565acb04"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1182
+      },
+      "artifactSha256": "ca4afff96f117ab0f56d1520e0f628564ea9286fcd7b0f3b4e1e3423859b2db1",
+      "artifactBytes": 35312
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_joint_name_and_key_have_separate_authority",
+      "label": "source joint change with stale artifact element_id",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1188,
+          "sha256": "d19bc6202c399895aba6679e31dbf0358197fed231103218ebfcd1ce7a85dcc5",
+          "snapshot": "inputs.zip!d19bc6202c399895aba6679e31dbf0358197fed231103218ebfcd1ce7a85dcc5.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "4e7e19369fe970801e1b9a38baf4f7fbce39e842c20013a18822cb04cac3e2a0",
+          "snapshot": "inputs.zip!4e7e19369fe970801e1b9a38baf4f7fbce39e842c20013a18822cb04cac3e2a0.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35336,
+        "sha256": "fff5fd0706e08ef4d8f29780f5b8e86e6ff0f3d22da294467b4f48ebe032f0ec",
+        "snapshot": "inputs.zip!fff5fd0706e08ef4d8f29780f5b8e86e6ff0f3d22da294467b4f48ebe032f0ec.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "complete source and artifact joint identity sets differ",
+      "pointer": "/extras/ontokin/joints",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "4e7e19369fe970801e1b9a38baf4f7fbce39e842c20013a18822cb04cac3e2a0",
+        "hinges.ok": "d19bc6202c399895aba6679e31dbf0358197fed231103218ebfcd1ce7a85dcc5"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1188
+      },
+      "artifactSha256": "fff5fd0706e08ef4d8f29780f5b8e86e6ff0f3d22da294467b4f48ebe032f0ec",
+      "artifactBytes": 35336
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_malformed_artifact_fields_and_strict_axis_shape",
+      "label": "artifact malformed axis [0, 1]",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35292,
+        "sha256": "a183ef6d118274ab099783fde895abd5eeac75967e8b05121a0ccfb38b1a2c0a",
+        "snapshot": "inputs.zip!a183ef6d118274ab099783fde895abd5eeac75967e8b05121a0ccfb38b1a2c0a.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "three axis components required",
+      "pointer": "/extras/ontokin/joints/0/axis",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "a183ef6d118274ab099783fde895abd5eeac75967e8b05121a0ccfb38b1a2c0a",
+      "artifactBytes": 35292
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_malformed_artifact_fields_and_strict_axis_shape",
+      "label": "artifact malformed axis [False, 0, 1]",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35300,
+        "sha256": "f08136419fa24375ed7213b2a6404849dc1ec218841450cf7e6a61b6d6bc65d5",
+        "snapshot": "inputs.zip!f08136419fa24375ed7213b2a6404849dc1ec218841450cf7e6a61b6d6bc65d5.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "finite JSON number required",
+      "pointer": "/extras/ontokin/joints/0/axis/0",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "f08136419fa24375ed7213b2a6404849dc1ec218841450cf7e6a61b6d6bc65d5",
+      "artifactBytes": 35300
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_malformed_artifact_fields_and_strict_axis_shape",
+      "label": "artifact malformed axis [0, 0, '1']",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "4fd4994a9d6c223113bca865da150dcb29083babda27f1817848d0c1c5fa949f",
+        "snapshot": "inputs.zip!4fd4994a9d6c223113bca865da150dcb29083babda27f1817848d0c1c5fa949f.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "finite JSON number required",
+      "pointer": "/extras/ontokin/joints/0/axis/2",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "4fd4994a9d6c223113bca865da150dcb29083babda27f1817848d0c1c5fa949f",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_malformed_artifact_fields_and_strict_axis_shape",
+      "label": "artifact malformed axis [1e-300, 0, 1]",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35300,
+        "sha256": "62392d8b9d21d38b7c19e726fa7715db066b96e830a125307998ec7571b30d06",
+        "snapshot": "inputs.zip!62392d8b9d21d38b7c19e726fa7715db066b96e830a125307998ec7571b30d06.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "signed basis axis required",
+      "pointer": "/extras/ontokin/joints/0/axis",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "62392d8b9d21d38b7c19e726fa7715db066b96e830a125307998ec7571b30d06",
+      "artifactBytes": 35300
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_malformed_artifact_fields_and_strict_axis_shape",
+      "label": "artifact malformed axis [0, 0, nan]",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "f20b67a52827581cc83b52c3c0f61b5a43ce1fb4d0f374ec086f215ff22f3187",
+        "snapshot": "inputs.zip!f20b67a52827581cc83b52c3c0f61b5a43ce1fb4d0f374ec086f215ff22f3187.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "nonfinite JSON constant",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "f20b67a52827581cc83b52c3c0f61b5a43ce1fb4d0f374ec086f215ff22f3187",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_malformed_artifact_fields_and_strict_axis_shape",
+      "label": "artifact malformed axis [0, 0, inf]",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35304,
+        "sha256": "0549635ad84a9b36559db1f43cf1f35fd06f40d75c9559a67b9eac582a2d8c0d",
+        "snapshot": "inputs.zip!0549635ad84a9b36559db1f43cf1f35fd06f40d75c9559a67b9eac582a2d8c0d.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "nonfinite JSON constant",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "0549635ad84a9b36559db1f43cf1f35fd06f40d75c9559a67b9eac582a2d8c0d",
+      "artifactBytes": 35304
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_malformed_artifact_fields_and_strict_axis_shape",
+      "label": "artifact malformed limits [False, 0.7853981633974483]",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35280,
+        "sha256": "bf1a73ec9846d50aeab9ac18f49b4fe94a81b09437ac6deb3d59b25e778f86b4",
+        "snapshot": "inputs.zip!bf1a73ec9846d50aeab9ac18f49b4fe94a81b09437ac6deb3d59b25e778f86b4.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "finite JSON number required",
+      "pointer": "/extras/ontokin/joints/0/limits/0",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "bf1a73ec9846d50aeab9ac18f49b4fe94a81b09437ac6deb3d59b25e778f86b4",
+      "artifactBytes": 35280
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_malformed_artifact_fields_and_strict_axis_shape",
+      "label": "artifact malformed limits [0]",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35260,
+        "sha256": "a612ff05fa2e8078ac97565de7e4230cdbfb4219e218dda2aed6f10300dedfdc",
+        "snapshot": "inputs.zip!a612ff05fa2e8078ac97565de7e4230cdbfb4219e218dda2aed6f10300dedfdc.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "two ordered limits required",
+      "pointer": "/extras/ontokin/joints/0/limits",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "a612ff05fa2e8078ac97565de7e4230cdbfb4219e218dda2aed6f10300dedfdc",
+      "artifactBytes": 35260
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_malformed_artifact_fields_and_strict_axis_shape",
+      "label": "artifact malformed initial True",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35300,
+        "sha256": "1fbe4dc66de9668995429c341568257d7e3af68dc7ecff4a7a70280e66697bc8",
+        "snapshot": "inputs.zip!1fbe4dc66de9668995429c341568257d7e3af68dc7ecff4a7a70280e66697bc8.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "finite JSON number required",
+      "pointer": "/extras/ontokin/joints/0/initial",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "1fbe4dc66de9668995429c341568257d7e3af68dc7ecff4a7a70280e66697bc8",
+      "artifactBytes": 35300
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_malformed_artifact_fields_and_strict_axis_shape",
+      "label": "artifact malformed initial '0'",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "53ee56ab61491b7d487895ebefccff83cdd23afab1977b285caf4fcb7cc6dcac",
+        "snapshot": "inputs.zip!53ee56ab61491b7d487895ebefccff83cdd23afab1977b285caf4fcb7cc6dcac.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "finite JSON number required",
+      "pointer": "/extras/ontokin/joints/0/initial",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "53ee56ab61491b7d487895ebefccff83cdd23afab1977b285caf4fcb7cc6dcac",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_membership_opaque_keys_rebinding_and_byte_offsets",
+      "label": "membership and opaque keys helper_default",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1183,
+          "sha256": "03954b99b16063faef43ced5cfcb9b794188bd0c07d316088de2f9e5acbdc652",
+          "snapshot": "inputs.zip!03954b99b16063faef43ced5cfcb9b794188bd0c07d316088de2f9e5acbdc652.ok"
+        },
+        "main.ok": {
+          "bytes": 655,
+          "sha256": "81f3a7025581da857082a80f68de593f5f6f5f1b3a32e2587e581f8eb37eedb6",
+          "snapshot": "inputs.zip!81f3a7025581da857082a80f68de593f5f6f5f1b3a32e2587e581f8eb37eedb6.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 29268,
+        "sha256": "d1500f64c133dbbabe53d2d2463e00a1de50cf40c9c6738382af1fff63c8a409",
+        "snapshot": "inputs.zip!d1500f64c133dbbabe53d2d2463e00a1de50cf40c9c6738382af1fff63c8a409.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 4,
+      "siteCount": 8,
+      "objectCount": 10,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_membership_opaque_keys_rebinding_and_byte_offsets",
+      "label": "membership and opaque keys direct_default",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1183,
+          "sha256": "03954b99b16063faef43ced5cfcb9b794188bd0c07d316088de2f9e5acbdc652",
+          "snapshot": "inputs.zip!03954b99b16063faef43ced5cfcb9b794188bd0c07d316088de2f9e5acbdc652.ok"
+        },
+        "main.ok": {
+          "bytes": 788,
+          "sha256": "2026855db8be6b72f55397b818596e7308b0c310b208399058bdf6d4012f5daf",
+          "snapshot": "inputs.zip!2026855db8be6b72f55397b818596e7308b0c310b208399058bdf6d4012f5daf.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 29120,
+        "sha256": "d04b64bd43ceec93201e35da60d984355cee06689cb78b170bda50d954ed26ea",
+        "snapshot": "inputs.zip!d04b64bd43ceec93201e35da60d984355cee06689cb78b170bda50d954ed26ea.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 4,
+      "siteCount": 8,
+      "objectCount": 10,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_membership_opaque_keys_rebinding_and_byte_offsets",
+      "label": "membership and opaque keys helper_override",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1183,
+          "sha256": "03954b99b16063faef43ced5cfcb9b794188bd0c07d316088de2f9e5acbdc652",
+          "snapshot": "inputs.zip!03954b99b16063faef43ced5cfcb9b794188bd0c07d316088de2f9e5acbdc652.ok"
+        },
+        "main.ok": {
+          "bytes": 615,
+          "sha256": "c36df161c0d51d838f8cec900a9883f74b2788eafd96719c61eca8242a801aa7",
+          "snapshot": "inputs.zip!c36df161c0d51d838f8cec900a9883f74b2788eafd96719c61eca8242a801aa7.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 29320,
+        "sha256": "7c184184efb0d3c97825b6264b7702d48e6bf4d148e10b77705a2afe65aed215",
+        "snapshot": "inputs.zip!7c184184efb0d3c97825b6264b7702d48e6bf4d148e10b77705a2afe65aed215.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 4,
+      "siteCount": 8,
+      "objectCount": 10,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_membership_opaque_keys_rebinding_and_byte_offsets",
+      "label": "membership and opaque keys final_override",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1183,
+          "sha256": "03954b99b16063faef43ced5cfcb9b794188bd0c07d316088de2f9e5acbdc652",
+          "snapshot": "inputs.zip!03954b99b16063faef43ced5cfcb9b794188bd0c07d316088de2f9e5acbdc652.ok"
+        },
+        "main.ok": {
+          "bytes": 869,
+          "sha256": "7b9d935930ac400433434fc502dfb62fd0dbb12a9ebcaeb24afaefbda870a38c",
+          "snapshot": "inputs.zip!7b9d935930ac400433434fc502dfb62fd0dbb12a9ebcaeb24afaefbda870a38c.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 29120,
+        "sha256": "3e4844e206c2246bc3bac815ff7c38d6be46fa405383a3346eab699c0f06f6f5",
+        "snapshot": "inputs.zip!3e4844e206c2246bc3bac815ff7c38d6be46fa405383a3346eab699c0f06f6f5.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 4,
+      "siteCount": 8,
+      "objectCount": 10,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_membership_opaque_keys_rebinding_and_byte_offsets",
+      "label": "renamed modules classes roots collection and private part",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1110,
+          "sha256": "096513cc93312189c4b4b6ee1f342e42d7564d4874c5d1de384d872b09602110",
+          "snapshot": "inputs.zip!096513cc93312189c4b4b6ee1f342e42d7564d4874c5d1de384d872b09602110.ok"
+        },
+        "main.ok": {
+          "bytes": 694,
+          "sha256": "101263f2393cdf82d15b46b962eaed880f8483e52428131715b263ed711b77ce",
+          "snapshot": "inputs.zip!101263f2393cdf82d15b46b962eaed880f8483e52428131715b263ed711b77ce.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 24288,
+        "sha256": "9e2e33f41630a43ec1e9e1f3bf4cd34aaa0b82393db6baa777c957d3fe35e50f",
+        "snapshot": "inputs.zip!9e2e33f41630a43ec1e9e1f3bf4cd34aaa0b82393db6baa777c957d3fe35e50f.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 3,
+      "siteCount": 6,
+      "objectCount": 8,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_nontrivial_source_site_pose_is_not_evaluated",
+      "label": "site pose witness retained without world-alignment inference",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1188,
+          "sha256": "d72abb96bf576a9ac50a331b90c7aa9145a7e067b4e4c3152db3155faa8ee53e",
+          "snapshot": "inputs.zip!d72abb96bf576a9ac50a331b90c7aa9145a7e067b4e4c3152db3155faa8ee53e.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "d13d046d85a5cf64ae9375a8129bffade4cb057d4070f612d8e3c3273979bd51",
+          "snapshot": "inputs.zip!d13d046d85a5cf64ae9375a8129bffade4cb057d4070f612d8e3c3273979bd51.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "30949df36fc16eb4cc38a49e044ffd0eca697c9753cce20668ed14916b0adf43",
+        "snapshot": "inputs.zip!30949df36fc16eb4cc38a49e044ffd0eca697c9753cce20668ed14916b0adf43.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_ordered_endpoint_swap_wrong_object_and_same_object",
+      "label": "supported paired endpoint reversal",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "7388c256a4f67c0a14f967482f1cf7b403ff8b56c4eeb1dfebc5da7a0bde6e48",
+          "snapshot": "inputs.zip!7388c256a4f67c0a14f967482f1cf7b403ff8b56c4eeb1dfebc5da7a0bde6e48.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "33e2e0022628dfcde001b0b98f8d1854333903b9bd110bc3e7fd865cfd562c62",
+          "snapshot": "inputs.zip!33e2e0022628dfcde001b0b98f8d1854333903b9bd110bc3e7fd865cfd562c62.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "e0b37c1c6baf6926ae9608958e2497c89b3e968f7b4d6a519724e61e577e43fd",
+        "snapshot": "inputs.zip!e0b37c1c6baf6926ae9608958e2497c89b3e968f7b4d6a519724e61e577e43fd.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_ordered_endpoint_swap_wrong_object_and_same_object",
+      "label": "artifact endpoint swap",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "ec0f722260559ff0d4e5299a1f27f1cf69154ef4c4a5311bf08621e3b2e53d18",
+        "snapshot": "inputs.zip!ec0f722260559ff0d4e5299a1f27f1cf69154ef4c4a5311bf08621e3b2e53d18.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/parent_site",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 758,
+        "endByteExclusive": 924,
+        "role": "site declaration",
+        "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "ec0f722260559ff0d4e5299a1f27f1cf69154ef4c4a5311bf08621e3b2e53d18",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_ordered_endpoint_swap_wrong_object_and_same_object",
+      "label": "artifact endpoint same",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35292,
+        "sha256": "742d55850f8df1ef1a5271d5cb8cd822367a89e77983ff75a80adc42e7fea7e8",
+        "snapshot": "inputs.zip!742d55850f8df1ef1a5271d5cb8cd822367a89e77983ff75a80adc42e7fea7e8.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/child_site",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 554,
+        "endByteExclusive": 718,
+        "role": "site declaration",
+        "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "742d55850f8df1ef1a5271d5cb8cd822367a89e77983ff75a80adc42e7fea7e8",
+      "artifactBytes": 35292
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_ordered_endpoint_swap_wrong_object_and_same_object",
+      "label": "artifact endpoint wrong_object",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "0c7ef4c8a868207b0572a65ce92591d981c4022e396e73d2b5422a5e44b7db76",
+        "snapshot": "inputs.zip!0c7ef4c8a868207b0572a65ce92591d981c4022e396e73d2b5422a5e44b7db76.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/parent_site",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 758,
+        "endByteExclusive": 924,
+        "role": "site declaration",
+        "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "0c7ef4c8a868207b0572a65ce92591d981c4022e396e73d2b5422a5e44b7db76",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_ordered_endpoint_swap_wrong_object_and_same_object",
+      "label": "artifact endpoint suffix_only",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35272,
+        "sha256": "be3d45119e41f10c6f6db3e8dee46b786c764dd6d31ddc64c51dac8ded98c40b",
+        "snapshot": "inputs.zip!be3d45119e41f10c6f6db3e8dee46b786c764dd6d31ddc64c51dac8ded98c40b.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/parent_site",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 758,
+        "endByteExclusive": 924,
+        "role": "site declaration",
+        "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "be3d45119e41f10c6f6db3e8dee46b786c764dd6d31ddc64c51dac8ded98c40b",
+      "artifactBytes": 35272
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_ordered_endpoint_swap_wrong_object_and_same_object",
+      "label": "source same-object endpoints",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1173,
+          "sha256": "71bb1d3f7d627cc4f8509b7320f7f157903e406f1f3ab11c450085d6e5fbb108",
+          "snapshot": "inputs.zip!71bb1d3f7d627cc4f8509b7320f7f157903e406f1f3ab11c450085d6e5fbb108.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "729bfb6873fb931195647351cf462909336cc4a01d6eb124bdf7ab39312126f6",
+          "snapshot": "inputs.zip!729bfb6873fb931195647351cf462909336cc4a01d6eb124bdf7ab39312126f6.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "bfabe0268a9b30f9b8e6ac75a863a2bbe37bd9db9d0fa9fd0ab5b8a737d752ef",
+        "snapshot": "inputs.zip!bfabe0268a9b30f9b8e6ac75a863a2bbe37bd9db9d0fa9fd0ab5b8a737d752ef.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "hinge endpoints must belong to distinct objects",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "729bfb6873fb931195647351cf462909336cc4a01d6eb124bdf7ab39312126f6",
+        "hinges.ok": "71bb1d3f7d627cc4f8509b7320f7f157903e406f1f3ab11c450085d6e5fbb108"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1173
+      },
+      "artifactSha256": "bfabe0268a9b30f9b8e6ac75a863a2bbe37bd9db9d0fa9fd0ab5b8a737d752ef",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_original_before_after_exact_bytes",
+      "label": "exact original before",
+      "expected": "agreement",
+      "sources": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123",
+          "snapshot": "inputs.zip!73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123.ok"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+          "snapshot": "inputs.zip!1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 185276,
+        "sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534",
+        "snapshot": "inputs.zip!d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 8,
+      "siteCount": 16,
+      "objectCount": 18,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_original_before_after_exact_bytes",
+      "label": "exact original after",
+      "expected": "agreement",
+      "sources": {
+        "main.ok": {
+          "bytes": 1708,
+          "sha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a",
+          "snapshot": "inputs.zip!443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a.ok"
+        },
+        "hinges.ok": {
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+          "snapshot": "inputs.zip!1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 185236,
+        "sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8",
+        "snapshot": "inputs.zip!05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 8,
+      "siteCount": 16,
+      "objectCount": 18,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_raw_glb_structural_duplicate_json_and_size_refusals",
+      "label": "raw structural NoneType",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "type": "NoneType"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "raw must be bytes",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": null,
+      "artifactBytes": null
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_raw_glb_structural_duplicate_json_and_size_refusals",
+      "label": "raw structural bytearray",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "type": "bytearray"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "raw must be bytes",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": null,
+      "artifactBytes": null
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_raw_glb_structural_duplicate_json_and_size_refusals",
+      "label": "raw structural str",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "type": "str"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "raw must be bytes",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": null,
+      "artifactBytes": null
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_raw_glb_structural_duplicate_json_and_size_refusals",
+      "label": "raw structural bytes",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 11,
+        "sha256": "81638dc5e234b9e11111871980b7a0a2494cad655593528c78c934f0da45230c",
+        "snapshot": "inputs.zip!81638dc5e234b9e11111871980b7a0a2494cad655593528c78c934f0da45230c.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "truncated GLB",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "81638dc5e234b9e11111871980b7a0a2494cad655593528c78c934f0da45230c",
+      "artifactBytes": 11
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_raw_glb_structural_duplicate_json_and_size_refusals",
+      "label": "raw structural bytes",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35295,
+        "sha256": "d2047c86b40fadea45bb9e3f4cb6f196dc8d6e087548d388cec6df23bd904f17",
+        "snapshot": "inputs.zip!d2047c86b40fadea45bb9e3f4cb6f196dc8d6e087548d388cec6df23bd904f17.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "GLB2 header or length",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "d2047c86b40fadea45bb9e3f4cb6f196dc8d6e087548d388cec6df23bd904f17",
+      "artifactBytes": 35295
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_raw_glb_structural_duplicate_json_and_size_refusals",
+      "label": "raw structural bytes",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 9,
+        "sha256": "23b06bb64afc49c2ba14c7e2a1230354aa99805d04ea3b70f868625de105f817",
+        "snapshot": "inputs.zip!23b06bb64afc49c2ba14c7e2a1230354aa99805d04ea3b70f868625de105f817.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "truncated GLB",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "23b06bb64afc49c2ba14c7e2a1230354aa99805d04ea3b70f868625de105f817",
+      "artifactBytes": 9
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_raw_glb_structural_duplicate_json_and_size_refusals",
+      "label": "GLB byte cap",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 4194305,
+        "sha256": "95e441ca65cd41fa01b2a71799e79fd60db59ed34f13af32a91e85f90378676c",
+        "snapshot": "inputs.zip!95e441ca65cd41fa01b2a71799e79fd60db59ed34f13af32a91e85f90378676c.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "RESOURCE_LIMIT",
+      "detail": "GLB exceeds 4 MiB",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": null,
+      "artifactBytes": 4194305
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_raw_glb_structural_duplicate_json_and_size_refusals",
+      "label": "duplicate JSON key",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 84,
+        "sha256": "35d13f82adf309c393a0fd5203478216a8a02908394ca5ef14ba9652c49c1366",
+        "snapshot": "inputs.zip!35d13f82adf309c393a0fd5203478216a8a02908394ca5ef14ba9652c49c1366.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "duplicate JSON key",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "35d13f82adf309c393a0fd5203478216a8a02908394ca5ef14ba9652c49c1366",
+      "artifactBytes": 84
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_raw_glb_structural_duplicate_json_and_size_refusals",
+      "label": "joint row field missing",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35284,
+        "sha256": "2065664e6b311c3ea60cdeb7ee2187a5b13f2e396c3cb04cc319bacd49b89979",
+        "snapshot": "inputs.zip!2065664e6b311c3ea60cdeb7ee2187a5b13f2e396c3cb04cc319bacd49b89979.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "joint fields must be exactly the eight contract fields",
+      "pointer": "/extras/ontokin/joints/0",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "2065664e6b311c3ea60cdeb7ee2187a5b13f2e396c3cb04cc319bacd49b89979",
+      "artifactBytes": 35284
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_raw_glb_structural_duplicate_json_and_size_refusals",
+      "label": "joint row field extra",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35336,
+        "sha256": "5948a1fc477958d457d62f5d27d6a84a45320e32157f5d218a7b69bc65e90461",
+        "snapshot": "inputs.zip!5948a1fc477958d457d62f5d27d6a84a45320e32157f5d218a7b69bc65e90461.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "joint fields must be exactly the eight contract fields",
+      "pointer": "/extras/ontokin/joints/0",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "5948a1fc477958d457d62f5d27d6a84a45320e32157f5d218a7b69bc65e90461",
+      "artifactBytes": 35336
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_row_node_and_mapping_reordering_preserves_pointers",
+      "label": "joint node and program row reordering",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "345474ee2bfe4146547ab72e7d5c4367824eb08d53a0758567d76ea5b48d43e0",
+        "snapshot": "inputs.zip!345474ee2bfe4146547ab72e7d5c4367824eb08d53a0758567d76ea5b48d43e0.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_site_names_and_derived_keys_remain_distinct",
+      "label": "paired endpoint lexical names",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1184,
+          "sha256": "c9d83cc1bc4c90c89751b61b5f2b62ee7ec4c2d80e45e0ddebbb2df27f5805b0",
+          "snapshot": "inputs.zip!c9d83cc1bc4c90c89751b61b5f2b62ee7ec4c2d80e45e0ddebbb2df27f5805b0.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "600dcad1cac9f05fcf92ac9c4ce63149426cb2f4293ad3450865706a7544880a",
+          "snapshot": "inputs.zip!600dcad1cac9f05fcf92ac9c4ce63149426cb2f4293ad3450865706a7544880a.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35312,
+        "sha256": "126404b76397a6673c30d7e00b82b0f76ab5695866485cf561dd84f51832f667",
+        "snapshot": "inputs.zip!126404b76397a6673c30d7e00b82b0f76ab5695866485cf561dd84f51832f667.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_site_names_and_derived_keys_remain_distinct",
+      "label": "stale endpoint path after source rename parent_site",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1184,
+          "sha256": "c9d83cc1bc4c90c89751b61b5f2b62ee7ec4c2d80e45e0ddebbb2df27f5805b0",
+          "snapshot": "inputs.zip!c9d83cc1bc4c90c89751b61b5f2b62ee7ec4c2d80e45e0ddebbb2df27f5805b0.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "600dcad1cac9f05fcf92ac9c4ce63149426cb2f4293ad3450865706a7544880a",
+          "snapshot": "inputs.zip!600dcad1cac9f05fcf92ac9c4ce63149426cb2f4293ad3450865706a7544880a.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35308,
+        "sha256": "179cca77413e69d5e6d6fa02de0061af01a815bc6dd61d9bba7e3ebbfdea3d45",
+        "snapshot": "inputs.zip!179cca77413e69d5e6d6fa02de0061af01a815bc6dd61d9bba7e3ebbfdea3d45.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/parent_site",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 760,
+        "endByteExclusive": 927,
+        "role": "site declaration",
+        "sha256": "c9d83cc1bc4c90c89751b61b5f2b62ee7ec4c2d80e45e0ddebbb2df27f5805b0"
+      },
+      "sourceHashes": {
+        "main.ok": "600dcad1cac9f05fcf92ac9c4ce63149426cb2f4293ad3450865706a7544880a",
+        "hinges.ok": "c9d83cc1bc4c90c89751b61b5f2b62ee7ec4c2d80e45e0ddebbb2df27f5805b0"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1184
+      },
+      "artifactSha256": "179cca77413e69d5e6d6fa02de0061af01a815bc6dd61d9bba7e3ebbfdea3d45",
+      "artifactBytes": 35308
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_site_names_and_derived_keys_remain_distinct",
+      "label": "stale endpoint path after source rename child_site",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1184,
+          "sha256": "c9d83cc1bc4c90c89751b61b5f2b62ee7ec4c2d80e45e0ddebbb2df27f5805b0",
+          "snapshot": "inputs.zip!c9d83cc1bc4c90c89751b61b5f2b62ee7ec4c2d80e45e0ddebbb2df27f5805b0.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "600dcad1cac9f05fcf92ac9c4ce63149426cb2f4293ad3450865706a7544880a",
+          "snapshot": "inputs.zip!600dcad1cac9f05fcf92ac9c4ce63149426cb2f4293ad3450865706a7544880a.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35308,
+        "sha256": "b470c68545bb4dfdaae7ba10d5c3da2efee4b1cc70e912765a739aa2d911fce0",
+        "snapshot": "inputs.zip!b470c68545bb4dfdaae7ba10d5c3da2efee4b1cc70e912765a739aa2d911fce0.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/child_site",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 554,
+        "endByteExclusive": 720,
+        "role": "site declaration",
+        "sha256": "c9d83cc1bc4c90c89751b61b5f2b62ee7ec4c2d80e45e0ddebbb2df27f5805b0"
+      },
+      "sourceHashes": {
+        "main.ok": "600dcad1cac9f05fcf92ac9c4ce63149426cb2f4293ad3450865706a7544880a",
+        "hinges.ok": "c9d83cc1bc4c90c89751b61b5f2b62ee7ec4c2d80e45e0ddebbb2df27f5805b0"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1184
+      },
+      "artifactSha256": "b470c68545bb4dfdaae7ba10d5c3da2efee4b1cc70e912765a739aa2d911fce0",
+      "artifactBytes": 35308
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_site_names_and_derived_keys_remain_distinct",
+      "label": "site-key change has source-only identity authority",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1190,
+          "sha256": "e672c8b274cf6e48a7ea5b308a81173183f9b65b6d8c7c2442769eaaa27b12d6",
+          "snapshot": "inputs.zip!e672c8b274cf6e48a7ea5b308a81173183f9b65b6d8c7c2442769eaaa27b12d6.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "2b7aff37f7139a173cd21336150aef219b2942fe715b16ba26ffa03b9bf4cb4d",
+          "snapshot": "inputs.zip!2b7aff37f7139a173cd21336150aef219b2942fe715b16ba26ffa03b9bf4cb4d.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "ba090d9b9c9226234d68ca106ca46cb4f73990cbd255b658bdcac59c365e810e",
+        "snapshot": "inputs.zip!ba090d9b9c9226234d68ca106ca46cb4f73990cbd255b658bdcac59c365e810e.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_six_signed_basis_axes_and_reversal",
+      "label": "paired basis [-1, 0, 0]",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "a0e43b18aef8faae16b95d61eabc0e29871f9087707ce06267934e34d8d43b31",
+          "snapshot": "inputs.zip!a0e43b18aef8faae16b95d61eabc0e29871f9087707ce06267934e34d8d43b31.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "7c48230dac49fe5d735569ec4963b6b1465ddf89c4c6ab769a1f4a790c2f748f",
+          "snapshot": "inputs.zip!7c48230dac49fe5d735569ec4963b6b1465ddf89c4c6ab769a1f4a790c2f748f.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35300,
+        "sha256": "caf37d7036c18afdc84ff91f53a4876ca5c2219041a9bd9af8c229d98cf856b9",
+        "snapshot": "inputs.zip!caf37d7036c18afdc84ff91f53a4876ca5c2219041a9bd9af8c229d98cf856b9.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_six_signed_basis_axes_and_reversal",
+      "label": "paired basis [1, 0, 0]",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "9f3a56ad2a6427731ebdc19c7805419caf46073b3361d53298d5dc1ca582cc92",
+          "snapshot": "inputs.zip!9f3a56ad2a6427731ebdc19c7805419caf46073b3361d53298d5dc1ca582cc92.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "babf3d8c15fc549d238095d5ee52cd14ce82984545180c94a98ea8c0da146764",
+          "snapshot": "inputs.zip!babf3d8c15fc549d238095d5ee52cd14ce82984545180c94a98ea8c0da146764.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "d8d409411c5f13ccb4f9d49329a54d8585d1a8c046885be84e52b8399106f31b",
+        "snapshot": "inputs.zip!d8d409411c5f13ccb4f9d49329a54d8585d1a8c046885be84e52b8399106f31b.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_six_signed_basis_axes_and_reversal",
+      "label": "paired basis [0, -1, 0]",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "c1bf9b1e2185c7b31c99e6a29d1618c4028f16d48a2e644c01ca7042cf55c9f6",
+          "snapshot": "inputs.zip!c1bf9b1e2185c7b31c99e6a29d1618c4028f16d48a2e644c01ca7042cf55c9f6.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "cdbc1ef91354078d7c044c0804d96e31db9e55c65a018eb75c2b12a5d847c64d",
+          "snapshot": "inputs.zip!cdbc1ef91354078d7c044c0804d96e31db9e55c65a018eb75c2b12a5d847c64d.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35300,
+        "sha256": "31becb3e755ea5120908212d2b9093a4a56dc6d66d2623994a01fc7b8a4d9129",
+        "snapshot": "inputs.zip!31becb3e755ea5120908212d2b9093a4a56dc6d66d2623994a01fc7b8a4d9129.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_six_signed_basis_axes_and_reversal",
+      "label": "paired basis [0, 1, 0]",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "6be4dde91cca765f6418d2915194a504022a21d8beefa9fc1b66bd12a7ca5882",
+          "snapshot": "inputs.zip!6be4dde91cca765f6418d2915194a504022a21d8beefa9fc1b66bd12a7ca5882.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "45603ad1acacdfac342ad0ec07d91f87f323834568b8d96500c12d339e22cd8c",
+          "snapshot": "inputs.zip!45603ad1acacdfac342ad0ec07d91f87f323834568b8d96500c12d339e22cd8c.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "e7fa3ee7595c548ed37796ffb4e759624b2d48a6d886e749c6ded3c6401163eb",
+        "snapshot": "inputs.zip!e7fa3ee7595c548ed37796ffb4e759624b2d48a6d886e749c6ded3c6401163eb.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_six_signed_basis_axes_and_reversal",
+      "label": "paired basis [0, 0, -1]",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "7857a74e84a45f5ee32d35b4c8add0bc0fabbae0934888c85b91f5b09eec2e1e",
+          "snapshot": "inputs.zip!7857a74e84a45f5ee32d35b4c8add0bc0fabbae0934888c85b91f5b09eec2e1e.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "1c2541e7f083f644dca258e191acef3f90142a7e8094a2ceea291c9481622a8c",
+          "snapshot": "inputs.zip!1c2541e7f083f644dca258e191acef3f90142a7e8094a2ceea291c9481622a8c.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35300,
+        "sha256": "3404e140fac3c596ecba9f3fa4d5c306ced81606c0bc2d59355a2ae0ea0f8053",
+        "snapshot": "inputs.zip!3404e140fac3c596ecba9f3fa4d5c306ced81606c0bc2d59355a2ae0ea0f8053.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_six_signed_basis_axes_and_reversal",
+      "label": "paired basis [0, 0, 1]",
+      "expected": "agreement",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "agreement",
+      "hingeCount": 5,
+      "siteCount": 10,
+      "objectCount": 12,
+      "flags": {
+        "inputBindingVerified": true,
+        "hingeComparisonVerified": true,
+        "hingeSetAgreementVerified": true,
+        "endpointAgreementVerified": true,
+        "historicalInputsBound": false,
+        "sitePosesEvaluated": false,
+        "sourceValidityQualified": false,
+        "acceptedRevisionQualified": false,
+        "completeC255Semantic": false,
+        "executionAllowed": false,
+        "directSiteTableObserved": false,
+        "jointDefinitionOrSpanObserved": false
+      }
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_six_signed_basis_axes_and_reversal",
+      "label": "source-only axis sign",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1179,
+          "sha256": "7857a74e84a45f5ee32d35b4c8add0bc0fabbae0934888c85b91f5b09eec2e1e",
+          "snapshot": "inputs.zip!7857a74e84a45f5ee32d35b4c8add0bc0fabbae0934888c85b91f5b09eec2e1e.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "1c2541e7f083f644dca258e191acef3f90142a7e8094a2ceea291c9481622a8c",
+          "snapshot": "inputs.zip!1c2541e7f083f644dca258e191acef3f90142a7e8094a2ceea291c9481622a8c.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "9c2726f89f138f3dcc8e3e4475489a2ab48b2aca9bb46a0bd5f01269d51f5dc9",
+        "snapshot": "inputs.zip!9c2726f89f138f3dcc8e3e4475489a2ab48b2aca9bb46a0bd5f01269d51f5dc9.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/axis",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 1086,
+        "endByteExclusive": 1100,
+        "role": "field expression: axis",
+        "sha256": "7857a74e84a45f5ee32d35b4c8add0bc0fabbae0934888c85b91f5b09eec2e1e"
+      },
+      "sourceHashes": {
+        "main.ok": "1c2541e7f083f644dca258e191acef3f90142a7e8094a2ceea291c9481622a8c",
+        "hinges.ok": "7857a74e84a45f5ee32d35b4c8add0bc0fabbae0934888c85b91f5b09eec2e1e"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1179
+      },
+      "artifactSha256": "9c2726f89f138f3dcc8e3e4475489a2ab48b2aca9bb46a0bd5f01269d51f5dc9",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_six_signed_basis_axes_and_reversal",
+      "label": "artifact-only axis sign",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "8eaa50e31ca49be134617b0b5227e3888965f6e16c2b816143992177c22aca9e",
+        "snapshot": "inputs.zip!8eaa50e31ca49be134617b0b5227e3888965f6e16c2b816143992177c22aca9e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "FIELD_MISMATCH",
+      "detail": "artifact hinge field differs from source",
+      "pointer": "/extras/ontokin/joints/0/axis",
+      "origin": {
+        "file": "hinges.ok",
+        "startByte": 1086,
+        "endByteExclusive": 1099,
+        "role": "field expression: axis",
+        "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "8eaa50e31ca49be134617b0b5227e3888965f6e16c2b816143992177c22aca9e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_source_compatibility_fields_refuse_when_unsupported_or_inconsistent",
+      "label": "source site compatibility interface = \"\";",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1156,
+          "sha256": "ce363bc72276d368fd3fd051502509b594822ebba55a44a46ad1b1000793385d",
+          "snapshot": "inputs.zip!ce363bc72276d368fd3fd051502509b594822ebba55a44a46ad1b1000793385d.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "d1ed5e6c53fe22d564b3aaf9012dc8f91f1667bda80ab9f6fa9ece78077846a5",
+          "snapshot": "inputs.zip!d1ed5e6c53fe22d564b3aaf9012dc8f91f1667bda80ab9f6fa9ece78077846a5.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "84f422771856eb7cdc40cba32be16d99a5c7a8c6c31673a292f2f8136361d1e5",
+        "snapshot": "inputs.zip!84f422771856eb7cdc40cba32be16d99a5c7a8c6c31673a292f2f8136361d1e5.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "C257 TEXT: source string",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "d1ed5e6c53fe22d564b3aaf9012dc8f91f1667bda80ab9f6fa9ece78077846a5",
+        "hinges.ok": "ce363bc72276d368fd3fd051502509b594822ebba55a44a46ad1b1000793385d"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1156
+      },
+      "artifactSha256": "84f422771856eb7cdc40cba32be16d99a5c7a8c6c31673a292f2f8136361d1e5",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_source_compatibility_fields_refuse_when_unsupported_or_inconsistent",
+      "label": "source site compatibility size = -1[m];",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1180,
+          "sha256": "6cdeb85025d8a15c13017fbf13b696e54624649c12e49f08f8344f1184732332",
+          "snapshot": "inputs.zip!6cdeb85025d8a15c13017fbf13b696e54624649c12e49f08f8344f1184732332.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "8f4436ce5218c97e4dc19a3754caa40a2b7f18d286f007723a1698459dd7710d",
+          "snapshot": "inputs.zip!8f4436ce5218c97e4dc19a3754caa40a2b7f18d286f007723a1698459dd7710d.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "fae60f9b2a5d6de9c31e27840655685622ba1f400dce176a8b5a48176a840d5a",
+        "snapshot": "inputs.zip!fae60f9b2a5d6de9c31e27840655685622ba1f400dce176a8b5a48176a840d5a.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "site size must be nonnegative",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "8f4436ce5218c97e4dc19a3754caa40a2b7f18d286f007723a1698459dd7710d",
+        "hinges.ok": "6cdeb85025d8a15c13017fbf13b696e54624649c12e49f08f8344f1184732332"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1180
+      },
+      "artifactSha256": "fae60f9b2a5d6de9c31e27840655685622ba1f400dce176a8b5a48176a840d5a",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_source_compatibility_fields_refuse_when_unsupported_or_inconsistent",
+      "label": "source site compatibility size = 1[m] + 0[m];",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1192,
+          "sha256": "8c840e6fea39d8f4774df814df600ede9fab3baf49e3000b0d05f10f7b4d7091",
+          "snapshot": "inputs.zip!8c840e6fea39d8f4774df814df600ede9fab3baf49e3000b0d05f10f7b4d7091.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "0ea0ede08d13bac1047efe528cf23c52563827e7777fa5171e381779dc592e32",
+          "snapshot": "inputs.zip!0ea0ede08d13bac1047efe528cf23c52563827e7777fa5171e381779dc592e32.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "b2f6391028e287b6fb339588ca21e888557c3bca6aec2cff169d5ef468caca55",
+        "snapshot": "inputs.zip!b2f6391028e287b6fb339588ca21e888557c3bca6aec2cff169d5ef468caca55.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "computed literal expression is unsupported",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "0ea0ede08d13bac1047efe528cf23c52563827e7777fa5171e381779dc592e32",
+        "hinges.ok": "8c840e6fea39d8f4774df814df600ede9fab3baf49e3000b0d05f10f7b4d7091"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1192
+      },
+      "artifactSha256": "b2f6391028e287b6fb339588ca21e888557c3bca6aec2cff169d5ef468caca55",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_source_compatibility_fields_refuse_when_unsupported_or_inconsistent",
+      "label": "source sites unequal size before provenance",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "edafb46adafcc85d2f1d0ae1a1ab3978e3537288d6ba99f037a5ecf09be3dc20",
+          "snapshot": "inputs.zip!edafb46adafcc85d2f1d0ae1a1ab3978e3537288d6ba99f037a5ecf09be3dc20.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "cf9e74a7e9530796db2ba9359de386a4badcf0d26965b37f11fabbf2240fbee5",
+          "snapshot": "inputs.zip!cf9e74a7e9530796db2ba9359de386a4badcf0d26965b37f11fabbf2240fbee5.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "source endpoint interface/size mismatch",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "cf9e74a7e9530796db2ba9359de386a4badcf0d26965b37f11fabbf2240fbee5",
+        "hinges.ok": "edafb46adafcc85d2f1d0ae1a1ab3978e3537288d6ba99f037a5ecf09be3dc20"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_structural_source_and_numeric_bounds_propagate",
+      "label": "invalid source closure dict",
+      "expected": "refusal",
+      "sources": {},
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "exact main.ok and hinges.ok closure required",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {},
+      "sourceBytes": {},
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_structural_source_and_numeric_bounds_propagate",
+      "label": "invalid source closure dict",
+      "expected": "refusal",
+      "sources": {
+        "main.ok": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "snapshot": "inputs.zip!e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "exact main.ok and hinges.ok closure required",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "sourceBytes": {
+        "main.ok": 0
+      },
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_structural_source_and_numeric_bounds_propagate",
+      "label": "invalid source closure dict",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+          "snapshot": "inputs.zip!db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08.ok"
+        },
+        "extra.ok": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "snapshot": "inputs.zip!e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "exact main.ok and hinges.ok closure required",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "db688d9b6d5e170090565e1c713b9bc26d30a231d5da1a7d131c921e4c18da08",
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_structural_source_and_numeric_bounds_propagate",
+      "label": "invalid source closure dict",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "type": "str"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "supplied source must be bytes: main.ok",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_structural_source_and_numeric_bounds_propagate",
+      "label": "invalid source closure NoneType",
+      "expected": "refusal",
+      "sources": {
+        "type": "NoneType"
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "INPUT_BINDING",
+      "detail": "exact main.ok and hinges.ok closure required",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {},
+      "sourceBytes": {},
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_structural_source_and_numeric_bounds_propagate",
+      "label": "source byte cap",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c",
+          "snapshot": "inputs.zip!0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c.ok"
+        },
+        "main.ok": {
+          "bytes": 65537,
+          "sha256": "76c002eec0c9da854ca2ee5dae9fb0069a622274b6638ab712fcb70384304899",
+          "snapshot": "inputs.zip!76c002eec0c9da854ca2ee5dae9fb0069a622274b6638ab712fcb70384304899.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+        "snapshot": "inputs.zip!89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "RESOURCE_LIMIT",
+      "detail": "source byte limit: main.ok",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "hinges.ok": "0cb6cf082151283ce3f98dd8cd97accbdc118aa12c2e60512bf52ed2d086563c"
+      },
+      "sourceBytes": {
+        "main.ok": 65537,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "89e23ce774ec6d27dd92fa1e8bf6714db15c78a25db0130c3eb70b5f86bf2a6e",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_structural_source_and_numeric_bounds_propagate",
+      "label": "bounded source numeric 11111111111111111111111111111111111111111111111111111111111111111[rad]",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1242,
+          "sha256": "bd13a7d30efd43494e0b93002e9604bcbc61a72a8591d5b70674cc6715088622",
+          "snapshot": "inputs.zip!bd13a7d30efd43494e0b93002e9604bcbc61a72a8591d5b70674cc6715088622.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "c1122a3fc9c4d9c80d191b2d78e03c4d856fbeec5839f274d644a936ea0de0ea",
+          "snapshot": "inputs.zip!c1122a3fc9c4d9c80d191b2d78e03c4d856fbeec5839f274d644a936ea0de0ea.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "06afe3ec1bee0a407422377a272974a74d3960c6d7000dc3a5d3915010f17316",
+        "snapshot": "inputs.zip!06afe3ec1bee0a407422377a272974a74d3960c6d7000dc3a5d3915010f17316.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "RESOURCE_LIMIT",
+      "detail": "numeric lexeme exceeds 64 characters",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "c1122a3fc9c4d9c80d191b2d78e03c4d856fbeec5839f274d644a936ea0de0ea",
+        "hinges.ok": "bd13a7d30efd43494e0b93002e9604bcbc61a72a8591d5b70674cc6715088622"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1242
+      },
+      "artifactSha256": "06afe3ec1bee0a407422377a272974a74d3960c6d7000dc3a5d3915010f17316",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_structural_source_and_numeric_bounds_propagate",
+      "label": "bounded source numeric 1e401[rad]",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1182,
+          "sha256": "8b8aa728049dd9604de78953ffff37ca9a02dc011cb814b514499c37e1af8a7a",
+          "snapshot": "inputs.zip!8b8aa728049dd9604de78953ffff37ca9a02dc011cb814b514499c37e1af8a7a.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "d225832b28dee8cd1fc50fdce15a7c9efc9277f89326fd542ac24940f771ff0a",
+          "snapshot": "inputs.zip!d225832b28dee8cd1fc50fdce15a7c9efc9277f89326fd542ac24940f771ff0a.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "665fb2dd079907f900386d2b9e4d0a5d095c6ef3a47cf8d37a9de220d04a30b2",
+        "snapshot": "inputs.zip!665fb2dd079907f900386d2b9e4d0a5d095c6ef3a47cf8d37a9de220d04a30b2.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "RESOURCE_LIMIT",
+      "detail": "explicit exponent outside [-400,400]",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "d225832b28dee8cd1fc50fdce15a7c9efc9277f89326fd542ac24940f771ff0a",
+        "hinges.ok": "8b8aa728049dd9604de78953ffff37ca9a02dc011cb814b514499c37e1af8a7a"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1182
+      },
+      "artifactSha256": "665fb2dd079907f900386d2b9e4d0a5d095c6ef3a47cf8d37a9de220d04a30b2",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_structural_source_and_numeric_bounds_propagate",
+      "label": "bounded source numeric 1e-401[rad]",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1183,
+          "sha256": "9dee7c36676f11c54c0ddff62abe8fc544c9df2b01473686161c6ce5abefe2f2",
+          "snapshot": "inputs.zip!9dee7c36676f11c54c0ddff62abe8fc544c9df2b01473686161c6ce5abefe2f2.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "76a62160498c0523046ea3c2dc36d64345aab3a6876ac31719aa3b82486b7af3",
+          "snapshot": "inputs.zip!76a62160498c0523046ea3c2dc36d64345aab3a6876ac31719aa3b82486b7af3.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "a4e49ae20388bbd70780bae8ac2767540a7f439a3a244e72467500a5d9aaba8a",
+        "snapshot": "inputs.zip!a4e49ae20388bbd70780bae8ac2767540a7f439a3a244e72467500a5d9aaba8a.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "RESOURCE_LIMIT",
+      "detail": "explicit exponent outside [-400,400]",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "76a62160498c0523046ea3c2dc36d64345aab3a6876ac31719aa3b82486b7af3",
+        "hinges.ok": "9dee7c36676f11c54c0ddff62abe8fc544c9df2b01473686161c6ce5abefe2f2"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1183
+      },
+      "artifactSha256": "a4e49ae20388bbd70780bae8ac2767540a7f439a3a244e72467500a5d9aaba8a",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_unsupported_and_invalid_source_axes",
+      "label": "source axis vec3(0, 0, 0)",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "076945d7b22121698c9db32c14ad247b73f3f620a10942dc4eab30c5780d7ffb",
+          "snapshot": "inputs.zip!076945d7b22121698c9db32c14ad247b73f3f620a10942dc4eab30c5780d7ffb.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "06c4ab5872b3ae6758cd5a45cc80f83704fc09ca6a5247abae8cdfa1dcc287a9",
+          "snapshot": "inputs.zip!06c4ab5872b3ae6758cd5a45cc80f83704fc09ca6a5247abae8cdfa1dcc287a9.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "2acc1cbbd55e3de199d29bad3b612c686aab7c087e0b80aac333717bd1e232a6",
+        "snapshot": "inputs.zip!2acc1cbbd55e3de199d29bad3b612c686aab7c087e0b80aac333717bd1e232a6.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "zero hinge axis",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "06c4ab5872b3ae6758cd5a45cc80f83704fc09ca6a5247abae8cdfa1dcc287a9",
+        "hinges.ok": "076945d7b22121698c9db32c14ad247b73f3f620a10942dc4eab30c5780d7ffb"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "2acc1cbbd55e3de199d29bad3b612c686aab7c087e0b80aac333717bd1e232a6",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_unsupported_and_invalid_source_axes",
+      "label": "source axis vec3(0, 0, 2)",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1178,
+          "sha256": "bbc6a7ebf1b52c01412c509d33a55ed38f9db32b62e031e01365869544ca8f5a",
+          "snapshot": "inputs.zip!bbc6a7ebf1b52c01412c509d33a55ed38f9db32b62e031e01365869544ca8f5a.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "e14ab9189eaef3b91cb33b30ca8c4c08d3c6db43482caa4eed9bde7c91f53982",
+          "snapshot": "inputs.zip!e14ab9189eaef3b91cb33b30ca8c4c08d3c6db43482caa4eed9bde7c91f53982.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "da93bae6a2cc681b01eee3e259db27d443ac06f836f9ee9b45ebf12bf4f80ce0",
+        "snapshot": "inputs.zip!da93bae6a2cc681b01eee3e259db27d443ac06f836f9ee9b45ebf12bf4f80ce0.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "MALFORMED",
+      "detail": "hinge axis outside adopted unit-norm domain",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "e14ab9189eaef3b91cb33b30ca8c4c08d3c6db43482caa4eed9bde7c91f53982",
+        "hinges.ok": "bbc6a7ebf1b52c01412c509d33a55ed38f9db32b62e031e01365869544ca8f5a"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1178
+      },
+      "artifactSha256": "da93bae6a2cc681b01eee3e259db27d443ac06f836f9ee9b45ebf12bf4f80ce0",
+      "artifactBytes": 35296
+    },
+    {
+      "case": "__main__.HingeComparisonControls.test_unsupported_and_invalid_source_axes",
+      "label": "source axis vec3(0.6, 0.8, 0)",
+      "expected": "refusal",
+      "sources": {
+        "hinges.ok": {
+          "bytes": 1182,
+          "sha256": "e901d3b843c8a5956d72dd69aa72418959dcefcde4f6b3fd86ab2c5761880e2e",
+          "snapshot": "inputs.zip!e901d3b843c8a5956d72dd69aa72418959dcefcde4f6b3fd86ab2c5761880e2e.ok"
+        },
+        "main.ok": {
+          "bytes": 651,
+          "sha256": "b3e3f6945a1e6716cfd6b306535c890dfc659812a577e0ae14ae0f973de14d00",
+          "snapshot": "inputs.zip!b3e3f6945a1e6716cfd6b306535c890dfc659812a577e0ae14ae0f973de14d00.ok"
+        }
+      },
+      "artifact": {
+        "bytes": 35296,
+        "sha256": "121e81053a65e78fac8d1a2f5099516b90c63f7e614adcefd1b170c84c418354",
+        "snapshot": "inputs.zip!121e81053a65e78fac8d1a2f5099516b90c63f7e614adcefd1b170c84c418354.glb"
+      },
+      "outcome": "typed_refusal",
+      "code": "UNSUPPORTED_SOURCE_FORM",
+      "detail": "axis outside the six signed basis vectors",
+      "pointer": "",
+      "origin": null,
+      "sourceHashes": {
+        "main.ok": "b3e3f6945a1e6716cfd6b306535c890dfc659812a577e0ae14ae0f973de14d00",
+        "hinges.ok": "e901d3b843c8a5956d72dd69aa72418959dcefcde4f6b3fd86ab2c5761880e2e"
+      },
+      "sourceBytes": {
+        "main.ok": 651,
+        "hinges.ok": 1182
+      },
+      "artifactSha256": "121e81053a65e78fac8d1a2f5099516b90c63f7e614adcefd1b170c84c418354",
+      "artifactBytes": 35296
+    }
+  ],
+  "limits": [
+    "Finite source/artifact declaration comparison only",
+    "No historical file-admission API or full H01/H03/H04/H26 historical coverage",
+    "No source execution/export, site-pose, full validity, accepted revision or physical claim",
+    "Inherited controls cover remaining parser/resource boundaries separately"
+  ]
+}
