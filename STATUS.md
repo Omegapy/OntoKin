@@ -17,8 +17,9 @@ for the C260 hinge comparator. [Scope258](https://github.com/Omegapy/OntoKin/iss
 and [plan](docs/workflow/tasks/C266/PLAN.md) own this active scope.
 The new authored controls pass 34 methods / 748 expected outcomes; separate
 independent review approves 87 distinct controls on the exact implementation.
-Candidate regression, integration, resulting-main checks and saved delivery
-remain distinct gates. Hinge values, joint sets and endpoints are not compared.
+Candidate regression passes all 10 declared groups: 222 methods, fourteen corpus
+bindings and workflow/documentation validation. Integration, resulting-main
+checks and saved delivery remain open. Hinge values, joint sets and endpoints are not compared.
 
 Next action: finish only C266 through verified integration and its required
 saved handoff. After completion, wait for a new continuation before selecting
@@ -100,11 +101,11 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-State: held for C266 reviewed source/program/object binding integration and saved delivery.
-Owner: `c266-root-2593880e88fd`. Scope: [issue258](https://github.com/Omegapy/OntoKin/issues/258).
-Acquired at: 2026-11-18T23:07:36.068Z. Expires at: 2026-11-18T23:37:36.068Z.
+State: held for final recovery of C266 integration and saved delivery.
+Owner: `c266-recovery-bb514ffca344`. Scope: [issue258](https://github.com/Omegapy/OntoKin/issues/258).
+Acquired at: 2026-11-19T00:27:06.000Z. Expires at: 2026-11-19T00:57:06.000Z.
 Reserved: main, STATUS integration fields, CURRENT, root navigation and C266 delivery/task closure.
-Observed parent: `7818de1f17e379df50680cb94347ce86bcabb8a5`. Independent workers remain confined to their assigned C266 files.
+Observed parent: `5c73d079ebcc829214540a1e793ebbb54e56dfba`. The owner requested recovery after repeated thread exhaustion. Live main and scope branch remain unchanged; the verified saved bundle preserves unpublished commit `74bba31a23f4acbda4484159576ae21c024664ce` and all ten candidate logs. No unknown remote write was found. The prior lease expired at 2026-11-19T00:26:56.461979+00:00; this conditional transfer follows explicit recovery authorization and ref reconciliation, not expiry alone.
 
 ## Historical status
 

@@ -23,3 +23,9 @@ This engineering-only standard-library component is not imported by the product.
 ## Next boundary
 
 After verified integration and saved delivery, a new continuation may select complete hinge-field/set/ordered-endpoint comparison under unchanged C260. C266 deliberately leaves omitted top-level module/scene and program collections unobserved; a future full comparator must reconcile any additional required association rather than assume this prerequisite proves it. Historical byte admission remains a separate fourth interface.
+
+## Recovered candidate verification
+
+The published recovery checkpoint `4986089edbd4443b05ef091d06bf4df55dfcdfa9`, tree `f0240182b44a91e9db362f43ae90d6005b397c3b`, passes all ten required groups on CPython 3.12.14 / Linux x86-64. C255/C256/C257/C258/C261/C265/C266 pass 31/29/23/28/28/49/34 methods respectively, 222 total with zero failures, errors or skips. C253 verifies fourteen exact historical bindings; workflow and documentation preservation pass. C266 again returns all 748 expected outcomes: 28 bindings and 720 typed refusals. [Candidate checks](evidence/candidate/CHECKS.json) retain commands, interpreter digest, exact input hashes, logs and full per-call evidence. No product/native/export/model workflow ran.
+
+[Recovery review](evidence/recovery-review/REVIEW.md) independently verifies unchanged implementation/pinned inputs, all retained control input archives, 87 final reviewer controls and five dependency-pin experiments. Earlier fixture errors and the recovery auditor's corrected nonbyte-artifact assumption remain visible. No candidate source changed during recovery. The reviewed implementation is reused only through verified exact byte equality. Integration and saved delivery remain open at this candidate checkpoint.

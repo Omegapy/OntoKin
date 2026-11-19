@@ -9,3 +9,17 @@ This review covers the C266 source/program/object binding prerequisite. It does 
 ## Dependency admission supplement
 
 A targeted separate review passes five isolated two-call experiments: after a successful call, same-size mutations of each C265/C261/C257 dependency, a missing C261 dependency, and an identical-byte C257 symlink all cause the next call to refuse INPUT_BINDING. The real checkout and original review archive were unchanged. This establishes that an earlier cached module cannot bypass the new per-call pin checks. The supplement and exact scripts/results are retained with the review evidence.
+
+## Interrupted-session evidence audit
+
+Independent reviewer `/root/candidate_review` approves reuse of the exact implementation and original review after inspecting current source and validating the retained archives and every reported input identity. Its [review](evidence/recovery-review/REVIEW.md) and [audit](evidence/recovery-review/AUDIT.json) identify the actual scope, commands and preserved first audit attempt. The Director separately executed the complete candidate cohort. This adds no hinge comparison or wider validity claim.
+
+## Final recovery identity audit
+
+The final independent [audit](evidence/final-recovery-audit/AUDIT.json) passes
+4,016 assertions and [approves reuse](evidence/final-recovery-audit/REVIEW.md)
+of the completed candidate scientific cohort and original review. All 119
+recorded inputs match their exact Git revision, 44 current scientific inputs
+remain equal, and all 16 outputs, including ten recovered logs, are retained.
+Later metadata changes require fresh workflow/documentation checks. Actual-main
+verification, branch disposition and saved delivery remain separate gates.

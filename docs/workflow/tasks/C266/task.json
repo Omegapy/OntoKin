@@ -4,7 +4,7 @@
   "title": "Source/program/object provenance binding for hinge comparison",
   "intent": "Establish whether source and artifact object-provenance inputs belong together before comparing hinge fields.",
   "status": "review",
-  "owner": "c266-recovery-31766bc15fec",
+  "owner": "c266-recovery-bb514ffca344",
   "branch": "work/c266-hinge-input-binding",
   "base_sha": "7818de1f17e379df50680cb94347ce86bcabb8a5",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/258",
@@ -63,8 +63,13 @@
       "id": "R06",
       "description": "Verify and independently review the exact increment.",
       "acceptance": "Independent public-API controls cover adversarial repeated claims, changed inputs and nonclaims; complete relevant predecessor/component cohorts and workflow/documentation checks pass with exact input identities. Preserve failures and partial H-group mapping.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c266/evidence/candidate/CHECKS.json",
+        "docs/engineering/localized-repair-c266/evidence/recovery-review/REVIEW.md",
+        "docs/engineering/localized-repair-c266/evidence/final-recovery-audit/REVIEW.md",
+        "docs/engineering/localized-repair-c266/evidence/final-recovery-audit/AUDIT.json"
+      ]
     },
     {
       "id": "R07",
@@ -128,7 +133,7 @@
       "requirements": [
         "R06"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c266/RESULTS.md",
         "docs/engineering/localized-repair-c266/REVIEW.md"
@@ -143,7 +148,7 @@
       "requirements": [
         "R07"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c266/INTEGRATION.json"
       ],
@@ -167,7 +172,27 @@
       ]
     }
   ],
-  "checks": [],
+  "checks": [
+    {
+      "name": "identified candidate regression and corpus",
+      "command": "C253 static corpus; C255/C256/C257/C258/C261/C265/C266; workflow and documentation checks",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c266/evidence/candidate/CHECKS.json"
+      ]
+    },
+    {
+      "name": "independent source review and recovered evidence audit",
+      "command": "Review exact source and dependency bytes; validate retained controls and review bundles",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c266/REVIEW.md",
+        "docs/engineering/localized-repair-c266/evidence/recovery-review/AUDIT.json"
+      ]
+    }
+  ],
   "completion": {
     "implementation_commit": "5454bfeb2c27aed0af23fb4dd363638ffbb10b07",
     "merge_commit": null,
@@ -175,7 +200,7 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Finish P03 candidate checks and recovery evidence audit, conditionally acquire a new integration lease, then complete only P04/P05 and stop.",
+  "next_action": "Publish recovered evidence and final audit; complete only P04 integration/main checks/branch disposition and P05 verified saved handoff, then stop.",
   "delivery": {
     "required": true,
     "kind": "browser-session",

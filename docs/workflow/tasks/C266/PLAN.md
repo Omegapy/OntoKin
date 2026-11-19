@@ -43,3 +43,15 @@ After implementation and each substantive verification/integration stage, publis
 ## Interrupted-session recovery
 
 The November 18 Prompt 2 resumes this same scope and branch under Director `c266-recovery-31766bc15fec`. The former owner and original base above remain historical provenance. Published implementation and controls at `e808af1403411960ebf360aa4588c9e358d2035a` are preserved unchanged. P03–P05 remain the authorized work; no new comparator implementation is selected. See [RECOVERY.md](RECOVERY.md).
+
+## Recovered candidate verification
+
+P03 is complete on published checkpoint `4986089edbd4443b05ef091d06bf4df55dfcdfa9`: all 10 groups pass, 222 methods with zero failures/errors/skips, fourteen C253 bindings, and workflow/documentation checks. Exact tracked source and 119 selected inputs stayed unchanged during execution. The recovery reviewer verified retained source/dependency equality and all original review evidence. P04/P05 remain open. Later documentation/receipt-only publication uses exact scientific-input equality and fresh metadata checks.
+
+## Final recovery: integration and delivery only
+
+Director `c266-recovery-bb514ffca344` resumes the same C266 branch. The verified
+saved bundle restores unpublished commit `74bba31a23f4acbda4484159576ae21c024664ce`;
+all ten candidate logs are restored and checked against their receipts. P03 is
+reused only with the final independent identity audit. Publish the preserved
+evidence, complete P04/P05, then stop. See [final recovery](RECOVERY-CLOSURE.md).

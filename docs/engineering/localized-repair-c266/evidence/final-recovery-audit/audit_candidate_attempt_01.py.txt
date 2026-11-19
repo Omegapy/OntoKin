@@ -1,0 +1,162 @@
+#!/usr/bin/env python3
+"""Audit recovered C266 evidence without repeating its behavioral execution."""
+from __future__ import annotations
+import argparse
+from collections import Counter
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path, PurePosixPath
+import platform
+import re
+import stat
+import subprocess
+import sys
+import zipfile
+
+
+def identity(raw):
+    return {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--repo", type=Path, required=True)
+    args = parser.parse_args()
+    repo = args.repo.resolve()
+    base = repo / "docs/engineering/localized-repair-c266"
+    out = Path(__file__).resolve().parent
+    candidate = base / "evidence/candidate"
+    errors, assertions = [], []
+
+    def check(name, passed, detail=None):
+        assertions.append({"name": name, "passed": bool(passed), "detail": detail})
+        if not passed:
+            errors.append(name)
+
+    def git(*argv):
+        return subprocess.check_output(["git", *argv], cwd=repo)
+
+    def equal(raw, expected):
+        found = identity(raw)
+        return all(found[k] == expected[k] for k in ("bytes", "sha256"))
+
+    def archive(path, expected=None):
+        if expected is not None:
+            check(f"archive identity {path.name}", equal(path.read_bytes(), expected))
+        z = zipfile.ZipFile(path)
+        names = z.namelist()
+        check(f"archive duplicate names {path.name}", len(names) == len(set(names)))
+        check(f"archive safe members {path.name}", all(
+            not PurePosixPath(i.filename).is_absolute()
+            and ".." not in PurePosixPath(i.filename).parts
+            and "\\" not in i.filename
+            and not stat.S_ISLNK(i.external_attr >> 16) for i in z.infolist()))
+        check(f"archive CRC {path.name}", z.testzip() is None)
+        if "MANIFEST-SHA256.json" in names:
+            manifest = json.loads(z.read("MANIFEST-SHA256.json"))["files"]
+            check(f"archive complete manifest {path.name}", set(names) == set(manifest) | {"MANIFEST-SHA256.json"})
+            check(f"archive all manifest hashes {path.name}", all(equal(z.read(n), d) for n, d in manifest.items()))
+        return z
+
+    report = json.loads((candidate / "CHECKS.json").read_text())
+    revision = report["source_before"]["commit"]
+    head = git("rev-parse", "HEAD").decode().strip()
+    check("recorded candidate complete pass", report["passed"] is True and report["complete"] is True)
+    check("recorded candidate stable Git identity", report["source_before"]["commit"] == report["source_after"]["commit"] and report["source_before"]["tree"] == report["source_after"]["tree"])
+    check("authentic candidate tree", git("rev-parse", revision + "^{tree}").decode().strip() == report["source_before"]["tree"])
+    check("recorded candidate clean tracked bytes", report["source_before"]["tracked_dirty_status"] == report["source_after"]["tracked_dirty_status"] == "")
+    check("recorded stable input inventory", report["input_identity_unchanged"] is True and report["input_files_before"] == report["input_files_after"])
+    input_rows, current_changes = [], []
+    corpus = json.loads((repo / "docs/engineering/localized-repair-c253/corpus.json").read_text())
+    corpus_paths = {v["path"] for v in corpus["files"].values()}
+    for row in report["input_files_before"]:
+        p = row["path"]
+        historic = git("show", revision + ":" + p)
+        current = (repo / p).read_bytes()
+        science = (p.endswith(".py") or p in corpus_paths or
+                   (p.startswith("docs/engineering/") and not p.endswith(".md")))
+        historic_match, current_match = equal(historic, row), equal(current, row)
+        check("candidate input at recorded revision " + p, historic_match)
+        if science:
+            check("reusable current scientific input " + p, current_match)
+        if not current_match:
+            current_changes.append({"path": p, "scientific": science, "recorded": {k: row[k] for k in ("bytes", "sha256")}, "current": identity(current)})
+        input_rows.append({"path": p, "recorded_revision_matches": historic_match, "current_matches": current_match, "scientific": science})
+    for row in report["output_files"]:
+        check("candidate output " + row["path"], equal((candidate / row["path"]).read_bytes(), row))
+    groups = []
+    for row in report["checks"]:
+        raw = (candidate / row["log"]["path"]).read_bytes()
+        text = raw.decode("utf-8")
+        check("candidate log " + row["name"], equal(raw, row["log"]))
+        check("candidate assertions " + row["name"], row["result"] == "passed" and row["exit_code"] == 0 and row["failure"] is None and all(row["assertions"].values()))
+        if row["expected_methods"] is not None:
+            counts = re.findall(r"(?m)^Ran (\d+) tests? in ", text)
+            check("logged methods " + row["name"], counts == [str(row["expected_methods"])] and row["methods"] == row["expected_methods"] and bool(re.search(r"(?m)^OK\r?$", text)))
+        groups.append({"name": row["name"], "methods": row["methods"], "log_identity": row["log"]})
+    check("ten complete groups", len(groups) == report["completed_check_count"] == report["planned_check_count"] == 10)
+    check("222 complete methods", sum(c["methods"] or 0 for c in groups) == report["total_methods"] == report["expected_total_methods"] == 222)
+    c253 = json.loads((candidate / "c253-corpus.log").read_text())
+    check("fourteen corpus bindings", c253["passed"] is True and c253["boundFiles"] == 14 and c253["tasks"] == 3)
+    check("workflow log passes", json.loads((candidate / "workflow.log").read_text())["passed"] is True)
+    check("documentation log passes", json.loads((candidate / "documentation.log").read_text())["status"] == "passed")
+    pins = json.loads((base / "INPUTS.json").read_text())["files"]
+    for row in pins:
+        check("exact dependency/contract pin " + row["path"], equal((repo / row["path"]).read_bytes(), row))
+    controls = json.loads((candidate / "c266-controls/results.json").read_text())
+    check("control aggregate", controls["passed"] is True and controls["testMethods"] == 34 and controls["apiCalls"] == 748 and controls["boundCalls"] == 28 and controls["typedRefusals"] == 720 and controls["failures"] == controls["errors"] == controls["skipped"] == [])
+    for p, row in controls["implementationAndControlInputs"].items():
+        check("checked current code " + p, equal((repo / p).read_bytes(), row))
+    for p in (candidate / "c266-controls/checked-code").iterdir():
+        check("checked code snapshot " + p.name, p.read_bytes() == (base / p.name).read_bytes())
+    with archive(candidate / "c266-controls/inputs.zip") as z:
+        referenced = set()
+        for n in z.namelist():
+            check("content addressed input " + n, Path(n).stem == identity(z.read(n))["sha256"])
+        for index, case in enumerate(controls["cases"]):
+            check(f"expected outcome {index}", case["outcome"] == {"binding": "bound", "refusal": "typed_refusal"}[case["expected"]])
+            if case["outcome"] == "bound":
+                check(f"nonclaims retained {index}", case["flags"]["inputBindingVerified"] is True and all(v is False for k, v in case["flags"].items() if k != "inputBindingVerified"))
+            rows = list(case["sourceInputs"].values()) + [case["artifactInput"]]
+            for row in rows:
+                if row.get("snapshot"):
+                    n = row["snapshot"].split("!", 1)[1]
+                    referenced.add(n)
+                    check(f"case input bytes {index} {n}", equal(z.read(n), row))
+        check("complete referenced control inputs", referenced == set(z.namelist()))
+    counts = Counter(c["outcome"] for c in controls["cases"])
+    check("748 case outcomes", len(controls["cases"]) == 748 and counts == {"bound": 28, "typed_refusal": 720})
+    check("34 distinct recorded methods", len({c["case"] for c in controls["cases"]}) == 34)
+    review_dir = base / "evidence/review"
+    summary = json.loads((review_dir / "SUMMARY.json").read_text())
+    original_receipt = json.loads((review_dir / "EVIDENCE-VERIFICATION.json").read_text())
+    implementation = (base / "hinge_binding.py").read_bytes()
+    check("original reviewed implementation", identity(implementation)["sha256"] == summary["implementationSha256"] and implementation == git("show", summary["implementationCommit"] + ":docs/engineering/localized-repair-c266/hinge_binding.py"))
+    review_runs = []
+    with archive(review_dir / original_receipt["archive"], original_receipt) as z:
+        check("original summary equals archived summary", z.read("SUMMARY.json") == (review_dir / "SUMMARY.json").read_bytes())
+        disposition = {}
+        for rec in summary["reports"]:
+            raw = z.read(rec["run"] + "/RESULTS.json")
+            d = json.loads(raw)
+            check("original review report " + rec["run"], identity(raw)["sha256"] == rec["sha256"] and d["candidateSha256"] == summary["implementationSha256"] and d["controls"] == rec["controls"] and d["passCount"] == rec["passed"] and d["failCount"] == rec["failed"])
+            review_runs.append({"run": rec["run"], "controls": d["controls"], "passed": d["passCount"], "failed": d["failCount"]})
+        check("original 89 executions retained", sum(x["controls"] for x in review_runs) == 89 and sum(x["passed"] for x in review_runs) == 88 and sum(x["failed"] for x in review_runs) == 1)
+        check("87 distinct passing dispositions", len(summary["currentControlDisposition"]) == 87 and all(v["passed"] is True for v in summary["currentControlDisposition"].values()))
+    supplement_receipt = json.loads((review_dir / "DEPENDENCY-SUPPLEMENT-VERIFICATION.json").read_text())
+    with archive(review_dir / "C266_Dependency_Review_Supplement.zip", supplement_receipt) as z:
+        d = json.loads(z.read("RESULTS.json"))
+        check("five dependency experiments retained", d["passed"] is True and d["checks"] == 5 and len(d["results"]) == 5 and all(x["passed"] is True for x in d["results"]))
+        check("dependency review implementation equality", d["implementationSha256"] == identity(implementation)["sha256"])
+    recovery = json.loads((base / "evidence/recovery-review/AUDIT.json").read_text())
+    check("recovery audit script identity", equal((base / "evidence/recovery-review/audit_recovery.py").read_bytes(), recovery["script"]))
+    check("recovery audit retained approval", recovery["passed"] is True and recovery["errors"] == [] and recovery["implementation"] == identity(implementation) and recovery["reviewDistinctPassingDispositions"] == 87 and recovery["dependencyExperiments"] == 5)
+    result = {"schema": "ontokin.c266.final-recovery-audit/1", "reviewer": "/root/evidence_audit", "at": datetime.now(timezone.utc).isoformat(), "command": [sys.executable, "-B", str(Path(__file__).resolve()), "--repo", str(repo)], "script": identity(Path(__file__).read_bytes()), "python": platform.python_version(), "platform": platform.platform(), "observed_local_head": head, "candidate_checked_commit": revision, "implementation": identity(implementation), "passed": not errors, "decision": "approve_reuse_of_candidate_scientific_checks_and_independent_review" if not errors else "reject_pending_findings", "candidate_groups": groups, "candidate_input_count": len(input_rows), "input_identity_audit": input_rows, "current_metadata_changes": current_changes, "candidate_output_count": len(report["output_files"]), "candidate_api_outcomes": dict(counts), "original_review_runs": review_runs, "distinct_passing_review_controls": 87, "dependency_experiments": 5, "assertion_count": len(assertions), "assertions": assertions, "errors": errors, "remaining_gates": ["Fresh workflow/documentation checks for later metadata changes", "Expected-head integration and fresh applicable actual-main checks", "Verified branch disposition", "Verified saved handoff and external delivery receipt"], "limits": ["Evidence integrity and equality audit; historical behavioral suites were not rerun by this reviewer", "No hinge-field/set/ordered-endpoint comparison or full C260 qualification", "No product/native/visual/model/alternate-Python qualification", "Original failed controls and reviewer-fixture failure remain retained"]}
+    (out / "AUDIT.json").write_text(json.dumps(result, indent=2) + "\n")
+    print(json.dumps({k: result[k] for k in ("passed", "decision", "candidate_checked_commit", "candidate_input_count", "candidate_output_count", "candidate_api_outcomes", "assertion_count", "errors")}))
+    return 0 if not errors else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

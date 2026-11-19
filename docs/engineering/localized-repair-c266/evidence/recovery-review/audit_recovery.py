@@ -1,0 +1,224 @@
+#!/usr/bin/env python3
+"""Audit preserved C266 input and review evidence without rerunning its suites."""
+from __future__ import annotations
+
+import ast
+from collections import Counter
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path, PurePosixPath
+import platform
+import re
+import stat
+import subprocess
+import sys
+import zipfile
+
+HERE = Path(__file__).resolve().parent
+COMPONENT = HERE.parent.parent
+ROOT = COMPONENT.parents[2]
+EXPECTED_REVISION = "e808af1403411960ebf360aa4588c9e358d2035a"
+EXPECTED_SOURCE = "68849dbe3339c158eac7ec43fb1defcbd2993c37c6a0a5ee813d2da71fb03dda"
+errors = []
+
+
+def check(condition, description):
+    if not condition:
+        errors.append(description)
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def identity(raw):
+    return {"bytes": len(raw), "sha256": sha(raw)}
+
+
+def read_json(path):
+    return json.loads(path.read_bytes())
+
+
+def safe_zip(path, *, manifest=False):
+    archive = zipfile.ZipFile(path)
+    names = archive.namelist()
+    check(len(names) == len(set(names)), f"{path.name}: duplicate members")
+    check(archive.testzip() is None, f"{path.name}: CRC failure")
+    for info in archive.infolist():
+        p = PurePosixPath(info.filename)
+        check(not p.is_absolute() and ".." not in p.parts and "\\" not in info.filename,
+              f"{path.name}: unsafe path {info.filename}")
+        check(not stat.S_ISLNK(info.external_attr >> 16), f"{path.name}: symlink {info.filename}")
+    report = {"path": str(path.relative_to(ROOT)), **identity(path.read_bytes()),
+              "members": len(names), "crcChecked": True, "safePathsChecked": True}
+    if manifest:
+        records = json.loads(archive.read("MANIFEST-SHA256.json"))["files"]
+        check(set(names) == set(records) | {"MANIFEST-SHA256.json"}, f"{path.name}: manifest inventory")
+        for name, record in records.items():
+            check(identity(archive.read(name)) == record, f"{path.name}: manifest identity {name}")
+        report["manifestPayloads"] = len(records)
+    return archive, report
+
+
+def controls(run):
+    directory = COMPONENT / "evidence/independent-controls" / run
+    result = read_json(directory / "results.json")
+    archive, report = safe_zip(directory / "inputs.zip")
+    referenced = set()
+    with archive:
+        for name in archive.namelist():
+            check(sha(archive.read(name)) == name.rsplit(".", 1)[0], f"{run}: content-addressed bytes {name}")
+        for case in result["cases"]:
+            candidates = list(case["sourceInputs"].values()) + [case["artifactInput"]]
+            for value in candidates:
+                if not isinstance(value, dict) or "snapshot" not in value:
+                    continue
+                archive_name, member = value["snapshot"].split("!", 1)
+                check(archive_name == "inputs.zip", f"{run}: unexpected input archive")
+                referenced.add(member)
+                check(identity(archive.read(member)) == {k: value[k] for k in ("bytes", "sha256")},
+                      f"{run}: case input identity {case['label']} {member}")
+        check(referenced == set(archive.namelist()), f"{run}: unreferenced/missing input payload")
+    counts = Counter(case["outcome"] for case in result["cases"])
+    mismatches = [case["label"] for case in result["cases"]
+                  if (case["expected"], case["outcome"]) not in
+                  (("binding", "bound"), ("refusal", "typed_refusal"))]
+    check(len(result["cases"]) == result["apiCalls"], f"{run}: call accounting")
+    check(counts["bound"] == result["boundCalls"], f"{run}: bound accounting")
+    check(counts["typed_refusal"] == result["typedRefusals"], f"{run}: refusal accounting")
+    check(len({case['case'] for case in result['cases']}) == result['testMethods'], f"{run}: distinct methods")
+    log = (directory / "unittest.txt").read_text()
+    check(re.search(r"Ran " + str(result["testMethods"]) + r" tests? in", log), f"{run}: log method count")
+    for name in ("hinge_binding.py", "test_hinge_binding.py", "binding_control_fixtures.py"):
+        snapshot = (directory / "checked-code" / name).read_bytes()
+        declared = result["implementationAndControlInputs"][str((COMPONENT / name).relative_to(ROOT))]
+        check(identity(snapshot) == declared, f"{run}: checked snapshot {name}")
+        if run == "run-02" or name == "hinge_binding.py":
+            check(snapshot == (COMPONENT / name).read_bytes(), f"{run}: current identity {name}")
+    for name, record in result["implementationAndControlInputs"].items():
+        if "localized-repair-c266/" not in name:
+            check(identity((ROOT / name).read_bytes()) == record, f"{run}: dependency identity {name}")
+    if run == "run-02":
+        check(not mismatches and result["passed"] and not result["errors"]
+              and not result["failures"] and not result["skipped"], "run-02: successful matched controls")
+    else:
+        check(len(mismatches) == 2 and len(result["errors"]) == 2 and not result["passed"],
+              "run-01: preserve two failed positive fixtures")
+    return {"run": run, "methods": result["testMethods"], "calls": result["apiCalls"],
+            "outcomes": dict(counts), "expectationMismatches": mismatches,
+            "recordedPassed": result["passed"], "inputsArchive": report}
+
+
+def main():
+    source = (COMPONENT / "hinge_binding.py").read_bytes()
+    check(sha(source) == EXPECTED_SOURCE, "candidate implementation SHA-256")
+    check(subprocess.check_output(["git", "hash-object", "--stdin"], input=source, cwd=ROOT).decode().strip()
+          == "9c9b4bb3105ff13c3dd684d56c89faa3ec621e15", "candidate implementation Git blob")
+    read_set = []
+    for entry in read_json(COMPONENT / "INPUTS.json")["files"]:
+        actual = identity((ROOT / entry["path"]).read_bytes())
+        check(actual == {k: entry[k] for k in ("bytes", "sha256")}, "pinned dependency " + entry["path"])
+        read_set.append({"path": entry["path"], **actual})
+    controls_reports = [controls(run) for run in ("run-01", "run-02")]
+    review_dir = COMPONENT / "evidence/review"
+    archive, review_zip = safe_zip(review_dir / "C266_Independent_Review_Evidence.zip", manifest=True)
+    external_receipt = read_json(review_dir / "EVIDENCE-VERIFICATION.json")
+    check(identity((review_dir / external_receipt["archive"]).read_bytes()) ==
+          {k: external_receipt[k] for k in ("bytes", "sha256")}, "review archive external identity")
+    summary = read_json(review_dir / "SUMMARY.json")
+    current, runs, total_pass, total_fail = {}, [], 0, 0
+    with archive:
+        check(archive.read("published-hinge_binding.py") == source, "review executed source equals candidate")
+        for name in ("SUMMARY.json", "REVIEW.md", "review_c266.py", "review_c266_initial.py",
+                     "review_c266_additional_initial.py"):
+            check(archive.read(name) == (review_dir / name).read_bytes(), "review archive/source copy " + name)
+        for name, record in summary["files"].items():
+            check(identity(archive.read(name)) == record, "review declared snapshot " + name)
+        for item in summary["reports"]:
+            run = item["run"]
+            raw = archive.read(run + "/RESULTS.json")
+            check(sha(raw) == item["sha256"], "review report identity " + run)
+            report = json.loads(raw)
+            check(report["candidateSha256"] == EXPECTED_SOURCE, "review candidate identity " + run)
+            script_name = {"initial-review": "review_c266_initial.py",
+                           "additional-review": "review_c266_additional_initial.py",
+                           "additional-corrected": "review_c266.py"}[run]
+            check(sha(archive.read(script_name)) == report["reviewerScriptSha256"]
+                  == item["reviewerScriptSha256"], "review script identity " + run)
+            check(len(report["results"]) == report["controls"], "review controls count " + run)
+            passed = sum(case["passed"] for case in report["results"])
+            failed = sum(not case["passed"] for case in report["results"])
+            check(passed == report["passCount"] and failed == report["failCount"], "review count " + run)
+            total_pass += passed
+            total_fail += failed
+            for case in report["results"]:
+                prefix = run + "/cases/" + case["name"] + "/"
+                if case["artifactSha256"] is not None:
+                    raw_artifact = archive.read(prefix + "artifact.glb")
+                    check(sha(raw_artifact) == case["artifactSha256"] and len(raw_artifact) == case["artifactBytes"],
+                          "review retained artifact " + prefix)
+                else:
+                    check(case["artifactBytes"] is None and case["outcome"] == "refused"
+                          and prefix + "refusal.json" in archive.namelist(),
+                          "review retained nonbyte refusal " + prefix)
+                for name, digest in case["sourceHashes"].items():
+                    check(sha(archive.read(prefix + name)) == digest, "review retained source " + prefix + name)
+                current[case["name"]] = {"run": run, "passed": case["passed"]}
+            runs.append({"run": run, "controls": report["controls"], "passed": passed, "failed": failed})
+        check(len(current) == 87 and all(case["passed"] for case in current.values()), "87 passing final review dispositions")
+        check(total_pass == 88 and total_fail == 1, "89 retained review attempts with one failure")
+        check(set(current) == set(summary["currentControlDisposition"]), "review summary complete disposition set")
+        for name, record in summary["currentControlDisposition"].items():
+            check(current[name] == {"run": record["run"], "passed": record["passed"]}, "review summary disposition " + name)
+    supplement_zip_path = review_dir / "C266_Dependency_Review_Supplement.zip"
+    archive, supplement_zip = safe_zip(supplement_zip_path, manifest=True)
+    supplement_receipt = read_json(review_dir / "DEPENDENCY-SUPPLEMENT-VERIFICATION.json")
+    check(identity(supplement_zip_path.read_bytes()) ==
+          {k: supplement_receipt[k] for k in ("bytes", "sha256")}, "supplement external archive identity")
+    supplement = read_json(review_dir / "dependency-supplement/RESULTS.json")
+    with archive:
+        check(archive.read("RESULTS.json") == (review_dir / "dependency-supplement/RESULTS.json").read_bytes(),
+              "supplement result copies")
+        check(supplement["implementationSha256"] == EXPECTED_SOURCE, "supplement implementation identity")
+        check(sha(archive.read("review_dependency_pins.py")) == supplement["scriptSha256"],
+              "supplement exact executed script")
+        check(len(supplement["results"]) == 5 and supplement["passed"], "five supplement experiments")
+        for relative, value in supplement["dependencyPins"].items():
+            current_bytes = (COMPONENT.parent / relative).read_bytes()
+            check(identity(current_bytes) == value, "supplement pin " + relative)
+            check(archive.read("original-code/" + relative) == current_bytes, "supplement code " + relative)
+        for case in supplement["results"]:
+            check(case["passed"] and case["firstCall"]["outcome"] == "accepted"
+                  and case["secondCall"]["outcome"] == "refused"
+                  and case["secondCall"]["code"] == "INPUT_BINDING", "supplement outcome " + case["name"])
+    imports = []
+    for node in ast.walk(ast.parse(source)):
+        if isinstance(node, ast.Import):
+            imports.extend(alias.name for alias in node.names)
+        elif isinstance(node, ast.ImportFrom):
+            imports.append(node.module)
+    check(set(imports) <= {"__future__", "hashlib", "json", "pathlib", "sys", "types"}, "standard-library imports only")
+    report = {"schema": "ontokin.c266.recovery-review/1", "reviewer": "/root/candidate_review",
+              "reviewedRevision": EXPECTED_REVISION, "observedCheckoutRevision": subprocess.check_output(
+                  ["git", "rev-parse", "HEAD"], cwd=ROOT).decode().strip(),
+              "at": datetime.now(timezone.utc).isoformat(), "python": platform.python_version(),
+              "platform": platform.platform(), "command": [sys.executable, "-B", str(Path(__file__).resolve())],
+              "script": identity(Path(__file__).read_bytes()), "implementation": identity(source),
+              "pinnedInputs": read_set, "controlRuns": controls_reports, "reviewArchive": review_zip,
+              "reviewRuns": runs, "reviewDistinctPassingDispositions": len(current),
+              "reviewRetainedPassedAttempts": total_pass, "reviewRetainedFailedAttempts": total_fail,
+              "dependencySupplementArchive": supplement_zip, "dependencyExperiments": 5,
+              "candidateImports": imports, "errors": errors, "passed": not errors,
+              "limits": ["Retained evidence audit and source review, not a fresh execution of the historical suites",
+                         "Director separately runs complete declared candidate and resulting-main checks",
+                         "No hinge-field/set/endpoint comparison, historical admission or complete C260 H group",
+                         "No product runtime, exporter, native application or model-trial qualification"]}
+    (HERE / "AUDIT.json").write_text(json.dumps(report, indent=2) + "\n")
+    print(json.dumps({key: report[key] for key in ("passed", "errors", "implementation",
+        "reviewDistinctPassingDispositions", "reviewRetainedPassedAttempts", "reviewRetainedFailedAttempts")}, indent=2))
+    return 0 if not errors else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

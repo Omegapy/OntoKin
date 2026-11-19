@@ -22,3 +22,12 @@ The API is `bind_hinge_inputs(source_files, raw)`, not `compare_hinges`. It may 
 Consumed metadata are the C261 public source/program excerpts and object records. Entry source ID/revision, full canonical manifest, source-unit maps, node path/element/class/program revision and both complete object mapping records are bound. Source URI/prose annotations, top-level module/scene, program collections, node display names, transforms, geometry, ownership/follow metadata outside the mapping and motion remain unobserved. Unknown fields within a consumed complete mapping may explicitly refuse as outside this finite mapping profile; unrelated metadata must not be promoted to source authority.
 
 No existing product runtime, exporter, source observer, raw reader, fixture, contract, hosted workflow or budget changes. No historical endpoint admission, site-pose evaluation, full source/GLB validity, accepted-revision/edit-atomicity/rebuild qualification, native/model trial, full C255 semantics or measured authoring advantage. No complete C260 H group is claimed from this prerequisite. The original C262 historical archive and unresolved C174 graph-retention limit remain intact.
+
+## Repeated recovery clarification
+
+The owner's November 18 recovery request reports repeated thread-length
+interruptions and asks for a method to reduce recurrence. R08 therefore also
+includes concise reusable closure guidance: reconcile actual completed gates,
+audit exact preserved candidate evidence for reuse, retain ignored logs, keep
+bulk output in files, and freeze/save once before the external receipt. This
+does not waive R06/R07 verification or authorize another product milestone.

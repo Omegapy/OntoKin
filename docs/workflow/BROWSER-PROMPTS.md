@@ -34,3 +34,16 @@ These updated replacement prompts implement the owner's November 18, 2026
 clarification in [C264](tasks/C264/REQUIREMENTS.md). They preserve separate
 continuation and recovery workflows; the complete earlier prompt wording was
 not available for a line-by-line edit.
+
+## Repeated-interruption closure discipline
+
+For either prompt, resume the first unmet gate after live reconciliation. Read
+required instructions at the observed revision, keep full logs and bulk API
+results in files, and ask workers for compact evidence summaries. Reuse a
+completed candidate check only after verifying its exact inputs and applicable
+environment; execute required checks on resulting main. Explicitly retain
+receipt-listed ignored logs. Preserve exact unpublished bytes at phase changes.
+After implementation and review pass, finish only integration, main checks,
+branch disposition and saved delivery. Freeze once and record the later save
+receipt externally; do not rebuild solely to insert that receipt. No reliable
+thread-length warning or fixed message budget is assumed.

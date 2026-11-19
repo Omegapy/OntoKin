@@ -29,6 +29,32 @@ files and unknown operations before retrying. Resume the unfinished scope and
 branch. If implementation is already integrated, finish only the outstanding
 verification, cleanup or delivery steps; do not start the next milestone.
 
+## Keep repeated recovery bounded
+
+After an interruption, resume from the first unmet gate in the existing task.
+Keep one concise phase table with each completed gate's exact revision and
+evidence path, the remaining action and any unknown write. Required startup
+reads remain mandatory; read them once at the observed revision and reopen only
+changed or newly relevant material. Keep bulk logs, patches, inventories and
+API responses in files. Worker reports should give verdicts, counts, identities,
+unresolved findings and evidence paths.
+
+Reuse completed candidate results only after checking exact implementation,
+dependency, fixture, test, command and applicable environment identities.
+Changed inputs require the affected checks; resulting main still requires its
+applicable fresh checks. Before committing evidence, compare receipt-listed
+files with the staged payload, including files excluded by ignore rules.
+Do not repeat a diagnosed unavailable publication method; use an authorized
+alternative with conditional updates, or record the concrete blocker.
+
+Once implementation and review pass, enter a finalization-only phase:
+integration, resulting-main verification, branch disposition, package/save and
+external receipt. Preserve exact unpublished bytes before a long operation.
+Freeze the verified package once; its later save receipt belongs outside it.
+Rebuild only for a material payload or recovery-instruction change. These
+procedures reduce repetition and improve recovery; they do not guarantee that
+the host will warn before a thread limit or that a thread cannot end.
+
 ## Package type and preservation boundary
 
 Identify the new package as a **browser-session handoff for online GitHub

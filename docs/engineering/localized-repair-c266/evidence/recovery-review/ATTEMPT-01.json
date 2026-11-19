@@ -1,0 +1,8 @@
+{
+  "status": "failed_audit_script_assumption",
+  "candidateChanged": false,
+  "scriptSha256": "5d2ad59863b44e21bc37dd64ca1eef976e65d4dc406a9115bcd0565891e1e9b4",
+  "failure": "KeyError for initial-review/cases/nonbytes_artifact/artifact.glb",
+  "cause": "The invalid nonbytes artifact control intentionally has no artifact.glb payload; the first audit implementation incorrectly assumed all cases have byte payloads.",
+  "correction": "Verify retained nonbytes expectation and refusal; require actual byte artifact snapshots only when a non-null artifact hash is declared."
+}

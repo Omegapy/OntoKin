@@ -23,3 +23,9 @@ The complete affected cohort remains C253 corpus binding, C255/C256/C257/C258/C2
 The Director owns all commits, remote mutations, task/shared state and delivery. `/root/repository_recon` is a read-only investigator. `/root/candidate_review` audits exact recovered code/review evidence and owns only evidence/recovery-review. `/root/handoff_builder` owns only the temporary packaging helper directory. No old worker is accessible in this new thread; its published work is retained. The supplied recovery reports no unpublished repository files or uncertain operations, and remote reconciliation found no unresolved write. This is not a claim to have inspected the inaccessible old conversation or scratch workspace.
 
 Next: finish the P03 candidate checks and audit, acquire a conditional bounded main lease, integrate P04, verify actual main and branch disposition, then freeze/verify/save P05 and record the external receipt. Stop after delivery; do not start hinge comparison.
+
+## Candidate verified
+
+At 2026-11-18T23:59:53.014541+00:00, the complete cohort on `4986089edbd4443b05ef091d06bf4df55dfcdfa9` passes 10 groups, 222 methods and fourteen corpus bindings with no skipped obligations. The source commit/tree and all 119 selected input hashes remained unchanged. The independently recovered review passes its evidence audit. See [candidate checks](../../../engineering/localized-repair-c266/evidence/candidate/CHECKS.json) and [recovery review](../../../engineering/localized-repair-c266/evidence/recovery-review/REVIEW.md).
+
+The new main lease was conditionally published and read back at `5c73d079ebcc829214540a1e793ebbb54e56dfba`, owned by `c266-recovery-31766bc15fec` until 2026-11-19T00:26:56.461979+00:00. The source branch retains that commit as a parent in its next publication. Recovery file version 2 is saved at its existing Library identity. The old v1 bytes are preserved in evidence/recovery-start/C266-RECOVERY-v1.json.
