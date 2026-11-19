@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "id": "STARTUP-COMPACT-20261119",
+  "title": "Compact browser startup instructions without information loss",
+  "intent": "Owner explicitly redirects this session to shorten startup Markdown except README; keep original meaning and exact recoverability",
+  "status": "done",
+  "owner": "startup-compact-9c7a0c0e0469",
+  "branch": "work/startup-compact-20261119",
+  "base_sha": "7ff41e071fb694dadf1ba256b13168e1a4083926",
+  "requirements": [
+    {
+      "id": "R01",
+      "description": "Identify startup inputs",
+      "acceptance": "Trace supplied C267 handoff to current main, exact mandatory Markdown, task/skill reads and prior preservation boundary.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/startup-compact-20261119/PRESERVATION.json"
+      ]
+    },
+    {
+      "id": "R02",
+      "description": "Compact operational text",
+      "acceptance": "Reduce required Markdown with concise structured rules; preserve every operative condition, exception, ordering, number, scope and claim strength. Task-specific C268 records and all README files stay unchanged.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/startup-compact-20261119/REVIEW.json",
+        "docs/engineering/startup-compact-20261119/METRICS.json"
+      ]
+    },
+    {
+      "id": "R03",
+      "description": "Recoverable information",
+      "acceptance": "Keep byte-exact originals, source revisions and hashes, every existing anchor/link target and protected README bytes. No opaque encoded instruction text; no product or evidence mutation.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/startup-compact-20261119/PRESERVATION-CHECKS.json"
+      ]
+    },
+    {
+      "id": "R04",
+      "description": "Verification",
+      "acceptance": "Measure identical before/after cohorts; independently audit obligation coverage; run preservation, workflow and documentation checks. Report token measurement limits honestly.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/startup-compact-20261119/REVIEW.json",
+        "docs/engineering/startup-compact-20261119/CHECKS.json"
+      ]
+    },
+    {
+      "id": "R05",
+      "description": "Publication and delivery",
+      "acceptance": "Publish reviewed scoped changes using conditional nonforce integration after reconciling prior lease/unknown writes. Preserve active C268 work/state. Verify/save final handoff with external receipt and report exact next action.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/startup-compact-20261119/INTEGRATION.json",
+        "docs/engineering/startup-compact-20261119/DELIVERY.json",
+        "docs/engineering/startup-compact-20261119/FINAL-PACKAGE-VERIFICATION.json",
+        "docs/engineering/startup-compact-20261119/REVIEW-CORRECTIONS.json"
+      ]
+    },
+    {
+      "id": "R06",
+      "description": "Evaluate lossless communication methods",
+      "acceptance": "Evaluate a reversible glossary representation with exact Git-byte reconstruction and independent controls. Adopt only if measured context savings justify its added machinery; preserve experiment, findings and disposition. Permit omission of STATUS empty HTML anchor-only lines from startup readout, never prose/rules/state/evidence; retain every anchor byte for history/link work. Measure full-file and effective-readout savings separately.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/startup-compact-20261119/DECISIONS.md",
+        "docs/engineering/startup-compact-20261119/PACKET-REVIEW.json"
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "id": "P01",
+      "title": "Scope and early recovery",
+      "requirements": [
+        "R01"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/startup-compact-20261119/PRESERVATION.json",
+        "docs/engineering/startup-compact-20261119/EARLY-RECOVERY-RECEIPT.json"
+      ],
+      "verification": [
+        "Inspect exact artifacts and observed checks"
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "Compression and preservation",
+      "requirements": [
+        "R02",
+        "R03",
+        "R06"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/startup-compact-20261119/METRICS.json",
+        "docs/engineering/startup-compact-20261119/DECISIONS.md"
+      ],
+      "verification": [
+        "Inspect exact artifacts and observed checks"
+      ]
+    },
+    {
+      "id": "P03",
+      "title": "Independent review and checks",
+      "requirements": [
+        "R04"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/startup-compact-20261119/REVIEW.json"
+      ],
+      "verification": [
+        "Inspect exact artifacts and observed checks"
+      ]
+    },
+    {
+      "id": "P04",
+      "title": "Integration and saved delivery",
+      "requirements": [
+        "R05"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/startup-compact-20261119/DELIVERY.json"
+      ],
+      "verification": [
+        "Inspect exact artifacts and observed checks"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "preservation",
+      "command": "python3 docs/engineering/startup-compact-20261119/verify_preservation.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/startup-compact-20261119/PRESERVATION-CHECKS.json"
+      ]
+    },
+    {
+      "name": "workflow",
+      "command": "python3 tools/chat_workflow.py check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/startup-compact-20261119/evidence/candidate/workflow.log"
+      ]
+    },
+    {
+      "name": "documentation",
+      "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/startup-compact-20261119/evidence/candidate/documentation.log"
+      ]
+    },
+    {
+      "name": "workflow_tests",
+      "command": "python3 -m unittest discover -s tests -p 'test_chat_workflow.py' -v",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/startup-compact-20261119/evidence/candidate/workflow-tests.log"
+      ]
+    },
+    {
+      "name": "whitespace",
+      "command": "git diff --cached --check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/startup-compact-20261119/CHECKS.json"
+      ]
+    }
+  ],
+  "completion": {
+    "implementation_commit": "8c3a32de825f688d1de0f97491a70ee16c1eb0fa",
+    "merge_commit": "e22e60dbba4b3483d0325b0d2d2794ed4b067946",
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/267",
+    "branch_disposition": "deleted",
+    "evidence": [
+      "docs/engineering/startup-compact-20261119/INTEGRATION.json",
+      "docs/engineering/startup-compact-20261119/REVIEW.json",
+      "docs/engineering/startup-compact-20261119/evidence/main/CHECKS.json",
+      "docs/engineering/startup-compact-20261119/DELIVERY.json",
+      "docs/engineering/startup-compact-20261119/FINAL-PACKAGE-VERIFICATION.json",
+      "docs/engineering/startup-compact-20261119/REVIEW-CORRECTIONS.json"
+    ],
+    "all_requirements_satisfied": true,
+    "completed_at_utc": "2026-11-19T16:21:41.819983+00:00"
+  },
+  "next_action": "Start a fresh chat using the saved handoff and continuation prompt; reconcile live C268 branch, review state, saved recovery and first unmet gate. Startup compression is complete.",
+  "session_phase": {
+    "id": "STARTUP-COMPACT-20261119",
+    "starting_main": "7ff41e071fb694dadf1ba256b13168e1a4083926",
+    "owner": "startup-compact-9c7a0c0e0469",
+    "declared_at_utc": "2026-11-19T15:16:48.159163+00:00",
+    "scope": "Only browser startup instruction compression and preservation; C268 remains active independently",
+    "acceptance": "R01-R05 satisfied with exact README preservation and measured reduction",
+    "stopping_point": "Stop after verified saved delivery; preserve partial progress if an unplanned scope expansion is needed",
+    "early_save_confirmed": true,
+    "early_receipt": "docs/engineering/startup-compact-20261119/EARLY-RECOVERY-RECEIPT.json"
+  },
+  "delivery": {
+    "required": true,
+    "kind": "browser-session",
+    "status": "saved",
+    "folder": "OntoKin",
+    "receipt": "docs/engineering/startup-compact-20261119/DELIVERY.json",
+    "artifacts": [
+      "libfile_fde3_f-c655f11e8fb48191b6c381812c9fd463_2ab2a24d43748191957f9bcc356b59de",
+      "libfile_fde3_f-a2c3e7dedb008191bb98f1bb61b5a6b0_2ab2a24d43748191957f9bcc356b59de",
+      "libfile_fde3_f-6c8c6e04bd5081919f49213aa9abc0dd_2ab2a24d43748191957f9bcc356b59de"
+    ],
+    "packaged_git_revision": "46485a6019648045d5a41d8a9254c7e84eab3128"
+  },
+  "method_decisions": [
+    {
+      "previous_acceptance": "Optional standard-library glossary packet reads exact required Git objects at a full pinned revision; literal nonrecursive decoding reproduces every byte. Reject unsafe/colliding/missing/truncated/tampered/incomplete inputs. Preserve README exclusion and source-read fallback; nested/scope-specific reads remain required. Execute meaningful tool controls and measure complete glossary/header/payload overhead.",
+      "decision": "Implement and verify candidate, then defer active packet tool after default0.824% and exploratory2.569% net token savings. User scope remains compact startup without lost information; direct reads remain canonical. Navigation-only anchor exclusion is explicit in START and retains file bytes.",
+      "evidence": [
+        "docs/engineering/startup-compact-20261119/PACKET-IMPLEMENTATION.md",
+        "docs/engineering/startup-compact-20261119/PACKET-REVIEW.json"
+      ]
+    }
+  ]
+}

@@ -53,3 +53,9 @@ The interrupted implementation is already published at `734789521f82248d39b623c3
 Current owner: `c268-recovery-8bd47a4cbab7`. Starting main: `7ff41e071fb694dadf1ba256b13168e1a4083926`. Confirmed recovery and unpublished-work ZIP receipts are under `evidence/recovery-20261119/`. The previous main lease is honored until expiry; this phase has no integration authority without a new verified lease.
 
 Acceptance: verify the fixed immutable candidate, independently review R01–R05, publish the P03 evidence checkpoint, and save a verified partial handoff with an external receipt. Stop before P04 integration and P05 parent closure. Retain the existing branch, draft PR266 and open issue265. Any remaining finding stays explicit; do not start another phase.
+
+## Finalization phase — November 19, fresh continuation
+
+Current user Prompt 1 resumes C268 and authorizes reviewed integration plus final saved delivery. The preceding P03-only stop bounded the interrupted prior session; it is retained above as history. This phase finishes the already-published correction, its full affected checks and independent acceptance, then P04/P05 if those gates pass. No next milestone or new implementation scope. Owner: `c268-final-ee457d84062e`; observed main `409ef18e0cb992ad1ab771c1258e989d5ef1c765`, branch `b799b7462bdc6a04464a2f903cec8dcabd659fa1`.
+
+Early recovery is confirmed saved; see `evidence/finalization-20261119/EARLY-RECOVERY-RECEIPT.json`. Publish checkpoint before verification. Independent recovery audit and exact-candidate reviewer are separate workers; Director owns all commits, shared state and remote writes. Acquire a new conditional main lease only after acceptance. Stop after final saved C268 handoff, or preserve an incomplete handoff if a new material implementation requirement appears.

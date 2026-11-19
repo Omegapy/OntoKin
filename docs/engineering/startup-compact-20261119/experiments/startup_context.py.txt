@@ -1,0 +1,504 @@
+#!/usr/bin/env python3
+"""Build, verify or expand an optional lossless OntoKin startup packet.
+
+Reads Git objects at an explicit full commit SHA; never fetches or changes Git.
+All registry skills are included. A packet is a literal shared glossary plus the
+complete selected source text, not a summary. Live GitHub-head observation,
+nested AGENTS and scope-specific reads remain external requirements. Any failure
+requires direct source reads. Only an explicitly named, new output file is written.
+"""
+
+from __future__ import annotations
+
+import argparse
+from collections import Counter
+from dataclasses import dataclass
+import hashlib
+import json
+import os
+from pathlib import Path, PurePosixPath
+import re
+import stat
+import subprocess
+import sys
+from typing import Any
+
+
+REGISTRY = "docs/workflow/registry.json"
+SHA = re.compile(r"[0-9a-f]{40}\Z")
+IDENTIFIER = re.compile(r"[A-Za-z][A-Za-z0-9_-]{0,63}\Z")
+SYMBOL = re.compile(r"§[0-9]{3}")
+TOKEN = re.compile(r"\w+|[^\w\s]|\s+")
+MAX_FILE = 2_000_000
+MAX_TOTAL = 16_000_000
+MAX_PACKET = 24_000_000
+MAX_FILES = 128
+MAX_DEFINITIONS = 96
+MAX_CANDIDATES = 500
+MAX_STARTS = 32_000
+SIZES = (8, 12, 16, 24, 32, 48, 64)
+PREAMBLE = (
+    "ONTOKIN STARTUP PACKET 1\n"
+    "Read all payload text using the glossary: § plus three digits expands once to its literal definition; other § signs are literal. No summary.\n"
+    "DEF: alias, literal-byte-length. FILE: path-byte-length, source-byte-length, encoded-byte-length. Lengths count UTF-8 bytes; each value has one framing LF.\n"
+    "Observe live GitHub head separately. Omitted entry means already read at REF. Nested AGENTS/scope reads remain extra; direct reads are fallback.\n"
+).encode("utf-8")
+
+
+class PacketError(ValueError):
+    """Reject a packet/source selection without silently skipping instructions."""
+
+
+def require(condition: bool, message: str) -> None:
+    if not condition:
+        raise PacketError(message)
+
+
+def utf8(data: bytes, label: str) -> str:
+    try:
+        return data.decode("utf-8")
+    except UnicodeError as exc:
+        raise PacketError(f"{label}: invalid UTF-8") from exc
+
+
+def safe_path(value: Any) -> str:
+    require(isinstance(value, str) and bool(value), "expected a nonempty repository-relative path")
+    require(not value.startswith("/") and not any(part in {"", ".", ".."} for part in value.split("/")),
+            f"unsafe repository path: {value!r}")
+    require(not any(ord(c) < 32 or ord(c) == 127 or c in "\\:*?[]" for c in value),
+            f"unsafe repository path: {value!r}")
+    require(not PurePosixPath(value).name.casefold().startswith("readme"),
+            f"README files are excluded: {value}")
+    require(not SYMBOL.search(value), f"reserved alias collision in path: {value}")
+    try:
+        require(len(value.encode("utf-8")) <= 4096, "repository path exceeds 4096 bytes")
+    except UnicodeError as exc:
+        raise PacketError("repository path is not valid UTF-8") from exc
+    return value
+
+
+def identifier(value: Any, label: str) -> str:
+    require(isinstance(value, str) and bool(IDENTIFIER.fullmatch(value)), f"{label}: invalid identifier")
+    return value
+
+
+def json_object(data: bytes, label: str) -> dict[str, Any]:
+    decoded = utf8(data, label)
+    depth = 0
+    quoted = escaped = False
+    for char in decoded:
+        if quoted:
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == '"':
+                quoted = False
+        elif char == '"':
+            quoted = True
+        elif char in "[{":
+            depth += 1
+            require(depth <= 64, f"{label}: JSON nesting exceeds 64 levels")
+        elif char in "]}":
+            depth -= 1
+    def unique(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+        result: dict[str, Any] = {}
+        for key, value in pairs:
+            require(key not in result, f"{label}: duplicate JSON key {key}")
+            result[key] = value
+        return result
+    try:
+        result = json.loads(decoded, object_pairs_hook=unique)
+    except PacketError:
+        raise
+    except (ValueError, RecursionError) as exc:
+        raise PacketError(f"{label}: invalid JSON") from exc
+    require(isinstance(result, dict), f"{label}: expected a JSON object")
+    return result
+
+
+class GitSource:
+    """Synchronous, bounded, read-only Git access; source working files are unused."""
+
+    def __init__(self, root: Path, ref: str):
+        require(isinstance(ref, str) and bool(SHA.fullmatch(ref)), "--ref must be a full lowercase 40-hex commit SHA")
+        self.root = root.resolve()
+        self.ref = ref
+        self.cache: dict[str, bytes] = {}
+        require(self.run("cat-file", "-t", ref) == b"commit\n", "--ref must identify a commit object")
+
+    def run(self, *args: str, input_data: bytes | None = None) -> bytes:
+        environment = os.environ.copy()
+        for key in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_COMMON_DIR",
+                    "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES"):
+            environment.pop(key, None)
+        environment.update(GIT_NO_LAZY_FETCH="1", GIT_TERMINAL_PROMPT="0", GIT_OPTIONAL_LOCKS="0")
+        command = ["git", "--no-replace-objects", "--no-optional-locks", "-c", "core.fsmonitor=false",
+                   "-c", "gc.auto=0", "-C", str(self.root), *args]
+        try:
+            result = subprocess.run(command, input=input_data, capture_output=True, timeout=20,
+                                    env=environment, check=False)
+        except (OSError, subprocess.SubprocessError) as exc:
+            raise PacketError(f"Git read failed: {exc}") from exc
+        require(result.returncode == 0, f"Git read failed: {result.stderr.decode('utf-8', 'replace')[:500].strip()}")
+        return result.stdout
+
+    def file_objects(self, paths: list[str]) -> dict[str, str]:
+        require(bool(paths) and len(paths) <= MAX_FILES, "invalid source path count")
+        require(len(set(paths)) == len(paths), "duplicate requested Git paths")
+        for path in paths:
+            safe_path(path)
+        raw = self.run("ls-tree", "-r", "-z", "--full-tree", self.ref, "--", *paths)
+        result: dict[str, str] = {}
+        for entry in raw.split(b"\0"):
+            if not entry:
+                continue
+            try:
+                info, path_bytes = entry.split(b"\t", 1)
+                mode, kind, oid = info.split(b" ")
+            except ValueError as exc:
+                raise PacketError("incomplete Git tree response") from exc
+            path = utf8(path_bytes, "Git path")
+            require(path in paths and path not in result, "unexpected or duplicate Git tree path")
+            require(mode in {b"100644", b"100755"} and kind == b"blob", f"source is not a regular Git file: {path}")
+            object_id = oid.decode("ascii")
+            require(bool(SHA.fullmatch(object_id)), "invalid Git object identity")
+            result[path] = object_id
+        require(set(result) == set(paths), f"missing Git files at {self.ref}: {', '.join(sorted(set(paths) - set(result)))}")
+        return result
+
+    def read_many(self, paths: list[str]) -> dict[str, bytes]:
+        for path in paths:
+            safe_path(path)
+        require(len(set(paths)) == len(paths), "duplicate source paths")
+        missing = [path for path in paths if path not in self.cache]
+        if missing:
+            objects = self.file_objects(missing)
+            request = b"".join(objects[path].encode("ascii") + b"\n" for path in missing)
+            checks = self.run("cat-file", "--batch-check", input_data=request).splitlines()
+            require(len(checks) == len(missing), "incomplete Git size response")
+            sizes: list[int] = []
+            for path, line in zip(missing, checks):
+                match = re.fullmatch(rb"([0-9a-f]{40}) blob ([0-9]+)", line)
+                require(match is not None and match[1].decode() == objects[path], "invalid Git size response")
+                size = int(match[2])
+                require(size <= MAX_FILE, f"{path}: source exceeds {MAX_FILE}-byte limit")
+                sizes.append(size)
+            require(sum(sizes) + sum(map(len, self.cache.values())) <= MAX_TOTAL, "source cohort exceeds byte limit")
+            raw = self.run("cat-file", "--batch", input_data=request)
+            offset = 0
+            for path, size in zip(missing, sizes):
+                end = raw.find(b"\n", offset)
+                require(end >= 0, "incomplete Git object header")
+                expected = f"{objects[path]} blob {size}".encode("ascii")
+                require(raw[offset:end] == expected, "Git object header changed or is incomplete")
+                offset = end + 1
+                require(offset + size < len(raw) and raw[offset + size:offset + size + 1] == b"\n",
+                        "incomplete Git object body")
+                body = raw[offset:offset + size]
+                utf8(body, path)
+                self.cache[path] = body
+                offset += size + 1
+            require(offset == len(raw), "unexpected trailing Git object bytes")
+        return {path: self.cache[path] for path in paths}
+
+
+@dataclass
+class Sources:
+    ref: str
+    metadata: dict[str, Any]
+    files: dict[str, bytes]
+
+
+def select_sources(store: GitSource, omit_entry: bool = False) -> Sources:
+    require(type(omit_entry) is bool, "omit_entry must be Boolean")
+    registry = json_object(store.read_many([REGISTRY])[REGISTRY], REGISTRY)
+    require(type(registry.get("schema_version")) is int and registry["schema_version"] == 1,
+            "unsupported registry schema")
+    require(registry.get("repository") == "Omegapy/OntoKin", "registry repository mismatch")
+    entry = safe_path(registry.get("entrypoint"))
+    current_path = safe_path(registry.get("current"))
+    task_root = safe_path(registry.get("task_root"))
+    required = registry.get("required_reads")
+    require(isinstance(required, list) and bool(required), "registry.required_reads must be nonempty")
+    required = [safe_path(path) for path in required]
+    require(len(set(required)) == len(required), "duplicate registry required reads")
+    require({REGISTRY, entry, current_path}.issubset(required), "registry omits its entry, registry or current required read")
+    skills = registry.get("skills")
+    require(isinstance(skills, list) and bool(skills), "registry.skills must be nonempty")
+    skill_ids: list[str] = []
+    skill_paths: list[str] = []
+    for skill in skills:
+        require(isinstance(skill, dict), "invalid skill record")
+        skill_ids.append(identifier(skill.get("id"), "skill.id"))
+        path = safe_path(skill.get("path"))
+        require(PurePosixPath(path).name == "SKILL.md", "selected skills must be full SKILL.md files")
+        skill_paths.append(path)
+    require(len(set(skill_ids)) == len(skill_ids) and len(set(skill_paths)) == len(skill_paths), "duplicate registry skills")
+    current = json_object(store.read_many([current_path])[current_path], current_path)
+    require(type(current.get("schema_version")) is int and current["schema_version"] == 1, "unsupported CURRENT schema")
+    require(current.get("project") == registry["repository"], "CURRENT repository mismatch")
+    latest = identifier(current.get("latest_task"), "current.latest_task")
+    active = current.get("active_task")
+    if active is not None:
+        identifier(active, "current.active_task")
+    task = active if active is not None else latest
+    selector = "active_task" if active is not None else "latest_task"
+    task_paths = [f"{task_root}/{task}/{name}" for name in ("task.json", "REQUIREMENTS.md", "PLAN.md")]
+    paths = list(dict.fromkeys(required + task_paths + skill_paths))
+    require(len(paths) <= MAX_FILES, "too many selected startup files")
+    if omit_entry:
+        store.file_objects([entry])  # Assert a real file exists without rereading its contents.
+        paths.remove(entry)
+    files = store.read_many(paths)
+    task_record = json_object(files[task_paths[0]], task_paths[0])
+    require(type(task_record.get("schema_version")) is int and task_record["schema_version"] == 1
+            and task_record.get("id") == task, "selected task record does not match CURRENT")
+    metadata = {"task": task, "task_selector": selector, "skills": skill_ids, "entrypoint": entry,
+                "omit_entry": omit_entry, "entry_read_at_ref": "REF" if omit_entry else None}
+    return Sources(store.ref, metadata, files)
+
+
+def compress(files: dict[str, bytes]) -> tuple[list[str], dict[str, bytes]]:
+    texts = [utf8(body, path) for path, body in files.items()]
+    for path, text in zip(files, texts):
+        require(SYMBOL.search(text) is None, f"{path}: reserved alias collision; use direct source reads")
+    spans = [list(TOKEN.finditer(text)) for text in texts]
+    stride = max(1, (sum(map(len, spans)) + MAX_STARTS - 1) // MAX_STARTS)
+    counts: Counter[str] = Counter()
+    for text, tokens in zip(texts, spans):
+        for start in range(0, len(tokens), stride):
+            for size in SIZES:
+                if start + size <= len(tokens):
+                    literal = text[tokens[start].start():tokens[start + size - 1].end()]
+                    length = len(literal.encode("utf-8"))
+                    if 24 <= length <= 4096 and literal.strip():
+                        counts[literal] += 1
+    alias_bytes = len("§000".encode("utf-8"))
+    def gain(literal: str, count: int) -> int:
+        length = len(literal.encode("utf-8"))
+        definition_cost = len(f"DEF §000 {length}\n".encode("utf-8")) + length + 1
+        return count * (length - alias_bytes) - definition_cost
+    candidates = sorted((literal for literal, count in counts.items() if count >= 2 and gain(literal, count) > 1),
+                        key=lambda literal: (-gain(literal, counts[literal]), literal))[:MAX_CANDIDATES]
+    # Immutable alias chunks prevent later substitutions from changing earlier aliases.
+    chunks: list[list[tuple[bool, str]]] = [[(False, text)] for text in texts]
+    glossary: list[str] = []
+    for _ in range(MAX_DEFINITIONS):
+        scored = []
+        for literal in candidates:
+            count = sum(text.count(literal) for parts in chunks for is_alias, text in parts if not is_alias)
+            saving = gain(literal, count)
+            if count >= 2 and saving > 1:
+                scored.append((saving, literal))
+        if not scored:
+            break
+        _, literal = min(scored, key=lambda item: (-item[0], item[1]))
+        alias = f"§{len(glossary):03d}"
+        glossary.append(literal)
+        candidates = [candidate for _, candidate in scored if candidate != literal]
+        for index, parts in enumerate(chunks):
+            changed: list[tuple[bool, str]] = []
+            for is_alias, text in parts:
+                if is_alias:
+                    changed.append((True, text))
+                    continue
+                pieces = text.split(literal)
+                for number, piece in enumerate(pieces):
+                    if number:
+                        changed.append((True, alias))
+                    if piece:
+                        changed.append((False, piece))
+            chunks[index] = changed
+    encoded = {path: "".join(text for _, text in parts).encode("utf-8") for path, parts in zip(files, chunks)}
+    return glossary, encoded
+
+
+def serialize(sources: Sources, glossary: list[str], encoded: dict[str, bytes]) -> bytes:
+    metadata = json.dumps(sources.metadata, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    pieces = [PREAMBLE, f"REF {sources.ref}\nMETA {len(metadata)}\n".encode("ascii"), metadata, b"\n",
+              f"GLOSSARY {len(glossary)}\n".encode("ascii")]
+    for number, literal in enumerate(glossary):
+        data = literal.encode("utf-8")
+        pieces.extend((f"DEF §{number:03d} {len(data)}\n".encode("utf-8"), data, b"\n"))
+    pieces.append(f"FILES {len(sources.files)}\n".encode("ascii"))
+    for path, original in sources.files.items():
+        path_bytes = path.encode("utf-8")
+        body = encoded[path]
+        pieces.extend((f"FILE {len(path_bytes)} {len(original)} {len(body)}\n".encode("ascii"),
+                       path_bytes, b"\n", body, b"\n"))
+    pieces.append(b"END\n")
+    return b"".join(pieces)
+
+
+class Reader:
+    def __init__(self, raw: bytes):
+        require(len(raw) <= MAX_PACKET, "packet exceeds byte limit")
+        self.raw = raw
+        self.offset = 0
+
+    def line(self) -> str:
+        end = self.raw.find(b"\n", self.offset, self.offset + 4097)
+        require(end >= 0, "missing or oversized packet header")
+        result = utf8(self.raw[self.offset:end], "packet header")
+        self.offset = end + 1
+        return result
+
+    def value(self, size: int, limit: int) -> bytes:
+        require(0 <= size <= limit, "invalid length in packet")
+        end = self.offset + size
+        require(end < len(self.raw) and self.raw[end:end + 1] == b"\n", "truncated value or wrong byte length")
+        result = self.raw[self.offset:end]
+        self.offset = end + 1
+        return result
+
+    def numbers(self, name: str, count: int) -> list[int]:
+        line = self.line()
+        pattern = name + (r" (0|[1-9][0-9]{0,8})" * count)
+        match = re.fullmatch(pattern, line)
+        require(match is not None, f"invalid {name} header")
+        return [int(value) for value in match.groups()]
+
+
+def decode_packet(raw: bytes) -> tuple[Sources, int]:
+    reader = Reader(raw)
+    require(raw.startswith(PREAMBLE), "unknown packet format or altered reader rules")
+    reader.offset = len(PREAMBLE)
+    ref_line = reader.line()
+    require(ref_line.startswith("REF ") and bool(SHA.fullmatch(ref_line[4:])), "invalid packet REF")
+    ref = ref_line[4:]
+    metadata = json_object(reader.value(reader.numbers("META", 1)[0], 65_536), "packet metadata")
+    expected_keys = {"task", "task_selector", "skills", "entrypoint", "omit_entry", "entry_read_at_ref"}
+    require(set(metadata) == expected_keys, "invalid packet metadata fields")
+    identifier(metadata["task"], "packet task")
+    require(isinstance(metadata["task_selector"], str) and metadata["task_selector"] in {"active_task", "latest_task"},
+            "invalid task selector")
+    safe_path(metadata["entrypoint"])
+    skills = metadata["skills"]
+    require(isinstance(skills, list) and bool(skills), "invalid packet skills")
+    for skill in skills:
+        identifier(skill, "packet skill")
+    require(len(set(skills)) == len(skills), "duplicate packet skills")
+    require(type(metadata["omit_entry"]) is bool, "invalid entry omission flag")
+    require(metadata["entry_read_at_ref"] == ("REF" if metadata["omit_entry"] else None),
+            "entry omission must assert the entry was already read at this REF")
+    count = reader.numbers("GLOSSARY", 1)[0]
+    require(count <= MAX_DEFINITIONS, "too many glossary definitions")
+    glossary: dict[str, str] = {}
+    for number in range(count):
+        alias = f"§{number:03d}"
+        size = reader.numbers(f"DEF {alias}", 1)[0]
+        literal = utf8(reader.value(size, MAX_FILE), "glossary definition")
+        require(bool(literal) and SYMBOL.search(literal) is None, "empty or recursive/colliding glossary definition")
+        require(literal not in glossary.values(), "duplicate glossary definition")
+        glossary[alias] = literal
+    count_files = reader.numbers("FILES", 1)[0]
+    require(0 < count_files <= MAX_FILES, "invalid packet file count")
+    files: dict[str, bytes] = {}
+    total = 0
+    for _ in range(count_files):
+        path_size, source_size, encoded_size = reader.numbers("FILE", 3)
+        require(source_size <= MAX_FILE, "source length exceeds file limit")
+        path = safe_path(utf8(reader.value(path_size, 4096), "packet path"))
+        require(path not in files, "duplicate packet path")
+        encoded = utf8(reader.value(encoded_size, MAX_FILE), "encoded source")
+        expanded_size = len(encoded.encode("utf-8"))
+        for match in SYMBOL.finditer(encoded):
+            require(match[0] in glossary, f"unknown glossary symbol: {match[0]}")
+            expanded_size += len(glossary[match[0]].encode("utf-8")) - len(match[0].encode("utf-8"))
+            require(expanded_size <= MAX_FILE, "expanded byte length exceeds file limit")
+        require(expanded_size == source_size, f"expanded byte length mismatch: {path}")
+        body = SYMBOL.sub(lambda match: glossary[match[0]], encoded).encode("utf-8")
+        require(len(body) == source_size, f"decoded byte length mismatch: {path}")
+        total += len(body)
+        require(total <= MAX_TOTAL, "decoded source cohort exceeds byte limit")
+        files[path] = body
+    require(reader.line() == "END" and reader.offset == len(raw), "missing END or trailing packet bytes")
+    return Sources(ref, metadata, files), count
+
+
+def compare_sources(decoded: Sources, expected: Sources) -> None:
+    require(decoded.ref == expected.ref, "packet source revision mismatch")
+    require(decoded.metadata == expected.metadata, "packet task/skills/entry selection differs from Git")
+    require(list(decoded.files) == list(expected.files), "packet source cohort omitted, added or reordered paths")
+    for path, body in decoded.files.items():
+        require(body == expected.files[path], f"packet decoded source bytes differ from Git: {path}")
+
+
+def report(sources: Sources, packet_bytes: int, definitions: int) -> dict[str, Any]:
+    source_bytes = sum(map(len, sources.files.values()))
+    return {"verified": True, "source_revision": sources.ref, "task": sources.metadata["task"],
+            "omit_entry": sources.metadata["omit_entry"], "files": len(sources.files), "glossary_entries": definitions,
+            "source_bytes": source_bytes, "packet_bytes": packet_bytes, "saved_bytes": source_bytes - packet_bytes,
+            "reduction_percent": round(100 * (source_bytes - packet_bytes) / source_bytes, 3) if source_bytes else 0,
+            "token_count": "not measured; bytes are not model tokens",
+            "limits": "Git byte equivalence only; live GitHub head, prior entry reading and extra scope reads require separate observation",
+            "sources": [{"path": path, "bytes": len(body), "sha256": hashlib.sha256(body).hexdigest()}
+                        for path, body in sources.files.items()]}
+
+
+def build_packet(root: Path, ref: str, omit_entry: bool = False) -> tuple[bytes, dict[str, Any]]:
+    sources = select_sources(GitSource(root, ref), omit_entry)
+    glossary, encoded = compress(sources.files)
+    raw = serialize(sources, glossary, encoded)
+    plain = serialize(sources, [], sources.files)
+    if len(raw) > len(plain):
+        raw = plain
+    decoded, definitions = decode_packet(raw)
+    compare_sources(decoded, sources)  # Every selected source byte came from the pinned Git objects.
+    return raw, report(decoded, len(raw), definitions)
+
+
+def verify_packet(raw: bytes, root: Path, ref: str | None = None) -> tuple[Sources, dict[str, Any]]:
+    decoded, definitions = decode_packet(raw)
+    require(ref is None or decoded.ref == ref, "packet REF differs from the explicitly expected commit")
+    expected = select_sources(GitSource(root, decoded.ref), decoded.metadata["omit_entry"])
+    compare_sources(decoded, expected)
+    return decoded, report(decoded, len(raw), definitions)
+
+
+def read_packet(path: Path) -> bytes:
+    # Nonblocking open also avoids hanging on a FIFO before its type can be checked.
+    descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_NONBLOCK", 0))
+    with os.fdopen(descriptor, "rb") as handle:
+        require(stat.S_ISREG(os.fstat(handle.fileno()).st_mode), "packet input must be a regular file")
+        raw = handle.read(MAX_PACKET + 1)
+    require(len(raw) <= MAX_PACKET, "packet exceeds byte limit")
+    return raw
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1], help="repository checkout root")
+    parser.add_argument("--ref", help="full commit SHA, required for build; optional expected SHA for verify/expand")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--verify", type=Path, metavar="PACKET", help="verify complete cohort and bytes against Git")
+    mode.add_argument("--expand", type=Path, metavar="PACKET", help="verify, then emit the full raw-text packet with no aliases")
+    parser.add_argument("--omit-entry", action="store_true", help="build: assert entrypoint already read at the same REF")
+    parser.add_argument("--output", type=Path, help="write a new file; default stdout; existing files are never overwritten")
+    args = parser.parse_args(argv)
+    try:
+        if args.verify or args.expand:
+            require(not args.omit_entry, "--omit-entry is a build-only assertion")
+            path = args.verify or args.expand
+            require(not path.name.casefold().startswith("readme"), "README files cannot be packet inputs")
+            raw = read_packet(path)
+            sources, result = verify_packet(raw, args.root, args.ref)
+            output = (json.dumps(result, ensure_ascii=False, indent=2) + "\n").encode("utf-8") if args.verify else serialize(sources, [], sources.files)
+        else:
+            require(args.ref is not None, "building requires --ref FULL_COMMIT_SHA")
+            output, _ = build_packet(args.root, args.ref, args.omit_entry)
+        if args.output:
+            require(not args.output.name.casefold().startswith("readme"), "README files cannot be packet outputs")
+            with args.output.open("xb") as handle:
+                handle.write(output)
+        else:
+            sys.stdout.buffer.write(output)
+        return 0
+    except (PacketError, OSError) as exc:
+        print(f"startup_context: {exc}. Use direct reads at the observed GitHub revision; no instructions may be skipped.", file=sys.stderr)
+        return 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())

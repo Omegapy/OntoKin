@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "task": "STARTUP-COMPACT-20261119",
+  "reviewer": "/root/startup_audit",
+  "recorded_at_utc": "2026-11-19T16:20:27.836237+00:00",
+  "kind": "external_historical_review_identity_correction",
+  "status": "resolved_metadata_qualification",
+  "affected_field": {
+    "path": "docs/engineering/startup-compact-20261119/REVIEW.json",
+    "selector": "findings[id=F01].first_candidate_sha256",
+    "previous_value": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de",
+    "corrected_value": null
+  },
+  "explanation": "The reviewer observed the first candidate wording without alone, then captured the hash after the Director concurrently restored alone. The initial review incorrectly attributed that post-correction digest to the earlier file. An independently frozen pre-correction hash is unavailable; none is inferred or invented.",
+  "preserved_evidence": {
+    "observed_pre_correction_wording": "Discussion grants no publication authority",
+    "verified_corrected_wording": "Discussion alone grants no publication authority",
+    "misattributed_initial_digest": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de",
+    "actual_digest_role": "Verified post-correction candidate SHA-256",
+    "resolved_candidate_sha256": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de",
+    "pre_correction_independently_frozen_sha256": null,
+    "pre_correction_identity_status": "unavailable"
+  },
+  "live_review": {
+    "before_sha256": "dd68b94a717db59d09fa240ef05ebf33658c46027c05320ba2b9b984ef328794",
+    "after_sha256": "32d04dc09d5f752c949c0a372e8a5c2378ad12a61dfd846948458dace7f88bd9",
+    "change_scope": "F01 initial hash set to null with explicit identity status and this correction reference; other review content preserved."
+  },
+  "frozen_handoff": {
+    "library_file_id": "libfile_fde3_f-c655f11e8fb48191b6c381812c9fd463_2ab2a24d43748191957f9bcc356b59de",
+    "file_name": "OntoKin_Startup_Compression_Handoff_2026-11-19.zip",
+    "bytes": 290419,
+    "sha256": "9ddf215d854c40712de986c1ffbaeccffc1e389fc50a3598a5985a685d1514af",
+    "source_revision": "46485a6019648045d5a41d8a9254c7e84eab3128",
+    "review_snapshot_sha256": "dd68b94a717db59d09fa240ef05ebf33658c46027c05320ba2b9b984ef328794",
+    "save_identity_source": "Successful save reported by Director; independent reviewer verified local archive identity and source bindings.",
+    "disposition": "Frozen ZIP preserved unchanged; external receipt must reference this correction."
+  },
+  "earlier_review_records": {
+    "REVIEW-01.json": "40ab9b89d82c17b5d0b70887702c76d1f4c08c92590642832b140e0fb371481b",
+    "REVIEW-01.md": "d5ce7dddadc7ac8e01dbb30e5e95b25c29fc6199e79a6ef4f2f3a50de6c383f8",
+    "disposition": "Preserved byte-for-byte; any repeated F01 initial-digest attribution in these historical records carries the same qualification."
+  },
+  "package_verification": {
+    "path": "docs/engineering/startup-compact-20261119/FINAL-PACKAGE-VERIFICATION.json",
+    "sha256": "ad916141f8ec4c0a0ae80acb1e052d1ee6da79bb8840afed3729bfe51512b3da",
+    "passed": true,
+    "qualification": "PACKAGE-NOTE-01",
+    "payload_or_recovery_blocker": false
+  },
+  "scope_limits": [
+    "No normative startup instruction changed.",
+    "No frozen archive, REVIEW-01 record, repository index, commit, task, receipt, STATUS or coordination record changed by this correction.",
+    "No unobserved pre-correction digest is asserted.",
+    "Director owns external receipt publication, task closure and lease release."
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "scope": "STARTUP-COMPACT-20261119",
+  "owner": "startup-compact-9c7a0c0e0469",
+  "base": "7ff41e071fb694dadf1ba256b13168e1a4083926",
+  "lease_commit": "2c800160880a496aa3c06770b66ae9caab246adb",
+  "lease_tree": "4123eef1df9961c1a47381e4a96a6bda5172f193",
+  "expected_head_update": true,
+  "readback": true,
+  "previous_lease": {
+    "owner": "c268-root-c7dae94da130",
+    "expires": "2026-11-19T14:58:39.000Z",
+    "branch": "work/c268-historical-endpoint",
+    "head": "b799b7462bdc6a04464a2f903cec8dcabd659fa1",
+    "scope_issue": 265,
+    "disposition": "retained; unfinished C268 work and recoveries unchanged",
+    "unknown_remote_writes": "None identified: published OPERATION-NOTES reports prior orchestration failure occurred before any remote call, subsequent publication succeeded; live refs match retained recorded heads"
+  },
+  "ci": {
+    "head": "7ff41e071fb694dadf1ba256b13168e1a4083926",
+    "workflow_runs": 0
+  },
+  "protected_state": [
+    "docs/workflow/CURRENT.json",
+    "docs/workflow/tasks/C268/",
+    "docs/engineering/localized-repair-c268/",
+    "all existing README files"
+  ],
+  "workers": [
+    "/root/startup_audit",
+    "/root/compress_goals",
+    "/root/compress_workflow"
+  ],
+  "renewal": {
+    "at": "2026-11-19T15:47:22.743233+00:00",
+    "expires": "2026-11-19T16:17:22.743233+00:00",
+    "expected_main": "2c800160880a496aa3c06770b66ae9caab246adb",
+    "checkpoint": "156-group editorial review,344 preservation checks,23 packet controls; defer low-benefit dictionary method",
+    "prior_attempt": "Execution runtime reset before setup; absence of setup file and unchanged live main confirmed no mutation reached",
+    "commit": "a0a0bb10f38f57ef8e199bf58d5f5bda52c9eea8",
+    "tree": "01ba18d6d3554226c696a66c5071bbc640a8f7fe",
+    "verified_readback": true
+  },
+  "closure_lease": {
+    "action": "reacquisition_after_expiry",
+    "owner": "startup-compact-9c7a0c0e0469",
+    "at": "2026-11-19T16:19:47.897029+00:00",
+    "expires": "2026-11-19T16:49:47.897029+00:00",
+    "expected_main": "46485a6019648045d5a41d8a9254c7e84eab3128",
+    "previous_lease_text": "## Main integration lease\n\nState: held for the owner's startup-instruction compression request; C268 work remains separate and untouched.\nOwner: `startup-compact-9c7a0c0e0469`. Acquired at UTC: 2026-11-19T15:20:05.261617+00:00. Expires at UTC: 2026-11-19T16:17:22.743233+00:00.\nRenewed at UTC: 2026-11-19T15:47:22.743233+00:00 after independent review of 156 obligation groups, 344 preservation checks and 23 experimental-reader controls; packet deployment deferred after measured low savings.\nExpected main at acquisition: `7ff41e071fb694dadf1ba256b13168e1a4083926`. Reserved paths: STATUS.md, docs/workflow/tasks/STARTUP-COMPACT-20261119/, docs/engineering/startup-compact-20261119/ and the explicitly assigned startup instruction files. CURRENT and C268 task/evidence remain unchanged. Prior C268 lease expired at 2026-11-19T14:58:39.000Z; its published branch and saved recovery remain available. Only a successful expected-head update and readback establishes this lease.\n\n",
+    "checkpoint": "Actual resulting-main verification; independent final ZIP verification; final ZIP and both prompts saved, recovered from successful-upload xattrs and Library metadata without retry",
+    "remote_reconciliation": {
+      "main": "46485a6019648045d5a41d8a9254c7e84eab3128",
+      "c268_branch": "b799b7462bdc6a04464a2f903cec8dcabd659fa1",
+      "pr267": "merged at e22e60dbba4b3483d0325b0d2d2794ed4b067946",
+      "compression_branch": "absent",
+      "relevant_ci_runs": 0,
+      "unknown_writes": "none; final save outcome recovered; no retry performed"
+    },
+    "verification": "Successful expected-head update from 46485a6019648045d5a41d8a9254c7e84eab3128 and exact main readback",
+    "commit": "93dab01407cec3fbc13aec37e723f0828cf3453f",
+    "tree": "a4b646ba3302aa2ac1ab530fc5d5c342f7d9d6ec"
+  },
+  "release": {
+    "at": "2026-11-19T16:21:41.819983+00:00",
+    "owner": "startup-compact-9c7a0c0e0469",
+    "expected_main": "93dab01407cec3fbc13aec37e723f0828cf3453f",
+    "prior_live_lease_text": "## Main integration lease\n\nState: held for confirmed delivery receipt and closure of the owner's startup-instruction compression request; C268 remains separate and untouched.\nOwner: `startup-compact-9c7a0c0e0469`. Acquired at UTC: 2026-11-19T16:19:47.897029+00:00. Expires at UTC: 2026-11-19T16:49:47.897029+00:00.\nCheckpoint: PR267 merged and resulting main verified; final handoff independently verified and saved with both prompts. Previous lease expired at 2026-11-19T16:17:22.743233+00:00; reconciled unchanged live main, retained C268 branch, merged PR, deleted compression branch and no outstanding unknown writes before reacquisition.\nExpected main at acquisition: `46485a6019648045d5a41d8a9254c7e84eab3128`. Reserved paths: STATUS.md, docs/workflow/tasks/STARTUP-COMPACT-20261119/ and docs/engineering/startup-compact-20261119/. CURRENT and C268 task/evidence remain unchanged. Only a successful expected-head update and readback establishes this lease.\n\n",
+    "reason": "All scoped requirements, actual integration/main checks, final package independent review and three confirmed saves complete",
+    "delivery_receipt": "docs/engineering/startup-compact-20261119/DELIVERY.json",
+    "reserved_paths": [],
+    "c268_preserved": true,
+    "publication_boundary": "Release becomes live when this closure commit is conditionally published and read back; actual closure SHA is discoverable in Git history, not invented inside its own payload"
+  }
+}

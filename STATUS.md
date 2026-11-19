@@ -1,48 +1,48 @@
 # OntoKin development status
 
-[GOAL](GOAL.md), [C252](docs/engineering/review-integration-c252/DECISION.md), [C210](docs/engineering/semantic-export-c210/DECISION.md) and [AGENTS](AGENTS.md) govern OntoKin's semantic-authoring direction, domain dispositions and preservation rules.
+[GOAL](GOAL.md), [C252](docs/engineering/review-integration-c252/DECISION.md), [C210](docs/engineering/semantic-export-c210/DECISION.md), [AGENTS](AGENTS.md): semantic-authoring direction, domain dispositions, preservation.
 
 ## Current workflow and next action
 
-C268 is active: exact historical endpoint admission under unchanged C260. [Requirements](docs/workflow/tasks/C268/REQUIREMENTS.md), [plan](docs/workflow/tasks/C268/PLAN.md), [scope265](https://github.com/Omegapy/OntoKin/issues/265). Implementation and qualification are pending; confirm early recovery before code work.
+C268 active: exact historical endpoint admission, unchanged C260. [Requirements](docs/workflow/tasks/C268/REQUIREMENTS.md), [plan](docs/workflow/tasks/C268/PLAN.md), [scope265](https://github.com/Omegapy/OntoKin/issues/265). Early recovery saved; published implementation/independent controls passed identified candidate cohort: **12 groups, 281 methods, 14 bindings**. Final independent review, integration/main checks and saved delivery remain.
 
-C267 is complete within its finite declaration-comparison scope. Implementation integrated through [PR261](https://github.com/Omegapy/OntoKin/pull/261), merge `7174e6796b38bac3fa83e6412e0944512d137434`; branch deletion and retained ancestry are verified. Recorded integration checks passed **11 groups, 247 methods, 14 corpus bindings**, CPython **3.12.14 / Linux**. This delivery-only phase independently verified exact evidence eligibility, passed fresh documentation/workflow checks, and saved the verified handoff. See the [delivery receipt](docs/engineering/localized-repair-c267/DELIVERY.json), [independent audit](docs/engineering/localized-repair-c267/evidence/delivery-20261118/EVIDENCE-REVIEW.md) and [integration checkpoint](docs/engineering/localized-repair-c267/INTEGRATION.json).
+C267 complete within finite declaration comparison: [PR261](https://github.com/Omegapy/OntoKin/pull/261), merge `7174e6796b38bac3fa83e6412e0944512d137434`; branch deletion/retained ancestry verified. Recorded integration: **11 groups, 247 methods, 14 bindings**, CPython **3.12.14 / Linux**. Delivery-only phase independently verified exact evidence eligibility, passed fresh documentation/workflow checks and saved verified handoff. [Receipt](docs/engineering/localized-repair-c267/DELIVERY.json), [audit](docs/engineering/localized-repair-c267/evidence/delivery-20261118/EVIDENCE-REVIEW.md), [integration](docs/engineering/localized-repair-c267/INTEGRATION.json).
 
-C266 is complete: [PR259](https://github.com/Omegapy/OntoKin/pull/259), merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`, **10 passing main groups, 222 methods, 14 bindings**; branch deleted, [saved delivery](docs/engineering/localized-repair-c266/DELIVERY.json) unchanged. C265/C264/C263 are complete within recorded scopes.
+C266 complete: [PR259](https://github.com/Omegapy/OntoKin/pull/259), merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`; **10 passing main groups, 222 methods, 14 bindings**; branch deleted; [saved delivery](docs/engineering/localized-repair-c266/DELIVERY.json) unchanged. C265/C264/C263 complete within recorded scopes.
 
-Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json) and [HANDOFF](docs/workflow/HANDOFF.md). C267 delivery is complete. The November 19 continuation selects C268 historical endpoint admission; stop after its one-phase verified saved handoff.
+Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json), [HANDOFF](docs/workflow/HANDOFF.md). C267 delivery complete; November 19 continuation selected C268 historical endpoint admission. Stop after its one-phase verified saved handoff. Owner-requested startup compression is delivered; C268 remains unchanged.
 
 ## Product state and remaining gates
 
-Reference package: **0.4.0**. Released profiles retain named evidence; experimental integration is not release acceptance.
+Reference package **0.4.0**; released profiles retain named evidence. Experimental integration is not release acceptance.
 
-C255 inert checks, C256 geometry/pose, C257 ownership and C258 explicit-follow readers remain bounded, with saved handoffs complete. C260 contract delivery is complete. C261 reads raw GLB hinge fields/JSON pointers; source/program claims remain untrusted. [Results](docs/engineering/localized-repair-c261/RESULTS.md) and [integration](docs/engineering/localized-repair-c261/INTEGRATION.md) bind PR250/`f2c175e22ce5f17f063b6de6d7ea9da7788b9040`; source integration and C262 delivery are complete. C265 independently derives finite hinge declarations and ordered site associations from supplied source bytes; its byte witnesses/literal numbers certify neither site poses nor full source validity. C266 binds retained source/program/object provenance only; C267 adds finite field/set/ordered-endpoint agreement after that binding.
+C255 inert checks, C256 geometry/pose, C257 ownership, C258 explicit-follow readers: bounded; saved handoffs complete. C260 contract delivery complete. C261 reads raw GLB hinge fields/JSON pointers; source/program claims untrusted. [Results](docs/engineering/localized-repair-c261/RESULTS.md)/[integration](docs/engineering/localized-repair-c261/INTEGRATION.md): PR250/`f2c175e22ce5f17f063b6de6d7ea9da7788b9040`; source integration/C262 delivery complete. C265 independently derives finite hinge declarations/ordered site associations from supplied source bytes; byte witnesses/literal numbers certify neither site poses nor full source validity. C266 binds retained source/program/object provenance only. C267 adds finite field/set/ordered-endpoint agreement after that binding.
 
-Historical endpoint admission, complete C260 H groups, site/world behavior, authentic revisions, invalid-edit atomicity qualification, clean rebuilds, native routes and comparative trials remain unqualified. No general authoring advantage is established. C251 native sampling, C201 native admission and C209 job/0.2 compatibility remain deferred; C199/C200 schedules stay closed. Existing geometry/material/source-edit/export profiles remain supported; GOAL retains all deferred domains and the superseded world-engine completion criterion.
+Unqualified: historical endpoint admission, complete C260 H groups, site/world behavior, authentic revisions, invalid-edit atomicity qualification, clean rebuilds, native routes, comparative trials. General authoring advantage unestablished. C251 native sampling, C201 native admission, C209 job/0.2 compatibility deferred; C199/C200 schedules closed. Existing geometry/material/source-edit/export profiles supported; GOAL retains all deferred domains/superseded world-engine completion criterion.
 
 ## Verification and remaining limits
 
-Historical full regression remains **FAILED**: **4,239** distinct passing methods; **13 torque-read methods NOT RUN** after the unchanged **30,000 ms** setup timeout. [C233's default aggregate](docs/engineering/aggregate-regression-c233/RESULTS.md) passed only its recorded inputs; it does not repair that historical failure. New/worsened failures block integration.
+Historical full regression **FAILED**: **4,239** distinct passing methods; **13 torque-read methods NOT RUN**, unchanged **30,000 ms** setup timeout. [C233 default aggregate](docs/engineering/aggregate-regression-c233/RESULTS.md) passed only recorded inputs; historical failure remains. New/worsened failures block integration.
 
-C244/C251 are integrated without GDScript parsing or native execution. C251 current-authority qualification remains **failed on two stale AGENTS/GOAL bindings**; its separate historical pass does not qualify current main. The strict-normal failure and finite Blender shading loss remain visible; exact save/reopen persistence does not imply lossless normals. Godot R07, Unreal support, external compatibility and broad destination claims remain incomplete; numerical checks cannot certify occluded/unresolvable views.
+C244/C251 integrated without GDScript parsing/native execution. C251 current-authority qualification **failed: two stale AGENTS/GOAL bindings**; historical pass does not qualify current main. Strict-normal failure/finite Blender shading loss remain; exact save/reopen persistence does not imply lossless normals. Godot R07, Unreal support, external compatibility/broad destination claims incomplete; numerical checks cannot certify occluded/unresolvable views.
 
-C263 checks cover workflow tools/records/document preservation, not new native experiments or product releases. [OK-ENG-006](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md) requires fresh assistant-workspace checks; hosted jobs remain manual-only/default-false, with no new paid execution requirement. GOAL's invariants remain mandatory; ordinary execution stays **100,000 operations / 30,000 ms**.
+C263 checks cover workflow tools/records/document preservation, not native experiments/product releases. [OK-ENG-006](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md): fresh assistant-workspace checks; hosted jobs manual-only/default-false; no new paid execution requirement. GOAL invariants mandatory; ordinary execution **100,000 operations / 30,000 ms**.
 
 ## Branches and historical handoff
 
-C264's recorded starting inventory had only main/no open PRs; after PR255, `work/c264-required-browser-handoffs` was automatically deleted and inventory again contained only main. Delivery is complete. C263, C234 and C261 completed branches are absent; C234 scope240 is closed. No historical deletion request remains. **Recheck live inventory before cleanup.** C174's archive branch is absent; complete historical graph retention remains unestablished.
+C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required-browser-handoffs` automatically deleted, inventory again main-only. Delivery complete. C263/C234/C261 completed branches absent; C234 scope240 closed. No historical deletion request remains. **Recheck live inventory before cleanup.** C174 archive branch absent; complete historical graph retention unestablished.
 
-[C262 migration](docs/engineering/browser-workflow-c263/MIGRATION.md) retains archive/delivery/source identities. GitHub owns operational state; C264 also requires saved session ZIPs. Historical offline restoration still requires the original archive contract; no fresh C263 restoration is claimed.
+[C262 migration](docs/engineering/browser-workflow-c263/MIGRATION.md) retains archive/delivery/source identities. GitHub owns operational state; C264 additionally requires saved session ZIPs. Historical offline restoration still needs original archive contract; no fresh C263 restoration claimed.
 
 ## Main integration lease
 
-State: held for C268 scope publication, integration and delivery.
-Owner: `c268-root-c7dae94da130`. Acquired at UTC: 2026-11-19T14:12:24.197517+00:00. Expires at UTC: 2026-11-19T14:42:24.197517+00:00.
-Expected main at acquisition: `b2ca38875bd7b43b85011bbc671ee9fee1682441`. Reserved paths: STATUS.md, docs/workflow/CURRENT.json, docs/workflow/tasks/C268/, docs/engineering/localized-repair-c268/. Independent workers own only their assigned new files. Acquisition is valid only after successful expected-head update and readback.
+State: released at UTC: 2026-11-19T16:21:41.819983+00:00. Owner: none; reserved paths: none.
+Last holder: `startup-compact-9c7a0c0e0469`; [startup compression delivery](docs/engineering/startup-compact-20261119/DELIVERY.json) complete, PR267 merged, final handoff and both prompts saved. Acquisition/renewal/release evidence: [COORDINATION](docs/engineering/startup-compact-20261119/COORDINATION.json).
+C268 remains active and untouched on `work/c268-historical-endpoint` at `b799b7462bdc6a04464a2f903cec8dcabd659fa1`; its next integrator must reconcile live state and acquire a new lease.
 
 ## Historical status
 
-Read the [exact precompression STATUS](docs/engineering/startup-reading-20261118/before/STATUS.md.txt) when tracing these checkpoints. Earlier results remain in [STATUS-before-C263.md.txt](docs/engineering/browser-workflow-c263/STATUS-before-C263.md.txt), its [byte/hash bindings](docs/engineering/browser-workflow-c263/PRESERVATION.json) and linked evidence. Original incoming anchors remain below.
+Read [precompression STATUS](docs/engineering/startup-reading-20261118/before/STATUS.md.txt) when tracing these checkpoints. Earlier results: [STATUS-before-C263.md.txt](docs/engineering/browser-workflow-c263/STATUS-before-C263.md.txt), [byte/hash bindings](docs/engineering/browser-workflow-c263/PRESERVATION.json), linked evidence. Original incoming anchors retained below.
 
 <a id="c200-integrated-finite-qualification-retained"></a>
 <a id="c204-ledger-component-integrated-c201-coordinator-pending"></a>

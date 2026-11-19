@@ -1,0 +1,299 @@
+"""Behavioral checks for exact source preservation and fail-closed startup packets."""
+
+from __future__ import annotations
+
+import contextlib
+import io
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import unittest
+from unittest import mock
+
+from tools import startup_context as packet
+
+
+class StartupContextTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.temporary = tempfile.TemporaryDirectory(prefix="ontokin-startup-test-")
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name)
+        self.git("init", "-q")
+        self.git("config", "user.name", "Startup Packet Test")
+        self.git("config", "user.email", "startup-test@example.invalid")
+        self.required = ["CHATGPT-START-HERE.md", "AGENTS.md", "GOAL.md", "STATUS.md", "ROLE.md",
+                         packet.REGISTRY, "docs/workflow/CURRENT.json", "docs/workflow/PROTOCOL.md",
+                         "docs/workflow/HANDOFF.md", "notes/π.md"]
+        self.registry = {"schema_version": 1, "repository": "Omegapy/OntoKin",
+                         "entrypoint": self.required[0], "required_reads": self.required,
+                         "current": "docs/workflow/CURRENT.json", "task_root": "docs/workflow/tasks",
+                         "skills": [{"id": name, "path": f".agents/skills/{name}/SKILL.md"}
+                                    for name in ("ontokin-session", "ontokin-delivery")]}
+        self.current = {"schema_version": 1, "project": "Omegapy/OntoKin",
+                        "active_task": "C268", "latest_task": "C267"}
+        self.phrase = "Preserve accepted source, exact provenance and every declared boundary. Unicode λ 中文 naïve; §1 is literal.\r\n"
+        for path in self.required:
+            self.write(path, (f"# {path}\n" + self.phrase * 5 + "literal []{}():;!?\\ and no final newline").encode("utf-8"))
+        for task in ("C267", "C268"):
+            self.write_json(f"docs/workflow/tasks/{task}/task.json", {"schema_version": 1, "id": task})
+            for name in ("REQUIREMENTS.md", "PLAN.md"):
+                self.write(f"docs/workflow/tasks/{task}/{name}", (f"# {task} {name}\n" + self.phrase).encode("utf-8"))
+        for skill in self.registry["skills"]:
+            self.write(skill["path"], (f"---\nname: {skill['id']}\n---\n" + self.phrase).encode("utf-8"))
+        self.write_json(packet.REGISTRY, self.registry)
+        self.write_json("docs/workflow/CURRENT.json", self.current)
+        # An unreadable README proves that merely existing in Git never selects it.
+        self.write("README.md", b"\xff protected README bytes\x00")
+        self.ref = self.commit()
+
+    def git(self, *args: str) -> bytes:
+        result = subprocess.run(["git", "-C", str(self.root), *args], capture_output=True, check=True)
+        return result.stdout
+
+    def write(self, path: str, data: bytes) -> None:
+        target = self.root / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(data)
+
+    def write_json(self, path: str, value: object) -> None:
+        self.write(path, (json.dumps(value, ensure_ascii=False, indent=2) + "\n").encode("utf-8"))
+
+    def commit(self) -> str:
+        self.git("add", "--all")
+        self.git("-c", "commit.gpgsign=false", "commit", "-q", "-m", "Test fixture")
+        return self.git("rev-parse", "HEAD").decode().strip()
+
+    def sources(self, omit_entry: bool = False) -> packet.Sources:
+        return packet.select_sources(packet.GitSource(self.root, self.ref), omit_entry)
+
+    def raw_packet(self, sources: packet.Sources | None = None) -> bytes:
+        sources = sources or self.sources()
+        return packet.serialize(sources, [], sources.files)
+
+    def test_roundtrip_preserves_unicode_newlines_punctuation_and_all_bytes(self) -> None:
+        raw, result = packet.build_packet(self.root, self.ref)
+        sources, checked = packet.verify_packet(raw, self.root, self.ref)
+        self.assertTrue(result["verified"] and checked["verified"])
+        self.assertGreater(result["glossary_entries"], 0)
+        for path, body in sources.files.items():
+            self.assertEqual(body, self.git("show", f"{self.ref}:{path}"))
+        self.assertIn(b"\r\n", sources.files["AGENTS.md"])
+        self.assertTrue(sources.files["AGENTS.md"].endswith(b"no final newline"))
+        self.assertIn("§1".encode(), sources.files["AGENTS.md"])
+        self.assertEqual(packet.build_packet(self.root, self.ref)[0], raw)
+
+    def test_active_task_all_skills_and_order_are_derived_from_git(self) -> None:
+        sources = self.sources()
+        expected = self.required + [f"docs/workflow/tasks/C268/{name}" for name in ("task.json", "REQUIREMENTS.md", "PLAN.md")]
+        expected += [skill["path"] for skill in self.registry["skills"]]
+        self.assertEqual(list(sources.files), expected)
+        self.assertEqual(sources.metadata["task_selector"], "active_task")
+        self.assertEqual(sources.metadata["skills"], [skill["id"] for skill in self.registry["skills"]])
+        self.assertNotIn("README.md", sources.files)
+        self.assertFalse(any("/C267/" in path for path in sources.files))
+
+    def test_latest_task_is_selected_only_without_active_task(self) -> None:
+        self.current["active_task"] = None
+        self.write_json("docs/workflow/CURRENT.json", self.current)
+        self.ref = self.commit()
+        sources = self.sources()
+        self.assertEqual(sources.metadata["task"], "C267")
+        self.assertEqual(sources.metadata["task_selector"], "latest_task")
+        self.assertTrue(any("/C267/" in path for path in sources.files))
+        self.assertFalse(any("/C268/" in path for path in sources.files))
+
+    def test_omit_entry_records_explicit_same_ref_assertion(self) -> None:
+        raw, _ = packet.build_packet(self.root, self.ref, omit_entry=True)
+        sources, _ = packet.verify_packet(raw, self.root)
+        self.assertNotIn(self.required[0], sources.files)
+        self.assertTrue(sources.metadata["omit_entry"])
+        self.assertEqual(sources.metadata["entry_read_at_ref"], "REF")
+        sources.metadata.update(omit_entry=False, entry_read_at_ref=None)
+        with self.assertRaisesRegex(packet.PacketError, "cohort"):
+            packet.verify_packet(self.raw_packet(sources), self.root)
+
+    def test_uncommitted_working_files_cannot_change_the_selected_bytes(self) -> None:
+        expected = self.sources()
+        self.write("AGENTS.md", b"uncommitted different instructions")
+        self.write(packet.REGISTRY, b"not JSON")
+        self.write("docs/workflow/CURRENT.json", b"not JSON")
+        raw, _ = packet.build_packet(self.root, self.ref)
+        decoded, _ = packet.verify_packet(raw, self.root)
+        self.assertEqual(decoded.files, expected.files)
+
+    def test_alias_collision_fails_and_cli_prescribes_direct_reads_without_output(self) -> None:
+        self.write("AGENTS.md", b"A reserved alias appears literally: " + "§000".encode())
+        self.ref = self.commit()
+        with self.assertRaisesRegex(packet.PacketError, "collision"):
+            packet.build_packet(self.root, self.ref)
+        destination = self.root / "failed-packet.txt"
+        errors = io.StringIO()
+        with contextlib.redirect_stderr(errors):
+            code = packet.main(["--root", str(self.root), "--ref", self.ref, "--output", str(destination)])
+        self.assertEqual(code, 2)
+        self.assertIn("direct reads", errors.getvalue())
+        self.assertFalse(destination.exists())
+
+    def test_unsafe_paths_and_readme_variants_are_rejected(self) -> None:
+        for path in ("/absolute.md", "../escape.md", "a/../b.md", "./a.md", "a//b.md", "a\\b.md",
+                     "a:content", "a\nb.md", "a\x00b.md", "a*[x].md", "README.md", "docs/readme-notes.txt"):
+            with self.subTest(path=path), self.assertRaises(packet.PacketError):
+                packet.safe_path(path)
+        self.assertEqual(packet.safe_path("notes/π.md"), "notes/π.md")
+        self.registry["required_reads"].append("../outside.md")
+        self.write_json(packet.REGISTRY, self.registry)
+        self.ref = self.commit()
+        with self.assertRaisesRegex(packet.PacketError, "unsafe"):
+            self.sources()
+
+    def test_readme_in_required_reads_is_a_failure_not_a_silent_skip(self) -> None:
+        self.registry["required_reads"].append("README.md")
+        self.write_json(packet.REGISTRY, self.registry)
+        self.ref = self.commit()
+        with self.assertRaisesRegex(packet.PacketError, "README"):
+            self.sources()
+
+    def test_missing_required_git_file_is_rejected(self) -> None:
+        self.registry["required_reads"].append("MISSING.md")
+        self.write_json(packet.REGISTRY, self.registry)
+        self.ref = self.commit()
+        with self.assertRaisesRegex(packet.PacketError, "missing Git files"):
+            self.sources()
+
+    def test_missing_task_plan_is_rejected(self) -> None:
+        (self.root / "docs/workflow/tasks/C268/PLAN.md").unlink()
+        self.ref = self.commit()
+        with self.assertRaisesRegex(packet.PacketError, "missing Git files"):
+            self.sources()
+
+    def test_missing_skill_is_rejected(self) -> None:
+        (self.root / self.registry["skills"][0]["path"]).unlink()
+        self.ref = self.commit()
+        with self.assertRaisesRegex(packet.PacketError, "missing Git files"):
+            self.sources()
+
+    def test_symlink_source_is_rejected(self) -> None:
+        (self.root / "AGENTS.md").unlink()
+        os.symlink("GOAL.md", self.root / "AGENTS.md")
+        self.ref = self.commit()
+        with self.assertRaisesRegex(packet.PacketError, "regular Git file"):
+            self.sources()
+
+    def test_unknown_alias_recursive_definition_duplicate_path_and_trailing_data(self) -> None:
+        sources = self.sources()
+        unknown = dict(sources.files, **{"AGENTS.md": "§999".encode()})
+        bad_packets = [packet.serialize(sources, [], unknown),
+                       packet.serialize(sources, ["§000"], sources.files),
+                       self.raw_packet().replace(b"\nROLE.md\n", b"\nGOAL.md\n", 1),
+                       self.raw_packet() + b"trailing bytes", self.raw_packet()[:-1]]
+        for raw in bad_packets:
+            with self.subTest(tail=raw[-30:]), self.assertRaises(packet.PacketError):
+                packet.decode_packet(raw)
+
+    def test_wrong_byte_lengths_and_truncated_values_fail(self) -> None:
+        raw = self.raw_packet()
+        marker = raw.index(b"META ")
+        end = raw.index(b"\n", marker)
+        size = int(raw[marker + 5:end])
+        wrong = raw[:marker] + f"META {size + 1}".encode() + raw[end:]
+        for damaged in (wrong, raw[:raw.index(b"FILES ") + 9], raw[:-12]):
+            with self.subTest(size=len(damaged)), self.assertRaises(packet.PacketError):
+                packet.decode_packet(damaged)
+
+    def test_same_length_source_tamper_is_detected_against_git(self) -> None:
+        sources = self.sources()
+        encoded = sources.files.copy()
+        encoded["AGENTS.md"] = b"!" + encoded["AGENTS.md"][1:]
+        raw = packet.serialize(sources, [], encoded)
+        packet.decode_packet(raw)  # Framing is valid; immutable source comparison must reject it.
+        with self.assertRaisesRegex(packet.PacketError, "source bytes differ from Git"):
+            packet.verify_packet(raw, self.root)
+
+    def test_omitted_added_and_reordered_cohorts_are_rejected(self) -> None:
+        sources = self.sources()
+        variants = [dict(list(sources.files.items())[1:]), dict(reversed(list(sources.files.items()))),
+                    dict(sources.files, **{"EXTRA.md": b"extra"})]
+        for files in variants:
+            altered = packet.Sources(sources.ref, sources.metadata.copy(), files)
+            with self.subTest(paths=list(files)), self.assertRaisesRegex(packet.PacketError, "cohort"):
+                packet.verify_packet(self.raw_packet(altered), self.root)
+
+    def test_wrong_task_skills_entry_assertion_and_expected_revision_are_rejected(self) -> None:
+        sources = self.sources()
+        for changes in ({"task": "C267"}, {"skills": ["ontokin-session"]},
+                        {"task_selector": "latest_task"}, {"entry_read_at_ref": "another revision"},
+                        {"entrypoint": "GOAL.md"}, {"task_selector": {"malformed": True}}):
+            changed = packet.Sources(sources.ref, dict(sources.metadata, **changes), sources.files)
+            with self.subTest(changes=changes), self.assertRaises(packet.PacketError):
+                packet.verify_packet(self.raw_packet(changed), self.root)
+        with self.assertRaisesRegex(packet.PacketError, "expected commit"):
+            packet.verify_packet(self.raw_packet(), self.root, "0" * 40)
+
+    def test_expansion_length_is_checked_before_materializing_large_values(self) -> None:
+        sources = self.sources()
+        encoded = dict(sources.files, **{"AGENTS.md": ("§000" * 1000).encode()})
+        raw = packet.serialize(sources, ["x" * 10_000], encoded)
+        with self.assertRaisesRegex(packet.PacketError, "expanded byte length"):
+            packet.decode_packet(raw)
+
+    def test_invalid_utf8_and_noncommit_or_abbreviated_revisions_fail(self) -> None:
+        for ref in ("HEAD", self.ref[:12], "0" * 40,
+                    self.git("rev-parse", f"{self.ref}:AGENTS.md").decode().strip()):
+            with self.subTest(ref=ref), self.assertRaises(packet.PacketError):
+                packet.build_packet(self.root, ref)
+        self.write("AGENTS.md", b"invalid UTF-8: \xff")
+        self.ref = self.commit()
+        with self.assertRaisesRegex(packet.PacketError, "UTF-8"):
+            self.sources()
+
+    def test_incomplete_git_batch_is_rejected(self) -> None:
+        store = packet.GitSource(self.root, self.ref)
+        real_run = store.run
+        def truncated(*args: str, **kwargs: object) -> bytes:
+            result = real_run(*args, **kwargs)
+            return result[:-1] if args == ("cat-file", "--batch") else result
+        with mock.patch.object(store, "run", side_effect=truncated):
+            with self.assertRaisesRegex(packet.PacketError, "incomplete Git object body"):
+                store.read_many(["AGENTS.md"])
+
+    def test_deep_json_and_duplicate_keys_fail_as_packet_errors(self) -> None:
+        for value in (b'{"x":1,"x":2}', b'{"x":' + b"[" * 2000 + b"0" + b"]" * 2000 + b"}",
+                      b'{"x":' + b"9" * 5000 + b"}"):
+            with self.subTest(length=len(value)), self.assertRaises(packet.PacketError):
+                packet.json_object(value, "test metadata")
+
+    def test_cli_verify_expand_and_exclusive_output(self) -> None:
+        tool = Path(packet.__file__).resolve()
+        destination = self.root / "packet.txt"
+        command = [sys.executable, "-B", str(tool), "--root", str(self.root)]
+        subprocess.run(command + ["--ref", self.ref, "--output", str(destination)], capture_output=True, check=True)
+        checked = subprocess.run(command + ["--verify", str(destination), "--ref", self.ref], capture_output=True, check=True)
+        self.assertTrue(json.loads(checked.stdout)["verified"])
+        expanded = subprocess.run(command + ["--expand", str(destination)], capture_output=True, check=True)
+        sources, definitions = packet.decode_packet(expanded.stdout)
+        self.assertEqual(definitions, 0)
+        self.assertEqual(sources.files, self.sources().files)
+        original = destination.read_bytes()
+        failure = subprocess.run(command + ["--ref", self.ref, "--output", str(destination)], capture_output=True)
+        self.assertEqual(failure.returncode, 2)
+        self.assertEqual(destination.read_bytes(), original)
+        self.assertIn(b"direct reads", failure.stderr)
+
+    def test_packet_input_rejects_devices_fifos_and_oversized_files(self) -> None:
+        fifo = self.root / "packet-fifo"
+        os.mkfifo(fifo)
+        for path in (Path(os.devnull), fifo):
+            with self.subTest(path=str(path)), self.assertRaisesRegex(packet.PacketError, "regular file"):
+                packet.read_packet(path)
+        large = self.root / "large-packet"
+        large.write_bytes(b"x" * 101)
+        with mock.patch.object(packet, "MAX_PACKET", 100):
+            with self.assertRaisesRegex(packet.PacketError, "byte limit"):
+                packet.read_packet(large)
+
+
+if __name__ == "__main__":
+    unittest.main()
