@@ -36,10 +36,10 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: held for the owner's startup-instruction compression request; C268 work remains separate and untouched.
-Owner: `startup-compact-9c7a0c0e0469`. Acquired at UTC: 2026-11-19T15:20:05.261617+00:00. Expires at UTC: 2026-11-19T16:17:22.743233+00:00.
-Renewed at UTC: 2026-11-19T15:47:22.743233+00:00 after independent review of 156 obligation groups, 344 preservation checks and 23 experimental-reader controls; packet deployment deferred after measured low savings.
-Expected main at acquisition: `7ff41e071fb694dadf1ba256b13168e1a4083926`. Reserved paths: STATUS.md, docs/workflow/tasks/STARTUP-COMPACT-20261119/, docs/engineering/startup-compact-20261119/ and the explicitly assigned startup instruction files. CURRENT and C268 task/evidence remain unchanged. Prior C268 lease expired at 2026-11-19T14:58:39.000Z; its published branch and saved recovery remain available. Only a successful expected-head update and readback establishes this lease.
+State: held for confirmed delivery receipt and closure of the owner's startup-instruction compression request; C268 remains separate and untouched.
+Owner: `startup-compact-9c7a0c0e0469`. Acquired at UTC: 2026-11-19T16:19:47.897029+00:00. Expires at UTC: 2026-11-19T16:49:47.897029+00:00.
+Checkpoint: PR267 merged and resulting main verified; final handoff independently verified and saved with both prompts. Previous lease expired at 2026-11-19T16:17:22.743233+00:00; reconciled unchanged live main, retained C268 branch, merged PR, deleted compression branch and no outstanding unknown writes before reacquisition.
+Expected main at acquisition: `46485a6019648045d5a41d8a9254c7e84eab3128`. Reserved paths: STATUS.md, docs/workflow/tasks/STARTUP-COMPACT-20261119/ and docs/engineering/startup-compact-20261119/. CURRENT and C268 task/evidence remain unchanged. Only a successful expected-head update and readback establishes this lease.
 
 ## Historical status
 
