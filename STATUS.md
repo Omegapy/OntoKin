@@ -4,11 +4,11 @@
 
 ## Current workflow and next action
 
-C267 integrated through [PR261](https://github.com/Omegapy/OntoKin/pull/261), merge `7174e6796b38bac3fa83e6412e0944512d137434`, after exact independent review. Under unchanged C260, it compares finite source/GLB hinge fields, complete joint sets and ordered endpoints. Automatic branch deletion and retained ancestry were verified. Fresh main checks passed **11 groups, 247 methods, 14 corpus bindings**, CPython **3.12.14 / Linux**. **Saved delivery remains pending**; issue260 and parent task stay open. [Integration checkpoint](docs/engineering/localized-repair-c267/INTEGRATION.json).
+C267 is complete within its finite declaration-comparison scope. Implementation integrated through [PR261](https://github.com/Omegapy/OntoKin/pull/261), merge `7174e6796b38bac3fa83e6412e0944512d137434`; branch deletion and retained ancestry are verified. Recorded integration checks passed **11 groups, 247 methods, 14 corpus bindings**, CPython **3.12.14 / Linux**. This delivery-only phase independently verified exact evidence eligibility, passed fresh documentation/workflow checks, and saved the verified handoff. See the [delivery receipt](docs/engineering/localized-repair-c267/DELIVERY.json), [independent audit](docs/engineering/localized-repair-c267/evidence/delivery-20261118/EVIDENCE-REVIEW.md) and [integration checkpoint](docs/engineering/localized-repair-c267/INTEGRATION.json).
 
 C266 is complete: [PR259](https://github.com/Omegapy/OntoKin/pull/259), merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`, **10 passing main groups, 222 methods, 14 bindings**; branch deleted, [saved delivery](docs/engineering/localized-repair-c266/DELIVERY.json) unchanged. C265/C264/C263 are complete within recorded scopes.
 
-Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json) and [HANDOFF](docs/workflow/HANDOFF.md). **Stop after C267's verified saved handoff.** Historical endpoint admission is separately queued; do not start it.
+Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json) and [HANDOFF](docs/workflow/HANDOFF.md). **C267 delivery is complete; stop this phase.** Historical endpoint admission remains separately queued for a new continuation.
 
 ## Product state and remaining gates
 
@@ -34,12 +34,9 @@ C264's recorded starting inventory had only main/no open PRs; after PR255, `work
 
 ## Main integration lease
 
-State: held for C267 saved-delivery finalization only.
-Owner: `c267-delivery-24545fba506f`.
-Acquired: 2026-11-19T04:13:41.652787+00:00. Expires: 2026-11-19T04:43:41.652787+00:00.
-Starting main: `2cb08b08077806fd21e7eeaac373efc3e4501720`.
-Reserved paths: `STATUS.md`, `docs/workflow/CURRENT.json`, `docs/workflow/tasks/C267/`, and `docs/engineering/localized-repair-c267/evidence/delivery-20261118/` plus the new C267 delivery receipt.
-The implementation is already merged through PR261 and its branch is deleted. This lease covers verified delivery records and closure; it authorizes no new product implementation. Early recovery is confirmed saved; [phase record](docs/engineering/localized-repair-c267/evidence/delivery-20261118/PHASE.json) and [early receipt](docs/engineering/localized-repair-c267/evidence/delivery-20261118/EARLY-RECOVERY-RECEIPT.json) retain recovery.
+State: released after verified C267 saved delivery and external receipt publication.
+Owner: none. Reserved paths: none.
+Completed scope: C267 R07/P05 delivery-only recovery. The implementation branch was already merged and deleted; no new branch was created. The [delivery receipt](docs/engineering/localized-repair-c267/DELIVERY.json), [coordination history](docs/engineering/localized-repair-c267/evidence/delivery-20261118/COORDINATION.json) and [task record](docs/workflow/tasks/C267/task.json) retain the exact identities, reviews and checks. Reconcile live state before acquiring any new lease.
 
 ## Historical status
 

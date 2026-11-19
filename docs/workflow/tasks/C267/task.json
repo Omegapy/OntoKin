@@ -3,7 +3,7 @@
   "id": "C267",
   "title": "Finite source and GLB hinge declaration comparison",
   "intent": "Verify complete declared hinge field/set/ordered-endpoint agreement after source/program/object binding",
-  "status": "in_progress",
+  "status": "done",
   "owner": "c267-delivery-24545fba506f",
   "branch": "work/c267-hinge-comparison",
   "base_sha": "47681b1e4c442a580910dba1fc5a823dc86ee6b0",
@@ -73,8 +73,12 @@
       "id": "R07",
       "description": "Saved handoff",
       "acceptance": "Freeze and verify required online browser-session ZIP and fresh extraction, save in the existing OntoKin folder, confirm identity, publish external delivery receipt and close the task. Preserve C262 unchanged.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c267/DELIVERY.json",
+        "docs/engineering/localized-repair-c267/evidence/delivery-20261118/PACKAGE-VERIFICATION.json",
+        "docs/engineering/localized-repair-c267/evidence/delivery-20261118/FINAL-PACKAGE-REVIEW.json"
+      ]
     }
   ],
   "plan": [
@@ -152,7 +156,7 @@
         "R07",
         "R06"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c267/DELIVERY.json"
       ],
@@ -215,25 +219,54 @@
       "evidence": [
         "docs/engineering/localized-repair-c267/evidence/delivery-20261118/fresh-main/CHECKS.json"
       ]
+    },
+    {
+      "name": "final saved browser-session handoff",
+      "command": "Independent archive/source/manifest verification and fresh extraction; inspect ordered successful save results",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c267/evidence/delivery-20261118/PACKAGE-VERIFICATION.json",
+        "docs/engineering/localized-repair-c267/evidence/delivery-20261118/FINAL-PACKAGE-REVIEW.json",
+        "docs/engineering/localized-repair-c267/DELIVERY.json"
+      ]
+    },
+    {
+      "name": "packaged actual-main metadata",
+      "command": "python3 -B tools/chat_workflow.py check; python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py; git diff --check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c267/evidence/delivery-20261118/packaged-main/CHECKS.json"
+      ]
     }
   ],
-  "next_action": "Freeze and verify final browser-session handoff, confirm save, publish external receipt and close C267; then stop",
+  "next_action": "C267 is complete within its bounded scope. Stop this session. A fresh continuation may select historical endpoint admission under C260; recovery of this task first reconciles the saved receipt and issue state.",
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "pending",
+    "status": "saved",
     "folder": "OntoKin",
-    "receipt": null
+    "receipt": "docs/engineering/localized-repair-c267/DELIVERY.json",
+    "library_file_id": "libfile_fde3_f-ce29df678ba4819192f5b177c3da90e2_2ab2a24d43748191957f9bcc356b59de",
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-ce29df678ba4819192f5b177c3da90e2_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "sha256": "5d00ae5d44624f37806bff301c647f8d4486309252f575c7b762a6724f4aaaae",
+    "bytes": 250000,
+    "version": 0
   },
   "completion": {
     "branch_disposition": "deleted",
     "evidence": [
-      "docs/engineering/localized-repair-c267/INTEGRATION.json"
+      "docs/engineering/localized-repair-c267/INTEGRATION.json",
+      "docs/engineering/localized-repair-c267/DELIVERY.json",
+      "docs/engineering/localized-repair-c267/evidence/delivery-20261118/FINAL-PACKAGE-REVIEW.json",
+      "docs/engineering/localized-repair-c267/evidence/delivery-20261118/packaged-main/CHECKS.json"
     ],
     "implementation_commit": "2d47c608a953dc0d2ffb09b67e0ce6f720b205eb",
     "merge_commit": "7174e6796b38bac3fa83e6412e0944512d137434",
     "pull_request": "https://github.com/Omegapy/OntoKin/pull/261",
-    "completed_branch_head": "4fc1ff16f68f0c534d987eb49bbc4e7ef5044dd2"
+    "completed_branch_head": "4fc1ff16f68f0c534d987eb49bbc4e7ef5044dd2",
+    "completed_at_utc": "2026-11-19T04:30:21.676815+00:00"
   },
   "session_phase": {
     "id": "C267-delivery-20261118",
@@ -254,8 +287,9 @@
     "early_save_confirmed": true,
     "early_receipt": "docs/engineering/localized-repair-c267/evidence/delivery-20261118/EARLY-RECOVERY-RECEIPT.json",
     "branch_state": "Existing implementation branch already merged/deleted; receipt-only main checkpoints under a fresh conditional lease",
-    "parent_task_status": "in_progress",
-    "acceptance_checkpoint_progress": "Existing R01-R06 evidence independently reverified and fresh metadata checks passed; final ZIP verification/save/receipt/closure remain"
+    "parent_task_status": "done",
+    "acceptance_checkpoint_progress": "R01-R06 identity audit, fresh metadata checks, exact package review, fresh extraction and final save passed; external receipt published with this task state",
+    "delivered_at_utc": "2026-11-19T04:29:04.869187+00:00"
   },
   "session_phase_history": [
     {
