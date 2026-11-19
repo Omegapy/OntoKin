@@ -1,0 +1,29 @@
+{
+  "schema": "ontokin.c268.coordination/1",
+  "director": "c268-root-c7dae94da130",
+  "lease_acquisition_commit": "5de702710bf913f3c92c24451e9b8161ed431035",
+  "lease_expected_parent": "b2ca38875bd7b43b85011bbc671ee9fee1682441",
+  "lease_verified_readback": true,
+  "workers": [
+    {
+      "identity": "/root/state_audit",
+      "role": "independent startup auditor and later exact-candidate reviewer",
+      "writes": "assigned audit/review files only"
+    },
+    {
+      "identity": "/root/reader_impl",
+      "role": "implementer",
+      "writes": "endpoint_reader.py, IMPLEMENTATION.md, evidence/implementation only"
+    },
+    {
+      "identity": "/root/reader_controls",
+      "role": "independent control author",
+      "writes": "test_endpoint_reader.py, optional fixtures, CONTROL-COVERAGE.md, evidence/control-author only"
+    }
+  ],
+  "context": "fresh fork_turns=none; configuration inherited; no overrides requested",
+  "no_nested_workers": true,
+  "shared_index_owner": "Director only",
+  "early_save_confirmed": true,
+  "observed_at_utc": "2026-11-19T14:15:19.033825+00:00"
+}
