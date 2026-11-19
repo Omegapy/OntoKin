@@ -101,15 +101,13 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-State: active C267 finalization; integration and main checks verified, delivery pending.
-Owner: `c267-final-e1562410a291`. Scope: [issue260](https://github.com/Omegapy/OntoKin/issues/260), [PR261](https://github.com/Omegapy/OntoKin/pull/261).
-Observed parent: `007d4fdbf0119e75eff555c0681e28bf3a86bf75`; acquired by expected-head conditional update after live reconciliation.
-Expires at: 2026-11-19T03:35:08.851367+00:00.
-Reserved shared paths: STATUS.md integration coordination, CURRENT.json, C267 task and integration/delivery evidence; candidate branch `work/c267-hinge-comparison`.
-This session resumes only finalization: reconcile the reviewed candidate, conditional integration, fresh affected main checks, safe branch disposition and verified saved handoff/receipt. No product expansion.
-Reviewed branch head observed: `ff1659a508d30a60fa6ca2d9214779dd7bcf1262`. Its saved recovery reports no unknown writes or active workers; older external ephemeral work cannot be exhaustively inspected. The prior lease is not restored.
-Early recovery is confirmed saved as `libfile_fde3_f-f4a20153115c8191bab73cd8f44ac6b4_2ab2a24d43748191957f9bcc356b59de`, SHA-256 `5a6874b1b09a2e17d74a1494d35adbc7012c2b02a51e1e405e5acaccae6d9508`.
-Newer prompt-repair instructions and delivery remain authoritative and retained.
+State: active startup-reading compression; C267 delivery remains pending separately.
+Owner: `startup-reading-root-e2dfdb529a6f`. Scope: [PR263](https://github.com/Omegapy/OntoKin/pull/263), documentation compression only.
+Observed parent: `ee509d5d7ce3a4c0fb61cdb9e2668575e3af370d`; acquisition uses an expected-head conditional update after live reconciliation.
+Expires at: 2026-11-19T04:07:42.000Z.
+Reserved shared paths: STATUS integration coordination and the ten startup instruction documents. CURRENT and C267 task/evidence are unchanged by this scope.
+Reconciled 2026-11-19 03:37:42 UTC: main, branch inventory, open PRs and C267 integration/task evidence. PR261 is merged and its branch absent; only main and this scope's branch remain. The prior C267 lease expired at 2026-11-19T03:35:08.851367+00:00; expiry alone is not proof of worker termination. No unresolved writes or recoverable branch were observed; external ephemeral work cannot be exhaustively inspected.
+Preserve C267's verified integration and outstanding delivery. Exact prior coordination is archived in `docs/engineering/startup-reading-20261118/before/STATUS.md.txt`; reconciliation evidence is in this scope's task record.
 
 ## Historical status
 
