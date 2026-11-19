@@ -98,10 +98,15 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-State: released after verified documentation delivery.
-Last owner: `browser-length-root-e2dfdb529a6f`. Scope: [PR262](https://github.com/Omegapy/OntoKin/pull/262).
-Prompt repair merged at `992a7afee6e1c01a983ccc69bdbbf1dbf35d4006`; actual-main checks passed, its branch is deleted and [saved delivery](docs/workflow/tasks/CHAT-LENGTH-20261118/DELIVERY.json) is confirmed.
-No integration reservation remains from this scope. C267, its existing branch/PR, CURRENT and unfinished product obligations remain unchanged. A subsequent integrator must reconcile current main and any surviving C267 work, then acquire a fresh conditional lease; the previous C267 lease is not restored.
+State: active C267 finalization.
+Owner: `c267-final-e1562410a291`. Scope: [issue260](https://github.com/Omegapy/OntoKin/issues/260), [PR261](https://github.com/Omegapy/OntoKin/pull/261).
+Observed parent: `007d4fdbf0119e75eff555c0681e28bf3a86bf75`; acquired by expected-head conditional update after live reconciliation.
+Expires at: 2026-11-19T03:24:19.340Z.
+Reserved shared paths: STATUS.md integration coordination, CURRENT.json, C267 task and integration/delivery evidence; candidate branch `work/c267-hinge-comparison`.
+This session resumes only finalization: reconcile the reviewed candidate, conditional integration, fresh affected main checks, safe branch disposition and verified saved handoff/receipt. No product expansion.
+Reviewed branch head observed: `ff1659a508d30a60fa6ca2d9214779dd7bcf1262`. Its saved recovery reports no unknown writes or active workers; older external ephemeral work cannot be exhaustively inspected. The prior lease is not restored.
+Early recovery is confirmed saved as `libfile_fde3_f-f4a20153115c8191bab73cd8f44ac6b4_2ab2a24d43748191957f9bcc356b59de`, SHA-256 `5a6874b1b09a2e17d74a1494d35adbc7012c2b02a51e1e405e5acaccae6d9508`.
+Newer prompt-repair instructions and delivery remain authoritative and retained.
 
 ## Historical status
 
