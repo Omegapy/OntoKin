@@ -30,3 +30,7 @@ EARLY-RECOVERY.json records a confirmed initial ZIP. The final archive and both 
 ## Verified main integration
 
 PR262 merged at `992a7afee6e1c01a983ccc69bdbbf1dbf35d4006`. The eight independently reviewed document hashes match actual main. Fresh workflow and documentation preservation checks passed on that revision, with 29 preserved sources and no failures. The merged work branch is absent from the complete branch inventory, and its exact head is retained as a merge parent. C267 remains open on its unchanged branch. Final saved delivery and lease release remain pending.
+
+## Confirmed saved delivery
+
+The final verified ZIP and both standalone replacement prompts are saved. Exact identities, sizes, hashes and source revision are in DELIVERY.json; PACKAGE-VERIFICATION.json records 48 members, 36 exact repository snapshots, safe paths, complete inventory and fresh-extraction verification. The ZIP deliberately freezes before this external receipt. The prompt-repair task is complete; C267 development remains separate.

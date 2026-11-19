@@ -98,13 +98,10 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-State: active documentation integration.
-Owner: `browser-length-root-e2dfdb529a6f`. Scope: [PR262](https://github.com/Omegapy/OntoKin/pull/262).
-Observed parent: `6122bd272c3f5b960ed5c1d6434ebf5f7f9b4020`. Acquired by expected-head conditional update after live reconciliation.
-Expires at: 2026-11-19T02:55:25.000Z.
-Reserved shared paths: STATUS.md integration coordination, the PR262 workflow/prompt files and CHAT-LENGTH-20261118 task evidence.
-The prior C267 lease expired at 2026-11-19T02:20:13.455553+00:00. Its branch head remains `ff1659a508d30a60fa6ca2d9214779dd7bcf1262` and PR261 is open; expiry is not treated as proof that its worker stopped.
-C267 product work, CURRENT, task evidence and unpublished work remain outside this scope. This lease covers the independent browser-prompt repair only.
+State: released after verified documentation delivery.
+Last owner: `browser-length-root-e2dfdb529a6f`. Scope: [PR262](https://github.com/Omegapy/OntoKin/pull/262).
+Prompt repair merged at `992a7afee6e1c01a983ccc69bdbbf1dbf35d4006`; actual-main checks passed, its branch is deleted and [saved delivery](docs/workflow/tasks/CHAT-LENGTH-20261118/DELIVERY.json) is confirmed.
+No integration reservation remains from this scope. C267, its existing branch/PR, CURRENT and unfinished product obligations remain unchanged. A subsequent integrator must reconcile current main and any surviving C267 work, then acquire a fresh conditional lease; the previous C267 lease is not restored.
 
 ## Historical status
 
