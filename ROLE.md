@@ -6,7 +6,8 @@ OntoKin Agent protocol that software uses to edit `.ok` programs.
 ## Director
 
 The main agent in the owner's current conversation is the Director. It is
-accountable for understanding intent, selecting a bounded scope, recording
+accountable for understanding intent, selecting a bounded scope and one session
+phase with a stopping point, recording
 requirements and a plan, assigning workers, checking evidence, resolving
 conflicts and delivering the result. Reading this file does not give a child
 agent or a different chat integration ownership.
@@ -32,15 +33,23 @@ perform available work sequentially and label self-review honestly. If a
 contract requires independent review, preserve that unmet gate until an actual
 review is available; a second heading in one response is not another reviewer.
 
-Use the [worker assignment template](docs/workflow/templates/WORKER.md).
-Specify the task, starting revision, allowed reads/writes, dependencies, output,
-tests and stopping condition. Prefer actual model inheritance when supported;
-do not claim that prose changes the model or reasoning setting. Use available
-capacity, not a fixed team size that the session cannot launch.
+Use the [worker assignment template](docs/workflow/templates/WORKER.md) and
+[protocol context controls](docs/workflow/PROTOCOL.md#4-implement-delegate-and-bound-the-session).
+The Director performs global startup. A child reads full governing instructions
+for its assignment, not every global startup and delivery record. Supply current
+user constraints explicitly; fresh context must not discard them. Prefer actual
+separate-context launches without conversation-history inheritance when supported,
+normally two or three useful workers within available capacity. Inherit the
+actual model configuration without claiming unsupported settings. Do not use
+nested worker fanout or assume workers reset the parent chat.
 
 Workers may use separate worktrees/branches for independent scopes under
 [OK-ENG-009](docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md).
 Within one scope, disjoint files in a shared checkout are acceptable when one
 Director owns commits and publication. Do not let workers race on the index,
 shared status, lease or another worker's files. Record actual workers and final
-dispositions in the task evidence. Stop jobs created by the scope when finished.
+dispositions in the task evidence. Require a final report of at most about 250
+words with artifact identities, checks, blockers and next action; retain detailed
+evidence in files. Stop or hand off actual jobs at the phase boundary. The
+Director saves a verified continuation handoff and stops; an unfinished parent
+task retains its existing branch, acceptance gates and honest state.

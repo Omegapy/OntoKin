@@ -1,53 +1,81 @@
-# Prompt 2: recover after an interrupted conversation
+# Prompt 2: recover one unfinished phase
 
 Repository: https://github.com/Omegapy/OntoKin
 
-Last successfully saved handoff: [PASTE LAST COMPLETE HANDOFF ZIP LINK]
+Last successfully saved handoff: [PASTE LINK]
 
-Newer recovery file or partial handoff, if available: [PASTE LINK OR WRITE NONE]
+Newer recovery file or partial handoff: [PASTE LINK, OR WRITE NONE]
 
 Interrupted task or last known event: [DESCRIBE BRIEFLY, OR WRITE UNKNOWN]
 
-Recover the interrupted OntoKin work and complete only its remaining authorized scope. Then create, verify and save the next handoff ZIP in my existing `OntoKin` folder in ChatGPT Library. Saved delivery is required. Stop afterward; do not start another milestone.
+Recover only the interrupted authorized scope. Resume its **first unmet gate
+within one predeclared phase**, save a verified handoff ZIP in my existing
+`OntoKin` Library folder and stop. Do not start another milestone. A verified
+partial handoff may finish this session while the parent task remains open.
+Continue routine authorized actions without repeated permission requests.
 
-## 1. Recover the authoritative state
+## Reconcile before retrying
 
-Open the last successful ZIP and read `README-START-HERE.md`, its checkpoint, recovery status and next-task instructions. Inspect any newer recovery file or partial handoff. Missing files or timestamps alone do not prove which operations completed.
+Read the ZIP's `README-START-HERE.md`, checkpoint, recovery status and next
+action, plus newer recovery files. Observe current main's full SHA through
+GitHub. Read `CHATGPT-START-HERE.md`, all required applicable instructions,
+the interrupted task, requirements, plan and complete selected skills at that
+revision. Read each once, without duplicate archived/remote copies. Missing or
+truncated instructions remain a gap.
 
-Read https://github.com/Omegapy/OntoKin/blob/main/CHATGPT-START-HERE.md through the available GitHub connection. Observe current main's full commit SHA and explicitly read its required files at that revision: AGENTS, GOAL, STATUS, ROLE, registry, CURRENT and PROTOCOL. Read the interrupted task's requirements, plan, relevant complete skills and applicable nested instructions. Do not assume automatic browser discovery or access to the old conversation.
+Reconcile main, branches, PRs, issues, ownership, checks, receipts and local
+work. Record actual capabilities. Saved observations and timestamps do not
+prove current state or completed operations.
 
-Reconcile live branches, PRs, scope issues, integration ownership, checks, saved delivery records and surviving local work. Record actual tool capabilities. Preserve historical evidence, while using current GitHub observations to establish repository state.
+Before retrying an unknown write or process, inspect its actual destination
+or state. Retain operation, target and intended parent/tree/commit identities.
+A timeout or expired lease proves neither failure nor a stopped worker.
+Preserve unique unpublished bytes with base revisions; state missing work and
+consequences without inventing results.
 
-## 2. Determine what remains before retrying
+## Recover one phase
 
-Identify completed implementation, unresolved defects, verification, review, integration, cleanup and delivery separately. Resume the existing task and branch. Do not duplicate its issue, PR or work merely because this is a new chat.
+Resume the existing task and branch. Keep one phase table separating
+implementation, review, integration, main checks, branch disposition and
+delivery, with exact evidence. Select the first unmet gate and declare its
+acceptance checkpoint and stopping point under `docs/workflow/PROTOCOL.md`.
+Do not replay completed work or duplicate its PR.
 
-For every uncertain commit, push, merge, deletion, upload or long-running process, inspect the actual destination or process before retrying. A timeout is not proof of failure or that another worker stopped. Retain intended parent, tree, commit, target and operation identities when available. Reconcile concurrent changes without overwriting them or bypassing ownership.
+If implementation is integrated, finish only outstanding verification, cleanup
+or delivery. If every obligation is already complete, return the confirmed
+existing handoff and stop. Otherwise create, verify and confirm an early
+recovery ZIP under `docs/workflow/HANDOFF.md` before substantial or long work.
+Refresh durable checkpoints at phase changes and before long operations;
+include actual unique files or recoverable patches, not temporary paths alone.
 
-Inspect partial files and compare them with published versions before replacing anything. Preserve unique unpublished bytes through exact files, patches or commits, with their base revisions. If earlier work cannot be recovered, state exactly what is missing and the consequence; do not invent its contents or results.
+## Delegate and check
 
-If implementation is already integrated and only handoff delivery remains, finish verification and delivery. Do not implement the next queued task. If all interrupted obligations are already complete, verify that state and provide the confirmed handoff instead of fabricating more work.
+Coordinate normally two or three useful workers within actual capacity.
+Prefer fresh context without inherited history (`fork_turns="none"` when
+supported). Supply applicable current user and repository instructions, exact
+base/candidate, ownership, checks and stopping condition. Inherit actual model
+configuration without unsupported claims. No nested fanout. Require at most
+about 250 words: artifact identities, checks, blockers and next action; inspect
+detailed evidence saved in files. Otherwise work sequentially and label self-review.
 
-## 3. Resume with durable checkpoints
+Use selected tool fields and bounded excerpts; retain failures without dumping
+logs, trees, tool registries or repeated wrappers. Reuse evidence only with verified
+exact relevant inputs and environment. Run required checks, obtain required
+independent review and preserve historical evidence and rules.
 
-Update the existing requirements and plan to show verified progress and the exact remaining actions. Publish an early recovery checkpoint before long work. Refresh it after meaningful implementation, verification and integration stages, and save a concise recovery file in the same Library folder when available.
+## Preserve the result and stop
 
-Do not depend on automatic compaction, a remaining-context counter, crash detection or advance warning. Keep essential state outside this chat. Use available subagents for independent work with clear ownership; distinguish self-review when separate review is unavailable. Continue authorized work without repeated permission requests.
+Stop at the declared checkpoint or first unplanned expansion. Save unfinished
+work honestly; a planned pause is not a blocker or completed parent task.
+Completing implementation/review still ends this phase; select finalization in
+a fresh chat. A declared finalization phase covers only authorized conditional
+integration, live readback, main checks, branch disposition and saved delivery. Preserve active branches; verify completed-branch deletion
+or record its exact `deletion_pending` action.
 
-## 4. Verify and resolve the branch
-
-Run applicable checks on the recovered candidate. Reuse earlier evidence only after establishing unchanged relevant inputs. Record exact revisions, commands, outcomes and limits, retaining failed and not-run checks. Obtain required review of the actual candidate.
-
-Integrate completed reviewed work using the repository's ownership and conditional-update rules, then read back the merge and verify actual main. Preserve unfinished multi-chat branches. Delete a completed branch only after checking integration, retained history, current head and absence of active work. Verify deletion; otherwise record `deletion_pending` and tell me its exact name.
-
-## 5. Save the recovered handoff
-
-Follow https://github.com/Omegapy/OntoKin/blob/main/docs/workflow/HANDOFF.md. Build an online browser-session ZIP with `README-START-HERE.md`, `CHECKPOINT.json`, `HANDOFF.md`, `NEXT-TASK.md`, `RECOVERY-STATUS.md`, `HISTORICAL-DEPENDENCIES.json`, both prompts, frozen workflow/task snapshots, required recovery payloads and `MANIFEST-SHA256.json`.
-
-Identify the recovered scope, actual GitHub revision, all remaining limitations and precise continuation action. Preserve unique work and evidence. Keep C262 unchanged and identify its separate historical/offline role; this session ZIP is not a complete offline source archive.
-
-Verify the exact archive, member hashes and a fresh extraction. Save it with a new unambiguous filename in the existing Library folder and confirm the returned file identity. Reconcile an unknown save before retrying. Record confirmed delivery in GitHub without recursively rebuilding the frozen ZIP to include its own later receipt.
-
-## 6. Report and stop
-
-Give the recovered outcome, actual checks, merge/main identity, branch disposition, saved ZIP link and next action. A blocked operation requires a saved incomplete recovery record, not a completion claim. Stop after the interrupted scope and required delivery are resolved.
+Verify the session ZIP's manifest, hashes and fresh extraction. Freeze once,
+confirm the Library save and publish its external receipt; reconcile unknown
+saves before retrying. Keep C262 unchanged and do not rebuild only to insert a
+future receipt. Report actual checks, recovered phase, merge/branch state, saved
+link, limits and first remaining action. Completion requires all parent gates.
+Use a fresh parent chat for the next phase; assume no automatic compaction,
+new-chat creation, length warning or parent reset from subagents.

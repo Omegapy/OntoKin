@@ -33,3 +33,21 @@ Independent author `/root/controls` completed 25 methods and 123 API cases: 35 a
 ## Verification gate complete
 
 Candidate `1f369cb49f95f7df220ff91c78caa090dcbf2fcc` passed all eleven groups, 247 methods and fourteen C253 bindings with stable inputs. Independent review approves exact implementation and controls; seven additional composition probes pass. P01–P03 and R01–R05 are complete. Enter finalization only: P04 integration/main checks/branch disposition, then P05 verified saved handoff and external closure. No new implementation scope is authorized.
+
+## Resumed finalization — November 18, 2026
+
+Director `c267-final-e1562410a291` resumes the existing branch and issue260/PR261. Current main was observed at `007d4fdbf0119e75eff555c0681e28bf3a86bf75`, tree `e0d9a4494e6b6a5f35bce5cd6ac772a453885ece`; candidate was `ff1659a508d30a60fa6ca2d9214779dd7bcf1262`, tree `30944399f57d65a7232e474e91634a7de6e6084a`. The previous implementation and prompt-repair sessions are historical; their completed work is preserved.
+
+The supplied link resolved to the continuation prompt text. The actual latest product C266 ZIP and C267 recovery/control payload were resolved and independently verified. Early tests differ from the reviewed candidate and are retained only as historical bytes. C262 remains unchanged. No required startup instruction gap remains; [read-set](../../../engineering/localized-repair-c267/evidence/finalization/READ-SET.json), [capabilities](../../../engineering/localized-repair-c267/evidence/finalization/CAPABILITIES.json), [recovery audit](../../../engineering/localized-repair-c267/evidence/finalization/RECOVERY-AUDIT.md), [initial failures](../../../engineering/localized-repair-c267/evidence/finalization/STARTUP-FAILURES.json) and [confirmed early save](../../../engineering/localized-repair-c267/evidence/finalization/EARLY-RECOVERY-RECEIPT.json) retain the evidence.
+
+The bounded main lease was conditionally acquired and exact STATUS read back. Branch/PR remained unchanged before resumption. Older external ephemeral files cannot be exhaustively inspected; the supplied C267 recovery reported no unknown writes or active workers. Root alone owns all publication, index, canonical records and lease changes. Workers use fresh contexts, inherited configuration without overrides, disjoint files and no nested fanout.
+
+| Gate | Recorded state at phase declaration | Next action |
+| --- | --- | --- |
+| Implementation and independent review | Complete at reviewed candidate | Verify relevant input and environment equality |
+| Integration | Pending; fresh lease verified | Reconcile current main and conditional PR merge |
+| Actual-main cohort | Pending | Execute eleven groups and preserve all outcomes |
+| Branch disposition | Active | Verify retention and actual deletion or exact pending action |
+| Final delivery | Pending | Freeze, verify, save, external receipt, close, stop |
+
+This is a finalization phase under the current PROTOCOL, not a new implementation milestone. First unplanned expansion ends the phase with a verified partial handoff. Full product, native/visual/model and additional Python compatibility checks remain outside the qualified cohort.

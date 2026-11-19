@@ -100,12 +100,15 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-State: active C267 integration acquisition.
-Owner: `c267-root-ad39e933f0f3`. Scope: [issue260](https://github.com/Omegapy/OntoKin/issues/260).
-Observed parent: `47681b1e4c442a580910dba1fc5a823dc86ee6b0`. Acquired by expected-head conditional update.
-Expires at: 2026-11-19T02:20:13.455553+00:00.
-Reserved shared paths: STATUS.md, docs/workflow/CURRENT.json, C267 task/evidence and selected memory records.
-C266 is complete. C267 implements one finite hinge comparison; historical admission remains separate.
+State: active C267 finalization.
+Owner: `c267-final-e1562410a291`. Scope: [issue260](https://github.com/Omegapy/OntoKin/issues/260), [PR261](https://github.com/Omegapy/OntoKin/pull/261).
+Observed parent: `007d4fdbf0119e75eff555c0681e28bf3a86bf75`; acquired by expected-head conditional update after live reconciliation.
+Expires at: 2026-11-19T03:24:19.340Z.
+Reserved shared paths: STATUS.md integration coordination, CURRENT.json, C267 task and integration/delivery evidence; candidate branch `work/c267-hinge-comparison`.
+This session resumes only finalization: reconcile the reviewed candidate, conditional integration, fresh affected main checks, safe branch disposition and verified saved handoff/receipt. No product expansion.
+Reviewed branch head observed: `ff1659a508d30a60fa6ca2d9214779dd7bcf1262`. Its saved recovery reports no unknown writes or active workers; older external ephemeral work cannot be exhaustively inspected. The prior lease is not restored.
+Early recovery is confirmed saved as `libfile_fde3_f-f4a20153115c8191bab73cd8f44ac6b4_2ab2a24d43748191957f9bcc356b59de`, SHA-256 `5a6874b1b09a2e17d74a1494d35adbc7012c2b02a51e1e405e5acaccae6d9508`.
+Newer prompt-repair instructions and delivery remain authoritative and retained.
 
 ## Historical status
 

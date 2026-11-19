@@ -1,49 +1,78 @@
-# Prompt 1: continue development and deliver the next handoff
+# Prompt 1: continue one phase and save the next handoff
 
 Repository: https://github.com/Omegapy/OntoKin
 
 Source handoff: [PASTE LATEST SUCCESSFULLY SAVED HANDOFF ZIP LINK]
 
-Task override, if any: [DESCRIBE A SPECIFIC TASK, OR LEAVE BLANK]
+Task or phase override, if any: [DESCRIBE IT, OR LEAVE BLANK]
 
-Open the supplied ZIP and begin with `README-START-HERE.md`. Continue OntoKin through ONE bounded next step, then create, verify and save the next handoff ZIP in my existing `OntoKin` folder in ChatGPT Library. The saved ZIP is required for completion. Stop after delivering it.
+Continue OntoKin for **one predeclared phase of authorized work**, then create,
+verify and save its handoff ZIP in my existing `OntoKin` Library folder and stop.
+Saved partial progress may finish this session while the parent task remains
+unfinished. Continue routine authorized actions without
+repeated permission requests.
 
-If I leave the task override blank, this prompt authorizes selecting the next bounded step from the current approved plan and queued work. A saved `awaiting_user_direction` state does not cancel this new direction. Resolve material scope conflicts before implementation.
+## Establish the starting state
 
-## 1. Establish the actual starting state
+Open the supplied ZIP's `README-START-HERE.md`, checkpoint and recovery status.
+Through the GitHub connection, observe current main's full SHA and read
+`CHATGPT-START-HERE.md` and all its required applicable instructions at that
+revision. Read each once; do not load duplicate archived and remote copies.
+Read the active task, requirements, plan and complete selected skills. Missing
+or truncated instructions remain an explicit gap.
 
-Read https://github.com/Omegapy/OntoKin/blob/main/CHATGPT-START-HERE.md through the available GitHub connection. Observe the actual main commit SHA and explicitly read its required files at that revision, including AGENTS, GOAL, STATUS, ROLE, the workflow registry, CURRENT and PROTOCOL. Read the current task, requirements, plan, relevant complete skill files and applicable nested instructions. Do not assume the browser loads them automatically.
+Reconcile live main, branches, PRs, scope issues, ownership, checks, delivery
+receipts and surviving unpublished work. GitHub governs current repository
+state. Record actual capabilities, including separate-context workers, tests,
+conditional updates and verified Library saving; do not infer unavailable tools.
 
-Compare the ZIP checkpoint with live main, branches, pull requests, scope issues, ownership, checks and surviving unpublished work. GitHub governs current repository state; preserve historical evidence and reconcile discrepancies. Check actual read/write, terminal, test, subagent and Library capabilities. Record missing capabilities precisely; do not invent successful operations.
+## Select and preserve one phase
 
-## 2. Define and implement one scope
+Resume the same active authorized scope and branch. Only when none is active
+does a blank override authorize selecting one next bounded step from the
+approved plan or queue, including from `awaiting_user_direction`. Resolve a
+material conflict with current user direction before implementation.
 
-Resume an active authorized task before creating a duplicate. Otherwise select one coherent step consistent with GOAL and current priorities. Record its requirements, acceptance criteria, exclusions and implementation plan in GitHub before substantial implementation. Reuse its scope branch across chats; use commits for checkpoints.
+Record requirements, plan, session phase, acceptance checkpoint and stopping
+point under `docs/workflow/PROTOCOL.md` before substantial work. Reuse the task
+and branch; checkpoints are commits. A planned pause is not a blocker.
 
-Act as the coordinating agent. Delegate independent work to available subagents with clear ownership, inspect their results, and keep main integration serialized. Continue routine authorized work without repeated permission requests. Preserve product semantics, evidence, budgets and hosted-execution rules. Do not expand into another milestone.
+Before substantial work or a long operation, create, verify and confirm an early
+recovery ZIP under `docs/workflow/HANDOFF.md`. Record exact revisions, outstanding
+gates, unknown operations and the next action. Preserve unique unpublished
+bytes, not only their temporary paths. Refresh durable checkpoints at phase
+changes and before long operations.
 
-## 3. Preserve progress before an interruption
+## Delegate and verify
 
-Publish an early recoverable checkpoint and refresh it after meaningful implementation, verification and integration stages. Save a concise recovery file in the same Library folder when available. Include the task and branch, exact commits, completed and remaining work, tests, pending operations, unique unpublished files or recoverable patches, and the next command or action.
+Act as coordinator. When useful and available, use normally two or three bounded
+workers within actual capacity, with fresh context rather than inherited chat
+history (`fork_turns="none"` when supported). Supply current applicable user and
+repository instructions, exact base/candidate, owned paths, checks and stopping
+condition. Inherit the actual model configuration; do not invent settings or
+independence. No nested fanout. Require reports of at most about 250 words with
+artifact identities, checks, blockers and next action; keep detailed evidence
+in files and inspect it. Otherwise work sequentially and label self-review.
 
-Keep essential state outside this chat. Do not rely on automatic compaction, a conversation-length counter or advance warning of a crash. Avoid dumping long files and logs into the conversation. If continuation becomes blocked, preserve the actual partial work and a clearly labeled incomplete recovery handoff.
+Keep tool output to selected fields or bounded excerpts. Preserve failures;
+avoid full logs, trees, tool registries and repeated JSON wrappers. Run required
+checks and obtain required independent review; reuse evidence only after exact
+relevant input and environment checks. Preserve semantics, history and budgets.
 
-## 4. Verify and integrate completed work
+## Save and stop
 
-Run the checks required by the actual change and obtain applicable independent review. Record exact inputs, commands, environment and passed, failed or not-run results. Do not reuse evidence after relevant inputs change without establishing equality.
+Stop at the declared checkpoint or first unplanned expansion. Preserve an
+honest partial handoff and first unmet gate. Completing implementation/review
+still ends this phase; select finalization in a fresh chat. A declared
+finalization phase covers only serialized conditional integration, live merge
+readback, applicable main checks, safe branch disposition and delivery.
+Reconcile unknown writes before retrying; never delete an unfinished branch.
+Verify completed-branch deletion or record its exact `deletion_pending` action.
 
-Merge completed reviewed work into main through the repository's verified ownership and conditional-update procedure. Read back the actual merge and check resulting main. Reconcile an uncertain remote write before retrying it.
-
-Delete the completed branch only after verifying integration, retained history and absence of active work. Verify deletion. If authorized deletion is unavailable, record `deletion_pending` and tell me its exact name. Preserve unfinished branches and their ownership.
-
-## 5. Create and save the handoff
-
-Follow https://github.com/Omegapy/OntoKin/blob/main/docs/workflow/HANDOFF.md. Create an online browser-session ZIP containing `README-START-HERE.md`, `CHECKPOINT.json`, `HANDOFF.md`, `NEXT-TASK.md`, `RECOVERY-STATUS.md`, `HISTORICAL-DEPENDENCIES.json`, both reusable prompts, frozen workflow/task snapshots, required recovery payloads and `MANIFEST-SHA256.json`.
-
-Bind included files to their hashes and observed GitHub revision. Preserve unique evidence and unpublished work. Keep C262 unchanged as the separately identified historical recovery archive; do not claim this session ZIP is a complete offline source archive.
-
-Verify the exact ZIP, its manifest and a fresh extraction. Save it with a new unambiguous filename in the existing Library folder. Confirm the returned file identity. An archive on temporary disk or an attempted upload is not delivery. Record the successful save in GitHub; the frozen ZIP cannot contain its own future save receipt and need not be rebuilt solely to include it.
-
-## 6. Deliver and stop
-
-Report the changes, actual checks, merge/main identity, branch disposition, remaining limits, saved ZIP link and exact next action. Mark completion only after all required gates, including saved delivery, are satisfied. Stop without beginning the next task.
+Verify the handoff's manifest, hashes and fresh extraction; freeze it, confirm
+its Library save and record the external receipt. Do not rebuild solely to
+insert that later receipt. Keep C262 unchanged. Report actual checks, task/phase,
+merge and branch state, saved link, limits and exact next action. Keep the parent
+task open until all acceptance, integration and delivery gates pass. Use a fresh
+parent chat for the next phase; assume no automatic compaction, new chat,
+remaining-length warning or parent reset from subagents.
