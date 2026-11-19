@@ -3,7 +3,7 @@
   "id": "C266",
   "title": "Source/program/object provenance binding for hinge comparison",
   "intent": "Establish whether source and artifact object-provenance inputs belong together before comparing hinge fields.",
-  "status": "in_progress",
+  "status": "done",
   "owner": "c266-final-bb514ffca344-4",
   "branch": "work/c266-hinge-input-binding",
   "base_sha": "7818de1f17e379df50680cb94347ce86bcabb8a5",
@@ -85,8 +85,12 @@
       "id": "R08",
       "description": "Verify and save the required online session handoff.",
       "acceptance": "Required root files, prompts, frozen Git read-set, unique recovery payloads and manifest pass exact ZIP/fresh extraction; confirmed saved OntoKin-folder identity is recorded externally before completion. C262 remains unchanged. Stop.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c266/DELIVERY.json",
+        "docs/engineering/localized-repair-c266/PACKAGE-VERIFICATION.json",
+        "docs/engineering/localized-repair-c266/PACKAGE-REVIEW.md"
+      ]
     }
   ],
   "plan": [
@@ -166,7 +170,7 @@
         "R08",
         "R07"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c266/DELIVERY.json"
       ],
@@ -203,14 +207,21 @@
     "branch_disposition": "deleted",
     "evidence": [
       "docs/engineering/localized-repair-c266/INTEGRATION.json",
-      "docs/engineering/localized-repair-c266/evidence/actual-main/CHECKS.json"
+      "docs/engineering/localized-repair-c266/evidence/actual-main/CHECKS.json",
+      "docs/engineering/localized-repair-c266/DELIVERY.json"
     ]
   },
-  "next_action": "Freeze and verify the C266 browser-session ZIP, save it and both prompts, publish external delivery receipt, close scope and release lease. Stop; no new milestone.",
+  "next_action": "C266 complete. Stop and await new owner direction. A new continuation prompt may select one bounded hinge-field/set/endpoint comparison step.",
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "pending",
-    "folder": "OntoKin"
+    "status": "complete",
+    "folder": "OntoKin",
+    "receipt": "docs/engineering/localized-repair-c266/DELIVERY.json",
+    "archive": "https://chatgpt.com/library?file_id=libfile_fde3_f-f8f7afe884748191be8014ddce2f0f41_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "library_file_id": "libfile_fde3_f-f8f7afe884748191be8014ddce2f0f41_2ab2a24d43748191957f9bcc356b59de",
+    "version": 0,
+    "sha256": "8540ac67af254b87321c851d762750d82fa02eb213e571ec4c6533c98a954726",
+    "bytes": 7336504
   }
 }

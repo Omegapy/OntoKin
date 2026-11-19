@@ -78,3 +78,12 @@ the previously inspected bytes. Only the operational lease had changed.
 Final owner: `c266-final-bb514ffca344-4`. Lease commit: `0251951ea8cae23b1792d6d0c68ad2e69dd0e0b7`. Expiry: `2026-11-19T01:57:06.000Z`.
 Remaining: expected-head merge, fresh actual-main checks, branch disposition,
 verified saved ZIP/prompts, external receipt and stop.
+
+## Fifth interruption: delivery-only closure
+
+Live main was `4e9828392420fc2bdbf7688dd1951877d03f022c`. The final ZIP
+build and verification had already finished. This continuation reused that
+exact verified archive, saved it and both prompts, and recorded the external
+receipt. No implementation, candidate test, actual-main test or archive build
+was repeated. [Delivery](../../../engineering/localized-repair-c266/DELIVERY.json)
+and CURRENT now own the completed state; the earlier recovery JSON is historical.

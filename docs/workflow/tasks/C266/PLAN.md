@@ -62,3 +62,12 @@ P04/R07 are complete through PR259, merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc
 All ten fresh main groups, 222 methods and fourteen corpus bindings pass.
 The exact completed head is retained as a merge parent and its branch is absent.
 Only P05/R08 saved delivery and closure remain.
+
+## Saved delivery and stop
+
+P05/R08 are complete. The immutable verified ZIP is 7,336,504 bytes,
+SHA-256 `8540ac67af254b87321c851d762750d82fa02eb213e571ec4c6533c98a954726`, saved with identity
+`libfile_fde3_f-f8f7afe884748191be8014ddce2f0f41_2ab2a24d43748191957f9bcc356b59de`. Both prompts were saved in the same ordered
+operation. [External receipt](../../../engineering/localized-repair-c266/DELIVERY.json)
+resolves the frozen save_pending boundary. All R01–R08 and P01–P05 are done.
+Stop and await new user direction; no next milestone was started.

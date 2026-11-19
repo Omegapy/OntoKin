@@ -19,9 +19,15 @@ The [integration receipt](docs/engineering/localized-repair-c266/INTEGRATION.jso
 retains review, evidence and verified automatic deletion of the completed
 `work/c266-hinge-input-binding` branch. Only main remains.
 
-Next action: finish only C266's verified saved ZIP/prompts and external receipt,
-then close the task and wait for new owner direction. Hinge values, joint sets
-and endpoints remain unqualified; historical admission stays separate.
+The verified [C266 session handoff](https://chatgpt.com/library?file_id=libfile_fde3_f-f8f7afe884748191be8014ddce2f0f41_2ab2a24d43748191957f9bcc356b59de&account_id=personal) and both standalone prompts
+are saved. [Delivery receipt](docs/engineering/localized-repair-c266/DELIVERY.json),
+[package verification](docs/engineering/localized-repair-c266/PACKAGE-VERIFICATION.json)
+and [independent package review](docs/engineering/localized-repair-c266/PACKAGE-REVIEW.md)
+confirm 178 payload files and 163 exact Git snapshots. C266 is complete.
+
+Next action: wait for new owner direction. A later continuation may select
+one bounded hinge-field/set/endpoint comparison step; historical admission
+remains a separate interface. No next milestone was started.
 
 C265 is complete through [PR257](https://github.com/Omegapy/OntoKin/pull/257),
 merge `d602adee52bd5913dc86fdb3a29e2c4c653a4ed9`; its completed branch is deleted
@@ -99,11 +105,12 @@ subject to the original archive contract; no fresh C263 restoration is claimed.
 
 ## Main integration lease
 
-State: held for C266 final integration, actual-main verification and saved delivery.
-Owner: `c266-final-bb514ffca344-4`. Scope: [issue258](https://github.com/Omegapy/OntoKin/issues/258).
-Acquired at: 2026-11-19T01:27:06.000Z. Expires at: 2026-11-19T01:57:06.000Z.
-Reserved: main, STATUS integration fields, CURRENT, root navigation and C266 delivery/task closure.
-Observed parent: `4da657bb3e9e15f0d9ed8124d159716f4102b134`. The owner's fourth recovery request resumes only remaining C266 gates. The previous lease expired at 2026-11-19T00:57:06.000Z. Live main was unchanged; the complete recovered candidate and audits are now published at `66b1613c480723c0b2045c1fa0891a81ab5658c0`. The final candidate tree was verified against the staged recovery tree before conditional branch publication. No unknown ref write remains.
+State: released after verified C266 integration, branch disposition and saved delivery.
+Former owner: `c266-final-bb514ffca344-4`. Released at: 2026-11-19T01:39:01.627310+00:00.
+Completed scope: [issue258](https://github.com/Omegapy/OntoKin/issues/258).
+The exact implementation head is retained in merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`.
+No active repository writer, unknown ref operation or remaining C266 gate is known.
+Future work must reconcile current main and acquire its own conditional lease.
 
 ## Historical status
 
