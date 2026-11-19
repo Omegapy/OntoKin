@@ -3,7 +3,7 @@
   "id": "C267",
   "title": "Finite source and GLB hinge declaration comparison",
   "intent": "Verify complete declared hinge field/set/ordered-endpoint agreement after source/program/object binding",
-  "status": "review",
+  "status": "in_progress",
   "owner": "c267-root-ad39e933f0f3",
   "branch": "work/c267-hinge-comparison",
   "base_sha": "47681b1e4c442a580910dba1fc5a823dc86ee6b0",
@@ -13,36 +13,51 @@
       "id": "R01",
       "description": "Input authority",
       "acceptance": "Require supplied `main.ok`, `hinges.ok` and GLB bytes; preserve predecessor hash/size dependency checks and bounded refusals. Complete C266 input binding must pass before comparison. No product parser/evaluator/exporter, sidecar, expected table or motion fitting.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c267/RESULTS.md",
+        "docs/engineering/localized-repair-c267/REVIEW.md"
+      ]
     },
     {
       "id": "R02",
       "description": "Complete joint set and ownership",
       "acceptance": "Match every source-derived hinge occurrence ID and independently rendered path to exactly one artifact row. Reject missing/extra/duplicate IDs or paths and wrong owning object/class associations. Source names, keys, membership and row order remain actual inputs.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c267/RESULTS.md",
+        "docs/engineering/localized-repair-c267/REVIEW.md"
+      ]
     },
     {
       "id": "R03",
       "description": "Exact fields and ordered endpoints",
       "acceptance": "Compare kind, signed basis axis, both closed limit values and initial using unchanged exact canonical numeric equality. Resolve parent and child path claims against full source-derived site records and mapped objects, preserving order and opaque dotted keys.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c267/RESULTS.md",
+        "docs/engineering/localized-repair-c267/REVIEW.md"
+      ]
     },
     {
       "id": "R04",
       "description": "Evidence and nonclaims",
       "acceptance": "Return exact source byte witnesses and artifact SHA/JSON pointers. Label site/joint definitions and absent artifact spans as source-derived. Historical admission, site poses/world behavior, full source/glTF/C255 validity, accepted revisions, atomicity, rebuilds, native/model trials and comparative advantage remain unqualified. Omitted top-level metadata is expressly unobserved unless the reviewed association requires it.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c267/RESULTS.md",
+        "docs/engineering/localized-repair-c267/REVIEW.md"
+      ]
     },
     {
       "id": "R05",
       "description": "Independent verification",
       "acceptance": "Independently constructed original, source-only, artifact-only and paired changed-input controls cover the relevant C260 H groups, complete sets, endpoints, strict numerics, refusals and nonclaims. Run all affected predecessor/component cohorts plus workflow and documentation preservation. Preserve exact inputs and failures. Obtain independent exact-candidate review.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c267/RESULTS.md",
+        "docs/engineering/localized-repair-c267/REVIEW.md"
+      ]
     },
     {
       "id": "R06",
@@ -104,7 +119,7 @@
       "requirements": [
         "R05"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c267/RESULTS.md",
         "docs/engineering/localized-repair-c267/REVIEW.md"
@@ -119,7 +134,7 @@
       "requirements": [
         "R06"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c267/INTEGRATION.json"
       ],
@@ -143,8 +158,27 @@
       ]
     }
   ],
-  "checks": [],
-  "next_action": "Finish independent controls and exact-candidate review; then verify, integrate and deliver only C267",
+  "checks": [
+    {
+      "name": "identified candidate cohort",
+      "command": "python3 -B session_tools/run_checks.py --repo validate-candidate --phase candidate --output evidence/candidate --c267-methods 25",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c267/evidence/candidate/CHECKS.json"
+      ]
+    },
+    {
+      "name": "independent implementation and control review",
+      "command": "Inspect exact candidate and run seven independent composition probes; audit retained control inputs",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c267/REVIEW.json"
+      ]
+    }
+  ],
+  "next_action": "Integrate reviewed C267, run fresh actual-main checks, resolve branch, save verified handoff and publish external receipt; then stop",
   "delivery": {
     "required": true,
     "kind": "browser-session",
@@ -154,6 +188,7 @@
   },
   "completion": {
     "branch_disposition": "active",
-    "evidence": []
+    "evidence": [],
+    "implementation_commit": "2d47c608a953dc0d2ffb09b67e0ce6f720b205eb"
   }
 }

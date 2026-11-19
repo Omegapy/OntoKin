@@ -29,3 +29,7 @@ Early recovery and partial control bytes were saved successfully. [Returned iden
 ## Independent control checkpoint
 
 Independent author `/root/controls` completed 25 methods and 123 API cases: 35 agreements and 88 expected typed refusals, zero failures/errors/skips. Three actual passing control-author runs are retained. The comparator remains exactly 12,382 bytes, SHA-256 f98b9eab7a7f0cc75afa26eab0b672356d7e3275e3d713d16df214e68e69d71d. A separate reviewer is checking composition and dependency refresh; complete candidate regression remains pending.
+
+## Verification gate complete
+
+Candidate `1f369cb49f95f7df220ff91c78caa090dcbf2fcc` passed all eleven groups, 247 methods and fourteen C253 bindings with stable inputs. Independent review approves exact implementation and controls; seven additional composition probes pass. P01–P03 and R01–R05 are complete. Enter finalization only: P04 integration/main checks/branch disposition, then P05 verified saved handoff and external closure. No new implementation scope is authorized.

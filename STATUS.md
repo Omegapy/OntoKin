@@ -16,7 +16,8 @@ on `work/c267-hinge-comparison`. It implements the finite C260 source/artifact
 hinge-field, complete joint-set and ordered-endpoint comparator after C266's
 input binding. [Requirements](docs/workflow/tasks/C267/REQUIREMENTS.md) and
 [plan](docs/workflow/tasks/C267/PLAN.md) define its bounded acceptance.
-Implementation, independent review, integration and saved delivery remain open.
+Implementation and independent review pass, with eleven candidate check groups and
+247 methods. Integration, fresh actual-main checks and saved delivery remain open.
 Historical endpoint admission is a separate queued interface.
 
 C266 is complete through [PR259](https://github.com/Omegapy/OntoKin/pull/259),
@@ -43,7 +44,8 @@ C261 source integration and C262 saved delivery are complete.
 
 C265 derives finite source hinge declarations independently; its byte witnesses
 and literal numeric profile do not evaluate site poses or certify full source validity.
-C266 binds retained source/program/object provenance only. Hinge-field/set/endpoint comparison, historical endpoint admission,
+C266 binds retained source/program/object provenance only. C267 verifies finite
+hinge-field/set/endpoint agreement on the reviewed candidate. Historical endpoint admission,
 complete C260 H groups, site/world behavior, authentic revisions, invalid-edit
 atomicity qualification, clean rebuilds, native routes and comparative model
 trials remain unqualified. No general authoring advantage has been established.
