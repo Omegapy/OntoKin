@@ -8,7 +8,7 @@ Required startup and selected repository skill reads are bound in [STARTUP.json]
 
 | Phase | State | Remaining action |
 | --- | --- | --- |
-| Scope | Published in issue260; repository checkpoint prepared | Publish and read back commit; save recovery |
+| Scope | Published and read back at 6122bd272c3f5b960ed5c1d6434ebf5f7f9b4020 | Save concise recovery |
 | Implementation | In progress under disjoint workers | Inspect actual comparator and independent controls |
 | Verification/review | Pending | Execute all applicable groups and exact-candidate review |
 | Integration | Pending | Acquire lease, conditional merge, main checks, branch disposition |
@@ -17,3 +17,9 @@ Required startup and selected repository skill reads are bound in [STARTUP.json]
 Prior C266 worktrees contain historical unpublished draft/evidence bytes; audit and exact inert recovery archive will be preserved separately. They do not reopen C266 or authorize stale state. No unknown remote write is known. Current workers are explicitly assigned; no other writer is presumed stopped from lease expiry.
 
 No implementation check has yet passed. No release or historical endpoint admission is claimed. The exact next action is publish this recoverable scope, save recovery, then complete P02–P05. Stop after saved delivery.
+
+## Initial publication and implementation checkpoint
+
+Scope checkpoint `6122bd272c3f5b960ed5c1d6434ebf5f7f9b4020` was created with the GitHub connection, installed on both scope branch and main by nonforce expected-head updates, and read back. The STATUS lease is held by c267-root-ad39e933f0f3 until 2026-11-19T02:20:13.455553+00:00. Terminal Git reads work; HTTPS push lacks credentials, so all publication uses the GitHub connection. No further terminal push attempts are planned.
+
+Initial comparator is checkpointed before acceptance testing. Its author performed original before/after, field-mismatch and reorder development probes; these are not independent qualification. Independent controls and exact-candidate review remain pending. Older unpublished metadata is retained under evidence/startup/legacy-c266-wip.zip.
