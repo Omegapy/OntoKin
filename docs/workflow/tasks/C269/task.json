@@ -3,7 +3,7 @@
   "id": "C269",
   "title": "C260 hinge qualification coverage audit",
   "intent": "Determine exactly which H01-H28 obligations are supported by the existing four-interface evidence and identify the first remaining gap",
-  "status": "review",
+  "status": "in_progress",
   "owner": "c269-audit-d59e10906594",
   "branch": "work/c269-hinge-coverage-audit",
   "base_sha": "23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb",
@@ -45,8 +45,12 @@
       "id": "R04",
       "description": "Verification and independent review",
       "acceptance": "Pass fresh documentation and workflow checks; verify every local evidence reference and hash binding. Obtain actual independent review of the exact audit candidate, resolve mandatory findings, and retain failures and unrun checks.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/REVIEW.json",
+        "docs/engineering/localized-repair-c269/evidence/candidate-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c269/evidence/candidate-checks/references.json"
+      ]
     },
     {
       "id": "R05",
@@ -104,7 +108,7 @@
         "R03",
         "R04"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c269/AUDIT.md",
         "docs/engineering/localized-repair-c269/NEXT-TASK.md",
@@ -120,7 +124,7 @@
       "requirements": [
         "R05"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c269/INTEGRATION.json"
       ],
@@ -143,15 +147,36 @@
       ]
     }
   ],
-  "checks": [],
+  "checks": [
+    {
+      "name": "candidate documentation and workflow",
+      "command": "python3 docs/engineering/localized-repair-c269/evidence/run_record_checks.py --repo IDENTIFIED_CANDIDATE --output NEW_OUTPUT --phase candidate",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c269/evidence/candidate-checks/CHECKS.json"
+      ]
+    },
+    {
+      "name": "audit reference identities",
+      "command": "python3 -B docs/engineering/localized-repair-c269/evidence/check_audit_references.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c269/evidence/candidate-checks/references.json"
+      ]
+    }
+  ],
   "completion": {
-    "implementation_commit": null,
+    "implementation_commit": "4258e001a567ff830b790a174f8bdde9d368f05a",
     "merge_commit": null,
-    "pull_request": null,
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/269",
     "branch_disposition": "active",
-    "evidence": []
+    "evidence": [
+      "docs/engineering/localized-repair-c269/REVIEW.json"
+    ]
   },
-  "next_action": "Independently review the exact combined C269 audit candidate and pass fresh documentation/workflow/reference checks; then integrate and save the handoff without implementing missing controls.",
+  "next_action": "Integrate the reviewed audit through PR269 under verified ownership, check actual main and branch disposition, then verify/save the final handoff and receipt; no missing control implementation.",
   "session_phase": {
     "id": "C269-coverage-audit",
     "starting_main": "23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb",

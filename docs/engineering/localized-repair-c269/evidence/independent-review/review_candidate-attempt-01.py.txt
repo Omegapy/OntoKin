@@ -1,0 +1,268 @@
+"""Inspect immutable C269 audit evidence without importing or running observers.
+
+This reviewer-owned script checks identity, map preservation, retained outcome
+references, and selected archived bytes. Semantic judgments remain in REVIEW.md.
+Only the adjacent CANDIDATE-INSPECTION.json is written.
+"""
+
+from __future__ import annotations
+
+import copy
+import datetime as dt
+import hashlib
+import io
+import json
+from pathlib import Path
+import struct
+import subprocess
+import zipfile
+from collections import Counter
+
+
+ROOT = Path(__file__).resolve().parents[5]
+E = "docs/engineering/localized-repair-c269"
+BASE = "23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb"
+CANDIDATE = "4258e001a567ff830b790a174f8bdde9d368f05a"
+TREE = "63b4b6f367c1a548dc1e1e00b65a4bedc5b6bb1a"
+ORIGINAL = "5084dd69312e8da5a49aadd33cf83ba56db7c058"
+MAIN = "docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration"
+STARTED = dt.datetime.now(dt.timezone.utc).isoformat()
+CHECKS = []
+CACHE = {}
+
+
+def git(*args):
+    return subprocess.check_output(["git", "--no-optional-locks", *args], cwd=ROOT)
+
+
+def raw(path, revision=CANDIDATE):
+    key = revision, path
+    if key not in CACHE:
+        CACHE[key] = git("show", revision + ":" + path)
+    return CACHE[key]
+
+
+def doc(path, revision=CANDIDATE):
+    return json.loads(raw(path, revision))
+
+
+def sha(value):
+    return hashlib.sha256(value).hexdigest()
+
+
+def identity(path, value):
+    return {"path": path, "bytes": len(value), "sha256": sha(value)}
+
+
+def check(name, passed, detail=None):
+    row = {"name": name, "passed": bool(passed)}
+    if detail is not None:
+        row["detail"] = detail
+    CHECKS.append(row)
+
+
+def pinned(name, value, pin):
+    check(name, len(value) == pin["bytes"] and sha(value) == pin["sha256"])
+
+
+def pointer(document, location):
+    for key in location.strip("/").split("/"):
+        key = key.replace("~1", "/").replace("~0", "~")
+        document = document[int(key)] if isinstance(document, list) else document[key]
+    return document
+
+
+check("candidate tree", git("rev-parse", CANDIDATE + "^{tree}").decode().strip() == TREE)
+coverage = doc(E + "/COVERAGE.json")
+check("baseline named by coverage", coverage["audit_baseline_revision"] == BASE)
+check("original execution named by coverage", coverage["original_execution_revision"] == ORIGINAL)
+groups = coverage["groups"]
+subcases = [sub for group in groups for sub in group["required_subcases"]]
+check("all 28 ordered groups", [group["id"] for group in groups] == [f"H{i:02}" for i in range(1, 29)])
+check("24 complete and four partial groups", Counter(group["status"] for group in groups) == {"complete": 24, "partial": 4})
+check("99 unique subcases", len(subcases) == len({sub["id"] for sub in subcases}) == 99)
+check("94 complete and five partial subcases", Counter(sub["status"] for sub in subcases) == {"complete": 94, "partial": 5})
+partial_ids = [sub["id"] for sub in subcases if sub["status"] == "partial"]
+check("precisely identified partial subcases", partial_ids == ["H16.02", "H20.01", "H20.03", "H22.02", "H24.04"], partial_ids)
+
+inventory = []
+for row in git("diff", "--name-status", BASE, CANDIDATE).decode().splitlines():
+    status, path = row.split("\t")
+    allowed = (status == "A" and (path.startswith(E + "/") or path.startswith("docs/workflow/tasks/C269/"))) or (
+        status == "M" and path in ("STATUS.md", "docs/workflow/CURRENT.json"))
+    inventory.append({"status": status, "path": path, "allowed": allowed})
+check("full baseline-to-candidate change scope", all(row["allowed"] for row in inventory), {"paths": len(inventory), "statuses": dict(Counter(row["status"] for row in inventory))})
+check("existing-file edits only STATUS and CURRENT", sorted(row["path"] for row in inventory if row["status"] != "A") == ["STATUS.md", "docs/workflow/CURRENT.json"])
+
+for map_path in (E + "/evidence/audit-h01-h14/MAP.json", E + "/evidence/audit-h15-h28/MAP.json"):
+    source = doc(map_path)
+    for original_group in source["groups"]:
+        combined = copy.deepcopy(next(group for group in groups if group["id"] == original_group["id"]))
+        check("source-map binding " + combined["id"], combined.pop("source_map") == map_path and combined.pop("source_map_sha256") == sha(raw(map_path)))
+        for sub, source_sub in zip(combined["required_subcases"], original_group["required_subcases"]):
+            if "id" not in source_sub:
+                sub.pop("id")
+            for assertion, original_assertion in zip(sub["source_assertions"], source_sub["source_assertions"]):
+                if "revision" not in original_assertion:
+                    assertion.pop("revision", None)
+        check("original investigator map preserved " + combined["id"], combined == original_group)
+
+readiness_path = E + "/evidence/independent-review/READINESS.json"
+readiness = doc(readiness_path)
+check("readiness review bytes unchanged locally", raw(readiness_path) == (ROOT / readiness_path).read_bytes())
+check("readiness has no mandatory identity findings", not readiness["mandatory_identity_findings"])
+receipt_path = MAIN + "/CHECKS.json"
+receipt = doc(receipt_path)
+pinned("original receipt still exact", raw(receipt_path), readiness["historical_receipt"])
+original_deltas, candidate_deltas = [], []
+for pin in receipt["input_files_before"]:
+    original = raw(pin["path"], ORIGINAL)
+    pinned("original execution input " + pin["path"], original, pin)
+    if raw(pin["path"], BASE) != original:
+        original_deltas.append(pin["path"])
+    if raw(pin["path"]) != raw(pin["path"], BASE):
+        candidate_deltas.append(pin["path"])
+check("159 original inputs and seven historical documentation deltas", len(receipt["input_files_before"]) == 159 and len(original_deltas) == 7, original_deltas)
+check("candidate changes among original inputs only scoped canonical state", sorted(candidate_deltas) == ["STATUS.md", "docs/workflow/CURRENT.json"], candidate_deltas)
+for pin in receipt["output_files"]:
+    pinned("retained original output " + pin["path"], raw(MAIN + "/" + pin["path"]), pin)
+check("30 original outputs", len(receipt["output_files"]) == 30)
+
+identity_manifest = doc(E + "/INPUT-IDENTITIES.json")
+for pin in identity_manifest["files"]:
+    pinned("audit input " + pin["path"], raw(pin["path"], pin["revision"]), pin)
+check("218 audit input identities", len(identity_manifest["files"]) == 218)
+
+index = doc(E + "/evidence/audit-h01-h14/EVIDENCE-INDEX.json")
+indexed = {}
+for suite in index["suites"].values():
+    result = doc(suite["result_path"])
+    for record in suite["records"]:
+        original = pointer(result, record["result_pointer"])
+        copied = {key: value for key, value in record.items() if key not in ("id", "result_pointer")}
+        check("original outcome copied exactly " + record["id"], copied == original)
+        indexed[record["id"]] = record
+
+assertion_refs = execution_refs = case_refs = 0
+for group in groups:
+    check("group classification is conservative " + group["id"], group["status"] != "complete" or all(sub["status"] == "complete" for sub in group["required_subcases"]))
+    for sub in group["required_subcases"]:
+        for assertion in sub["source_assertions"]:
+            source = raw(assertion["path"], assertion.get("revision", BASE))
+            line = assertion.get("line_reference", {})
+            start = line.get("start_line", assertion.get("line_start"))
+            end = line.get("end_line", assertion.get("line_end"))
+            check("assertion location " + sub["id"] + " " + assertion["path"] + " " + str(start), 1 <= start <= end <= len(source.decode().splitlines()))
+            check("assertion source unchanged at candidate " + sub["id"] + " " + assertion["path"], raw(assertion["path"]) == source)
+            assertion_refs += 1
+        for execution in sub.get("execution_results", sub.get("execution_evidence", [])):
+            path = execution.get("path", execution.get("result_path"))
+            result = doc(path)
+            if "result_sha256" in execution:
+                check("execution digest " + sub["id"] + " " + path, sha(raw(path)) == execution["result_sha256"])
+            if "record_pointers" in execution:
+                for location, outcome in zip(execution["record_pointers"], execution["outcomes"]):
+                    actual = pointer(result, location)
+                    check("record binding " + sub["id"] + " " + outcome["record_id"], indexed[outcome["record_id"]]["result_pointer"] == location)
+                    check("outcome truth " + sub["id"] + " " + outcome["record_id"], outcome["outcome"] == actual.get("outcome", actual.get("observed")) and outcome["code"] == actual.get("code"))
+                    case_refs += 1
+            else:
+                selected = [result[execution["case_array"]][i] for i in execution["case_indices"]]
+                actual_outcomes = Counter(str(row.get("outcome", row.get("observed", row.get("actual")))) for row in selected)
+                actual_codes = Counter(row["code"] for row in selected if "code" in row)
+                check("selected outcome truth " + sub["id"] + " " + execution["run_id"], actual_outcomes == execution["outcomes"] and actual_codes == execution["typed_codes"])
+                case_refs += len(selected)
+            execution_refs += 1
+check("source/evidence reference accounting", (assertion_refs, execution_refs, case_refs) == (259, 177, 1865), {"assertion_references": assertion_refs, "execution_references": execution_refs, "selected_case_references": case_refs})
+
+archives = {}
+for suite in ("c267-controls", "c268-controls"):
+    archive_path = MAIN + "/" + suite + "/inputs.zip"
+    archive = zipfile.ZipFile(io.BytesIO(raw(archive_path)))
+    check("archive CRC " + suite, archive.testzip() is None)
+    check("archive duplicate names " + suite, len(archive.namelist()) == len(set(archive.namelist())))
+    archives[suite] = {name: archive.read(name) for name in archive.namelist()}
+
+
+def input_bytes(pin, suite):
+    if "snapshot" in pin:
+        value = archives[suite][pin["snapshot"].split("!", 1)[1]]
+    else:
+        value = raw(pin["frozenReference"])
+    pinned("retained selected payload " + pin["sha256"], value, pin)
+    return value
+
+
+def selected(suite, number):
+    record = doc(MAIN + "/" + suite + "/results.json")["cases"][number]
+    sources = {name: input_bytes(pin, suite) for name, pin in record.get("sources", {}).items()}
+    artifact = input_bytes(record["artifact"], suite)
+    size = struct.unpack_from("<I", artifact, 12)[0]
+    document = json.loads(artifact[20:20 + size])
+    if sources:
+        check("selected actual leaf digest bound " + str(number), sha(sources["hinges.ok"]).encode() in sources["main.ok"])
+        manifest = document["extras"]["ontokin"]["program"]["manifest"]
+        check("selected manifest names actual bytes " + str(number), all(unit["source_revision"] == "sha256:" + sha(sources[unit["filename"]]) for unit in manifest["units"]))
+    return record, sources, document
+
+
+mutation_review = []
+for number in (0, 53, 55, 75, 98):
+    record, sources, document = selected("c267-controls", number)
+    meta = document["extras"]["ontokin"]
+    if number == 0:
+        check("H20 actual singular follow field", "follow" in meta and "follows" not in meta)
+        check("H20 actual owner bundled mutation", any(node.get("extras", {}).get("ontokin", {}).get("owner") == "unobserved" for node in document["nodes"]))
+    if number in (53, 55):
+        check("actual changed source initial " + str(number), b"initial = 0.25[rad]" in sources["hinges.ok"])
+        check("actual retained artifact initial " + str(number), {row["initial"] for row in meta["joints"]} == ({0} if number == 53 else {0.25}))
+    if number == 75:
+        check("H28 actual nontrivial pose bytes", b"999[m]" in sources["hinges.ok"] and b"-123[m]" in sources["hinges.ok"] and b"quat(0, 1, 0, 0)" in sources["hinges.ok"])
+        check("H28 actual pose authority false", record["flags"]["sitePosesEvaluated"] is False)
+    if number == 98:
+        check("H13 actual renamed site keys", b'"parent-key"' in sources["hinges.ok"] and b'"child-key"' in sources["hinges.ok"])
+        check("H13 no direct artifact site table", "sites" not in meta)
+        check("H13 actual endpoint paths retain lexical site names", all(row["parent_site"].endswith(".pivot") and row["child_site"].endswith(".blade.base") for row in meta["joints"]))
+    mutation_review.append({"suite": "c267-controls", "case_index": number, "label": record["label"], "source_identities": record["sources"], "artifact_identity": record["artifact"], "observed_outcome": record["outcome"], "inspection": "stdlib archive extraction in memory, SHA-256, GLB JSON decoding; no observer import or execution"})
+record, sources, document = selected("c268-controls", 0)
+check("H03 actual one-row artifact-only initial mutation", [row["initial"] for row in document["extras"]["ontokin"]["joints"]].count(0.5) == 1)
+c268 = doc(MAIN + "/c268-controls/results.json")
+check("H03 same artifact at three interfaces", c268["cases"][0]["artifact"]["sha256"] == c268["cases"][1]["artifact"]["sha256"] == c268["cases"][2]["inputs"]["before.glb"]["sha256"])
+check("H26 actual permission denial retained", any(note.get("actualPermissionDenial") is True and note.get("effectiveUid") == 1000 for note in c268["notes"]))
+
+check_dir = ROOT / E / "evidence/candidate-checks"
+candidate_checks = json.loads((check_dir / "CHECKS.json").read_text())
+check("fresh check receipt exact candidate", candidate_checks["source_revision"] == CANDIDATE and candidate_checks["source_tree"] == TREE and candidate_checks["source_clean"] is True and candidate_checks["result"] == "passed")
+for item in candidate_checks["checks"]:
+    log = (check_dir / item["log"]["path"]).read_bytes()
+    pinned("fresh check log " + item["name"], log, item["log"])
+    check("fresh check success " + item["name"], item["exit_code"] == 0 and item["result"] == "passed")
+pinned("fresh-check runner candidate identity", raw(E + "/evidence/run_record_checks.py"), candidate_checks["runner"])
+reference_checks = json.loads((check_dir / "references.json").read_text())
+check("fresh reference receipt exact coverage", reference_checks["coverage_sha256"] == sha(raw(E + "/COVERAGE.json")) and reference_checks["result"] == "passed")
+
+report = {
+    "schema": "ontokin.c269.independent-candidate-inspection/1",
+    "reviewer": "/root/state_audit",
+    "started_at_utc": STARTED,
+    "finished_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+    "candidate_revision": CANDIDATE,
+    "candidate_tree": TREE,
+    "baseline_revision": BASE,
+    "original_behavior_execution_revision": ORIGINAL,
+    "result": "passed" if all(row["passed"] for row in CHECKS) else "failed",
+    "check_count": len(CHECKS),
+    "failed_checks": [row for row in CHECKS if not row["passed"]],
+    "checks": CHECKS,
+    "full_change_inventory": inventory,
+    "candidate_artifacts": [identity(path, raw(path)) for path in (E + "/AUDIT.md", E + "/COVERAGE.json", E + "/NEXT-TASK.md", E + "/evidence/audit-h01-h14/MAP.json", E + "/evidence/audit-h15-h28/MAP.json", readiness_path)],
+    "selected_retained_input_inspections": mutation_review,
+    "supplemental_candidate_checks": [identity((check_dir / name).relative_to(ROOT).as_posix(), (check_dir / name).read_bytes()) for name in ("CHECKS.json", "documentation.log", "workflow.log", "references.json")],
+    "behavioral_executions": 0,
+    "observer_imports": 0,
+    "limits": ["This check inspects existing bytes, references and recorded outcomes; it does not replay behavior.", "Counts and reference structure alone do not establish semantic assertion coverage or full qualification.", "The companion independent REVIEW.md supplies the source-level coverage judgment.", "Candidate-check outputs are supplemental post-candidate artifacts; their receipt is bound to the exact immutable candidate."],
+}
+target = Path(__file__).with_name("CANDIDATE-INSPECTION.json")
+target.write_text(json.dumps(report, indent=2) + "\n")
+print(json.dumps({"result": report["result"], "check_count": len(CHECKS), "failed_checks": report["failed_checks"], "output": str(target)}))
+raise SystemExit(0 if report["result"] == "passed" else 1)

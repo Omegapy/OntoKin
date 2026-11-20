@@ -4,7 +4,7 @@
 
 ## Current workflow and next action
 
-C269 is active: one evidence-only audit of C260 H01-H28 across the four existing hinge interfaces. [Scope268](https://github.com/Omegapy/OntoKin/issues/268), [requirements](docs/workflow/tasks/C269/REQUIREMENTS.md), [plan](docs/workflow/tasks/C269/PLAN.md), [confirmed early recovery](docs/engineering/localized-repair-c269/EARLY-RECOVERY-RECEIPT.json). Map actual independent assertions and exact execution identities; identify remaining gaps. No product, test, contract or fixture changes, and no new qualification claim at startup.
+C269 audit is independently reviewed at `4258e001a567ff830b790a174f8bdde9d368f05a`; [PR269](https://github.com/Omegapy/OntoKin/pull/269) integration and saved delivery remain pending. [Audit](docs/engineering/localized-repair-c269/AUDIT.md): **24 complete and four partial H groups** (H16/H20/H22/H24), 99 material subcases; complete C260 qualification remains unestablished. [Independent review](docs/engineering/localized-repair-c269/REVIEW.json), [scope268](https://github.com/Omegapy/OntoKin/issues/268), [confirmed early recovery](docs/engineering/localized-repair-c269/EARLY-RECOVERY-RECEIPT.json). No product, existing control, contract or fixture behavior changed; no behavioral rerun. Stop after final verified saved handoff; the proposed H16 control is a separate next phase.
 
 C268 complete within exact historical endpoint admission under unchanged C260. [PR266](https://github.com/Omegapy/OntoKin/pull/266) merged at `5084dd69312e8da5a49aadd33cf83ba56db7c058`; its source branch is absent and the reviewed history is retained. Actual-main evidence passed **12 groups, 282 methods, 14 bindings**, zero failures/errors/skips on CPython **3.12.14 / Linux**. [Integration](docs/engineering/localized-repair-c268/INTEGRATION.json), [independent recovery audit](docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/REPORT.md), [confirmed final handoff and prompts](docs/engineering/localized-repair-c268/DELIVERY.json). [Scope265](https://github.com/Omegapy/OntoKin/issues/265) is closed. The final package passed independent verification; source checks remain attributed to their actual revisions.
 
@@ -39,8 +39,8 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 ## Main integration lease
 
 State: held. Owner: `c269-audit-d59e10906594`.
-Acquired at UTC: `2026-11-20T02:44:18.431010+00:00`; expires at UTC: `2026-11-20T03:14:18.431010+00:00`.
-Expected predecessor: `23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb`; acquisition requires conditional nonforce main update and exact readback.
+Acquired at UTC: `2026-11-20T02:44:18.431010+00:00`; expires at UTC: `2026-11-20T03:31:12.530093+00:00`.
+Acquisition verified at `5e193e831e74483bccca67ea6cf8a1b8cec47491`. Renewal checkpoint at `2026-11-20T03:01:12.530093+00:00`: candidate `4258e001a567ff830b790a174f8bdde9d368f05a` passed fresh documentation/workflow/reference checks and independent historical-evidence identity review. Combined coverage review and final delivery remain pending; renewal requires expected-head nonforce publication.
 Scope: C269 evidence coverage audit and saved delivery. Reserved shared paths: STATUS.md, docs/workflow/CURRENT.json, docs/workflow/tasks/C269/, docs/engineering/localized-repair-c269/ root integration and delivery records. Investigators own only their assigned evidence subdirectories; they have no integration authority.
 
 ## Historical status

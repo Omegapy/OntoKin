@@ -23,3 +23,7 @@ Early recovery is confirmed: `libfile_fde3_f-d282a7bee20c8191bfed2cc17bdce30f_2a
 ## Audited candidate checkpoint
 
 H01-H28 map: 24 complete groups and four partial (H16/H20/H22/H24), 99 material subcases. Existing behavioral evidence remains attributed to merge5084; no observer rerun. Independent identity review passed. Audit authors stopped; combined exact-candidate review is next. Root terminal Git push was unavailable and not repeated. Authenticated GitHub publication acquired the lease at `5e193e831e74483bccca67ea6cf8a1b8cec47491`; its tree equals the preserved local bootstrap tree. Native bootstrap commit bytes are retained in the recovery bundle.
+
+## Independent acceptance checkpoint
+
+Separate reviewer `/root/state_audit` accepted R01-R04 at `4258e001a567ff830b790a174f8bdde9d368f05a`, with no mandatory findings and 1,882 static checks. Original audit/map/next-task hashes remain unchanged. R05/R06 remain open. Fresh documentation/workflow checks apply only to their actual candidate. Lease renewal `a255b8e2790f49df4b22074a9dfc3f8ee8a4e85b` is retained as a reconciliation parent. Package preflight required adopted language specifications and mandatory native-bundle verification; both are corrected before package creation.
