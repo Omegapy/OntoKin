@@ -25,3 +25,9 @@ Confirm early recovery before substantial work; verify and save final ZIP and pr
 ## Constraints and exclusions
 
 One evidence-only phase. Preserve existing runtime, observers, contracts, controls, fixtures, dependencies, semantics and budgets. No source evaluator/exporter/native/model trial. Do not relax the expected category, add SiteRef support or fix implementation in this phase. H20/H22/H24 remain open; H16 only qualifies if independently demonstrated. C262 remains unchanged. A contradiction is retained with the smallest next correction and parent task remains open.
+
+## Current authorized correction phase — November 20, 2026
+
+The fresh continuation resumes existing C270 after its completed failure-evidence delivery. The evidence-only exclusions above describe the original phase and remain historical. This phase explicitly authorizes only the narrow C265 declared SiteRef refusal correction and necessary current C266/C267/C268 size/hash pins. The original R01 fixture/oracle and failed R02 execution remain immutable. No source evaluator, alias resolution, successful endpoint support, semantics, contracts, budgets, hosted workflows or other H groups change.
+
+R02 now requires the unchanged frozen exact-category assertions to pass and genuine malformed/non-SiteRef/invalid nominal-type/inaccessible-member distinctions to remain correct. R03 and R04 reopen for affected checks, independent review and actual-main integration of the correction. R05 reopens for this phase's verified saved ZIP/prompts and separate receipt; the confirmed early save is in the correction record. Prior completed review/integration/delivery gates remain recorded in phase history. See [session](../../../engineering/localized-repair-c270/correction/SESSION.md) for scope, ownership, checks and stop.

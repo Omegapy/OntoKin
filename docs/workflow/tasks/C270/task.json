@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "id": "C270",
-  "title": "H16 source-valid SiteRef refusal control",
+  "title": "H16 source-valid SiteRef refusal control and classification correction",
   "intent": "Resolve the C269 H16.02 evidence gap using one source-valid declared/computed site reference and precise refusal propagation",
   "status": "in_progress",
-  "owner": "c270-recovery-9e9d17639499",
+  "owner": "c270-correction-92228987b591",
   "branch": "work/c270-valid-siteref-control",
-  "base_sha": "254e481351239b536394c182b6761ec4c8662764",
+  "base_sha": "55c585acdaa750961ac37a5c46c9160bed149f97",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/270",
   "requirements": [
     {
@@ -22,7 +22,7 @@
     {
       "id": "R02",
       "description": "Actual source and comparison outcomes",
-      "acceptance": "Execute source observation and applicable comparison for the frozen fixture. Require exact UNSUPPORTED_SOURCE_FORM, retained identities and reason, and no qualified partial set. Preserve every result. If contradicted, leave this acceptance unmet and queue a specific correction without implementation repair.",
+      "acceptance": "The unchanged independently frozen SiteRef control must return exact UNSUPPORTED_SOURCE_FORM through source observation, binding and comparison, retaining identities and reason with no qualified partial output. Preserve original failure evidence. In this newly authorized correction phase, preserve undeclared, invalid nominal type, non-SiteRef and inaccessible external-member refusals without adding successful SiteRef support or evaluating aliases.",
       "status": "not_done",
       "evidence": [
         "docs/engineering/localized-repair-c270/FINDING.json",
@@ -32,8 +32,8 @@
     {
       "id": "R03",
       "description": "Affected checks and independent review",
-      "acceptance": "Preserve historical controls and implementation. Execute the scope-relevant regression inventory and documentation/workflow checks. Obtain independent exact-candidate review and resolve mandatory evidence findings.",
-      "status": "done",
+      "acceptance": "Preserve historical controls, contracts, fixtures and evidence. Independently review the precise classification distinction; execute the frozen control, new negative distinctions, complete affected C265-C268 regression/pin-admission cohort and applicable local documentation/workflow checks. Independently review exact candidate and resolve mandatory findings.",
+      "status": "not_done",
       "evidence": [
         "docs/engineering/localized-repair-c270/evidence/recovery-20261120/CANDIDATE-REVIEW.json",
         "docs/engineering/localized-repair-c270/evidence/recovery-20261120/candidate-checks/CHECKS.json",
@@ -43,8 +43,8 @@
     {
       "id": "R04",
       "description": "Reviewed evidence integration",
-      "acceptance": "Acquire expected-head lease, publish and review one branch/PR, conditionally integrate eligible evidence, verify actual main and retain history/observed branch disposition. A failed control is evidence, never successful qualification.",
-      "status": "done",
+      "acceptance": "Acquire verified expected-head integration ownership, publish the retained scope branch and a reviewable PR, conditionally integrate the reviewed correction/evidence, verify actual main and retain history with observed branch disposition.",
+      "status": "not_done",
       "evidence": [
         "docs/engineering/localized-repair-c270/INTEGRATION.json",
         "docs/engineering/localized-repair-c270/evidence/recovery-20261120/actual-main-checks/CHECKS.json"
@@ -54,10 +54,11 @@
       "id": "R05",
       "description": "Verified delivery and closure decision",
       "acceptance": "Confirm early recovery before substantial work; verify and save final ZIP and prompts, publish separate receipt, stop. Close parent/issue only when all gates pass; otherwise retain open scope and exact remaining action.",
-      "status": "done",
+      "status": "not_done",
       "evidence": [
         "docs/engineering/localized-repair-c270/DELIVERY.json",
-        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/FINAL-PACKAGE-REVIEW.json"
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/FINAL-PACKAGE-REVIEW.json",
+        "docs/engineering/localized-repair-c270/correction/EARLY-RECOVERY-RECEIPT.json"
       ]
     }
   ],
@@ -71,7 +72,8 @@
       ],
       "status": "done",
       "artifacts": [
-        "docs/engineering/localized-repair-c270/EARLY-RECOVERY-RECEIPT.json"
+        "docs/engineering/localized-repair-c270/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c270/correction/EARLY-RECOVERY-RECEIPT.json"
       ],
       "verification": [
         "Confirmed early recovery save and live main/lease/branch/issue readback"
@@ -79,7 +81,7 @@
     },
     {
       "id": "P02",
-      "title": "Independent fixture, predeclared expectation and execution",
+      "title": "Preserve frozen control and correct the narrow refusal classification",
       "requirements": [
         "R01",
         "R02"
@@ -98,7 +100,7 @@
       "requirements": [
         "R03"
       ],
-      "status": "done",
+      "status": "not_done",
       "artifacts": [
         "docs/engineering/localized-repair-c270/evidence/recovery-20261120/CANDIDATE-REVIEW.json"
       ],
@@ -108,11 +110,11 @@
     },
     {
       "id": "P04",
-      "title": "Evidence integration and actual-main verification",
+      "title": "Reviewed correction integration and actual-main verification",
       "requirements": [
         "R04"
       ],
-      "status": "done",
+      "status": "not_done",
       "artifacts": [
         "docs/engineering/localized-repair-c270/INTEGRATION.json"
       ],
@@ -126,7 +128,7 @@
       "requirements": [
         "R05"
       ],
-      "status": "done",
+      "status": "not_done",
       "artifacts": [
         "docs/engineering/localized-repair-c270/DELIVERY.json"
       ],
@@ -136,6 +138,168 @@
     }
   ],
   "checks": [
+    {
+      "name": "unchanged frozen H16 category control",
+      "command": "python3 -B docs/engineering/localized-repair-c270/run_h16_control.py --phase C270-correction --output NEW_OUTPUT",
+      "result": "not_run",
+      "required": true,
+      "evidence": []
+    },
+    {
+      "name": "narrow malformed/access distinctions",
+      "command": "python3 -B docs/engineering/localized-repair-c270/correction/test_refusal_classification.py",
+      "result": "not_run",
+      "required": true,
+      "evidence": []
+    },
+    {
+      "name": "complete affected C265-C268 dependency cohort",
+      "command": "python3 -B docs/engineering/localized-repair-c268/evidence/run_checks.py --repo IDENTIFIED_REPO --phase C270-correction --output NEW_OUTPUT --c268-methods 35",
+      "result": "not_run",
+      "required": true,
+      "evidence": []
+    },
+    {
+      "name": "documentation and workflow records",
+      "command": "python3 -B tools/chat_workflow.py check; python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "not_run",
+      "required": true,
+      "evidence": []
+    },
+    {
+      "name": "routine local driver",
+      "command": "python3 -B tools/check_local.py --output-dir NEW_OUTPUT",
+      "result": "not_run",
+      "required": false,
+      "evidence": [],
+      "interpretation": "Mandatory invocation; complete affected regression acceptance is separately identified. Preserve all failures and investigate any new/worsened effect on this correction."
+    }
+  ],
+  "completion": {
+    "implementation_commit": null,
+    "merge_commit": null,
+    "pull_request": null,
+    "branch_disposition": "retained",
+    "evidence": [],
+    "scope_issue_state": "open",
+    "phase_complete_parent_open": false
+  },
+  "next_action": "Complete the one declared classification correction, preserve original failed evidence, verify/review/integrate and deliver a new verified handoff; stop without H20/H22/H24 work.",
+  "session_phase": {
+    "id": "C270-classification-correction",
+    "starting_main": "55c585acdaa750961ac37a5c46c9160bed149f97",
+    "starting_branch_head": "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68",
+    "declared_at_utc": "2026-11-20T19:37:12Z",
+    "owner": "c270-correction-92228987b591",
+    "scope": "One narrow declared SiteRef refusal correction and required current dependency pins, verification, integration and saved delivery",
+    "acceptance": "Unchanged frozen exact-category control plus malformed/access distinctions, affected regression, independent review, actual-main verification and confirmed delivery",
+    "stopping_point": "One verified saved handoff and external receipt; no second phase or support expansion",
+    "early_save_confirmed": true,
+    "early_receipt": "docs/engineering/localized-repair-c270/correction/EARLY-RECOVERY-RECEIPT.json",
+    "status": "in_progress",
+    "integration_complete": false,
+    "delivery_confirmed": false
+  },
+  "delivery": {
+    "required": true,
+    "kind": "browser-session",
+    "status": "pending",
+    "folder": "OntoKin",
+    "receipt": null,
+    "partial": true
+  },
+  "phase_history": [
+    {
+      "id": "C270-H16-control",
+      "starting_main": "254e481351239b536394c182b6761ec4c8662764",
+      "declared_at_utc": "2026-11-20T03:59:48.392367+00:00",
+      "owner": "c270-h16-1242e9ec1f21",
+      "scope": "One evidence-only H16 declared/computed SiteRef control, review, eligible integration and saved handoff",
+      "acceptance": "R01-R05; exact unsupported category or honest preserved failure with parent open",
+      "stopping_point": "Verified saved handoff; first unplanned implementation or contract expansion stops behavioral work",
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c270/EARLY-RECOVERY-RECEIPT.json",
+      "outcome": "control_exposed_defect; no implementation repair",
+      "behavioral_work_stopped": true
+    },
+    {
+      "id": "C270-recovery-finalization",
+      "starting_main": "c7b99e7c37bf8e3b11b58660b2903150211dc355",
+      "starting_branch_head": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
+      "declared_at_utc": "2026-11-20T15:02:00.521622+00:00",
+      "owner": "c270-recovery-9e9d17639499",
+      "scope": "Finish existing failure-evidence review, eligible integration, actual-main record checks and verified saved partial handoff",
+      "acceptance": "R03-R05 finalization gates; R02 remains failed and the parent/issue remain open",
+      "stopping_point": "Verified saved partial handoff and separate receipt; no classification correction or new milestone",
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c270/RECOVERY-EARLY-RECEIPT.json",
+      "behavioral_work_stopped": true,
+      "behavioral_reruns_this_phase": 0,
+      "integration_complete": true,
+      "outcome": "Reviewed preserved failure evidence integrated, checked and delivered in a verified partial handoff; parent R02 remains failed",
+      "delivery_confirmed": true,
+      "ownership_release": "released by this closeout commit; discover identity from live history",
+      "status": "complete_partial_delivery",
+      "completed_at_utc": "2026-11-20T15:18:58.880051+00:00",
+      "requirement_states_at_closeout": {
+        "R01": "done",
+        "R02": "not_done",
+        "R03": "done",
+        "R04": "done",
+        "R05": "done"
+      },
+      "completion": {
+        "implementation_commit": null,
+        "merge_commit": "1afe569efc365caa6ec3203d3079dbc33d70349e",
+        "pull_request": "https://github.com/Omegapy/OntoKin/pull/271",
+        "branch_disposition": "retained",
+        "evidence": [
+          "docs/engineering/localized-repair-c270/INTEGRATION.json",
+          "docs/engineering/localized-repair-c270/evidence/recovery-20261120/FINAL-APPROVAL.json",
+          "docs/engineering/localized-repair-c270/DELIVERY.json",
+          "docs/engineering/localized-repair-c270/CLOSEOUT.json"
+        ],
+        "evidence_candidate": "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68",
+        "scope_issue_state": "open",
+        "delivery_receipt_commit": "fbfa7701862bf49265043b194c2c509f62cb54c5",
+        "phase_complete_parent_open": true
+      },
+      "delivery": {
+        "required": true,
+        "kind": "browser-session",
+        "status": "saved",
+        "folder": "OntoKin",
+        "receipt": "docs/engineering/localized-repair-c270/DELIVERY.json",
+        "library_file_id": "libfile_fde3_f-fb342ba3a2d48191be837ec9bab3566f_2ab2a24d43748191957f9bcc356b59de",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fb342ba3a2d48191be837ec9bab3566f_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "bytes": 2573742,
+        "sha256": "2c8d08e8cbdeec4ada3e65d692dc47d813169c3268fe33d014b89e6281a32940",
+        "version": 0,
+        "source_revision": "a8e0bd1d446396b220075b5329e2c769c338f6a2",
+        "partial": true
+      }
+    }
+  ],
+  "recovery": {
+    "starting_branch": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
+    "lease_commit": "ab0f196cd8c67dfa94cba369381dafa8b6c7a015",
+    "first_unmet_gate": "Implement narrowly declared correction after verified bootstrap",
+    "known_unknown_operations": [],
+    "preserve_original_failure": true,
+    "workers": [
+      "/root/candidate_review",
+      "/root/handoff_audit"
+    ],
+    "read_set": "docs/engineering/localized-repair-c270/evidence/recovery-20261120/startup_read_set.json",
+    "independent_review": {
+      "candidate": "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68",
+      "static_checks": 429,
+      "result": "approved_for_evidence_only_integration",
+      "final_metadata_delta_review": "passed"
+    },
+    "workers_disposition": "All assigned workers complete; no known active process or unknown operation"
+  },
+  "historical_checks": [
     {
       "name": "frozen H16 category control",
       "command": "python3 -B docs/engineering/localized-repair-c270/run_h16_control.py --phase frozen-candidate --output NEW_OUTPUT",
@@ -173,44 +337,7 @@
       ]
     }
   ],
-  "completion": {
-    "implementation_commit": null,
-    "merge_commit": "1afe569efc365caa6ec3203d3079dbc33d70349e",
-    "pull_request": "https://github.com/Omegapy/OntoKin/pull/271",
-    "branch_disposition": "retained",
-    "evidence": [
-      "docs/engineering/localized-repair-c270/INTEGRATION.json",
-      "docs/engineering/localized-repair-c270/evidence/recovery-20261120/FINAL-APPROVAL.json",
-      "docs/engineering/localized-repair-c270/DELIVERY.json",
-      "docs/engineering/localized-repair-c270/CLOSEOUT.json"
-    ],
-    "evidence_candidate": "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68",
-    "scope_issue_state": "open",
-    "delivery_receipt_commit": "fbfa7701862bf49265043b194c2c509f62cb54c5",
-    "phase_complete_parent_open": true
-  },
-  "next_action": "This recovery phase is complete and its verified partial handoff is saved. In a fresh main chat explicitly declare the narrow R02 classification correction using NEXT-TASK.md, preserving the existing task/branch and original failed control. Parent remains in_progress; do not replay completed finalization.",
-  "session_phase": {
-    "id": "C270-recovery-finalization",
-    "starting_main": "c7b99e7c37bf8e3b11b58660b2903150211dc355",
-    "starting_branch_head": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
-    "declared_at_utc": "2026-11-20T15:02:00.521622+00:00",
-    "owner": "c270-recovery-9e9d17639499",
-    "scope": "Finish existing failure-evidence review, eligible integration, actual-main record checks and verified saved partial handoff",
-    "acceptance": "R03-R05 finalization gates; R02 remains failed and the parent/issue remain open",
-    "stopping_point": "Verified saved partial handoff and separate receipt; no classification correction or new milestone",
-    "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c270/RECOVERY-EARLY-RECEIPT.json",
-    "behavioral_work_stopped": true,
-    "behavioral_reruns_this_phase": 0,
-    "integration_complete": true,
-    "outcome": "Reviewed preserved failure evidence integrated, checked and delivered in a verified partial handoff; parent R02 remains failed",
-    "delivery_confirmed": true,
-    "ownership_release": "released by this closeout commit; discover identity from live history",
-    "status": "complete_partial_delivery",
-    "completed_at_utc": "2026-11-20T15:18:58.880051+00:00"
-  },
-  "delivery": {
+  "previous_delivery": {
     "required": true,
     "kind": "browser-session",
     "status": "saved",
@@ -223,39 +350,5 @@
     "version": 0,
     "source_revision": "a8e0bd1d446396b220075b5329e2c769c338f6a2",
     "partial": true
-  },
-  "phase_history": [
-    {
-      "id": "C270-H16-control",
-      "starting_main": "254e481351239b536394c182b6761ec4c8662764",
-      "declared_at_utc": "2026-11-20T03:59:48.392367+00:00",
-      "owner": "c270-h16-1242e9ec1f21",
-      "scope": "One evidence-only H16 declared/computed SiteRef control, review, eligible integration and saved handoff",
-      "acceptance": "R01-R05; exact unsupported category or honest preserved failure with parent open",
-      "stopping_point": "Verified saved handoff; first unplanned implementation or contract expansion stops behavioral work",
-      "early_save_confirmed": true,
-      "early_receipt": "docs/engineering/localized-repair-c270/EARLY-RECOVERY-RECEIPT.json",
-      "outcome": "control_exposed_defect; no implementation repair",
-      "behavioral_work_stopped": true
-    }
-  ],
-  "recovery": {
-    "starting_branch": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
-    "lease_commit": "ab0f196cd8c67dfa94cba369381dafa8b6c7a015",
-    "first_unmet_gate": "Parent R02 classification correction, only in a fresh explicitly declared bounded phase",
-    "known_unknown_operations": [],
-    "preserve_original_failure": true,
-    "workers": [
-      "/root/candidate_review",
-      "/root/handoff_audit"
-    ],
-    "read_set": "docs/engineering/localized-repair-c270/evidence/recovery-20261120/startup_read_set.json",
-    "independent_review": {
-      "candidate": "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68",
-      "static_checks": 429,
-      "result": "approved_for_evidence_only_integration",
-      "final_metadata_delta_review": "passed"
-    },
-    "workers_disposition": "All assigned workers complete; no known active process or unknown operation"
   }
 }
