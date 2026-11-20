@@ -24,7 +24,10 @@
       "description": "Actual source and comparison outcomes",
       "acceptance": "Execute source observation and applicable comparison for the frozen fixture. Require exact UNSUPPORTED_SOURCE_FORM, retained identities and reason, and no qualified partial set. Preserve every result. If contradicted, leave this acceptance unmet and queue a specific correction without implementation repair.",
       "status": "not_done",
-      "evidence": []
+      "evidence": [
+        "docs/engineering/localized-repair-c270/FINDING.json",
+        "docs/engineering/localized-repair-c270/evidence/candidate/h16/RESULTS.json"
+      ]
     },
     {
       "id": "R03",
@@ -122,7 +125,26 @@
       ]
     }
   ],
-  "checks": [],
+  "checks": [
+    {
+      "name": "frozen H16 category control",
+      "command": "python3 -B docs/engineering/localized-repair-c270/run_h16_control.py --phase frozen-candidate --output NEW_OUTPUT",
+      "result": "failed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c270/evidence/candidate/h16/RESULTS.json"
+      ]
+    },
+    {
+      "name": "affected regression cohort and records",
+      "command": "python3 -B docs/engineering/localized-repair-c270/run_regressions.py --phase frozen-candidate --output NEW_OUTPUT",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c270/evidence/candidate/regressions/CHECKS.json"
+      ]
+    }
+  ],
   "completion": {
     "implementation_commit": null,
     "merge_commit": null,
@@ -130,7 +152,7 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Publish exact independent fixture and expected result; then execute source/comparator control and record all outcomes.",
+  "next_action": "Finish independent evidence review, eligible evidence integration and saved partial handoff. R02 remains unmet; next fresh phase is the narrowly scoped classification correction.",
   "session_phase": {
     "id": "C270-H16-control",
     "starting_main": "254e481351239b536394c182b6761ec4c8662764",
@@ -140,7 +162,9 @@
     "acceptance": "R01-R05; exact unsupported category or honest preserved failure with parent open",
     "stopping_point": "Verified saved handoff; first unplanned implementation or contract expansion stops behavioral work",
     "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c270/EARLY-RECOVERY-RECEIPT.json"
+    "early_receipt": "docs/engineering/localized-repair-c270/EARLY-RECOVERY-RECEIPT.json",
+    "outcome": "control_exposed_defect; no implementation repair",
+    "behavioral_work_stopped": true
   },
   "delivery": {
     "required": true,
