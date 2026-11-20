@@ -19,3 +19,7 @@ Before audit work: verify and save early recovery. Initial C269 scope documents 
 ## Early-save and scope-publication checkpoint
 
 Early recovery is confirmed: `libfile_fde3_f-d282a7bee20c8191bfed2cc17bdce30f_2ab2a24d43748191957f9bcc356b59de`, 98070 bytes, SHA-256 `3282f0e4efab6ee38ff2c3caa2b0087c1991c2fe7d6cd6f311b80498177f8434`. [Receipt](../../../../docs/engineering/localized-repair-c269/EARLY-RECOVERY-RECEIPT.json). Scope issue268 is open. Three actual fresh-context workers are recorded in [WORKERS.json](WORKERS.json). C269 is now in progress; root requests the first main lease against the exact observed available predecessor. No audit findings have yet been accepted.
+
+## Audited candidate checkpoint
+
+H01-H28 map: 24 complete groups and four partial (H16/H20/H22/H24), 99 material subcases. Existing behavioral evidence remains attributed to merge5084; no observer rerun. Independent identity review passed. Audit authors stopped; combined exact-candidate review is next. Root terminal Git push was unavailable and not repeated. Authenticated GitHub publication acquired the lease at `5e193e831e74483bccca67ea6cf8a1b8cec47491`; its tree equals the preserved local bootstrap tree. Native bootstrap commit bytes are retained in the recovery bundle.

@@ -1,0 +1,15 @@
+# After C269: reconcile delivery, then one H16 control
+
+First reconcile live C269 DELIVERY.json, CURRENT, task, scope issue, branch/PR and ownership. Finish any unmet C269 delivery/closure gate before selecting work. A frozen archive may say save_pending because its save receipt follows externally. Do not replay the completed audit.
+
+When C269 is integrated, independently reviewed, delivered and complete, stop this phase. A fresh continuation can select the first remaining audited gap: **H16 source-valid declared/computed SiteRef refusal classification**. The audit found four partial groups (H16, H20, H22, H24); this proposal addresses only the named H16 clause.
+
+## Proposed bounded scope
+
+Read the unchanged C260 contract/control plan, the adopted source rules governing typed site references, the exact C269 H16 map, and the current C265 source observer/C267 comparator. Independently construct the smallest valid declared or computed site-reference input that is outside this finite observation profile. Freeze exact source bytes, pins and independently authored expected result before execution. A source-invalid undeclared identifier cannot substitute for this fixture.
+
+Acceptance: prove the fixture's source form from adopted rules without taking the observer as its oracle; execute actual source observation and applicable comparison refusal propagation; require the exact unsupported-form category, retained identities/reason and no qualified partial set. Preserve all existing contract/fixture/code expectations. Record both negative evidence and any successful behavior with exact implementation/input/environment/command identities. Obtain independent review and the affected regression checks selected for the actual change.
+
+Do not expand supported source forms, weaken the category assertion, rewrite historical controls, or silently repair implementation within an evidence-only assignment. If the new control exposes a defect or a contract ambiguity, retain the failing input and declare the smallest specific correction as the next scope. Keep H20/H22/H24 open; no whole-contract, product, site/world, accepted-revision, native/model or comparative claim follows from H16 alone.
+
+Use a new bounded task/phase and confirmed early recovery. Stop after its reviewed checkpoint and verified saved handoff. No part of that next scope was executed by C269.

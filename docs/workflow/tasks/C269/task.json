@@ -3,7 +3,7 @@
   "id": "C269",
   "title": "C260 hinge qualification coverage audit",
   "intent": "Determine exactly which H01-H28 obligations are supported by the existing four-interface evidence and identify the first remaining gap",
-  "status": "in_progress",
+  "status": "review",
   "owner": "c269-audit-d59e10906594",
   "branch": "work/c269-hinge-coverage-audit",
   "base_sha": "23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb",
@@ -13,22 +13,33 @@
       "id": "R01",
       "description": "Exact baseline and evidence identity",
       "acceptance": "Bind unchanged C260 CONTRACT, CONTROL-PLAN and INPUTS, the C253 corpus, and the C261/C265/C266/C267/C268 implementations, independent controls and relevant saved execution evidence to exact revisions, byte sizes and hashes. Separate historical execution from new audit checks.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/INPUT-IDENTITIES.json",
+        "docs/engineering/localized-repair-c269/evidence/EXECUTION-ELIGIBILITY.json"
+      ]
     },
     {
       "id": "R02",
       "description": "Complete H01-H28 coverage map",
       "acceptance": "Record all 28 groups and every material subcase. Cite actual independent assertions, input construction, identities and outcomes. Classify complete, partial, absent or contradictory evidence conservatively. Do not promote a method count or label to group qualification.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/COVERAGE.json",
+        "docs/engineering/localized-repair-c269/AUDIT.md",
+        "docs/engineering/localized-repair-c269/NEXT-TASK.md"
+      ]
     },
     {
       "id": "R03",
       "description": "Qualification decision and first remaining gap",
       "acceptance": "Publish a human-readable audit and machine-readable map. State whether existing evidence supports contract-wide qualification. Identify one specific next bounded control or investigation, with inputs, acceptance and exclusions. No implementation or contract amendment in this phase.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/COVERAGE.json",
+        "docs/engineering/localized-repair-c269/AUDIT.md",
+        "docs/engineering/localized-repair-c269/NEXT-TASK.md"
+      ]
     },
     {
       "id": "R04",
@@ -76,7 +87,7 @@
         "R01",
         "R02"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c269/COVERAGE.json",
         "docs/engineering/localized-repair-c269/INPUT-IDENTITIES.json"
@@ -93,7 +104,7 @@
         "R03",
         "R04"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c269/AUDIT.md",
         "docs/engineering/localized-repair-c269/NEXT-TASK.md",
@@ -140,7 +151,7 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Complete the disjoint independent H01-H14 and H15-H28 evidence audits; synthesize exact coverage and gaps, then independently review this candidate.",
+  "next_action": "Independently review the exact combined C269 audit candidate and pass fresh documentation/workflow/reference checks; then integrate and save the handoff without implementing missing controls.",
   "session_phase": {
     "id": "C269-coverage-audit",
     "starting_main": "23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb",
