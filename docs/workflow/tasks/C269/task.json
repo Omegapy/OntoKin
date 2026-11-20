@@ -3,7 +3,7 @@
   "id": "C269",
   "title": "C260 hinge qualification coverage audit",
   "intent": "Determine exactly which H01-H28 obligations are supported by the existing four-interface evidence and identify the first remaining gap",
-  "status": "in_progress",
+  "status": "done",
   "owner": "c269-audit-d59e10906594",
   "branch": "work/c269-hinge-coverage-audit",
   "base_sha": "23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb",
@@ -66,10 +66,12 @@
       "id": "R06",
       "description": "Verified saved delivery and closure",
       "acceptance": "Confirm early recovery before audit work. Verify the final ZIP inventory, manifest, fresh extraction and exact Git snapshots; save the ZIP and both prompts in the existing OntoKin folder. Publish a separate receipt, close task and issue only when all gates pass, release ownership and stop.",
-      "status": "not_done",
+      "status": "done",
       "evidence": [
         "docs/engineering/localized-repair-c269/DELIVERY.json",
-        "docs/engineering/localized-repair-c269/evidence/delivery/final-package-review/RESULTS.json"
+        "docs/engineering/localized-repair-c269/evidence/delivery/final-package-review/RESULTS.json",
+        "docs/engineering/localized-repair-c269/CLOSEOUT.json",
+        "docs/engineering/localized-repair-c269/evidence/delivery/receipt-main-checks/CHECKS.json"
       ]
     }
   ],
@@ -144,7 +146,7 @@
       "requirements": [
         "R06"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c269/DELIVERY.json"
       ],
@@ -189,6 +191,15 @@
       "evidence": [
         "docs/engineering/localized-repair-c269/evidence/delivery/final-package-review/RESULTS.json"
       ]
+    },
+    {
+      "name": "confirmed receipt main documentation and workflow",
+      "command": "python3 docs/engineering/localized-repair-c269/evidence/run_record_checks.py --repo IDENTIFIED_RECEIPT_MAIN --output NEW_OUTPUT --phase confirmed-receipt-main",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c269/evidence/delivery/receipt-main-checks/CHECKS.json"
+      ]
     }
   ],
   "completion": {
@@ -199,11 +210,17 @@
     "evidence": [
       "docs/engineering/localized-repair-c269/REVIEW.json",
       "docs/engineering/localized-repair-c269/INTEGRATION.json",
-      "docs/engineering/localized-repair-c269/evidence/actual-main-checks/CHECKS.json"
+      "docs/engineering/localized-repair-c269/evidence/actual-main-checks/CHECKS.json",
+      "docs/engineering/localized-repair-c269/DELIVERY.json",
+      "docs/engineering/localized-repair-c269/CLOSEOUT.json"
     ],
-    "published_evidence_commit": "9a1b68b861843b7689d71590b897f4e4f8367b3d"
+    "published_evidence_commit": "9a1b68b861843b7689d71590b897f4e4f8367b3d",
+    "scope_issue_state": "closed",
+    "scope_issue_closed_at": "2026-11-20T03:16:46Z",
+    "delivery_receipt_commit": "c356702d1af8a0f63c7314b2682bc7bb53d298bf",
+    "closed_at_utc": "2026-11-20T03:16:56.424035+00:00"
   },
-  "next_action": "Final ZIP and both prompts saved and independently verified. Publish/check the separate receipt, close R06/task/scope issue268, release ownership and stop.",
+  "next_action": "Completed this one audit phase and stopped. The next separate candidate is one source-valid declared/computed SiteRef control for H16; follow NEXT-TASK.md only in a fresh authorized phase.",
   "session_phase": {
     "id": "C269-coverage-audit",
     "starting_main": "23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb",
@@ -222,6 +239,10 @@
     "folder": "OntoKin",
     "receipt": "docs/engineering/localized-repair-c269/DELIVERY.json",
     "library_file_id": "libfile_fde3_f-0ba7fe628c688191b4b555a7e7b8e891_2ab2a24d43748191957f9bcc356b59de",
-    "source_revision": "3ad6f2e0d56e1b97c87a63e1d3353aec899bfaf0"
+    "source_revision": "3ad6f2e0d56e1b97c87a63e1d3353aec899bfaf0",
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-0ba7fe628c688191b4b555a7e7b8e891_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "sha256": "6f09f8855c361f7157bc87f2c56d2a097df7aa60f78a779a90db9a124091200f",
+    "bytes": 925448,
+    "version": 0
   }
 }

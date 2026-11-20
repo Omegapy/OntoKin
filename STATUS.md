@@ -4,7 +4,7 @@
 
 ## Current workflow and next action
 
-C269 audit is integrated and verified: [PR269](https://github.com/Omegapy/OntoKin/pull/269), merge `c3bda080febf6359a6ad364b940d5d68f2741c9d`, exact reviewed tree and retained history; its branch is absent. [Audit](docs/engineering/localized-repair-c269/AUDIT.md): **24 complete and four partial H groups** (H16/H20/H22/H24), 99 material subcases. Complete C260 qualification remains unestablished. [Independent review](docs/engineering/localized-repair-c269/REVIEW.json) and fresh actual-main documentation/workflow checks passed; [integration](docs/engineering/localized-repair-c269/INTEGRATION.json). No observer behavior or existing control/contract/fixture changed; no behavioral rerun. R06 final verified handoff/receipt/closure remains pending in [scope268](https://github.com/Omegapy/OntoKin/issues/268). Stop after saved delivery; proposed H16 control is a separate phase.
+C269 complete within its evidence-only coverage audit. [PR269](https://github.com/Omegapy/OntoKin/pull/269) merged at `c3bda080febf6359a6ad364b940d5d68f2741c9d`; its branch is deleted and reviewed history is retained. [Audit](docs/engineering/localized-repair-c269/AUDIT.md): **24 complete and four partial H groups** (H16/H20/H22/H24), **94 complete and five partial material subcases**. Full C260 qualification remains unestablished. Independent audit review and fresh documentation/workflow checks passed. The final package passed **1,768 independent checks** and its ZIP plus matching prompts have confirmed saves; [separate receipt](docs/engineering/localized-repair-c269/DELIVERY.json), [closeout](docs/engineering/localized-repair-c269/CLOSEOUT.json). R01-R06 and [scope268](https://github.com/Omegapy/OntoKin/issues/268) are complete. No observer behavior or existing control/contract/fixture changed; no behavioral rerun. This phase stops here. Proposed H16 control remains a separate next phase.
 
 C268 complete within exact historical endpoint admission under unchanged C260. [PR266](https://github.com/Omegapy/OntoKin/pull/266) merged at `5084dd69312e8da5a49aadd33cf83ba56db7c058`; its source branch is absent and the reviewed history is retained. Actual-main evidence passed **12 groups, 282 methods, 14 bindings**, zero failures/errors/skips on CPython **3.12.14 / Linux**. [Integration](docs/engineering/localized-repair-c268/INTEGRATION.json), [independent recovery audit](docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/REPORT.md), [confirmed final handoff and prompts](docs/engineering/localized-repair-c268/DELIVERY.json). [Scope265](https://github.com/Omegapy/OntoKin/issues/265) is closed. The final package passed independent verification; source checks remain attributed to their actual revisions.
 
@@ -12,7 +12,7 @@ C267 complete within finite declaration comparison: [PR261](https://github.com/O
 
 C266 complete: [PR259](https://github.com/Omegapy/OntoKin/pull/259), merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`; **10 passing main groups, 222 methods, 14 bindings**; branch deleted; [saved delivery](docs/engineering/localized-repair-c266/DELIVERY.json) unchanged. C265/C264/C263 complete within recorded scopes.
 
-Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json), [HANDOFF](docs/workflow/HANDOFF.md). C268 integration, verification and saved delivery are complete. The new continuation selects its queued C269 coverage audit. Stop after C269 verified saved delivery; do not implement missing controls in this phase. Owner-requested startup compression is delivered; C268 remains unchanged.
+Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json), [HANDOFF](docs/workflow/HANDOFF.md). C269 integration, verification and saved delivery are complete. No active task remains. A fresh authorized continuation may select the bounded H16 control in [NEXT-TASK](docs/engineering/localized-repair-c269/NEXT-TASK.md). No missing control was implemented in C269. Owner-requested startup compression and prior C268 results remain unchanged.
 
 ## Product state and remaining gates
 
@@ -38,10 +38,10 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: held. Owner: `c269-audit-d59e10906594`.
-Acquired at UTC: `2026-11-20T02:44:18.431010+00:00`; expires at UTC: `2026-11-20T03:31:12.530093+00:00`.
-Acquisition verified at `5e193e831e74483bccca67ea6cf8a1b8cec47491`. Renewal checkpoint at `2026-11-20T03:01:12.530093+00:00`: candidate `4258e001a567ff830b790a174f8bdde9d368f05a` passed fresh documentation/workflow/reference checks and independent historical-evidence identity review. Combined coverage review and final delivery remain pending; renewal requires expected-head nonforce publication.
-Scope: C269 evidence coverage audit and saved delivery. Reserved shared paths: STATUS.md, docs/workflow/CURRENT.json, docs/workflow/tasks/C269/, docs/engineering/localized-repair-c269/ root integration and delivery records. Investigators own only their assigned evidence subdirectories; they have no integration authority.
+State: available. Owner: none.
+Last owner: `c269-audit-d59e10906594`; released at UTC: `2026-11-20T03:16:56.424035+00:00` by the expected-parent C269 closure publication.
+The lease was acquired at `2026-11-20T02:44:18.431010+00:00`, verified at `5e193e831e74483bccca67ea6cf8a1b8cec47491`, and renewed through `2026-11-20T03:31:12.530093+00:00`. Audit integration, exact-main checks, independent package review, confirmed ZIP/prompt saves, separate receipt and scope-issue closure are complete. Receipt/main prerequisite: `c356702d1af8a0f63c7314b2682bc7bb53d298bf`.
+No shared paths remain reserved. All subagents have stopped; no next phase is active.
 
 ## Historical status
 
