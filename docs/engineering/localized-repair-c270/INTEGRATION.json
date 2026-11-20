@@ -1,0 +1,75 @@
+{
+  "schema": "ontokin.c270.evidence-integration/1",
+  "recorded_at_utc": "2026-11-20T15:10:20.040859+00:00",
+  "scope": "Existing C270 failure evidence and recovery records only",
+  "status": "integrated_and_checked; parent remains incomplete",
+  "pull_request": {
+    "number": 271,
+    "url": "https://github.com/Omegapy/OntoKin/pull/271",
+    "state": "closed",
+    "merged": true,
+    "merged_at_utc": "2026-11-20T15:09:15Z"
+  },
+  "candidate": "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68",
+  "candidate_tree": "c923dad3176443f23167ef4526c0264e6e172c0f",
+  "starting_main": "ab0f196cd8c67dfa94cba369381dafa8b6c7a015",
+  "merge_commit": "1afe569efc365caa6ec3203d3079dbc33d70349e",
+  "merge_tree": "c923dad3176443f23167ef4526c0264e6e172c0f",
+  "merge_parents": [
+    "ab0f196cd8c67dfa94cba369381dafa8b6c7a015",
+    "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68"
+  ],
+  "method": "Exact reviewed-tree two-parent merge commit followed by expected-main conditional nonforce update; actual main and PR merged status read back",
+  "owner": "c270-recovery-9e9d17639499",
+  "review": {
+    "reviewer": "/root/candidate_review",
+    "candidate": "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68",
+    "passed": true,
+    "static_checks": 429,
+    "mandatory_findings": [],
+    "report": "docs/engineering/localized-repair-c270/evidence/recovery-20261120/FINAL-APPROVAL.json",
+    "report_sha256": "40a2763ad6dcd5949854ff46aa99ca6637e449e31b6d5f23ca7d17357d9e097d"
+  },
+  "actual_main_checks": {
+    "result": "passed",
+    "source_revision": "1afe569efc365caa6ec3203d3079dbc33d70349e",
+    "source_tree": "c923dad3176443f23167ef4526c0264e6e172c0f",
+    "evidence": "docs/engineering/localized-repair-c270/evidence/recovery-20261120/actual-main-checks/CHECKS.json",
+    "commands": [
+      "python3 -B tools/chat_workflow.py check",
+      "python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+    ]
+  },
+  "retained_behavioral_execution": {
+    "revision": "1ae7b594cc075031d11f2f1a33e4c5c0f0171da4",
+    "regression_methods": 108,
+    "corpus_bindings": 14,
+    "new_control_category_failures": 3,
+    "behavioral_reruns_this_recovery": 0,
+    "eligibility": "Exact implementation/dependency/fixture/test/command and applicable environment equality independently verified; these are historical results, not fresh execution"
+  },
+  "branch": {
+    "name": "work/c270-valid-siteref-control",
+    "state": "retained",
+    "head": "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68",
+    "automatic_deletion_observed": true,
+    "restored_same_name": true,
+    "restoration_readback_verified": true,
+    "retained_history_commit": "1afe569efc365caa6ec3203d3079dbc33d70349e",
+    "reason": "C270 R02 remains unmet; preserve unfinished branch for a fresh bounded correction phase"
+  },
+  "task": {
+    "id": "C270",
+    "status": "in_progress",
+    "R02": "not_done",
+    "scope_issue": 270,
+    "scope_issue_state": "open"
+  },
+  "delivery": "pending verified final package and confirmed save/receipt",
+  "unknown_operations": [],
+  "limits": [
+    "Evidence integration does not repair the source observer or qualify H16",
+    "H20/H22/H24 and full C260/product/native/model/site/world claims remain unqualified",
+    "No original control/contract/observer/runtime/dependency/budget/workflow byte changed"
+  ]
+}

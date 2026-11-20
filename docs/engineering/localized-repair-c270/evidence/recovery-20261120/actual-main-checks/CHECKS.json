@@ -1,0 +1,58 @@
+{
+  "runner": {
+    "path": "/workspace/scratch/9e9d17639499/OntoKin/docs/engineering/localized-repair-c269/evidence/run_record_checks.py",
+    "bytes": 2350,
+    "sha256": "3a02a82cd39f8e0c7b802614c0a170ce1236d456db3dc10d263b730903d373f4"
+  },
+  "schema": "ontokin.c269.document-checks/1",
+  "phase": "C270-actual-main",
+  "source_revision": "1afe569efc365caa6ec3203d3079dbc33d70349e",
+  "source_tree": "c923dad3176443f23167ef4526c0264e6e172c0f",
+  "source_clean": true,
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "started_at_utc": "2026-11-20T15:09:23.851515+00:00",
+      "finished_at_utc": "2026-11-20T15:09:23.927114+00:00",
+      "result": "passed",
+      "exit_code": 0,
+      "log": {
+        "path": "workflow.log",
+        "bytes": 148,
+        "sha256": "3a4c5215ccda80a3479a1fb26a5d57ada445e4d0cddada9f67506fb01a8f235f"
+      }
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "started_at_utc": "2026-11-20T15:09:23.927168+00:00",
+      "finished_at_utc": "2026-11-20T15:09:26.183495+00:00",
+      "result": "passed",
+      "exit_code": 0,
+      "log": {
+        "path": "documentation.log",
+        "bytes": 6608,
+        "sha256": "7800e0bdcc1e1fa887b03f790575d15002c4ab580569f9564c12e41a13982fa1"
+      }
+    }
+  ],
+  "result": "passed",
+  "limits": [
+    "Documentation/workflow evidence only",
+    "No behavioral cohort or product/native/model/compatibility test executed"
+  ]
+}

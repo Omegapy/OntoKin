@@ -44,8 +44,11 @@
       "id": "R04",
       "description": "Reviewed evidence integration",
       "acceptance": "Acquire expected-head lease, publish and review one branch/PR, conditionally integrate eligible evidence, verify actual main and retain history/observed branch disposition. A failed control is evidence, never successful qualification.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c270/INTEGRATION.json",
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/actual-main-checks/CHECKS.json"
+      ]
     },
     {
       "id": "R05",
@@ -106,7 +109,7 @@
       "requirements": [
         "R04"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c270/INTEGRATION.json"
       ],
@@ -156,16 +159,30 @@
       "evidence": [
         "docs/engineering/localized-repair-c270/evidence/recovery-20261120/candidate-checks/CHECKS.json"
       ]
+    },
+    {
+      "name": "actual-main documentation/workflow",
+      "command": "python3 -B docs/engineering/localized-repair-c269/evidence/run_record_checks.py --repo IDENTIFIED_MAIN --output NEW_OUTPUT --phase C270-actual-main",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/actual-main-checks/CHECKS.json"
+      ]
     }
   ],
   "completion": {
     "implementation_commit": null,
-    "merge_commit": null,
-    "pull_request": null,
-    "branch_disposition": "active",
-    "evidence": []
+    "merge_commit": "1afe569efc365caa6ec3203d3079dbc33d70349e",
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/271",
+    "branch_disposition": "retained",
+    "evidence": [
+      "docs/engineering/localized-repair-c270/INTEGRATION.json",
+      "docs/engineering/localized-repair-c270/evidence/recovery-20261120/FINAL-APPROVAL.json"
+    ],
+    "evidence_candidate": "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68",
+    "scope_issue_state": "open"
   },
-  "next_action": "Independent review approves the preserved failure evidence. Verify final evidence/state delta, conditionally integrate, run actual-main documentation/workflow checks, retain the unfinished branch, save partial handoff and external receipt, then stop. R02 remains unmet.",
+  "next_action": "Verify and save the C270 partial handoff and matching prompts, publish its separate receipt, release ownership and stop. R02 remains unmet; correction is a separately declared phase for a fresh main chat.",
   "session_phase": {
     "id": "C270-recovery-finalization",
     "starting_main": "c7b99e7c37bf8e3b11b58660b2903150211dc355",
@@ -178,7 +195,9 @@
     "early_save_confirmed": true,
     "early_receipt": "docs/engineering/localized-repair-c270/RECOVERY-EARLY-RECEIPT.json",
     "behavioral_work_stopped": true,
-    "behavioral_reruns_this_phase": 0
+    "behavioral_reruns_this_phase": 0,
+    "integration_complete": true,
+    "outcome": "Original classification defect preserved; reviewed evidence integrated and checked; partial delivery pending"
   },
   "delivery": {
     "required": true,
@@ -205,7 +224,7 @@
   "recovery": {
     "starting_branch": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
     "lease_commit": "ab0f196cd8c67dfa94cba369381dafa8b6c7a015",
-    "first_unmet_gate": "R04 eligible evidence integration and actual-main verification",
+    "first_unmet_gate": "R05 verified partial handoff, confirmed save and separate receipt",
     "known_unknown_operations": [],
     "preserve_original_failure": true,
     "workers": [
@@ -214,10 +233,10 @@
     ],
     "read_set": "docs/engineering/localized-repair-c270/evidence/recovery-20261120/startup_read_set.json",
     "independent_review": {
-      "candidate": "096803b2377966a04f9043139324bac2c65b6a52",
-      "static_checks": 389,
+      "candidate": "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68",
+      "static_checks": 429,
       "result": "approved_for_evidence_only_integration",
-      "final_metadata_delta_review": "pending"
+      "final_metadata_delta_review": "passed"
     }
   }
 }

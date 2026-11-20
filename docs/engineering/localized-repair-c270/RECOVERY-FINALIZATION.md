@@ -11,7 +11,7 @@ This phase resumes the existing evidence-only task after the conversation ended.
 | Actual H16 control (R02) | Failed, retained | Exactly three category assertions failed at `1ae7b594cc075031d11f2f1a33e4c5c0f0171da4`; no partial qualified set |
 | Affected cohort | 108 methods and 14 corpus bindings passed | Original candidate/regressions/CHECKS.json; no behavioral rerun in this phase |
 | Independent exact-candidate review (R03) | Approved for evidence-only integration | 389 static checks at 096803b2377966a04f9043139324bac2c65b6a52; final receipt/state delta reviewed before integration |
-| Evidence integration and actual-main checks (R04) | Pending | Conditional integration after review; fresh documentation/workflow checks |
+| Evidence integration and actual-main checks (R04) | Complete | PR271 merged at 1afe569efc365caa6ec3203d3079dbc33d70349e; fresh documentation/workflow checks passed; unfinished branch restored and retained |
 | Partial delivery and receipt (R05) | Pending | Verify frozen ZIP, save ZIP/prompts, publish separate receipt |
 
 ## Preservation and limits
@@ -25,3 +25,7 @@ R02 remains unmet even if documentation checks, evidence review, integration and
 ## Independent review and current checks
 
 [Independent approval](evidence/recovery-20261120/CANDIDATE-REVIEW.json) and [review rationale](evidence/recovery-20261120/CANDIDATE-REVIEW.md) verify the original failure, complete recorded regression cohort and recovery records. Full review detail and both corrected helper attempts are retained in the byte-manifested candidate-review-evidence.zip with a separate archive identity record. Fresh documentation/workflow checks passed on clean checkpoint `096803b2377966a04f9043139324bac2c65b6a52`. No behavioral run was repeated. These passes do not close R02 or H16.
+
+## Verified integration
+
+[PR271](https://github.com/Omegapy/OntoKin/pull/271) merged the exact approved evidence tree through a conditional main-head update. [Integration record](INTEGRATION.json) binds the 429-check independent review, merge parents, actual-main checks and branch readbacks. Repository automatic cleanup removed the branch; the same name was restored at its verified retained candidate head. Original history is reachable through the merge parents. R04 is complete; R05 final delivery remains pending at this record. R02 and the parent remain incomplete.
