@@ -7,14 +7,18 @@
   "owner": "c271-control-cce28e2b3ca4",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
-  "scope_issue": null,
+  "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
   "requirements": [
     {
       "id": "R01",
       "description": "Independently frozen missing-digest control",
       "acceptance": "Author isolated actual source import-digest removal from the unchanged historical input, with unchanged companion source and GLB, predeclared exact refusal expectation from adopted rules, input hashes and an independent construction explanation before invoking the observers.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/control/EXPECTED.json",
+        "docs/engineering/localized-repair-c271/control/SOURCE-VALIDITY.md",
+        "docs/engineering/localized-repair-c271/control/STATIC-CHECKS.json"
+      ]
     },
     {
       "id": "R02",
@@ -86,7 +90,7 @@
   "checks": [
     {
       "name": "isolated H22 control",
-      "command": "Pending independently frozen runner command",
+      "command": "python3 -B docs/engineering/localized-repair-c271/run_h22_control.py --output NEW_OUTPUT --phase C271-P01",
       "result": "not_run",
       "required": true,
       "evidence": []
@@ -127,7 +131,7 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Confirm early recovery, then independently freeze and execute the isolated H22.02 control. Stop after candidate review, branch publication and verified partial handoff; do not integrate in this phase.",
+  "next_action": "Freeze independent oracle and runner on the scope branch before executing 18 planned calls; retain every outcome for independent P01 review and saved partial delivery.",
   "session_phase": {
     "id": "C271-P01-control-candidate",
     "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
@@ -138,7 +142,8 @@
     "stopping_point": "Verified saved partial handoff and separate receipt; or first unplanned runtime/contract repair",
     "integration_allowed_this_phase": false,
     "status": "in_progress",
-    "early_save_confirmed": false
+    "early_save_confirmed": true,
+    "early_receipt": "docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json"
   },
   "delivery": {
     "required": true,

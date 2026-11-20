@@ -1,0 +1,100 @@
+{
+  "schema": "ontokin.c271.package-verification/1",
+  "passed": true,
+  "archive": {
+    "filename": "OntoKin_C271_Control_Early_Recovery_2026-11-20.zip",
+    "local_path": "/workspace/scratch/cce28e2b3ca4/artifacts/OntoKin_C271_Control_Early_Recovery_2026-11-20.zip",
+    "bytes": 11365488,
+    "sha256": "159769f7cce5de2364ccb0a8c3e49f7275233f370ad3102d6d7e975a05a3b727"
+  },
+  "source_revision": "c27609ebab7c86ff20d7bd288994b49e3dd3c7e1",
+  "source_tree": "80f499fa35cf2d31e7a440eb67a13e8d7b387425",
+  "observed_main": {
+    "sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+    "tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+    "observed_at_utc": "2026-11-20T21:49:53.235938+00:00",
+    "source": "Director live startup reconciliation recorded in C271 SESSION; package worker independently verified the named local Git commit/tree, without remote connector reads."
+  },
+  "fresh_extraction": "/workspace/scratch/cce28e2b3ca4/packaging/c271-early-extracted-e9wy7em1",
+  "config_path": "/workspace/scratch/cce28e2b3ca4/packaging/early-package-config.json",
+  "config_sha256": "a346cf821976e54ac6803ddeab34fb87512848e761fc3326bbff6aed9b2a25c7",
+  "builder_path": "/workspace/scratch/cce28e2b3ca4/packaging/build_c271_package.py",
+  "builder_sha256": "5c2b488178c6952990fb8524eb39fdded4b85ba8fbb36e8bdbba595ea995b6a3",
+  "members": 70,
+  "payloads": 69,
+  "git_snapshots": 55,
+  "checks": [
+    {
+      "name": "No duplicate members",
+      "result": "passed",
+      "count": 70
+    },
+    {
+      "name": "Safe relative regular-file member paths",
+      "result": "passed"
+    },
+    {
+      "name": "ZIP CRC integrity",
+      "result": "passed"
+    },
+    {
+      "name": "Exact inventory and required root files",
+      "result": "passed",
+      "root_files": 9
+    },
+    {
+      "name": "Manifest covers every payload exactly once",
+      "result": "passed",
+      "payloads": 69
+    },
+    {
+      "name": "Fresh-extraction inventory, bytes and SHA-256",
+      "result": "passed",
+      "payloads": 69
+    },
+    {
+      "name": "All frozen snapshots equal exact declared Git sources",
+      "result": "passed",
+      "snapshots": 55
+    },
+    {
+      "name": "Immutable incoming preservation inputs",
+      "result": "passed",
+      "count": 1
+    },
+    {
+      "name": "Checkpoint agrees with frozen task and separately identified actual-main state",
+      "result": "passed"
+    },
+    {
+      "name": "C262 immutable external dependency identity",
+      "result": "passed"
+    },
+    {
+      "name": "Standalone prompts match archive bytes",
+      "result": "passed",
+      "count": 2
+    }
+  ],
+  "standalone_prompts": [
+    {
+      "archive_path": "PROMPT-1-CONTINUE.md",
+      "local_path": "/workspace/scratch/cce28e2b3ca4/artifacts/OntoKin_C271_Early_PROMPT-1-CONTINUE.md",
+      "bytes": 3211,
+      "sha256": "96aaff16156613f1456c1da21743127403314ed5fd75e79ae92210b61012058f"
+    },
+    {
+      "archive_path": "PROMPT-2-RECOVER.md",
+      "local_path": "/workspace/scratch/cce28e2b3ca4/artifacts/OntoKin_C271_Early_PROMPT-2-RECOVER.md",
+      "bytes": 3437,
+      "sha256": "52b24c50cf6dc60e7ae7652e158d3ab08ccb94cdbc3cb9cfd34339ee96e26145"
+    }
+  ],
+  "behavioral_tests": "not_run_by_package_worker",
+  "save": "pending_parent_confirmation",
+  "limits": [
+    "Online continuation, not full historical restoration.",
+    "Archive integrity does not prove behavior, independent review, GitHub publication or Library save.",
+    "Historical broad-driver completion remains unknown; no broad product pass is asserted."
+  ]
+}

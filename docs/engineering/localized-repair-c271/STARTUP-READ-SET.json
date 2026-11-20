@@ -212,11 +212,37 @@
     }
   ],
   "gaps": [],
-  "additional_scope_reads_pending": [
-    "Adopted OK-LANG-002 pinned import syntax and historical source fixtures before independent oracle construction"
-  ],
+  "additional_scope_reads_pending": [],
   "notes": [
     "CHATGPT-START-HERE fetched at main; blob b7543b2d1e979d8fea82921e74123b5461104588 verified equal at observed commit",
     "Missing ranges from truncated outputs completed; duplicate archive instructions not reread"
+  ],
+  "scope_reads": [
+    {
+      "path": "docs/README.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "range": "specification navigation table around lines188-204"
+    },
+    {
+      "path": "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "range": "section3.1-3.2 in full"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/ontokin-construction.ebnf",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "range": "preamble and source/import grammar lines1-42"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c269/COVERAGE.json",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "range": "H22.02 required_subcase and group rationale"
+    }
+  ],
+  "intake_attempts": [
+    {
+      "status": "corrected",
+      "detail": "Initial coverage extractor assumed a subcases key; actual key is required_subcases. Read-only KeyError, no project or evidence bytes changed."
+    }
   ]
 }
