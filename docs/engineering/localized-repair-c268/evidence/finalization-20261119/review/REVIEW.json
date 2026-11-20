@@ -1,0 +1,430 @@
+{
+  "schema": "ontokin.c268.independent-final-review/1",
+  "reviewer": "/root/review_c268_final",
+  "role": "separate exact-candidate reviewer",
+  "director": "c268-final-ee457d84062e",
+  "completed_at_utc": "2026-11-19T17:49:20.101615+00:00",
+  "verdict": "eligible",
+  "scope": "C268 R01-R05 only; reviewed integration eligibility, not integration or saved delivery completion",
+  "local_candidate": "52af987fd5705c034bf264e2fe3fbc9fa1f146ae",
+  "published_candidate": "e6f55b73fa71953aa648bcd34711a6796a7346b6",
+  "tree": "d94436a22552db903b8016f9d035985a7d8b6752",
+  "base": "409ef18e0cb992ad1ab771c1258e989d5ef1c765",
+  "whole_tree_equality_independently_verified": true,
+  "published_remote_readback_owner": "Director; reviewer independently verified local objects/equality and published-cohort identity",
+  "review_md": {
+    "path": "REVIEW.md",
+    "bytes": 17707,
+    "sha256": "282856ef8bdf9cc433060b72df417be96d474f561055f530636da50781753fc6"
+  },
+  "required_findings": [],
+  "resolved_required_findings": [
+    {
+      "id": "ENDPOINT-BOUND-FINDING",
+      "requirement": "R02",
+      "prior_revision": "734789521f82248d39b623c33aae9d3284ab4bce",
+      "prior_reader_sha256": "f615f14f5d4bcee3a3ecdb20466fd60b0a04df2dcd13095d993baf20b1430086",
+      "current_reader_sha256": "a7bb1f67398a54922e647d6d43062f89acb32c6e05a2fc653f5c30160f888157",
+      "resolution": "Exact built-in string type and five/six-character length before pin-table membership; sole reader delta verified; 4 lookup-order probes passed and 35-method independent suite passed",
+      "evidence": [
+        "selector-guard.json",
+        "independent-probes/RESULTS.json",
+        "COHORT-AUDIT.json"
+      ]
+    }
+  ],
+  "optional_suggestions": [
+    {
+      "id": "O01",
+      "title": "Native Path preprocessing precedes text cap",
+      "mandatory": false,
+      "observed": {
+        "id": "PATH-PREPROCESSING",
+        "native_path_parsed_character_lengths": [
+          200001
+        ],
+        "final_refusal": {
+          "code": "RESOURCE_LIMIT",
+          "reason": "PATH_LIMIT"
+        },
+        "stdlib_str_source": "    def __str__(self):\n        \"\"\"Return the string representation of the path, suitable for\n        passing to system calls.\"\"\"\n        try:\n            return self._str\n        except AttributeError:\n            self._str = self._format_parsed_parts(self.drive, self.root,\n                                                  self._tail) or '.'\n            return self._str\n",
+        "meaning": "Native Path conversion precedes the wrapper text cap; string roots receive the cap before scanning. No file admission bypass observed."
+      },
+      "disposition": "Optional future input-contract hardening; no historical-admission or file-bound bypass. No change requested in this finalization phase."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "R01",
+      "disposition": "eligible",
+      "details": "See requirement table and supporting evidence in REVIEW.md"
+    },
+    {
+      "id": "R02",
+      "disposition": "eligible",
+      "details": "See requirement table and supporting evidence in REVIEW.md"
+    },
+    {
+      "id": "R03",
+      "disposition": "eligible",
+      "details": "See requirement table and supporting evidence in REVIEW.md"
+    },
+    {
+      "id": "R04",
+      "disposition": "eligible",
+      "details": "See requirement table and supporting evidence in REVIEW.md"
+    },
+    {
+      "id": "R05",
+      "disposition": "eligible",
+      "details": "See requirement table and supporting evidence in REVIEW.md"
+    },
+    {
+      "id": "R06",
+      "disposition": "not_assessed",
+      "owner": "Director"
+    },
+    {
+      "id": "R07",
+      "disposition": "not_assessed",
+      "owner": "Director"
+    }
+  ],
+  "code_test_fixture_dependency_identities": {
+    "docs/engineering/localized-repair-c268/endpoint_reader.py": {
+      "bytes": 14914,
+      "sha256": "a7bb1f67398a54922e647d6d43062f89acb32c6e05a2fc653f5c30160f888157"
+    },
+    "docs/engineering/localized-repair-c268/test_endpoint_reader.py": {
+      "bytes": 52981,
+      "sha256": "d7c426870348ab9e0976d46ee64b8624eb39c3e0b2f84a2159d2a91f66bf46c9"
+    },
+    "docs/engineering/localized-repair-c268/endpoint_control_fixtures.py": {
+      "bytes": 9181,
+      "sha256": "b062555ea7816cb8425b1d73db949974838d6e00afe549dce91ab2b9ad22439d"
+    },
+    "docs/engineering/localized-repair-c268/evidence/run_checks.py": {
+      "bytes": 14667,
+      "sha256": "9c6c67a2bb1ce9e7a238b53e185f34d25f794ce7a1bb6e17753d7a9c187b3a3a"
+    },
+    "docs/engineering/localized-repair-c260/CONTRACT.md": {
+      "bytes": 16245,
+      "sha256": "39bf90c51256cb392b0b639c36f3325c76f8919bbea4e3e572937e9834f8cd6c"
+    },
+    "docs/engineering/localized-repair-c260/CONTROL-PLAN.md": {
+      "bytes": 7975,
+      "sha256": "7b3e74b9a58567d70edc4481aba8022df8a2b1ad8bab4903d9f4a0d05f8d26d1"
+    },
+    "docs/engineering/localized-repair-c260/INPUTS.json": {
+      "bytes": 4605,
+      "sha256": "d9f81932098104b051667d9523744530525ac891c3898718d8b1625db1941b8d"
+    },
+    "docs/engineering/localized-repair-c253/corpus.json": {
+      "bytes": 15763,
+      "sha256": "2d65c6b5f31457f99372d3cd02bbbf79c5922c03d776cfd8cd5605fac6d156b5"
+    },
+    "docs/engineering/localized-repair-c267/hinge_compare.py": {
+      "bytes": 12382,
+      "sha256": "f98b9eab7a7f0cc75afa26eab0b672356d7e3275e3d713d16df214e68e69d71d"
+    },
+    "docs/engineering/localized-repair-c266/hinge_binding.py": {
+      "bytes": 17639,
+      "sha256": "68849dbe3339c158eac7ec43fb1defcbd2993c37c6a0a5ee813d2da71fb03dda"
+    },
+    "docs/engineering/localized-repair-c265/source_hinges.py": {
+      "bytes": 37570,
+      "sha256": "04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31abbf9e"
+    },
+    "docs/engineering/localized-repair-c261/hinge_glb.py": {
+      "bytes": 14036,
+      "sha256": "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08"
+    },
+    "docs/engineering/localized-repair-c257/ownership.py": {
+      "bytes": 35942,
+      "sha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1"
+    },
+    "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok": {
+      "bytes": 1708,
+      "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+    },
+    "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok": {
+      "bytes": 1708,
+      "sha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+    },
+    "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok": {
+      "bytes": 1911,
+      "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    "docs/engineering/semantic-export-c210/evidence/proof/before.glb": {
+      "bytes": 185276,
+      "sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+    },
+    "docs/engineering/semantic-export-c210/evidence/proof/after.glb": {
+      "bytes": 185236,
+      "sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+    }
+  },
+  "independent_control_inputs": {
+    "docs/engineering/localized-repair-c268/endpoint_reader.py": {
+      "bytes": 14914,
+      "sha256": "a7bb1f67398a54922e647d6d43062f89acb32c6e05a2fc653f5c30160f888157"
+    },
+    "docs/engineering/localized-repair-c268/test_endpoint_reader.py": {
+      "bytes": 52981,
+      "sha256": "d7c426870348ab9e0976d46ee64b8624eb39c3e0b2f84a2159d2a91f66bf46c9"
+    },
+    "docs/engineering/localized-repair-c268/endpoint_control_fixtures.py": {
+      "bytes": 9181,
+      "sha256": "b062555ea7816cb8425b1d73db949974838d6e00afe549dce91ab2b9ad22439d"
+    },
+    "docs/engineering/localized-repair-c266/binding_control_fixtures.py": {
+      "bytes": 17102,
+      "sha256": "fc675e5da709a1f67892d929d90701833a62dd55f6fd0b9798b1c95496fca983"
+    },
+    "docs/engineering/localized-repair-c260/CONTRACT.md": {
+      "bytes": 16245,
+      "sha256": "39bf90c51256cb392b0b639c36f3325c76f8919bbea4e3e572937e9834f8cd6c"
+    },
+    "docs/engineering/localized-repair-c260/INPUTS.json": {
+      "bytes": 4605,
+      "sha256": "d9f81932098104b051667d9523744530525ac891c3898718d8b1625db1941b8d"
+    },
+    "docs/engineering/localized-repair-c260/CONTROL-PLAN.md": {
+      "bytes": 7975,
+      "sha256": "7b3e74b9a58567d70edc4481aba8022df8a2b1ad8bab4903d9f4a0d05f8d26d1"
+    },
+    "docs/engineering/localized-repair-c253/corpus.json": {
+      "bytes": 15763,
+      "sha256": "2d65c6b5f31457f99372d3cd02bbbf79c5922c03d776cfd8cd5605fac6d156b5"
+    },
+    "docs/engineering/localized-repair-c267/hinge_compare.py": {
+      "bytes": 12382,
+      "sha256": "f98b9eab7a7f0cc75afa26eab0b672356d7e3275e3d713d16df214e68e69d71d"
+    },
+    "docs/engineering/localized-repair-c266/hinge_binding.py": {
+      "bytes": 17639,
+      "sha256": "68849dbe3339c158eac7ec43fb1defcbd2993c37c6a0a5ee813d2da71fb03dda"
+    },
+    "docs/engineering/localized-repair-c265/source_hinges.py": {
+      "bytes": 37570,
+      "sha256": "04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31abbf9e"
+    },
+    "docs/engineering/localized-repair-c261/hinge_glb.py": {
+      "bytes": 14036,
+      "sha256": "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08"
+    },
+    "docs/engineering/localized-repair-c257/ownership.py": {
+      "bytes": 35942,
+      "sha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1"
+    }
+  },
+  "supplemental_execution": {
+    "newly_authored_cases": 7,
+    "newly_authored_passed": true,
+    "reused_capture_script_cases": 14,
+    "capture_passed": true,
+    "capture_calls": {
+      "public": 21,
+      "successes": 13,
+      "typed_refusals": 8,
+      "unexpected": 0
+    },
+    "capture_script_author": "/root/state_audit",
+    "capture_execution_reviewer": "/root/review_c268_final",
+    "selector_cases": 4,
+    "selector_passed": true,
+    "all_inputs_unchanged": true
+  },
+  "fresh_cohort": {
+    "receipt": {
+      "path": "/workspace/scratch/ee457d84062e/verification/candidate-published/CHECKS.json",
+      "bytes": 93146,
+      "sha256": "157aad3073c38367d2cd883b8f2d855692e60947e4ba7608c2fdf85e7ebc08a8"
+    },
+    "adopted_path": "docs/engineering/localized-repair-c268/evidence/finalization-20261119/candidate-published/CHECKS.json",
+    "source_before": {
+      "commit": "e6f55b73fa71953aa648bcd34711a6796a7346b6",
+      "tree": "d94436a22552db903b8016f9d035985a7d8b6752",
+      "tracked_dirty_status": "",
+      "all_dirty_status": "",
+      "shallow_checkout": false
+    },
+    "source_after": {
+      "commit": "e6f55b73fa71953aa648bcd34711a6796a7346b6",
+      "tree": "d94436a22552db903b8016f9d035985a7d8b6752",
+      "tracked_dirty_status": "",
+      "all_dirty_status": "",
+      "shallow_checkout": false
+    },
+    "groups": 12,
+    "test_methods": 282,
+    "C253_bindings": 14,
+    "C253_tasks": 3,
+    "complete": true,
+    "passed": true,
+    "verified_input_files": 157,
+    "verified_output_files": 30,
+    "controls": {
+      "testMethods": 35,
+      "apiCalls": 131,
+      "historicalCalls": 121,
+      "rawCalls": 10,
+      "admittedCalls": 12,
+      "rawSuccessfulCalls": 9,
+      "typedRefusals": 110,
+      "untypedExceptions": 0,
+      "failures": [],
+      "errors": [],
+      "skipped": []
+    },
+    "cohort_executed_by": "separate cohort worker; reviewer audited exact outputs after identity confirmation"
+  },
+  "copied_cohort_relocation": {
+    "old_relative_directory": "evidence/finalization-20261119/candidate",
+    "new_relative_directory": "evidence/finalization-20261119/candidate-published",
+    "receipt_bytes_equal": true,
+    "all_30_output_identities_equal": true
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "version_info": [
+      3,
+      12,
+      14,
+      "final",
+      0
+    ],
+    "implementation": "CPython",
+    "cache_tag": "cpython-312",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "resolved_executable": {
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "bytes": 30894944,
+      "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7"
+    },
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "uname": [
+      "Linux",
+      "d19eeeb3f592",
+      "6.18.57",
+      "#1 SMP Tue Oct 20 21:56:04 UTC 2026",
+      "x86_64",
+      ""
+    ],
+    "python_build": [
+      "main",
+      "Aug 25 2026 14:00:49"
+    ],
+    "python_compiler": "Clang 22.1.3 ",
+    "runtime_bundle_version": "26.1117.11355",
+    "environment_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    }
+  },
+  "commands": {
+    "independent": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-B",
+      "/workspace/scratch/ee457d84062e/review-final/independent_probes.py",
+      "--repo",
+      "/workspace/scratch/ee457d84062e/review-final/repository",
+      "--output",
+      "/workspace/scratch/ee457d84062e/review-final/independent-probes"
+    ],
+    "evidence_audit": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-B",
+      "/workspace/scratch/ee457d84062e/review-final/evidence_audit.py",
+      "--repo",
+      "/workspace/scratch/ee457d84062e/review-final/repository",
+      "--identity-repo",
+      "/workspace/scratch/ee457d84062e/OntoKin",
+      "--cohort",
+      "/workspace/scratch/ee457d84062e/verification/candidate-published",
+      "--copied-cohort",
+      "/workspace/scratch/ee457d84062e/OntoKin/docs/engineering/localized-repair-c268/evidence/finalization-20261119/candidate",
+      "--output",
+      "/workspace/scratch/ee457d84062e/review-final/COHORT-AUDIT.json"
+    ],
+    "capture": [
+      "python3",
+      "-B",
+      "docs/engineering/localized-repair-c268/evidence/review/review_c268.py",
+      "--repo",
+      "/workspace/scratch/ee457d84062e/review-final/repository",
+      "--output",
+      "/workspace/scratch/ee457d84062e/review-final/capture-probes"
+    ],
+    "guard": [
+      "python3",
+      "-B",
+      "docs/engineering/localized-repair-c268/evidence/review/endpoint_bound_probe.py",
+      "--repo",
+      "/workspace/scratch/ee457d84062e/review-final/repository",
+      "--output",
+      "/workspace/scratch/ee457d84062e/review-final/selector-guard.json"
+    ]
+  },
+  "preserved_failure_accounting": {
+    "original_control_run": {
+      "testMethods": 34,
+      "errors": 12,
+      "failures": 0,
+      "passed": false,
+      "error_kinds": [
+        "KeyError: 'text'"
+      ]
+    },
+    "prior_281_method_cohort": "Retained historical; not reused to qualify fixed candidate",
+    "review_audit_attempt01": {
+      "path": "COHORT-AUDIT-attempt01.json",
+      "cause": "Reviewer incorrectly treated newly added recovered evidence as alteration; all candidate/cohort identity assertions otherwise passed",
+      "correction": "Allow added evidence, forbid modification/deletion of prior records, verify recovered output hashes",
+      "prior_source": "evidence_audit.py.before.txt",
+      "final_audit_passed": true
+    }
+  },
+  "policy": {
+    "applicable": [
+      "AGENTS.md",
+      "docs/workflow/PROTOCOL.md",
+      "docs/workflow/tasks/C268/REQUIREMENTS.md",
+      "docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md"
+    ],
+    "generic_check_local_not_run": true,
+    "scope_exception": "Current approved isolated observer scope expressly selects complete affected cohort and excludes full product execution; cumulative diff changes no shared product or hosted machinery",
+    "unresolved_concrete_conflict": null
+  },
+  "not_run": [
+    "full product aggregate",
+    "source conformance/export",
+    "native/visual/model trials",
+    "other Python compatibility",
+    "hosted workflows"
+  ],
+  "nonclaims": [
+    "complete H01-H28 qualification",
+    "product release",
+    "site poses or endpoint world alignment",
+    "physical validity or motion",
+    "complete source/glTF/C255 validity",
+    "accepted revisions",
+    "invalid-edit atomicity",
+    "clean rebuild equivalence",
+    "native behavior",
+    "model-trial success",
+    "comparative advantage"
+  ],
+  "ownership": {
+    "implementation_edits": false,
+    "commits": false,
+    "external_writes": false,
+    "lease_changes": false,
+    "child_workers": false,
+    "active_processes": [],
+    "unknown_operations": [],
+    "stop": "review artifacts delivered; no global handoff or next milestone"
+  },
+  "adoption_note": "Adopt review artifacts listed in ARTIFACTS.json under evidence/finalization-20261119/review; exclude the local repository clone."
+}

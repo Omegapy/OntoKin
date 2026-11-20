@@ -4,7 +4,7 @@
 
 ## Current workflow and next action
 
-C268 active: exact historical endpoint admission, unchanged C260. [Requirements](docs/workflow/tasks/C268/REQUIREMENTS.md), [plan](docs/workflow/tasks/C268/PLAN.md), [scope265](https://github.com/Omegapy/OntoKin/issues/265). Early recovery saved; published implementation/independent controls passed identified candidate cohort: **12 groups, 281 methods, 14 bindings**. Final independent review, integration/main checks and saved delivery remain.
+C268 reviewed and ready for integration: exact historical endpoint admission under unchanged C260. [Requirements](docs/workflow/tasks/C268/REQUIREMENTS.md), [plan](docs/workflow/tasks/C268/PLAN.md), [scope265](https://github.com/Omegapy/OntoKin/issues/265). Corrected published candidate `e6f55b73fa71953aa648bcd34711a6796a7346b6` passed **12 groups, 282 methods, 14 bindings** on CPython **3.12.14 / Linux**. [Independent review](docs/engineering/localized-repair-c268/REVIEW.md) accepts R01–R05; [fresh evidence](docs/engineering/localized-repair-c268/evidence/finalization-20261119/candidate-published/CHECKS.json) includes all 35 C268 methods. Integration, actual-main checks, branch disposition and saved final delivery remain. Early recovery confirmed saved.
 
 C267 complete within finite declaration comparison: [PR261](https://github.com/Omegapy/OntoKin/pull/261), merge `7174e6796b38bac3fa83e6412e0944512d137434`; branch deletion/retained ancestry verified. Recorded integration: **11 groups, 247 methods, 14 bindings**, CPython **3.12.14 / Linux**. Delivery-only phase independently verified exact evidence eligibility, passed fresh documentation/workflow checks and saved verified handoff. [Receipt](docs/engineering/localized-repair-c267/DELIVERY.json), [audit](docs/engineering/localized-repair-c267/evidence/delivery-20261118/EVIDENCE-REVIEW.md), [integration](docs/engineering/localized-repair-c267/INTEGRATION.json).
 
@@ -36,9 +36,12 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: released at UTC: 2026-11-19T16:21:41.819983+00:00. Owner: none; reserved paths: none.
-Last holder: `startup-compact-9c7a0c0e0469`; [startup compression delivery](docs/engineering/startup-compact-20261119/DELIVERY.json) complete, PR267 merged, final handoff and both prompts saved. Acquisition/renewal/release evidence: [COORDINATION](docs/engineering/startup-compact-20261119/COORDINATION.json).
-C268 remains active and untouched on `work/c268-historical-endpoint` at `b799b7462bdc6a04464a2f903cec8dcabd659fa1`; its next integrator must reconcile live state and acquire a new lease.
+State: held. Owner: `c268-final-ee457d84062e`.
+Acquired UTC: `2026-11-19T17:47:05.000Z`; expires UTC: `2026-11-19T18:17:05.000Z`.
+Reserved: STATUS/CURRENT, workflow memory/knowledge and C268 integration/delivery/task records.
+Scope: finish reviewed C268 candidate, conditional integration, actual-main checks and verified saved handoff; no next milestone.
+Expected acquisition parent: `409ef18e0cb992ad1ab771c1258e989d5ef1c765`; corrected candidate: `e6f55b73fa71953aa648bcd34711a6796a7346b6`.
+[Coordination](docs/engineering/localized-repair-c268/evidence/finalization-20261119/COORDINATION.json). Prior startup-compression lease was released; unknown writes reconciled.
 
 ## Historical status
 

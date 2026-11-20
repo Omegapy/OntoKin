@@ -1,0 +1,74 @@
+{
+  "schema": "ontokin.c268.recovery-sensitive-content-review/1",
+  "reviewer": "/root/recover_c268",
+  "completed_at_utc": "2026-11-19T17:45:17.845974+00:00",
+  "archive": {
+    "path": "/workspace/scratch/ee457d84062e/recovery-audit/FINAL-CARRY-FORWARD.zip",
+    "bytes": 256639,
+    "source_sha256": "ee5322fc8c32780f525b37f503b13200c6d1492ba9c50d2a74ddeff1ed680352",
+    "output_sha256": "ee5322fc8c32780f525b37f503b13200c6d1492ba9c50d2a74ddeff1ed680352",
+    "members_checked": 40,
+    "unchanged": true
+  },
+  "audit_files": [
+    {
+      "path": "/workspace/scratch/ee457d84062e/recovery-audit/RECOVERY-AUDIT.md",
+      "bytes": 9788,
+      "sha256": "1409ca3d989eeb0f94b64dffb20de233e131a6089973773354c1f771059e762e"
+    },
+    {
+      "path": "/workspace/scratch/ee457d84062e/recovery-audit/INVENTORY.json",
+      "bytes": 2139750,
+      "sha256": "e11e6be0c4137e521f64da01b0de3e2822547442590900f7967256ea0390b45a"
+    },
+    {
+      "path": "/workspace/scratch/ee457d84062e/recovery-audit/CLASSIFICATION.json",
+      "bytes": 119260,
+      "sha256": "a7320aba7ee4443aeeee87ade4360d9085ccc60ab9347ec10ea70937032b557e"
+    },
+    {
+      "path": "/workspace/scratch/ee457d84062e/recovery-audit/HEAD-COMPARISON.json",
+      "bytes": 16123,
+      "sha256": "8a8fc39d5afd339add2c6f1d6ed8169c882f02724f458e18f2204661462e7b16"
+    },
+    {
+      "path": "/workspace/scratch/ee457d84062e/recovery-audit/READ-SET.json",
+      "bytes": 2306,
+      "sha256": "cb6fae4ca5b95bc3a2caeea052f0d822f7f9516ba9f49f024cf727cbb6187b71"
+    },
+    {
+      "path": "/workspace/scratch/ee457d84062e/recovery-audit/CARRY-FORWARD-VERIFICATION.json",
+      "bytes": 990,
+      "sha256": "2bd2d0f1d899213cd17d45d5cb961e225d11a351e7c5df66a310d6e4b700a383"
+    },
+    {
+      "path": "/workspace/scratch/ee457d84062e/recovery-audit/audit_recovery.py",
+      "bytes": 11269,
+      "sha256": "cd4d919136ea10f767762f5c226c6c5b6b0305acd59aef0afff78c154f131390"
+    },
+    {
+      "path": "/workspace/scratch/ee457d84062e/recovery-audit/classify_recovery.py",
+      "bytes": 11246,
+      "sha256": "62abb1a9b64ffa155c1360fe87fa8d12810872209c6b08b6a705626fa20ea8bf"
+    }
+  ],
+  "methods": [
+    "Scan exact UTF-8 member and audit bytes for private keys, access tokens, JWTs, authorization headers and literal secret fields",
+    "Recursively inspect JSON string values; decode HTML/URL escaping before URL credential/query checks",
+    "Inspect URL host/query-key inventory without exposing parameter values",
+    "Inspect JSON record shapes and transcript/analysis-channel markers; preserve historical technical findings and public API evidence"
+  ],
+  "credential_findings": [],
+  "signed_transfer_url_findings": [],
+  "private_reasoning_or_full_transcript_findings": [],
+  "redaction_required": false,
+  "redactions": [],
+  "sanitized_copy_created": false,
+  "conclusion": "No sensitive-content findings in the bounded checked artifact set; original archive and audit files remain unchanged. No private session storage was included.",
+  "limits": "This bounded content audit is not a guarantee against every possible secret format. Public repository author metadata and requested historical technical records are retained.",
+  "supporting_evidence": [
+    "SENSITIVE-SCAN-TRIAGE.json",
+    "SENSITIVE-SCAN-CONTEXT.json"
+  ],
+  "source_handoff_verification": "SOURCE-HANDOFF-INDEPENDENT-VERIFICATION.json"
+}

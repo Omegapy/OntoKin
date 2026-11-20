@@ -1,0 +1,703 @@
+{
+  "schema": "ontokin.c268.final-review-evidence-audit/1",
+  "reviewer": "/root/review_c268_final",
+  "at_utc": "2026-11-19T17:45:59.778533+00:00",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-B",
+    "/workspace/scratch/ee457d84062e/review-final/evidence_audit.py",
+    "--repo",
+    "/workspace/scratch/ee457d84062e/review-final/repository",
+    "--identity-repo",
+    "/workspace/scratch/ee457d84062e/OntoKin",
+    "--cohort",
+    "/workspace/scratch/ee457d84062e/verification/candidate-published",
+    "--copied-cohort",
+    "/workspace/scratch/ee457d84062e/OntoKin/docs/engineering/localized-repair-c268/evidence/finalization-20261119/candidate",
+    "--output",
+    "/workspace/scratch/ee457d84062e/review-final/COHORT-AUDIT.json"
+  ],
+  "script": {
+    "bytes": 9476,
+    "sha256": "3b5fadf597367097efad6391d3ee2fd67a87cd03e6d103bf345ca9343c6c8e65"
+  },
+  "local_candidate": "52af987fd5705c034bf264e2fe3fbc9fa1f146ae",
+  "published_candidate": "e6f55b73fa71953aa648bcd34711a6796a7346b6",
+  "tree": "d94436a22552db903b8016f9d035985a7d8b6752",
+  "base": "409ef18e0cb992ad1ab771c1258e989d5ef1c765",
+  "assertions": {
+    "local_tree": true,
+    "published_tree": true,
+    "whole_tree_equality": true,
+    "base_is_ancestor": true,
+    "cumulative_scope_only_C268_and_task": true,
+    "review_clone_clean": true,
+    "cohort_copy_matches": true,
+    "source_before_matches": true,
+    "source_after_matches": true,
+    "cohort_complete": true,
+    "cohort_inventory_stable": true,
+    "all_cohort_inputs_equal_reviewed_git_blobs": true,
+    "all_output_receipts_and_copies_match": true,
+    "runner_equals_reviewed_blob": true,
+    "runtime_binary_identity": true,
+    "all_groups_pass": true,
+    "C268_full_ledger_accounting": true,
+    "C268_zero_skips_errors_failures": true,
+    "all_control_input_identities_equal_candidate": true,
+    "historical_existing_checks_not_modified_or_deleted": true,
+    "recovered_predecessor_output_identities": true,
+    "prior_reader_snapshot_exact": true
+  },
+  "changed_paths": [
+    "docs/engineering/localized-repair-c268/CONTROL-COVERAGE.md",
+    "docs/engineering/localized-repair-c268/COORDINATION.json",
+    "docs/engineering/localized-repair-c268/IMPLEMENTATION.md",
+    "docs/engineering/localized-repair-c268/INPUTS.json",
+    "docs/engineering/localized-repair-c268/NEXT-TASK.md",
+    "docs/engineering/localized-repair-c268/README.md",
+    "docs/engineering/localized-repair-c268/RECOVERY-PHASE.json",
+    "docs/engineering/localized-repair-c268/RESULTS.md",
+    "docs/engineering/localized-repair-c268/endpoint_control_fixtures.py",
+    "docs/engineering/localized-repair-c268/endpoint_reader.py",
+    "docs/engineering/localized-repair-c268/evidence/OPERATION-NOTES.json",
+    "docs/engineering/localized-repair-c268/evidence/candidate/CHECKS.json",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c253-corpus.log",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c255-oracle.log",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c256-reader.log",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c257-ownership.log",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c258-follows.log",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c261-hinge_glb.log",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c265-source_hinges.log",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c266-binding.log",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c266-controls/checked-code/binding_control_fixtures.py",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c266-controls/checked-code/hinge_binding.py",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c266-controls/checked-code/test_hinge_binding.py",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c266-controls/inputs.zip",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c266-controls/results.json",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c266-controls/unittest.txt",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c267-comparison.log",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c267-controls/checked-code/comparison_control_fixtures.py",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c267-controls/checked-code/hinge_compare.py",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c267-controls/checked-code/test_hinge_compare.py",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c267-controls/inputs.zip",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c267-controls/results.json",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c267-controls/unittest.txt",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c268-controls/checked-code/endpoint_control_fixtures.py",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c268-controls/checked-code/endpoint_reader.py",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c268-controls/checked-code/test_endpoint_reader.py",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c268-controls/inputs.zip",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c268-controls/results.json",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c268-controls/unittest.txt",
+    "docs/engineering/localized-repair-c268/evidence/candidate/c268-endpoint.log",
+    "docs/engineering/localized-repair-c268/evidence/candidate/documentation.log",
+    "docs/engineering/localized-repair-c268/evidence/candidate/workflow.log",
+    "docs/engineering/localized-repair-c268/evidence/control-author/AUTHOR-RESULT.md",
+    "docs/engineering/localized-repair-c268/evidence/control-author/AUTHOR-UPDATE-01.md",
+    "docs/engineering/localized-repair-c268/evidence/control-author/discovery-01/RESULTS.json",
+    "docs/engineering/localized-repair-c268/evidence/control-author/discovery-01/stderr.txt",
+    "docs/engineering/localized-repair-c268/evidence/control-author/discovery-01/stdout.txt",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-01/checked-code/endpoint_control_fixtures.py",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-01/checked-code/endpoint_reader.py",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-01/checked-code/test_endpoint_reader.py",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-01/inputs.zip",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-01/results.json",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-01/unittest.txt",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-02/checked-code/endpoint_control_fixtures.py",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-02/checked-code/endpoint_reader.py",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-02/checked-code/test_endpoint_reader.py",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-02/inputs.zip",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-02/results.json",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-02/unittest.txt",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-03/checked-code/endpoint_control_fixtures.py",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-03/checked-code/endpoint_reader.py",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-03/checked-code/test_endpoint_reader.py",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-03/inputs.zip",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-03/results.json",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-03/unittest.txt",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-04/checked-code/endpoint_control_fixtures.py",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-04/checked-code/endpoint_reader.py",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-04/checked-code/test_endpoint_reader.py",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-04/inputs.zip",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-04/results.json",
+    "docs/engineering/localized-repair-c268/evidence/control-author/run-04/unittest.txt",
+    "docs/engineering/localized-repair-c268/evidence/finalization-20261119/EARLY-RECOVERY-RECEIPT.json",
+    "docs/engineering/localized-repair-c268/evidence/finalization-20261119/PHASE.json",
+    "docs/engineering/localized-repair-c268/evidence/finalization-20261119/SESSION.json",
+    "docs/engineering/localized-repair-c268/evidence/implementation/PATH-BOUND.json",
+    "docs/engineering/localized-repair-c268/evidence/implementation/RESULTS-01.json",
+    "docs/engineering/localized-repair-c268/evidence/implementation/RESULTS.json",
+    "docs/engineering/localized-repair-c268/evidence/implementation/check_candidate.py",
+    "docs/engineering/localized-repair-c268/evidence/implementation/endpoint-length-fix/IMPLEMENTATION.md.before.txt",
+    "docs/engineering/localized-repair-c268/evidence/implementation/endpoint-length-fix/RESULTS.json",
+    "docs/engineering/localized-repair-c268/evidence/implementation/endpoint-length-fix/endpoint_reader.py.before.txt",
+    "docs/engineering/localized-repair-c268/evidence/implementation/endpoint-length-fix/smoke.py",
+    "docs/engineering/localized-repair-c268/evidence/implementation/endpoint_reader-before-path-bound.py.txt",
+    "docs/engineering/localized-repair-c268/evidence/recovery-20261119/EARLY-RECOVERY-RECEIPT.json",
+    "docs/engineering/localized-repair-c268/evidence/recovery-20261119/INITIAL-LIVE-AUDIT.md",
+    "docs/engineering/localized-repair-c268/evidence/recovery-20261119/INPUT-HANDOFF-VERIFICATION.json",
+    "docs/engineering/localized-repair-c268/evidence/recovery-20261119/PRIOR-WORKSPACE-STATE.json",
+    "docs/engineering/localized-repair-c268/evidence/recovery-20261119/SESSION.json",
+    "docs/engineering/localized-repair-c268/evidence/recovery-20261119/UNPUBLISHED-RECOVERY-RECEIPT.json",
+    "docs/engineering/localized-repair-c268/evidence/review/ENDPOINT-BOUND-FINDING.json",
+    "docs/engineering/localized-repair-c268/evidence/review/EVIDENCE-AUDIT.json",
+    "docs/engineering/localized-repair-c268/evidence/review/audit_evidence.py",
+    "docs/engineering/localized-repair-c268/evidence/review/endpoint_bound_probe.py",
+    "docs/engineering/localized-repair-c268/evidence/review/review_c268.py",
+    "docs/engineering/localized-repair-c268/evidence/review/run-01/RESULTS.json",
+    "docs/engineering/localized-repair-c268/evidence/review/run-01/copied-code/docs/engineering/localized-repair-c257/ownership.py",
+    "docs/engineering/localized-repair-c268/evidence/review/run-01/copied-code/docs/engineering/localized-repair-c261/hinge_glb.py",
+    "docs/engineering/localized-repair-c268/evidence/review/run-01/copied-code/docs/engineering/localized-repair-c265/source_hinges.py",
+    "docs/engineering/localized-repair-c268/evidence/review/run-01/copied-code/docs/engineering/localized-repair-c266/hinge_binding.py",
+    "docs/engineering/localized-repair-c268/evidence/review/run-01/copied-code/docs/engineering/localized-repair-c267/hinge_compare.py",
+    "docs/engineering/localized-repair-c268/evidence/review/run-01/copied-code/docs/engineering/localized-repair-c268/endpoint_reader.py",
+    "docs/engineering/localized-repair-c268/evidence/review/run-01/input-bytes/after.glb",
+    "docs/engineering/localized-repair-c268/evidence/review/run-01/input-bytes/after.main.ok",
+    "docs/engineering/localized-repair-c268/evidence/review/run-01/input-bytes/before.glb",
+    "docs/engineering/localized-repair-c268/evidence/review/run-01/input-bytes/before.main.ok",
+    "docs/engineering/localized-repair-c268/evidence/review/run-01/input-bytes/changed-initial.glb",
+    "docs/engineering/localized-repair-c268/evidence/review/run-01/input-bytes/hinges.ok",
+    "docs/engineering/localized-repair-c268/evidence/run_checks.py",
+    "docs/engineering/localized-repair-c268/evidence/startup/EARLY-PACKAGE-REVIEW.md",
+    "docs/engineering/localized-repair-c268/evidence/startup/RUNNER-REVIEW.md",
+    "docs/engineering/localized-repair-c268/evidence/whitespace/REVIEW.json",
+    "docs/engineering/localized-repair-c268/evidence/whitespace/excluding-immutable-failed-log.log",
+    "docs/engineering/localized-repair-c268/evidence/whitespace/full.log",
+    "docs/engineering/localized-repair-c268/test_endpoint_reader.py",
+    "docs/workflow/tasks/C268/PLAN.md",
+    "docs/workflow/tasks/C268/task.json"
+  ],
+  "cohort_receipt": {
+    "path": "/workspace/scratch/ee457d84062e/verification/candidate-published/CHECKS.json",
+    "bytes": 93146,
+    "sha256": "157aad3073c38367d2cd883b8f2d855692e60947e4ba7608c2fdf85e7ebc08a8"
+  },
+  "copied_cohort_receipt": {
+    "path": "/workspace/scratch/ee457d84062e/OntoKin/docs/engineering/localized-repair-c268/evidence/finalization-20261119/candidate/CHECKS.json",
+    "bytes": 93146,
+    "sha256": "157aad3073c38367d2cd883b8f2d855692e60947e4ba7608c2fdf85e7ebc08a8"
+  },
+  "input_file_count": 157,
+  "candidate_input_mismatches": [],
+  "output_file_count": 30,
+  "outputs": [
+    {
+      "path": "c253-corpus.log",
+      "bytes": 430,
+      "sha256": "959f75f4a7887a689e2cdff8b90d84d9d058b28ed35ca2c56555b5a9e6734393",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c255-oracle.log",
+      "bytes": 4032,
+      "sha256": "bca734d564a44e079bd18e901a63cb3cf36bd077a2ac581dc3805222071e075a",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c256-reader.log",
+      "bytes": 3954,
+      "sha256": "7b34222ff877da70446ffa1720786a11e75bc49409ac580599e8ec34a5d1267a",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c257-ownership.log",
+      "bytes": 3342,
+      "sha256": "9f17bfaa5f49cb8b2bf3f2a27b049397ac3aa21b19622e91d13c34e8a21d5ec8",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c258-follows.log",
+      "bytes": 3815,
+      "sha256": "ed0901f064ef72f9cd019e4d24cef2ee616ec3b22b975279b241556ce6310978",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c261-hinge_glb.log",
+      "bytes": 3485,
+      "sha256": "8f57bf16213d3c836512dc78da2ac421b887c28599c4e9c390b7c72a3ad58475",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c265-source_hinges.log",
+      "bytes": 7411,
+      "sha256": "cd5e7339d7791e2dc87327806081f49005c4e0575015958702272afe3d0fe186",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c266-binding.log",
+      "bytes": 4759,
+      "sha256": "73e88b36a5dd04f9d84e292249da87ee609a3433e943ae54b57bf0914d5d899c",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c266-controls/checked-code/binding_control_fixtures.py",
+      "bytes": 17102,
+      "sha256": "fc675e5da709a1f67892d929d90701833a62dd55f6fd0b9798b1c95496fca983",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c266-controls/checked-code/hinge_binding.py",
+      "bytes": 17639,
+      "sha256": "68849dbe3339c158eac7ec43fb1defcbd2993c37c6a0a5ee813d2da71fb03dda",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c266-controls/checked-code/test_hinge_binding.py",
+      "bytes": 29777,
+      "sha256": "582adecab5975b922ce123851f6b76b7d86e2947664d79818055c19e4ed3c26b",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c266-controls/inputs.zip",
+      "bytes": 1659474,
+      "sha256": "60f17b8daf2f0ccd46ad39be2685314b4ec8039f3260a9ba520dd63cbd980ec8",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c266-controls/results.json",
+      "bytes": 1203390,
+      "sha256": "af9d70c33dc2d9539af3ba0abda72f0e6230405edbab273d0244c33f9bae1802",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c266-controls/unittest.txt",
+      "bytes": 4666,
+      "sha256": "67d68b65a9ed10f0ff7859878730c5c660c58307b9c313a5cfbe1277a6e142af",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c267-comparison.log",
+      "bytes": 3865,
+      "sha256": "43b2c142354cca530baae4e5a3f939e6aa2088949ffb6ba7c48dc28bdef18894",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c267-controls/checked-code/comparison_control_fixtures.py",
+      "bytes": 8620,
+      "sha256": "c107fae79ef28303fc9db63f7f8b9aec4041190e4caf8338742a180b073fcb3f",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c267-controls/checked-code/hinge_compare.py",
+      "bytes": 12382,
+      "sha256": "f98b9eab7a7f0cc75afa26eab0b672356d7e3275e3d713d16df214e68e69d71d",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c267-controls/checked-code/test_hinge_compare.py",
+      "bytes": 34659,
+      "sha256": "b7b7bd749eae6266d48f32b99d52631b9bbeddc606bd5f8d4e2ba9802786e3b7",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c267-controls/inputs.zip",
+      "bytes": 321902,
+      "sha256": "f16b6a6ad08ca8f3a0599556aa3a6f04dc4ef06d637471cee9a78c0bb1804e75",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c267-controls/results.json",
+      "bytes": 195687,
+      "sha256": "70be795ad8e4c2c9564e0b1bc7d7bf93aa36f9b9287a95eef536d458ee75bc9c",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c267-controls/unittest.txt",
+      "bytes": 3735,
+      "sha256": "b8e2abd628ea394c39c0f00b19930854fac49a7cf7fccd740264ddc4bf3a88c3",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c268-controls/checked-code/endpoint_control_fixtures.py",
+      "bytes": 9181,
+      "sha256": "b062555ea7816cb8425b1d73db949974838d6e00afe549dce91ab2b9ad22439d",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c268-controls/checked-code/endpoint_reader.py",
+      "bytes": 14914,
+      "sha256": "a7bb1f67398a54922e647d6d43062f89acb32c6e05a2fc653f5c30160f888157",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c268-controls/checked-code/test_endpoint_reader.py",
+      "bytes": 52981,
+      "sha256": "d7c426870348ab9e0976d46ee64b8624eb39c3e0b2f84a2159d2a91f66bf46c9",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c268-controls/inputs.zip",
+      "bytes": 259641,
+      "sha256": "a6e796f8a0ce8b466737f76dbda02d19a0279d194a668e5dfa0c5adb7033f147",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c268-controls/results.json",
+      "bytes": 278696,
+      "sha256": "2d295a06c37edc100d1c2202bde49cde41a5ee344b526f5db3213af3ef27565a",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c268-controls/unittest.txt",
+      "bytes": 5096,
+      "sha256": "b0aa36eb353888b508aa6b6c623580f5ab83ad039e67f4787b0b6d0e0d855b15",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "c268-endpoint.log",
+      "bytes": 5370,
+      "sha256": "8a9da1950959dc7b28e4e170eafc7bee78e6a57ca3595d6e8ce38f2bdbc5b709",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "documentation.log",
+      "bytes": 6608,
+      "sha256": "86592e44273b79834e65e697ee5c9ab8f817aa7e5ce2505dd0a76ba32cd4c775",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    },
+    {
+      "path": "workflow.log",
+      "bytes": 184,
+      "sha256": "d9feea7e9896e14e1365fcf7a593ed9fa706828dff781ec1857def49a0092fd6",
+      "receipt_matches": true,
+      "copied_payload_matches": true
+    }
+  ],
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "version_info": [
+      3,
+      12,
+      14,
+      "final",
+      0
+    ],
+    "implementation": "CPython",
+    "cache_tag": "cpython-312",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "resolved_executable": {
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "bytes": 30894944,
+      "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7"
+    },
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "uname": [
+      "Linux",
+      "d19eeeb3f592",
+      "6.18.57",
+      "#1 SMP Tue Oct 20 21:56:04 UTC 2026",
+      "x86_64",
+      ""
+    ],
+    "python_build": [
+      "main",
+      "Aug 25 2026 14:00:49"
+    ],
+    "python_compiler": "Clang 22.1.3 ",
+    "runtime_bundle_version": "26.1117.11355",
+    "environment_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    }
+  },
+  "groups": [
+    {
+      "name": "c253-corpus",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "docs/engineering/localized-repair-c253/verify_manifest.py"
+      ],
+      "methods": null,
+      "result": "passed",
+      "exit_code": 0,
+      "failure": null
+    },
+    {
+      "name": "c255-oracle",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c255",
+        "-p",
+        "test_oracle.py",
+        "-v"
+      ],
+      "methods": 31,
+      "result": "passed",
+      "exit_code": 0,
+      "failure": null
+    },
+    {
+      "name": "c256-reader",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c256",
+        "-p",
+        "test_reader.py",
+        "-v"
+      ],
+      "methods": 29,
+      "result": "passed",
+      "exit_code": 0,
+      "failure": null
+    },
+    {
+      "name": "c257-ownership",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c257",
+        "-p",
+        "test_ownership.py",
+        "-v"
+      ],
+      "methods": 23,
+      "result": "passed",
+      "exit_code": 0,
+      "failure": null
+    },
+    {
+      "name": "c258-follows",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c258",
+        "-p",
+        "test_follows.py",
+        "-v"
+      ],
+      "methods": 28,
+      "result": "passed",
+      "exit_code": 0,
+      "failure": null
+    },
+    {
+      "name": "c261-hinge_glb",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c261",
+        "-p",
+        "test_hinge_glb.py",
+        "-v"
+      ],
+      "methods": 28,
+      "result": "passed",
+      "exit_code": 0,
+      "failure": null
+    },
+    {
+      "name": "c265-source_hinges",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "docs/engineering/localized-repair-c265",
+        "-p",
+        "test_source_hinges.py",
+        "-v"
+      ],
+      "methods": 49,
+      "result": "passed",
+      "exit_code": 0,
+      "failure": null
+    },
+    {
+      "name": "c266-binding",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "docs/engineering/localized-repair-c266/test_hinge_binding.py",
+        "--evidence-dir",
+        "/workspace/scratch/ee457d84062e/verification/candidate-published/c266-controls"
+      ],
+      "methods": 34,
+      "result": "passed",
+      "exit_code": 0,
+      "failure": null
+    },
+    {
+      "name": "c267-comparison",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "docs/engineering/localized-repair-c267/test_hinge_compare.py",
+        "--evidence-dir",
+        "/workspace/scratch/ee457d84062e/verification/candidate-published/c267-controls"
+      ],
+      "methods": 25,
+      "result": "passed",
+      "exit_code": 0,
+      "failure": null
+    },
+    {
+      "name": "c268-endpoint",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "docs/engineering/localized-repair-c268/test_endpoint_reader.py",
+        "--evidence-dir",
+        "/workspace/scratch/ee457d84062e/verification/candidate-published/c268-controls"
+      ],
+      "methods": 35,
+      "result": "passed",
+      "exit_code": 0,
+      "failure": null
+    },
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ],
+      "methods": null,
+      "result": "passed",
+      "exit_code": 0,
+      "failure": null
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "methods": null,
+      "result": "passed",
+      "exit_code": 0,
+      "failure": null
+    }
+  ],
+  "C268_actual_outcomes": {
+    "raw_success": 9,
+    "typed_refusal": 110,
+    "admitted": 12
+  },
+  "C268_actual_apis": {
+    "raw-artifact": 3,
+    "raw-comparison": 5,
+    "historical-reader": 121,
+    "raw-source": 2
+  },
+  "control_input_mismatches": [],
+  "permission_observations": [
+    {
+      "case": "__main__.EndpointReaderControls.test_permission_refusal_with_explicit_oserror_injection",
+      "permissionProbe": "mode 000 file",
+      "actualPermissionDenial": true,
+      "effectiveUid": 1000,
+      "deterministicCoverage": "Injected EACCES at os.open and os.read"
+    }
+  ],
+  "historical_evidence_delta": [
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/CHECKS.json",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c253-corpus.log",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c255-oracle.log",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c256-reader.log",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c257-ownership.log",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c258-follows.log",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c261-hinge_glb.log",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c265-source_hinges.log",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c266-binding.log",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c266-controls/checked-code/binding_control_fixtures.py",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c266-controls/checked-code/hinge_binding.py",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c266-controls/checked-code/test_hinge_binding.py",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c266-controls/inputs.zip",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c266-controls/results.json",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c266-controls/unittest.txt",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c267-comparison.log",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c267-controls/checked-code/comparison_control_fixtures.py",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c267-controls/checked-code/hinge_compare.py",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c267-controls/checked-code/test_hinge_compare.py",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c267-controls/inputs.zip",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c267-controls/results.json",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c267-controls/unittest.txt",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c268-controls/checked-code/endpoint_control_fixtures.py",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c268-controls/checked-code/endpoint_reader.py",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c268-controls/checked-code/test_endpoint_reader.py",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c268-controls/inputs.zip",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c268-controls/results.json",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c268-controls/unittest.txt",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/c268-endpoint.log",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/documentation.log",
+    "A\tdocs/engineering/localized-repair-c268/evidence/candidate/workflow.log"
+  ],
+  "recovered_predecessor_cohort": {
+    "source": {
+      "commit": "734789521f82248d39b623c33aae9d3284ab4bce",
+      "tree": "23aa5e900cede54b9ff2ff7b14cbfb2e440547d0",
+      "tracked_dirty_status": "",
+      "all_dirty_status": "",
+      "shallow_checkout": false
+    },
+    "methods": 281,
+    "passed": true
+  },
+  "preserved_failed_run": {
+    "testMethods": 34,
+    "errors": 12,
+    "failures": 0,
+    "passed": false,
+    "error_kinds": [
+      "KeyError: 'text'"
+    ]
+  },
+  "corrected_control_delta_numstat": "14\t0\tdocs/engineering/localized-repair-c268/test_endpoint_reader.py",
+  "passed": true
+}
