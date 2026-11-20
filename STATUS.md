@@ -4,7 +4,7 @@
 
 ## Current workflow and next action
 
-C270 evidence phase: the independently source-valid declared `SiteRef` control returns **MALFORMED** at source, binding and comparison; unchanged C260 requires **UNSUPPORTED_SOURCE_FORM**. Two original positives pass; all identity/reason/no-partial-output checks pass. The complete affected cohort passes **108 methods** plus **14 corpus bindings**. [Finding](docs/engineering/localized-repair-c270/FINDING.json), [results](docs/engineering/localized-repair-c270/RESULTS.md), [next gate](docs/engineering/localized-repair-c270/NEXT-TASK.md). No implementation or contract changed. C270 R02 and scope270 remain open; evidence review/integration and saved partial handoff are pending. The current phase makes no correction or qualification claim.
+C270 active: the independently frozen valid SiteRef control exposed `MALFORMED` instead of required `UNSUPPORTED_SOURCE_FORM` in source observation, binding and comparison. Original positive controls and the complete affected 108-method cohort passed at their recorded revision. [Preserved result](docs/engineering/localized-repair-c270/RESULTS.md) is failure evidence; R02 and H16 remain unmet. Current recovery finishes evidence review, eligible integration and a verified saved partial handoff only. No corrective implementation is authorized in this phase. Keep [scope270](https://github.com/Omegapy/OntoKin/issues/270) and parent C270 open; retain its unfinished work branch. [Recovery state](docs/engineering/localized-repair-c270/RECOVERY-FINALIZATION.md).
 
 C269 complete within its evidence-only coverage audit. [PR269](https://github.com/Omegapy/OntoKin/pull/269) merged at `c3bda080febf6359a6ad364b940d5d68f2741c9d`; its branch is deleted and reviewed history is retained. [Audit](docs/engineering/localized-repair-c269/AUDIT.md): **24 complete and four partial H groups** (H16/H20/H22/H24), **94 complete and five partial material subcases**. Full C260 qualification remains unestablished. Independent audit review and fresh documentation/workflow checks passed. The final package passed **1,768 independent checks** and its ZIP plus matching prompts have confirmed saves; [separate receipt](docs/engineering/localized-repair-c269/DELIVERY.json), [closeout](docs/engineering/localized-repair-c269/CLOSEOUT.json). R01-R06 and [scope268](https://github.com/Omegapy/OntoKin/issues/268) are complete. No observer behavior or existing control/contract/fixture changed; no behavioral rerun. This phase stops here. Proposed H16 control remains a separate next phase.
 
@@ -14,7 +14,7 @@ C267 complete within finite declaration comparison: [PR261](https://github.com/O
 
 C266 complete: [PR259](https://github.com/Omegapy/OntoKin/pull/259), merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`; **10 passing main groups, 222 methods, 14 bindings**; branch deleted; [saved delivery](docs/engineering/localized-repair-c266/DELIVERY.json) unchanged. C265/C264/C263 complete within recorded scopes.
 
-Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json), [HANDOFF](docs/workflow/HANDOFF.md). C269 integration, verification and saved delivery are complete. C270 is the active H16 evidence scope; its classification acceptance remains unmet. Follow the current C270 task and next gate. No missing control was implemented in C269. Owner-requested startup compression and prior C268 results remain unchanged.
+Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json), [HANDOFF](docs/workflow/HANDOFF.md). C269 integration, verification and saved delivery are complete. C270 is now active; its preserved H16 control failed and the current phase only finalizes evidence and delivery. No missing control was implemented in C269. Owner-requested startup compression and prior C268 results remain unchanged.
 
 ## Product state and remaining gates
 
@@ -40,10 +40,11 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: held. Owner: `c270-h16-1242e9ec1f21`.
-Acquired at UTC: `2026-11-20T04:02:42.299678+00:00`; expires at UTC: `2026-11-20T04:32:42.299678+00:00`.
-Starting main: `254e481351239b536394c182b6761ec4c8662764`. Scope: one C270 evidence-only H16 source-valid SiteRef control; early recovery save confirmed before work.
-Reserved shared files: STATUS integration fields, docs/workflow/CURRENT.json and C270 canonical task/delivery records. Root owns integration; independent workers own disjoint new evidence. No unknown preceding write was found; C269 is complete and its lease released.
+State: held. Owner: `c270-recovery-9e9d17639499`.
+Acquired at UTC: `2026-11-20T14:59:52.000Z`; expires at UTC: `2026-11-20T15:29:52.000Z`.
+Starting main: `c7b99e7c37bf8e3b11b58660b2903150211dc355`. Scope: C270 recovery finalization only: independent review of preserved failure evidence, eligible integration, actual-main record checks and verified saved partial handoff. No classification repair.
+Reserved shared files: STATUS integration fields, docs/workflow/CURRENT.json and C270 canonical task/delivery records. Root owns integration; independent reviewer and packaging workers own disjoint scratch evidence.
+Prior owner `c270-h16-1242e9ec1f21` expired at 2026-11-20T04:32:42.299678+00:00. Main and work branch were observed unchanged, no open PR or unresolved write was found, and the old workspace is unavailable. A new early recovery ZIP is confirmed saved as `libfile_fde3_f-604b6734ed0081918851e404d1a8bf1e_2ab2a24d43748191957f9bcc356b59de` before substantive recovery work. Parent C270 and issue270 remain open; preserve unfinished branch.
 
 ## Historical status
 

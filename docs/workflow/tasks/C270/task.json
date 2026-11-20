@@ -4,7 +4,7 @@
   "title": "H16 source-valid SiteRef refusal control",
   "intent": "Resolve the C269 H16.02 evidence gap using one source-valid declared/computed site reference and precise refusal propagation",
   "status": "in_progress",
-  "owner": "c270-h16-1242e9ec1f21",
+  "owner": "c270-recovery-9e9d17639499",
   "branch": "work/c270-valid-siteref-control",
   "base_sha": "254e481351239b536394c182b6761ec4c8662764",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/270",
@@ -152,19 +152,20 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Finish independent evidence review, eligible evidence integration and saved partial handoff. R02 remains unmet; next fresh phase is the narrowly scoped classification correction.",
+  "next_action": "Complete independent review of published C270 evidence, integrate eligible records, verify actual main, save the partial handoff and separate receipt, then stop. R02 remains unmet.",
   "session_phase": {
-    "id": "C270-H16-control",
-    "starting_main": "254e481351239b536394c182b6761ec4c8662764",
-    "declared_at_utc": "2026-11-20T03:59:48.392367+00:00",
-    "owner": "c270-h16-1242e9ec1f21",
-    "scope": "One evidence-only H16 declared/computed SiteRef control, review, eligible integration and saved handoff",
-    "acceptance": "R01-R05; exact unsupported category or honest preserved failure with parent open",
-    "stopping_point": "Verified saved handoff; first unplanned implementation or contract expansion stops behavioral work",
+    "id": "C270-recovery-finalization",
+    "starting_main": "c7b99e7c37bf8e3b11b58660b2903150211dc355",
+    "starting_branch_head": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
+    "declared_at_utc": "2026-11-20T15:02:00.521622+00:00",
+    "owner": "c270-recovery-9e9d17639499",
+    "scope": "Finish existing failure-evidence review, eligible integration, actual-main record checks and verified saved partial handoff",
+    "acceptance": "R03-R05 finalization gates; R02 remains failed and the parent/issue remain open",
+    "stopping_point": "Verified saved partial handoff and separate receipt; no classification correction or new milestone",
     "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c270/EARLY-RECOVERY-RECEIPT.json",
-    "outcome": "control_exposed_defect; no implementation repair",
-    "behavioral_work_stopped": true
+    "early_receipt": "docs/engineering/localized-repair-c270/RECOVERY-EARLY-RECEIPT.json",
+    "behavioral_work_stopped": true,
+    "behavioral_reruns_this_phase": 0
   },
   "delivery": {
     "required": true,
@@ -172,5 +173,32 @@
     "status": "pending",
     "folder": "OntoKin",
     "receipt": "docs/engineering/localized-repair-c270/DELIVERY.json"
+  },
+  "phase_history": [
+    {
+      "id": "C270-H16-control",
+      "starting_main": "254e481351239b536394c182b6761ec4c8662764",
+      "declared_at_utc": "2026-11-20T03:59:48.392367+00:00",
+      "owner": "c270-h16-1242e9ec1f21",
+      "scope": "One evidence-only H16 declared/computed SiteRef control, review, eligible integration and saved handoff",
+      "acceptance": "R01-R05; exact unsupported category or honest preserved failure with parent open",
+      "stopping_point": "Verified saved handoff; first unplanned implementation or contract expansion stops behavioral work",
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c270/EARLY-RECOVERY-RECEIPT.json",
+      "outcome": "control_exposed_defect; no implementation repair",
+      "behavioral_work_stopped": true
+    }
+  ],
+  "recovery": {
+    "starting_branch": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
+    "lease_commit": "ab0f196cd8c67dfa94cba369381dafa8b6c7a015",
+    "first_unmet_gate": "R03 independent exact-candidate evidence review",
+    "known_unknown_operations": [],
+    "preserve_original_failure": true,
+    "workers": [
+      "/root/candidate_review",
+      "/root/handoff_audit"
+    ],
+    "read_set": "docs/engineering/localized-repair-c270/evidence/recovery-20261120/startup_read_set.json"
   }
 }

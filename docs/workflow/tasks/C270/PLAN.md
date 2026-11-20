@@ -29,3 +29,13 @@ Root owns canonical task/CURRENT/STATUS, Git index and commits, lease, remote wr
 Freeze exact fixture bytes and literal expected outcome before executing observer; bind source/import identities and preserve every result. Failure classification is the principal risk: undeclared identifiers cannot substitute for a valid SiteRef, and a valid refusal must propagate without partial qualification. Select and justify the complete affected regression inventory; no runtime edit means no whole-product claim. Run fresh documentation and workflow checks on candidate and actual main.
 
 Stop after reviewed saved handoff or first unplanned scope expansion. A discovered defect is not repaired here. Keep parent and issue open until R01-R05 pass. No second phase.
+
+## Recovery finalization — November 20, 2026
+
+Director `c270-recovery-9e9d17639499` resumes this same task and branch from `1a2e9f85fa3ba210a16235e5660f1762ea8a953e`; observed main `c7b99e7c37bf8e3b11b58660b2903150211dc355`, verified new lease `ab0f196cd8c67dfa94cba369381dafa8b6c7a015`. The source-valid control, actual five-call execution, affected regression cohort and prior defect review are already preserved. Their results are not rerun or relabeled. R02 remains failed.
+
+This session has one phase: independently review the exact published evidence (R03), integrate eligible evidence under the renewed ownership and check actual main (R04), then verify/save a partial handoff and publish its separate receipt (R05). Keep the parent and issue270 open. Retain `work/c270-valid-siteref-control`; if repository automatic cleanup removes it after merge, restore the same branch at its verified retained head and record the actual disposition.
+
+New recovery checkpoint is confirmed in `docs/engineering/localized-repair-c270/RECOVERY-EARLY-RECEIPT.json`. Independent reviewer `/root/candidate_review` owns scratch review evidence; `/root/handoff_audit` owns scratch packaging. Root alone writes canonical state, Git/index, lease and remote refs. Review changes to the final evidence/state candidate before integration. Execute fresh documentation/workflow checks on that candidate and actual main; reuse old behavioral results only after exact input/implementation/command/environment eligibility inspection.
+
+Stop after the verified saved partial handoff. The smallest classification correction is a proposed phase for a new main chat, not part of this recovery authorization. No runtime, observer, contract, frozen control, dependency, semantics, budget or hosted workflow changes.
