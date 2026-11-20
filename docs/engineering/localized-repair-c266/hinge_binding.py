@@ -15,8 +15,8 @@ MAX_SOURCE_BYTES = 65536
 MAX_GLB_BYTES = 4 * 1024 * 1024
 PACKAGE_SOURCE = "package:example.hinges@1.0.0"
 DEPENDENCIES = {
-    "source": ("localized-repair-c265/source_hinges.py", 37570,
-               "04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31abbf9e"),
+    "source": ("localized-repair-c265/source_hinges.py", 38229,
+               "70d5e5b6247347bf44eaa3be0bc9c91b13f10d4717b4b32261eaebad75987132"),
     "artifact": ("localized-repair-c261/hinge_glb.py", 14036,
                  "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08"),
     "identity": ("localized-repair-c257/ownership.py", 35942,

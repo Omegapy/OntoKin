@@ -1,0 +1,302 @@
+#!/usr/bin/env python3
+"""Admit original C260 endpoint bytes before finite C267 hinge comparison."""
+from __future__ import annotations
+
+from contextlib import ExitStack, contextmanager
+import errno
+import hashlib
+import os
+from pathlib import Path
+import stat
+import sys
+import types
+
+
+SCHEMA = "ontokin.c268.bound-hinge-endpoint/0.1"
+COMPARISON_SCHEMA = "ontokin.c267.hinge-comparison/0.1"
+CONTRACT = "ontokin.c260.hinge-declarations/0.1"
+MAX_PATH_BYTES = 4096
+MAX_PATH_COMPONENTS = 128
+PROOF = "docs/engineering/semantic-export-c210/evidence/proof/"
+# Transcribed from frozen C260 INPUTS.json (d9f81932098104b051667d9523744530
+# 525ac891c3898718d8b1625db1941b8d); source pins also match frozen C253 corpus.
+# No caller-supplied or on-disk manifest supplies an expected hash at runtime.
+PINS = types.MappingProxyType({
+    "before": (
+        ("main.ok", PROOF + "before.main.ok", 1708,
+         "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"),
+        ("hinges.ok", PROOF + "hinges.ok", 1911,
+         "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"),
+        ("artifact", PROOF + "before.glb", 185276,
+         "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"),
+    ),
+    "after": (
+        ("main.ok", PROOF + "after.main.ok", 1708,
+         "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"),
+        ("hinges.ok", PROOF + "hinges.ok", 1911,
+         "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"),
+        ("artifact", PROOF + "after.glb", 185236,
+         "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"),
+    ),
+})
+DEPENDENCIES = types.MappingProxyType({
+    "comparison": ("localized-repair-c267/hinge_compare.py", 12382,
+                   "9b2899d95471546a25a8a7e5ed9d9ac2a1e42854c31808d4e68aff2582686b58"),
+    "binding": ("localized-repair-c266/hinge_binding.py", 17639,
+                "8f6b26f0bedad335b069975d0491e5565a25f0793b3bc48802e90d3993aa0d0a"),
+    "source": ("localized-repair-c265/source_hinges.py", 38229,
+               "70d5e5b6247347bf44eaa3be0bc9c91b13f10d4717b4b32261eaebad75987132"),
+    "artifact": ("localized-repair-c261/hinge_glb.py", 14036,
+                 "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08"),
+    "identity": ("localized-repair-c257/ownership.py", 35942,
+                 "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1"),
+})
+RAW_HISTORICAL_LIMIT = "No historical byte admission, accepted revision, edit atomicity or clean rebuild"
+BOUND_HISTORICAL_LIMIT = (
+    "Historical input bytes admitted only; no accepted revision, edit atomicity or clean rebuild equivalence"
+)
+_PATH_TYPE = type(Path())
+# Keep native-function identities only for capability detection. Actual calls
+# use os.* and can be fault-injected without falsifying platform support.
+_NATIVE_OPEN, _NATIVE_STAT = os.open, os.stat
+
+
+class Fault(ValueError):
+    """Whole-endpoint refusal with bounded available captured input identity."""
+
+    def __init__(self, code, detail, pointer="", origin=None, reason=None):
+        self.code, self.detail = code, detail
+        self.pointer, self.origin, self.reason = pointer, origin, reason
+        self.sourceHashes, self.sourceBytes = {}, {}
+        self.artifactSha256, self.artifactBytes = None, None
+        super().__init__(f"{code}: {pointer}: {detail}")
+
+
+def _fault(code, reason, detail, pointer, dependency=False):
+    raise Fault("INPUT_BINDING" if dependency else code, detail, pointer, reason=reason)
+
+
+def _platform():
+    flags = ("O_NOFOLLOW", "O_DIRECTORY", "O_NONBLOCK", "O_CLOEXEC")
+    if (os.name != "posix"
+            or any(type(getattr(os, name, None)) is not int or getattr(os, name) <= 0 for name in flags)
+            or _NATIVE_OPEN not in getattr(os, "supports_dir_fd", ())
+            or _NATIVE_STAT not in getattr(os, "supports_dir_fd", ())
+            or _NATIVE_STAT not in getattr(os, "supports_follow_symlinks", ())):
+        raise Fault("UNSUPPORTED_PLATFORM", "descriptor-relative nofollow file access is required",
+                    "/repo", reason="CAPABILITY")
+
+
+def _components(value, pointer, absolute, dependency=False):
+    if type(value) is not str or not value:
+        _fault("INPUT_PATH", "PATH", "nonempty text path required", pointer, dependency)
+    if len(value) > MAX_PATH_BYTES:
+        _fault("RESOURCE_LIMIT", "PATH_LIMIT", "path exceeds 4096 UTF-8 bytes", pointer, dependency)
+    if any(ord(c) < 32 or 127 <= ord(c) < 160 or 0xD800 <= ord(c) <= 0xDFFF for c in value):
+        _fault("INPUT_PATH", "PATH", "nonempty text path without controls or surrogates required",
+               pointer, dependency)
+    if len(value.encode("utf-8")) > MAX_PATH_BYTES:
+        _fault("RESOURCE_LIMIT", "PATH_LIMIT", "path exceeds 4096 UTF-8 bytes", pointer, dependency)
+    if value.startswith("//") or (not absolute and value.startswith("/")):
+        _fault("INPUT_PATH", "ESCAPE", "ambiguous or absolute child path refused", pointer, dependency)
+    parts = value.split("/")
+    if ".." in parts:
+        _fault("INPUT_PATH", "ESCAPE", "parent traversal is refused before normalization", pointer, dependency)
+    parts = [part for part in parts if part not in ("", ".")]
+    if len(parts) > MAX_PATH_COMPONENTS:
+        _fault("RESOURCE_LIMIT", "PATH_LIMIT", "path exceeds 128 components", pointer, dependency)
+    return parts
+
+
+def _root_path(repo, pointer, dependency=False):
+    if type(repo) not in (str, _PATH_TYPE):
+        _fault("INPUT_PATH", "ROOT_TYPE", "root must be str or the native concrete pathlib.Path type",
+               pointer, dependency)
+    value = str(repo)
+    _components(value, pointer, True, dependency)
+    if not value.startswith("/"):
+        value = os.getcwd() + "/" + value
+    return value, _components(value, pointer, True, dependency)
+
+
+def _io_fault(exc, pointer, operation, dependency=False, name=None, parent=None, directory=False):
+    if exc.errno in (errno.EACCES, errno.EPERM):
+        code, reason = "IO_ERROR", "PERMISSION"
+    elif exc.errno == errno.ENOENT:
+        code, reason = "IO_ERROR", "MISSING"
+    elif exc.errno == errno.ELOOP:
+        code, reason = "INPUT_PATH", "SYMLINK"
+    elif exc.errno == errno.ENOTDIR:
+        code, reason = "INPUT_PATH", "NOT_DIRECTORY"
+    else:
+        code, reason = "IO_ERROR", operation
+    # Linux O_DIRECTORY|O_NOFOLLOW can report ENOTDIR for a symlink. This
+    # nonfollowing stat only refines a refusal; it never authorizes an open.
+    if name is not None and exc.errno in (errno.ENOTDIR, errno.ENXIO, errno.ENODEV):
+        try:
+            mode = os.stat(name, dir_fd=parent, follow_symlinks=False).st_mode
+            if stat.S_ISLNK(mode):
+                code, reason = "INPUT_PATH", "SYMLINK"
+            elif not (stat.S_ISDIR(mode) if directory else stat.S_ISREG(mode)):
+                code, reason = "INPUT_PATH", "NOT_DIRECTORY" if directory else "NOT_REGULAR"
+        except OSError:
+            pass
+    _fault(code, reason, "file access refused: " + reason, pointer, dependency)
+
+
+@contextmanager
+def _descriptor(name, pointer, parent=None, directory=False, dependency=False):
+    flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK | os.O_CLOEXEC
+    if directory:
+        flags |= os.O_DIRECTORY
+    try:
+        fd = os.open(name, flags, dir_fd=parent)
+    except OSError as exc:
+        _io_fault(exc, pointer, "OPEN", dependency, name, parent, directory)
+    try:
+        yield fd
+    finally:
+        os.close(fd)
+
+
+@contextmanager
+def _root_descriptor(repo, pointer, dependency=False):
+    absolute, parts = _root_path(repo, pointer, dependency)
+    with ExitStack() as stack:
+        fd = stack.enter_context(_descriptor("/", pointer, directory=True, dependency=dependency))
+        for part in parts:
+            fd = stack.enter_context(_descriptor(part, pointer, fd, True, dependency))
+        yield fd, absolute
+
+
+def _stat(fd, pointer, dependency=False):
+    try:
+        return os.fstat(fd)
+    except OSError as exc:
+        _io_fault(exc, pointer, "STAT", dependency)
+
+
+def _read_pinned(root, relative, size, digest, pointer, observed, dependency=False):
+    parts = _components(relative, pointer, False, dependency)
+    if not parts:
+        _fault("INPUT_PATH", "PATH", "file path required", pointer, dependency)
+    with ExitStack() as stack:
+        parent = root
+        for part in parts[:-1]:
+            parent = stack.enter_context(_descriptor(part, pointer, parent, True, dependency))
+        fd = stack.enter_context(_descriptor(parts[-1], pointer, parent, dependency=dependency))
+        before = _stat(fd, pointer, dependency)
+        if not stat.S_ISREG(before.st_mode):
+            _fault("INPUT_PATH", "NOT_REGULAR", "regular file required", pointer, dependency)
+        observed["bytes"] = before.st_size
+        if before.st_size != size:
+            _fault("INPUT_SIZE", "SIZE", "file size differs from frozen pin before read", pointer, dependency)
+        try:
+            raw = os.read(fd, size + 1)
+        except OSError as exc:
+            _io_fault(exc, pointer, "READ", dependency)
+        observed.update(bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
+        after = _stat(fd, pointer, dependency)
+        if len(raw) > size or after.st_size > size:
+            _fault("HISTORICAL_BINDING", "GROWN", "file grew during bounded read", pointer, dependency)
+        if len(raw) < size or after.st_size < size:
+            _fault("HISTORICAL_BINDING", "SHORT_READ", "short or shrinking bounded read", pointer, dependency)
+        if (before.st_mtime_ns, before.st_ctime_ns) != (after.st_mtime_ns, after.st_ctime_ns):
+            _fault("HISTORICAL_BINDING", "CHANGED_DURING_READ", "file metadata changed during read",
+                   pointer, dependency)
+        if observed["sha256"] != digest:
+            _fault("HISTORICAL_BINDING", "HASH", "captured bytes differ from frozen SHA-256", pointer, dependency)
+        return raw
+
+
+def _capture_dependencies():
+    """Capture the complete transitive code closure anew, before any code load."""
+    root = Path(__file__).parent.parent
+    captured = {}
+    with _root_descriptor(root, "/dependencies", True) as (fd, absolute):
+        for name, (relative, size, digest) in DEPENDENCIES.items():
+            raw = _read_pinned(fd, relative, size, digest, "/dependencies/" + name, {}, True)
+            captured[name] = absolute + "/" + relative, raw
+    return captured
+
+
+def _compare_captured(captured, source_files, raw):
+    """Use exact code bodies with only per-call dependency acquisition replaced."""
+    modules = {}
+    try:
+        for name, (path, code) in captured.items():
+            module = types.ModuleType(f"_c268_{id(modules):x}_{name}")
+            module.__file__ = path
+            modules[name] = module
+            sys.modules[module.__name__] = module
+            exec(compile(code, path, "exec"), module.__dict__)
+        # C267 and C266 otherwise reopen dependencies after checking paths.
+        # Supplying their already-admitted private modules removes those races.
+        # C265's sole transitive dependency is C257; its cache is private here.
+        modules["source"]._DEPENDENCY = modules["identity"]
+        modules["binding"]._dependencies = lambda: {
+            name: modules[name] for name in ("source", "artifact", "identity")}
+        modules["comparison"]._dependencies = lambda: {
+            name: modules[name] for name in ("binding", "source", "artifact")}
+        try:
+            return modules["comparison"].compare_hinges(source_files, raw)
+        except modules["comparison"].Fault as exc:
+            raise Fault(exc.code, exc.detail, getattr(exc, "pointer", ""),
+                        getattr(exc, "origin", None), reason="COMPARISON") from exc
+    finally:
+        for module in modules.values():
+            if sys.modules.get(module.__name__) is module:
+                del sys.modules[module.__name__]
+
+
+def read_bound_endpoint(repo, endpoint):
+    """Compare admitted original before/after files or raise a whole-input Fault.
+
+    On supported POSIX hosts, repo is a str or native concrete pathlib.Path,
+    absolute or relative to the current directory. Parent-traversal components,
+    symlink files/ancestors and nonregular inputs are refused. File descriptors
+    anchor access; a successful result identifies captured bytes, not a live
+    filesystem snapshot or an accepted source revision.
+    """
+    observed = {}
+    try:
+        if type(endpoint) is not str or len(endpoint) not in (5, 6) or endpoint not in PINS:
+            raise Fault("ENDPOINT", "endpoint must be exactly before or after", "/endpoint", reason="ENDPOINT")
+        _platform()
+        captured, admission = {}, {}
+        with _root_descriptor(repo, "/repo") as (fd, _):
+            for name, relative, size, digest in PINS[endpoint]:
+                observed[name] = {}
+                captured[name] = _read_pinned(fd, relative, size, digest,
+                                              "/historicalAdmission/" + name, observed[name])
+                admission[name] = {"path": relative, "bytes": size, "sha256": digest}
+        source_files = {name: captured[name] for name in ("main.ok", "hinges.ok")}
+        dependencies = _capture_dependencies()
+        result = _compare_captured(dependencies, source_files, captured["artifact"])
+        if result["schema"] != COMPARISON_SCHEMA or result["limits"].count(RAW_HISTORICAL_LIMIT) != 1:
+            raise Fault("INPUT_BINDING", "unexpected pinned comparison result schema or limits",
+                        "/comparisonSchema", reason="COMPARISON")
+        result = dict(result)
+        result.update(schema=SCHEMA, comparisonSchema=COMPARISON_SCHEMA,
+                      historicalInputsBound=True, endpoint=endpoint, historicalAdmission=admission)
+        result["limits"] = [BOUND_HISTORICAL_LIMIT if item == RAW_HISTORICAL_LIMIT else item
+                            for item in result["limits"]]
+        return result
+    except Fault as exc:
+        fault = exc
+    except OSError as exc:
+        reason = "PERMISSION" if exc.errno in (errno.EACCES, errno.EPERM) else "IO"
+        fault = Fault("IO_ERROR", type(exc).__name__, reason=reason)
+    except (UnicodeError, ValueError, TypeError, KeyError, IndexError, AttributeError,
+            ArithmeticError, RecursionError) as exc:
+        fault = Fault("MALFORMED", type(exc).__name__, reason="INTERNAL_INPUT")
+    for name in ("main.ok", "hinges.ok"):
+        if name in observed:
+            if "bytes" in observed[name]:
+                fault.sourceBytes[name] = observed[name]["bytes"]
+            if "sha256" in observed[name]:
+                fault.sourceHashes[name] = observed[name]["sha256"]
+    if "artifact" in observed:
+        fault.artifactBytes = observed["artifact"].get("bytes")
+        fault.artifactSha256 = observed["artifact"].get("sha256")
+    raise fault
