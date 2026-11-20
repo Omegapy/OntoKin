@@ -3,16 +3,15 @@
   "project": "Omegapy/OntoKin",
   "latest_task": "C270",
   "active_task": "C270",
-  "observed_main": "4d27756f1c503b430dd85219235778a1f78ef101",
-  "snapshot_date": "2026-11-20T21:21:00.864910+00:00",
+  "observed_main": "0f90048b74b4cb69f2d5f058106c81967b13ae6d",
+  "snapshot_date": "2026-11-20T21:31:00.447636+00:00",
   "next_action": {
     "status": "ready",
-    "summary": "R05 only: verify and save final ZIP and matching prompts, publish external receipt, close C270/issue270 after confirmed delivery, release lease and stop. No next milestone.",
-    "suggested_task": "Complete existing C270 R05 only; no new milestone.",
+    "summary": "R05 closure only: final ZIP/prompts are saved and this external receipt is published by this commit. Verify records, close issue270 and C270, release lease and stop. No next milestone.",
+    "suggested_task": "Finish existing C270 closure only, then await user direction.",
     "sources": [
       "docs/workflow/tasks/C270/task.json",
-      "docs/engineering/localized-repair-c270/correction/finalization-20261120/INTEGRATION.json",
-      "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json"
+      "docs/engineering/localized-repair-c270/correction/finalization-20261120/DELIVERY.json"
     ]
   },
   "historical_handoff": {
@@ -39,6 +38,19 @@
   "latest_handoff": {
     "task": "C270",
     "kind": "online_browser_session",
+    "phase": "C270-R03-R05-recovery-finalization",
+    "partial": false,
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-a959b432b8c881918c0ef4ab596c8a8f_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "library_file_id": "libfile_fde3_f-a959b432b8c881918c0ef4ab596c8a8f_2ab2a24d43748191957f9bcc356b59de",
+    "version": 0,
+    "bytes": 10963559,
+    "sha256": "4852a588a96bc9839234c9491b61497859011efc553a26518eadae655dd034cd",
+    "source_revision": "0f90048b74b4cb69f2d5f058106c81967b13ae6d",
+    "delivery_receipt": "docs/engineering/localized-repair-c270/correction/finalization-20261120/DELIVERY.json"
+  },
+  "previous_handoff": {
+    "task": "C270",
+    "kind": "online_browser_session",
     "phase": "C270-recovery-finalization",
     "partial": true,
     "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fb342ba3a2d48191be837ec9bab3566f_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
@@ -48,17 +60,6 @@
     "sha256": "2c8d08e8cbdeec4ada3e65d692dc47d813169c3268fe33d014b89e6281a32940",
     "source_revision": "a8e0bd1d446396b220075b5329e2c769c338f6a2",
     "delivery_receipt": "docs/engineering/localized-repair-c270/DELIVERY.json"
-  },
-  "previous_handoff": {
-    "task": "C269",
-    "kind": "online_browser_session",
-    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-0ba7fe628c688191b4b555a7e7b8e891_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-    "library_file_id": "libfile_fde3_f-0ba7fe628c688191b4b555a7e7b8e891_2ab2a24d43748191957f9bcc356b59de",
-    "version": 0,
-    "bytes": 925448,
-    "sha256": "6f09f8855c361f7157bc87f2c56d2a097df7aa60f78a779a90db9a124091200f",
-    "source_revision": "3ad6f2e0d56e1b97c87a63e1d3353aec899bfaf0",
-    "delivery_receipt": "docs/engineering/localized-repair-c269/DELIVERY.json"
   },
   "latest_recovery": {
     "schema": "ontokin.c270.r03-early-delivery/1",
@@ -82,5 +83,18 @@
     },
     "boundary": "Saved before R03 acceptance review and integration; final saved handoff remains required",
     "receipt": "docs/engineering/localized-repair-c270/correction/finalization-20261120/EARLY-RECOVERY-RECEIPT.json"
-  }
+  },
+  "older_handoffs": [
+    {
+      "task": "C269",
+      "kind": "online_browser_session",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-0ba7fe628c688191b4b555a7e7b8e891_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "library_file_id": "libfile_fde3_f-0ba7fe628c688191b4b555a7e7b8e891_2ab2a24d43748191957f9bcc356b59de",
+      "version": 0,
+      "bytes": 925448,
+      "sha256": "6f09f8855c361f7157bc87f2c56d2a097df7aa60f78a779a90db9a124091200f",
+      "source_revision": "3ad6f2e0d56e1b97c87a63e1d3353aec899bfaf0",
+      "delivery_receipt": "docs/engineering/localized-repair-c269/DELIVERY.json"
+    }
+  ]
 }

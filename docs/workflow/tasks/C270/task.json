@@ -66,7 +66,10 @@
       "evidence": [
         "docs/engineering/localized-repair-c270/DELIVERY.json",
         "docs/engineering/localized-repair-c270/evidence/recovery-20261120/FINAL-PACKAGE-REVIEW.json",
-        "docs/engineering/localized-repair-c270/correction/EARLY-RECOVERY-RECEIPT.json"
+        "docs/engineering/localized-repair-c270/correction/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-PACKAGE-REVIEW.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/DELIVERY.json"
       ]
     }
   ],
@@ -143,7 +146,9 @@
       ],
       "status": "in_progress",
       "artifacts": [
-        "docs/engineering/localized-repair-c270/DELIVERY.json"
+        "docs/engineering/localized-repair-c270/DELIVERY.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/DELIVERY.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-PACKAGE-REVIEW.json"
       ],
       "verification": [
         "Exact ZIP manifest/extraction/source verification, confirmed save and separate receipt; parent closure decision"
@@ -225,6 +230,17 @@
         "docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-REVIEW.md",
         "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.md"
       ]
+    },
+    {
+      "name": "verified final handoff and matching prompt save",
+      "command": "Exact ZIP inventory/hash/extraction/Git comparison, independent archive review, one ordered prepared upload batch and destination metadata readback",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-PACKAGE-REVIEW.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-PACKAGE-VERIFICATION.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/DELIVERY.json"
+      ]
     }
   ],
   "completion": {
@@ -236,12 +252,14 @@
       "docs/engineering/localized-repair-c270/correction/finalization-20261120/INTEGRATION.json",
       "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json",
       "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.md",
-      "docs/engineering/localized-repair-c270/correction/finalization-20261120/BRANCH-DISPOSITION.json"
+      "docs/engineering/localized-repair-c270/correction/finalization-20261120/BRANCH-DISPOSITION.json",
+      "docs/engineering/localized-repair-c270/correction/finalization-20261120/DELIVERY.json",
+      "docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-PACKAGE-REVIEW.json"
     ],
     "scope_issue_state": "open",
     "phase_complete_parent_open": false
   },
-  "next_action": "R05 only: verify and save final ZIP and matching prompts, publish external receipt, close C270/issue270 after confirmed delivery, release lease and stop. No next milestone.",
+  "next_action": "R05 closure only: final ZIP/prompts are saved and this external receipt is published by this commit. Verify records, close issue270 and C270, release lease and stop. No next milestone.",
   "session_phase": {
     "id": "C270-classification-correction",
     "starting_main": "55c585acdaa750961ac37a5c46c9160bed149f97",
@@ -255,7 +273,7 @@
     "early_receipt": "docs/engineering/localized-repair-c270/correction/EARLY-RECOVERY-RECEIPT.json",
     "status": "in_progress",
     "integration_complete": true,
-    "delivery_confirmed": false,
+    "delivery_confirmed": true,
     "candidate": "a6099546e2ae66e78621008338ecd3b2d352d9b8",
     "candidate_tree": "6e05696718723fe77f6973d1aa2319638723d127",
     "completed_gates": [
@@ -269,15 +287,21 @@
     "reviewed_candidate": "29e98cab1774629171152be3be68c14e39bb9c0e",
     "merge_commit": "4d27756f1c503b430dd85219235778a1f78ef101",
     "actual_main_verified": true,
-    "remaining_gate": "R05"
+    "remaining_gate": "R05 closure and lease release only"
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "pending",
+    "status": "saved",
     "folder": "OntoKin",
-    "receipt": null,
-    "partial": true
+    "receipt": "docs/engineering/localized-repair-c270/correction/finalization-20261120/DELIVERY.json",
+    "library_file_id": "libfile_fde3_f-a959b432b8c881918c0ef4ab596c8a8f_2ab2a24d43748191957f9bcc356b59de",
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-a959b432b8c881918c0ef4ab596c8a8f_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "bytes": 10963559,
+    "sha256": "4852a588a96bc9839234c9491b61497859011efc553a26518eadae655dd034cd",
+    "version": 0,
+    "source_revision": "0f90048b74b4cb69f2d5f058106c81967b13ae6d",
+    "partial": false
   },
   "phase_history": [
     {
@@ -354,7 +378,7 @@
   "recovery": {
     "starting_branch": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
     "lease_commit": "ab0f196cd8c67dfa94cba369381dafa8b6c7a015",
-    "first_unmet_gate": "R05 final package/save/receipt/closure only",
+    "first_unmet_gate": "R05 closure and lease release only",
     "known_unknown_operations": [],
     "preserve_original_failure": true,
     "workers": [
@@ -384,7 +408,8 @@
       "unknown_operations": [
         "Historical routine broad-driver completion remains unknown; no current remote write is unresolved"
       ],
-      "main_verified": "4d27756f1c503b430dd85219235778a1f78ef101"
+      "main_verified": "4d27756f1c503b430dd85219235778a1f78ef101",
+      "delivery_receipt": "docs/engineering/localized-repair-c270/correction/finalization-20261120/DELIVERY.json"
     }
   },
   "historical_checks": [

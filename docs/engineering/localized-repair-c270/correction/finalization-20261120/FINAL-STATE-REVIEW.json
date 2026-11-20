@@ -1,0 +1,1968 @@
+{
+  "schema": "ontokin.c270.final-state-review/1",
+  "reviewer": "/root/candidate_review",
+  "reviewed_at_utc": "2026-11-20T21:24:37.869804+00:00",
+  "source_revision": "0f90048b74b4cb69f2d5f058106c81967b13ae6d",
+  "source_tree": "12dbb596ec9c4695dcd5d9badab83cdabae24a72",
+  "parent": "4d27756f1c503b430dd85219235778a1f78ef101",
+  "verdict": "accepted_R01_R04_done_R05_pending",
+  "passed": true,
+  "mandatory_findings": [],
+  "check_count": 169,
+  "checks": [
+    {
+      "name": "source_tree_and_single_parent",
+      "passed": true
+    },
+    {
+      "name": "only_three_state_files_modified",
+      "passed": true,
+      "paths": [
+        "STATUS.md",
+        "docs/workflow/CURRENT.json",
+        "docs/workflow/tasks/C270/task.json"
+      ]
+    },
+    {
+      "name": "twenty_one_evidence_additions_only",
+      "passed": true,
+      "paths": [
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-ARTIFACTS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-EVIDENCE.zip",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-MANIFEST.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.md",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/AUDIT-ATTEMPTS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/BRANCH-DISPOSITION.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-ARTIFACTS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-DELTA-EVIDENCE.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-REVIEW.md",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/INTEGRATION.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/LEARNING.md",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/LOCAL-SETUP-ATTEMPTS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_actual_main.py",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_final_delta.py",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/candidate-record-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/POST-MERGE.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-before-ref.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-intent.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-result.json"
+      ]
+    },
+    {
+      "name": "all_previous_other_bytes_modes_retained",
+      "passed": true
+    },
+    {
+      "name": "exact_requirement_gate_state",
+      "passed": true,
+      "states": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "done",
+        "R04": "done",
+        "R05": "not_done"
+      }
+    },
+    {
+      "name": "requirement_acceptance_preserved",
+      "passed": true
+    },
+    {
+      "name": "parent_issue_delivery_pending",
+      "passed": true
+    },
+    {
+      "name": "completion_identities_correct",
+      "passed": true
+    },
+    {
+      "name": "session_stops_at_R05",
+      "passed": true
+    },
+    {
+      "name": "unknown_routine_status_retained",
+      "passed": true
+    },
+    {
+      "name": "CURRENT_R05_only",
+      "passed": true
+    },
+    {
+      "name": "historical_archive_boundaries_retained",
+      "passed": true
+    },
+    {
+      "name": "STATUS_does_not_prematurely_close",
+      "passed": true
+    },
+    {
+      "name": "lease_renewal_bounded_to_remaining_scope",
+      "passed": true
+    },
+    {
+      "name": "canonical_integration_matches_review",
+      "passed": true
+    },
+    {
+      "name": "branch_record_matches_observation",
+      "passed": true
+    },
+    {
+      "name": "published_reviewer_bytes:FINAL-REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "published_reviewer_bytes:FINAL-DELTA-EVIDENCE.json",
+      "passed": true
+    },
+    {
+      "name": "published_reviewer_bytes:FINAL-ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "published_reviewer_bytes:ACTUAL-MAIN-REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "published_reviewer_bytes:ACTUAL-MAIN-REVIEW.json",
+      "passed": true
+    },
+    {
+      "name": "published_reviewer_bytes:ACTUAL-MAIN-ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "published_reviewer_bytes:audit_actual_main.py",
+      "passed": true
+    },
+    {
+      "name": "published_reviewer_bytes:audit_final_delta.py",
+      "passed": true
+    },
+    {
+      "name": "published_reviewer_bytes:AUDIT-ATTEMPTS.json",
+      "passed": true
+    },
+    {
+      "name": "published_setup_failures_retained",
+      "passed": true
+    },
+    {
+      "name": "actual_main_archive_exact_identity",
+      "passed": true
+    },
+    {
+      "name": "main_evidence_attribution_preserved",
+      "passed": true
+    },
+    {
+      "name": "archive_exact39_payloads_crc_safe",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c253-corpus.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c253-corpus.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c255-oracle.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c255-oracle.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c256-reader.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c256-reader.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c257-ownership.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c257-ownership.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c258-follows.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c258-follows.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c261-hinge_glb.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c261-hinge_glb.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c265-source_hinges.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c265-source_hinges.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c266-binding.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c266-binding.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c266-controls/checked-code/binding_control_fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c266-controls/checked-code/binding_control_fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c266-controls/checked-code/hinge_binding.py",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c266-controls/checked-code/hinge_binding.py",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c266-controls/checked-code/test_hinge_binding.py",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c266-controls/checked-code/test_hinge_binding.py",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c266-controls/inputs.zip",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c266-controls/inputs.zip",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c266-controls/results.json",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c266-controls/results.json",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c266-controls/unittest.txt",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c266-controls/unittest.txt",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c267-comparison.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c267-comparison.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c267-controls/checked-code/comparison_control_fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c267-controls/checked-code/comparison_control_fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c267-controls/checked-code/hinge_compare.py",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c267-controls/checked-code/hinge_compare.py",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c267-controls/checked-code/test_hinge_compare.py",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c267-controls/checked-code/test_hinge_compare.py",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c267-controls/inputs.zip",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c267-controls/inputs.zip",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c267-controls/results.json",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c267-controls/results.json",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c267-controls/unittest.txt",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c267-controls/unittest.txt",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c268-controls/checked-code/endpoint_control_fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c268-controls/checked-code/endpoint_control_fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c268-controls/checked-code/endpoint_reader.py",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c268-controls/checked-code/endpoint_reader.py",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c268-controls/checked-code/test_endpoint_reader.py",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c268-controls/checked-code/test_endpoint_reader.py",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c268-controls/inputs.zip",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c268-controls/inputs.zip",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c268-controls/results.json",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c268-controls/results.json",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c268-controls/unittest.txt",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c268-controls/unittest.txt",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/c268-endpoint.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/c268-endpoint.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:affected-cohort/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:affected-cohort/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:distinctions/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:distinctions/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:distinctions/distinctions.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:distinctions/distinctions.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:h16/RESULTS.json",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:h16/RESULTS.json",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:h16/responses/original-comparison.json",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:h16/responses/original-comparison.json",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:h16/responses/original-source.json",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:h16/responses/original-source.json",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:driver-logs/cohort.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:driver-logs/cohort.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:driver-logs/h16.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:driver-logs/h16.log",
+      "passed": true
+    },
+    {
+      "name": "archive_payload_hash:driver-logs/distinctions.log",
+      "passed": true
+    },
+    {
+      "name": "archive_original_bytes:driver-logs/distinctions.log",
+      "passed": true
+    },
+    {
+      "name": "canonical_report_binding:affected-cohort/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "canonical_report_binding:h16/RESULTS.json",
+      "passed": true
+    },
+    {
+      "name": "canonical_report_binding:distinctions/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "canonical_counts_match_review",
+      "passed": true
+    },
+    {
+      "name": "publication_intent_correct_expected_nonforce",
+      "passed": true
+    },
+    {
+      "name": "exact24_publication_entries",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:STATUS.md",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-EVIDENCE.zip",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-MANIFEST.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/AUDIT-ATTEMPTS.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/BRANCH-DISPOSITION.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-DELTA-EVIDENCE.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/INTEGRATION.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/LEARNING.md",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/LOCAL-SETUP-ATTEMPTS.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_actual_main.py",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_final_delta.py",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/candidate-record-checks/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/POST-MERGE.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-before-ref.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-intent.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-result.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/workflow/CURRENT.json",
+      "passed": true
+    },
+    {
+      "name": "publication_binding:docs/workflow/tasks/C270/task.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:STATUS.md",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-EVIDENCE.zip",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-MANIFEST.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/AUDIT-ATTEMPTS.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/BRANCH-DISPOSITION.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-DELTA-EVIDENCE.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/INTEGRATION.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/LEARNING.md",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/LOCAL-SETUP-ATTEMPTS.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_actual_main.py",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_final_delta.py",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/candidate-record-checks/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/POST-MERGE.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-before-ref.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-intent.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-result.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/workflow/CURRENT.json",
+      "passed": true
+    },
+    {
+      "name": "publication_content:docs/workflow/tasks/C270/task.json",
+      "passed": true
+    },
+    {
+      "name": "publication_success_exact_main_readback",
+      "passed": true
+    },
+    {
+      "name": "fresh0f_record_checks_exact_clean",
+      "passed": true
+    },
+    {
+      "name": "fresh_record_log_identity:workflow",
+      "passed": true
+    },
+    {
+      "name": "fresh_record_log_outcome:workflow",
+      "passed": true
+    },
+    {
+      "name": "fresh_record_log_identity:documentation",
+      "passed": true
+    },
+    {
+      "name": "fresh_record_log_outcome:documentation",
+      "passed": true
+    },
+    {
+      "name": "same_record_check_environment",
+      "passed": true
+    },
+    {
+      "name": "fresh_runner_preserved",
+      "passed": true
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "ls-tree",
+        "-rz",
+        "--full-tree",
+        "4d27756f1c503b430dd85219235778a1f78ef101"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 2510948,
+        "sha256": "29135fa2529afbc83fc611a35708a5b3bb658bd06e1f5c537168a57a07ad9d70"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "ls-tree",
+        "-rz",
+        "--full-tree",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 2514079,
+        "sha256": "09badb772fe4261a516d498280a3b216ed44d51f1929ccbf672de7a70d16be21"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "rev-parse",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d^{tree}"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 41,
+        "sha256": "7a33fa37ec7940cddbf66db4d1d2a065a82fd71bcf366f2a5322aa158bad5e97"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "-s",
+        "--format=%P",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 41,
+        "sha256": "2c369b70220e27f35b603895061461f30f6e9616a6d16160d3cdd181b174f3e7"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/workflow/tasks/C270/task.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 22084,
+        "sha256": "2bb246f6a63027726466a739b64c9b6e862446c67ecf3e6ea673b804b4205a83"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "4d27756f1c503b430dd85219235778a1f78ef101:docs/workflow/tasks/C270/task.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 19550,
+        "sha256": "072bfede136989d23d756ea12f0c3c27316f99d47576e0c53265a5d90f764b08"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/workflow/CURRENT.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 4832,
+        "sha256": "c0c6f46c431e311ee40aba11af32d3c0bba07657904bac49bfd59c8d81f9e6ed"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "4d27756f1c503b430dd85219235778a1f78ef101:docs/workflow/CURRENT.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 4977,
+        "sha256": "a2210702ae3c9412c22855329c4582af70a697eb70c2eaebb3afcdb232647d26"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:STATUS.md"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 13783,
+        "sha256": "c376e81541c6211e26f42fcc310f60b405159690d3b5ed97277d708267b1a4a6"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/INTEGRATION.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 3227,
+        "sha256": "49870180714a18de0f76a23708ec47259954b720aeb6c718f6d48651c212853c"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 8758,
+        "sha256": "95db1b208167e85ab8b13842fa41b75f63cf99e1e84467661392ea8e57505e67"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/BRANCH-DISPOSITION.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 987,
+        "sha256": "6299db58ea282d2d5d39700a66b67a8115d4e168d6faeed2d335a02afb18f1d1"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-REVIEW.md"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 4876,
+        "sha256": "1def105ef4330c25658ad4350cfc6c38ba632781f2d4d8cab74196f4e4b17f75"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-DELTA-EVIDENCE.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 53333,
+        "sha256": "fbf9b34d6613f3aa225fd69eb5a4363dd9edb13bc0dbd3a94766c67e188fd6fe"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-ARTIFACTS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 793,
+        "sha256": "6bc1b38ec8107a88bc8a9e0002547f7d9b425a56c5337a8e4e49dc8b94700f4d"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.md"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 4076,
+        "sha256": "302e36062335a9c10a4b7d3986904e92d9b60b6c9082f932976f1da5367b1c34"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 156569,
+        "sha256": "de9d017252e188f923ac4093c3a20872b812a74ee2e5e3198e96d26d35da5cac"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-ARTIFACTS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 586,
+        "sha256": "4a08cb69469b8f0869e782f8b137ac9ca4c2595b2b39c5034b33dc5d29da6b36"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_actual_main.py"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 10923,
+        "sha256": "74716a28429ca2b1074845ada2ef7cde03266ee042746b048f86f5a454f1e976"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_final_delta.py"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 10549,
+        "sha256": "0862de69d4448f1ea83b512a0990c4f5396d8060087e09b3093377fbc68c96d2"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/AUDIT-ATTEMPTS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 916,
+        "sha256": "f0a0fc2b45c246b20db2535ef3f3e5b55f53acdf762a6defa8d1737daa8bd184"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/LOCAL-SETUP-ATTEMPTS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 1145,
+        "sha256": "045b38d137511fa3fb80fc1004c0f60fc7eade22600bcf4c12cb767f550cfc3e"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-MANIFEST.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 7323,
+        "sha256": "ee20e27a4b0ffd9d8c9517035e44bd464c818d4b7f5b6d71bc6db40894a3c821"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-EVIDENCE.zip"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 1918886,
+        "sha256": "eee464faaa95b1d992c759262890e92332f145be1dbb5cd315b9c5d71b93a9df"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:STATUS.md"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 13783,
+        "sha256": "c376e81541c6211e26f42fcc310f60b405159690d3b5ed97277d708267b1a4a6"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-ARTIFACTS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 586,
+        "sha256": "4a08cb69469b8f0869e782f8b137ac9ca4c2595b2b39c5034b33dc5d29da6b36"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 8758,
+        "sha256": "95db1b208167e85ab8b13842fa41b75f63cf99e1e84467661392ea8e57505e67"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-EVIDENCE.zip"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 1918886,
+        "sha256": "eee464faaa95b1d992c759262890e92332f145be1dbb5cd315b9c5d71b93a9df"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-MANIFEST.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 7323,
+        "sha256": "ee20e27a4b0ffd9d8c9517035e44bd464c818d4b7f5b6d71bc6db40894a3c821"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 156569,
+        "sha256": "de9d017252e188f923ac4093c3a20872b812a74ee2e5e3198e96d26d35da5cac"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.md"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 4076,
+        "sha256": "302e36062335a9c10a4b7d3986904e92d9b60b6c9082f932976f1da5367b1c34"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/AUDIT-ATTEMPTS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 916,
+        "sha256": "f0a0fc2b45c246b20db2535ef3f3e5b55f53acdf762a6defa8d1737daa8bd184"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/BRANCH-DISPOSITION.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 987,
+        "sha256": "6299db58ea282d2d5d39700a66b67a8115d4e168d6faeed2d335a02afb18f1d1"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-ARTIFACTS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 793,
+        "sha256": "6bc1b38ec8107a88bc8a9e0002547f7d9b425a56c5337a8e4e49dc8b94700f4d"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-DELTA-EVIDENCE.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 53333,
+        "sha256": "fbf9b34d6613f3aa225fd69eb5a4363dd9edb13bc0dbd3a94766c67e188fd6fe"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-REVIEW.md"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 4876,
+        "sha256": "1def105ef4330c25658ad4350cfc6c38ba632781f2d4d8cab74196f4e4b17f75"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/INTEGRATION.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 3227,
+        "sha256": "49870180714a18de0f76a23708ec47259954b720aeb6c718f6d48651c212853c"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/LEARNING.md"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 734,
+        "sha256": "382da27a16a059efeeac12235adc7f60f143660bfee89ff8ba470929825599c0"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/LOCAL-SETUP-ATTEMPTS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 1145,
+        "sha256": "045b38d137511fa3fb80fc1004c0f60fc7eade22600bcf4c12cb767f550cfc3e"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_actual_main.py"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 10923,
+        "sha256": "74716a28429ca2b1074845ada2ef7cde03266ee042746b048f86f5a454f1e976"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_final_delta.py"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 10549,
+        "sha256": "0862de69d4448f1ea83b512a0990c4f5396d8060087e09b3093377fbc68c96d2"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/candidate-record-checks/CHECKS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 1945,
+        "sha256": "5d95e314d82fdef2942c276604f03a15a1ff553f3324793286f9c9c500f3f324"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/POST-MERGE.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 47382,
+        "sha256": "5e98223ce24708b7c8193a2289aaff7f039d6a6ceb326f502b6c6b92d36218b9"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-before-ref.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 599,
+        "sha256": "148f2b3cdc8566ade8e43193e18240d70ec9ac0727a079e9eb6219579fe0ece8"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-intent.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 478,
+        "sha256": "918076ffad1db93d98e55a1dbdb5d37c4c65ea4d11142add5a9cb92abda68db0"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-result.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 429,
+        "sha256": "612877ac92ea12439385cd2fbd2e48201fe3eb84745e8107c426bd799d00216f"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/workflow/CURRENT.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 4832,
+        "sha256": "c0c6f46c431e311ee40aba11af32d3c0bba07657904bac49bfd59c8d81f9e6ed"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/workflow/tasks/C270/task.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 22084,
+        "sha256": "2bb246f6a63027726466a739b64c9b6e862446c67ecf3e6ea673b804b4205a83"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:STATUS.md"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 13783,
+        "sha256": "c376e81541c6211e26f42fcc310f60b405159690d3b5ed97277d708267b1a4a6"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-ARTIFACTS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 586,
+        "sha256": "4a08cb69469b8f0869e782f8b137ac9ca4c2595b2b39c5034b33dc5d29da6b36"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 8758,
+        "sha256": "95db1b208167e85ab8b13842fa41b75f63cf99e1e84467661392ea8e57505e67"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-EVIDENCE.zip"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 1918886,
+        "sha256": "eee464faaa95b1d992c759262890e92332f145be1dbb5cd315b9c5d71b93a9df"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-MANIFEST.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 7323,
+        "sha256": "ee20e27a4b0ffd9d8c9517035e44bd464c818d4b7f5b6d71bc6db40894a3c821"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 156569,
+        "sha256": "de9d017252e188f923ac4093c3a20872b812a74ee2e5e3198e96d26d35da5cac"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.md"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 4076,
+        "sha256": "302e36062335a9c10a4b7d3986904e92d9b60b6c9082f932976f1da5367b1c34"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/AUDIT-ATTEMPTS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 916,
+        "sha256": "f0a0fc2b45c246b20db2535ef3f3e5b55f53acdf762a6defa8d1737daa8bd184"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/BRANCH-DISPOSITION.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 987,
+        "sha256": "6299db58ea282d2d5d39700a66b67a8115d4e168d6faeed2d335a02afb18f1d1"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-ARTIFACTS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 793,
+        "sha256": "6bc1b38ec8107a88bc8a9e0002547f7d9b425a56c5337a8e4e49dc8b94700f4d"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-DELTA-EVIDENCE.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 53333,
+        "sha256": "fbf9b34d6613f3aa225fd69eb5a4363dd9edb13bc0dbd3a94766c67e188fd6fe"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-REVIEW.md"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 4876,
+        "sha256": "1def105ef4330c25658ad4350cfc6c38ba632781f2d4d8cab74196f4e4b17f75"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/INTEGRATION.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 3227,
+        "sha256": "49870180714a18de0f76a23708ec47259954b720aeb6c718f6d48651c212853c"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/LEARNING.md"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 734,
+        "sha256": "382da27a16a059efeeac12235adc7f60f143660bfee89ff8ba470929825599c0"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/LOCAL-SETUP-ATTEMPTS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 1145,
+        "sha256": "045b38d137511fa3fb80fc1004c0f60fc7eade22600bcf4c12cb767f550cfc3e"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_actual_main.py"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 10923,
+        "sha256": "74716a28429ca2b1074845ada2ef7cde03266ee042746b048f86f5a454f1e976"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_final_delta.py"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 10549,
+        "sha256": "0862de69d4448f1ea83b512a0990c4f5396d8060087e09b3093377fbc68c96d2"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/candidate-record-checks/CHECKS.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 1945,
+        "sha256": "5d95e314d82fdef2942c276604f03a15a1ff553f3324793286f9c9c500f3f324"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/POST-MERGE.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 47382,
+        "sha256": "5e98223ce24708b7c8193a2289aaff7f039d6a6ceb326f502b6c6b92d36218b9"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-before-ref.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 599,
+        "sha256": "148f2b3cdc8566ade8e43193e18240d70ec9ac0727a079e9eb6219579fe0ece8"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-intent.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 478,
+        "sha256": "918076ffad1db93d98e55a1dbdb5d37c4c65ea4d11142add5a9cb92abda68db0"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-result.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 429,
+        "sha256": "612877ac92ea12439385cd2fbd2e48201fe3eb84745e8107c426bd799d00216f"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/workflow/CURRENT.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 4832,
+        "sha256": "c0c6f46c431e311ee40aba11af32d3c0bba07657904bac49bfd59c8d81f9e6ed"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/workflow/tasks/C270/task.json"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 22084,
+        "sha256": "2bb246f6a63027726466a739b64c9b6e862446c67ecf3e6ea673b804b4205a83"
+      }
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/workspace/scratch/a2bb67238030/OntoKin",
+        "show",
+        "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c269/evidence/run_record_checks.py"
+      ],
+      "exit_code": 0,
+      "stdout_identity": {
+        "bytes": 2350,
+        "sha256": "3a02a82cd39f8e0c7b802614c0a170ce1236d456db3dc10d263b730903d373f4"
+      }
+    }
+  ],
+  "sources": {
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/workflow/tasks/C270/task.json": {
+      "bytes": 22084,
+      "sha256": "2bb246f6a63027726466a739b64c9b6e862446c67ecf3e6ea673b804b4205a83"
+    },
+    "4d27756f1c503b430dd85219235778a1f78ef101:docs/workflow/tasks/C270/task.json": {
+      "bytes": 19550,
+      "sha256": "072bfede136989d23d756ea12f0c3c27316f99d47576e0c53265a5d90f764b08"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/workflow/CURRENT.json": {
+      "bytes": 4832,
+      "sha256": "c0c6f46c431e311ee40aba11af32d3c0bba07657904bac49bfd59c8d81f9e6ed"
+    },
+    "4d27756f1c503b430dd85219235778a1f78ef101:docs/workflow/CURRENT.json": {
+      "bytes": 4977,
+      "sha256": "a2210702ae3c9412c22855329c4582af70a697eb70c2eaebb3afcdb232647d26"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:STATUS.md": {
+      "bytes": 13783,
+      "sha256": "c376e81541c6211e26f42fcc310f60b405159690d3b5ed97277d708267b1a4a6"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/INTEGRATION.json": {
+      "bytes": 3227,
+      "sha256": "49870180714a18de0f76a23708ec47259954b720aeb6c718f6d48651c212853c"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json": {
+      "bytes": 8758,
+      "sha256": "95db1b208167e85ab8b13842fa41b75f63cf99e1e84467661392ea8e57505e67"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/BRANCH-DISPOSITION.json": {
+      "bytes": 987,
+      "sha256": "6299db58ea282d2d5d39700a66b67a8115d4e168d6faeed2d335a02afb18f1d1"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-REVIEW.md": {
+      "bytes": 4876,
+      "sha256": "1def105ef4330c25658ad4350cfc6c38ba632781f2d4d8cab74196f4e4b17f75"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-DELTA-EVIDENCE.json": {
+      "bytes": 53333,
+      "sha256": "fbf9b34d6613f3aa225fd69eb5a4363dd9edb13bc0dbd3a94766c67e188fd6fe"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-ARTIFACTS.json": {
+      "bytes": 793,
+      "sha256": "6bc1b38ec8107a88bc8a9e0002547f7d9b425a56c5337a8e4e49dc8b94700f4d"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.md": {
+      "bytes": 4076,
+      "sha256": "302e36062335a9c10a4b7d3986904e92d9b60b6c9082f932976f1da5367b1c34"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.json": {
+      "bytes": 156569,
+      "sha256": "de9d017252e188f923ac4093c3a20872b812a74ee2e5e3198e96d26d35da5cac"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-ARTIFACTS.json": {
+      "bytes": 586,
+      "sha256": "4a08cb69469b8f0869e782f8b137ac9ca4c2595b2b39c5034b33dc5d29da6b36"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_actual_main.py": {
+      "bytes": 10923,
+      "sha256": "74716a28429ca2b1074845ada2ef7cde03266ee042746b048f86f5a454f1e976"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/audit_final_delta.py": {
+      "bytes": 10549,
+      "sha256": "0862de69d4448f1ea83b512a0990c4f5396d8060087e09b3093377fbc68c96d2"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/AUDIT-ATTEMPTS.json": {
+      "bytes": 916,
+      "sha256": "f0a0fc2b45c246b20db2535ef3f3e5b55f53acdf762a6defa8d1737daa8bd184"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/LOCAL-SETUP-ATTEMPTS.json": {
+      "bytes": 1145,
+      "sha256": "045b38d137511fa3fb80fc1004c0f60fc7eade22600bcf4c12cb767f550cfc3e"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-MANIFEST.json": {
+      "bytes": 7323,
+      "sha256": "ee20e27a4b0ffd9d8c9517035e44bd464c818d4b7f5b6d71bc6db40894a3c821"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-EVIDENCE.zip": {
+      "bytes": 1918886,
+      "sha256": "eee464faaa95b1d992c759262890e92332f145be1dbb5cd315b9c5d71b93a9df"
+    },
+    "/workspace/scratch/a2bb67238030/operations/integration-record-intent.json": {
+      "bytes": 396791,
+      "sha256": "dc58bde12f9a182ad60f3de951e9a31400b0bea2681f82842407a1b19e6672b9"
+    },
+    "/workspace/scratch/a2bb67238030/operations/integration-record-result.json": {
+      "bytes": 1987,
+      "sha256": "c7ddfe5d6d6cb52a28b20d0f0ec2a8976f619a6edbb6fdbaab1282742ddbffdb"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/LEARNING.md": {
+      "bytes": 734,
+      "sha256": "382da27a16a059efeeac12235adc7f60f143660bfee89ff8ba470929825599c0"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/candidate-record-checks/CHECKS.json": {
+      "bytes": 1945,
+      "sha256": "5d95e314d82fdef2942c276604f03a15a1ff553f3324793286f9c9c500f3f324"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/POST-MERGE.json": {
+      "bytes": 47382,
+      "sha256": "5e98223ce24708b7c8193a2289aaff7f039d6a6ceb326f502b6c6b92d36218b9"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-before-ref.json": {
+      "bytes": 599,
+      "sha256": "148f2b3cdc8566ade8e43193e18240d70ec9ac0727a079e9eb6219579fe0ece8"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-intent.json": {
+      "bytes": 478,
+      "sha256": "918076ffad1db93d98e55a1dbdb5d37c4c65ea4d11142add5a9cb92abda68db0"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c270/correction/finalization-20261120/operations/merge-result.json": {
+      "bytes": 429,
+      "sha256": "612877ac92ea12439385cd2fbd2e48201fe3eb84745e8107c426bd799d00216f"
+    },
+    "/workspace/scratch/a2bb67238030/evidence/published-integration-records/CHECKS.json": {
+      "bytes": 1944,
+      "sha256": "5c259b485a5310f99c6a5ecbbca4ce9f9765d0fef633ea58a1722ee2add4781f"
+    },
+    "/workspace/scratch/a2bb67238030/evidence/published-integration-records/workflow.log": {
+      "bytes": 148,
+      "sha256": "3a4c5215ccda80a3479a1fb26a5d57ada445e4d0cddada9f67506fb01a8f235f"
+    },
+    "/workspace/scratch/a2bb67238030/evidence/published-integration-records/documentation.log": {
+      "bytes": 6608,
+      "sha256": "b8637fc2d84027302bab81324de0e7c3551cadced01574d0df8ba4d7117c2a06"
+    },
+    "0f90048b74b4cb69f2d5f058106c81967b13ae6d:docs/engineering/localized-repair-c269/evidence/run_record_checks.py": {
+      "bytes": 2350,
+      "sha256": "3a02a82cd39f8e0c7b802614c0a170ce1236d456db3dc10d263b730903d373f4"
+    }
+  },
+  "audit_command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "/workspace/scratch/a2bb67238030/audit/review/audit_final_state.py"
+  ],
+  "script_identity": {
+    "bytes": 11284,
+    "sha256": "e43635956bc2fae7ae1fa301c2a0c52519f770c2b3ebaab547ea625f367b41b1"
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "gate_state": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "done",
+    "R04": "done",
+    "R05": "not_done"
+  },
+  "next_action": "R05 only: verify/save final package and matching prompts; confirm separate receipt; close task/issue and release ownership; stop",
+  "record_checks": {
+    "runner": {
+      "path": "/workspace/scratch/a2bb67238030/OntoKin/docs/engineering/localized-repair-c269/evidence/run_record_checks.py",
+      "bytes": 2350,
+      "sha256": "3a02a82cd39f8e0c7b802614c0a170ce1236d456db3dc10d263b730903d373f4"
+    },
+    "schema": "ontokin.c269.document-checks/1",
+    "phase": "C270-R05-handoff-source",
+    "source_revision": "0f90048b74b4cb69f2d5f058106c81967b13ae6d",
+    "source_tree": "12dbb596ec9c4695dcd5d9badab83cdabae24a72",
+    "source_clean": true,
+    "environment": {
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+    },
+    "checks": [
+      {
+        "name": "workflow",
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "tools/chat_workflow.py",
+          "check"
+        ],
+        "started_at_utc": "2026-11-20T21:21:47.224198+00:00",
+        "finished_at_utc": "2026-11-20T21:21:47.339405+00:00",
+        "result": "passed",
+        "exit_code": 0,
+        "log": {
+          "path": "workflow.log",
+          "bytes": 148,
+          "sha256": "3a4c5215ccda80a3479a1fb26a5d57ada445e4d0cddada9f67506fb01a8f235f"
+        }
+      },
+      {
+        "name": "documentation",
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+        ],
+        "started_at_utc": "2026-11-20T21:21:47.339463+00:00",
+        "finished_at_utc": "2026-11-20T21:21:49.417661+00:00",
+        "result": "passed",
+        "exit_code": 0,
+        "log": {
+          "path": "documentation.log",
+          "bytes": 6608,
+          "sha256": "b8637fc2d84027302bab81324de0e7c3551cadced01574d0df8ba4d7117c2a06"
+        }
+      }
+    ],
+    "result": "passed",
+    "limits": [
+      "Documentation/workflow evidence only",
+      "No behavioral cohort or product/native/model/compatibility test executed"
+    ]
+  },
+  "limits": [
+    "Metadata/evidence-container binding only; no behavioral rerun.",
+    "Actual behavior remains attributed to4d277 and original candidate evidence, not this later record-only commit.",
+    "This review does not certify final handoff integrity/save or preapprove an unidentified receipt/closure commit."
+  ]
+}
