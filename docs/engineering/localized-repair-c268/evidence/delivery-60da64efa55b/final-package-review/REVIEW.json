@@ -1,0 +1,4714 @@
+{
+  "schema": "ontokin.c268.independent-final-package-review/1",
+  "reviewer": "/root/main_evidence_audit",
+  "started_at_utc": "2026-11-20T02:20:07.327877+00:00",
+  "finished_at_utc": "2026-11-20T02:20:08.197970+00:00",
+  "verdict": "eligible_for_save",
+  "assertion_count": 1157,
+  "mandatory_findings": [],
+  "archive": {
+    "filename": "OntoKin_C268_Development_Handoff_2026-11-19.zip",
+    "bytes": 4125939,
+    "sha256": "5ba28847d3993a25715ea76f7bc9fdd0f3e7de906c7c787d0d17eb25673b4a9f"
+  },
+  "source_revision": "0e0ed57bb704b6291bc66fcc057b73828d247f79",
+  "source_tree": "b8b6e764053a0344c0ae1d4fcade5787938f33bb",
+  "payload_files_excluding_manifest": 109,
+  "snapshot_files": 50,
+  "evidence_index_entries": 93,
+  "preservation_counts": {
+    "published_git": 53,
+    "included_exact_bytes": 35,
+    "confirmed_early_archive": 5
+  },
+  "prior_external_files": 223,
+  "original_recovery_paths": 52,
+  "original_bundle": {
+    "path": "recovery/C268_Actual_Main_Records_ecce5f18.bundle",
+    "bytes": 1761256,
+    "sha256": "d8b96a8a8db53159076a1cbf33592f8220856a2116527e63d52ce2f31241a340",
+    "prerequisite": "5084dd69312e8da5a49aadd33cf83ba56db7c058",
+    "head": "ecce5f18fd4693e254bc6c797cd8b3f0a74d32a1"
+  },
+  "standalone_prompts": [
+    {
+      "filename": "OntoKin_C268_Continue.md",
+      "zip_path": "PROMPT-1-CONTINUE.md",
+      "bytes": 3312,
+      "sha256": "4565c253e991a0f443602d36b48704e6e98e36893a04a0bc80c58709771f0127"
+    },
+    {
+      "filename": "OntoKin_C268_Recover.md",
+      "zip_path": "PROMPT-2-RECOVER.md",
+      "bytes": 3443,
+      "sha256": "6c2b3a6fd8f059f669c3f9b2a80b7f617bdf80fc9cb79eab78b151080a408ba2"
+    }
+  ],
+  "early_saved_dependency": {
+    "library_file_id": "libfile_fde3_f-fd815384ec70819182812c63cc6b7f61_2ab2a24d43748191957f9bcc356b59de",
+    "bytes": 2386165,
+    "sha256": "482a59c33e886a609cec7cf27aef85770d11c9b05f17f835fb62085cd59686dd",
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fd815384ec70819182812c63cc6b7f61_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+  },
+  "fresh_extraction_directory": "/workspace/scratch/60da64efa55b/c268-independent-package-_65jo1u6",
+  "bundle_verify_command": [
+    "git",
+    "--no-optional-locks",
+    "bundle",
+    "verify",
+    "/workspace/scratch/60da64efa55b/c268-independent-package-_65jo1u6/recovery/C268_Actual_Main_Records_ecce5f18.bundle"
+  ],
+  "checks": [
+    {
+      "name": "frozen_zip_identity",
+      "passed": true
+    },
+    {
+      "name": "builder_binding",
+      "passed": true
+    },
+    {
+      "name": "public_snapshot_object",
+      "passed": true
+    },
+    {
+      "name": "public_snapshot_parents",
+      "passed": true
+    },
+    {
+      "name": "unique_safe_regular_inventory",
+      "passed": true
+    },
+    {
+      "name": "required_root_files",
+      "passed": true
+    },
+    {
+      "name": "zip_crc",
+      "passed": true
+    },
+    {
+      "name": "exact_manifest_inventory",
+      "passed": true
+    },
+    {
+      "name": "payload:CHECKPOINT.json",
+      "passed": true
+    },
+    {
+      "name": "payload:HANDOFF.md",
+      "passed": true
+    },
+    {
+      "name": "payload:HISTORICAL-DEPENDENCIES.json",
+      "passed": true
+    },
+    {
+      "name": "payload:NEXT-TASK.md",
+      "passed": true
+    },
+    {
+      "name": "payload:PROMPT-1-CONTINUE.md",
+      "passed": true
+    },
+    {
+      "name": "payload:PROMPT-2-RECOVER.md",
+      "passed": true
+    },
+    {
+      "name": "payload:READ-SET.json",
+      "passed": true
+    },
+    {
+      "name": "payload:README-START-HERE.md",
+      "passed": true
+    },
+    {
+      "name": "payload:RECOVERY-STATUS.md",
+      "passed": true
+    },
+    {
+      "name": "payload:SNAPSHOT-SOURCES.json",
+      "passed": true
+    },
+    {
+      "name": "payload:SOURCE-IDENTITIES.json",
+      "passed": true
+    },
+    {
+      "name": "payload:evidence/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true
+    },
+    {
+      "name": "payload:evidence/EARLY-RECOVERY-VERIFICATION.json",
+      "passed": true
+    },
+    {
+      "name": "payload:evidence/FINAL-STATE-OBSERVATION.json",
+      "passed": true
+    },
+    {
+      "name": "payload:evidence/INDEX.json",
+      "passed": true
+    },
+    {
+      "name": "payload:package-preparation/attempt-01/ATTEMPT.json",
+      "passed": true
+    },
+    {
+      "name": "payload:package-preparation/attempt-01/MANIFEST-SHA256.json",
+      "passed": true
+    },
+    {
+      "name": "payload:package-preparation/attempt-01/PROMPT-1-CONTINUE.md",
+      "passed": true
+    },
+    {
+      "name": "payload:package-preparation/attempt-01/PROMPT-2-RECOVER.md",
+      "passed": true
+    },
+    {
+      "name": "payload:package-preparation/attempt-01/VERIFICATION.json",
+      "passed": true
+    },
+    {
+      "name": "payload:recovery/C268_Actual_Main_Records_ecce5f18.bundle",
+      "passed": true
+    },
+    {
+      "name": "payload:recovery/PRIOR-EXTERNAL-RECOVERY.json",
+      "passed": true
+    },
+    {
+      "name": "payload:recovery/RESTORE.md",
+      "passed": true
+    },
+    {
+      "name": "payload:recovery/UNPUBLISHED-COMMIT.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/.agents/skills/ontokin-delivery/SKILL.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/.agents/skills/ontokin-learning/SKILL.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/.agents/skills/ontokin-session/SKILL.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/AGENTS.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/CHATGPT-START-HERE.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/GOAL.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/ROLE.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/STATUS.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/README.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/browser-workflow-c263/MIGRATION.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c260/CONTRACT.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c260/INPUTS.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/CONTROL-COVERAGE.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/INTEGRATION.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/README.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/RESULTS.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/REVIEW.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/BLOB-READBACK.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/CAPABILITIES.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/LOCAL-IMPORT-ATTEMPT.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/RECOVERY-PROVENANCE.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/finalization-review/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/finalization-review/REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/READ-SET.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/REPORT.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/evidence/finalization-20261119/VERIFICATION-SUMMARY.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/RECOVERY-PROVENANCE.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/BROWSER-PROMPTS.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/CURRENT.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/HANDOFF.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/KNOWLEDGE.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/PROTOCOL.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/knowledge.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/memory.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/prompts/CONTINUE.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/prompts/RECOVER.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/registry.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/tasks/C268/PLAN.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/tasks/C268/REQUIREMENTS.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/tasks/C268/SESSION.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/tasks/C268/task.json",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/templates/SESSION.md",
+      "passed": true
+    },
+    {
+      "name": "payload:repository/docs/workflow/templates/WORKER.md",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/EARLY-UPLOAD-RESULT.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/FINAL-ANCESTRY.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/FINAL-PACKAGE-STATE.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/PHASE.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/lease-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/lease-commit-readback.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/lease-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/lease-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/lease-ref-readback.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/lease-tree-intent.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/lease-tree-result.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovered-blob-2219ca9381099127d357b1c81cd9c2c27c63886e-intent.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovered-blob-2219ca9381099127d357b1c81cd9c2c27c63886e-result.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovered-blob-6bfbb1ab372c745d0442f076e912e9d9aa8add0f-intent.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovered-blob-6bfbb1ab372c745d0442f076e912e9d9aa8add0f-result.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovered-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovered-commit-readback.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovered-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovered-tree-intent.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovered-tree-readback-before.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovered-tree-result.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovery-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovery-commit-readback.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovery-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovery-prepublication-ref.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovery-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovery-ref-readback.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovery-tree-intent.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/publication/recovery-tree-result.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/published-checkpoint-checks/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/evidence/published-checkpoint-checks/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/publication/lease-tree-payload.json",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/publication/recovered-apply.patch",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/publication/recovered-commit.raw",
+      "passed": true
+    },
+    {
+      "name": "payload:session-evidence/publication/recovery-tree-payload.json",
+      "passed": true
+    },
+    {
+      "name": "fresh_extraction_exact_inventory",
+      "passed": true
+    },
+    {
+      "name": "builder_payload_count",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:.agents/skills/ontokin-delivery/SKILL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:.agents/skills/ontokin-delivery/SKILL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:.agents/skills/ontokin-delivery/SKILL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:.agents/skills/ontokin-learning/SKILL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:.agents/skills/ontokin-learning/SKILL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:.agents/skills/ontokin-learning/SKILL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:.agents/skills/ontokin-session/SKILL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:.agents/skills/ontokin-session/SKILL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:.agents/skills/ontokin-session/SKILL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:AGENTS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:AGENTS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:AGENTS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:CHATGPT-START-HERE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:CHATGPT-START-HERE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:CHATGPT-START-HERE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:GOAL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:GOAL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:GOAL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:ROLE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:ROLE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:ROLE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:STATUS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:STATUS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:STATUS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/README.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/README.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/README.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/browser-workflow-c263/MIGRATION.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/browser-workflow-c263/MIGRATION.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/browser-workflow-c263/MIGRATION.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c260/CONTRACT.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c260/CONTRACT.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c260/CONTRACT.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c260/INPUTS.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c260/INPUTS.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c260/INPUTS.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/CONTROL-COVERAGE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/CONTROL-COVERAGE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/CONTROL-COVERAGE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/INTEGRATION.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/INTEGRATION.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/INTEGRATION.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/README.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/README.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/README.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/RESULTS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/RESULTS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/RESULTS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/REVIEW.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/REVIEW.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/REVIEW.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/RECOVERY-PROVENANCE.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/RECOVERY-PROVENANCE.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/RECOVERY-PROVENANCE.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/finalization-review/REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/finalization-review/REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/finalization-review/REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/REPORT.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/REPORT.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/REPORT.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/evidence/finalization-20261119/VERIFICATION-SUMMARY.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/evidence/finalization-20261119/VERIFICATION-SUMMARY.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/evidence/finalization-20261119/VERIFICATION-SUMMARY.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/RECOVERY-PROVENANCE.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/RECOVERY-PROVENANCE.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/RECOVERY-PROVENANCE.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/BROWSER-PROMPTS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/BROWSER-PROMPTS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/BROWSER-PROMPTS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/CURRENT.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/CURRENT.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/CURRENT.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/HANDOFF.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/HANDOFF.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/HANDOFF.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/KNOWLEDGE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/KNOWLEDGE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/KNOWLEDGE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/PROTOCOL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/PROTOCOL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/PROTOCOL.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/knowledge.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/knowledge.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/knowledge.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/memory.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/memory.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/memory.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/prompts/CONTINUE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/prompts/CONTINUE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/prompts/CONTINUE.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/prompts/RECOVER.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/prompts/RECOVER.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/prompts/RECOVER.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/registry.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/registry.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/registry.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/tasks/C268/PLAN.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/tasks/C268/PLAN.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/tasks/C268/PLAN.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/tasks/C268/REQUIREMENTS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/tasks/C268/REQUIREMENTS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/tasks/C268/REQUIREMENTS.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/tasks/C268/SESSION.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/tasks/C268/SESSION.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/tasks/C268/SESSION.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/tasks/C268/task.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/tasks/C268/task.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/tasks/C268/task.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/templates/SESSION.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/templates/SESSION.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/templates/SESSION.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/workflow/templates/WORKER.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/workflow/templates/WORKER.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/workflow/templates/WORKER.md",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/BLOB-READBACK.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/BLOB-READBACK.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/BLOB-READBACK.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/CAPABILITIES.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/CAPABILITIES.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/CAPABILITIES.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/LOCAL-IMPORT-ATTEMPT.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/LOCAL-IMPORT-ATTEMPT.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/LOCAL-IMPORT-ATTEMPT.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/finalization-review/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/finalization-review/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/finalization-review/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_digest:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/READ-SET.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_git:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/READ-SET.json",
+      "passed": true
+    },
+    {
+      "name": "snapshot_mode:docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/READ-SET.json",
+      "passed": true
+    },
+    {
+      "name": "exact_snapshot_inventory",
+      "passed": true
+    },
+    {
+      "name": "mandatory_snapshots_and_full_active_task",
+      "passed": true
+    },
+    {
+      "name": "builder_snapshot_count",
+      "passed": true
+    },
+    {
+      "name": "observed_state_exact",
+      "passed": true
+    },
+    {
+      "name": "checkpoint_source_identity",
+      "passed": true
+    },
+    {
+      "name": "checkpoint_live_observation",
+      "passed": true
+    },
+    {
+      "name": "pending_R07_truth",
+      "passed": true
+    },
+    {
+      "name": "execution_provenance",
+      "passed": true
+    },
+    {
+      "name": "future_receipt_not_fabricated",
+      "passed": true
+    },
+    {
+      "name": "C262_exact",
+      "passed": true
+    },
+    {
+      "name": "early_archive_identity",
+      "passed": true
+    },
+    {
+      "name": "early_receipt_exact",
+      "passed": true
+    },
+    {
+      "name": "early_saved_id",
+      "passed": true
+    },
+    {
+      "name": "early_upload_receipt_binding",
+      "passed": true
+    },
+    {
+      "name": "early_verification_identity",
+      "passed": true
+    },
+    {
+      "name": "unique_evidence_index",
+      "passed": true
+    },
+    {
+      "name": "early_dependency_crc",
+      "passed": true
+    },
+    {
+      "name": "prior_external_index_exact",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/C268_Local_Finalization_b70f55cf.bundle",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/C268_Local_Finalization_b70f55cf.bundle",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/EARLY-RECOVERY-SAVE.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/EARLY-RECOVERY-SAVE.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/handoff-audit/audit_archives.py",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/handoff-audit/audit_archives.py",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/package-preparation/PREPARATION.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/package-preparation/PREPARATION.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/package-preparation/README.md",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/package-preparation/README.md",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/package-preparation/STATE.example.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/package-preparation/STATE.example.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/post-integration-records/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/post-integration-records/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/post-integration-records/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/post-integration-records/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/post-integration-records/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/post-integration-records/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/accepted-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/accepted-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/accepted-commit-raw.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/accepted-commit-raw.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/accepted-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/accepted-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/accepted-tree.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/accepted-tree.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-0083129d8a28bb0d21ffaba871e8f59884c635f1.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-0083129d8a28bb0d21ffaba871e8f59884c635f1.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-0826eb35534b508dcea0bdfb216658daa5eae4af.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-0826eb35534b508dcea0bdfb216658daa5eae4af.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-0a829fda22dc6c105e27b204c697b6ccc6e17506.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-0a829fda22dc6c105e27b204c697b6ccc6e17506.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-0d9a8a9e64ba176c13ce02aa0f4a153850ca6eb6.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-0d9a8a9e64ba176c13ce02aa0f4a153850ca6eb6.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-1413ad7cd96aeaaa7322198a1ad840c0fad23647.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-1413ad7cd96aeaaa7322198a1ad840c0fad23647.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-171dfa294bac9f8112f1904bacaf82ca85e50595.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-171dfa294bac9f8112f1904bacaf82ca85e50595.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-1dc1db3caddc0d764c5d01727cd084538cd7c2e3.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-1dc1db3caddc0d764c5d01727cd084538cd7c2e3.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-204346cb2b37cd0ed28b2cacbe6cfbd34892d1c7.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-204346cb2b37cd0ed28b2cacbe6cfbd34892d1c7.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-23020c7e9227c2850b8c27ec4d7b081ac77f3aad.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-23020c7e9227c2850b8c27ec4d7b081ac77f3aad.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-27b9696ffa3a9ec48fe0786d22b304d260145f3b.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-27b9696ffa3a9ec48fe0786d22b304d260145f3b.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-284bd5363283c0b6824559b81ffcf728cecd2045.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-284bd5363283c0b6824559b81ffcf728cecd2045.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-29cb4d512e8661bf7ed8a8eb33d4182f3b06d79a.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-29cb4d512e8661bf7ed8a8eb33d4182f3b06d79a.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-2b06abfffab126ff100322459579703e719c5bff.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-2b06abfffab126ff100322459579703e719c5bff.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-2ccd5df80de6df915ebc1c4e516ac16a115ddfbf.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-2ccd5df80de6df915ebc1c4e516ac16a115ddfbf.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-32824913b54daf54a33960c1584f9cbbd598cbf5.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-32824913b54daf54a33960c1584f9cbbd598cbf5.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-391f2b4aa2386cfda1b9aa320a4e0e3a2c292062.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-391f2b4aa2386cfda1b9aa320a4e0e3a2c292062.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-3d3c5a2b48435c2d717761b50a45728fb67fc0a6.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-3d3c5a2b48435c2d717761b50a45728fb67fc0a6.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-423e518d50a877a743b4c339adff3805f459b801.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-423e518d50a877a743b4c339adff3805f459b801.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-45b56f9c5cd794199e119b6ee3e4a324cf0a253d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-45b56f9c5cd794199e119b6ee3e4a324cf0a253d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-4c85eb6035985dd25f9e6f956ece946fedde8bda.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-4c85eb6035985dd25f9e6f956ece946fedde8bda.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-50e4e038c767fd8f7426dc97c42365e5dbc2b967.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-50e4e038c767fd8f7426dc97c42365e5dbc2b967.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-5264a3220a29cfe9c1e16a6c329d95eaeb3a28b4.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-5264a3220a29cfe9c1e16a6c329d95eaeb3a28b4.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-57aba4eb2b6eadd1881daadeb32016d53765558d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-57aba4eb2b6eadd1881daadeb32016d53765558d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-5cc51f6e892126a277804107b57d90abdcc9189d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-5cc51f6e892126a277804107b57d90abdcc9189d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-5d6166c47a0ec9524e0f88e431bb754d5eedb894.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-5d6166c47a0ec9524e0f88e431bb754d5eedb894.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-62adcb37470922ff967b0747070a4cb55e3ec25b.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-62adcb37470922ff967b0747070a4cb55e3ec25b.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-65077f8395ed0881f33d38ac57f7cbe4b9a8a643.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-65077f8395ed0881f33d38ac57f7cbe4b9a8a643.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-65d241a08bc3589d0a136d3d2e7a6ca6ab40ccbd.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-65d241a08bc3589d0a136d3d2e7a6ca6ab40ccbd.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-66b79e01b1b5871c4024864fe667f200a6396818.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-66b79e01b1b5871c4024864fe667f200a6396818.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-696819bac5ab9c49d2e00305c51a368172d538b8.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-696819bac5ab9c49d2e00305c51a368172d538b8.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-69fd87839845c1bb08a3a8e63da010504ff92221.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-69fd87839845c1bb08a3a8e63da010504ff92221.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-6f5591a4fd4c41b686ef80c42ef9be9d3163e6ad.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-6f5591a4fd4c41b686ef80c42ef9be9d3163e6ad.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-7374e7ffb36022fde63dfd7ca3c55ef70f6dff54.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-7374e7ffb36022fde63dfd7ca3c55ef70f6dff54.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-748a089c4e891129934db8530cef9810e8cf2e61.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-748a089c4e891129934db8530cef9810e8cf2e61.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-74bc22adcc904ef06f72b54ce536c54b32e3d6f2.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-74bc22adcc904ef06f72b54ce536c54b32e3d6f2.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-7654a4c1d8328729c28caccc5fb118ae86711003.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-7654a4c1d8328729c28caccc5fb118ae86711003.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-7658721734696e87339a6d620f635292a38dc5c4.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-7658721734696e87339a6d620f635292a38dc5c4.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-7669466b17d18cf9283440718afce9fc2e1c6efa.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-7669466b17d18cf9283440718afce9fc2e1c6efa.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-7bdd9469bda2406317c9d26e0b7b64e6d321f54a.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-7bdd9469bda2406317c9d26e0b7b64e6d321f54a.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-7feb863b770024f136deeac9317c28a71eb7bb79.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-7feb863b770024f136deeac9317c28a71eb7bb79.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-844496d7409ab6d4d61577572c9b7e8533e2efc6.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-844496d7409ab6d4d61577572c9b7e8533e2efc6.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-8e0ef1aff7db1dff7520de3aa36a5461adbf1d26.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-8e0ef1aff7db1dff7520de3aa36a5461adbf1d26.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-9585e49c63f62cf232cc834198ebae9ff0440039.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-9585e49c63f62cf232cc834198ebae9ff0440039.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-985b59616601a90ebe7116da0abe412b03838535.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-985b59616601a90ebe7116da0abe412b03838535.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-9bc72bf2dd859b90a113f994f03e040749b69419.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-9bc72bf2dd859b90a113f994f03e040749b69419.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-9db6010973038c8df8100f628fa3f306eb6784ca.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-9db6010973038c8df8100f628fa3f306eb6784ca.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-a35c8bab1befdad824193e2832e5197288d45388.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-a35c8bab1befdad824193e2832e5197288d45388.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-a3ecf6a8f2f6d89c2746e95f3770bb9f301324bb.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-a3ecf6a8f2f6d89c2746e95f3770bb9f301324bb.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-a5d175f167e6161c6f3e00005012f26be2e32edb.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-a5d175f167e6161c6f3e00005012f26be2e32edb.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-b3aca04475c29e2770374f441bf59782622bc023.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-b3aca04475c29e2770374f441bf59782622bc023.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-bc85ba90b76d5510dcdc303adeee1b3bca2bfb32.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-bc85ba90b76d5510dcdc303adeee1b3bca2bfb32.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-c2bcb2eb80d2c0d0cb2f7d8bc7dfe3817ceca9bb.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-c2bcb2eb80d2c0d0cb2f7d8bc7dfe3817ceca9bb.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-c83497e5f3002903a6a494b8441f40560bc9a701.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-c83497e5f3002903a6a494b8441f40560bc9a701.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-caf6e56e8217cc95c6b99f192fc4326ffdcedb66.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-caf6e56e8217cc95c6b99f192fc4326ffdcedb66.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-cfe89cc0b71c6cbec4775c02ea58b590b2dba0fd.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-cfe89cc0b71c6cbec4775c02ea58b590b2dba0fd.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-db7c0961114061807d2a927a78eaf6e48beccbc6.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-db7c0961114061807d2a927a78eaf6e48beccbc6.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-dfe5d6ef86781fdb2e20ac85f99a291deba4cf8d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-dfe5d6ef86781fdb2e20ac85f99a291deba4cf8d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-e2291861f9e9add27b3d7728daf59eb9c78f0ade.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-e2291861f9e9add27b3d7728daf59eb9c78f0ade.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-ea68eeeaee740ed8a069d09b2199f26802d53594.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-ea68eeeaee740ed8a069d09b2199f26802d53594.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-ebf40ebd7c97782078d53fa7ea51d78742d37f0c.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-ebf40ebd7c97782078d53fa7ea51d78742d37f0c.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-f43e1fee923ef2750b57cfb117a355705e9e3341.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-f43e1fee923ef2750b57cfb117a355705e9e3341.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-f6a3d46227913350629a3346db2bbb4975571e23.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-f6a3d46227913350629a3346db2bbb4975571e23.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-f99386ee6c761f7fdbca04afa357b951bbaca2d7.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-f99386ee6c761f7fdbca04afa357b951bbaca2d7.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/blob-ff32246374571611629fae030eef1fb2b42f037b.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/blob-ff32246374571611629fae030eef1fb2b42f037b.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-05ec687653b7ebb13353a0cbaca612064821eb6d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-05ec687653b7ebb13353a0cbaca612064821eb6d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-092ce02ddfd918aa1a3b24b2af50c1f23a93f4b8.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-092ce02ddfd918aa1a3b24b2af50c1f23a93f4b8.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-2e056f467eddda0ad7af14c028ed01deeec409ff.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-2e056f467eddda0ad7af14c028ed01deeec409ff.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-3867670ed002fccf29a4ec5436b32299772c0c74.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-3867670ed002fccf29a4ec5436b32299772c0c74.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-42fe5f867260b489ac148368a45af25fc45484ec.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-42fe5f867260b489ac148368a45af25fc45484ec.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-570babc7a8b0640bf9c5ca5c294dc47f0e549dfe.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-570babc7a8b0640bf9c5ca5c294dc47f0e549dfe.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-5c8f204dfabc96fdbe2ac180674141338b41107c.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-5c8f204dfabc96fdbe2ac180674141338b41107c.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-76083a91b9c0bb23a4d93830b20263e45b3d4977.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-76083a91b9c0bb23a4d93830b20263e45b3d4977.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-89c55c3fb65902dae6a1db92eaed2b32b1cdf837.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-89c55c3fb65902dae6a1db92eaed2b32b1cdf837.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-8b82937b4a300fc7e66240e8d99eac2ce5264c3d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-8b82937b4a300fc7e66240e8d99eac2ce5264c3d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-8da9bf8c6cfef64c95f0eea994a44742373fd7e9.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-8da9bf8c6cfef64c95f0eea994a44742373fd7e9.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-97c5808f1b00c5ec3e8e120ac7ddd4ca38032621.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-97c5808f1b00c5ec3e8e120ac7ddd4ca38032621.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-9f6e73cd34dc2b6341ae3e181e05902309f30fb4.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-9f6e73cd34dc2b6341ae3e181e05902309f30fb4.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-aa55f0b6a32eb962a9266749b2d5877911219d7a.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-aa55f0b6a32eb962a9266749b2d5877911219d7a.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-ae90254bb35402942c6e7886ba4ace5ab28421cb.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-ae90254bb35402942c6e7886ba4ace5ab28421cb.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-bca8e636bb38603fb807062a13b24078c037f69c.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-bca8e636bb38603fb807062a13b24078c037f69c.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-c6af58f931676b7c2427d12f5713e831c9d3f11b.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-c6af58f931676b7c2427d12f5713e831c9d3f11b.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-blob-fef624ed80ed132e388bd78f0e2106d38c6510d1.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-blob-fef624ed80ed132e388bd78f0e2106d38c6510d1.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-finalization-tree.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-finalization-tree.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-review-blob-04b9c33c3ed2b88b5dd49501ca1d9cc8010f2f94.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-review-blob-04b9c33c3ed2b88b5dd49501ca1d9cc8010f2f94.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-review-blob-0d55d4a645dc359441a7ba579dfc8fe50eabba61.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-review-blob-0d55d4a645dc359441a7ba579dfc8fe50eabba61.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-review-blob-c958a8ac0e6baa823dc6fd3b956e6063b47fed42.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-review-blob-c958a8ac0e6baa823dc6fd3b956e6063b47fed42.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/draft-review-tree.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/draft-review-tree.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/final-candidate-blob-cf2186794081ae906e3f467c8e938928904280b8.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/final-candidate-blob-cf2186794081ae906e3f467c8e938928904280b8.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/final-candidate-commit.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/final-candidate-commit.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/final-candidate-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/final-candidate-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/final-candidate-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/final-candidate-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/final-candidate-tree.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/final-candidate-tree.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/lease-blob-8e681916e1b2440abfe1450764d087c469a1b1fb.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/lease-blob-8e681916e1b2440abfe1450764d087c469a1b1fb.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/lease-blob-b86bc29450d9746e00a40d12f8eba1d803a8a7bb.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/lease-blob-b86bc29450d9746e00a40d12f8eba1d803a8a7bb.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/lease-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/lease-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/lease-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/lease-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/lease-readback.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/lease-readback.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/lease-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/lease-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/lease-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/lease-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/lease-tree.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/lease-tree.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/main-remote-checks-0.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/main-remote-checks-0.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/main-remote-checks-1.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/main-remote-checks-1.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/merge-intent.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/merge-intent.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/merge-result.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/merge-result.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/postmerge-branches.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/postmerge-branches.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/postmerge-commit.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/postmerge-commit.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/postmerge-main.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/postmerge-main.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/postmerge-pr.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/postmerge-pr.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/pr-ready.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/pr-ready.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/prelease-branch.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/prelease-branch.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/prelease-issue.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/prelease-issue.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/prelease-main.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/prelease-main.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/prelease-pr.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/prelease-pr.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/premerge-readback.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/premerge-readback.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-final-blob-71a3e3b0eee175c3784c68e43811861324052d40.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-final-blob-71a3e3b0eee175c3784c68e43811861324052d40.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-final-blob-7e948e304e31639cf1441304da9df90a41680479.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-final-blob-7e948e304e31639cf1441304da9df90a41680479.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-final-blob-990439bd594a877fa00788684ff2a9d8eb3dc561.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-final-blob-990439bd594a877fa00788684ff2a9d8eb3dc561.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-final-blob-ebb2f87d8a728517c8f9f69095dc87558f8ad99a.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-final-blob-ebb2f87d8a728517c8f9f69095dc87558f8ad99a.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-01f3ff85b5c8569202cc9011670e7e32f4aa0318.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-01f3ff85b5c8569202cc9011670e7e32f4aa0318.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-039b10fb174f4da8df43819cd284c17d3b3ba997.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-039b10fb174f4da8df43819cd284c17d3b3ba997.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-139f8648da81c1d5f535757bf5f6e0b430075c37.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-139f8648da81c1d5f535757bf5f6e0b430075c37.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-3d4885647d48893350b9010388b4b94dcd94dd4d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-3d4885647d48893350b9010388b4b94dcd94dd4d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-556915dce7b48864e8ce09fbac6bf6314982c368.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-556915dce7b48864e8ce09fbac6bf6314982c368.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-55faa977a41aac3ad0b397f5447e5c84a136634a.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-55faa977a41aac3ad0b397f5447e5c84a136634a.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-651920a74675d32cf02b22f89bb354c748925e48.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-651920a74675d32cf02b22f89bb354c748925e48.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-6fec7faf0d23ee53905021429dec769051e240c9.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-6fec7faf0d23ee53905021429dec769051e240c9.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-7ee4e5ff99134f320aebf00dde33a79c85d9c202.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-7ee4e5ff99134f320aebf00dde33a79c85d9c202.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-9bf55917179fece2d7c7cb3a5b53116f49ff1992.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-9bf55917179fece2d7c7cb3a5b53116f49ff1992.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-a0ae9922c06d5014e4a99c1b0db16ea49c5062d9.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-a0ae9922c06d5014e4a99c1b0db16ea49c5062d9.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-b573ed325f47795f6e190ad2f55f3499b530395c.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-b573ed325f47795f6e190ad2f55f3499b530395c.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-cde43c56d0a1222c8f5e6d32fb704cc35b8ce22f.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-cde43c56d0a1222c8f5e6d32fb704cc35b8ce22f.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-d9f30bbb0b22fed81df20e677507a8361647dd0d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-d9f30bbb0b22fed81df20e677507a8361647dd0d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-ea42cd2a1b5ccbcb8e8b1979a1880252928a981f.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-ea42cd2a1b5ccbcb8e8b1979a1880252928a981f.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part1-blob-f969f4c23b8fa73f9942188524990852bede00ca.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part1-blob-f969f4c23b8fa73f9942188524990852bede00ca.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-073a148c6b1dbd9ea5c1bcd869c04749ca8b2167.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-073a148c6b1dbd9ea5c1bcd869c04749ca8b2167.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-12025e131443c8fc6025564844e4ba4be476f25d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-12025e131443c8fc6025564844e4ba4be476f25d.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-1b670d11f0061612d12edc985dde513131a44ad2.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-1b670d11f0061612d12edc985dde513131a44ad2.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-2553b1b9d816f2ec4e76885b67628128c6cabe22.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-2553b1b9d816f2ec4e76885b67628128c6cabe22.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-2d8c25cedb2d6e03021d2cb07795957aeccbb9e8.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-2d8c25cedb2d6e03021d2cb07795957aeccbb9e8.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-36146538a119f8bef7490f13f671eb42c17362c3.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-36146538a119f8bef7490f13f671eb42c17362c3.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-70c174ad61bc74a22e9f7ffc6b488e5448105003.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-70c174ad61bc74a22e9f7ffc6b488e5448105003.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-870a66e1c7e302d5f7fdab204e010bb1f38ab683.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-870a66e1c7e302d5f7fdab204e010bb1f38ab683.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-a47b1f385efc29cbb5d40f6fe0c0d0498fcb413a.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-a47b1f385efc29cbb5d40f6fe0c0d0498fcb413a.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-ccb16a63aecb738da72d98c09c275494ad2b95a9.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-ccb16a63aecb738da72d98c09c275494ad2b95a9.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-d3bf5e204587469e51b33c975fd2a0feaac4fbb2.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-d3bf5e204587469e51b33c975fd2a0feaac4fbb2.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-dc4f784868dc423e0db14df75d3ab1da66876341.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-dc4f784868dc423e0db14df75d3ab1da66876341.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-e5b2da2caa4fe4c64fa17a2b96386f9427db5ae9.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-e5b2da2caa4fe4c64fa17a2b96386f9427db5ae9.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-eb852c4e6dc396857741a6b607c482ee57b140f2.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-eb852c4e6dc396857741a6b607c482ee57b140f2.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-f11bb5662b9cda6decc68faba37ab9ca28f06c51.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-f11bb5662b9cda6decc68faba37ab9ca28f06c51.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/publication/verified-main-part2-blob-f40c9172202dacdf962864530e2ab5c9a10ef9d8.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/publication/verified-main-part2-blob-f40c9172202dacdf962864530e2ab5c9a10ef9d8.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/.agents__skills__ontokin-delivery__SKILL.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/.agents__skills__ontokin-delivery__SKILL.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/.agents__skills__ontokin-learning__SKILL.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/.agents__skills__ontokin-learning__SKILL.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/.agents__skills__ontokin-session__SKILL.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/.agents__skills__ontokin-session__SKILL.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/AGENTS.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/AGENTS.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/GOAL.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/GOAL.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/ROLE.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/ROLE.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/STATUS.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/STATUS.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/docs__engineering__OK-ENG-006-local-validation-and-hosted-ci-policy.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/docs__engineering__OK-ENG-006-local-validation-and-hosted-ci-policy.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/docs__engineering__OK-ENG-009-development-integration-and-branch-lifecycle.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/docs__engineering__OK-ENG-009-development-integration-and-branch-lifecycle.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/docs__workflow__CURRENT.json.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/docs__workflow__CURRENT.json.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/docs__workflow__HANDOFF.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/docs__workflow__HANDOFF.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/docs__workflow__PROTOCOL.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/docs__workflow__PROTOCOL.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/docs__workflow__registry.json.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/docs__workflow__registry.json.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/docs__workflow__tasks__C268__PLAN.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/docs__workflow__tasks__C268__PLAN.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/docs__workflow__tasks__C268__REQUIREMENTS.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/docs__workflow__tasks__C268__REQUIREMENTS.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/docs__workflow__tasks__C268__task.json.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/docs__workflow__tasks__C268__task.json.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/instructions/startup.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/instructions/startup.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/branches.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/branches.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/c268dir.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/c268dir.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/checks-head.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/checks-head.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/checks-main.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/checks-main.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/docs__engineering__localized-repair-c268__RECOVERY-PHASE.json.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/docs__engineering__localized-repair-c268__RECOVERY-PHASE.json.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/docs__engineering__localized-repair-c268__RESULTS.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/docs__engineering__localized-repair-c268__RESULTS.md-source.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/docs__engineering__localized-repair-c268__evidence__finalization-014048e883e4__COORDINATION.json.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/docs__engineering__localized-repair-c268__evidence__finalization-014048e883e4__COORDINATION.json.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/issue265.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/issue265.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/issue265comments.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/issue265comments.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/main-history.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/main-history.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/main.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/main.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/pr266.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/pr266.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/pr266comments.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/pr266comments.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/pulls.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/pulls.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/recovered-commit.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/recovered-commit.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/runs-head.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/runs-head.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/runs-main.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/runs-main.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/status-head.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/status-head.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/remote-audit/observations/status-main.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/remote-audit/observations/status-main.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/startup/live-read-responses.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/startup/live-read-responses.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/startup/main_ref.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/startup/main_ref.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/startup/materialization.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/startup/materialization.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/startup/newer_search.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/startup/newer_search.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/startup/ontokin_listing.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/startup/ontokin_listing.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:evidence/startup/root_listing.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:evidence/startup/root_listing.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/PR266-BODY.md",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/PR266-BODY.md",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/accepted-publication-plan.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/accepted-publication-plan.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/blobs/57aba4eb2b6eadd1881daadeb32016d53765558d",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/blobs/57aba4eb2b6eadd1881daadeb32016d53765558d",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/blobs/74bc22adcc904ef06f72b54ce536c54b32e3d6f2",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/blobs/74bc22adcc904ef06f72b54ce536c54b32e3d6f2",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/blobs/c83497e5f3002903a6a494b8441f40560bc9a701",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/blobs/c83497e5f3002903a6a494b8441f40560bc9a701",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/blobs/db7c0961114061807d2a927a78eaf6e48beccbc6",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/blobs/db7c0961114061807d2a927a78eaf6e48beccbc6",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/draft-finalization/blobs/3867670ed002fccf29a4ec5436b32299772c0c74",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/draft-finalization/blobs/3867670ed002fccf29a4ec5436b32299772c0c74",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/draft-finalization/blobs/570babc7a8b0640bf9c5ca5c294dc47f0e549dfe",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/draft-finalization/blobs/570babc7a8b0640bf9c5ca5c294dc47f0e549dfe",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/draft-finalization/blobs/89c55c3fb65902dae6a1db92eaed2b32b1cdf837",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/draft-finalization/blobs/89c55c3fb65902dae6a1db92eaed2b32b1cdf837",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/draft-finalization/blobs/8b82937b4a300fc7e66240e8d99eac2ce5264c3d",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/draft-finalization/blobs/8b82937b4a300fc7e66240e8d99eac2ce5264c3d",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/draft-finalization/blobs/ae90254bb35402942c6e7886ba4ace5ab28421cb",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/draft-finalization/blobs/ae90254bb35402942c6e7886ba4ace5ab28421cb",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/draft-finalization/plan.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/draft-finalization/plan.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/draft-review/plan.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/draft-review/plan.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/final-candidate/blobs/cf2186794081ae906e3f467c8e938928904280b8",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/final-candidate/blobs/cf2186794081ae906e3f467c8e938928904280b8",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/final-candidate/plan.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/final-candidate/plan.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/lease/blobs/8e681916e1b2440abfe1450764d087c469a1b1fb",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/lease/blobs/8e681916e1b2440abfe1450764d087c469a1b1fb",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/lease/plan.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/lease/plan.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_recovery:publication/verified-main/plan.json",
+      "passed": true
+    },
+    {
+      "name": "prior_external_manifest:publication/verified-main/plan.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/BLOB-READBACK.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/BLOB-READBACK.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/BLOB-READBACK.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/BLOB-READBACK.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/CAPABILITIES.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/CAPABILITIES.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/CAPABILITIES.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/CAPABILITIES.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/EARLY-UPLOAD-RESULT.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/EARLY-UPLOAD-RESULT.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/EARLY-UPLOAD-RESULT.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/FINAL-ANCESTRY.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/FINAL-ANCESTRY.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/FINAL-ANCESTRY.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/FINAL-PACKAGE-STATE.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/FINAL-PACKAGE-STATE.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/FINAL-PACKAGE-STATE.json",
+      "passed": true
+    },
+    {
+      "name": "early_evidence_pin:evidence/LIVE-START.json",
+      "passed": true
+    },
+    {
+      "name": "early_matching_locations:evidence/LIVE-START.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/LIVE-START.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/LIVE-START.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/LOCAL-IMPORT-ATTEMPT.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/LOCAL-IMPORT-ATTEMPT.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/LOCAL-IMPORT-ATTEMPT.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/LOCAL-IMPORT-ATTEMPT.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/PHASE.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/PHASE.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/PHASE.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/POST-REVIEW-STAGING.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/POST-REVIEW-STAGING.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/POST-REVIEW-STAGING.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/PR266-READBACK.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/PR266-READBACK.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/PR266-READBACK.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/REMOTE-CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/REMOTE-CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/REMOTE-CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/STARTUP-READ-SET.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/STARTUP-READ-SET.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/STARTUP-READ-SET.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/finalization-review/ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/finalization-review/ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/finalization-review/ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/finalization-review/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/finalization-review/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/finalization-review/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/finalization-review/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/finalization-review/ATTEMPT-01.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/finalization-review/ATTEMPT-01.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/finalization-review/ATTEMPT-01.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/finalization-review/METADATA-DIFF.patch",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/finalization-review/METADATA-DIFF.patch",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/finalization-review/METADATA-DIFF.patch",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/finalization-review/REVIEW.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/finalization-review/REVIEW.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/finalization-review/REVIEW.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/finalization-review/REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/finalization-review/REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/finalization-review/REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/finalization-review/REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/finalization-review/review_candidate.attempt-01.py.txt",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/finalization-review/review_candidate.attempt-01.py.txt",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/finalization-review/review_candidate.attempt-01.py.txt",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/finalization-review/review_candidate.py",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/finalization-review/review_candidate.py",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/finalization-review/review_candidate.py",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/lease-checks/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/lease-checks/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/lease-checks/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/lease-checks/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/lease-checks/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/lease-checks/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/lease-checks/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/lease-checks/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/lease-checks/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/main-evidence-audit/ATTEMPT-01-NOTE.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/ATTEMPT-01.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/ATTEMPT-01.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/ATTEMPT-01.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/AUDIT.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/AUDIT.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/AUDIT.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/INSPECTED-IDENTITIES.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/INSPECTED-IDENTITIES.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/INSPECTED-IDENTITIES.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/METADATA-DELTA.patch",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/METADATA-DELTA.patch",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/METADATA-DELTA.patch",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/READ-SET.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/READ-SET.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/READ-SET.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/main-evidence-audit/READ-SET.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/REPORT.md",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/REPORT.md",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/REPORT.md",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/main-evidence-audit/REPORT.md",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/audit_evidence.attempt-01.py.txt",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/audit_evidence.attempt-01.py.txt",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/audit_evidence.attempt-01.py.txt",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/audit_evidence.py",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/audit_evidence.py",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/audit_evidence.py",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/post-integration-records/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/post-integration-records/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/post-integration-records/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/post-integration-records/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/post-integration-records/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/post-integration-records/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/post-integration-records/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/post-integration-records/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/post-integration-records/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/publication-receipts/final-candidate-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/publication-receipts/final-candidate-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/publication-receipts/final-candidate-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/publication-receipts/final-candidate-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/publication-receipts/final-candidate-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/publication-receipts/final-candidate-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/publication-receipts/lease-readback.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/publication-receipts/lease-readback.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/publication-receipts/lease-readback.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/publication-receipts/lease-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/publication-receipts/lease-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/publication-receipts/lease-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/publication-receipts/lease-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/publication-receipts/lease-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/publication-receipts/lease-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/publication-receipts/merge-intent.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/publication-receipts/merge-intent.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/publication-receipts/merge-intent.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/publication-receipts/merge-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/publication-receipts/merge-result.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/publication-receipts/merge-result.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/publication-receipts/postmerge-branches.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/publication-receipts/postmerge-branches.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/publication-receipts/postmerge-branches.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/publication-receipts/postmerge-commit.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/publication-receipts/postmerge-commit.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/publication-receipts/postmerge-commit.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/publication-receipts/postmerge-main.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/publication-receipts/postmerge-main.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/publication-receipts/postmerge-main.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/publication-receipts/postmerge-pr.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/publication-receipts/postmerge-pr.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/publication-receipts/postmerge-pr.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/main-evidence-audit/publication-receipts/premerge-readback.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/main-evidence-audit/publication-receipts/premerge-readback.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/main-evidence-audit/publication-receipts/premerge-readback.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/lease-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/lease-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/lease-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/lease-commit-readback.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/lease-commit-readback.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/lease-commit-readback.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/lease-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/lease-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/lease-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/lease-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/lease-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/lease-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/lease-ref-readback.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/lease-ref-readback.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/lease-ref-readback.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/publication/lease-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/lease-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/lease-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/lease-tree-intent.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/lease-tree-intent.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/lease-tree-intent.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/lease-tree-result.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/lease-tree-result.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/lease-tree-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovered-blob-2219ca9381099127d357b1c81cd9c2c27c63886e-intent.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovered-blob-2219ca9381099127d357b1c81cd9c2c27c63886e-intent.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovered-blob-2219ca9381099127d357b1c81cd9c2c27c63886e-intent.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovered-blob-2219ca9381099127d357b1c81cd9c2c27c63886e-result.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovered-blob-2219ca9381099127d357b1c81cd9c2c27c63886e-result.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovered-blob-2219ca9381099127d357b1c81cd9c2c27c63886e-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovered-blob-6bfbb1ab372c745d0442f076e912e9d9aa8add0f-intent.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovered-blob-6bfbb1ab372c745d0442f076e912e9d9aa8add0f-intent.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovered-blob-6bfbb1ab372c745d0442f076e912e9d9aa8add0f-intent.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovered-blob-6bfbb1ab372c745d0442f076e912e9d9aa8add0f-result.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovered-blob-6bfbb1ab372c745d0442f076e912e9d9aa8add0f-result.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovered-blob-6bfbb1ab372c745d0442f076e912e9d9aa8add0f-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovered-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovered-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovered-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovered-commit-readback.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovered-commit-readback.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovered-commit-readback.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovered-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovered-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovered-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovered-tree-intent.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovered-tree-intent.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovered-tree-intent.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovered-tree-readback-before.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovered-tree-readback-before.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovered-tree-readback-before.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovered-tree-result.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovered-tree-result.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovered-tree-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovery-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovery-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovery-commit-intent.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovery-commit-readback.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovery-commit-readback.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovery-commit-readback.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovery-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovery-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovery-commit-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovery-prepublication-ref.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovery-prepublication-ref.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovery-prepublication-ref.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovery-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovery-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovery-ref-intent.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovery-ref-readback.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovery-ref-readback.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovery-ref-readback.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/publication/recovery-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovery-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovery-ref-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovery-tree-intent.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovery-tree-intent.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovery-tree-intent.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/publication/recovery-tree-result.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/publication/recovery-tree-result.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/publication/recovery-tree-result.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/published-checkpoint-checks/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/published-checkpoint-checks/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/published-checkpoint-checks/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/published-checkpoint-checks/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/published-checkpoint-checks/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:evidence/published-checkpoint-checks/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/published-checkpoint-checks/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/published-checkpoint-checks/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/published-checkpoint-checks/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/recovery-record-checks/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/recovery-record-checks/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/recovery-record-checks/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/recovery-record-checks/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/recovery-record-checks/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/recovery-record-checks/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/recovery-record-checks/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/recovery-record-checks/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/recovery-record-checks/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "early_evidence_pin:evidence/surviving-publication-audit.json",
+      "passed": true
+    },
+    {
+      "name": "early_matching_locations:evidence/surviving-publication-audit.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/surviving-publication-audit.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/surviving-publication-audit.json",
+      "passed": true
+    },
+    {
+      "name": "early_evidence_pin:evidence/surviving-work-audit.json",
+      "passed": true
+    },
+    {
+      "name": "early_matching_locations:evidence/surviving-work-audit.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/surviving-work-audit.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/surviving-work-audit.json",
+      "passed": true
+    },
+    {
+      "name": "early_evidence_pin:evidence/surviving-work-audit.md",
+      "passed": true
+    },
+    {
+      "name": "early_matching_locations:evidence/surviving-work-audit.md",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/surviving-work-audit.md",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/surviving-work-audit.md",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/whitespace/REVIEW.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/whitespace/REVIEW.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/whitespace/REVIEW.json",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/whitespace/excluding-preserved-patch.log",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/whitespace/excluding-preserved-patch.log",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/whitespace/excluding-preserved-patch.log",
+      "passed": true
+    },
+    {
+      "name": "published_evidence_pin:evidence/whitespace/full.log",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:evidence/whitespace/full.log",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:evidence/whitespace/full.log",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:publication/lease-tree-payload.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:publication/lease-tree-payload.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:publication/lease-tree-payload.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:publication/recovered-apply.patch",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:publication/recovered-apply.patch",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:publication/recovered-apply.patch",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:publication/recovered-commit.raw",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:publication/recovered-commit.raw",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:publication/recovered-commit.raw",
+      "passed": true
+    },
+    {
+      "name": "early_evidence_pin:publication/recovered-plan.json",
+      "passed": true
+    },
+    {
+      "name": "early_matching_locations:publication/recovered-plan.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:publication/recovered-plan.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:publication/recovered-plan.json",
+      "passed": true
+    },
+    {
+      "name": "current_external_recovery:publication/recovery-tree-payload.json",
+      "passed": true
+    },
+    {
+      "name": "external_git_blob:publication/recovery-tree-payload.json",
+      "passed": true
+    },
+    {
+      "name": "included_index_payload:publication/recovery-tree-payload.json",
+      "passed": true
+    },
+    {
+      "name": "original_bundle_identity",
+      "passed": true
+    },
+    {
+      "name": "bundle_equals_confirmed_early_bytes",
+      "passed": true
+    },
+    {
+      "name": "builder_external_counts",
+      "passed": true
+    },
+    {
+      "name": "prefreeze_evidence_inventory_covered",
+      "passed": true,
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "name": "bundle_exact_online_prerequisite",
+      "passed": true
+    },
+    {
+      "name": "recovery_original_metadata",
+      "passed": true
+    },
+    {
+      "name": "original_raw_commit_hash",
+      "passed": true
+    },
+    {
+      "name": "original_changed_inventory",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:STATUS.md",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:STATUS.md",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/INTEGRATION.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/INTEGRATION.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/README.md",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/README.md",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/RESULTS.md",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/RESULTS.md",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/BRANCH-DISPOSITION.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/BRANCH-DISPOSITION.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/LEARNING.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/LEARNING.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/OUTPUT-STAGING-AUDIT.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/OUTPUT-STAGING-AUDIT.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/REMOTE-CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/REMOTE-CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/WORKERS.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/WORKERS.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-audit/ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-audit/ARTIFACTS.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-audit/ATTEMPT01.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-audit/ATTEMPT01.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-audit/MAIN-AUDIT.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-audit/MAIN-AUDIT.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-audit/MAIN-VERIFICATION.md",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-audit/MAIN-VERIFICATION.md",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-audit/audit_main.attempt01.py.txt",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-audit/audit_main.attempt01.py.txt",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-audit/audit_main.py",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-audit/audit_main.py",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c253-corpus.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c253-corpus.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c255-oracle.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c255-oracle.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c256-reader.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c256-reader.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c257-ownership.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c257-ownership.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c258-follows.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c258-follows.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c261-hinge_glb.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c261-hinge_glb.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c265-source_hinges.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c265-source_hinges.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-binding.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-binding.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-controls/checked-code/binding_control_fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-controls/checked-code/binding_control_fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-controls/checked-code/hinge_binding.py",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-controls/checked-code/hinge_binding.py",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-controls/checked-code/test_hinge_binding.py",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-controls/checked-code/test_hinge_binding.py",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-controls/inputs.zip",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-controls/inputs.zip",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-controls/results.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-controls/results.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-controls/unittest.txt",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c266-controls/unittest.txt",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-comparison.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-comparison.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-controls/checked-code/comparison_control_fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-controls/checked-code/comparison_control_fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-controls/checked-code/hinge_compare.py",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-controls/checked-code/hinge_compare.py",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-controls/checked-code/test_hinge_compare.py",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-controls/checked-code/test_hinge_compare.py",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-controls/inputs.zip",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-controls/inputs.zip",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-controls/results.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-controls/results.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-controls/unittest.txt",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c267-controls/unittest.txt",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-controls/checked-code/endpoint_control_fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-controls/checked-code/endpoint_control_fixtures.py",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-controls/checked-code/endpoint_reader.py",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-controls/checked-code/endpoint_reader.py",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-controls/checked-code/test_endpoint_reader.py",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-controls/checked-code/test_endpoint_reader.py",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-controls/inputs.zip",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-controls/inputs.zip",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-controls/results.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-controls/results.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-controls/unittest.txt",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-controls/unittest.txt",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-endpoint.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/c268-endpoint.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/preintegration/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/preintegration/CHECKS.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/preintegration/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/preintegration/documentation.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/preintegration/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/preintegration/workflow.log",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/workflow/CURRENT.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/workflow/CURRENT.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/workflow/knowledge.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/workflow/knowledge.json",
+      "passed": true
+    },
+    {
+      "name": "original_recoverable_path:docs/workflow/tasks/C268/task.json",
+      "passed": true
+    },
+    {
+      "name": "original_git_blob:docs/workflow/tasks/C268/task.json",
+      "passed": true
+    },
+    {
+      "name": "bundle_verify_with_available_prerequisite",
+      "passed": true
+    },
+    {
+      "name": "bundle_list_heads_exact",
+      "passed": true
+    },
+    {
+      "name": "standalone_prompt:OntoKin_C268_Continue.md",
+      "passed": true
+    },
+    {
+      "name": "standalone_equals_zip:OntoKin_C268_Continue.md",
+      "passed": true
+    },
+    {
+      "name": "standalone_prompt:OntoKin_C268_Recover.md",
+      "passed": true
+    },
+    {
+      "name": "standalone_equals_zip:OntoKin_C268_Recover.md",
+      "passed": true
+    },
+    {
+      "name": "prompt1_conflict_resolved",
+      "passed": true
+    },
+    {
+      "name": "both_prompts_bind_exact_file_and_snapshot",
+      "passed": true
+    },
+    {
+      "name": "both_prompts_reconcile_then_wait_or_R07",
+      "passed": true
+    },
+    {
+      "name": "prior_preparation_attempt_honest",
+      "passed": true
+    },
+    {
+      "name": "preserved_failed_prompt:PROMPT-1-CONTINUE.md",
+      "passed": true
+    },
+    {
+      "name": "preserved_failed_prompt:PROMPT-2-RECOVER.md",
+      "passed": true
+    },
+    {
+      "name": "failed_prompt1_materially_corrected",
+      "passed": true
+    },
+    {
+      "name": "published_checkpoint_fresh_checks",
+      "passed": true
+    },
+    {
+      "name": "published_check_log:workflow",
+      "passed": true
+    },
+    {
+      "name": "published_check_pass:workflow",
+      "passed": true
+    },
+    {
+      "name": "published_check_log:documentation",
+      "passed": true
+    },
+    {
+      "name": "published_check_pass:documentation",
+      "passed": true
+    },
+    {
+      "name": "frozen_zip_unchanged_after_review",
+      "passed": true
+    }
+  ],
+  "manual_review": {
+    "read_in_full": [
+      "README-START-HERE.md",
+      "HANDOFF.md",
+      "NEXT-TASK.md",
+      "RECOVERY-STATUS.md",
+      "PROMPT-1-CONTINUE.md",
+      "PROMPT-2-RECOVER.md",
+      "recovery/RESTORE.md",
+      "package-preparation/attempt-01/ATTEMPT.json"
+    ],
+    "judgment": "Coherent online continuation; R01-R06 complete, R07 pending at freeze. Reconcile actual live delivery receipt and closure before work. Complete only remaining delivery or wait for fresh user direction. No future save/receipt/closure represented as observed. Both prompts carry the same bounded instruction.",
+    "historical_boundaries": "C262 unchanged; early archive contains identified prior external recovery bytes. Current external bytes have exact retained locations. Original ecce metadata remains historical and is not instructions to overwrite live ownership."
+  },
+  "scope_limits": [
+    "Archive/source/recovery integrity only; no product cohort rerun or release qualification",
+    "No network read/write, no uploads, no shared repository/index or frozen-artifact mutation",
+    "Bundle identity/prerequisites verified with existing local Git prerequisite; no complete offline reconstruction claimed",
+    "Director must still save exact ZIP and prompts, verify save results, publish external receipt, close task/issue, release lease and stop"
+  ]
+}
