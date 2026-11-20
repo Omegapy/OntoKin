@@ -31,3 +31,7 @@ Separate reviewer `/root/state_audit` accepted R01-R04 at `4258e001a567ff830b790
 ## Integration checkpoint
 
 PR269 merged the reviewed branch head `9a1b68b861843b7689d71590b897f4e4f8367b3d` at `c3bda080febf6359a6ad364b940d5d68f2741c9d`. Merge tree equals reviewed candidate tree; both branch and lease parents are retained. Fresh actual-main documentation/workflow checks passed. Automatic branch deletion was separately observed after the initial post-merge read still showed the branch. Only main remains. R01-R05 complete; scope issue268 and R06 stay open for final saved delivery.
+
+## Confirmed final delivery
+
+At 2026-11-20T03:14:55.086208+00:00, the immutable 925,448-byte ZIP and both matching prompts were saved successfully and their destination metadata was read back. Independent package verification passed 1,768 checks with no mandatory findings. Receipt: `docs/engineering/localized-repair-c269/DELIVERY.json`. The source snapshot remains 3ad6f2e; future receipts and closure do not rebuild it. R06 and issue268 remain open until the receipt publication/check and closure gates finish. No next phase started.
