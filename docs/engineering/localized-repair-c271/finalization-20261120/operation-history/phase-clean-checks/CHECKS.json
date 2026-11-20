@@ -1,0 +1,35 @@
+{
+  "source": {
+    "commit": "2a85f71489fea57dc165cde61e3f7cc67a8ae999",
+    "tree": "219962df4639a0c1de0fdbbe708ac3adf5a0b6b6",
+    "dirty_before": ""
+  },
+  "checked_at_utc": "2026-11-20T22:51:06.831675+00:00",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "log": "workflow.log",
+      "log_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "log": "documentation.log",
+      "log_sha256": "cad8c6307f750c828ed0d7897c5e495d3feb71627a7c9cfb49029101d47c3a86"
+    }
+  ],
+  "dirty_after": "",
+  "passed": true
+}

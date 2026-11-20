@@ -23,3 +23,13 @@ P01 is complete with a verified saved partial ZIP, matching prompts and a separa
 ## P02 session ownership and boundary
 
 Director `c271-p02-c219bb61a617` resumes branch head `88bc8b51b3963b7072375edac6400b6e6a4532e4` against main `e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d`. Confirm a new early recovery save before substantial work. The existing branch is retained; no main lease is held at startup. Root alone owns canonical Git/index/remote writes. Independent workers audit intake, prepare/run validation and build/verify packages in disjoint scratch paths. The acceptance and stop remain R03/R04/R05 completion or an honest partial handoff at a concrete blocker/unplanned expansion.
+
+## P02 blocked phase boundary — 2026-11-20
+
+The complete affected cohort passed all 12 groups and 282 methods with no failures, errors or skips. The original required routine driver completed with exit 1: five stages passed, the unit stage exceeded 900 seconds, and the isolated documentation stage reported 21 links to five instruction files omitted from its copied workspace. No completed unit-suite total is available. The complete-checkout documentation check passed; this does not waive the required isolated check.
+
+C271 is blocked and remains open. R01/R02 remain done; R03–R05 remain not_done. P01 remains done and P02 remains in_progress. PR #274 stays draft; issue #273 and the unmerged branch are retained. No main lease was acquired, no integration occurred and no repair or second phase was started. Complete results and failures are in `docs/engineering/localized-repair-c271/finalization-20261120/PHASE-OUTCOME.json` and its linked evidence.
+
+Next action: In a fresh chat, select one bounded C271 validation-recovery phase: repair the isolated-workspace copy omission of CHATGPT-START-HERE.md, ROLE.md and the three .agents skill files with a focused copy-preservation check; establish a justified completion plan for the full required routine driver and prepare its declared dependencies. Preserve all tests, frozen controls, original failures and the 100000-operation/30000-ms per-source limits. Then resume R03 independent acceptance; do not blindly repeat the failed command or start another H group.
+
+The final partial delivery is pending its separate `docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json` receipt. Saving this phase does not complete the parent requirements.

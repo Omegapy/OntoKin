@@ -1,0 +1,32 @@
+{
+  "schema": "ontokin.record-checks/1",
+  "source_parent": "15b1dd985b59cf037ebbeae733c16a54ca87f83d",
+  "checked_at_utc": "2026-11-20T23:20:15.453581+00:00",
+  "scope": "Complete working blocked state and copied independent review, before publication",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "log": "workflow.log",
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "log": "documentation.log",
+      "sha256": "0998716e25ece18968bd9f66ed953511715aa19f4ea7ec2f732d603f59291afe"
+    }
+  ],
+  "passed": true
+}
