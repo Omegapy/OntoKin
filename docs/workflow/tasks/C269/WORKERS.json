@@ -1,0 +1,35 @@
+{
+  "director": "/root",
+  "owner": "c269-audit-d59e10906594",
+  "model_configuration": "inherited; no requested overrides",
+  "workers": [
+    {
+      "id": "/root/state_audit",
+      "context": "fresh",
+      "scope": "startup reconciliation, later independent candidate review",
+      "paths": [
+        "session/state-audit/"
+      ],
+      "state": "running"
+    },
+    {
+      "id": "/root/audit_h01_h14",
+      "context": "fresh",
+      "scope": "H01-H14 assertion/evidence audit",
+      "paths": [
+        "docs/engineering/localized-repair-c269/evidence/audit-h01-h14/"
+      ],
+      "state": "running"
+    },
+    {
+      "id": "/root/audit_h15_h28",
+      "context": "fresh",
+      "scope": "H15-H28 assertion/evidence audit",
+      "paths": [
+        "docs/engineering/localized-repair-c269/evidence/audit-h15-h28/"
+      ],
+      "state": "running"
+    }
+  ],
+  "no_nested_fanout": true
+}

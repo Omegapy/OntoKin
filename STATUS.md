@@ -4,13 +4,15 @@
 
 ## Current workflow and next action
 
+C269 is active: one evidence-only audit of C260 H01-H28 across the four existing hinge interfaces. [Scope268](https://github.com/Omegapy/OntoKin/issues/268), [requirements](docs/workflow/tasks/C269/REQUIREMENTS.md), [plan](docs/workflow/tasks/C269/PLAN.md), [confirmed early recovery](docs/engineering/localized-repair-c269/EARLY-RECOVERY-RECEIPT.json). Map actual independent assertions and exact execution identities; identify remaining gaps. No product, test, contract or fixture changes, and no new qualification claim at startup.
+
 C268 complete within exact historical endpoint admission under unchanged C260. [PR266](https://github.com/Omegapy/OntoKin/pull/266) merged at `5084dd69312e8da5a49aadd33cf83ba56db7c058`; its source branch is absent and the reviewed history is retained. Actual-main evidence passed **12 groups, 282 methods, 14 bindings**, zero failures/errors/skips on CPython **3.12.14 / Linux**. [Integration](docs/engineering/localized-repair-c268/INTEGRATION.json), [independent recovery audit](docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/REPORT.md), [confirmed final handoff and prompts](docs/engineering/localized-repair-c268/DELIVERY.json). [Scope265](https://github.com/Omegapy/OntoKin/issues/265) is closed. The final package passed independent verification; source checks remain attributed to their actual revisions.
 
 C267 complete within finite declaration comparison: [PR261](https://github.com/Omegapy/OntoKin/pull/261), merge `7174e6796b38bac3fa83e6412e0944512d137434`; branch deletion/retained ancestry verified. Recorded integration: **11 groups, 247 methods, 14 bindings**, CPython **3.12.14 / Linux**. Delivery-only phase independently verified exact evidence eligibility, passed fresh documentation/workflow checks and saved verified handoff. [Receipt](docs/engineering/localized-repair-c267/DELIVERY.json), [audit](docs/engineering/localized-repair-c267/evidence/delivery-20261118/EVIDENCE-REVIEW.md), [integration](docs/engineering/localized-repair-c267/INTEGRATION.json).
 
 C266 complete: [PR259](https://github.com/Omegapy/OntoKin/pull/259), merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`; **10 passing main groups, 222 methods, 14 bindings**; branch deleted; [saved delivery](docs/engineering/localized-repair-c266/DELIVERY.json) unchanged. C265/C264/C263 complete within recorded scopes.
 
-Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json), [HANDOFF](docs/workflow/HANDOFF.md). C268 integration, verification and saved delivery are complete. CURRENT awaits new user direction; stop this phase. Owner-requested startup compression is delivered; C268 remains unchanged.
+Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json), [HANDOFF](docs/workflow/HANDOFF.md). C268 integration, verification and saved delivery are complete. The new continuation selects its queued C269 coverage audit. Stop after C269 verified saved delivery; do not implement missing controls in this phase. Owner-requested startup compression is delivered; C268 remains unchanged.
 
 ## Product state and remaining gates
 
@@ -36,9 +38,10 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: available. Last owner: `c268-delivery-60da64efa55b`.
-C268 required delivery and issue-closure gates passed. This closure publication releases the lease acquired at `bb317b3bb84c484a4877b2a1a5e74393d94795f8` after confirmed receipt `9ffdbf4aa96ab8c1895aac2c6ee31e7bbf92cf20` and closed issue265.
-Reserved paths: none. No next milestone started. [Closure evidence](docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/CLOSURE.json).
+State: held. Owner: `c269-audit-d59e10906594`.
+Acquired at UTC: `2026-11-20T02:44:18.431010+00:00`; expires at UTC: `2026-11-20T03:14:18.431010+00:00`.
+Expected predecessor: `23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb`; acquisition requires conditional nonforce main update and exact readback.
+Scope: C269 evidence coverage audit and saved delivery. Reserved shared paths: STATUS.md, docs/workflow/CURRENT.json, docs/workflow/tasks/C269/, docs/engineering/localized-repair-c269/ root integration and delivery records. Investigators own only their assigned evidence subdirectories; they have no integration authority.
 
 ## Historical status
 
