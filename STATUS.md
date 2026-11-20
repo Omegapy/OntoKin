@@ -36,12 +36,12 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: held. Owner: `c268-finalize-014048e883e4`.
-Acquired UTC: `2026-11-19T23:57:11.096746+00:00`; expires UTC: `2026-11-20T00:27:11.096746+00:00`.
+State: held. Owner: `c268-finalize-a3de3dd23bbf`.
+Acquired UTC: `2026-11-20T00:27:22.767246+00:00`; expires UTC: `2026-11-20T00:57:22.767246+00:00`.
 Reserved: STATUS/CURRENT, workflow memory/knowledge and C268 integration/delivery/task records.
-Scope: publish recovered accepted C268 evidence, conditionally integrate PR266, verify actual main and save the final handoff; no next milestone.
-Expected acquisition parent: `452c88b8485e6d6fcf5557fa07ea6cb8f63e4b92`; recovered accepted evidence: `ffb912cce59ccfe7d0d82ab4349de9b12271cc03`.
-[Coordination](docs/engineering/localized-repair-c268/evidence/finalization-014048e883e4/COORDINATION.json). Prior lease expired; exact refs and unpublished checkpoint reconciled; early recovery save confirmed.
+Scope: finish existing PR266 integration, actual-main verification, branch disposition and verified saved delivery; no next milestone.
+Expected acquisition parent: `412a7e38741d3f3db2625cb6c1caf43b69c0cae0`; published accepted-evidence object: `b49a930292752e80abe47cc0526e76413089d64d`, exactly preserving recovered tree `10bcebf566d001a850f8e5c5c77eb96857de7e3b`.
+[Coordination](docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/COORDINATION.json). Prior lease expired; current refs and preserved work reconciled; early recovery save confirmed.
 
 ## Historical status
 
