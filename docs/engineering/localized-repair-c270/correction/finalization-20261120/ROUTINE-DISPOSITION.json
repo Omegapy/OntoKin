@@ -1,0 +1,66 @@
+{
+  "schema": "ontokin.c270.interrupted-routine-account/1",
+  "source_revision": "a6099546e2ae66e78621008338ecd3b2d352d9b8",
+  "source_tree": "6e05696718723fe77f6973d1aa2319638723d127",
+  "invocation_observed": true,
+  "execution_status": "interrupted_unknown",
+  "final_exit_code": null,
+  "completed_broad_result": null,
+  "broad_pass_claimed": false,
+  "original_summary_status": "running",
+  "preserved_archive": {
+    "path": "interrupted-routine-evidence.zip",
+    "bytes": 968597,
+    "sha256": "e2499fc787e024ab465c677879716f0802ef67f3e57eb6469575a64887858d0a",
+    "files": [
+      {
+        "path": "RECOVERY.json",
+        "bytes": 3089,
+        "sha256": "4f671be35c65bb3765873c2c43a8ee268d7e533db4585cd82446a65eb2b9aa30"
+      },
+      {
+        "path": "logs/unit-tests.log",
+        "bytes": 443733,
+        "sha256": "ac3e323f286a5024d972fafea57276feef6f04a78126676d518547d2b5cb5438"
+      },
+      {
+        "path": "routine-local-driver.log",
+        "bytes": 21,
+        "sha256": "eac35b1d7bc28080ac1323a4d130c37553ee565395060243a0e9269f26617f5f"
+      },
+      {
+        "path": "source-before.json",
+        "bytes": 4121829,
+        "sha256": "a21b7765ff4ab67b7b366c156496f8d21ea3ac29e08e50fc94006b7d34f95891"
+      },
+      {
+        "path": "summary.json",
+        "bytes": 1327,
+        "sha256": "0af8692125d3d3f99b390245a20a3906629cb0ffb4670c0f6fca9d65694a56e8"
+      },
+      {
+        "path": "workspace-storage.json",
+        "bytes": 184,
+        "sha256": "3fe3794771e6b1ccd619ab05b22532b0b4cca2f897a3e56e42cd0e88d9c3d3e0"
+      }
+    ]
+  },
+  "independent_disposition": {
+    "reviewer": "/root/candidate_review",
+    "verdict": "accepted for this scoped correction; no full-suite pass claimed",
+    "reviewed_candidate": "2076b06f133fd548079052102e060bc29abc7493",
+    "report": "INITIAL-REVIEW.md",
+    "evidence": "INITIAL-EVIDENCE.json",
+    "rationale": [
+      "Mandatory invocation was predeclared before execution; broad completion was not a required acceptance gate",
+      "Complete required affected cohort passed with exact implementation/dependency/fixture/test/environment bindings",
+      "Core runtime, tests, tools and hosted workflow blobs unchanged",
+      "Retained partial log has no failure/error/skip markers and ends inside an unrelated reach test; this does not prove the unknown remainder passed",
+      "No concrete scope-relevant uncertainty justifies repeating the broad run"
+    ]
+  },
+  "applicability": "Original task declared mandatory routine invocation and separate complete affected regression acceptance before execution; optional broader completion is not a core qualification result",
+  "unrun": "Remaining broad-driver steps have no completed result; no conformance/whole-suite pass inferred",
+  "process_limit": "Global prior-worker/process termination cannot be established from the current command namespace; no process was killed",
+  "schema_note": "Task check.result supports passed, failed, not_run only. For optional broad completion, not_run means no completed result available; execution_status retains the observed interruption. Mandatory invocation is separately evidenced."
+}

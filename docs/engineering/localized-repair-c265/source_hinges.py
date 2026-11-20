@@ -406,7 +406,8 @@ class Source:
                 rest = stream.statement(); groups = d.split_top(rest, "=")
                 _require(len(groups) == 2 and groups[0] and groups[1], "parameter declaration")
                 member = {"memberKind": kind, "name": name_token.value, "key": key_token.value,
-                          "visibility": visibility or "private", "type": groups[0], "expression": groups[1]}
+                          "visibility": visibility or "private", "explicitVisibility": visibility is not None,
+                          "type": groups[0], "expression": groups[1]}
             elif kind in ("site", "joint", "follow", "method"):
                 keyword = stream.pop(kind)
                 if kind == "joint":
@@ -518,6 +519,13 @@ class Source:
     def site(self, context, name, external):
         _require(name not in ("origin", "frame"), "implicit site endpoint unsupported", "UNSUPPORTED_SOURCE_FORM")
         member = context["class"]["members"].get(name)
+        if member is not None and member["memberKind"] == "param":
+            _require(not external or member["visibility"] == "public", "private external endpoint parameter")
+            declared_type = member["type"]
+            if (member["explicitVisibility"] and len(declared_type) == 1
+                    and declared_type[0].kind == "id" and declared_type[0].value == "SiteRef"):
+                # Classify the declared form only; do not resolve or evaluate its value.
+                raise Fault("UNSUPPORTED_SOURCE_FORM", "declared SiteRef parameter endpoint is unsupported")
         _require(member is not None and member["memberKind"] == "site", "endpoint must resolve to a declared site")
         _require(not external or member["visibility"] == "public", "private external endpoint site")
         record = context["record"]

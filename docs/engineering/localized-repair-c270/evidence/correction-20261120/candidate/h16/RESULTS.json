@@ -1,0 +1,597 @@
+{
+  "schema": "ontokin.c270.h16-control/1",
+  "phase": "C270-correction-candidate",
+  "started_at_utc": "2026-11-20T19:43:03.194826+00:00",
+  "source_revision": "a6099546e2ae66e78621008338ecd3b2d352d9b8",
+  "source_tree": "6e05696718723fe77f6973d1aa2319638723d127",
+  "tracked_dirty_status": "",
+  "all_dirty_status": "",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "executable": {
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "bytes": 30894944,
+      "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7"
+    }
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "docs/engineering/localized-repair-c270/run_h16_control.py",
+    "--phase",
+    "C270-correction-candidate",
+    "--output",
+    "/workspace/scratch/92228987b591/evidence/candidate/h16"
+  ],
+  "inputs": [
+    {
+      "path": "docs/engineering/localized-repair-c265/source_hinges.py",
+      "bytes": 38229,
+      "sha256": "70d5e5b6247347bf44eaa3be0bc9c91b13f10d4717b4b32261eaebad75987132"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c267/hinge_compare.py",
+      "bytes": 12382,
+      "sha256": "9b2899d95471546a25a8a7e5ed9d9ac2a1e42854c31808d4e68aff2582686b58"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c266/hinge_binding.py",
+      "bytes": 17639,
+      "sha256": "8f6b26f0bedad335b069975d0491e5565a25f0793b3bc48802e90d3993aa0d0a"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c261/hinge_glb.py",
+      "bytes": 14036,
+      "sha256": "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c257/ownership.py",
+      "bytes": 35942,
+      "sha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1"
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "bytes": 1708,
+      "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "bytes": 1911,
+      "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "bytes": 185276,
+      "sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/EXPECTED.json",
+      "bytes": 8605,
+      "sha256": "aa73df1e9ffb4d76bc589a7239f454be28e4cd6ae4ee523b208dbf66860ef4a7"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/SOURCE-VALIDITY.md",
+      "bytes": 7901,
+      "sha256": "0a966b5c8acd6bec75445199992babe0023fadb37d36bcd0d37fc36bf4257eb2"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/build_control.py",
+      "bytes": 9479,
+      "sha256": "f92eaf3e1ffeaf722fa8d71dbfda3a6961eb944f4dd85ab3426c4b51c7ad748d"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/hinges.ok",
+      "bytes": 1998,
+      "sha256": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/main.ok",
+      "bytes": 1708,
+      "sha256": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/run_h16_control.py",
+      "bytes": 11397,
+      "sha256": "716619b1c390622bec4ae871732bd1ecb5cb2db0fb37d93cd08240be841e8f16"
+    }
+  ],
+  "expected_code": "UNSUPPORTED_SOURCE_FORM",
+  "cases": [
+    {
+      "label": "original-source",
+      "expected": "eight complete original hinges",
+      "assertions": {
+        "success_expected": true,
+        "complete_original_hinges": true,
+        "source_hashes_retained": true,
+        "source_sizes_retained": true,
+        "complete_original_sites": true
+      },
+      "outcome": "returned_result",
+      "response": {
+        "path": "/workspace/scratch/92228987b591/evidence/candidate/h16/responses/original-source.json",
+        "bytes": 360137,
+        "sha256": "e2e6479b47a27dfa4b9ed4baca7135a594a5b0ffedb2398a1e4fc95a76eff774"
+      },
+      "passed": true
+    },
+    {
+      "label": "original-comparison",
+      "expected": "eight complete original hinges",
+      "assertions": {
+        "success_expected": true,
+        "complete_original_hinges": true,
+        "source_hashes_retained": true,
+        "source_sizes_retained": true,
+        "complete_agreement": true
+      },
+      "outcome": "returned_result",
+      "response": {
+        "path": "/workspace/scratch/92228987b591/evidence/candidate/h16/responses/original-comparison.json",
+        "bytes": 738637,
+        "sha256": "976248424f6bfdbb0f1c19f2836fbabc2d6de3dc2ddfb6d1ae0b25c91c3e3c8f"
+      },
+      "passed": true
+    },
+    {
+      "label": "siteref-source",
+      "expected": "UNSUPPORTED_SOURCE_FORM",
+      "assertions": {
+        "refusal_expected": true,
+        "exact_unsupported_category": true,
+        "source_hashes_retained": true,
+        "source_sizes_retained": true,
+        "nonempty_reason": true,
+        "no_partial_qualified_set": true,
+        "optional_origin_propagated": true
+      },
+      "outcome": "typed_refusal",
+      "exception": {
+        "class": "Fault",
+        "module": "c270_source_under_test",
+        "code": "UNSUPPORTED_SOURCE_FORM",
+        "detail": "declared SiteRef parameter endpoint is unsupported",
+        "origin": null,
+        "sourceHashes": {
+          "main.ok": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d",
+          "hinges.ok": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+        },
+        "sourceBytes": {
+          "main.ok": 1708,
+          "hinges.ok": 1998
+        }
+      },
+      "cause_chain": [
+        {
+          "class": "Fault",
+          "module": "c270_source_under_test",
+          "code": "UNSUPPORTED_SOURCE_FORM",
+          "detail": "declared SiteRef parameter endpoint is unsupported",
+          "origin": null,
+          "sourceHashes": {
+            "main.ok": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d",
+            "hinges.ok": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+          },
+          "sourceBytes": {
+            "main.ok": 1708,
+            "hinges.ok": 1998
+          },
+          "traceback": [
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c270/run_h16_control.py",
+              "line": 112,
+              "function": "main"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c265/source_hinges.py",
+              "line": 674,
+              "function": "observe_source_hinges"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c265/source_hinges.py",
+              "line": 592,
+              "function": "observe"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c265/source_hinges.py",
+              "line": 560,
+              "function": "endpoint"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c265/source_hinges.py",
+              "line": 528,
+              "function": "site"
+            }
+          ]
+        }
+      ],
+      "diagnostic_origin": null,
+      "passed": true
+    },
+    {
+      "label": "siteref-binding",
+      "expected": "UNSUPPORTED_SOURCE_FORM",
+      "assertions": {
+        "refusal_expected": true,
+        "exact_unsupported_category": true,
+        "source_hashes_retained": true,
+        "source_sizes_retained": true,
+        "nonempty_reason": true,
+        "no_partial_qualified_set": true,
+        "optional_origin_propagated": true,
+        "artifact_hash_retained": true,
+        "artifact_size_retained": true,
+        "source_refusal_propagated": true,
+        "originating_source_identity_retained": true,
+        "originating_source_module": true,
+        "originating_source_api": true,
+        "equals_direct_source_failure": true
+      },
+      "outcome": "typed_refusal",
+      "exception": {
+        "class": "Fault",
+        "module": "c270_binding_under_test",
+        "code": "UNSUPPORTED_SOURCE_FORM",
+        "detail": "declared SiteRef parameter endpoint is unsupported",
+        "pointer": "",
+        "origin": null,
+        "sourceHashes": {
+          "main.ok": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d",
+          "hinges.ok": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+        },
+        "sourceBytes": {
+          "main.ok": 1708,
+          "hinges.ok": 1998
+        },
+        "artifactSha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534",
+        "artifactBytes": 185276
+      },
+      "cause_chain": [
+        {
+          "class": "Fault",
+          "module": "c270_binding_under_test",
+          "code": "UNSUPPORTED_SOURCE_FORM",
+          "detail": "declared SiteRef parameter endpoint is unsupported",
+          "pointer": "",
+          "origin": null,
+          "sourceHashes": {
+            "main.ok": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d",
+            "hinges.ok": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+          },
+          "sourceBytes": {
+            "main.ok": 1708,
+            "hinges.ok": 1998
+          },
+          "artifactSha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534",
+          "artifactBytes": 185276,
+          "traceback": [
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c270/run_h16_control.py",
+              "line": 112,
+              "function": "main"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c266/hinge_binding.py",
+              "line": 328,
+              "function": "bind_hinge_inputs"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c266/hinge_binding.py",
+              "line": 318,
+              "function": "bind_hinge_inputs"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c266/hinge_binding.py",
+              "line": 255,
+              "function": "_bind"
+            }
+          ]
+        },
+        {
+          "class": "Fault",
+          "module": "_c266_pinned_source",
+          "code": "UNSUPPORTED_SOURCE_FORM",
+          "detail": "declared SiteRef parameter endpoint is unsupported",
+          "origin": null,
+          "sourceHashes": {
+            "main.ok": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d",
+            "hinges.ok": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+          },
+          "sourceBytes": {
+            "main.ok": 1708,
+            "hinges.ok": 1998
+          },
+          "traceback": [
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c266/hinge_binding.py",
+              "line": 253,
+              "function": "_bind"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c265/source_hinges.py",
+              "line": 674,
+              "function": "observe_source_hinges"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c265/source_hinges.py",
+              "line": 592,
+              "function": "observe"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c265/source_hinges.py",
+              "line": 560,
+              "function": "endpoint"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c265/source_hinges.py",
+              "line": 528,
+              "function": "site"
+            }
+          ]
+        }
+      ],
+      "diagnostic_origin": null,
+      "passed": true
+    },
+    {
+      "label": "siteref-comparison",
+      "expected": "UNSUPPORTED_SOURCE_FORM",
+      "assertions": {
+        "refusal_expected": true,
+        "exact_unsupported_category": true,
+        "source_hashes_retained": true,
+        "source_sizes_retained": true,
+        "nonempty_reason": true,
+        "no_partial_qualified_set": true,
+        "optional_origin_propagated": true,
+        "artifact_hash_retained": true,
+        "artifact_size_retained": true,
+        "source_refusal_propagated": true,
+        "originating_source_identity_retained": true,
+        "originating_source_module": true,
+        "originating_source_api": true,
+        "equals_direct_source_failure": true
+      },
+      "outcome": "typed_refusal",
+      "exception": {
+        "class": "Fault",
+        "module": "c270_comparison_under_test",
+        "code": "UNSUPPORTED_SOURCE_FORM",
+        "detail": "declared SiteRef parameter endpoint is unsupported",
+        "pointer": "",
+        "origin": null,
+        "sourceHashes": {
+          "main.ok": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d",
+          "hinges.ok": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+        },
+        "sourceBytes": {
+          "main.ok": 1708,
+          "hinges.ok": 1998
+        },
+        "artifactSha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534",
+        "artifactBytes": 185276
+      },
+      "cause_chain": [
+        {
+          "class": "Fault",
+          "module": "c270_comparison_under_test",
+          "code": "UNSUPPORTED_SOURCE_FORM",
+          "detail": "declared SiteRef parameter endpoint is unsupported",
+          "pointer": "",
+          "origin": null,
+          "sourceHashes": {
+            "main.ok": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d",
+            "hinges.ok": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+          },
+          "sourceBytes": {
+            "main.ok": 1708,
+            "hinges.ok": 1998
+          },
+          "artifactSha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534",
+          "artifactBytes": 185276,
+          "traceback": [
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c270/run_h16_control.py",
+              "line": 112,
+              "function": "main"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c267/hinge_compare.py",
+              "line": 226,
+              "function": "compare_hinges"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c267/hinge_compare.py",
+              "line": 216,
+              "function": "compare_hinges"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c267/hinge_compare.py",
+              "line": 122,
+              "function": "_compare"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c267/hinge_compare.py",
+              "line": 92,
+              "function": "_invoke"
+            }
+          ]
+        },
+        {
+          "class": "Fault",
+          "module": "_c267_pinned_binding",
+          "code": "UNSUPPORTED_SOURCE_FORM",
+          "detail": "declared SiteRef parameter endpoint is unsupported",
+          "pointer": "",
+          "origin": null,
+          "sourceHashes": {
+            "main.ok": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d",
+            "hinges.ok": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+          },
+          "sourceBytes": {
+            "main.ok": 1708,
+            "hinges.ok": 1998
+          },
+          "artifactSha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534",
+          "artifactBytes": 185276,
+          "traceback": [
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c267/hinge_compare.py",
+              "line": 89,
+              "function": "_invoke"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c266/hinge_binding.py",
+              "line": 328,
+              "function": "bind_hinge_inputs"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c266/hinge_binding.py",
+              "line": 318,
+              "function": "bind_hinge_inputs"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c266/hinge_binding.py",
+              "line": 255,
+              "function": "_bind"
+            }
+          ]
+        },
+        {
+          "class": "Fault",
+          "module": "_c266_pinned_source",
+          "code": "UNSUPPORTED_SOURCE_FORM",
+          "detail": "declared SiteRef parameter endpoint is unsupported",
+          "origin": null,
+          "sourceHashes": {
+            "main.ok": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d",
+            "hinges.ok": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+          },
+          "sourceBytes": {
+            "main.ok": 1708,
+            "hinges.ok": 1998
+          },
+          "traceback": [
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c266/hinge_binding.py",
+              "line": 253,
+              "function": "_bind"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c265/source_hinges.py",
+              "line": 674,
+              "function": "observe_source_hinges"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c265/source_hinges.py",
+              "line": 592,
+              "function": "observe"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c265/source_hinges.py",
+              "line": 560,
+              "function": "endpoint"
+            },
+            {
+              "file": "/workspace/scratch/92228987b591/validation/candidate/docs/engineering/localized-repair-c265/source_hinges.py",
+              "line": 528,
+              "function": "site"
+            }
+          ]
+        }
+      ],
+      "diagnostic_origin": null,
+      "passed": true
+    }
+  ],
+  "scope": "One frozen source-valid SiteRef parameter; source refusal propagation only",
+  "artifact_policy": "Unchanged original before.glb; not rebound and no paired agreement claimed. C266 calls source observation before artifact parsing/provenance; refusal chain is retained.",
+  "limits": [
+    "No source compiler/evaluator/exporter execution",
+    "No implementation repair",
+    "No H20/H22/H24 or full C260/product/site/world qualification"
+  ],
+  "frozen_expectation": {
+    "path": "docs/engineering/localized-repair-c270/control/EXPECTED.json",
+    "bytes": 8605,
+    "sha256": "aa73df1e9ffb4d76bc589a7239f454be28e4cd6ae4ee523b208dbf66860ef4a7"
+  },
+  "finished_at_utc": "2026-11-20T19:43:04.245822+00:00",
+  "inputs_after": [
+    {
+      "path": "docs/engineering/localized-repair-c265/source_hinges.py",
+      "bytes": 38229,
+      "sha256": "70d5e5b6247347bf44eaa3be0bc9c91b13f10d4717b4b32261eaebad75987132"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c267/hinge_compare.py",
+      "bytes": 12382,
+      "sha256": "9b2899d95471546a25a8a7e5ed9d9ac2a1e42854c31808d4e68aff2582686b58"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c266/hinge_binding.py",
+      "bytes": 17639,
+      "sha256": "8f6b26f0bedad335b069975d0491e5565a25f0793b3bc48802e90d3993aa0d0a"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c261/hinge_glb.py",
+      "bytes": 14036,
+      "sha256": "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c257/ownership.py",
+      "bytes": 35942,
+      "sha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1"
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "bytes": 1708,
+      "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "bytes": 1911,
+      "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "bytes": 185276,
+      "sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/EXPECTED.json",
+      "bytes": 8605,
+      "sha256": "aa73df1e9ffb4d76bc589a7239f454be28e4cd6ae4ee523b208dbf66860ef4a7"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/SOURCE-VALIDITY.md",
+      "bytes": 7901,
+      "sha256": "0a966b5c8acd6bec75445199992babe0023fadb37d36bcd0d37fc36bf4257eb2"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/build_control.py",
+      "bytes": 9479,
+      "sha256": "f92eaf3e1ffeaf722fa8d71dbfda3a6961eb944f4dd85ab3426c4b51c7ad748d"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/hinges.ok",
+      "bytes": 1998,
+      "sha256": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/main.ok",
+      "bytes": 1708,
+      "sha256": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/run_h16_control.py",
+      "bytes": 11397,
+      "sha256": "716619b1c390622bec4ae871732bd1ecb5cb2db0fb37d93cd08240be841e8f16"
+    }
+  ],
+  "inputs_unchanged": true,
+  "source_revision_unchanged": true,
+  "tracked_clean_after": true,
+  "passed": true,
+  "failed_assertions": []
+}
