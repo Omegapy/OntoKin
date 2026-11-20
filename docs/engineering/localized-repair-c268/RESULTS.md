@@ -40,3 +40,9 @@ The published corrected candidate `e6f55b73fa71953aa648bcd34711a6796a7346b6`, tr
 The original selector-length finding is resolved in the published candidate. Its failure/probe, original 281-method result, first control-author errors and prior interrupted audit records remain unchanged. R01–R05 acceptance is recorded by the independent final reviewer in [REVIEW](REVIEW.md). Integration, actual-main verification and saved delivery are subsequent gates recorded separately; this paragraph does not claim their completion.
 
 Only the isolated engineering observer and its selected affected components are qualified. Runtime, fixtures, adopted language/contract files and hosted workflow definitions retain exact prior trees. Full product aggregate, source/export/conformance, other interpreters, native/visual/model trials and all C260 H-group qualification remain unrun or incomplete as previously recorded.
+
+## Verified integration — November 19, 2026
+
+[PR266](https://github.com/Omegapy/OntoKin/pull/266) merged as `5084dd69312e8da5a49aadd33cf83ba56db7c058`, tree `07971fcdbc6d912febc6adbec7ebf576eccab43f`. A fresh clean-checkout execution on that actual main revision passed **12 groups, 282 methods and 14 corpus bindings**, with zero failures, errors and skips. All 159 identified input files remained stable. The [main receipt](evidence/finalization-a3de3dd23bbf/main-integration/CHECKS.json) retains exact commands, interpreter, input/output identities and logs; independent audit is retained alongside it.
+
+The completed branch was automatically removed, and its final head remains a merge parent. [INTEGRATION.json](INTEGRATION.json) records the full publication/recovery mapping, readbacks, branch disposition and limits. R01–R06 are complete; final saved handoff/receipt and task closure remain R07. This finite verification does not establish any of the broader qualifications excluded above.
