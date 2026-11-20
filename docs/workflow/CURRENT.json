@@ -4,15 +4,16 @@
   "latest_task": "C271",
   "active_task": "C271",
   "observed_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
-  "snapshot_date": "2026-11-20T22:05:38.009619+00:00",
+  "snapshot_date": "2026-11-20T22:19:47.359915+00:00",
   "next_action": {
     "status": "ready",
-    "summary": "C271 P01 control evidence is published with focused independent approval. Finish its clean record checks and saved partial delivery; then stop. Fresh chat resumes P02 integration verification.",
-    "suggested_task": "Continue C271 P02 on retained work/c271-missing-import-digest-control / draft PR274. Required integration gates remain open; no new H group.",
+    "summary": "C271 P01 is delivered with verified ZIP/prompts and separate receipt. Stop this chat. A fresh chat resumes P02 at R03 integration verification on the retained branch.",
+    "suggested_task": "Continue C271 P02 on work/c271-missing-import-digest-control / draft PR274: required local driver, complete affected cohort and independent integration review before any main lease/integration.",
     "sources": [
       "docs/workflow/tasks/C271/task.json",
       "docs/engineering/localized-repair-c271/NEXT-TASK.md",
-      "docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.md"
+      "docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.md",
+      "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
     ]
   },
   "historical_handoff": {
@@ -38,6 +39,22 @@
     "completion_gate": "confirmed saved ZIP plus external delivery receipt"
   },
   "latest_handoff": {
+    "task": "C271",
+    "kind": "online_browser_session",
+    "phase": "C271-P01-control-candidate",
+    "partial": true,
+    "file_name": "OntoKin_C271_Control_Candidate_Handoff_2026-11-20.zip",
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-6fa4862a8b2c8191957e4b0760c32705_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "library_file_id": "libfile_fde3_f-6fa4862a8b2c8191957e4b0760c32705_2ab2a24d43748191957f9bcc356b59de",
+    "file_id": "file_0000000015dc81f6ad1374c44bf4c809",
+    "version": 0,
+    "bytes": 12003931,
+    "sha256": "9bdb8ec134fbf8facc1b1f52aa9b7171de16f35593ddf7ad61930e521f4495df",
+    "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+    "source_tree": "9ab0d4dfcb21735fed4c019f85f8f450ebfaa7b4",
+    "delivery_receipt": "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
+  },
+  "previous_handoff": {
     "task": "C270",
     "kind": "online_browser_session",
     "phase": "C270-R03-R05-recovery-finalization",
@@ -50,20 +67,58 @@
     "source_revision": "0f90048b74b4cb69f2d5f058106c81967b13ae6d",
     "delivery_receipt": "docs/engineering/localized-repair-c270/correction/finalization-20261120/DELIVERY.json"
   },
-  "previous_handoff": {
-    "task": "C270",
-    "kind": "online_browser_session",
-    "phase": "C270-recovery-finalization",
-    "partial": true,
-    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fb342ba3a2d48191be837ec9bab3566f_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-    "library_file_id": "libfile_fde3_f-fb342ba3a2d48191be837ec9bab3566f_2ab2a24d43748191957f9bcc356b59de",
-    "version": 0,
-    "bytes": 2573742,
-    "sha256": "2c8d08e8cbdeec4ada3e65d692dc47d813169c3268fe33d014b89e6281a32940",
-    "source_revision": "a8e0bd1d446396b220075b5329e2c769c338f6a2",
-    "delivery_receipt": "docs/engineering/localized-repair-c270/DELIVERY.json"
-  },
   "latest_recovery": {
+    "schema": "ontokin.c271.early-delivery/1",
+    "status": "saved",
+    "saved_at_utc": "2026-11-20T21:54:14.201460+00:00",
+    "file_name": "OntoKin_C271_Control_Early_Recovery_2026-11-20.zip",
+    "library_file_id": "libfile_fde3_f-c35b97fcc0f881918db27cd25309fc8a_2ab2a24d43748191957f9bcc356b59de",
+    "file_id": "file_00000000f64881f58457014567ef1048",
+    "version": 0,
+    "path": "/OntoKin/OntoKin_C271_Control_Early_Recovery_2026-11-20.zip",
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-c35b97fcc0f881918db27cd25309fc8a_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "bytes": 11365488,
+    "sha256": "159769f7cce5de2364ccb0a8c3e49f7275233f370ad3102d6d7e975a05a3b727",
+    "source_revision": "c27609ebab7c86ff20d7bd288994b49e3dd3c7e1",
+    "source_tree": "80f499fa35cf2d31e7a440eb67a13e8d7b387425",
+    "local_metadata_applied": true,
+    "verification": {
+      "passed": true,
+      "members": 70,
+      "payloads": 69,
+      "git_snapshots": 55,
+      "report": "docs/engineering/localized-repair-c271/EARLY-PACKAGE-VERIFICATION.json"
+    },
+    "boundary": "Saved before control construction/observation. P01 is not parent completion or integration.",
+    "receipt": "docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json"
+  },
+  "older_handoffs": [
+    {
+      "task": "C269",
+      "kind": "online_browser_session",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-0ba7fe628c688191b4b555a7e7b8e891_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "library_file_id": "libfile_fde3_f-0ba7fe628c688191b4b555a7e7b8e891_2ab2a24d43748191957f9bcc356b59de",
+      "version": 0,
+      "bytes": 925448,
+      "sha256": "6f09f8855c361f7157bc87f2c56d2a097df7aa60f78a779a90db9a124091200f",
+      "source_revision": "3ad6f2e0d56e1b97c87a63e1d3353aec899bfaf0",
+      "delivery_receipt": "docs/engineering/localized-repair-c269/DELIVERY.json"
+    },
+    {
+      "task": "C270",
+      "kind": "online_browser_session",
+      "phase": "C270-recovery-finalization",
+      "partial": true,
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fb342ba3a2d48191be837ec9bab3566f_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "library_file_id": "libfile_fde3_f-fb342ba3a2d48191be837ec9bab3566f_2ab2a24d43748191957f9bcc356b59de",
+      "version": 0,
+      "bytes": 2573742,
+      "sha256": "2c8d08e8cbdeec4ada3e65d692dc47d813169c3268fe33d014b89e6281a32940",
+      "source_revision": "a8e0bd1d446396b220075b5329e2c769c338f6a2",
+      "delivery_receipt": "docs/engineering/localized-repair-c270/DELIVERY.json"
+    }
+  ],
+  "previous_recovery": {
     "schema": "ontokin.c270.r03-early-delivery/1",
     "status": "saved",
     "library_file_id": "libfile_fde3_f-3afa93d934708191b8d10378d9afb0ed_2ab2a24d43748191957f9bcc356b59de",
@@ -85,18 +140,5 @@
     },
     "boundary": "Saved before R03 acceptance review and integration; final saved handoff remains required",
     "receipt": "docs/engineering/localized-repair-c270/correction/finalization-20261120/EARLY-RECOVERY-RECEIPT.json"
-  },
-  "older_handoffs": [
-    {
-      "task": "C269",
-      "kind": "online_browser_session",
-      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-0ba7fe628c688191b4b555a7e7b8e891_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-      "library_file_id": "libfile_fde3_f-0ba7fe628c688191b4b555a7e7b8e891_2ab2a24d43748191957f9bcc356b59de",
-      "version": 0,
-      "bytes": 925448,
-      "sha256": "6f09f8855c361f7157bc87f2c56d2a097df7aa60f78a779a90db9a124091200f",
-      "source_revision": "3ad6f2e0d56e1b97c87a63e1d3353aec899bfaf0",
-      "delivery_receipt": "docs/engineering/localized-repair-c269/DELIVERY.json"
-    }
-  ]
+  }
 }

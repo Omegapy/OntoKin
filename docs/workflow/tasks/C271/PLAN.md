@@ -15,3 +15,7 @@ Reconcile this same task/branch. Complete required routine local driver, complet
 Root alone owns task/CURRENT, Git index, commits, remote writes and delivery. No main integration lease is held or needed for this nonoverlapping candidate phase. Workers own disjoint fixture or scratch review/package paths. No nested worker fanout. Principal risks: deleting more than the targeted digest, deriving the expectation from the observer, confusing source rejection with successful comparison, or presenting a partial phase as integrated completion. Exact input diffs, immutable oracle, full responses and independent review address them.
 
 Dependencies: unchanged C260 CONTRACT/CONTROL-PLAN, C269 H22.02 map, adopted OK-LANG-002 import grammar, unchanged C265/C266/C267 observers and C253 historical bytes. Detailed learning belongs to this scope; historical archives remain unchanged.
+
+## P01 delivery checkpoint
+
+P01 is complete with a verified saved partial ZIP, matching prompts and a separate [delivery receipt](../../../engineering/localized-repair-c271/delivery/P01-DELIVERY.json). P02 remains not done and belongs to a fresh parent chat. Parent R03, R04 and R05 remain open. This receipt-only checkpoint does not change the frozen candidate.

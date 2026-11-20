@@ -31,3 +31,9 @@ Draft [PR274](https://github.com/Omegapy/OntoKin/pull/274) is open and unmerged;
 GitHub returned no PR-triggered workflow runs or combined status entries at published evidence commit `2633cc1ffabfebe3233a76e164b9e80f91960faf`; the workflow query is first-page/PR-event limited. No hosted CI was requested, and repository-wide Actions settings were not changed or claimed disabled.
 
 Final clean published-candidate record checks and phase package review/save remain pending at this source freeze; their exact results and separate receipt are intentionally external. After the phase save, P01 may be marked done by receipt-only publication, while parent R03/R04/R05 remain open. No main write/merge/lease acquisition or branch deletion occurs in P01.
+
+## Confirmed P01 partial delivery
+
+The final package freezes candidate `e0b73f7d6ce49631e598d1378a0ddba717726524` and its exact Git tree. Fresh workflow/documentation checks passed on that clean source; the final source review passed 58 checks. Builder and independent archive review passed. ZIP and matching prompts are saved; exact identities and results are in the separate [P01 delivery receipt](../../../engineering/localized-repair-c271/delivery/P01-DELIVERY.json). Earlier pending statements above remain historical checkpoints. The receipt-only publication changes no implementation, oracle or original evidence.
+
+P01 is complete; parent R03/R04/R05 and P02 remain open. Draft PR274 is retained and unmerged; issue273 remains open. No main write, merge, integration lease or branch deletion occurred. Stop this chat; a fresh chat resumes R03 verification on the same branch.
