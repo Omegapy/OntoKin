@@ -27,3 +27,7 @@ H01-H28 map: 24 complete groups and four partial (H16/H20/H22/H24), 99 material 
 ## Independent acceptance checkpoint
 
 Separate reviewer `/root/state_audit` accepted R01-R04 at `4258e001a567ff830b790a174f8bdde9d368f05a`, with no mandatory findings and 1,882 static checks. Original audit/map/next-task hashes remain unchanged. R05/R06 remain open. Fresh documentation/workflow checks apply only to their actual candidate. Lease renewal `a255b8e2790f49df4b22074a9dfc3f8ee8a4e85b` is retained as a reconciliation parent. Package preflight required adopted language specifications and mandatory native-bundle verification; both are corrected before package creation.
+
+## Integration checkpoint
+
+PR269 merged the reviewed branch head `9a1b68b861843b7689d71590b897f4e4f8367b3d` at `c3bda080febf6359a6ad364b940d5d68f2741c9d`. Merge tree equals reviewed candidate tree; both branch and lease parents are retained. Fresh actual-main documentation/workflow checks passed. Automatic branch deletion was separately observed after the initial post-merge read still showed the branch. Only main remains. R01-R05 complete; scope issue268 and R06 stay open for final saved delivery.

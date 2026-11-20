@@ -56,8 +56,11 @@
       "id": "R05",
       "description": "Reviewed integration and branch disposition",
       "acceptance": "Acquire a verified expected-head integration lease, publish one scope branch/PR, merge the reviewed candidate without force, read actual main and run applicable fresh checks. Retain the branch history and observe final branch disposition.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/INTEGRATION.json",
+        "docs/engineering/localized-repair-c269/evidence/actual-main-checks/CHECKS.json"
+      ]
     },
     {
       "id": "R06",
@@ -124,7 +127,7 @@
       "requirements": [
         "R05"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c269/INTEGRATION.json"
       ],
@@ -138,7 +141,7 @@
       "requirements": [
         "R06"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c269/DELIVERY.json"
       ],
@@ -165,18 +168,30 @@
       "evidence": [
         "docs/engineering/localized-repair-c269/evidence/candidate-checks/references.json"
       ]
+    },
+    {
+      "name": "actual-main documentation and workflow",
+      "command": "python3 docs/engineering/localized-repair-c269/evidence/run_record_checks.py --repo IDENTIFIED_MAIN --output NEW_OUTPUT --phase actual-main",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c269/evidence/actual-main-checks/CHECKS.json"
+      ]
     }
   ],
   "completion": {
     "implementation_commit": "4258e001a567ff830b790a174f8bdde9d368f05a",
-    "merge_commit": null,
+    "merge_commit": "c3bda080febf6359a6ad364b940d5d68f2741c9d",
     "pull_request": "https://github.com/Omegapy/OntoKin/pull/269",
-    "branch_disposition": "active",
+    "branch_disposition": "deleted",
     "evidence": [
-      "docs/engineering/localized-repair-c269/REVIEW.json"
-    ]
+      "docs/engineering/localized-repair-c269/REVIEW.json",
+      "docs/engineering/localized-repair-c269/INTEGRATION.json",
+      "docs/engineering/localized-repair-c269/evidence/actual-main-checks/CHECKS.json"
+    ],
+    "published_evidence_commit": "9a1b68b861843b7689d71590b897f4e4f8367b3d"
   },
-  "next_action": "Integrate the reviewed audit through PR269 under verified ownership, check actual main and branch disposition, then verify/save the final handoff and receipt; no missing control implementation.",
+  "next_action": "R01-R05 complete. Verify and independently review final handoff, confirm ZIP/prompt saves, publish separate receipt, close task/issue268, release ownership and stop.",
   "session_phase": {
     "id": "C269-coverage-audit",
     "starting_main": "23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb",
