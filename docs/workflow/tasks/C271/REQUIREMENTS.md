@@ -22,8 +22,12 @@ In a later phase acquire verified expected-head ownership, conditionally integra
 
 Confirm early recovery before substantial work. Verify and save each phase handoff and matching prompts; publish its separate receipt. Keep parent and scope issue open until every requirement, integration and final delivery gate passes.
 
-## Constraints and exclusions
+## Historical P01 constraints and exclusions
 
 One phase in this chat: P01, independent control candidate. Keep the parent open. Do not merge, close the scope, change runtime/observers/dependency pins/adopted contracts/previous controls, evaluate source, export artifacts, run native/model trials, start other H groups, or relabel historical failures. Scope only the H22.02 missing actual import-digest case identified by the unchanged C269 audit. If the control contradicts its expectation, retain the failure and stop behavioral work. A correction requires a fresh phase.
 
 A scoped control success does not complete H22, C260, accepted-revision authority, the product, or comparative trials. P02 retains required broader integration checks, independent integration review, actual-main verification and final delivery.
+
+## Current P02 continuation declaration
+
+The fresh November 20 continuation request resumes the existing authorized P02 phase. The historical P01 current-chat restrictions above describe its completed candidate phase. P02 may perform only R03 required verification and independent review, then eligible R04 integration and actual-main verification, and R05 saved delivery/closure. The frozen oracle, controls, observer/runtime behavior, adopted contracts, dependencies and historical evidence remain unchanged. No new H group or behavioral correction is authorized in this phase. A concrete unresolved gate or unplanned repair ends substantive work with an honest saved partial handoff.

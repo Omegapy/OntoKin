@@ -4,7 +4,7 @@
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
   "status": "in_progress",
-  "owner": "c271-control-cce28e2b3ca4",
+  "owner": "c271-p02-c219bb61a617",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -87,7 +87,7 @@
         "R04",
         "R05"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c271/INTEGRATION.json",
         "docs/engineering/localized-repair-c271/DELIVERY.json"
@@ -161,102 +161,51 @@
       "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
     ]
   },
-  "next_action": "Stop this chat. In a fresh parent chat reconcile live state and resume C271 P02 at R03: required routine driver, complete affected regression cohort and independent integration review.",
+  "next_action": "Early recovery confirmed; execute the required routine local driver and complete affected regression cohort on an identified clean candidate; independently review eligibility before any main lease or integration.",
   "session_phase": {
-    "id": "C271-P01-control-candidate",
+    "schema": "ontokin.c271.p02-phase/1",
+    "task": "C271",
+    "phase": "C271-P02-integration-finalization",
+    "owner": "c271-p02-c219bb61a617",
+    "declared_at_utc": "2026-11-20T22:46:24.912827+00:00",
     "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
-    "declared_at_utc": "2026-11-20T21:49:53.235938+00:00",
-    "owner": "c271-control-cce28e2b3ca4",
-    "scope": "Only independent isolated missing import-digest control construction, execution, scoped review, recoverable candidate publication and saved partial handoff",
-    "acceptance": "R01/R02 evidence, focused candidate review, applicable record checks and confirmed partial delivery; integration requirements remain open",
-    "stopping_point": "Verified saved partial handoff and separate receipt; or first unplanned runtime/contract repair",
-    "integration_allowed_this_phase": false,
-    "status": "complete_partial_delivery",
+    "starting_branch": "88bc8b51b3963b7072375edac6400b6e6a4532e4",
+    "branch": "work/c271-missing-import-digest-control",
+    "scope": "Resume R03 required routine driver, complete affected regression cohort and independent integration review; if eligible complete R04 ownership/integration/actual-main/lifecycle and R05 final saved delivery",
+    "acceptance": [
+      "Required routine driver with preserved full outcomes",
+      "Complete affected observer regression cohort with exact identities",
+      "Independent integration approval without mandatory unresolved findings",
+      "Conditional integration under verified main lease",
+      "Fresh applicable actual-main checks and retained branch history",
+      "Verified final ZIP and matching prompts saved with separate receipt before parent closure"
+    ],
+    "stopping_point": "Saved final handoff after all gates, or honest saved partial at first concrete blocker/unplanned expansion; no second phase",
+    "exclusions": [
+      "No behavior, runtime, observer, frozen oracle, contract or dependency-pin changes",
+      "No other H groups, source evaluation/export, native/model trials or hosted CI",
+      "No full C260/product qualification"
+    ],
+    "early_recovery": "confirmed",
+    "main_lease": "not_held",
+    "parent_status": "in_progress",
+    "workers": {
+      "/root/intake_audit": "independent incoming package/receipt verification",
+      "/root/package_builder": "early package build/verification only",
+      "/root/validation": "required validation preparation only; waits for early save"
+    },
+    "status": "in_progress",
     "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json",
-    "executed_source_revision": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
-    "controls": {
-      "input_cases": 6,
-      "interface_calls": 18,
-      "positive_calls": 6,
-      "typed_refusals": 12,
-      "assertion_checks": 1042,
-      "failed_assertions": 0,
-      "environment": "CPython 3.12.14 / Linux x86-64"
-    },
-    "focused_review": {
-      "reviewer": "/root/github_reconciliation",
-      "execution_candidate": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
-      "publication_candidate": "2633cc1ffabfebe3233a76e164b9e80f91960faf",
-      "candidate_checks": 425,
-      "publication_checks": 30,
-      "failed_checks": 0,
-      "mandatory_findings": [],
-      "resolved_finding": "C271-RV-001 exact command provenance",
-      "integration_approved": false,
-      "final_source_candidate": "e0b73f7d6ce49631e598d1378a0ddba717726524",
-      "final_state_checks": 58,
-      "final_source_review": "docs/engineering/localized-repair-c271/delivery/FINAL-STATE-REVIEW.json"
-    },
-    "branch_disposition": "retained_unmerged",
-    "delivery_confirmed": true,
-    "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524",
-    "source_tree": "9ab0d4dfcb21735fed4c019f85f8f450ebfaa7b4",
-    "delivery_receipt": "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
-    "completed_at_utc": "2026-11-20T22:19:47.359915+00:00",
-    "record_checks": {
-      "result": "passed",
-      "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524",
-      "report": "docs/engineering/localized-repair-c271/delivery/record-checks/CHECKS.json"
-    },
-    "package_review": {
-      "result": "passed",
-      "report": "docs/engineering/localized-repair-c271/delivery/package-review/AUDIT.json"
-    }
+    "delivery_confirmed": false,
+    "early_receipt": "docs/engineering/localized-repair-c271/finalization-20261120/EARLY-RECOVERY-RECEIPT.json"
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "saved",
+    "status": "pending",
     "folder": "OntoKin",
     "partial": true,
-    "receipt": "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
-    "archive": {
-      "file_name": "OntoKin_C271_Control_Candidate_Handoff_2026-11-20.zip",
-      "library_file_id": "libfile_fde3_f-6fa4862a8b2c8191957e4b0760c32705_2ab2a24d43748191957f9bcc356b59de",
-      "file_id": "file_0000000015dc81f6ad1374c44bf4c809",
-      "version": 0,
-      "path": "/OntoKin/OntoKin_C271_Control_Candidate_Handoff_2026-11-20.zip",
-      "bytes": 12003931,
-      "sha256": "9bdb8ec134fbf8facc1b1f52aa9b7171de16f35593ddf7ad61930e521f4495df",
-      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-6fa4862a8b2c8191957e4b0760c32705_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-      "local_metadata_applied": true
-    },
-    "prompts": [
-      {
-        "file_name": "OntoKin_C271_Prompt_1_Continue_2026-11-20.md",
-        "library_file_id": "libfile_fde3_f-69176d668244819184ba6b3c5af8c5fe_2ab2a24d43748191957f9bcc356b59de",
-        "file_id": "file_00000000ea6c81f69fa8f633f8194c78",
-        "version": 0,
-        "path": "/OntoKin/OntoKin_C271_Prompt_1_Continue_2026-11-20.md",
-        "bytes": 3559,
-        "sha256": "60252a3177831711fdbc34c60d735b16cf31162bd89efa250269d9275bab893d",
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-69176d668244819184ba6b3c5af8c5fe_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "local_metadata_applied": true
-      },
-      {
-        "file_name": "OntoKin_C271_Prompt_2_Recover_2026-11-20.md",
-        "library_file_id": "libfile_fde3_f-43686d2798448191bbef891b19ef0499_2ab2a24d43748191957f9bcc356b59de",
-        "file_id": "file_000000005eb881f687684fef85db6c42",
-        "version": 0,
-        "path": "/OntoKin/OntoKin_C271_Prompt_2_Recover_2026-11-20.md",
-        "bytes": 3785,
-        "sha256": "09192571ddcaae69ad91fbb51872cc18087a973bd4fd551075fde43f62b93c89",
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-43686d2798448191bbef891b19ef0499_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "local_metadata_applied": true
-      }
-    ],
-    "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524"
+    "receipt": "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json"
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
@@ -272,6 +221,106 @@
         "docs/engineering/localized-repair-c271/evidence/working-record-checks/CHECKS.json"
       ],
       "limit": "Preliminary working-tree record checks, not final clean-candidate acceptance evidence."
+    }
+  ],
+  "prior_session_phases": [
+    {
+      "id": "C271-P01-control-candidate",
+      "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "declared_at_utc": "2026-11-20T21:49:53.235938+00:00",
+      "owner": "c271-control-cce28e2b3ca4",
+      "scope": "Only independent isolated missing import-digest control construction, execution, scoped review, recoverable candidate publication and saved partial handoff",
+      "acceptance": "R01/R02 evidence, focused candidate review, applicable record checks and confirmed partial delivery; integration requirements remain open",
+      "stopping_point": "Verified saved partial handoff and separate receipt; or first unplanned runtime/contract repair",
+      "integration_allowed_this_phase": false,
+      "status": "complete_partial_delivery",
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json",
+      "executed_source_revision": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+      "controls": {
+        "input_cases": 6,
+        "interface_calls": 18,
+        "positive_calls": 6,
+        "typed_refusals": 12,
+        "assertion_checks": 1042,
+        "failed_assertions": 0,
+        "environment": "CPython 3.12.14 / Linux x86-64"
+      },
+      "focused_review": {
+        "reviewer": "/root/github_reconciliation",
+        "execution_candidate": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+        "publication_candidate": "2633cc1ffabfebe3233a76e164b9e80f91960faf",
+        "candidate_checks": 425,
+        "publication_checks": 30,
+        "failed_checks": 0,
+        "mandatory_findings": [],
+        "resolved_finding": "C271-RV-001 exact command provenance",
+        "integration_approved": false,
+        "final_source_candidate": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+        "final_state_checks": 58,
+        "final_source_review": "docs/engineering/localized-repair-c271/delivery/FINAL-STATE-REVIEW.json"
+      },
+      "branch_disposition": "retained_unmerged",
+      "delivery_confirmed": true,
+      "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+      "source_tree": "9ab0d4dfcb21735fed4c019f85f8f450ebfaa7b4",
+      "delivery_receipt": "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+      "completed_at_utc": "2026-11-20T22:19:47.359915+00:00",
+      "record_checks": {
+        "result": "passed",
+        "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+        "report": "docs/engineering/localized-repair-c271/delivery/record-checks/CHECKS.json"
+      },
+      "package_review": {
+        "result": "passed",
+        "report": "docs/engineering/localized-repair-c271/delivery/package-review/AUDIT.json"
+      }
+    }
+  ],
+  "prior_phase_deliveries": [
+    {
+      "required": true,
+      "kind": "browser-session",
+      "status": "saved",
+      "folder": "OntoKin",
+      "partial": true,
+      "receipt": "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+      "archive": {
+        "file_name": "OntoKin_C271_Control_Candidate_Handoff_2026-11-20.zip",
+        "library_file_id": "libfile_fde3_f-6fa4862a8b2c8191957e4b0760c32705_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_0000000015dc81f6ad1374c44bf4c809",
+        "version": 0,
+        "path": "/OntoKin/OntoKin_C271_Control_Candidate_Handoff_2026-11-20.zip",
+        "bytes": 12003931,
+        "sha256": "9bdb8ec134fbf8facc1b1f52aa9b7171de16f35593ddf7ad61930e521f4495df",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-6fa4862a8b2c8191957e4b0760c32705_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_metadata_applied": true
+      },
+      "prompts": [
+        {
+          "file_name": "OntoKin_C271_Prompt_1_Continue_2026-11-20.md",
+          "library_file_id": "libfile_fde3_f-69176d668244819184ba6b3c5af8c5fe_2ab2a24d43748191957f9bcc356b59de",
+          "file_id": "file_00000000ea6c81f69fa8f633f8194c78",
+          "version": 0,
+          "path": "/OntoKin/OntoKin_C271_Prompt_1_Continue_2026-11-20.md",
+          "bytes": 3559,
+          "sha256": "60252a3177831711fdbc34c60d735b16cf31162bd89efa250269d9275bab893d",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-69176d668244819184ba6b3c5af8c5fe_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "local_metadata_applied": true
+        },
+        {
+          "file_name": "OntoKin_C271_Prompt_2_Recover_2026-11-20.md",
+          "library_file_id": "libfile_fde3_f-43686d2798448191bbef891b19ef0499_2ab2a24d43748191957f9bcc356b59de",
+          "file_id": "file_000000005eb881f687684fef85db6c42",
+          "version": 0,
+          "path": "/OntoKin/OntoKin_C271_Prompt_2_Recover_2026-11-20.md",
+          "bytes": 3785,
+          "sha256": "09192571ddcaae69ad91fbb51872cc18087a973bd4fd551075fde43f62b93c89",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-43686d2798448191bbef891b19ef0499_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "local_metadata_applied": true
+        }
+      ],
+      "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524"
     }
   ]
 }

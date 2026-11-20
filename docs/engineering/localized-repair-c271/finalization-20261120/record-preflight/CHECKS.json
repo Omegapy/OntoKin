@@ -1,0 +1,31 @@
+{
+  "schema": "ontokin.c271.p02-working-record-checks/1",
+  "base": "88bc8b51b3963b7072375edac6400b6e6a4532e4",
+  "dirty_state": "Working-tree P02 metadata only; later clean checkpoint checks required",
+  "checked_at_utc": "2026-11-20T22:49:16.732941+00:00",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "log": "workflow.log"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "log": "documentation.log"
+    }
+  ],
+  "passed": true,
+  "preserved_prior_failure": "attempt-01.json"
+}
