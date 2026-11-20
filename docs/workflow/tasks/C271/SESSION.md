@@ -23,3 +23,11 @@ Early recovery saved before fixture construction: [receipt](../../../engineering
 The independent oracle and runner were published and read back at `067392f2b5f592a5c3104fa8848cc0030ba1117b` before observation. The clean checkout executed six input cases and eighteen interface calls: six baseline successes and twelve exact MALFORMED refusals; 1,042 assertions passed, zero failed. Complete immutable evidence is in [control-candidate](../../../engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json). The reviewer requested an external exact-command receipt for the omitted `-B` flag; the original report is unchanged.
 
 Working-candidate documentation/workflow checks passed. Required routine driver, complete integration cohort and actual-main checks have not run in this phase. Independent P01 evidence review is in progress. Scope273 stays open; no main write or merge has occurred.
+
+## Focused review and publication
+
+Draft [PR274](https://github.com/Omegapy/OntoKin/pull/274) is open and unmerged; [issue273](https://github.com/Omegapy/OntoKin/issues/273) stays open. Reviewer `/root/github_reconciliation` accepted the control/evidence after 425 candidate and 30 publication checks with zero failures. Its single exact-command finding is resolved in the separate receipt; original report bytes are unchanged. [Final focused review](../../../engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.md). This is not integration approval.
+
+GitHub returned no PR-triggered workflow runs or combined status entries at published evidence commit `2633cc1ffabfebe3233a76e164b9e80f91960faf`; the workflow query is first-page/PR-event limited. No hosted CI was requested, and repository-wide Actions settings were not changed or claimed disabled.
+
+Final clean published-candidate record checks and phase package review/save remain pending at this source freeze; their exact results and separate receipt are intentionally external. After the phase save, P01 may be marked done by receipt-only publication, while parent R03/R04/R05 remain open. No main write/merge/lease acquisition or branch deletion occurs in P01.

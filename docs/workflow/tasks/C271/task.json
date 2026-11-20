@@ -115,30 +115,31 @@
       "evidence": []
     },
     {
-      "name": "documentation and workflow records",
+      "name": "clean published-candidate documentation and workflow records",
       "command": "python3 -B tools/chat_workflow.py check; python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
-      "result": "passed",
+      "result": "not_run",
       "required": true,
-      "evidence": [
-        "docs/engineering/localized-repair-c271/evidence/working-record-checks/CHECKS.json"
-      ]
+      "evidence": []
     },
     {
       "name": "independent candidate review",
       "command": "Actual independent subagent review; commands and exact identities recorded in report",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/independent-review/CANDIDATE-AUDIT.json",
+        "docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.json"
+      ]
     }
   ],
   "completion": {
     "implementation_commit": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
     "merge_commit": null,
-    "pull_request": null,
-    "branch_disposition": "active",
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/274",
+    "branch_disposition": "retained",
     "evidence": []
   },
-  "next_action": "Finish focused independent P01 evidence review and documentation/workflow checks; publish the retained draft candidate and save a verified partial handoff. Integration remains P02.",
+  "next_action": "Finish P01 clean published-candidate record checks and verified partial delivery, then stop. In a fresh main chat resume P02 at R03 integration verification on the same branch/PR; parent R03-R05 remain open.",
   "session_phase": {
     "id": "C271-P01-control-candidate",
     "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
@@ -148,7 +149,7 @@
     "acceptance": "R01/R02 evidence, focused candidate review, applicable record checks and confirmed partial delivery; integration requirements remain open",
     "stopping_point": "Verified saved partial handoff and separate receipt; or first unplanned runtime/contract repair",
     "integration_allowed_this_phase": false,
-    "status": "in_progress",
+    "status": "awaiting_clean_record_checks_and_saved_phase_delivery",
     "early_save_confirmed": true,
     "early_receipt": "docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json",
     "executed_source_revision": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
@@ -160,18 +161,42 @@
       "assertion_checks": 1042,
       "failed_assertions": 0,
       "environment": "CPython 3.12.14 / Linux x86-64"
-    }
+    },
+    "focused_review": {
+      "reviewer": "/root/github_reconciliation",
+      "execution_candidate": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+      "publication_candidate": "2633cc1ffabfebe3233a76e164b9e80f91960faf",
+      "candidate_checks": 425,
+      "publication_checks": 30,
+      "failed_checks": 0,
+      "mandatory_findings": [],
+      "resolved_finding": "C271-RV-001 exact command provenance",
+      "integration_approved": false
+    },
+    "branch_disposition": "retained_unmerged"
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
     "status": "pending",
     "folder": "OntoKin",
-    "partial": true
+    "partial": true,
+    "receipt": "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
     "rule": "PROTOCOL section 8 permits one next step when no scope is active; prior C270 stop text is historical and does not override newer owner direction.",
     "selection": "H22.02 is a concrete missing control in the adopted C260 qualification plan and C269 coverage audit. It is independent of larger H20/H24 work."
-  }
+  },
+  "historical_checks": [
+    {
+      "name": "working-tree documentation/workflow preflight",
+      "result": "passed",
+      "required": false,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/working-record-checks/CHECKS.json"
+      ],
+      "limit": "Preliminary working-tree record checks, not final clean-candidate acceptance evidence."
+    }
+  ]
 }

@@ -17,3 +17,7 @@ Every refusal retained exact source hashes and byte counts; binding/comparison a
 This P01 candidate is not merged. The parent stays open for P02: required routine local driver, complete affected regression inventory, independent integration approval, expected-head ownership/update, fresh actual-main checks, branch lifecycle and final saved delivery. Focused independent review and phase record checks are recorded separately. Main stays at `e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d`.
 
 No observer/runtime/grammar/contract/pin or historical control changed. No complete H22/C260 qualification, accepted-revision authority, source evaluation, export, native/model trial, physical correctness or comparative benefit follows. H20/H24 remain outside scope. Historical broad-driver completion remains unknown.
+
+## Focused independent review
+
+The [candidate audit](evidence/independent-review/CANDIDATE-AUDIT.json) passed 425 checks. The [publication review](evidence/independent-review/PUBLICATION-REVIEW.md) passed 30 further checks and resolved the exact-command recording finding. The reviewer accepted R01/R02 and the P01 control/evidence publication; it explicitly left integration and parent completion unapproved. Final clean record checks and the verified phase save are external completion records after this source snapshot.
