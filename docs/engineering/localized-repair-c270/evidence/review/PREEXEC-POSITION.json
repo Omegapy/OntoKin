@@ -1,0 +1,153 @@
+{
+  "schema": "ontokin.c270.independent-preexecution-position/1",
+  "reviewer": "/root/reconcile",
+  "recorded_at_utc": "2026-11-20T04:04:25.755833+00:00",
+  "observed_head": "c7b99e7c37bf8e3b11b58660b2903150211dc355",
+  "phase": "Normative expectation and propagation boundary before observation; actual fixture approval pending",
+  "independence": {
+    "source_observer_implementation_read": false,
+    "source_observer_run": false,
+    "product_parser_evaluator_exporter_run": false,
+    "normative_expectation_announced_before_binding_implementation_inspection": true,
+    "binding_comparator_static_control_flow_read": true
+  },
+  "normative_expected_code": "UNSUPPORTED_SOURCE_FORM",
+  "proposed_form": {
+    "declaration": "private param parent_site_ref @ \"parent-site-ref\": SiteRef = self.pivot;",
+    "joint_parent": "self.parent_site_ref"
+  },
+  "source_validity_basis": [
+    "OK-LANG-001 section 5.1: SiteRef is a reference type; copying a reference preserves the identified object.",
+    "OK-LANG-001 section 6.1: self.member resolves the effective class namespace; section 6.2 permits same-declaring-class private access.",
+    "OK-LANG-001 section 6.3: pure forward dependencies are permitted if acyclic; defaults resolve once per occurrence.",
+    "OK-LANG-001 section 7.3: joint parent and child require SiteRef values, not only syntactic direct site paths.",
+    "Construction grammar property_decl admits private param with typed expression; expression postfix admits self.member.",
+    "OK-LANG-002 section 3 preserves imported definitions original lexical scope and inherited member visibility; exact changed source digest must replace original main import pin."
+  ],
+  "contract_basis": "C260 CONTRACT sections 1 and 3.3 explicitly distinguish language validity from finite observation support and exclude aliases/parameters/computed SiteRef endpoints. CONTROL-PLAN H16 requires typed unsupported-form refusal.",
+  "acceptance": {
+    "exact_code": true,
+    "retain_exact_source_hashes_and_sizes": true,
+    "retain_nonempty_reason_and_source_origin": true,
+    "no_qualified_or_partial_hinge_set": true,
+    "binding_and_comparator_propagation": true,
+    "accept_malformed_as_equivalent": false
+  },
+  "artifact_boundary": {
+    "original_glb_allowed_for_refusal_only": true,
+    "basis": "C266 _bind lines 253-255 refuses source before artifact read at 257 and provenance comparison at 265+. C267 _compare line 122 delegates through C266 and _invoke preserves the fault code.",
+    "confound_guard": "Unexpected source acceptance followed by stale provenance INPUT_BINDING must fail exact expected-code assertion; no claim of rebinding or paired artifact agreement.",
+    "artifact_hash_must_be_recorded": true
+  },
+  "regression_inventory": [
+    {
+      "name": "c265 source observer controls",
+      "command": [
+        "python3",
+        "-B",
+        "docs/engineering/localized-repair-c265/test_source_hinges.py",
+        "--evidence-dir",
+        "FRESH_OUTPUT/c265-controls"
+      ],
+      "expected_methods": 49
+    },
+    {
+      "name": "c266 binding controls",
+      "command": [
+        "python3",
+        "-B",
+        "docs/engineering/localized-repair-c266/test_hinge_binding.py",
+        "--evidence-dir",
+        "FRESH_OUTPUT/c266-controls"
+      ],
+      "expected_methods": 34
+    },
+    {
+      "name": "c267 comparator controls",
+      "command": [
+        "python3",
+        "-B",
+        "docs/engineering/localized-repair-c267/test_hinge_compare.py",
+        "--evidence-dir",
+        "FRESH_OUTPUT/c267-controls"
+      ],
+      "expected_methods": 25
+    },
+    {
+      "name": "new C270 control",
+      "requirement": "Execute frozen fixture against source, binding and comparator; persist actual results separately from the immutable expected result."
+    },
+    {
+      "name": "documentation preservation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ]
+    },
+    {
+      "name": "workflow records",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ]
+    },
+    {
+      "name": "exact preservation",
+      "requirement": "Bind all observer/dependency/old-test/old-fixture identities; only new evidence/control files and Director-owned workflow records may change."
+    }
+  ],
+  "regression_scope_rationale": "The new assertion directly exercises source refusal and propagation through C266/C267. Their complete independent suites cover the invoked boundary. No existing implementation or control changes. C268 historical admission, independent geometry/follow components and product runtime behavior are unchanged and are not newly qualified. Historical outcomes retain their actual revisions; no broad runtime regression pass is claimed.",
+  "fixtures_approval": "pending actual main.ok, hinges.ok, EXPECTED.json and SOURCE-VALIDITY.md",
+  "inputs": {
+    "docs/workflow/tasks/C270/REQUIREMENTS.md": {
+      "sha256": "afde48f58532139928d503f0e7258318e4d76e9e10e05627390c9f44b9806b39",
+      "bytes": 2160
+    },
+    "docs/workflow/tasks/C270/PLAN.md": {
+      "sha256": "63bf414892042547f2aa7b788a01043db2364e3af9b5923b9b07ac5a341df5aa",
+      "bytes": 1701
+    },
+    "docs/engineering/localized-repair-c260/CONTRACT.md": {
+      "sha256": "39bf90c51256cb392b0b639c36f3325c76f8919bbea4e3e572937e9834f8cd6c",
+      "bytes": 16245
+    },
+    "docs/engineering/localized-repair-c260/CONTROL-PLAN.md": {
+      "sha256": "7b3e74b9a58567d70edc4481aba8022df8a2b1ad8bab4903d9f4a0d05f8d26d1",
+      "bytes": 7975
+    },
+    "docs/engineering/localized-repair-c269/COVERAGE.json": {
+      "sha256": "ac335dda60a23cd512a787a3b4686fdd4c125d84b15788798235cb1fb91975ea",
+      "bytes": 468675
+    },
+    "docs/language-design/OK-LANG-001-core-language-specification.md": {
+      "sha256": "d19d117cf26a281fc0fd2fa06b07c1075aa1d346ad4c8f13d12ec8e1de98fced",
+      "bytes": 128525
+    },
+    "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md": {
+      "sha256": "7a3700b2b72924582184e49829b5678a8c53e4d419b79d3fa5bd55c5c76b940e",
+      "bytes": 53806
+    },
+    "docs/language-design/construction-v0.1/ontokin-construction.ebnf": {
+      "sha256": "3603c44daf891244cda2c5adeadede03635d1d66e3bdbead26b1bd5459cff1a6",
+      "bytes": 4301
+    },
+    "docs/engineering/localized-repair-c266/hinge_binding.py": {
+      "sha256": "68849dbe3339c158eac7ec43fb1defcbd2993c37c6a0a5ee813d2da71fb03dda",
+      "bytes": 17639
+    },
+    "docs/engineering/localized-repair-c267/hinge_compare.py": {
+      "sha256": "f98b9eab7a7f0cc75afa26eab0b672356d7e3275e3d713d16df214e68e69d71d",
+      "bytes": 12382
+    }
+  },
+  "checks_executed": [],
+  "mandatory_findings": [],
+  "limits": [
+    "This record establishes independently reasoned expectations, not a source execution or qualification.",
+    "All fixture syntax, declaration uniqueness, compatible sites and the exact pin require actual-byte review before approval."
+  ]
+}

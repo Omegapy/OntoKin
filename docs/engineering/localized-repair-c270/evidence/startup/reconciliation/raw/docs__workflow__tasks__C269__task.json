@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "id": "C269",
+  "title": "C260 hinge qualification coverage audit",
+  "intent": "Determine exactly which H01-H28 obligations are supported by the existing four-interface evidence and identify the first remaining gap",
+  "status": "done",
+  "owner": "c269-audit-d59e10906594",
+  "branch": "work/c269-hinge-coverage-audit",
+  "base_sha": "23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb",
+  "scope_issue": "https://github.com/Omegapy/OntoKin/issues/268",
+  "requirements": [
+    {
+      "id": "R01",
+      "description": "Exact baseline and evidence identity",
+      "acceptance": "Bind unchanged C260 CONTRACT, CONTROL-PLAN and INPUTS, the C253 corpus, and the C261/C265/C266/C267/C268 implementations, independent controls and relevant saved execution evidence to exact revisions, byte sizes and hashes. Separate historical execution from new audit checks.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/INPUT-IDENTITIES.json",
+        "docs/engineering/localized-repair-c269/evidence/EXECUTION-ELIGIBILITY.json"
+      ]
+    },
+    {
+      "id": "R02",
+      "description": "Complete H01-H28 coverage map",
+      "acceptance": "Record all 28 groups and every material subcase. Cite actual independent assertions, input construction, identities and outcomes. Classify complete, partial, absent or contradictory evidence conservatively. Do not promote a method count or label to group qualification.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/COVERAGE.json",
+        "docs/engineering/localized-repair-c269/AUDIT.md",
+        "docs/engineering/localized-repair-c269/NEXT-TASK.md"
+      ]
+    },
+    {
+      "id": "R03",
+      "description": "Qualification decision and first remaining gap",
+      "acceptance": "Publish a human-readable audit and machine-readable map. State whether existing evidence supports contract-wide qualification. Identify one specific next bounded control or investigation, with inputs, acceptance and exclusions. No implementation or contract amendment in this phase.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/COVERAGE.json",
+        "docs/engineering/localized-repair-c269/AUDIT.md",
+        "docs/engineering/localized-repair-c269/NEXT-TASK.md"
+      ]
+    },
+    {
+      "id": "R04",
+      "description": "Verification and independent review",
+      "acceptance": "Pass fresh documentation and workflow checks; verify every local evidence reference and hash binding. Obtain actual independent review of the exact audit candidate, resolve mandatory findings, and retain failures and unrun checks.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/REVIEW.json",
+        "docs/engineering/localized-repair-c269/evidence/candidate-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c269/evidence/candidate-checks/references.json"
+      ]
+    },
+    {
+      "id": "R05",
+      "description": "Reviewed integration and branch disposition",
+      "acceptance": "Acquire a verified expected-head integration lease, publish one scope branch/PR, merge the reviewed candidate without force, read actual main and run applicable fresh checks. Retain the branch history and observe final branch disposition.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/INTEGRATION.json",
+        "docs/engineering/localized-repair-c269/evidence/actual-main-checks/CHECKS.json"
+      ]
+    },
+    {
+      "id": "R06",
+      "description": "Verified saved delivery and closure",
+      "acceptance": "Confirm early recovery before audit work. Verify the final ZIP inventory, manifest, fresh extraction and exact Git snapshots; save the ZIP and both prompts in the existing OntoKin folder. Publish a separate receipt, close task and issue only when all gates pass, release ownership and stop.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/DELIVERY.json",
+        "docs/engineering/localized-repair-c269/evidence/delivery/final-package-review/RESULTS.json",
+        "docs/engineering/localized-repair-c269/CLOSEOUT.json",
+        "docs/engineering/localized-repair-c269/evidence/delivery/receipt-main-checks/CHECKS.json"
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "id": "P01",
+      "title": "Scope, reconciliation and early recovery",
+      "requirements": [
+        "R01",
+        "R06"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/workflow/tasks/C269/SESSION.md",
+        "docs/engineering/localized-repair-c269/EARLY-RECOVERY-RECEIPT.json"
+      ],
+      "verification": [
+        "Live reconciliation, exact startup read-set and confirmed early save"
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "Independent coverage investigations",
+      "requirements": [
+        "R01",
+        "R02"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c269/COVERAGE.json",
+        "docs/engineering/localized-repair-c269/INPUT-IDENTITIES.json"
+      ],
+      "verification": [
+        "Actual assertion and source/evidence identity inspection for every H group"
+      ]
+    },
+    {
+      "id": "P03",
+      "title": "Synthesis, checks and independent review",
+      "requirements": [
+        "R02",
+        "R03",
+        "R04"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c269/AUDIT.md",
+        "docs/engineering/localized-repair-c269/NEXT-TASK.md",
+        "docs/engineering/localized-repair-c269/REVIEW.json"
+      ],
+      "verification": [
+        "Fresh documentation/workflow checks and exact-candidate independent review"
+      ]
+    },
+    {
+      "id": "P04",
+      "title": "Integration and actual-main checks",
+      "requirements": [
+        "R05"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c269/INTEGRATION.json"
+      ],
+      "verification": [
+        "Expected-head integration, exact readback, fresh main checks and retained-history disposition"
+      ]
+    },
+    {
+      "id": "P05",
+      "title": "Saved handoff, receipt and closure",
+      "requirements": [
+        "R06"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c269/DELIVERY.json"
+      ],
+      "verification": [
+        "Safe ZIP, manifest/extraction/source verification, confirmed saves and external receipt"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "candidate documentation and workflow",
+      "command": "python3 docs/engineering/localized-repair-c269/evidence/run_record_checks.py --repo IDENTIFIED_CANDIDATE --output NEW_OUTPUT --phase candidate",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c269/evidence/candidate-checks/CHECKS.json"
+      ]
+    },
+    {
+      "name": "audit reference identities",
+      "command": "python3 -B docs/engineering/localized-repair-c269/evidence/check_audit_references.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c269/evidence/candidate-checks/references.json"
+      ]
+    },
+    {
+      "name": "actual-main documentation and workflow",
+      "command": "python3 docs/engineering/localized-repair-c269/evidence/run_record_checks.py --repo IDENTIFIED_MAIN --output NEW_OUTPUT --phase actual-main",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c269/evidence/actual-main-checks/CHECKS.json"
+      ]
+    },
+    {
+      "name": "final handoff package verification",
+      "command": "python3 -B session/final-package-review/verify_package.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c269/evidence/delivery/final-package-review/RESULTS.json"
+      ]
+    },
+    {
+      "name": "confirmed receipt main documentation and workflow",
+      "command": "python3 docs/engineering/localized-repair-c269/evidence/run_record_checks.py --repo IDENTIFIED_RECEIPT_MAIN --output NEW_OUTPUT --phase confirmed-receipt-main",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c269/evidence/delivery/receipt-main-checks/CHECKS.json"
+      ]
+    }
+  ],
+  "completion": {
+    "implementation_commit": "4258e001a567ff830b790a174f8bdde9d368f05a",
+    "merge_commit": "c3bda080febf6359a6ad364b940d5d68f2741c9d",
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/269",
+    "branch_disposition": "deleted",
+    "evidence": [
+      "docs/engineering/localized-repair-c269/REVIEW.json",
+      "docs/engineering/localized-repair-c269/INTEGRATION.json",
+      "docs/engineering/localized-repair-c269/evidence/actual-main-checks/CHECKS.json",
+      "docs/engineering/localized-repair-c269/DELIVERY.json",
+      "docs/engineering/localized-repair-c269/CLOSEOUT.json"
+    ],
+    "published_evidence_commit": "9a1b68b861843b7689d71590b897f4e4f8367b3d",
+    "scope_issue_state": "closed",
+    "scope_issue_closed_at": "2026-11-20T03:16:46Z",
+    "delivery_receipt_commit": "c356702d1af8a0f63c7314b2682bc7bb53d298bf",
+    "closed_at_utc": "2026-11-20T03:16:56.424035+00:00"
+  },
+  "next_action": "Completed this one audit phase and stopped. The next separate candidate is one source-valid declared/computed SiteRef control for H16; follow NEXT-TASK.md only in a fresh authorized phase.",
+  "session_phase": {
+    "id": "C269-coverage-audit",
+    "starting_main": "23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb",
+    "declared_at_utc": "2026-11-20T02:43:00.812413+00:00",
+    "owner": "c269-audit-d59e10906594",
+    "scope": "One evidence-only coverage audit, review, integration and saved handoff",
+    "acceptance": "R01-R06; no group qualification unsupported by exact independent evidence",
+    "stopping_point": "Verified saved handoff and closure, or honest partial at the first unplanned scope expansion; no next implementation phase",
+    "early_save_confirmed": true,
+    "early_receipt": "docs/engineering/localized-repair-c269/EARLY-RECOVERY-RECEIPT.json"
+  },
+  "delivery": {
+    "required": true,
+    "kind": "browser-session",
+    "status": "saved",
+    "folder": "OntoKin",
+    "receipt": "docs/engineering/localized-repair-c269/DELIVERY.json",
+    "library_file_id": "libfile_fde3_f-0ba7fe628c688191b4b555a7e7b8e891_2ab2a24d43748191957f9bcc356b59de",
+    "source_revision": "3ad6f2e0d56e1b97c87a63e1d3353aec899bfaf0",
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-0ba7fe628c688191b4b555a7e7b8e891_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "sha256": "6f09f8855c361f7157bc87f2c56d2a097df7aa60f78a779a90db9a124091200f",
+    "bytes": 925448,
+    "version": 0
+  }
+}
+

@@ -1,0 +1,121 @@
+{
+  "schema": "ontokin.c270.independent-preexecution-review/1",
+  "reviewer": "/root/reconcile",
+  "created_at_utc": "2026-11-20T04:08:33.524684+00:00",
+  "baseline": "c7b99e7c37bf8e3b11b58660b2903150211dc355",
+  "candidate_kind": "Exact reviewed working-file identities before Director commits/publication; not an invented commit identity",
+  "verdict": "approved_for_one_frozen_control_execution",
+  "mandatory_findings": [],
+  "fixture_identities": [
+    {
+      "path": "docs/engineering/localized-repair-c270/control/EXPECTED.json",
+      "bytes": 8605,
+      "sha256": "aa73df1e9ffb4d76bc589a7239f454be28e4cd6ae4ee523b208dbf66860ef4a7"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/SOURCE-VALIDITY.md",
+      "bytes": 7901,
+      "sha256": "0a966b5c8acd6bec75445199992babe0023fadb37d36bcd0d37fc36bf4257eb2"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/build_control.py",
+      "bytes": 9479,
+      "sha256": "f92eaf3e1ffeaf722fa8d71dbfda3a6961eb944f4dd85ab3426c4b51c7ad748d"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/hinges.ok",
+      "bytes": 1998,
+      "sha256": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/control/main.ok",
+      "bytes": 1708,
+      "sha256": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c270/run_h16_control.py",
+      "bytes": 11397,
+      "sha256": "716619b1c390622bec4ae871732bd1ecb5cb2db0fb37d93cd08240be841e8f16"
+    }
+  ],
+  "fixture_static_checks": {
+    "path": {
+      "path": "docs/engineering/localized-repair-c270/evidence/review/PREEXEC-FIXTURE-CHECKS.json",
+      "bytes": 10653,
+      "sha256": "839473f2fd8c2a4f8e7413020f9a99f1209454485cf557f0209ec2ea2c0528d8"
+    },
+    "passed": true,
+    "checks": 65
+  },
+  "normative_position": {
+    "path": "docs/engineering/localized-repair-c270/evidence/review/PREEXEC-POSITION.json",
+    "bytes": 7063,
+    "sha256": "d8beef02da60423123ec47ac5c1d33fac8c01e60181b552d9e0f9cc7c626881e"
+  },
+  "acceptance_assessment": {
+    "source_form": "The added private SiteRef default refers to an existing same-class pivot site; same-class read in flex.parent is typed, accessible and acyclic under the adopted rules. The copied reference preserves the original endpoint identity and compatible distinct-object relation.",
+    "source_delta": "Independent reverse-edit checks recover exact original leaf bytes after removing the declaration and restoring one parent expression. Replacing only the new dependency digest recovers exact original entry bytes.",
+    "expected_classification": "Exactly UNSUPPORTED_SOURCE_FORM follows C260 sections 1, 3.3 and 6 plus CONTROL-PLAN H16. No observed implementation result supplied this expected category; MALFORMED is not accepted.",
+    "artifact": "Original unchanged before.glb is suitable for source-refusal propagation only. C266 observes source before parsing/binding artifact claims. Unexpected source acceptance followed by stale-provenance INPUT_BINDING cannot satisfy the exact assertion. No paired agreement or historical admission is expected.",
+    "runner": "Five calls: original source and comparator positives, then frozen changed source, binder and comparator refusals. Literal expected category remains exact; input identities and expectation are checked before observer imports. Every case is retained incrementally, unexpected results are saved, and failed assertions make final exit status 1. Runtime/observer/control source identities and Git revision are captured and checked for stability.",
+    "failure_origin": "Source cause attribution is established by exact originating module and source API traceback, retained hashes/sizes, equal code/detail through causal chain and equal direct source outcome. Optional diagnostic-origin dictionaries must agree and any supplied span is validated; null is explicitly recorded.",
+    "no_partial_set": "Unexpected success fails and saves its actual response. Fault/cause records cannot contain qualified hinge/site/object records or qualification fields.",
+    "preservation": "No observer, runtime, dependency, original control/fixture or contract edit is authorized; failures remain unmodified evidence."
+  },
+  "resolved_review_items": [
+    {
+      "id": "PRE-01",
+      "finding": "Initial runner hashed EXPECTED.json but did not compare supplied/original input identities or expected codes before invocation.",
+      "resolution": "Latest runner parses EXPECTED and verifies both literal categories and all frozen source/artifact identities before module imports.",
+      "status": "resolved"
+    },
+    {
+      "id": "PRE-02",
+      "finding": "Initial runner did not independently attribute the final propagated exception to the source API or compare it with the direct source outcome.",
+      "resolution": "Latest runner checks _c266_pinned_source, source_hinges.py / observe_source_hinges traceback, direct code/detail/optional-origin agreement and source identities.",
+      "status": "resolved"
+    },
+    {
+      "id": "PRE-03",
+      "finding": "Reviewer initially proposed requiring a nonempty diagnostic byte span for source_failure_origin_required.",
+      "resolution": "Clarified from C260 section 6 and fixture prose: this means source provenance of refusal, not a stronger mandatory span contract. Optional origin is retained, validated when present, and may be null. Expected classification and existing oracle bytes are unchanged.",
+      "status": "clarified_not_a_contract_requirement"
+    }
+  ],
+  "regression_selection": {
+    "behavioral_methods": 108,
+    "cohorts": [
+      {
+        "task": "C265",
+        "methods": 49
+      },
+      {
+        "task": "C266",
+        "methods": 34
+      },
+      {
+        "task": "C267",
+        "methods": 25
+      }
+    ],
+    "new_control_calls": 5,
+    "additional": [
+      "documentation preservation",
+      "workflow records",
+      "exact input/implementation preservation"
+    ],
+    "excluded_with_reason": "No existing product/observer/control behavior changes; unrelated C255/C256/C258 and product aggregate/native/evaluator/exporter checks are outside this evidence-only phase. C268 historical byte-admission behavior is unchanged. No broad pass is claimed."
+  },
+  "execution_conditions": [
+    "Commit/publish exact reviewed bytes before execution; retain actual commit/tree identity.",
+    "Run without Python optimization so preflight assert statements remain enabled.",
+    "Keep frozen fixture/expected bytes unchanged through the recorded run.",
+    "On category contradiction preserve every actual outcome and stop behavioral work; do not repair implementation or relax assertions."
+  ],
+  "checks_run_by_reviewer": [
+    "65 static exact-byte/identity/oracle assertions",
+    "Python AST parse of latest runner; no import or execution"
+  ],
+  "behavioral_or_product_executions_by_reviewer": 0,
+  "qualification_status": "not established; execution and later exact-candidate review remain pending"
+}

@@ -1,0 +1,230 @@
+{
+  "schema": "ontokin.c270.h16-siteref-expectation/0.1",
+  "case_id": "H16.02-declared-private-siteref",
+  "scope": "Exactly one declared SiteRef parameter input and its source-refusal propagation",
+  "source_revision": "254e481351239b536394c182b6761ec4c8662764",
+  "author": {
+    "worker": "/root/fixture",
+    "role": "independent fixture investigator"
+  },
+  "construction_order": "Source bytes and this literal oracle were authored before any C270 observer execution and before this author read C265/C267 implementation.",
+  "original_inputs": [
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "bytes": 1708,
+      "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "bytes": 1911,
+      "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    {
+      "path": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "bytes": 185276,
+      "sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+    }
+  ],
+  "supplied_sources": [
+    {
+      "filename": "main.ok",
+      "source_id": "entry",
+      "path": "docs/engineering/localized-repair-c270/control/main.ok",
+      "bytes": 1708,
+      "sha256": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d"
+    },
+    {
+      "filename": "hinges.ok",
+      "source_id": "package:example.hinges@1.0.0",
+      "path": "docs/engineering/localized-repair-c270/control/hinges.ok",
+      "bytes": 1998,
+      "sha256": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+    }
+  ],
+  "import": {
+    "alias": "mech",
+    "package_id": "example.hinges",
+    "version": "1.0.0",
+    "old_digest": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a",
+    "new_digest": "sha256:dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+  },
+  "program_identity_reference": {
+    "manifest": {
+      "schema_version": "ontokin.bundle/0.1",
+      "entry_source_id": "entry",
+      "units": [
+        {
+          "source_id": "entry",
+          "package_id": null,
+          "version": null,
+          "filename": "main.ok",
+          "source_revision": "sha256:f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d"
+        },
+        {
+          "source_id": "package:example.hinges@1.0.0",
+          "package_id": "example.hinges",
+          "version": "1.0.0",
+          "filename": "hinges.ok",
+          "source_revision": "sha256:dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+        }
+      ]
+    },
+    "program_revision": "sha256:a8f2eb9648b59ec23183b0a3ebb109de161707af2be95fb1a99fc3a4728d6356",
+    "method": "Independent byte hashing under OK-LANG-002 section 3.2; not an evaluated or accepted program."
+  },
+  "mutation": {
+    "added_declaration": "private param parent_site_ref @ \"parent-site-ref\": SiteRef = self.pivot;",
+    "declaration_owner": "example.hinges@1.0.0 / Hinges / Finger",
+    "changed_joint": "Finger.flex",
+    "old_parent_assignment": "parent = self.pivot;",
+    "new_parent_assignment": "parent = self.parent_site_ref;",
+    "other_source_changes": "Only main.ok's exact companion digest changes. All remaining original source bytes are retained."
+  },
+  "comparison_input": {
+    "path": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+    "bytes": 185276,
+    "sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534",
+    "purpose": "Source-refusal propagation only",
+    "source_matched": false,
+    "provenance_rebound": false,
+    "agreement_expected": false,
+    "isolation_requirement": "Retain the actual source failure and its propagation; stale artifact provenance or field disagreement cannot satisfy this control."
+  },
+  "expected": {
+    "observe_source_hinges": {
+      "outcome": "typed_refusal",
+      "exact_code": "UNSUPPORTED_SOURCE_FORM",
+      "malformed_is_not_acceptable": true,
+      "nonempty_reason_required": true,
+      "reason_scope": "The declared SiteRef parameter used by flex.parent is outside the finite endpoint form; no exact English message is prescribed by C260.",
+      "input_source_hashes_retained": {
+        "main.ok": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d",
+        "hinges.ok": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+      },
+      "qualified_hinge_count": 0,
+      "qualified_site_count": 0,
+      "partial_qualified_set_allowed": false,
+      "source_success_allowed": false
+    },
+    "compare_hinges": {
+      "outcome": "typed_refusal",
+      "exact_code": "UNSUPPORTED_SOURCE_FORM",
+      "source_refusal_code_and_reason_preserved": true,
+      "source_failure_origin_required": true,
+      "nonempty_reason_required": true,
+      "input_source_hashes_retained": {
+        "main.ok": "f7e22c5bb8c42dadc475b970d16c1ce0503dc2333ed359387d85e5e6638b584d",
+        "hinges.ok": "dd5b49760121c0fe8ee5e707fe60e1d269be954896951f991887f195b0686e97"
+      },
+      "input_artifact_sha256_retained": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534",
+      "qualified_hinge_count": 0,
+      "qualified_site_count": 0,
+      "partial_qualified_set_allowed": false,
+      "agreement_allowed": false
+    }
+  },
+  "rule_basis": [
+    {
+      "path": "docs/language-design/OK-LANG-001-core-language-specification.md",
+      "sections": [
+        "5.1 / LANG-003",
+        "6.1 / LANG-007",
+        "6.2 / LANG-008",
+        "6.3 / LANG-009",
+        "7.2 / LANG-012",
+        "7.3 / LANG-013",
+        "10.2 / LANG-022"
+      ]
+    },
+    {
+      "path": "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "sections": [
+        "1",
+        "3.1",
+        "3.2"
+      ]
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/ontokin-construction.ebnf",
+      "productions": [
+        "member",
+        "property_decl",
+        "type",
+        "assignment",
+        "postfix"
+      ]
+    },
+    {
+      "path": "docs/engineering/localized-repair-c260/CONTRACT.md",
+      "sections": [
+        "1",
+        "3.3",
+        "6"
+      ]
+    },
+    {
+      "path": "docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "control": "H16"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c269/COVERAGE.json",
+      "subcase": "H16.02"
+    }
+  ],
+  "reference_identities": [
+    {
+      "path": "docs/language-design/OK-LANG-001-core-language-specification.md",
+      "bytes": 128525,
+      "sha256": "d19d117cf26a281fc0fd2fa06b07c1075aa1d346ad4c8f13d12ec8e1de98fced"
+    },
+    {
+      "path": "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "bytes": 53806,
+      "sha256": "7a3700b2b72924582184e49829b5678a8c53e4d419b79d3fa5bd55c5c76b940e"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/ontokin-construction.ebnf",
+      "bytes": 4301,
+      "sha256": "3603c44daf891244cda2c5adeadede03635d1d66e3bdbead26b1bd5459cff1a6"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c260/CONTRACT.md",
+      "bytes": 16245,
+      "sha256": "39bf90c51256cb392b0b639c36f3325c76f8919bbea4e3e572937e9834f8cd6c"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "bytes": 7975,
+      "sha256": "7b3e74b9a58567d70edc4481aba8022df8a2b1ad8bab4903d9f4a0d05f8d26d1"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c260/INPUTS.json",
+      "bytes": 4605,
+      "sha256": "d9f81932098104b051667d9523744530525ac891c3898718d8b1625db1941b8d"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c269/COVERAGE.json",
+      "bytes": 468675,
+      "sha256": "ac335dda60a23cd512a787a3b4686fdd4c125d84b15788798235cb1fb91975ea"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c269/NEXT-TASK.md",
+      "bytes": 2378,
+      "sha256": "17627d0158ddaecf460e8265dc3e4147640cca5ef5c7c38641344766c2af7013"
+    }
+  ],
+  "not_run_by_author": [
+    "C265 observer",
+    "C267 comparator",
+    "product parser/compiler",
+    "evaluator",
+    "exporter",
+    "native/model trial"
+  ],
+  "nonclaims": [
+    "No accepted or evaluated source revision is asserted.",
+    "No source/artifact agreement or historical admission is expected.",
+    "No site pose, world alignment, motion, physics, broader H16 cases, H20, H22, H24, or whole-product qualification follows.",
+    "A mismatching outcome must be retained; this oracle is not changed to match implementation."
+  ]
+}
