@@ -36,21 +36,26 @@
       "id": "R03",
       "description": "Affected checks and independent review",
       "acceptance": "Preserve historical controls, contracts, fixtures and evidence. Independently review the precise classification distinction; execute the frozen control, new negative distinctions, complete affected C265-C268 regression/pin-admission cohort and applicable local documentation/workflow checks. Independently review exact candidate and resolve mandatory findings.",
-      "status": "not_done",
+      "status": "done",
       "evidence": [
         "docs/engineering/localized-repair-c270/evidence/recovery-20261120/CANDIDATE-REVIEW.json",
         "docs/engineering/localized-repair-c270/evidence/recovery-20261120/candidate-checks/CHECKS.json",
-        "docs/engineering/localized-repair-c270/evidence/candidate/regressions/CHECKS.json"
+        "docs/engineering/localized-repair-c270/evidence/candidate/regressions/CHECKS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-REVIEW.md",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/candidate-record-checks/CHECKS.json"
       ]
     },
     {
       "id": "R04",
       "description": "Reviewed evidence integration",
       "acceptance": "Acquire verified expected-head integration ownership, publish the retained scope branch and a reviewable PR, conditionally integrate the reviewed correction/evidence, verify actual main and retain history with observed branch disposition.",
-      "status": "not_done",
+      "status": "done",
       "evidence": [
         "docs/engineering/localized-repair-c270/INTEGRATION.json",
-        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/actual-main-checks/CHECKS.json"
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/actual-main-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/INTEGRATION.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/BRANCH-DISPOSITION.json"
       ]
     },
     {
@@ -104,9 +109,10 @@
       "requirements": [
         "R03"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
-        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/CANDIDATE-REVIEW.json"
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/CANDIDATE-REVIEW.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-REVIEW.md"
       ],
       "verification": [
         "Complete affected observer cohort and documentation/workflow checks; independent exact-candidate review"
@@ -118,9 +124,12 @@
       "requirements": [
         "R04"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
-        "docs/engineering/localized-repair-c270/INTEGRATION.json"
+        "docs/engineering/localized-repair-c270/INTEGRATION.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/INTEGRATION.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/BRANCH-DISPOSITION.json"
       ],
       "verification": [
         "Observed-parent conditional integration, actual-main checks and retained branch history"
@@ -132,7 +141,7 @@
       "requirements": [
         "R05"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c270/DELIVERY.json"
       ],
@@ -148,7 +157,8 @@
       "result": "passed",
       "required": true,
       "evidence": [
-        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/h16/RESULTS.json"
+        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/h16/RESULTS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json"
       ]
     },
     {
@@ -157,7 +167,8 @@
       "result": "passed",
       "required": true,
       "evidence": [
-        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/distinctions/CHECKS.json"
+        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/distinctions/CHECKS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json"
       ]
     },
     {
@@ -166,7 +177,8 @@
       "result": "passed",
       "required": true,
       "evidence": [
-        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/affected-cohort/CHECKS.json"
+        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/affected-cohort/CHECKS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json"
       ]
     },
     {
@@ -175,7 +187,8 @@
       "result": "passed",
       "required": true,
       "evidence": [
-        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/affected-cohort/CHECKS.json"
+        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/affected-cohort/CHECKS.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json"
       ]
     },
     {
@@ -202,18 +215,33 @@
         "docs/engineering/localized-repair-c270/correction/finalization-20261120/interrupted-routine-evidence.zip"
       ],
       "interpretation": "Only invocation and retained interruption evidence are verified. Broad completion remains unknown."
+    },
+    {
+      "name": "independent exact candidate and actual-main review",
+      "command": "Independent source/evidence audits by /root/candidate_review; actual commands retained in reports",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/FINAL-REVIEW.md",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.md"
+      ]
     }
   ],
   "completion": {
     "implementation_commit": "a6099546e2ae66e78621008338ecd3b2d352d9b8",
-    "merge_commit": null,
+    "merge_commit": "4d27756f1c503b430dd85219235778a1f78ef101",
     "pull_request": "https://github.com/Omegapy/OntoKin/pull/272",
-    "branch_disposition": "retained",
-    "evidence": [],
+    "branch_disposition": "deleted",
+    "evidence": [
+      "docs/engineering/localized-repair-c270/correction/finalization-20261120/INTEGRATION.json",
+      "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-CHECKS.json",
+      "docs/engineering/localized-repair-c270/correction/finalization-20261120/ACTUAL-MAIN-REVIEW.md",
+      "docs/engineering/localized-repair-c270/correction/finalization-20261120/BRANCH-DISPOSITION.json"
+    ],
     "scope_issue_state": "open",
     "phase_complete_parent_open": false
   },
-  "next_action": "Finish independent exact-candidate R03 review and fresh record checks, then conditional reviewed integration, actual-main verification, observed branch disposition and verified final ZIP/prompts with separate receipt; stop.",
+  "next_action": "R05 only: verify and save final ZIP and matching prompts, publish external receipt, close C270/issue270 after confirmed delivery, release lease and stop. No next milestone.",
   "session_phase": {
     "id": "C270-classification-correction",
     "starting_main": "55c585acdaa750961ac37a5c46c9160bed149f97",
@@ -226,7 +254,7 @@
     "early_save_confirmed": true,
     "early_receipt": "docs/engineering/localized-repair-c270/correction/EARLY-RECOVERY-RECEIPT.json",
     "status": "in_progress",
-    "integration_complete": false,
+    "integration_complete": true,
     "delivery_confirmed": false,
     "candidate": "a6099546e2ae66e78621008338ecd3b2d352d9b8",
     "candidate_tree": "6e05696718723fe77f6973d1aa2319638723d127",
@@ -236,7 +264,12 @@
       "Frozen H16 control: 45 assertions",
       "New distinctions: 8 methods / 16 variants / 48 interface calls",
       "Affected dependency cohort: 12 groups / 282 methods / 14 bindings"
-    ]
+    ],
+    "current_director": "c270-finalization-a2bb67238030",
+    "reviewed_candidate": "29e98cab1774629171152be3be68c14e39bb9c0e",
+    "merge_commit": "4d27756f1c503b430dd85219235778a1f78ef101",
+    "actual_main_verified": true,
+    "remaining_gate": "R05"
   },
   "delivery": {
     "required": true,
@@ -321,7 +354,7 @@
   "recovery": {
     "starting_branch": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
     "lease_commit": "ab0f196cd8c67dfa94cba369381dafa8b6c7a015",
-    "first_unmet_gate": "R03 independent exact-candidate review and fresh final record checks",
+    "first_unmet_gate": "R05 final package/save/receipt/closure only",
     "known_unknown_operations": [],
     "preserve_original_failure": true,
     "workers": [
@@ -350,7 +383,8 @@
       ],
       "unknown_operations": [
         "Historical routine broad-driver completion remains unknown; no current remote write is unresolved"
-      ]
+      ],
+      "main_verified": "4d27756f1c503b430dd85219235778a1f78ef101"
     }
   },
   "historical_checks": [

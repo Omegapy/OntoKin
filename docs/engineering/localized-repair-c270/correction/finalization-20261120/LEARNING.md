@@ -1,0 +1,3 @@
+# Finalization learning decision
+
+The Director used the repository learning skill and searched current memory/knowledge for unsupported-form and interruption records. `memory-c270-unsupported-form-classification` already captures this correction's supported distinction, with immutable design and execution sources. The independent [initial review](INITIAL-REVIEW.md), [final candidate review](FINAL-REVIEW.md) and [actual-main review](ACTUAL-MAIN-REVIEW.md) support that same bounded lesson. No additional memory entry is needed. The recovery handling applies existing PROTOCOL rules; it is not a new language or capability decision. No canonical knowledge, adopted meaning or previous lesson was rewritten during this finalization.

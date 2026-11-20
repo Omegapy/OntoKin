@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "reviewer": "/root/candidate_review",
+  "candidate": "29e98cab1774629171152be3be68c14e39bb9c0e",
+  "attempts": [
+    {
+      "command": "python -B /workspace/scratch/a2bb67238030/audit/review/audit_final_delta.py",
+      "result": "First audit execution exited 1 at its own log parser with JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+      "cause": "The workflow checker emits plain text without --json; the reviewer harness incorrectly tried json.loads on that existing log",
+      "resolution": "Inspect unchanged 148-byte workflow.log, check its explicit passing text, preserve JSON parsing for documentation.log; repeat only the static audit",
+      "final_result": "exit 0; 95 independent metadata/publication/log checks passed",
+      "product_tests_repeated": false,
+      "repository_or_remote_mutations": false,
+      "candidate_bytes_changed": false
+    }
+  ]
+}

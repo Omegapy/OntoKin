@@ -1,0 +1,312 @@
+{
+  "schema": "ontokin.c270.actual-main-checks/1",
+  "result": "passed",
+  "source_revision": "4d27756f1c503b430dd85219235778a1f78ef101",
+  "source_tree": "3ec9ba3caa18f560a751044d1d5bbd2f036383a2",
+  "source_clean_and_stable": true,
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "version_info": [
+      3,
+      12,
+      14,
+      "final",
+      0
+    ],
+    "implementation": "CPython",
+    "cache_tag": "cpython-312",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "resolved_executable": {
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "bytes": 30894944,
+      "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7"
+    },
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "uname": [
+      "Linux",
+      "2e417c89a927",
+      "6.18.57",
+      "#1 SMP Tue Oct 20 21:56:04 UTC 2026",
+      "x86_64",
+      ""
+    ],
+    "python_build": [
+      "main",
+      "Aug 25 2026 14:00:49"
+    ],
+    "python_compiler": "Clang 22.1.3 ",
+    "runtime_bundle_version": "26.1119.11507",
+    "environment_overrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    }
+  },
+  "archive": {
+    "filename": "ACTUAL-MAIN-EVIDENCE.zip",
+    "bytes": 1918886,
+    "sha256": "eee464faaa95b1d992c759262890e92332f145be1dbb5cd315b9c5d71b93a9df"
+  },
+  "archive_manifest": "ACTUAL-MAIN-MANIFEST.json",
+  "reports": [
+    {
+      "archive_entry": "affected-cohort/CHECKS.json",
+      "bytes": 94586,
+      "sha256": "924ffab5462d418a01a7598895a9b1bafb0a8a6a4ed7cd81dc770a184f0619c6"
+    },
+    {
+      "archive_entry": "h16/RESULTS.json",
+      "bytes": 22852,
+      "sha256": "ac38f94711b44fa97326ef074a6c02ddba99e08af0baadbae030e2c9c230a749"
+    },
+    {
+      "archive_entry": "distinctions/CHECKS.json",
+      "bytes": 5282,
+      "sha256": "521ac385745f7f7e01d0656688e3016bedced3a2d04dac4eb18f13f373f4a28c"
+    }
+  ],
+  "frozen_h16": {
+    "cases": 5,
+    "assertions": 45,
+    "failed_assertions": [],
+    "passed": true,
+    "refusal_codes": [
+      "UNSUPPORTED_SOURCE_FORM",
+      "UNSUPPORTED_SOURCE_FORM",
+      "UNSUPPORTED_SOURCE_FORM"
+    ]
+  },
+  "affected_cohort": {
+    "groups": 12,
+    "methods": 282,
+    "corpus_bindings": 14,
+    "complete": true,
+    "passed": true,
+    "remaining": [],
+    "inventory": [
+      {
+        "name": "c253-corpus",
+        "expected_methods": null,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "docs/engineering/localized-repair-c253/verify_manifest.py"
+        ],
+        "result": "passed",
+        "exit_code": 0,
+        "methods": null,
+        "failure": null
+      },
+      {
+        "name": "c255-oracle",
+        "expected_methods": 31,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "docs/engineering/localized-repair-c255",
+          "-p",
+          "test_oracle.py",
+          "-v"
+        ],
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 31,
+        "failure": null
+      },
+      {
+        "name": "c256-reader",
+        "expected_methods": 29,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "docs/engineering/localized-repair-c256",
+          "-p",
+          "test_reader.py",
+          "-v"
+        ],
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 29,
+        "failure": null
+      },
+      {
+        "name": "c257-ownership",
+        "expected_methods": 23,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "docs/engineering/localized-repair-c257",
+          "-p",
+          "test_ownership.py",
+          "-v"
+        ],
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 23,
+        "failure": null
+      },
+      {
+        "name": "c258-follows",
+        "expected_methods": 28,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "docs/engineering/localized-repair-c258",
+          "-p",
+          "test_follows.py",
+          "-v"
+        ],
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 28,
+        "failure": null
+      },
+      {
+        "name": "c261-hinge_glb",
+        "expected_methods": 28,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "docs/engineering/localized-repair-c261",
+          "-p",
+          "test_hinge_glb.py",
+          "-v"
+        ],
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 28,
+        "failure": null
+      },
+      {
+        "name": "c265-source_hinges",
+        "expected_methods": 49,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "docs/engineering/localized-repair-c265",
+          "-p",
+          "test_source_hinges.py",
+          "-v"
+        ],
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 49,
+        "failure": null
+      },
+      {
+        "name": "c266-binding",
+        "expected_methods": 34,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "docs/engineering/localized-repair-c266/test_hinge_binding.py",
+          "--evidence-dir",
+          "/workspace/scratch/a2bb67238030/evidence/actual-main/affected-cohort/c266-controls"
+        ],
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 34,
+        "failure": null
+      },
+      {
+        "name": "c267-comparison",
+        "expected_methods": 25,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "docs/engineering/localized-repair-c267/test_hinge_compare.py",
+          "--evidence-dir",
+          "/workspace/scratch/a2bb67238030/evidence/actual-main/affected-cohort/c267-controls"
+        ],
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 25,
+        "failure": null
+      },
+      {
+        "name": "c268-endpoint",
+        "expected_methods": 35,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "docs/engineering/localized-repair-c268/test_endpoint_reader.py",
+          "--evidence-dir",
+          "/workspace/scratch/a2bb67238030/evidence/actual-main/affected-cohort/c268-controls"
+        ],
+        "result": "passed",
+        "exit_code": 0,
+        "methods": 35,
+        "failure": null
+      },
+      {
+        "name": "workflow",
+        "expected_methods": null,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "tools/chat_workflow.py",
+          "check",
+          "--json"
+        ],
+        "result": "passed",
+        "exit_code": 0,
+        "methods": null,
+        "failure": null
+      },
+      {
+        "name": "documentation",
+        "expected_methods": null,
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-B",
+          "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+        ],
+        "result": "passed",
+        "exit_code": 0,
+        "methods": null,
+        "failure": null
+      }
+    ]
+  },
+  "distinctions": {
+    "methods": 8,
+    "variants": 16,
+    "interface_calls": 48,
+    "passed": true,
+    "exit_code": 0
+  },
+  "review": {
+    "reviewer": "/root/candidate_review",
+    "result": "passed",
+    "checks": 297,
+    "report": "ACTUAL-MAIN-REVIEW.md",
+    "evidence": "ACTUAL-MAIN-REVIEW.json"
+  },
+  "limits": [
+    "Fresh finite observer and affected dependency qualification only",
+    "Historical broad-driver completion remains unknown; no broad pass claim",
+    "No complete H16/C260, site/world, native/model, compatibility-matrix, product or comparative-advantage qualification"
+  ]
+}
