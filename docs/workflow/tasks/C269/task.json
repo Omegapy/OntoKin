@@ -13,29 +13,44 @@
       "id": "R01",
       "description": "Exact baseline and evidence identity",
       "acceptance": "Bind unchanged C260 CONTRACT, CONTROL-PLAN and INPUTS, the C253 corpus, and the C261/C265/C266/C267/C268 implementations, independent controls and relevant saved execution evidence to exact revisions, byte sizes and hashes. Separate historical execution from new audit checks.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/INPUT-IDENTITIES.json",
+        "docs/engineering/localized-repair-c269/evidence/EXECUTION-ELIGIBILITY.json"
+      ]
     },
     {
       "id": "R02",
       "description": "Complete H01-H28 coverage map",
       "acceptance": "Record all 28 groups and every material subcase. Cite actual independent assertions, input construction, identities and outcomes. Classify complete, partial, absent or contradictory evidence conservatively. Do not promote a method count or label to group qualification.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/COVERAGE.json",
+        "docs/engineering/localized-repair-c269/AUDIT.md",
+        "docs/engineering/localized-repair-c269/NEXT-TASK.md"
+      ]
     },
     {
       "id": "R03",
       "description": "Qualification decision and first remaining gap",
       "acceptance": "Publish a human-readable audit and machine-readable map. State whether existing evidence supports contract-wide qualification. Identify one specific next bounded control or investigation, with inputs, acceptance and exclusions. No implementation or contract amendment in this phase.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/COVERAGE.json",
+        "docs/engineering/localized-repair-c269/AUDIT.md",
+        "docs/engineering/localized-repair-c269/NEXT-TASK.md"
+      ]
     },
     {
       "id": "R04",
       "description": "Verification and independent review",
       "acceptance": "Pass fresh documentation and workflow checks; verify every local evidence reference and hash binding. Obtain actual independent review of the exact audit candidate, resolve mandatory findings, and retain failures and unrun checks.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c269/REVIEW.json",
+        "docs/engineering/localized-repair-c269/evidence/candidate-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c269/evidence/candidate-checks/references.json"
+      ]
     },
     {
       "id": "R05",
@@ -76,7 +91,7 @@
         "R01",
         "R02"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c269/COVERAGE.json",
         "docs/engineering/localized-repair-c269/INPUT-IDENTITIES.json"
@@ -93,7 +108,7 @@
         "R03",
         "R04"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c269/AUDIT.md",
         "docs/engineering/localized-repair-c269/NEXT-TASK.md",
@@ -109,7 +124,7 @@
       "requirements": [
         "R05"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c269/INTEGRATION.json"
       ],
@@ -132,15 +147,36 @@
       ]
     }
   ],
-  "checks": [],
+  "checks": [
+    {
+      "name": "candidate documentation and workflow",
+      "command": "python3 docs/engineering/localized-repair-c269/evidence/run_record_checks.py --repo IDENTIFIED_CANDIDATE --output NEW_OUTPUT --phase candidate",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c269/evidence/candidate-checks/CHECKS.json"
+      ]
+    },
+    {
+      "name": "audit reference identities",
+      "command": "python3 -B docs/engineering/localized-repair-c269/evidence/check_audit_references.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c269/evidence/candidate-checks/references.json"
+      ]
+    }
+  ],
   "completion": {
-    "implementation_commit": null,
+    "implementation_commit": "4258e001a567ff830b790a174f8bdde9d368f05a",
     "merge_commit": null,
-    "pull_request": null,
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/269",
     "branch_disposition": "active",
-    "evidence": []
+    "evidence": [
+      "docs/engineering/localized-repair-c269/REVIEW.json"
+    ]
   },
-  "next_action": "Complete the disjoint independent H01-H14 and H15-H28 evidence audits; synthesize exact coverage and gaps, then independently review this candidate.",
+  "next_action": "Integrate the reviewed audit through PR269 under verified ownership, check actual main and branch disposition, then verify/save the final handoff and receipt; no missing control implementation.",
   "session_phase": {
     "id": "C269-coverage-audit",
     "starting_main": "23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb",

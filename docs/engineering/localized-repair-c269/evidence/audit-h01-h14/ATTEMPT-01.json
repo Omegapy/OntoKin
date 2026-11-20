@@ -1,0 +1,22 @@
+{
+  "schema": "ontokin.c269.audit-inspection-attempt/0.1",
+  "worker": "/root/audit_h01_h14",
+  "result": "failed_audit_script_assertion",
+  "behavioral_executions": 0,
+  "script_sha256": "dc91d3f8adf8ce6ac8bbba82b0c6ef348a66574fc302c1e4047f3d1658f3bc66",
+  "command": [
+    "python3",
+    "-B",
+    "docs/engineering/localized-repair-c269/evidence/audit-h01-h14/inspect_evidence.py",
+    "--repo",
+    ".",
+    "--output",
+    "docs/engineering/localized-repair-c269/evidence/audit-h01-h14"
+  ],
+  "cause": "Initial audit script incorrectly required later C268 RESULTS.md documentation to equal its pre-delivery version captured by the historical 5084dd6 execution. Scientific implementation, fixture, test and contract bytes were not the mismatch.",
+  "failing_line": 138,
+  "mismatching_path": "docs/engineering/localized-repair-c268/RESULTS.md",
+  "recorded_5084dd6_sha256": "119f7d6808be606ed54ce2a4214bc03d7ab91481c56c3c29a929cb94577a5c6f",
+  "audit_baseline_sha256": "1fcdb1168d984e524b8ff1c5b99105696eeafb9d0a6bba86e0e898dbc75aae35",
+  "correction": "Check the historical documentation bytes at the recorded execution revision and identify subsequent documentation additions separately. Retain strict current equality for scientific inputs."
+}

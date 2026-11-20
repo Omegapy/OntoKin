@@ -1,0 +1,76 @@
+"""Build one frozen online handoff from an exact Git revision and explicit recovery bytes."""
+from pathlib import Path
+import datetime as dt
+import hashlib
+import json
+import shutil
+import subprocess
+import zipfile
+
+W=Path('/workspace/scratch/d59e10906594');R=W/'OntoKin';C=json.loads((W/'session/final-config.json').read_text())
+REV=C['revision'];E='docs/engineering/localized-repair-c269';T='docs/workflow/tasks/C269'
+P=W/'packages/C269-final';assert not P.exists(),'Freeze directory already exists; reconcile before rebuilding.'
+P.mkdir(parents=True)
+def git(*args):return subprocess.check_output(['git',*args],cwd=R)
+def write(p,s):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(s)
+def js(p,x):write(p,json.dumps(x,indent=2)+'\n')
+def identity(b):return {'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+TREE=git('rev-parse',REV+'^{tree}').decode().strip();assert TREE==C['tree']
+readset=json.loads(git('show',REV+':'+T+'/READ-SET.json'))
+paths=[x['path'] for x in readset['files']]
+paths+=git('ls-tree','-r','--name-only',REV,'--',T,E).decode().splitlines()
+paths+=['docs/engineering/localized-repair-c260/FIELD-ORIGINS.md','docs/engineering/localized-repair-c260/README.md','docs/engineering/localized-repair-c253/corpus.json']
+for directory in ['localized-repair-c261','localized-repair-c265','localized-repair-c266','localized-repair-c267','localized-repair-c268']:
+    prefix='docs/engineering/'+directory+'/'
+    for p in git('ls-tree','--name-only',REV+':'+prefix.rstrip('/')).decode().splitlines():
+        if p.endswith(('.py','.md','.json')):paths.append(prefix+p)
+bindings=[]
+for path in sorted(set(paths)):
+    b=git('show',REV+':'+path);dest=P/'repository'/path;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(b)
+    row=git('ls-tree',REV,'--',path).decode().split()
+    bindings.append({'package_path':'repository/'+path,'repository_path':path,'revision':REV,'git_blob':row[2],'mode':row[0],**identity(b)})
+js(P/'SNAPSHOT-SOURCES.json',{'revision':REV,'tree':TREE,'files':bindings})
+current=json.loads(git('show',REV+':docs/workflow/CURRENT.json'));task=json.loads(git('show',REV+':'+T+'/task.json'))
+coverage=json.loads(git('show',REV+':'+E+'/COVERAGE.json'))
+early=json.loads(git('show',REV+':'+E+'/EARLY-RECOVERY-RECEIPT.json'))
+js(P/'HISTORICAL-DEPENDENCIES.json',{'C262':current['historical_handoff'],'previous_C268':json.loads(git('show','23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb:docs/workflow/CURRENT.json'))['latest_handoff'],'C269_early_recovery':early,'purpose':'Online continuation uses current GitHub. C262 remains unchanged for historical restoration. C268 preserves older unique recovery bytes. Archives are not nested.'})
+recovery=[]
+for name in ['C269-bootstrap-native.bundle']:
+    src=W/'session'/name
+    if src.exists():
+        dest=P/'recovery'/name;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(src,dest);recovery.append({'path':dest.relative_to(P).as_posix(),**identity(src.read_bytes())})
+for name in ['bootstrap_c269.py','build_final_handoff.py','git_api_payload.py','synthesize_c269.py']:
+    src=W/'session'/name;dest=P/'session-evidence'/name;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(src,dest)
+js(P/'recovery/RECOVERY-BINDINGS.json',{'base_revision':'23c044775ad77e7c1ab2f27eb1c9dd4a67c004bb','native_commits':['37d55eded8d903ff6dbf61fc5924783a983273e0','b9b0590b8155a6591ab9ed60bd03e2a59f56291e'],'published_equivalent':'5e193e831e74483bccca67ea6cf8a1b8cec47491','tree':'cb1d3758bbd500fa65fca2fce49746c886bb3535','files':recovery,'restore':'Clone/fetch exact base, verify bundle, fetch bundle into a separate recovery ref. These native bootstrap commits were superseded by the same-tree authenticated publication; do not replay onto main.'})
+checkpoint={'schema_version':1,'package_type':'browser-session handoff for online GitHub continuation','task':'C269','phase':'C269-coverage-audit','frozen_at_utc':dt.datetime.now(dt.timezone.utc).isoformat(),'source_snapshot_revision':REV,'source_snapshot_tree':TREE,'observed_main':C['observed_main'],'branch':task['branch'],'branch_state':C['branch_state'],'pull_request':C['pull_request'],'scope_issue':task['scope_issue'],'scope_issue_state':'open at freeze pending saved delivery','ownership':C['ownership'],'parent_task_status':task['status'],'requirements':{x['id']:x['status'] for x in task['requirements']},'completed':C['completed'],'pending':['independent final-package verification','confirmed final ZIP and standalone prompt saves','external delivery receipt','task/issue closure and ownership release'],'verification':C['verification'],'coverage_summary':C['coverage_summary'],'workers':C['workers'],'unknown_operations':[],'session_delivery_at_freeze':'save_pending; exact future save and closure are external','external_delivery_record':E+'/DELIVERY.json','next_action':'Reconcile live DELIVERY/CURRENT/C269 task/issue first. Finish any existing delivery gate only. If all gates are complete, a fresh continuation may select the specific queued gap in NEXT-TASK.md. Do not replay the completed audit.','limits':['No new behavioral run or implementation change','No full H-group or product qualification from this audit','C262 unchanged; online GitHub continuation, not full offline restoration']}
+js(P/'CHECKPOINT.json',checkpoint)
+write(P/'README-START-HERE.md','# OntoKin C269 development handoff\n\nThis is a **browser-session handoff for online GitHub continuation**. C269 audited existing evidence for all C260 H01-H28 hinge qualification groups. The reviewed audit is integrated; final saved delivery and closure follow outside this frozen package.\n\nRead CHECKPOINT.json, HANDOFF.md, RECOVERY-STATUS.md and NEXT-TASK.md. Then observe actual GitHub main and read live CHATGPT-START-HERE.md and its required instructions. Reconcile [C269 delivery](https://github.com/Omegapy/OntoKin/blob/main/'+E+'/DELIVERY.json), CURRENT, task, issue and ownership before work. A frozen save_pending state does not mean the later save failed.\n\nSnapshot: `'+REV+'`; tree: `'+TREE+'`. repository/ contains exact Git snapshots bound by SNAPSHOT-SOURCES.json. MANIFEST-SHA256.json binds every payload file. Detailed inherited execution remains at its original revision and pinned repository paths; it is not a newly executed C269 run.\n\nExternal dependencies: live GitHub and the exact historical evidence/input revisions; unchanged C262 for historical offline restoration and C268 for its older unique recovery bytes. See HISTORICAL-DEPENDENCIES.json. This package is not a complete offline backup. The separate delivery receipt records the eventual saved identity; receipt/closure commits do not require rebuilding this frozen archive.\n')
+audit=git('show',REV+':'+E+'/AUDIT.md').decode()
+write(P/'HANDOFF.md','# C269 phase handoff\n\n'+C['handoff_summary']+'\n\n## Findings\n\n'+C['findings_summary']+'\n\nThe full group/subcase map and supporting evidence are frozen under repository/'+E+'/. The audit report follows.\n\n'+audit+'\n## Delivery boundary\n\nAt freeze R06 remains pending only for the final package review/save, separate receipt and closure. GitHub records later outcomes. Do not rerun unchanged behavioral checks or begin a second phase to improve the audit result.\n')
+write(P/'NEXT-TASK.md',git('show',REV+':'+E+'/NEXT-TASK.md').decode())
+write(P/'RECOVERY-STATUS.md','# C269 recovery status\n\nThe audit candidate, independent review, integration and applicable main checks are public at the pinned snapshot. '+C['recovery_summary']+'\n\nNo unresolved remote operation is known at freeze. Audit workers are complete; final package review and save/closure operations follow after freeze. Inspect actual destinations before retrying any operation after interruption. No unknown external unpublished work can be excluded solely by an absent record.\n\nThe original two native bootstrap commits are preserved in recovery/C269-bootstrap-native.bundle with base/application guidance. They have a verified same-tree public equivalent and must not be replayed. Later candidate publication used Git objects directly; no further unique uncommitted implementation is known. Historical failures and all audit-attempt corrections are preserved in the repository evidence.\n\nC262 and prior archives remain unchanged. Final task and issue closure, receipt and ownership release are external gates.\n')
+receipt_url='https://github.com/Omegapy/OntoKin/blob/main/'+E+'/DELIVERY.json'
+binding='**OntoKin_C269_Development_Handoff_2026-11-19.zip**. Resolve its exact saved link from `archive.url` in '+receipt_url+' and confirm the receipt status. The receipt is external because the ZIP cannot contain its future save identity.'
+cont=git('show',REV+':docs/workflow/prompts/CONTINUE.md').decode().replace('[PASTE LINK]',binding).replace('[LEAVE BLANK TO RESUME CURRENT TASK]','Resume any incomplete C269 gate first; otherwise select one approved next step from its reviewed NEXT-TASK.md.')
+rec=git('show',REV+':docs/workflow/prompts/RECOVER.md').decode().replace('[PASTE LINK]',binding).replace('[PASTE LINK OR NONE]','Use any newer confirmed C269 recovery/receipt found during live reconciliation; otherwise none.').replace('[DESCRIBE BRIEFLY OR UNKNOWN]','C269 audit integration or final delivery. Reconcile the live task and resume only its first unmet gate.')
+write(P/'PROMPT-1-CONTINUE.md',cont);write(P/'PROMPT-2-RECOVER.md',rec)
+write(W/'packages/OntoKin_C269_Continue.md',cont);write(W/'packages/OntoKin_C269_Recover.md',rec)
+manifest={p.relative_to(P).as_posix():identity(p.read_bytes()) for p in sorted(P.rglob('*')) if p.is_file()}
+js(P/'MANIFEST-SHA256.json',manifest)
+ZIP=W/'packages/OntoKin_C269_Development_Handoff_2026-11-19.zip'
+with zipfile.ZipFile(ZIP,'w',zipfile.ZIP_DEFLATED) as z:
+    for p in sorted(P.rglob('*')):
+        if p.is_file():z.write(p,p.relative_to(P).as_posix())
+V=W/'verification/C269-final-extracted';assert not V.exists()
+with zipfile.ZipFile(ZIP) as z:
+    names=z.namelist();assert z.testzip() is None
+    assert len(names)==len(set(names));assert all(not Path(n).is_absolute() and '..' not in Path(n).parts for n in names)
+    assert set(names)==set(manifest)|{'MANIFEST-SHA256.json'}
+    z.extractall(V)
+for path,expected in manifest.items():assert identity((V/path).read_bytes())==expected,path
+for item in bindings:assert (V/item['package_path']).read_bytes()==git('show',REV+':'+item['repository_path']),item['repository_path']
+required=['README-START-HERE.md','CHECKPOINT.json','HANDOFF.md','NEXT-TASK.md','RECOVERY-STATUS.md','PROMPT-1-CONTINUE.md','PROMPT-2-RECOVER.md','HISTORICAL-DEPENDENCIES.json','MANIFEST-SHA256.json']
+assert all((V/n).is_file() for n in required)
+for inside,outside in [('PROMPT-1-CONTINUE.md','OntoKin_C269_Continue.md'),('PROMPT-2-RECOVER.md','OntoKin_C269_Recover.md')]:assert (V/inside).read_bytes()==(W/'packages'/outside).read_bytes()
+verification={'result':'passed','archive':{'file_name':ZIP.name,'local_path':str(ZIP),**identity(ZIP.read_bytes())},'source_revision':REV,'source_tree':TREE,'payload_files':len(manifest),'source_snapshots':len(bindings),'fresh_extraction':str(V),'checks':['required root names','safe exact inventory','duplicate-free paths','CRC','fresh extraction','all payload byte counts and SHA256','all Git snapshots exact','identical standalone prompts'],'verified_at_utc':dt.datetime.now(dt.timezone.utc).isoformat(),'independent_review':'pending externally','delivery':'pending externally'}
+js(W/'session/FINAL-HANDOFF-VERIFICATION.json',verification);print(json.dumps(verification,indent=2))
