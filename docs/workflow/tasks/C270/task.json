@@ -23,10 +23,13 @@
       "id": "R02",
       "description": "Actual source and comparison outcomes",
       "acceptance": "The unchanged independently frozen SiteRef control must return exact UNSUPPORTED_SOURCE_FORM through source observation, binding and comparison, retaining identities and reason with no qualified partial output. Preserve original failure evidence. In this newly authorized correction phase, preserve undeclared, invalid nominal type, non-SiteRef and inaccessible external-member refusals without adding successful SiteRef support or evaluating aliases.",
-      "status": "not_done",
+      "status": "done",
       "evidence": [
         "docs/engineering/localized-repair-c270/FINDING.json",
-        "docs/engineering/localized-repair-c270/evidence/candidate/h16/RESULTS.json"
+        "docs/engineering/localized-repair-c270/evidence/candidate/h16/RESULTS.json",
+        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/h16/RESULTS.json",
+        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/distinctions/CHECKS.json",
+        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/PRESERVATION.json"
       ]
     },
     {
@@ -86,9 +89,10 @@
         "R01",
         "R02"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
-        "docs/engineering/localized-repair-c270/control/EXPECTED.json"
+        "docs/engineering/localized-repair-c270/control/EXPECTED.json",
+        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/h16/RESULTS.json"
       ],
       "verification": [
         "Frozen source/input identities, adopted-rule validity proof, precise actual API outcomes"
@@ -100,7 +104,7 @@
       "requirements": [
         "R03"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c270/evidence/recovery-20261120/CANDIDATE-REVIEW.json"
       ],
@@ -141,30 +145,38 @@
     {
       "name": "unchanged frozen H16 category control",
       "command": "python3 -B docs/engineering/localized-repair-c270/run_h16_control.py --phase C270-correction --output NEW_OUTPUT",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/h16/RESULTS.json"
+      ]
     },
     {
       "name": "narrow malformed/access distinctions",
       "command": "python3 -B docs/engineering/localized-repair-c270/correction/test_refusal_classification.py",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/distinctions/CHECKS.json"
+      ]
     },
     {
       "name": "complete affected C265-C268 dependency cohort",
       "command": "python3 -B docs/engineering/localized-repair-c268/evidence/run_checks.py --repo IDENTIFIED_REPO --phase C270-correction --output NEW_OUTPUT --c268-methods 35",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/affected-cohort/CHECKS.json"
+      ]
     },
     {
       "name": "documentation and workflow records",
       "command": "python3 -B tools/chat_workflow.py check; python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/localized-repair-c270/evidence/correction-20261120/candidate/affected-cohort/CHECKS.json"
+      ]
     },
     {
       "name": "routine local driver",
@@ -176,15 +188,15 @@
     }
   ],
   "completion": {
-    "implementation_commit": null,
+    "implementation_commit": "a6099546e2ae66e78621008338ecd3b2d352d9b8",
     "merge_commit": null,
-    "pull_request": null,
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/272",
     "branch_disposition": "retained",
     "evidence": [],
     "scope_issue_state": "open",
     "phase_complete_parent_open": false
   },
-  "next_action": "Complete the one declared classification correction, preserve original failed evidence, verify/review/integrate and deliver a new verified handoff; stop without H20/H22/H24 work.",
+  "next_action": "Inspect routine local checks and independent exact-candidate review, publish reviewed evidence, then conditional integration, actual-main checks and verified saved handoff; stop.",
   "session_phase": {
     "id": "C270-classification-correction",
     "starting_main": "55c585acdaa750961ac37a5c46c9160bed149f97",
@@ -198,7 +210,16 @@
     "early_receipt": "docs/engineering/localized-repair-c270/correction/EARLY-RECOVERY-RECEIPT.json",
     "status": "in_progress",
     "integration_complete": false,
-    "delivery_confirmed": false
+    "delivery_confirmed": false,
+    "candidate": "a6099546e2ae66e78621008338ecd3b2d352d9b8",
+    "candidate_tree": "6e05696718723fe77f6973d1aa2319638723d127",
+    "completed_gates": [
+      "Early recovery",
+      "Published correction candidate",
+      "Frozen H16 control: 45 assertions",
+      "New distinctions: 8 methods / 16 variants / 48 interface calls",
+      "Affected dependency cohort: 12 groups / 282 methods / 14 bindings"
+    ]
   },
   "delivery": {
     "required": true,
