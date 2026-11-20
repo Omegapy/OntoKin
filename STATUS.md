@@ -38,10 +38,10 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: available. Owner: none.
-Last owner: `c269-audit-d59e10906594`; released at UTC: `2026-11-20T03:16:56.424035+00:00` by the expected-parent C269 closure publication.
-The lease was acquired at `2026-11-20T02:44:18.431010+00:00`, verified at `5e193e831e74483bccca67ea6cf8a1b8cec47491`, and renewed through `2026-11-20T03:31:12.530093+00:00`. Audit integration, exact-main checks, independent package review, confirmed ZIP/prompt saves, separate receipt and scope-issue closure are complete. Receipt/main prerequisite: `c356702d1af8a0f63c7314b2682bc7bb53d298bf`.
-No shared paths remain reserved. All subagents have stopped; no next phase is active.
+State: held. Owner: `c270-h16-1242e9ec1f21`.
+Acquired at UTC: `2026-11-20T04:02:42.299678+00:00`; expires at UTC: `2026-11-20T04:32:42.299678+00:00`.
+Starting main: `254e481351239b536394c182b6761ec4c8662764`. Scope: one C270 evidence-only H16 source-valid SiteRef control; early recovery save confirmed before work.
+Reserved shared files: STATUS integration fields, docs/workflow/CURRENT.json and C270 canonical task/delivery records. Root owns integration; independent workers own disjoint new evidence. No unknown preceding write was found; C269 is complete and its lease released.
 
 ## Historical status
 
