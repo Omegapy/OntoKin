@@ -1,0 +1,38 @@
+{
+  "result": "accepted with exact immutable evidence exception",
+  "checks": [
+    {
+      "name": "full",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 2,
+      "log": "full.log",
+      "sha256": "8f0b0b03705181edae1aa85f45470826b334d15a684869226af29877ac8504a8",
+      "bytes": 2083
+    },
+    {
+      "name": "excluding-preserved-patch",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/METADATA-DELTA.patch"
+      ],
+      "exit_code": 0,
+      "log": "excluding-preserved-patch.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "excluded_path": "docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/METADATA-DELTA.patch",
+  "sha256": "5b764c6aa54a82781422f047e2aded285d45a72f84ae01aebd32605be149e370",
+  "reason": "Preserved unified diff has required one-space context lines for blank source lines. Do not rewrite independently hashed evidence to remove patch syntax. Every current source/record passes without this immutable patch.",
+  "behavioral_tests_affected": false
+}

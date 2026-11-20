@@ -1,0 +1,42 @@
+{
+  "phase": "lease-candidate",
+  "source_commit": "5084dd69312e8da5a49aadd33cf83ba56db7c058",
+  "checked_tree": "2ba8f9fdd1861ebdf91f1ccb8fbb947821aa8493",
+  "state": "M  STATUS.md\nA  docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/CAPABILITIES.json\nA  docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/COORDINATION.json\nA  docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/EARLY-RECOVERY-RECEIPT.json\nA  docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/EARLY-RECOVERY-VERIFICATION.json\nA  docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/PHASE.json",
+  "started_at_utc": "2026-11-20T02:06:34.534419+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "executable_sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.08,
+      "log": "workflow.log",
+      "bytes": 184,
+      "sha256": "d9feea7e9896e14e1365fcf7a593ed9fa706828dff781ec1857def49a0092fd6"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "seconds": 2.268,
+      "log": "documentation.log",
+      "bytes": 6608,
+      "sha256": "33be29bfca047152456c5d9e6c61f938e90bd79472c182ffd9fdf95d9034591f"
+    }
+  ],
+  "passed": true,
+  "finished_at_utc": "2026-11-20T02:06:37.028833+00:00"
+}

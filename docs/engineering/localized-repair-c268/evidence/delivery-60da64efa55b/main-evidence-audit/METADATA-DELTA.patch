@@ -1,0 +1,192 @@
+diff --git a/STATUS.md b/STATUS.md
+index cf218679..651920a7 100644
+--- a/STATUS.md
++++ b/STATUS.md
+@@ -4,21 +4,21 @@
+ 
+ ## Current workflow and next action
+ 
+-C268 reviewed and ready for integration: exact historical endpoint admission under unchanged C260. [Requirements](docs/workflow/tasks/C268/REQUIREMENTS.md), [plan](docs/workflow/tasks/C268/PLAN.md), [scope265](https://github.com/Omegapy/OntoKin/issues/265). Corrected published candidate `e6f55b73fa71953aa648bcd34711a6796a7346b6` passed **12 groups, 282 methods, 14 bindings** on CPython **3.12.14 / Linux**. [Independent review](docs/engineering/localized-repair-c268/REVIEW.md) accepts R01–R05; [fresh evidence](docs/engineering/localized-repair-c268/evidence/finalization-20261119/candidate-published/CHECKS.json) includes all 35 C268 methods. Integration, actual-main checks, branch disposition and saved final delivery remain. Early recovery confirmed saved.
++C268 integrated and verified; final saved delivery remains. [PR266](https://github.com/Omegapy/OntoKin/pull/266), merge `5084dd69312e8da5a49aadd33cf83ba56db7c058`: exact historical endpoint admission under unchanged C260. Fresh actual-main checks passed **12 groups, 282 methods, 14 corpus bindings** on CPython **3.12.14 / Linux**, with zero failures/errors/skips. R01–R06 complete; branch automatically deleted and public history retained. [Integration](docs/engineering/localized-repair-c268/INTEGRATION.json), [requirements](docs/workflow/tasks/C268/REQUIREMENTS.md), [plan](docs/workflow/tasks/C268/PLAN.md), [scope265](https://github.com/Omegapy/OntoKin/issues/265). R07 remains: verified saved handoff, separate receipt and closure; stop afterward.
+ 
+ C267 complete within finite declaration comparison: [PR261](https://github.com/Omegapy/OntoKin/pull/261), merge `7174e6796b38bac3fa83e6412e0944512d137434`; branch deletion/retained ancestry verified. Recorded integration: **11 groups, 247 methods, 14 bindings**, CPython **3.12.14 / Linux**. Delivery-only phase independently verified exact evidence eligibility, passed fresh documentation/workflow checks and saved verified handoff. [Receipt](docs/engineering/localized-repair-c267/DELIVERY.json), [audit](docs/engineering/localized-repair-c267/evidence/delivery-20261118/EVIDENCE-REVIEW.md), [integration](docs/engineering/localized-repair-c267/INTEGRATION.json).
+ 
+ C266 complete: [PR259](https://github.com/Omegapy/OntoKin/pull/259), merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`; **10 passing main groups, 222 methods, 14 bindings**; branch deleted; [saved delivery](docs/engineering/localized-repair-c266/DELIVERY.json) unchanged. C265/C264/C263 complete within recorded scopes.
+ 
+-Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json), [HANDOFF](docs/workflow/HANDOFF.md). C267 delivery complete; November 19 continuation selected C268 historical endpoint admission. Stop after its one-phase verified saved handoff. Owner-requested startup compression is delivered; C268 remains unchanged.
++Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json), [HANDOFF](docs/workflow/HANDOFF.md). C268 integration and main verification are complete. Finish its verified saved handoff and stop. Owner-requested startup compression is delivered; C268 remains unchanged.
+ 
+ ## Product state and remaining gates
+ 
+ Reference package **0.4.0**; released profiles retain named evidence. Experimental integration is not release acceptance.
+ 
+-C255 inert checks, C256 geometry/pose, C257 ownership, C258 explicit-follow readers: bounded; saved handoffs complete. C260 contract delivery complete. C261 reads raw GLB hinge fields/JSON pointers; source/program claims untrusted. [Results](docs/engineering/localized-repair-c261/RESULTS.md)/[integration](docs/engineering/localized-repair-c261/INTEGRATION.md): PR250/`f2c175e22ce5f17f063b6de6d7ea9da7788b9040`; source integration/C262 delivery complete. C265 independently derives finite hinge declarations/ordered site associations from supplied source bytes; byte witnesses/literal numbers certify neither site poses nor full source validity. C266 binds retained source/program/object provenance only. C267 adds finite field/set/ordered-endpoint agreement after that binding.
++C255 inert checks, C256 geometry/pose, C257 ownership, C258 explicit-follow readers: bounded; saved handoffs complete. C260 contract delivery complete. C261 reads raw GLB hinge fields/JSON pointers; source/program claims untrusted. [Results](docs/engineering/localized-repair-c261/RESULTS.md)/[integration](docs/engineering/localized-repair-c261/INTEGRATION.md): PR250/`f2c175e22ce5f17f063b6de6d7ea9da7788b9040`; source integration/C262 delivery complete. C265 independently derives finite hinge declarations/ordered site associations from supplied source bytes; byte witnesses/literal numbers certify neither site poses nor full source validity. C266 binds retained source/program/object provenance only. C267 adds finite field/set/ordered-endpoint agreement after that binding. C268 admits only the exact original historical source/GLB bytes before that comparison; this establishes no accepted-revision authority.
+ 
+-Unqualified: historical endpoint admission, complete C260 H groups, site/world behavior, authentic revisions, invalid-edit atomicity qualification, clean rebuilds, native routes, comparative trials. General authoring advantage unestablished. C251 native sampling, C201 native admission, C209 job/0.2 compatibility deferred; C199/C200 schedules closed. Existing geometry/material/source-edit/export profiles supported; GOAL retains all deferred domains/superseded world-engine completion criterion.
++Unqualified: complete C260 H groups, site/world behavior, authentic revisions, invalid-edit atomicity qualification, clean rebuilds, native routes, comparative trials. General authoring advantage unestablished. C251 native sampling, C201 native admission, C209 job/0.2 compatibility deferred; C199/C200 schedules closed. Existing geometry/material/source-edit/export profiles supported; GOAL retains all deferred domains/superseded world-engine completion criterion.
+ 
+ ## Verification and remaining limits
+ 
+diff --git a/docs/engineering/localized-repair-c268/README.md b/docs/engineering/localized-repair-c268/README.md
+index a73e6c06..6fec7faf 100644
+--- a/docs/engineering/localized-repair-c268/README.md
++++ b/docs/engineering/localized-repair-c268/README.md
+@@ -1,6 +1,6 @@
+ # C268 historical hinge endpoint admission
+ 
+-C268 implements the fourth C260 interface, `read_bound_endpoint(repo, endpoint)`, for the original `before` and `after` source/GLB byte tuples. The current checkpoint contains implementation and initial self-check evidence; independent controls, review, integration and saved final delivery remain pending.
++C268 implements the fourth C260 interface, `read_bound_endpoint(repo, endpoint)`, for the original `before` and `after` source/GLB byte tuples. Independent controls and review are accepted, and the implementation is integrated through [PR266](https://github.com/Omegapy/OntoKin/pull/266). Fresh actual-main checks passed 12 groups, 282 methods and 14 corpus bindings. [Integration](INTEGRATION.json) records the exact revision and deleted branch; final saved delivery remains the current gate.
+ 
+ The reader admits exact sizes/hashes through bounded descriptor-relative reads, refuses symlink files/ancestors, escapes and nonregular files, and supplies captured bytes to the pinned C267 finite comparator. Its five-module dependency closure is captured anew before each call; the scoped acquisition hooks avoid later path reopening. See [implementation](IMPLEMENTATION.md), [input bindings](INPUTS.json), [requirements](../../workflow/tasks/C268/REQUIREMENTS.md) and [plan](../../workflow/tasks/C268/PLAN.md).
+ 
+diff --git a/docs/engineering/localized-repair-c268/RESULTS.md b/docs/engineering/localized-repair-c268/RESULTS.md
+index c83497e5..d9f30bbb 100644
+--- a/docs/engineering/localized-repair-c268/RESULTS.md
++++ b/docs/engineering/localized-repair-c268/RESULTS.md
+@@ -40,3 +40,9 @@ The published corrected candidate `e6f55b73fa71953aa648bcd34711a6796a7346b6`, tr
+ The original selector-length finding is resolved in the published candidate. Its failure/probe, original 281-method result, first control-author errors and prior interrupted audit records remain unchanged. R01–R05 acceptance is recorded by the independent final reviewer in [REVIEW](REVIEW.md). Integration, actual-main verification and saved delivery are subsequent gates recorded separately; this paragraph does not claim their completion.
+ 
+ Only the isolated engineering observer and its selected affected components are qualified. Runtime, fixtures, adopted language/contract files and hosted workflow definitions retain exact prior trees. Full product aggregate, source/export/conformance, other interpreters, native/visual/model trials and all C260 H-group qualification remain unrun or incomplete as previously recorded.
++
++## Verified integration — November 19, 2026
++
++[PR266](https://github.com/Omegapy/OntoKin/pull/266) merged as `5084dd69312e8da5a49aadd33cf83ba56db7c058`, tree `07971fcdbc6d912febc6adbec7ebf576eccab43f`. A fresh clean-checkout execution on that actual main revision passed **12 groups, 282 methods and 14 corpus bindings**, with zero failures, errors and skips. All 159 identified input files remained stable. The [main receipt](evidence/finalization-a3de3dd23bbf/main-integration/CHECKS.json) retains exact commands, interpreter, input/output identities and logs; independent audit is retained alongside it.
++
++The completed branch was automatically removed, and its final head remains a merge parent. [INTEGRATION.json](INTEGRATION.json) records the full publication/recovery mapping, readbacks, branch disposition and limits. R01–R06 are complete; final saved handoff/receipt and task closure remain R07. This finite verification does not establish any of the broader qualifications excluded above.
+diff --git a/docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/WORKERS.json b/docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/WORKERS.json
+index 89c55c3f..a0ae9922 100644
+--- a/docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/WORKERS.json
++++ b/docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/WORKERS.json
+@@ -12,7 +12,7 @@
+     {
+       "id": "/root/handoff_audit",
+       "scope": "Source ZIP/accepted evidence audit and handoff-builder preparation",
+-      "state": "handoff_builder_preparation",
++      "state": "completed",
+       "verdict": "4 archives, 374 snapshot bindings and accepted evidence passed",
+       "remote_write_authority": false
+     }
+diff --git a/docs/workflow/CURRENT.json b/docs/workflow/CURRENT.json
+index ae90254b..98daf6f0 100644
+--- a/docs/workflow/CURRENT.json
++++ b/docs/workflow/CURRENT.json
+@@ -3,16 +3,16 @@
+   "project": "Omegapy/OntoKin",
+   "latest_task": "C268",
+   "active_task": "C268",
+-  "observed_main": "412a7e38741d3f3db2625cb6c1caf43b69c0cae0",
+-  "snapshot_date": "2026-11-20T00:22:05.167960+00:00",
++  "observed_main": "5084dd69312e8da5a49aadd33cf83ba56db7c058",
++  "snapshot_date": "2026-11-20T00:31:56.331669+00:00",
+   "next_action": {
+     "status": "ready",
+-    "summary": "C268 finalization: accepted evidence recovered; integration, actual-main verification and final saved delivery remain",
++    "summary": "C268 integrated and actual-main checks passed; save final handoff and publish separate receipt before closure",
+     "sources": [
+       "docs/workflow/tasks/C268/task.json",
+-      "docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/RECOVERY-PROVENANCE.json"
++      "docs/engineering/localized-repair-c268/INTEGRATION.json"
+     ],
+-    "suggested_task": "Finish existing C268 finalization and stop; no next milestone"
++    "suggested_task": "Complete C268 saved delivery and closure only, then stop"
+   },
+   "historical_handoff": {
+     "url": "https://chatgpt.com/library/share/libfile_fde3_f-99755ba096208191b599cd0087fa0a19_2ab2a24d43748191957f9bcc356b59de?account_id=personal",
+@@ -23,7 +23,7 @@
+   "boundaries": [
+     "C263 changes repository development workflow only.",
+     "C261 raw GLB hinge observations are untrusted artifact claims, not independent source truth.",
+-    "C265 source observations, C266 input binding and C267 finite declaration comparison are integrated within their recorded scopes. Historical admission, site/world behavior, full C260 H groups and native/model trials remain unqualified.",
++    "C265 source observations, C266 input binding and C267 finite declaration comparison are integrated within their recorded scopes. C268 exact historical-byte admission is integrated within its recorded finite scope; site/world behavior, full C260 H groups and native/model trials remain unqualified.",
+     "C174 complete historical graph retention remains unestablished.",
+     "C264 requires a saved online browser-session ZIP; the separate C262 archive and offline restoration contract remain unchanged."
+   ],
+diff --git a/docs/workflow/knowledge.json b/docs/workflow/knowledge.json
+index 446bb71b..2219ca93 100644
+--- a/docs/workflow/knowledge.json
++++ b/docs/workflow/knowledge.json
+@@ -220,13 +220,15 @@
+     {
+       "id": "hinge-historical-admission",
+       "name": "Historical hinge input admission",
+-      "description": "Admit the exact historical source and artifact inputs through the separate C260 boundary.",
+-      "status": "unimplemented",
++      "description": "C268 admits exact original before/after source and GLB sizes/hashes through the separate C260 boundary, then invokes the pinned finite C267 declaration comparator.",
++      "status": "partial",
+       "sources": [
+-        "docs/engineering/localized-repair-c260/CONTRACT.md",
+-        "docs/engineering/localized-repair-c261/NEXT-TASK.md"
++        "docs/engineering/localized-repair-c268/README.md",
++        "docs/engineering/localized-repair-c268/RESULTS.md",
++        "docs/engineering/localized-repair-c268/INTEGRATION.json",
++        "docs/engineering/localized-repair-c260/CONTRACT.md"
+       ],
+-      "limits": "A raw reader artifact hash does not establish historical source binding or an authentic accepted revision."
++      "limits": "Exact historical byte identity only; supported changed raw inputs remain separate. No authentic accepted revision, full H-group qualification, site/world behavior, edit atomicity, rebuild, native/model or comparative claim."
+     },
+     {
+       "id": "localized-repair-qualification",
+diff --git a/docs/workflow/tasks/C268/task.json b/docs/workflow/tasks/C268/task.json
+index 3867670e..6bfbb1ab 100644
+--- a/docs/workflow/tasks/C268/task.json
++++ b/docs/workflow/tasks/C268/task.json
+@@ -63,8 +63,12 @@
+       "id": "R06",
+       "description": "Integration and branch lifecycle",
+       "acceptance": "Use verified expected-head lease and conditional nonforce publication/expected-head PR merge; read back actual main and execute affected checks, retain reviewed history and verify branch disposition. New/worsened legacy failures block integration.",
+-      "status": "not_done",
+-      "evidence": []
++      "status": "done",
++      "evidence": [
++        "docs/engineering/localized-repair-c268/INTEGRATION.json",
++        "docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/CHECKS.json",
++        "docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/BRANCH-DISPOSITION.json"
++      ]
+     },
+     {
+       "id": "R07",
+@@ -133,7 +137,7 @@
+       "requirements": [
+         "R06"
+       ],
+-      "status": "in_progress",
++      "status": "done",
+       "artifacts": [
+         "docs/engineering/localized-repair-c268/INTEGRATION.json"
+       ],
+@@ -147,7 +151,7 @@
+       "requirements": [
+         "R07"
+       ],
+-      "status": "not_done",
++      "status": "in_progress",
+       "artifacts": [
+         "docs/engineering/localized-repair-c268/DELIVERY.json"
+       ],
+@@ -188,16 +192,20 @@
+   ],
+   "completion": {
+     "implementation_commit": "e6f55b73fa71953aa648bcd34711a6796a7346b6",
+-    "merge_commit": null,
++    "merge_commit": "5084dd69312e8da5a49aadd33cf83ba56db7c058",
+     "pull_request": "https://github.com/Omegapy/OntoKin/pull/266",
+-    "branch_disposition": "active",
++    "branch_disposition": "deleted",
+     "evidence": [
+       "docs/engineering/localized-repair-c268/REVIEW.md",
+-      "docs/engineering/localized-repair-c268/evidence/finalization-20261119/VERIFICATION-SUMMARY.json"
++      "docs/engineering/localized-repair-c268/evidence/finalization-20261119/VERIFICATION-SUMMARY.json",
++      "docs/engineering/localized-repair-c268/INTEGRATION.json",
++      "docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/CHECKS.json",
++      "docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/BRANCH-DISPOSITION.json"
+     ],
+-    "published_evidence_commit": "b49a930292752e80abe47cc0526e76413089d64d"
++    "published_evidence_commit": "b49a930292752e80abe47cc0526e76413089d64d",
++    "integration_candidate": "43115fb864c6f475fb2a56da43566fc1c8b3af50"
+   },
+-  "next_action": "Conditionally integrate the accepted C268 evidence on the existing PR266, check actual main, verify branch disposition, save the final handoff and external receipt, close and stop",
++  "next_action": "Save the verified final C268 handoff and prompt files, publish the separate receipt, close issue265/task, release ownership and stop; no next milestone",
+   "session_phase": {
+     "id": "C268-finalization-a3de3dd23bbf",
+     "starting_main": "412a7e38741d3f3db2625cb6c1caf43b69c0cae0",

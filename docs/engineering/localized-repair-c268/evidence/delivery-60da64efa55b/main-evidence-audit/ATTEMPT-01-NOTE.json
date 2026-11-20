@@ -1,0 +1,58 @@
+{
+  "cause": "Audit normalized output paths containing /evidence/ only; the candidate used /verification/. Only --evidence-dir values differ. Preserve command argument order and all other settings.",
+  "cohort_failure": false,
+  "cohort_rerun": false,
+  "command_deltas": [
+    {
+      "group": "c266-binding",
+      "candidate": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "docs/engineering/localized-repair-c266/test_hinge_binding.py",
+        "--evidence-dir",
+        "/workspace/scratch/ee457d84062e/verification/candidate-published/c266-controls"
+      ],
+      "main": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "docs/engineering/localized-repair-c266/test_hinge_binding.py",
+        "--evidence-dir",
+        "/workspace/scratch/a3de3dd23bbf/evidence/main-integration/c266-controls"
+      ]
+    },
+    {
+      "group": "c267-comparison",
+      "candidate": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "docs/engineering/localized-repair-c267/test_hinge_compare.py",
+        "--evidence-dir",
+        "/workspace/scratch/ee457d84062e/verification/candidate-published/c267-controls"
+      ],
+      "main": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "docs/engineering/localized-repair-c267/test_hinge_compare.py",
+        "--evidence-dir",
+        "/workspace/scratch/a3de3dd23bbf/evidence/main-integration/c267-controls"
+      ]
+    },
+    {
+      "group": "c268-endpoint",
+      "candidate": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "docs/engineering/localized-repair-c268/test_endpoint_reader.py",
+        "--evidence-dir",
+        "/workspace/scratch/ee457d84062e/verification/candidate-published/c268-controls"
+      ],
+      "main": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-B",
+        "docs/engineering/localized-repair-c268/test_endpoint_reader.py",
+        "--evidence-dir",
+        "/workspace/scratch/a3de3dd23bbf/evidence/main-integration/c268-controls"
+      ]
+    }
+  ]
+}

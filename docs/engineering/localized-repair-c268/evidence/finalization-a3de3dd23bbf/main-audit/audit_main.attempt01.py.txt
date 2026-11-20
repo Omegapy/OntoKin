@@ -1,0 +1,82 @@
+#!/usr/bin/env python3
+"""Audit fresh C268 main receipts without rerunning the cohort."""
+import hashlib
+import json
+from pathlib import Path, PurePosixPath
+import re
+import subprocess
+import sys
+import zipfile
+from datetime import datetime, timezone
+
+REPO = Path('/workspace/scratch/a3de3dd23bbf/OntoKin')
+SOURCE = '5084dd69312e8da5a49aadd33cf83ba56db7c058'
+TREE = '07971fcdbc6d912febc6adbec7ebf576eccab43f'
+OUT = Path('/workspace/scratch/a3de3dd23bbf/evidence/main-audit')
+RUN = Path('/workspace/scratch/a3de3dd23bbf/evidence/main-integration')
+checks = []
+
+def git(*args):
+    return subprocess.check_output(['git', *args], cwd=REPO)
+
+def load(path):
+    return json.loads(path.read_text())
+
+def identity(raw):
+    return {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+def assert_record(name, passed, detail=None):
+    checks.append({'name': name, 'passed': bool(passed), 'detail': detail})
+
+def verify_identity(name, raw, expected):
+    actual = identity(raw)
+    assert_record(name, all(actual[k] == expected[k] for k in ('bytes', 'sha256')), {'expected': expected, 'actual': actual})
+
+receipt = load(RUN / 'CHECKS.json')
+assert_record('live_local_identity', git('rev-parse', 'HEAD').decode().strip() == SOURCE and git('rev-parse', 'HEAD^{tree}').decode().strip() == TREE)
+assert_record('clean_checkout', not git('status', '--porcelain').strip())
+assert_record('run_source_identity', receipt['source_before']['commit'] == receipt['source_after']['commit'] == SOURCE and receipt['source_before']['tree'] == receipt['source_after']['tree'] == TREE)
+assert_record('clean_before_after', all(receipt[key]['tracked_dirty_status'] == receipt[key]['all_dirty_status'] == '' for key in ('source_before', 'source_after')))
+assert_record('input_inventory_stable', receipt['input_files_before'] == receipt['input_files_after'] and receipt['input_identity_unchanged'])
+assert_record('complete_passing_cohort', receipt['complete'] and receipt['passed'] and receipt['planned_check_count'] == receipt['completed_check_count'] == 12 and receipt['total_methods'] == receipt['expected_total_methods'] == 282 and not receipt['remaining_checks'])
+for row in receipt['input_files_before']:
+    verify_identity('input:' + row['path'], git('show', SOURCE + ':' + row['path']), row)
+for row in receipt['output_files']:
+    verify_identity('output:' + row['path'], (RUN / row['path']).read_bytes(), row)
+assert_record('exact_output_inventory', {p.relative_to(RUN).as_posix() for p in RUN.rglob('*') if p.is_file()} == {row['path'] for row in receipt['output_files']} | {'CHECKS.json'})
+groups = []
+for group in receipt['checks']:
+    assert_record('group:' + group['name'], group['result'] == 'passed' and group['exit_code'] == 0 and group['failure'] is None and all(group['assertions'].values()))
+    raw = (RUN / group['log']['path']).read_text()
+    if group['expected_methods'] is not None:
+        count = re.findall(r'(?m)^Ran (\d+) tests? in ', raw)
+        assert_record('method_count:' + group['name'], bool(count) and int(count[-1]) == group['expected_methods'] == group['methods'] and bool(re.search(r'(?m)^OK\r?$', raw)))
+    groups.append({'name': group['name'], 'methods': group['methods'], 'result': group['result'], 'command': group['command'], 'seconds': group['seconds']})
+assert_record('method_total', sum(g['methods'] or 0 for g in groups) == 282)
+corpus = load(RUN / 'c253-corpus.log')
+assert_record('corpus', corpus['passed'] and corpus['boundFiles'] == 14 and corpus['tasks'] == 3)
+control_summary = {}
+for group, expected in [('c266-controls', {'testMethods': 34, 'apiCalls': 748, 'boundCalls': 28, 'typedRefusals': 720}), ('c267-controls', {'testMethods': 25, 'apiCalls': 123, 'agreementCalls': 35, 'typedRefusals': 88}), ('c268-controls', {'testMethods': 35, 'apiCalls': 131, 'historicalCalls': 121, 'rawCalls': 10, 'admittedCalls': 12, 'rawSuccessfulCalls': 9, 'typedRefusals': 110, 'untypedExceptions': 0})]:
+    data = load(RUN / group / 'results.json')
+    assert_record('control_totals:' + group, all(data[k] == v for k, v in expected.items()), {k: data[k] for k in expected})
+    assert_record('control_pass:' + group, data['passed'] and not data['failures'] and not data['errors'] and not data['skipped'] and data['inputCodeStableDuringRun'])
+    control_summary[group] = {k: data[k] for k in expected}
+archive_checks = []
+for path in sorted(RUN.rglob('*.zip')):
+    with zipfile.ZipFile(path) as archive:
+        names = archive.namelist()
+        safe = len(names) == len(set(names)) and all(not PurePosixPath(n).is_absolute() and '..' not in PurePosixPath(n).parts and '\\' not in n for n in names)
+        assert_record('fixture_archive:' + path.relative_to(RUN).as_posix(), safe and archive.testzip() is None)
+        archive_checks.append({'path': path.relative_to(RUN).as_posix(), 'entries': len(names), **identity(path.read_bytes())})
+verify_identity('interpreter', Path(receipt['environment']['resolved_executable']['path']).read_bytes(), receipt['environment']['resolved_executable'])
+runner = REPO / 'docs/engineering/localized-repair-c268/evidence/run_checks.py'
+verify_identity('runner', runner.read_bytes(), receipt['runner'])
+accepted_review = load(REPO / 'docs/engineering/localized-repair-c268/evidence/finalization-20261119/review/REVIEW.json')
+for path, expected in accepted_review['code_test_fixture_dependency_identities'].items():
+    verify_identity('accepted_input_preserved:' + path, git('show', SOURCE + ':' + path), expected)
+assert_record('final_clean_identity', not git('status', '--porcelain').strip() and git('rev-parse', 'HEAD').decode().strip() == SOURCE)
+
+report = {'schema': 'ontokin.c268.resulting-main-independent-audit/1', 'worker': '/root/remote_audit', 'at_utc': datetime.now(timezone.utc).isoformat(), 'source_commit': SOURCE, 'source_tree': TREE, 'run_receipt': {'path': str(RUN / 'CHECKS.json'), **identity((RUN / 'CHECKS.json').read_bytes())}, 'runner': receipt['runner'], 'run_environment': receipt['environment'], 'started_at': receipt['started_at'], 'finished_at': receipt['finished_at'], 'passed': all(x['passed'] for x in checks), 'assertion_count': len(checks), 'failures': [x for x in checks if not x['passed']], 'checks': checks, 'input_count': len(receipt['input_files_before']), 'output_count': len(receipt['output_files']), 'groups': groups, 'controls': control_summary, 'fixture_archives': archive_checks, 'not_run': receipt['not_run'], 'limits': receipt['limits'], 'ownership': {'repository_edits': False, 'index_mutations': False, 'remote_writes': False, 'dependency_installation': False, 'active_processes': [], 'remaining_action': 'Director publishes exact outputs, verifies final records and saves handoff; no further cohort run requested'}}
+OUT.mkdir(parents=True, exist_ok=True)
+(OUT / 'MAIN-AUDIT.json').write_text(json.dumps(report, indent=2) + '\n')
+print(json.dumps({k: report[k] for k in ('passed', 'assertion_count', 'failures', 'input_count', 'output_count', 'controls')}, indent=2))
