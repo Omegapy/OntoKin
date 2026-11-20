@@ -40,9 +40,9 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: held. Owner: `c270-recovery-5e26e7f63dc9`.
-Acquired at UTC: `2026-11-20T20:08:06Z`; expires at UTC: `2026-11-20T20:38:06Z`.
-Expected acquisition parent: `2814aac8d90db075cf3f17a144ede3a465c12ef8`. Scope: finish existing C270 correction R03-R05 through exact evidence review, conditional integration, actual-main checks and verified saved delivery. Reserved shared files: STATUS, CURRENT, C270 task/phase evidence and authorized integration records. Root is the sole integrator. The prior lease expired at `2026-11-20T20:07:12Z`; live main/branch are unchanged, prior staged bytes equal published `2076b06f133fd548079052102e060bc29abc7493`, and no prior validation process or unresolved remote write is known. The interrupted routine run retains an unknown final result. Reconcile actual refs before every conditional update. [Recovery session](docs/engineering/localized-repair-c270/correction/recovery-20261120/SESSION.md).
+State: held. Owner: `c270-finalization-a2bb67238030`.
+Acquired at UTC: `2026-11-20T21:03:45Z`; expires at UTC: `2026-11-20T21:33:45Z`.
+Expected acquisition parent: `81dfa5c1ff26556124741dda8c703926e2126c25`. Scope: finish existing C270 correction R03-R05 only: independent exact-evidence review, conditional integration, actual-main verification, branch disposition and verified saved delivery. Reserved shared files: STATUS, CURRENT, C270 task/phase evidence and authorized integration records. Root is the sole integrator. Prior holder `c270-recovery-5e26e7f63dc9` expired at `2026-11-20T20:38:06Z`; its five staged files match published main and the earlier eight staged review files match published branch2076. All known remote intents are reconciled; global prior-process termination is unknown. The interrupted broad-driver final result remains unknown, not passed. Recheck actual refs before conditional writes. [Current finalization session](docs/engineering/localized-repair-c270/correction/finalization-20261120/SESSION.md).
 
 ## Historical status
 
