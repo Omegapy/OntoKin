@@ -40,9 +40,9 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: held. Owner: `c270-correction-92228987b591`.
-Acquired at UTC: `2026-11-20T19:37:12Z`; expires at UTC: `2026-11-20T20:07:12Z`.
-Expected acquisition parent: `55c585acdaa750961ac37a5c46c9160bed149f97`. Scope: one C270 declared SiteRef classification correction, reviewed integration, actual-main verification and saved handoff. Reserved shared files: STATUS, CURRENT, C270 task/phase evidence and authorized integration records. Root is the sole integrator. Prior ownership is released; reconciliation found no active write or job. Renew only after a substantive implementation/verification checkpoint. Reconcile actual main before any conditional update. No unknown operation at acquisition.
+State: held. Owner: `c270-recovery-5e26e7f63dc9`.
+Acquired at UTC: `2026-11-20T20:08:06Z`; expires at UTC: `2026-11-20T20:38:06Z`.
+Expected acquisition parent: `2814aac8d90db075cf3f17a144ede3a465c12ef8`. Scope: finish existing C270 correction R03-R05 through exact evidence review, conditional integration, actual-main checks and verified saved delivery. Reserved shared files: STATUS, CURRENT, C270 task/phase evidence and authorized integration records. Root is the sole integrator. The prior lease expired at `2026-11-20T20:07:12Z`; live main/branch are unchanged, prior staged bytes equal published `2076b06f133fd548079052102e060bc29abc7493`, and no prior validation process or unresolved remote write is known. The interrupted routine run retains an unknown final result. Reconcile actual refs before every conditional update. [Recovery session](docs/engineering/localized-repair-c270/correction/recovery-20261120/SESSION.md).
 
 ## Historical status
 
