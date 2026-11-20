@@ -38,10 +38,11 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: held. Owner: `c270-h16-1242e9ec1f21`.
-Acquired at UTC: `2026-11-20T04:02:42.299678+00:00`; expires at UTC: `2026-11-20T04:32:42.299678+00:00`.
-Starting main: `254e481351239b536394c182b6761ec4c8662764`. Scope: one C270 evidence-only H16 source-valid SiteRef control; early recovery save confirmed before work.
-Reserved shared files: STATUS integration fields, docs/workflow/CURRENT.json and C270 canonical task/delivery records. Root owns integration; independent workers own disjoint new evidence. No unknown preceding write was found; C269 is complete and its lease released.
+State: held. Owner: `c270-recovery-9e9d17639499`.
+Acquired at UTC: `2026-11-20T14:59:52.000Z`; expires at UTC: `2026-11-20T15:29:52.000Z`.
+Starting main: `c7b99e7c37bf8e3b11b58660b2903150211dc355`. Scope: C270 recovery finalization only: independent review of preserved failure evidence, eligible integration, actual-main record checks and verified saved partial handoff. No classification repair.
+Reserved shared files: STATUS integration fields, docs/workflow/CURRENT.json and C270 canonical task/delivery records. Root owns integration; independent reviewer and packaging workers own disjoint scratch evidence.
+Prior owner `c270-h16-1242e9ec1f21` expired at 2026-11-20T04:32:42.299678+00:00. Main and work branch were observed unchanged, no open PR or unresolved write was found, and the old workspace is unavailable. A new early recovery ZIP is confirmed saved as `libfile_fde3_f-604b6734ed0081918851e404d1a8bf1e_2ab2a24d43748191957f9bcc356b59de` before substantive recovery work. Parent C270 and issue270 remain open; preserve unfinished branch.
 
 ## Historical status
 
