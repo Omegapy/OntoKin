@@ -1,0 +1,53 @@
+{
+  "schema": "ontokin.c270.h16-finding/1",
+  "status": "confirmed_contract_classification_defect",
+  "source_revision": "1ae7b594cc075031d11f2f1a33e4c5c0f0171da4",
+  "source_tree": "2af435b52ca1047a1a16e5a66afb91a855d1d1bd",
+  "oracle": "control/EXPECTED.json",
+  "oracle_sha256": "aa73df1e9ffb4d76bc589a7239f454be28e4cd6ae4ee523b208dbf66860ef4a7",
+  "expected": "UNSUPPORTED_SOURCE_FORM",
+  "actual": "MALFORMED",
+  "reason": "endpoint must resolve to a declared site",
+  "affected_interfaces": [
+    "observe_source_hinges",
+    "bind_hinge_inputs",
+    "compare_hinges"
+  ],
+  "input_source_validity": "Independently derived and reviewed from adopted language rules; no product evaluator run",
+  "failed_assertions": [
+    {
+      "case": "siteref-source",
+      "assertion": "exact_unsupported_category"
+    },
+    {
+      "case": "siteref-binding",
+      "assertion": "exact_unsupported_category"
+    },
+    {
+      "case": "siteref-comparison",
+      "assertion": "exact_unsupported_category"
+    }
+  ],
+  "api_calls": 5,
+  "assertions": 45,
+  "passed_assertions": 42,
+  "retained_input_identities": true,
+  "partial_qualified_output": false,
+  "diagnostic_origin": null,
+  "cause": "C265 Source.site() groups missing members and existing non-site members under default MALFORMED. This exact member is a declared SiteRef parameter, excluded as unsupported by C260. C266 and C267 propagate the source category unchanged.",
+  "implementation_changed": false,
+  "H16_qualification": "not_established",
+  "parent_requirement": "C270/R02 not_done",
+  "regressions": {
+    "methods": 108,
+    "passed": true,
+    "corpus_bindings": 14,
+    "source_revision": "1ae7b594cc075031d11f2f1a33e4c5c0f0171da4"
+  },
+  "remaining_groups": [
+    "H16",
+    "H20",
+    "H22",
+    "H24"
+  ]
+}

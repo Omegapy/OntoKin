@@ -1,0 +1,51 @@
+# Independent source-handoff audit
+
+## Scope and verdict
+
+Read-only audit of the two supplied archives. Both archives pass local integrity and source-binding checks. These are online GitHub continuation packages; neither is a full offline repository backup. No repository mutation, upload, observer execution, or historical-work replay was performed by this reviewer.
+
+The C269 frozen pending state is superseded by the C269 delivery and closeout evidence preserved in the newer C270 archive. The C270 archive predates substantive C270 work. Its first pending gate cannot be treated as the current first unmet gate without live reconciliation of the already-existing C270 branch.
+
+## Verified archive identities
+
+| Archive | Bytes | SHA-256 | Payload files | Snapshot files |
+| --- | ---: | --- | ---: | ---: |
+| OntoKin_C269_Development_Handoff_2026-11-19.zip | 925448 | 6f09f8855c361f7157bc87f2c56d2a097df7aa60f78a779a90db9a124091200f | 223 | 205 |
+| OntoKin_C270_Early_Recovery_2026-11-19.zip | 366492 | 9a97ba1a1a24bc1bf13c7d460445968c990ad1326f8fc138399f3dd78efe4afc | 80 | 41 |
+
+Checks passed for each ZIP: CRC; no duplicate or unsafe paths; exact manifest coverage of every payload file; every manifest byte count and SHA-256; every snapshot byte count, SHA-256, and Git blob identity. The five C270 overlay files also match their declared sizes and SHA-256. Detailed machine-readable results are in `handoff_archive_verification.json`. Git blob agreement establishes packaged bytes against their recorded identities; remote commit membership remains a live-reconciliation responsibility.
+
+## C269 gates
+
+- Complete in frozen package: 28-group audit, independent review, PR269 integration, actual-main checks, and observed branch removal.
+- Frozen pending: final package review/save/receipt, task and issue closure, ownership release.
+- Superseding evidence in the C270 archive: `repository/docs/engineering/localized-repair-c269/DELIVERY.json` confirms the exact supplied C269 ZIP and both standalone prompts. Its archive identity matches the independently computed hash above. `session-evidence/reconciliation/REPORT.md` records main `254e481351239b536394c182b6761ec4c8662764`, C269 R01-R06 done, issue268 closed, lease available, and no active task on 2026-11-20 03:59:10 UTC.
+- Consequence: do not rerun C269 audit, rebuild its immutable archive, recreate its branch, or replay its native bootstrap history solely because the frozen C269 checkpoint says save_pending.
+
+## C270 frozen gates
+
+At early freeze 2026-11-20T04:01:44.465903+00:00, base `254e481351239b536394c182b6761ec4c8662764`:
+
+- Complete: source C269 integrity/receipt reconciliation, startup reads, bounded C270 task/plan/session records.
+- Pending: exact early-save confirmation and external receipt; verified lease and branch publication; independent source-valid fixture and predeclared expectation; source/comparator execution; affected checks and independent review; eligible integration and actual-main checks; final ZIP/prompts/receipt and closure decision.
+- Unknown at this boundary: later writes, later workers, later executions, and later delivery. The package records no unresolved operation at freeze, but does not rule out later or unrelated unpublished work.
+
+The Director now reports main `c7b99e7c37bf8e3b11b58660b2903150211dc355`, work branch `work/c270-valid-siteref-control` at `1a2e9f85fa3ba210a16235e5660f1762ea8a953e`, and zero open PRs. Those observations demonstrate the frozen early state is stale. The current first unmet gate must come from the current task, branch evidence, receipts, ownership, and recent PR history; archive pending fields alone cannot select it.
+
+## Preserved unpublished work and replay limits
+
+The C270 archive contains exactly five unpublished overlay files: task.json, REQUIREMENTS.md, PLAN.md, SESSION.md, and STARTUP-READ-SET.json. It contains no substantive C270 fixture, oracle, control output, or implementation bytes at that boundary. `recovery/OVERLAY-SOURCES.json` supplies base, destination, and identity for each file. Never copy this old overlay over newer branch records.
+
+The C269 archive retains `recovery/C269-bootstrap-native.bundle` (55,410 bytes; SHA-256 `50ec91ed3e960995f8db2b4254650f0310b90355808a5ed7f2e5f49f1d5c10dd`). Native commits `37d55eded8d903ff6dbf61fc5924783a983273e0` and `b9b0590b8155a6591ab9ed60bd03e2a59f56291e` have recorded same-tree public equivalent `5e193e831e74483bccca67ea6cf8a1b8cec47491`, tree `cb1d3758bbd500fa65fca2fce49746c886bb3535`. Preserve the bundle dependency; do not replay it onto main. Historical C262 and C268 archives remain unchanged external dependencies.
+
+## Scope boundary to preserve
+
+C270 is one evidence-only H16 source-valid declared/computed SiteRef refusal control. R01 freezes independent source-validity reasoning, exact source/import identities, and expected `UNSUPPORTED_SOURCE_FORM` before execution. R02 requires that category, retained identities/reason, and no qualified partial set through source and comparison paths. A contrary result must remain a failed acceptance with the parent and issue open; preserve the failure and queue a separate minimal correction. Do not repair runtime, expand supported forms, weaken expectations, or address H20/H22/H24 during this recovery.
+
+## Delivery identities useful for reconciliation
+
+The newer package's confirmed C269 DELIVERY records destination folder `OntoKin`, ID `libdir_fde3_dl-6ad29e65bf148191aef327539199fc34_2ab2a24d43748191957f9bcc356b59de`. The Director's initial Library metadata confirms the supplied C270 early archive exists at `/OntoKin/OntoKin_C270_Early_Recovery_2026-11-19.zip`, ID `libfile_fde3_f-8cfe61159fdc8191beafddd79daeded4_2ab2a24d43748191957f9bcc356b59de`, backing file `file_00000000eb9081f5b68edca88a32eaed`, version 0, created 2026-11-20T04:02:05.663283+00:00. The materialized archive independently matches 366492 bytes and SHA-256 above. The frozen early-save pending flag therefore does not justify another upload of that same early ZIP.
+
+## Reviewer disposition
+
+Source-handoff integrity review complete; no mandatory archive-integrity findings. Live gate selection, current branch evidence, and final-package verification remain separate review tasks. This reviewer has no active background process and made no canonical repository edits.

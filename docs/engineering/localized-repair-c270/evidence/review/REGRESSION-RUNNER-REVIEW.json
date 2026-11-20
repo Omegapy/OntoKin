@@ -1,0 +1,26 @@
+{
+  "schema": "ontokin.c270.regression-runner-review/1",
+  "reviewer": "/root/reconcile",
+  "recorded_at_utc": "2026-11-20T04:09:17.939877+00:00",
+  "runner": {
+    "path": "docs/engineering/localized-repair-c270/run_regressions.py",
+    "bytes": 5914,
+    "sha256": "90d9c2b904c3c8043a63ba02afa54ae783f0e4e469d3b683f4ed45d7b5e04fb8"
+  },
+  "verdict": "approved_for_declared_affected_cohort",
+  "mandatory_findings": [],
+  "inspected": [
+    "Full runner source, Python AST syntax and actual C260 INPUTS file-reference shape",
+    "Fresh output refusal, candidate revision/tree and exact before/after input inventory",
+    "Explicit 49+34+25=108-method inventory with per-command output and exit status",
+    "Strict plain OK log requirement prevents skips from passing the aggregate",
+    "Original corpus verifier requires 14 bound files; fixture reproduction is read-only --check",
+    "Workflow and documentation checks remain separate named checks",
+    "New H16 behavior result is explicitly separate and cannot be overridden by existing regression success"
+  ],
+  "limits": [
+    "No test subprocess executed by this review.",
+    "If a 300-second subprocess timeout or output-schema parsing exception occurs, the runner exits without a final pass. Preserve that external exception/partial output and complete the missing outcome record before any acceptance claim."
+  ],
+  "behavioral_executions": 0
+}

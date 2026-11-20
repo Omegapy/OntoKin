@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "id": "C270",
+  "title": "H16 source-valid SiteRef refusal control",
+  "intent": "Resolve the C269 H16.02 evidence gap using one source-valid declared/computed site reference and precise refusal propagation",
+  "status": "in_progress",
+  "owner": "c270-recovery-9e9d17639499",
+  "branch": "work/c270-valid-siteref-control",
+  "base_sha": "254e481351239b536394c182b6761ec4c8662764",
+  "scope_issue": "https://github.com/Omegapy/OntoKin/issues/270",
+  "requirements": [
+    {
+      "id": "R01",
+      "description": "Source-valid independent H16 control",
+      "acceptance": "Freeze one declared/computed SiteRef fixture, exact import pin and independently authored unsupported-form expectation from adopted language rules and unchanged C260 before observation. No source evaluator or exporter supplies expected fields.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c270/control/EXPECTED.json",
+        "docs/engineering/localized-repair-c270/control/SOURCE-VALIDITY.md"
+      ]
+    },
+    {
+      "id": "R02",
+      "description": "Actual source and comparison outcomes",
+      "acceptance": "Execute source observation and applicable comparison for the frozen fixture. Require exact UNSUPPORTED_SOURCE_FORM, retained identities and reason, and no qualified partial set. Preserve every result. If contradicted, leave this acceptance unmet and queue a specific correction without implementation repair.",
+      "status": "not_done",
+      "evidence": [
+        "docs/engineering/localized-repair-c270/FINDING.json",
+        "docs/engineering/localized-repair-c270/evidence/candidate/h16/RESULTS.json"
+      ]
+    },
+    {
+      "id": "R03",
+      "description": "Affected checks and independent review",
+      "acceptance": "Preserve historical controls and implementation. Execute the scope-relevant regression inventory and documentation/workflow checks. Obtain independent exact-candidate review and resolve mandatory evidence findings.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/CANDIDATE-REVIEW.json",
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/candidate-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c270/evidence/candidate/regressions/CHECKS.json"
+      ]
+    },
+    {
+      "id": "R04",
+      "description": "Reviewed evidence integration",
+      "acceptance": "Acquire expected-head lease, publish and review one branch/PR, conditionally integrate eligible evidence, verify actual main and retain history/observed branch disposition. A failed control is evidence, never successful qualification.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R05",
+      "description": "Verified delivery and closure decision",
+      "acceptance": "Confirm early recovery before substantial work; verify and save final ZIP and prompts, publish separate receipt, stop. Close parent/issue only when all gates pass; otherwise retain open scope and exact remaining action.",
+      "status": "not_done",
+      "evidence": []
+    }
+  ],
+  "plan": [
+    {
+      "id": "P01",
+      "title": "Scope and confirmed early recovery",
+      "requirements": [
+        "R01",
+        "R05"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c270/EARLY-RECOVERY-RECEIPT.json"
+      ],
+      "verification": [
+        "Confirmed early recovery save and live main/lease/branch/issue readback"
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "Independent fixture, predeclared expectation and execution",
+      "requirements": [
+        "R01",
+        "R02"
+      ],
+      "status": "in_progress",
+      "artifacts": [
+        "docs/engineering/localized-repair-c270/control/EXPECTED.json"
+      ],
+      "verification": [
+        "Frozen source/input identities, adopted-rule validity proof, precise actual API outcomes"
+      ]
+    },
+    {
+      "id": "P03",
+      "title": "Affected checks and independent review",
+      "requirements": [
+        "R03"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/CANDIDATE-REVIEW.json"
+      ],
+      "verification": [
+        "Complete affected observer cohort and documentation/workflow checks; independent exact-candidate review"
+      ]
+    },
+    {
+      "id": "P04",
+      "title": "Evidence integration and actual-main verification",
+      "requirements": [
+        "R04"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c270/INTEGRATION.json"
+      ],
+      "verification": [
+        "Observed-parent conditional integration, actual-main checks and retained branch history"
+      ]
+    },
+    {
+      "id": "P05",
+      "title": "Verified saved handoff and closure decision",
+      "requirements": [
+        "R05"
+      ],
+      "status": "not_done",
+      "artifacts": [
+        "docs/engineering/localized-repair-c270/DELIVERY.json"
+      ],
+      "verification": [
+        "Exact ZIP manifest/extraction/source verification, confirmed save and separate receipt; parent closure decision"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "frozen H16 category control",
+      "command": "python3 -B docs/engineering/localized-repair-c270/run_h16_control.py --phase frozen-candidate --output NEW_OUTPUT",
+      "result": "failed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c270/evidence/candidate/h16/RESULTS.json"
+      ]
+    },
+    {
+      "name": "affected regression cohort and records",
+      "command": "python3 -B docs/engineering/localized-repair-c270/run_regressions.py --phase frozen-candidate --output NEW_OUTPUT",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c270/evidence/candidate/regressions/CHECKS.json"
+      ]
+    },
+    {
+      "name": "recovered candidate documentation/workflow",
+      "command": "python3 -B docs/engineering/localized-repair-c269/evidence/run_record_checks.py --repo IDENTIFIED_REPO --output NEW_OUTPUT --phase C270-recovery-checkpoint",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/candidate-checks/CHECKS.json"
+      ]
+    }
+  ],
+  "completion": {
+    "implementation_commit": null,
+    "merge_commit": null,
+    "pull_request": null,
+    "branch_disposition": "active",
+    "evidence": []
+  },
+  "next_action": "Independent review approves the preserved failure evidence. Verify final evidence/state delta, conditionally integrate, run actual-main documentation/workflow checks, retain the unfinished branch, save partial handoff and external receipt, then stop. R02 remains unmet.",
+  "session_phase": {
+    "id": "C270-recovery-finalization",
+    "starting_main": "c7b99e7c37bf8e3b11b58660b2903150211dc355",
+    "starting_branch_head": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
+    "declared_at_utc": "2026-11-20T15:02:00.521622+00:00",
+    "owner": "c270-recovery-9e9d17639499",
+    "scope": "Finish existing failure-evidence review, eligible integration, actual-main record checks and verified saved partial handoff",
+    "acceptance": "R03-R05 finalization gates; R02 remains failed and the parent/issue remain open",
+    "stopping_point": "Verified saved partial handoff and separate receipt; no classification correction or new milestone",
+    "early_save_confirmed": true,
+    "early_receipt": "docs/engineering/localized-repair-c270/RECOVERY-EARLY-RECEIPT.json",
+    "behavioral_work_stopped": true,
+    "behavioral_reruns_this_phase": 0
+  },
+  "delivery": {
+    "required": true,
+    "kind": "browser-session",
+    "status": "pending",
+    "folder": "OntoKin",
+    "receipt": "docs/engineering/localized-repair-c270/DELIVERY.json"
+  },
+  "phase_history": [
+    {
+      "id": "C270-H16-control",
+      "starting_main": "254e481351239b536394c182b6761ec4c8662764",
+      "declared_at_utc": "2026-11-20T03:59:48.392367+00:00",
+      "owner": "c270-h16-1242e9ec1f21",
+      "scope": "One evidence-only H16 declared/computed SiteRef control, review, eligible integration and saved handoff",
+      "acceptance": "R01-R05; exact unsupported category or honest preserved failure with parent open",
+      "stopping_point": "Verified saved handoff; first unplanned implementation or contract expansion stops behavioral work",
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c270/EARLY-RECOVERY-RECEIPT.json",
+      "outcome": "control_exposed_defect; no implementation repair",
+      "behavioral_work_stopped": true
+    }
+  ],
+  "recovery": {
+    "starting_branch": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
+    "lease_commit": "ab0f196cd8c67dfa94cba369381dafa8b6c7a015",
+    "first_unmet_gate": "R04 eligible evidence integration and actual-main verification",
+    "known_unknown_operations": [],
+    "preserve_original_failure": true,
+    "workers": [
+      "/root/candidate_review",
+      "/root/handoff_audit"
+    ],
+    "read_set": "docs/engineering/localized-repair-c270/evidence/recovery-20261120/startup_read_set.json",
+    "independent_review": {
+      "candidate": "096803b2377966a04f9043139324bac2c65b6a52",
+      "static_checks": 389,
+      "result": "approved_for_evidence_only_integration",
+      "final_metadata_delta_review": "pending"
+    }
+  }
+}
