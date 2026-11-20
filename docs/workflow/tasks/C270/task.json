@@ -4,7 +4,7 @@
   "title": "H16 source-valid SiteRef refusal control and classification correction",
   "intent": "Resolve the C269 H16.02 evidence gap using one source-valid declared/computed site reference and precise refusal propagation",
   "status": "in_progress",
-  "owner": "c270-correction-92228987b591",
+  "owner": "c270-finalization-a2bb67238030",
   "branch": "work/c270-valid-siteref-control",
   "base_sha": "55c585acdaa750961ac37a5c46c9160bed149f97",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/270",
@@ -179,12 +179,29 @@
       ]
     },
     {
-      "name": "routine local driver",
+      "name": "routine local driver completion (interrupted; final result unknown)",
       "command": "python3 -B tools/check_local.py --output-dir NEW_OUTPUT",
       "result": "not_run",
       "required": false,
-      "evidence": [],
-      "interpretation": "Mandatory invocation; complete affected regression acceptance is separately identified. Preserve all failures and investigate any new/worsened effect on this correction."
+      "evidence": [
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ROUTINE-DISPOSITION.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/interrupted-routine-evidence.zip"
+      ],
+      "interpretation": "No completed result is available; not_run is the task schema completion-state placeholder, not a denial of the actual invocation. The run started and was interrupted. No full-suite pass or failure is claimed. Complete affected acceptance is separately identified.",
+      "execution_status": "interrupted_unknown",
+      "invocation_observed": true,
+      "final_exit_code": null
+    },
+    {
+      "name": "mandatory routine local driver invocation evidence",
+      "command": "Preserved original python3 -B tools/check_local.py --output-dir invocation at a6099546; no rerun",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/ROUTINE-DISPOSITION.json",
+        "docs/engineering/localized-repair-c270/correction/finalization-20261120/interrupted-routine-evidence.zip"
+      ],
+      "interpretation": "Only invocation and retained interruption evidence are verified. Broad completion remains unknown."
     }
   ],
   "completion": {
@@ -196,7 +213,7 @@
     "scope_issue_state": "open",
     "phase_complete_parent_open": false
   },
-  "next_action": "Inspect routine local checks and independent exact-candidate review, publish reviewed evidence, then conditional integration, actual-main checks and verified saved handoff; stop.",
+  "next_action": "Finish independent exact-candidate R03 review and fresh record checks, then conditional reviewed integration, actual-main verification, observed branch disposition and verified final ZIP/prompts with separate receipt; stop.",
   "session_phase": {
     "id": "C270-classification-correction",
     "starting_main": "55c585acdaa750961ac37a5c46c9160bed149f97",
@@ -304,7 +321,7 @@
   "recovery": {
     "starting_branch": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
     "lease_commit": "ab0f196cd8c67dfa94cba369381dafa8b6c7a015",
-    "first_unmet_gate": "Implement narrowly declared correction after verified bootstrap",
+    "first_unmet_gate": "R03 independent exact-candidate review and fresh final record checks",
     "known_unknown_operations": [],
     "preserve_original_failure": true,
     "workers": [
@@ -318,7 +335,23 @@
       "result": "approved_for_evidence_only_integration",
       "final_metadata_delta_review": "passed"
     },
-    "workers_disposition": "All assigned workers complete; no known active process or unknown operation"
+    "workers_disposition": "All assigned workers complete; no known active process or unknown operation",
+    "current_finalization": {
+      "director": "c270-finalization-a2bb67238030",
+      "starting_main": "81dfa5c1ff26556124741dda8c703926e2126c25",
+      "lease_commit": "f2d503423c5a790df79d28d61679d146a4c28c32",
+      "starting_branch": "2076b06f133fd548079052102e060bc29abc7493",
+      "session": "docs/engineering/localized-repair-c270/correction/finalization-20261120/SESSION.md",
+      "early_receipt": "docs/engineering/localized-repair-c270/correction/finalization-20261120/EARLY-RECOVERY-RECEIPT.json",
+      "workers": [
+        "/root/recovery_audit",
+        "/root/candidate_review",
+        "/root/package_builder"
+      ],
+      "unknown_operations": [
+        "Historical routine broad-driver completion remains unknown; no current remote write is unresolved"
+      ]
+    }
   },
   "historical_checks": [
     {
