@@ -17,3 +17,9 @@ First action: confirm newly verified early recovery. Phase stop: reviewed candid
 Early recovery saved before fixture construction: [receipt](../../../engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json). Scope issue [273](https://github.com/Omegapy/OntoKin/issues/273) is open. Initial scope publication and readback succeeded at `c27609ebab7c86ff20d7bd288994b49e3dd3c7e1`, tree `80f499fa35cf2d31e7a440eb67a13e8d7b387425`; main remained `e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d`. Local scope precursor `e6462e053251f5bd0810fc7b2834fa2a26ba1952` has exactly the same tree; remote publication identity governs.
 
 `/root/control_author` received the confirmed-save message before writing independent control files. `/root/github_reconciliation` completed intake review with 1,703 static checks, zero failures; detailed source audit is retained for this phase ZIP. `/root/package_builder` built and verified the early package. Workers use fresh contexts and no model overrides or nested workers. No main lease acquired; no integration in P01.
+
+## P01 execution checkpoint
+
+The independent oracle and runner were published and read back at `067392f2b5f592a5c3104fa8848cc0030ba1117b` before observation. The clean checkout executed six input cases and eighteen interface calls: six baseline successes and twelve exact MALFORMED refusals; 1,042 assertions passed, zero failed. Complete immutable evidence is in [control-candidate](../../../engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json). The reviewer requested an external exact-command receipt for the omitted `-B` flag; the original report is unchanged.
+
+Working-candidate documentation/workflow checks passed. Required routine driver, complete integration cohort and actual-main checks have not run in this phase. Independent P01 evidence review is in progress. Scope273 stays open; no main write or merge has occurred.

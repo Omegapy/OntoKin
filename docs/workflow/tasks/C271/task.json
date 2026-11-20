@@ -24,8 +24,11 @@
       "id": "R02",
       "description": "Observed isolated refusal and propagation",
       "acceptance": "Execute positive baseline and isolated missing-digest variants through applicable source observation, binding and comparison interfaces. Preserve complete actual responses, input identities and reasons. Require the independently frozen typed refusal and no qualified partial result; preserve contradictions without repairing runtime or changing the oracle.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json",
+        "docs/engineering/localized-repair-c271/evidence/control-candidate/RAW-EVIDENCE.zip"
+      ]
     },
     {
       "id": "R03",
@@ -91,9 +94,11 @@
     {
       "name": "isolated H22 control",
       "command": "python3 -B docs/engineering/localized-repair-c271/run_h22_control.py --output NEW_OUTPUT --phase C271-P01",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json"
+      ]
     },
     {
       "name": "required routine local driver before integration",
@@ -112,9 +117,11 @@
     {
       "name": "documentation and workflow records",
       "command": "python3 -B tools/chat_workflow.py check; python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/working-record-checks/CHECKS.json"
+      ]
     },
     {
       "name": "independent candidate review",
@@ -125,13 +132,13 @@
     }
   ],
   "completion": {
-    "implementation_commit": null,
+    "implementation_commit": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
     "merge_commit": null,
     "pull_request": null,
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Freeze independent oracle and runner on the scope branch before executing 18 planned calls; retain every outcome for independent P01 review and saved partial delivery.",
+  "next_action": "Finish focused independent P01 evidence review and documentation/workflow checks; publish the retained draft candidate and save a verified partial handoff. Integration remains P02.",
   "session_phase": {
     "id": "C271-P01-control-candidate",
     "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
@@ -143,7 +150,17 @@
     "integration_allowed_this_phase": false,
     "status": "in_progress",
     "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json"
+    "early_receipt": "docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json",
+    "executed_source_revision": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+    "controls": {
+      "input_cases": 6,
+      "interface_calls": 18,
+      "positive_calls": 6,
+      "typed_refusals": 12,
+      "assertion_checks": 1042,
+      "failed_assertions": 0,
+      "environment": "CPython 3.12.14 / Linux x86-64"
+    }
   },
   "delivery": {
     "required": true,

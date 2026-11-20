@@ -1,0 +1,40 @@
+{
+  "source_commit": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+  "dirty_state": " M docs/workflow/tasks/C271/task.json\n?? docs/engineering/localized-repair-c271/evidence/control-candidate/\n",
+  "checked_at_utc": "2026-11-20T21:59:48.206200+00:00",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "log": "workflow.log",
+      "log_bytes": 148,
+      "log_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "passed": true,
+      "log": "documentation.log",
+      "log_bytes": 6608,
+      "log_sha256": "1b0b0cd3ba0ad7db698604ccccfb84e7a27091860ba2ae7550705c648f69d606"
+    }
+  ],
+  "passed": true,
+  "scope": "Working candidate record checks; exact changed-file manifest supplied separately; no behavioral rerun"
+}
