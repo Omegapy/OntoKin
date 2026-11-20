@@ -33,8 +33,12 @@
       "id": "R03",
       "description": "Affected checks and independent review",
       "acceptance": "Preserve historical controls and implementation. Execute the scope-relevant regression inventory and documentation/workflow checks. Obtain independent exact-candidate review and resolve mandatory evidence findings.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/CANDIDATE-REVIEW.json",
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/candidate-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c270/evidence/candidate/regressions/CHECKS.json"
+      ]
     },
     {
       "id": "R04",
@@ -88,9 +92,9 @@
       "requirements": [
         "R03"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
-        "docs/engineering/localized-repair-c270/evidence/review/CANDIDATE-REVIEW.json"
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/CANDIDATE-REVIEW.json"
       ],
       "verification": [
         "Complete affected observer cohort and documentation/workflow checks; independent exact-candidate review"
@@ -143,6 +147,15 @@
       "evidence": [
         "docs/engineering/localized-repair-c270/evidence/candidate/regressions/CHECKS.json"
       ]
+    },
+    {
+      "name": "recovered candidate documentation/workflow",
+      "command": "python3 -B docs/engineering/localized-repair-c269/evidence/run_record_checks.py --repo IDENTIFIED_REPO --output NEW_OUTPUT --phase C270-recovery-checkpoint",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/candidate-checks/CHECKS.json"
+      ]
     }
   ],
   "completion": {
@@ -152,7 +165,7 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Complete independent review of published C270 evidence, integrate eligible records, verify actual main, save the partial handoff and separate receipt, then stop. R02 remains unmet.",
+  "next_action": "Independent review approves the preserved failure evidence. Verify final evidence/state delta, conditionally integrate, run actual-main documentation/workflow checks, retain the unfinished branch, save partial handoff and external receipt, then stop. R02 remains unmet.",
   "session_phase": {
     "id": "C270-recovery-finalization",
     "starting_main": "c7b99e7c37bf8e3b11b58660b2903150211dc355",
@@ -192,13 +205,19 @@
   "recovery": {
     "starting_branch": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
     "lease_commit": "ab0f196cd8c67dfa94cba369381dafa8b6c7a015",
-    "first_unmet_gate": "R03 independent exact-candidate evidence review",
+    "first_unmet_gate": "R04 eligible evidence integration and actual-main verification",
     "known_unknown_operations": [],
     "preserve_original_failure": true,
     "workers": [
       "/root/candidate_review",
       "/root/handoff_audit"
     ],
-    "read_set": "docs/engineering/localized-repair-c270/evidence/recovery-20261120/startup_read_set.json"
+    "read_set": "docs/engineering/localized-repair-c270/evidence/recovery-20261120/startup_read_set.json",
+    "independent_review": {
+      "candidate": "096803b2377966a04f9043139324bac2c65b6a52",
+      "static_checks": 389,
+      "result": "approved_for_evidence_only_integration",
+      "final_metadata_delta_review": "pending"
+    }
   }
 }
