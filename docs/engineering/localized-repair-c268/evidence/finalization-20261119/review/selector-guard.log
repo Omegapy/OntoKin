@@ -1,0 +1,65 @@
+{
+  "schema": "ontokin.c268.endpoint-guard-review/1",
+  "reviewer": "/root/state_audit",
+  "source_revision": "52af987fd5705c034bf264e2fe3fbc9fa1f146ae",
+  "reader": {
+    "bytes": 14914,
+    "sha256": "a7bb1f67398a54922e647d6d43062f89acb32c6e05a2fc653f5c30160f888157"
+  },
+  "probe": {
+    "bytes": 2282,
+    "sha256": "d4ed96d5871d199af1faea00b3fff897735e0c3edc0f551fc4fd0b9c4b7c6057"
+  },
+  "cases": [
+    {
+      "selector_recipe": "z repeated N for lengths7/1000001; empty text for0; bogus for5",
+      "length": 0,
+      "expected_lookup_lengths": [],
+      "observed_lookup_lengths": [],
+      "refusal": {
+        "code": "ENDPOINT",
+        "reason": "ENDPOINT"
+      },
+      "passed": true
+    },
+    {
+      "selector_recipe": "z repeated N for lengths7/1000001; empty text for0; bogus for5",
+      "length": 7,
+      "expected_lookup_lengths": [],
+      "observed_lookup_lengths": [],
+      "refusal": {
+        "code": "ENDPOINT",
+        "reason": "ENDPOINT"
+      },
+      "passed": true
+    },
+    {
+      "selector_recipe": "z repeated N for lengths7/1000001; empty text for0; bogus for5",
+      "length": 1000001,
+      "expected_lookup_lengths": [],
+      "observed_lookup_lengths": [],
+      "refusal": {
+        "code": "ENDPOINT",
+        "reason": "ENDPOINT"
+      },
+      "passed": true
+    },
+    {
+      "selector_recipe": "z repeated N for lengths7/1000001; empty text for0; bogus for5",
+      "length": 5,
+      "expected_lookup_lengths": [
+        5
+      ],
+      "observed_lookup_lengths": [
+        5
+      ],
+      "refusal": {
+        "code": "ENDPOINT",
+        "reason": "ENDPOINT"
+      },
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "meaning": "Contains-spy tracks lookup ordering, not elapsed time; original refusal outcome may remain correct despite unbounded selector hashing."
+}

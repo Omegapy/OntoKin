@@ -43,3 +43,23 @@ The complete affected cohort is the C253 corpus and C255/C256/C257/C258/C261/C26
 ## Stop
 
 Stop after confirmed final delivery, or first unplanned scope expansion with honest partial handoff; no next phase. Parent stays in_progress or review until every gate passes. A partial handoff is session delivery only.
+
+Reviewer continuity: `/root/state_audit` launched with fresh context for startup, then retained that context for follow-up early-package and candidate review. Implementation/control workers launched separately with fresh contexts. No worker is represented as reset between follow-ups.
+
+## Recovery phase — C268 P03, November 19
+
+The interrupted implementation is already published at `734789521f82248d39b623c33aae9d3284ab4bce`. Its exact 12-group/281-method cohort was recovered from the previous workspace. A mandatory endpoint-length guard correction and independent 35-method controls were staged but unpublished. Preserve and resume these exact bytes.
+
+Current owner: `c268-recovery-8bd47a4cbab7`. Starting main: `7ff41e071fb694dadf1ba256b13168e1a4083926`. Confirmed recovery and unpublished-work ZIP receipts are under `evidence/recovery-20261119/`. The previous main lease is honored until expiry; this phase has no integration authority without a new verified lease.
+
+Acceptance: verify the fixed immutable candidate, independently review R01–R05, publish the P03 evidence checkpoint, and save a verified partial handoff with an external receipt. Stop before P04 integration and P05 parent closure. Retain the existing branch, draft PR266 and open issue265. Any remaining finding stays explicit; do not start another phase.
+
+## Finalization phase — November 19, fresh continuation
+
+Current user Prompt 1 resumes C268 and authorizes reviewed integration plus final saved delivery. The preceding P03-only stop bounded the interrupted prior session; it is retained above as history. This phase finishes the already-published correction, its full affected checks and independent acceptance, then P04/P05 if those gates pass. No next milestone or new implementation scope. Owner: `c268-final-ee457d84062e`; observed main `409ef18e0cb992ad1ab771c1258e989d5ef1c765`, branch `b799b7462bdc6a04464a2f903cec8dcabd659fa1`.
+
+Early recovery is confirmed saved; see `evidence/finalization-20261119/EARLY-RECOVERY-RECEIPT.json`. Publish checkpoint before verification. Independent recovery audit and exact-candidate reviewer are separate workers; Director owns all commits, shared state and remote writes. Acquire a new conditional main lease only after acceptance. Stop after final saved C268 handoff, or preserve an incomplete handoff if a new material implementation requirement appears.
+
+## Recovery finalization — November 19
+
+Owner `c268-finalize-a3de3dd23bbf` resumes this same scope and branch. R01–R05 are accepted on the unchanged corrected candidate. Preserve the recovered original commit and exact evidence; finish P04 integration/main checks and P05 saved delivery/closure only. Reconcile the current main lease before any integration write. No implementation replay or next milestone is authorized by this phase.

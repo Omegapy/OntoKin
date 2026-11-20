@@ -25,5 +25,51 @@
   "no_nested_workers": true,
   "shared_index_owner": "Director only",
   "early_save_confirmed": true,
-  "observed_at_utc": "2026-11-19T14:15:19.033825+00:00"
+  "observed_at_utc": "2026-11-19T14:15:19.033825+00:00",
+  "reviewer_context": "Initial fresh launch; follow-up assignments retain prior bounded audit context",
+  "remote_checkpoints": [
+    {
+      "kind": "scope_and_lease",
+      "sha": "5de702710bf913f3c92c24451e9b8161ed431035"
+    },
+    {
+      "kind": "early_receipt",
+      "sha": "4595bade65291f36900be3e648c733aea74d5c40"
+    }
+  ],
+  "pull_request": "https://github.com/Omegapy/OntoKin/pull/266",
+  "implementation_checkpoint": "8a2fc5708e60e620987db3d1db33c01456833bda",
+  "implementation_worker_state": "complete; frozen code returned; available for findings",
+  "reviewer_state": "independent exact implementation review active; final controls/cohort gate pending",
+  "lease_renewal": {
+    "main": "7ff41e071fb694dadf1ba256b13168e1a4083926",
+    "expected_parent": "4595bade65291f36900be3e648c733aea74d5c40",
+    "expires_at_utc": "2026-11-19T14:58:39.000Z",
+    "reason": "Published independent controls and clean identified candidate cohort passed",
+    "readback_verified": true
+  },
+  "recovery": {
+    "director": "c268-recovery-8bd47a4cbab7",
+    "user_direction": "Recover interrupted task at first unmet gate; one bounded phase",
+    "phase": "C268-P03-recovery-20261119",
+    "prior_workspace": "/workspace/scratch/c7dae94da130",
+    "previous_scoped_processes_observed": [],
+    "prior_main_lease_expires_at_utc": "2026-11-19T14:58:39Z",
+    "main_lease": "not acquired; prior lease honored",
+    "workers": [
+      {
+        "identity": "/root/live_recovery_audit",
+        "role": "independent source/evidence reviewer",
+        "owned_paths": "review-evidence and recovery-audit outside checkout"
+      },
+      {
+        "identity": "/root/candidate_cohort",
+        "role": "independent exact-evidence auditor and fixed-candidate verifier",
+        "owned_paths": "cohort-evidence outside checkout"
+      }
+    ],
+    "nested_fanout": false,
+    "model_configuration": "inherited; no override requested",
+    "branch_owner_reconciled": "Fresh user-directed recovery; unchanged remote head, exact prior staged/untracked work captured, no prior cwd-scoped process observed. All writes remain conditional."
+  }
 }

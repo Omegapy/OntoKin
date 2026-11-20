@@ -1,0 +1,34 @@
+{
+  "scope": "Documentation/evidence-only updates after e6f55b73; product observer inputs unchanged",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "log": "workflow.log",
+      "bytes": 184,
+      "sha256": "d9feea7e9896e14e1365fcf7a593ed9fa706828dff781ec1857def49a0092fd6"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "result": "passed",
+      "log": "documentation.log",
+      "bytes": 6608,
+      "sha256": "6a2b6094f56234764276971ce9578adb9c7b2c3ea63784a83436e5847b96d50f"
+    }
+  ],
+  "passed": true
+}

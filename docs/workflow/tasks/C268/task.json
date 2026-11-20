@@ -4,7 +4,7 @@
   "title": "Historical hinge endpoint admission",
   "intent": "Bind original source and GLB bytes before finite declaration comparison",
   "status": "in_progress",
-  "owner": "c268-root-c7dae94da130",
+  "owner": "c268-finalize-a3de3dd23bbf",
   "branch": "work/c268-historical-endpoint",
   "base_sha": "b2ca38875bd7b43b85011bbc671ee9fee1682441",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/265",
@@ -13,36 +13,51 @@
       "id": "R01",
       "description": "Historical identity",
       "acceptance": "Admit only before/after endpoints from unchanged C260 INPUTS and matching C253 pins. Require exact size and SHA-256 for the selected main.ok, shared hinges.ok and GLB before calling the comparator. No alternate file, sidecar, network or ambient fallback.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c268/REVIEW.md",
+        "docs/engineering/localized-repair-c268/evidence/finalization-20261119/candidate-published/CHECKS.json"
+      ]
     },
     {
       "id": "R02",
       "description": "Safe bounded file access",
       "acceptance": "Reject symbolic-link files and ancestors, repository escape, invalid endpoint, missing/permission/nonregular files and short/growing/wrong-sized or wrong-hash bytes. Check size before bounded reads; return typed refusals with bounded available identities and no qualified partial set. Preserve inherited resource bounds.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c268/REVIEW.md",
+        "docs/engineering/localized-repair-c268/evidence/finalization-20261119/candidate-published/CHECKS.json"
+      ]
     },
     {
       "id": "R03",
       "description": "Comparison and authority",
       "acceptance": "Invoke exact pinned C267 comparator on captured bytes only after admission. Preserve comparison results, source-only/absent-artifact authority and all physical/execution nonclaims. Only this wrapper may affirm historicalInputsBound for original bytes; first three interfaces and supported changed raw inputs stay unchanged.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c268/REVIEW.md",
+        "docs/engineering/localized-repair-c268/evidence/finalization-20261119/candidate-published/CHECKS.json"
+      ]
     },
     {
       "id": "R04",
       "description": "Independent controls",
       "acceptance": "Independently exercise both original endpoints, missing/changed-size/same-size-changed source and GLB, symlinks/ancestors/loops/escape, permission and nonregular paths, bounded read failures, dependency mutation and refusal propagation. Include raw changed-input versus historical admission controls for H01/H03/H04/H26/H27. Record actual coverage without claiming full H-group qualification. Original endpoints must each yield eight hinges, one shared joint definition and sixteen endpoint sites.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c268/REVIEW.md",
+        "docs/engineering/localized-repair-c268/evidence/finalization-20261119/candidate-published/CHECKS.json"
+      ]
     },
     {
       "id": "R05",
       "description": "Verification and independent review",
       "acceptance": "Execute the complete affected C253/C255/C256/C257/C258/C261/C265/C266/C267/C268 cohort plus workflow/documentation checks on identified bytes. Obtain separate exact-candidate review, resolve mandatory findings, preserve failed attempts and all unrun roles.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c268/REVIEW.md",
+        "docs/engineering/localized-repair-c268/evidence/finalization-20261119/candidate-published/CHECKS.json"
+      ]
     },
     {
       "id": "R06",
@@ -87,7 +102,7 @@
         "R03",
         "R04"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c268/endpoint_reader.py",
         "docs/engineering/localized-repair-c268/test_endpoint_reader.py"
@@ -103,7 +118,7 @@
         "R04",
         "R05"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c268/RESULTS.md",
         "docs/engineering/localized-repair-c268/REVIEW.json"
@@ -118,7 +133,7 @@
       "requirements": [
         "R06"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "docs/engineering/localized-repair-c268/INTEGRATION.json"
       ],
@@ -141,25 +156,58 @@
       ]
     }
   ],
-  "checks": [],
+  "checks": [
+    {
+      "name": "independent historical reader controls",
+      "command": "python3 -B docs/engineering/localized-repair-c268/test_endpoint_reader.py --evidence-dir evidence/control-author/run-04",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c268/evidence/control-author/run-04/results.json",
+        "docs/engineering/localized-repair-c268/CONTROL-COVERAGE.md"
+      ]
+    },
+    {
+      "name": "original identified candidate cohort before review finding",
+      "command": "python3 -B docs/engineering/localized-repair-c268/evidence/run_checks.py --repo /workspace/scratch/c7dae94da130/validate-candidate --phase candidate --output /workspace/scratch/c7dae94da130/evidence/candidate --c268-methods 34",
+      "result": "passed",
+      "required": false,
+      "evidence": [
+        "docs/engineering/localized-repair-c268/evidence/candidate/CHECKS.json"
+      ]
+    },
+    {
+      "name": "corrected identified full affected candidate cohort",
+      "command": "python3 -B docs/engineering/localized-repair-c268/evidence/run_checks.py --repo IDENTIFIED_CLEAN_CHECKOUT --phase candidate-finalization --output NEW_EVIDENCE --c268-methods 35",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c268/evidence/finalization-20261119/candidate-published/CHECKS.json"
+      ]
+    }
+  ],
   "completion": {
-    "implementation_commit": null,
+    "implementation_commit": "e6f55b73fa71953aa648bcd34711a6796a7346b6",
     "merge_commit": null,
-    "pull_request": null,
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/266",
     "branch_disposition": "active",
-    "evidence": []
+    "evidence": [
+      "docs/engineering/localized-repair-c268/REVIEW.md",
+      "docs/engineering/localized-repair-c268/evidence/finalization-20261119/VERIFICATION-SUMMARY.json"
+    ],
+    "published_evidence_commit": "b49a930292752e80abe47cc0526e76413089d64d"
   },
-  "next_action": "Implement reader and independent controls; verify exact candidate",
+  "next_action": "Conditionally integrate the accepted C268 evidence on the existing PR266, check actual main, verify branch disposition, save the final handoff and external receipt, close and stop",
   "session_phase": {
-    "id": "C268-historical-endpoint-20261119",
-    "starting_main": "b2ca38875bd7b43b85011bbc671ee9fee1682441",
-    "owner": "c268-root-c7dae94da130",
-    "declared_at_utc": "2026-11-19T14:12:24.197517+00:00",
-    "scope": "Implement, independently verify/review and integrate the finite historical endpoint reader; save verified delivery and stop",
-    "acceptance": "R01-R07 complete with actual integration/main checks and confirmed final saved handoff",
-    "stopping_point": "Stop after confirmed final delivery, or first unplanned scope expansion with honest partial handoff; no next phase",
+    "id": "C268-finalization-a3de3dd23bbf",
+    "starting_main": "412a7e38741d3f3db2625cb6c1caf43b69c0cae0",
+    "owner": "c268-finalize-a3de3dd23bbf",
+    "declared_at_utc": "2026-11-20T00:12:19.794119+00:00",
+    "scope": "Publish recovered accepted evidence, integrate existing PR266 conditionally, check actual main, resolve branch disposition, save final handoff and external receipt; no next milestone",
+    "acceptance": "Existing C268 R01-R07 only",
+    "stopping_point": "Verified saved final delivery and closure, or saved partial if new scope or a material blocker is encountered",
     "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c268/EARLY-RECOVERY-RECEIPT.json"
+    "early_receipt": "docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/EARLY-RECOVERY-RECEIPT.json"
   },
   "delivery": {
     "required": true,

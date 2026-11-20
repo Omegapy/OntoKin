@@ -1,0 +1,252 @@
+{
+  "schema": "ontokin.c268.independent-review-probes/1",
+  "reviewer": "/root/state_audit",
+  "source_revision": "52af987fd5705c034bf264e2fe3fbc9fa1f146ae",
+  "source_tree": "d94436a22552db903b8016f9d035985a7d8b6752",
+  "started_at_utc": "2026-11-19T17:42:51.076469+00:00",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "probe_source": {
+    "bytes": 14766,
+    "sha256": "177a6225bcf266c7aadf71dcd5d2fdba21020701c893b012d7dcfbfa4f5d5cec"
+  },
+  "reviewed_inputs": {
+    "docs/engineering/localized-repair-c268/endpoint_reader.py": {
+      "bytes": 14914,
+      "sha256": "a7bb1f67398a54922e647d6d43062f89acb32c6e05a2fc653f5c30160f888157"
+    },
+    "docs/engineering/localized-repair-c260/CONTRACT.md": {
+      "bytes": 16245,
+      "sha256": "39bf90c51256cb392b0b639c36f3325c76f8919bbea4e3e572937e9834f8cd6c"
+    },
+    "docs/engineering/localized-repair-c260/INPUTS.json": {
+      "bytes": 4605,
+      "sha256": "d9f81932098104b051667d9523744530525ac891c3898718d8b1625db1941b8d"
+    },
+    "docs/engineering/localized-repair-c267/hinge_compare.py": {
+      "bytes": 12382,
+      "sha256": "f98b9eab7a7f0cc75afa26eab0b672356d7e3275e3d713d16df214e68e69d71d"
+    },
+    "docs/engineering/localized-repair-c266/hinge_binding.py": {
+      "bytes": 17639,
+      "sha256": "68849dbe3339c158eac7ec43fb1defcbd2993c37c6a0a5ee813d2da71fb03dda"
+    },
+    "docs/engineering/localized-repair-c265/source_hinges.py": {
+      "bytes": 37570,
+      "sha256": "04bea0f7c5f82a3e3e74610d3ee98755f44ed0905566c00eb063647e31abbf9e"
+    },
+    "docs/engineering/localized-repair-c261/hinge_glb.py": {
+      "bytes": 14036,
+      "sha256": "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08"
+    },
+    "docs/engineering/localized-repair-c257/ownership.py": {
+      "bytes": 35942,
+      "sha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1"
+    }
+  },
+  "input_witnesses": {
+    "before.main.ok": {
+      "bytes": 1708,
+      "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+    },
+    "after.main.ok": {
+      "bytes": 1708,
+      "sha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+    },
+    "hinges.ok": {
+      "bytes": 1911,
+      "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    "before.glb": {
+      "bytes": 185276,
+      "sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+    },
+    "after.glb": {
+      "bytes": 185236,
+      "sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+    },
+    "changed-initial.glb": {
+      "bytes": 185276,
+      "sha256": "b5e83287387c06fa8aa8cda14fde2da91fae8e003bf2edd1c2b76efc7bdada93"
+    }
+  },
+  "cases": [
+    {
+      "name": "whole_result_parity_before",
+      "started_at_utc": "2026-11-19T17:42:51.076971+00:00",
+      "details": {
+        "endpoint": "before",
+        "whole_comparison_equal": true,
+        "hinges": 8,
+        "sites": 16,
+        "private_modules_unchanged": true,
+        "descriptors_unchanged": true
+      },
+      "passed": true
+    },
+    {
+      "name": "whole_result_parity_after",
+      "started_at_utc": "2026-11-19T17:42:51.391750+00:00",
+      "details": {
+        "endpoint": "after",
+        "whole_comparison_equal": true,
+        "hinges": 8,
+        "sites": 16,
+        "private_modules_unchanged": true,
+        "descriptors_unchanged": true
+      },
+      "passed": true
+    },
+    {
+      "name": "copied_closure_baseline",
+      "started_at_utc": "2026-11-19T17:42:51.597833+00:00",
+      "details": {
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "name": "post_capture_all_dependency_paths_replaced",
+      "started_at_utc": "2026-11-19T17:42:51.692881+00:00",
+      "details": {
+        "all_five_paths_replaced_after_capture": true,
+        "filesystem_reopens": 0,
+        "captured_comparison_passed": true
+      },
+      "passed": true
+    },
+    {
+      "name": "same_module_next_call_rejects_replaced_paths",
+      "started_at_utc": "2026-11-19T17:42:51.779618+00:00",
+      "details": {
+        "code": "INPUT_BINDING",
+        "reason": "SYMLINK",
+        "all_input_identities_retained": true
+      },
+      "passed": true
+    },
+    {
+      "name": "restored_paths_recover_without_reload",
+      "started_at_utc": "2026-11-19T17:42:51.781399+00:00",
+      "details": {
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "name": "complete_closure_before_compile_comparison",
+      "started_at_utc": "2026-11-19T17:42:51.868003+00:00",
+      "details": {
+        "dependency": "comparison",
+        "code": "INPUT_BINDING",
+        "reason": "HASH",
+        "modules_compiled_before_refusal": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "complete_closure_before_compile_binding",
+      "started_at_utc": "2026-11-19T17:42:51.869544+00:00",
+      "details": {
+        "dependency": "binding",
+        "code": "INPUT_BINDING",
+        "reason": "HASH",
+        "modules_compiled_before_refusal": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "complete_closure_before_compile_source",
+      "started_at_utc": "2026-11-19T17:42:51.870892+00:00",
+      "details": {
+        "dependency": "source",
+        "code": "INPUT_BINDING",
+        "reason": "HASH",
+        "modules_compiled_before_refusal": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "complete_closure_before_compile_artifact",
+      "started_at_utc": "2026-11-19T17:42:51.872241+00:00",
+      "details": {
+        "dependency": "artifact",
+        "code": "INPUT_BINDING",
+        "reason": "HASH",
+        "modules_compiled_before_refusal": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "complete_closure_before_compile_identity",
+      "started_at_utc": "2026-11-19T17:42:51.873662+00:00",
+      "details": {
+        "dependency": "identity",
+        "code": "INPUT_BINDING",
+        "reason": "HASH",
+        "modules_compiled_before_refusal": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "last_transitive_dependency_fifo_bounded_refusal",
+      "started_at_utc": "2026-11-19T17:42:51.875159+00:00",
+      "details": {
+        "last_dependency_fifo": true,
+        "code": "INPUT_BINDING",
+        "reason": "NOT_REGULAR"
+      },
+      "passed": true
+    },
+    {
+      "name": "exact_comparison_fault_translation_and_cleanup",
+      "started_at_utc": "2026-11-19T17:42:51.878417+00:00",
+      "details": {
+        "predecessor_fields_equal": true,
+        "fields": {
+          "code": "FIELD_MISMATCH",
+          "detail": "artifact hinge field differs from source",
+          "pointer": "/extras/ontokin/joints/0/initial",
+          "origin": {
+            "file": "hinges.ok",
+            "startByte": 1759,
+            "endByteExclusive": 1765,
+            "role": "field expression: initial",
+            "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+          }
+        },
+        "public_fault_records_original_admitted_bytes": true,
+        "injected_changed_argument": true,
+        "no_private_module_or_fd_leak": true
+      },
+      "passed": true
+    },
+    {
+      "name": "overlapping_calls_keep_private_modules_isolated",
+      "started_at_utc": "2026-11-19T17:42:52.083765+00:00",
+      "details": {
+        "calls": 8,
+        "workers": 4,
+        "all_admitted": true,
+        "no_private_module_or_fd_leak": true
+      },
+      "passed": true
+    }
+  ],
+  "calls": {
+    "public": 21,
+    "successes": 13,
+    "typed_refusals": 8,
+    "unexpected": 0
+  },
+  "limits": [
+    "Independent supplemental probes, not the full required cohort",
+    "Comparison-failure probe injects changed GLB after original admission to exercise fault translation",
+    "Concurrent calls test this finite process/environment only"
+  ],
+  "source_revision_after": "52af987fd5705c034bf264e2fe3fbc9fa1f146ae",
+  "source_inputs_unchanged": true,
+  "private_modules_remaining": [],
+  "finished_at_utc": "2026-11-19T17:42:53.052601+00:00",
+  "passed": true,
+  "case_count": 14
+}

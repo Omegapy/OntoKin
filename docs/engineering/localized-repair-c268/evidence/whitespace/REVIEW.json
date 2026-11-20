@@ -1,0 +1,44 @@
+{
+  "source_base": "4595bade65291f36900be3e648c733aea74d5c40",
+  "source_head": "734789521f82248d39b623c33aae9d3284ab4bce",
+  "checks": [
+    {
+      "name": "full",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "4595bade65291f36900be3e648c733aea74d5c40",
+        "734789521f82248d39b623c33aae9d3284ab4bce"
+      ],
+      "exit_code": 2,
+      "output_sha256": "713bf53f88c0483edefecf00a0b816e560393a3b730d2f5011cb0486cec394a8",
+      "output_bytes": 256,
+      "output": "docs/engineering/localized-repair-c268/evidence/control-author/run-01/unittest.txt:21: trailing whitespace.\n+test_original_before_after_with_path_and_string_roots (__main__.EndpointReaderControls.test_original_before_after_with_path_and_string_roots) ... \n"
+    },
+    {
+      "name": "excluding-immutable-failed-log",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "4595bade65291f36900be3e648c733aea74d5c40",
+        "734789521f82248d39b623c33aae9d3284ab4bce",
+        "--",
+        ".",
+        ":(exclude)docs/engineering/localized-repair-c268/evidence/control-author/run-01/unittest.txt"
+      ],
+      "exit_code": 0,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output_bytes": 0,
+      "output": ""
+    }
+  ],
+  "accepted_evidence_exception": {
+    "path": "docs/engineering/localized-repair-c268/evidence/control-author/run-01/unittest.txt",
+    "bytes": 20104,
+    "sha256": "9a989421325e0eae9a4054d97b077b56fd90d6f18402f020603c7aa66bb895ab",
+    "reason": "Original failed unittest output retains a trailing space on a subtest line. Preserve failure bytes; no source/docs whitespace exception is granted."
+  },
+  "source_and_docs_clean": true
+}
