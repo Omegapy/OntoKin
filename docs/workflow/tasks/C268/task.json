@@ -3,7 +3,7 @@
   "id": "C268",
   "title": "Historical hinge endpoint admission",
   "intent": "Bind original source and GLB bytes before finite declaration comparison",
-  "status": "in_progress",
+  "status": "done",
   "owner": "c268-delivery-60da64efa55b",
   "branch": "work/c268-historical-endpoint",
   "base_sha": "b2ca38875bd7b43b85011bbc671ee9fee1682441",
@@ -74,8 +74,12 @@
       "id": "R07",
       "description": "Saved delivery",
       "acceptance": "Verify exact manifest, safe ZIP inventory, fresh extraction and source snapshots; save final online browser-session handoff and prompt files in existing OntoKin folder, publish separate receipt, complete task only after every gate, release ownership and stop. Preserve C262 unchanged.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c268/DELIVERY.json",
+        "docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/final-package-review/REVIEW.json",
+        "docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/issue-close-readback.json"
+      ]
     }
   ],
   "plan": [
@@ -151,7 +155,7 @@
       "requirements": [
         "R07"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c268/DELIVERY.json"
       ],
@@ -210,14 +214,22 @@
       "docs/engineering/localized-repair-c268/INTEGRATION.json",
       "docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/main-integration/CHECKS.json",
       "docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/BRANCH-DISPOSITION.json",
-      "docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/REPORT.md"
+      "docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/REPORT.md",
+      "docs/engineering/localized-repair-c268/DELIVERY.json",
+      "docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/final-package-review/REVIEW.json",
+      "docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/published-receipt-checks/CHECKS.json"
     ],
     "published_evidence_commit": "b49a930292752e80abe47cc0526e76413089d64d",
     "integration_candidate": "43115fb864c6f475fb2a56da43566fc1c8b3af50",
     "recovered_main_evidence_publication_commit": "71932558224d80794f76e52adf603b6308580326",
-    "original_main_evidence_commit": "ecce5f18fd4693e254bc6c797cd8b3f0a74d32a1"
+    "original_main_evidence_commit": "ecce5f18fd4693e254bc6c797cd8b3f0a74d32a1",
+    "delivery_receipt": "docs/engineering/localized-repair-c268/DELIVERY.json",
+    "handoff_source_commit": "0e0ed57bb704b6291bc66fcc057b73828d247f79",
+    "receipt_publication_commit": "9ffdbf4aa96ab8c1895aac2c6ee31e7bbf92cf20",
+    "scope_issue_state": "closed",
+    "lease_disposition": "released by closure publication"
   },
-  "next_action": "Save verified final C268 handoff and both prompts, publish external receipt, close task/issue265, release lease and stop; no next milestone",
+  "next_action": "C268 is complete within exact historical endpoint admission. Stop this session. Await separate user direction in a new main chat; a C260 H01-H28 coverage audit is only a queued option.",
   "session_phase": {
     "id": "C268-delivery-60da64efa55b",
     "starting_main": "5084dd69312e8da5a49aadd33cf83ba56db7c058",
@@ -227,12 +239,19 @@
     "acceptance": "Preserved C268 R01-R06 evidence and R07 saved delivery/closure only",
     "stopping_point": "Verified final delivery and closure or honest partial for material blocker; no new milestone",
     "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/EARLY-RECOVERY-RECEIPT.json"
+    "early_receipt": "docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/EARLY-RECOVERY-RECEIPT.json",
+    "status": "done"
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "pending",
-    "folder": "OntoKin"
+    "status": "saved",
+    "folder": "OntoKin",
+    "receipt": "docs/engineering/localized-repair-c268/DELIVERY.json",
+    "library_file_id": "libfile_fde3_f-c26a8fe2f39c8191b30935fe476ba4f9_2ab2a24d43748191957f9bcc356b59de",
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-c26a8fe2f39c8191b30935fe476ba4f9_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "sha256": "5ba28847d3993a25715ea76f7bc9fdd0f3e7de906c7c787d0d17eb25673b4a9f",
+    "bytes": 4125939,
+    "version": 0
   }
 }

@@ -4,13 +4,13 @@
 
 ## Current workflow and next action
 
-C268 integrated and verified; final saved delivery remains. [PR266](https://github.com/Omegapy/OntoKin/pull/266), merge `5084dd69312e8da5a49aadd33cf83ba56db7c058`: exact historical endpoint admission under unchanged C260. Fresh actual-main checks passed **12 groups, 282 methods, 14 corpus bindings** on CPython **3.12.14 / Linux**, with zero failures/errors/skips. R01–R06 complete; branch automatically deleted and public history retained. [Integration](docs/engineering/localized-repair-c268/INTEGRATION.json), [requirements](docs/workflow/tasks/C268/REQUIREMENTS.md), [plan](docs/workflow/tasks/C268/PLAN.md), [scope265](https://github.com/Omegapy/OntoKin/issues/265). R07 remains: verified saved handoff, separate receipt and closure; stop afterward.
+C268 complete within exact historical endpoint admission under unchanged C260. [PR266](https://github.com/Omegapy/OntoKin/pull/266) merged at `5084dd69312e8da5a49aadd33cf83ba56db7c058`; its source branch is absent and the reviewed history is retained. Actual-main evidence passed **12 groups, 282 methods, 14 bindings**, zero failures/errors/skips on CPython **3.12.14 / Linux**. [Integration](docs/engineering/localized-repair-c268/INTEGRATION.json), [independent recovery audit](docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/main-evidence-audit/REPORT.md), [confirmed final handoff and prompts](docs/engineering/localized-repair-c268/DELIVERY.json). [Scope265](https://github.com/Omegapy/OntoKin/issues/265) is closed. The final package passed independent verification; source checks remain attributed to their actual revisions.
 
 C267 complete within finite declaration comparison: [PR261](https://github.com/Omegapy/OntoKin/pull/261), merge `7174e6796b38bac3fa83e6412e0944512d137434`; branch deletion/retained ancestry verified. Recorded integration: **11 groups, 247 methods, 14 bindings**, CPython **3.12.14 / Linux**. Delivery-only phase independently verified exact evidence eligibility, passed fresh documentation/workflow checks and saved verified handoff. [Receipt](docs/engineering/localized-repair-c267/DELIVERY.json), [audit](docs/engineering/localized-repair-c267/evidence/delivery-20261118/EVIDENCE-REVIEW.md), [integration](docs/engineering/localized-repair-c267/INTEGRATION.json).
 
 C266 complete: [PR259](https://github.com/Omegapy/OntoKin/pull/259), merge `395c68be3f4c497fad2a1a41f0fc7c3a68fbc821`; **10 passing main groups, 222 methods, 14 bindings**; branch deleted; [saved delivery](docs/engineering/localized-repair-c266/DELIVERY.json) unchanged. C265/C264/C263 complete within recorded scopes.
 
-Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json), [HANDOFF](docs/workflow/HANDOFF.md). C268 integration and main verification are complete. Finish its verified saved handoff and stop. Owner-requested startup compression is delivered; C268 remains unchanged.
+Follow [START](CHATGPT-START-HERE.md), [CURRENT](docs/workflow/CURRENT.json), [HANDOFF](docs/workflow/HANDOFF.md). C268 integration, verification and saved delivery are complete. CURRENT awaits new user direction; stop this phase. Owner-requested startup compression is delivered; C268 remains unchanged.
 
 ## Product state and remaining gates
 
@@ -36,13 +36,9 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: held. Owner: `c268-delivery-60da64efa55b`.
-Acquired UTC: `2026-11-20T02:06:08.923123+00:00`; expires UTC: `2026-11-20T02:36:08.923123+00:00`.
-Reserved: STATUS/CURRENT, workflow knowledge and C268 final verification/delivery/task records.
-Scope: recover published-merge verification evidence, save final C268 handoff and prompts, publish receipt, close and stop; no implementation or next milestone.
-Expected acquisition parent: `5084dd69312e8da5a49aadd33cf83ba56db7c058`.
-Prior `c268-finalize-a3de3dd23bbf` lease expired at `2026-11-20T00:57:22.767246+00:00`. Live main/PR/branches and surviving writes reconciled; no active prior worker observed. Original unpublished `ecce5f18fd4693e254bc6c797cd8b3f0a74d32a1` is preserved in confirmed early recovery. Its identical tree is published as object `71932558224d80794f76e52adf603b6308580326`; it has not moved main.
-[Coordination](docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/COORDINATION.json). [Early save](docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/EARLY-RECOVERY-RECEIPT.json).
+State: available. Last owner: `c268-delivery-60da64efa55b`.
+C268 required delivery and issue-closure gates passed. This closure publication releases the lease acquired at `bb317b3bb84c484a4877b2a1a5e74393d94795f8` after confirmed receipt `9ffdbf4aa96ab8c1895aac2c6ee31e7bbf92cf20` and closed issue265.
+Reserved paths: none. No next milestone started. [Closure evidence](docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/CLOSURE.json).
 
 ## Historical status
 
