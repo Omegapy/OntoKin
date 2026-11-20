@@ -181,12 +181,15 @@
     "evidence": [
       "docs/engineering/localized-repair-c270/INTEGRATION.json",
       "docs/engineering/localized-repair-c270/evidence/recovery-20261120/FINAL-APPROVAL.json",
-      "docs/engineering/localized-repair-c270/DELIVERY.json"
+      "docs/engineering/localized-repair-c270/DELIVERY.json",
+      "docs/engineering/localized-repair-c270/CLOSEOUT.json"
     ],
     "evidence_candidate": "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68",
-    "scope_issue_state": "open"
+    "scope_issue_state": "open",
+    "delivery_receipt_commit": "fbfa7701862bf49265043b194c2c509f62cb54c5",
+    "phase_complete_parent_open": true
   },
-  "next_action": "Confirmed partial handoff delivered. Finish receipt checks and release ownership, then stop. In a new main chat explicitly declare the narrow classification correction under active C270; preserve the original failure and unchanged expectation.",
+  "next_action": "This recovery phase is complete and its verified partial handoff is saved. In a fresh main chat explicitly declare the narrow R02 classification correction using NEXT-TASK.md, preserving the existing task/branch and original failed control. Parent remains in_progress; do not replay completed finalization.",
   "session_phase": {
     "id": "C270-recovery-finalization",
     "starting_main": "c7b99e7c37bf8e3b11b58660b2903150211dc355",
@@ -203,7 +206,9 @@
     "integration_complete": true,
     "outcome": "Reviewed preserved failure evidence integrated, checked and delivered in a verified partial handoff; parent R02 remains failed",
     "delivery_confirmed": true,
-    "ownership_release": "pending receipt check/closeout"
+    "ownership_release": "released by this closeout commit; discover identity from live history",
+    "status": "complete_partial_delivery",
+    "completed_at_utc": "2026-11-20T15:18:58.880051+00:00"
   },
   "delivery": {
     "required": true,
@@ -237,7 +242,7 @@
   "recovery": {
     "starting_branch": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
     "lease_commit": "ab0f196cd8c67dfa94cba369381dafa8b6c7a015",
-    "first_unmet_gate": "Receipt checks and ownership release for this phase; R02 classification correction remains for a fresh main chat",
+    "first_unmet_gate": "Parent R02 classification correction, only in a fresh explicitly declared bounded phase",
     "known_unknown_operations": [],
     "preserve_original_failure": true,
     "workers": [
@@ -250,6 +255,7 @@
       "static_checks": 429,
       "result": "approved_for_evidence_only_integration",
       "final_metadata_delta_review": "passed"
-    }
+    },
+    "workers_disposition": "All assigned workers complete; no known active process or unknown operation"
   }
 }

@@ -1,0 +1,68 @@
+{
+  "schema": "ontokin.c270.partial-phase-closeout/1",
+  "recorded_at_utc": "2026-11-20T15:18:58.880051+00:00",
+  "phase": "C270-recovery-finalization",
+  "phase_status": "complete; stopped after partial delivery",
+  "parent_task": "C270",
+  "parent_status": "in_progress",
+  "requirements": {
+    "R01": "done",
+    "R02": "not_done",
+    "R03": "done",
+    "R04": "done",
+    "R05": "done"
+  },
+  "unmet_requirement": "R02 valid declared SiteRef refusal category remains MALFORMED rather than frozen UNSUPPORTED_SOURCE_FORM",
+  "scope_issue": {
+    "number": 270,
+    "state": "open",
+    "current_delivery_update_read_back": true
+  },
+  "pull_request": {
+    "number": 271,
+    "merged": true,
+    "merge_commit": "1afe569efc365caa6ec3203d3079dbc33d70349e"
+  },
+  "delivery_receipt_commit": "fbfa7701862bf49265043b194c2c509f62cb54c5",
+  "delivery_record": "docs/engineering/localized-repair-c270/DELIVERY.json",
+  "receipt_main_checks": {
+    "result": "passed",
+    "source_revision": "fbfa7701862bf49265043b194c2c509f62cb54c5",
+    "record": "docs/engineering/localized-repair-c270/evidence/recovery-20261120/receipt-main-checks/CHECKS.json"
+  },
+  "branch": {
+    "name": "work/c270-valid-siteref-control",
+    "state": "retained",
+    "head": "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68",
+    "history_retained_by": "1afe569efc365caa6ec3203d3079dbc33d70349e"
+  },
+  "ownership": {
+    "action": "release with this verified expected-head closeout commit",
+    "previous_owner": "c270-recovery-9e9d17639499",
+    "release_at_utc": "2026-11-20T15:18:58.880051+00:00",
+    "next_owner": null,
+    "discover_actual_release_commit": "Read live main history; this file cannot contain its own future commit identity"
+  },
+  "workers": [
+    {
+      "id": "/root/candidate_review",
+      "state": "complete; no process or unknown operation"
+    },
+    {
+      "id": "/root/handoff_audit",
+      "state": "complete; no process or unknown operation"
+    },
+    {
+      "id": "/root/package_review",
+      "state": "complete; no process or unknown operation"
+    }
+  ],
+  "known_unpublished_product_work": [],
+  "unknown_operations": [],
+  "next_action": "In a new main chat, reconcile live receipt and ownership, then explicitly declare one narrow classification-correction phase under the existing parent and retained branch. Do not repeat this completed finalization or change the frozen expectation.",
+  "limits": [
+    "No runtime/observer correction or behavioral rerun in recovery",
+    "No H16/full C260/product/native/model/site/world qualification",
+    "Immutable ZIP source snapshot precedes receipt and closeout commits; no rebuild is required"
+  ]
+}

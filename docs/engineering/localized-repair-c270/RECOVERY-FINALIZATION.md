@@ -33,3 +33,7 @@ R02 remains unmet even if documentation checks, evidence review, integration and
 ## Confirmed partial delivery
 
 The frozen ZIP and both byte-matching prompts are confirmed saved. [DELIVERY.json](DELIVERY.json) records exact identities, version, bytes, hashes, source revision and the external independent package approval. The frozen ZIP still says save_pending because this receipt occurs after its freeze; it is not rebuilt. R01/R03/R04/R05 are done, R02 remains failed, and parent C270/issue270 stay open. Receipt checks and ownership release finish this recovery; no next implementation phase starts here.
+
+## Phase closeout
+
+Receipt-main documentation and workflow checks passed. [CLOSEOUT.json](CLOSEOUT.json) releases integration ownership and records all workers stopped, the retained unfinished branch, the open parent/issue and the exact remaining R02 correction. Current recovery is complete. Continue only through a fresh explicitly declared main-chat phase; no correction was started here. The ZIP remains immutable at its earlier verified source snapshot and its confirmed receipt remains separate.
