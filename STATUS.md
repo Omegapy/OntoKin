@@ -36,12 +36,13 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: held. Owner: `c268-finalize-a3de3dd23bbf`.
-Acquired UTC: `2026-11-20T00:27:22.767246+00:00`; expires UTC: `2026-11-20T00:57:22.767246+00:00`.
-Reserved: STATUS/CURRENT, workflow memory/knowledge and C268 integration/delivery/task records.
-Scope: finish existing PR266 integration, actual-main verification, branch disposition and verified saved delivery; no next milestone.
-Expected acquisition parent: `412a7e38741d3f3db2625cb6c1caf43b69c0cae0`; published accepted-evidence object: `b49a930292752e80abe47cc0526e76413089d64d`, exactly preserving recovered tree `10bcebf566d001a850f8e5c5c77eb96857de7e3b`.
-[Coordination](docs/engineering/localized-repair-c268/evidence/finalization-a3de3dd23bbf/COORDINATION.json). Prior lease expired; current refs and preserved work reconciled; early recovery save confirmed.
+State: held. Owner: `c268-delivery-60da64efa55b`.
+Acquired UTC: `2026-11-20T02:06:08.923123+00:00`; expires UTC: `2026-11-20T02:36:08.923123+00:00`.
+Reserved: STATUS/CURRENT, workflow knowledge and C268 final verification/delivery/task records.
+Scope: recover published-merge verification evidence, save final C268 handoff and prompts, publish receipt, close and stop; no implementation or next milestone.
+Expected acquisition parent: `5084dd69312e8da5a49aadd33cf83ba56db7c058`.
+Prior `c268-finalize-a3de3dd23bbf` lease expired at `2026-11-20T00:57:22.767246+00:00`. Live main/PR/branches and surviving writes reconciled; no active prior worker observed. Original unpublished `ecce5f18fd4693e254bc6c797cd8b3f0a74d32a1` is preserved in confirmed early recovery. Its identical tree is published as object `71932558224d80794f76e52adf603b6308580326`; it has not moved main.
+[Coordination](docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/COORDINATION.json). [Early save](docs/engineering/localized-repair-c268/evidence/delivery-60da64efa55b/EARLY-RECOVERY-RECEIPT.json).
 
 ## Historical status
 
