@@ -58,7 +58,8 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
-        "docs/engineering/localized-repair-c271/finalization-20261120/EARLY-RECOVERY-RECEIPT.json"
+        "docs/engineering/localized-repair-c271/finalization-20261120/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json"
       ]
     }
   ],
@@ -145,7 +146,8 @@
       "required": true,
       "evidence": [
         "docs/engineering/localized-repair-c271/delivery/record-checks/CHECKS.json",
-        "docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/CHECKS.json"
+        "docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/final-source-record-checks/CHECKS.json"
       ]
     },
     {
@@ -180,6 +182,18 @@
         "docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REPORT.md"
       ],
       "scope": "Evidence inspection passed; integration acceptance failed because two mandatory routine-driver findings remain unresolved. No requirement waiver."
+    },
+    {
+      "name": "P02 blocked partial handoff archive and independent package review",
+      "command": "Recorded builder, independent archive audit and saved file readback; no behavioral replay",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/finalization-20261120/PACKAGE-VERIFICATION.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/package-review/AUDIT.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json"
+      ],
+      "scope": "Current partial phase delivery only; R03-R05 parent gates remain unmet."
     }
   ],
   "completion": {
@@ -188,7 +202,8 @@
     "pull_request": "https://github.com/Omegapy/OntoKin/pull/274",
     "branch_disposition": "retained",
     "evidence": [
-      "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
+      "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json"
     ]
   },
   "next_action": "In a fresh chat, select one bounded C271 validation-recovery phase: repair the isolated-workspace copy omission of CHATGPT-START-HERE.md, ROLE.md and the three .agents skill files with a focused copy-preservation check; establish a justified completion plan for the full required routine driver and prepare its declared dependencies. Preserve all tests, frozen controls, original failures and the 100000-operation/30000-ms per-source limits. Then resume R03 independent acceptance; do not blindly repeat the failed command or start another H group.",
@@ -224,9 +239,9 @@
       "/root/package_builder": "verified early save preparation; final partial package preparation",
       "/root/validation": "both original verification processes completed; all outcomes and raw evidence preserved"
     },
-    "status": "blocked_pending_partial_delivery",
+    "status": "complete_partial_delivery",
     "early_save_confirmed": true,
-    "delivery_confirmed": false,
+    "delivery_confirmed": true,
     "early_receipt": "docs/engineering/localized-repair-c271/finalization-20261120/EARLY-RECOVERY-RECEIPT.json",
     "behavioral_work_stopped": true,
     "blocking_findings": [
@@ -236,15 +251,60 @@
     "executed_source_revision": "88bc8b51b3963b7072375edac6400b6e6a4532e4",
     "executed_source_tree": "755f366d1091beb71b5421b14fdac0b9b868cfb0",
     "outcome": "docs/engineering/localized-repair-c271/finalization-20261120/PHASE-OUTCOME.json",
-    "independent_integration_approved": false
+    "independent_integration_approved": false,
+    "completed_at_utc": "2026-11-20T23:35:18.387537+00:00",
+    "source_revision": "70a658c31085bf8dd78d79663c57f8e3cdb28ceb",
+    "source_tree": "77ee621cdfb00acf637828ce71f3384b4dd8275c",
+    "delivery_receipt": "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json",
+    "package_review": {
+      "result": "passed",
+      "report": "docs/engineering/localized-repair-c271/finalization-20261120/package-review/AUDIT.json"
+    }
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "pending",
+    "status": "saved",
     "folder": "OntoKin",
     "partial": true,
-    "receipt": "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json"
+    "receipt": "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json",
+    "archive": {
+      "file_name": "OntoKin_C271_P02_Validation_Blocked_Handoff_2026-11-20.zip",
+      "library_file_id": "libfile_fde3_f-b14e79917ee8819184206c7d300f0466_2ab2a24d43748191957f9bcc356b59de",
+      "file_id": "file_000000002f94822f83b1f727c17239fe",
+      "path": "/OntoKin/OntoKin_C271_P02_Validation_Blocked_Handoff_2026-11-20.zip",
+      "bytes": 19975795,
+      "sha256": "f9cd741651c271a31cbe6fa691b07080dcc531f6fc35ea62adf6186cb0091b7a",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-b14e79917ee8819184206c7d300f0466_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "local_metadata_applied": true,
+      "version": 0
+    },
+    "prompts": [
+      {
+        "file_name": "OntoKin_C271_P02_Blocked_Prompt_1_Continue_2026-11-20.md",
+        "library_file_id": "libfile_fde3_f-586b31a5008081918b97240185ff02c4_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_00000000e238822faf8e98b4d7eb7fe6",
+        "path": "/OntoKin/OntoKin_C271_P02_Blocked_Prompt_1_Continue_2026-11-20.md",
+        "bytes": 4830,
+        "sha256": "e468d8edc5d9a97a7a44d5d961159339e9959689fc375c2d84a554c6e8827eca",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-586b31a5008081918b97240185ff02c4_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_metadata_applied": true,
+        "version": 0
+      },
+      {
+        "file_name": "OntoKin_C271_P02_Blocked_Prompt_2_Recover_2026-11-20.md",
+        "library_file_id": "libfile_fde3_f-d0cf906d1b1881918731b294bf141098_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_00000000b928822f8dccf547896da451",
+        "path": "/OntoKin/OntoKin_C271_P02_Blocked_Prompt_2_Recover_2026-11-20.md",
+        "bytes": 5106,
+        "sha256": "20df654347e76b99c63ada054109e3941beb9f9b036db98b99ccde3c0fb5030f",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-d0cf906d1b1881918731b294bf141098_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_metadata_applied": true,
+        "version": 0
+      }
+    ],
+    "source_revision": "70a658c31085bf8dd78d79663c57f8e3cdb28ceb",
+    "source_tree": "77ee621cdfb00acf637828ce71f3384b4dd8275c"
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",

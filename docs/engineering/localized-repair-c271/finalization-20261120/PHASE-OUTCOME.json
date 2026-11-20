@@ -2,7 +2,7 @@
   "schema": "ontokin.c271.p02-blocked-outcome/1",
   "recorded_at_utc": "2026-11-20T23:15:27.961628+00:00",
   "phase": "C271-P02-integration-finalization",
-  "status": "blocked_partial_handoff_pending",
+  "status": "blocked_partial_delivery_saved",
   "task_status": "blocked",
   "source_commit": "88bc8b51b3963b7072375edac6400b6e6a4532e4",
   "source_tree": "755f366d1091beb71b5421b14fdac0b9b868cfb0",
@@ -164,7 +164,14 @@
     "raw_verification": "verification/RAW-EVIDENCE-VERIFICATION.json",
     "independent_review": "independent-review/REPORT.md"
   },
-  "delivery": "Pending final ZIP/prompts save; separate P02-DELIVERY.json will record the actual saved receipt.",
+  "delivery": {
+    "status": "saved",
+    "partial": true,
+    "receipt": "P02-DELIVERY.json",
+    "source_revision": "70a658c31085bf8dd78d79663c57f8e3cdb28ceb",
+    "archive_sha256": "f9cd741651c271a31cbe6fa691b07080dcc531f6fc35ea62adf6186cb0091b7a",
+    "boundary": "Frozen ZIP plus two matching prompts confirmed saved; current phase delivered, parent remains blocked/open."
+  },
   "independent_acceptance": {
     "verdict": "not_eligible",
     "integration_approved": false,

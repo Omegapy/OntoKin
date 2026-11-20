@@ -33,3 +33,7 @@ C271 is blocked and remains open. R01/R02 remain done; R03–R05 remain not_done
 Next action: In a fresh chat, select one bounded C271 validation-recovery phase: repair the isolated-workspace copy omission of CHATGPT-START-HERE.md, ROLE.md and the three .agents skill files with a focused copy-preservation check; establish a justified completion plan for the full required routine driver and prepare its declared dependencies. Preserve all tests, frozen controls, original failures and the 100000-operation/30000-ms per-source limits. Then resume R03 independent acceptance; do not blindly repeat the failed command or start another H group.
 
 The final partial delivery is pending its separate `docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json` receipt. Saving this phase does not complete the parent requirements.
+
+### P02 delivery confirmed after source freeze
+
+The ZIP and two matching prompts are confirmed saved; the separate `docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json` identifies the exact files and verification. Earlier pending-delivery text records the frozen source boundary. The phase session is complete_partial_delivery; C271 remains blocked/open, R03–R05 remain not_done and P02 remains in_progress. No required failure was waived and no integration occurred. Resume the recorded validation-recovery action only in a fresh bounded phase.

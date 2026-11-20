@@ -35,3 +35,9 @@ C271 is blocked and remains open. R01/R02 remain done; R03–R05 remain not_done
 Next action: In a fresh chat, select one bounded C271 validation-recovery phase: repair the isolated-workspace copy omission of CHATGPT-START-HERE.md, ROLE.md and the three .agents skill files with a focused copy-preservation check; establish a justified completion plan for the full required routine driver and prepare its declared dependencies. Preserve all tests, frozen controls, original failures and the 100000-operation/30000-ms per-source limits. Then resume R03 independent acceptance; do not blindly repeat the failed command or start another H group.
 
 The final partial delivery is pending its separate `docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json` receipt. Saving this phase does not complete the parent requirements.
+
+## Confirmed partial delivery — 2026-11-20
+
+The frozen ZIP and both matching prompts were saved successfully in the existing OntoKin folder. Saved IDs, version 0, exact sizes, hashes, destination paths and applied local metadata were checked against the ordered upload and a subsequent destination listing. The external `docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json` records the confirmed files, 719 builder checks, 1,031 independent package checks and the 1,522-check source audit. All inspection predicates passed; required routine acceptance still failed.
+
+The phase session is complete_partial_delivery. C271 remains blocked, P02 remains in_progress, R03–R05 remain not_done, and PR #274/issue #273 remain open. Main was not changed and no lease was acquired. This receipt-only publication does not rebuild the ZIP, rerun behavior or approve integration. The next fresh chat starts with the recorded validation-recovery action.
