@@ -54,8 +54,11 @@
       "id": "R05",
       "description": "Verified delivery and closure decision",
       "acceptance": "Confirm early recovery before substantial work; verify and save final ZIP and prompts, publish separate receipt, stop. Close parent/issue only when all gates pass; otherwise retain open scope and exact remaining action.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c270/DELIVERY.json",
+        "docs/engineering/localized-repair-c270/evidence/recovery-20261120/FINAL-PACKAGE-REVIEW.json"
+      ]
     }
   ],
   "plan": [
@@ -123,7 +126,7 @@
       "requirements": [
         "R05"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/localized-repair-c270/DELIVERY.json"
       ],
@@ -177,12 +180,13 @@
     "branch_disposition": "retained",
     "evidence": [
       "docs/engineering/localized-repair-c270/INTEGRATION.json",
-      "docs/engineering/localized-repair-c270/evidence/recovery-20261120/FINAL-APPROVAL.json"
+      "docs/engineering/localized-repair-c270/evidence/recovery-20261120/FINAL-APPROVAL.json",
+      "docs/engineering/localized-repair-c270/DELIVERY.json"
     ],
     "evidence_candidate": "4c53c3566cd18cb0f1fd47b02be6b23a40b40e68",
     "scope_issue_state": "open"
   },
-  "next_action": "Verify and save the C270 partial handoff and matching prompts, publish its separate receipt, release ownership and stop. R02 remains unmet; correction is a separately declared phase for a fresh main chat.",
+  "next_action": "Confirmed partial handoff delivered. Finish receipt checks and release ownership, then stop. In a new main chat explicitly declare the narrow classification correction under active C270; preserve the original failure and unchanged expectation.",
   "session_phase": {
     "id": "C270-recovery-finalization",
     "starting_main": "c7b99e7c37bf8e3b11b58660b2903150211dc355",
@@ -197,14 +201,23 @@
     "behavioral_work_stopped": true,
     "behavioral_reruns_this_phase": 0,
     "integration_complete": true,
-    "outcome": "Original classification defect preserved; reviewed evidence integrated and checked; partial delivery pending"
+    "outcome": "Reviewed preserved failure evidence integrated, checked and delivered in a verified partial handoff; parent R02 remains failed",
+    "delivery_confirmed": true,
+    "ownership_release": "pending receipt check/closeout"
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "pending",
+    "status": "saved",
     "folder": "OntoKin",
-    "receipt": "docs/engineering/localized-repair-c270/DELIVERY.json"
+    "receipt": "docs/engineering/localized-repair-c270/DELIVERY.json",
+    "library_file_id": "libfile_fde3_f-fb342ba3a2d48191be837ec9bab3566f_2ab2a24d43748191957f9bcc356b59de",
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fb342ba3a2d48191be837ec9bab3566f_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "bytes": 2573742,
+    "sha256": "2c8d08e8cbdeec4ada3e65d692dc47d813169c3268fe33d014b89e6281a32940",
+    "version": 0,
+    "source_revision": "a8e0bd1d446396b220075b5329e2c769c338f6a2",
+    "partial": true
   },
   "phase_history": [
     {
@@ -224,7 +237,7 @@
   "recovery": {
     "starting_branch": "1a2e9f85fa3ba210a16235e5660f1762ea8a953e",
     "lease_commit": "ab0f196cd8c67dfa94cba369381dafa8b6c7a015",
-    "first_unmet_gate": "R05 verified partial handoff, confirmed save and separate receipt",
+    "first_unmet_gate": "Receipt checks and ownership release for this phase; R02 classification correction remains for a fresh main chat",
     "known_unknown_operations": [],
     "preserve_original_failure": true,
     "workers": [

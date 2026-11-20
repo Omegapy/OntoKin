@@ -12,7 +12,7 @@ This phase resumes the existing evidence-only task after the conversation ended.
 | Affected cohort | 108 methods and 14 corpus bindings passed | Original candidate/regressions/CHECKS.json; no behavioral rerun in this phase |
 | Independent exact-candidate review (R03) | Approved for evidence-only integration | 389 static checks at 096803b2377966a04f9043139324bac2c65b6a52; final receipt/state delta reviewed before integration |
 | Evidence integration and actual-main checks (R04) | Complete | PR271 merged at 1afe569efc365caa6ec3203d3079dbc33d70349e; fresh documentation/workflow checks passed; unfinished branch restored and retained |
-| Partial delivery and receipt (R05) | Pending | Verify frozen ZIP, save ZIP/prompts, publish separate receipt |
+| Partial delivery and receipt (R05) | Saved | Exact ZIP and both prompts confirmed; 2,129 independent package checks passed; separate DELIVERY.json |
 
 ## Preservation and limits
 
@@ -29,3 +29,7 @@ R02 remains unmet even if documentation checks, evidence review, integration and
 ## Verified integration
 
 [PR271](https://github.com/Omegapy/OntoKin/pull/271) merged the exact approved evidence tree through a conditional main-head update. [Integration record](INTEGRATION.json) binds the 429-check independent review, merge parents, actual-main checks and branch readbacks. Repository automatic cleanup removed the branch; the same name was restored at its verified retained candidate head. Original history is reachable through the merge parents. R04 is complete; R05 final delivery remains pending at this record. R02 and the parent remain incomplete.
+
+## Confirmed partial delivery
+
+The frozen ZIP and both byte-matching prompts are confirmed saved. [DELIVERY.json](DELIVERY.json) records exact identities, version, bytes, hashes, source revision and the external independent package approval. The frozen ZIP still says save_pending because this receipt occurs after its freeze; it is not rebuilt. R01/R03/R04/R05 are done, R02 remains failed, and parent C270/issue270 stay open. Receipt checks and ownership release finish this recovery; no next implementation phase starts here.
