@@ -1,0 +1,5240 @@
+{
+  "schema": "ontokin.c271.p10-focused-run/1",
+  "started_at_utc": "2026-11-21T20:24:34.512202+00:00",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-I",
+    "-S",
+    "-B",
+    "/workspace/scratch/7b9b58d10704/session_p10/verification/run_focused_guarded.py",
+    "--repo",
+    "/workspace/scratch/7b9b58d10704/OntoKin",
+    "--output",
+    "/workspace/scratch/7b9b58d10704/session_p10/verification/run001",
+    "--fixtures",
+    "/workspace/scratch/7b9b58d10704/session_p10/verification/run001/fixtures",
+    "--expected-head",
+    "fdacc11349079be21bcce755b18ca660df4d96a2",
+    "--freeze",
+    "/workspace/scratch/7b9b58d10704/session_p10/verification/FROZEN-INPUTS.json",
+    "--freeze-sha256",
+    "bebe2cddd3400af27cf29d5ce8aa22cff1ada99849657b3cc5b2a81892855a7e"
+  ],
+  "cwd": "/workspace/scratch/7b9b58d10704",
+  "selected_modules": [
+    "tests.test_current_host_inspection_v01",
+    "tests.test_current_host_elf_mapping_v01"
+  ],
+  "state": "completed",
+  "passed": true,
+  "pre_guard_git_commands": [
+    {
+      "argv": [
+        "/usr/bin/git",
+        "-C",
+        "/workspace/scratch/7b9b58d10704/OntoKin",
+        "rev-parse",
+        "--show-toplevel"
+      ],
+      "exit_code": 0,
+      "stdout": "root.stdout",
+      "stderr": "root.stderr"
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "-C",
+        "/workspace/scratch/7b9b58d10704/OntoKin",
+        "rev-parse",
+        "HEAD",
+        "HEAD^{tree}"
+      ],
+      "exit_code": 0,
+      "stdout": "identity.stdout",
+      "stderr": "identity.stderr"
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "-C",
+        "/workspace/scratch/7b9b58d10704/OntoKin",
+        "status",
+        "--porcelain=v1",
+        "-z",
+        "--untracked-files=all"
+      ],
+      "exit_code": 0,
+      "stdout": "status.stdout",
+      "stderr": "status.stderr"
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "-C",
+        "/workspace/scratch/7b9b58d10704/OntoKin",
+        "diff",
+        "--no-renames",
+        "--name-only",
+        "-z",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "changed.stdout",
+      "stderr": "changed.stderr"
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "-C",
+        "/workspace/scratch/7b9b58d10704/OntoKin",
+        "ls-files",
+        "--others",
+        "--exclude-standard",
+        "-z"
+      ],
+      "exit_code": 0,
+      "stdout": "untracked.stdout",
+      "stderr": "untracked.stderr"
+    },
+    {
+      "argv": [
+        "/usr/bin/git",
+        "-C",
+        "/workspace/scratch/7b9b58d10704/OntoKin",
+        "diff",
+        "--binary",
+        "--no-ext-diff",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "patch.stdout",
+      "stderr": "patch.stderr"
+    }
+  ],
+  "guards_installed": true,
+  "product_tests_started": true,
+  "current_unknown_operations": [],
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "ONTOKIN_HI_RETAIN_ROOT": "/workspace/scratch/7b9b58d10704/session_p10/verification/run001/fixtures/inspection",
+    "ONTOKIN_ELF_RETAIN_ROOT": "/workspace/scratch/7b9b58d10704/session_p10/verification/run001/fixtures/elf"
+  },
+  "unexpected_environment_keys": [],
+  "python": {
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "resolved_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "binding": {
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "mode": "0o755",
+      "bytes": 30894944,
+      "device": 27,
+      "inode": 9223372036854863271,
+      "links": 1,
+      "mtime_ns": 1795130451000000000,
+      "kind": "file",
+      "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7"
+    },
+    "platform": "linux",
+    "uname": [
+      "Linux",
+      "d132cb9a4965",
+      "6.18.57",
+      "#1 SMP Tue Oct 20 21:56:04 UTC 2026",
+      "x86_64"
+    ]
+  },
+  "git_executable": {
+    "path": "/usr/bin/git",
+    "mode": "0o755",
+    "bytes": 4082768,
+    "device": 27,
+    "inode": 9223372036855080214,
+    "links": 1,
+    "mtime_ns": 1753899052000000000,
+    "kind": "file",
+    "sha256": "356db14e102d68a1a37d8a1ac577dfd678d45d46e92f468bef8b7154e7bfdc60"
+  },
+  "source": {
+    "repo": "/workspace/scratch/7b9b58d10704/OntoKin",
+    "head": "fdacc11349079be21bcce755b18ca660df4d96a2",
+    "tree": "be6534bc800ad8be7b7ee4938d289b852503e534",
+    "dirty": false,
+    "dirty_manifest": "DIRTY-MANIFEST.json",
+    "preflight_only": true
+  },
+  "frozen_source_files": [
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/docs/engineering/localized-repair-c271/elf-string-table-p10/VERIFICATION-PLAN.json",
+        "mode": "0o644",
+        "bytes": 2068,
+        "device": 27,
+        "inode": 3804576,
+        "links": 1,
+        "mtime_ns": 1795292364873444204,
+        "kind": "file",
+        "sha256": "465e8dbf1ed520ae44970feb70d7889e5b94581d76b453f399429ceb74c37605"
+      },
+      "snapshot": "frozen-inputs/0000-VERIFICATION-PLAN.json"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/__init__.py",
+        "mode": "0o644",
+        "bytes": 85,
+        "device": 27,
+        "inode": 3691758,
+        "links": 1,
+        "mtime_ns": 1795291244650537836,
+        "kind": "file",
+        "sha256": "f63210895af2901371763f24f7ddb301c2a7c1f73f4133335ae85bbb559832e8"
+      },
+      "snapshot": "frozen-inputs/0001-__init__.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/canonical.py",
+        "mode": "0o644",
+        "bytes": 12078,
+        "device": 27,
+        "inode": 3691759,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "ce3f67349ade5af1d966ed0f1f240b264278c14f1f77c8ecc5cdeabb12ad6433"
+      },
+      "snapshot": "frozen-inputs/0002-canonical.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/cli.py",
+        "mode": "0o644",
+        "bytes": 9667,
+        "device": 27,
+        "inode": 3691760,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "cae6191d143509e29fdf9d550e00fc8d8f5f9c267b9420c7d8865a6941d937f0"
+      },
+      "snapshot": "frozen-inputs/0003-cli.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/current_host_inspection_v01.py",
+        "mode": "0o644",
+        "bytes": 148602,
+        "device": 27,
+        "inode": 3691761,
+        "links": 1,
+        "mtime_ns": 1795292231456023990,
+        "kind": "file",
+        "sha256": "0c2ef54a227e2e05a7eb1f71a4fedd934399aa27d98ec7a3845f93a4dbfbb612"
+      },
+      "snapshot": "frozen-inputs/0004-current_host_inspection_v01.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/current_host_readback_v01.mjs",
+        "mode": "0o644",
+        "bytes": 55792,
+        "device": 27,
+        "inode": 3691762,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "218d22e8b279daf667ff9717ad8eacc30612e2d83bb6dd2a37b50f2d30162ff1"
+      },
+      "snapshot": "frozen-inputs/0005-current_host_readback_v01.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/current_host_readback_v01.py",
+        "mode": "0o644",
+        "bytes": 65533,
+        "device": 27,
+        "inode": 3691763,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "2a8144624ea00f3f350a6b7f482c993665b4049b363b93bc399ed0cd7a14ba78"
+      },
+      "snapshot": "frozen-inputs/0006-current_host_readback_v01.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/delivery-rules.json",
+        "mode": "0o644",
+        "bytes": 2220,
+        "device": 27,
+        "inode": 3691764,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "b96f29fa65a1f684a85d70dbc4df0db5fd981baadba61377a4142b2d70ff2de6"
+      },
+      "snapshot": "frozen-inputs/0007-delivery-rules.json"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/errors.py",
+        "mode": "0o644",
+        "bytes": 903,
+        "device": 27,
+        "inode": 3691765,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "ebd82d6945722f6ab896ddfd5763818432d3e53f8bd3aec1e9c5bfee5aa4300b"
+      },
+      "snapshot": "frozen-inputs/0008-errors.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/export-settings.json",
+        "mode": "0o644",
+        "bytes": 3696,
+        "device": 27,
+        "inode": 3691766,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "4a148619a8d7cb0618a6b0b6fc3098ad9943cfc01cb061625ea3514b2eb865e4"
+      },
+      "snapshot": "frozen-inputs/0009-export-settings.json"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/fixtures.py",
+        "mode": "0o644",
+        "bytes": 9653,
+        "device": 27,
+        "inode": 3691767,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "10f6f59488d2621b6f085683e34049954aa5b06dab6c66f5e4af02ab14e28bf6"
+      },
+      "snapshot": "frozen-inputs/0010-fixtures.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/format_check.py",
+        "mode": "0o644",
+        "bytes": 15959,
+        "device": 27,
+        "inode": 3691768,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447"
+      },
+      "snapshot": "frozen-inputs/0011-format_check.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/import-settings.json",
+        "mode": "0o644",
+        "bytes": 626,
+        "device": 27,
+        "inode": 3691769,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "8ea29a41e898b0aee5f2479cbe42a49a7f9af271597dcf04e1c1ec61b1e5e050"
+      },
+      "snapshot": "frozen-inputs/0012-import-settings.json"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/lifecycle.py",
+        "mode": "0o644",
+        "bytes": 8041,
+        "device": 27,
+        "inode": 3691770,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "7621b2cb40e7e23a770a2171ddd0e368b24744730084a5b088d2cc5d86214c51"
+      },
+      "snapshot": "frozen-inputs/0013-lifecycle.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/lifecycle_stub.py",
+        "mode": "0o644",
+        "bytes": 940,
+        "device": 27,
+        "inode": 3691771,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "16902d9f0fd3c49b5052990592475bac18c26df5286da334f1fb294a3aacd432"
+      },
+      "snapshot": "frozen-inputs/0014-lifecycle_stub.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/lock.py",
+        "mode": "0o644",
+        "bytes": 23327,
+        "device": 27,
+        "inode": 3691772,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "bb98718bcfcca82e7eabb310bccc51cbf2ab2903af5b0c203c673d56bebb47e0"
+      },
+      "snapshot": "frozen-inputs/0015-lock.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/qualification.py",
+        "mode": "0o644",
+        "bytes": 9022,
+        "device": 27,
+        "inode": 3691773,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "611f85be0beb2e700075fc062521453bbc105e434eb060bf19d845a0bcae9bae"
+      },
+      "snapshot": "frozen-inputs/0016-qualification.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/readback.mjs",
+        "mode": "0o644",
+        "bytes": 11537,
+        "device": 27,
+        "inode": 3691774,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "156c988ffc478adafe59c495a07e0a48f5ac77c12829d85d147838578b523b4c"
+      },
+      "snapshot": "frozen-inputs/0017-readback.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/receive_check.py",
+        "mode": "0o644",
+        "bytes": 13780,
+        "device": 27,
+        "inode": 3691775,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "9cde23fd1008491bc8dc87e4863cf1badda239157a693de27e7f4146a025168a"
+      },
+      "snapshot": "frozen-inputs/0018-receive_check.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/receiver.py",
+        "mode": "0o644",
+        "bytes": 10558,
+        "device": 27,
+        "inode": 3691776,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "02dd0a479ba0849ac0433550daca6bba35dfce0d66a96daa603d0565ff3ceea1"
+      },
+      "snapshot": "frozen-inputs/0019-receiver.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/sources.py",
+        "mode": "0o644",
+        "bytes": 46148,
+        "device": 27,
+        "inode": 3691777,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "c785153c1b7a92441c59cbfae1daf7da4fbc6101e7c7e67a3da0c3b0bfdc546e"
+      },
+      "snapshot": "frozen-inputs/0020-sources.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/store.py",
+        "mode": "0o644",
+        "bytes": 6735,
+        "device": 27,
+        "inode": 3691778,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "d0006497ff6fc13ff0b563cdb58445789cd1a26c489ac4ce2a84e77a03607bd0"
+      },
+      "snapshot": "frozen-inputs/0021-store.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/supervisor.py",
+        "mode": "0o644",
+        "bytes": 11286,
+        "device": 27,
+        "inode": 3691779,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10"
+      },
+      "snapshot": "frozen-inputs/0022-supervisor.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/transaction.py",
+        "mode": "0o644",
+        "bytes": 28617,
+        "device": 27,
+        "inode": 3691780,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "4fc05f614189a5782023a6701195ddc631395d053172092c9ede9f30db360466"
+      },
+      "snapshot": "frozen-inputs/0023-transaction.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/worker.py",
+        "mode": "0o644",
+        "bytes": 12289,
+        "device": 27,
+        "inode": 3691781,
+        "links": 1,
+        "mtime_ns": 1795291244651568395,
+        "kind": "file",
+        "sha256": "2651bbcff9140f9e95c31388e7b9599af342caffc7ed1c1791f4657b75565302"
+      },
+      "snapshot": "frozen-inputs/0024-worker.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/pyproject.toml",
+        "mode": "0o644",
+        "bytes": 1661,
+        "device": 27,
+        "inode": 3314599,
+        "links": 1,
+        "mtime_ns": 1795291244654806351,
+        "kind": "file",
+        "sha256": "9722f48d6ab3f41431e369e8158e0b7173b28a9b18fe5c768da0b1b13f4a5f8d"
+      },
+      "snapshot": "frozen-inputs/0025-pyproject.toml"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tests/fixtures/current_host_elf_mapping_v01/FIXTURES.json",
+        "mode": "0o644",
+        "bytes": 20330,
+        "device": 27,
+        "inode": 3804482,
+        "links": 1,
+        "mtime_ns": 1795292231625558295,
+        "kind": "file",
+        "sha256": "e655c0d6c7ae7a2d5fb7a7ad20b3d9b263cc84c48e2f937eb9f8eee55240f841"
+      },
+      "snapshot": "frozen-inputs/0026-FIXTURES.json"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tests/fixtures/current_host_elf_mapping_v01/ORACLE.json",
+        "mode": "0o644",
+        "bytes": 30806,
+        "device": 27,
+        "inode": 3804481,
+        "links": 1,
+        "mtime_ns": 1795292231604022430,
+        "kind": "file",
+        "sha256": "35b8535599cc24276dfe66e57b9ed80348c12d429e9a61441c4f449a7cb4ce8a"
+      },
+      "snapshot": "frozen-inputs/0027-ORACLE.json"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tests/fixtures/rack_explicit.ok",
+        "mode": "0o644",
+        "bytes": 3581,
+        "device": 27,
+        "inode": 3314602,
+        "links": 1,
+        "mtime_ns": 1795291244655033492,
+        "kind": "file",
+        "sha256": "a12194316c682f8675e2718003a819ace124de5e1111a1d6eb8341ba16833d50"
+      },
+      "snapshot": "frozen-inputs/0028-rack_explicit.ok"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tests/test_current_host_elf_mapping_v01.py",
+        "mode": "0o644",
+        "bytes": 5937,
+        "device": 27,
+        "inode": 3312597,
+        "links": 1,
+        "mtime_ns": 1795292285743452810,
+        "kind": "file",
+        "sha256": "6860891b40f2bc63c4dd8b62c2e3f05fd8ac2d0616e39dd13d363b288c1e8826"
+      },
+      "snapshot": "frozen-inputs/0029-test_current_host_elf_mapping_v01.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tests/test_current_host_inspection_v01.py",
+        "mode": "0o644",
+        "bytes": 139313,
+        "device": 27,
+        "inode": 3314626,
+        "links": 1,
+        "mtime_ns": 1795291244655033492,
+        "kind": "file",
+        "sha256": "797eb208670f6f74f14c9b5849485bd6cf3522a265d4129618c4b50ddc0a739a"
+      },
+      "snapshot": "frozen-inputs/0030-test_current_host_inspection_v01.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/.gitignore",
+        "mode": "0o644",
+        "bytes": 55,
+        "device": 27,
+        "inode": 3691788,
+        "links": 1,
+        "mtime_ns": 1795291244686251229,
+        "kind": "file",
+        "sha256": "cbc68af0aaaed8265efe381dd1ac57ad9a7d217d6768c75960526712abca8185"
+      },
+      "snapshot": "frozen-inputs/0031-.gitignore"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_duct_route_exchanges.py",
+        "mode": "0o644",
+        "bytes": 10736,
+        "device": 27,
+        "inode": 3691789,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "afc23c12bf2ab8a55ca95412c690122318a39473e3adb9f339ddd0110a025fa9"
+      },
+      "snapshot": "frozen-inputs/0032-audit_duct_route_exchanges.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_framed_loft_acceptance.py",
+        "mode": "0o644",
+        "bytes": 97779,
+        "device": 27,
+        "inode": 3691790,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "3aca2e270e227cc34b9fc6c2b1cbc54b7387ee90bf7d234574a4be0d538761cf"
+      },
+      "snapshot": "frozen-inputs/0033-audit_framed_loft_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_pockets_acceptance.py",
+        "mode": "0o644",
+        "bytes": 99803,
+        "device": 27,
+        "inode": 3691791,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "d42e33dff73354fd061a273f751f07e62a3fc82fcc619525edbf8af5e33d155a"
+      },
+      "snapshot": "frozen-inputs/0034-audit_pockets_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_reach_agent_delivery.py",
+        "mode": "0o644",
+        "bytes": 82320,
+        "device": 27,
+        "inode": 3691792,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "015c4c461cddb6e83b70c018fcc05ce09e0f24f6819eee266035b772e7ddd5ef"
+      },
+      "snapshot": "frozen-inputs/0035-audit_reach_agent_delivery.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_reach_reader_setup.py",
+        "mode": "0o644",
+        "bytes": 41586,
+        "device": 27,
+        "inode": 3691793,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "ef322586e7693647f07f6901737611c82c844e2a6ed98578f499ac49bf994602"
+      },
+      "snapshot": "frozen-inputs/0036-audit_reach_reader_setup.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_reach_recording_work.py",
+        "mode": "0o644",
+        "bytes": 71385,
+        "device": 27,
+        "inode": 3691794,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "5a1ece268ba6f8bf71f2f62fbe2963da34175280797ec66be668261b2886b0cf"
+      },
+      "snapshot": "frozen-inputs/0037-audit_reach_recording_work.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_torque_artifact_loop.py",
+        "mode": "0o644",
+        "bytes": 27545,
+        "device": 27,
+        "inode": 3691795,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "f682f7afb17691b5f3413bf219fd56aab412da70ed5dc82a40b68dce486b7383"
+      },
+      "snapshot": "frozen-inputs/0038-audit_torque_artifact_loop.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_agent_demo.py",
+        "mode": "0o644",
+        "bytes": 10062,
+        "device": 27,
+        "inode": 3691796,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "6f85bf2ba2f9c33fa9ae70cf9445bc4d216a3303bac595c019e85f9f6d31333a"
+      },
+      "snapshot": "frozen-inputs/0039-build_agent_demo.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_construction_demo.py",
+        "mode": "0o644",
+        "bytes": 12535,
+        "device": 27,
+        "inode": 3691797,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "479d5df00196b5e83e938f6bc88788bc4b9b51263d3859dfee38d1a520e2a196"
+      },
+      "snapshot": "frozen-inputs/0040-build_construction_demo.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_force_agent_demo.py",
+        "mode": "0o644",
+        "bytes": 14240,
+        "device": 27,
+        "inode": 3691798,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "a3e264559216f7f239b1104a550a5e1bd34d32a8af8ae5a300fbf7f19223d534"
+      },
+      "snapshot": "frozen-inputs/0041-build_force_agent_demo.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_force_delivery_demo.py",
+        "mode": "0o644",
+        "bytes": 15052,
+        "device": 27,
+        "inode": 3691799,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "c73443ca04f1bb1bdc472c1c662b5276f24b7ab013c3e69c56b6168dca54df55"
+      },
+      "snapshot": "frozen-inputs/0042-build_force_delivery_demo.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_force_demo.py",
+        "mode": "0o644",
+        "bytes": 15169,
+        "device": 27,
+        "inode": 3691800,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "401dde5a8a2f77a7e2cf94330a69a11e5bdf020b34ee497167fa247148849d98"
+      },
+      "snapshot": "frozen-inputs/0043-build_force_demo.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_force_release_evidence.py",
+        "mode": "0o644",
+        "bytes": 11297,
+        "device": 27,
+        "inode": 3691801,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "d28e3bfbc5296ba539257bddaf33b48e9eb441421292e2d1b6989415f07c2362"
+      },
+      "snapshot": "frozen-inputs/0044-build_force_release_evidence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_impulse_agent_demo.py",
+        "mode": "0o644",
+        "bytes": 35660,
+        "device": 27,
+        "inode": 3691802,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "3b47d2733b28e08a11ad031d905a9690f70f9513bc3b124a3cc42329371f9b00"
+      },
+      "snapshot": "frozen-inputs/0045-build_impulse_agent_demo.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_reach_agent_delivery.py",
+        "mode": "0o644",
+        "bytes": 59104,
+        "device": 27,
+        "inode": 3691803,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "41dbec6f71433e70ee199737d2236f905a298d5f1126e1bed96ae6fb430a47e2"
+      },
+      "snapshot": "frozen-inputs/0046-build_reach_agent_delivery.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_reach_native_reference.py",
+        "mode": "0o644",
+        "bytes": 19357,
+        "device": 27,
+        "inode": 3691804,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "58075db8230238fecb61b09fcc9e2daa1eca9c889fde83c2012a76e30c4e60b3"
+      },
+      "snapshot": "frozen-inputs/0047-build_reach_native_reference.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_reach_source_artifacts.py",
+        "mode": "0o644",
+        "bytes": 6343,
+        "device": 27,
+        "inode": 3691805,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "231d11a039df4a9fa2f5fe5c09828d1d0da1ff240208cf5fb70af90e71640a1a"
+      },
+      "snapshot": "frozen-inputs/0048-build_reach_source_artifacts.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_semantic_export_demo.py",
+        "mode": "0o644",
+        "bytes": 21637,
+        "device": 27,
+        "inode": 3691806,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "ed8a3a41ac5f3a7d6253827b9654304088352f0a4d6decf6dfdfb2c751a8c4fd"
+      },
+      "snapshot": "frozen-inputs/0049-build_semantic_export_demo.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_surface_agent_demo.py",
+        "mode": "0o644",
+        "bytes": 32821,
+        "device": 27,
+        "inode": 3691807,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "420fcf0b621a35e02d7ac34f76ed446898a5066f92bf3f84aafc57448db60574"
+      },
+      "snapshot": "frozen-inputs/0050-build_surface_agent_demo.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_surface_demo.py",
+        "mode": "0o644",
+        "bytes": 15008,
+        "device": 27,
+        "inode": 3691808,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "0281d740b5994972ffd134547037a7e545ecedf700c64779d99b8f892624431b"
+      },
+      "snapshot": "frozen-inputs/0051-build_surface_demo.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_surface_prototype.py",
+        "mode": "0o644",
+        "bytes": 1696,
+        "device": 27,
+        "inode": 3691809,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "4669d444d4b63f528660ed6ce316eafa21fca277cd39389d32bbcec757f7f8d5"
+      },
+      "snapshot": "frozen-inputs/0052-build_surface_prototype.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_viewer.mjs",
+        "mode": "0o644",
+        "bytes": 758,
+        "device": 27,
+        "inode": 3691810,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "63e5a0e9375a94e19b0ba30a9ea967ee592ef8e5f10767a07816d2e5ac1305a4"
+      },
+      "snapshot": "frozen-inputs/0053-build_viewer.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_visual_demos.py",
+        "mode": "0o644",
+        "bytes": 5503,
+        "device": 27,
+        "inode": 3691811,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "751bbf1d6884a936edd5dd2eabcdff5bf87387e6d14b99773a4b87afadfabfbe"
+      },
+      "snapshot": "frozen-inputs/0054-build_visual_demos.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/capture_handoff_evidence.py",
+        "mode": "0o644",
+        "bytes": 10331,
+        "device": 27,
+        "inode": 3691812,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "bcd2dfb0fe43c191bc4ac08382d42735b4da34ae8625ea2ab700487edeb8baa4"
+      },
+      "snapshot": "frozen-inputs/0055-capture_handoff_evidence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/capture_reach_reader_setup.py",
+        "mode": "0o644",
+        "bytes": 50678,
+        "device": 27,
+        "inode": 3691813,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "b90854f1a73053a3f9f9ebd7b67662d27b788f478a39a36cbc95abad2429183e"
+      },
+      "snapshot": "frozen-inputs/0056-capture_reach_reader_setup.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/capture_reach_recording_work.py",
+        "mode": "0o644",
+        "bytes": 30860,
+        "device": 27,
+        "inode": 3691814,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "916718f2056b076b94ae9c1423a3bc19718f2425bccd6196537044b4657c996a"
+      },
+      "snapshot": "frozen-inputs/0057-capture_reach_recording_work.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/chat_workflow.py",
+        "mode": "0o644",
+        "bytes": 27862,
+        "device": 27,
+        "inode": 3691815,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "43029d35c10e206e0fb2192aa32e9819984edec985561a76371594d52efa3f24"
+      },
+      "snapshot": "frozen-inputs/0058-chat_workflow.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_local.py",
+        "mode": "0o644",
+        "bytes": 41254,
+        "device": 27,
+        "inode": 3691816,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "76705ca4c812572e0b24e5840818008848dc5ad2fb4262a3e9d3ab0dc0a83c4e"
+      },
+      "snapshot": "frozen-inputs/0059-check_local.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_native_reader_setup.py",
+        "mode": "0o644",
+        "bytes": 749,
+        "device": 27,
+        "inode": 3691817,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "585fac8ff9074c88a9bde9bc88054ca72fed5364b02c475910881800014268c3"
+      },
+      "snapshot": "frozen-inputs/0060-check_native_reader_setup.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_agent_pose_oracles.py",
+        "mode": "0o644",
+        "bytes": 6982,
+        "device": 27,
+        "inode": 3691818,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "0c00ed28e2858371950bfb8f32367a026622147bb45c13272fd267d9d919820c"
+      },
+      "snapshot": "frozen-inputs/0061-check_torque_agent_pose_oracles.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_artifact_audit.py",
+        "mode": "0o644",
+        "bytes": 12238,
+        "device": 27,
+        "inode": 3691819,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "0379d974de9f49b4487abd852c9959cf314d7f7d1e4d84d98638c1fe9d99ec17"
+      },
+      "snapshot": "frozen-inputs/0062-check_torque_artifact_audit.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_delivery_edges.py",
+        "mode": "0o644",
+        "bytes": 5547,
+        "device": 27,
+        "inode": 3691820,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "ce2088ea7f361a69c9606912bd953779c5945fcc60bb8f026966099e8438660d"
+      },
+      "snapshot": "frozen-inputs/0063-check_torque_delivery_edges.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_delivery_gate.py",
+        "mode": "0o644",
+        "bytes": 3483,
+        "device": 27,
+        "inode": 3691821,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "74977d90fba6aa917484be7673bf7206547ef93cbfc8999acd18beeb72c42500"
+      },
+      "snapshot": "frozen-inputs/0064-check_torque_delivery_gate.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_internal_comparisons.py",
+        "mode": "0o644",
+        "bytes": 4179,
+        "device": 27,
+        "inode": 3691822,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "4a77dddb52e3b1651d72678d98d6786fd282570a4e556ee8db7e605950b89ffc"
+      },
+      "snapshot": "frozen-inputs/0065-check_torque_internal_comparisons.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_predecessor_bytes.py",
+        "mode": "0o644",
+        "bytes": 5876,
+        "device": 27,
+        "inode": 3691823,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "e3e12886987ef8ccc941c117958bcdccf3737a71927ac0f26cd3d1e5085353db"
+      },
+      "snapshot": "frozen-inputs/0066-check_torque_predecessor_bytes.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_quaternion_oracle.py",
+        "mode": "0o644",
+        "bytes": 2563,
+        "device": 27,
+        "inode": 3691824,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "22acede1177397bb61b69560fd6d09fc0ff2059b8f0f79dc21681b184a0b3954"
+      },
+      "snapshot": "frozen-inputs/0067-check_torque_quaternion_oracle.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_recording_pose_identity.py",
+        "mode": "0o644",
+        "bytes": 2692,
+        "device": 27,
+        "inode": 3691825,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "e4f24164a742550a1fd676f23259215da0dcefaa807d6456e5254fe6f114dc93"
+      },
+      "snapshot": "frozen-inputs/0068-check_torque_recording_pose_identity.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_request_schema_dispatch.py",
+        "mode": "0o644",
+        "bytes": 7926,
+        "device": 27,
+        "inode": 3691826,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "ef7a2d697f482e04ab053d69c2d132fa5e873c6f2e766b56c90e2a4100606ef3"
+      },
+      "snapshot": "frozen-inputs/0069-check_torque_request_schema_dispatch.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_resumption_equivalence.py",
+        "mode": "0o644",
+        "bytes": 5459,
+        "device": 27,
+        "inode": 3691827,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "be494c576b9a85545efbe078be1c40af3ddb86810523430adaa4fbf2a2c0c6cb"
+      },
+      "snapshot": "frozen-inputs/0070-check_torque_resumption_equivalence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_structural_counts.py",
+        "mode": "0o644",
+        "bytes": 4841,
+        "device": 27,
+        "inode": 3691828,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "0e0b3c03908139b3a9670bcf2c65341e9939da2cbc7920dad069e491aaa696b8"
+      },
+      "snapshot": "frozen-inputs/0071-check_torque_structural_counts.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/compare_keyed_merge_predecessor.py",
+        "mode": "0o644",
+        "bytes": 11445,
+        "device": 27,
+        "inode": 3691829,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "5517de33562ea2efa8e8cf9fc45980400d88d246ce49720401fd49bff0a3dd4a"
+      },
+      "snapshot": "frozen-inputs/0072-compare_keyed_merge_predecessor.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/compare_keyed_rekey_predecessor.py",
+        "mode": "0o644",
+        "bytes": 20759,
+        "device": 27,
+        "inode": 3691830,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "bd1e97549d43717503dd1affc96fc79f768623b50c64d1b88de2b61a4866eb49"
+      },
+      "snapshot": "frozen-inputs/0073-compare_keyed_rekey_predecessor.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/compare_keyed_zip_predecessor.py",
+        "mode": "0o644",
+        "bytes": 12035,
+        "device": 27,
+        "inode": 3691831,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "75758de0073df6e957150b1abf836f67dbb41d2d78643ff625752f3fca3eb974"
+      },
+      "snapshot": "frozen-inputs/0074-compare_keyed_zip_predecessor.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/extrusion_oracles.py",
+        "mode": "0o644",
+        "bytes": 6834,
+        "device": 27,
+        "inode": 3691832,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "85ef6763b6d84ebae61055d53603a470fe5e3703e2328b0e2807d0787bf033ef"
+      },
+      "snapshot": "frozen-inputs/0075-extrusion_oracles.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/force-agent-verification-requirements.txt",
+        "mode": "0o644",
+        "bytes": 270,
+        "device": 27,
+        "inode": 3691833,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "6d5fefcbd7ccced7d39bf8d20e87ec1c4401fc6b252aea41677d41d9124555d1"
+      },
+      "snapshot": "frozen-inputs/0076-force-agent-verification-requirements.txt"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/force_oracles.py",
+        "mode": "0o644",
+        "bytes": 13205,
+        "device": 27,
+        "inode": 3691834,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "e3a6f3f85ca99a565b845c809c11de18e3d874683421bcc1a47c2a904633cb2e"
+      },
+      "snapshot": "frozen-inputs/0077-force_oracles.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/framed_loft_oracles.py",
+        "mode": "0o644",
+        "bytes": 27826,
+        "device": 27,
+        "inode": 3691835,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "c55a4f3165f31758a1447f754f9fb471d8f606dfd0675a1f384d02f9d51c02d8"
+      },
+      "snapshot": "frozen-inputs/0078-framed_loft_oracles.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/holes_oracles.py",
+        "mode": "0o644",
+        "bytes": 16205,
+        "device": 27,
+        "inode": 3691836,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "a0f69fd08a1fe5d0196a336f28588fbe48387e6fc41c2fb0892a683fe86e397f"
+      },
+      "snapshot": "frozen-inputs/0079-holes_oracles.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/impulse_oracles.py",
+        "mode": "0o644",
+        "bytes": 5710,
+        "device": 27,
+        "inode": 3691837,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "efddf0988ed41ba0438f9fbc3bf35343befcf4d0609f8ccebb262a0fbbfad88c"
+      },
+      "snapshot": "frozen-inputs/0080-impulse_oracles.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_filter_adversaries.py",
+        "mode": "0o644",
+        "bytes": 4563,
+        "device": 27,
+        "inode": 3691838,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "ff0582924a48d46020322042779fdf091df688c3c5fdb0b992f85ca77f223fc4"
+      },
+      "snapshot": "frozen-inputs/0081-keyed_filter_adversaries.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_filter_destination_expectations.py",
+        "mode": "0o644",
+        "bytes": 3727,
+        "device": 27,
+        "inode": 3691839,
+        "links": 1,
+        "mtime_ns": 1795291244690275888,
+        "kind": "file",
+        "sha256": "f012cf959e7fe1030b33a02a97b90aca3ef69274323a3863e7425a1aec440445"
+      },
+      "snapshot": "frozen-inputs/0082-keyed_filter_destination_expectations.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_filter_reference.py",
+        "mode": "0o644",
+        "bytes": 77489,
+        "device": 27,
+        "inode": 3691840,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "fdd3a57951c97ff0138ae874ae25ccd4c8e710803a90ec96f12bd7745df1998c"
+      },
+      "snapshot": "frozen-inputs/0083-keyed_filter_reference.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_membership_amendment.py",
+        "mode": "0o644",
+        "bytes": 5989,
+        "device": 27,
+        "inode": 3691841,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "3a57f6e5748c05d4482e302b059d651817ae8f2354bc526d85f7d3b952956a86"
+      },
+      "snapshot": "frozen-inputs/0084-keyed_membership_amendment.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_membership_evidence.py",
+        "mode": "0o644",
+        "bytes": 9897,
+        "device": 27,
+        "inode": 3691842,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "cc7c07dc9df6edfb1d1c1e3d1ec0dcfe54b6d7f821827a157bd0cc62db6785c5"
+      },
+      "snapshot": "frozen-inputs/0085-keyed_membership_evidence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_membership_native_fixtures.py",
+        "mode": "0o644",
+        "bytes": 10723,
+        "device": 27,
+        "inode": 3691843,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "d24efc65b30d7a1d42a837be58e0a603c708de8ec9726f7af26d747661cebad7"
+      },
+      "snapshot": "frozen-inputs/0086-keyed_membership_native_fixtures.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_membership_observer.py",
+        "mode": "0o644",
+        "bytes": 4335,
+        "device": 27,
+        "inode": 3691844,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "c0e418430f805d91320b164ccb647194cfc13eecc371ed4dfdd83461403c8aaf"
+      },
+      "snapshot": "frozen-inputs/0087-keyed_membership_observer.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_merge_adversaries.py",
+        "mode": "0o644",
+        "bytes": 7872,
+        "device": 27,
+        "inode": 3691845,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "9415dc7227398761f698cfdda6afc26629a3c99cd42d549a3a2afda31ed81c05"
+      },
+      "snapshot": "frozen-inputs/0088-keyed_merge_adversaries.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_merge_destination_expectations.py",
+        "mode": "0o644",
+        "bytes": 3724,
+        "device": 27,
+        "inode": 3691846,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "6daa93811a6bf4ef6cfbf3f9242df2e27974b982e51ee4a2d666a57ecbeca8af"
+      },
+      "snapshot": "frozen-inputs/0089-keyed_merge_destination_expectations.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_merge_reference.py",
+        "mode": "0o644",
+        "bytes": 88638,
+        "device": 27,
+        "inode": 3691847,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "ff9531bbc782690950c7830783f2754afc1817be4a7e414cecf63053991f496a"
+      },
+      "snapshot": "frozen-inputs/0090-keyed_merge_reference.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_reduction_adversaries.py",
+        "mode": "0o644",
+        "bytes": 4565,
+        "device": 27,
+        "inode": 3691848,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "d1abdb1cce0bbc21803d9bd55b787596f51b027ecf9c411e224e271d902c4263"
+      },
+      "snapshot": "frozen-inputs/0091-keyed_reduction_adversaries.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_reduction_destination_expectations.py",
+        "mode": "0o644",
+        "bytes": 3736,
+        "device": 27,
+        "inode": 3691849,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "3bbe5abcda16bf4f08029984c59c5c09d1d355a214a560e487791a3ee74d3811"
+      },
+      "snapshot": "frozen-inputs/0092-keyed_reduction_destination_expectations.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_reduction_reference.py",
+        "mode": "0o644",
+        "bytes": 61307,
+        "device": 27,
+        "inode": 3691850,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "5f39ab8f9a8f4bbc1dc123b08ca6a42905f2b192637c71c9d851acafc556b678"
+      },
+      "snapshot": "frozen-inputs/0093-keyed_reduction_reference.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_rekey_adversaries.py",
+        "mode": "0o644",
+        "bytes": 16250,
+        "device": 27,
+        "inode": 3691851,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "7b8e99d7bfa51b78c0183a6b6a64bcd414775aff245577b43bb661c0fea924a5"
+      },
+      "snapshot": "frozen-inputs/0094-keyed_rekey_adversaries.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_rekey_agent_workflows.py",
+        "mode": "0o644",
+        "bytes": 37424,
+        "device": 27,
+        "inode": 3691852,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "6207f6280dfd8334ea18589688041b696867f5134e97c23958952a7cfa299817"
+      },
+      "snapshot": "frozen-inputs/0095-keyed_rekey_agent_workflows.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_rekey_delivery_reference.py",
+        "mode": "0o644",
+        "bytes": 34635,
+        "device": 27,
+        "inode": 3691853,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "3cf03d360902e64464645c044693f7239c035b382301cf72e2efe40f6a4f9755"
+      },
+      "snapshot": "frozen-inputs/0096-keyed_rekey_delivery_reference.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_rekey_destination_expectations.py",
+        "mode": "0o644",
+        "bytes": 3912,
+        "device": 27,
+        "inode": 3691854,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "9239c3f97a0e83c1507f4ae6d4b3764bbf9f869c9de42339aaedde88f79b6c5d"
+      },
+      "snapshot": "frozen-inputs/0097-keyed_rekey_destination_expectations.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_rekey_reference.py",
+        "mode": "0o644",
+        "bytes": 22720,
+        "device": 27,
+        "inode": 3691855,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "7623a5650305fa359e3b8478674dd5f1dd7c2dd8b21ac00fb3d67e537c5d41c4"
+      },
+      "snapshot": "frozen-inputs/0098-keyed_rekey_reference.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_rekey_source_reference.py",
+        "mode": "0o644",
+        "bytes": 61095,
+        "device": 27,
+        "inode": 3691856,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "1917686222fd3c9fa41515d924b2e5a7dfbf6f12939c01bab9a99eb12380ce5e"
+      },
+      "snapshot": "frozen-inputs/0099-keyed_rekey_source_reference.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_transform_adversaries.py",
+        "mode": "0o644",
+        "bytes": 4567,
+        "device": 27,
+        "inode": 3691857,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "f51708fcd883bc7941d2da8c7077e89c24fef56ec670b4fd7a3e7d32af398636"
+      },
+      "snapshot": "frozen-inputs/0100-keyed_transform_adversaries.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_transform_destination_expectations.py",
+        "mode": "0o644",
+        "bytes": 3572,
+        "device": 27,
+        "inode": 3691858,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "2aa5b3d1db59677088bf0d031beea485f8dea87f1ee6c7aae67b6d72ba892e7e"
+      },
+      "snapshot": "frozen-inputs/0101-keyed_transform_destination_expectations.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_transform_reference.py",
+        "mode": "0o644",
+        "bytes": 39800,
+        "device": 27,
+        "inode": 3691859,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "318630af73eb7d009d9fcc35ebf4d0fe01eb1f250639e8975d9015d1cf4c62b6"
+      },
+      "snapshot": "frozen-inputs/0102-keyed_transform_reference.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_zip_adversaries.py",
+        "mode": "0o644",
+        "bytes": 8358,
+        "device": 27,
+        "inode": 3691860,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "7d4fab40028352f825c0887c4991d7433a7ec61aaf24983de34bf2f887f425f0"
+      },
+      "snapshot": "frozen-inputs/0103-keyed_zip_adversaries.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_zip_agent_workflows.py",
+        "mode": "0o644",
+        "bytes": 34544,
+        "device": 27,
+        "inode": 3691861,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "b588b726ade8e4073de906b13417dcee3c0890c92ba7a64382fa39c4d7f2bd7c"
+      },
+      "snapshot": "frozen-inputs/0104-keyed_zip_agent_workflows.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_zip_destination_expectations.py",
+        "mode": "0o644",
+        "bytes": 3906,
+        "device": 27,
+        "inode": 3691862,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "c5e3968a89ffcde053c983976617a150801b44255d355b2fb4532d0dda328745"
+      },
+      "snapshot": "frozen-inputs/0105-keyed_zip_destination_expectations.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_zip_reference.py",
+        "mode": "0o644",
+        "bytes": 107441,
+        "device": 27,
+        "inode": 3691863,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "d87fb03569f0bb48b8b2ae22b5d41ea6693ac43e48b67a9923b393264c098329"
+      },
+      "snapshot": "frozen-inputs/0106-keyed_zip_reference.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/membership_destination_expectations.py",
+        "mode": "0o644",
+        "bytes": 8609,
+        "device": 27,
+        "inode": 3691864,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "aff4ea31dbe4872915d85de77a3707b5630b5e3a964c6ec9514ab2ef2f32f707"
+      },
+      "snapshot": "frozen-inputs/0107-membership_destination_expectations.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/native-reader-verification-linux-cp312.lock",
+        "mode": "0o644",
+        "bytes": 779,
+        "device": 27,
+        "inode": 3691865,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "a7f17491000c2e139ccc5d213ca0e8a6f917e5befb4b878fef29f5ff72ae780f"
+      },
+      "snapshot": "frozen-inputs/0108-native-reader-verification-linux-cp312.lock"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/ontokin_budget_host.py",
+        "mode": "0o644",
+        "bytes": 606,
+        "device": 27,
+        "inode": 3691866,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "6aaf37638135a3cfebf8a3a2470b9372fd3e8d7ba8c6164e88b5eb2aef89d9ca"
+      },
+      "snapshot": "frozen-inputs/0109-ontokin_budget_host.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/pack_lossless_jsonl.py",
+        "mode": "0o644",
+        "bytes": 8732,
+        "device": 27,
+        "inode": 3691867,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "07580619b93b6efed593f05ccfad24128154835e0d1bfda3c75b9e04533b1c61"
+      },
+      "snapshot": "frozen-inputs/0110-pack_lossless_jsonl.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/package-lock.json",
+        "mode": "0o644",
+        "bytes": 16805,
+        "device": 27,
+        "inode": 3691868,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "f1351b945f847f937dcacc9736fea07a710f1c066dbc9d7a5e19e89a858d635a"
+      },
+      "snapshot": "frozen-inputs/0111-package-lock.json"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/package.json",
+        "mode": "0o644",
+        "bytes": 448,
+        "device": 27,
+        "inode": 3691869,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "ce695b672904c8c01d699c06b0ed16f97e34e6e34115b65fb192e25d70dee4cb"
+      },
+      "snapshot": "frozen-inputs/0112-package.json"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/pockets_oracles.py",
+        "mode": "0o644",
+        "bytes": 19319,
+        "device": 27,
+        "inode": 3691870,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "27ff028d17ac4379966e2a0dec24bcc0d11514781640f9c7fb488bfe806b7d45"
+      },
+      "snapshot": "frozen-inputs/0113-pockets_oracles.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/prepare_current_host_readback.py",
+        "mode": "0o644",
+        "bytes": 19788,
+        "device": 27,
+        "inode": 3691871,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "fd4da23dde3cd75a95c3f5edc071028e5884da62932c32cba4be928e72f87bb3"
+      },
+      "snapshot": "frozen-inputs/0114-prepare_current_host_readback.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/prepare_lfs_archives.py",
+        "mode": "0o644",
+        "bytes": 11056,
+        "device": 27,
+        "inode": 3691872,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "2367a73dcf7e89a09e52d646a34e2ebd471619893aea5d8153fb1545d6895f96"
+      },
+      "snapshot": "frozen-inputs/0115-prepare_lfs_archives.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/probe_reach_native_artifact.mjs",
+        "mode": "0o644",
+        "bytes": 11324,
+        "device": 27,
+        "inode": 3691873,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "14ff83a0a77745ace2bf62c55daad8aed7099fc20a5abd009994840707bcf469"
+      },
+      "snapshot": "frozen-inputs/0116-probe_reach_native_artifact.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/probe_reach_recording_work.py",
+        "mode": "0o644",
+        "bytes": 13210,
+        "device": 27,
+        "inode": 3691874,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "38bcfd5ba46f658b7b5686c93f91a732fec9d4b19e76a6004acf7a7d499f6634"
+      },
+      "snapshot": "frozen-inputs/0117-probe_reach_recording_work.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/reach_delivery_inventory.py",
+        "mode": "0o644",
+        "bytes": 8293,
+        "device": 27,
+        "inode": 3691875,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "1920801b6f6c56ef40c6d20471797bd370c412a8b7a8f6a815c1e2d739c286b5"
+      },
+      "snapshot": "frozen-inputs/0118-reach_delivery_inventory.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/reach_destination.mjs",
+        "mode": "0o644",
+        "bytes": 15119,
+        "device": 27,
+        "inode": 3691876,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "98360ee870ce74dfbab91553409186ad4f25583cb5fbf326f3c34c92db3c1637"
+      },
+      "snapshot": "frozen-inputs/0119-reach_destination.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/reach_native_support.mjs",
+        "mode": "0o644",
+        "bytes": 28463,
+        "device": 27,
+        "inode": 3691877,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "2d48989fff7756214fb38b1b0763df00afd0dfc1d048806da6b7ab6a9437258f"
+      },
+      "snapshot": "frozen-inputs/0120-reach_native_support.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/reach_rate_inventory.py",
+        "mode": "0o644",
+        "bytes": 10668,
+        "device": 27,
+        "inode": 3691878,
+        "links": 1,
+        "mtime_ns": 1795291244694251146,
+        "kind": "file",
+        "sha256": "5908df77f9c59be0b6b5d0dd2b1e51659cd72a24345e1cf390bb44df5f2352ed"
+      },
+      "snapshot": "frozen-inputs/0121-reach_rate_inventory.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/reach_source_rates.py",
+        "mode": "0o644",
+        "bytes": 29638,
+        "device": 27,
+        "inode": 3691879,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "52f6e0fd6d7fe9ccec0f284da2a66256cf9bec355b52123d78f71b75170bc19d"
+      },
+      "snapshot": "frozen-inputs/0122-reach_source_rates.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/reach_viewer_harness.mjs",
+        "mode": "0o644",
+        "bytes": 9501,
+        "device": 27,
+        "inode": 3691880,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "f75a7e548ea962e2e79cf93e49d5e5dd25f7a271ea4b143b2b4ab4f70c398b71"
+      },
+      "snapshot": "frozen-inputs/0123-reach_viewer_harness.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/record_construction_evidence.py",
+        "mode": "0o644",
+        "bytes": 5206,
+        "device": 27,
+        "inode": 3691881,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "ed24e3fa584ef3643e5d1505718eacb158e8e93c0af12cc31e035efc30529032"
+      },
+      "snapshot": "frozen-inputs/0124-record_construction_evidence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/recover_handoff_evidence.py",
+        "mode": "0o644",
+        "bytes": 9349,
+        "device": 27,
+        "inode": 3691882,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "f7be315c10fc4c3af98a34ec3f0fb48933a72241daa5e56f6b5ab1b5a8aad6ee"
+      },
+      "snapshot": "frozen-inputs/0125-recover_handoff_evidence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/review_torque_artifact_auditor.py",
+        "mode": "0o644",
+        "bytes": 5603,
+        "device": 27,
+        "inode": 3691883,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "e6be38f44bbd963848af4cbd9a62f2a85e3629b365b8ad4f17f5f5c0da8b78ad"
+      },
+      "snapshot": "frozen-inputs/0126-review_torque_artifact_auditor.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/review_torque_cache_ownership.py",
+        "mode": "0o644",
+        "bytes": 7367,
+        "device": 27,
+        "inode": 3691884,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "26c0863e3ab955c4978a672971940e90ff3a51521739a8c3d915b25a312250a9"
+      },
+      "snapshot": "frozen-inputs/0127-review_torque_cache_ownership.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/review_torque_source_guard.py",
+        "mode": "0o644",
+        "bytes": 4377,
+        "device": 27,
+        "inode": 3691885,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "17312586eec3a9612582a0e4a4f520bb8669d50bde6e074ce9212cdd0f7e37f4"
+      },
+      "snapshot": "frozen-inputs/0128-review_torque_source_guard.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/ring_loft_oracles.py",
+        "mode": "0o644",
+        "bytes": 26363,
+        "device": 27,
+        "inode": 3691886,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "b419ca774b773ce7c0c17246f2f100a3222c5dcd456861092df859132b526308"
+      },
+      "snapshot": "frozen-inputs/0129-ring_loft_oracles.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_agent_conformance.py",
+        "mode": "0o644",
+        "bytes": 5115,
+        "device": 27,
+        "inode": 3691887,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "4b46a1245a17655a5871fcdcb2e108bc48f0fdf21627c83557238fa849ae5f5e"
+      },
+      "snapshot": "frozen-inputs/0130-run_agent_conformance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_budget_acceptance.py",
+        "mode": "0o644",
+        "bytes": 4465,
+        "device": 27,
+        "inode": 3691888,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "38e718f4f10a57798b1b693ea364cf3dd2690d4f868bbb6fdce836abeb1df330"
+      },
+      "snapshot": "frozen-inputs/0131-run_budget_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_budget_agent_acceptance.py",
+        "mode": "0o644",
+        "bytes": 14738,
+        "device": 27,
+        "inode": 3691889,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "3538c509deaeac1ed7b707d1cddd3fb474c66f93a3b079573cb735c6dbbe3242"
+      },
+      "snapshot": "frozen-inputs/0132-run_budget_agent_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_extrusion_acceptance.py",
+        "mode": "0o644",
+        "bytes": 14771,
+        "device": 27,
+        "inode": 3691890,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "9226ec5414f8a08cf6d34fd056491e35d01ab5171bdfa562a6141083a25c287b"
+      },
+      "snapshot": "frozen-inputs/0133-run_extrusion_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_force_conformance.py",
+        "mode": "0o644",
+        "bytes": 314,
+        "device": 27,
+        "inode": 3691891,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "d96e4b358fac0d7b454d0729f142a2eae1765fa55d0de832265e16cd3f9796a5"
+      },
+      "snapshot": "frozen-inputs/0134-run_force_conformance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_framed_loft_acceptance.py",
+        "mode": "0o644",
+        "bytes": 39715,
+        "device": 27,
+        "inode": 3691892,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "1d336d513ab642c3a838ee2fffd0fc74021b18791ddd66cd4fb3366036842fed"
+      },
+      "snapshot": "frozen-inputs/0135-run_framed_loft_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_holes_acceptance.py",
+        "mode": "0o644",
+        "bytes": 14838,
+        "device": 27,
+        "inode": 3691893,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "70d119e35bda06b098d763926d89c5569b506fa805c09a5f7890a480f8355b21"
+      },
+      "snapshot": "frozen-inputs/0136-run_holes_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_hostile_membership_records.py",
+        "mode": "0o644",
+        "bytes": 15326,
+        "device": 27,
+        "inode": 3691894,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "09b713281c361d541eb3499331ff021e0368ff85a7e4ce5f4880f13fc41a2f35"
+      },
+      "snapshot": "frozen-inputs/0137-run_hostile_membership_records.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_impulse_conformance.py",
+        "mode": "0o644",
+        "bytes": 296,
+        "device": 27,
+        "inode": 3691895,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "e432b3225fed6e1db668e627dff9d1e4d0d5833e79ede4131eac63c1bdb4f683"
+      },
+      "snapshot": "frozen-inputs/0138-run_impulse_conformance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_filter_acceptance.py",
+        "mode": "0o644",
+        "bytes": 51831,
+        "device": 27,
+        "inode": 3691896,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "2df2ef5caac0bc1a4b8a8ee3cb370dd8a59801f2c3d739b33f001000f198d7bc"
+      },
+      "snapshot": "frozen-inputs/0139-run_keyed_filter_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_membership_native.py",
+        "mode": "0o644",
+        "bytes": 12330,
+        "device": 27,
+        "inode": 3691897,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "a25be301bde60203ace9afe0f05b4a594a5cfd415a8010df949f7f04f8a02983"
+      },
+      "snapshot": "frozen-inputs/0140-run_keyed_membership_native.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_membership_sources.py",
+        "mode": "0o644",
+        "bytes": 16373,
+        "device": 27,
+        "inode": 3691898,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "faca9684752292abcfe6a8d275be3c14d8d9abd773fd2893899725009204192e"
+      },
+      "snapshot": "frozen-inputs/0141-run_keyed_membership_sources.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_merge_acceptance.py",
+        "mode": "0o644",
+        "bytes": 56070,
+        "device": 27,
+        "inode": 3691899,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "474d433f7fb1063916709d39fd59cfe6af7c38e6333f7a5137c3adcb3151aed2"
+      },
+      "snapshot": "frozen-inputs/0142-run_keyed_merge_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_reduction_acceptance.py",
+        "mode": "0o644",
+        "bytes": 42787,
+        "device": 27,
+        "inode": 3691900,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "3a23b458818145b921ac4d4d43e838011436ca14c448f4eb808d22481ea542e1"
+      },
+      "snapshot": "frozen-inputs/0143-run_keyed_reduction_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_rekey_acceptance.py",
+        "mode": "0o644",
+        "bytes": 31252,
+        "device": 27,
+        "inode": 3691901,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "d709af4750ac0b5af30247f71072632ee1a93f87e0f6778eab07c32bc7979f91"
+      },
+      "snapshot": "frozen-inputs/0144-run_keyed_rekey_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_transform_acceptance.py",
+        "mode": "0o644",
+        "bytes": 42728,
+        "device": 27,
+        "inode": 3691902,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "7fac838e000b9571c0deb370c0eda7ba8280ac61906174984ad867cc1160d117"
+      },
+      "snapshot": "frozen-inputs/0145-run_keyed_transform_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_zip_acceptance.py",
+        "mode": "0o644",
+        "bytes": 32357,
+        "device": 27,
+        "inode": 3691903,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "9c2ee172f45bd06f123df44d05c23f96dd3956962cc5c03b24eff7a2d5c891bc"
+      },
+      "snapshot": "frozen-inputs/0146-run_keyed_zip_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_membership_agent.py",
+        "mode": "0o644",
+        "bytes": 35677,
+        "device": 27,
+        "inode": 3691904,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "866afd13472a446ff5515517ebe1e2e2d844ced04ffb72dac8a864d9e317f50a"
+      },
+      "snapshot": "frozen-inputs/0147-run_membership_agent.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_pockets_acceptance.py",
+        "mode": "0o644",
+        "bytes": 40399,
+        "device": 27,
+        "inode": 3691905,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "7878c0ba6966c6713c5eb9f88fe30afaf44f60c9531a02d5235cc30d0bce7692"
+      },
+      "snapshot": "frozen-inputs/0148-run_pockets_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_reach_regression.py",
+        "mode": "0o644",
+        "bytes": 4169,
+        "device": 27,
+        "inode": 3691906,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "52ac98cea1a78c9711aeb2093e6805e8690fb766f2d231fa5095ab162200acfb"
+      },
+      "snapshot": "frozen-inputs/0149-run_reach_regression.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_reach_source_corpus.py",
+        "mode": "0o644",
+        "bytes": 9670,
+        "device": 27,
+        "inode": 3691907,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "fe9af0986f01b13bca45403b018581136acecfff99340d506e88c2d34ffb7980"
+      },
+      "snapshot": "frozen-inputs/0150-run_reach_source_corpus.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_ring_loft_acceptance.py",
+        "mode": "0o755",
+        "bytes": 16701,
+        "device": 27,
+        "inode": 3691908,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "4a2ca63b0a3976ed9a0ee9f923eb0694f83d8d38d54358006874eb8e03238e65"
+      },
+      "snapshot": "frozen-inputs/0151-run_ring_loft_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_string_concat_acceptance.py",
+        "mode": "0o644",
+        "bytes": 26604,
+        "device": 27,
+        "inode": 3691909,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "ffbd31bddc71e0cc4f696a8cfeb1a01810358b75cc5637793bf2f1822acd0499"
+      },
+      "snapshot": "frozen-inputs/0152-run_string_concat_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_string_concat_glb_probes.py",
+        "mode": "0o644",
+        "bytes": 5603,
+        "device": 27,
+        "inode": 3691910,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "cf322dc1c49d0e9e337e3975d743ed9cdd03da598af27c38e1dc624167689fcc"
+      },
+      "snapshot": "frozen-inputs/0153-run_string_concat_glb_probes.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_surface_conformance.py",
+        "mode": "0o644",
+        "bytes": 1101,
+        "device": 27,
+        "inode": 3691911,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "0b4212d2e62816e54fda3efc7fa5a4459e1eab260cd56269e5148da1c0c7836a"
+      },
+      "snapshot": "frozen-inputs/0154-run_surface_conformance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_texture_acceptance.py",
+        "mode": "0o644",
+        "bytes": 47489,
+        "device": 27,
+        "inode": 3691912,
+        "links": 1,
+        "mtime_ns": 1795291244698251104,
+        "kind": "file",
+        "sha256": "93ee448b83a9004aae24eb1bd87a33b9089d317b82ebba3d22441fb15fe67731"
+      },
+      "snapshot": "frozen-inputs/0155-run_texture_acceptance.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_domains.py",
+        "mode": "0o644",
+        "bytes": 10979,
+        "device": 27,
+        "inode": 3691913,
+        "links": 1,
+        "mtime_ns": 1795291244702251062,
+        "kind": "file",
+        "sha256": "03db5b180dca8efc75b42fbd50a33c5804eba14d669a26ece7e58a16b9dc10b6"
+      },
+      "snapshot": "frozen-inputs/0156-run_torque_agent_domains.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_resources.py",
+        "mode": "0o644",
+        "bytes": 13554,
+        "device": 27,
+        "inode": 3691914,
+        "links": 1,
+        "mtime_ns": 1795291244702251062,
+        "kind": "file",
+        "sha256": "d1712404fe4a47dc15591386bf66034bb5372baf9bc987f9cc2e51cfa6df58c1"
+      },
+      "snapshot": "frozen-inputs/0157-run_torque_agent_resources.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_self_frames.py",
+        "mode": "0o644",
+        "bytes": 5259,
+        "device": 27,
+        "inode": 3691915,
+        "links": 1,
+        "mtime_ns": 1795291244702251062,
+        "kind": "file",
+        "sha256": "5c2e013971121163383f50be233e9ecfe0ea9ae9d6195d2dad38f9a0c69ac512"
+      },
+      "snapshot": "frozen-inputs/0158-run_torque_agent_self_frames.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_source_refusals.py",
+        "mode": "0o644",
+        "bytes": 15323,
+        "device": 27,
+        "inode": 3691916,
+        "links": 1,
+        "mtime_ns": 1795291244702251062,
+        "kind": "file",
+        "sha256": "489c0bb002db49cb4e8aff5a992aef7447a889b2fffccf43e5e66081cb4f6172"
+      },
+      "snapshot": "frozen-inputs/0159-run_torque_agent_source_refusals.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_state_matrix.py",
+        "mode": "0o644",
+        "bytes": 9594,
+        "device": 27,
+        "inode": 3691917,
+        "links": 1,
+        "mtime_ns": 1795291244702251062,
+        "kind": "file",
+        "sha256": "3678d93b785f365d9e08a07ef39fa88161c04726c0776d24223c21dbd053b402"
+      },
+      "snapshot": "frozen-inputs/0160-run_torque_agent_state_matrix.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_store.py",
+        "mode": "0o644",
+        "bytes": 11652,
+        "device": 27,
+        "inode": 3691918,
+        "links": 1,
+        "mtime_ns": 1795291244702251062,
+        "kind": "file",
+        "sha256": "d77cade5fa03f3d291990c3af134210840ffde899d7535cd616705e246ac1a68"
+      },
+      "snapshot": "frozen-inputs/0161-run_torque_agent_store.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_workflows.py",
+        "mode": "0o644",
+        "bytes": 49267,
+        "device": 27,
+        "inode": 3691919,
+        "links": 1,
+        "mtime_ns": 1795291244702251062,
+        "kind": "file",
+        "sha256": "52a3c90bd4d70f4831253a6e647f968d1b02fc6e20a3380fdb75204c85dbff9d"
+      },
+      "snapshot": "frozen-inputs/0162-run_torque_agent_workflows.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_domain_refusals.py",
+        "mode": "0o644",
+        "bytes": 4631,
+        "device": 27,
+        "inode": 3691920,
+        "links": 1,
+        "mtime_ns": 1795291244702251062,
+        "kind": "file",
+        "sha256": "d14dc38227fb008b36ce3cceeabb59f850508ca17f858c80e554ce3aa835d3f2"
+      },
+      "snapshot": "frozen-inputs/0163-run_torque_domain_refusals.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_runtime_stage_faults.py",
+        "mode": "0o644",
+        "bytes": 4720,
+        "device": 27,
+        "inode": 3691921,
+        "links": 1,
+        "mtime_ns": 1795291244702251062,
+        "kind": "file",
+        "sha256": "0d91c5beb5b1fb6be8b3afe72031867723101f7d21b404466278de24e7b4c3c9"
+      },
+      "snapshot": "frozen-inputs/0164-run_torque_runtime_stage_faults.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_runtime_states.py",
+        "mode": "0o644",
+        "bytes": 3411,
+        "device": 27,
+        "inode": 3691922,
+        "links": 1,
+        "mtime_ns": 1795291244702251062,
+        "kind": "file",
+        "sha256": "4442a0ab897c04cce2eda002e736581651daf0306ca4a08adac8532b94d4d863"
+      },
+      "snapshot": "frozen-inputs/0165-run_torque_runtime_states.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c221/check_bindings.py",
+        "mode": "0o644",
+        "bytes": 31854,
+        "device": 27,
+        "inode": 3691924,
+        "links": 1,
+        "mtime_ns": 1795291244702251062,
+        "kind": "file",
+        "sha256": "fff5569d31b3cd900385ac4b955dc5b30c8ee440ef16d8851b5a0ffb5d03aa4b"
+      },
+      "snapshot": "frozen-inputs/0166-check_bindings.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c221/tests/run_controls.py",
+        "mode": "0o644",
+        "bytes": 13754,
+        "device": 27,
+        "inode": 3691926,
+        "links": 1,
+        "mtime_ns": 1795291244706160597,
+        "kind": "file",
+        "sha256": "93f387df963aa86f8bb5116e99dd73b289556f4af13215c3380d63a9bf286479"
+      },
+      "snapshot": "frozen-inputs/0167-run_controls.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c222/check_observations.py",
+        "mode": "0o644",
+        "bytes": 18786,
+        "device": 27,
+        "inode": 3691928,
+        "links": 1,
+        "mtime_ns": 1795291244706160597,
+        "kind": "file",
+        "sha256": "1eab170204d8f02b5d281f7e67d7f649040a1c525884fcc17eadfed6c765b6b9"
+      },
+      "snapshot": "frozen-inputs/0168-check_observations.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c222/tests/run_controls.py",
+        "mode": "0o644",
+        "bytes": 13588,
+        "device": 27,
+        "inode": 3691930,
+        "links": 1,
+        "mtime_ns": 1795291244706462777,
+        "kind": "file",
+        "sha256": "ac74a4c8096c3d45373f61781c40057f48f2a8346c14e8428287b3c8753bbe82"
+      },
+      "snapshot": "frozen-inputs/0169-run_controls.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c234/check_materials.py",
+        "mode": "0o644",
+        "bytes": 20025,
+        "device": 27,
+        "inode": 3691932,
+        "links": 1,
+        "mtime_ns": 1795291244706462777,
+        "kind": "file",
+        "sha256": "e68d212d4b5490c9e17466fb1a858a69a6d0764b0019cb4df265902bf0cabb13"
+      },
+      "snapshot": "frozen-inputs/0170-check_materials.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c234/tests/run_controls.py",
+        "mode": "0o644",
+        "bytes": 20083,
+        "device": 27,
+        "inode": 3691934,
+        "links": 1,
+        "mtime_ns": 1795291244706694364,
+        "kind": "file",
+        "sha256": "1d6541c629af016a23076a2cab3146875e3861cc035c456b517211a96109c4ca"
+      },
+      "snapshot": "frozen-inputs/0171-run_controls.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c235/check_normals.py",
+        "mode": "0o644",
+        "bytes": 20057,
+        "device": 27,
+        "inode": 3691936,
+        "links": 1,
+        "mtime_ns": 1795291244706694364,
+        "kind": "file",
+        "sha256": "15acd1e95b47a9f6f6eee6c3c28875883d3722b5071ec37a14b7c720a9e8773c"
+      },
+      "snapshot": "frozen-inputs/0172-check_normals.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c235/tests/run_controls.py",
+        "mode": "0o644",
+        "bytes": 26327,
+        "device": 27,
+        "inode": 3691938,
+        "links": 1,
+        "mtime_ns": 1795291244707023829,
+        "kind": "file",
+        "sha256": "552bb26f6837d4074624aaa26159b980a762c84b8adec396afdc3f99c7638e03"
+      },
+      "snapshot": "frozen-inputs/0173-run_controls.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c236/check_poses.py",
+        "mode": "0o644",
+        "bytes": 27129,
+        "device": 27,
+        "inode": 3691940,
+        "links": 1,
+        "mtime_ns": 1795291244707023829,
+        "kind": "file",
+        "sha256": "51864445f638a36ef5a93fd4bd58c07a416d342ce6e371a894f52f3af06bf584"
+      },
+      "snapshot": "frozen-inputs/0174-check_poses.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c236/tests/run_controls.py",
+        "mode": "0o644",
+        "bytes": 29845,
+        "device": 27,
+        "inode": 3691942,
+        "links": 1,
+        "mtime_ns": 1795291244707252760,
+        "kind": "file",
+        "sha256": "43ad0cf77bf0564c40bc84d550573436e7dda7c9412b435b5fbbf77038a1499f"
+      },
+      "snapshot": "frozen-inputs/0175-run_controls.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c237/check_semantics.py",
+        "mode": "0o644",
+        "bytes": 20819,
+        "device": 27,
+        "inode": 3691944,
+        "links": 1,
+        "mtime_ns": 1795291244707252760,
+        "kind": "file",
+        "sha256": "c5127c265eb247ebeb1e7625e57179fb839ba932967c48ed071d5b60afb3a0c0"
+      },
+      "snapshot": "frozen-inputs/0176-check_semantics.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c237/tests/run_controls.py",
+        "mode": "0o644",
+        "bytes": 33389,
+        "device": 27,
+        "inode": 3691946,
+        "links": 1,
+        "mtime_ns": 1795291244707519161,
+        "kind": "file",
+        "sha256": "ea14063061920e534abbc0a4882d35ef37bd92889bf6f860b38bdc8e06d4a0e1"
+      },
+      "snapshot": "frozen-inputs/0177-run_controls.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c238/check_envelope.py",
+        "mode": "0o644",
+        "bytes": 40475,
+        "device": 27,
+        "inode": 3691948,
+        "links": 1,
+        "mtime_ns": 1795291244707519161,
+        "kind": "file",
+        "sha256": "76c87096d810236b58ac47a13ad58ab9eec558500104c6c96acf89f462deea83"
+      },
+      "snapshot": "frozen-inputs/0178-check_envelope.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c238/tests/run_controls.py",
+        "mode": "0o644",
+        "bytes": 36374,
+        "device": 27,
+        "inode": 3691950,
+        "links": 1,
+        "mtime_ns": 1795291244707922250,
+        "kind": "file",
+        "sha256": "9ef02af6df84da037ecc92c76de044ec76f1e12b4258ab15a89047c70132a5bb"
+      },
+      "snapshot": "frozen-inputs/0179-run_controls.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c239/check_combined.py",
+        "mode": "0o644",
+        "bytes": 29284,
+        "device": 27,
+        "inode": 3691952,
+        "links": 1,
+        "mtime_ns": 1795291244707922250,
+        "kind": "file",
+        "sha256": "c7271264bb50e384361aed3430e9c99205365202bc988c129e249d021f0ec7f1"
+      },
+      "snapshot": "frozen-inputs/0180-check_combined.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c239/tests/run_controls.py",
+        "mode": "0o644",
+        "bytes": 41218,
+        "device": 27,
+        "inode": 3691954,
+        "links": 1,
+        "mtime_ns": 1795291244708429416,
+        "kind": "file",
+        "sha256": "f24f7659746e292038f0488fbef88f1401f22534721cb270228aa8c7c18dfac6"
+      },
+      "snapshot": "frozen-inputs/0181-run_controls.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/static_tray_reader_v01/README.md",
+        "mode": "0o644",
+        "bytes": 6842,
+        "device": 27,
+        "inode": 3691956,
+        "links": 1,
+        "mtime_ns": 1795291244708429416,
+        "kind": "file",
+        "sha256": "d944b9599b66f7a918e9558984b5c95343645de422a15991d4b6610ff0efb715"
+      },
+      "snapshot": "frozen-inputs/0182-README.md"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/static_tray_reader_v01/audit.py",
+        "mode": "0o644",
+        "bytes": 2607,
+        "device": 27,
+        "inode": 3691957,
+        "links": 1,
+        "mtime_ns": 1795291244708696149,
+        "kind": "file",
+        "sha256": "bea1cc6370997a4b0d1ee335569b920759e9022394001752eebe3336be02ede5"
+      },
+      "snapshot": "frozen-inputs/0183-audit.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/static_tray_reader_v01/corrupt.py",
+        "mode": "0o644",
+        "bytes": 9410,
+        "device": 27,
+        "inode": 3691958,
+        "links": 1,
+        "mtime_ns": 1795291244708696149,
+        "kind": "file",
+        "sha256": "716824ef584e9ebf9f9065925018ab35185bf61d29f41eb14d32a7d360832b18"
+      },
+      "snapshot": "frozen-inputs/0184-corrupt.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/static_tray_reader_v01/expected.py",
+        "mode": "0o644",
+        "bytes": 6456,
+        "device": 27,
+        "inode": 3691959,
+        "links": 1,
+        "mtime_ns": 1795291244708696149,
+        "kind": "file",
+        "sha256": "b677815b42bbd439c590091b7668acd14fea189bea659aefb52ea16c0f264e10"
+      },
+      "snapshot": "frozen-inputs/0185-expected.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/static_tray_reader_v01/glb.py",
+        "mode": "0o644",
+        "bytes": 10284,
+        "device": 27,
+        "inode": 3691960,
+        "links": 1,
+        "mtime_ns": 1795291244708696149,
+        "kind": "file",
+        "sha256": "15e539c1c5225b8b6c2e8c42beec42a1e5fd00ce8bec1530c7c2dc04bf425774"
+      },
+      "snapshot": "frozen-inputs/0186-glb.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/static_tray_reader_v01/reader.py",
+        "mode": "0o644",
+        "bytes": 33399,
+        "device": 27,
+        "inode": 3691961,
+        "links": 1,
+        "mtime_ns": 1795291244708696149,
+        "kind": "file",
+        "sha256": "4cd7be509bd286f482b1f34bfb9bbf574ae93e3970c89bbce13295320430f34c"
+      },
+      "snapshot": "frozen-inputs/0187-reader.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/storage_identity.py",
+        "mode": "0o644",
+        "bytes": 14543,
+        "device": 27,
+        "inode": 3691962,
+        "links": 1,
+        "mtime_ns": 1795291244708696149,
+        "kind": "file",
+        "sha256": "ef4c51dbbb8866496abc612e5e8a97b6b5429173faa63e4b7f2742a5ca28d609"
+      },
+      "snapshot": "frozen-inputs/0188-storage_identity.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/storage_tests/README.md",
+        "mode": "0o644",
+        "bytes": 701,
+        "device": 27,
+        "inode": 3691964,
+        "links": 1,
+        "mtime_ns": 1795291244708696149,
+        "kind": "file",
+        "sha256": "7ce6d6205e788749e78bf9f9c38f6e02d14c420624629fa80cd5bd8595f7d5f8"
+      },
+      "snapshot": "frozen-inputs/0189-README.md"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/storage_tests/test_storage_identity.py",
+        "mode": "0o644",
+        "bytes": 16231,
+        "device": 27,
+        "inode": 3691965,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "e1bf133ca5c4c40a1160031b7d84143b1866819194cf2b0ca29c342c082e256a"
+      },
+      "snapshot": "frozen-inputs/0190-test_storage_identity.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_adversaries.py",
+        "mode": "0o644",
+        "bytes": 13345,
+        "device": 27,
+        "inode": 3691966,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "056a277bdf8f4fa8f13ecaa0027db6fa5a66103349b2204d8c7df4479d9f4cce"
+      },
+      "snapshot": "frozen-inputs/0191-string_concat_adversaries.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_agent_workflows.py",
+        "mode": "0o644",
+        "bytes": 39381,
+        "device": 27,
+        "inode": 3691967,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "fb2a256a0dfa89ad1a7bc34feb06654519d5fbb925bb404c56769a90cecdedc8"
+      },
+      "snapshot": "frozen-inputs/0192-string_concat_agent_workflows.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_boundary_checks.py",
+        "mode": "0o644",
+        "bytes": 12956,
+        "device": 27,
+        "inode": 3691968,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "42932db0ef32a3db90146c639783460c080a45feac7d2bbf31725065cc444611"
+      },
+      "snapshot": "frozen-inputs/0193-string_concat_boundary_checks.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_delivery_reference.py",
+        "mode": "0o644",
+        "bytes": 36303,
+        "device": 27,
+        "inode": 3691969,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "2b2b0e9cb94c7f65e94d55633a2ad3950a141df3b809fdfbaa6106cfce6b23cd"
+      },
+      "snapshot": "frozen-inputs/0194-string_concat_delivery_reference.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_destination_expectations.py",
+        "mode": "0o644",
+        "bytes": 3918,
+        "device": 27,
+        "inode": 3691970,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "561c5f3eec468bccfb0f7b892848e8915a03de453ddbafbb26cfadc1df3ef43a"
+      },
+      "snapshot": "frozen-inputs/0195-string_concat_destination_expectations.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_observer.py",
+        "mode": "0o644",
+        "bytes": 9013,
+        "device": 27,
+        "inode": 3691971,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "64ffc2371bb121dd30c94cb98719cf2bcd389fb18315e15a40fbbfc50abc766d"
+      },
+      "snapshot": "frozen-inputs/0196-string_concat_observer.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_reference.py",
+        "mode": "0o644",
+        "bytes": 15530,
+        "device": 27,
+        "inode": 3691972,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "0d68e6114051616d8136e2f530436b1cc9c0054d39f796510fccba6163b3f121"
+      },
+      "snapshot": "frozen-inputs/0197-string_concat_reference.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_source_reference.py",
+        "mode": "0o644",
+        "bytes": 54197,
+        "device": 27,
+        "inode": 3691973,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "ca60431dff92f6ce9453c9266c20eed5a59886049cf1c7d1b1da5fa58f989a63"
+      },
+      "snapshot": "frozen-inputs/0198-string_concat_source_reference.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/texture_adversaries.py",
+        "mode": "0o644",
+        "bytes": 6100,
+        "device": 27,
+        "inode": 3691974,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "8e3a4fd89a1d4c927e98c3f8ecead1467b79433a0147eb7fe4eecb0585883911"
+      },
+      "snapshot": "frozen-inputs/0199-texture_adversaries.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/texture_destination_expectations.py",
+        "mode": "0o644",
+        "bytes": 4741,
+        "device": 27,
+        "inode": 3691975,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "d54fa587c5af12b72a18f95a56eacd06bebf0ec92c5f541fbac41ebd37924786"
+      },
+      "snapshot": "frozen-inputs/0200-texture_destination_expectations.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/texture_reference.py",
+        "mode": "0o644",
+        "bytes": 41008,
+        "device": 27,
+        "inode": 3691976,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "71cb727ef8a9700f288b1ceb04e65c563302278917bd6536f1bc03616d2ada50"
+      },
+      "snapshot": "frozen-inputs/0201-texture_reference.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/torque_browser_probe.mjs",
+        "mode": "0o644",
+        "bytes": 10463,
+        "device": 27,
+        "inode": 3691977,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "fd18f4b0cc9799bb9af668ce1efdea72794539540198f29c9e3fd7a19d0a10cb"
+      },
+      "snapshot": "frozen-inputs/0202-torque_browser_probe.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/torque_destination.mjs",
+        "mode": "0o644",
+        "bytes": 10063,
+        "device": 27,
+        "inode": 3691978,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "401cc15d061762643eea826bf5cf89e7e6d3fc8a51d32dc71340635bc36acfd0"
+      },
+      "snapshot": "frozen-inputs/0203-torque_destination.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/trace_torque_source_projection.py",
+        "mode": "0o644",
+        "bytes": 2946,
+        "device": 27,
+        "inode": 3691979,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "12e3163044839e71f46eb5f4bfcef29af155e815e7690ca14567da86b490f814"
+      },
+      "snapshot": "frozen-inputs/0204-trace_torque_source_projection.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_agent_viewer.mjs",
+        "mode": "0o644",
+        "bytes": 16496,
+        "device": 27,
+        "inode": 3691980,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "b4540ba146567dd090f9b139e57beee429e9420fa96877e1115a88004caf1b7c"
+      },
+      "snapshot": "frozen-inputs/0205-verify_agent_viewer.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_budget_glb.mjs",
+        "mode": "0o644",
+        "bytes": 26720,
+        "device": 27,
+        "inode": 3691981,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "961d7fbb52df9374de792903bdf7229dffb3b84db08b008f466dec4179a289a1"
+      },
+      "snapshot": "frozen-inputs/0206-verify_budget_glb.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_connected_duct.py",
+        "mode": "0o644",
+        "bytes": 13856,
+        "device": 27,
+        "inode": 3691982,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "600e77359b9751d60e3ef884f8170b81586fc150d9e3df065e60c16cee75c6b2"
+      },
+      "snapshot": "frozen-inputs/0207-verify_connected_duct.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_construction_ci.py",
+        "mode": "0o644",
+        "bytes": 3997,
+        "device": 27,
+        "inode": 3691983,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "53c97f11a57df4feec74d855f92b53aac29d98f3809e18674a4f563fcaa8aa17"
+      },
+      "snapshot": "frozen-inputs/0208-verify_construction_ci.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_construction_viewer.mjs",
+        "mode": "0o644",
+        "bytes": 16739,
+        "device": 27,
+        "inode": 3691984,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "b733ae754d8b593540e3f478f1bab300d54769f4be17335c195386aa013177a6"
+      },
+      "snapshot": "frozen-inputs/0209-verify_construction_viewer.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_duct_offset_route.py",
+        "mode": "0o644",
+        "bytes": 3646,
+        "device": 27,
+        "inode": 3691985,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "c4e9d4f5c52f456e9017d30af48df1bc09c968d327b7dbbea867fdb233568561"
+      },
+      "snapshot": "frozen-inputs/0210-verify_duct_offset_route.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_duct_placement.py",
+        "mode": "0o644",
+        "bytes": 8033,
+        "device": 27,
+        "inode": 3691986,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "124d7c635dd3f64d53ec60decaade083c097721cec530a7f58b58ad953d8e3b1"
+      },
+      "snapshot": "frozen-inputs/0211-verify_duct_placement.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_duct_route.py",
+        "mode": "0o644",
+        "bytes": 3161,
+        "device": 27,
+        "inode": 3691987,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "a96128fd557c8e643e332f01d32c40fb84ef0bd3f3809a1bedf13f87fb21cf50"
+      },
+      "snapshot": "frozen-inputs/0212-verify_duct_route.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_duct_selection.py",
+        "mode": "0o644",
+        "bytes": 8308,
+        "device": 27,
+        "inode": 3691988,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "03743ff18579ffeba76e5c062a071866ffc5d00a54fbc33632a2bd414a1c7358"
+      },
+      "snapshot": "frozen-inputs/0213-verify_duct_selection.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_duct_span.py",
+        "mode": "0o644",
+        "bytes": 10456,
+        "device": 27,
+        "inode": 3691989,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "ee9652be1c1a1752e8b9826f571ee3ca5b03328d8a693a4e3e7a607c0a367f4a"
+      },
+      "snapshot": "frozen-inputs/0214-verify_duct_span.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_extrusion_glb.mjs",
+        "mode": "0o644",
+        "bytes": 11995,
+        "device": 27,
+        "inode": 3691990,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "2259fa8253f54912b0c37afef6b3be6924e9b7d28e2c3f395d2625a03526c3d3"
+      },
+      "snapshot": "frozen-inputs/0215-verify_extrusion_glb.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_force_agent_workflow.py",
+        "mode": "0o644",
+        "bytes": 45546,
+        "device": 27,
+        "inode": 3691991,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "13a1d94104c1cdbae4314bfc267b1c492dcfe6e615d937fa1425272cb866a194"
+      },
+      "snapshot": "frozen-inputs/0216-verify_force_agent_workflow.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_force_delivery_workflow.py",
+        "mode": "0o644",
+        "bytes": 51379,
+        "device": 27,
+        "inode": 3691992,
+        "links": 1,
+        "mtime_ns": 1795291244709322515,
+        "kind": "file",
+        "sha256": "b57a93069a29fa3391c9e6b2a294f742a21e74cc098c4514679908b72db24d33"
+      },
+      "snapshot": "frozen-inputs/0217-verify_force_delivery_workflow.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_force_native.mjs",
+        "mode": "0o644",
+        "bytes": 63500,
+        "device": 27,
+        "inode": 3691993,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "be08e5bea462fb98a87e7ba4c9d3d7e30500698e1dd52d5407038aba23c7bd75"
+      },
+      "snapshot": "frozen-inputs/0218-verify_force_native.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_force_viewer.mjs",
+        "mode": "0o644",
+        "bytes": 28801,
+        "device": 27,
+        "inode": 3691994,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "6cbba29481f743111bc371b387a65a4d1a99919ddcc5db3847a5328c65b96a72"
+      },
+      "snapshot": "frozen-inputs/0219-verify_force_viewer.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_framed_loft_glb.mjs",
+        "mode": "0o644",
+        "bytes": 15527,
+        "device": 27,
+        "inode": 3691995,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "ff42b168e460fda316c35cb60e652c9821f6a80e2f64fe4b1cfbef81cb0e7976"
+      },
+      "snapshot": "frozen-inputs/0220-verify_framed_loft_glb.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_gltf.mjs",
+        "mode": "0o644",
+        "bytes": 7203,
+        "device": 27,
+        "inode": 3691996,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "edc372d797ab4191e4fb70425e9106623d1f3b0ac4609f32d47b35179a308073"
+      },
+      "snapshot": "frozen-inputs/0221-verify_gltf.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_holes_glb.mjs",
+        "mode": "0o644",
+        "bytes": 12311,
+        "device": 27,
+        "inode": 3691997,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "c5ef3351416026c99c2e746a98632bae76e060c9b9c6744b0457d34482ad924d"
+      },
+      "snapshot": "frozen-inputs/0222-verify_holes_glb.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_impulse_native.mjs",
+        "mode": "0o644",
+        "bytes": 27046,
+        "device": 27,
+        "inode": 3691998,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "ca315b6475135decbfc4946b7200adf19b1b5cf32f3b40fc352c36840c355756"
+      },
+      "snapshot": "frozen-inputs/0223-verify_impulse_native.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_impulse_viewer.mjs",
+        "mode": "0o644",
+        "bytes": 22372,
+        "device": 27,
+        "inode": 3691999,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "7b980366316615bb1f27f677c5b8da6fa2b373d407ca55a0cdca7967b5dd660a"
+      },
+      "snapshot": "frozen-inputs/0224-verify_impulse_viewer.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_inferred_duct_offset.py",
+        "mode": "0o644",
+        "bytes": 7155,
+        "device": 27,
+        "inode": 3692000,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "e18ff4c3766b71ef9c668255d827982c57c78ec9c9c3b17ad00cc7857bed5370"
+      },
+      "snapshot": "frozen-inputs/0225-verify_inferred_duct_offset.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_filter.py",
+        "mode": "0o644",
+        "bytes": 18524,
+        "device": 27,
+        "inode": 3692001,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "cf325fdb3eda11b6a9fc60e2fa1a8121994506977a86019e9df8bf184e49cac0"
+      },
+      "snapshot": "frozen-inputs/0226-verify_keyed_filter.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_filter_agent_evidence.py",
+        "mode": "0o644",
+        "bytes": 43838,
+        "device": 27,
+        "inode": 3692002,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "ca38009a9e0e0708906ece7f9f0d643835874e741ccb59a39bcc8ec50b15eab4"
+      },
+      "snapshot": "frozen-inputs/0227-verify_keyed_filter_agent_evidence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_filter_destination.mjs",
+        "mode": "0o644",
+        "bytes": 26107,
+        "device": 27,
+        "inode": 3692003,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "6e6fd1baccc2ec5e2674674a45525bb74b046817a5bb3574c027eb656b4320ff"
+      },
+      "snapshot": "frozen-inputs/0228-verify_keyed_filter_destination.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_membership_observations.py",
+        "mode": "0o644",
+        "bytes": 31981,
+        "device": 27,
+        "inode": 3692004,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "bda0d77eda20ef86e073d442fa80abd1c4195d67863f5f85876e995c5c739b0f"
+      },
+      "snapshot": "frozen-inputs/0229-verify_keyed_membership_observations.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_merge.py",
+        "mode": "0o644",
+        "bytes": 19496,
+        "device": 27,
+        "inode": 3692005,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "e88e78ca6958ead9a526ab08931fda728c7ace8f197f4a788a3ff93e4181a1c8"
+      },
+      "snapshot": "frozen-inputs/0230-verify_keyed_merge.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_merge_agent_evidence.py",
+        "mode": "0o644",
+        "bytes": 47911,
+        "device": 27,
+        "inode": 3692006,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "e4c61bb001409f1ec74dfc3ba6a010a664f3159ba1919b874b72d4479401df20"
+      },
+      "snapshot": "frozen-inputs/0231-verify_keyed_merge_agent_evidence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_merge_destination.mjs",
+        "mode": "0o644",
+        "bytes": 26103,
+        "device": 27,
+        "inode": 3692007,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "3a7ae7962c54639b38186ead70c7cbb13ec57d6b0081102c8b65213dabce31bb"
+      },
+      "snapshot": "frozen-inputs/0232-verify_keyed_merge_destination.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_reduction.py",
+        "mode": "0o644",
+        "bytes": 11960,
+        "device": 27,
+        "inode": 3692008,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "86b327574ecf61d630d4f886506b85bc2236edc0734476a681d1a7deb2187cfa"
+      },
+      "snapshot": "frozen-inputs/0233-verify_keyed_reduction.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_reduction_agent_evidence.py",
+        "mode": "0o644",
+        "bytes": 41660,
+        "device": 27,
+        "inode": 3692009,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "ee60bc091bb38e719d99350bdbd2e942eafae9ea67d7e857149f9f40067a36df"
+      },
+      "snapshot": "frozen-inputs/0234-verify_keyed_reduction_agent_evidence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_reduction_destination.mjs",
+        "mode": "0o644",
+        "bytes": 26103,
+        "device": 27,
+        "inode": 3692010,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "23b88d3a709ce9a5bf63c2a78b42f204ead06238e6533067bacfb6c5a73d25d6"
+      },
+      "snapshot": "frozen-inputs/0235-verify_keyed_reduction_destination.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_rekey.py",
+        "mode": "0o644",
+        "bytes": 28338,
+        "device": 27,
+        "inode": 3692011,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "8ff735e98bd46a6ff483cb290f79df2bfa24456ba95003f59862fb9b237eef40"
+      },
+      "snapshot": "frozen-inputs/0236-verify_keyed_rekey.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_rekey_agent_evidence.py",
+        "mode": "0o644",
+        "bytes": 66231,
+        "device": 27,
+        "inode": 3692012,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "871b1c924f5e58e0ad59aa284f09a3057c5b46b048544c4d5e0bc2d55f80effa"
+      },
+      "snapshot": "frozen-inputs/0237-verify_keyed_rekey_agent_evidence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_rekey_destination.mjs",
+        "mode": "0o644",
+        "bytes": 26572,
+        "device": 27,
+        "inode": 3692013,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "8b4b4993c7be457bda56f2594c1dd7fb43810b4cd63dde15d99d87ee40566c3f"
+      },
+      "snapshot": "frozen-inputs/0238-verify_keyed_rekey_destination.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_transform.py",
+        "mode": "0o644",
+        "bytes": 11749,
+        "device": 27,
+        "inode": 3692014,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "f531e76a7dd1c820bda835ffeaf7c2bf248db045d355de08e1c5602c8abe8293"
+      },
+      "snapshot": "frozen-inputs/0239-verify_keyed_transform.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_transform_agent_evidence.py",
+        "mode": "0o644",
+        "bytes": 41917,
+        "device": 27,
+        "inode": 3692015,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "800ded31121cabafd003638aee88714b5882ae810d43f1199b09997a119da98c"
+      },
+      "snapshot": "frozen-inputs/0240-verify_keyed_transform_agent_evidence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_transform_destination.mjs",
+        "mode": "0o644",
+        "bytes": 25353,
+        "device": 27,
+        "inode": 3692016,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "f1190d44f1654685006bd1cd4127d62e12bc5fe128eae82628ff5660cf9815c3"
+      },
+      "snapshot": "frozen-inputs/0241-verify_keyed_transform_destination.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_zip.py",
+        "mode": "0o644",
+        "bytes": 26744,
+        "device": 27,
+        "inode": 3692017,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "3211e329c7d2504ceb13126a8a1c07f44a874c97b31e7e9eb416aed78c473a99"
+      },
+      "snapshot": "frozen-inputs/0242-verify_keyed_zip.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_zip_agent_evidence.py",
+        "mode": "0o644",
+        "bytes": 59343,
+        "device": 27,
+        "inode": 3692018,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "c7ab182ae6b0ec0cb458dbbe0b096d1ddfedb3414355c492891b547fc205c44a"
+      },
+      "snapshot": "frozen-inputs/0243-verify_keyed_zip_agent_evidence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_zip_destination.mjs",
+        "mode": "0o644",
+        "bytes": 26584,
+        "device": 27,
+        "inode": 3692019,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "05a9ca15bd97f8d81f475f9a1acf5fe26872db47185651810ea20ddd82cf9f2a"
+      },
+      "snapshot": "frozen-inputs/0244-verify_keyed_zip_destination.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_membership_agent.py",
+        "mode": "0o644",
+        "bytes": 48339,
+        "device": 27,
+        "inode": 3692020,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "af3e7c05edb29928085493b0bf4a19b200a2b47883f369218353a2a530ab1b47"
+      },
+      "snapshot": "frozen-inputs/0245-verify_membership_agent.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_membership_agent_glb.py",
+        "mode": "0o644",
+        "bytes": 10406,
+        "device": 27,
+        "inode": 3692021,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "0f10ec889aa3e4ee1eea63902c760856c66742771ef9097949ed62eb4018dfa7"
+      },
+      "snapshot": "frozen-inputs/0246-verify_membership_agent_glb.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_membership_destination.mjs",
+        "mode": "0o644",
+        "bytes": 27558,
+        "device": 27,
+        "inode": 3692022,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "79133a0a6f1a346013cd732152310b3bcc193039f7a40f825bd4a947fbb8d93d"
+      },
+      "snapshot": "frozen-inputs/0247-verify_membership_destination.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_membership_glb.py",
+        "mode": "0o644",
+        "bytes": 49807,
+        "device": 27,
+        "inode": 3692023,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "ca6c55a2c75812fa1fc8d136c2da054d910762768168fdc542513bfa7c499243"
+      },
+      "snapshot": "frozen-inputs/0248-verify_membership_glb.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_pockets_glb.mjs",
+        "mode": "0o644",
+        "bytes": 16721,
+        "device": 27,
+        "inode": 3692024,
+        "links": 1,
+        "mtime_ns": 1795291244710250979,
+        "kind": "file",
+        "sha256": "5ef65c3fe4fad37ffe141e438a77da378ead8e9b774cd16aa88af8db2b3c874d"
+      },
+      "snapshot": "frozen-inputs/0249-verify_pockets_glb.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_program_schemas.py",
+        "mode": "0o644",
+        "bytes": 4570,
+        "device": 27,
+        "inode": 3692025,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "a1d9dfaca7bc0a23d3ac00b6e7a3310b4d1b076de8185ed800b9dfd1d0772b07"
+      },
+      "snapshot": "frozen-inputs/0250-verify_program_schemas.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_reach_destinations.py",
+        "mode": "0o644",
+        "bytes": 13812,
+        "device": 27,
+        "inode": 3692026,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "3500dea57e7aec58ab7f86883fb5d2cfc7400a23c62e3957f87dcd1a468850c6"
+      },
+      "snapshot": "frozen-inputs/0251-verify_reach_destinations.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_reach_native.mjs",
+        "mode": "0o644",
+        "bytes": 41673,
+        "device": 27,
+        "inode": 3692027,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "9397f5a68d17548b1dd8756a98171e315dc2f1bd9df561d3b6735ac76f818a5a"
+      },
+      "snapshot": "frozen-inputs/0252-verify_reach_native.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_reach_viewer.mjs",
+        "mode": "0o644",
+        "bytes": 27146,
+        "device": 27,
+        "inode": 3692028,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "ffd308b2e5193d78f5314339a29f80fb0049b38b66892dd1168e48a3eb0c34e1"
+      },
+      "snapshot": "frozen-inputs/0253-verify_reach_viewer.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_ring_loft_glb.mjs",
+        "mode": "0o755",
+        "bytes": 12394,
+        "device": 27,
+        "inode": 3692029,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "7e86cb2090f61152918b82fe3080d737f24effcc93bdfb8766d31b0948b2fc54"
+      },
+      "snapshot": "frozen-inputs/0254-verify_ring_loft_glb.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_semantic_export_viewer.mjs",
+        "mode": "0o644",
+        "bytes": 10546,
+        "device": 27,
+        "inode": 3692030,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "7190dd7e69be9f0cbb43d086f09e7a48049a34be9fd1e940206491ffe91d93f5"
+      },
+      "snapshot": "frozen-inputs/0255-verify_semantic_export_viewer.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat.py",
+        "mode": "0o644",
+        "bytes": 28859,
+        "device": 27,
+        "inode": 3692031,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "a7272f4a95329c783d06f0edd5777eb8451046f4f8974dc41eac9233b3fc1c89"
+      },
+      "snapshot": "frozen-inputs/0256-verify_string_concat.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat_agent_adversaries.py",
+        "mode": "0o644",
+        "bytes": 11063,
+        "device": 27,
+        "inode": 3692032,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "5d0a4ce1ba7d8b13eda406e2a8cc4b810910a3f3138f04c062067c6ea62d8c8d"
+      },
+      "snapshot": "frozen-inputs/0257-verify_string_concat_agent_adversaries.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat_agent_evidence.py",
+        "mode": "0o644",
+        "bytes": 74797,
+        "device": 27,
+        "inode": 3692033,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "4a4c205016e4cc98b31d3cbc5cc37f63fa0b27045a4247e8f73bc1bfa84916ed"
+      },
+      "snapshot": "frozen-inputs/0258-verify_string_concat_agent_evidence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat_boundaries.py",
+        "mode": "0o644",
+        "bytes": 40087,
+        "device": 27,
+        "inode": 3692034,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "8e67ce0202eb2c47708fbb927a196ffe9b3b83413f543c11ec365e0d7ed95d70"
+      },
+      "snapshot": "frozen-inputs/0259-verify_string_concat_boundaries.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat_destination.mjs",
+        "mode": "0o644",
+        "bytes": 26655,
+        "device": 27,
+        "inode": 3692035,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "45deec4927fd1bba6fb71953b8b8b140723f08cf0f635605ad715c0a9322cd39"
+      },
+      "snapshot": "frozen-inputs/0260-verify_string_concat_destination.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat_glb_probes.py",
+        "mode": "0o644",
+        "bytes": 5054,
+        "device": 27,
+        "inode": 3692036,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "90e3b1a7e2c6cdae3a5584caada7733480929b15dd09cf05d37e54f7847064ca"
+      },
+      "snapshot": "frozen-inputs/0261-verify_string_concat_glb_probes.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat_partial_regressions.py",
+        "mode": "0o644",
+        "bytes": 4092,
+        "device": 27,
+        "inode": 3692037,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "2f1055561a4cab43bb6b8fa5b2fd22de9e5a72816c105247c983272c80daa54e"
+      },
+      "snapshot": "frozen-inputs/0262-verify_string_concat_partial_regressions.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_surface_native.mjs",
+        "mode": "0o644",
+        "bytes": 30000,
+        "device": 27,
+        "inode": 3692038,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "77b74bc15c606840034d50bfc266446cb96a43dd95ccfe83294401e918ba8226"
+      },
+      "snapshot": "frozen-inputs/0263-verify_surface_native.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_surface_prototype.mjs",
+        "mode": "0o644",
+        "bytes": 2948,
+        "device": 27,
+        "inode": 3692039,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "892236885dc7191cd52cde1e2064100bd718ac25331f6663a89341812fa9bb40"
+      },
+      "snapshot": "frozen-inputs/0264-verify_surface_prototype.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_surface_viewer.mjs",
+        "mode": "0o644",
+        "bytes": 16165,
+        "device": 27,
+        "inode": 3692040,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "62221c96986db0549dceba4db4e3fadddd07411ec073594f8c4ab97a5edc85b1"
+      },
+      "snapshot": "frozen-inputs/0265-verify_surface_viewer.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_texture_agent_evidence.py",
+        "mode": "0o644",
+        "bytes": 27798,
+        "device": 27,
+        "inode": 3692041,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "200642d4c314be5115b094b27d5b283dd7d2513b2a57f80397c802c4ef80957d"
+      },
+      "snapshot": "frozen-inputs/0266-verify_texture_agent_evidence.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_textures.py",
+        "mode": "0o644",
+        "bytes": 16510,
+        "device": 27,
+        "inode": 3692042,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "079e282be720274f92fa2ec2967e25312792f003841a94ba9364d97a2d0ebb21"
+      },
+      "snapshot": "frozen-inputs/0267-verify_textures.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_textures_destination.mjs",
+        "mode": "0o644",
+        "bytes": 25209,
+        "device": 27,
+        "inode": 3692043,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "744ed26a2bc74840fc764a8921fadac66329f8715b9016f1fee633059bd4a95d"
+      },
+      "snapshot": "frozen-inputs/0268-verify_textures_destination.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_torque_delivery_frozen.py",
+        "mode": "0o644",
+        "bytes": 5388,
+        "device": 27,
+        "inode": 3692044,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "98e29de7a8aac307aeccba70900a81aace856a51cc5dd0d59113a51915e27398"
+      },
+      "snapshot": "frozen-inputs/0269-verify_torque_delivery_frozen.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_torque_geometry_streams.py",
+        "mode": "0o644",
+        "bytes": 7590,
+        "device": 27,
+        "inode": 3692045,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "186a2a9e6b6d1af5db4e3409db6d04e982fc209a7fd7932462889934e8fc02fe"
+      },
+      "snapshot": "frozen-inputs/0270-verify_torque_geometry_streams.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_torque_hostile_bytes.py",
+        "mode": "0o644",
+        "bytes": 22359,
+        "device": 27,
+        "inode": 3692046,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "f4a9f1e37db1b60c7adbc341620c7ec2294361b314d91e68b03b3b11766e57a8"
+      },
+      "snapshot": "frozen-inputs/0271-verify_torque_hostile_bytes.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_torque_native_dense.py",
+        "mode": "0o644",
+        "bytes": 25573,
+        "device": 27,
+        "inode": 3692047,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "39362551d20fba2537516c00d04d102fe7a916de6e27368fc04d7bb611298449"
+      },
+      "snapshot": "frozen-inputs/0272-verify_torque_native_dense.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_torque_native_dense_c093.py",
+        "mode": "0o644",
+        "bytes": 28699,
+        "device": 27,
+        "inode": 3692048,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "2c75cb36493e039192ed331d4dca8897e91b099666377209083fa35e09f29c76"
+      },
+      "snapshot": "frozen-inputs/0273-verify_torque_native_dense_c093.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_torque_reference_frozen.py",
+        "mode": "0o644",
+        "bytes": 4691,
+        "device": 27,
+        "inode": 3692049,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "118dbb20de8857f8a2445d1dc2f44b779bf783a53c42bd13c7574af9aac79f02"
+      },
+      "snapshot": "frozen-inputs/0274-verify_torque_reference_frozen.py"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_viewer.mjs",
+        "mode": "0o644",
+        "bytes": 6498,
+        "device": 27,
+        "inode": 3692050,
+        "links": 1,
+        "mtime_ns": 1795291244714250938,
+        "kind": "file",
+        "sha256": "f6ce713e976572280958140a070f214edf1ed838a640c86108fbf666a1cec4fd"
+      },
+      "snapshot": "frozen-inputs/0275-verify_viewer.mjs"
+    },
+    {
+      "source": {
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/verification/run_focused_guarded.py",
+        "mode": "0o644",
+        "bytes": 18812,
+        "device": 27,
+        "inode": 3803997,
+        "links": 1,
+        "mtime_ns": 1795292366598602129,
+        "kind": "file",
+        "sha256": "1f3fdc836bd8c7320fc76a824c961ae14b3137faf812aa0c254d4e1e9e14b30f"
+      },
+      "snapshot": "frozen-inputs/0276-run_focused_guarded.py"
+    }
+  ],
+  "guards_installed_before_project_imports_at_utc": "2026-11-21T20:24:34.787347+00:00",
+  "tests_run": 175,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "expectedFailures": 0,
+  "unexpectedSuccesses": 0,
+  "outer_process_guard_calls": {
+    "subprocess.Popen": 0,
+    "subprocess.run": 0,
+    "subprocess.check_output": 0,
+    "subprocess.call": 0,
+    "subprocess.check_call": 0,
+    "os.system": 0,
+    "os.popen": 0,
+    "os.fork": 0,
+    "os.forkpty": 0,
+    "os.posix_spawn": 0,
+    "os.posix_spawnp": 0,
+    "os.spawnl": 0,
+    "os.spawnle": 0,
+    "os.spawnlp": 0,
+    "os.spawnlpe": 0,
+    "os.spawnv": 0,
+    "os.spawnve": 0,
+    "os.spawnvp": 0,
+    "os.spawnvpe": 0,
+    "os.execl": 0,
+    "os.execle": 0,
+    "os.execlp": 0,
+    "os.execlpe": 0,
+    "os.execv": 0,
+    "os.execve": 0,
+    "os.execvp": 0,
+    "os.execvpe": 0,
+    "os.kill": 0,
+    "os.killpg": 0,
+    "os.setsid": 0,
+    "os.setpgid": 0,
+    "os.getpgid": 0,
+    "os.getpgrp": 0,
+    "os.getsid": 0,
+    "os.wait": 0,
+    "os.waitpid": 0,
+    "os.waitid": 0,
+    "os.wait3": 0,
+    "os.wait4": 0
+  },
+  "blocked_process_audit_events": [],
+  "blocked_test_module_imports": [],
+  "frozen_input_postflight": [
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/docs/engineering/localized-repair-c271/elf-string-table-p10/VERIFICATION-PLAN.json",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/__init__.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/canonical.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/cli.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/current_host_readback_v01.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/current_host_readback_v01.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/delivery-rules.json",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/errors.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/export-settings.json",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/fixtures.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/format_check.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/import-settings.json",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/lifecycle.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/lifecycle_stub.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/lock.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/qualification.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/readback.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/receive_check.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/receiver.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/sources.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/store.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/supervisor.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/transaction.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/prototypes/static_tray_v01/worker.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/pyproject.toml",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tests/fixtures/current_host_elf_mapping_v01/FIXTURES.json",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tests/fixtures/current_host_elf_mapping_v01/ORACLE.json",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tests/fixtures/rack_explicit.ok",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tests/test_current_host_elf_mapping_v01.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tests/test_current_host_inspection_v01.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/.gitignore",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_duct_route_exchanges.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_framed_loft_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_pockets_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_reach_agent_delivery.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_reach_reader_setup.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_reach_recording_work.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/audit_torque_artifact_loop.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_agent_demo.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_construction_demo.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_force_agent_demo.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_force_delivery_demo.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_force_demo.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_force_release_evidence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_impulse_agent_demo.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_reach_agent_delivery.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_reach_native_reference.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_reach_source_artifacts.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_semantic_export_demo.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_surface_agent_demo.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_surface_demo.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_surface_prototype.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_viewer.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/build_visual_demos.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/capture_handoff_evidence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/capture_reach_reader_setup.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/capture_reach_recording_work.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/chat_workflow.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_local.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_native_reader_setup.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_agent_pose_oracles.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_artifact_audit.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_delivery_edges.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_delivery_gate.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_internal_comparisons.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_predecessor_bytes.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_quaternion_oracle.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_recording_pose_identity.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_request_schema_dispatch.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_resumption_equivalence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/check_torque_structural_counts.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/compare_keyed_merge_predecessor.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/compare_keyed_rekey_predecessor.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/compare_keyed_zip_predecessor.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/extrusion_oracles.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/force-agent-verification-requirements.txt",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/force_oracles.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/framed_loft_oracles.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/holes_oracles.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/impulse_oracles.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_filter_adversaries.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_filter_destination_expectations.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_filter_reference.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_membership_amendment.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_membership_evidence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_membership_native_fixtures.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_membership_observer.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_merge_adversaries.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_merge_destination_expectations.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_merge_reference.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_reduction_adversaries.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_reduction_destination_expectations.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_reduction_reference.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_rekey_adversaries.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_rekey_agent_workflows.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_rekey_delivery_reference.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_rekey_destination_expectations.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_rekey_reference.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_rekey_source_reference.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_transform_adversaries.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_transform_destination_expectations.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_transform_reference.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_zip_adversaries.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_zip_agent_workflows.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_zip_destination_expectations.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/keyed_zip_reference.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/membership_destination_expectations.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/native-reader-verification-linux-cp312.lock",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/ontokin_budget_host.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/pack_lossless_jsonl.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/package-lock.json",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/package.json",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/pockets_oracles.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/prepare_current_host_readback.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/prepare_lfs_archives.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/probe_reach_native_artifact.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/probe_reach_recording_work.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/reach_delivery_inventory.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/reach_destination.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/reach_native_support.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/reach_rate_inventory.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/reach_source_rates.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/reach_viewer_harness.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/record_construction_evidence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/recover_handoff_evidence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/review_torque_artifact_auditor.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/review_torque_cache_ownership.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/review_torque_source_guard.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/ring_loft_oracles.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_agent_conformance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_budget_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_budget_agent_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_extrusion_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_force_conformance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_framed_loft_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_holes_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_hostile_membership_records.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_impulse_conformance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_filter_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_membership_native.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_membership_sources.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_merge_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_reduction_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_rekey_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_transform_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_keyed_zip_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_membership_agent.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_pockets_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_reach_regression.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_reach_source_corpus.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_ring_loft_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_string_concat_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_string_concat_glb_probes.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_surface_conformance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_texture_acceptance.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_domains.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_resources.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_self_frames.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_source_refusals.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_state_matrix.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_store.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_agent_workflows.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_domain_refusals.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_runtime_stage_faults.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/run_torque_runtime_states.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c221/check_bindings.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c221/tests/run_controls.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c222/check_observations.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c222/tests/run_controls.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c234/check_materials.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c234/tests/run_controls.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c235/check_normals.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c235/tests/run_controls.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c236/check_poses.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c236/tests/run_controls.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c237/check_semantics.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c237/tests/run_controls.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c238/check_envelope.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c238/tests/run_controls.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c239/check_combined.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/second_target_c239/tests/run_controls.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/static_tray_reader_v01/README.md",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/static_tray_reader_v01/audit.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/static_tray_reader_v01/corrupt.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/static_tray_reader_v01/expected.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/static_tray_reader_v01/glb.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/static_tray_reader_v01/reader.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/storage_identity.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/storage_tests/README.md",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/storage_tests/test_storage_identity.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_adversaries.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_agent_workflows.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_boundary_checks.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_delivery_reference.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_destination_expectations.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_observer.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_reference.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/string_concat_source_reference.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/texture_adversaries.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/texture_destination_expectations.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/texture_reference.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/torque_browser_probe.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/torque_destination.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/trace_torque_source_projection.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_agent_viewer.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_budget_glb.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_connected_duct.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_construction_ci.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_construction_viewer.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_duct_offset_route.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_duct_placement.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_duct_route.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_duct_selection.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_duct_span.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_extrusion_glb.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_force_agent_workflow.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_force_delivery_workflow.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_force_native.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_force_viewer.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_framed_loft_glb.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_gltf.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_holes_glb.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_impulse_native.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_impulse_viewer.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_inferred_duct_offset.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_filter.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_filter_agent_evidence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_filter_destination.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_membership_observations.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_merge.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_merge_agent_evidence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_merge_destination.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_reduction.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_reduction_agent_evidence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_reduction_destination.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_rekey.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_rekey_agent_evidence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_rekey_destination.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_transform.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_transform_agent_evidence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_transform_destination.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_zip.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_zip_agent_evidence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_keyed_zip_destination.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_membership_agent.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_membership_agent_glb.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_membership_destination.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_membership_glb.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_pockets_glb.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_program_schemas.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_reach_destinations.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_reach_native.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_reach_viewer.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_ring_loft_glb.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_semantic_export_viewer.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat_agent_adversaries.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat_agent_evidence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat_boundaries.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat_destination.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat_glb_probes.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_string_concat_partial_regressions.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_surface_native.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_surface_prototype.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_surface_viewer.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_texture_agent_evidence.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_textures.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_textures_destination.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_torque_delivery_frozen.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_torque_geometry_streams.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_torque_hostile_bytes.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_torque_native_dense.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_torque_native_dense_c093.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_torque_reference_frozen.py",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tools/verify_viewer.mjs",
+      "matches_frozen": true
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/session_p10/verification/run_focused_guarded.py",
+      "matches_frozen": true
+    }
+  ],
+  "environment_restored": true,
+  "finished_at_utc": "2026-11-21T20:24:43.070246+00:00",
+  "actual_project_process_operations": 0,
+  "logs": [
+    {
+      "path": "/workspace/scratch/7b9b58d10704/session_p10/verification/run001/stdout.log",
+      "mode": "0o644",
+      "bytes": 0,
+      "device": 27,
+      "inode": 3804675,
+      "links": 1,
+      "mtime_ns": 1795292674507194505,
+      "kind": "file",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/session_p10/verification/run001/stderr.log",
+      "mode": "0o644",
+      "bytes": 27879,
+      "device": 27,
+      "inode": 3804676,
+      "links": 1,
+      "mtime_ns": 1795292683054648980,
+      "kind": "file",
+      "sha256": "b03e70a55ca5f0113de22d0e2ca91c11bc2636084d15a6049b1a26d653fdabb8"
+    }
+  ],
+  "exit_code": 0,
+  "retry_permitted": false,
+  "source_identity_boundary": "Git HEAD/tree/status observed before guards; frozen input bytes checked after tests. Director rechecks live Git state separately."
+}

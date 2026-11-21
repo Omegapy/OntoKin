@@ -173,3 +173,10 @@ Select only correction of `read_elf_metadata` dynamic string-table file mapping 
 Acceptance: frozen independent oracle/design, one finite implementation change, focused static/filesystem/mocked regression, independent exact-source/evidence review with findings resolved, applicable workflow/documentation/whitespace checks, retained-branch publication, verified partial ZIP/prompts and separate saved receipt. See [P10 phase](../../../engineering/localized-repair-c271/elf-string-table-p10/PHASE.json).
 
 No H0 retry, runtime installation, H1/Node/ldd, probes, original seven methods, full routine, native/model/hosted execution, main lease/integration or parent closure. The full routine remains a mandatory unmet R03 gate. Stop after this correction's partial delivery or a concrete unresolved blocker/unplanned expansion; do not begin another phase. R01/R02 stay done, R03–R05 not_done, parent P02 in_progress, PR274 draft/open/unmerged, issue273 open. Root owns canonical state/Git/publication; independent workers own disjoint fixture, audit and package paths.
+
+
+## P10 verified implementation boundary
+
+The exact candidate `fdacc11349079be21bcce755b18ca660df4d96a2` passed 175 focused methods and the independent 40-case oracle. The retained Python image now reaches the unchanged `$ORIGIN/../lib` token refusal. C271 is blocked/open; R03–R05 remain not_done and P02 in_progress. The full routine is still mandatory and unrun in P10. Final independent boundary review and saved partial delivery follow; no next phase or integration begins.
+
+In a fresh bounded phase, reconcile the P10 handoff and live GitHub and confirm new early recovery. Independently review the selected Python RPATH $ORIGIN/../lib refusal and freeze a finite decision and positive/refusal controls before any loader-path correction or input substitution. H0 remains unaccepted; re-establish it only after the prerequisite is resolved. H1 and the complete routine remain later gates. Do not begin this phase in the P10 chat.

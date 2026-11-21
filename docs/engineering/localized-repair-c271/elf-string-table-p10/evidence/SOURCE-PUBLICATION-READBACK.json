@@ -1,0 +1,101 @@
+{
+  "verified_at_utc": "2026-11-21T20:24:06.403238+00:00",
+  "source_head": "fdacc11349079be21bcce755b18ca660df4d96a2",
+  "tree": "be6534bc800ad8be7b7ee4938d289b852503e534",
+  "clean": true,
+  "records": [
+    {
+      "argv": [
+        "git",
+        "ls-remote",
+        "origin",
+        "refs/heads/work/c271-missing-import-digest-control"
+      ],
+      "exit_code": 0,
+      "stdout": "fdacc11349079be21bcce755b18ca660df4d96a2\trefs/heads/work/c271-missing-import-digest-control\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "fetch",
+        "origin",
+        "work/c271-missing-import-digest-control"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "From https://github.com/Omegapy/OntoKin\n * branch              work/c271-missing-import-digest-control -> FETCH_HEAD\n   ffd234b1..fdacc113  work/c271-missing-import-digest-control -> origin/work/c271-missing-import-digest-control\n"
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "fdacc11349079be21bcce755b18ca660df4d96a2^{tree}"
+      ],
+      "exit_code": 0,
+      "stdout": "be6534bc800ad8be7b7ee4938d289b852503e534\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "write-tree"
+      ],
+      "exit_code": 0,
+      "stdout": "be6534bc800ad8be7b7ee4938d289b852503e534\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "ffd234b17723e8370cc0afa6cf19c1a161719892\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "update-ref",
+        "refs/heads/work/c271-missing-import-digest-control",
+        "fdacc11349079be21bcce755b18ca660df4d96a2",
+        "ffd234b17723e8370cc0afa6cf19c1a161719892"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "read-tree",
+        "fdacc11349079be21bcce755b18ca660df4d96a2"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "fdacc11349079be21bcce755b18ca660df4d96a2\n",
+      "stderr": ""
+    }
+  ]
+}

@@ -11,3 +11,10 @@ Real workers: `/root/intake_audit` for prior delivery and package audit; `/root/
 Early attempt001 was saved but independent ER-27 required omitted unique intake evidence. Corrected attempt002 and its exact current-phase supplement are saved and byte-verified before technical work. Both earlier verifier failures and the unchanged first ZIP are retained. No native push retry: P09 diagnosed its unavailable credential path; conditional GitHub API publication is selected.
 
 Parent R03–R05 and P02 remain open. H0/H1, original seven, full routine, integration and closure belong to later declared gates. Final handoff and external receipt will record the actual phase result and next action.
+
+
+## P10 verified implementation boundary
+
+The exact candidate `fdacc11349079be21bcce755b18ca660df4d96a2` passed 175 focused methods and the independent 40-case oracle. The retained Python image now reaches the unchanged `$ORIGIN/../lib` token refusal. C271 is blocked/open; R03–R05 remain not_done and P02 in_progress. The full routine is still mandatory and unrun in P10. Final independent boundary review and saved partial delivery follow; no next phase or integration begins.
+
+In a fresh bounded phase, reconcile the P10 handoff and live GitHub and confirm new early recovery. Independently review the selected Python RPATH $ORIGIN/../lib refusal and freeze a finite decision and positive/refusal controls before any loader-path correction or input substitution. H0 remains unaccepted; re-establish it only after the prerequisite is resolved. H1 and the complete routine remain later gates. Do not begin this phase in the P10 chat.

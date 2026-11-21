@@ -1,7 +1,23 @@
-# C271 P10: bounded ELF string-table mapping correction
+# C271 P10 — bounded ELF string-table correction
 
-This phase addresses P09's inability to map a dynamic string table across adjacent ELF load segments. ELF is the executable file format; this reader inspects bytes without executing the image.
+The implementation and independent evidence review are accepted. Final published
+record checks and saved partial delivery are pending at this source snapshot;
+P10-DELIVERY.json will record the later actual save without rebuilding its ZIP.
 
-The [phase](PHASE.json) and [session](../../../workflow/tasks/C271/P10-SESSION.md) retain acceptance and stopping conditions. [Early recovery](EARLY-RECOVERY-RECEIPT.json) is independently accepted and saved. The independent oracle precedes implementation. Expected results are not derived from candidate output.
+Read RESULTS.md for the outcome and limits, PHASE.json for the declared gates,
+EXECUTION-CHECKS.json for test provenance, and INDEPENDENT-FINAL-REVIEW.json for
+the independent decision. Full retained raw evidence and failed attempts belong
+to the final handoff recovery map; no prior failure is replaced by a pass.
 
-Only finite file mapping is selected. Host qualification, Node/ldd, the original seven tests, complete routine, integration and parent completion remain later gates. Historical P09 and all earlier failed evidence remain unchanged.
+The exact behavioral candidate is `fdacc11349079be21bcce755b18ca660df4d96a2`.
+All 175 focused methods passed. The independent 40-case oracle passed, with
+all seven faults triggered. Those 40 cases overlap the permanent controls.
+The retained inert Python image passes mapping and then reaches the unchanged
+`$ORIGIN/../lib` loader-token refusal. H0 remains unaccepted.
+
+C271 remains blocked/open. R03–R05 remain not_done; P02 remains in_progress.
+The complete routine is mandatory and was not run in P10. PR #274 remains
+open/draft/unmerged, issue #273 open, and the work branch retained. Main is
+unchanged; no integration lease was acquired. The first remaining action is a
+fresh bounded review of the observed loader-path prerequisite after new early
+recovery. This P10 chat ends after verified partial delivery.

@@ -1,0 +1,72 @@
+{
+  "schema": "ontokin.c271.p10-focused-runner-preparation/1",
+  "prepared_at_utc": "2026-11-21T20:20:47.280233+00:00",
+  "worker": "/root/intake_audit",
+  "status": "prepared_not_executed",
+  "observed_source_head": "ffd234b17723e8370cc0afa6cf19c1a161719892",
+  "runner": {
+    "path": "/workspace/scratch/7b9b58d10704/session_p10/verification/run_focused_guarded.py",
+    "bytes": 18812,
+    "sha256": "1f3fdc836bd8c7320fc76a824c961ae14b3137faf812aa0c254d4e1e9e14b30f"
+  },
+  "usage": {
+    "path": "/workspace/scratch/7b9b58d10704/session_p10/verification/README.md",
+    "bytes": 4676,
+    "sha256": "f9f464eb6f7d4b2712b4de0f61618265998d70a6e73b3372986db55a45cf7d32"
+  },
+  "syntax_check": {
+    "operation": "ast.parse of runner bytes only; no import or execution of runner/project code",
+    "passed": true,
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+  },
+  "read_inputs": [
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p08/candidate-002/run_focused_guarded.py",
+      "bytes": 2686,
+      "sha256": "27489064a600ea3cfba73381fa1f75cc781cdc72303bd97ee200c6ebdb4aafdd",
+      "inspection": "Full harness/outcome/review; selected test imports, fixture-retention setup/teardown, and process seam references."
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p08/evidence/run-002/OUTCOME.json",
+      "bytes": 9496,
+      "sha256": "6fdd29cf01db6ac6e4687775e325a649cd4ca241ce1c18f1a00987a2b3cef42c",
+      "inspection": "Full harness/outcome/review; selected test imports, fixture-retention setup/teardown, and process seam references."
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p08/candidate-002/ROOT-PREEXECUTION-REVIEW.json",
+      "bytes": 3339,
+      "sha256": "f74ae024a33f3eac96b6258e1138f069ebb05c6c813032c72fcec9b6cc1bce83",
+      "inspection": "Full harness/outcome/review; selected test imports, fixture-retention setup/teardown, and process seam references."
+    },
+    {
+      "path": "/workspace/scratch/7b9b58d10704/OntoKin/tests/test_current_host_inspection_v01.py",
+      "bytes": 139313,
+      "sha256": "797eb208670f6f74f14c9b5849485bd6cf3522a265d4129618c4b50ddc0a739a",
+      "inspection": "Full harness/outcome/review; selected test imports, fixture-retention setup/teardown, and process seam references."
+    }
+  ],
+  "inherited_governing_read_set": "/workspace/scratch/7b9b58d10704/session_p10/intake_audit/READ-SET.json",
+  "fixed_modules": [
+    "tests.test_current_host_inspection_v01",
+    "tests.test_current_host_elf_mapping_v01"
+  ],
+  "original_methods_required": 135,
+  "new_methods_required": "Positive exact count supplied by independent frozen inputs; no count inferred during preparation.",
+  "execution_authority": "Director only after independent corpus and exact source freeze; no grant consumed or inferred.",
+  "project_imports_during_preparation": 0,
+  "product_tests_run": 0,
+  "production_parser_calls": 0,
+  "operational_preparer_calls": 0,
+  "Node_starts": 0,
+  "ldd_starts": 0,
+  "runtime_installations": 0,
+  "repository_writes": 0,
+  "active_processes": [],
+  "read_observations": [
+    {
+      "operation": "Static rg import inspection included absent tests/__init__.py",
+      "outcome": "rg reported no such file; tests is a namespace package in this checkout. No source change or behavioral call."
+    }
+  ],
+  "next_action": "Director reviews runner and freezes exact input identities/count. Invoke only upon explicit execution grant; worker stands by."
+}

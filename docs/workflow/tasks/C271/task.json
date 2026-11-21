@@ -3,7 +3,7 @@
   "id": "C271",
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
-  "status": "in_progress",
+  "status": "blocked",
   "owner": "c271-p10-7b9b58d10704",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
@@ -60,7 +60,10 @@
         "docs/engineering/localized-repair-c271/host-inspection-p08/independent-review/IMPLEMENTATION-ACCEPTANCE.json",
         "docs/engineering/localized-repair-c271/host-inspection-p08/candidate004-repository-checks/CHECKS.json",
         "docs/engineering/localized-repair-c271/host-preparation-p09/PHASE-OUTCOME.json",
-        "docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/PYTHON-BLOCKER-VERIFICATION.json"
+        "docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/PYTHON-BLOCKER-VERIFICATION.json",
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/EXECUTION-CHECKS.json",
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/INDEPENDENT-FINAL-REVIEW.json"
       ]
     },
     {
@@ -91,7 +94,8 @@
         "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json",
         "docs/engineering/localized-repair-c271/host-inspection-p08/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
-        "docs/engineering/localized-repair-c271/host-preparation-p09/EARLY-RECOVERY-RECEIPT.json"
+        "docs/engineering/localized-repair-c271/host-preparation-p09/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/EARLY-RECOVERY-RECEIPT.json"
       ]
     }
   ],
@@ -439,6 +443,46 @@
         "docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/PYTHON-BLOCKER-VERIFICATION.json"
       ],
       "scope": "Independent evidence audit passed43 checks; required H0 prerequisite is blocked, not waived"
+    },
+    {
+      "name": "P10 guarded focused ELF mapping regression",
+      "command": "Exact env -i, Python -I -S -B and guarded runner argv retained in OUTCOME.json",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/EXECUTION-CHECKS.json"
+      ],
+      "scope": "175 methods only; no H0/H1, original-seven, complete routine or integration acceptance."
+    },
+    {
+      "name": "P10 independent frozen candidate oracle",
+      "command": "Independent guarded runner, exact candidate fdacc11349079be21bcce755b18ca660df4d96a2",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/evidence/INDEPENDENT-CANDIDATE-REPORT.json"
+      ],
+      "scope": "40 frozen cases plus one inert-image observation; overlaps permanent new controls."
+    },
+    {
+      "name": "P10 candidate workflow metadata check",
+      "command": "python3 -B tools/chat_workflow.py check --json",
+      "result": "failed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/evidence/candidate-record-checks/CHECKS.json"
+      ],
+      "scope": "Preserved invalid next_action status at fdacc1134; corrected in later documentary checkpoint."
+    },
+    {
+      "name": "P10 independent implementation/evidence/boundary review",
+      "command": "Independent exact-source and retained-evidence review; no behavioral rerun",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/INDEPENDENT-FINAL-REVIEW.json"
+      ],
+      "scope": "Bounded mapping phase only; no parent R03 or integration approval."
     }
   ],
   "completion": {
@@ -457,9 +501,10 @@
       "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
-    "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e"
+    "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
+    "elf_mapping_implementation_commit": "fdacc11349079be21bcce755b18ca660df4d96a2"
   },
-  "next_action": "Complete only P10: independently freeze fixtures, implement and review the finite ELF string-table mapping correction, run focused checks, publish retained checkpoint and save verified partial delivery. H0 re-establishment and all later gates remain excluded.",
+  "next_action": "In a fresh bounded phase, reconcile the P10 handoff and live GitHub and confirm new early recovery. Independently review the selected Python RPATH $ORIGIN/../lib refusal and freeze a finite decision and positive/refusal controls before any loader-path correction or input substitution. H0 remains unaccepted; re-establish it only after the prerequisite is resolved. H1 and the complete routine remain later gates. Do not begin this phase in the P10 chat.",
   "session_phase": {
     "schema": "ontokin.c271.p10-phase/1",
     "task": "C271",
@@ -486,11 +531,11 @@
       "Root owns Git/index/canonical state/publication/delivery; workers disjoint files; no nested fanout",
       "Do not retry native git push: diagnosed credential failure preserved in P09; use available conditional API publication"
     ],
-    "status": "in_progress",
+    "status": "technical_complete_delivery_pending",
     "early_recovery": "confirmed_saved_and_independently_accepted",
     "main_lease_held": false,
     "integration_allowed": false,
-    "parent_status": "in_progress",
+    "parent_status": "blocked",
     "parent_requirements": {
       "R01": "done",
       "R02": "done",
@@ -504,9 +549,9 @@
     },
     "stop": "Stop after independently reviewed correction and verified partial delivery, or first concrete unresolved blocker/unplanned expansion. Re-establish H0 only in a later fresh phase.",
     "workers": {
-      "/root/intake_audit": "P09 archive/receipt reconciliation; independent audit",
-      "/root/elf_review": "Independent predeclared fixtures and later exact-source review; waiting for early confirmation",
-      "/root/handoff_engineer": "Early and final package builder; no Library or repo writes"
+      "/root/intake_audit": "Independent intake/early audit and focused-runner preparation; final package audit assigned separately",
+      "/root/elf_review": "Independent fixtures/design, legacy baseline, candidate oracle and final source/evidence review",
+      "/root/handoff_engineer": "Early and final package builder; no Library or repository writes"
     },
     "current_unknown_operations": [],
     "historical_unknowns": [
@@ -533,21 +578,44 @@
       },
       {
         "gate": "P10-03 finite implementation",
-        "state": "static_review_accepted; behavioral evidence pending",
-        "evidence": "INDEPENDENT-PREEXECUTION-REVIEW.json"
+        "state": "passed",
+        "evidence": [
+          "INDEPENDENT-PREEXECUTION-REVIEW.json",
+          "evidence/INDEPENDENT-CANDIDATE-REPORT.json"
+        ]
       },
       {
         "gate": "P10-04 focused regression and final-source review",
-        "state": "not_started"
+        "state": "passed",
+        "evidence": [
+          "evidence/focused001/OUTCOME.json",
+          "evidence/INDEPENDENT-CANDIDATE-REPORT.json",
+          "INDEPENDENT-FINAL-REVIEW.json"
+        ]
       },
       {
         "gate": "P10-05 published checkpoint and partial delivery",
-        "state": "pending"
+        "state": "record_checks_passed; final_publication_package_review_and_save_pending"
       }
     ],
     "oracle_sha256": "35b8535599cc24276dfe66e57b9ed80348c12d429e9a61441c4f449a7cb4ce8a",
     "baseline": "BASELINE-REPORT.json",
-    "code_sha256": "0c2ef54a227e2e05a7eb1f71a4fedd934399aa27d98ec7a3845f93a4dbfbb612"
+    "code_sha256": "0c2ef54a227e2e05a7eb1f71a4fedd934399aa27d98ec7a3845f93a4dbfbb612",
+    "behavioral_source": "fdacc11349079be21bcce755b18ca660df4d96a2",
+    "behavioral_tree": "be6534bc800ad8be7b7ee4938d289b852503e534",
+    "technical_checks_passed": true,
+    "independent_final_review": "accepted",
+    "remaining_blocker": {
+      "id": "H0-PYTHON-RPATH-TOKEN-001",
+      "status": "observed_unresolved",
+      "evidence": "docs/engineering/localized-repair-c271/elf-string-table-p10/evidence/INDEPENDENT-CANDIDATE-REPORT.json",
+      "fact": "The inert selected Python image now passes string-table mapping, then returns CHI-UNSUPPORTED / Unreviewed loader token expansion for RPATH $ORIGIN/../lib.",
+      "scope": "Static regression observation only; neither a prepared runtime nor accepted H0."
+    },
+    "next_action": "In a fresh bounded phase, reconcile the P10 handoff and live GitHub and confirm new early recovery. Independently review the selected Python RPATH $ORIGIN/../lib refusal and freeze a finite decision and positive/refusal controls before any loader-path correction or input substitution. H0 remains unaccepted; re-establish it only after the prerequisite is resolved. H1 and the complete routine remain later gates. Do not begin this phase in the P10 chat.",
+    "updated_at_utc": "2026-11-21T20:27:02.901409Z",
+    "no_second_phase": true,
+    "final_review": "docs/engineering/localized-repair-c271/elf-string-table-p10/INDEPENDENT-FINAL-REVIEW.json"
   },
   "delivery": {
     "required": true,
@@ -556,7 +624,7 @@
     "folder": "OntoKin",
     "partial": true,
     "phase_complete": false,
-    "technical_phase_complete": false,
+    "technical_phase_complete": true,
     "early_receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/EARLY-RECOVERY-RECEIPT.json"
   },
   "authorization": {
@@ -1663,5 +1731,12 @@
       "disposition": "P10 narrow correction candidate independently reviewed; validation pending"
     }
   ],
-  "remaining_h0_constraint": "Raw Python RPATH $ORIGIN/../lib remains outside unchanged token policy. Expected later refusal is frozen; H0 is not accepted."
+  "remaining_h0_constraint": {
+    "id": "H0-PYTHON-RPATH-TOKEN-001",
+    "status": "observed_unresolved",
+    "evidence": "docs/engineering/localized-repair-c271/elf-string-table-p10/evidence/INDEPENDENT-CANDIDATE-REPORT.json",
+    "fact": "The inert selected Python image now passes string-table mapping, then returns CHI-UNSUPPORTED / Unreviewed loader token expansion for RPATH $ORIGIN/../lib.",
+    "scope": "Static regression observation only; neither a prepared runtime nor accepted H0."
+  },
+  "blocked_reason": "The inert selected Python image now passes string-table mapping, then returns CHI-UNSUPPORTED / Unreviewed loader token expansion for RPATH $ORIGIN/../lib."
 }

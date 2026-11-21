@@ -1,0 +1,45 @@
+{
+  "schema": "ontokin.c271.p10-execution-summary/1",
+  "source_head": "fdacc11349079be21bcce755b18ca660df4d96a2",
+  "source_tree": "be6534bc800ad8be7b7ee4938d289b852503e534",
+  "focused": {
+    "methods": 175,
+    "existing_methods": 135,
+    "new_methods": 40,
+    "passed": true,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "process_guard_calls": 0,
+    "frozen_inputs_unchanged": 277,
+    "evidence": "evidence/focused001/OUTCOME.json"
+  },
+  "independent_oracle": {
+    "cases": 40,
+    "all_passed": true,
+    "faults_triggered": 7,
+    "additional_inert_selected_image_observations": 1,
+    "descriptor_closure": "41/41",
+    "process_attempts": 0,
+    "evidence": "evidence/INDEPENDENT-CANDIDATE-REPORT.json"
+  },
+  "count_limit": "The independent oracle and permanent new tests exercise the same 40 frozen cases; do not add them as distinct test coverage.",
+  "baseline": "All 40 legacy predictions held; 24 intended corrected outcomes differed before correction. This is baseline evidence, not acceptance.",
+  "remaining_blocker": {
+    "id": "H0-PYTHON-RPATH-TOKEN-001",
+    "status": "observed_unresolved",
+    "evidence": "docs/engineering/localized-repair-c271/elf-string-table-p10/evidence/INDEPENDENT-CANDIDATE-REPORT.json",
+    "fact": "The inert selected Python image now passes string-table mapping, then returns CHI-UNSUPPORTED / Unreviewed loader token expansion for RPATH $ORIGIN/../lib.",
+    "scope": "Static regression observation only; neither a prepared runtime nor accepted H0."
+  },
+  "H0_accepted": false,
+  "H1_approved": false,
+  "full_routine_run": false,
+  "parent_R03_accepted": false,
+  "integration_approved": false,
+  "current_unknown_operations": [],
+  "historical_unknowns": [
+    "C270 broad-driver completion remains unknown",
+    "Global prior-process termination remains unestablished"
+  ]
+}

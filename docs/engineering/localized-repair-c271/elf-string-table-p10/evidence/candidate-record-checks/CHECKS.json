@@ -1,0 +1,49 @@
+{
+  "source_head": "fdacc11349079be21bcce755b18ca660df4d96a2",
+  "source_tree": "be6534bc800ad8be7b7ee4938d289b852503e534",
+  "checked_at_utc": "2026-11-21T20:25:26.006405+00:00",
+  "clean": true,
+  "checks": [
+    {
+      "name": "workflow",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 0.118,
+      "stdout": "workflow.stdout",
+      "stderr": "workflow.stderr"
+    },
+    {
+      "name": "documents",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.849,
+      "stdout": "documents.stdout",
+      "stderr": "documents.stderr"
+    },
+    {
+      "name": "whitespace",
+      "argv": [
+        "git",
+        "diff",
+        "ffd234b17723e8370cc0afa6cf19c1a161719892",
+        "HEAD",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.017,
+      "stdout": "whitespace.stdout",
+      "stderr": "whitespace.stderr"
+    }
+  ],
+  "passed": false
+}
