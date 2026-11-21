@@ -1,0 +1,21 @@
+{
+  "schema": "ontokin.c271.p08-receipt-metadata-failure/1",
+  "recorded_at_utc": "2026-11-21T17:15:55.324254+00:00",
+  "failed_commit": "be159c31db3ef26f66adbcb641e326e2b6ebc198",
+  "failed_tree": "a7ce1badf01817d56f152a476f19704fb2110585",
+  "actual_failure": "current.snapshot_date: expected an explicit UTC timestamp",
+  "cause": "Root record_final_delivery.py replaced a full UTC snapshot timestamp with client date only (2026-11-21).",
+  "scope": "Receipt metadata only. Final ZIP, matching prompts, production/test/control bytes and all prior independent acceptances unchanged.",
+  "failed_check_record": {
+    "path": "session/receipt-source-checks/CHECKS.json",
+    "sha256": "39435b45e6bd683d940da81492f7c6ff4376be59c35658594ee84858b67a44bc"
+  },
+  "passed_checks": [
+    "documents",
+    "whitespace",
+    "protected existing code unchanged"
+  ],
+  "correction": "Set only CURRENT.snapshot_date to the actual explicit UTC correction timestamp; preserve failed check and source revision. Do not relax checker.",
+  "publication_retry": false,
+  "followup_publication": "A separate conditional metadata correction commit on the same retained branch is required. Fresh exact-commit repository checks follow; no product tests or runtime work."
+}

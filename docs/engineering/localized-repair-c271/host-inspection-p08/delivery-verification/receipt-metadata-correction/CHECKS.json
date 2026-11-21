@@ -1,0 +1,86 @@
+{
+  "schema": "ontokin.c271.p08-root-repository-checks/1",
+  "recorded_at_utc": "2026-11-21T17:15:07.220494+00:00",
+  "source_commit": "be159c31db3ef26f66adbcb641e326e2b6ebc198",
+  "source_tree": "a7ce1badf01817d56f152a476f19704fb2110585",
+  "baseline_commit": "c99f44aaec10445b96deb2b451b1a860a1027401",
+  "clean_expected_source": true,
+  "status_before": "",
+  "status_after": "",
+  "protected_source_paths": [
+    "ontokin",
+    "prototypes",
+    "tests",
+    "tools",
+    "pyproject.toml"
+  ],
+  "changed_code_paths": [
+    "prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "tests/test_current_host_inspection_v01.py"
+  ],
+  "protected_existing_code_unchanged": true,
+  "code_identities": [
+    {
+      "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "bytes": 147900,
+      "sha256": "b2f4c869fd03919047db797bd3a80616cbe16f6b17689fe61d40754b27f97a39",
+      "blob": "010d5dfcc6ef52eb6c8dd4c579dbde7efe15057e"
+    },
+    {
+      "path": "tests/test_current_host_inspection_v01.py",
+      "bytes": 139313,
+      "sha256": "797eb208670f6f74f14c9b5849485bd6cf3522a265d4129618c4b50ddc0a739a",
+      "blob": "00be2c04c5e45c449264bf37cf8384a6f35ae72a"
+    }
+  ],
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 0.137111,
+      "stdout": "workflow.stdout.txt",
+      "stderr": "workflow.stderr.txt"
+    },
+    {
+      "name": "documents",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.170031,
+      "stdout": "documents.stdout.txt",
+      "stderr": "documents.stderr.txt"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "c99f44aaec10445b96deb2b451b1a860a1027401",
+        "be159c31db3ef26f66adbcb641e326e2b6ebc198"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.049487,
+      "stdout": "whitespace.stdout.txt",
+      "stderr": "whitespace.stderr.txt"
+    }
+  ],
+  "passed": false,
+  "deferred": [
+    "Full tools/check_local.py routine",
+    "Node/ldd execution",
+    "Original seven methods",
+    "Runtime preparation or installation",
+    "Host qualification",
+    "Main integration"
+  ]
+}

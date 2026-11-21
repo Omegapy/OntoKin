@@ -1,0 +1,18 @@
+{
+  "schema": "ontokin.c271.p08-reviewer-readonly-probe-error/1",
+  "recorded_at_utc": "2026-11-21T17:16:05.854199+00:00",
+  "command": "rg -n 'snapshot_date|expected explicit UTC|explicit UTC timestamp' OntoKin/scripts OntoKin/tools OntoKin/docs/workflow OntoKin/CURRENT* session/record_final_delivery.py package_work/record_final_delivery.py",
+  "exit_code": 2,
+  "stderr": [
+    "rg: OntoKin/scripts: No such file or directory (os error 2)",
+    "rg: OntoKin/CURRENT*: No such file or directory (os error 2)",
+    "rg: package_work/record_final_delivery.py: No such file or directory (os error 2)"
+  ],
+  "valid_hits": [
+    "session/record_final_delivery.py:152",
+    "OntoKin/docs/workflow/CURRENT.json:7",
+    "OntoKin/tools/chat_workflow.py:78,205"
+  ],
+  "classification": "Reviewer search supplied nonexistent optional paths. Valid located files will be read directly; no workflow execution or artifact defect is implied.",
+  "mutations": 0
+}

@@ -1,0 +1,142 @@
+{
+  "schema": "ontokin.c271.p08-independent-receipt-metadata-correction-review/1",
+  "recorded_at_utc": "2026-11-21T17:17:07.851607+00:00",
+  "reviewer": "/root/implementation_review",
+  "scope": "One canonical CURRENT.snapshot_date value plus separately retained correction evidence; no product or archive work.",
+  "failed_receipt_commit": "be159c31db3ef26f66adbcb641e326e2b6ebc198",
+  "failed_receipt_tree": "a7ce1badf01817d56f152a476f19704fb2110585",
+  "failed_checks": {
+    "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/CHECKS.json",
+    "bytes": 2409,
+    "sha256": "39435b45e6bd683d940da81492f7c6ff4376be59c35658594ee84858b67a44bc"
+  },
+  "retained_failed_check_artifacts": [
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/CHECKS.json",
+      "bytes": 2409,
+      "sha256": "39435b45e6bd683d940da81492f7c6ff4376be59c35658594ee84858b67a44bc"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/documents.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/documents.stdout.txt",
+      "bytes": 6608,
+      "sha256": "729c1b80123c3091df4960f6748b740cfcecbe34d4b4fd85c7c650a21643cc6b"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/whitespace.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/whitespace.stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/workflow.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/workflow.stdout.txt",
+      "bytes": 193,
+      "sha256": "639a0d77b5222b32830b0445cd9fbb685e1a8aa7892f69751e0910ad378272c6"
+    }
+  ],
+  "failed_gate": {
+    "name": "workflow",
+    "exit_code": 1,
+    "diagnostic": "current.snapshot_date: expected an explicit UTC timestamp",
+    "stdout": {
+      "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/workflow.stdout.txt",
+      "bytes": 193,
+      "sha256": "639a0d77b5222b32830b0445cd9fbb685e1a8aa7892f69751e0910ad378272c6"
+    },
+    "stderr_empty": true,
+    "other_recorded_gates": {
+      "documents": 0,
+      "whitespace": 0
+    },
+    "protected_existing_code_unchanged": true
+  },
+  "checker": {
+    "descriptor": {
+      "path": "/workspace/scratch/8838dfc6e876/OntoKin/tools/chat_workflow.py",
+      "bytes": 27862,
+      "sha256": "43029d35c10e206e0fb2192aa32e9819984edec985561a76371594d52efa3f24"
+    },
+    "condition_lines": {
+      "71-78": "def timestamp(value: Any, label: str) -> None:\n    raw = text(value, label)\n    try:\n        parsed = datetime.fromisoformat(raw.replace(\"Z\", \"+00:00\"))\n    except ValueError as exc:\n        raise Invalid(f\"{label}: invalid ISO timestamp\") from exc\n    require(parsed.utcoffset() is not None and parsed.utcoffset().total_seconds() == 0,\n            f\"{label}: expected an explicit UTC timestamp\")",
+      "198-205": "    def validate_current(self) -> None:\n        c = self.current = self.load(self.registry[\"current\"])\n        require(c.get(\"project\") == self.registry[\"repository\"], \"current.project: repository mismatch\")\n        identifier(c.get(\"latest_task\"), \"current.latest_task\")\n        if c.get(\"active_task\") is not None:\n            identifier(c[\"active_task\"], \"current.active_task\")\n        sha(c.get(\"observed_main\"), \"current.observed_main\")\n        timestamp(c.get(\"snapshot_date\"), \"current.snapshot_date\")"
+    },
+    "requirement": "A nonempty ISO timestamp which parses with an explicit UTC offset equal to zero; Z is normalized to +00:00."
+  },
+  "cause": {
+    "publisher": {
+      "path": "/workspace/scratch/8838dfc6e876/session/record_final_delivery.py",
+      "bytes": 11656,
+      "sha256": "607aece40c0d507b9f1eec2a1d0ee1cbe283eac60cb4858bf1474e870973c9f0"
+    },
+    "assignment_line": 152,
+    "assignment": "current['snapshot_date'] = '2026-11-21'",
+    "invalid_value": "2026-11-21",
+    "mechanism": "The date-only string supplies no timezone. timestamp() rejects a parsed value with utcoffset() is None."
+  },
+  "preimage": {
+    "source_commit": "3ed2670bf9bf4326dab126d3466699053f6b4320",
+    "snapshot_date": "2026-11-21T16:32:28.655368+00:00",
+    "source_descriptor": {
+      "path": "/workspace/scratch/8838dfc6e876/review_work/final-package/attempt-002/extracted/repository/docs/workflow/CURRENT.json",
+      "bytes": 27137,
+      "sha256": "344137e65eb098e602cc12a3e15fbc6606a74e0f98f23aeea68ac409c76ce7ea"
+    },
+    "retained_copy": {
+      "path": "/workspace/scratch/8838dfc6e876/review_work/receipt-metadata-correction/CURRENT-preimage-3ed2670.json",
+      "bytes": 27137,
+      "sha256": "344137e65eb098e602cc12a3e15fbc6606a74e0f98f23aeea68ac409c76ce7ea"
+    }
+  },
+  "current_observed": {
+    "snapshot_date": "2026-11-21T17:16:40.093675+00:00",
+    "retained_copy": {
+      "path": "/workspace/scratch/8838dfc6e876/review_work/receipt-metadata-correction/CURRENT-observed.json",
+      "bytes": 32627,
+      "sha256": "7828773e75dfce43b6cad490e79dd827b9a2d699713ae97de4a740d4d83d2636"
+    }
+  },
+  "proposed_correction": {
+    "path": "OntoKin/docs/workflow/CURRENT.json",
+    "field": "snapshot_date",
+    "replacement_rule": "Use the actual recorded UTC metadata correction time as an ISO timestamp with time and explicit +00:00 (or Z), preserving all other CURRENT fields.",
+    "format_evidence": "2026-11-21T16:32:28.655368+00:00",
+    "static_predicate_satisfied_by_rule": true,
+    "change_checker": false,
+    "change_source_tests_archive_or_prompts": false,
+    "preserve_failed_attempt": true,
+    "separate_correction_evidence": true
+  },
+  "correction_accepted": true,
+  "acceptance_kind": "Static approval of narrow metadata correction, not a claim that corrected publication/checks have run.",
+  "corrected_candidate_examined": false,
+  "workflow_execution_or_retest": false,
+  "canonical_or_git_mutations": 0,
+  "candidate_fixture_runtime_execution": false,
+  "implementation_and_exact_package_acceptance_unchanged": true,
+  "parent_closed": false,
+  "scope_expansion_authorized": false,
+  "root_remaining": [
+    "Record the exact replacement timestamp and metadata-only diff.",
+    "Preserve the complete failed receipt-source check and this review.",
+    "Publish the narrow correction and run required repository checks against its exact source.",
+    "Keep saved ZIP/prompt byte identities unchanged and retain later receipt/publication observations separately."
+  ],
+  "reviewer_search_error": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/receipt-metadata-correction/INSPECTION-FAILURE-001.json",
+    "bytes": 952,
+    "sha256": "653851dcd6344f1159462a59c3b128739a1acd9e38ab2ebb498f74c36e549bee"
+  }
+}

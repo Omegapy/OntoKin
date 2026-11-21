@@ -1,0 +1,165 @@
+{
+  "schema": "ontokin.c271.p08-independent-exact-receipt-metadata-review/1",
+  "recorded_at_utc": "2026-11-21T17:17:56.346225+00:00",
+  "reviewer": "/root/implementation_review",
+  "correction_accepted": true,
+  "exact_existing_canonical_change": {
+    "path": "docs/workflow/CURRENT.json",
+    "base_commit": "be159c31db3ef26f66adbcb641e326e2b6ebc198",
+    "field": "snapshot_date",
+    "before": "2026-11-21",
+    "after": "2026-11-21T17:16:40.093675+00:00",
+    "before_descriptor": {
+      "path": "/workspace/scratch/8838dfc6e876/review_work/receipt-metadata-correction/CURRENT-BEFORE-be159.json",
+      "bytes": 32605,
+      "sha256": "46937779fe73d9d58384b38dafaf85843ebdf80350f1a2550319ec2c980578b1"
+    },
+    "after_descriptor": {
+      "path": "/workspace/scratch/8838dfc6e876/review_work/receipt-metadata-correction/CURRENT-AFTER-exact.json",
+      "bytes": 32627,
+      "sha256": "7828773e75dfce43b6cad490e79dd827b9a2d699713ae97de4a740d4d83d2636"
+    },
+    "changed_parsed_fields": [
+      "snapshot_date"
+    ],
+    "exact_one_string_replacement": true
+  },
+  "readonly_git_preimage_verification": {
+    "command": [
+      "git",
+      "--no-optional-locks",
+      "-C",
+      "/workspace/scratch/8838dfc6e876/OntoKin",
+      "show",
+      "be159c31db3ef26f66adbcb641e326e2b6ebc198:docs/workflow/CURRENT.json"
+    ],
+    "exit_code": 0,
+    "stdout_bytes": 32605,
+    "stdout_sha256": "46937779fe73d9d58384b38dafaf85843ebdf80350f1a2550319ec2c980578b1",
+    "stderr": "",
+    "exact_root_retained_preimage_equal": true
+  },
+  "existing_checker_predicate": "The exact corrected literal is a valid ISO date/time with explicit zero +00:00 UTC offset, satisfying the unchanged static condition at tools/chat_workflow.py:71-78 and invocation at line205. No checker was executed.",
+  "prior_rule_review": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/receipt-metadata-correction/REVIEW.json",
+    "bytes": 7239,
+    "sha256": "8a18e1a23725b21430dceaa37c4482e2dfb301598c9dbc8f11c4f05533c59ab7"
+  },
+  "timing_note": "The prior rule review observed this corrected CURRENT during its final metadata capture; this addendum now independently binds its exact one-field diff to the published failed preimage. The prior review remains unchanged.",
+  "root_operation_records": [
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/receipt-metadata-correction/CORRECTION-INTENT.json",
+      "bytes": 781,
+      "sha256": "34afbd0cce62b05c94c055ddcf4064ec19bd8a814141e7b7b8f8349344b3c33e"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/receipt-metadata-correction/CORRECTION-OUTCOME.json",
+      "bytes": 335,
+      "sha256": "164e5bdf48708b22de2c09528510ecf3f780516f549ed42e164b9ba1beca627d"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/receipt-metadata-correction/FAILURE.json",
+      "bytes": 1252,
+      "sha256": "bd1235bda9baf8dc883b1611464bad81df23aeb191e649a233a85df4bfd5fe9a"
+    }
+  ],
+  "failed_checks_preserved": [
+    {
+      "original": {
+        "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/CHECKS.json",
+        "bytes": 2409,
+        "sha256": "39435b45e6bd683d940da81492f7c6ff4376be59c35658594ee84858b67a44bc"
+      },
+      "preserved_copy": {
+        "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p08/delivery-verification/receipt-metadata-correction/CHECKS.json",
+        "bytes": 2409,
+        "sha256": "39435b45e6bd683d940da81492f7c6ff4376be59c35658594ee84858b67a44bc"
+      },
+      "equal": true
+    },
+    {
+      "original": {
+        "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/documents.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "preserved_copy": {
+        "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p08/delivery-verification/receipt-metadata-correction/documents.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "equal": true
+    },
+    {
+      "original": {
+        "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/documents.stdout.txt",
+        "bytes": 6608,
+        "sha256": "729c1b80123c3091df4960f6748b740cfcecbe34d4b4fd85c7c650a21643cc6b"
+      },
+      "preserved_copy": {
+        "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p08/delivery-verification/receipt-metadata-correction/documents.stdout.txt",
+        "bytes": 6608,
+        "sha256": "729c1b80123c3091df4960f6748b740cfcecbe34d4b4fd85c7c650a21643cc6b"
+      },
+      "equal": true
+    },
+    {
+      "original": {
+        "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/whitespace.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "preserved_copy": {
+        "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p08/delivery-verification/receipt-metadata-correction/whitespace.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "equal": true
+    },
+    {
+      "original": {
+        "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/whitespace.stdout.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "preserved_copy": {
+        "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p08/delivery-verification/receipt-metadata-correction/whitespace.stdout.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "equal": true
+    },
+    {
+      "original": {
+        "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/workflow.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "preserved_copy": {
+        "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p08/delivery-verification/receipt-metadata-correction/workflow.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "equal": true
+    },
+    {
+      "original": {
+        "path": "/workspace/scratch/8838dfc6e876/session/receipt-source-checks/workflow.stdout.txt",
+        "bytes": 193,
+        "sha256": "639a0d77b5222b32830b0445cd9fbb685e1a8aa7892f69751e0910ad378272c6"
+      },
+      "preserved_copy": {
+        "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p08/delivery-verification/receipt-metadata-correction/workflow.stdout.txt",
+        "bytes": 193,
+        "sha256": "639a0d77b5222b32830b0445cd9fbb685e1a8aa7892f69751e0910ad378272c6"
+      },
+      "equal": true
+    }
+  ],
+  "publication_and_required_checks": "Pending root publication and fresh exact-commit repository checks; this static review makes no pass claim for those future checks.",
+  "scope": "Receipt metadata correction plus retained evidence only. Exact saved archive/prompts, accepted product/test/oracles, parent gates and later H0 boundary remain unchanged.",
+  "workflow_execution_or_retest": false,
+  "canonical_or_git_mutations": 0,
+  "product_or_runtime_execution": false,
+  "parent_closed": false
+}
