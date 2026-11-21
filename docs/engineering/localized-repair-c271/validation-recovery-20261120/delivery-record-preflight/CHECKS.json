@@ -1,0 +1,34 @@
+{
+  "recorded_at_utc": "2026-11-21T00:32:19.546838+00:00",
+  "base_commit": "633c5097b2c5b870a13baa33a095a91eaa241eea",
+  "scope": "Working delivery-record checks only; no behavioral replay or parent acceptance",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "returncode": 0,
+      "seconds": 0.083,
+      "log": "workflow.log",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "returncode": 0,
+      "seconds": 2.394,
+      "log": "documentation.log",
+      "bytes": 6608,
+      "sha256": "d06abe0294f60b9dce94044e8072a971b7bd20998d75aaad1e74fdb8fa15e078"
+    }
+  ]
+}

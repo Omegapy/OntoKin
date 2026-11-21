@@ -1,0 +1,205 @@
+{
+  "schema": "ontokin.c271.p02-independent-integration-review/1",
+  "reviewer": "/root/intake_audit",
+  "reviewed_at_utc": "2026-11-20T23:19:27.892236+00:00",
+  "verdict": "not_eligible",
+  "integration_approved": false,
+  "parent_closure_approved": false,
+  "partial_handoff_supported": true,
+  "source": {
+    "main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+    "candidate": "88bc8b51b3963b7072375edac6400b6e6a4532e4",
+    "candidate_tree": "755f366d1091beb71b5421b14fdac0b9b868cfb0",
+    "phase_checkpoint": "2a85f71489fea57dc165cde61e3f7cc67a8ae999",
+    "reviewed_published_checkpoint": "15b1dd985b59cf037ebbeae733c16a54ca87f83d",
+    "checkpoint_tree": "5e3e6a54a64f91a49e124bac7f11e6c73c024129"
+  },
+  "required_gate": {
+    "routine_driver_required": true,
+    "routine_driver_status": "failed",
+    "routine_outer_exit": 1,
+    "unit_timeout_seconds": 900,
+    "unit_exit": -15,
+    "unit_complete_result": "unknown_no_footer",
+    "documents_exit": 1,
+    "document_link_failures": 21,
+    "document_omitted_targets": 5,
+    "affected_cohort_status": "passed",
+    "affected_checks": 12,
+    "affected_methods": 282,
+    "affected_failures": 0,
+    "affected_errors": 0,
+    "affected_skips": 0,
+    "R03": "unmet",
+    "R04": "not_started"
+  },
+  "mandatory_findings": [
+    {
+      "id": "C271-P02-RV-001",
+      "title": "Required unit test step exceeded 900 seconds",
+      "acceptance_effect": "No complete regression result; mandatory routine gate failed",
+      "evidence": [
+        "UNIT-TIMEOUT-INSPECTION.json",
+        "ROUTINE-EVIDENCE-REVIEW.json"
+      ],
+      "assertion_failure_or_skip_observed": false
+    },
+    {
+      "id": "C271-P02-RV-002",
+      "title": "Isolated driver copy omits five tracked documentation targets",
+      "acceptance_effect": "Documents step failed on21 links; mandatory routine gate failed",
+      "established_cause": "SOURCE_DIRS excludes .agents; ROOT_FILES excludes CHATGPT-START-HERE.md and ROLE.md; initial copy Git status records five deletions; all source/referrer/validator bytes equal main/candidate/checkpoint",
+      "evidence": [
+        "ROUTINE-EVIDENCE-REVIEW.json"
+      ]
+    }
+  ],
+  "p01_historical_reuse": {
+    "eligible": true,
+    "runtime_opened_inputs_identical": 22,
+    "immutable_control_runner_files": 11,
+    "all_preparation_reuse_inputs_exact_to_phase": 1124,
+    "claim": "Original identified finite execution retained, no fresh replay",
+    "limit": "Original P01 interpreter binary digest not recorded; no exact binary equivalence claim"
+  },
+  "preparation_limits": [
+    {
+      "item": "rpds-py",
+      "expected": "2026.5.1",
+      "installed": "2026.6.3",
+      "resolved": false
+    },
+    {
+      "item": "three ReadbackCPUControls historical inputs",
+      "present": false,
+      "reached_in_unit_run": false,
+      "observed_skips": false
+    },
+    {
+      "item": "conditional Git LFS",
+      "required_minimum": "3.8.1",
+      "installed": "3.6.1",
+      "lfs_archive_paths_selected": false
+    }
+  ],
+  "inspection_summary": {
+    "checks": 1983,
+    "failed_final_predicates": 0,
+    "meaning": "Evidence verification, not behavioral gate success",
+    "reports": [
+      {
+        "report": "STATIC-REVIEW.json",
+        "check_count": 1343,
+        "failed_count": 0,
+        "identity": {
+          "path": "/workspace/scratch/c219bb61a617/integration-review/STATIC-REVIEW.json",
+          "bytes": 182073,
+          "sha256": "177ef897fac9163d56513ce3d777671806636cfd2f1a31febfd7bfd82b7b7b94"
+        }
+      },
+      {
+        "report": "AFFECTED-EVIDENCE-REVIEW.json",
+        "check_count": 259,
+        "failed_count": 0,
+        "identity": {
+          "path": "/workspace/scratch/c219bb61a617/integration-review/AFFECTED-EVIDENCE-REVIEW.json",
+          "bytes": 57937,
+          "sha256": "44f8aa7990d9b8bd8064bffba20c2af97d89870449211068b3f37d21f0ae1dcc"
+        }
+      },
+      {
+        "report": "PHASE-RECORD-REVIEW.json",
+        "check_count": 6,
+        "failed_count": 0,
+        "identity": {
+          "path": "/workspace/scratch/c219bb61a617/integration-review/PHASE-RECORD-REVIEW.json",
+          "bytes": 1481,
+          "sha256": "f68dfdbf49ae00bf2508d098a4f731cd031210910259b8ee6244640ca342ec8a"
+        }
+      },
+      {
+        "report": "AFFECTED-CHECKPOINT-RECORD-REVIEW.json",
+        "check_count": 6,
+        "failed_count": 0,
+        "identity": {
+          "path": "/workspace/scratch/c219bb61a617/integration-review/AFFECTED-CHECKPOINT-RECORD-REVIEW.json",
+          "bytes": 1150,
+          "sha256": "284266311807c89feb2c3f0e11a7927daa556ba137634d683487a2c9147b8896"
+        }
+      },
+      {
+        "report": "DURABLE-EVIDENCE-REVIEW.json",
+        "check_count": 73,
+        "failed_count": 0,
+        "identity": {
+          "path": "/workspace/scratch/c219bb61a617/integration-review/DURABLE-EVIDENCE-REVIEW.json",
+          "bytes": 9875,
+          "sha256": "4beb51d4fddfd4042fee30ae7d1a679ea22e6b052581cb81f45054d800bf5a32"
+        }
+      },
+      {
+        "report": "ROUTINE-EVIDENCE-REVIEW.json",
+        "check_count": 93,
+        "failed_count": 0,
+        "identity": {
+          "path": "/workspace/scratch/c219bb61a617/integration-review/ROUTINE-EVIDENCE-REVIEW.json",
+          "bytes": 28459,
+          "sha256": "b9c8e92b39ed3f081ff494684fdeeca1e2ff26320bfe67c1526c9126ffb45f9f"
+        }
+      },
+      {
+        "report": "FINAL-RAW-EVIDENCE-REVIEW.json",
+        "check_count": 157,
+        "failed_count": 0,
+        "identity": {
+          "path": "/workspace/scratch/c219bb61a617/integration-review/FINAL-RAW-EVIDENCE-REVIEW.json",
+          "bytes": 19348,
+          "sha256": "1ed29dad6690786b8d6c7378e056483b3d37dae7b8e4552194b8905db3849a8a"
+        }
+      },
+      {
+        "report": "BLOCKED-WORKING-RECORD-REVIEW.json",
+        "check_count": 46,
+        "failed_count": 0,
+        "identity": {
+          "path": "/workspace/scratch/c219bb61a617/integration-review/BLOCKED-WORKING-RECORD-REVIEW.json",
+          "bytes": 15879,
+          "sha256": "d61479e2e0ce70b81ac99c7d41be7761c9fac4389c8c77133fa5d81661ad4bed"
+        }
+      }
+    ]
+  },
+  "raw_validation_archive": {
+    "path": "/workspace/scratch/c219bb61a617/validation/RAW-EVIDENCE.zip",
+    "bytes": 4965080,
+    "sha256": "c4c973d40c4f6571def93b257877de69568bcd5fdca43bcfed92ff6acfc61e20"
+  },
+  "raw_archive_payloads": 73,
+  "raw_archive_total_members": 74,
+  "failure_history": "REVIEW-ATTEMPTS.json and retained ATTEMPT-01 files; validation and session failures remain in original directories",
+  "reviewer_behavioral_execution": false,
+  "reviewer_repository_changes": false,
+  "nested_workers": false,
+  "active_current_validation_operations": 0,
+  "unknown_current_validation_operations": 0,
+  "first_remaining_action": "In a new authorized bounded validation-recovery phase, prepare exact pins and historical readback inputs; correct driver copy/inventory coverage with focused validation-tool evidence; establish adequate full-suite timing from preserved timeout evidence; complete the required driver without skipped obligations; independently reassess before R04. Reuse prior passing evidence only after exact relevant identity verification. No repair or rerun in this phase.",
+  "limits": [
+    "Prepared blocked working bytes reviewed; final intended edits and published metadata not yet reviewed",
+    "Final saved handoff not yet reviewed",
+    "No parent completion or integration",
+    "No full H22/C260 acceptance",
+    "No product/release/compatibility/native/hosted-CI/model-trial certification"
+  ],
+  "report": "REPORT.md",
+  "report_identity": {
+    "path": "/workspace/scratch/c219bb61a617/integration-review/REPORT.md",
+    "bytes": 18120,
+    "sha256": "8df87a31e42e844460c59b43ea8c4b7eac838560210720f76f8c1b36ba925145"
+  },
+  "prepared_blocked_records": {
+    "status": "passed",
+    "report": "BLOCKED-WORKING-RECORD-REVIEW.json",
+    "check_count": 46,
+    "published_revision_reviewed": false
+  }
+}

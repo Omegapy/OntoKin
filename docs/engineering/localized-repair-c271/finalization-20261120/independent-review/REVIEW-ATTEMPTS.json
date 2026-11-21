@@ -1,0 +1,97 @@
+{
+  "schema": "ontokin.c271.p02-review-attempts/1",
+  "first_static_attempt": {
+    "status": "failed_checker_assumption",
+    "checks": 1343,
+    "failed_checks": 1,
+    "records": [
+      {
+        "path": "ATTEMPT-01-STATIC-REVIEW.json",
+        "bytes": 181915,
+        "sha256": "9eccf51825466e3afba8ce2de8fe4c9136cca9a3f9bb519f01cea9efc9fff66f"
+      },
+      {
+        "path": "ATTEMPT-01-review_static.py",
+        "bytes": 17189,
+        "sha256": "faffbc9aec72ba7be42a02a5832f5d60d78ca18c287bf9768e40ce2012ff3703"
+      },
+      {
+        "path": "ATTEMPT-01-GIT-READ-COMMANDS.json",
+        "bytes": 46595,
+        "sha256": "30adfc8e5ed1771a028c26647f5f1402e4f23be58b15d94f20f203a861069d6e"
+      },
+      {
+        "path": "static-run-01.log",
+        "bytes": 936,
+        "sha256": "362fae246081e219fdc4a3e78a65ee882333665ad3879d070ff5036ff6e91b5f"
+      }
+    ],
+    "cause": "Checker expected the literal invalid value in attempt-01-workflow.log. The actual log reports the allowed enum values; attempt-01.json separately states the invalid status and resolution.",
+    "correction": "Validate the actual enum-error log together with the preserved exit-code1 receipt and correction description.",
+    "reviewed_inputs_changed": false
+  },
+  "second_static_attempt": {
+    "status": "passed",
+    "checks": 1343,
+    "failed_checks": 0,
+    "report": "STATIC-REVIEW.json",
+    "log": "static-run-02.log"
+  },
+  "affected_evidence_review": {
+    "status": "passed",
+    "checks": 259,
+    "failed_checks": 0,
+    "log": "affected-review-run-01.log"
+  },
+  "retrieval_note": {
+    "command": "rg on a quoted wildcard path tests/test*readback* plus tools/check_local.py",
+    "exit_code": 2,
+    "cause": "Quoted glob was treated as a nonexistent literal path. No test or modification occurred.",
+    "resolution": "Located the real file with rg over the tests directory; inspected test_static_tray_readback_v01.py."
+  },
+  "phase_record_review": {
+    "first_status": "failed_literal_checker_assumption",
+    "first_failed_checks": 1,
+    "first_check_count": 6,
+    "first_report": {
+      "path": "ATTEMPT-01-PHASE-RECORD-REVIEW.json",
+      "bytes": 1228,
+      "sha256": "20eb1739b512f89bd9b0794223c014bf0a6f95345e5a5994fded82d92faed310"
+    },
+    "first_predicate": "b\"Workflow check passed\" in workflow_log",
+    "observed_success_line": "Workflow structure passed (12 tasks).",
+    "corrected_status": "passed",
+    "reviewed_bytes_changed": false,
+    "behavior_rerun": false
+  },
+  "durable_evidence_review": {
+    "first_status": "failed_summary_schema_assumption",
+    "first_failed_checks": 1,
+    "first_check_count": 73,
+    "first_report": {
+      "path": "ATTEMPT-01-DURABLE-EVIDENCE-REVIEW.json",
+      "bytes": 9511,
+      "sha256": "5b640d792eaeefc2e8008111eb32ae58f8a712cdbb20235be2698932930b545d"
+    },
+    "cause": "Assumed named summary receipt was a byte copy of original execution receipt. Schemas are intentionally different.",
+    "correction": "Validate summary against actual counts/source/archive; original execution receipt remains checked byte-for-byte inside the archive.",
+    "corrected_status": "passed",
+    "reviewed_bytes_changed": false,
+    "behavior_rerun": false
+  },
+  "final_evidence_review": {
+    "status": "passed",
+    "routine_evidence_checks": 93,
+    "raw_archive_checks": 157,
+    "failed_checks": 0,
+    "log": "final-evidence-review-run-01.log",
+    "behavioral_reexecution": false
+  },
+  "blocked_working_records": {
+    "status": "passed",
+    "checks": 46,
+    "failed": 0,
+    "log": "blocked-record-review-run-01.log",
+    "behavioral_reexecution": false
+  }
+}

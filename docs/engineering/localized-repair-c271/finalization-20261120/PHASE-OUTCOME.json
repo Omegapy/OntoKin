@@ -1,0 +1,186 @@
+{
+  "schema": "ontokin.c271.p02-blocked-outcome/1",
+  "recorded_at_utc": "2026-11-20T23:15:27.961628+00:00",
+  "phase": "C271-P02-integration-finalization",
+  "status": "blocked_partial_delivery_saved",
+  "task_status": "blocked",
+  "source_commit": "88bc8b51b3963b7072375edac6400b6e6a4532e4",
+  "source_tree": "755f366d1091beb71b5421b14fdac0b9b868cfb0",
+  "source_unchanged_and_clean": true,
+  "affected": {
+    "status": "passed",
+    "complete": true,
+    "checks": 12,
+    "methods": 282,
+    "zero_failures_errors_skips": true,
+    "report": {
+      "path": "affected-candidate/CHECKS.json",
+      "bytes": 94560,
+      "sha256": "100fbe9a686f51e0b281d313a15cf786f372924db4b37562b8c21de111150c35"
+    }
+  },
+  "routine": {
+    "status": "failed",
+    "returncode": 1,
+    "step_count": 7,
+    "duration_seconds": 1039.574,
+    "all_planned_steps_observed": true,
+    "steps": [
+      {
+        "id": "unit-tests",
+        "status": "failed",
+        "returncode": -15,
+        "seconds": 900.025,
+        "reason": "Exceeded 900 seconds",
+        "test_execution": {
+          "tests_run": 0,
+          "skipped": 0,
+          "expected_failures": 0,
+          "executed_without_skips": 0,
+          "complete_regression_passed": false
+        }
+      },
+      {
+        "id": "source",
+        "status": "passed",
+        "returncode": 0,
+        "seconds": 0.769,
+        "reason": null,
+        "test_execution": null
+      },
+      {
+        "id": "agent",
+        "status": "passed",
+        "returncode": 0,
+        "seconds": 0.869,
+        "reason": null,
+        "test_execution": null
+      },
+      {
+        "id": "construction",
+        "status": "passed",
+        "returncode": 0,
+        "seconds": 36.597,
+        "reason": null,
+        "test_execution": null
+      },
+      {
+        "id": "surface",
+        "status": "passed",
+        "returncode": 0,
+        "seconds": 21.694,
+        "reason": null,
+        "test_execution": null
+      },
+      {
+        "id": "impulse",
+        "status": "passed",
+        "returncode": 0,
+        "seconds": 53.316,
+        "reason": null,
+        "test_execution": null
+      },
+      {
+        "id": "documents",
+        "status": "failed",
+        "returncode": 1,
+        "seconds": 2.271,
+        "reason": null,
+        "test_execution": null
+      }
+    ],
+    "failed_steps": [
+      {
+        "id": "unit-tests",
+        "status": "failed",
+        "returncode": -15,
+        "reason": "Exceeded 900 seconds",
+        "test_execution": {
+          "tests_run": 0,
+          "skipped": 0,
+          "expected_failures": 0,
+          "executed_without_skips": 0,
+          "complete_regression_passed": false
+        },
+        "log": "logs/unit-tests.log"
+      },
+      {
+        "id": "documents",
+        "status": "failed",
+        "returncode": 1,
+        "reason": null,
+        "test_execution": null,
+        "log": "logs/documents.log"
+      }
+    ],
+    "unittest_footer_present": false
+  },
+  "blocking_findings": [
+    {
+      "id": "C271-P02-B01",
+      "description": "Required unit suite exceeded its 900-second driver timeout; no completed-suite footer exists.",
+      "complete_suite_count": null,
+      "exit_code": -15
+    },
+    {
+      "id": "C271-P02-B02",
+      "description": "Required isolated documentation check failed: 21 local links target five tracked instruction files omitted by the unchanged driver copy inventory. Direct full-checkout check passes.",
+      "missing_paths": [
+        "CHATGPT-START-HERE.md",
+        "ROLE.md",
+        ".agents/skills/ontokin-session/SKILL.md",
+        ".agents/skills/ontokin-delivery/SKILL.md",
+        ".agents/skills/ontokin-learning/SKILL.md"
+      ],
+      "changed_from_main": false,
+      "baseline_execution_performed": false,
+      "waiver": false
+    }
+  ],
+  "integration_eligible": false,
+  "main_lease": "not_held",
+  "integration_performed": false,
+  "main_observed": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+  "branch_disposition": "retained_unmerged",
+  "pull_request": {
+    "number": 274,
+    "state": "open",
+    "draft": true
+  },
+  "scope_issue": {
+    "number": 273,
+    "state": "open"
+  },
+  "active_processes": [],
+  "unknown_current_operations": [],
+  "historical_unknowns": "Earlier C270 interrupted broad-driver completion and historical global process disposition remain unknown; current positive process closure does not resolve them.",
+  "acceptance": "R01/R02 remain done; R03/R04/R05 remain not_done. P01 remains done; P02 remains in_progress. Required failed gates are not reclassified or waived.",
+  "boundary": "Behavioral work stopped at the observed blocker. No repair, retries, other H group, main write or new phase was started.",
+  "next_action": "In a fresh chat, select one bounded C271 validation-recovery phase: repair the isolated-workspace copy omission of CHATGPT-START-HERE.md, ROLE.md and the three .agents skill files with a focused copy-preservation check; establish a justified completion plan for the full required routine driver and prepare its declared dependencies. Preserve all tests, frozen controls, original failures and the 100000-operation/30000-ms per-source limits. Then resume R03 independent acceptance; do not blindly repeat the failed command or start another H group.",
+  "evidence": {
+    "validation_report": "verification/REPORT.md",
+    "validation_results": "verification/RESULTS.json",
+    "raw_archive": "verification/RAW-EVIDENCE.zip",
+    "raw_verification": "verification/RAW-EVIDENCE-VERIFICATION.json",
+    "independent_review": "independent-review/REPORT.md"
+  },
+  "delivery": {
+    "status": "saved",
+    "partial": true,
+    "receipt": "P02-DELIVERY.json",
+    "source_revision": "70a658c31085bf8dd78d79663c57f8e3cdb28ceb",
+    "archive_sha256": "f9cd741651c271a31cbe6fa691b07080dcc531f6fc35ea62adf6186cb0091b7a",
+    "boundary": "Frozen ZIP plus two matching prompts confirmed saved; current phase delivered, parent remains blocked/open."
+  },
+  "independent_acceptance": {
+    "verdict": "not_eligible",
+    "integration_approved": false,
+    "parent_closure_approved": false,
+    "partial_handoff_supported": true,
+    "review": "independent-review/INTEGRATION-REVIEW.json",
+    "mandatory_findings": [
+      "C271-P02-RV-001",
+      "C271-P02-RV-002"
+    ]
+  }
+}

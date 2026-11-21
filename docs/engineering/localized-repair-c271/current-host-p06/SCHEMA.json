@@ -1,0 +1,2126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ontokin.current-host-readback-schemas/0.1.0",
+  "title": "Current-host CPU readback document structures",
+  "$comment": "These closed structural schemas are necessary, not sufficient. Provider/probe enforce actual own source root, immutable source/host/dependency/method roles, exact paths/complete inventories, clean Git, time-of-use checks, and independently supplied expected config digest. Canonical serialization is sorted ASCII JSON with separators comma/colon and no nonfinite values. Fresh host observation and full runtime qualification are later Gate H work. Source trees and complete installation rules are described in PROVIDER-IMPLEMENTATION.md. Job has no schema member to preserve the original helper body.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/config"
+    },
+    {
+      "$ref": "#/$defs/sourceInventory"
+    },
+    {
+      "$ref": "#/$defs/dependencyInventory"
+    },
+    {
+      "$ref": "#/$defs/host"
+    },
+    {
+      "$ref": "#/$defs/inspection"
+    },
+    {
+      "$ref": "#/$defs/methods"
+    },
+    {
+      "$ref": "#/$defs/discovery"
+    },
+    {
+      "$ref": "#/$defs/workspace"
+    },
+    {
+      "$ref": "#/$defs/manifest"
+    },
+    {
+      "$ref": "#/$defs/job"
+    },
+    {
+      "$ref": "#/$defs/install"
+    }
+  ],
+  "$defs": {
+    "binding": {
+      "type": "object",
+      "properties": {
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mode": {
+          "type": "string",
+          "pattern": "^0o[0-7]{3,4}$"
+        }
+      },
+      "required": [
+        "sha256",
+        "size_bytes",
+        "mode"
+      ],
+      "additionalProperties": false
+    },
+    "descriptor": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mode": {
+          "type": "string",
+          "pattern": "^0o[0-7]{3,4}$"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes",
+        "mode"
+      ],
+      "additionalProperties": false
+    },
+    "sourceBinding": {
+      "type": "object",
+      "properties": {
+        "root": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$"
+        },
+        "tree": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$"
+        },
+        "inventory": {
+          "$ref": "#/$defs/descriptor"
+        }
+      },
+      "required": [
+        "root",
+        "commit",
+        "tree",
+        "inventory"
+      ],
+      "additionalProperties": false
+    },
+    "dependenciesBinding": {
+      "type": "object",
+      "properties": {
+        "root": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "inventory": {
+          "$ref": "#/$defs/descriptor"
+        }
+      },
+      "required": [
+        "root",
+        "inventory"
+      ],
+      "additionalProperties": false
+    },
+    "runtimeBinding": {
+      "type": "object",
+      "properties": {
+        "executable": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "version": {
+          "const": "v24.22.1"
+        }
+      },
+      "required": [
+        "executable",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "parent": {
+      "type": "object",
+      "properties": {
+        "config": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "source_root": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "workspace_binding": {
+          "$ref": "#/$defs/descriptor"
+        }
+      },
+      "required": [
+        "config",
+        "source_root",
+        "workspace_binding"
+      ],
+      "additionalProperties": false
+    },
+    "config": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "ontokin.current-host-readback-config/0.1.0"
+        },
+        "contract": {
+          "const": "ontokin.current-host-readback/0.1.0"
+        },
+        "contract_source": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "source": {
+          "$ref": "#/$defs/sourceBinding"
+        },
+        "host": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "dependencies": {
+          "$ref": "#/$defs/dependenciesBinding"
+        },
+        "runtime": {
+          "$ref": "#/$defs/runtimeBinding"
+        },
+        "methods": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "evidence_root": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "parent": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/parent"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema",
+        "contract",
+        "contract_source",
+        "source",
+        "host",
+        "dependencies",
+        "runtime",
+        "methods",
+        "evidence_root",
+        "parent"
+      ],
+      "additionalProperties": false
+    },
+    "sourceInventory": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "ontokin.current-host-readback-source/0.1.0"
+        },
+        "files": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/binding"
+          }
+        }
+      },
+      "required": [
+        "schema",
+        "files"
+      ],
+      "additionalProperties": false
+    },
+    "dependencyInventory": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "ontokin.current-host-readback-dependencies/0.1.0"
+        },
+        "files": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/binding"
+          }
+        },
+        "directories": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^0o[0-7]{3,4}$"
+          }
+        },
+        "archive": {
+          "$ref": "#/$defs/descriptor"
+        }
+      },
+      "required": [
+        "schema",
+        "files",
+        "directories",
+        "archive"
+      ],
+      "additionalProperties": false
+    },
+    "alias": {
+      "type": "object",
+      "properties": {
+        "resolved_path": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "symlink": {
+          "type": "boolean"
+        },
+        "link_target": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "resolved_path",
+        "symlink",
+        "link_target"
+      ],
+      "additionalProperties": false
+    },
+    "roles": {
+      "type": "object",
+      "properties": {
+        "node": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "python": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "ldd": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "inspector_interpreter": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "elf_interpreter": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "loader_configuration": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^/[^\\u0000]*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "shared_libraries": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^/[^\\u0000]*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "inspector_runtime": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^/[^\\u0000]*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "node",
+        "python",
+        "ldd",
+        "inspector_interpreter",
+        "elf_interpreter",
+        "loader_configuration",
+        "shared_libraries",
+        "inspector_runtime"
+      ],
+      "additionalProperties": false
+    },
+    "hostRuntime": {
+      "type": "object",
+      "properties": {
+        "executable": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "version": {
+          "const": "v24.22.1"
+        },
+        "candidate_sha256": {
+          "const": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa"
+        },
+        "candidate_size_bytes": {
+          "const": 126951512
+        },
+        "candidate_mode": {
+          "const": "0o755"
+        },
+        "source_archive": {
+          "$ref": "#/$defs/descriptor"
+        }
+      },
+      "required": [
+        "executable",
+        "version",
+        "candidate_sha256",
+        "candidate_size_bytes",
+        "candidate_mode",
+        "source_archive"
+      ],
+      "additionalProperties": false
+    },
+    "host": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "ontokin.current-host-readback-host/0.1.0"
+        },
+        "observed_at_utc": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "object",
+          "properties": {
+            "system": {
+              "const": "Linux"
+            },
+            "release": {
+              "type": "string"
+            },
+            "machine": {
+              "type": "string"
+            },
+            "libc": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "boot_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "system",
+            "release",
+            "machine",
+            "libc",
+            "boot_id"
+          ],
+          "additionalProperties": false
+        },
+        "python": {
+          "type": "object",
+          "properties": {
+            "executable": {
+              "type": "string",
+              "pattern": "^/[^\\u0000]*$"
+            },
+            "version": {
+              "type": "string"
+            },
+            "packages": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "executable",
+            "version",
+            "packages"
+          ],
+          "additionalProperties": false
+        },
+        "runtime": {
+          "$ref": "#/$defs/hostRuntime"
+        },
+        "files": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/binding"
+          }
+        },
+        "aliases": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/alias"
+          }
+        },
+        "roles": {
+          "$ref": "#/$defs/roles"
+        },
+        "environment": {
+          "const": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "PATH": "/usr/bin:/bin",
+            "TZ": "UTC",
+            "UV_THREADPOOL_SIZE": "2"
+          }
+        },
+        "inspections": {
+          "type": "object",
+          "properties": {
+            "node_version": {
+              "$ref": "#/$defs/descriptor"
+            },
+            "shared_libraries": {
+              "$ref": "#/$defs/descriptor"
+            }
+          },
+          "required": [
+            "node_version",
+            "shared_libraries"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema",
+        "observed_at_utc",
+        "platform",
+        "python",
+        "runtime",
+        "files",
+        "aliases",
+        "roles",
+        "environment",
+        "inspections"
+      ],
+      "additionalProperties": false
+    },
+    "cleanup": {
+      "type": "object",
+      "properties": {
+        "passed": {
+          "const": true
+        },
+        "process_group_absent": {
+          "const": true
+        },
+        "reaped": {
+          "const": true
+        },
+        "elapsed_ms": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2000
+        }
+      },
+      "required": [
+        "passed",
+        "process_group_absent",
+        "reaped",
+        "elapsed_ms"
+      ],
+      "additionalProperties": false
+    },
+    "inspection": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "ontokin.current-host-readback-inspection/0.1.0"
+        },
+        "argv": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "environment": {
+          "const": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "PATH": "/usr/bin:/bin",
+            "TZ": "UTC",
+            "UV_THREADPOOL_SIZE": "2"
+          }
+        },
+        "timeout_ms": {
+          "const": 5000
+        },
+        "started_at_utc": {
+          "type": "string"
+        },
+        "finished_at_utc": {
+          "type": "string"
+        },
+        "process": {
+          "type": "object",
+          "properties": {
+            "argv": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "cwd": {
+              "type": "string",
+              "pattern": "^/[^\\u0000]*$"
+            },
+            "environment": {
+              "const": {
+                "LANG": "C.UTF-8",
+                "LC_ALL": "C.UTF-8",
+                "PATH": "/usr/bin:/bin",
+                "TZ": "UTC",
+                "UV_THREADPOOL_SIZE": "2"
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "start_monotonic": {
+              "type": "number"
+            },
+            "pid": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "process_group": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "returncode": {
+              "const": 0
+            },
+            "observed_log_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "retained_log_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "cleanup": {
+              "$ref": "#/$defs/cleanup"
+            },
+            "handles_closed": {
+              "const": true
+            },
+            "error": {
+              "type": "null"
+            },
+            "end_monotonic": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "argv",
+            "cwd",
+            "environment",
+            "label",
+            "start_monotonic",
+            "pid",
+            "process_group",
+            "returncode",
+            "observed_log_bytes",
+            "retained_log_bytes",
+            "cleanup",
+            "handles_closed",
+            "error",
+            "end_monotonic"
+          ],
+          "additionalProperties": false
+        },
+        "stdout": {
+          "type": "string"
+        },
+        "stderr": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema",
+        "argv",
+        "environment",
+        "timeout_ms",
+        "started_at_utc",
+        "finished_at_utc",
+        "process",
+        "stdout",
+        "stderr"
+      ],
+      "additionalProperties": false
+    },
+    "methods": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "ontokin.current-host-readback-methods/0.1.0"
+        },
+        "source_test": {
+          "const": "tests/test_static_tray_readback_v01.py"
+        },
+        "original_bodies": {
+          "const": {
+            "ReadbackCoordinatorSeams.run_seam": "2f39cde2f0f4a18eb54b003e2628b22c47d49495d862d25e38223b5a056817a5",
+            "ReadbackCoordinatorSeams.test_result_write_failure_leaves_predecessor_gate_blocked": "222b654a8da505965f0821be4e7b61eefeb1a5f12e767c72e6123feba909f06d",
+            "ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup": "29665028886624307beacb4debb33b8582f91bf60951149c0160ae957ed68f98",
+            "ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm": "f4a5d8242e91d3792039b94f2f75c8002b7cc5e1b432ce3cc91d46d65d3f1f55",
+            "ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending": "5e3041a6f1e57db4c4c03e97927e1aa88c6d8dfe2b431e71b38319e3851b75bc",
+            "ReadbackCPUControls.check_case": "53a03c60a7473af90ba88f2fddf225713036d417cf3c13a0c1e8a6a3105946a4",
+            "ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries": "e7793b38ebedd196c228ce6841642c2546c8ef1f5db552b1b1f824a30087fd34",
+            "ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries": "e09a9c173e4879558da9206549f085a840639a314c22e525fccabc498c7e3dd4",
+            "ReadbackCPUControls.test_three_rejects_changed_synthetic_reference": "8b2de031c533e1308efeef130047b0a2b4fcfc1cb6cd2f576e7b3ef832ec05d9"
+          }
+        },
+        "discovery": {
+          "$ref": "#/$defs/descriptor"
+        }
+      },
+      "required": [
+        "schema",
+        "source_test",
+        "original_bodies",
+        "discovery"
+      ],
+      "additionalProperties": false
+    },
+    "discovery": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "ontokin.current-host-readback-discovery/0.1.0"
+        },
+        "method_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 7,
+          "uniqueItems": true
+        },
+        "baseline_map": {
+          "$ref": "#/$defs/descriptor"
+        }
+      },
+      "required": [
+        "schema",
+        "method_ids",
+        "baseline_map"
+      ],
+      "additionalProperties": false
+    },
+    "workspace": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "ontokin.current-host-readback-workspace/0.1.0"
+        },
+        "identity": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{32}$"
+        },
+        "parent_config": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "source_root": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "workspace_root": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$"
+        },
+        "tree": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$"
+        },
+        "source_inventory": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "source_before": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "workspace_inventory": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "immutable_inventory_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "provider": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "probe": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        }
+      },
+      "required": [
+        "schema",
+        "identity",
+        "parent_config",
+        "source_root",
+        "workspace_root",
+        "commit",
+        "tree",
+        "source_inventory",
+        "source_before",
+        "workspace_inventory",
+        "immutable_inventory_sha256",
+        "provider",
+        "probe"
+      ],
+      "additionalProperties": false
+    },
+    "manifest": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "ontokin.current-host-readback-lock/0.1.0"
+        },
+        "contract": {
+          "const": "ontokin.current-host-readback/0.1.0"
+        },
+        "profile": {
+          "const": "ontokin.static-tray/0.1.0"
+        },
+        "schedule_root": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "cohort_root": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "dependencies_root": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "scope": {
+          "const": "Three original synthetic CPU cases only; twelve native slots are structural, never execution authority"
+        },
+        "limits": {
+          "const": {
+            "child_work_ms": 28000,
+            "cleanup_ms": 2000,
+            "glb_bytes": 8388608,
+            "host_ms": 30000,
+            "log_bytes": 4194304,
+            "maximum_checks": 12,
+            "result_bytes": 4194304
+          }
+        },
+        "environment": {
+          "const": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "PATH": "/usr/bin:/bin",
+            "TZ": "UTC",
+            "UV_THREADPOOL_SIZE": "2"
+          }
+        },
+        "files": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/binding"
+          }
+        },
+        "runtime": {
+          "type": "object",
+          "properties": {
+            "executable": {
+              "type": "string",
+              "pattern": "^/[^\\u0000]*$"
+            },
+            "version": {
+              "const": "v24.22.1"
+            },
+            "files": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/binding"
+              }
+            },
+            "aliases": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/alias"
+              }
+            }
+          },
+          "required": [
+            "executable",
+            "version",
+            "files",
+            "aliases"
+          ],
+          "additionalProperties": false
+        },
+        "validator_version": {
+          "const": "2.0.0-dev.3.10"
+        },
+        "three_version": {
+          "const": "0.186.1"
+        },
+        "validator_entry": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "three_package": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "three_entry": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "gltf_loader_entry": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "module_loader": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "probe": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "validator_options": {
+          "const": {
+            "allowed_errors": 0,
+            "allowed_warnings": 0,
+            "external_resources": "rejected",
+            "format": "glb",
+            "ignoredIssues": [],
+            "maxIssues": 1000,
+            "writeTimestamp": false
+          }
+        },
+        "three_options": {
+          "const": {
+            "animation_count": 0,
+            "external_resources": "rejected",
+            "matrix_tolerance": 1e-06,
+            "mesh_count": 12,
+            "node_count": 14,
+            "position_tolerance_m": 5e-06
+          }
+        },
+        "slots": {
+          "type": "array",
+          "minItems": 12,
+          "maxItems": 12,
+          "prefixItems": [
+            {
+              "type": "object",
+              "properties": {
+                "slot": {
+                  "const": "N01"
+                },
+                "case": {
+                  "const": "Q01"
+                },
+                "route": {
+                  "const": "ontokin"
+                },
+                "maximum_starts": {
+                  "const": 1
+                },
+                "stage": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "result": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "argv": {
+                  "type": "array",
+                  "minItems": 10,
+                  "maxItems": 10,
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--no-addons"
+                    },
+                    {
+                      "const": "--max-old-space-size=256"
+                    },
+                    {
+                      "const": "--experimental-loader"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--expected-config-sha256"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "const": "--job"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    }
+                  ],
+                  "items": false
+                }
+              },
+              "required": [
+                "slot",
+                "case",
+                "route",
+                "maximum_starts",
+                "stage",
+                "result",
+                "argv"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "slot": {
+                  "const": "N02"
+                },
+                "case": {
+                  "const": "Q01"
+                },
+                "route": {
+                  "const": "direct-python"
+                },
+                "maximum_starts": {
+                  "const": 1
+                },
+                "stage": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "result": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "argv": {
+                  "type": "array",
+                  "minItems": 10,
+                  "maxItems": 10,
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--no-addons"
+                    },
+                    {
+                      "const": "--max-old-space-size=256"
+                    },
+                    {
+                      "const": "--experimental-loader"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--expected-config-sha256"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "const": "--job"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    }
+                  ],
+                  "items": false
+                }
+              },
+              "required": [
+                "slot",
+                "case",
+                "route",
+                "maximum_starts",
+                "stage",
+                "result",
+                "argv"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "slot": {
+                  "const": "N03"
+                },
+                "case": {
+                  "const": "Q01"
+                },
+                "route": {
+                  "const": "ontokin"
+                },
+                "maximum_starts": {
+                  "const": 1
+                },
+                "stage": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "result": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "argv": {
+                  "type": "array",
+                  "minItems": 10,
+                  "maxItems": 10,
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--no-addons"
+                    },
+                    {
+                      "const": "--max-old-space-size=256"
+                    },
+                    {
+                      "const": "--experimental-loader"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--expected-config-sha256"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "const": "--job"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    }
+                  ],
+                  "items": false
+                }
+              },
+              "required": [
+                "slot",
+                "case",
+                "route",
+                "maximum_starts",
+                "stage",
+                "result",
+                "argv"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "slot": {
+                  "const": "N04"
+                },
+                "case": {
+                  "const": "Q01"
+                },
+                "route": {
+                  "const": "direct-python"
+                },
+                "maximum_starts": {
+                  "const": 1
+                },
+                "stage": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "result": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "argv": {
+                  "type": "array",
+                  "minItems": 10,
+                  "maxItems": 10,
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--no-addons"
+                    },
+                    {
+                      "const": "--max-old-space-size=256"
+                    },
+                    {
+                      "const": "--experimental-loader"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--expected-config-sha256"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "const": "--job"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    }
+                  ],
+                  "items": false
+                }
+              },
+              "required": [
+                "slot",
+                "case",
+                "route",
+                "maximum_starts",
+                "stage",
+                "result",
+                "argv"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "slot": {
+                  "const": "N05"
+                },
+                "case": {
+                  "const": "Q02"
+                },
+                "route": {
+                  "const": "ontokin"
+                },
+                "maximum_starts": {
+                  "const": 1
+                },
+                "stage": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "result": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "argv": {
+                  "type": "array",
+                  "minItems": 10,
+                  "maxItems": 10,
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--no-addons"
+                    },
+                    {
+                      "const": "--max-old-space-size=256"
+                    },
+                    {
+                      "const": "--experimental-loader"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--expected-config-sha256"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "const": "--job"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    }
+                  ],
+                  "items": false
+                }
+              },
+              "required": [
+                "slot",
+                "case",
+                "route",
+                "maximum_starts",
+                "stage",
+                "result",
+                "argv"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "slot": {
+                  "const": "N06"
+                },
+                "case": {
+                  "const": "Q02"
+                },
+                "route": {
+                  "const": "direct-python"
+                },
+                "maximum_starts": {
+                  "const": 1
+                },
+                "stage": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "result": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "argv": {
+                  "type": "array",
+                  "minItems": 10,
+                  "maxItems": 10,
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--no-addons"
+                    },
+                    {
+                      "const": "--max-old-space-size=256"
+                    },
+                    {
+                      "const": "--experimental-loader"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--expected-config-sha256"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "const": "--job"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    }
+                  ],
+                  "items": false
+                }
+              },
+              "required": [
+                "slot",
+                "case",
+                "route",
+                "maximum_starts",
+                "stage",
+                "result",
+                "argv"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "slot": {
+                  "const": "N07"
+                },
+                "case": {
+                  "const": "Q03"
+                },
+                "route": {
+                  "const": "ontokin"
+                },
+                "maximum_starts": {
+                  "const": 1
+                },
+                "stage": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "result": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "argv": {
+                  "type": "array",
+                  "minItems": 10,
+                  "maxItems": 10,
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--no-addons"
+                    },
+                    {
+                      "const": "--max-old-space-size=256"
+                    },
+                    {
+                      "const": "--experimental-loader"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--expected-config-sha256"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "const": "--job"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    }
+                  ],
+                  "items": false
+                }
+              },
+              "required": [
+                "slot",
+                "case",
+                "route",
+                "maximum_starts",
+                "stage",
+                "result",
+                "argv"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "slot": {
+                  "const": "N08"
+                },
+                "case": {
+                  "const": "Q03"
+                },
+                "route": {
+                  "const": "direct-python"
+                },
+                "maximum_starts": {
+                  "const": 1
+                },
+                "stage": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "result": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "argv": {
+                  "type": "array",
+                  "minItems": 10,
+                  "maxItems": 10,
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--no-addons"
+                    },
+                    {
+                      "const": "--max-old-space-size=256"
+                    },
+                    {
+                      "const": "--experimental-loader"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--expected-config-sha256"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "const": "--job"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    }
+                  ],
+                  "items": false
+                }
+              },
+              "required": [
+                "slot",
+                "case",
+                "route",
+                "maximum_starts",
+                "stage",
+                "result",
+                "argv"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "slot": {
+                  "const": "N09"
+                },
+                "case": {
+                  "const": "Q04"
+                },
+                "route": {
+                  "const": "ontokin"
+                },
+                "maximum_starts": {
+                  "const": 1
+                },
+                "stage": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "result": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "argv": {
+                  "type": "array",
+                  "minItems": 10,
+                  "maxItems": 10,
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--no-addons"
+                    },
+                    {
+                      "const": "--max-old-space-size=256"
+                    },
+                    {
+                      "const": "--experimental-loader"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--expected-config-sha256"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "const": "--job"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    }
+                  ],
+                  "items": false
+                }
+              },
+              "required": [
+                "slot",
+                "case",
+                "route",
+                "maximum_starts",
+                "stage",
+                "result",
+                "argv"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "slot": {
+                  "const": "N10"
+                },
+                "case": {
+                  "const": "Q04"
+                },
+                "route": {
+                  "const": "direct-python"
+                },
+                "maximum_starts": {
+                  "const": 1
+                },
+                "stage": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "result": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "argv": {
+                  "type": "array",
+                  "minItems": 10,
+                  "maxItems": 10,
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--no-addons"
+                    },
+                    {
+                      "const": "--max-old-space-size=256"
+                    },
+                    {
+                      "const": "--experimental-loader"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--expected-config-sha256"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "const": "--job"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    }
+                  ],
+                  "items": false
+                }
+              },
+              "required": [
+                "slot",
+                "case",
+                "route",
+                "maximum_starts",
+                "stage",
+                "result",
+                "argv"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "slot": {
+                  "const": "N11"
+                },
+                "case": {
+                  "const": "Q05"
+                },
+                "route": {
+                  "const": "ontokin"
+                },
+                "maximum_starts": {
+                  "const": 1
+                },
+                "stage": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "result": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "argv": {
+                  "type": "array",
+                  "minItems": 10,
+                  "maxItems": 10,
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--no-addons"
+                    },
+                    {
+                      "const": "--max-old-space-size=256"
+                    },
+                    {
+                      "const": "--experimental-loader"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--expected-config-sha256"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "const": "--job"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    }
+                  ],
+                  "items": false
+                }
+              },
+              "required": [
+                "slot",
+                "case",
+                "route",
+                "maximum_starts",
+                "stage",
+                "result",
+                "argv"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "slot": {
+                  "const": "N12"
+                },
+                "case": {
+                  "const": "Q05"
+                },
+                "route": {
+                  "const": "direct-python"
+                },
+                "maximum_starts": {
+                  "const": 1
+                },
+                "stage": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "result": {
+                  "type": "string",
+                  "pattern": "^/[^\\u0000]*$"
+                },
+                "argv": {
+                  "type": "array",
+                  "minItems": 10,
+                  "maxItems": 10,
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--no-addons"
+                    },
+                    {
+                      "const": "--max-old-space-size=256"
+                    },
+                    {
+                      "const": "--experimental-loader"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    },
+                    {
+                      "const": "--expected-config-sha256"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    {
+                      "const": "--job"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^/[^\\u0000]*$"
+                    }
+                  ],
+                  "items": false
+                }
+              },
+              "required": [
+                "slot",
+                "case",
+                "route",
+                "maximum_starts",
+                "stage",
+                "result",
+                "argv"
+              ],
+              "additionalProperties": false
+            }
+          ],
+          "items": false
+        },
+        "selection": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "pattern": "^/[^\\u0000]*$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "source": {
+          "$ref": "#/$defs/sourceBinding"
+        },
+        "host": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "methods": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "dependencies": {
+          "$ref": "#/$defs/dependenciesBinding"
+        }
+      },
+      "required": [
+        "schema",
+        "contract",
+        "profile",
+        "schedule_root",
+        "cohort_root",
+        "dependencies_root",
+        "scope",
+        "limits",
+        "environment",
+        "files",
+        "runtime",
+        "validator_version",
+        "three_version",
+        "validator_entry",
+        "three_package",
+        "three_entry",
+        "gltf_loader_entry",
+        "module_loader",
+        "probe",
+        "validator_options",
+        "three_options",
+        "slots",
+        "selection",
+        "source",
+        "host",
+        "methods",
+        "dependencies"
+      ],
+      "additionalProperties": false
+    },
+    "job": {
+      "type": "object",
+      "properties": {
+        "slot": {
+          "enum": [
+            "CPU-Q01-positive",
+            "CPU-Q03-positive",
+            "CPU-Q01-changed-reference"
+          ]
+        },
+        "case": {
+          "enum": [
+            "Q01",
+            "Q03"
+          ]
+        },
+        "manifest": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "supplemental_manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "input_lock_sha256": {
+          "const": "CPU-ONLY-SYNTHETIC-NOT-NATIVE"
+        },
+        "artifact": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "artifact_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "audit": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "audit_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "result": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        }
+      },
+      "required": [
+        "slot",
+        "case",
+        "manifest",
+        "supplemental_manifest_sha256",
+        "input_lock_sha256",
+        "artifact",
+        "artifact_sha256",
+        "audit",
+        "audit_sha256",
+        "result"
+      ],
+      "additionalProperties": false
+    },
+    "archiveMember": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "file",
+            "directory"
+          ]
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sha256": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mode": {
+          "type": "string",
+          "pattern": "^0o[0-7]{3,4}$"
+        },
+        "target": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "size_bytes",
+        "sha256",
+        "mode",
+        "target"
+      ],
+      "additionalProperties": false
+    },
+    "install": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "const": "ontokin.current-host-readback-install/0.1.0"
+        },
+        "purpose": {
+          "enum": [
+            "retained-dependencies",
+            "selected-node",
+            "isolated-control"
+          ]
+        },
+        "source": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sourceBinding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "archive": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "destination": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "root_mode": {
+          "type": "string",
+          "pattern": "^0o[0-7]{3,4}$"
+        },
+        "files": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/binding"
+          }
+        },
+        "directories": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^0o[0-7]{3,4}$"
+          }
+        },
+        "members": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/archiveMember"
+          }
+        },
+        "report": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        }
+      },
+      "required": [
+        "schema",
+        "purpose",
+        "source",
+        "archive",
+        "destination",
+        "root_mode",
+        "files",
+        "directories",
+        "members",
+        "report"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

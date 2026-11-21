@@ -1,0 +1,645 @@
+{
+  "schema": "ontokin.c271.p07-independent-consumer-matrix/1",
+  "purpose": "Read-only reference for later exact candidate review; not execution or acceptance",
+  "structures": {
+    "binding": {
+      "required": [
+        "sha256",
+        "size_bytes",
+        "mode"
+      ],
+      "additionalProperties": false,
+      "field_shapes": {
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mode": {
+          "type": "string",
+          "pattern": "^0o[0-7]{3,4}$"
+        }
+      }
+    },
+    "descriptor": {
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes",
+        "mode"
+      ],
+      "additionalProperties": false,
+      "field_shapes": {
+        "path": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "mode": {
+          "type": "string",
+          "pattern": "^0o[0-7]{3,4}$"
+        }
+      }
+    },
+    "roles": {
+      "required": [
+        "node",
+        "python",
+        "ldd",
+        "inspector_interpreter",
+        "elf_interpreter",
+        "loader_configuration",
+        "shared_libraries",
+        "inspector_runtime"
+      ],
+      "additionalProperties": false,
+      "field_shapes": {
+        "node": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "python": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "ldd": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "inspector_interpreter": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "elf_interpreter": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "loader_configuration": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^/[^\\u0000]*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "shared_libraries": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^/[^\\u0000]*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "inspector_runtime": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^/[^\\u0000]*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "hostRuntime": {
+      "required": [
+        "executable",
+        "version",
+        "candidate_sha256",
+        "candidate_size_bytes",
+        "candidate_mode",
+        "source_archive"
+      ],
+      "additionalProperties": false,
+      "field_shapes": {
+        "executable": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "version": {
+          "const": "v24.22.1"
+        },
+        "candidate_sha256": {
+          "const": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa"
+        },
+        "candidate_size_bytes": {
+          "const": 126951512
+        },
+        "candidate_mode": {
+          "const": "0o755"
+        },
+        "source_archive": {
+          "$ref": "#/$defs/descriptor"
+        }
+      }
+    },
+    "host": {
+      "required": [
+        "schema",
+        "observed_at_utc",
+        "platform",
+        "python",
+        "runtime",
+        "files",
+        "aliases",
+        "roles",
+        "environment",
+        "inspections"
+      ],
+      "additionalProperties": false,
+      "field_shapes": {
+        "schema": {
+          "const": "ontokin.current-host-readback-host/0.1.0"
+        },
+        "observed_at_utc": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "object",
+          "properties": {
+            "system": {
+              "const": "Linux"
+            },
+            "release": {
+              "type": "string"
+            },
+            "machine": {
+              "type": "string"
+            },
+            "libc": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "boot_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "system",
+            "release",
+            "machine",
+            "libc",
+            "boot_id"
+          ],
+          "additionalProperties": false
+        },
+        "python": {
+          "type": "object",
+          "properties": {
+            "executable": {
+              "type": "string",
+              "pattern": "^/[^\\u0000]*$"
+            },
+            "version": {
+              "type": "string"
+            },
+            "packages": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "executable",
+            "version",
+            "packages"
+          ],
+          "additionalProperties": false
+        },
+        "runtime": {
+          "$ref": "#/$defs/hostRuntime"
+        },
+        "files": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/binding"
+          }
+        },
+        "aliases": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/alias"
+          }
+        },
+        "roles": {
+          "$ref": "#/$defs/roles"
+        },
+        "environment": {
+          "const": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "PATH": "/usr/bin:/bin",
+            "TZ": "UTC",
+            "UV_THREADPOOL_SIZE": "2"
+          }
+        },
+        "inspections": {
+          "type": "object",
+          "properties": {
+            "node_version": {
+              "$ref": "#/$defs/descriptor"
+            },
+            "shared_libraries": {
+              "$ref": "#/$defs/descriptor"
+            }
+          },
+          "required": [
+            "node_version",
+            "shared_libraries"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "inspection": {
+      "required": [
+        "schema",
+        "argv",
+        "environment",
+        "timeout_ms",
+        "started_at_utc",
+        "finished_at_utc",
+        "process",
+        "stdout",
+        "stderr"
+      ],
+      "additionalProperties": false,
+      "field_shapes": {
+        "schema": {
+          "const": "ontokin.current-host-readback-inspection/0.1.0"
+        },
+        "argv": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "environment": {
+          "const": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "PATH": "/usr/bin:/bin",
+            "TZ": "UTC",
+            "UV_THREADPOOL_SIZE": "2"
+          }
+        },
+        "timeout_ms": {
+          "const": 5000
+        },
+        "started_at_utc": {
+          "type": "string"
+        },
+        "finished_at_utc": {
+          "type": "string"
+        },
+        "process": {
+          "type": "object",
+          "properties": {
+            "argv": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "cwd": {
+              "type": "string",
+              "pattern": "^/[^\\u0000]*$"
+            },
+            "environment": {
+              "const": {
+                "LANG": "C.UTF-8",
+                "LC_ALL": "C.UTF-8",
+                "PATH": "/usr/bin:/bin",
+                "TZ": "UTC",
+                "UV_THREADPOOL_SIZE": "2"
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "start_monotonic": {
+              "type": "number"
+            },
+            "pid": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "process_group": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "returncode": {
+              "const": 0
+            },
+            "observed_log_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "retained_log_bytes": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "cleanup": {
+              "$ref": "#/$defs/cleanup"
+            },
+            "handles_closed": {
+              "const": true
+            },
+            "error": {
+              "type": "null"
+            },
+            "end_monotonic": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "argv",
+            "cwd",
+            "environment",
+            "label",
+            "start_monotonic",
+            "pid",
+            "process_group",
+            "returncode",
+            "observed_log_bytes",
+            "retained_log_bytes",
+            "cleanup",
+            "handles_closed",
+            "error",
+            "end_monotonic"
+          ],
+          "additionalProperties": false
+        },
+        "stdout": {
+          "type": "string"
+        },
+        "stderr": {
+          "type": "string"
+        }
+      }
+    },
+    "cleanup": {
+      "required": [
+        "passed",
+        "process_group_absent",
+        "reaped",
+        "elapsed_ms"
+      ],
+      "additionalProperties": false,
+      "field_shapes": {
+        "passed": {
+          "const": true
+        },
+        "process_group_absent": {
+          "const": true
+        },
+        "reaped": {
+          "const": true
+        },
+        "elapsed_ms": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2000
+        }
+      }
+    },
+    "config": {
+      "required": [
+        "schema",
+        "contract",
+        "contract_source",
+        "source",
+        "host",
+        "dependencies",
+        "runtime",
+        "methods",
+        "evidence_root",
+        "parent"
+      ],
+      "additionalProperties": false,
+      "field_shapes": {
+        "schema": {
+          "const": "ontokin.current-host-readback-config/0.1.0"
+        },
+        "contract": {
+          "const": "ontokin.current-host-readback/0.1.0"
+        },
+        "contract_source": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "source": {
+          "$ref": "#/$defs/sourceBinding"
+        },
+        "host": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "dependencies": {
+          "$ref": "#/$defs/dependenciesBinding"
+        },
+        "runtime": {
+          "$ref": "#/$defs/runtimeBinding"
+        },
+        "methods": {
+          "$ref": "#/$defs/descriptor"
+        },
+        "evidence_root": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "parent": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/parent"
+            }
+          ]
+        }
+      }
+    },
+    "sourceBinding": {
+      "required": [
+        "root",
+        "commit",
+        "tree",
+        "inventory"
+      ],
+      "additionalProperties": false,
+      "field_shapes": {
+        "root": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$"
+        },
+        "tree": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$"
+        },
+        "inventory": {
+          "$ref": "#/$defs/descriptor"
+        }
+      }
+    },
+    "runtimeBinding": {
+      "required": [
+        "executable",
+        "version"
+      ],
+      "additionalProperties": false,
+      "field_shapes": {
+        "executable": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "version": {
+          "const": "v24.22.1"
+        }
+      }
+    },
+    "inspection_process": {
+      "required": [
+        "argv",
+        "cwd",
+        "environment",
+        "label",
+        "start_monotonic",
+        "pid",
+        "process_group",
+        "returncode",
+        "observed_log_bytes",
+        "retained_log_bytes",
+        "cleanup",
+        "handles_closed",
+        "error",
+        "end_monotonic"
+      ],
+      "additionalProperties": false,
+      "field_shapes": {
+        "argv": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cwd": {
+          "type": "string",
+          "pattern": "^/[^\\u0000]*$"
+        },
+        "environment": {
+          "const": {
+            "LANG": "C.UTF-8",
+            "LC_ALL": "C.UTF-8",
+            "PATH": "/usr/bin:/bin",
+            "TZ": "UTC",
+            "UV_THREADPOOL_SIZE": "2"
+          }
+        },
+        "label": {
+          "type": "string"
+        },
+        "start_monotonic": {
+          "type": "number"
+        },
+        "pid": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "process_group": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "returncode": {
+          "const": 0
+        },
+        "observed_log_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "retained_log_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cleanup": {
+          "$ref": "#/$defs/cleanup"
+        },
+        "handles_closed": {
+          "const": true
+        },
+        "error": {
+          "type": "null"
+        },
+        "end_monotonic": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "implementation_predicates": [
+    {
+      "id": "PC01",
+      "anchor": "provider:_verify_inspection; probe:verifyInspection",
+      "requirement": "Exact two command vectors; process argv/environment equal enclosing receipt; actual positive integer PID equals process group; returncode zero, handles closed, cleanup passed/reaped/group absent, error null; finite monotonic duration in [0,5] seconds."
+    },
+    {
+      "id": "PC02",
+      "anchor": "provider:_verify_host; probe:verifyHost",
+      "requirement": "Exact Linux platform/boot identity; Python executable/version/seven package pins; selected Node archive and executable byte/size/mode constants; actual Node version and process.execPath at probe."
+    },
+    {
+      "id": "PC03",
+      "anchor": "provider:_verify_host; probe:verifyHost",
+      "requirement": "Every scalar/list role participates in exact named alias set; resolved aliases form exact files key set; complete nonempty unique runtime role lists, no extra or omitted files."
+    },
+    {
+      "id": "PC04",
+      "anchor": "provider:_elf_interpreter; probe:elfInterpreter",
+      "requirement": "Statically parsed PT_INTERP equals named role; ldd first-line interpreter literal equals #! plus role; do not loosen aliases or shebang to force admission."
+    },
+    {
+      "id": "PC05",
+      "anchor": "provider:_verify_host; probe:verifyHost",
+      "requirement": "ldd observed absolute path set equals shared_libraries union elf_interpreter. Probe also rejects not found in stderr; stricter plan must reject unresolved output in both streams."
+    },
+    {
+      "id": "PC06",
+      "anchor": "provider:_verify_host; probe:verifyHost",
+      "requirement": "Host timestamp follows both successful inspection finishes; timestamps cannot be in the future. Sidecar proves stronger freshness/source-chain requirements."
+    },
+    {
+      "id": "PC07",
+      "anchor": "provider:_selection; operations.md",
+      "requirement": "Expected config digest selected outside config; new HOST authoring must not require this completed config as its bootstrap authority."
+    },
+    {
+      "id": "PC08",
+      "anchor": "supervisor:Clock/run_process",
+      "requirement": "5000-ms total inspection clock includes its unchanged 2000-ms cleanup reserve; no 5000+2000 extension or reset. Callback records immediate actual start; Popen failure can have zero start and no successful inspection."
+    },
+    {
+      "id": "PC09",
+      "anchor": "P06 CONTROL-DISPOSITIONS.json",
+      "requirement": "H01 coherent-unapproved-input and H02 direct refusal require separately declared actual Node counts; H03 retains all original seven outcomes with three original CPU starts. None is passed by static review."
+    }
+  ]
+}

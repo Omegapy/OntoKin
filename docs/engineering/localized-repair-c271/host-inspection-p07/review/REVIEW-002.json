@@ -1,0 +1,98 @@
+{
+  "schema": "ontokin.c271.p07-independent-design-review/1",
+  "reviewer": "/root/intake_review",
+  "recorded_at_utc": "2026-11-21T06:30:44.617516+00:00",
+  "candidate": "review-candidate-002",
+  "candidate_directory": "/workspace/scratch/522363862012/audit/host-design/review-candidate-002",
+  "candidate_manifest_sha256": "ad48e321ee9163f9f87c675c291f566e28b961b55696976f738b04e165845f2a",
+  "verdict": "ACCEPT_P07_DESIGN_ONLY",
+  "mandatory_open_findings": 0,
+  "resolved_findings": [
+    {
+      "id": "P07-R01",
+      "status": "resolved",
+      "resolution_evidence": "Candidate-002 explicit nullable exact/lower-bound/count-status contract and updated HI14/HI18/HI19 controls; affected re-review passed."
+    }
+  ],
+  "static_checks": "STATIC-CHECKS.json",
+  "static_check_groups_passed": 13,
+  "source_inputs_verified": 34,
+  "candidate_payload_files": 9,
+  "candidate_payload_bytes": 202038,
+  "manual_review": [
+    {
+      "area": "External authority and bootstrap",
+      "verdict": "accepted_design",
+      "evidence": "HOST-INSPECTION-DESIGN \u00a7\u00a71\u20133; QUALIFICATION-PLAN stages H0/H1/H2",
+      "reason": "Distinct pre-HOST plan breaks the validate_selection/HOST cycle; external invocation supplies the separately reviewed digest; observations do not approve future configs."
+    },
+    {
+      "area": "P06 structural and semantic compatibility",
+      "verdict": "accepted_design",
+      "evidence": "HOST-INSPECTION-DESIGN \u00a7\u00a75\u20136; full P06 schema; both consumer host/inspection functions",
+      "reason": "Exact closed successful HOST/inspection/process/cleanup shapes are retained; stricter intersection of both consumers is used; failures and provenance stay in separate sidecars."
+    },
+    {
+      "area": "Bounded implementation surface",
+      "verdict": "accepted_design",
+      "evidence": "HOST-INSPECTION-DESIGN \u00a7\u00a72 and 7; provider/probe SOURCE_TREES; preparer helper source",
+      "reason": "New module and focused test reside in existing inventoried trees; explicit rooted helper import reuses bound rename_without_replacement without invoking its CLI or editing existing consumers."
+    },
+    {
+      "area": "Inspector/loader trust boundary",
+      "verdict": "accepted_design",
+      "evidence": "HOST-INSPECTION-DESIGN \u00a7\u00a73\u20134; P05 CONTRACT \u00a74",
+      "reason": "Finite externally reviewed static map and exact executable, interpreter, script, loader, alias, search and absence inputs precede Node/ldd; unsupported resolution refuses. No whole-OS authentication is claimed."
+    },
+    {
+      "area": "Process lifetime and output",
+      "verdict": "accepted_design",
+      "evidence": "HOST-INSPECTION-DESIGN \u00a75; supervisor Clock/run_process",
+      "reason": "Fixed 5000-ms command clock contains unchanged 2000-ms cleanup reserve and at most 3000-ms active interval; actual argv/environment/receipt/log/cleanup predicates govern success."
+    },
+    {
+      "area": "Failure and interrupted-start accounting",
+      "verdict": "accepted_after_correction",
+      "evidence": "Candidate-002 five-file diff, new_attempt_count_contract, REVIEW-RESPONSE-001.json",
+      "reason": "Exact null plus observed lower bound and explicit status preserves the launch-to-callback uncertainty; missing evidence cannot prove zero, unknown aggregation cannot collapse to zero, and success/retry are blocked."
+    },
+    {
+      "area": "Direct negative controls",
+      "verdict": "accepted_design",
+      "evidence": "QUALIFICATION-PLAN \u00a75; probe approvedEnvelope and import ordering; P05 dependency loader source",
+      "reason": "H01 preserves external D0 against coherent D1 rewrite; H02 reaches exact unsupported schema guard under an approved negative-only comparator. Each later direct launch needs its own raw nonzero evidence. No-reader-import is correctly limited to a source-backed path inference."
+    },
+    {
+      "area": "Preserved original outcomes and science",
+      "verdict": "accepted_design",
+      "evidence": "QUALIFICATION-PLAN \u00a76; original-body/source checks; adopted contract; C225 recorded audit criteria",
+      "reason": "All seven IDs, nine bodies, scientific suffix, exact 24 dependencies, fixed budgets, and intended negative numerical audit remain required. Static preservation is not claimed as execution."
+    },
+    {
+      "area": "Complete routine and gate separation",
+      "verdict": "accepted_design",
+      "evidence": "QUALIFICATION-PLAN \u00a7\u00a71,7\u20138; machine plan stages and future fields",
+      "reason": "HI/H0/H1/H2/H3/R/R04/R05 have separate entry/stop conditions; real discovery/per-method outcome collector and independent R03 acceptance remain required; the design has no executable authority or fabricated actual bindings."
+    },
+    {
+      "area": "Scope and preservation",
+      "verdict": "accepted_design",
+      "evidence": "Immutable candidate-001 and candidate-002 manifests; AUTHORING-ERRORS; source bindings",
+      "reason": "Original author failures, first candidate and mandatory finding remain retained; current task stays open and no existing source/schema change or runtime result is claimed."
+    }
+  ],
+  "acceptance_boundary": "Accepted as a source-backed operational design and staged nonexecutable plan for later bounded implementation only. Not implementation, host eligibility, original seven outcomes, Gate H/R, R03/R04/R05, publication, saved delivery, or parent completion.",
+  "current_phase_next_action": "Director may finalize P07 canonical records/publication and verified partial delivery, then stop this phase.",
+  "first_remaining_technical_gate": "In a fresh declared phase, implement only the accepted single authoring module and focused controls (HI), bind its exact clean source and obtain independent implementation review; stop before runtime preparation/Node/ldd.",
+  "execution_counts": {
+    "project_imports": 0,
+    "project_tests": 0,
+    "Node": 0,
+    "ldd": 0,
+    "runtime_preparation": 0,
+    "full_routine": 0,
+    "native_model_hosted": 0
+  },
+  "uncertain_operations": [],
+  "worker_disposition": "Review finished; no child workers or active operations; available for specifically assigned affected re-review or final package review."
+}

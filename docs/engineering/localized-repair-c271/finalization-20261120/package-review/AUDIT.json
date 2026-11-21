@@ -1,0 +1,5213 @@
+{
+  "schema": "ontokin.c271.p02-independent-final-package-audit/1",
+  "reviewer": "/root/intake_audit",
+  "reviewed_at_utc": "2026-11-20T23:31:49.193688+00:00",
+  "verdict": "eligible_for_save",
+  "integration_approved": false,
+  "parent_closure_approved": false,
+  "save_observed": false,
+  "archive": {
+    "path": "/workspace/scratch/c219bb61a617/packages/OntoKin_C271_P02_Validation_Blocked_Handoff_2026-11-20.zip",
+    "bytes": 19975795,
+    "sha256": "f9cd741651c271a31cbe6fa691b07080dcc531f6fc35ea62adf6186cb0091b7a"
+  },
+  "source_commit": "70a658c31085bf8dd78d79663c57f8e3cdb28ceb",
+  "source_tree": "77ee621cdfb00acf637828ce71f3384b4dd8275c",
+  "observed_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+  "observed_main_tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+  "members": 219,
+  "manifest_payloads": 218,
+  "git_snapshots": 157,
+  "snapshot_counts": {
+    "70a658c31085bf8dd78d79663c57f8e3cdb28ceb": 144,
+    "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d": 13
+  },
+  "source_recovery_mappings": 118,
+  "exact_git_alias_mappings": 61,
+  "online_source_dependencies": 8,
+  "preserved_acceptance_review_files": 34,
+  "preserved_final_source_review_files": 13,
+  "fresh_extraction": "/workspace/scratch/c219bb61a617/final-package-review/fresh-extraction-01",
+  "nested_archive_expansion": false,
+  "behavioral_reexecution": false,
+  "source_or_package_mutated": false,
+  "manual_root_document_review": {
+    "files": [
+      "CHECKPOINT.json",
+      "HANDOFF.md",
+      "HISTORICAL-DEPENDENCIES.json",
+      "NEXT-TASK.md",
+      "PROMPT-1-CONTINUE.md",
+      "PROMPT-2-RECOVER.md",
+      "README-START-HERE.md",
+      "RECOVERY-STATUS.md"
+    ],
+    "finding": "Accurate blocked/pending-save state, original failures/environment limits, distinct main/source, bounded recovery, external receipt rule and no false integration/closure approval."
+  },
+  "checks": [
+    {
+      "name": "expected archive identity",
+      "passed": true,
+      "category": "package"
+    },
+    {
+      "name": "builder receipt binds same archive",
+      "passed": true,
+      "category": "package"
+    },
+    {
+      "name": "exact candidate tree",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "exact observed main tree",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "safe relative regular unencrypted paths",
+      "passed": true,
+      "category": "package"
+    },
+    {
+      "name": "no exact/casefold duplicates",
+      "passed": true,
+      "category": "package"
+    },
+    {
+      "name": "CRC integrity",
+      "passed": true,
+      "category": "package"
+    },
+    {
+      "name": "219 members / 218 exact manifest payloads",
+      "passed": true,
+      "category": "package"
+    },
+    {
+      "name": "explicit manifest self exclusion",
+      "passed": true,
+      "category": "package"
+    },
+    {
+      "name": "manifest CHECKPOINT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest HANDOFF.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest HISTORICAL-DEPENDENCIES.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest NEXT-TASK.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest PROMPT-1-CONTINUE.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest PROMPT-2-RECOVER.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest README-START-HERE.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest RECOVERY-STATUS.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest builder/build_final.py",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest builder/final-config.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest builder/prepare_final_content.py",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest metadata/BUILD-BOUNDARY.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest metadata/EXTERNAL-SOURCE-DEPENDENCIES.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest metadata/SESSION-AND-RECOVERY-SOURCES.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest metadata/SNAPSHOT-SOURCES.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest observed-main/AGENTS.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest observed-main/CHATGPT-START-HERE.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest observed-main/GOAL.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest observed-main/ROLE.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest observed-main/STATUS.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest observed-main/docs/workflow/CURRENT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest observed-main/docs/workflow/HANDOFF.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest observed-main/docs/workflow/PROTOCOL.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest observed-main/docs/workflow/registry.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest observed-main/docs/workflow/tasks/C270/PLAN.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest observed-main/docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest observed-main/docs/workflow/tasks/C270/SESSION.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest observed-main/docs/workflow/tasks/C270/task.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest preserved-inputs/OntoKin_C271_Control_Candidate_Handoff_2026-11-20.zip",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest recovery/UNPUBLISHED-COMMIT-IDENTITY.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest recovery/UNPUBLISHED-COMMIT-RECOVERY.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/.agents/skills/ontokin-delivery/SKILL.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/.agents/skills/ontokin-learning/SKILL.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/.agents/skills/ontokin-session/SKILL.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/AGENTS.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/CHATGPT-START-HERE.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/GOAL.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/ROLE.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/STATUS.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/README.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/browser-workflow-c263/MIGRATION.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c260/CONTRACT.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c260/INPUTS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c269/AUDIT.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c269/COVERAGE.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c269/evidence/audit-h15-h28/MAP.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/README.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/RESULTS.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/control/AUTHOR-RECORD.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/control/EXPECTED.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/control/HASHES.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/control/SOURCE-VALIDITY.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/control/STATIC-CHECKS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/control/construct.py",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/evidence/control-candidate/EXECUTION-RECEIPT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/evidence/control-candidate/RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/evidence/control-candidate/driver.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/evidence/independent-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/evidence/independent-review/CANDIDATE-AUDIT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/evidence/independent-review/CANDIDATE-REVIEW.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLISHED-CANDIDATE.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLISHED-EVIDENCE-STATE.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/CAPABILITIES.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/EARLY-PACKAGE-VERIFICATION.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/EVIDENCE-LOCATION.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/PHASE-OUTCOME.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/PHASE.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/READ-SET.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-final-preflight/CHECKS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-final-preflight/documentation.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-final-preflight/workflow.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-record-preflight/CHECKS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-record-preflight/documentation.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-record-preflight/workflow.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/AFFECTED-CHECKPOINT-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/AFFECTED-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-STATIC-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-review_static.py",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/BLOCKED-WORKING-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/CHANGED-FILES-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/FINAL-EVIDENCE-READ-SET.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/FINAL-RAW-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTEGRATION-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTERIM-REPORT.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/P01-REUSE-IDENTITIES.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/READ-SET.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REGRESSION-INVENTORY-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REPORT.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REVIEW-ATTEMPTS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ROUTINE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/STATIC-REVIEW.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/UNIT-TIMEOUT-INSPECTION.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/affected-review-run-01.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/blocked-record-review-run-01.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/final-evidence-review-run-01.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_affected.py",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_blocked_records.py",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_final_evidence.py",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_static.py",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/static-run-01.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/static-run-02.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-API-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-GIT-PUSH-FAILURE.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-PUBLICATION.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/PHASE-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/PHASE-PUBLICATION.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/PRE-FINAL-LIVE-STATE.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/RAW-BLOB-PUBLICATION.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/TRANSPORT-READ-FAILURE.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/UNPUBLISHED-AFFECTED-COMMIT.txt",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/CHECKS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/documentation.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/workflow.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/phase-clean-checks/CHECKS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/phase-clean-checks/documentation.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/phase-clean-checks/workflow.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/CHECKS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/attempt-01-workflow.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/attempt-01.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/documentation.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/workflow.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/starting-observations.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/ACTIVE-OPERATIONS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-CHECKS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RECEIPT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RESULT-INSPECTION.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/DOCUMENTS-FAILURE-INSPECTION.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/PARTIAL-UNIT-LOG-ACCOUNTING.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE-MANIFEST.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE-VERIFICATION.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/REPORT.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RESULTS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/engineering/localized-repair-c271/run_h22_control.py",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/language-design/construction-v0.1/ontokin-construction.ebnf",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/BROWSER-PROMPTS.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/CURRENT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/HANDOFF.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/KNOWLEDGE.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/PROTOCOL.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/knowledge.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/memory.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/prompts/CONTINUE.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/prompts/RECOVER.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/registry.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/tasks/C271/LEARNING-P02.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/tasks/C271/P02-SESSION.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/tasks/C271/PLAN.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/tasks/C271/SESSION.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/tasks/C271/task.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/templates/SESSION.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest repository/docs/workflow/templates/WORKER.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/final-source-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/final-source-review/AUDIT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/final-source-review/READ-SET.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/final-source-review/REPORT.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/final-source-review/audit-run-01.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/final-source-review/audit_final_source.py",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/final-source-review/observations/remote-branch.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/final-source-review/observations/remote-commit.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/final-source-review/observations/remote-issue273-updated.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/final-source-review/observations/remote-issue273.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/final-source-review/observations/remote-main.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/final-source-review/observations/remote-pr274-updated.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/final-source-review/observations/remote-pr274.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/ARTIFACTS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/AUDIT-ATTEMPTS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/AUDIT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/DELIVERY-DELTA.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/PRIOR-AUDIT-STATUS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/READ-SET.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/REPORT.md",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/SOURCE-IDENTITIES.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/audit-run-01.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/audit_intake.py",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/observations/BRANCH-TASK.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/observations/LIVE-ISSUE-273.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/observations/LIVE-PR-274.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest review-evidence/intake-audit/observations/P01-DELIVERY.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/BLOCKED-EXTERNAL-STATUS-INTENT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/BLOCKED-EXTERNAL-STATUS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/BLOCKED-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/BLOCKED-PUBLICATION.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/EARLY-SAVE-RESULT.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/FINAL-SOURCE-LIVE-STATE.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/FINAL-UPLOAD-REQUEST.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/UPLOAD-HELPER-USAGE-CHECK.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/blocked-publication-input.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/final-source-record-checks/CHECKS.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/final-source-record-checks/documentation.stderr.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/final-source-record-checks/workflow.stderr.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/final-source-record-checks/workflow.stdout.log",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/phase-publication-input.json",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "manifest session-evidence/prepare_publication.py",
+      "passed": true,
+      "category": "manifest"
+    },
+    {
+      "name": "extraction CHECKPOINT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction HANDOFF.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction HISTORICAL-DEPENDENCIES.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction MANIFEST-SHA256.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction NEXT-TASK.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction PROMPT-1-CONTINUE.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction PROMPT-2-RECOVER.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction README-START-HERE.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction RECOVERY-STATUS.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction builder/build_final.py",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction builder/final-config.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction builder/prepare_final_content.py",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction metadata/BUILD-BOUNDARY.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction metadata/EXTERNAL-SOURCE-DEPENDENCIES.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction metadata/SESSION-AND-RECOVERY-SOURCES.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction metadata/SNAPSHOT-SOURCES.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction observed-main/AGENTS.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction observed-main/CHATGPT-START-HERE.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction observed-main/GOAL.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction observed-main/ROLE.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction observed-main/STATUS.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction observed-main/docs/workflow/CURRENT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction observed-main/docs/workflow/HANDOFF.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction observed-main/docs/workflow/PROTOCOL.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction observed-main/docs/workflow/registry.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction observed-main/docs/workflow/tasks/C270/PLAN.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction observed-main/docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction observed-main/docs/workflow/tasks/C270/SESSION.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction observed-main/docs/workflow/tasks/C270/task.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction preserved-inputs/OntoKin_C271_Control_Candidate_Handoff_2026-11-20.zip",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction recovery/UNPUBLISHED-COMMIT-IDENTITY.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction recovery/UNPUBLISHED-COMMIT-RECOVERY.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/.agents/skills/ontokin-delivery/SKILL.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/.agents/skills/ontokin-learning/SKILL.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/.agents/skills/ontokin-session/SKILL.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/AGENTS.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/CHATGPT-START-HERE.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/GOAL.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/ROLE.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/STATUS.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/README.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/browser-workflow-c263/MIGRATION.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c260/CONTRACT.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c260/INPUTS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c269/AUDIT.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c269/COVERAGE.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c269/evidence/audit-h15-h28/MAP.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/README.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/RESULTS.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/control/AUTHOR-RECORD.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/control/EXPECTED.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/control/HASHES.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/control/SOURCE-VALIDITY.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/control/STATIC-CHECKS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/control/construct.py",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/evidence/control-candidate/EXECUTION-RECEIPT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/evidence/control-candidate/RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/evidence/control-candidate/driver.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/evidence/independent-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/evidence/independent-review/CANDIDATE-AUDIT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/evidence/independent-review/CANDIDATE-REVIEW.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLISHED-CANDIDATE.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLISHED-EVIDENCE-STATE.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/CAPABILITIES.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/EARLY-PACKAGE-VERIFICATION.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/EVIDENCE-LOCATION.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/PHASE-OUTCOME.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/PHASE.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/READ-SET.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-final-preflight/CHECKS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-final-preflight/documentation.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-final-preflight/workflow.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-record-preflight/CHECKS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-record-preflight/documentation.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-record-preflight/workflow.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/AFFECTED-CHECKPOINT-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/AFFECTED-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-STATIC-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-review_static.py",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/BLOCKED-WORKING-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/CHANGED-FILES-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/FINAL-EVIDENCE-READ-SET.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/FINAL-RAW-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTEGRATION-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTERIM-REPORT.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/P01-REUSE-IDENTITIES.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/READ-SET.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REGRESSION-INVENTORY-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REPORT.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REVIEW-ATTEMPTS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ROUTINE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/STATIC-REVIEW.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/UNIT-TIMEOUT-INSPECTION.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/affected-review-run-01.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/blocked-record-review-run-01.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/final-evidence-review-run-01.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_affected.py",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_blocked_records.py",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_final_evidence.py",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_static.py",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/static-run-01.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/static-run-02.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-API-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-GIT-PUSH-FAILURE.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-PUBLICATION.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/PHASE-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/PHASE-PUBLICATION.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/PRE-FINAL-LIVE-STATE.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/RAW-BLOB-PUBLICATION.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/TRANSPORT-READ-FAILURE.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/UNPUBLISHED-AFFECTED-COMMIT.txt",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/CHECKS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/documentation.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/workflow.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/phase-clean-checks/CHECKS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/phase-clean-checks/documentation.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/phase-clean-checks/workflow.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/CHECKS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/attempt-01-workflow.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/attempt-01.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/documentation.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/workflow.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/starting-observations.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/ACTIVE-OPERATIONS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-CHECKS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RECEIPT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RESULT-INSPECTION.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/DOCUMENTS-FAILURE-INSPECTION.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/PARTIAL-UNIT-LOG-ACCOUNTING.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE-MANIFEST.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE-VERIFICATION.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/REPORT.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RESULTS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/engineering/localized-repair-c271/run_h22_control.py",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/language-design/construction-v0.1/ontokin-construction.ebnf",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/BROWSER-PROMPTS.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/CURRENT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/HANDOFF.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/KNOWLEDGE.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/PROTOCOL.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/knowledge.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/memory.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/prompts/CONTINUE.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/prompts/RECOVER.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/registry.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/tasks/C271/LEARNING-P02.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/tasks/C271/P02-SESSION.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/tasks/C271/PLAN.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/tasks/C271/SESSION.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/tasks/C271/task.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/templates/SESSION.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction repository/docs/workflow/templates/WORKER.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/final-source-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/final-source-review/AUDIT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/final-source-review/READ-SET.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/final-source-review/REPORT.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/final-source-review/audit-run-01.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/final-source-review/audit_final_source.py",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/final-source-review/observations/remote-branch.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/final-source-review/observations/remote-commit.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/final-source-review/observations/remote-issue273-updated.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/final-source-review/observations/remote-issue273.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/final-source-review/observations/remote-main.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/final-source-review/observations/remote-pr274-updated.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/final-source-review/observations/remote-pr274.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/ARTIFACTS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/AUDIT-ATTEMPTS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/AUDIT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/DELIVERY-DELTA.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/PRIOR-AUDIT-STATUS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/READ-SET.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/REPORT.md",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/SOURCE-IDENTITIES.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/audit-run-01.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/audit_intake.py",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/observations/BRANCH-TASK.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/observations/LIVE-ISSUE-273.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/observations/LIVE-PR-274.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction review-evidence/intake-audit/observations/P01-DELIVERY.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/BLOCKED-EXTERNAL-STATUS-INTENT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/BLOCKED-EXTERNAL-STATUS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/BLOCKED-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/BLOCKED-PUBLICATION.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/EARLY-SAVE-RESULT.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/FINAL-SOURCE-LIVE-STATE.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/FINAL-UPLOAD-REQUEST.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/UPLOAD-HELPER-USAGE-CHECK.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/blocked-publication-input.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/final-source-record-checks/CHECKS.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/final-source-record-checks/documentation.stderr.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/final-source-record-checks/workflow.stderr.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/final-source-record-checks/workflow.stdout.log",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/phase-publication-input.json",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "extraction session-evidence/prepare_publication.py",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "fresh extraction exact inventory",
+      "passed": true,
+      "category": "extraction"
+    },
+    {
+      "name": "157 unique Git snapshots",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/.agents/skills/ontokin-delivery/SKILL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/.agents/skills/ontokin-delivery/SKILL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/.agents/skills/ontokin-learning/SKILL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/.agents/skills/ontokin-learning/SKILL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/.agents/skills/ontokin-session/SKILL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/.agents/skills/ontokin-session/SKILL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/AGENTS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/AGENTS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/CHATGPT-START-HERE.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/CHATGPT-START-HERE.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/GOAL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/GOAL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/ROLE.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/ROLE.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/STATUS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/STATUS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/README.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/README.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/browser-workflow-c263/MIGRATION.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/browser-workflow-c263/MIGRATION.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c260/CONTRACT.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c260/CONTRACT.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c260/INPUTS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c260/INPUTS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c269/AUDIT.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c269/AUDIT.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c269/COVERAGE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c269/COVERAGE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c269/evidence/audit-h15-h28/MAP.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c269/evidence/audit-h15-h28/MAP.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/README.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/README.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/RESULTS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/RESULTS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/control/AUTHOR-RECORD.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/control/AUTHOR-RECORD.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/control/EXPECTED.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/control/EXPECTED.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/control/HASHES.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/control/HASHES.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/control/SOURCE-VALIDITY.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/control/SOURCE-VALIDITY.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/control/STATIC-CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/control/STATIC-CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/control/construct.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/control/construct.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/evidence/control-candidate/EXECUTION-RECEIPT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/evidence/control-candidate/EXECUTION-RECEIPT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/evidence/control-candidate/RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/evidence/control-candidate/RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/evidence/control-candidate/driver.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/evidence/control-candidate/driver.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/evidence/independent-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/evidence/independent-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/evidence/independent-review/CANDIDATE-AUDIT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/evidence/independent-review/CANDIDATE-AUDIT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/evidence/independent-review/CANDIDATE-REVIEW.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/evidence/independent-review/CANDIDATE-REVIEW.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLISHED-CANDIDATE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLISHED-CANDIDATE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLISHED-EVIDENCE-STATE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/evidence/independent-review/PUBLISHED-EVIDENCE-STATE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/CAPABILITIES.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/CAPABILITIES.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/EARLY-PACKAGE-VERIFICATION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/EARLY-PACKAGE-VERIFICATION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/EVIDENCE-LOCATION.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/EVIDENCE-LOCATION.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/PHASE-OUTCOME.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/PHASE-OUTCOME.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/PHASE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/PHASE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/READ-SET.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/READ-SET.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-final-preflight/CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-final-preflight/CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-final-preflight/documentation.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-final-preflight/documentation.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-final-preflight/workflow.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-final-preflight/workflow.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-record-preflight/CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-record-preflight/CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-record-preflight/documentation.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-record-preflight/documentation.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-record-preflight/workflow.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/blocked-record-preflight/workflow.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/AFFECTED-CHECKPOINT-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/AFFECTED-CHECKPOINT-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/AFFECTED-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/AFFECTED-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-STATIC-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-STATIC-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-review_static.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ATTEMPT-01-review_static.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/BLOCKED-WORKING-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/BLOCKED-WORKING-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/CHANGED-FILES-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/CHANGED-FILES-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/FINAL-EVIDENCE-READ-SET.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/FINAL-EVIDENCE-READ-SET.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/FINAL-RAW-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/FINAL-RAW-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTEGRATION-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTEGRATION-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTERIM-REPORT.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTERIM-REPORT.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/P01-REUSE-IDENTITIES.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/P01-REUSE-IDENTITIES.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/READ-SET.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/READ-SET.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REGRESSION-INVENTORY-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REGRESSION-INVENTORY-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REPORT.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REPORT.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REVIEW-ATTEMPTS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REVIEW-ATTEMPTS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ROUTINE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/ROUTINE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/STATIC-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/STATIC-REVIEW.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/UNIT-TIMEOUT-INSPECTION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/UNIT-TIMEOUT-INSPECTION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/affected-review-run-01.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/affected-review-run-01.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/blocked-record-review-run-01.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/blocked-record-review-run-01.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/final-evidence-review-run-01.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/final-evidence-review-run-01.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_affected.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_affected.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_blocked_records.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_blocked_records.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_final_evidence.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_final_evidence.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_static.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/review_static.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/static-run-01.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/static-run-01.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/static-run-02.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/static-run-02.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-API-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-API-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-GIT-PUSH-FAILURE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-GIT-PUSH-FAILURE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-PUBLICATION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/AFFECTED-PUBLICATION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/PHASE-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/PHASE-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/PHASE-PUBLICATION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/PHASE-PUBLICATION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/PRE-FINAL-LIVE-STATE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/PRE-FINAL-LIVE-STATE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/RAW-BLOB-PUBLICATION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/RAW-BLOB-PUBLICATION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/TRANSPORT-READ-FAILURE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/TRANSPORT-READ-FAILURE.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/UNPUBLISHED-AFFECTED-COMMIT.txt",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/UNPUBLISHED-AFFECTED-COMMIT.txt",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/documentation.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/documentation.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/workflow.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/workflow.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/phase-clean-checks/CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/phase-clean-checks/CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/phase-clean-checks/documentation.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/phase-clean-checks/documentation.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/phase-clean-checks/workflow.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/operation-history/phase-clean-checks/workflow.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/attempt-01-workflow.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/attempt-01-workflow.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/attempt-01.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/attempt-01.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/documentation.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/documentation.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/workflow.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/record-preflight/workflow.log",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/starting-observations.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/starting-observations.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/ACTIVE-OPERATIONS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/ACTIVE-OPERATIONS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-CHECKS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RECEIPT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RECEIPT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RESULT-INSPECTION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RESULT-INSPECTION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/DOCUMENTS-FAILURE-INSPECTION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/DOCUMENTS-FAILURE-INSPECTION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/PARTIAL-UNIT-LOG-ACCOUNTING.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/PARTIAL-UNIT-LOG-ACCOUNTING.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE-MANIFEST.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE-MANIFEST.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE-VERIFICATION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE-VERIFICATION.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/REPORT.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/REPORT.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RESULTS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RESULTS.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/engineering/localized-repair-c271/run_h22_control.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/engineering/localized-repair-c271/run_h22_control.py",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/language-design/construction-v0.1/ontokin-construction.ebnf",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/language-design/construction-v0.1/ontokin-construction.ebnf",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/BROWSER-PROMPTS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/BROWSER-PROMPTS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/CURRENT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/CURRENT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/HANDOFF.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/HANDOFF.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/KNOWLEDGE.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/KNOWLEDGE.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/PROTOCOL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/PROTOCOL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/knowledge.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/knowledge.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/memory.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/memory.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/prompts/CONTINUE.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/prompts/CONTINUE.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/prompts/RECOVER.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/prompts/RECOVER.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/registry.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/registry.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/tasks/C271/LEARNING-P02.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/tasks/C271/LEARNING-P02.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/tasks/C271/P02-SESSION.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/tasks/C271/P02-SESSION.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/tasks/C271/PLAN.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/tasks/C271/PLAN.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/tasks/C271/SESSION.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/tasks/C271/SESSION.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/tasks/C271/task.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/tasks/C271/task.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/templates/SESSION.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/templates/SESSION.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot repository/docs/workflow/templates/WORKER.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix repository/docs/workflow/templates/WORKER.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot observed-main/AGENTS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix observed-main/AGENTS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot observed-main/CHATGPT-START-HERE.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix observed-main/CHATGPT-START-HERE.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot observed-main/GOAL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix observed-main/GOAL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot observed-main/ROLE.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix observed-main/ROLE.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot observed-main/STATUS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix observed-main/STATUS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot observed-main/docs/workflow/CURRENT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix observed-main/docs/workflow/CURRENT.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot observed-main/docs/workflow/HANDOFF.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix observed-main/docs/workflow/HANDOFF.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot observed-main/docs/workflow/PROTOCOL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix observed-main/docs/workflow/PROTOCOL.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot observed-main/docs/workflow/registry.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix observed-main/docs/workflow/registry.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot observed-main/docs/workflow/tasks/C270/PLAN.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix observed-main/docs/workflow/tasks/C270/PLAN.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot observed-main/docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix observed-main/docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot observed-main/docs/workflow/tasks/C270/SESSION.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix observed-main/docs/workflow/tasks/C270/SESSION.md",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "Git snapshot observed-main/docs/workflow/tasks/C270/task.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "snapshot prefix observed-main/docs/workflow/tasks/C270/task.json",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "144 candidate / 13 main snapshots",
+      "passed": true,
+      "category": "git"
+    },
+    {
+      "name": "online dependency tools/check_local.py",
+      "passed": true,
+      "category": "online"
+    },
+    {
+      "name": "online dependency tools/chat_workflow.py",
+      "passed": true,
+      "category": "online"
+    },
+    {
+      "name": "online dependency docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "passed": true,
+      "category": "online"
+    },
+    {
+      "name": "online dependency docs/engineering/localized-repair-c268/evidence/run_checks.py",
+      "passed": true,
+      "category": "online"
+    },
+    {
+      "name": "online dependency docs/engineering/localized-repair-c265/source_hinges.py",
+      "passed": true,
+      "category": "online"
+    },
+    {
+      "name": "online dependency docs/engineering/localized-repair-c266/hinge_binding.py",
+      "passed": true,
+      "category": "online"
+    },
+    {
+      "name": "online dependency docs/engineering/localized-repair-c267/hinge_compare.py",
+      "passed": true,
+      "category": "online"
+    },
+    {
+      "name": "online dependency docs/engineering/localized-repair-c268/endpoint_reader.py",
+      "passed": true,
+      "category": "online"
+    },
+    {
+      "name": "eight pinned online dependencies",
+      "passed": true,
+      "category": "online"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/package-work/final-content/CHECKPOINT.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/package-work/final-content/HANDOFF.md",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/package-work/final-content/HISTORICAL-DEPENDENCIES.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/package-work/final-content/NEXT-TASK.md",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/package-work/final-content/PROMPT-1-CONTINUE.md",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/package-work/final-content/PROMPT-2-RECOVER.md",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/package-work/final-content/README-START-HERE.md",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/package-work/final-content/RECOVERY-STATUS.md",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/AFFECTED-API-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/AFFECTED-API-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/AFFECTED-GIT-PUSH-FAILURE.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/AFFECTED-GIT-PUSH-FAILURE.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/AFFECTED-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/AFFECTED-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/AFFECTED-PUBLICATION.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/AFFECTED-PUBLICATION.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/BLOCKED-EXTERNAL-STATUS-INTENT.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/BLOCKED-EXTERNAL-STATUS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/BLOCKED-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/BLOCKED-PUBLICATION.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/CAPABILITIES.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/CAPABILITIES.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/EARLY-SAVE-RESULT.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/FINAL-SOURCE-LIVE-STATE.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/FINAL-UPLOAD-REQUEST.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/PHASE-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/PHASE-PUBLICATION-INTENT.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/PHASE-PUBLICATION.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/PHASE-PUBLICATION.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/PHASE.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/PHASE.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/PRE-FINAL-LIVE-STATE.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/PRE-FINAL-LIVE-STATE.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/RAW-BLOB-PUBLICATION.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/RAW-BLOB-PUBLICATION.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/READ-SET.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/READ-SET.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/TRANSPORT-READ-FAILURE.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/TRANSPORT-READ-FAILURE.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/UNPUBLISHED-AFFECTED-COMMIT.txt",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/UNPUBLISHED-AFFECTED-COMMIT.txt",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/UPLOAD-HELPER-USAGE-CHECK.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/affected-checkpoint-record-checks/CHECKS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/affected-checkpoint-record-checks/CHECKS.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/affected-checkpoint-record-checks/documentation.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/affected-checkpoint-record-checks/documentation.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/affected-checkpoint-record-checks/workflow.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/affected-checkpoint-record-checks/workflow.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/blocked-final-preflight/CHECKS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/blocked-final-preflight/CHECKS.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/blocked-final-preflight/documentation.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/blocked-final-preflight/documentation.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/blocked-final-preflight/workflow.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/blocked-final-preflight/workflow.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/blocked-publication-input.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/blocked-record-preflight/CHECKS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/blocked-record-preflight/CHECKS.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/blocked-record-preflight/documentation.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/blocked-record-preflight/documentation.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/blocked-record-preflight/workflow.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/blocked-record-preflight/workflow.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/final-source-record-checks/CHECKS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/final-source-record-checks/documentation.stderr.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/final-source-record-checks/documentation.stdout.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/final-source-record-checks/documentation.stdout.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/final-source-record-checks/workflow.stderr.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/final-source-record-checks/workflow.stdout.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/phase-clean-checks/CHECKS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/phase-clean-checks/CHECKS.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/phase-clean-checks/documentation.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/phase-clean-checks/documentation.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/phase-clean-checks/workflow.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/phase-clean-checks/workflow.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/phase-publication-input.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/prepare_publication.py",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/session/starting-observations.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/session/starting-observations.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/ARTIFACTS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/AUDIT-ATTEMPTS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/AUDIT.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/DELIVERY-DELTA.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/PRIOR-AUDIT-STATUS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/READ-SET.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/REPORT.md",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/SOURCE-IDENTITIES.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/audit-run-01.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/audit_intake.py",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/observations/BRANCH-TASK.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/observations/LIVE-ISSUE-273.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/observations/LIVE-PR-274.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/intake-audit/observations/P01-DELIVERY.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/AFFECTED-CHECKPOINT-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/AFFECTED-CHECKPOINT-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/AFFECTED-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/AFFECTED-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/ATTEMPT-01-DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/ATTEMPT-01-DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/ATTEMPT-01-GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/ATTEMPT-01-GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/ATTEMPT-01-PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/ATTEMPT-01-PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/ATTEMPT-01-STATIC-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/ATTEMPT-01-STATIC-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/ATTEMPT-01-review_static.py",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/ATTEMPT-01-review_static.py",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/BLOCKED-WORKING-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/BLOCKED-WORKING-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/CHANGED-FILES-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/CHANGED-FILES-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/FINAL-EVIDENCE-READ-SET.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/FINAL-EVIDENCE-READ-SET.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/FINAL-RAW-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/FINAL-RAW-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/INTEGRATION-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/INTEGRATION-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/INTERIM-REPORT.md",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/INTERIM-REPORT.md",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/P01-REUSE-IDENTITIES.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/P01-REUSE-IDENTITIES.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/READ-SET.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/READ-SET.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/REGRESSION-INVENTORY-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/REGRESSION-INVENTORY-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/REPORT.md",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/REPORT.md",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/REVIEW-ATTEMPTS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/REVIEW-ATTEMPTS.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/ROUTINE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/ROUTINE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/STATIC-REVIEW.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/STATIC-REVIEW.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/UNIT-TIMEOUT-INSPECTION.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/UNIT-TIMEOUT-INSPECTION.json",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/affected-review-run-01.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/affected-review-run-01.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/blocked-record-review-run-01.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/blocked-record-review-run-01.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/final-evidence-review-run-01.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/final-evidence-review-run-01.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/review_affected.py",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/review_affected.py",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/review_blocked_records.py",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/review_blocked_records.py",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/review_final_evidence.py",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/review_final_evidence.py",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/review_static.py",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/review_static.py",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/static-run-01.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/static-run-01.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/integration-review/static-run-02.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "exact alias /workspace/scratch/c219bb61a617/integration-review/static-run-02.log",
+      "passed": true,
+      "category": "alias"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/final-source-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/final-source-review/AUDIT.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/final-source-review/READ-SET.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/final-source-review/REPORT.md",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/final-source-review/audit-run-01.log",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/final-source-review/audit_final_source.py",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/final-source-review/observations/remote-branch.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/final-source-review/observations/remote-commit.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/final-source-review/observations/remote-issue273-updated.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/final-source-review/observations/remote-issue273.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/final-source-review/observations/remote-main.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/final-source-review/observations/remote-pr274-updated.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/final-source-review/observations/remote-pr274.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/package-work/recovery/UNPUBLISHED-COMMIT-IDENTITY.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/package-work/recovery/UNPUBLISHED-COMMIT-RECOVERY.md",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/package-work/build_final.py",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/package-work/prepare_final_content.py",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/package-work/final-config.json",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "source map /workspace/scratch/c219bb61a617/source/OntoKin_C271_Control_Candidate_Handoff_2026-11-20.zip",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "118 source/recovery mappings",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "every payload classified",
+      "passed": true,
+      "category": "mapping"
+    },
+    {
+      "name": "complete frozen integration-review",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/AFFECTED-CHECKPOINT-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/AFFECTED-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/ATTEMPT-01-DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/ATTEMPT-01-GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/ATTEMPT-01-PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/ATTEMPT-01-STATIC-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/ATTEMPT-01-review_static.py",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/BLOCKED-WORKING-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/CHANGED-FILES-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/DURABLE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/FINAL-EVIDENCE-READ-SET.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/FINAL-RAW-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/GIT-READ-COMMANDS.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/INTEGRATION-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/INTERIM-REPORT.md",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/P01-REUSE-IDENTITIES.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/PHASE-RECORD-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/READ-SET.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/REGRESSION-INVENTORY-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/REPORT.md",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/REVIEW-ATTEMPTS.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/ROUTINE-EVIDENCE-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/STATIC-REVIEW.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/UNIT-TIMEOUT-INSPECTION.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/affected-review-run-01.log",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/blocked-record-review-run-01.log",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/final-evidence-review-run-01.log",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/review_affected.py",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/review_blocked_records.py",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/review_final_evidence.py",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/review_static.py",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/static-run-01.log",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review integration-review/static-run-02.log",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "complete frozen final-source-review",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review final-source-review/ARTIFACTS.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review final-source-review/AUDIT.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review final-source-review/READ-SET.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review final-source-review/REPORT.md",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review final-source-review/audit-run-01.log",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review final-source-review/audit_final_source.py",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review final-source-review/observations/remote-branch.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review final-source-review/observations/remote-commit.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review final-source-review/observations/remote-issue273-updated.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review final-source-review/observations/remote-issue273.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review final-source-review/observations/remote-main.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review final-source-review/observations/remote-pr274-updated.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "retained review final-source-review/observations/remote-pr274.json",
+      "passed": true,
+      "category": "review"
+    },
+    {
+      "name": "nested archive identity only preserved-inputs/OntoKin_C271_Control_Candidate_Handoff_2026-11-20.zip",
+      "passed": true,
+      "category": "nested_identity"
+    },
+    {
+      "name": "nested archive identity only repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "nested_identity"
+    },
+    {
+      "name": "nested archive identity only repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RAW-EVIDENCE.zip",
+      "passed": true,
+      "category": "nested_identity"
+    },
+    {
+      "name": "exact recoverable unpublished commit",
+      "passed": true,
+      "category": "recovery"
+    },
+    {
+      "name": "unpublished tree equals published equivalent",
+      "passed": true,
+      "category": "recovery"
+    },
+    {
+      "name": "failed CLI push retained",
+      "passed": true,
+      "category": "recovery"
+    },
+    {
+      "name": "all eight required roots present",
+      "passed": true,
+      "category": "root"
+    },
+    {
+      "name": "checkpoint frozen/main/executed identities",
+      "passed": true,
+      "category": "root"
+    },
+    {
+      "name": "blocked partial requirements accurate",
+      "passed": true,
+      "category": "root"
+    },
+    {
+      "name": "P01 done P02 incomplete",
+      "passed": true,
+      "category": "root"
+    },
+    {
+      "name": "actual routine and affected results retained",
+      "passed": true,
+      "category": "root"
+    },
+    {
+      "name": "negative independent approval preserved",
+      "passed": true,
+      "category": "root"
+    },
+    {
+      "name": "final source audit correctly scoped",
+      "passed": true,
+      "category": "root"
+    },
+    {
+      "name": "pending save / external receipt",
+      "passed": true,
+      "category": "root"
+    },
+    {
+      "name": "no integration lease closure or active operation claimed",
+      "passed": true,
+      "category": "root"
+    },
+    {
+      "name": "unwaived blockers and exact next action",
+      "passed": true,
+      "category": "root"
+    },
+    {
+      "name": "saved early recovery distinct from pending final",
+      "passed": true,
+      "category": "root"
+    },
+    {
+      "name": "historical input/C262 identities",
+      "passed": true,
+      "category": "root"
+    },
+    {
+      "name": "builder/config boundary exact",
+      "passed": true,
+      "category": "root"
+    },
+    {
+      "name": "standalone prompt equals ZIP PROMPT-1-CONTINUE.md",
+      "passed": true,
+      "category": "prompt"
+    },
+    {
+      "name": "prompt source/status/save identity PROMPT-1-CONTINUE.md",
+      "passed": true,
+      "category": "prompt"
+    },
+    {
+      "name": "prompt bounded next action/preparation PROMPT-1-CONTINUE.md",
+      "passed": true,
+      "category": "prompt"
+    },
+    {
+      "name": "standalone prompt equals ZIP PROMPT-2-RECOVER.md",
+      "passed": true,
+      "category": "prompt"
+    },
+    {
+      "name": "prompt source/status/save identity PROMPT-2-RECOVER.md",
+      "passed": true,
+      "category": "prompt"
+    },
+    {
+      "name": "prompt bounded next action/preparation PROMPT-2-RECOVER.md",
+      "passed": true,
+      "category": "prompt"
+    },
+    {
+      "name": "delivery-only and uncertain-operation recovery",
+      "passed": true,
+      "category": "prompt"
+    },
+    {
+      "name": "planned upload is not a save result",
+      "passed": true,
+      "category": "delivery"
+    },
+    {
+      "name": "planned upload names audited deliverables",
+      "passed": true,
+      "category": "delivery"
+    },
+    {
+      "name": "archive unchanged after inspection",
+      "passed": true,
+      "category": "package"
+    }
+  ],
+  "check_count": 1031,
+  "failed_count": 0,
+  "limits": [
+    "Actual saved-file confirmation and later receipt-only publication remain outside this audit",
+    "Online continuation package, not complete offline restoration",
+    "Routine failures and parent requirements remain unmet",
+    "Planned upload input does not establish a write"
+  ],
+  "next_action": "Root may save this exact ZIP and matching prompts, verify saved identities, publish the external receipt, verify receipt-only state, then stop."
+}

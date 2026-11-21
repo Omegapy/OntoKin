@@ -21,6 +21,7 @@ import platform
 import re
 import shutil
 import signal
+import stat
 import subprocess
 import sys
 import time
@@ -31,8 +32,11 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from tools.storage_identity import prepare_offline_workspace
 
-SOURCE_DIRS = ("ontokin", "tests", "tools", "docs", "examples", "fixtures", "schemas", "prototypes", "packaging", ".github")
-ROOT_FILES = ("pyproject.toml", "README.md", "AGENTS.md", "GOAL.md", "STATUS.md", "LICENSE", "LICENSE-CODE",
+READBACK_CONFIG_ENV = "ONTOKIN_CURRENT_HOST_READBACK_CONFIG"
+READBACK_DIGEST_ENV = "ONTOKIN_CURRENT_HOST_READBACK_CONFIG_SHA256"
+
+SOURCE_DIRS = ("ontokin", "tests", "tools", "docs", "examples", "fixtures", "schemas", "prototypes", "packaging", ".github", ".agents")
+ROOT_FILES = ("pyproject.toml", "README.md", "AGENTS.md", "GOAL.md", "STATUS.md", "CHATGPT-START-HERE.md", "ROLE.md", "LICENSE", "LICENSE-CODE",
               "LICENSE-DOCS", ".gitignore", ".gitattributes", ".lfsconfig")
 IGNORED = {".git", "node_modules", "__pycache__", ".venv", "venv", ".tox", ".cache",
            ".pytest_cache", ".mypy_cache", ".ruff_cache", "build", "dist", "_build"}
@@ -391,12 +395,78 @@ def stop_process(process: subprocess.Popen) -> None:
         process.wait()
 
 
-def execute_step(step: Step, workspace: Path, output: Path, previous: dict, timeout: float) -> dict:
+def readback_config_identity(path: Path) -> dict:
+    """Read a bounded regular selection file without following its final link."""
+    if path.is_symlink():
+        raise ValueError("Readback configuration must be a regular file, not a symbolic link.")
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
+    descriptor = os.open(path, flags)
+    try:
+        before = os.fstat(descriptor)
+        if not stat.S_ISREG(before.st_mode) or before.st_size > 1048576:
+            raise ValueError("Readback configuration must be a regular file of at most 1 MiB.")
+        raw = bytearray()
+        while len(raw) <= 1048576:
+            chunk = os.read(descriptor, min(65536, 1048577 - len(raw)))
+            if not chunk:
+                break
+            raw.extend(chunk)
+        after = os.fstat(descriptor)
+        fields = ("st_dev", "st_ino", "st_mode", "st_size", "st_mtime_ns")
+        if len(raw) != before.st_size or any(getattr(before, key) != getattr(after, key) for key in fields):
+            raise ValueError("Readback configuration changed while its identity was read.")
+        return {"sha256": "sha256:" + hashlib.sha256(raw).hexdigest(), "bytes": len(raw)}
+    finally:
+        os.close(descriptor)
+
+
+def prepare_readback_selection(config_path: Path | None, config_sha256: str | None, *,
+                               root: Path, output: Path, observation: dict | None = None) -> dict:
+    """Require the caller's independently approved selection before isolation."""
+    if config_path is None or config_sha256 is None:
+        raise ValueError("The unit stage requires --readback-config ABSOLUTE_FILE and "
+                         "--readback-config-sha256 EXPECTED_DIGEST from the reviewed execution plan.")
+    if not config_path.is_absolute() or re.fullmatch(r"[0-9a-f]{64}", config_sha256) is None:
+        raise ValueError("Readback selection requires an absolute configuration path and a lowercase SHA-256 digest.")
+    actual = readback_config_identity(config_path)
+    if observation is not None:
+        observation["observed_identity"] = actual
+    if actual["sha256"] != "sha256:" + config_sha256:
+        raise ValueError("Readback configuration differs from the independently supplied expected digest.")
+    from prototypes.static_tray_v01.current_host_readback_v01 import validate_selection
+    config = validate_selection(config_path, config_sha256, root)
+    parent = Path(config["evidence_root"])
+    if not parent.is_absolute() or not output.is_relative_to(parent):
+        raise ValueError("The driver output must be beneath the configuration's approved external evidence root.")
+    return {"config_path": str(config_path), "config_sha256": config_sha256,
+            "observed_identity": actual, "source_root": str(root)}
+
+
+def bind_readback_workspace(selection: dict, *, root: Path, workspace: Path, output: Path,
+                            source_before: dict, workspace_inventory: dict) -> dict:
+    """Derive an explicit binding after the complete existing copy checks."""
+    if workspace_inventory != source_before:
+        raise ValueError("Readback workspace source inventory differs from the original checkout.")
+    from prototypes.static_tray_v01.current_host_readback_v01 import derive_workspace_binding
+    derived = derive_workspace_binding(
+        Path(selection["config_path"]), selection["config_sha256"], root, workspace,
+        output / "readback-binding", source_before, workspace_inventory)
+    if readback_config_identity(Path(derived["config_path"]))["sha256"] != "sha256:" + derived["config_sha256"]:
+        raise ValueError("The derived readback configuration no longer matches its recorded identity.")
+    return derived
+
+
+def execute_step(step: Step, workspace: Path, output: Path, previous: dict, timeout: float,
+                 *, readback_selection: dict | None = None) -> dict:
     log_path = output / "logs" / (step.id + ".log")
     log_path.parent.mkdir(parents=True, exist_ok=True)
     record = {"id": step.id, "argv": list(step.argv), "cwd": str(workspace), "requires": list(step.requires),
-              "started_at": utc_now(), "log": log_path.relative_to(output).as_posix(), "returncode": None}
+              "started_at": utc_now(), "log": log_path.relative_to(output).as_posix(), "returncode": None,
+              "process_started": False, "process_pid": None}
     environment = git_environment(workspace)
+    # Ambient selections must never override the driver's explicit approval.
+    environment.pop(READBACK_CONFIG_ENV, None)
+    environment.pop(READBACK_DIGEST_ENV, None)
     # Unlike a parent-only -B flag, this also reaches ordinary Python descendants.
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
     record["environment_overrides"] = {"PYTHONDONTWRITEBYTECODE": "1"}
@@ -408,8 +478,28 @@ def execute_step(step: Step, workspace: Path, output: Path, previous: dict, time
             log.write(record["reason"] + "\n")
         else:
             try:
+                if step.id == "unit-tests" and readback_selection is not None:
+                    config = Path(readback_selection["config_path"])
+                    expected = readback_selection["config_sha256"]
+                    if readback_config_identity(config)["sha256"] != "sha256:" + expected:
+                        raise ValueError("Derived readback configuration changed before the unit process.")
+                    environment[READBACK_CONFIG_ENV] = str(config)
+                    environment[READBACK_DIGEST_ENV] = expected
+                    removed = []
+                    for name in ("PYTHONPATH", "PYTHONHOME", "PYTHONSTARTUP", "PYTHONINSPECT",
+                                 "PYTHONBREAKPOINT", "PYTHONUSERBASE", "PYTHONPYCACHEPREFIX",
+                                 "LD_PRELOAD", "LD_LIBRARY_PATH", "NODE_OPTIONS", "NODE_PATH"):
+                        if name in environment:
+                            removed.append(name)
+                            environment.pop(name)
+                    environment["PYTHONNOUSERSITE"] = "1"
+                    record["removed_injection_environment_names"] = removed
+                    record["environment_overrides"].update({READBACK_CONFIG_ENV: str(config),
+                                                             READBACK_DIGEST_ENV: expected,
+                                                             "PYTHONNOUSERSITE": "1"})
                 process = subprocess.Popen(step.argv, cwd=workspace, stdout=log, stderr=subprocess.STDOUT,
                                            start_new_session=os.name == "posix", env=environment)
+                record.update(process_started=True, process_pid=process.pid)
                 try:
                     record["returncode"] = process.wait(timeout=timeout)
                     record["status"] = "passed" if process.returncode == 0 else "failed"
@@ -420,6 +510,9 @@ def execute_step(step: Step, workspace: Path, output: Path, previous: dict, time
                                   returncode=process.returncode)
             except OSError as error:
                 record.update(status="unavailable", reason=str(error))
+                log.write(str(error) + "\n")
+            except ValueError as error:
+                record.update(status="failed", reason=str(error))
                 log.write(str(error) + "\n")
     if step.id in {"unit-tests", "force-agent-tests"}:
         raw = log_path.read_text(encoding="utf-8", errors="replace")
@@ -460,7 +553,8 @@ def execute_step(step: Step, workspace: Path, output: Path, previous: dict, time
     return record
 
 
-def run(root: Path, output: Path, full: bool, timeout: float, *, force_agent: bool = False) -> int:
+def run(root: Path, output: Path, full: bool, timeout: float, *, force_agent: bool = False,
+        readback_config: Path | None = None, readback_config_sha256: str | None = None) -> int:
     prepare_output(root, output)
     summary = {"schema_version": "ontokin.local-checks/0.1", "profile": "full" if full else "core",
                "selected_roles": selected_roles(full, force_agent),
@@ -476,6 +570,17 @@ def run(root: Path, output: Path, full: bool, timeout: float, *, force_agent: bo
     write_json(summary_path, summary)
     exit_code = 1
     try:
+        plan = build_plan(output / "workspace", output, full, force_agent=force_agent)
+        summary["planned_steps"] = [step.id for step in plan]
+        selection, derived = None, None
+        if any(step.id == "unit-tests" for step in plan) or readback_config is not None or readback_config_sha256 is not None:
+            summary["readback_selection"] = {"status": "preparation_pending",
+                "config_path": str(readback_config) if readback_config is not None else None,
+                "expected_config_sha256": readback_config_sha256,
+                "approval_source": "explicit caller argument from independently reviewed execution plan"}
+            selection = prepare_readback_selection(readback_config, readback_config_sha256, root=root, output=output,
+                                                   observation=summary["readback_selection"])
+            summary["readback_selection"].update(status="original_verified", **selection)
         before = inventory(root)
         write_json(output / "source-before.json", before)
         summary["source_inventory"] = {"path": "source-before.json", **file_identity(output / "source-before.json"),
@@ -492,16 +597,19 @@ def run(root: Path, output: Path, full: bool, timeout: float, *, force_agent: bo
         if summary["workspace_git"]["available"]:
             summary["workspace_git"].update(index_basis="source_commit_tree",
                                              copied_worktree_changes_preserved=True, source_staging_preserved=False)
-        if inventory(workspace) != before:
+        workspace_before = inventory(workspace)
+        if workspace_before != before:
             raise ValueError("Source changed while the isolated workspace was copied.")
+        if selection is not None:
+            derived = bind_readback_workspace(selection, root=root, workspace=workspace, output=output,
+                                               source_before=before, workspace_inventory=workspace_before)
+            summary["readback_selection"].update(status="workspace_bound", derived=derived)
         (output / "reports").mkdir()
         (output / "artifacts").mkdir()
         previous = {}
-        plan = build_plan(workspace, output, full, force_agent=force_agent)
-        summary["planned_steps"] = [step.id for step in plan]
         for step in plan:
             print(f"[{step.id}] running", flush=True)
-            record = execute_step(step, workspace, output, previous, timeout)
+            record = execute_step(step, workspace, output, previous, timeout, readback_selection=derived)
             previous[step.id] = record
             summary["steps"].append(record)
             write_json(summary_path, summary)
@@ -520,7 +628,7 @@ def run(root: Path, output: Path, full: bool, timeout: float, *, force_agent: bo
                                               for step in summary["steps"] for report in step["reports"]
                                               for case in report.get("pending_cases", [])]
         summary["not_executed_steps"] = [step.id for step in plan if step.id not in previous
-                                         or previous[step.id]["status"] in {"blocked", "unavailable"}]
+                                         or not previous[step.id]["process_started"]]
         if not summary["source_unchanged"]:
             raise ValueError("Source or verification inputs changed during this run.")
         if exit_code != 130:
@@ -529,9 +637,14 @@ def run(root: Path, output: Path, full: bool, timeout: float, *, force_agent: bo
     except KeyboardInterrupt:
         summary.update(status="interrupted", error="Interrupted before checks completed.")
         exit_code = 130
-    except (OSError, ValueError, subprocess.SubprocessError) as error:
+    except (OSError, ValueError, RuntimeError, ImportError, subprocess.SubprocessError) as error:
         summary.update(status="failed", error=str(error))
+        if "readback_selection" in summary:
+            summary["readback_selection"]["preparation_or_execution_error"] = str(error)
     finally:
+        summary.setdefault("not_executed_steps", [name for name in summary.get("planned_steps", [])
+                                                  if name not in {step["id"] for step in summary["steps"]
+                                                                  if step["process_started"]}])
         summary.update(finished_at=utc_now(), duration_seconds=round(time.monotonic() - started, 3), exit_code=exit_code)
         write_json(summary_path, summary)
         print(f"Local checks {summary['status']}. Evidence: {summary_path}", flush=True)
@@ -547,6 +660,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir", type=Path, help="New/empty evidence directory; default: build/local-checks/<unique-run>")
     parser.add_argument("--list", "--dry-run", dest="list_only", action="store_true", help="Print commands without running checks or writing files")
     parser.add_argument("--timeout", type=float, default=900, help="Maximum seconds per command (default: 900)")
+    parser.add_argument("--readback-config", type=Path,
+                        help="Absolute current-host readback configuration from the reviewed execution plan")
+    parser.add_argument("--readback-config-sha256",
+                        help="Independently approved SHA-256 of the selected readback configuration")
     args = parser.parse_args(argv)
     if sys.version_info < (3, 11):
         parser.error("Python 3.11 or later is required.")
@@ -561,7 +678,8 @@ def main(argv: list[str] | None = None) -> int:
                                     for s in build_plan(output / "workspace", output, args.full, force_agent=args.force_agent)]}, indent=2))
         return 0
     try:
-        return run(ROOT, output, args.full, args.timeout, force_agent=args.force_agent)
+        return run(ROOT, output, args.full, args.timeout, force_agent=args.force_agent,
+                   readback_config=args.readback_config, readback_config_sha256=args.readback_config_sha256)
     except (OSError, ValueError) as error:
         print(f"Cannot start local checks: {error}", file=sys.stderr)
         return 1

@@ -1,0 +1,89 @@
+{
+  "recorded_at_utc": "2026-11-21T01:25:50.398342+00:00",
+  "source_revision": "6518a812526ee13bec4fb5f0c901b1d93c77c690",
+  "source_tree": "25bbafcfea9a34a688f20955a90bdc533980659e",
+  "source_state": "clean_published_revision",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "returncode": 0,
+      "seconds": 0.1,
+      "log": "workflow.log",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "returncode": 0,
+      "seconds": 2.138,
+      "log": "documentation.log",
+      "bytes": 6608,
+      "sha256": "e595f330fbb390b5a68e2770ce78f2a13e422e6d4ee3e5305b284ce9242b3750"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "6d4324e8fd835351da2db165bf0907a3bf1916bc",
+        "6518a812526ee13bec4fb5f0c901b1d93c77c690"
+      ],
+      "returncode": 0,
+      "seconds": 0.006,
+      "log": "whitespace.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "protected_source_comparison": {
+    "baseline": "6d4324e8fd835351da2db165bf0907a3bf1916bc",
+    "changed_paths": [
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/CAPABILITIES.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/CURRENT-BINDINGS-REVIEW.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/CURRENT-BINDINGS.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/CURRENT-HOST-QUALIFICATION-PROPOSAL.md",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/EARLY-PACKAGE-VERIFICATION.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/EARLY-RECOVERY-RECEIPT.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/EVIDENCE-LOCATION.md",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/INCOMING-VERIFICATION.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/INVESTIGATION-OUTCOME.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/INVESTIGATION-REPORT.md",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/PHASE-OUTCOME.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/PHASE.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/RAW-EVIDENCE-LOCATION.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/RAW-EVIDENCE-VERIFICATION.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/READ-SET.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/README.md",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/RESULTS.md",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/STARTUP-FAILURES.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/STARTUP-RECONCILIATION.md",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/TECHNICAL-REVIEW-SUMMARY.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/TECHNICAL-REVIEW.md",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/WORKING-RECORD-REVIEW.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/WORKING-RECORD-REVIEW.md",
+      "docs/workflow/CURRENT.json",
+      "docs/workflow/tasks/C271/LEARNING-P04.md",
+      "docs/workflow/tasks/C271/P04-SESSION.md",
+      "docs/workflow/tasks/C271/PLAN.md",
+      "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "docs/workflow/tasks/C271/task.json"
+    ],
+    "all_changes_within_documentary_allowlist": true,
+    "runtime_test_guard_dependency_pin_contract_files_unchanged": true
+  },
+  "source_unchanged_during_checks": true,
+  "scope": "Documentation, workflow and source-boundary checks only. No product tests or runtime qualification.",
+  "passed": true
+}

@@ -1,5 +1,5 @@
 """Exercise local-check failure reporting and isolation with real child processes."""
-from contextlib import redirect_stderr, redirect_stdout
+from contextlib import nullcontext, redirect_stderr, redirect_stdout
 import io
 import json
 import os
@@ -26,7 +26,19 @@ class LocalChecksTests(unittest.TestCase):
         self.output = self.directory / "evidence"
 
     def execute(self, steps, *, timeout=10, force_agent=False):
-        with patch.object(checks, "build_plan", return_value=steps), redirect_stdout(io.StringIO()):
+        # These synthetic repositories exercise the generic driver, not readback.
+        # Bind the new provider seam explicitly while retaining real test children.
+        selection = self.directory / "mocked-readback-selection.json"
+        binding = None
+        if any(step.id == "unit-tests" for step in steps):
+            selection.write_text('{"scope": "mocked driver-test preparation boundary"}\n')
+            binding = {"config_path": str(selection),
+                       "config_sha256": checks.file_identity(selection)["sha256"].removeprefix("sha256:")}
+        preparation = (patch.object(checks, "prepare_readback_selection", return_value=binding)
+                       if binding else nullcontext())
+        derivation = (patch.object(checks, "bind_readback_workspace", return_value=binding)
+                      if binding else nullcontext())
+        with patch.object(checks, "build_plan", return_value=steps), preparation, derivation, redirect_stdout(io.StringIO()):
             code = checks.run(self.root, self.output, False, timeout, force_agent=force_agent)
         return code, json.loads((self.output / "summary.json").read_text(encoding="utf-8"))
 
@@ -227,6 +239,48 @@ class LocalChecksTests(unittest.TestCase):
         self.assertEqual(summary["workspace_git"]["tracked_worktree_status"], "")
         for name in paths:
             self.assertEqual((self.output / "workspace" / name).read_bytes(), (self.root / name).read_bytes())
+
+    def test_workflow_instruction_targets_survive_workspace_isolation(self):
+        paths = ("CHATGPT-START-HERE.md", "ROLE.md",
+                 ".agents/skills/ontokin-session/SKILL.md",
+                 ".agents/skills/ontokin-delivery/SKILL.md",
+                 ".agents/skills/ontokin-learning/SKILL.md")
+        for name in paths:
+            source = self.root / name
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_bytes(b"# Required workflow instruction: " + name.encode("utf-8") + b"\n")
+        original = self.initialize_git(self.root)
+        excluded = (".agents/.env", ".agents/.env.local", ".agents/.cache/session.tmp",
+                    ".agents/node_modules/package/index.js", ".agents/.venv/installed.py",
+                    ".agents/__pycache__/module.pyc", "temporary-worker/notes.txt")
+        for name in excluded:
+            source = self.root / name
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_bytes(b"Unrelated local fixture; must stay outside the copied inputs.\n")
+        source_index = self.root / ".git/index"
+        before_index = (source_index.read_bytes(), source_index.stat().st_mtime_ns)
+        code, summary = self.execute([])
+        self.assertEqual(code, 0, summary)
+        workspace = self.output / "workspace"
+        before = json.loads((self.output / "source-before.json").read_text())
+        recorded = {item["path"] for item in before["files"]}
+        self.assertTrue(set(paths) <= recorded, set(paths) - recorded)
+        self.assertEqual(checks.inventory(workspace), before)
+        for name in paths:
+            self.assertEqual((workspace / name).read_bytes(), (self.root / name).read_bytes())
+        for name in excluded:
+            self.assertNotIn(name, recorded)
+            self.assertFalse((workspace / name).exists(), name)
+        self.assertEqual(summary["workspace_git"]["tracked_worktree_status"], "")
+        for name in ("git", "workspace_git", "git_after"):
+            self.assertEqual(summary[name]["local_head"], original["local_head"])
+            self.assertEqual(summary[name]["local_tree"], original["local_tree"])
+        self.assertFalse(source_index.samefile(workspace / ".git/index"))
+        checks.git_read(workspace, "update-index", "--assume-unchanged", "ROLE.md")
+        self.assertNotEqual((workspace / ".git/index").read_bytes(), before_index[0])
+        self.assertEqual((source_index.read_bytes(), source_index.stat().st_mtime_ns), before_index)
+        self.assertEqual(checks.git_read(workspace, "rev-parse", "HEAD"), original["local_head"])
+        self.assertTrue(summary["source_unchanged"])
 
     def test_top_level_fixture_can_be_read_by_isolated_child(self):
         fixture = self.root / "fixtures/static_tray_v01/native/Q01/ontokin/source.json"

@@ -1,0 +1,1286 @@
+{
+  "schema_version": 1,
+  "id": "C271",
+  "title": "H22 isolated missing source import-digest control",
+  "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
+  "status": "in_progress",
+  "owner": "c271-p07-522363862012",
+  "branch": "work/c271-missing-import-digest-control",
+  "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+  "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
+  "requirements": [
+    {
+      "id": "R01",
+      "description": "Independently frozen missing-digest control",
+      "acceptance": "Author isolated actual source import-digest removal from the unchanged historical input, with unchanged companion source and GLB, predeclared exact refusal expectation from adopted rules, input hashes and an independent construction explanation before invoking the observers.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/control/EXPECTED.json",
+        "docs/engineering/localized-repair-c271/control/SOURCE-VALIDITY.md",
+        "docs/engineering/localized-repair-c271/control/STATIC-CHECKS.json"
+      ]
+    },
+    {
+      "id": "R02",
+      "description": "Observed isolated refusal and propagation",
+      "acceptance": "Execute positive baseline and isolated missing-digest variants through applicable source observation, binding and comparison interfaces. Preserve complete actual responses, input identities and reasons. Require the independently frozen typed refusal and no qualified partial result; preserve contradictions without repairing runtime or changing the oracle.",
+      "status": "done",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json",
+        "docs/engineering/localized-repair-c271/evidence/control-candidate/RAW-EVIDENCE.zip"
+      ]
+    },
+    {
+      "id": "R03",
+      "description": "Required checks and independent review",
+      "acceptance": "Independently review the exact candidate and evidence; resolve mandatory findings. Before integration execute the complete affected regression inventory, required local driver and applicable documentation/workflow checks, retaining all failures, interruptions and environment limits.",
+      "status": "not_done",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/delivery/record-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/delivery/FINAL-STATE-REVIEW.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/verification/RESULTS.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTEGRATION-REVIEW.json",
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json",
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json",
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/TECHNICAL-REVIEW-SUMMARY.json",
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/WORKING-RECORD-REVIEW.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/ADOPTION.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/review/DESIGN-REVIEW.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/published-source-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/current-host-p06/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/current-host-p06/EXECUTION-CHECKS.json",
+        "docs/engineering/localized-repair-c271/current-host-p06/INDEPENDENT-REVIEW.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/review/REVIEW-002.json"
+      ]
+    },
+    {
+      "id": "R04",
+      "description": "Reviewed integration and actual-main verification",
+      "acceptance": "In a later phase acquire verified expected-head ownership, conditionally integrate the reviewed candidate, verify actual main and observe branch disposition with retained history.",
+      "status": "not_done",
+      "evidence": []
+    },
+    {
+      "id": "R05",
+      "description": "Verified phase delivery and truthful closure",
+      "acceptance": "Confirm early recovery before substantial work. Verify and save each phase handoff and matching prompts; publish its separate receipt. Keep parent and scope issue open until every requirement, integration and final delivery gate passes.",
+      "status": "not_done",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/current-host-p06/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/current-host-p06/P06-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json"
+      ]
+    }
+  ],
+  "plan": [
+    {
+      "id": "P01",
+      "title": "Freeze, execute and independently review one isolated control candidate; save partial handoff",
+      "requirements": [
+        "R01",
+        "R02",
+        "R03",
+        "R05"
+      ],
+      "status": "done",
+      "artifacts": [
+        "docs/workflow/tasks/C271/SESSION.md",
+        "docs/engineering/localized-repair-c271/control/EXPECTED.json",
+        "docs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json",
+        "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
+      ],
+      "verification": [
+        "Confirmed early recovery; independent expectation before observation; exact input/response evidence; focused independent candidate review; documentation/workflow checks; published retained branch and verified saved partial handoff"
+      ]
+    },
+    {
+      "id": "P02",
+      "title": "Complete integration gates and final delivery in a fresh main chat",
+      "requirements": [
+        "R03",
+        "R04",
+        "R05"
+      ],
+      "status": "in_progress",
+      "artifacts": [
+        "docs/engineering/localized-repair-c271/INTEGRATION.json",
+        "docs/engineering/localized-repair-c271/DELIVERY.json",
+        "docs/workflow/tasks/C271/P02-SESSION.md",
+        "docs/engineering/localized-repair-c271/finalization-20261120/PHASE-OUTCOME.json"
+      ],
+      "verification": [
+        "Required local driver and complete affected cohort with exact provenance; independent integration approval; expected-head lease; conditional merge; fresh actual-main checks; branch lifecycle; confirmed final save and closure"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "isolated H22 control",
+      "command": "python3 -B docs/engineering/localized-repair-c271/run_h22_control.py --output NEW_OUTPUT --phase C271-P01",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json"
+      ]
+    },
+    {
+      "name": "required routine local driver before integration",
+      "command": "python3 -B tools/check_local.py --output-dir NEW_OUTPUT",
+      "result": "failed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/finalization-20261120/verification/RESULTS.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE.zip"
+      ],
+      "executed_command": "python3 -B tools/check_local.py --output-dir /workspace/scratch/c219bb61a617/validation/routine-candidate --timeout 900",
+      "limit": "The original process completed exit 1; unit timeout and documents failure remain mandatory unmet gates."
+    },
+    {
+      "name": "complete affected observer regression before integration",
+      "command": "python3 -B docs/engineering/localized-repair-c268/evidence/run_checks.py --repo IDENTIFIED_REPO --phase C271-integration --output NEW_OUTPUT --c268-methods 35",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-CHECKS.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RECEIPT.json"
+      ],
+      "executed_command": "python3 -B docs/engineering/localized-repair-c268/evidence/run_checks.py --repo /workspace/scratch/c219bb61a617/validation/candidate-checkout --phase C271-P02-integration --output /workspace/scratch/c219bb61a617/validation/affected-candidate --c268-methods 35",
+      "methods": 282,
+      "groups": 12
+    },
+    {
+      "name": "clean published-candidate documentation and workflow records",
+      "command": "python3 -B tools/chat_workflow.py check; python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/delivery/record-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/final-source-record-checks/CHECKS.json"
+      ]
+    },
+    {
+      "name": "independent candidate review",
+      "command": "Actual independent subagent review; commands and exact identities recorded in report",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/independent-review/CANDIDATE-AUDIT.json",
+        "docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.json"
+      ],
+      "scope": "Historical P01 control-candidate approval only; does not approve P02 integration."
+    },
+    {
+      "name": "P01 partial handoff archive and independent package review",
+      "command": "Recorded builder and independent archive audits; no behavioral replay",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/delivery/PACKAGE-VERIFICATION.json",
+        "docs/engineering/localized-repair-c271/delivery/package-review/AUDIT.json",
+        "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
+      ]
+    },
+    {
+      "name": "independent P02 integration acceptance review",
+      "command": "Independent source/evidence review by /root/intake_audit; exact checks and provenance retained",
+      "result": "failed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTEGRATION-REVIEW.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REPORT.md"
+      ],
+      "scope": "Evidence inspection passed; integration acceptance failed because two mandatory routine-driver findings remain unresolved. No requirement waiver."
+    },
+    {
+      "name": "P02 blocked partial handoff archive and independent package review",
+      "command": "Recorded builder, independent archive audit and saved file readback; no behavioral replay",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/finalization-20261120/PACKAGE-VERIFICATION.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/package-review/AUDIT.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json"
+      ],
+      "scope": "Current partial phase delivery only; R03-R05 parent gates remain unmet."
+    },
+    {
+      "name": "P03 minimal workspace repair and clean focused validation",
+      "command": "Prepared Python tests.test_local_checks (31 methods), actual driver workspace builder and documents step, workflow and native-reader setup",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json"
+      ],
+      "scope": "Focused tool correction only; does not satisfy the complete routine requirement"
+    },
+    {
+      "name": "P03 unchanged historical readback prerequisite",
+      "command": "Prepared Python restore_readback_prerequisites.py --repo IDENTIFIED_REPO --report NEW_REPORT (no --apply)",
+      "result": "failed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json"
+      ],
+      "scope": "Exact Node binary binding refusal; no mutation or test execution"
+    },
+    {
+      "name": "P03 complete routine driver after qualified preparation",
+      "command": "Prepared Python tools/check_local.py --output-dir NEW_OUTPUT --timeout 3600",
+      "result": "not_run",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE-OUTCOME.json"
+      ],
+      "scope": "Not launched because preparation failed; prior P02 driver failure remains unchanged"
+    },
+    {
+      "name": "Independent P03 R03 acceptance decision",
+      "command": "Independent exact-candidate, clean evidence and working-record review by /root/intake_review",
+      "result": "failed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json"
+      ],
+      "scope": "Narrow repair approved for retained partial delivery; R03 not eligible because exact runtime prerequisite and complete routine remain unmet. Evidence inspection passed; it is not a product test run."
+    },
+    {
+      "name": "P04 exact historical runtime qualification",
+      "command": "Read-only source/runtime bindings plus bounded local/C262 nested-object investigation; no helper or test execution",
+      "result": "failed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/PHASE-OUTCOME.json"
+      ],
+      "scope": "The evidence inspection supports a scoped no-match finding. Runtime qualification and R03 acceptance are not established."
+    },
+    {
+      "name": "P04 published documentary checkpoint checks",
+      "command": "Existing workflow, documentation and whitespace checks on clean published source 6518a812526ee13bec4fb5f0c901b1d93c77c690",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/PUBLISHED-SOURCE-CHECKS.json"
+      ],
+      "scope": "Record validity and protected-source boundary only; no product/runtime test acceptance."
+    },
+    {
+      "name": "P04 partial handoff delivery",
+      "command": "ZIP integrity, independent package review, ordered saves, destination metadata and prompt identity verification",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json"
+      ],
+      "scope": "This phase delivery only; parent R03-R05 remain not_done."
+    },
+    {
+      "name": "P05 independent current-host design review",
+      "command": "Independent source/AST/discovery/contract/archive inspection by /root/intake_audit; exact checks and bindings retained",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p05/review/DESIGN-REVIEW.json"
+      ],
+      "scope": "46 static design checks; no behavioral execution, runtime qualification or R03 acceptance"
+    },
+    {
+      "name": "P05 clean published-source documentary checks",
+      "command": "python3 -B tools/chat_workflow.py check; python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py; git diff --check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p05/published-source-checks/CHECKS.json"
+      ],
+      "scope": "Clean source 405c0c9ec35e50b4dd13b8779a31f822dc45f61f only; not product or R03 acceptance"
+    },
+    {
+      "name": "P05 immutable core package and save",
+      "command": "Independent 29-check package audit, prepared ordered upload, exact destination metadata and local hash/xattr verification",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p05/package-review/PACKAGE-REVIEW.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
+      ],
+      "scope": "Core ZIP and prompts only; required corrected companion and final phase completion remain pending"
+    },
+    {
+      "name": "P05 required corrected companion and saved partial delivery",
+      "command": "Independent exact companion recovery/source review and confirmed save/readback; final source/state publication follows with external terminal evidence",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p05/companion-review/COMPANION-REVIEW.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/COMPANION-VERIFICATION.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
+      ],
+      "scope": "P05 partial delivery only. Parent R03-R05 and complete routine/integration remain open."
+    },
+    {
+      "name": "P06 focused implementation verification and independent review",
+      "command": "Exact frozen commands and candidate-attributed controls in current-host-p06/EXECUTION-CHECKS.json",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p06/EXECUTION-CHECKS.json",
+        "docs/engineering/localized-repair-c271/current-host-p06/INDEPENDENT-REVIEW.json"
+      ],
+      "scope": "P06 only: 66 focused methods, 64 selected controls, 145 effective variants, 2 final source checks; original seven outcomes/full routine/R03 remain unrun or unaccepted."
+    },
+    {
+      "name": "P07 source-backed host-inspection design and independent review",
+      "command": "Retained static artifact/source/schema checks and independent review; no product execution",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/DESIGN-STATIC-CHECKS.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/review/REVIEW-002.json"
+      ],
+      "scope": "26 author and 13 independent static groups; accepted design only. Actual runtime, original seven, complete routine and R03-R05 remain unmet."
+    },
+    {
+      "name": "P07 documentary records and protected source",
+      "command": "python3 -B tools/chat_workflow.py check; python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py; git diff --check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p07/design-record-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/design-record-checks/SOURCE-BOUNDARY.json"
+      ],
+      "scope": "Declared documentary working snapshot only; final published-source checks follow. No product execution or R03 acceptance."
+    },
+    {
+      "name": "P07 clean published design documentary checks",
+      "command": "python3 -B tools/chat_workflow.py check; python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py; git diff --check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p07/published-source-checks/CHECKS.json"
+      ],
+      "scope": "Exact clean source a5622f7fdd5ffb40a387d860e41c2ebbe5291d6f only; documentation/workflow/protected source, no product/R03 acceptance."
+    },
+    {
+      "name": "P07 partial handoff and confirmed save/readback",
+      "command": "18 builder and 20 independent archive groups, ordered core save and exact saved-byte readback",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p07/PACKAGE-VERIFICATION.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/package-review/RESULTS.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json"
+      ],
+      "scope": "P07 design delivery only. C271 R03-R05 and P02 remain open; later receipt-publication checks follow separately."
+    }
+  ],
+  "completion": {
+    "implementation_commit": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+    "merge_commit": null,
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/274",
+    "branch_disposition": "retained",
+    "evidence": [
+      "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/validation-recovery-20261120/P03-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/current-host-p06/P06-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json"
+    ],
+    "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1"
+  },
+  "next_action": "In a fresh bounded chat, reconcile this delivery and terminal confirmation, then implement only the accepted HI authoring module and focused controls, with new early recovery and independent review. Stop before runtime preparation, Node/ldd or qualification.",
+  "session_phase": {
+    "schema": "ontokin.c271.p07-phase/1",
+    "task": "C271",
+    "phase": "C271-P07-host-inspection-design",
+    "owner": "c271-p07-522363862012",
+    "declared_at_utc": "2026-11-21T06:15:05.202429+00:00",
+    "client_filename_date": "2026-11-20",
+    "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+    "starting_main_tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+    "starting_branch": "3d9d5eacaff25244916f99912ef92947e1582592",
+    "starting_branch_tree": "8e65c9c18031ebddf694b9f7e9fb555b33886911",
+    "branch": "work/c271-missing-import-digest-control",
+    "scope": "Documentation-only design and independent review of the missing host-observation and inspection-record authoring entry point, with a frozen staged Gate H qualification plan before any Node/ldd execution",
+    "acceptance": [
+      "P07-D01: exact source-backed authoring interface and record contracts compatible with the existing strict P06 consumers",
+      "P07-D02: independently selected static command/input plan precedes future inspection starts; observed host/configuration bytes do not approve themselves",
+      "P07-D03: staged actual-host qualification plan preserves exact runtime/dependencies, original seven methods, direct-host controls, process/failure accounting, and later Gate R obligations",
+      "P07-D04: independent review resolves mandatory findings, or names the concrete unresolved design blocker; documentation/workflow checks and protected-source comparison pass",
+      "P07-D05: reviewed conditional retained-branch publication, verified final partial ZIP and matching prompts, confirmed save and separate receipt, then stop"
+    ],
+    "constraints": [
+      "No runtime, provider, probe, preparer, driver, test, historical contract, dependency, or frozen evidence changes in P07",
+      "No Node or ldd execution, runtime installation, original-method execution, full routine, native/model trial, hosted CI, main lease, integration, or parent closure",
+      "Preserve source 100000-operation/30000-ms limits and all original numerical/lifecycle predicates",
+      "Keep independently approved execution inputs separate from observations and explicit about still-unbound future host fields",
+      "One parent-chat phase; no nested worker fanout; root alone canonical Git/index/state/publication/delivery"
+    ],
+    "status": "complete_partial_delivery",
+    "early_recovery": "confirmed",
+    "early_save_confirmed": true,
+    "early_receipt": "docs/engineering/localized-repair-c271/host-inspection-p07/EARLY-RECOVERY-RECEIPT.json",
+    "main_lease_held": false,
+    "integration_allowed": false,
+    "runtime_qualification_selected": false,
+    "full_routine_selected": false,
+    "parent_status": "in_progress",
+    "parent_requirements": {
+      "R01": "done",
+      "R02": "done",
+      "R03": "not_done",
+      "R04": "not_done",
+      "R05": "not_done"
+    },
+    "parent_plan": {
+      "P01": "done",
+      "P02": "in_progress"
+    },
+    "workers": {
+      "/root/host_design": "Author source-backed host-inspection design and staged qualification plan; audit/host-design only",
+      "/root/intake_review": "Independent intake complete; independent exact design and later package review; disjoint audit paths only",
+      "/root/package_builder": "Early/final package engineering and byte/source verification; packaging/packages only"
+    },
+    "stop": "At independently reviewed design or first concrete blocker/unplanned expansion, finish publication and verified partial saved delivery, then stop. No implementation or second phase in this chat.",
+    "design_adoption": "docs/engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json",
+    "independent_review": "docs/engineering/localized-repair-c271/host-inspection-p07/review/REVIEW-002.json",
+    "mandatory_open_findings": 0,
+    "technical_phase_complete": true,
+    "phase_complete": true,
+    "delivery_receipt": "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json"
+  },
+  "delivery": {
+    "required": true,
+    "kind": "browser-session",
+    "status": "saved",
+    "folder": "OntoKin",
+    "partial": true,
+    "phase_complete": true,
+    "receipt": "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json",
+    "technical_phase_complete": true,
+    "file": {
+      "file_name": "OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20.zip",
+      "file_id": "file_00000000648c81f58dded27bc1e9cf3f",
+      "library_file_id": "libfile_fde3_f-fbf41b87736881919b8d5c9452e9b82b_2ab2a24d43748191957f9bcc356b59de",
+      "path": "/OntoKin/OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20.zip",
+      "local_metadata_applied": true,
+      "version": 0,
+      "bytes": 957300,
+      "sha256": "be774f33019e41fc65011fe3a1014edd36ac3298181b04236583f4e39b88d675",
+      "confirmed_at_utc": "2026-11-21T06:46:39.149383+00:00",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fbf41b87736881919b8d5c9452e9b82b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "status": "saved",
+      "upload_status": "succeeded",
+      "saved_bytes_readback_equal": true,
+      "local_bytes_unchanged_after_save": true,
+      "destination_metadata_observed": true
+    },
+    "matching_prompts": [
+      {
+        "file_name": "OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Continue.md",
+        "file_id": "file_000000009a7081f5bca6a5d3b80ac0a8",
+        "library_file_id": "libfile_fde3_f-de6af10340948191a6bfff3451a692de_2ab2a24d43748191957f9bcc356b59de",
+        "path": "/OntoKin/OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Continue.md",
+        "local_metadata_applied": true,
+        "version": 0,
+        "bytes": 4794,
+        "sha256": "21fbd0af232a99143d86e02ba4f22e7c9814eeca1b4fd5ffdf5dbd7b63cd1a3b",
+        "confirmed_at_utc": "2026-11-21T06:46:39.149383+00:00",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-de6af10340948191a6bfff3451a692de_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "status": "saved",
+        "upload_status": "succeeded",
+        "saved_bytes_readback_equal": true,
+        "local_bytes_unchanged_after_save": true,
+        "destination_metadata_observed": true,
+        "archive_member": "PROMPT-1-CONTINUE.md"
+      },
+      {
+        "file_name": "OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Recover.md",
+        "file_id": "file_00000000fe7081f5872824bd5d8fe887",
+        "library_file_id": "libfile_fde3_f-78303a21c9248191b9db2d1a63f6a4b2_2ab2a24d43748191957f9bcc356b59de",
+        "path": "/OntoKin/OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Recover.md",
+        "local_metadata_applied": true,
+        "version": 0,
+        "bytes": 5020,
+        "sha256": "d98b51e6d41a1da33da6cb23b328fcd76d66b5a509ba4cdda490b751547cee28",
+        "confirmed_at_utc": "2026-11-21T06:46:39.149383+00:00",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-78303a21c9248191b9db2d1a63f6a4b2_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "status": "saved",
+        "upload_status": "succeeded",
+        "saved_bytes_readback_equal": true,
+        "local_bytes_unchanged_after_save": true,
+        "destination_metadata_observed": true,
+        "archive_member": "PROMPT-2-RECOVER.md"
+      }
+    ],
+    "outcome": "complete_partial_delivery",
+    "terminal_verification_location": "https://github.com/Omegapy/OntoKin/pull/274"
+  },
+  "authorization": {
+    "source": "Current fresh Prompt 1 continuation request",
+    "rule": "PROTOCOL section 8 permits one next step when no scope is active; prior C270 stop text is historical and does not override newer owner direction.",
+    "selection": "H22.02 is a concrete missing control in the adopted C260 qualification plan and C269 coverage audit. It is independent of larger H20/H24 work."
+  },
+  "historical_checks": [
+    {
+      "name": "working-tree documentation/workflow preflight",
+      "result": "passed",
+      "required": false,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/working-record-checks/CHECKS.json"
+      ],
+      "limit": "Preliminary working-tree record checks, not final clean-candidate acceptance evidence."
+    }
+  ],
+  "prior_session_phases": [
+    {
+      "id": "C271-P01-control-candidate",
+      "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "declared_at_utc": "2026-11-20T21:49:53.235938+00:00",
+      "owner": "c271-control-cce28e2b3ca4",
+      "scope": "Only independent isolated missing import-digest control construction, execution, scoped review, recoverable candidate publication and saved partial handoff",
+      "acceptance": "R01/R02 evidence, focused candidate review, applicable record checks and confirmed partial delivery; integration requirements remain open",
+      "stopping_point": "Verified saved partial handoff and separate receipt; or first unplanned runtime/contract repair",
+      "integration_allowed_this_phase": false,
+      "status": "complete_partial_delivery",
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json",
+      "executed_source_revision": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+      "controls": {
+        "input_cases": 6,
+        "interface_calls": 18,
+        "positive_calls": 6,
+        "typed_refusals": 12,
+        "assertion_checks": 1042,
+        "failed_assertions": 0,
+        "environment": "CPython 3.12.14 / Linux x86-64"
+      },
+      "focused_review": {
+        "reviewer": "/root/github_reconciliation",
+        "execution_candidate": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+        "publication_candidate": "2633cc1ffabfebe3233a76e164b9e80f91960faf",
+        "candidate_checks": 425,
+        "publication_checks": 30,
+        "failed_checks": 0,
+        "mandatory_findings": [],
+        "resolved_finding": "C271-RV-001 exact command provenance",
+        "integration_approved": false,
+        "final_source_candidate": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+        "final_state_checks": 58,
+        "final_source_review": "docs/engineering/localized-repair-c271/delivery/FINAL-STATE-REVIEW.json"
+      },
+      "branch_disposition": "retained_unmerged",
+      "delivery_confirmed": true,
+      "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+      "source_tree": "9ab0d4dfcb21735fed4c019f85f8f450ebfaa7b4",
+      "delivery_receipt": "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+      "completed_at_utc": "2026-11-20T22:19:47.359915+00:00",
+      "record_checks": {
+        "result": "passed",
+        "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+        "report": "docs/engineering/localized-repair-c271/delivery/record-checks/CHECKS.json"
+      },
+      "package_review": {
+        "result": "passed",
+        "report": "docs/engineering/localized-repair-c271/delivery/package-review/AUDIT.json"
+      }
+    },
+    {
+      "schema": "ontokin.c271.p02-phase/1",
+      "task": "C271",
+      "phase": "C271-P02-integration-finalization",
+      "owner": "c271-p02-c219bb61a617",
+      "declared_at_utc": "2026-11-20T22:46:24.912827+00:00",
+      "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "starting_branch": "88bc8b51b3963b7072375edac6400b6e6a4532e4",
+      "branch": "work/c271-missing-import-digest-control",
+      "scope": "Resume R03 required routine driver, complete affected regression cohort and independent integration review; if eligible complete R04 ownership/integration/actual-main/lifecycle and R05 final saved delivery",
+      "acceptance": [
+        "Required routine driver with preserved full outcomes",
+        "Complete affected observer regression cohort with exact identities",
+        "Independent integration approval without mandatory unresolved findings",
+        "Conditional integration under verified main lease",
+        "Fresh applicable actual-main checks and retained branch history",
+        "Verified final ZIP and matching prompts saved with separate receipt before parent closure"
+      ],
+      "stopping_point": "Saved final handoff after all gates, or honest saved partial at first concrete blocker/unplanned expansion; no second phase",
+      "exclusions": [
+        "No behavior, runtime, observer, frozen oracle, contract or dependency-pin changes",
+        "No other H groups, source evaluation/export, native/model trials or hosted CI",
+        "No full C260/product qualification"
+      ],
+      "early_recovery": "confirmed",
+      "main_lease": "not_held",
+      "parent_status": "blocked",
+      "workers": {
+        "/root/intake_audit": "independent intake and acceptance review; integration not eligible",
+        "/root/package_builder": "verified early save preparation; final partial package preparation",
+        "/root/validation": "both original verification processes completed; all outcomes and raw evidence preserved"
+      },
+      "status": "complete_partial_delivery",
+      "early_save_confirmed": true,
+      "delivery_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/finalization-20261120/EARLY-RECOVERY-RECEIPT.json",
+      "behavioral_work_stopped": true,
+      "blocking_findings": [
+        "C271-P02-B01",
+        "C271-P02-B02"
+      ],
+      "executed_source_revision": "88bc8b51b3963b7072375edac6400b6e6a4532e4",
+      "executed_source_tree": "755f366d1091beb71b5421b14fdac0b9b868cfb0",
+      "outcome": "docs/engineering/localized-repair-c271/finalization-20261120/PHASE-OUTCOME.json",
+      "independent_integration_approved": false,
+      "completed_at_utc": "2026-11-20T23:35:18.387537+00:00",
+      "source_revision": "70a658c31085bf8dd78d79663c57f8e3cdb28ceb",
+      "source_tree": "77ee621cdfb00acf637828ce71f3384b4dd8275c",
+      "delivery_receipt": "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json",
+      "package_review": {
+        "result": "passed",
+        "report": "docs/engineering/localized-repair-c271/finalization-20261120/package-review/AUDIT.json"
+      }
+    },
+    {
+      "schema": "ontokin.c271.p03-phase/1",
+      "task": "C271",
+      "phase": "C271-P03-validation-recovery",
+      "owner": "c271-p03-7010345bc259",
+      "declared_at_utc": "2026-11-21T00:03:44.431Z",
+      "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "starting_branch": "72084140cd3ae64defc698e410f8806a8b338b72",
+      "branch": "work/c271-missing-import-digest-control",
+      "scope": "Repair isolated workspace instruction-file omission, prepare exact declared validation inputs, establish a justified complete routine-driver run and independent R03 review",
+      "acceptance": [
+        "Focused regression demonstrates all five previously omitted instruction files survive workspace isolation without weakening isolation or changing source Git identity",
+        "Exact declared dependency/historical input preparation is established before full routine execution",
+        "Complete truthful required routine results and independent R03 review; otherwise retain concrete blocked partial outcome",
+        "Verified saved phase handoff and matching prompts with separate delivery receipt"
+      ],
+      "stop": "R03 acceptance checkpoint or first concrete blocker/unplanned expansion, then verified partial saved delivery. No R04 integration or second phase in this chat.",
+      "constraints": [
+        "Retain all original failures and frozen controls",
+        "No runtime/observer/contract/dependency-pin changes or test skips",
+        "Per-source limits remain 100000 operations/30000 ms",
+        "No hosted CI, native apps/model trials or other H groups"
+      ],
+      "status": "complete_partial_delivery",
+      "main_lease_held": false,
+      "early_recovery": "confirmed",
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-RECOVERY-RECEIPT.json",
+      "workers": {
+        "/root/validation_prepare": "Validation prerequisites and minimal copy repair with focused coverage",
+        "/root/intake_review": "Independent incoming and repaired-candidate review",
+        "/root/package_builder": "Early/final archive preparation and verification"
+      },
+      "parent_status": "blocked",
+      "code_candidate": "fea1aa6fb3712c5283dde197295b2d3cbf925d36",
+      "code_candidate_tree": "d4fe9aa7f2166a46d7a141ad001b13c71d43a6b6",
+      "technical_work_stopped": true,
+      "full_routine_executed": false,
+      "independent_r03_accepted": false,
+      "blocking_findings": [
+        "C271-P03-B01-exact-node-build",
+        "C271-P03-B02-complete-routine-unmet"
+      ],
+      "next_action": "In a fresh bounded C271 validation-preparation phase, obtain the authenticated historical Node build with SHA-256 61ab14cd750fc24d5db53490ec5fc40f756e4b6e136b78cf7004265471d9bd1d (126939688 bytes) and establish unchanged C225 runtime/path/alias checks. If those bytes cannot be recovered, define a separately reviewed current-host qualification approach while preserving all frozen historical records and expectations. Only after prerequisites pass, run the complete required routine driver with a justified 3600-second per-command timeout and obtain independent R03 acceptance. Retain per-source limits and every required test; no blind rerun or pin replacement.",
+      "independent_review_complete": true,
+      "independent_acceptance_record": "docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json",
+      "delivery_confirmed": true,
+      "completed_at_utc": "2026-11-21T00:32:08.341193+00:00",
+      "source_revision": "633c5097b2c5b870a13baa33a095a91eaa241eea",
+      "source_tree": "7f8eb385de71c6dd202389ad09113b779a6dc4b8",
+      "delivery_receipt": "docs/engineering/localized-repair-c271/validation-recovery-20261120/P03-DELIVERY.json",
+      "package_review": {
+        "result": "passed",
+        "report": "docs/engineering/localized-repair-c271/validation-recovery-20261120/package-review/AUDIT.json"
+      }
+    },
+    {
+      "schema": "ontokin.c271.p04-phase/1",
+      "task": "C271",
+      "phase": "C271-P04-historical-runtime-recovery",
+      "owner": "c271-p04-005a7eaf6603",
+      "declared_at_utc": "2026-11-21T00:57:07.188514+00:00",
+      "client_filename_date": "2026-11-20",
+      "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "starting_main_tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+      "starting_branch": "6d4324e8fd835351da2db165bf0907a3bf1916bc",
+      "starting_branch_tree": "48b90d77723a40fa8b5b591203bb10b048e5ea6f",
+      "branch": "work/c271-missing-import-digest-control",
+      "scope": "Recover and authenticate the exact historical Node runtime and unchanged C225 preparation prerequisites through bounded inspection of surviving local binaries, declared C262 archive dependencies and nested retained Git objects not covered by P03. If recovered, verify unchanged C225 preparation and post-readback. Stop at qualified prerequisite checkpoint or concrete blocker.",
+      "acceptance": [
+        "Confirmed verified early recovery before substantive searches or preparation",
+        "Exact historical Node bytes/size/mode/alias provenance and unchanged preparation qualification, OR a scoped negative result with concrete recoverable next action",
+        "Independent source/evidence review and applicable documentation/workflow checks",
+        "Verified saved partial handoff and matching prompts with separate receipt"
+      ],
+      "stop": "At prerequisite qualification or first concrete blocker/unplanned expansion, finish review/publication/verified saved partial delivery and stop. Full routine validation and R04 integration remain later phases.",
+      "constraints": [
+        "No runtime/observer/test/contract/dependency-pin changes",
+        "No substitute bytes beneath unchanged historical guards",
+        "Preserve all prior failures, 100000 operation/30000 ms source budgets and every required test",
+        "No shared runtime replacement, mount namespace installation, hosted CI, native/model trials or other H group"
+      ],
+      "parent_requirements": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "not_done",
+        "R04": "not_done",
+        "R05": "not_done"
+      },
+      "parent_plan": {
+        "P01": "done",
+        "P02": "in_progress"
+      },
+      "main_lease_held": false,
+      "early_recovery": "confirmed",
+      "integration_allowed": false,
+      "full_routine_selected": false,
+      "status": "complete_partial_delivery",
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/runtime-recovery-p04/EARLY-RECOVERY-RECEIPT.json",
+      "parent_status": "blocked",
+      "workers": {
+        "/root/github_reconcile": "Independent live-state reconciliation, prerequisite criteria and evidence/package review",
+        "/root/package_builder": "Early and final archive builder; no source or remote writes",
+        "/root/runtime_recovery": "Exact runtime search through surviving executables and retained nested archive/Git objects"
+      },
+      "technical_work_stopped": true,
+      "exact_runtime_recovered": false,
+      "C225_qualified": false,
+      "full_routine_executed": false,
+      "next_action": "In a fresh bounded C271 phase, adopt an independently reviewed, separately versioned current-host execution contract and complete per-method/predicate mapping for the original hardcoded readback cohort. Preserve original C199/C225 records, helper guards and historical test/source bytes. Do not count a replacement-only suite, skipped original methods or rewritten pins as R03. Implement and verify only the design selected for that fresh phase; a complete default routine requires its own declared eligible environment and full inventory. Repeat exact-runtime recovery only if a new authenticated source becomes available.",
+      "independent_scoped_evidence_review": "accepted",
+      "independent_r03_accepted": false,
+      "independent_working_record_review": "accepted",
+      "working_record_review": "docs/engineering/localized-repair-c271/runtime-recovery-p04/WORKING-RECORD-REVIEW.json",
+      "final_handoff_saved": true,
+      "delivery_receipt": "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json",
+      "handoff_source_revision": "6518a812526ee13bec4fb5f0c901b1d93c77c690",
+      "independent_package_review": "accepted"
+    },
+    {
+      "schema": "ontokin.c271.p05-phase/1",
+      "task": "C271",
+      "phase": "C271-P05-current-host-contract-design",
+      "owner": "c271-p05-7536ba80cf21",
+      "declared_at_utc": "2026-11-21T03:00:39.788661+00:00",
+      "client_filename_date": "2026-11-20",
+      "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "starting_main_tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+      "starting_branch": "743409619a8663682750b0ca29c50547a25dde41",
+      "starting_branch_tree": "8202185735f50aa91078a9206c351d917084ed16",
+      "branch": "work/c271-missing-import-digest-control",
+      "scope": "Define and independently review one separately versioned current-host readback execution contract and implementation design, with complete original-method and transitive-predicate mapping. No operational implementation or runtime qualification in this phase.",
+      "acceptance": [
+        "Confirm verified early recovery ZIP before substantive design/mapping work",
+        "Complete source-backed versioned contract and original default-method/transitive-predicate map with historical source preservation",
+        "Independent design decision and resolution of mandatory findings, or a concrete design blocker",
+        "Documentation/workflow checks; conditional branch checkpoint; verified saved partial handoff with matching prompts and separate receipt"
+      ],
+      "stop": "Stop after independently reviewed design checkpoint or concrete unresolved design blocker and verified partial delivery. Implementation, eligible-environment qualification, complete routine and integration are later phases.",
+      "constraints": [
+        "No changes to runtime, test, helper guard, historical evidence, dependency pins or existing contracts",
+        "Preserve all original failures and 100000-operation/30000-ms source budgets",
+        "No Node/ldd execution, dependency installation, native/model trials or hosted CI",
+        "No main lease or integration; retain draft PR274, issue273 and branch",
+        "One parent-chat phase; no nested worker fanout"
+      ],
+      "parent_requirements": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "not_done",
+        "R04": "not_done",
+        "R05": "not_done"
+      },
+      "parent_plan": {
+        "P01": "done",
+        "P02": "in_progress"
+      },
+      "early_recovery": "confirmed",
+      "status": "complete_partial_delivery",
+      "main_lease_held": false,
+      "integration_allowed": false,
+      "full_routine_selected": false,
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/current-host-p05/EARLY-RECOVERY-RECEIPT.json",
+      "workers": {
+        "/root/intake_audit": "Independent intake, design and final evidence review",
+        "/root/predicate_map": "Complete original-method/transitive-predicate inventory and map",
+        "/root/package_builder": "Early/final package build and integrity verification"
+      },
+      "design_accepted": true,
+      "design_decision": "docs/engineering/localized-repair-c271/current-host-p05/ADOPTION.json",
+      "technical_work_stopped": true,
+      "implementation_performed": false,
+      "runtime_qualified": false,
+      "independent_r03_accepted": false,
+      "next_action": "In a fresh bounded C271 chat, reconcile live GitHub and the saved P05 handoff, required companion and terminal receipt; confirm new early recovery; then implement only the adopted current-host provider, separate probe, safe preparer and original-test/driver bindings under IMPLEMENTATION-PLAN.md. Freeze independent controls before selected execution. Preserve original method/helper bodies and historical guards. Stop at reviewed implementation evidence or a concrete blocker and verified partial delivery. Actual host qualification, full routine/R03 acceptance and R04/R05 closure remain separate gates.",
+      "final_handoff_saved": true,
+      "delivery_confirmed": true,
+      "phase_complete": true,
+      "delivery_receipt": "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json",
+      "handoff_source_revision": "405c0c9ec35e50b4dd13b8779a31f822dc45f61f",
+      "independent_package_review": "accepted_core_and_corrected_saved_companion",
+      "completed_at_utc": "2026-11-21T03:58:54.298703+00:00",
+      "required_companion_saved": true,
+      "companion_library_file_id": "libfile_fde3_f-ce436883e8d48191a8b111f5f9f54a9b_2ab2a24d43748191957f9bcc356b59de",
+      "next_phase_started": false
+    },
+    {
+      "schema": "ontokin.c271.p06-phase/1",
+      "task": "C271",
+      "phase": "C271-P06-current-host-provider-implementation",
+      "owner": "c271-p06-beb0c8540848",
+      "declared_at_utc": "2026-11-21T04:34:49.267867+00:00",
+      "client_filename_date": "2026-11-20",
+      "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "starting_main_tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+      "starting_branch": "cfd73140c80a76bf390fbcfbae6bac51d05f386b",
+      "starting_branch_tree": "366166b979e3026ffa96ccfc40a409e45c62cbc7",
+      "branch": "work/c271-missing-import-digest-control",
+      "scope": "Implement only the adopted separately versioned current-host provider, JavaScript probe, safe preparer, original-test setup and explicit isolated-driver bindings; independent source review and focused non-qualifying controls",
+      "acceptance": [
+        "Confirmed early recovery before substantial work",
+        "Source-bound new implementation and exact preserved original method/helper and JS scientific bodies",
+        "Frozen independent control expectations before focused isolated filesystem and mocked process-boundary execution; no claims of actual host qualification",
+        "Independent review resolves mandatory findings or identifies concrete blocker",
+        "Required documentary and focused tool checks; conditional retained-branch publication; verified saved partial ZIP and matching prompts with separate receipt"
+      ],
+      "stop": "At independently reviewed implementation evidence or first concrete blocker/unplanned expansion, finish partial delivery and stop. No second phase.",
+      "constraints": [
+        "No Node/ldd execution or actual runtime installation/qualification in P06; those require later Gate H",
+        "No full required routine, main lease/integration, native/model trials or hosted CI",
+        "Preserve every historical failure/source pin/dependency byte, original test/helper body and source 100000-operation/30000-ms limits",
+        "Keep original seven methods; missing config is visible failure, never skip",
+        "No nested worker fanout; root alone canonical Git/index/publication/delivery"
+      ],
+      "parent_requirements": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "not_done",
+        "R04": "not_done",
+        "R05": "not_done"
+      },
+      "parent_plan": {
+        "P01": "done",
+        "P02": "in_progress"
+      },
+      "status": "complete_partial_delivery",
+      "early_recovery": "confirmed",
+      "main_lease_held": false,
+      "integration_allowed": false,
+      "full_routine_selected": false,
+      "runtime_qualification_selected": false,
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/current-host-p06/EARLY-RECOVERY-RECEIPT.json",
+      "workers": {
+        "/root/live_state_review": "Independent intake, frozen controls and exact candidate review",
+        "/root/provider_impl": "Python provider, safe preparer and original test lifecycle binding",
+        "/root/package_builder": "Early/final packages; independent argv reading and disjoint JavaScript probe"
+      },
+      "approval_channel_resolution": "Explicitly bound --expected-config-sha256 DIGEST before terminal --job FILE; permitted schema/bootstrap adaptation, external expected digest cannot originate solely in manifest",
+      "technical_work_stopped": true,
+      "implementation_performed": true,
+      "runtime_qualified": false,
+      "independent_r03_accepted": false,
+      "candidate_disposition": "Independent P06-only acceptance; actual host and parent gates remain open",
+      "independent_review_accepted": true,
+      "mandatory_open_findings": 0,
+      "technical_candidate": {
+        "commit": "113e1b855d97773307c8c2fced00e886a809bce1",
+        "tree": "5e3dd09d054dc149a5ca322160a14a1d64d67b2c"
+      },
+      "outcome": "docs/engineering/localized-repair-c271/current-host-p06/PHASE-OUTCOME.json",
+      "next_development_action": "In a fresh bounded chat, reconcile the saved P06 receipt and live retained branch, confirm early recovery, then design/review the missing Gate H host-observation and inspection-record authoring entry point and freeze the actual-host qualification plan before any Node/ldd execution. Original seven-method outcomes, the complete routine/R03, R04 integration and R05 closure remain separate gates.",
+      "technical_phase_status": "complete",
+      "artifact_delivery_status": "saved_and_readback_verified",
+      "delivery_record": "docs/engineering/localized-repair-c271/current-host-p06/P06-DELIVERY.json",
+      "terminal_receipt": {
+        "status": "pending_after_publication",
+        "file_name": "OntoKin_C271_P06_Delivery_Receipt_2026-11-20.zip",
+        "expected_path": "/OntoKin/OntoKin_C271_P06_Delivery_Receipt_2026-11-20.zip",
+        "purpose": "Separate receipt and complete postfreeze audit/publication evidence; not a development handoff.",
+        "location_publication": "The final saved URL will be recorded in retained PR #274 and scope issue #273 after exact-byte save/readback.",
+        "self_reference_policy": "Do not rebuild the development ZIP or this canonical record to insert a later receipt's own identity."
+      },
+      "recorded_delivery_at_utc": "2026-11-21T05:47:01.555706+00:00",
+      "status_at_source_checkpoint": "delivery_confirmation_pending",
+      "terminal_delivery_reconciliation": "docs/engineering/localized-repair-c271/host-inspection-p07/P06-DELIVERY-RECONCILIATION.json"
+    }
+  ],
+  "prior_phase_deliveries": [
+    {
+      "required": true,
+      "kind": "browser-session",
+      "status": "saved",
+      "folder": "OntoKin",
+      "partial": true,
+      "receipt": "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+      "archive": {
+        "file_name": "OntoKin_C271_Control_Candidate_Handoff_2026-11-20.zip",
+        "library_file_id": "libfile_fde3_f-6fa4862a8b2c8191957e4b0760c32705_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_0000000015dc81f6ad1374c44bf4c809",
+        "version": 0,
+        "path": "/OntoKin/OntoKin_C271_Control_Candidate_Handoff_2026-11-20.zip",
+        "bytes": 12003931,
+        "sha256": "9bdb8ec134fbf8facc1b1f52aa9b7171de16f35593ddf7ad61930e521f4495df",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-6fa4862a8b2c8191957e4b0760c32705_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_metadata_applied": true
+      },
+      "prompts": [
+        {
+          "file_name": "OntoKin_C271_Prompt_1_Continue_2026-11-20.md",
+          "library_file_id": "libfile_fde3_f-69176d668244819184ba6b3c5af8c5fe_2ab2a24d43748191957f9bcc356b59de",
+          "file_id": "file_00000000ea6c81f69fa8f633f8194c78",
+          "version": 0,
+          "path": "/OntoKin/OntoKin_C271_Prompt_1_Continue_2026-11-20.md",
+          "bytes": 3559,
+          "sha256": "60252a3177831711fdbc34c60d735b16cf31162bd89efa250269d9275bab893d",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-69176d668244819184ba6b3c5af8c5fe_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "local_metadata_applied": true
+        },
+        {
+          "file_name": "OntoKin_C271_Prompt_2_Recover_2026-11-20.md",
+          "library_file_id": "libfile_fde3_f-43686d2798448191bbef891b19ef0499_2ab2a24d43748191957f9bcc356b59de",
+          "file_id": "file_000000005eb881f687684fef85db6c42",
+          "version": 0,
+          "path": "/OntoKin/OntoKin_C271_Prompt_2_Recover_2026-11-20.md",
+          "bytes": 3785,
+          "sha256": "09192571ddcaae69ad91fbb51872cc18087a973bd4fd551075fde43f62b93c89",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-43686d2798448191bbef891b19ef0499_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "local_metadata_applied": true
+        }
+      ],
+      "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524"
+    },
+    {
+      "required": true,
+      "kind": "browser-session",
+      "status": "saved",
+      "folder": "OntoKin",
+      "partial": true,
+      "receipt": "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json",
+      "archive": {
+        "file_name": "OntoKin_C271_P02_Validation_Blocked_Handoff_2026-11-20.zip",
+        "library_file_id": "libfile_fde3_f-b14e79917ee8819184206c7d300f0466_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_000000002f94822f83b1f727c17239fe",
+        "path": "/OntoKin/OntoKin_C271_P02_Validation_Blocked_Handoff_2026-11-20.zip",
+        "bytes": 19975795,
+        "sha256": "f9cd741651c271a31cbe6fa691b07080dcc531f6fc35ea62adf6186cb0091b7a",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-b14e79917ee8819184206c7d300f0466_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_metadata_applied": true,
+        "version": 0
+      },
+      "prompts": [
+        {
+          "file_name": "OntoKin_C271_P02_Blocked_Prompt_1_Continue_2026-11-20.md",
+          "library_file_id": "libfile_fde3_f-586b31a5008081918b97240185ff02c4_2ab2a24d43748191957f9bcc356b59de",
+          "file_id": "file_00000000e238822faf8e98b4d7eb7fe6",
+          "path": "/OntoKin/OntoKin_C271_P02_Blocked_Prompt_1_Continue_2026-11-20.md",
+          "bytes": 4830,
+          "sha256": "e468d8edc5d9a97a7a44d5d961159339e9959689fc375c2d84a554c6e8827eca",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-586b31a5008081918b97240185ff02c4_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "local_metadata_applied": true,
+          "version": 0
+        },
+        {
+          "file_name": "OntoKin_C271_P02_Blocked_Prompt_2_Recover_2026-11-20.md",
+          "library_file_id": "libfile_fde3_f-d0cf906d1b1881918731b294bf141098_2ab2a24d43748191957f9bcc356b59de",
+          "file_id": "file_00000000b928822f8dccf547896da451",
+          "path": "/OntoKin/OntoKin_C271_P02_Blocked_Prompt_2_Recover_2026-11-20.md",
+          "bytes": 5106,
+          "sha256": "20df654347e76b99c63ada054109e3941beb9f9b036db98b99ccde3c0fb5030f",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-d0cf906d1b1881918731b294bf141098_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "local_metadata_applied": true,
+          "version": 0
+        }
+      ],
+      "source_revision": "70a658c31085bf8dd78d79663c57f8e3cdb28ceb",
+      "source_tree": "77ee621cdfb00acf637828ce71f3384b4dd8275c"
+    },
+    {
+      "required": true,
+      "kind": "browser-session",
+      "status": "saved",
+      "folder": "OntoKin",
+      "partial": true,
+      "receipt": "docs/engineering/localized-repair-c271/validation-recovery-20261120/P03-DELIVERY.json",
+      "archive": {
+        "file_name": "OntoKin_C271_P03_Validation_Recovery_Handoff_2026-11-20.zip",
+        "bytes": 22484405,
+        "sha256": "09a56ab40d5916d72abc5d4d165aa6a07ea981f96e651046b8e298dbd83aadb4",
+        "library_file_id": "libfile_fde3_f-f8497d7597408191b4080c146df73fcd_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_0000000058e881f59b292a859c7edda5",
+        "version": 0,
+        "path": "/OntoKin/OntoKin_C271_P03_Validation_Recovery_Handoff_2026-11-20.zip",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-f8497d7597408191b4080c146df73fcd_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "saved_at_utc": "2026-11-21T00:31:12.376474+00:00",
+        "local_metadata_applied": true,
+        "destination_metadata_observed": true
+      },
+      "prompts": [
+        {
+          "file_name": "OntoKin_C271_P03_Prompt_1_Continue_2026-11-20.md",
+          "bytes": 4114,
+          "sha256": "c2a9101bb245d475966aa3b42a4e74de7781fd805036476ed4ae6139a9ba9500",
+          "library_file_id": "libfile_fde3_f-950754c7311c8191a46943e429ab59df_2ab2a24d43748191957f9bcc356b59de",
+          "file_id": "file_000000000f5c81f59e57d61abddc46e3",
+          "version": 0,
+          "path": "/OntoKin/OntoKin_C271_P03_Prompt_1_Continue_2026-11-20.md",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-950754c7311c8191a46943e429ab59df_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "saved_at_utc": "2026-11-21T00:31:12.420548+00:00",
+          "local_metadata_applied": true,
+          "destination_metadata_observed": true
+        },
+        {
+          "file_name": "OntoKin_C271_P03_Prompt_2_Recover_2026-11-20.md",
+          "bytes": 4432,
+          "sha256": "1f2eaf36a24fe46d0848b7669026e991caf710ada8157e8fc43de505aaf1becf",
+          "library_file_id": "libfile_fde3_f-669e44f1c8108191b5a2bcb073d55c7b_2ab2a24d43748191957f9bcc356b59de",
+          "file_id": "file_000000000bc481f5afbbd77c45b03bd1",
+          "version": 0,
+          "path": "/OntoKin/OntoKin_C271_P03_Prompt_2_Recover_2026-11-20.md",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-669e44f1c8108191b5a2bcb073d55c7b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "saved_at_utc": "2026-11-21T00:31:12.399686+00:00",
+          "local_metadata_applied": true,
+          "destination_metadata_observed": true
+        }
+      ],
+      "source_revision": "633c5097b2c5b870a13baa33a095a91eaa241eea",
+      "source_tree": "7f8eb385de71c6dd202389ad09113b779a6dc4b8"
+    },
+    {
+      "required": true,
+      "kind": "browser-session",
+      "status": "saved",
+      "folder": "OntoKin",
+      "partial": true,
+      "receipt": "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json",
+      "handoff": {
+        "file_name": "OntoKin_C271_P04_Runtime_Recovery_Handoff_2026-11-20.zip",
+        "file_id": "file_0000000049d4822f9fc661b2d4c474b1",
+        "library_file_id": "libfile_fde3_f-ec398842c118819190c0fb77a18201cb_2ab2a24d43748191957f9bcc356b59de",
+        "path": "/OntoKin/OntoKin_C271_P04_Runtime_Recovery_Handoff_2026-11-20.zip",
+        "version": 0,
+        "bytes": 45353631,
+        "sha256": "86698c921b8fa74938d7ee1e9fc75a8844628db7e6af436530a06d6dcdaa647f",
+        "saved_at_utc": "2026-11-21T01:32:32.889588+00:00",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-ec398842c118819190c0fb77a18201cb_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_metadata_applied": true,
+        "destination_metadata_observed": true
+      },
+      "prompts": [
+        {
+          "file_name": "OntoKin_C271_P04_Continue_2026-11-20.md",
+          "file_id": "file_000000002f00822fac80bf7efa2a177d",
+          "library_file_id": "libfile_fde3_f-81c8530ed0448191af78f75168401a70_2ab2a24d43748191957f9bcc356b59de",
+          "path": "/OntoKin/OntoKin_C271_P04_Continue_2026-11-20.md",
+          "version": 0,
+          "bytes": 5590,
+          "sha256": "ec93344dda7187525b5069f0ab275d63d0516472d18e50636dcc9d42f208025b",
+          "saved_at_utc": "2026-11-21T01:32:32.872226+00:00",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-81c8530ed0448191af78f75168401a70_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "local_metadata_applied": true,
+          "destination_metadata_observed": true,
+          "archive_member": "PROMPT-1-CONTINUE.md"
+        },
+        {
+          "file_name": "OntoKin_C271_P04_Recover_2026-11-20.md",
+          "file_id": "file_00000000a018822f90ae290844ea018f",
+          "library_file_id": "libfile_fde3_f-e32c886370d481918e9b173a0f17ec5f_2ab2a24d43748191957f9bcc356b59de",
+          "path": "/OntoKin/OntoKin_C271_P04_Recover_2026-11-20.md",
+          "version": 0,
+          "bytes": 6261,
+          "sha256": "2cf40448f9ad842dd1013a7b618ce70419d7a6b060301672afbaf2bda2c1dbec",
+          "saved_at_utc": "2026-11-21T01:32:32.874375+00:00",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-e32c886370d481918e9b173a0f17ec5f_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "local_metadata_applied": true,
+          "destination_metadata_observed": true,
+          "archive_member": "PROMPT-2-RECOVER.md"
+        }
+      ]
+    },
+    {
+      "required": true,
+      "kind": "browser-session",
+      "status": "saved",
+      "folder": "OntoKin",
+      "partial": true,
+      "core_handoff_saved": true,
+      "phase_complete": true,
+      "receipt": "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json",
+      "handoff": {
+        "file_name": "OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20.zip",
+        "file_id": "file_00000000deb481f5b577db5d16ba838e",
+        "library_file_id": "libfile_fde3_f-ae36f58493d48191a707b8b0025bbe1e_2ab2a24d43748191957f9bcc356b59de",
+        "path": "/OntoKin/OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20.zip",
+        "version": 0,
+        "bytes": 50969509,
+        "sha256": "d8c44804a4e8b967ddc460e83dae038db9795c6a06b6a8df39f2117229c59e44",
+        "saved_at_utc": "2026-11-21T03:46:42.977437+00:00",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-ae36f58493d48191a707b8b0025bbe1e_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_metadata_applied": true,
+        "destination_metadata_observed": true,
+        "local_bytes_unchanged_after_save": true
+      },
+      "prompts": [
+        {
+          "file_name": "OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20_Continue.md",
+          "file_id": "file_00000000c32081f595a97eb91215a3f7",
+          "library_file_id": "libfile_fde3_f-7c4da2691a608191be8923b1be2f78de_2ab2a24d43748191957f9bcc356b59de",
+          "path": "/OntoKin/OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20_Continue.md",
+          "version": 0,
+          "bytes": 6412,
+          "sha256": "4e7e0bf1a965b38ab6feff51adec77c09aa4fd8e9c99d5c0a3f71415d2bc70de",
+          "saved_at_utc": "2026-11-21T03:46:42.967661+00:00",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-7c4da2691a608191be8923b1be2f78de_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "local_metadata_applied": true,
+          "destination_metadata_observed": true,
+          "local_bytes_unchanged_after_save": true,
+          "archive_member": "PROMPT-1-CONTINUE.md"
+        },
+        {
+          "file_name": "OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20_Recover.md",
+          "file_id": "file_000000004e1081f59bcf1124417dbac4",
+          "library_file_id": "libfile_fde3_f-64f48a4b049881918a7035bdda1df04d_2ab2a24d43748191957f9bcc356b59de",
+          "path": "/OntoKin/OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20_Recover.md",
+          "version": 0,
+          "bytes": 6794,
+          "sha256": "e24432eaa5e9c75cc0df221eb3b0c1efcfd06cded029102f911bb930dbb2fd1c",
+          "saved_at_utc": "2026-11-21T03:46:42.970255+00:00",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-64f48a4b049881918a7035bdda1df04d_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "local_metadata_applied": true,
+          "destination_metadata_observed": true,
+          "local_bytes_unchanged_after_save": true,
+          "archive_member": "PROMPT-2-RECOVER.md"
+        }
+      ],
+      "required_companion_saved": true,
+      "companion": {
+        "file_name": "OntoKin_C271_P05_Delivery_Receipt_2026-11-20.json",
+        "file_id": "file_000000000d6481f6adbb12ab39f65bf6",
+        "library_file_id": "libfile_fde3_f-ce436883e8d48191a8b111f5f9f54a9b_2ab2a24d43748191957f9bcc356b59de",
+        "version": 0,
+        "path": "/OntoKin/OntoKin_C271_P05_Delivery_Receipt_2026-11-20.json",
+        "bytes": 1405358,
+        "sha256": "91eea0532cb8d7e9d751426a523ae2d492f2b4ffa5659dfbb3e71d620d16cfc6",
+        "saved_at_utc": "2026-11-21T03:58:39.434277+00:00",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-ce436883e8d48191a8b111f5f9f54a9b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_metadata_applied": true,
+        "destination_metadata_observed": true,
+        "local_bytes_unchanged_after_save": true
+      },
+      "source_revision": "405c0c9ec35e50b4dd13b8779a31f822dc45f61f",
+      "source_tree": "ce3d5bfb1769ebbd1f50f86297002d30a95cbcfd",
+      "post_record_observation_gates": {
+        "status_at_record_authoring": "pending",
+        "required_observations": [
+          "Final conditional receipt publication and expected-head readback",
+          "Fresh checks on the clean published final receipt source",
+          "Verified saved terminal metadata receipt"
+        ],
+        "completion_evidence": "OntoKin_C271_P05_Companion_Saved_2026-11-20.json plus actual live GitHub state",
+        "boundary": "These observations follow this record own publication. Reconcile the exact later terminal receipt; do not rebuild frozen artifacts or begin another development phase in this chat."
+      }
+    },
+    {
+      "required": true,
+      "kind": "browser-session",
+      "status": "saved",
+      "folder": "OntoKin",
+      "partial": true,
+      "phase_complete": true,
+      "technical_phase_complete": true,
+      "artifact_status": "saved_and_readback_verified",
+      "receipt": "docs/engineering/localized-repair-c271/current-host-p06/P06-DELIVERY.json",
+      "handoff": {
+        "file_name": "OntoKin_C271_P06_Implementation_Handoff_2026-11-20.zip",
+        "file_id": "file_0000000007c481f7a45c143f3ad774b0",
+        "library_file_id": "libfile_fde3_f-d66f70ea8664819192b07c3d440d28ab_2ab2a24d43748191957f9bcc356b59de",
+        "path": "/OntoKin/OntoKin_C271_P06_Implementation_Handoff_2026-11-20.zip",
+        "version": 0,
+        "bytes": 20034456,
+        "sha256": "a2521923356df2a1d2070e2b81e0292fb3909f8dbc1f4cc290165a1548c675a7",
+        "saved_at_utc": "2026-11-21T05:44:49.542814+00:00",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-d66f70ea8664819192b07c3d440d28ab_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_metadata_applied": true,
+        "destination_metadata_observed": true,
+        "local_bytes_unchanged_after_save": true,
+        "saved_bytes_readback_equal": true
+      },
+      "matching_prompts": [
+        {
+          "file_name": "OntoKin_C271_P06_Implementation_Handoff_2026-11-20_Continue.md",
+          "file_id": "file_00000000a61081f7aa54584cfc9695c2",
+          "library_file_id": "libfile_fde3_f-2009d31b54548191be46416ea96acaef_2ab2a24d43748191957f9bcc356b59de",
+          "path": "/OntoKin/OntoKin_C271_P06_Implementation_Handoff_2026-11-20_Continue.md",
+          "version": 0,
+          "bytes": 3634,
+          "sha256": "efcd84c8930f56414213bce66fb2adb69d858e22a6af30f3abd77e084598f97b",
+          "saved_at_utc": "2026-11-21T05:44:49.584483+00:00",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-2009d31b54548191be46416ea96acaef_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "local_metadata_applied": true,
+          "destination_metadata_observed": true,
+          "local_bytes_unchanged_after_save": true,
+          "saved_bytes_readback_equal": true,
+          "archive_member": "PROMPT-1-CONTINUE.md"
+        },
+        {
+          "file_name": "OntoKin_C271_P06_Implementation_Handoff_2026-11-20_Recover.md",
+          "file_id": "file_0000000044f88212b2cae376b7f848eb",
+          "library_file_id": "libfile_fde3_f-2d9abfb25dec8191a34cb6c2280ca54e_2ab2a24d43748191957f9bcc356b59de",
+          "path": "/OntoKin/OntoKin_C271_P06_Implementation_Handoff_2026-11-20_Recover.md",
+          "version": 0,
+          "bytes": 3860,
+          "sha256": "673e253207d04c32858877b1cf1a7a5589e7461115ee87665f73ea905d3aff20",
+          "saved_at_utc": "2026-11-21T05:44:49.487704+00:00",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-2d9abfb25dec8191a34cb6c2280ca54e_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "local_metadata_applied": true,
+          "destination_metadata_observed": true,
+          "local_bytes_unchanged_after_save": true,
+          "saved_bytes_readback_equal": true,
+          "archive_member": "PROMPT-2-RECOVER.md"
+        }
+      ],
+      "terminal_receipt": {
+        "status": "pending_after_publication",
+        "file_name": "OntoKin_C271_P06_Delivery_Receipt_2026-11-20.zip",
+        "expected_path": "/OntoKin/OntoKin_C271_P06_Delivery_Receipt_2026-11-20.zip",
+        "purpose": "Separate receipt and complete postfreeze audit/publication evidence; not a development handoff.",
+        "location_publication": "The final saved URL will be recorded in retained PR #274 and scope issue #273 after exact-byte save/readback.",
+        "self_reference_policy": "Do not rebuild the development ZIP or this canonical record to insert a later receipt's own identity."
+      },
+      "status_at_source_checkpoint": "delivery_confirmation_pending",
+      "terminal_delivery_reconciliation": "docs/engineering/localized-repair-c271/host-inspection-p07/P06-DELIVERY-RECONCILIATION.json"
+    }
+  ],
+  "prior_blocked_reason": "Required routine gate failed: unit timeout at 900 seconds and isolated documentation copy omitted five tracked instruction files, producing 21 missing local links.",
+  "blocked_reason_history": [
+    {
+      "phase": "C271-P03-validation-recovery",
+      "reason": "Exact historical Node binary is unavailable among checked inputs; unchanged C225 prerequisite refused current binary. Complete required routine run remains unmet."
+    },
+    {
+      "phase": "C271-P04-historical-runtime-recovery",
+      "reason": "Exact historical Node was not recovered from the inspected P04 sources; unchanged C225 runtime binding remains unsatisfied. Full routine and independent R03 acceptance remain unmet. A separately reviewed current-host execution decision is the next proposed bounded step."
+    }
+  ]
+}

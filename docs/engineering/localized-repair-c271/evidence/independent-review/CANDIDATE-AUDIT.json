@@ -1,0 +1,2400 @@
+{
+  "schema": "ontokin.c271.independent-candidate-review/1",
+  "reviewer": "/root/github_reconciliation",
+  "reviewed_at_utc": "2026-11-20T22:02:06.109139+00:00",
+  "candidate": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+  "tree": "21ab07914931495d6bee70591a70ff2d8bcabb84",
+  "base": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+  "verdict": "control_and_retained_evidence_accepted_pending_publication_provenance",
+  "integration_approved": false,
+  "parent_completion_approved": false,
+  "oracle_sha256": "0b8da6eab52323e8092c348fabad0d8d77247552e4eb5e3a1ffdc17266d12522",
+  "runner_sha256": "358c3a50a5b437d0b765ff9547cc1c4611bcbdbbff95c31a22cccae7050c2480",
+  "results_sha256": "ea516696267931321ab1d63f4fb420f31f6de28addb537dd9b7479329bdd6eb7",
+  "raw_evidence_sha256": "24f8b99ca5682dbc23f93f7f4c856e211c98eb82124fe93475848196b41376b4",
+  "actual_observer_execution_by_reviewer": false,
+  "observed_execution": {
+    "root_executed_calls": 18,
+    "baseline_successes": 6,
+    "typed_MALFORMED_refusals": 12,
+    "root_assertion_checks": 1042,
+    "root_failed_checks": 0,
+    "environment": {
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+    },
+    "source": {
+      "commit": "067392f2b5f592a5c3104fa8848cc0030ba1117b",
+      "dirty_before": "",
+      "tree": "21ab07914931495d6bee70591a70ff2d8bcabb84"
+    }
+  },
+  "independent_audit": {
+    "check_count": 425,
+    "passed": true,
+    "failed_count": 0,
+    "group_counts": {
+      "candidate": 3,
+      "oracle": 13,
+      "author_readset": 21,
+      "basis": 6,
+      "preservation": 23,
+      "control_artifacts": 9,
+      "case_inputs": 18,
+      "isolation": 10,
+      "identity": 6,
+      "mutation_original": 4,
+      "baseline_derivation": 2,
+      "execution": 9,
+      "executed_identity": 45,
+      "archive": 28,
+      "requests": 6,
+      "responses": 66,
+      "baseline": 20,
+      "baseline_row": 32,
+      "baseline_site": 64,
+      "refusal": 40
+    },
+    "failed": []
+  },
+  "manual_review": [
+    {
+      "criterion": "Expectation isolation",
+      "verdict": "accepted",
+      "reason": "The independent author uses adopted import grammar, C260 refusal categories and historical source bytes; neither implementation nor prior outcome supplies the expected MALFORMED result. Public spelling confirmation is disclosed."
+    },
+    {
+      "criterion": "Causal isolation",
+      "verdict": "accepted",
+      "reason": "Each negative input removes exactly one contiguous digest clause/value, preserving all other entry bytes, companion source and original GLB. Source-only refusal precedes artifact binding; later stale artifact claims cannot explain the first refusal."
+    },
+    {
+      "criterion": "Baseline derivation",
+      "verdict": "accepted",
+      "reason": "Three first-rack and five final second-rack Finger occurrences yield eight hinges, sixteen sites and eighteen objects. Literal hinge fields follow C260 canonical policy."
+    },
+    {
+      "criterion": "Runner failure handling",
+      "verdict": "accepted_with_explicit_scope",
+      "reason": "The runner captures each normal return or typed/host exception before its outcome assertion; a contradiction raises CheckFailure and stops further calls, then retains partial requests/responses/checks and a nonzero result. An abrupt killed process remains a Director recovery responsibility."
+    },
+    {
+      "criterion": "Execution identities",
+      "verdict": "accepted_pending_exact_command_receipt",
+      "reason": "Frozen commit/tree, oracle, inputs, runtime dependencies and raw responses are bound by exact bytes. RESULTS.command omits interpreter flag -B because sys.argv excludes it; external execution receipt must preserve actual invocation without altering the original report."
+    },
+    {
+      "criterion": "Scope and completion",
+      "verdict": "accepted_for_control_review_only",
+      "reason": "P01 candidate evidence does not approve integration. R03 broader checks, R04, P02, actual-main verification and parent closure remain open."
+    }
+  ],
+  "mandatory_findings": [
+    {
+      "id": "C271-RV-001",
+      "severity": "mandatory_publication_provenance",
+      "status": "awaiting_external_receipt_inspection",
+      "summary": "RESULTS.command omits the executed interpreter flag -B.",
+      "resolution_required": "Preserve original RESULTS and runner; publish an external EXECUTION-RECEIPT with actual -B shell invocation, resolved interpreter, source commit/tree, observed exit status and driver-log hash.",
+      "director_response": "Accepted; no behavioral rerun or oracle/runner change."
+    }
+  ],
+  "checks": [
+    {
+      "group": "candidate",
+      "name": "live_commit_tree",
+      "passed": true
+    },
+    {
+      "group": "candidate",
+      "name": "only_scoped_changes",
+      "passed": true,
+      "paths": [
+        "A\tdocs/engineering/localized-repair-c271/EARLY-PACKAGE-VERIFICATION.json",
+        "A\tdocs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json",
+        "A\tdocs/engineering/localized-repair-c271/README.md",
+        "A\tdocs/engineering/localized-repair-c271/STARTUP-READ-SET.json",
+        "A\tdocs/engineering/localized-repair-c271/control/AUTHOR-RECORD.json",
+        "A\tdocs/engineering/localized-repair-c271/control/EXPECTED.json",
+        "A\tdocs/engineering/localized-repair-c271/control/HASHES.json",
+        "A\tdocs/engineering/localized-repair-c271/control/SOURCE-VALIDITY.md",
+        "A\tdocs/engineering/localized-repair-c271/control/STATIC-CHECKS.json",
+        "A\tdocs/engineering/localized-repair-c271/control/construct.py",
+        "A\tdocs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok",
+        "A\tdocs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok",
+        "A\tdocs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok",
+        "A\tdocs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok",
+        "A\tdocs/engineering/localized-repair-c271/evidence/intake/REPORT.md",
+        "A\tdocs/engineering/localized-repair-c271/evidence/intake/SOURCE-AUDIT-INDEX.json",
+        "A\tdocs/engineering/localized-repair-c271/run_h22_control.py",
+        "M\tdocs/workflow/CURRENT.json",
+        "A\tdocs/workflow/tasks/C271/PLAN.md",
+        "A\tdocs/workflow/tasks/C271/REQUIREMENTS.md",
+        "A\tdocs/workflow/tasks/C271/SESSION.md",
+        "A\tdocs/workflow/tasks/C271/task.json"
+      ]
+    },
+    {
+      "group": "oracle",
+      "name": "frozen_oracle_hash",
+      "passed": true
+    },
+    {
+      "group": "candidate",
+      "name": "frozen_runner_hash",
+      "passed": true
+    },
+    {
+      "group": "oracle",
+      "name": "independent_author",
+      "passed": true
+    },
+    {
+      "group": "oracle",
+      "name": "recorded_author_boundaries",
+      "passed": true
+    },
+    {
+      "group": "author_readset",
+      "name": "AGENTS.md",
+      "passed": true,
+      "actual_sha256": "ce0fef82308e1c329dcf0514c99e81e89c340bbb550cf0cdcdb589599ae42822"
+    },
+    {
+      "group": "author_readset",
+      "name": "ROLE.md",
+      "passed": true,
+      "actual_sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/workflow/PROTOCOL.md",
+      "passed": true,
+      "actual_sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/workflow/templates/WORKER.md",
+      "passed": true,
+      "actual_sha256": "47068e4ca8372629ead0c0e1d25ea6de009e027f4497f3765711c391779debc8"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "passed": true,
+      "actual_sha256": "fbcc136012c20969a8479f6e0694d8b8e058ca34b99d01896790b4111982d8b0"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/workflow/tasks/C271/PLAN.md",
+      "passed": true,
+      "actual_sha256": "2c1fb193cc26fcc1cdd5a92b700c99bbb60caa3ac9a5bb743b5a411923a43d09"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "passed": true,
+      "actual_sha256": "274f989927ca3de0fa1506f579e6872ac30ffca33df7b95ee7f23c4e1d2e62b2"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/engineering/localized-repair-c260/CONTRACT.md",
+      "passed": true,
+      "actual_sha256": "39bf90c51256cb392b0b639c36f3325c76f8919bbea4e3e572937e9834f8cd6c"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "passed": true,
+      "actual_sha256": "7b3e74b9a58567d70edc4481aba8022df8a2b1ad8bab4903d9f4a0d05f8d26d1"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/engineering/localized-repair-c260/INPUTS.json",
+      "passed": true,
+      "actual_sha256": "d9f81932098104b051667d9523744530525ac891c3898718d8b1625db1941b8d"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "passed": true,
+      "actual_sha256": "7a3700b2b72924582184e49829b5678a8c53e4d419b79d3fa5bd55c5c76b940e"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/language-design/construction-v0.1/ontokin-construction.ebnf",
+      "passed": true,
+      "actual_sha256": "3603c44daf891244cda2c5adeadede03635d1d66e3bdbead26b1bd5459cff1a6"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/engineering/localized-repair-c269/COVERAGE.json",
+      "passed": true,
+      "actual_sha256": "ac335dda60a23cd512a787a3b4686fdd4c125d84b15788798235cb1fb91975ea"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/engineering/localized-repair-c269/AUDIT.md",
+      "passed": true,
+      "actual_sha256": "d330ff1a678299b68a08e4d9afdc74d18e3ee02705ee3919d7737312b50223d6"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/engineering/semantic-export-c210/CONTRACT.md",
+      "passed": true,
+      "actual_sha256": "4f1038a9f82ec5e68c1698114aa810186be07862ce58fa28cae3f457e144ed62"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/README.md",
+      "passed": true,
+      "actual_sha256": "71618b8f54afd1515744bd1f852329e9f03ac2f2d01cf9240def04c08f993fc6"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "passed": true,
+      "actual_sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "passed": true,
+      "actual_sha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true,
+      "actual_sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "passed": true,
+      "actual_sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+    },
+    {
+      "group": "author_readset",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+      "passed": true,
+      "actual_sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+    },
+    {
+      "group": "basis",
+      "name": "docs/engineering/localized-repair-c260/CONTRACT.md",
+      "passed": true,
+      "actual_sha256": "39bf90c51256cb392b0b639c36f3325c76f8919bbea4e3e572937e9834f8cd6c"
+    },
+    {
+      "group": "preservation",
+      "name": "unchanged_basis:docs/engineering/localized-repair-c260/CONTRACT.md",
+      "passed": true
+    },
+    {
+      "group": "basis",
+      "name": "docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "passed": true,
+      "actual_sha256": "7b3e74b9a58567d70edc4481aba8022df8a2b1ad8bab4903d9f4a0d05f8d26d1"
+    },
+    {
+      "group": "preservation",
+      "name": "unchanged_basis:docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "passed": true
+    },
+    {
+      "group": "basis",
+      "name": "docs/engineering/localized-repair-c260/INPUTS.json",
+      "passed": true,
+      "actual_sha256": "d9f81932098104b051667d9523744530525ac891c3898718d8b1625db1941b8d"
+    },
+    {
+      "group": "preservation",
+      "name": "unchanged_basis:docs/engineering/localized-repair-c260/INPUTS.json",
+      "passed": true
+    },
+    {
+      "group": "basis",
+      "name": "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "passed": true,
+      "actual_sha256": "7a3700b2b72924582184e49829b5678a8c53e4d419b79d3fa5bd55c5c76b940e"
+    },
+    {
+      "group": "preservation",
+      "name": "unchanged_basis:docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "passed": true
+    },
+    {
+      "group": "basis",
+      "name": "docs/language-design/construction-v0.1/ontokin-construction.ebnf",
+      "passed": true,
+      "actual_sha256": "3603c44daf891244cda2c5adeadede03635d1d66e3bdbead26b1bd5459cff1a6"
+    },
+    {
+      "group": "preservation",
+      "name": "unchanged_basis:docs/language-design/construction-v0.1/ontokin-construction.ebnf",
+      "passed": true
+    },
+    {
+      "group": "basis",
+      "name": "docs/engineering/localized-repair-c269/COVERAGE.json",
+      "passed": true,
+      "actual_sha256": "ac335dda60a23cd512a787a3b4686fdd4c125d84b15788798235cb1fb91975ea"
+    },
+    {
+      "group": "preservation",
+      "name": "unchanged_basis:docs/engineering/localized-repair-c269/COVERAGE.json",
+      "passed": true
+    },
+    {
+      "group": "control_artifacts",
+      "name": "docs/engineering/localized-repair-c271/control/AUTHOR-RECORD.json",
+      "passed": true,
+      "actual_sha256": "9026115999d3a670b87014ed7ca2abd73da970aae4d6cfc08be2c2095821af38"
+    },
+    {
+      "group": "control_artifacts",
+      "name": "docs/engineering/localized-repair-c271/control/EXPECTED.json",
+      "passed": true,
+      "actual_sha256": "0b8da6eab52323e8092c348fabad0d8d77247552e4eb5e3a1ffdc17266d12522"
+    },
+    {
+      "group": "control_artifacts",
+      "name": "docs/engineering/localized-repair-c271/control/SOURCE-VALIDITY.md",
+      "passed": true,
+      "actual_sha256": "2d3b8a07c3cdb8f54de7285834f8220e42e8bc0ed069a31601ecccb8d453588d"
+    },
+    {
+      "group": "control_artifacts",
+      "name": "docs/engineering/localized-repair-c271/control/STATIC-CHECKS.json",
+      "passed": true,
+      "actual_sha256": "6ef6dd47d7a11762a4733a6fa41d9cd5488fc3995bd0d705ea0aa94d4b3e9bd6"
+    },
+    {
+      "group": "control_artifacts",
+      "name": "docs/engineering/localized-repair-c271/control/construct.py",
+      "passed": true,
+      "actual_sha256": "c8867e7d82d6a825594b96ddd757330668e0b8873c70a57be9c3d12b480b67da"
+    },
+    {
+      "group": "control_artifacts",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok",
+      "passed": true,
+      "actual_sha256": "cc8e875fd33f175b09acbbb39daa9b77bb0ae699b314f198354514876dc2fade"
+    },
+    {
+      "group": "control_artifacts",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok",
+      "passed": true,
+      "actual_sha256": "2d597b7706af825103298ad718efdfdf5c1a9b012dd7db385dcac3355ec8facf"
+    },
+    {
+      "group": "control_artifacts",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok",
+      "passed": true,
+      "actual_sha256": "11fcba0b5b54bb981b16d4bad9aaeceb7bc4899b5695c92963db630068f578b5"
+    },
+    {
+      "group": "control_artifacts",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok",
+      "passed": true,
+      "actual_sha256": "0dc807d0b5998eefb4cf87a443700132433d41a971c71d35c3f95d9e7ccba690"
+    },
+    {
+      "group": "oracle",
+      "name": "constructor_standard_library_only",
+      "passed": true,
+      "imports": [
+        "__future__",
+        "argparse",
+        "hashlib",
+        "json",
+        "pathlib",
+        "platform",
+        "sys"
+      ]
+    },
+    {
+      "group": "oracle",
+      "name": "constructor_has_no_dynamic_execution",
+      "passed": true
+    },
+    {
+      "group": "oracle",
+      "name": "mandatory_import_digest_grammar",
+      "passed": true
+    },
+    {
+      "group": "oracle",
+      "name": "exact_six_case_inventory",
+      "passed": true
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "passed": true,
+      "actual_sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true,
+      "actual_sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "passed": true,
+      "actual_sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+    },
+    {
+      "group": "preservation",
+      "name": "before__baseline:docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true
+    },
+    {
+      "group": "preservation",
+      "name": "before__baseline:docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "passed": true
+    },
+    {
+      "group": "isolation",
+      "name": "before__baseline:original",
+      "passed": true
+    },
+    {
+      "group": "identity",
+      "name": "before__baseline:program",
+      "passed": true
+    },
+    {
+      "group": "oracle",
+      "name": "before__baseline:predeclared_results",
+      "passed": true
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok",
+      "passed": true,
+      "actual_sha256": "11fcba0b5b54bb981b16d4bad9aaeceb7bc4899b5695c92963db630068f578b5"
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true,
+      "actual_sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "passed": true,
+      "actual_sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+    },
+    {
+      "group": "preservation",
+      "name": "before__missing_digest_clause:docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true
+    },
+    {
+      "group": "preservation",
+      "name": "before__missing_digest_clause:docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "passed": true
+    },
+    {
+      "group": "mutation_original",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "passed": true,
+      "actual_sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+    },
+    {
+      "group": "isolation",
+      "name": "before__missing_digest_clause",
+      "passed": true,
+      "removed_range": [
+        217,
+        297
+      ],
+      "removed_sha256": "1c2320701fc8055e419ed67beb0b7b1b5ef8f6457d25583aaec978711841bf61"
+    },
+    {
+      "group": "isolation",
+      "name": "before__missing_digest_clause:retained_import_context",
+      "passed": true
+    },
+    {
+      "group": "identity",
+      "name": "before__missing_digest_clause:program",
+      "passed": true
+    },
+    {
+      "group": "oracle",
+      "name": "before__missing_digest_clause:predeclared_results",
+      "passed": true
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok",
+      "passed": true,
+      "actual_sha256": "0dc807d0b5998eefb4cf87a443700132433d41a971c71d35c3f95d9e7ccba690"
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true,
+      "actual_sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "passed": true,
+      "actual_sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+    },
+    {
+      "group": "preservation",
+      "name": "before__missing_digest_value:docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true
+    },
+    {
+      "group": "preservation",
+      "name": "before__missing_digest_value:docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "passed": true
+    },
+    {
+      "group": "mutation_original",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "passed": true,
+      "actual_sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+    },
+    {
+      "group": "isolation",
+      "name": "before__missing_digest_value",
+      "passed": true,
+      "removed_range": [
+        224,
+        297
+      ],
+      "removed_sha256": "704df31a1e034f449cdf282fde3b020ad8becbfe80eeb321a39da4ff416d0c70"
+    },
+    {
+      "group": "isolation",
+      "name": "before__missing_digest_value:retained_import_context",
+      "passed": true
+    },
+    {
+      "group": "identity",
+      "name": "before__missing_digest_value:program",
+      "passed": true
+    },
+    {
+      "group": "oracle",
+      "name": "before__missing_digest_value:predeclared_results",
+      "passed": true
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "passed": true,
+      "actual_sha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true,
+      "actual_sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+      "passed": true,
+      "actual_sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+    },
+    {
+      "group": "preservation",
+      "name": "after__baseline:docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true
+    },
+    {
+      "group": "preservation",
+      "name": "after__baseline:docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+      "passed": true
+    },
+    {
+      "group": "isolation",
+      "name": "after__baseline:original",
+      "passed": true
+    },
+    {
+      "group": "identity",
+      "name": "after__baseline:program",
+      "passed": true
+    },
+    {
+      "group": "oracle",
+      "name": "after__baseline:predeclared_results",
+      "passed": true
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok",
+      "passed": true,
+      "actual_sha256": "cc8e875fd33f175b09acbbb39daa9b77bb0ae699b314f198354514876dc2fade"
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true,
+      "actual_sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+      "passed": true,
+      "actual_sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+    },
+    {
+      "group": "preservation",
+      "name": "after__missing_digest_clause:docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true
+    },
+    {
+      "group": "preservation",
+      "name": "after__missing_digest_clause:docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+      "passed": true
+    },
+    {
+      "group": "mutation_original",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "passed": true,
+      "actual_sha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+    },
+    {
+      "group": "isolation",
+      "name": "after__missing_digest_clause",
+      "passed": true,
+      "removed_range": [
+        217,
+        297
+      ],
+      "removed_sha256": "1c2320701fc8055e419ed67beb0b7b1b5ef8f6457d25583aaec978711841bf61"
+    },
+    {
+      "group": "isolation",
+      "name": "after__missing_digest_clause:retained_import_context",
+      "passed": true
+    },
+    {
+      "group": "identity",
+      "name": "after__missing_digest_clause:program",
+      "passed": true
+    },
+    {
+      "group": "oracle",
+      "name": "after__missing_digest_clause:predeclared_results",
+      "passed": true
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok",
+      "passed": true,
+      "actual_sha256": "2d597b7706af825103298ad718efdfdf5c1a9b012dd7db385dcac3355ec8facf"
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true,
+      "actual_sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    {
+      "group": "case_inputs",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+      "passed": true,
+      "actual_sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+    },
+    {
+      "group": "preservation",
+      "name": "after__missing_digest_value:docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true
+    },
+    {
+      "group": "preservation",
+      "name": "after__missing_digest_value:docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+      "passed": true
+    },
+    {
+      "group": "mutation_original",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "passed": true,
+      "actual_sha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+    },
+    {
+      "group": "isolation",
+      "name": "after__missing_digest_value",
+      "passed": true,
+      "removed_range": [
+        224,
+        297
+      ],
+      "removed_sha256": "704df31a1e034f449cdf282fde3b020ad8becbfe80eeb321a39da4ff416d0c70"
+    },
+    {
+      "group": "isolation",
+      "name": "after__missing_digest_value:retained_import_context",
+      "passed": true
+    },
+    {
+      "group": "identity",
+      "name": "after__missing_digest_value:program",
+      "passed": true
+    },
+    {
+      "group": "oracle",
+      "name": "after__missing_digest_value:predeclared_results",
+      "passed": true
+    },
+    {
+      "group": "baseline_derivation",
+      "name": "source_occurrence_rows",
+      "passed": true
+    },
+    {
+      "group": "baseline_derivation",
+      "name": "literal_hinge_values",
+      "passed": true
+    },
+    {
+      "group": "execution",
+      "name": "exact_archive_identity",
+      "passed": true
+    },
+    {
+      "group": "execution",
+      "name": "source_and_oracle",
+      "passed": true
+    },
+    {
+      "group": "execution",
+      "name": "reported_success",
+      "passed": true
+    },
+    {
+      "group": "execution",
+      "name": "case_count",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c257/ownership.py",
+      "passed": true,
+      "actual_sha256": "c28b6a52e0d3575204e138986e5b1dfa57081943b8e194be0613fc33a28210f1"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c257/ownership.py:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c260/CONTRACT.md",
+      "passed": true,
+      "actual_sha256": "39bf90c51256cb392b0b639c36f3325c76f8919bbea4e3e572937e9834f8cd6c"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c260/CONTRACT.md:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "passed": true,
+      "actual_sha256": "7b3e74b9a58567d70edc4481aba8022df8a2b1ad8bab4903d9f4a0d05f8d26d1"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c260/CONTROL-PLAN.md:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c260/INPUTS.json",
+      "passed": true,
+      "actual_sha256": "d9f81932098104b051667d9523744530525ac891c3898718d8b1625db1941b8d"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c260/INPUTS.json:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c261/hinge_glb.py",
+      "passed": true,
+      "actual_sha256": "6167b3a56a2b1a600812340d85ee02eaa3b6399801d585a758333aabcfaa5e08"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c261/hinge_glb.py:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c265/source_hinges.py",
+      "passed": true,
+      "actual_sha256": "70d5e5b6247347bf44eaa3be0bc9c91b13f10d4717b4b32261eaebad75987132"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c265/source_hinges.py:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c266/hinge_binding.py",
+      "passed": true,
+      "actual_sha256": "8f6b26f0bedad335b069975d0491e5565a25f0793b3bc48802e90d3993aa0d0a"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c266/hinge_binding.py:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c267/hinge_compare.py",
+      "passed": true,
+      "actual_sha256": "9b2899d95471546a25a8a7e5ed9d9ac2a1e42854c31808d4e68aff2582686b58"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c267/hinge_compare.py:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c269/COVERAGE.json",
+      "passed": true,
+      "actual_sha256": "ac335dda60a23cd512a787a3b4686fdd4c125d84b15788798235cb1fb91975ea"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c269/COVERAGE.json:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c271/control/EXPECTED.json",
+      "passed": true,
+      "actual_sha256": "0b8da6eab52323e8092c348fabad0d8d77247552e4eb5e3a1ffdc17266d12522"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c271/control/EXPECTED.json:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok",
+      "passed": true,
+      "actual_sha256": "cc8e875fd33f175b09acbbb39daa9b77bb0ae699b314f198354514876dc2fade"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok",
+      "passed": true,
+      "actual_sha256": "2d597b7706af825103298ad718efdfdf5c1a9b012dd7db385dcac3355ec8facf"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok",
+      "passed": true,
+      "actual_sha256": "11fcba0b5b54bb981b16d4bad9aaeceb7bc4899b5695c92963db630068f578b5"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok",
+      "passed": true,
+      "actual_sha256": "0dc807d0b5998eefb4cf87a443700132433d41a971c71d35c3f95d9e7ccba690"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c271/run_h22_control.py",
+      "passed": true,
+      "actual_sha256": "358c3a50a5b437d0b765ff9547cc1c4611bcbdbbff95c31a22cccae7050c2480"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/localized-repair-c271/run_h22_control.py:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+      "passed": true,
+      "actual_sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/after.glb:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+      "passed": true,
+      "actual_sha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+      "passed": true,
+      "actual_sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/before.glb:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+      "passed": true,
+      "actual_sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+      "passed": true,
+      "actual_sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "passed": true,
+      "actual_sha256": "7a3700b2b72924582184e49829b5678a8c53e4d419b79d3fa5bd55c5c76b940e"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/language-design/construction-v0.1/ontokin-construction.ebnf",
+      "passed": true,
+      "actual_sha256": "3603c44daf891244cda2c5adeadede03635d1d66e3bdbead26b1bd5459cff1a6"
+    },
+    {
+      "group": "executed_identity",
+      "name": "docs/language-design/construction-v0.1/ontokin-construction.ebnf:git_blob",
+      "passed": true
+    },
+    {
+      "group": "executed_identity",
+      "name": "dependency_coverage",
+      "passed": true
+    },
+    {
+      "group": "preservation",
+      "name": "unchanged_runtime:docs/engineering/localized-repair-c261/hinge_glb.py",
+      "passed": true
+    },
+    {
+      "group": "preservation",
+      "name": "unchanged_runtime:docs/engineering/localized-repair-c267/hinge_compare.py",
+      "passed": true
+    },
+    {
+      "group": "preservation",
+      "name": "unchanged_runtime:docs/engineering/localized-repair-c257/ownership.py",
+      "passed": true
+    },
+    {
+      "group": "preservation",
+      "name": "unchanged_runtime:docs/engineering/localized-repair-c266/hinge_binding.py",
+      "passed": true
+    },
+    {
+      "group": "preservation",
+      "name": "unchanged_runtime:docs/engineering/localized-repair-c265/source_hinges.py",
+      "passed": true
+    },
+    {
+      "group": "execution",
+      "name": "all_unique_calls",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "integrity",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "manifest_inventory",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "CHECKS.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "INPUT-IDENTITIES.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "requests/after__baseline.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "requests/after__missing_digest_clause.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "requests/after__missing_digest_value.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "requests/before__baseline.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "requests/before__missing_digest_clause.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "requests/before__missing_digest_value.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/after__baseline--hinge_comparison.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/after__baseline--source_observation.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/after__baseline--source_program_binding.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/after__missing_digest_clause--hinge_comparison.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/after__missing_digest_clause--source_observation.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/after__missing_digest_clause--source_program_binding.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/after__missing_digest_value--hinge_comparison.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/after__missing_digest_value--source_observation.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/after__missing_digest_value--source_program_binding.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/before__baseline--hinge_comparison.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/before__baseline--source_observation.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/before__baseline--source_program_binding.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/before__missing_digest_clause--hinge_comparison.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/before__missing_digest_clause--source_observation.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/before__missing_digest_clause--source_program_binding.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/before__missing_digest_value--hinge_comparison.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/before__missing_digest_value--source_observation.json",
+      "passed": true
+    },
+    {
+      "group": "archive",
+      "name": "responses/before__missing_digest_value--source_program_binding.json",
+      "passed": true
+    },
+    {
+      "group": "execution",
+      "name": "assertion_inventory",
+      "passed": true
+    },
+    {
+      "group": "execution",
+      "name": "recorded_clean_after",
+      "passed": true
+    },
+    {
+      "group": "execution",
+      "name": "identity_record_exact",
+      "passed": true
+    },
+    {
+      "group": "requests",
+      "name": "before__baseline",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__baseline:source_observation:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__baseline:source_observation:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__baseline:source_observation:source_identity",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "before__baseline:source_observation:program",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "before__baseline:source_observation:limits",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "before__baseline:source_observation:complete_hinges",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:source_observation:keyed-rack/demo/first/fingers/lower/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/first/fingers/lower/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/first/fingers/lower/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:source_observation:keyed-rack/demo/first/fingers/middle/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/first/fingers/middle/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/first/fingers/middle/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:source_observation:keyed-rack/demo/first/fingers/upper/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/first/fingers/upper/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/first/fingers/upper/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/bottom/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/bottom/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/bottom/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/lower/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/lower/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/lower/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/middle/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/middle/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/middle/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/upper/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/upper/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/upper/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/top/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/top/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:source_observation:keyed-rack/demo/second/fingers/top/flex:child",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__baseline:source_program_binding:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__baseline:source_program_binding:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__baseline:source_program_binding:source_identity",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__baseline:source_program_binding:artifact_identity",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "before__baseline:source_program_binding:program",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "before__baseline:source_program_binding:limits",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "before__baseline:binding_objects",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__baseline:hinge_comparison:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__baseline:hinge_comparison:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__baseline:hinge_comparison:source_identity",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__baseline:hinge_comparison:artifact_identity",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "before__baseline:hinge_comparison:program",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "before__baseline:hinge_comparison:limits",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "before__baseline:hinge_comparison:complete_hinges",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/first/fingers/lower/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/first/fingers/lower/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/first/fingers/lower/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/first/fingers/middle/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/first/fingers/middle/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/first/fingers/middle/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/first/fingers/upper/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/first/fingers/upper/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/first/fingers/upper/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/bottom/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/bottom/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/bottom/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/lower/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/lower/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/lower/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/middle/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/middle/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/middle/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/upper/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/upper/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/upper/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/top/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/top/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "before__baseline:hinge_comparison:keyed-rack/demo/second/fingers/top/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "before__baseline:comparison_flags",
+      "passed": true
+    },
+    {
+      "group": "requests",
+      "name": "before__missing_digest_clause",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_clause:source_observation:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_clause:source_observation:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_clause:source_observation:source_identity",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_clause:source_observation:exact_code",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_clause:source_observation:no_partial_output",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_clause:source_observation:source_error_reason",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_clause:source_program_binding:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_clause:source_program_binding:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_clause:source_program_binding:source_identity",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_clause:source_program_binding:artifact_identity",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_clause:source_program_binding:exact_code",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_clause:source_program_binding:no_partial_output",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_clause:source_program_binding:source_error_reason",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_clause:hinge_comparison:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_clause:hinge_comparison:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_clause:hinge_comparison:source_identity",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_clause:hinge_comparison:artifact_identity",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_clause:hinge_comparison:exact_code",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_clause:hinge_comparison:no_partial_output",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_clause:hinge_comparison:source_error_reason",
+      "passed": true
+    },
+    {
+      "group": "requests",
+      "name": "before__missing_digest_value",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_value:source_observation:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_value:source_observation:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_value:source_observation:source_identity",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_value:source_observation:exact_code",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_value:source_observation:no_partial_output",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_value:source_observation:source_error_reason",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_value:source_program_binding:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_value:source_program_binding:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_value:source_program_binding:source_identity",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_value:source_program_binding:artifact_identity",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_value:source_program_binding:exact_code",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_value:source_program_binding:no_partial_output",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_value:source_program_binding:source_error_reason",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_value:hinge_comparison:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_value:hinge_comparison:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_value:hinge_comparison:source_identity",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "before__missing_digest_value:hinge_comparison:artifact_identity",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_value:hinge_comparison:exact_code",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_value:hinge_comparison:no_partial_output",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_value:hinge_comparison:source_error_reason",
+      "passed": true
+    },
+    {
+      "group": "requests",
+      "name": "after__baseline",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__baseline:source_observation:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__baseline:source_observation:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__baseline:source_observation:source_identity",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "after__baseline:source_observation:program",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "after__baseline:source_observation:limits",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "after__baseline:source_observation:complete_hinges",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:source_observation:keyed-rack/demo/first/fingers/lower/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/first/fingers/lower/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/first/fingers/lower/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:source_observation:keyed-rack/demo/first/fingers/middle/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/first/fingers/middle/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/first/fingers/middle/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:source_observation:keyed-rack/demo/first/fingers/upper/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/first/fingers/upper/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/first/fingers/upper/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/bottom/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/bottom/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/bottom/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/lower/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/lower/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/lower/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/middle/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/middle/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/middle/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/upper/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/upper/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/upper/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/top/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/top/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:source_observation:keyed-rack/demo/second/fingers/top/flex:child",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__baseline:source_program_binding:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__baseline:source_program_binding:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__baseline:source_program_binding:source_identity",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__baseline:source_program_binding:artifact_identity",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "after__baseline:source_program_binding:program",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "after__baseline:source_program_binding:limits",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "after__baseline:binding_objects",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__baseline:hinge_comparison:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__baseline:hinge_comparison:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__baseline:hinge_comparison:source_identity",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__baseline:hinge_comparison:artifact_identity",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "after__baseline:hinge_comparison:program",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "after__baseline:hinge_comparison:limits",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "after__baseline:hinge_comparison:complete_hinges",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/first/fingers/lower/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/first/fingers/lower/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/first/fingers/lower/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/first/fingers/middle/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/first/fingers/middle/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/first/fingers/middle/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/first/fingers/upper/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/first/fingers/upper/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/first/fingers/upper/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/bottom/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/bottom/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/bottom/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/lower/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/lower/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/lower/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/middle/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/middle/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/middle/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/upper/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/upper/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/upper/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline_row",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/top/flex",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/top/flex:parent",
+      "passed": true
+    },
+    {
+      "group": "baseline_site",
+      "name": "after__baseline:hinge_comparison:keyed-rack/demo/second/fingers/top/flex:child",
+      "passed": true
+    },
+    {
+      "group": "baseline",
+      "name": "after__baseline:comparison_flags",
+      "passed": true
+    },
+    {
+      "group": "requests",
+      "name": "after__missing_digest_clause",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_clause:source_observation:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_clause:source_observation:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_clause:source_observation:source_identity",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_clause:source_observation:exact_code",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_clause:source_observation:no_partial_output",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_clause:source_observation:source_error_reason",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_clause:source_program_binding:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_clause:source_program_binding:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_clause:source_program_binding:source_identity",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_clause:source_program_binding:artifact_identity",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_clause:source_program_binding:exact_code",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_clause:source_program_binding:no_partial_output",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_clause:source_program_binding:source_error_reason",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_clause:hinge_comparison:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_clause:hinge_comparison:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_clause:hinge_comparison:source_identity",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_clause:hinge_comparison:artifact_identity",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_clause:hinge_comparison:exact_code",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_clause:hinge_comparison:no_partial_output",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_clause:hinge_comparison:source_error_reason",
+      "passed": true
+    },
+    {
+      "group": "requests",
+      "name": "after__missing_digest_value",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_value:source_observation:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_value:source_observation:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_value:source_observation:source_identity",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_value:source_observation:exact_code",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_value:source_observation:no_partial_output",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_value:source_observation:source_error_reason",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_value:source_program_binding:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_value:source_program_binding:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_value:source_program_binding:source_identity",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_value:source_program_binding:artifact_identity",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_value:source_program_binding:exact_code",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_value:source_program_binding:no_partial_output",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_value:source_program_binding:source_error_reason",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_value:hinge_comparison:retained_bytes",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_value:hinge_comparison:call_result",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_value:hinge_comparison:source_identity",
+      "passed": true
+    },
+    {
+      "group": "responses",
+      "name": "after__missing_digest_value:hinge_comparison:artifact_identity",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_value:hinge_comparison:exact_code",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_value:hinge_comparison:no_partial_output",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_value:hinge_comparison:source_error_reason",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_clause:propagation",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "before__missing_digest_value:propagation",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_clause:propagation",
+      "passed": true
+    },
+    {
+      "group": "refusal",
+      "name": "after__missing_digest_value:propagation",
+      "passed": true
+    },
+    {
+      "group": "execution",
+      "name": "driver_summary",
+      "passed": true
+    }
+  ],
+  "readset": {
+    "reused_instructions": [
+      "AGENTS.md",
+      "docs/workflow/PROTOCOL.md",
+      "docs/workflow/HANDOFF.md"
+    ],
+    "new_full_reads": [
+      "ROLE.md",
+      "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "docs/workflow/tasks/C271/PLAN.md",
+      "docs/workflow/tasks/C271/SESSION.md",
+      "docs/workflow/tasks/C271/task.json",
+      "docs/engineering/localized-repair-c271/control/SOURCE-VALIDITY.md",
+      "docs/engineering/localized-repair-c271/control/EXPECTED.json",
+      "docs/engineering/localized-repair-c271/control/AUTHOR-RECORD.json",
+      "docs/engineering/localized-repair-c271/control/HASHES.json",
+      "docs/engineering/localized-repair-c271/control/construct.py",
+      "docs/engineering/localized-repair-c271/run_h22_control.py",
+      "docs/engineering/localized-repair-c260/CONTRACT.md"
+    ],
+    "selected_reads": [
+      "OK-LANG-002 sections 3.1-3.3",
+      "construction import_decl grammar",
+      "C260 CONTROL-PLAN H22 and review acceptance",
+      "C269 H22.02 coverage entry",
+      "three full historical .ok source files",
+      "retained requests/responses/identities/checks"
+    ]
+  },
+  "limits": [
+    "Independent review inspects retained authentic execution without replay; no observer invoked by this reviewer.",
+    "Author independence is supported by actual separate assignment, read-set, construction code and frozen-before-execution commit; no claim of exhaustive external-process telemetry.",
+    "Six finite input cases do not complete H22/C260, historical endpoint admission, source evaluation, accepted revisions or product qualification.",
+    "Documentation/workflow publication checks, draft PR, retained branch and verified partial delivery remain Director gates.",
+    "Routine driver, complete affected cohort, independent integration review, actual-main verification, branch disposal and parent closure remain P02 gates.",
+    "Historical broad-driver completion from earlier C270 remains unknown."
+  ]
+}

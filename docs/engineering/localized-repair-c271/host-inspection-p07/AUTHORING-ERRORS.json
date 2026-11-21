@@ -1,0 +1,27 @@
+{
+  "schema": "ontokin.c271.p07-authoring-errors/1",
+  "errors": [
+    {
+      "id": "AUTHOR-01",
+      "operation": "Build source metadata inventory from explicit path list",
+      "state": "failed_before_writing_SOURCE_BINDINGS",
+      "exception": "FileNotFoundError",
+      "path": "docs/engineering/readback-prerequisites-c225/audit_outcome.py",
+      "reason": "Historical REVIEW.md refers to this audit script in separately saved raw evidence, not as a current repository file.",
+      "correction": "Inventory current evidence/OUTCOME-REVIEW.json as S20; preserve historical review and do not invent a repository source binding for the absent script.",
+      "project_execution": false,
+      "existing_source_changed": false
+    },
+    {
+      "id": "AUTHOR-02",
+      "operation": "Check manual P06 host-key count against unchanged original schema",
+      "state": "failed_static_check",
+      "exception": "AssertionError",
+      "reason": "Author compatibility prose initially said eleven top-level host keys; actual P06 schema requires ten.",
+      "correction": "Corrected prose and assertion to ten; no schema changed.",
+      "retained_failure": "drafts/static-checks-failed-001.json",
+      "project_execution": false,
+      "existing_source_changed": false
+    }
+  ]
+}

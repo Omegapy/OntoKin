@@ -1,0 +1,22 @@
+{
+  "schema": "ontokin.c271.p06-reporting-erratum/1",
+  "target": "audit/independent-controls/runs/final-candidate-003/final-rebind-RESULTS.json",
+  "target_row": "P06-FINAL-STATIC / exact_final_source_preservation",
+  "original_result_retained_unchanged": true,
+  "incorrect_reporting_field": {
+    "frozen_expected": "A02 supplemental reader control"
+  },
+  "correct_expectation_source": [
+    "audit/independent-controls/harness/FINAL-REBIND-PLAN.json",
+    "audit/independent-controls/PRESERVATION-ORACLE.json",
+    "P06-P01/P06-P02/P06-P03 frozen preservation obligations"
+  ],
+  "explanation": "The generic harness reporting fallback labels any additional ID as an A02 reader control. The final static function actually checks its prebound preservation plan: nine original full-function ASTs, seven actual loader IDs without execution or skips, fifteen protected files, and fifteen unique ordered JS segments. It does not execute either reader-race control.",
+  "predicate_or_outcome_change": false,
+  "rerun_required": false,
+  "ast_representation": {
+    "preservation_control": "SHA-256 of UTF-8 ast.dump(function_node, annotate_fields=True, include_attributes=False)",
+    "provider_method_lock": "SHA-256 of UTF-8 ast.dump(ast.Module(body=function_node.body, type_ignores=[]), include_attributes=False)",
+    "comparison_rule": "Compare each representation only with its own frozen oracle; these different hash representations are not expected to equal each other."
+  }
+}

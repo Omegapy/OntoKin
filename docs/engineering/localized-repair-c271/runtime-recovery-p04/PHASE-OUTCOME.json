@@ -1,0 +1,123 @@
+{
+  "schema": "ontokin.c271.p04-phase-outcome/1",
+  "recorded_at_utc": "2026-11-21T01:17:58.502815+00:00",
+  "task": "C271",
+  "phase": "C271-P04-historical-runtime-recovery",
+  "phase_outcome": "blocked_partial",
+  "technical_work_stopped": true,
+  "source_baseline": "6d4324e8fd835351da2db165bf0907a3bf1916bc",
+  "bootstrap_checkpoint": "e7962d64cad08b52fb32cf4cf34c3f77e1337156",
+  "observed_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+  "parent_status": "blocked",
+  "requirements": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "parent_plan": {
+    "P01": "done",
+    "P02": "in_progress"
+  },
+  "early_recovery_confirmed": true,
+  "static_binding_counts": {
+    "source_match": 6,
+    "source_total": 6,
+    "runtime_match": 9,
+    "runtime_total": 10,
+    "alias_match": 10,
+    "alias_total": 10
+  },
+  "historical_node": {
+    "size_bytes": 126939688,
+    "sha256": "61ab14cd750fc24d5db53490ec5fc40f756e4b6e136b78cf7004265471d9bd1d",
+    "mode": "0o755"
+  },
+  "observed_node": {
+    "sha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+    "size_bytes": 126951512,
+    "mode": "0o755"
+  },
+  "historical_targets_absent": true,
+  "search": {
+    "local_regular_file_observations": 522972,
+    "local_hashed_named_candidates": 5,
+    "local_exact_size_candidates": 0,
+    "top_zip_physical_members": 16422,
+    "git_imported_bundle_pack_payloads": 69,
+    "git_objects_enumerated": 18208,
+    "git_unique_blobs_fully_read": 14104,
+    "declared_split_archives_unique": 35,
+    "declared_manifest_records_verified": 43,
+    "additional_split_archive_member_observations": 37798
+  },
+  "complete_historical_source_closure": false,
+  "limits": [
+    "Three inaccessible filesystem directories; no permission bypass",
+    "One retained truncated XZ and five incomplete ZIP prefixes",
+    "Two thin bundles lack bases; direct result sizes parsed, nested delta-derived contents not fully materialized",
+    "One header-only record and supplemental author-bundle delta-derived contents unmaterialized",
+    "Live filesystem observations are not unique-inode or deleted/unmounted/remote-store coverage"
+  ],
+  "exact_runtime_recovered": false,
+  "C225_qualified": false,
+  "full_routine_executed": false,
+  "R03_accepted": false,
+  "integration_performed": false,
+  "main_lease_held": false,
+  "branch_disposition": "retained_unmerged",
+  "independent_review": {
+    "status": "accepted_scoped_negative_recovery_evidence",
+    "reviewer": "/root/github_reconcile",
+    "evidence_predicates": 678,
+    "failed_predicates": 0,
+    "runtime_qualified": false,
+    "R03_accepted": false,
+    "proposal": "Unadopted; reviewer authored it, so later independent operational-design review remains required.",
+    "report": "docs/engineering/localized-repair-c271/runtime-recovery-p04/TECHNICAL-REVIEW-SUMMARY.json"
+  },
+  "preserved_failures": [
+    "Original P02 unit timeout and isolated documentation failure",
+    "Original P03 C225 preflight refusal and focused red regression",
+    "P04 original archive parser/Git import errors and corrected investigator KeyError",
+    "P04 root observation-script, record-check, payload-read and local-commit-import preliminary failures"
+  ],
+  "current_unknown_mutations": [],
+  "historical_unknowns": [
+    "C270 broad-driver completion and global earlier-process termination remain unknown"
+  ],
+  "next_action": "In a fresh bounded C271 phase, adopt an independently reviewed, separately versioned current-host execution contract and complete per-method/predicate mapping for the original hardcoded readback cohort. Preserve original C199/C225 records, helper guards and historical test/source bytes. Do not count a replacement-only suite, skipped original methods or rewritten pins as R03. Implement and verify only the design selected for that fresh phase; a complete default routine requires its own declared eligible environment and full inventory. Repeat exact-runtime recovery only if a new authenticated source becomes available.",
+  "delivery": {
+    "status": "pending",
+    "partial": true,
+    "receipt": "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json"
+  },
+  "stop": "Finish independent review, publish truthful partial evidence, verify/save final handoff and matching prompts, record receipt separately, then stop without another phase.",
+  "raw_evidence": {
+    "status": "saved",
+    "receipt": "docs/engineering/localized-repair-c271/runtime-recovery-p04/RAW-EVIDENCE-LOCATION.json",
+    "bytes": 22461740,
+    "sha256": "0f2c5f2ce2ddcefb2416db44a7ebd6071c74c297a02a649281892c7c665ecb95",
+    "payloads": 2177,
+    "final_handoff_member": "evidence/RAW-EVIDENCE.zip"
+  },
+  "investigator_execution_counts": {
+    "node": 0,
+    "ldd": 0,
+    "C225_helper": 0,
+    "product_test": 0,
+    "native": 0,
+    "full_routine": 0,
+    "network_requests": 0
+  },
+  "investigator_execution_scope": "Counts supplied by /root/runtime_recovery only. Root GitHub/Library publication and read operations are recorded separately and are not zero.",
+  "phase_technical_execution_counts": {
+    "node": 0,
+    "ldd": 0,
+    "C225_helper": 0,
+    "product_test": 0,
+    "native": 0,
+    "full_routine": 0
+  }
+}

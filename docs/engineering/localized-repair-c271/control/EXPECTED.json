@@ -1,0 +1,856 @@
+{
+  "schema": "ontokin.c271.missing-import-digest-oracle/0.1",
+  "task": "C271",
+  "control": "H22.02",
+  "author": "/root/control_author",
+  "reported_published_scope_revision": "c27609ebab7c86ff20d7bd288994b49e3dd3c7e1",
+  "reported_starting_main_revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+  "observation_status": "not_run_by_oracle_author",
+  "independence": {
+    "basis": "Adopted rules and historical source bytes; no implementation or observed output supplies an expected result",
+    "observer_test_product_code_read_or_executed": false,
+    "prior_observer_outcome_logs_read": false,
+    "public_code_spelling": "Director supplied only the public README mapping of malformed source to MALFORMED before construction",
+    "c269_usage": "Only the H22.02 gap and its audit context identify the missing case; no historical output supplies the oracle"
+  },
+  "basis_files": [
+    {
+      "path": "docs/engineering/localized-repair-c260/CONTRACT.md",
+      "bytes": 16245,
+      "sha256": "39bf90c51256cb392b0b639c36f3325c76f8919bbea4e3e572937e9834f8cd6c"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "bytes": 7975,
+      "sha256": "7b3e74b9a58567d70edc4481aba8022df8a2b1ad8bab4903d9f4a0d05f8d26d1"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c260/INPUTS.json",
+      "bytes": 4605,
+      "sha256": "d9f81932098104b051667d9523744530525ac891c3898718d8b1625db1941b8d"
+    },
+    {
+      "path": "docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "bytes": 53806,
+      "sha256": "7a3700b2b72924582184e49829b5678a8c53e4d419b79d3fa5bd55c5c76b940e"
+    },
+    {
+      "path": "docs/language-design/construction-v0.1/ontokin-construction.ebnf",
+      "bytes": 4301,
+      "sha256": "3603c44daf891244cda2c5adeadede03635d1d66e3bdbead26b1bd5459cff1a6"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c269/COVERAGE.json",
+      "bytes": 468675,
+      "sha256": "ac335dda60a23cd512a787a3b4686fdd4c125d84b15788798235cb1fb91975ea"
+    }
+  ],
+  "baseline_semantics": {
+    "derivation": "C260 sections 3 and 4; actual main.ok and hinges.ok declarations only",
+    "object_count": 18,
+    "hinge_count": 8,
+    "unique_joint_definition_count": 1,
+    "distinct_endpoint_site_count": 16,
+    "joint_definition_id": [
+      "package",
+      "example.hinges",
+      "hinges",
+      "definitions",
+      "finger",
+      "flex"
+    ],
+    "parent_site_definition_id": [
+      "package",
+      "example.hinges",
+      "hinges",
+      "definitions",
+      "finger",
+      "pivot"
+    ],
+    "child_site_definition_id": [
+      "package",
+      "example.hinges",
+      "hinges",
+      "definitions",
+      "blade",
+      "base"
+    ],
+    "joint_name": "flex",
+    "joint_key": "flex",
+    "kind": "hinge",
+    "axis": [
+      0,
+      0,
+      1
+    ],
+    "limits_binary64_hex": [
+      "-0x1.921fb54442d18p-1",
+      "0x1.921fb54442d18p-1"
+    ],
+    "initial_binary64_hex": "0x0.0p+0",
+    "site_interface": "hinged.part",
+    "site_size_metres_binary64_hex": "0x0.0p+0",
+    "rows": [
+      {
+        "owning_object_id": [
+          "keyed-rack",
+          "demo",
+          "first",
+          "fingers",
+          "lower"
+        ],
+        "joint_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "first",
+          "fingers",
+          "lower",
+          "flex"
+        ],
+        "parent_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "first",
+          "fingers",
+          "lower",
+          "pivot"
+        ],
+        "child_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "first",
+          "fingers",
+          "lower",
+          "blade",
+          "base"
+        ]
+      },
+      {
+        "owning_object_id": [
+          "keyed-rack",
+          "demo",
+          "first",
+          "fingers",
+          "middle"
+        ],
+        "joint_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "first",
+          "fingers",
+          "middle",
+          "flex"
+        ],
+        "parent_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "first",
+          "fingers",
+          "middle",
+          "pivot"
+        ],
+        "child_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "first",
+          "fingers",
+          "middle",
+          "blade",
+          "base"
+        ]
+      },
+      {
+        "owning_object_id": [
+          "keyed-rack",
+          "demo",
+          "first",
+          "fingers",
+          "upper"
+        ],
+        "joint_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "first",
+          "fingers",
+          "upper",
+          "flex"
+        ],
+        "parent_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "first",
+          "fingers",
+          "upper",
+          "pivot"
+        ],
+        "child_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "first",
+          "fingers",
+          "upper",
+          "blade",
+          "base"
+        ]
+      },
+      {
+        "owning_object_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "bottom"
+        ],
+        "joint_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "bottom",
+          "flex"
+        ],
+        "parent_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "bottom",
+          "pivot"
+        ],
+        "child_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "bottom",
+          "blade",
+          "base"
+        ]
+      },
+      {
+        "owning_object_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "lower"
+        ],
+        "joint_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "lower",
+          "flex"
+        ],
+        "parent_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "lower",
+          "pivot"
+        ],
+        "child_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "lower",
+          "blade",
+          "base"
+        ]
+      },
+      {
+        "owning_object_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "middle"
+        ],
+        "joint_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "middle",
+          "flex"
+        ],
+        "parent_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "middle",
+          "pivot"
+        ],
+        "child_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "middle",
+          "blade",
+          "base"
+        ]
+      },
+      {
+        "owning_object_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "upper"
+        ],
+        "joint_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "upper",
+          "flex"
+        ],
+        "parent_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "upper",
+          "pivot"
+        ],
+        "child_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "upper",
+          "blade",
+          "base"
+        ]
+      },
+      {
+        "owning_object_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "top"
+        ],
+        "joint_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "top",
+          "flex"
+        ],
+        "parent_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "top",
+          "pivot"
+        ],
+        "child_site_occurrence_id": [
+          "keyed-rack",
+          "demo",
+          "second",
+          "fingers",
+          "top",
+          "blade",
+          "base"
+        ]
+      }
+    ],
+    "row_order_significant": false,
+    "endpoint_order_significant": true,
+    "site_records_are_source_associations": true,
+    "site_pose_evaluated": false
+  },
+  "cases": [
+    {
+      "id": "before__baseline",
+      "endpoint": "before",
+      "variant": "baseline",
+      "source_files": {
+        "main.ok": {
+          "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+          "bytes": 1708,
+          "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+        },
+        "hinges.ok": {
+          "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "artifact": {
+        "path": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+        "bytes": 185276,
+        "sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+      },
+      "candidate_program": {
+        "manifest": {
+          "schema_version": "ontokin.bundle/0.1",
+          "entry_source_id": "entry",
+          "units": [
+            {
+              "source_id": "entry",
+              "package_id": null,
+              "version": null,
+              "filename": "main.ok",
+              "source_revision": "sha256:73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+            },
+            {
+              "source_id": "package:example.hinges@1.0.0",
+              "package_id": "example.hinges",
+              "version": "1.0.0",
+              "filename": "hinges.ok",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+            }
+          ]
+        },
+        "revision": "sha256:8f9d976568e2a9fa39573e3fb90f616529097241a098b21d4eb22eabe4b7032f"
+      },
+      "mutation": null,
+      "expected": {
+        "source_observation": {
+          "outcome": "success",
+          "refusal_code": null
+        },
+        "source_program_binding": {
+          "outcome": "success",
+          "refusal_code": null
+        },
+        "hinge_comparison": {
+          "outcome": "success",
+          "refusal_code": null
+        },
+        "returned_success_allowed": true,
+        "qualified_partial_result_allowed": false,
+        "qualified_hinge_set_allowed": true,
+        "baseline_semantics_reference": "#/baseline_semantics",
+        "exact_refusal_message_required": false,
+        "historical_admission_claim_allowed": false,
+        "complete_language_validity_claim_allowed": false,
+        "accepted_revision_claim_allowed": false
+      }
+    },
+    {
+      "id": "before__missing_digest_clause",
+      "endpoint": "before",
+      "variant": "missing_digest_clause",
+      "source_files": {
+        "main.ok": {
+          "path": "docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok",
+          "bytes": 1628,
+          "sha256": "11fcba0b5b54bb981b16d4bad9aaeceb7bc4899b5695c92963db630068f578b5"
+        },
+        "hinges.ok": {
+          "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "artifact": {
+        "path": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+        "bytes": 185276,
+        "sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+      },
+      "candidate_program": {
+        "manifest": {
+          "schema_version": "ontokin.bundle/0.1",
+          "entry_source_id": "entry",
+          "units": [
+            {
+              "source_id": "entry",
+              "package_id": null,
+              "version": null,
+              "filename": "main.ok",
+              "source_revision": "sha256:11fcba0b5b54bb981b16d4bad9aaeceb7bc4899b5695c92963db630068f578b5"
+            },
+            {
+              "source_id": "package:example.hinges@1.0.0",
+              "package_id": "example.hinges",
+              "version": "1.0.0",
+              "filename": "hinges.ok",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+            }
+          ]
+        },
+        "revision": "sha256:7206021ad40283f65590c3e381ed992214e72a29b69c52fe311bf00325b48d0b"
+      },
+      "mutation": {
+        "operation": "delete_one_exact_contiguous_byte_range",
+        "original": {
+          "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+          "bytes": 1708,
+          "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+        },
+        "range_convention": "zero_based_half_open_utf8_bytes",
+        "start_byte": 217,
+        "end_byte": 297,
+        "removed_utf8": "digest \"sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a\"",
+        "removed_bytes": 80,
+        "removed_sha256": "1c2320701fc8055e419ed67beb0b7b1b5ef8f6457d25583aaec978711841bf61",
+        "replacement_utf8": "",
+        "all_other_entry_bytes_preserved": true,
+        "companion_source_unchanged": true,
+        "artifact_unchanged": true
+      },
+      "expected": {
+        "source_observation": {
+          "outcome": "typed_refusal",
+          "refusal_code": "MALFORMED"
+        },
+        "source_program_binding": {
+          "outcome": "typed_refusal",
+          "refusal_code": "MALFORMED"
+        },
+        "hinge_comparison": {
+          "outcome": "typed_refusal",
+          "refusal_code": "MALFORMED"
+        },
+        "returned_success_allowed": false,
+        "qualified_partial_result_allowed": false,
+        "qualified_hinge_set_allowed": false,
+        "baseline_semantics_reference": null,
+        "exact_refusal_message_required": false,
+        "historical_admission_claim_allowed": false,
+        "complete_language_validity_claim_allowed": false,
+        "accepted_revision_claim_allowed": false
+      }
+    },
+    {
+      "id": "before__missing_digest_value",
+      "endpoint": "before",
+      "variant": "missing_digest_value",
+      "source_files": {
+        "main.ok": {
+          "path": "docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok",
+          "bytes": 1635,
+          "sha256": "0dc807d0b5998eefb4cf87a443700132433d41a971c71d35c3f95d9e7ccba690"
+        },
+        "hinges.ok": {
+          "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "artifact": {
+        "path": "docs/engineering/semantic-export-c210/evidence/proof/before.glb",
+        "bytes": 185276,
+        "sha256": "d009d9dba6c69bb8e8e6decdfa9d7e1e92f819e3b59013d481cd30101c973534"
+      },
+      "candidate_program": {
+        "manifest": {
+          "schema_version": "ontokin.bundle/0.1",
+          "entry_source_id": "entry",
+          "units": [
+            {
+              "source_id": "entry",
+              "package_id": null,
+              "version": null,
+              "filename": "main.ok",
+              "source_revision": "sha256:0dc807d0b5998eefb4cf87a443700132433d41a971c71d35c3f95d9e7ccba690"
+            },
+            {
+              "source_id": "package:example.hinges@1.0.0",
+              "package_id": "example.hinges",
+              "version": "1.0.0",
+              "filename": "hinges.ok",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+            }
+          ]
+        },
+        "revision": "sha256:6c18cc7372291e984e5a610a38a884c8d80705c84842a0b24252f6b6539e73ae"
+      },
+      "mutation": {
+        "operation": "delete_one_exact_contiguous_byte_range",
+        "original": {
+          "path": "docs/engineering/semantic-export-c210/evidence/proof/before.main.ok",
+          "bytes": 1708,
+          "sha256": "73c95c6509363e492084d7b6959356fe1955f4e78086a72b507167a271a33123"
+        },
+        "range_convention": "zero_based_half_open_utf8_bytes",
+        "start_byte": 224,
+        "end_byte": 297,
+        "removed_utf8": "\"sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a\"",
+        "removed_bytes": 73,
+        "removed_sha256": "704df31a1e034f449cdf282fde3b020ad8becbfe80eeb321a39da4ff416d0c70",
+        "replacement_utf8": "",
+        "all_other_entry_bytes_preserved": true,
+        "companion_source_unchanged": true,
+        "artifact_unchanged": true
+      },
+      "expected": {
+        "source_observation": {
+          "outcome": "typed_refusal",
+          "refusal_code": "MALFORMED"
+        },
+        "source_program_binding": {
+          "outcome": "typed_refusal",
+          "refusal_code": "MALFORMED"
+        },
+        "hinge_comparison": {
+          "outcome": "typed_refusal",
+          "refusal_code": "MALFORMED"
+        },
+        "returned_success_allowed": false,
+        "qualified_partial_result_allowed": false,
+        "qualified_hinge_set_allowed": false,
+        "baseline_semantics_reference": null,
+        "exact_refusal_message_required": false,
+        "historical_admission_claim_allowed": false,
+        "complete_language_validity_claim_allowed": false,
+        "accepted_revision_claim_allowed": false
+      }
+    },
+    {
+      "id": "after__baseline",
+      "endpoint": "after",
+      "variant": "baseline",
+      "source_files": {
+        "main.ok": {
+          "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+          "bytes": 1708,
+          "sha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+        },
+        "hinges.ok": {
+          "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "artifact": {
+        "path": "docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+        "bytes": 185236,
+        "sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+      },
+      "candidate_program": {
+        "manifest": {
+          "schema_version": "ontokin.bundle/0.1",
+          "entry_source_id": "entry",
+          "units": [
+            {
+              "source_id": "entry",
+              "package_id": null,
+              "version": null,
+              "filename": "main.ok",
+              "source_revision": "sha256:443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+            },
+            {
+              "source_id": "package:example.hinges@1.0.0",
+              "package_id": "example.hinges",
+              "version": "1.0.0",
+              "filename": "hinges.ok",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+            }
+          ]
+        },
+        "revision": "sha256:c77d102a4b201d3c3cce6cbdc73c38eedf0bb1dfca7c9843a92d697cc0c7e082"
+      },
+      "mutation": null,
+      "expected": {
+        "source_observation": {
+          "outcome": "success",
+          "refusal_code": null
+        },
+        "source_program_binding": {
+          "outcome": "success",
+          "refusal_code": null
+        },
+        "hinge_comparison": {
+          "outcome": "success",
+          "refusal_code": null
+        },
+        "returned_success_allowed": true,
+        "qualified_partial_result_allowed": false,
+        "qualified_hinge_set_allowed": true,
+        "baseline_semantics_reference": "#/baseline_semantics",
+        "exact_refusal_message_required": false,
+        "historical_admission_claim_allowed": false,
+        "complete_language_validity_claim_allowed": false,
+        "accepted_revision_claim_allowed": false
+      }
+    },
+    {
+      "id": "after__missing_digest_clause",
+      "endpoint": "after",
+      "variant": "missing_digest_clause",
+      "source_files": {
+        "main.ok": {
+          "path": "docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok",
+          "bytes": 1628,
+          "sha256": "cc8e875fd33f175b09acbbb39daa9b77bb0ae699b314f198354514876dc2fade"
+        },
+        "hinges.ok": {
+          "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "artifact": {
+        "path": "docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+        "bytes": 185236,
+        "sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+      },
+      "candidate_program": {
+        "manifest": {
+          "schema_version": "ontokin.bundle/0.1",
+          "entry_source_id": "entry",
+          "units": [
+            {
+              "source_id": "entry",
+              "package_id": null,
+              "version": null,
+              "filename": "main.ok",
+              "source_revision": "sha256:cc8e875fd33f175b09acbbb39daa9b77bb0ae699b314f198354514876dc2fade"
+            },
+            {
+              "source_id": "package:example.hinges@1.0.0",
+              "package_id": "example.hinges",
+              "version": "1.0.0",
+              "filename": "hinges.ok",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+            }
+          ]
+        },
+        "revision": "sha256:3135da2c9129e8cda2dc3c19dbd3efff9ec0ac429e3e3344733b45c7ca48f5f0"
+      },
+      "mutation": {
+        "operation": "delete_one_exact_contiguous_byte_range",
+        "original": {
+          "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+          "bytes": 1708,
+          "sha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+        },
+        "range_convention": "zero_based_half_open_utf8_bytes",
+        "start_byte": 217,
+        "end_byte": 297,
+        "removed_utf8": "digest \"sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a\"",
+        "removed_bytes": 80,
+        "removed_sha256": "1c2320701fc8055e419ed67beb0b7b1b5ef8f6457d25583aaec978711841bf61",
+        "replacement_utf8": "",
+        "all_other_entry_bytes_preserved": true,
+        "companion_source_unchanged": true,
+        "artifact_unchanged": true
+      },
+      "expected": {
+        "source_observation": {
+          "outcome": "typed_refusal",
+          "refusal_code": "MALFORMED"
+        },
+        "source_program_binding": {
+          "outcome": "typed_refusal",
+          "refusal_code": "MALFORMED"
+        },
+        "hinge_comparison": {
+          "outcome": "typed_refusal",
+          "refusal_code": "MALFORMED"
+        },
+        "returned_success_allowed": false,
+        "qualified_partial_result_allowed": false,
+        "qualified_hinge_set_allowed": false,
+        "baseline_semantics_reference": null,
+        "exact_refusal_message_required": false,
+        "historical_admission_claim_allowed": false,
+        "complete_language_validity_claim_allowed": false,
+        "accepted_revision_claim_allowed": false
+      }
+    },
+    {
+      "id": "after__missing_digest_value",
+      "endpoint": "after",
+      "variant": "missing_digest_value",
+      "source_files": {
+        "main.ok": {
+          "path": "docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok",
+          "bytes": 1635,
+          "sha256": "2d597b7706af825103298ad718efdfdf5c1a9b012dd7db385dcac3355ec8facf"
+        },
+        "hinges.ok": {
+          "path": "docs/engineering/semantic-export-c210/evidence/proof/hinges.ok",
+          "bytes": 1911,
+          "sha256": "1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+        }
+      },
+      "artifact": {
+        "path": "docs/engineering/semantic-export-c210/evidence/proof/after.glb",
+        "bytes": 185236,
+        "sha256": "05ebe856d3fdb96dce4b6aa55906be5ae67501bcaede9112abc30b703905b5d8"
+      },
+      "candidate_program": {
+        "manifest": {
+          "schema_version": "ontokin.bundle/0.1",
+          "entry_source_id": "entry",
+          "units": [
+            {
+              "source_id": "entry",
+              "package_id": null,
+              "version": null,
+              "filename": "main.ok",
+              "source_revision": "sha256:2d597b7706af825103298ad718efdfdf5c1a9b012dd7db385dcac3355ec8facf"
+            },
+            {
+              "source_id": "package:example.hinges@1.0.0",
+              "package_id": "example.hinges",
+              "version": "1.0.0",
+              "filename": "hinges.ok",
+              "source_revision": "sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a"
+            }
+          ]
+        },
+        "revision": "sha256:7dbae97599934ffdc92e6dc0faf196070d9f6e69ab3cff55e6e4e402cb036ba8"
+      },
+      "mutation": {
+        "operation": "delete_one_exact_contiguous_byte_range",
+        "original": {
+          "path": "docs/engineering/semantic-export-c210/evidence/proof/after.main.ok",
+          "bytes": 1708,
+          "sha256": "443328e2a2e3f2e68245fa1e725b518187aa446ecd7ee3de4675e006cf4e666a"
+        },
+        "range_convention": "zero_based_half_open_utf8_bytes",
+        "start_byte": 224,
+        "end_byte": 297,
+        "removed_utf8": "\"sha256:1516e53179a7b9deecf593ab48afdcd72fba8124ea77868327c25a28a654681a\"",
+        "removed_bytes": 73,
+        "removed_sha256": "704df31a1e034f449cdf282fde3b020ad8becbfe80eeb321a39da4ff416d0c70",
+        "replacement_utf8": "",
+        "all_other_entry_bytes_preserved": true,
+        "companion_source_unchanged": true,
+        "artifact_unchanged": true
+      },
+      "expected": {
+        "source_observation": {
+          "outcome": "typed_refusal",
+          "refusal_code": "MALFORMED"
+        },
+        "source_program_binding": {
+          "outcome": "typed_refusal",
+          "refusal_code": "MALFORMED"
+        },
+        "hinge_comparison": {
+          "outcome": "typed_refusal",
+          "refusal_code": "MALFORMED"
+        },
+        "returned_success_allowed": false,
+        "qualified_partial_result_allowed": false,
+        "qualified_hinge_set_allowed": false,
+        "baseline_semantics_reference": null,
+        "exact_refusal_message_required": false,
+        "historical_admission_claim_allowed": false,
+        "complete_language_validity_claim_allowed": false,
+        "accepted_revision_claim_allowed": false
+      }
+    }
+  ],
+  "limits": [
+    "Exactly two original endpoints and two digest-deletion variants per endpoint",
+    "No runtime, observer, source grammar or adopted contract change",
+    "No source evaluation, export, site-pose/motion qualification, or product-wide result",
+    "A passing control does not complete H22, C260, or the parent task"
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "schema": "ontokin.c271.p03-outcome/1",
+  "phase": "C271-P03-validation-recovery",
+  "recorded_at_utc": "2026-11-21T00:15:07.806211+00:00",
+  "status": "blocked_pending_saved_partial_handoff",
+  "source_commit": "fea1aa6fb3712c5283dde197295b2d3cbf925d36",
+  "source_tree": "d4fe9aa7f2166a46d7a141ad001b13c71d43a6b6",
+  "source_unchanged": true,
+  "changes": [
+    "Add .agents to isolated source directories",
+    "Add CHATGPT-START-HERE.md and ROLE.md to copied root files",
+    "Add one test covering all five instruction targets, exclusions, unchanged source identity and independent Git index"
+  ],
+  "focused_tests": {
+    "methods": 31,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "passed": true,
+    "original_failure_preserved": true
+  },
+  "isolated_documents": {
+    "passed": true,
+    "targets": 5,
+    "source_git_identity_retained": true,
+    "documents": 1348,
+    "local_links": 5916
+  },
+  "python_pins": {
+    "prepared": true,
+    "lock_unchanged": true,
+    "packages": 7,
+    "environment": "External task-specific virtual environment; CPython 3.12.14 / Linux x86-64"
+  },
+  "readback_preflight": {
+    "returncode": 1,
+    "outcome": "REFUSED_OR_FAILED",
+    "source_clean": true,
+    "error": "ValueError: Binding differs: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "apply_requested": false,
+    "node_executions": 0,
+    "native_executions": 0
+  },
+  "required_routine": {
+    "status": "not_run",
+    "reason": "Exact historical Node runtime binding unresolved; no unprepared aggregate attempt or skipped prerequisite waiver",
+    "prior_P02_result": "failed and preserved"
+  },
+  "p02_failures": {
+    "original_unit_timeout_seconds": 900,
+    "original_unit_complete_total": null,
+    "original_document_links_failed": 21,
+    "preserved": true,
+    "waived": false
+  },
+  "node_builds": {
+    "required": {
+      "version": "v24.22.1",
+      "bytes": 126939688,
+      "sha256": "61ab14cd750fc24d5db53490ec5fc40f756e4b6e136b78cf7004265471d9bd1d"
+    },
+    "current_host": {
+      "version": "v24.22.3",
+      "bytes": 126951512,
+      "sha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa"
+    },
+    "official_download": {
+      "url": "https://nodejs.org/dist/v24.22.1/node-v24.22.1-linux-x64.tar.xz",
+      "started_at_utc": "2026-11-21T00:07:58.399698+00:00",
+      "archive_bytes": 32026916,
+      "archive_sha256": "6c172a9ab6718f7b801fb5a7bd486af2ee5e32758086a04b84fcce2aa77095e6",
+      "binary_path": "/workspace/scratch/7010345bc259/environment/node-v24.22.1",
+      "binary_bytes": 126879696,
+      "binary_sha256": "e32e2d16081cf644f88392934288086e7662529d0d43277c34f7aad2207cfafb",
+      "expected_binary_sha256": "61ab14cd750fc24d5db53490ec5fc40f756e4b6e136b78cf7004265471d9bd1d",
+      "matches_historical_pin": false
+    },
+    "historical_search": "C262 direct archive inventory and 246 selected JSON manifests searched; no matching executable identified. No full offline restoration or nested Git-object traversal claim."
+  },
+  "independent_review": {
+    "status": "complete_not_eligible",
+    "reviewer": "/root/intake_review",
+    "verdict": "not_eligible_for_R03_acceptance",
+    "minimal_repair_approved_for_retained_partial": true,
+    "partial_handoff_supported": true,
+    "r03_accepted": false,
+    "integration_approved": false,
+    "parent_closure_approved": false,
+    "record": "FINAL-ACCEPTANCE.json",
+    "evidence_predicates_passed": 73,
+    "working_record_predicates_passed": 18,
+    "failed_final_predicates": 0,
+    "counts_are_product_tests": false
+  },
+  "integration": {
+    "performed": false,
+    "main_lease_held": false,
+    "main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+    "branch": "work/c271-missing-import-digest-control",
+    "branch_disposition": "retained_unmerged",
+    "pr": 274,
+    "pr_draft": true,
+    "issue": 273,
+    "issue_open": true
+  },
+  "requirements": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "parent_plan": {
+    "P01": "done",
+    "P02": "in_progress"
+  },
+  "active_current_operations": [],
+  "unknown_current_operations": [],
+  "historical_unknowns": "Earlier C270 interrupted broad-driver completion/global prior-process disposition remain unknown.",
+  "next_action": "In a fresh bounded C271 validation-preparation phase, obtain the authenticated historical Node build with SHA-256 61ab14cd750fc24d5db53490ec5fc40f756e4b6e136b78cf7004265471d9bd1d (126939688 bytes) and establish unchanged C225 runtime/path/alias checks. If those bytes cannot be recovered, define a separately reviewed current-host qualification approach while preserving all frozen historical records and expectations. Only after prerequisites pass, run the complete required routine driver with a justified 3600-second per-command timeout and obtain independent R03 acceptance. Retain per-source limits and every required test; no blind rerun or pin replacement.",
+  "delivery": {
+    "status": "pending",
+    "partial": true,
+    "receipt": "P03-DELIVERY.json"
+  },
+  "limits": [
+    "No complete routine, integration, parent closure or H22/C260/product qualification",
+    "No hosted CI, native/model trials, source budget or frozen contract changes",
+    "Evidence predicates and archive checks are not product tests"
+  ]
+}

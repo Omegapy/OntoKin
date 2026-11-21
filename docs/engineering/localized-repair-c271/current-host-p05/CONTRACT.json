@@ -1,0 +1,444 @@
+{
+  "schema": "ontokin.current-host-readback-design/0.1.0",
+  "contract": "ontokin.current-host-readback/0.1.0",
+  "status": "draft_pending_independent_review",
+  "source_baseline": {
+    "commit": "743409619a8663682750b0ca29c50547a25dde41",
+    "tree": "8202185735f50aa91078a9206c351d917084ed16"
+  },
+  "scope": "Explicit current-host provider for original synthetic CPU readback regression methods; no native schedule authority",
+  "implemented": false,
+  "runtime_qualified": false,
+  "R03_accepted": false,
+  "main_integration": false,
+  "proposed_paths": {
+    "provider": "prototypes/static_tray_v01/current_host_readback_v01.py",
+    "probe": "prototypes/static_tray_v01/current_host_readback_v01.mjs",
+    "preparer": "tools/prepare_current_host_readback.py",
+    "test_setup": "tests/test_static_tray_readback_v01.py",
+    "driver": "tools/check_local.py"
+  },
+  "proposed_source_sha256": null,
+  "proposed_source_identity_reason": "Implementation deliberately deferred; future gate must bind exact proposed bytes before execution",
+  "schemas": {
+    "manifest": "ontokin.current-host-readback-lock/0.1.0",
+    "host": "ontokin.current-host-readback-host/0.1.0",
+    "result": "ontokin.current-host-readback-result/0.1.0",
+    "config": "ontokin.current-host-readback-config/0.1.0"
+  },
+  "runtime": {
+    "schema": "ontokin.c271.p05-runtime-candidate-static/1",
+    "observed_at_utc": "2026-11-21T03:08:14.669483+00:00",
+    "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "resolved_path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "symlink": false,
+    "bytes": 126951512,
+    "sha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+    "mode": "0o755",
+    "selected_required_version": "v24.22.1",
+    "version_executed_this_phase": false,
+    "runtime_qualified": false,
+    "purpose": "Freeze explicit proposed candidate identity before any future selected execution; static bytes only, not historical restoration or version/behavior equivalence"
+  },
+  "dependencies": {
+    "external_files": 24,
+    "validator": "2.0.0-dev.3.10",
+    "three": "0.186.1",
+    "three_revision": "186",
+    "source_manifest": "docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json",
+    "archive": "docs/engineering/ownership-recovery-c195/evidence/recorded-evidence.tar.xz",
+    "archive_sha256": "b1e54a6cfef133f7004b1988c90bc718fc954409843c2bcac3772d42e904a0c9",
+    "installation": "external-task-specific-absent-or-complete-exact-nonreplacing"
+  },
+  "selection": {
+    "driver_flag": "--readback-config",
+    "path_env": "ONTOKIN_CURRENT_HOST_READBACK_CONFIG",
+    "digest_env": "ONTOKIN_CURRENT_HOST_READBACK_CONFIG_SHA256",
+    "absent_behavior": "fail_preparation_or_setUpClass_not_skip",
+    "list_only": "no runtime execution",
+    "historical_fallback": false,
+    "driver_digest_flag": "--readback-config-sha256",
+    "approval": "expected config digest frozen in separate independently reviewed execution plan; compare before preparation; never self-approve observed bytes"
+  },
+  "api": {
+    "prepare": "prepare_case_manifest(output, *, config_path, config_sha256, source_root, schedule_root) -> (manifest, manifest_sha256)",
+    "verify": "verify_case_manifest(path, *, config_path, config_sha256, source_root, schedule_root) -> (manifest, manifest_sha256)",
+    "process": "guarded_run_process(argv, *, stage, label, clock, stage_end, env=None, on_started=None, cancel_after_ms=None) -> original process record or preserved original Stop"
+  },
+  "source_binding": "clean_commit_tree_and_complete_execution_closure; explicit isolated-workspace derivation with identical source and preserved parent config; recheck before/after",
+  "method_ids": [
+    "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_result_write_failure_leaves_predecessor_gate_blocked",
+    "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup",
+    "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm",
+    "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending",
+    "test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries",
+    "test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries",
+    "test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference"
+  ],
+  "method_preservation": "same IDs and unchanged original test/check_case/run_seam bodies; future setup/import/decorator change reviewed separately",
+  "historical_protected": [
+    "prototypes/static_tray_v01/format_check.py",
+    "prototypes/static_tray_v01/readback.mjs",
+    "docs/engineering/readback-prerequisites-c225/restore_readback_prerequisites.py",
+    "docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json",
+    "docs/engineering/static-tray-qualification-c199/evidence/preflight/HOST-RUNTIME-INVENTORY.json",
+    "docs/engineering/ownership-recovery-c195/evidence/recorded-evidence.tar.xz",
+    "tests/test_static_tray_reader_v01.py",
+    "prototypes/static_tray_v01/supervisor.py",
+    "prototypes/static_tray_v01/transaction.py",
+    "prototypes/static_tray_v01/lock.py",
+    "prototypes/static_tray_v01/canonical.py"
+  ],
+  "historical_replay": "original pinned checkout only; revised setup must not pass old C225 source guard",
+  "limits": {
+    "source_operations": 100000,
+    "source_ms": 30000,
+    "host_ms": 30000,
+    "child_work_ms": 28000,
+    "cleanup_ms": 2000,
+    "glb_bytes": 8388608,
+    "result_bytes": 4194304,
+    "log_bytes": 4194304,
+    "manifest_bytes": 1048576,
+    "audit_bytes": 4194304,
+    "job_bytes": 32768,
+    "node_inspection_seconds": 5
+  },
+  "numeric": {
+    "position_tolerance_m": 5e-06,
+    "matrix_tolerance": 1e-06,
+    "normal_tolerance": 1e-06,
+    "nodes": 14,
+    "meshes": 12,
+    "scenes": 1,
+    "animations": 0,
+    "cameras": 0,
+    "negative_delta": 0.001,
+    "negative_field": "equipment-tray/pair/left/base.world_matrix[0][3]"
+  },
+  "node_flags": [
+    "--no-addons",
+    "--max-old-space-size=256"
+  ],
+  "node_environment": {
+    "PATH": "/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "UV_THREADPOOL_SIZE": "2"
+  },
+  "native_schedule": "original12rows_structural_only_schedule_must_remain_absent_no_native_authority",
+  "controls": [
+    {
+      "id": "CH01",
+      "requirement": "executable bytes",
+      "input_mutation": "Change the selected executable digest or byte count",
+      "expected": "Static preparation fails before version/ldd/checker execution",
+      "evidence_kind": "real isolated file/input mutation",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH02",
+      "requirement": "executable mode/path",
+      "input_mutation": "Wrong executable mode, resolved path, symlink or alias binding",
+      "expected": "Refuse before preparation processes and checker execution",
+      "evidence_kind": "real isolated file/input mutation",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH03",
+      "requirement": "supported version",
+      "input_mutation": "Declared version differs from v24.22.1; separately simulate an observed version mismatch at the command boundary",
+      "expected": "Declared mismatch refuses before launch; simulated observed mismatch is failed preparation and cannot establish actual runtime behavior",
+      "evidence_kind": "real config mutation plus labeled mocked response control",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH04",
+      "requirement": "runtime closure",
+      "input_mutation": "Remove or mutate a bound shared library, loader configuration, or required alias",
+      "expected": "Preparation/execution preflight refuses; no checker starts",
+      "evidence_kind": "real isolated file/input mutation",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH05",
+      "requirement": "inspector provenance",
+      "input_mutation": "Change ldd/inspector/interpreter binding or inject environment overrides",
+      "expected": "Refuse before affected inspection command or checker",
+      "evidence_kind": "real isolated config/input mutation",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH06",
+      "requirement": "dependency inventory",
+      "input_mutation": "Omit, append, mutate or rename one of the exact24 dependency files or add an extra directory",
+      "expected": "Refuse incomplete or changed dependency tree before checker",
+      "evidence_kind": "real isolated dependency mutation",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH07",
+      "requirement": "dependency path safety",
+      "input_mutation": "Create a symlink/hardlink/special/traversing/duplicate archive entry or unexpected mode",
+      "expected": "Refuse extraction/installation before executing any recovered code",
+      "evidence_kind": "real isolated archive/filesystem control",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH08",
+      "requirement": "installation state",
+      "input_mutation": "Use partial, extra, changed, symlinked or inaccessible existing destination; race no-replace publication",
+      "expected": "Refuse without replacing/deleting original content; record observed state; unknown rename stays unknown until readback",
+      "evidence_kind": "real isolated filesystem control",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH09",
+      "requirement": "source ownership",
+      "input_mutation": "Use another checkout/root/commit/tree, untracked executable file, changed provider/probe or copied source mismatch",
+      "expected": "Refuse source or workspace derivation before checker",
+      "evidence_kind": "real isolated source/input mutation",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH10",
+      "requirement": "time of use",
+      "input_mutation": "Change source/runtime/dependency/config after preflight or between checks",
+      "expected": "Invalidate current attempt; prelaunch change yields zero new starts; postlaunch change prevents qualification and remains failed evidence",
+      "evidence_kind": "real isolated mutation with explicit synchronization",
+      "expected_checker_starts": null,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH11-P",
+      "requirement": "schema and manifest identity",
+      "input_mutation": "Use old/unknown schema, altered manifest bytes/digest or self-declared unapproved configuration",
+      "expected": "Parent manifest/source preflight refuses before checker; old provider keeps rejecting new schema",
+      "evidence_kind": "real isolated parent-side manifest mutation",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH11-C",
+      "requirement": "schema and manifest identity",
+      "input_mutation": "Use old/unknown schema, altered manifest bytes/digest or self-declared unapproved configuration",
+      "expected": "Direct new probe records one actual Node start and rejects schema/binding before dynamic reader imports; no successful qualification",
+      "evidence_kind": "separately declared direct-probe negative",
+      "expected_checker_starts": 1,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH12",
+      "requirement": "options and launch",
+      "input_mutation": "Alter environment/limit/options/role/flags/argv/slot ordering/count/case/route/result destination",
+      "expected": "Refuse exact manifest/launch binding before checker",
+      "evidence_kind": "real isolated manifest mutation",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH13",
+      "requirement": "selection absent",
+      "input_mutation": "Omit config, digest, driver explicit selection or provide malformed/unknown selection",
+      "expected": "Driver preparation/direct original-module setup fails visibly; no skip or substitute methods",
+      "evidence_kind": "real CLI/environment control",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH14",
+      "requirement": "workspace derivation",
+      "input_mutation": "Retarget isolated provider/probe to original checkout or edit parent config in place",
+      "expected": "Refuse unbound derived root or parent/config hash mismatch",
+      "evidence_kind": "real isolated workspace/control",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH15",
+      "requirement": "negative GLB reference",
+      "input_mutation": "Run original Q01 negative with exactly +0.001 designated matrix translation and explanatory scope only",
+      "expected": "Original test passes through real rejection: exact intended matrix_0_3 finding; no relaxed numerical check",
+      "evidence_kind": "original method, real Node checker",
+      "expected_checker_starts": 1,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH16",
+      "requirement": "positive real reader cases",
+      "input_mutation": "Run original Q01/Q03 synthetic case without mutations",
+      "expected": "Both retained libraries read actual bytes, complete probes/hash/numerical/input-preservation and cleanup predicates pass",
+      "evidence_kind": "original methods, real Node checkers",
+      "expected_checker_starts": 2,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH17",
+      "requirement": "coordinator finalization",
+      "input_mutation": "Run all original four seams including write-failure/pending-marker and remaining-alarm checks",
+      "expected": "All four original test outcomes recorded; mocked seams labeled, no native cleanup claim",
+      "evidence_kind": "original mocked coordinator methods",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH18",
+      "requirement": "discovery completeness",
+      "input_mutation": "Exclude a module/class, rename/remove a required method, hide a skip/expected failure or change a generated case inventory",
+      "expected": "Inventory/acceptance refuses even if aggregate process exits0",
+      "evidence_kind": "actual discovery inventory and controlled evidence mutation",
+      "expected_checker_starts": 0,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH19",
+      "requirement": "process/output/finalization failure",
+      "input_mutation": "Exercise all mapped supervisor timeout/log/output/cleanup and uncertain finalization obligations selected for changed boundary",
+      "expected": "Original limits/consequences retained; no unknown child or pending marker is labeled passed; all process attempts retained",
+      "evidence_kind": "existing tests plus independently predeclared meaningful fault controls",
+      "expected_checker_starts": null,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    },
+    {
+      "id": "CH20",
+      "requirement": "input/output limits",
+      "input_mutation": "Oversize/mutate job/manifest/audit/GLB/result/log or introduce external resource fetch",
+      "expected": "Original pre-import/read/write/output refusals and limits retained; record attempted and actual starts by stage",
+      "evidence_kind": "real bounded input mutation or labeled process boundary control",
+      "expected_checker_starts": null,
+      "status": "predeclared_design_not_executed",
+      "future_fixture_freeze_required": true
+    }
+  ],
+  "gates": [
+    {
+      "id": "D",
+      "scope": "P05 design and complete map independently accepted; save partial and stop",
+      "status": "pending"
+    },
+    {
+      "id": "I",
+      "scope": "fresh phase implementation and focused checks; independent review",
+      "status": "not_started"
+    },
+    {
+      "id": "H",
+      "scope": "eligible actual host and exact source/input control qualification; original7 outcomes",
+      "status": "not_started"
+    },
+    {
+      "id": "R",
+      "scope": "later complete default routine and independent R03 acceptance",
+      "status": "not_started"
+    },
+    {
+      "id": "R04",
+      "scope": "later leased integration and actual-main checks",
+      "status": "not_started"
+    },
+    {
+      "id": "R05",
+      "scope": "final full-parent delivery and closure",
+      "status": "not_started"
+    }
+  ],
+  "revision": "draft-002",
+  "explicit_package_method_ids": [
+    "tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_result_write_failure_leaves_predecessor_gate_blocked",
+    "tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup",
+    "tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm",
+    "tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending",
+    "tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries",
+    "tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries",
+    "tests.test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference"
+  ],
+  "method_id_aliases": [
+    {
+      "default": "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_result_write_failure_leaves_predecessor_gate_blocked",
+      "explicit_package": "tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_result_write_failure_leaves_predecessor_gate_blocked",
+      "identity_basis": "same source path, class, method and body hash; retain actual raw IDs and distinct execution attempts"
+    },
+    {
+      "default": "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup",
+      "explicit_package": "tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup",
+      "identity_basis": "same source path, class, method and body hash; retain actual raw IDs and distinct execution attempts"
+    },
+    {
+      "default": "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm",
+      "explicit_package": "tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm",
+      "identity_basis": "same source path, class, method and body hash; retain actual raw IDs and distinct execution attempts"
+    },
+    {
+      "default": "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending",
+      "explicit_package": "tests.test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending",
+      "identity_basis": "same source path, class, method and body hash; retain actual raw IDs and distinct execution attempts"
+    },
+    {
+      "default": "test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries",
+      "explicit_package": "tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries",
+      "identity_basis": "same source path, class, method and body hash; retain actual raw IDs and distinct execution attempts"
+    },
+    {
+      "default": "test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries",
+      "explicit_package": "tests.test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries",
+      "identity_basis": "same source path, class, method and body hash; retain actual raw IDs and distinct execution attempts"
+    },
+    {
+      "default": "test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference",
+      "explicit_package": "tests.test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference",
+      "identity_basis": "same source path, class, method and body hash; retain actual raw IDs and distinct execution attempts"
+    }
+  ],
+  "process_adapter": {
+    "call_site": "explicit future import guarded_run_process as run_process; unchanged original check_case body",
+    "preflight": "verify config/job/manifest/source/runtime/dependencies before original supervisor call",
+    "delegation": "exactly once; original arguments/Clock/stage_end/environment/callback semantics; no deadline extension",
+    "postflight": "verify all declared bindings and clock after every supervisor outcome",
+    "provider_error": "CurrentHostBindingError(RuntimeError), not Stop; retain actual receipt/cause; cannot be swallowed by expected negative Stop handling",
+    "genuine_supervisor_stop": "re-raise same Stop with process_record if postflight passes",
+    "evidence": "durable external attempt ledger including no-start and failed/unknown; setup failure self-finalizes because tearDownClass may not run; post-start receipts retained",
+    "own_clock_stop": "Wrap adapter Clock.check/binding Stop as distinct provider RuntimeError while retaining original timeout/state metadata/cause; only genuine delegated Stop can be re-raised",
+    "cancellation": "Original optional cancel_after_ms=None signature; non-None admitted only for identified independently frozen fault-control case; no ambient/default selection"
+  },
+  "runtime_preservation": {
+    "receipt": "RUNTIME-CANDIDATE-LOCATION.json",
+    "artifact": "OntoKin_C271_P05_Node_Candidate_2026-11-20.tar.gz",
+    "contents": [
+      "bin/node",
+      "SOURCE.json"
+    ],
+    "installed": false,
+    "executed": false,
+    "qualified": false
+  }
+}

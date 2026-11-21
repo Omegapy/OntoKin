@@ -1,0 +1,63 @@
+{
+  "schema": "ontokin.c271.p05-documentary-checks/1",
+  "source_state": {
+    "head": "d98ccf018f6f7039de5d50131f74acbaeccd7744",
+    "tree": "7fca172e44c038687ba02044315da7cb8feaf7cb",
+    "status": "M docs/engineering/localized-repair-c271/current-host-p05/PHASE.json\n M docs/workflow/CURRENT.json\n M docs/workflow/tasks/C271/P05-SESSION.md\n M docs/workflow/tasks/C271/PLAN.md\n M docs/workflow/tasks/C271/REQUIREMENTS.md\n M docs/workflow/tasks/C271/task.json\n?? docs/engineering/localized-repair-c271/current-host-p05/ADOPTION.json\n?? docs/engineering/localized-repair-c271/current-host-p05/ADOPTION.md\n?? docs/engineering/localized-repair-c271/current-host-p05/CONTRACT.json\n?? docs/engineering/localized-repair-c271/current-host-p05/CONTRACT.md\n?? docs/engineering/localized-repair-c271/current-host-p05/DRAFT-ARTIFACTS.json\n?? docs/engineering/localized-repair-c271/current-host-p05/IMPLEMENTATION-PLAN.md\n?? docs/engineering/localized-repair-c271/current-host-p05/LEARNING-DECISION.json\n?? docs/engineering/localized-repair-c271/current-host-p05/PHASE-OUTCOME.json\n?? docs/engineering/localized-repair-c271/current-host-p05/README.md\n?? docs/engineering/localized-repair-c271/current-host-p05/REVISION-002.json\n?? docs/engineering/localized-repair-c271/current-host-p05/RUNTIME-CANDIDATE-ARCHIVE-VERIFICATION.json\n?? docs/engineering/localized-repair-c271/current-host-p05/RUNTIME-CANDIDATE-LOCATION.json\n?? docs/engineering/localized-repair-c271/current-host-p05/RUNTIME-CANDIDATE-STATIC.json\n?? docs/engineering/localized-repair-c271/current-host-p05/mapping/\n?? docs/engineering/localized-repair-c271/current-host-p05/review/"
+  },
+  "clean_source_required": false,
+  "checks": [
+    {
+      "name": "workflow",
+      "argv": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/7536ba80cf21/OntoKin",
+      "started_at_utc": "2026-11-21T03:35:03.821518+00:00",
+      "completed_at_utc": "2026-11-21T03:35:03.936005+00:00",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "workflow.log",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "name": "documentation",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/7536ba80cf21/OntoKin",
+      "started_at_utc": "2026-11-21T03:35:03.936074+00:00",
+      "completed_at_utc": "2026-11-21T03:35:06.408106+00:00",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "documentation.log",
+      "bytes": 6608,
+      "sha256": "0848b416aa75ecc93dcab6f973f8f32a9b284ac50ee810f1d015f2a7c1da393c"
+    },
+    {
+      "name": "whitespace",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/workspace/scratch/7536ba80cf21/OntoKin",
+      "started_at_utc": "2026-11-21T03:35:06.408160+00:00",
+      "completed_at_utc": "2026-11-21T03:35:06.440203+00:00",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "whitespace.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "all_passed": true,
+  "source_unchanged": true,
+  "scope": "Documentation/workflow/whitespace only; no product tests, Node, ldd, full routine or integration"
+}

@@ -1,0 +1,65 @@
+{
+  "attempt": 1,
+  "status": "audit_assertion_assumptions_corrected_no_package_change",
+  "first_check_count": 1933,
+  "first_failed_count": 3,
+  "records": [
+    {
+      "path": "/workspace/scratch/cce28e2b3ca4/reviews/c271-final-package-audit/ATTEMPT-01-AUDIT.json",
+      "bytes": 599031,
+      "sha256": "e4d73a697512d1ad6a2796f5d9ff0ca34ff2ef597e5312925d2e5cf938b93259"
+    },
+    {
+      "path": "/workspace/scratch/cce28e2b3ca4/reviews/c271-final-package-audit/ATTEMPT-01-REVIEW.md",
+      "bytes": 3508,
+      "sha256": "265713808eba74258d3b0f1dc75f09af69eb1de5020a061834effe77b5bc14af"
+    },
+    {
+      "path": "/workspace/scratch/cce28e2b3ca4/reviews/c271-final-package-audit/ATTEMPT-01-audit_final_package.py",
+      "bytes": 35251,
+      "sha256": "a4230cc58e5c6c67be709fea8798e93a9d78fcabe374499378370863a81d7764"
+    }
+  ],
+  "corrections": [
+    {
+      "checks": [
+        "PROMPT-1-CONTINUE.md",
+        "PROMPT-2-RECOVER.md"
+      ],
+      "cause": "Literal check required PR274; human-readable prompts correctly say PR 274.",
+      "resolution": "Require the actual printed PR 274 token and unchanged identity bytes."
+    },
+    {
+      "check": "docs/engineering/localized-repair-c261/hinge_glb.py",
+      "cause": "Availability assertion allowed only a direct original-path entry, although this online continuation package preserves the original path and exact executed blob in RESULTS and three exact-source external aliases.",
+      "resolution": "Verify source and executed original-path Git blobs independently; accept an external original path or declared alias only when its exact blob and mode match. Record all aliases explicitly.",
+      "original_git_blob": "933c2cd18917ce531a781c03caf5b15c553c5206",
+      "aliases": [
+        {
+          "git_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+          "git_path": "docs/engineering/localized-repair-c266/evidence/review/dependency-supplement/original-code/localized-repair-c261/hinge_glb.py",
+          "git_blob": "933c2cd18917ce531a781c03caf5b15c553c5206",
+          "git_mode": "100644",
+          "url": "https://github.com/Omegapy/OntoKin/blob/e0b73f7d6ce49631e598d1378a0ddba717726524/docs/engineering/localized-repair-c266/evidence/review/dependency-supplement/original-code/localized-repair-c261/hinge_glb.py"
+        },
+        {
+          "git_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+          "git_path": "docs/engineering/localized-repair-c268/evidence/finalization-20261119/review/capture-probes/copied-code/docs/engineering/localized-repair-c261/hinge_glb.py",
+          "git_blob": "933c2cd18917ce531a781c03caf5b15c553c5206",
+          "git_mode": "100644",
+          "url": "https://github.com/Omegapy/OntoKin/blob/e0b73f7d6ce49631e598d1378a0ddba717726524/docs/engineering/localized-repair-c268/evidence/finalization-20261119/review/capture-probes/copied-code/docs/engineering/localized-repair-c261/hinge_glb.py"
+        },
+        {
+          "git_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524",
+          "git_path": "docs/engineering/localized-repair-c268/evidence/review/run-01/copied-code/docs/engineering/localized-repair-c261/hinge_glb.py",
+          "git_blob": "933c2cd18917ce531a781c03caf5b15c553c5206",
+          "git_mode": "100644",
+          "url": "https://github.com/Omegapy/OntoKin/blob/e0b73f7d6ce49631e598d1378a0ddba717726524/docs/engineering/localized-repair-c268/evidence/review/run-01/copied-code/docs/engineering/localized-repair-c261/hinge_glb.py"
+        }
+      ]
+    }
+  ],
+  "archive_changed": false,
+  "prompts_changed": false,
+  "product_behavior_rerun": false
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "ontokin.record-checks/1",
+  "checked_at_utc": "2026-11-20T23:15:48.072192+00:00",
+  "source_parent": "15b1dd985b59cf037ebbeae733c16a54ca87f83d",
+  "scope": "Working-tree blocked-phase records; final clean published candidate still requires fresh record checks.",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "log": "workflow.log",
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "log": "documentation.log",
+      "sha256": "42def30885a80a131e3191d5ffccbfd3ce651a4438c804c9f3713d7f3b041c1e"
+    }
+  ],
+  "passed": true
+}

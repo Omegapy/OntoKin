@@ -1,0 +1,24 @@
+{
+  "schema": "ontokin.c271.p07-learning-decision/1",
+  "decision": "no_new_general_pattern",
+  "scope": "P07 design-only phase",
+  "existing_lookup": {
+    "command": [
+      "python3",
+      "-B",
+      "tools/chat_workflow.py",
+      "lookup",
+      "current host inspection"
+    ],
+    "observed_result": "no matching pattern returned",
+    "source_revision": "f980ad31eb2af9d7e8b1b233b84e21ee662730fd"
+  },
+  "reason": "The distinction between separately approved execution inputs and observed evidence is already an adopted P05/P06 obligation. P07 gives it a concrete authoring design, but supplies no new implementation or runtime outcome from which to generalize a further verified engineering pattern. Keep the source-backed decision in this phase design and revisit learning only if a later bounded implementation produces distinct evidence.",
+  "retained_decisions": [
+    "Separate inspection-plan approval from observed HOST/configuration approval.",
+    "Preserve unsuccessful or unresolved attempts in sidecars rather than altering closed success-only P06 records.",
+    "Count direct launcher receipts separately from descendant processes and mocked test seams."
+  ],
+  "new_pattern_files": [],
+  "runtime_claim": false
+}

@@ -1,0 +1,38 @@
+{
+  "recorded_at_utc": "2026-11-21T00:22:41.733323+00:00",
+  "source": {
+    "commit": "633c5097b2c5b870a13baa33a095a91eaa241eea",
+    "tree": "7f8eb385de71c6dd202389ad09113b779a6dc4b8"
+  },
+  "source_clean_and_unchanged": true,
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "returncode": 0,
+      "seconds": 0.117,
+      "log": "workflow.log",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "returncode": 0,
+      "seconds": 2.106,
+      "log": "documentation.log",
+      "bytes": 6608,
+      "sha256": "6b20d40e3629ae2746bc505c24935a05e0580f8991295ba1de480c031ff865df"
+    }
+  ],
+  "scope": "Final published record/navigation verification only. Behavioral checks remain attributed to fea1aa6f; R03 stays unmet."
+}

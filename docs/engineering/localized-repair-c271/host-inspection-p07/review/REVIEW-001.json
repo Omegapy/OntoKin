@@ -1,0 +1,30 @@
+{
+  "schema": "ontokin.c271.p07-independent-design-review/1",
+  "reviewer": "/root/intake_review",
+  "recorded_at_utc": "2026-11-21T06:30:44.617516+00:00",
+  "candidate": "review-candidate-001",
+  "verdict": "CHANGES_REQUIRED",
+  "findings": [
+    {
+      "id": "P07-R01",
+      "severity": "mandatory",
+      "title": "Interrupted launch requires an unknown actual-start count",
+      "candidate": "review-candidate-001",
+      "candidate_manifest_sha256": "509d97fc3c85c82e210ee2fa084cc772ca8deaddffcffecb1340ce24753ddbb5",
+      "locations": [
+        "HOST-INSPECTION-DESIGN.md \u00a77 sidecar count contract",
+        "QUALIFICATION-PLAN.md \u00a74 process denominators",
+        "CONTROL-MATRIX.json HI14/HI18/HI19"
+      ],
+      "observed": "Candidate-001 restricts actual_direct_starts to 0 or 1. Interruption after Popen but before durable callback may leave an intent with no start evidence, so neither exact zero nor exact one is established.",
+      "source_support": [
+        "prototypes/static_tray_v01/supervisor.py: run_process creates the child before invoking on_started",
+        "docs/workflow/PROTOCOL.md \u00a78: unknown outcomes must be preserved and reconciled before retry"
+      ],
+      "impact": "A forced integer can turn missing evidence into a false zero and undercount an unresolved attempt.",
+      "required_resolution": "Distinguish exact actual count from retained observed/lower-bound count; represent unresolved actual count as null/UNKNOWN; require positive proof for zero or one; propagate unknown through aggregate counts; block success and automatic retry; preserve initial candidate."
+    }
+  ],
+  "scope": "Design only; preliminary source criteria remain separate.",
+  "superseding_review": "REVIEW-002.json"
+}

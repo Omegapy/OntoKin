@@ -1,0 +1,63 @@
+{
+  "schema": "ontokin.c271.p05-documentary-checks/1",
+  "source_state": {
+    "head": "405c0c9ec35e50b4dd13b8779a31f822dc45f61f",
+    "tree": "ce3d5bfb1769ebbd1f50f86297002d30a95cbcfd",
+    "status": ""
+  },
+  "clean_source_required": true,
+  "checks": [
+    {
+      "name": "workflow",
+      "argv": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/7536ba80cf21/OntoKin",
+      "started_at_utc": "2026-11-21T03:38:14.076308+00:00",
+      "completed_at_utc": "2026-11-21T03:38:14.190653+00:00",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "workflow.log",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "name": "documentation",
+      "argv": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/7536ba80cf21/OntoKin",
+      "started_at_utc": "2026-11-21T03:38:14.190703+00:00",
+      "completed_at_utc": "2026-11-21T03:38:16.360655+00:00",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "documentation.log",
+      "bytes": 6608,
+      "sha256": "55e26820c135707c34a352c2678b526485d6c5ac13d05bedce0fb3943c10269a"
+    },
+    {
+      "name": "whitespace",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/workspace/scratch/7536ba80cf21/OntoKin",
+      "started_at_utc": "2026-11-21T03:38:16.360695+00:00",
+      "completed_at_utc": "2026-11-21T03:38:16.377447+00:00",
+      "exit_code": 0,
+      "result": "passed",
+      "log": "whitespace.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "all_passed": true,
+  "source_unchanged": true,
+  "scope": "Documentation/workflow/whitespace only; no product tests, Node, ldd, full routine or integration"
+}

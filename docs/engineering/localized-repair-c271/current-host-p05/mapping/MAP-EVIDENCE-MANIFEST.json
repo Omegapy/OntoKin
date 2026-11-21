@@ -1,0 +1,120 @@
+{
+  "archive": {
+    "path": "MAP-EVIDENCE.zip",
+    "sha256": "e959d8df7a19327979e6f63508239950a3fa2e1aa59f1227ca610014bfc98db3",
+    "size_bytes": 1783600
+  },
+  "member_count": 13,
+  "members": [
+    {
+      "path": "DEFAULT-DISCOVERY-INVENTORY.json",
+      "sha256": "5944d90a0e01a8e9bf63bae9314efab547cb5fb8ff82069e6b2bcd7e4f77d370",
+      "size_bytes": 4986370
+    },
+    {
+      "path": "DEPENDENCY-INVENTORY.json",
+      "sha256": "4faac71190212b90ae2005ce177462e58cc003f8038631b3b2928581046143e9",
+      "size_bytes": 29708
+    },
+    {
+      "path": "KNOWN-CALLBACKS.json",
+      "sha256": "358b878528d1ef1cacd7e5ad1593e20dd1fbc59370eb3254cb95ada71ebda98c",
+      "size_bytes": 5401
+    },
+    {
+      "path": "METHOD-PREDICATE-MAP.json",
+      "sha256": "53c6b75a335cf55d018de252a4cb250dcd74599b9f6c3059100114589da14bf0",
+      "size_bytes": 1845314
+    },
+    {
+      "path": "PREDICATES.json",
+      "sha256": "9d431652aff0828e38f133fdfb4e72ad74299dcdc24b846d23c1184ed5f418e4",
+      "size_bytes": 5124341
+    },
+    {
+      "path": "PRESERVATION-DISPOSITIONS.json",
+      "sha256": "d5aa32d631af59b80989aec43b9e9a072e2e3de5f324a963fca57a1f886b5006",
+      "size_bytes": 187907
+    },
+    {
+      "path": "SCOPED-EXCLUSIONS.json",
+      "sha256": "9a2a8e48220dcf4d6ee4a0b2ea9ca74c3fefbb5c11968da4dfa0a317f488d5a0",
+      "size_bytes": 3118
+    },
+    {
+      "path": "SOURCE-INVENTORY.json",
+      "sha256": "a00a52537dbf8072149b66022b26e8d2388bba965a0af4b53259960c24dd9465",
+      "size_bytes": 180894
+    },
+    {
+      "path": "STATIC-VALIDATION.json",
+      "sha256": "bd73f2212ad81a497c52acff801a7fcefa5544dfa75e55d89cc25e75dc4e35e8",
+      "size_bytes": 1520
+    },
+    {
+      "path": "SUPERSEDED-PACKAGES.json",
+      "sha256": "a54146c411865236cc8a02b99a1ccce0ab37a20aa14ab87e48ba8f8c4c0c6d01",
+      "size_bytes": 1246
+    },
+    {
+      "path": "annotate_dispositions.py",
+      "sha256": "0b710ea5684e73824b3c929bb66c3322cde2ee94532f51a9b193aa5c25c9b334",
+      "size_bytes": 40051
+    },
+    {
+      "path": "build_inventory.py",
+      "sha256": "b62375114f616f90b0871b4663a3d9782841829425c09fd2b4fd50ed86cc09e1",
+      "size_bytes": 43004
+    },
+    {
+      "path": "freeze_evidence.py",
+      "sha256": "e2cecfec0e0e6d9a09c7af8fdb5469db582b23b0b5b0ec1d8efc63941f95d0cc",
+      "size_bytes": 5850
+    }
+  ],
+  "purpose": "Static source/design evidence; no executable runtime implementation, test result, qualification or integration claim.",
+  "schema": "ontokin.c271.p05-map-evidence-manifest/1",
+  "source_commit": "743409619a8663682750b0ca29c50547a25dde41",
+  "source_tree": "8202185735f50aa91078a9206c351d917084ed16",
+  "superseded_packages": [
+    {
+      "archive_sha256": "db9b2f560daf8b531fb3ffba59daefb477eacf0a0776d52e65f5270ca4fee174",
+      "archive_size_bytes": 1782140,
+      "reason": "Independent reviewer found external node disposition labels incorrectly implied all external bytes and paths stay unchanged. New runtime/stdlib closure must be qualified separately; exact retained dependency bytes may move to explicitly bound external paths. Original source predicates and human map were already correct.",
+      "retained_files": [
+        {
+          "path": "superseded-001/MAP-EVIDENCE.zip",
+          "sha256": "db9b2f560daf8b531fb3ffba59daefb477eacf0a0776d52e65f5270ca4fee174",
+          "size_bytes": 1782140
+        },
+        {
+          "path": "superseded-001/MAP-EVIDENCE-MANIFEST.json",
+          "sha256": "a1b8327f65318064201de484fe5a6c65cdc35665ddd4394f7513f5c7a55a2637",
+          "size_bytes": 2954
+        },
+        {
+          "path": "superseded-001/MAP-SUMMARY.json",
+          "sha256": "4c2572575d2728e15f2ec2208a460977e842aef417a81d4636f597719f7718a1",
+          "size_bytes": 3266
+        }
+      ],
+      "status": "superseded-by-metadata-precision-correction"
+    }
+  ],
+  "total_uncompressed_bytes": 12454724,
+  "verification": {
+    "all_four_seam_callback_closures": true,
+    "all_member_sizes_hashes_and_bytes": true,
+    "crc_integrity": true,
+    "deterministic_reconstruction": true,
+    "exact_member_inventory": true,
+    "safe_relative_paths": true,
+    "unique_names": true
+  },
+  "zip_format": {
+    "compression": "deflate-9",
+    "mode": "0o100644",
+    "order": "lexicographic",
+    "timestamp": "1980-01-01T00:00:00"
+  }
+}
