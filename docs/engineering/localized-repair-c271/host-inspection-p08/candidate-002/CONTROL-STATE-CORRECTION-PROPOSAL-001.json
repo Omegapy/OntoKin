@@ -1,0 +1,183 @@
+{
+  "schema": "ontokin.c271.p08.independent-control-state-correction-proposal/1",
+  "recorded_at_utc": "2026-11-21T15:47:33.417330+00:00",
+  "reviewer": "/root/implementation_review",
+  "state": "PROPOSED_AWAITING_DIRECTOR_APPROVAL_BEFORE_EXECUTION",
+  "execution_authorized": false,
+  "purpose": "Correct four independently frozen exact-state labels to the accepted P07 uncertainty contract before any candidate execution; preserve all original history.",
+  "base_freeze": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/CONTROL-FREEZE-002.json",
+    "bytes": 132463,
+    "sha256": "55ccbcf49c0a7f283813345ec66e07936f3d777076d4b28db74bc46d56111887"
+  },
+  "sources": [
+    {
+      "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p07/HOST-INSPECTION-DESIGN.md",
+      "bytes": 35323,
+      "sha256": "3c29d86d0e3e8fc1b0191bd231013dbf5e5a856764056db1501c0c2918c19bef"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p07/CONTROL-MATRIX.json",
+      "bytes": 52044,
+      "sha256": "dca53a8c59525e86beddd1f9228670f29e665d4a1f67f106dc84f359e0635465"
+    }
+  ],
+  "source_requirements": [
+    {
+      "source": "HOST-INSPECTION-DESIGN.md",
+      "line": 121,
+      "meaning": "Losing the final supervisor write without a process_record leaves final status unknown; retain earlier actual start/logs and refuse a compatible success inspection."
+    },
+    {
+      "source": "HOST-INSPECTION-DESIGN.md",
+      "lines": [
+        163,
+        165
+      ],
+      "meaning": "Historical launch counts and final attempt/evidence state are separate. Positive retained evidence proves one; known counts do not stand in for final receipts."
+    },
+    {
+      "source": "HOST-INSPECTION-DESIGN.md",
+      "line": 169,
+      "meaning": "Unretained failure evidence requires evidence_finalized=false/UNKNOWN; no successful outcome when failure evidence or cleanup is uncertain."
+    },
+    {
+      "source": "CONTROL-MATRIX.json",
+      "rows": [
+        "HI17",
+        "HI18"
+      ],
+      "meaning": "Visible failure preserves original evidence; uncertainty remains UNKNOWN; no retry or replacement."
+    }
+  ],
+  "corrections": [
+    {
+      "id": "HI17-D",
+      "old_exact_field": {
+        "expected_state": "REJECTED"
+      },
+      "proposed_corrected_exact_field": {
+        "expected_state": "UNKNOWN"
+      },
+      "applies_when": "Supervisor loses final process record and raises after the earlier positive start receipt is durable.",
+      "reason": "The supervisor loses its final record and raises without process_record after a retained positive start; final process/cleanup status is unproved. P07 design line 121 explicitly requires unknown final status.",
+      "unchanged_category": "CHI-PROCESS",
+      "unchanged_counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "unchanged_evidence_policy": "started_failure",
+      "unchanged_additional_assertion": "No reconstructed success field; original raw receipt/exception stays unchanged; exact count one comes from the separate retained start."
+    },
+    {
+      "id": "HI18-A",
+      "old_exact_field": {
+        "expected_state": "REJECTED"
+      },
+      "proposed_corrected_exact_field": {
+        "expected_state": "UNKNOWN"
+      },
+      "applies_when": "Inject failure writing/fsyncing reservation, preflight or intent before supervisor entry, one operation per subcase.",
+      "reason": "A real write/file-fsync/directory-fsync failure prevents proof of durable reservation, preflight or intent/failure publication before launch. Persistence status is UNKNOWN; retained boundary proof still proves zero starts.",
+      "unchanged_category": "CHI-EVIDENCE",
+      "unchanged_counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "unchanged_evidence_policy": "evidence_unfinalized",
+      "unchanged_additional_assertion": "No child; retain any committed records; return evidence_finalized=false; never claim durable failure when persistence failed."
+    },
+    {
+      "id": "HI18-B",
+      "old_exact_field": {
+        "expected_state": "REJECTED"
+      },
+      "proposed_corrected_exact_field": {
+        "expected_state": "UNKNOWN"
+      },
+      "applies_when": "After callback with positive PID, fail start-ledger write; preserve actual PID in the supervisor final receipt/outer capture.",
+      "reason": "Start-ledger publication fails after an actual callback; retained callback/final receipt still proves one historical start, but failed evidence finalization remains UNKNOWN.",
+      "unchanged_category": "CHI-EVIDENCE",
+      "unchanged_counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "unchanged_evidence_policy": "evidence_unfinalized",
+      "unchanged_additional_assertion": "Category CHI-EVIDENCE even if supervisor wraps callback error; count stays one; cleanup and original cause/receipt retained."
+    },
+    {
+      "id": "HI18-C",
+      "old_exact_field": {
+        "expected_state": "REJECTED"
+      },
+      "proposed_corrected_exact_field": {
+        "expected_state": "UNKNOWN"
+      },
+      "applies_when": "After a positive mocked start, fail process-outcome/postflight/failure write or directory fsync, separately.",
+      "reason": "A real process-outcome/postflight/failure write or directory-fsync failure leaves finalization unproved after one retained start. Known count one does not prove evidence completion.",
+      "unchanged_category": "CHI-EVIDENCE",
+      "unchanged_counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "unchanged_evidence_policy": "evidence_unfinalized",
+      "unchanged_additional_assertion": "Preserve earlier committed artifacts and actual start; no second command; return failed/unknown evidence state."
+    }
+  ],
+  "state_surface": {
+    "required": "The returned unsuccessful observation/refusal state is UNKNOWN when final process/cleanup or publication durability is unproved. Where a newly retained failure/final sidecar represents this uncertainty, its state is UNKNOWN.",
+    "preserve": "Never rewrite an earlier durable intent/start/completed-command record, the original supervisor exception/process_record, or an uncertain writer temporary merely to make all historical records share the final overall state.",
+    "counts": "actual_counts and affected-command start_count_state keep the exact independently frozen values; UNKNOWN finalization does not turn known zero/one into an unknown historical start count.",
+    "categories": "CHI-PROCESS remains HI17-D; CHI-EVIDENCE remains HI18-A/B/C. No changed category, mutation, process budget, or success/approval boundary."
+  },
+  "unchanged_obligations": [
+    "Original freeze002 and supplement001 remain byte-for-byte unchanged.",
+    "All 109 original control IDs and five positives remain selected; this is no removal or waiver.",
+    "All actual OS/Node/ldd/checker starts in these controls remain zero.",
+    "No compatible success inspection, completion success, next command, retry, replacement, synthetic zero, invented cleanup or erased history.",
+    "Preserve original exception/object identity, raw bytes, intended publication bytes/hash, readback, committed artifacts and caller-captured failure wherever available.",
+    "No H0/H1/qualification/full routine/integration authorization is created."
+  ],
+  "basis": "Independent reread of accepted P07 text and pre-execution test-design review. No candidate imports, compilation, tests, or observed execution results influenced this proposal.",
+  "approval_required": "Director must explicitly approve this immutable proposal and its SHA-256 before affected execution; approval is recorded separately."
+}

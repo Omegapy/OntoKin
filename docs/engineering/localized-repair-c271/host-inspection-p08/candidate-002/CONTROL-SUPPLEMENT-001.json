@@ -1,0 +1,769 @@
+{
+  "schema": "ontokin.c271.p08.independent-control-supplement/1",
+  "recorded_at_utc": "2026-11-21T15:36:26.365352+00:00",
+  "reviewer": "/root/implementation_review",
+  "status": "FROZEN_ORACLES_BEFORE_CANDIDATE_EXECUTION",
+  "base_freeze": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/CONTROL-FREEZE-002.json",
+    "bytes": 132463,
+    "sha256": "55ccbcf49c0a7f283813345ec66e07936f3d777076d4b28db74bc46d56111887"
+  },
+  "base_freeze_unchanged": true,
+  "original_material_variants": 109,
+  "original_positive_controls": 5,
+  "review_source": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/preliminary-002/REVIEW-002.md",
+    "bytes": 14588,
+    "sha256": "c39af0f2f85f2fc442efc420b5de9f56bb1f63ebb4821f2c031b46e569d45bb3"
+  },
+  "implementation_decisions_source": {
+    "path": "/workspace/scratch/8838dfc6e876/session/IMPLEMENTATION-DECISIONS.json",
+    "bytes": 3574,
+    "sha256": "becb40e49cd6951af2fee0ca16be257881dd5aca2edceb63086d2d0baabb2aa4"
+  },
+  "D03": {
+    "id": "P08-D03",
+    "topic": "Caller-owned append capture during reconciliation",
+    "recorded_at_utc": "2026-11-21T15:28:20.724474+00:00",
+    "decision": "Preserve the immutable authority and external plan. Bind the original log prefix and frozen inode/ancestor identities, permitting bounded append-only growth during later reconciliation. Log content never supplies approval.",
+    "basis": "P07 caller-owned outer capture is allowed to grow; complete-module static review found that requiring the initial whole-file hash during reconciliation contradicts that flow. This concretizes the existing capture model without adding any process or preparation authorization.",
+    "constraints": [
+      "Keep the original prefix hash/size and file mode exact.",
+      "Require original log file/ancestor identity, private regular file, no symlink or replacement; reject truncation or changed prefix.",
+      "Use bounded reads and deadlines; do not read an unbounded append tail.",
+      "Include authority/log paths in significant guard coverage.",
+      "Do not rewrite the approved plan or grant approval from log contents."
+    ],
+    "independent_review": "Required on the final exact implementation",
+    "verification_required": [
+      "Legitimate append remains reconcilable",
+      "Prefix alteration, truncation, replacement and symlink are refused",
+      "Authority and ancestor drift remain refusal conditions"
+    ]
+  },
+  "supplement_group_count": 16,
+  "controls": [
+    {
+      "id": "SUP-01",
+      "review_findings": [
+        "PRE-07"
+      ],
+      "links_to_existing_controls": [
+        "HI04-F",
+        "HI06-E",
+        "HI07-A"
+      ],
+      "title": "Git closure before five source reads",
+      "route": "static plan validation with Git subprocess seam mocked",
+      "input_mutation": "Remove one declared DT_NEEDED resolution edge from the Git ELF image while its actual synthetic ELF metadata, other images, source identities and all other bindings remain valid.",
+      "variants": [],
+      "expected": {
+        "category": "CHI-LOADER",
+        "state": "REJECTED",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 0,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": null
+        },
+        "assertions": [
+          "The real closure predicate rejects before the first mocked Git delegation.",
+          "Positive anchor HI-P01 records complete closure/guard checks before exactly five prescribed mocked Git reads.",
+          "No different or sixth Git command and no Node/ldd/checker start."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Reconciliation/projection writes, renames, deletions, signals, retries and new process starts are zero; compare before/after bytes, paths and inode identities. No recorded success supplies approval."
+    },
+    {
+      "id": "SUP-02",
+      "review_findings": [
+        "PRE-08"
+      ],
+      "links_to_existing_controls": [
+        "HI06-C"
+      ],
+      "title": "Coherent but false Python descriptor",
+      "route": "author-runtime static validator with actual synthetic file binding active",
+      "input_mutation": "Change author.python_descriptor.sha256 and runtime_inventory.executable.sha256 to the same different digest; recompute only the enclosing runtime-document descriptor and plan comparator for this negative fixture. Keep runtime.files and the actual Python fixture bytes unchanged.",
+      "variants": [],
+      "expected": {
+        "category": "CHI-INSPECTOR",
+        "state": "REJECTED",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 0,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": null
+        },
+        "assertions": [
+          "Descriptor equality with another claim is insufficient; actual runtime.files/file binding mismatch must reject.",
+          "Do not mock the descriptor-to-file-map equality or the affected file binding."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Reconciliation/projection writes, renames, deletions, signals, retries and new process starts are zero; compare before/after bytes, paths and inode identities. No recorded success supplies approval."
+    },
+    {
+      "id": "SUP-03",
+      "review_findings": [
+        "PRE-08"
+      ],
+      "links_to_existing_controls": [
+        "HI06-C",
+        "HI20-C"
+      ],
+      "title": "Author startup input remains in HOST lock",
+      "route": "static author-runtime to HOST correspondence predicate",
+      "input_mutation": "Keep a required non-source startup file in author runtime.files/startup_files but coherently remove its HOST role member, alias and file row. Keep other HOST set relations and ELF roots valid.",
+      "variants": [],
+      "expected": {
+        "category": "CHI-INSPECTOR",
+        "state": "REJECTED",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 0,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": null
+        },
+        "assertions": [
+          "The omitted admitted author file is detected by the live correspondence predicate.",
+          "No unrelated dummy role may restore success; no whole-environment package audit is added."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Reconciliation/projection writes, renames, deletions, signals, retries and new process starts are zero; compare before/after bytes, paths and inode identities. No recorded success supplies approval."
+    },
+    {
+      "id": "SUP-04",
+      "review_findings": [
+        "PRE-09"
+      ],
+      "links_to_existing_controls": [
+        "HI14-B",
+        "HI17-C"
+      ],
+      "title": "Callback and final process identity disagree",
+      "route": "mocked one-command observation; actual record validator and evidence writes active",
+      "input_mutation": "Invoke one callback with positive PID/group 4242, then return and retain a valid-shape final process receipt with PID/group 5252. Keep argv/environment/cwd/label/logs/cleanup otherwise valid.",
+      "variants": [],
+      "expected": {
+        "category": "CHI-PROCESS",
+        "state": "REJECTED",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 1,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": null
+        },
+        "assertions": [
+          "Reject the callback/final identity disagreement before compatible inspection or ldd delegation.",
+          "Preserve both conflicting records verbatim; do not overwrite the callback or manufacture a second real start.",
+          "One controlled mocked start remains the executed route count. The retained callback proves one observed start; the conflicting final claim is retained as invalid evidence."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Only this fresh attempt may acquire durable failure records; original raw callback/final objects remain unchanged."
+    },
+    {
+      "id": "SUP-05",
+      "review_findings": [
+        "PRE-10"
+      ],
+      "links_to_existing_controls": [
+        "HI18-D",
+        "HI18-E"
+      ],
+      "title": "No retry of uncertain result publication",
+      "route": "two-command mocked observation with result-writer fault",
+      "input_mutation": "After both command mocks succeed, inject an uncertain failure for the first result.json publication and report its destination absent on exact readback.",
+      "variants": [],
+      "expected": {
+        "category": "CHI-EVIDENCE",
+        "state": "UNKNOWN",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 1,
+          "mocked_ldd_starts_during_exercise": 1,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": null
+        },
+        "assertions": [
+          "Exactly one publication attempt targets result.json; absence does not authorize a second write with changed failure bytes.",
+          "No completion marker is attempted after the result publication failure.",
+          "Retain original source/destination/intended hash, exception and readback; caller capture reports evidence_finalized=false.",
+          "One start per command and two mocked starts total remain recorded; no retry or new process."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Preserve every committed record and owned temporary from the failed publication; never replace the result path or delete a competitor."
+    },
+    {
+      "id": "SUP-06",
+      "review_findings": [
+        "PRE-11"
+      ],
+      "links_to_existing_controls": [
+        "HI19-D",
+        "HI20-C"
+      ],
+      "title": "Exact completion command cardinality and order",
+      "route": "read-only reconciliation of an otherwise complete synthetic package",
+      "input_mutation": "Coherently change both result.command_attempts and completion.command_attempts while preserving all nominal command files and two successful historical receipts.",
+      "variants": [
+        "Empty list in both records.",
+        "One-element list in both records.",
+        "Three-element list with a repeated descriptor in both records.",
+        "Two correct descriptors in reversed command order."
+      ],
+      "expected": {
+        "category": "CHI-EVIDENCE",
+        "state": "UNKNOWN",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 0,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": {
+            "node_version": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "shared_libraries": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "direct_starts": {
+              "exact": 2,
+              "observed_lower_bound": 2
+            },
+            "meaning": "Synthetic historical fixture receipts only; no processes run during reconciliation."
+          }
+        },
+        "assertions": [
+          "Reject each nonexact two-command list before any zip/truncated comparison can accept it.",
+          "Never return OBSERVED_UNAPPROVED_AS_RECORDED for these variants."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Reconciliation/projection writes, renames, deletions, signals, retries and new process starts are zero; compare before/after bytes, paths and inode identities. No recorded success supplies approval."
+    },
+    {
+      "id": "SUP-07",
+      "review_findings": [
+        "PRE-11"
+      ],
+      "links_to_existing_controls": [
+        "HI09-A",
+        "HI19-D"
+      ],
+      "title": "Completion descriptors use exact planned paths",
+      "route": "read-only reconciliation",
+      "input_mutation": "Point a completion descriptor to an alternate valid file with the same required content; coherently update its companion references/hashes. Keep the nominal planned output file present so file-set existence alone cannot catch it.",
+      "variants": [
+        "completion.result points to an alternate result file.",
+        "completion.host and matching result.host point to an alternate HOST file."
+      ],
+      "expected": {
+        "category": "CHI-EVIDENCE",
+        "state": "UNKNOWN",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 0,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": {
+            "node_version": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "shared_libraries": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "direct_starts": {
+              "exact": 2,
+              "observed_lower_bound": 2
+            },
+            "meaning": "Synthetic historical fixture receipts only; no processes run during reconciliation."
+          }
+        },
+        "assertions": [
+          "Result and HOST descriptor paths must equal their selected plan output paths.",
+          "A bound alternate file cannot replace the planned evidence reference."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Reconciliation/projection writes, renames, deletions, signals, retries and new process starts are zero; compare before/after bytes, paths and inode identities. No recorded success supplies approval."
+    },
+    {
+      "id": "SUP-08",
+      "review_findings": [
+        "PRE-11"
+      ],
+      "links_to_existing_controls": [
+        "HI17-C",
+        "HI19-D",
+        "HI20-C"
+      ],
+      "title": "Reconciliation validates actual record links",
+      "route": "read-only reconciliation with one coherent relationship mutation per case",
+      "input_mutation": "Keep individual record shapes and all descriptor hashes valid; alter one relationship so independent per-file validation still succeeds.",
+      "variants": [
+        "Final start descriptor names a different valid start record.",
+        "Final supervisor_process descriptor names a different valid committed outcome.",
+        "Final preflight descriptor disagrees with the retained planned preflight.",
+        "Outcome artifact descriptor names a different valid stdout/stderr or raw-process path.",
+        "Decoded raw process differs from committed process while both objects remain individually valid.",
+        "Retained callback PID/start identity differs from final/inspection process identity."
+      ],
+      "expected": {
+        "category": "CHI-EVIDENCE",
+        "state": "UNKNOWN",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 0,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": {
+            "node_version": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "shared_libraries": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "direct_starts": {
+              "exact": 2,
+              "observed_lower_bound": 2
+            },
+            "meaning": "Synthetic historical fixture receipts only; no processes run during reconciliation."
+          }
+        },
+        "assertions": [
+          "Validate start/raw/committed/final/inspection relationships against actual retained descriptors and process identities.",
+          "Preserve the conflicting historical records and report unresolved evidence; no repair or inferred success."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Reconciliation/projection writes, renames, deletions, signals, retries and new process starts are zero; compare before/after bytes, paths and inode identities. No recorded success supplies approval."
+    },
+    {
+      "id": "SUP-09",
+      "review_findings": [
+        "PRE-11"
+      ],
+      "links_to_existing_controls": [
+        "HI19-D",
+        "HI20-A"
+      ],
+      "title": "Reservation, intent and preflight are meaningful evidence",
+      "route": "read-only reconciliation",
+      "input_mutation": "Replace one otherwise required retained record with canonical, parseable, valid-hash data that fails its role in the selected plan.",
+      "variants": [
+        "Reservation owned_directories is empty or missing one command stage.",
+        "Reservation has an extra unrelated directory.",
+        "Intent has an unrelated plan or command ID.",
+        "Preflight has wrong schema, selected plan or corresponding descriptor relation."
+      ],
+      "expected": {
+        "category": "CHI-EVIDENCE",
+        "state": "UNKNOWN",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 0,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": {
+            "node_version": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "shared_libraries": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "direct_starts": {
+              "exact": 2,
+              "observed_lower_bound": 2
+            },
+            "meaning": "Synthetic historical fixture receipts only; no processes run during reconciliation."
+          }
+        },
+        "assertions": [
+          "Require exact expected record shapes, selected plan/command bindings and complete owned-directory set.",
+          "A present parseable file is insufficient proof of its intended role."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Reconciliation/projection writes, renames, deletions, signals, retries and new process starts are zero; compare before/after bytes, paths and inode identities. No recorded success supplies approval."
+    },
+    {
+      "id": "SUP-10",
+      "review_findings": [
+        "PRE-12"
+      ],
+      "links_to_existing_controls": [
+        "HI20-B",
+        "HI20-C"
+      ],
+      "title": "Schema-valid HOST fields still match selected inputs",
+      "route": "static HOST compatibility predicate, no observation execution",
+      "input_mutation": "Mutate one schema-valid HOST field while leaving platform/files/aliases/roles, actual retained receipt descriptors and timestamps valid.",
+      "variants": [
+        "Python executable differs.",
+        "Python version differs.",
+        "One Python package version differs.",
+        "Runtime executable differs.",
+        "Runtime source_archive descriptor differs from the selected descriptor."
+      ],
+      "expected": {
+        "category": "CHI-COMPAT",
+        "state": "REJECTED",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 0,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": null
+        },
+        "assertions": [
+          "Exact selected Python and runtime/source-archive relationships must reject the mutant.",
+          "The target compatibility predicate remains live; no real P06 selection/probe/qualification is invoked."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Reconciliation/projection writes, renames, deletions, signals, retries and new process starts are zero; compare before/after bytes, paths and inode identities. No recorded success supplies approval."
+    },
+    {
+      "id": "SUP-11",
+      "review_findings": [
+        "PRE-12"
+      ],
+      "links_to_existing_controls": [
+        "HI20-A"
+      ],
+      "title": "Top-level inspection argv cannot be silently reconstructed",
+      "route": "static retained-inspection compatibility predicate",
+      "input_mutation": "Change only receipt.argv to a different string-array value. Keep receipt.process.argv and every other process/output/time field valid; update its file descriptor coherently.",
+      "variants": [],
+      "expected": {
+        "category": "CHI-COMPAT",
+        "state": "REJECTED",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 0,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": null
+        },
+        "assertions": [
+          "Reject by exact retained-versus-reconstructed receipt comparison.",
+          "Do not replace the retained wrong argv with a reconstructed correct value or edit the raw fixture."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Reconciliation/projection writes, renames, deletions, signals, retries and new process starts are zero; compare before/after bytes, paths and inode identities. No recorded success supplies approval."
+    },
+    {
+      "id": "SUP-12",
+      "review_findings": [
+        "PRE-13",
+        "P08-D03"
+      ],
+      "links_to_existing_controls": [
+        "HI19",
+        "HI-P03"
+      ],
+      "title": "Legitimate caller-log append remains reconcilable",
+      "route": "read-only reconciliation with live append-prefix/identity predicate",
+      "input_mutation": "Start with original log bytes outer-start\\n, then append observation-result\\n on the same private inode before reconciliation. Preserve original prefix descriptor, authority, plan digest, file mode, guards and complete synthetic observation package.",
+      "variants": [],
+      "expected": {
+        "category": null,
+        "state": "OBSERVED_UNAPPROVED_AS_RECORDED",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 0,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": {
+            "node_version": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "shared_libraries": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "direct_starts": {
+              "exact": 2,
+              "observed_lower_bound": 2
+            },
+            "meaning": "Synthetic historical fixture receipts only; no processes run during reconciliation."
+          }
+        },
+        "assertions": [
+          "The original plan comparator and immutable authority are unchanged; no rewritten log digest/plan is needed.",
+          "Successful reconciliation means only as-recorded unapproved observations; approved=false and relaunch_permitted=false.",
+          "Both original prefix and appended tail remain byte-identical after reconciliation.",
+          "Capture validation must execute; a wholesale mocked _validate bypassing it cannot cover this row."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Reconciliation/projection writes, renames, deletions, signals, retries and new process starts are zero; compare before/after bytes, paths and inode identities. No recorded success supplies approval."
+    },
+    {
+      "id": "SUP-13",
+      "review_findings": [
+        "PRE-13",
+        "P08-D03"
+      ],
+      "links_to_existing_controls": [
+        "HI09-C",
+        "HI19-D"
+      ],
+      "title": "Append contract refuses changed or truncated prefix",
+      "route": "read-only reconciliation with live append-prefix predicate",
+      "input_mutation": "Keep the same path/inode/mode and plan, but violate the frozen initial log prefix.",
+      "variants": [
+        "Change the first prefix byte while preserving total length.",
+        "Truncate the log below the frozen prefix length."
+      ],
+      "expected": {
+        "category": "CHI-EVIDENCE",
+        "state": "UNKNOWN",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 0,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": {
+            "node_version": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "shared_libraries": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "direct_starts": {
+              "exact": 2,
+              "observed_lower_bound": 2
+            },
+            "meaning": "Synthetic historical fixture receipts only; no processes run during reconciliation."
+          }
+        },
+        "assertions": [
+          "Refuse changed prefix or insufficient size without reading an unbounded tail.",
+          "Do not adopt a new prefix digest, rewrite the approved plan, or derive authority from appended JSON."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Reconciliation/projection writes, renames, deletions, signals, retries and new process starts are zero; compare before/after bytes, paths and inode identities. No recorded success supplies approval."
+    },
+    {
+      "id": "SUP-14",
+      "review_findings": [
+        "PRE-13",
+        "P08-D03"
+      ],
+      "links_to_existing_controls": [
+        "HI09-B",
+        "HI09-C",
+        "HI19-D"
+      ],
+      "title": "Append contract preserves ownership and authority",
+      "route": "read-only reconciliation with live inode/ancestor/authority checks",
+      "input_mutation": "Keep valid prefix bytes, but change one identity or authority relation.",
+      "variants": [
+        "Replace the log with a different regular inode containing identical bytes.",
+        "Replace log with a symlink.",
+        "Add a second hardlink to the log.",
+        "Change frozen log mode.",
+        "Change a guarded log/authority ancestor identity.",
+        "Change immutable authority bytes.",
+        "Omit required authority/log guard coverage."
+      ],
+      "expected": {
+        "category": "CHI-EVIDENCE",
+        "state": "UNKNOWN",
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 0,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": {
+            "node_version": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "shared_libraries": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "direct_starts": {
+              "exact": 2,
+              "observed_lower_bound": 2
+            },
+            "meaning": "Synthetic historical fixture receipts only; no processes run during reconciliation."
+          }
+        },
+        "assertions": [
+          "Same content never forgives changed inode, link status, mode, ancestors or immutable authority.",
+          "Both authority and log paths are required significant guards; omitting their required guards also refuses."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Reconciliation/projection writes, renames, deletions, signals, retries and new process starts are zero; compare before/after bytes, paths and inode identities. No recorded success supplies approval."
+    },
+    {
+      "id": "SUP-15",
+      "review_findings": [
+        "PRE-13",
+        "P08-D03"
+      ],
+      "links_to_existing_controls": [
+        "HI03-G",
+        "HI18",
+        "HI19"
+      ],
+      "title": "Append validation reads a bounded prefix",
+      "route": "isolated capture-prefix check with instrumented file I/O and frozen time facts",
+      "input_mutation": "Append data up to the independently frozen supported capture-size bound, while retaining the exact original prefix and inode. Separately supply one byte above that bound or exhaust the existing validation deadline.",
+      "variants": [],
+      "expected": {
+        "category": {
+          "within_bound": null,
+          "above_bound": "CHI-EVIDENCE via public reconciliation",
+          "deadline": "CHI-EVIDENCE via public reconciliation"
+        },
+        "state": {
+          "within_bound": "OBSERVED_UNAPPROVED_AS_RECORDED",
+          "above_bound": "UNKNOWN",
+          "deadline": "UNKNOWN"
+        },
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 0,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": {
+            "node_version": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "shared_libraries": {
+              "exact": 1,
+              "observed_lower_bound": 1
+            },
+            "direct_starts": {
+              "exact": 2,
+              "observed_lower_bound": 2
+            },
+            "meaning": "Synthetic historical fixture receipts only; no processes run during reconciliation."
+          }
+        },
+        "assertions": [
+          "Freeze the exact supported bound and fixture sizes in candidate mapping before execution; do not choose a limit after observing a result.",
+          "The log reader does not read/seek beyond the original prefix solely to validate appended content, and never issues an unbounded read.",
+          "Existing file-size/identity observations and deadline checks bound work; oversized growth or exhausted allowance refuses.",
+          "Instrumentation must not replace the prefix/identity predicate; guard actual read offsets/counts at the I/O seam."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Reconciliation/projection writes, renames, deletions, signals, retries and new process starts are zero; compare before/after bytes, paths and inode identities. No recorded success supplies approval."
+    },
+    {
+      "id": "SUP-16",
+      "review_findings": [
+        "PRE-14"
+      ],
+      "links_to_existing_controls": [
+        "HI11-C",
+        "HI18-C"
+      ],
+      "title": "Original supervisor failure survives a later failure",
+      "route": "one-command mocked failure plus live postflight/evidence failure handling",
+      "input_mutation": "Raise one identifiable mocked supervisor exception carrying an identifiable process_record after a retained positive start; then inject a later postflight drift or evidence-finalization fault.",
+      "variants": [
+        "Supervisor failure followed by postflight drift.",
+        "Supervisor failure followed by failure-evidence publication failure."
+      ],
+      "expected": {
+        "category": {
+          "postflight_drift": "CHI-DRIFT",
+          "finalization_failure": "CHI-EVIDENCE"
+        },
+        "state": {
+          "postflight_drift": "REJECTED",
+          "finalization_failure": "UNKNOWN"
+        },
+        "counts": {
+          "actual_OS_children": 0,
+          "actual_Node": 0,
+          "actual_ldd": 0,
+          "actual_checkers": 0,
+          "mocked_Node_starts_during_exercise": 1,
+          "mocked_ldd_starts_during_exercise": 0,
+          "mocked_Git_reads_during_exercise": 0,
+          "historical_record_counts": null
+        },
+        "assertions": [
+          "The returned exception keeps the original supervisor exception object and process_record reachable unchanged, alongside the later error.",
+          "Freeze the inspected attachment/chain field in candidate mapping; identity assertions must compare with the original exception/receipt, not merely equal dictionaries.",
+          "Retain serialized failure summaries as evidence, block ldd, and keep one observed mocked start."
+        ]
+      },
+      "immutability": "All original positive/frozen inputs stay intact. Each negative uses an isolated copy frozen before execution. Snapshot that copy immediately before the exercise; execution must not change it except where an explicitly authorized mocked observation writes its own fresh evidence. Preserve original exception fields, process object and raw bytes without mutation; fresh owned evidence may record both failures."
+    }
+  ],
+  "synthetic_log_fixture_bytes": {
+    "original_prefix_hex": "6f757465722d73746172740a",
+    "append_hex": "6f62736572766174696f6e2d726573756c740a"
+  },
+  "candidate_execution_authorized": false,
+  "scope": "Additional precision for already required HI authoring/static/filesystem/mocked controls. No new phase, host plan, runtime retrieval, preparation or process execution.",
+  "mapping_gate": [
+    "Map each ID/variant to exact frozen candidate source/test and deterministic fixture generator/hashes before execution.",
+    "Keep every mutated predicate live; synthetic host/runtime facts may be mocked at explicit seams.",
+    "Recompute only mutation-required fixture descriptors before freezing, never change expected results after execution.",
+    "Keep new starts, mocked starts and historical record counts distinct. Preserve all original control expectations and failed evidence."
+  ],
+  "unknown_policy": "Never convert missing/conflicting evidence into zero, approval or completion. A failed reconciliation may decline to expose reconciled historical exact counts; it must preserve the raw historical claims and cannot claim successful two-start completion."
+}

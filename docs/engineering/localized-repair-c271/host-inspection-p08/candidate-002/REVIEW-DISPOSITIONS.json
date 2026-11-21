@@ -1,0 +1,642 @@
+{
+  "schema": "ontokin.c271.p08.author-review-dispositions/1",
+  "candidate": "candidate-002",
+  "status": "IMPLEMENTED_IN_FROZEN_BYTES_NOT_EXECUTED_NOT_ACCEPTED",
+  "module": {
+    "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-002/current_host_inspection_v01.py",
+    "sha256": "1e150672c2eb0c0f64e4dfb724e482aaee01fff26f142e0d8b3918ae7b8e55e3",
+    "size_bytes": 147775
+  },
+  "tests": {
+    "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-002/test_current_host_inspection_v01.py",
+    "sha256": "f095156a9b85e5857f9ce269243d06c7597fadf6b533e5aeca3a1de47ac41e14",
+    "size_bytes": 136677
+  },
+  "production_findings": [
+    {
+      "id": "PRE-01",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_check_resolution",
+          "first_line": 835,
+          "last_line": 953,
+          "sha256": "0c37f880cdd8e45efd1777a6588b1e5d04d51f3463603b0fbcaca688d469e560",
+          "size_bytes": 9322
+        }
+      ],
+      "controls": [
+        "HI07-E"
+      ],
+      "change": "Every present RTLD candidate is a canonical ELF root with admitted transitive edges."
+    },
+    {
+      "id": "PRE-02",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_existing_chain",
+          "first_line": 443,
+          "last_line": 464,
+          "sha256": "3ab8c33873649b7369b7b7a2888ecb6f92cfc075f47d173483fde045ded01761",
+          "size_bytes": 1152
+        }
+      ],
+      "controls": [
+        "HI08-F"
+      ],
+      "change": "Parent-traversal symlink targets refuse before lexical normalization."
+    },
+    {
+      "id": "PRE-03",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "read_elf_metadata",
+          "first_line": 623,
+          "last_line": 737,
+          "sha256": "b5e9e77bba462d5125f4e8cbcd418563a60cb8c76c65d3d485de080d2e0fefad",
+          "size_bytes": 8028
+        }
+      ],
+      "controls": [
+        "HI08-B",
+        "HI08-C"
+      ],
+      "change": "PT_DYNAMIC uses the same file/virtual load mapping and PT_LOAD offsets are alignment-congruent; isolated coherent-address regression."
+    },
+    {
+      "id": "PRE-04",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_walk_bounded",
+          "first_line": 1006,
+          "last_line": 1027,
+          "sha256": "af8487062a24da8ec476c15adc457d8595dac373c5ee7c34b6c99fe5c907fbd5",
+          "size_bytes": 1203
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_bounded_include",
+          "first_line": 756,
+          "last_line": 777,
+          "sha256": "d12f46266b71c3a01cf76d38e3d95dabb05d5881237b3d4133609a3f7d5b1e6c",
+          "size_bytes": 1266
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_source_paths",
+          "first_line": 1030,
+          "last_line": 1045,
+          "sha256": "7bd1fca8cee905fcaf5d53291488c550c8f18baddd76b1fa0f79514e15b46124",
+          "size_bytes": 989
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_check_metadata",
+          "first_line": 1228,
+          "last_line": 1274,
+          "sha256": "0c049ba44ac1355b3f999696085e93fc6b68b106e88f2798ce7894bbed46073f",
+          "size_bytes": 3585
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_input_snapshot",
+          "first_line": 1455,
+          "last_line": 1473,
+          "sha256": "6d60d784d93ef70c0a58f7a08f79f0b93475f37091f4dfa540681b343650b088",
+          "size_bytes": 837
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_EvidenceStore.budget",
+          "first_line": 1570,
+          "last_line": 1575,
+          "sha256": "47cbf4411be67cf7b3cff762cfa7537485589b7b54510e917cf77656773d1d9b",
+          "size_bytes": 482
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_check_installed_tree",
+          "first_line": 1324,
+          "last_line": 1337,
+          "sha256": "ddeab8224d72a64ff81292b030224e517c980225a3419a8240cab0ff076e7602",
+          "size_bytes": 1082
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "reconcile_attempt",
+          "first_line": 2224,
+          "last_line": 2316,
+          "sha256": "db90a76a0b327cdfc9cea40b4569ca8046d3e5d866c3cdc877e2f9e930be7d18",
+          "size_bytes": 7917
+        }
+      ],
+      "controls": [
+        "HI08-E",
+        "HI-P01",
+        "PRE_04_bounded_exact_trees"
+      ],
+      "change": "Direct checked scandir iteration replaces unbounded walks/glob enumeration. Local exact installed-tree predicate retains existing inventory and pin requirements."
+    },
+    {
+      "id": "PRE-05",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_check_resolution",
+          "first_line": 835,
+          "last_line": 953,
+          "sha256": "0c37f880cdd8e45efd1777a6588b1e5d04d51f3463603b0fbcaca688d469e560",
+          "size_bytes": 9322
+        }
+      ],
+      "controls": [
+        "HI07-C",
+        "HI07-F"
+      ],
+      "change": "Present loader config/cache/include bindings are required in HOST aliases/files/loader_configuration."
+    },
+    {
+      "id": "PRE-06",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_plan_shape",
+          "first_line": 359,
+          "last_line": 421,
+          "sha256": "1cabe8f90c439e8253585b02059d313aab1920f6386b7e1b7618d27322ef9611",
+          "size_bytes": 5403
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_binding_shape",
+          "first_line": 193,
+          "last_line": 200,
+          "sha256": "d0057f06b224d8699005de990eada9c58620f7e1258f752b27b62ea1092daace",
+          "size_bytes": 521
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_decode",
+          "first_line": 263,
+          "last_line": 280,
+          "sha256": "2c00a2db0f8b03cb3de42b68143bc39790a7ff951c7aa591cbbde4388d942c2e",
+          "size_bytes": 894
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "parse_ldd_output",
+          "first_line": 956,
+          "last_line": 1003,
+          "sha256": "95ff524b5db530f7a5fcf94f2bcd292c8ecebae0fd2d464033ae3d4a73fcb6ea",
+          "size_bytes": 3390
+        }
+      ],
+      "controls": [
+        "HI03-F",
+        "HI03-I",
+        "HI05-A",
+        "HI13-F"
+      ],
+      "change": "Strict numeric types, finite canonical input and exact vDSO list shape."
+    },
+    {
+      "id": "PRE-07",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_validate",
+          "first_line": 1384,
+          "last_line": 1414,
+          "sha256": "ef19a65ab05bc7ab280b3b13563e669c1e9ae37b8829b46f4e32a1665e950c99",
+          "size_bytes": 1995
+        }
+      ],
+      "controls": [
+        "SUP-01",
+        "HI-P01"
+      ],
+      "change": "Complete static closure/guards precede the five Git reads."
+    },
+    {
+      "id": "PRE-08",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_check_author_runtime",
+          "first_line": 1178,
+          "last_line": 1208,
+          "sha256": "0c446250a6380126073e5af98b5d18c64775d6ee25bd5896f4fac90b9aa6f008",
+          "size_bytes": 2462
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_check_author_host_bindings",
+          "first_line": 1211,
+          "last_line": 1225,
+          "sha256": "867d03b768aac6ca18f4ea1e337269141aa3ff82d9af3841575aff14f1b97e65",
+          "size_bytes": 1109
+        }
+      ],
+      "controls": [
+        "SUP-02",
+        "SUP-03",
+        "HI06-C"
+      ],
+      "change": "Python descriptor binds actual runtime.files bytes; every author runtime alias/file has its HOST role correspondence."
+    },
+    {
+      "id": "PRE-09",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_run_command",
+          "first_line": 1783,
+          "last_line": 1920,
+          "sha256": "fbd83edcc262c72f5b4b64b26dbc895533aefaa97b9aa5c0e528d2552fd29f3b",
+          "size_bytes": 9235
+        }
+      ],
+      "controls": [
+        "SUP-04",
+        "HI14-D",
+        "HI17-C"
+      ],
+      "change": "Invariant callback/final identity compared; every ordered callback retained; multi-start violation is separate from ordinary count projection."
+    },
+    {
+      "id": "PRE-10",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "inspect_host",
+          "first_line": 1987,
+          "last_line": 2055,
+          "sha256": "1e0c62044440b5662cab5c234a9a3e9ea042b494fd4e192f73d69c8030bead9d",
+          "size_bytes": 4533
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_EvidenceStore.write",
+          "first_line": 1577,
+          "last_line": 1629,
+          "sha256": "49c1a296c1a6e805d1dbbe13c87656177251c0bdf1a18c22a872344cea92bd8c",
+          "size_bytes": 3041
+        }
+      ],
+      "controls": [
+        "SUP-05",
+        "HI18-D",
+        "HI18-E"
+      ],
+      "change": "Result retry is forbidden by publication history even when a destination is currently absent."
+    },
+    {
+      "id": "PRE-11",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_reconcile_command",
+          "first_line": 2083,
+          "last_line": 2221,
+          "sha256": "4ecfaea2d4ad4bba7083d89423ed524025c8d4c08fca8f5e68aab200e35f1a0e",
+          "size_bytes": 12259
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "reconcile_attempt",
+          "first_line": 2224,
+          "last_line": 2316,
+          "sha256": "db90a76a0b327cdfc9cea40b4569ca8046d3e5d866c3cdc877e2f9e930be7d18",
+          "size_bytes": 7917
+        }
+      ],
+      "controls": [
+        "SUP-06",
+        "SUP-07",
+        "SUP-08",
+        "SUP-09",
+        "HI19-D",
+        "HI-P03"
+      ],
+      "change": "Exact command cardinality/order, planned paths, reservation/intent/preflight and complete raw/committed/start/final/inspection graph relationships."
+    },
+    {
+      "id": "PRE-12",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_validate_host_projection",
+          "first_line": 1953,
+          "last_line": 1984,
+          "sha256": "686b77a0be38733a4a180f8a21755d4dbc04b68f436ad3754513c158637dbab9",
+          "size_bytes": 2438
+        }
+      ],
+      "controls": [
+        "SUP-10",
+        "SUP-11",
+        "HI20"
+      ],
+      "change": "Full selected Python/runtime identity and exact reconstructed-versus-retained inspection comparison."
+    },
+    {
+      "id": "PRE-13",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_check_log_prefix",
+          "first_line": 501,
+          "last_line": 532,
+          "sha256": "196c70dc93c0559573811f8e1ec32ae37ed32aa037b78cb6e2b7e2c8250fc4ed",
+          "size_bytes": 1847
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_check_evidence",
+          "first_line": 535,
+          "last_line": 548,
+          "sha256": "aa290dc9e9e3a2d88c07cac8f32c6079e0d664556d3cd59d61c9903d7c298775",
+          "size_bytes": 855
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_required_paths",
+          "first_line": 1369,
+          "last_line": 1381,
+          "sha256": "699f594dcc045847aac6c7aff1e0c98ccaf006db419ebc0fc6bd372d3845a14f",
+          "size_bytes": 856
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_input_snapshot",
+          "first_line": 1455,
+          "last_line": 1473,
+          "sha256": "6d60d784d93ef70c0a58f7a08f79f0b93475f37091f4dfa540681b343650b088",
+          "size_bytes": 837
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_launch_check",
+          "first_line": 1476,
+          "last_line": 1499,
+          "sha256": "e1da25c8cd3203271fc38416ca5e74d6eff7005d12009c10bb13a08194664460",
+          "size_bytes": 1612
+        }
+      ],
+      "controls": [
+        "SUP-12",
+        "SUP-13",
+        "SUP-14",
+        "SUP-15"
+      ],
+      "change": "Immutable authority and bounded initial-prefix append contract under same required inode/ancestor guards; no plan rewrite or log-derived approval."
+    },
+    {
+      "id": "PRE-14",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_run_command",
+          "first_line": 1783,
+          "last_line": 1920,
+          "sha256": "fbd83edcc262c72f5b4b64b26dbc895533aefaa97b9aa5c0e528d2552fd29f3b",
+          "size_bytes": 9235
+        }
+      ],
+      "controls": [
+        "SUP-16",
+        "HI11-C"
+      ],
+      "change": "HostInspectionError.supervisor_exception and process_record retain the original objects; later cause and serialized summaries remain alongside them."
+    }
+  ],
+  "draft_test_findings": [
+    {
+      "id": "DTR-01",
+      "controls": [
+        "HI03-D",
+        "HI03-F"
+      ],
+      "change": "Decoder-only cases include matched valid counterparts; later plan shape cannot mask the intended input predicate."
+    },
+    {
+      "id": "DTR-02",
+      "controls": [
+        "HI08-B"
+      ],
+      "change": "Positive inert ELF anchor; load/dynamic/interpreter/string virtual addresses move together; alignment-specific reason is asserted."
+    },
+    {
+      "id": "DTR-03",
+      "controls": [
+        "HI11-A",
+        "HI11-B",
+        "HI11-C"
+      ],
+      "change": "Real _recheck now runs; source/runtime/dependency/loader/alias/boot mutations are separate and unrelated host facts narrowly mocked."
+    },
+    {
+      "id": "DTR-04",
+      "controls": [
+        "HI19-F"
+      ],
+      "change": "Actual production platform predicate sees changed boot; absent-process stub deliberately remains unused and cannot promote UNKNOWN."
+    },
+    {
+      "id": "DTR-05",
+      "controls": [
+        "HI08-E"
+      ],
+      "change": "Unbound glibc-hwcaps directory reaches unsupported closure predicate; include syntax/cardinality remain separately labelled bounds checks."
+    },
+    {
+      "id": "DTR-06",
+      "controls": [
+        "HI18-A",
+        "HI18-C",
+        "HI18-E"
+      ],
+      "change": "Actual writer remains active while os.write, regular-file fsync and directory fsync are separately faulted where required."
+    },
+    {
+      "id": "DTR-07",
+      "controls": [
+        "HI-P01",
+        "PRE_04_bounded_exact_trees"
+      ],
+      "change": "Independent literals assert fixed Node/archive/environment/LIMITS/source trees/files/optional set/seven package versions; historical retained dependency cardinality is 24."
+    },
+    {
+      "id": "DTR-08",
+      "controls": [
+        "HI07-C",
+        "HI07-D",
+        "HI07-F",
+        "HI19-D"
+      ],
+      "change": "Changed cache/config/include and required absence; added/removed/mode-changed search entries; empty preload change; partial/failure-finalization/missing-artifact cases are explicit."
+    },
+    {
+      "id": "DTR-09",
+      "controls": [
+        "HI10",
+        "HI11",
+        "HI12",
+        "HI14",
+        "HI15",
+        "HI17",
+        "HI18",
+        "HI19",
+        "HI-P03"
+      ],
+      "change": "Common observation checks exact state/lower bounds/count state; read-only reconciliation compares complete before/after path inventories. Four state corrections are separately approved before execution."
+    }
+  ],
+  "candidate_001_findings": [
+    {
+      "id": "C01-01",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_reconcile_command",
+          "first_line": 2083,
+          "last_line": 2221,
+          "sha256": "4ecfaea2d4ad4bba7083d89423ed524025c8d4c08fca8f5e68aab200e35f1a0e",
+          "size_bytes": 12259
+        }
+      ],
+      "controls": [
+        "test_REVIEW_outcome_only_count"
+      ],
+      "change": "Outcome-only positive counts require closed fixed-command process fields and matching actual raw receipt binding before promotion."
+    },
+    {
+      "id": "C01-02",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "reconcile_attempt",
+          "first_line": 2224,
+          "last_line": 2316,
+          "sha256": "db90a76a0b327cdfc9cea40b4569ca8046d3e5d866c3cdc877e2f9e930be7d18",
+          "size_bytes": 7917
+        }
+      ],
+      "controls": [
+        "test_REVIEW_empty_evidence_directory"
+      ],
+      "change": "Complete graph compares both exact file set and exact reserved directory set; added empty directories refuse and remain untouched."
+    },
+    {
+      "id": "C01-03",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_check_guards",
+          "first_line": 467,
+          "last_line": 498,
+          "sha256": "6e3db748fe29359f13be9c5bf3136f3a08a74b7e38140cb017f8022fcb8d4e4a",
+          "size_bytes": 1879
+        }
+      ],
+      "controls": [
+        "SUP-14"
+      ],
+      "change": "Guard defects are selected before synthetic historical generation; retained descriptor graph stays coherent and is a matched positive without capture validation."
+    },
+    {
+      "id": "C01-04",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_run_command",
+          "first_line": 1783,
+          "last_line": 1920,
+          "sha256": "fbd83edcc262c72f5b4b64b26dbc895533aefaa97b9aa5c0e528d2552fd29f3b",
+          "size_bytes": 9235
+        }
+      ],
+      "controls": [
+        "HI14-D"
+      ],
+      "change": "Explicit exact observed distinct count2 and lower2, ordered callbacks, original raw bytes, unavailable normal projection and separate total uncertainty; later drift/retention failures preserve details."
+    },
+    {
+      "id": "C01-05",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "reconcile_attempt",
+          "first_line": 2224,
+          "last_line": 2316,
+          "sha256": "db90a76a0b327cdfc9cea40b4569ca8046d3e5d866c3cdc877e2f9e930be7d18",
+          "size_bytes": 7917
+        }
+      ],
+      "controls": [
+        "HI18-E",
+        "HI-P03",
+        "SUP-12"
+      ],
+      "change": "Read-only reconciliation exposes unknown durability and evidence_finalized false even for a complete graph, including a completion-directory-fsync fault."
+    },
+    {
+      "id": "PRE-07-NAMED-GIT",
+      "predicates": [
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_check_git",
+          "first_line": 1131,
+          "last_line": 1168,
+          "sha256": "50801ffb478adfe00b9420da9e6620c0324a24322c82d20ba1784fe9a38d1cbd",
+          "size_bytes": 2486
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_validate",
+          "first_line": 1384,
+          "last_line": 1414,
+          "sha256": "ef19a65ab05bc7ab280b3b13563e669c1e9ae37b8829b46f4e32a1665e950c99",
+          "size_bytes": 1995
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_required_paths",
+          "first_line": 1369,
+          "last_line": 1381,
+          "sha256": "699f594dcc045847aac6c7aff1e0c98ccaf006db419ebc0fc6bd372d3845a14f",
+          "size_bytes": 856
+        },
+        {
+          "file": "current_host_inspection_v01.py",
+          "definition": "_check_guards",
+          "first_line": 467,
+          "last_line": 498,
+          "sha256": "6e3db748fe29359f13be9c5bf3136f3a08a74b7e38140cb017f8022fcb8d4e4a",
+          "size_bytes": 1879
+        }
+      ],
+      "controls": [
+        "test_REVIEW_named_git_alias",
+        "SUP-01",
+        "HI-P01"
+      ],
+      "change": "Actual selected PATH name must be an already-admitted HOST role/alias with exact canonical descriptor binding; its required path guard precedes the five reads."
+    }
+  ],
+  "review_sources": [
+    {
+      "path": "/workspace/scratch/8838dfc6e876/review_work/candidate-001/REVIEW-001.md",
+      "sha256": "24a31d4bbcea7a307ebc6456e050c45862603e5e1b56b07af8fed5620b887dce",
+      "size_bytes": 10449
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/review_work/candidate-001/MAPPING-DISPOSITIONS-001.md",
+      "sha256": "2e955d9f9477557086f617b240b62bfcc9baf8b217cddcf8436b75785eed0f37",
+      "size_bytes": 2466
+    }
+  ]
+}

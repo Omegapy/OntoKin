@@ -1,0 +1,98 @@
+{
+  "schema": "ontokin.c271.p08.independent-preexecution-approval/1",
+  "recorded_at_utc": "2026-11-21T16:14:13.461587+00:00",
+  "reviewer": "/root/implementation_review",
+  "verdict": "APPROVED_FOR_ONE_BOUNDED_FOCUSED_RUN_AFTER_ROOT_CLEAN_SOURCE_AND_HASH_CHECKPOINT",
+  "active": true,
+  "candidate": "candidate-003",
+  "supersedes_for_execution_only": "candidate-002 HOLD-001; withdrawn unissued draft and original candidate bytes preserved",
+  "inputs": [
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-003/current_host_inspection_v01.py",
+      "bytes": 147900,
+      "sha256": "b2f4c869fd03919047db797bd3a80616cbe16f6b17689fe61d40754b27f97a39"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-003/test_current_host_inspection_v01.py",
+      "bytes": 139313,
+      "sha256": "76582b5d0f075022f7a06e37b9b8df8a6a8e03792ea36817e3ac54f72643f777"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-003/CONTROL-MAP.json",
+      "bytes": 530684,
+      "sha256": "dbf40c47f5ceaa36f204e9a44154d61c9950694cc20dbef87d0329ca0f4a0a76"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-003/FREEZE-MANIFEST.json",
+      "bytes": 2345,
+      "sha256": "ed6b000034fa9783df2d7c79edef82e26c7208aad50943f5cfa26c857dd04f3b"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/run_focused_guarded.py",
+      "bytes": 2686,
+      "sha256": "27489064a600ea3cfba73381fa1f75cc781cdc72303bd97ee200c6ebdb4aafdd"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/CONCRETE-SHAPES-AND-CORRESPONDENCE.md",
+      "bytes": 7815,
+      "sha256": "9c717a18aeedb0e3bdb92957c952e8e4a9341318abfc5cc3f071b9cd1d57de9a"
+    }
+  ],
+  "report": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/candidate-003/PRE-EXECUTION-REVIEW.md",
+    "bytes": 8922,
+    "sha256": "0ea011c21e841f36d62748ec8053aceb88d4a3f855b91e3523cdea10e4a3afa0"
+  },
+  "map_verification": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/candidate-003/MAP-STRUCTURE-VERIFICATION-001.json",
+    "bytes": 21370,
+    "sha256": "5bc9727b2925f55b5ee6bc67e9f6f56adb17d4238597592d71abe806ee6c37f8"
+  },
+  "freeze_verification": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/candidate-003/FREEZE-VERIFICATION.json",
+    "bytes": 1340,
+    "sha256": "72682a212f6df0af57c881477b9363da47a612050ebe4b3a5ee44a920b314e61"
+  },
+  "selected_counts": {
+    "original_negative_variants": 109,
+    "positive_controls": 5,
+    "supplemental_groups": 16,
+    "scoped_regressions": 5,
+    "test_methods": 135
+  },
+  "selection": "tests.test_current_host_inspection_v01 through the exact guarded runner",
+  "preexecution_findings_resolved": [
+    "PRE-01..PRE-14",
+    "DTR-01..DTR-09",
+    "C01-01..C01-05",
+    "named PATH Git alias/guard relation",
+    "C02-01"
+  ],
+  "mandatory_residual_static_findings": [],
+  "approved_qualifications": {
+    "P08-D05": "Only HI17-D and HI18-A/B/C exact state changes to UNKNOWN; known counts unchanged.",
+    "P08-D06": "AS_RECORDED describes retained graph only; durability UNKNOWN, evidence_finalized false, approval false; no write/fsync/retry/log-tail authority.",
+    "P08-D07": "HI16-C size-only route: actual OS0, new mocked supervisor0, supplied synthetic PID1. Preserve original generic count reference; exact size/refusal guards unchanged."
+  },
+  "root_conditions": [
+    "Clean source checkpoint with exact reviewed module/test hashes and protected-source preservation.",
+    "Fresh retained run paths; preserve command, environment, complete logs, result, fixture trees/manifests and source/map identities.",
+    "Run only the mapped new focused tests through the pre-import guarded runner.",
+    "Any failed or unknown attempt remains retained; no silent retry or unreviewed edit."
+  ],
+  "review_activity": {
+    "candidate_imports": 0,
+    "candidate_compilations": 0,
+    "tests_run": 0,
+    "project_process_starts": 0
+  },
+  "not_authorized": [
+    "Actual Node/ldd or operational host observations",
+    "Runtime preparation or installation",
+    "Original seven methods or complete routine",
+    "H0/H1 qualification or R03 acceptance",
+    "Integration, PR merge or parent closure"
+  ],
+  "implementation_acceptance": false,
+  "base_freeze_sha256_unchanged": true
+}

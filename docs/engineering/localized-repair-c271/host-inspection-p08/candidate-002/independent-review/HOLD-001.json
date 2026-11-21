@@ -1,0 +1,34 @@
+{
+  "schema": "ontokin.c271.p08-candidate002-preexecution-hold/1",
+  "recorded_at_utc": "2026-11-21T16:09:24.394226+00:00",
+  "state": "HOLD_NO_EXECUTION_APPROVAL",
+  "late_finding": "C02-01",
+  "reason": "Live on_started and retained-start reconciliation compare process_group == pid without strict integer type. With pid integer1, booleanTrue or float1.0 can satisfy equality. Completed success/outcome-only checks are already strict; retained positive-start admission must be strict too.",
+  "withdrawn_unissued_draft": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/candidate-002/PRE-EXECUTION-REVIEW-WITHDRAWN-DRAFT.md",
+    "bytes": 8127,
+    "sha256": "4b2428bef32fb7c3f40623d357625ed26e5b657e8d280ceead6559de98031073",
+    "approval_was_issued": false,
+    "preserved_without_byte_change": true
+  },
+  "director_notified_before_execution": true,
+  "source_contract": {
+    "path": "OntoKin/docs/engineering/localized-repair-c271/host-inspection-p07/HOST-INSPECTION-DESIGN.md",
+    "lines": [
+      119,
+      141,
+      163
+    ],
+    "meaning": "Actual PID/process-group identity and closed process record typing; valid retained positive start is required for OBSERVED_ONE."
+  },
+  "required_correction": [
+    "Require type(process_group) is int before equality at live callback and retained-start recovery.",
+    "Preserve original callback/final data and known positive PID count; refuse malformed callback without next command.",
+    "Use boolean and float group variants with integer pid1; final receipt stays integer-correct to isolate callback predicate.",
+    "Read-only malformed-start variants use coherent history with no later valid final receipt masking the target; reject CHI-EVIDENCE/UNKNOWN, no write or launch.",
+    "Keep exact002 unchanged; independently review exact minimal003 module/tests/map before any focused run."
+  ],
+  "oracle_changes": false,
+  "tests_run": 0,
+  "candidate_imports_or_compilation": 0
+}

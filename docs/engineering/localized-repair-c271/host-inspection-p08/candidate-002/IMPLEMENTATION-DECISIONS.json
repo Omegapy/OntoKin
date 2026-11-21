@@ -1,0 +1,101 @@
+{
+  "schema": "ontokin.c271.p08-implementation-decisions/1",
+  "recorded_at_utc": "2026-11-21 15:05:40 UTC",
+  "decisions": [
+    {
+      "id": "P08-D01",
+      "topic": "Concrete supervisor_outcome paths",
+      "decision": "Use a closed {raw, committed} nested path pair under each command's supervisor_outcome. The raw path is exactly cwd/LABEL.process.json; committed is a distinct predeclared wrapper-owned atomic evidence path.",
+      "basis": "P07 explicitly requires preserving the unchanged supervisor raw receipt and a separate durable wrapper record; its nested evidence output shapes were left for HI implementation.",
+      "constraints": [
+        "Both normalized paths are frozen by the external plan and inventoried.",
+        "Preserve raw bytes; malformed/incomplete receipts never become fabricated success.",
+        "No P06 schema or protected source change; no additional launch or unlisted publication."
+      ],
+      "independent_review": "pending exact candidate",
+      "verification_required": [
+        "missing/extra/swapped/overlapping paths",
+        "raw and committed outcome preservation",
+        "failure blocks next command"
+      ]
+    },
+    {
+      "id": "P08-D02",
+      "topic": "Session wording correction",
+      "decision": "The source-time SESSION sentence accidentally said source work begins after control freeze. The phase authorization permits implementation after confirmed early save and requires independent controls/candidate mapping before meaningful test execution. Correct that sentence explicitly in the next checkpoint.",
+      "basis": "PHASE.json and Director worker authorization; no source/contract/execution gate is weakened. Implementation started after early save; no tests were run before the freeze.",
+      "prior_record": "ba9ce189755641f50593b09e205e4dac1230ae3e:docs/workflow/tasks/C271/P08-SESSION.md",
+      "recorded_at_utc": "2026-11-21T15:09:02.933226+00:00"
+    },
+    {
+      "id": "P08-D03",
+      "topic": "Caller-owned append capture during reconciliation",
+      "recorded_at_utc": "2026-11-21T15:28:20.724474+00:00",
+      "decision": "Preserve the immutable authority and external plan. Bind the original log prefix and frozen inode/ancestor identities, permitting bounded append-only growth during later reconciliation. Log content never supplies approval.",
+      "basis": "P07 caller-owned outer capture is allowed to grow; complete-module static review found that requiring the initial whole-file hash during reconciliation contradicts that flow. This concretizes the existing capture model without adding any process or preparation authorization.",
+      "constraints": [
+        "Keep the original prefix hash/size and file mode exact.",
+        "Require original log file/ancestor identity, private regular file, no symlink or replacement; reject truncation or changed prefix.",
+        "Use bounded reads and deadlines; do not read an unbounded append tail.",
+        "Include authority/log paths in significant guard coverage.",
+        "Do not rewrite the approved plan or grant approval from log contents."
+      ],
+      "independent_review": "Required on the final exact implementation",
+      "verification_required": [
+        "Legitimate append remains reconcilable",
+        "Prefix alteration, truncation, replacement and symlink are refused",
+        "Authority and ancestor drift remain refusal conditions"
+      ]
+    },
+    {
+      "id": "P08-D04",
+      "topic": "Bounded exact tree verification under unchanged preparation contract",
+      "recorded_at_utc": "2026-11-21T15:38:03.667022+00:00",
+      "decision": "A local bounded tree checker may enforce the adopted P06/preparer inventory predicates without invoking an inherited unbounded tree walk, provided exact predicate correspondence is demonstrated and independently reviewed.",
+      "basis": "PRE-04 applies to the admitted inspector finite-input contract. Changing protected P06/preparer sources or adopting a smaller alternate inventory is outside P08.",
+      "constraints": [
+        "Retain all 24 adopted dependency files and exact directory/member/hash/size/mode/archive/source/version requirements.",
+        "Preserve symlink, hardlink, missing/extra file and directory refusal predicates.",
+        "Bound enumeration and propagate the existing deadline; do not silently ignore traversal errors.",
+        "Document correspondence to exact unchanged helper predicates and focused controls."
+      ],
+      "independent_review": "Required on exact final candidate; conditional implementation choice, not acceptance or contract waiver."
+    },
+    {
+      "id": "P08-D05",
+      "topic": "Four pre-execution exact-state oracle corrections",
+      "decision": "Approve only HI17-D and HI18-A/B/C expected_state REJECTED to UNKNOWN under exact proposal 9fa12c71e9c39f664f45637844ac446c1bc382ed0ea7d323c9a1481bf80bcba0. Categories, counts and preservation obligations remain unchanged.",
+      "basis": "P07 final-receipt and uncertain-persistence contract; independent proposal and root review completed before execution.",
+      "approval_record": "session/CONTROL-STATE-CORRECTION-APPROVAL-001.json",
+      "execution_authorized": false
+    },
+    {
+      "id": "P08-D06",
+      "topic": "Recorded completion does not prove durability during read-only reconciliation",
+      "recorded_at_utc": "2026-11-21T15:59:23.776130+00:00",
+      "decision": "A validated completion graph may retain its AS_RECORDED state label, but the read-only reconciliation result must explicitly report durability_state UNKNOWN and evidence_finalized false. It grants neither fresh success nor approval.",
+      "basis": "Independent reviewer cited accepted P07 design uncertainty clauses: marker presence cannot distinguish successful parent-directory fsync from a lost/failed final fsync. No admitted independent proof exists in this API.",
+      "constraints": [
+        "No extra fsync, write, retry or launch in reconciliation.",
+        "Caller-log append content does not supply approval or durability proof.",
+        "Exercise final-marker directory-fsync failure followed by read-only reconciliation.",
+        "Keep positive historical start counts and recorded graph observations separate from unresolved durability."
+      ],
+      "independent_review": "Required on candidate002; no execution approval."
+    },
+    {
+      "id": "P08-D07",
+      "topic": "HI16-C isolated serialization route and count denominator",
+      "recorded_at_utc": "2026-11-21T15:59:23.776143+00:00",
+      "decision": "Accept the real writer >16MiB and real inspection serializer >8MiB isolated controls, with only unrelated ldd grammar substituted. Report actual OS starts 0, new mocked supervisor starts 0, and supplied synthetic process PID count 1 separately.",
+      "basis": "Independent reviewer accepted the live size-guard route; generic copied mocked_sequence_starts fields must not be reported as measured outcomes. Other HI16 controls and P03 separately exercise state-machine counts.",
+      "constraints": [
+        "Keep size limits, refusal expectations, production constants and base freeze reference unchanged.",
+        "Use route-specific measured-count fields; do not relabel zero mocked calls as one launch.",
+        "No extra integrated test solely duplicating the same size predicate."
+      ],
+      "independent_review": "Reviewer to freeze exact limited mapping disposition before execution; no execution approval."
+    }
+  ],
+  "claim_scope": "Concrete implementation detail under accepted design, not a contract amendment, executable host approval or new phase."
+}
