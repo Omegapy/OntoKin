@@ -46,7 +46,10 @@
         "docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json",
         "docs/engineering/localized-repair-c271/runtime-recovery-p04/PHASE-OUTCOME.json",
         "docs/engineering/localized-repair-c271/runtime-recovery-p04/TECHNICAL-REVIEW-SUMMARY.json",
-        "docs/engineering/localized-repair-c271/runtime-recovery-p04/WORKING-RECORD-REVIEW.json"
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/WORKING-RECORD-REVIEW.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/ADOPTION.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/review/DESIGN-REVIEW.json"
       ]
     },
     {
@@ -68,7 +71,8 @@
         "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json",
         "docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/runtime-recovery-p04/EARLY-RECOVERY-RECEIPT.json",
-        "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json"
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/EARLY-RECOVERY-RECEIPT.json"
       ]
     }
   ],
@@ -273,6 +277,16 @@
         "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json"
       ],
       "scope": "This phase delivery only; parent R03-R05 remain not_done."
+    },
+    {
+      "name": "P05 independent current-host design review",
+      "command": "Independent source/AST/discovery/contract/archive inspection by /root/intake_audit; exact checks and bindings retained",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p05/review/DESIGN-REVIEW.json"
+      ],
+      "scope": "46 static design checks; no behavioral execution, runtime qualification or R03 acceptance"
     }
   ],
   "completion": {
@@ -287,7 +301,7 @@
       "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json"
     ]
   },
-  "next_action": "Complete P05 source-backed separately versioned current-host execution contract, complete original-method/transitive-predicate mapping and independent design review; then verified partial delivery and stop. No implementation or runtime qualification in this phase.",
+  "next_action": "Finish the P05 verified partial handoff and separate receipt, then stop. In a fresh bounded C271 phase, reconcile live GitHub and this P05 saved receipt, confirm new early recovery, then implement the accepted current-host provider, separate probe, safe preparer and explicit test/driver binding under IMPLEMENTATION-PLAN.md. Freeze meaningful positive/refusal controls independently before selected execution; preserve every original method/helper body, historical guard and dependency byte. Stop at reviewed implementation evidence or a concrete blocker and verified partial delivery. Host qualification, the complete routine/R03 acceptance and R04/R05 closure remain separate gates; do not begin them in this P05 chat.",
   "session_phase": {
     "schema": "ontokin.c271.p05-phase/1",
     "task": "C271",
@@ -327,7 +341,7 @@
       "P02": "in_progress"
     },
     "early_recovery": "confirmed",
-    "status": "in_progress",
+    "status": "design_accepted_delivery_pending",
     "main_lease_held": false,
     "integration_allowed": false,
     "full_routine_selected": false,
@@ -337,7 +351,14 @@
       "/root/intake_audit": "Independent intake, design and final evidence review",
       "/root/predicate_map": "Complete original-method/transitive-predicate inventory and map",
       "/root/package_builder": "Early/final package build and integrity verification"
-    }
+    },
+    "design_accepted": true,
+    "design_decision": "docs/engineering/localized-repair-c271/current-host-p05/ADOPTION.json",
+    "technical_work_stopped": true,
+    "implementation_performed": false,
+    "runtime_qualified": false,
+    "independent_r03_accepted": false,
+    "next_action": "In a fresh bounded C271 phase, reconcile live GitHub and this P05 saved receipt, confirm new early recovery, then implement the accepted current-host provider, separate probe, safe preparer and explicit test/driver binding under IMPLEMENTATION-PLAN.md. Freeze meaningful positive/refusal controls independently before selected execution; preserve every original method/helper body, historical guard and dependency byte. Stop at reviewed implementation evidence or a concrete blocker and verified partial delivery. Host qualification, the complete routine/R03 acceptance and R04/R05 closure remain separate gates; do not begin them in this P05 chat."
   },
   "delivery": {
     "required": true,

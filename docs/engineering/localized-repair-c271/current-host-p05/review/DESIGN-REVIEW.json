@@ -1,0 +1,383 @@
+{
+  "schema": "ontokin.c271.p05-independent-design-review/1",
+  "reviewer": "/root/intake_audit",
+  "recorded_at_utc": "2026-11-21T03:33:16.157578+00:00",
+  "verdict": "accepted_design_only",
+  "adoption_recommendation": "Accept the exact reviewed contract and map in a separate P05 adoption record; select implementation only in the next fresh bounded phase.",
+  "remaining_mandatory_findings": [],
+  "scope": "Current-host CPU readback execution contract and complete original-method/predicate map; no implementation, runtime execution, full routine or integration.",
+  "source_baseline": {
+    "commit": "743409619a8663682750b0ca29c50547a25dde41",
+    "tree": "8202185735f50aa91078a9206c351d917084ed16"
+  },
+  "current_documentary_checkpoint": {
+    "commit": "d98ccf018f6f7039de5d50131f74acbaeccd7744",
+    "tree": "7fca172e44c038687ba02044315da7cb8feaf7cb",
+    "meaning": "Root-reported P05 bootstrap only; 402 reviewed product/source inputs independently match baseline Git objects."
+  },
+  "preconditions": {
+    "governing_files": "Seven governing/skill reads recorded in intake READ-SET.json; Director global startup complete.",
+    "early_recovery": "Confirmed succeeded before substantive review; exact receipt in session/EARLY-SAVE-RESULT.json.",
+    "independence": "Reviewer authored no contract or predicate-map candidate and used no nested worker. All review mutations stayed in audit/design-review."
+  },
+  "reviewed_artifacts": [
+    {
+      "path": "contract-draft/CONTRACT.json",
+      "bytes": 23359,
+      "sha256": "2033574a52749f7962741b3ad9450bdf0635611d70320a62acd3f56a90768af2"
+    },
+    {
+      "path": "contract-draft/CONTRACT.md",
+      "bytes": 26139,
+      "sha256": "32af491828bcfcb384f7e811da36165a74c8e38cd974d977275331155bf021c2"
+    },
+    {
+      "path": "contract-draft/IMPLEMENTATION-PLAN.md",
+      "bytes": 4516,
+      "sha256": "f175d305ad20523a13b472df518917e5512696d4d75fea4005a1d5c0be737376"
+    },
+    {
+      "path": "contract-draft/REVISION-002.json",
+      "bytes": 574,
+      "sha256": "d5168130c3d57defec269fe5371791c047d48d3844c33697b7d432a31cbc2a25"
+    },
+    {
+      "path": "contract-draft/RUNTIME-CANDIDATE-ARCHIVE-VERIFICATION.json",
+      "bytes": 2141,
+      "sha256": "c4993c9c3a4ad1860d5e54e2cafcbda2a3865c8134249b679e50c2461255ade9"
+    },
+    {
+      "path": "contract-draft/RUNTIME-CANDIDATE-LOCATION.json",
+      "bytes": 1256,
+      "sha256": "dc14eb953d720ec0933052a262abeec591e674cf0fde75350fded9c8550ed058"
+    },
+    {
+      "path": "contract-draft/RUNTIME-CANDIDATE-STATIC.json",
+      "bytes": 722,
+      "sha256": "5d6efb821f89cb098cdaf2847d3ea1233631cc4c73b6eaf85846685a492b8bbe"
+    },
+    {
+      "path": "contract-draft/DRAFT-ARTIFACTS.json",
+      "bytes": 1164,
+      "sha256": "b7727e0a726bbd4b9e70092a1e4ed218511b16b521dae566009e9665b8fffb98"
+    },
+    {
+      "path": "design-map/MAP-EVIDENCE.zip",
+      "bytes": 1783600,
+      "sha256": "e959d8df7a19327979e6f63508239950a3fa2e1aa59f1227ca610014bfc98db3"
+    },
+    {
+      "path": "design-map/MAP-EVIDENCE-MANIFEST.json",
+      "bytes": 4314,
+      "sha256": "eb90177e256995677e9494b91e31e1c24c022a912c93f0886b34edefab2ab661"
+    },
+    {
+      "path": "design-map/MAP-SUMMARY.json",
+      "bytes": 3375,
+      "sha256": "06e7f6b8fec9388cbe142eda0d311b4c2b20ad9e981a842711aa212a8034ba4c"
+    },
+    {
+      "path": "design-map/REVIEWABLE-MAP.md",
+      "bytes": 26663,
+      "sha256": "4187f02731eba76244c7a6aa65e207ec03059e98c6a09517d35b380e151a7f46"
+    }
+  ],
+  "map_members": [
+    {
+      "path": "DEFAULT-DISCOVERY-INVENTORY.json",
+      "sha256": "5944d90a0e01a8e9bf63bae9314efab547cb5fb8ff82069e6b2bcd7e4f77d370",
+      "size_bytes": 4986370
+    },
+    {
+      "path": "DEPENDENCY-INVENTORY.json",
+      "sha256": "4faac71190212b90ae2005ce177462e58cc003f8038631b3b2928581046143e9",
+      "size_bytes": 29708
+    },
+    {
+      "path": "KNOWN-CALLBACKS.json",
+      "sha256": "358b878528d1ef1cacd7e5ad1593e20dd1fbc59370eb3254cb95ada71ebda98c",
+      "size_bytes": 5401
+    },
+    {
+      "path": "METHOD-PREDICATE-MAP.json",
+      "sha256": "53c6b75a335cf55d018de252a4cb250dcd74599b9f6c3059100114589da14bf0",
+      "size_bytes": 1845314
+    },
+    {
+      "path": "PREDICATES.json",
+      "sha256": "9d431652aff0828e38f133fdfb4e72ad74299dcdc24b846d23c1184ed5f418e4",
+      "size_bytes": 5124341
+    },
+    {
+      "path": "PRESERVATION-DISPOSITIONS.json",
+      "sha256": "d5aa32d631af59b80989aec43b9e9a072e2e3de5f324a963fca57a1f886b5006",
+      "size_bytes": 187907
+    },
+    {
+      "path": "SCOPED-EXCLUSIONS.json",
+      "sha256": "9a2a8e48220dcf4d6ee4a0b2ea9ca74c3fefbb5c11968da4dfa0a317f488d5a0",
+      "size_bytes": 3118
+    },
+    {
+      "path": "SOURCE-INVENTORY.json",
+      "sha256": "a00a52537dbf8072149b66022b26e8d2388bba965a0af4b53259960c24dd9465",
+      "size_bytes": 180894
+    },
+    {
+      "path": "STATIC-VALIDATION.json",
+      "sha256": "bd73f2212ad81a497c52acff801a7fcefa5544dfa75e55d89cc25e75dc4e35e8",
+      "size_bytes": 1520
+    },
+    {
+      "path": "SUPERSEDED-PACKAGES.json",
+      "sha256": "a54146c411865236cc8a02b99a1ccce0ab37a20aa14ab87e48ba8f8c4c0c6d01",
+      "size_bytes": 1246
+    },
+    {
+      "path": "annotate_dispositions.py",
+      "sha256": "0b710ea5684e73824b3c929bb66c3322cde2ee94532f51a9b193aa5c25c9b334",
+      "size_bytes": 40051
+    },
+    {
+      "path": "build_inventory.py",
+      "sha256": "b62375114f616f90b0871b4663a3d9782841829425c09fd2b4fd50ed86cc09e1",
+      "size_bytes": 43004
+    },
+    {
+      "path": "freeze_evidence.py",
+      "sha256": "e2cecfec0e0e6d9a09c7af8fdb5469db582b23b0b5b0ec1d8efc63941f95d0cc",
+      "size_bytes": 5850
+    }
+  ],
+  "criteria": [
+    {
+      "id": "D01",
+      "criterion": "Design-only versioned decision; no runtime qualification or R03 acceptance; historical C199/C225 bytes, guards, pins, failures and per-source budgets remain authoritative.",
+      "verdict": "satisfied_as_design_requirement",
+      "assessment": "Separate versioned provider and design-only gates; historical C225 source pins and full original test object stay authoritative. Changed future setup must keep failing old helper guards."
+    },
+    {
+      "id": "D02",
+      "criterion": "Predeclare one strict Node version policy and exact candidate provenance before later execution; bind executable digest, size, mode, aliases, resolved libraries, loader configuration and inspection tool identity.",
+      "verdict": "satisfied_as_design_requirement",
+      "assessment": "Strict v24.22.1 is predeclared. Candidate digest/size/mode, runtime-supplied provenance and exact saved input archive are bound; actual version, host closure and behavior remain unqualified."
+    },
+    {
+      "id": "D03",
+      "criterion": "All seven original method IDs and original method/helper assertion bodies are carried into later default discovery, with genuine execution, zero hidden skips and no replacement-only pass. Explicitly explain the import-time skip guard and historical hardcoded provider transition.",
+      "verdict": "satisfied_as_design_requirement",
+      "assessment": "Seven original IDs and method/helper bodies remain obligations. Explicit import/decorator/setup/teardown adaptations are bounded; missing selection fails, with zero skipped or replacement-only acceptance."
+    },
+    {
+      "id": "D04",
+      "criterion": "Map reachable helper/JS/parser/importer predicates with source identities, branch conditions, provider preservation/disposition and corresponding retained evidence; describe patched versus actually exercised seams.",
+      "verdict": "satisfied_as_design_requirement",
+      "assessment": "Complete owned-source AST/call inventory and original graph reviewed beyond assertions, including strict JSON, oracle, imports, file binding, runtime/readers, callbacks, mocked seams, process lifecycle and result finalization. All 253 nodes have dispositions; JavaScript uses exact manually inspected ranges."
+    },
+    {
+      "id": "D05",
+      "criterion": "Reconcile static method inventory and unresolved dynamic/inheritance/load_tests/import aliases with a future actual default-discovery inventory; bounded fallback and complete failure/skip denominator required.",
+      "verdict": "satisfied_as_design_requirement",
+      "assessment": "Independent static inventory matches 372 modules and 4741 unique methods including 56 known generated cases. Future actual discovery and every outcome must reconcile; arbitrary import/decorator behavior is explicitly unresolved by static inspection."
+    },
+    {
+      "id": "D06",
+      "criterion": "Retain exact validator 2.0.0-dev.3.10 and Three.js 0.186.1/186 bytes, complete package trees/loader metadata, reject unbound symlinks/extras and external resource fetches; fresh current-host lock must be distinct from historical lock.",
+      "verdict": "satisfied_as_design_requirement",
+      "assessment": "Exact 24 C195/C199 dependency file bytes and existing loader layout are retained. Safe nonreplacing recovery and both pre-import boundaries remain required; bound external internals are not claimed exhaustively audited."
+    },
+    {
+      "id": "D07",
+      "criterion": "Retain three real synthetic checks, original Q01/Q03 fixtures and oracle; preserve 14 nodes/12 meshes, matrices/vertices/normals/indices/materials/bounds, 5e-6 position and 1e-6 matrix/normal tolerances, intended 0.001 matrix_0_3 refusal and exact input preservation.",
+      "verdict": "satisfied_as_design_requirement",
+      "assessment": "Read independent expected/glb/reader source and mapped scientific checks. Q01/Q03, the exact 0.001 negative mutation, finite coordinates, topology/materials/transforms/bounds, two tolerances and unchanged input bytes remain mandatory. Optional layout/baseline branches are preserved without false execution claims."
+    },
+    {
+      "id": "D08",
+      "criterion": "Retain Linux process-group/reaping/cleanup and alarm/finalization predicates, direct-start accounting, one checker per control, no retries, 30s host/28s child/2s cleanup and byte limits; bind receipts to the actual process/input/output.",
+      "verdict": "satisfied_as_design_requirement",
+      "assessment": "Original supervisor/clock/cleanup/alarm implementations remain unchanged. Adapter preserves once-only delegation, genuine process receipts and original time limits; independent ledgers make provider failure unhideable behind the expected negative."
+    },
+    {
+      "id": "D09",
+      "criterion": "Specify rejection and recovery evidence for absent/changed runtime, unexpected dependencies, malformed locks, unsafe/over-limit inputs, mutation, process failure, wrong version, failed cleanup and unresolved finalization.",
+      "verdict": "satisfied_as_design_requirement",
+      "assessment": "20 refusal/control families (21 rows after CH11 route split) predeclare relevant boundaries; precise fixtures and stage-specific counts must be independently frozen later. Preparation, checker, mocked and lifecycle processes are distinct; unknown outcomes cannot pass."
+    },
+    {
+      "id": "D10",
+      "criterion": "State later implementation, qualification, complete routine, independent acceptance, integration and saved-delivery gates separately; bind this independent review to exact candidate artifact hashes and re-review mandatory corrections.",
+      "verdict": "satisfied_as_design_requirement",
+      "assessment": "Separate D/I/H/R/R04/R05 gates; future source hashes intentionally null. This verdict is bound to exact corrected candidate/package bytes and preserves every prior mandatory finding."
+    }
+  ],
+  "findings_and_resolutions": [
+    {
+      "id": "RV-01",
+      "status": "resolved",
+      "original": "Per-checker parent authentication was promised without a reachable call seam from unchanged check_case.",
+      "resolution": "Explicit future guarded_run_process import alias delegates once to original supervisor with identical caller signature, Clock, absolute deadline, environment and callback. Own-clock/binding/postflight failures use CurrentHostBindingError outside Stop. Genuine delegated Stop remains eligible only after bounded postflight. Setup failure writes durable evidence without assuming teardown.",
+      "evidence": [
+        "CONTRACT.md sections 2-3",
+        "CONTRACT.json process_adapter/api/selection",
+        "METHOD-PREDICATE-MAP.json proposed_operational_graph"
+      ],
+      "failed_candidate_preserved": "attempt-001/candidate"
+    },
+    {
+      "id": "RV-02",
+      "status": "resolved",
+      "original": "Explicit package IDs were labeled as default discovery IDs.",
+      "resolution": "Seven raw default test_static_tray_readback_v01 IDs and explicit tests.test_static_tray_readback_v01 aliases are separately recorded with source/body identity joins. No runtime inventory is claimed observed.",
+      "evidence": [
+        "CONTRACT.json method_ids/explicit_package_method_ids/method_id_aliases",
+        "DEFAULT-DISCOVERY-INVENTORY.json",
+        "METHOD-PREDICATE-MAP.json"
+      ],
+      "failed_candidate_preserved": "attempt-001/candidate"
+    },
+    {
+      "id": "RV-03",
+      "status": "resolved",
+      "original": "One fixed zero-start requirement conflated parent-side refusal with a direct new-probe refusal.",
+      "resolution": "CH11-P requires zero checker starts; CH11-C records one real direct-probe start and rejection before dynamic imports. Other stage-dependent control families require independently frozen expected counts.",
+      "evidence": [
+        "CONTRACT.json controls CH11-P/CH11-C",
+        "CONTRACT.md section 8"
+      ],
+      "failed_candidate_preserved": "attempt-001/candidate"
+    },
+    {
+      "id": "RV-04",
+      "status": "resolved",
+      "original": "Real run_check.started callback had no incoming graph edge and was absent from four seam closures.",
+      "resolution": "Explicit binder and mock-child invocation edges reach started, which reaches durable transaction.write_new. Independent graph closure checks include the callback predicates in all four nonmocked seam closures; nine known callback groups are separately documented.",
+      "evidence": [
+        "KNOWN-CALLBACKS.json CB01",
+        "METHOD-PREDICATE-MAP.json",
+        "METHOD-CLOSURE-RECHECK.json"
+      ],
+      "failed_candidate_preserved": "attempt-001/map-at-finding"
+    },
+    {
+      "id": "RV-05",
+      "status": "resolved",
+      "original": "Generic external-node dispositions incorrectly implied unchanged bytes at existing paths for every runtime/dependency boundary.",
+      "resolution": "Three specialized dispositions retain historical records, require separately qualified new Node/Python host closures, and preserve the 24 dependency bytes under explicitly bound external relocation. Final map archive is e959d8df7a19327979e6f63508239950a3fa2e1aa59f1227ca610014bfc98db3.",
+      "evidence": [
+        "PRESERVATION-DISPOSITIONS.json external node dispositions",
+        "SUPERSEDED-PACKAGES.json"
+      ],
+      "failed_candidate_preserved": "attempt-002/map-at-finding"
+    }
+  ],
+  "verification": {
+    "core_source_inventory_checks": {
+      "passed": 19,
+      "failed": 0,
+      "record": "MAP-RECHECK.json"
+    },
+    "final_contract_disposition_archive_checks": {
+      "passed": 27,
+      "failed": 0,
+      "record": "FINAL-STATIC-VERIFICATION.json"
+    },
+    "total_current_checks_passed": 46,
+    "counts": {
+      "functions_scopes_and_boundaries": 253,
+      "graph_edges": 578,
+      "javascript_segments": 17,
+      "preservation_groups": 46,
+      "python_call_nodes": 3260,
+      "python_predicate_nodes": 3355,
+      "source_files": 402,
+      "static_generated_methods": 56,
+      "suite_methods": 4741,
+      "suite_modules": 372,
+      "target_methods": 7,
+      "target_reachable_nodes": 129
+    },
+    "method_identity_detail": "Function-line block and body AST hashes have explicit separate scopes. Earlier INITIAL-CRITERIA full-function AST/source hashes are different representations, not replacement identities."
+  },
+  "runtime_input_preservation": {
+    "archive": {
+      "path": "packages/OntoKin_C271_P05_Node_Candidate_2026-11-20.tar.gz",
+      "bytes": 45186132,
+      "sha256": "100ae976555b388472c3e875aeda67bd7d8c9229a968a11661fb852624adaeb5"
+    },
+    "node": {
+      "schema": "ontokin.c271.p05-runtime-candidate-static/1",
+      "observed_at_utc": "2026-11-21T03:08:14.669483+00:00",
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "resolved_path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "symlink": false,
+      "bytes": 126951512,
+      "sha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+      "mode": "0o755",
+      "selected_required_version": "v24.22.1",
+      "version_executed_this_phase": false,
+      "runtime_qualified": false,
+      "purpose": "Freeze explicit proposed candidate identity before any future selected execution; static bytes only, not historical restoration or version/behavior equivalence"
+    },
+    "saved_location": {
+      "schema": "ontokin.c271.p05-runtime-candidate-location/1",
+      "status": "saved",
+      "recorded_at_utc": "2026-11-21T03:27:24.043793+00:00",
+      "file_name": "OntoKin_C271_P05_Node_Candidate_2026-11-20.tar.gz",
+      "library_file_id": "libfile_fde3_f-d11430d85e8481918f39a176ca9513e8_2ab2a24d43748191957f9bcc356b59de",
+      "file_id": "file_00000000674481fd932398fb97b96f14",
+      "version": 0,
+      "path": "/OntoKin/OntoKin_C271_P05_Node_Candidate_2026-11-20.tar.gz",
+      "bytes": 45186132,
+      "sha256": "100ae976555b388472c3e875aeda67bd7d8c9229a968a11661fb852624adaeb5",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-d11430d85e8481918f39a176ca9513e8_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "local_metadata_applied": true,
+      "node_member": "bin/node",
+      "node_bytes": 126951512,
+      "node_sha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+      "node_mode": "0o755",
+      "purpose": "Durable exact design input for later implementation/host qualification; not the phase handoff",
+      "version_requirement": "v24.22.1",
+      "node_starts": 0,
+      "ldd_starts": 0,
+      "operational_installations": 0,
+      "runtime_qualified": false,
+      "historical_restoration": false,
+      "verification": "RUNTIME-CANDIDATE-ARCHIVE-VERIFICATION.json"
+    },
+    "independent_check": "Complete gzip read, safe exact two-file tar inventory, executable digest/size/mode and exact source metadata verified locally; no extraction, installation or execution by reviewer.",
+    "limit": "Saved location metadata and exact local archive verified; no independent remote re-download performed."
+  },
+  "limits": [
+    "No project imports, actual unittest discovery, test methods, Node, ldd, native process, installation, full routine or integration were executed by this reviewer.",
+    "Static source possibilities are not observed branch coverage. No arbitrary dynamic dispatch or import/decorator side-effect completeness proof is claimed.",
+    "JavaScript has all 168 lines and 17 exact manually inspected ranges, not a parsed JavaScript AST or future implementation equivalence result.",
+    "Three bound external library/runtime boundaries preserve provenance and actual future import/host requirements; their internal algorithms are not exhaustively audited.",
+    "The remaining 4734 default methods are source-inventoried, not individually given a transitive semantic audit in this bounded readback phase.",
+    "Future exact schemas/serialization, implementation hashes, frozen mutated fixtures, actual host qualification and runtime discovery remain gate obligations.",
+    "Existing historical failures and unknowns remain; this design does not satisfy R03, R04 or R05 or create a main lease."
+  ],
+  "inspection_errors_retained": [
+    {
+      "operation": "Read-only source-group metadata inspection",
+      "error": "KeyError: 'source_groups'",
+      "resolution": "Used the actual groups key and read all 46 groups in bounded output batches. No project code ran and no candidate was changed."
+    },
+    {
+      "operation": "Some broad read-only diagnostic displays exceeded tool output bounds",
+      "resolution": "Relevant human-map tail, all groups, final operational graph and known callbacks were read separately; complete byte/AST identities were checked programmatically."
+    }
+  ],
+  "execution": {
+    "project_imports": 0,
+    "actual_discovery": 0,
+    "test_methods": 0,
+    "Node": 0,
+    "ldd": 0,
+    "native": 0,
+    "installs": 0,
+    "full_routine": 0,
+    "integration": 0
+  },
+  "next_gate": "Root may adopt the exact documentary design; next phase implements only its accepted scope after fresh reconciliation and early recovery. Actual host qualification, full routine/R03 acceptance and R04/R05 remain separate."
+}

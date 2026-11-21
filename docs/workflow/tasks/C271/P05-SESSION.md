@@ -14,3 +14,9 @@ Root owns canonical task/index/remote writes; workers own disjoint design-map, r
 | Documentary checks/publication | Pending | Verify actual scope and conditional branch checkpoint |
 | Final partial delivery | Pending | Freeze, independently verify and save ZIP/prompts; separate receipt |
 | Parent R03–R05 | Not done | Implementation/qualification/routine/integration remain later work |
+
+## Reviewed design checkpoint
+
+The [adoption decision](../../../engineering/localized-repair-c271/current-host-p05/ADOPTION.md) now accepts the exact contract and map. Independent review passed 46 static checks and resolved five mandatory findings, preserving every prior candidate. The earlier table above is the bootstrap history. Design and review are now complete; documentary checks, publication and final partial delivery remain pending at this source checkpoint. No implementation, actual discovery, product test, Node, ldd, installation, full routine or integration occurred.
+
+The [phase outcome](../../../engineering/localized-repair-c271/current-host-p05/PHASE-OUTCOME.json) records limits and the fresh-chat implementation action. The parent requirements and plan remain unchanged: R01/R02 done, R03-R05 not_done; P01 done, P02 in_progress. The separate receipt will complete P05 delivery without closing C271.

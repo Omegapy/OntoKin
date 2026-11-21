@@ -1,0 +1,145 @@
+{
+  "schema": "ontokin.c271.p05-independent-map-recheck/1",
+  "reviewer": "/root/intake_audit",
+  "recorded_at_utc": "2026-11-21T03:31:32.084211+00:00",
+  "source_revision": "743409619a8663682750b0ca29c50547a25dde41",
+  "passed": true,
+  "checks_passed": 19,
+  "checks_failed": 0,
+  "checks": [
+    {
+      "name": "every inventoried source matches actual baseline Git blob and local bytes",
+      "passed": true
+    },
+    {
+      "name": "source inventory count unique",
+      "passed": true
+    },
+    {
+      "name": "all mapped Python nodes match actual source AST and segment hashes",
+      "passed": true
+    },
+    {
+      "name": "selected Python AST node inventory complete by independent walk",
+      "passed": true,
+      "detail": {
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "name": "Python predicate/call IDs unique",
+      "passed": true
+    },
+    {
+      "name": "every JS segment exact",
+      "passed": true
+    },
+    {
+      "name": "every nonblank JS source line covered",
+      "passed": true
+    },
+    {
+      "name": "JS whole-line inventory exact",
+      "passed": true
+    },
+    {
+      "name": "graph has unique nodes and valid endpoints",
+      "passed": true
+    },
+    {
+      "name": "every focal method graph/predicate closure internally complete",
+      "passed": true
+    },
+    {
+      "name": "known started callback included in all four unmocked seam closures",
+      "passed": true
+    },
+    {
+      "name": "test module inventory complete including no hidden nested modules",
+      "passed": true
+    },
+    {
+      "name": "independent static method set exactly matches declared inventory",
+      "passed": true,
+      "detail": {
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "name": "inventory count and static generated cases agree",
+      "passed": true
+    },
+    {
+      "name": "all declared suite method body/block identities match source",
+      "passed": true
+    },
+    {
+      "name": "all seven exact default focal IDs present once",
+      "passed": true
+    },
+    {
+      "name": "historical runtime and options/slots exact",
+      "passed": true
+    },
+    {
+      "name": "all 24 dependency file bindings exact",
+      "passed": true
+    },
+    {
+      "name": "all 24 dependencies match actual authenticated archive members",
+      "passed": true
+    }
+  ],
+  "inputs": [
+    {
+      "path": "SOURCE-INVENTORY.json",
+      "bytes": 180894,
+      "sha256": "a00a52537dbf8072149b66022b26e8d2388bba965a0af4b53259960c24dd9465"
+    },
+    {
+      "path": "PREDICATES.json",
+      "bytes": 5124341,
+      "sha256": "9d431652aff0828e38f133fdfb4e72ad74299dcdc24b846d23c1184ed5f418e4"
+    },
+    {
+      "path": "METHOD-PREDICATE-MAP.json",
+      "bytes": 1845314,
+      "sha256": "53c6b75a335cf55d018de252a4cb250dcd74599b9f6c3059100114589da14bf0"
+    },
+    {
+      "path": "DEFAULT-DISCOVERY-INVENTORY.json",
+      "bytes": 4986370,
+      "sha256": "5944d90a0e01a8e9bf63bae9314efab547cb5fb8ff82069e6b2bcd7e4f77d370"
+    },
+    {
+      "path": "DEPENDENCY-INVENTORY.json",
+      "bytes": 29708,
+      "sha256": "4faac71190212b90ae2005ce177462e58cc003f8038631b3b2928581046143e9"
+    }
+  ],
+  "details": {
+    "source_files": 402,
+    "Python_predicates_and_calls": 6615,
+    "JS_segments": 17,
+    "default_modules": 372,
+    "static_method_ids": 4741,
+    "generated_method_ids": 56,
+    "focal_method_ids": [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries",
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries",
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference",
+      "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup",
+      "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_result_write_failure_leaves_predecessor_gate_blocked",
+      "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm",
+      "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending"
+    ],
+    "limits": [
+      "No project import, actual discovery, test method, Node or ldd was executed.",
+      "AST inventory does not prove arbitrary import/decorator dispatch or actual test outcome.",
+      "Independent graph closure checks establish recorded consistency; manual source review is still required for edge completeness.",
+      "JS segments are original byte ranges, not parsed-JavaScript AST or future implementation equivalence."
+    ]
+  }
+}
