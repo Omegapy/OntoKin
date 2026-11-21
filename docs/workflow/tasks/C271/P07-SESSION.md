@@ -11,3 +11,7 @@ Current phase is in progress. Gate H authoring implementation and actual host qu
 ## Design acceptance
 
 Candidate-002 is independently accepted for design only, with P07-R01 resolved and no mandatory finding open. The [adoption](../../../engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json) binds unchanged reviewed files and their exact manifest. Twenty-six author checks and thirteen independent static groups passed. The [outcome](../../../engineering/localized-repair-c271/host-inspection-p07/PHASE-OUTCOME.json) retains the publication/delivery boundary. No runtime or original-method result is claimed.
+
+## P07 partial delivery complete
+
+The verified design handoff ZIP and both matching prompts are saved and exact-byte readback matched. [P07-DELIVERY.json](../../../engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json) records their receipts and the 18 builder/20 independent archive groups. The final receipt publication and fresh documentary checks are confirmed separately in the terminal receipt and PR #274. C271 remains open; R03-R05 are not_done. Stop this chat after terminal confirmation. The next technical work is HI in a fresh phase, ending before runtime preparation or Node/ldd.

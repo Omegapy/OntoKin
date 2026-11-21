@@ -119,3 +119,7 @@ Acceptance is independent design review with mandatory findings resolved (or an 
 ### P07 reviewed design checkpoint
 
 The [exact candidate adoption](../../../engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json) is accepted for design only. Independent review resolved the interrupted-launch count finding: missing start evidence stays unknown, never zero. Applicable documentary checks, publication and confirmed saved partial delivery must finish before stopping this phase. The next technical phase is bounded HI implementation in a fresh chat, ending before runtime preparation or Node/ldd. Parent requirement statuses do not change.
+
+## P07 partial delivery complete
+
+The verified design handoff ZIP and both matching prompts are saved and exact-byte readback matched. [P07-DELIVERY.json](../../../engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json) records their receipts and the 18 builder/20 independent archive groups. The final receipt publication and fresh documentary checks are confirmed separately in the terminal receipt and PR #274. C271 remains open; R03-R05 are not_done. Stop this chat after terminal confirmation. The next technical work is HI in a fresh phase, ending before runtime preparation or Node/ldd.

@@ -1,0 +1,95 @@
+{
+  "schema": "ontokin.c271.p07-independent-package-review/1",
+  "reviewer": "/root/intake_review",
+  "started_at_utc": "2026-11-21T06:43:22.530681+00:00",
+  "archive": {
+    "path": "/workspace/scratch/522363862012/packages/OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20.zip",
+    "expected_bytes": 957300,
+    "expected_sha256": "be774f33019e41fc65011fe3a1014edd36ac3298181b04236583f4e39b88d675",
+    "bytes": 957300,
+    "sha256": "be774f33019e41fc65011fe3a1014edd36ac3298181b04236583f4e39b88d675"
+  },
+  "source_commit": "a5622f7fdd5ffb40a387d860e41c2ebbe5291d6f",
+  "source_tree": "94df4e85c8ad43a635b07a8d4506308ef7244b5c",
+  "main_commit": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+  "checks": [
+    {
+      "name": "immutable archive identity",
+      "result": "PASS"
+    },
+    {
+      "name": "safe unique regular inventory",
+      "result": "PASS",
+      "entries": 261
+    },
+    {
+      "name": "all required and additional recovery roots",
+      "result": "PASS",
+      "required_roots": 9,
+      "additional_roots": 3
+    },
+    {
+      "name": "exact manifest coverage",
+      "result": "PASS",
+      "payloads": 260
+    },
+    {
+      "name": "all CRC sizes hashes and archive modes",
+      "result": "PASS",
+      "uncompressed_bytes": 3398125
+    },
+    {
+      "name": "independent fresh extraction exact bytes and restored modes",
+      "result": "PASS",
+      "extracted_files": 261
+    },
+    {
+      "name": "all selected source bytes commit tree blob mode bindings",
+      "result": "PASS",
+      "snapshots": 144,
+      "commits": {
+        "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d": 2,
+        "a5622f7fdd5ffb40a387d860e41c2ebbe5291d6f": 142
+      }
+    },
+    {
+      "name": "selected governance active task complete P07 subtree",
+      "result": "PASS",
+      "project_skills": 3
+    },
+    {
+      "name": "standalone prompts equal packaged prompts",
+      "result": "PASS",
+      "prompts": [
+        {
+          "path": "/workspace/scratch/522363862012/packages/OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Continue.md",
+          "bytes": 4794,
+          "sha256": "21fbd0af232a99143d86e02ba4f22e7c9814eeca1b4fd5ffdf5dbd7b63cd1a3b"
+        },
+        {
+          "path": "/workspace/scratch/522363862012/packages/OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Recover.md",
+          "bytes": 5020,
+          "sha256": "d98b51e6d41a1da33da6cb23b328fcd76d66b5a509ba4cdda490b751547cee28"
+        }
+      ]
+    }
+  ],
+  "mandatory_findings": [],
+  "notes": [],
+  "execution_counts": {
+    "project_imports": 0,
+    "project_tests": 0,
+    "Node": 0,
+    "ldd": 0,
+    "runtime_preparation": 0,
+    "full_routine": 0,
+    "native_model_hosted": 0
+  },
+  "fresh_extraction": "/workspace/scratch/522363862012/audit/final-package-review/extracted-r556tuqq",
+  "verdict": "REVIEW_CHECK_FAILED",
+  "verification_exception": {
+    "type": "AssertionError",
+    "message": "",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/scratch/522363862012/audit/final-package-review/verify_package.py\", line 321, in <module>\n    check()\n  File \"/workspace/scratch/522363862012/audit/final-package-review/verify_package.py\", line 170, in check\n    assert len(recovery_rows)==len({r['original_path'] for r in recovery_rows})==145\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  }
+}

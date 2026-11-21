@@ -1,0 +1,39 @@
+{
+  "schema": "ontokin.c271.p07-package-review-attempts/1",
+  "attempts": [
+    {
+      "id": "inspection-display-limits",
+      "kind": "read_only_output_limits",
+      "disposition": "resolved_by_targeted_reads",
+      "description": "Some broad preliminary artifact displays and a recursive packaging search exceeded tool output limits. Targeted root/descriptor/manifest reads and complete byte-level checks supplied the review inputs. No source or archive was modified."
+    },
+    {
+      "id": "path-listing",
+      "kind": "read_only_path_error",
+      "disposition": "resolved",
+      "description": "An exploratory listing used the repository cwd for a workspace audit path and reported that the directory did not exist. The review directory was subsequently created only at its assigned workspace path."
+    },
+    {
+      "id": "attempt-001",
+      "kind": "reviewer_assertion_failed",
+      "disposition": "reviewer_assumption_corrected",
+      "groups_passed_before_failure": 9,
+      "evidence": "attempt-001-RESULTS.json",
+      "runner": "attempt-001-verify_package.py",
+      "reason": "The first runner required one recovery-map row per original path. The map intentionally embeds audit/FINAL-FREEZE-INPUT.json at two package paths with identical size, hash and mode. Unique ZIP entry names and manifest inventory had already passed. This was an overly strict reviewer assertion, not a defective archive.",
+      "correction": "Validate unique origin/destination pairs and identical content/mode for every repeated original; then verify each original and packaged copy."
+    },
+    {
+      "id": "attempt-002",
+      "kind": "complete_independent_review",
+      "disposition": "passed",
+      "evidence": "RESULTS.json",
+      "runner": "verify_package.py",
+      "groups_passed": 20
+    }
+  ],
+  "original_failures_retained": true,
+  "archive_modified": false,
+  "repository_or_index_modified": false,
+  "runtime_or_project_execution": false
+}
