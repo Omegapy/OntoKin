@@ -1,0 +1,3377 @@
+{
+  "schema": "ontokin.c271.p03-independent-package-audit/1",
+  "reviewer": "/root/intake_review",
+  "recorded_at_utc": "2026-11-21T00:30:46.295078+00:00",
+  "verdict": "eligible_for_partial_save",
+  "archive": {
+    "path": "/workspace/scratch/7010345bc259/packages/OntoKin_C271_P03_Validation_Recovery_Handoff_2026-11-20.zip",
+    "bytes": 22484405,
+    "sha256": "09a56ab40d5916d72abc5d4d165aa6a07ea981f96e651046b8e298dbd83aadb4"
+  },
+  "prompts": [
+    {
+      "path": "/workspace/scratch/7010345bc259/packages/OntoKin_C271_P03_Prompt_1_Continue_2026-11-20.md",
+      "file_name": "OntoKin_C271_P03_Prompt_1_Continue_2026-11-20.md",
+      "bytes": 4114,
+      "sha256": "c2a9101bb245d475966aa3b42a4e74de7781fd805036476ed4ae6139a9ba9500"
+    },
+    {
+      "path": "/workspace/scratch/7010345bc259/packages/OntoKin_C271_P03_Prompt_2_Recover_2026-11-20.md",
+      "file_name": "OntoKin_C271_P03_Prompt_2_Recover_2026-11-20.md",
+      "bytes": 4432,
+      "sha256": "1f2eaf36a24fe46d0848b7669026e991caf710ada8157e8fc43de505aaf1becf"
+    }
+  ],
+  "source": {
+    "commit": "633c5097b2c5b870a13baa33a095a91eaa241eea",
+    "tree": "7f8eb385de71c6dd202389ad09113b779a6dc4b8"
+  },
+  "members": 135,
+  "payloads": 134,
+  "git_snapshots": 107,
+  "session_aliases": 119,
+  "raw_payloads": 108,
+  "check_count": 622,
+  "failed_count": 0,
+  "checks": [
+    {
+      "check": "archive_matches_assigned_identity",
+      "passed": true
+    },
+    {
+      "check": "builder_and_identity_records_agree",
+      "passed": true
+    },
+    {
+      "check": "safe_regular_relative_paths",
+      "passed": true,
+      "invalid": []
+    },
+    {
+      "check": "unique_member_names",
+      "passed": true
+    },
+    {
+      "check": "zip_crc",
+      "passed": true,
+      "first_bad_member": null
+    },
+    {
+      "check": "exact_manifest_inventory",
+      "passed": true
+    },
+    {
+      "check": "all_required_root_files",
+      "passed": true
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "CHECKPOINT.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "HANDOFF.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "HISTORICAL-DEPENDENCIES.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "NEXT-TASK.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "PROMPT-1-CONTINUE.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "PROMPT-2-RECOVER.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "README-START-HERE.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "RECOVERY-STATUS.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "builder/build_final.py"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "builder/final-config.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "metadata/EXTERNAL-EVIDENCE-LINKS.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "metadata/FINAL-OBSERVATION.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "metadata/RAW-ARCHIVE-MEMBERS.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "metadata/SESSION-AND-RECOVERY-SOURCES.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "metadata/SNAPSHOT-SOURCES.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/.agents/skills/ontokin-delivery/SKILL.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/.agents/skills/ontokin-learning/SKILL.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/.agents/skills/ontokin-session/SKILL.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/AGENTS.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/CHATGPT-START-HERE.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/GOAL.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/ROLE.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/STATUS.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/docs/workflow/BROWSER-PROMPTS.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/docs/workflow/CURRENT.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/docs/workflow/HANDOFF.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/docs/workflow/PROTOCOL.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/docs/workflow/README.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/docs/workflow/prompts/CONTINUE.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/docs/workflow/prompts/RECOVER.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/docs/workflow/registry.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/docs/workflow/tasks/C270/PLAN.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/docs/workflow/tasks/C270/REQUIREMENTS.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/docs/workflow/tasks/C270/SESSION.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "observed-main/docs/workflow/tasks/C270/task.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "preserved-inputs/OntoKin_C271_P02_Validation_Blocked_Handoff_2026-11-20.zip"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/.agents/skills/ontokin-delivery/SKILL.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/.agents/skills/ontokin-learning/SKILL.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/.agents/skills/ontokin-session/SKILL.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/AGENTS.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/CHATGPT-START-HERE.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/GOAL.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/ROLE.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/STATUS.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/README.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/browser-workflow-c263/MIGRATION.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c260/CONTRACT.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c260/CONTROL-PLAN.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c269/COVERAGE.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/EARLY-PACKAGE-VERIFICATION.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/LEARNING.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/NEXT-TASK.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/README.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/RESULTS.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/STARTUP-READ-SET.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/AUTHOR-RECORD.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/EXPECTED.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/HASHES.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/SOURCE-VALIDITY.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/STATIC-CHECKS.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/construct.py"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/EVIDENCE-LOCATION.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/PHASE-OUTCOME.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTEGRATION-REVIEW.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REPORT.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/ACTIVE-OPERATIONS.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/REPORT.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RESULTS.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/run_h22_control.py"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-LIBRARY-METADATA.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-PACKAGE-VERIFICATION.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-RECOVERY-RECEIPT.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EVIDENCE-LOCATION.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE-OUTCOME.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE-MANIFEST.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE-VERIFICATION.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/READ-SET.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/REMOTE-READBACK.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RESULTS.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/STARTUP-OBSERVATION.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/record-preflight/CHECKS.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/readback-prerequisites-c225/README.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/readback-prerequisites-c225/restore_readback_prerequisites.py"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/BROWSER-PROMPTS.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/CURRENT.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/HANDOFF.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/PROTOCOL.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/README.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/prompts/CONTINUE.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/prompts/RECOVER.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/registry.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/LEARNING-P02.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/LEARNING-P03.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/P02-SESSION.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/P03-SESSION.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/PLAN.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/REQUIREMENTS.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/SESSION.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/task.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/pyproject.toml"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/tests/test_local_checks.py"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/tests/test_static_tray_readback_v01.py"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/tools/check_local.py"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/tools/check_native_reader_setup.py"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/tools/force-agent-verification-requirements.txt"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/tools/native-reader-verification-linux-cp312.lock"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/tools/package-lock.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "repository/tools/package.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "session-evidence/review/final_publication/ARTIFACTS.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "session-evidence/review/final_publication/PUBLICATION-REVIEW.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "session-evidence/review/final_publication/REPORT.md"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "session-evidence/review/final_publication/check_publication.py"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "session-evidence/session/FINAL-OBSERVATION.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "session-evidence/session/FINAL-OPERATIONS.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "session-evidence/session/PUBLISH-02-COMMIT.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "session-evidence/session/PUBLISH-02-INTENT.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "session-evidence/session/PUBLISH-02-READBACK.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "session-evidence/session/final-source-record-checks/CHECKS.json"
+    },
+    {
+      "check": "fresh_payload_size_and_hash",
+      "passed": true,
+      "path": "session-evidence/session/final-source-record-checks/documentation.log"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/.agents/skills/ontokin-delivery/SKILL.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/.agents/skills/ontokin-delivery/SKILL.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/.agents/skills/ontokin-learning/SKILL.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/.agents/skills/ontokin-learning/SKILL.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/.agents/skills/ontokin-session/SKILL.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/.agents/skills/ontokin-session/SKILL.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/AGENTS.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/AGENTS.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/CHATGPT-START-HERE.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/CHATGPT-START-HERE.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/GOAL.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/GOAL.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/ROLE.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/ROLE.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/STATUS.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/STATUS.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/README.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/README.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/browser-workflow-c263/MIGRATION.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/browser-workflow-c263/MIGRATION.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c260/CONTRACT.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c260/CONTRACT.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c260/CONTROL-PLAN.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c260/CONTROL-PLAN.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c269/COVERAGE.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c269/COVERAGE.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/EARLY-PACKAGE-VERIFICATION.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/EARLY-PACKAGE-VERIFICATION.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/EARLY-RECOVERY-RECEIPT.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/LEARNING.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/LEARNING.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/NEXT-TASK.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/NEXT-TASK.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/README.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/README.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/RESULTS.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/RESULTS.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/STARTUP-READ-SET.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/STARTUP-READ-SET.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/AUTHOR-RECORD.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/AUTHOR-RECORD.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/EXPECTED.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/EXPECTED.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/HASHES.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/HASHES.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/SOURCE-VALIDITY.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/SOURCE-VALIDITY.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/STATIC-CHECKS.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/STATIC-CHECKS.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/construct.py",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/construct.py"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_clause.main.ok"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/fixtures/after.missing_digest_value.main.ok"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_clause.main.ok"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/control/fixtures/before.missing_digest_value.main.ok"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/EVIDENCE-LOCATION.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/EVIDENCE-LOCATION.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/PHASE-OUTCOME.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/PHASE-OUTCOME.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTEGRATION-REVIEW.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTEGRATION-REVIEW.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REPORT.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REPORT.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/ACTIVE-OPERATIONS.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/ACTIVE-OPERATIONS.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/REPORT.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/REPORT.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RESULTS.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/finalization-20261120/verification/RESULTS.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/run_h22_control.py",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/run_h22_control.py"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-LIBRARY-METADATA.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-LIBRARY-METADATA.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-PACKAGE-VERIFICATION.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-PACKAGE-VERIFICATION.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-RECOVERY-RECEIPT.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-RECOVERY-RECEIPT.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EVIDENCE-LOCATION.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EVIDENCE-LOCATION.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE-OUTCOME.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE-OUTCOME.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE-MANIFEST.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE-MANIFEST.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE-VERIFICATION.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE-VERIFICATION.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/READ-SET.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/READ-SET.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/REMOTE-READBACK.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/REMOTE-READBACK.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RESULTS.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RESULTS.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/STARTUP-OBSERVATION.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/STARTUP-OBSERVATION.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/record-preflight/CHECKS.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/record-preflight/CHECKS.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/readback-prerequisites-c225/README.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/readback-prerequisites-c225/README.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/readback-prerequisites-c225/restore_readback_prerequisites.py",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/readback-prerequisites-c225/restore_readback_prerequisites.py"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/language-design/OK-LANG-002-pinned-modules-and-keyed-assembly-construction.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/BROWSER-PROMPTS.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/BROWSER-PROMPTS.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/CURRENT.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/CURRENT.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/HANDOFF.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/HANDOFF.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/PROTOCOL.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/PROTOCOL.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/README.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/README.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/prompts/CONTINUE.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/prompts/CONTINUE.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/prompts/RECOVER.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/prompts/RECOVER.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/registry.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/registry.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/LEARNING-P02.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/LEARNING-P02.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/LEARNING-P03.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/LEARNING-P03.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/P02-SESSION.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/P02-SESSION.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/P03-SESSION.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/P03-SESSION.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/PLAN.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/PLAN.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/REQUIREMENTS.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/SESSION.md",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/SESSION.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/task.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/docs/workflow/tasks/C271/task.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/pyproject.toml",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/pyproject.toml"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/tests/test_local_checks.py",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/tests/test_local_checks.py"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/tests/test_static_tray_readback_v01.py",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/tests/test_static_tray_readback_v01.py"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/tools/check_local.py",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/tools/check_local.py"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/tools/check_native_reader_setup.py",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/tools/check_native_reader_setup.py"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/tools/force-agent-verification-requirements.txt",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/tools/force-agent-verification-requirements.txt"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/tools/native-reader-verification-linux-cp312.lock",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/tools/native-reader-verification-linux-cp312.lock"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/tools/package-lock.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/tools/package-lock.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "repository/tools/package.json",
+      "revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "repository/tools/package.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/.agents/skills/ontokin-delivery/SKILL.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/.agents/skills/ontokin-delivery/SKILL.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/.agents/skills/ontokin-learning/SKILL.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/.agents/skills/ontokin-learning/SKILL.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/.agents/skills/ontokin-session/SKILL.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/.agents/skills/ontokin-session/SKILL.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/AGENTS.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/AGENTS.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/CHATGPT-START-HERE.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/CHATGPT-START-HERE.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/GOAL.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/GOAL.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/ROLE.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/ROLE.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/STATUS.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/STATUS.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/docs/workflow/BROWSER-PROMPTS.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/docs/workflow/BROWSER-PROMPTS.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/docs/workflow/CURRENT.json",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/docs/workflow/CURRENT.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/docs/workflow/HANDOFF.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/docs/workflow/HANDOFF.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/docs/workflow/PROTOCOL.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/docs/workflow/PROTOCOL.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/docs/workflow/README.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/docs/workflow/README.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/docs/workflow/prompts/CONTINUE.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/docs/workflow/prompts/CONTINUE.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/docs/workflow/prompts/RECOVER.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/docs/workflow/prompts/RECOVER.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/docs/workflow/registry.json",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/docs/workflow/registry.json"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/docs/workflow/tasks/C270/PLAN.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/docs/workflow/tasks/C270/PLAN.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/docs/workflow/tasks/C270/REQUIREMENTS.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/docs/workflow/tasks/C270/SESSION.md",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/docs/workflow/tasks/C270/SESSION.md"
+    },
+    {
+      "check": "snapshot_identity_and_tree_binding",
+      "passed": true,
+      "path": "observed-main/docs/workflow/tasks/C270/task.json",
+      "revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d"
+    },
+    {
+      "check": "snapshot_exact_git_object_bytes",
+      "passed": true,
+      "path": "observed-main/docs/workflow/tasks/C270/task.json"
+    },
+    {
+      "check": "required_repository_snapshots_present",
+      "passed": true
+    },
+    {
+      "check": "declared_snapshot_count",
+      "passed": true
+    },
+    {
+      "check": "pinned_external_paths_exist_in_declared_git_tree",
+      "passed": true,
+      "paths": 166,
+      "failures": []
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/ARTIFACTS.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/ARTIFACTS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/ARTIFACTS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/COPY-REPAIR-REPORT.md",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/COPY-REPAIR-REPORT.md"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/COPY-REPAIR-REPORT.md"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/ENVIRONMENT-PREFLIGHT-READONLY.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/ENVIRONMENT-PREFLIGHT-READONLY.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/ENVIRONMENT-PREFLIGHT-READONLY.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/PREPARATION-FOLLOWUP.md",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/PREPARATION-FOLLOWUP.md"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/PREPARATION-FOLLOWUP.md"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/PREPARATION-REPORT.md",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/PREPARATION-REPORT.md"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/PREPARATION-REPORT.md"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/READBACK-INSPECTION-ATTEMPT01.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/READBACK-INSPECTION-ATTEMPT01.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/READBACK-INSPECTION-ATTEMPT01.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/READSET.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/READSET.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/READSET.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/REPAIR-OUTCOME.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/REPAIR-OUTCOME.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/REPAIR-OUTCOME.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/RPDS-WHEEL-HEAD.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/RPDS-WHEEL-HEAD.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/RPDS-WHEEL-HEAD.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/copy-repair/BASE.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/copy-repair/BASE.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/copy-repair/BASE.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/copy-repair/copy-repair.patch",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/copy-repair/copy-repair.patch"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/copy-repair/copy-repair.patch"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/copy-repair/green/EXECUTION.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/copy-repair/green/EXECUTION.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/copy-repair/green/EXECUTION.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/copy-repair/green/stderr.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/copy-repair/green/stderr.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/copy-repair/green/stderr.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/copy-repair/green/stdout.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/diff.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/copy-repair/green/stdout.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/copy-repair/local-driver-cohort/EXECUTION.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/copy-repair/local-driver-cohort/EXECUTION.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/copy-repair/local-driver-cohort/EXECUTION.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/copy-repair/local-driver-cohort/stderr.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/copy-repair/local-driver-cohort/stderr.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/copy-repair/local-driver-cohort/stderr.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/copy-repair/local-driver-cohort/stdout.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/diff.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/copy-repair/local-driver-cohort/stdout.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/copy-repair/red/EXECUTION.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/copy-repair/red/EXECUTION.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/copy-repair/red/EXECUTION.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/copy-repair/red/stderr.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/copy-repair/red/stderr.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/copy-repair/red/stderr.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/copy-repair/red/stdout.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/diff.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/copy-repair/red/stdout.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/copy-repair/source-before/tests/test_local_checks.py",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/copy-repair/source-before/tests/test_local_checks.py"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/copy-repair/source-before/tests/test_local_checks.py"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "preparation/copy-repair/source-before/tools/check_local.py",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/preparation/copy-repair/source-before/tools/check_local.py"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "preparation/copy-repair/source-before/tools/check_local.py"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/candidate/ARTIFACTS.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/candidate/ARTIFACTS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/candidate/ARTIFACTS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/candidate/CANDIDATE-AUDIT.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/candidate/CANDIDATE-AUDIT.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/candidate/CANDIDATE-AUDIT.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/candidate/INSTALLED-PYTHON-BINDINGS.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/candidate/INSTALLED-PYTHON-BINDINGS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/candidate/INSTALLED-PYTHON-BINDINGS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/candidate/READ-SET.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/candidate/READ-SET.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/candidate/READ-SET.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/candidate/REPORT.md",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/candidate/REPORT.md"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/candidate/REPORT.md"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/candidate/review_candidate.py",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/candidate/review_candidate.py"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/candidate/review_candidate.py"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/candidate/reviewed-diff.patch",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/candidate/reviewed-diff.patch"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/candidate/reviewed-diff.patch"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/candidate/reviewed-source/tests/test_local_checks.py",
+      "included_as": "repository/tests/test_local_checks.py"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/candidate/reviewed-source/tests/test_local_checks.py"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/candidate/reviewed-source/tools/check_local.py",
+      "included_as": "repository/tools/check_local.py"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/candidate/reviewed-source/tools/check_local.py"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/ARTIFACTS.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/ARTIFACTS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/ARTIFACTS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/ATTEMPT-01-verify_final_evidence.py",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/ATTEMPT-01-verify_final_evidence.py"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/ATTEMPT-01-verify_final_evidence.py"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/ATTEMPT-01.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/ATTEMPT-01.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/ATTEMPT-01.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/EVIDENCE-AUDIT.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/EVIDENCE-AUDIT.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/EVIDENCE-AUDIT.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/FINAL-ACCEPTANCE.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/FINAL-ACCEPTANCE.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/GIT-READS.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/GIT-READS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/GIT-READS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/READ-SET.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/READ-SET.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/READ-SET.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/REPORT.md",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/REPORT.md"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/REPORT.md"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/REVIEW-ATTEMPTS.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/REVIEW-ATTEMPTS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/REVIEW-ATTEMPTS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/WORKING-RECORD-REVIEW.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/WORKING-RECORD-REVIEW.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/WORKING-RECORD-REVIEW.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/verify_final_evidence.py",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/verify_final_evidence.py"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/verify_final_evidence.py"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/working-records/docs/engineering/localized-repair-c271/validation-recovery-20261120/EVIDENCE-LOCATION.md",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EVIDENCE-LOCATION.md"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/working-records/docs/engineering/localized-repair-c271/validation-recovery-20261120/EVIDENCE-LOCATION.md"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/working-records/docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/working-records/docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/working-records/docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE-OUTCOME.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/working-records/docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE-OUTCOME.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/working-records/docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE-OUTCOME.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/working-records/docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/working-records/docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/working-records/docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/working-records/docs/engineering/localized-repair-c271/validation-recovery-20261120/RESULTS.md",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/working-records/docs/engineering/localized-repair-c271/validation-recovery-20261120/RESULTS.md"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/working-records/docs/engineering/localized-repair-c271/validation-recovery-20261120/RESULTS.md"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/working-records/docs/workflow/CURRENT.json",
+      "included_as": "repository/docs/workflow/CURRENT.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/working-records/docs/workflow/CURRENT.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/working-records/docs/workflow/tasks/C271/LEARNING-P03.md",
+      "included_as": "repository/docs/workflow/tasks/C271/LEARNING-P03.md"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/working-records/docs/workflow/tasks/C271/LEARNING-P03.md"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/working-records/docs/workflow/tasks/C271/P03-SESSION.md",
+      "included_as": "repository/docs/workflow/tasks/C271/P03-SESSION.md"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/working-records/docs/workflow/tasks/C271/P03-SESSION.md"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/working-records/docs/workflow/tasks/C271/PLAN.md",
+      "included_as": "repository/docs/workflow/tasks/C271/PLAN.md"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/working-records/docs/workflow/tasks/C271/PLAN.md"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/working-records/docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "included_as": "repository/docs/workflow/tasks/C271/REQUIREMENTS.md"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/working-records/docs/workflow/tasks/C271/REQUIREMENTS.md"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final/working-records/docs/workflow/tasks/C271/task.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/final/working-records/docs/workflow/tasks/C271/task.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final/working-records/docs/workflow/tasks/C271/task.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final_publication/ARTIFACTS.json",
+      "included_as": "session-evidence/review/final_publication/ARTIFACTS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final_publication/ARTIFACTS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final_publication/PUBLICATION-REVIEW.json",
+      "included_as": "session-evidence/review/final_publication/PUBLICATION-REVIEW.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final_publication/PUBLICATION-REVIEW.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final_publication/REPORT.md",
+      "included_as": "session-evidence/review/final_publication/REPORT.md"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final_publication/REPORT.md"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/final_publication/check_publication.py",
+      "included_as": "session-evidence/review/final_publication/check_publication.py"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/final_publication/check_publication.py"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/intake/EXTERNAL-IDENTITY-RECONCILIATION.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/intake/EXTERNAL-IDENTITY-RECONCILIATION.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/intake/EXTERNAL-IDENTITY-RECONCILIATION.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/intake/GIT-READS.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/intake/GIT-READS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/intake/GIT-READS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/intake/INTEGRITY-AUDIT.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/intake/INTEGRITY-AUDIT.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/intake/INTEGRITY-AUDIT.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/intake/METADATA-NOTES.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/intake/METADATA-NOTES.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/intake/METADATA-NOTES.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/intake/P02-DELIVERY-at-72084140.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/intake/P02-DELIVERY-at-72084140.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/intake/READ-SET.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/intake/READ-SET.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/intake/READ-SET.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/intake/REPORT.md",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/intake/REPORT.md"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/intake/REPORT.md"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "review/intake/verify_intake.py",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/review/intake/verify_intake.py"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "review/intake/verify_intake.py"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "environment/C262-NODE-SEARCH.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/environment/C262-NODE-SEARCH.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "environment/C262-NODE-SEARCH.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "environment/ISOLATION-CAPABILITIES.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/environment/ISOLATION-CAPABILITIES.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "environment/ISOLATION-CAPABILITIES.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "environment/NODE-DISTRIBUTION-PROBE.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/environment/NODE-DISTRIBUTION-PROBE.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "environment/NODE-DISTRIBUTION-PROBE.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "environment/NODE-DOWNLOAD.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/environment/NODE-DOWNLOAD.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "environment/NODE-DOWNLOAD.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "environment/PYTHON-PREPARATION.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/environment/PYTHON-PREPARATION.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "environment/PYTHON-PREPARATION.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "environment/python-preparation-0.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/diff.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "environment/python-preparation-0.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "environment/python-preparation-1.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/environment/python-preparation-1.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "environment/python-preparation-1.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "candidate-preflight/CHECKS.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/CHECKS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "candidate-preflight/CHECKS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "candidate-preflight/diff.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/diff.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "candidate-preflight/diff.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "candidate-preflight/documentation.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/documentation.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "candidate-preflight/documentation.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "candidate-preflight/workflow-corrected.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/workflow-corrected.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "candidate-preflight/workflow-corrected.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "candidate-preflight/workflow.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/workflow.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "candidate-preflight/workflow.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/CHECKS.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/CHECKS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/SOURCE-AFTER.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/validation/SOURCE-AFTER.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/SOURCE-AFTER.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/SOURCE-BEFORE.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/validation/SOURCE-AFTER.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/SOURCE-BEFORE.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/focused-local-driver.receipt.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/validation/focused-local-driver.receipt.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/focused-local-driver.receipt.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/focused-local-driver.stderr.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/validation/focused-local-driver.stderr.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/focused-local-driver.stderr.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/focused-local-driver.stdout.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/diff.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/focused-local-driver.stdout.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/isolated-documents/workspace-storage.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/validation/isolated-documents/workspace-storage.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/isolated-documents/workspace-storage.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/isolated-documents.receipt.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/validation/isolated-documents.receipt.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/isolated-documents.receipt.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/isolated-documents.stderr.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/diff.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/isolated-documents.stderr.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/isolated-documents.stdout.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/documentation.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/isolated-documents.stdout.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/native-reader-setup.receipt.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/validation/native-reader-setup.receipt.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/native-reader-setup.receipt.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/native-reader-setup.stderr.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/diff.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/native-reader-setup.stderr.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/native-reader-setup.stdout.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/validation/native-reader-setup.stdout.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/native-reader-setup.stdout.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/readback-preflight.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/validation/readback-preflight.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/readback-preflight.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/readback-prerequisites.receipt.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/validation/readback-prerequisites.receipt.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/readback-prerequisites.receipt.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/readback-prerequisites.stderr.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/diff.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/readback-prerequisites.stderr.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/readback-prerequisites.stdout.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/validation/readback-prerequisites.stdout.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/readback-prerequisites.stdout.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/workflow.receipt.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/validation/workflow.receipt.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/workflow.receipt.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/workflow.stderr.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/diff.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/workflow.stderr.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "validation/workflow.stdout.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/workflow-corrected.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "validation/workflow.stdout.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/ACTIVE-OPERATIONS.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/session/ACTIVE-OPERATIONS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/ACTIVE-OPERATIONS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/CANDIDATE-CHECKS-RUN.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/session/CANDIDATE-CHECKS-RUN.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/CANDIDATE-CHECKS-RUN.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/EARLY-LIBRARY-METADATA.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-LIBRARY-METADATA.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/EARLY-LIBRARY-METADATA.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/EARLY-UPLOAD-RESULT.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/session/EARLY-UPLOAD-RESULT.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/EARLY-UPLOAD-RESULT.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/FINAL-OBSERVATION.json",
+      "included_as": "session-evidence/session/FINAL-OBSERVATION.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/FINAL-OBSERVATION.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/FINAL-OPERATIONS.json",
+      "included_as": "session-evidence/session/FINAL-OPERATIONS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/FINAL-OPERATIONS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/P03-PR-ISSUE-PUBLICATION.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/session/P03-PR-ISSUE-PUBLICATION.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/P03-PR-ISSUE-PUBLICATION.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/PHASE.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/session/PHASE.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/PHASE.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/PRESERVATION.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/session/PRESERVATION.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/PRESERVATION.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/PUBLISH-01-COMMIT.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/session/PUBLISH-01-COMMIT.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/PUBLISH-01-COMMIT.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/PUBLISH-01-INTENT.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/session/PUBLISH-01-INTENT.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/PUBLISH-01-INTENT.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/PUBLISH-01-READBACK.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/session/PUBLISH-01-READBACK.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/PUBLISH-01-READBACK.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/PUBLISH-02-COMMIT.json",
+      "included_as": "session-evidence/session/PUBLISH-02-COMMIT.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/PUBLISH-02-COMMIT.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/PUBLISH-02-INTENT.json",
+      "included_as": "session-evidence/session/PUBLISH-02-INTENT.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/PUBLISH-02-INTENT.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/PUBLISH-02-READBACK.json",
+      "included_as": "session-evidence/session/PUBLISH-02-READBACK.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/PUBLISH-02-READBACK.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/READ-SET.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/READ-SET.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/READ-SET.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/REMOTE-READBACK.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/REMOTE-READBACK.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/REMOTE-READBACK.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/STARTUP-OBSERVATION.json",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/STARTUP-OBSERVATION.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/STARTUP-OBSERVATION.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/final-source-record-checks/CHECKS.json",
+      "included_as": "session-evidence/session/final-source-record-checks/CHECKS.json"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/final-source-record-checks/CHECKS.json"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/final-source-record-checks/documentation.log",
+      "included_as": "session-evidence/session/final-source-record-checks/documentation.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/final-source-record-checks/documentation.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/final-source-record-checks/workflow.log",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/candidate-preflight/workflow-corrected.log"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/final-source-record-checks/workflow.log"
+    },
+    {
+      "check": "session_alias_resolves_exact_preserved_bytes",
+      "passed": true,
+      "source": "session/run_candidate_checks.py",
+      "included_as": "repository/docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip!/session/run_candidate_checks.py"
+    },
+    {
+      "check": "session_bytes_equal_available_original",
+      "passed": true,
+      "source": "session/run_candidate_checks.py"
+    },
+    {
+      "check": "declared_session_preservation_count",
+      "passed": true
+    },
+    {
+      "check": "raw_evidence_exact_identity",
+      "passed": true
+    },
+    {
+      "check": "raw_archive_crc_safe_exact_inventory",
+      "passed": true
+    },
+    {
+      "check": "raw_archive_member_map_exact",
+      "passed": true
+    },
+    {
+      "check": "all_raw_evidence_payloads_verified",
+      "passed": true,
+      "payloads": 108,
+      "failures": []
+    },
+    {
+      "check": "current_failures_and_reviews_preserved",
+      "passed": true
+    },
+    {
+      "check": "incoming_P02_unchanged_and_single",
+      "passed": true
+    },
+    {
+      "check": "historical_P01_nested_zip_preserved",
+      "passed": true
+    },
+    {
+      "check": "original_P02_failed_raw_archive_preserved",
+      "passed": true
+    },
+    {
+      "check": "standalone_prompt_equals_archive_and_declared_identity",
+      "passed": true,
+      "prompt": 1
+    },
+    {
+      "check": "standalone_prompt_equals_archive_and_declared_identity",
+      "passed": true,
+      "prompt": 2
+    },
+    {
+      "check": "frozen_source_identity",
+      "passed": true
+    },
+    {
+      "check": "execution_main_identity_distinction",
+      "passed": true
+    },
+    {
+      "check": "observation_checkpoint_agreement",
+      "passed": true
+    },
+    {
+      "check": "parent_requirements_remain_blocked",
+      "passed": true
+    },
+    {
+      "check": "routine_nonexecution_not_waived",
+      "passed": true
+    },
+    {
+      "check": "no_integration_or_parent_closure_claim",
+      "passed": true
+    },
+    {
+      "check": "future_save_receipt_is_external",
+      "passed": true
+    },
+    {
+      "check": "exact_runtime_blocker_and_exclusions_honest",
+      "passed": true
+    },
+    {
+      "check": "historical_C262_boundary_preserved",
+      "passed": true
+    },
+    {
+      "check": "current_operations_resolved_historical_unknowns_retained",
+      "passed": true
+    },
+    {
+      "check": "prompt_preserves_delivery_reconciliation_and_phase_boundary",
+      "passed": true,
+      "label": "PROMPT-1-CONTINUE.md"
+    },
+    {
+      "check": "prompt_preserves_delivery_reconciliation_and_phase_boundary",
+      "passed": true,
+      "label": "PROMPT-2-RECOVER.md"
+    },
+    {
+      "check": "recovery_prompt_handles_delivery_only",
+      "passed": true
+    },
+    {
+      "check": "old_exclusion_ambiguity_clarified",
+      "passed": true
+    },
+    {
+      "check": "frozen_archive_unmodified_by_audit",
+      "passed": true
+    }
+  ],
+  "semantic_review": {
+    "required_root_documents_read_in_full": [
+      "README-START-HERE.md",
+      "CHECKPOINT.json",
+      "HANDOFF.md",
+      "NEXT-TASK.md",
+      "RECOVERY-STATUS.md",
+      "PROMPT-1-CONTINUE.md",
+      "PROMPT-2-RECOVER.md",
+      "HISTORICAL-DEPENDENCIES.json",
+      "MANIFEST-SHA256.json"
+    ],
+    "one_phase_and_early_recovery": true,
+    "runtime_blocker_retained": true,
+    "historical_failures_retained": true,
+    "honest_partial_delivery": true,
+    "receipt_only_save_boundary": true,
+    "prior_exclusion_wording_clarified": true
+  },
+  "R03_accepted": false,
+  "integration_approved": false,
+  "parent_closure_approved": false,
+  "saved_delivery_confirmed": false,
+  "fresh_extraction": "/workspace/scratch/7010345bc259/review/package/fresh-extraction",
+  "limits": [
+    "Archive and source evidence only; no product tests or remote queries.",
+    "No full offline restoration claim.",
+    "Actual Library save and later receipt are separate gates."
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "schema": "ontokin.c271.p03-final-publication-review/1",
+  "reviewer": "/root/intake_review",
+  "recorded_at_utc": "2026-11-21T00:25:06.397461+00:00",
+  "source": {
+    "commit": "633c5097b2c5b870a13baa33a095a91eaa241eea",
+    "tree": "7f8eb385de71c6dd202389ad09113b779a6dc4b8"
+  },
+  "code_execution_candidate": "fea1aa6fb3712c5283dde197295b2d3cbf925d36",
+  "verdict": "accurate_blocked_partial_source_supported",
+  "check_count": 31,
+  "failed_count": 0,
+  "checks": [
+    {
+      "check": "exact_frozen_commit_tree",
+      "passed": true
+    },
+    {
+      "check": "local_frozen_checkout_clean",
+      "passed": true
+    },
+    {
+      "check": "technical_source_unchanged",
+      "passed": true,
+      "path": "tools/check_local.py"
+    },
+    {
+      "check": "technical_source_unchanged",
+      "passed": true,
+      "path": "tests/test_local_checks.py"
+    },
+    {
+      "check": "publication_delta_is_records_only",
+      "passed": true,
+      "paths": [
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/EVIDENCE-LOCATION.md",
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json",
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json",
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE.json",
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE-MANIFEST.json",
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE-VERIFICATION.json",
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/RAW-EVIDENCE.zip",
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/RESULTS.md",
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/record-preflight/CHECKS.json",
+        "docs/workflow/CURRENT.json",
+        "docs/workflow/tasks/C271/LEARNING-P03.md",
+        "docs/workflow/tasks/C271/P03-SESSION.md",
+        "docs/workflow/tasks/C271/PLAN.md",
+        "docs/workflow/tasks/C271/REQUIREMENTS.md",
+        "docs/workflow/tasks/C271/task.json"
+      ]
+    },
+    {
+      "check": "durable_expected_head_publication",
+      "passed": true
+    },
+    {
+      "check": "durable_PR_state",
+      "passed": true
+    },
+    {
+      "check": "exact_outcome_blob_readback",
+      "passed": true
+    },
+    {
+      "check": "raw_archive_expected_identity",
+      "passed": true
+    },
+    {
+      "check": "raw_archive_equals_frozen_git",
+      "passed": true
+    },
+    {
+      "check": "raw_archive_external_receipt",
+      "passed": true
+    },
+    {
+      "check": "raw_archive_CRC",
+      "passed": true
+    },
+    {
+      "check": "raw_archive_paths_unique_safe",
+      "passed": true
+    },
+    {
+      "check": "raw_manifest_internal_external_equal",
+      "passed": true
+    },
+    {
+      "check": "raw_archive_exact_inventory",
+      "passed": true
+    },
+    {
+      "check": "all_raw_payload_hashes_match",
+      "passed": true,
+      "payloads": 108,
+      "failures": []
+    },
+    {
+      "check": "all_raw_payloads_equal_originals",
+      "passed": true,
+      "payloads": 108,
+      "failures": []
+    },
+    {
+      "check": "entire_prior_final_review_retained",
+      "passed": true,
+      "payloads": 21,
+      "failures": []
+    },
+    {
+      "check": "failure_evidence_retained",
+      "passed": true
+    },
+    {
+      "check": "archive_contains_commands_logs_reviews",
+      "passed": true
+    },
+    {
+      "check": "published_acceptance_is_original",
+      "passed": true
+    },
+    {
+      "check": "actual_final_verdict_attached",
+      "passed": true
+    },
+    {
+      "check": "phase_execution_claims_preserve_original_candidate",
+      "passed": true
+    },
+    {
+      "check": "parent_and_delivery_unfinished",
+      "passed": true
+    },
+    {
+      "check": "current_task_blocked_no_integration",
+      "passed": true
+    },
+    {
+      "check": "failed_R03_review_remains_required",
+      "passed": true
+    },
+    {
+      "check": "original_execution_summary_preserved",
+      "passed": true
+    },
+    {
+      "check": "fresh_record_checks_exact_frozen_source",
+      "passed": true
+    },
+    {
+      "check": "fresh_record_check_pass_and_log_identity",
+      "passed": true,
+      "role": "workflow"
+    },
+    {
+      "check": "fresh_record_check_pass_and_log_identity",
+      "passed": true,
+      "role": "documentation"
+    },
+    {
+      "check": "fresh_documentation_has_no_failures",
+      "passed": true
+    }
+  ],
+  "archive": {
+    "bytes": 2062999,
+    "sha256": "06fb8cbfcbfd971285d406f60b64f7638f9524b592ac0b2573474b8c3edda68c"
+  },
+  "archive_payloads": 108,
+  "prior_final_review_payloads": 21,
+  "nonblocking_metadata_note": "RAW-EVIDENCE-VERIFICATION.json's excluded field starts with an included-evidence fragment. Archive inventory proves commands/logs/reviews are present. Only reproducible checkouts/Git objects, downloaded Node files and installed environments are excluded; preserve that clear boundary in the outer handoff.",
+  "R03_accepted": false,
+  "integration_approved": false,
+  "parent_closure_approved": false,
+  "limits": [
+    "No product replay or broad re-audit.",
+    "Director remote readback receipt reconciled; reviewer made no remote call.",
+    "Final handoff ZIP integrity, saved identity and delivery receipt await separate review."
+  ]
+}
