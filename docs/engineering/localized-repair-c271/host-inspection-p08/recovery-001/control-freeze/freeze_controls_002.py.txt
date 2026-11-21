@@ -1,0 +1,74 @@
+"""Refine unpublished expectation freeze before any affected author execution."""
+from pathlib import Path
+from datetime import datetime, timezone
+import copy
+import hashlib
+import json
+
+root = Path('/workspace/scratch/8838dfc6e876/review_work')
+old = root/'CONTROL-FREEZE-001.json'
+v = json.loads(old.read_bytes())
+v['recorded_at_utc'] = datetime.now(timezone.utc).isoformat()
+v['supersedes'] = {'path': str(old), 'sha256': hashlib.sha256(old.read_bytes()).hexdigest(), 'disposition': 'Retained prerelease expectation draft; no author execution was authorized against it.'}
+v['revision_reason'] = [
+ 'Separate prelaunch clock exhaustion (proven zero) from exhaustion after a retained callback (observed one). Preserve exact TIMEOUT only for injected timeout outcomes; invalid successful receipts remain REJECTED.',
+ 'Keep HI20 compatibility mutation separate from the already frozen HI01 wrong-plan-schema refusal.',
+ 'Director confirmed supervisor_outcome is closed {raw, committed}, with raw at cwd/LABEL.process.json and a distinct predeclared atomic wrapper record. Add exact shape/path/raw-preservation cases.'
+]
+v['director_confirmed_nested_output_shape'] = {
+ 'supervisor_outcome': {'raw': 'Exact command cwd / (label + .process.json); unchanged supervisor-owned raw bytes.', 'committed': 'Distinct explicitly predeclared wrapper atomic outcome path.'},
+ 'rules': ['Both paths belong to the explicit output inventory.', 'No swapping/overlap/aliasing of raw and committed.', 'Preserve malformed/incomplete raw bytes without repair or rewriting.', 'No existing P06 output/schema change or unlisted success path.']
+}
+rows = v['control_variants']
+by_id = {r['id']:r for r in rows}
+by_id['HI15-B']['expected_state'] = 'REJECTED'
+by_id['HI15-C']['expected_state'] = 'REJECTED'
+by_id['HI15-D']['input_mutation'] = 'Exhaust command clock during final launch-binding before the supervisor boundary; retain explicit prelaunch proof.'
+by_id['HI15-D']['counts'] = copy.deepcopy(by_id['HI14-A']['counts'])
+by_id['HI15-D']['additional_assertion'] = 'The prelaunch command-clock timeout is a visible CHI-PROCESS/TIMEOUT with PROVEN_ZERO; no new allowance, supervisor delegation or retry.'
+after = copy.deepcopy(by_id['HI15-A'])
+after['id'] = 'HI15-E'
+after['input_mutation'] = 'Retain positive callback PID/start, then exhaust command clock during callback work and return an explicit mocked supervisor TIMEOUT.'
+after['additional_assertion'] = 'Retained callback proves one; timeout never becomes zero; no fresh clock, retry or second command; preserve original timeout cause and receipt.'
+rows.append(after)
+by_id['HI20-E']['input_mutation'] = 'Add approved=true or qualification fields to the closed HOST/inspection object to promote observed data into approval.'
+by_id['HI20-E']['additional_assertion'] = 'Closed P06 compatibility shape rejects extra approval fields with CHI-COMPAT; successful sidecar remains OBSERVED_UNAPPROVED. Wrong executable-plan schema is independently covered by HI01-D.'
+
+shape=copy.deepcopy(by_id['HI01-E'])
+shape['id']='HI01-H'
+shape['input_mutation']='For a command supervisor_outcome object, omit raw/committed or add an unknown third key, as separate canonical negative-plan subcases.'
+shape['additional_assertion']='Closed {raw, committed} shape refuses before trusting any planned output; zero process boundary and no attempt writes.'
+rows.append(shape)
+paths=copy.deepcopy(by_id['HI09-A'])
+paths['id']='HI09-E'
+paths['input_mutation']='Swap raw and committed outcome paths; make them equal/overlap/alias; use raw other than exact cwd/LABEL.process.json; or omit either from explicit planned outputs, separately.'
+paths['additional_assertion']='Literal derived output topology must match before launch; every path distinct and predeclared; no wrong raw/committed ownership or unlisted output.'
+rows.append(paths)
+raw=copy.deepcopy(by_id['HI18-C'])
+raw['id']='HI18-G'
+raw['input_mutation']='After a retained mocked start, supervisor raw outcome bytes are malformed/partial or disagree with returned/attached process record; wrapper committed-record publication must not overwrite or repair raw.'
+raw['additional_assertion']='Preserve exact raw bytes, original process object/exception and mismatch/failure evidence. No reconstructed success, next command or byte replacement; output authority stays within declared pair.'
+rows.append(raw)
+rows.sort(key=lambda r:r['id'])
+v['coverage']['material_variant_count']=len(rows)
+v['fixture_semantics']['meaning']='Independent synthetic bytes; actual temporary-root substitutions and deterministic generation source/hash mapping remain candidate-review inputs.'
+new=root/'CONTROL-FREEZE-002.json'
+new.write_text(json.dumps(v,indent=2)+'\n')
+lines=['# C271 P08 independent control expectation freeze, revision 002','',
+       '**Frozen before author execution.** This is the current expectation freeze. Revision 001 remains retained as a prerelease draft with explicitly documented corrections. No author execution occurred against it.','',
+       f"Coverage: {v['coverage']['parent_count']} accepted HI controls; {len(rows)} material variants; {len(v['positive_controls'])} positive controls.",'',
+       'All real project subprocess starts are zero. The candidate/fixture manifest must map exact tests, bytes or deterministic fixture generators, mutations, expected categories, and mock seams before execution. This freeze grants no real-host authority.','',
+       '| Control | Variants | Expected category |','| --- | ---: | --- |']
+for parent in v['coverage']['parent_controls']:
+    selected=[r for r in rows if r['parent_control']==parent]
+    lines.append(f"| {parent} | {len(selected)} | {selected[0]['expected_category']} |")
+lines += ['', '## Decisive boundaries','',
+ '- A completed refusal before supervisor entry proves zero. A retained positive PID/start or final receipt proves one. A lost launch-to-callback window is UNKNOWN with exact null and lower bound zero.',
+ '- A pure parser/projection test has zero mocked starts. The integrated bad-ldd path has a successful version mock followed by one ldd mock: two mocked starts total. These are never reported as actual Node/ldd execution.',
+ '- A completion-marker failure after both command mocks still blocks package success, despite any existing HOST or successful individual process receipts.',
+ '- Reconciliation reads retained counts and starts nothing. It neither mutates evidence nor infers completion from PID absence.',
+ '- The raw supervisor outcome belongs exactly at cwd/LABEL.process.json. The committed wrapper outcome is a distinct planned path. Missing/extra shape keys, swapped/overlapping paths, malformed raw bytes and disagreement with returned process data all have explicit controls.',
+ '- Before any author execution, independently inspect the exact candidate/fixture-to-control mapping. Tests must reach their declared target predicate; mocks cannot replace that predicate with success.', '',
+ 'Detailed stable IDs, mutations, categories, counts, evidence policies and assertions are in `CONTROL-FREEZE-002.json`. Synthetic positive semantics are separately frozen in `INDEPENDENT-FIXTURE-SEMANTICS-001.json`. No real host plan or qualification result is created.']
+(root/'CONTROL-FREEZE-002.md').write_text('\n'.join(lines)+'\n')
+print(json.dumps({'path':str(new),'bytes':new.stat().st_size,'sha256':hashlib.sha256(new.read_bytes()).hexdigest(),'variants':len(rows),'positive_controls':len(v['positive_controls'])},indent=2))

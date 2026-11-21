@@ -1,0 +1,26 @@
+{
+  "schema": "ontokin.c271.p08.intake-attempts/1",
+  "attempts": [
+    {
+      "id": "001",
+      "command": "python3 -B review_work/intake_verify.py",
+      "exit_code": 1,
+      "error": "FileNotFoundError: /workspace/scratch/8838dfc6e876/OntoKin/audit/receipt-prepublication-checks/CHECKS.json",
+      "cause": "Reviewer treated embedded post-freeze receipt records as repository path bindings. Those records embed their exact UTF-8 content; repository bindings are separately identified.",
+      "source": "intake_verify_attempt_001.py",
+      "outcome": "No result report created; no repository or input bytes modified.",
+      "correction": "Verify embedded content against its own size/hash, and reconcile repository changes through the terminal publication request locators and package-review repository bindings."
+    },
+    {
+      "id": "002",
+      "command": "python3 -B review_work/intake_verify.py",
+      "exit_code": 0,
+      "reported_verdict": "BLOCKED_INTAKE",
+      "failed_group": "source snapshot frozen revision agreement",
+      "cause": "Reviewer assumed all 144 snapshots used the branch revision. The manifest explicitly distinguishes 142 repository/ branch snapshots from two observed-main/ snapshots.",
+      "source": "intake_verify_attempt_002.py",
+      "result": "INTAKE-VERIFICATION-ATTEMPT-002.json",
+      "correction": "Check declared snapshot category against the corresponding checkpoint source or main identity."
+    }
+  ]
+}

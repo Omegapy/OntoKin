@@ -1,0 +1,3020 @@
+{
+  "schema": "ontokin.c271.p08.independent-control-expectations/1",
+  "recorded_at_utc": "2026-11-21T15:06:30.514425+00:00",
+  "reviewer": "/root/implementation_review",
+  "state": "FROZEN_EXPECTATIONS_BEFORE_AUTHOR_EXECUTION",
+  "purpose": "Independent HI01-HI20 oracles and material subcases for bounded static/filesystem/mocked P08 controls.",
+  "source_commit_supplied_by_director": "c99f44aaec10445b96deb2b451b1a860a1027401",
+  "sources": [
+    {
+      "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json",
+      "bytes": 3140,
+      "sha256": "683d367b3b9b55e4a7ec25af20989c72fd0fbede7abb0826d8bbd42c113ed4db"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p07/HOST-INSPECTION-DESIGN.md",
+      "bytes": 35323,
+      "sha256": "3c29d86d0e3e8fc1b0191bd231013dbf5e5a856764056db1501c0c2918c19bef"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md",
+      "bytes": 23696,
+      "sha256": "cfb4200ea3745cfe590d9059cd272e244a2ba3cd8c9969f8df5982dc58a69bc1"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p07/CONTROL-MATRIX.json",
+      "bytes": 52044,
+      "sha256": "dca53a8c59525e86beddd1f9228670f29e665d4a1f67f106dc84f359e0635465"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/IMPLEMENTATION-PLAN.md",
+      "bytes": 11240,
+      "sha256": "15fbdef4fe14b1de59d6f5da48508bd18135e2916306ad37f228de18a3599dab"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/OntoKin/prototypes/static_tray_v01/supervisor.py",
+      "bytes": 11286,
+      "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/OntoKin/docs/engineering/localized-repair-c271/current-host-p06/SCHEMA.json",
+      "bytes": 57550,
+      "sha256": "41d90fed8fa5ff072f1ae620071e3bb54aebc81e02768260fb3c63cfd78591fa"
+    }
+  ],
+  "early_save": {
+    "confirmation_authority": "Director message confirmed saved-byte SHA-256 before this work; local receipt read during field update still had null readback field.",
+    "library_file_id": "libfile_fde3_f-01d687884cb48191b1215aaa97725b6c_2ab2a24d43748191957f9bcc356b59de",
+    "version": 0,
+    "bytes": 635513,
+    "sha256": "998a29a4badf6636f583f86a0d71b2c6716491350c91fce7799f3b48d9d10141"
+  },
+  "fixture_semantics": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/INDEPENDENT-FIXTURE-SEMANTICS-001.json",
+    "bytes": 1911,
+    "sha256": "b22ee4b6a6c4f32e33ecc8dc2609019c4fcb3a7665a98a708ce4c323971a6626",
+    "meaning": "Independent synthetic bytes; actual temporary-root substitutions and deterministic generation source/hash mapping remain candidate-review inputs."
+  },
+  "execution_boundary": {
+    "actual_project_subprocesses_in_HI": 0,
+    "all_Git_Node_ldd_checker_supervisor_process_creation_and_group_operations": "mocked or guarded to fail if invoked",
+    "no_product_imports_or_tests_performed_by_this_freeze": true,
+    "no_real_host_plan_or_HOST_approval": true
+  },
+  "before_author_execution": [
+    "Freeze exact candidate module/tests bytes and map every selected ID to test method/subcase, concrete positive fixture bytes or deterministic generation source, mutation, resulting fixture hashes, and exact mock seams.",
+    "Independent inspection must verify that every mutation reaches the claimed target predicate and is not masked by an earlier unrelated refusal; observed results cannot select the expected category afterward.",
+    "Concrete nested schema layouts may implement the accepted P07 requirements; protected P06 consumers/schemas and all adopted preservation boundaries stay unchanged.",
+    "Keep separate denominators for actual OS starts (always zero here), mocked affected-command starts, full mocked sequence totals, and historical record counts. Pure parser/projection tests claim no launch-path coverage.",
+    "Preserve this immutable freeze; any material oracle change requires a separately explained new revision before affected execution."
+  ],
+  "global_acceptance": [
+    "HostInspectionError is RuntimeError and never supervisor.Stop; preserve original cause and unmodified original process_record.",
+    "No failure or uncertainty produces successful compatible inspection/HOST approval, proceeds to next command, retries, replaces another path, or erases earlier evidence.",
+    "PROVEN_ZERO requires retained positive prelaunch proof. OBSERVED_ONE requires retained positive PID/start or final process receipt. Missing callback/receipt after possible launch is UNKNOWN exact null/lower bound zero.",
+    "Successful observation requires exactly one start each, successful cleanup and exact raw/observed/retained log counts, unchanged bindings and completed durable publication.",
+    "H0/H1/H2/H3, original seven methods, P06-H01/H02/H03, Gate R, main integration and parent closure remain unrun/unmet."
+  ],
+  "evidence_policies": {
+    "unauthenticated_refusal": "No plan-owned filesystem destination trusted or created; structured caller-captured refusal has evidence_finalized=false and visible cause; zero process boundary.",
+    "authenticated_refusal": "Keep reservation/preflight/intent already durable and immutable; retain exact refusal if possible; no success/next command; if persistence fails, evidence_finalized=false.",
+    "pure_refusal": "Return the exact category with original bytes unchanged; no filesystem/process authority or qualification claimed.",
+    "started_failure": "Retain actual start, raw stdout/stderr and unmodified supervisor outcome/exception before later validation; preserve postflight/failure evidence; zero next-command starts.",
+    "unknown_attempt": "Retain intent and every actual surviving record; exact launch count null with explicit lower bound; state UNKNOWN, no completion, no retry or invented termination.",
+    "evidence_unfinalized": "Preserve every committed artifact and attempted bytes/hash/exception/readback available; evidence_finalized=false if failure cannot durably complete; no success; caller captures error.",
+    "immutable_reconciliation": "Only read and compare bound evidence/process status under the admitted boot identity; no writes/deletes/signals/launches, and no promotion based on PID absence."
+  },
+  "positive_controls": [
+    {
+      "id": "HI-P01",
+      "route": "static_plan_validation",
+      "expected": "STATIC_READY; recursively immutable validated value; exact plan/constants/closed shapes honored; no fresh attempt/output paths consumed.",
+      "actual_OS_child_starts": 0,
+      "mocked_Node_ldd_starts": 0,
+      "limitations": "Git identity and host facts may be explicitly mocked; source/shape/content predicates under test may not be replaced by true-returning mocks."
+    },
+    {
+      "id": "HI-P02",
+      "route": "pure_ldd_parser",
+      "expected": "Accept exact frozen valid ldd grammar; one interpreter, exact unique SONAME/path set, optional exact vDSO; preserve input bytes.",
+      "actual_OS_child_starts": 0,
+      "mocked_Node_ldd_starts": 0
+    },
+    {
+      "id": "HI-P03",
+      "route": "two_command_mocked_observation",
+      "expected": "One ordered mocked version start and one mocked ldd start; success receipts preserve supplied actual fixture fields; HOST/sidecars are complete and unapproved; completion marker durable and last.",
+      "actual_OS_child_starts": 0,
+      "mocked_Node_starts": 1,
+      "mocked_ldd_starts": 1,
+      "mocked_checker_starts": 0,
+      "limitations": "Compatibility/state-machine proof only; generated fixture HOST is never a real host observation or an approved configuration."
+    },
+    {
+      "id": "HI-P04",
+      "route": "real_isolated_no_replace_writer",
+      "expected": "Owned fresh regular-file publication with file fsync, no-replace rename, parent fsync and exact readback; race preserves another writer; every output inode stays under authorized ancestor.",
+      "actual_OS_child_starts": 0,
+      "mocked_Node_ldd_starts": 0
+    },
+    {
+      "id": "HI-P05",
+      "route": "static_module_and_CLI_boundary",
+      "expected": "Import/new-module entry point introduces no child launch, source output, approval, installer, generic command/fallback/retry or protected-source change. CLI static is default; observe is explicit.",
+      "actual_OS_child_starts": 0,
+      "mocked_Node_ldd_starts": 0
+    }
+  ],
+  "control_variants": [
+    {
+      "id": "HI01-A",
+      "parent_control": "HI01",
+      "input_mutation": "Omit --plan / call API without a selected plan path.",
+      "route": "in_process_CLI_or_plan_input",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Before trusting output path",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "No attempt root/output may be trusted or created; no project bootstrap or supervisor delegation; capture refusal through caller-owned output.",
+      "source_parent_sha256": "c5cf4cf3a1bbde738d127fb5e3714af649a9bc10e61914d5cba7a77f1d228216"
+    },
+    {
+      "id": "HI01-B",
+      "parent_control": "HI01",
+      "input_mutation": "Omit --plan-sha256 / supply an empty expected comparator.",
+      "route": "in_process_CLI_or_plan_input",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Before trusting output path",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "No attempt root/output may be trusted or created; no project bootstrap or supervisor delegation; capture refusal through caller-owned output.",
+      "source_parent_sha256": "c5cf4cf3a1bbde738d127fb5e3714af649a9bc10e61914d5cba7a77f1d228216"
+    },
+    {
+      "id": "HI01-C",
+      "parent_control": "HI01",
+      "input_mutation": "Keep exact positive plan bytes D0 but supply a different well-formed expected digest.",
+      "route": "in_process_CLI_or_plan_input",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Before trusting output path",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "No attempt root/output may be trusted or created; no project bootstrap or supervisor delegation; capture refusal through caller-owned output.",
+      "source_parent_sha256": "c5cf4cf3a1bbde738d127fb5e3714af649a9bc10e61914d5cba7a77f1d228216"
+    },
+    {
+      "id": "HI01-D",
+      "parent_control": "HI01",
+      "input_mutation": "Replace executable inspection-plan schema with the adopted nonexecutable P07 qualification design schema, with matching externally supplied negative-fixture digest.",
+      "route": "in_process_CLI_or_plan_input",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Before trusting output path",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "No attempt root/output may be trusted or created; no project bootstrap or supervisor delegation; capture refusal through caller-owned output.",
+      "source_parent_sha256": "c5cf4cf3a1bbde738d127fb5e3714af649a9bc10e61914d5cba7a77f1d228216"
+    },
+    {
+      "id": "HI01-E",
+      "parent_control": "HI01",
+      "input_mutation": "Add an unknown top-level key or remove one required key, as separate subcases.",
+      "route": "in_process_CLI_or_plan_input",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Before trusting output path",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "No attempt root/output may be trusted or created; no project bootstrap or supervisor delegation; capture refusal through caller-owned output.",
+      "source_parent_sha256": "c5cf4cf3a1bbde738d127fb5e3714af649a9bc10e61914d5cba7a77f1d228216"
+    },
+    {
+      "id": "HI01-F",
+      "parent_control": "HI01",
+      "input_mutation": "Replace a required concrete field with null or a literal unresolved template, as separate subcases.",
+      "route": "in_process_CLI_or_plan_input",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Before trusting output path",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "No attempt root/output may be trusted or created; no project bootstrap or supervisor delegation; capture refusal through caller-owned output.",
+      "source_parent_sha256": "c5cf4cf3a1bbde738d127fb5e3714af649a9bc10e61914d5cba7a77f1d228216"
+    },
+    {
+      "id": "HI01-G",
+      "parent_control": "HI01",
+      "input_mutation": "Use relative plan path, relative descriptor path, or unknown CLI option, as separate subcases.",
+      "route": "in_process_CLI_or_plan_input",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Before trusting output path",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "No attempt root/output may be trusted or created; no project bootstrap or supervisor delegation; capture refusal through caller-owned output.",
+      "source_parent_sha256": "c5cf4cf3a1bbde738d127fb5e3714af649a9bc10e61914d5cba7a77f1d228216"
+    },
+    {
+      "id": "HI01-H",
+      "parent_control": "HI01",
+      "input_mutation": "For a command supervisor_outcome object, omit raw/committed or add an unknown third key, as separate canonical negative-plan subcases.",
+      "route": "in_process_CLI_or_plan_input",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Before trusting output path",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "Closed {raw, committed} shape refuses before trusting any planned output; zero process boundary and no attempt writes.",
+      "source_parent_sha256": "c5cf4cf3a1bbde738d127fb5e3714af649a9bc10e61914d5cba7a77f1d228216"
+    },
+    {
+      "id": "HI02-A",
+      "parent_control": "HI02",
+      "input_mutation": "Starting from approved bytes with external D0, change one valid isolated plan field, recompute coherent local descriptors/observed digest D1, and retain external D0.",
+      "route": "canonical_JSON_mutation",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Before source/process preparation",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "Comparison against external D0 must fail before output/source/process authority. Computing D1 does not approve it.",
+      "source_parent_sha256": "a2edfc6f901bb337e0a3f5279bea862391b572678add45f16cf370bf285d7d46"
+    },
+    {
+      "id": "HI02-B",
+      "parent_control": "HI02",
+      "input_mutation": "Insert approved=true, expected-plan-digest, or signature/self-approval key in otherwise canonical plan; supply its digest only as a negative-control comparator.",
+      "route": "canonical_JSON_mutation",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Before source/process preparation",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "Closed shape rejects every self-approval field. No sibling review file is automatically adopted.",
+      "source_parent_sha256": "a2edfc6f901bb337e0a3f5279bea862391b572678add45f16cf370bf285d7d46"
+    },
+    {
+      "id": "HI03-A",
+      "parent_control": "HI03",
+      "input_mutation": "Plan path is a symlink to a regular fixture file.",
+      "route": "isolated_filesystem_or_raw_JSON",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Bounded read before child",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "Bounded read, no FIFO wait, no output consumption, no successful decoded plan.",
+      "source_parent_sha256": "93274981132ec5a667f2312dd8151d383eff170f53b4d60deecadce847716c91"
+    },
+    {
+      "id": "HI03-B",
+      "parent_control": "HI03",
+      "input_mutation": "Plan path is a FIFO or another nonregular isolated fixture; exercise a nonblocking bounded refusal.",
+      "route": "isolated_filesystem_or_raw_JSON",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Bounded read before child",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "Bounded read, no FIFO wait, no output consumption, no successful decoded plan.",
+      "source_parent_sha256": "93274981132ec5a667f2312dd8151d383eff170f53b4d60deecadce847716c91"
+    },
+    {
+      "id": "HI03-C",
+      "parent_control": "HI03",
+      "input_mutation": "Plan file has a second hardlink.",
+      "route": "isolated_filesystem_or_raw_JSON",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Bounded read before child",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "Bounded read, no FIFO wait, no output consumption, no successful decoded plan.",
+      "source_parent_sha256": "93274981132ec5a667f2312dd8151d383eff170f53b4d60deecadce847716c91"
+    },
+    {
+      "id": "HI03-D",
+      "parent_control": "HI03",
+      "input_mutation": "Raw plan JSON contains duplicate keys at top level and in a nested object, as separate subcases.",
+      "route": "isolated_filesystem_or_raw_JSON",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Bounded read before child",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "Bounded read, no FIFO wait, no output consumption, no successful decoded plan.",
+      "source_parent_sha256": "93274981132ec5a667f2312dd8151d383eff170f53b4d60deecadce847716c91"
+    },
+    {
+      "id": "HI03-E",
+      "parent_control": "HI03",
+      "input_mutation": "Raw plan contains invalid UTF-8 bytes.",
+      "route": "isolated_filesystem_or_raw_JSON",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Bounded read before child",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "Bounded read, no FIFO wait, no output consumption, no successful decoded plan.",
+      "source_parent_sha256": "93274981132ec5a667f2312dd8151d383eff170f53b4d60deecadce847716c91"
+    },
+    {
+      "id": "HI03-F",
+      "parent_control": "HI03",
+      "input_mutation": "Raw plan contains NaN, Infinity, or -Infinity, as separate subcases.",
+      "route": "isolated_filesystem_or_raw_JSON",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Bounded read before child",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "Bounded read, no FIFO wait, no output consumption, no successful decoded plan.",
+      "source_parent_sha256": "93274981132ec5a667f2312dd8151d383eff170f53b4d60deecadce847716c91"
+    },
+    {
+      "id": "HI03-G",
+      "parent_control": "HI03",
+      "input_mutation": "Plan exceeds 16 MiB by one byte.",
+      "route": "isolated_filesystem_or_raw_JSON",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Bounded read before child",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "Bounded read, no FIFO wait, no output consumption, no successful decoded plan.",
+      "source_parent_sha256": "93274981132ec5a667f2312dd8151d383eff170f53b4d60deecadce847716c91"
+    },
+    {
+      "id": "HI03-H",
+      "parent_control": "HI03",
+      "input_mutation": "Change file bytes/size/inode during the checked read through a synchronized filesystem seam.",
+      "route": "isolated_filesystem_or_raw_JSON",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Bounded read before child",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "Bounded read, no FIFO wait, no output consumption, no successful decoded plan.",
+      "source_parent_sha256": "93274981132ec5a667f2312dd8151d383eff170f53b4d60deecadce847716c91"
+    },
+    {
+      "id": "HI03-I",
+      "parent_control": "HI03",
+      "input_mutation": "Use a boolean for a size/count field or noncanonical JSON serialization, as separate subcases.",
+      "route": "isolated_filesystem_or_raw_JSON",
+      "expected_category": "CHI-PLAN",
+      "expected_boundary": "Bounded read before child",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unauthenticated_refusal",
+      "additional_assertion": "Bounded read, no FIFO wait, no output consumption, no successful decoded plan.",
+      "source_parent_sha256": "93274981132ec5a667f2312dd8151d383eff170f53b4d60deecadce847716c91"
+    },
+    {
+      "id": "HI04-A",
+      "parent_control": "HI04",
+      "input_mutation": "Plan source.root differs from the module-derived canonical checkout.",
+      "route": "isolated_source_files_with_Git_reads_mocked",
+      "expected_category": "CHI-SOURCE",
+      "expected_boundary": "Before Node/ldd",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Target source predicates remain active; no actual Git process starts; reject before Node/ldd; protected repository files are never mutated.",
+      "source_parent_sha256": "71e4d9ee1b38f73245ec8b121fb670209332dd376cce6d476c7eba625e963a5b"
+    },
+    {
+      "id": "HI04-B",
+      "parent_control": "HI04",
+      "input_mutation": "Source commit or tree disagrees with independently mocked Git identity reads, as separate subcases.",
+      "route": "isolated_source_files_with_Git_reads_mocked",
+      "expected_category": "CHI-SOURCE",
+      "expected_boundary": "Before Node/ldd",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Target source predicates remain active; no actual Git process starts; reject before Node/ldd; protected repository files are never mutated.",
+      "source_parent_sha256": "71e4d9ee1b38f73245ec8b121fb670209332dd376cce6d476c7eba625e963a5b"
+    },
+    {
+      "id": "HI04-C",
+      "parent_control": "HI04",
+      "input_mutation": "Remove/change bound author entry point, provider, supervisor, or preparer source, one member per subcase.",
+      "route": "isolated_source_files_with_Git_reads_mocked",
+      "expected_category": "CHI-SOURCE",
+      "expected_boundary": "Before Node/ldd",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Target source predicates remain active; no actual Git process starts; reject before Node/ldd; protected repository files are never mutated.",
+      "source_parent_sha256": "71e4d9ee1b38f73245ec8b121fb670209332dd376cce6d476c7eba625e963a5b"
+    },
+    {
+      "id": "HI04-D",
+      "parent_control": "HI04",
+      "input_mutation": "Omit a required source inventory member or add an extra member, as separate subcases.",
+      "route": "isolated_source_files_with_Git_reads_mocked",
+      "expected_category": "CHI-SOURCE",
+      "expected_boundary": "Before Node/ldd",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Target source predicates remain active; no actual Git process starts; reject before Node/ldd; protected repository files are never mutated.",
+      "source_parent_sha256": "71e4d9ee1b38f73245ec8b121fb670209332dd376cce6d476c7eba625e963a5b"
+    },
+    {
+      "id": "HI04-E",
+      "parent_control": "HI04",
+      "input_mutation": "Mock tracked dirty or untracked executable-source Git status, as separate subcases.",
+      "route": "isolated_source_files_with_Git_reads_mocked",
+      "expected_category": "CHI-SOURCE",
+      "expected_boundary": "Before Node/ldd",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Target source predicates remain active; no actual Git process starts; reject before Node/ldd; protected repository files are never mutated.",
+      "source_parent_sha256": "71e4d9ee1b38f73245ec8b121fb670209332dd376cce6d476c7eba625e963a5b"
+    },
+    {
+      "id": "HI04-F",
+      "parent_control": "HI04",
+      "input_mutation": "Alter one of the five allowed source argv/read operations or admit an extra/fetch/mutating command.",
+      "route": "isolated_source_files_with_Git_reads_mocked",
+      "expected_category": "CHI-SOURCE",
+      "expected_boundary": "Before Node/ldd",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Target source predicates remain active; no actual Git process starts; reject before Node/ldd; protected repository files are never mutated.",
+      "source_parent_sha256": "71e4d9ee1b38f73245ec8b121fb670209332dd376cce6d476c7eba625e963a5b"
+    },
+    {
+      "id": "HI04-G",
+      "parent_control": "HI04",
+      "input_mutation": "Source guard requests a sixth read, or any one source read has a timeout above five seconds.",
+      "route": "isolated_source_files_with_Git_reads_mocked",
+      "expected_category": "CHI-SOURCE",
+      "expected_boundary": "Before Node/ldd",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Target source predicates remain active; no actual Git process starts; reject before Node/ldd; protected repository files are never mutated.",
+      "source_parent_sha256": "71e4d9ee1b38f73245ec8b121fb670209332dd376cce6d476c7eba625e963a5b"
+    },
+    {
+      "id": "HI05-A",
+      "parent_control": "HI05",
+      "input_mutation": "Change selected Node candidate digest, size, or executable mode, as separate subcases.",
+      "route": "isolated_descriptor_or_file_mutation",
+      "expected_category": "CHI-RUNTIME",
+      "expected_boundary": "Before version command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Version output may not forgive an identity mismatch; no installation or runtime execution.",
+      "source_parent_sha256": "e8bed982b169a6c05b7cdb671efdb92c75fd6947a168b720c8cfe806478fc3a3"
+    },
+    {
+      "id": "HI05-B",
+      "parent_control": "HI05",
+      "input_mutation": "Change runtime executable path to a relative, linked, nonprivate, or non-task-specific destination, as separate subcases.",
+      "route": "isolated_descriptor_or_file_mutation",
+      "expected_category": "CHI-RUNTIME",
+      "expected_boundary": "Before version command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Version output may not forgive an identity mismatch; no installation or runtime execution.",
+      "source_parent_sha256": "e8bed982b169a6c05b7cdb671efdb92c75fd6947a168b720c8cfe806478fc3a3"
+    },
+    {
+      "id": "HI05-C",
+      "parent_control": "HI05",
+      "input_mutation": "Declare a Node version other than v24.22.1.",
+      "route": "isolated_descriptor_or_file_mutation",
+      "expected_category": "CHI-RUNTIME",
+      "expected_boundary": "Before version command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Version output may not forgive an identity mismatch; no installation or runtime execution.",
+      "source_parent_sha256": "e8bed982b169a6c05b7cdb671efdb92c75fd6947a168b720c8cfe806478fc3a3"
+    },
+    {
+      "id": "HI05-D",
+      "parent_control": "HI05",
+      "input_mutation": "Change source archive digest or size from P05 constants, as separate subcases.",
+      "route": "isolated_descriptor_or_file_mutation",
+      "expected_category": "CHI-RUNTIME",
+      "expected_boundary": "Before version command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Version output may not forgive an identity mismatch; no installation or runtime execution.",
+      "source_parent_sha256": "e8bed982b169a6c05b7cdb671efdb92c75fd6947a168b720c8cfe806478fc3a3"
+    },
+    {
+      "id": "HI05-E",
+      "parent_control": "HI05",
+      "input_mutation": "Change installation-receipt source/destination binding or declare installed content inconsistent with the runtime descriptor.",
+      "route": "isolated_descriptor_or_file_mutation",
+      "expected_category": "CHI-RUNTIME",
+      "expected_boundary": "Before version command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Version output may not forgive an identity mismatch; no installation or runtime execution.",
+      "source_parent_sha256": "e8bed982b169a6c05b7cdb671efdb92c75fd6947a168b720c8cfe806478fc3a3"
+    },
+    {
+      "id": "HI06-A",
+      "parent_control": "HI06",
+      "input_mutation": "Remove or change ldd/declared inspector-interpreter file binding, separately.",
+      "route": "isolated_files_metadata_and_static_records",
+      "expected_category": "CHI-INSPECTOR",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Read metadata without site/package import; no suspect binary is run; every actual imported executable input must remain bound.",
+      "source_parent_sha256": "7a8399f7345f79574863f4c91401104bb710718bb77b7adbe64ed1debbad93a1"
+    },
+    {
+      "id": "HI06-B",
+      "parent_control": "HI06",
+      "input_mutation": "ldd shebang contains an argument, uses /usr/bin/env, or selects a different interpreter, separately.",
+      "route": "isolated_files_metadata_and_static_records",
+      "expected_category": "CHI-INSPECTOR",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Read metadata without site/package import; no suspect binary is run; every actual imported executable input must remain bound.",
+      "source_parent_sha256": "7a8399f7345f79574863f4c91401104bb710718bb77b7adbe64ed1debbad93a1"
+    },
+    {
+      "id": "HI06-C",
+      "parent_control": "HI06",
+      "input_mutation": "Python executable/version or admitted Python runtime/startup/extension input changes, separately.",
+      "route": "isolated_files_metadata_and_static_records",
+      "expected_category": "CHI-INSPECTOR",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Read metadata without site/package import; no suspect binary is run; every actual imported executable input must remain bound.",
+      "source_parent_sha256": "7a8399f7345f79574863f4c91401104bb710718bb77b7adbe64ed1debbad93a1"
+    },
+    {
+      "id": "HI06-D",
+      "parent_control": "HI06",
+      "input_mutation": "One of the seven metadata package versions differs, is missing, duplicated, or comes from an unbound metadata path, separately.",
+      "route": "isolated_files_metadata_and_static_records",
+      "expected_category": "CHI-INSPECTOR",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Read metadata without site/package import; no suspect binary is run; every actual imported executable input must remain bound.",
+      "source_parent_sha256": "7a8399f7345f79574863f4c91401104bb710718bb77b7adbe64ed1debbad93a1"
+    },
+    {
+      "id": "HI06-E",
+      "parent_control": "HI06",
+      "input_mutation": "Git executable or its admitted executable/loader input binding changes or is absent.",
+      "route": "isolated_files_metadata_and_static_records",
+      "expected_category": "CHI-INSPECTOR",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Read metadata without site/package import; no suspect binary is run; every actual imported executable input must remain bound.",
+      "source_parent_sha256": "7a8399f7345f79574863f4c91401104bb710718bb77b7adbe64ed1debbad93a1"
+    },
+    {
+      "id": "HI06-F",
+      "parent_control": "HI06",
+      "input_mutation": "Inject a nonapproved launcher variable or bind an unreviewed site/.pth/startup path.",
+      "route": "isolated_files_metadata_and_static_records",
+      "expected_category": "CHI-INSPECTOR",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Read metadata without site/package import; no suspect binary is run; every actual imported executable input must remain bound.",
+      "source_parent_sha256": "7a8399f7345f79574863f4c91401104bb710718bb77b7adbe64ed1debbad93a1"
+    },
+    {
+      "id": "HI06-G",
+      "parent_control": "HI06",
+      "input_mutation": "The operational ldd path is linked or not a private regular file.",
+      "route": "isolated_files_metadata_and_static_records",
+      "expected_category": "CHI-INSPECTOR",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Read metadata without site/package import; no suspect binary is run; every actual imported executable input must remain bound.",
+      "source_parent_sha256": "7a8399f7345f79574863f4c91401104bb710718bb77b7adbe64ed1debbad93a1"
+    },
+    {
+      "id": "HI07-A",
+      "parent_control": "HI07",
+      "input_mutation": "Synthetic ELF contains one DT_NEEDED edge missing from the declared map.",
+      "route": "synthetic_ELF_and_isolated_static_closure",
+      "expected_category": "CHI-LOADER",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "No observed output may expand this frozen closure; detection occurs before affected command.",
+      "source_parent_sha256": "f26f4753641beac46bfaec724444e253b5b2803fb3f0322eb240c3a4e55d7852"
+    },
+    {
+      "id": "HI07-B",
+      "parent_control": "HI07",
+      "input_mutation": "ELF PT_INTERP differs from the bound interpreter.",
+      "route": "synthetic_ELF_and_isolated_static_closure",
+      "expected_category": "CHI-LOADER",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "No observed output may expand this frozen closure; detection occurs before affected command.",
+      "source_parent_sha256": "f26f4753641beac46bfaec724444e253b5b2803fb3f0322eb240c3a4e55d7852"
+    },
+    {
+      "id": "HI07-C",
+      "parent_control": "HI07",
+      "input_mutation": "Change a frozen loader cache/config/include file or introduce a required-absent include, separately.",
+      "route": "synthetic_ELF_and_isolated_static_closure",
+      "expected_category": "CHI-LOADER",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "No observed output may expand this frozen closure; detection occurs before affected command.",
+      "source_parent_sha256": "f26f4753641beac46bfaec724444e253b5b2803fb3f0322eb240c3a4e55d7852"
+    },
+    {
+      "id": "HI07-D",
+      "parent_control": "HI07",
+      "input_mutation": "Add/remove/change a relevant search-directory entry or alter a significant alias hop, separately.",
+      "route": "synthetic_ELF_and_isolated_static_closure",
+      "expected_category": "CHI-LOADER",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "No observed output may expand this frozen closure; detection occurs before affected command.",
+      "source_parent_sha256": "f26f4753641beac46bfaec724444e253b5b2803fb3f0322eb240c3a4e55d7852"
+    },
+    {
+      "id": "HI07-E",
+      "parent_control": "HI07",
+      "input_mutation": "Add/change a possible inspector external command or RTLDLIST candidate not covered by the closure.",
+      "route": "synthetic_ELF_and_isolated_static_closure",
+      "expected_category": "CHI-LOADER",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "No observed output may expand this frozen closure; detection occurs before affected command.",
+      "source_parent_sha256": "f26f4753641beac46bfaec724444e253b5b2803fb3f0322eb240c3a4e55d7852"
+    },
+    {
+      "id": "HI07-F",
+      "parent_control": "HI07",
+      "input_mutation": "Required-absent /etc/ld.so.preload appears or its admitted empty content becomes nonempty, separately.",
+      "route": "synthetic_ELF_and_isolated_static_closure",
+      "expected_category": "CHI-LOADER",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "No observed output may expand this frozen closure; detection occurs before affected command.",
+      "source_parent_sha256": "f26f4753641beac46bfaec724444e253b5b2803fb3f0322eb240c3a4e55d7852"
+    },
+    {
+      "id": "HI07-G",
+      "parent_control": "HI07",
+      "input_mutation": "Remove/change one transitive runtime/inspector/loader file or one required-absence path guard.",
+      "route": "synthetic_ELF_and_isolated_static_closure",
+      "expected_category": "CHI-LOADER",
+      "expected_boundary": "Before affected command",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "No observed output may expand this frozen closure; detection occurs before affected command.",
+      "source_parent_sha256": "f26f4753641beac46bfaec724444e253b5b2803fb3f0322eb240c3a4e55d7852"
+    },
+    {
+      "id": "HI08-A",
+      "parent_control": "HI08",
+      "input_mutation": "Static platform record is non-Linux or libc is not the admitted glibc profile, separately.",
+      "route": "pure_ELF_parser_or_static_record",
+      "expected_category": "CHI-UNSUPPORTED",
+      "expected_boundary": "Static closure gate",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Specific unsupported reason; no normalization or schema widening to force acceptance.",
+      "source_parent_sha256": "9ec251d3104d7d6e81bc00c808e7f91e3969cf98e9aa26cfe8fde8a2f2267ab3"
+    },
+    {
+      "id": "HI08-B",
+      "parent_control": "HI08",
+      "input_mutation": "Malformed ELF header/class/endian/table bounds, no interpreter, or duplicate interpreter, separately.",
+      "route": "pure_ELF_parser_or_static_record",
+      "expected_category": "CHI-UNSUPPORTED",
+      "expected_boundary": "Static closure gate",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Specific unsupported reason; no normalization or schema widening to force acceptance.",
+      "source_parent_sha256": "9ec251d3104d7d6e81bc00c808e7f91e3969cf98e9aa26cfe8fde8a2f2267ab3"
+    },
+    {
+      "id": "HI08-C",
+      "parent_control": "HI08",
+      "input_mutation": "Synthetic dynamic table/string table is out of bounds, unterminated, conflicting, or unbounded, separately.",
+      "route": "pure_ELF_parser_or_static_record",
+      "expected_category": "CHI-UNSUPPORTED",
+      "expected_boundary": "Static closure gate",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Specific unsupported reason; no normalization or schema widening to force acceptance.",
+      "source_parent_sha256": "9ec251d3104d7d6e81bc00c808e7f91e3969cf98e9aa26cfe8fde8a2f2267ab3"
+    },
+    {
+      "id": "HI08-D",
+      "parent_control": "HI08",
+      "input_mutation": "Declare unsupported audit/filter/auxiliary loader feature, ambiguous RPATH/RUNPATH token, or architecture mismatch, separately.",
+      "route": "pure_ELF_parser_or_static_record",
+      "expected_category": "CHI-UNSUPPORTED",
+      "expected_boundary": "Static closure gate",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Specific unsupported reason; no normalization or schema widening to force acceptance.",
+      "source_parent_sha256": "9ec251d3104d7d6e81bc00c808e7f91e3969cf98e9aa26cfe8fde8a2f2267ab3"
+    },
+    {
+      "id": "HI08-E",
+      "parent_control": "HI08",
+      "input_mutation": "Static map cannot explain cache/hwcaps/search alternatives or contains ambiguous resolution.",
+      "route": "pure_ELF_parser_or_static_record",
+      "expected_category": "CHI-UNSUPPORTED",
+      "expected_boundary": "Static closure gate",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Specific unsupported reason; no normalization or schema widening to force acceptance.",
+      "source_parent_sha256": "9ec251d3104d7d6e81bc00c808e7f91e3969cf98e9aa26cfe8fde8a2f2267ab3"
+    },
+    {
+      "id": "HI08-F",
+      "parent_control": "HI08",
+      "input_mutation": "A library path has whitespace/NUL/noncanonical components that current consumers cannot represent, separately.",
+      "route": "pure_ELF_parser_or_static_record",
+      "expected_category": "CHI-UNSUPPORTED",
+      "expected_boundary": "Static closure gate",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Specific unsupported reason; no normalization or schema widening to force acceptance.",
+      "source_parent_sha256": "9ec251d3104d7d6e81bc00c808e7f91e3969cf98e9aa26cfe8fde8a2f2267ab3"
+    },
+    {
+      "id": "HI09-A",
+      "parent_control": "HI09",
+      "input_mutation": "Evidence parent/attempt/output is relative, escaping, or inside source/runtime/dependencies, separately.",
+      "route": "real_isolated_filesystem",
+      "expected_category": "CHI-PATH",
+      "expected_boundary": "Before command or publication as specified",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Competing content and all sentinels remain byte-identical; no overwrite, retry, unchecked parent creation, or foreign cleanup.",
+      "source_parent_sha256": "0fc250ae508fd4805f9583c95d592d91b8bd98ec515f9acfa523855e0cce2d0f"
+    },
+    {
+      "id": "HI09-B",
+      "parent_control": "HI09",
+      "input_mutation": "Attempt root, stage, or output already exists with a sentinel file, separately.",
+      "route": "real_isolated_filesystem",
+      "expected_category": "CHI-PATH",
+      "expected_boundary": "Before command or publication as specified",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Competing content and all sentinels remain byte-identical; no overwrite, retry, unchecked parent creation, or foreign cleanup.",
+      "source_parent_sha256": "0fc250ae508fd4805f9583c95d592d91b8bd98ec515f9acfa523855e0cce2d0f"
+    },
+    {
+      "id": "HI09-C",
+      "parent_control": "HI09",
+      "input_mutation": "Evidence ancestor device/inode/mode/alias identity differs from the approved plan.",
+      "route": "real_isolated_filesystem",
+      "expected_category": "CHI-PATH",
+      "expected_boundary": "Before command or publication as specified",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Competing content and all sentinels remain byte-identical; no overwrite, retry, unchecked parent creation, or foreign cleanup.",
+      "source_parent_sha256": "0fc250ae508fd4805f9583c95d592d91b8bd98ec515f9acfa523855e0cce2d0f"
+    },
+    {
+      "id": "HI09-D",
+      "parent_control": "HI09",
+      "input_mutation": "Insert a competing target immediately before no-replace reservation/prelaunch publication.",
+      "route": "real_isolated_filesystem",
+      "expected_category": "CHI-PATH",
+      "expected_boundary": "Before command or publication as specified",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Competing content and all sentinels remain byte-identical; no overwrite, retry, unchecked parent creation, or foreign cleanup.",
+      "source_parent_sha256": "0fc250ae508fd4805f9583c95d592d91b8bd98ec515f9acfa523855e0cce2d0f"
+    },
+    {
+      "id": "HI09-E",
+      "parent_control": "HI09",
+      "input_mutation": "Swap raw and committed outcome paths; make them equal/overlap/alias; use raw other than exact cwd/LABEL.process.json; or omit either from explicit planned outputs, separately.",
+      "route": "real_isolated_filesystem",
+      "expected_category": "CHI-PATH",
+      "expected_boundary": "Before command or publication as specified",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Literal derived output topology must match before launch; every path distinct and predeclared; no wrong raw/committed ownership or unlisted output.",
+      "source_parent_sha256": "0fc250ae508fd4805f9583c95d592d91b8bd98ec515f9acfa523855e0cce2d0f"
+    },
+    {
+      "id": "HI10-A",
+      "parent_control": "HI10",
+      "input_mutation": "Change bound file bytes after durable preflight and before the final launch check.",
+      "route": "synchronized_isolated_filesystem_mutation",
+      "expected_category": "CHI-DRIFT",
+      "expected_boundary": "Final launch check",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Final recheck refuses before supervisor boundary; actual/proven count zero; retain preflight and refusal.",
+      "source_parent_sha256": "26dce42b3ccb260453c128484058f694a905b244888731d38f1eb4d3ece0c474"
+    },
+    {
+      "id": "HI10-B",
+      "parent_control": "HI10",
+      "input_mutation": "Change alias/ancestor inode after preflight and before final launch check.",
+      "route": "synchronized_isolated_filesystem_mutation",
+      "expected_category": "CHI-DRIFT",
+      "expected_boundary": "Final launch check",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Final recheck refuses before supervisor boundary; actual/proven count zero; retain preflight and refusal.",
+      "source_parent_sha256": "26dce42b3ccb260453c128484058f694a905b244888731d38f1eb4d3ece0c474"
+    },
+    {
+      "id": "HI10-C",
+      "parent_control": "HI10",
+      "input_mutation": "Create a required-absent loader/search/output candidate after preflight and before final launch check.",
+      "route": "synchronized_isolated_filesystem_mutation",
+      "expected_category": "CHI-DRIFT",
+      "expected_boundary": "Final launch check",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "Final recheck refuses before supervisor boundary; actual/proven count zero; retain preflight and refusal.",
+      "source_parent_sha256": "26dce42b3ccb260453c128484058f694a905b244888731d38f1eb4d3ece0c474"
+    },
+    {
+      "id": "HI11-A",
+      "parent_control": "HI11",
+      "input_mutation": "After a retained mocked Node-version start, change source/runtime/dependency bytes or binding identity, separately.",
+      "route": "mocked_supervisor_with_real_or_frozen_identity_drift",
+      "expected_category": "CHI-DRIFT",
+      "expected_boundary": "Postflight after retaining actual process evidence",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Preserve unmodified process outcome before drift refusal; attach original failure when both occur; ldd is never delegated.",
+      "source_parent_sha256": "74b6c0aac47104fcfa66609eed71bb8d66468b3d9cefd466484bdbb2eb529cac"
+    },
+    {
+      "id": "HI11-B",
+      "parent_control": "HI11",
+      "input_mutation": "After retained mocked start, change loader/alias/boot identity, separately.",
+      "route": "mocked_supervisor_with_real_or_frozen_identity_drift",
+      "expected_category": "CHI-DRIFT",
+      "expected_boundary": "Postflight after retaining actual process evidence",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Preserve unmodified process outcome before drift refusal; attach original failure when both occur; ldd is never delegated.",
+      "source_parent_sha256": "74b6c0aac47104fcfa66609eed71bb8d66468b3d9cefd466484bdbb2eb529cac"
+    },
+    {
+      "id": "HI11-C",
+      "parent_control": "HI11",
+      "input_mutation": "Return a mocked supervisor failure and simultaneously cause postflight drift.",
+      "route": "mocked_supervisor_with_real_or_frozen_identity_drift",
+      "expected_category": "CHI-DRIFT",
+      "expected_boundary": "Postflight after retaining actual process evidence",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Preserve unmodified process outcome before drift refusal; attach original failure when both occur; ldd is never delegated.",
+      "source_parent_sha256": "74b6c0aac47104fcfa66609eed71bb8d66468b3d9cefd466484bdbb2eb529cac"
+    },
+    {
+      "id": "HI12-A",
+      "parent_control": "HI12",
+      "input_mutation": "Version stdout is v24.22.0\\n instead of exactly v24.22.1\\n.",
+      "route": "mocked_node_version_response",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "After retained command outcome",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Retain raw bytes unchanged; no second command and no compatible successful version inspection.",
+      "source_parent_sha256": "3f558633ba32e4f4ac45b9e440e5fab3d7917e765040ee6ea8b0704ccfa57886"
+    },
+    {
+      "id": "HI12-B",
+      "parent_control": "HI12",
+      "input_mutation": "Version stdout has an extra line, missing newline, leading/trailing bytes, or extra whitespace, separately.",
+      "route": "mocked_node_version_response",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "After retained command outcome",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Retain raw bytes unchanged; no second command and no compatible successful version inspection.",
+      "source_parent_sha256": "3f558633ba32e4f4ac45b9e440e5fab3d7917e765040ee6ea8b0704ccfa57886"
+    },
+    {
+      "id": "HI12-C",
+      "parent_control": "HI12",
+      "input_mutation": "Version stderr is nonempty.",
+      "route": "mocked_node_version_response",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "After retained command outcome",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Retain raw bytes unchanged; no second command and no compatible successful version inspection.",
+      "source_parent_sha256": "3f558633ba32e4f4ac45b9e440e5fab3d7917e765040ee6ea8b0704ccfa57886"
+    },
+    {
+      "id": "HI12-D",
+      "parent_control": "HI12",
+      "input_mutation": "Version stdout or stderr is invalid UTF-8.",
+      "route": "mocked_node_version_response",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "After retained command outcome",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Retain raw bytes unchanged; no second command and no compatible successful version inspection.",
+      "source_parent_sha256": "3f558633ba32e4f4ac45b9e440e5fab3d7917e765040ee6ea8b0704ccfa57886"
+    },
+    {
+      "id": "HI13-A",
+      "parent_control": "HI13",
+      "input_mutation": "ldd stdout contains not found, statically linked, or not a dynamic executable, separately.",
+      "route": "pure_ldd_parser",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "Parser after retaining raw output",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "pure_refusal",
+      "additional_assertion": "Pure parsing has zero mocked and actual starts; raw inputs remain unchanged. It proves parser logic only.",
+      "source_parent_sha256": "05260a2b5a3a41808e1e22727982941b747ea36346d115c50a7b53123f1d66de"
+    },
+    {
+      "id": "HI13-B",
+      "parent_control": "HI13",
+      "input_mutation": "ldd stderr is nonempty, including not found.",
+      "route": "pure_ldd_parser",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "Parser after retaining raw output",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "pure_refusal",
+      "additional_assertion": "Pure parsing has zero mocked and actual starts; raw inputs remain unchanged. It proves parser logic only.",
+      "source_parent_sha256": "05260a2b5a3a41808e1e22727982941b747ea36346d115c50a7b53123f1d66de"
+    },
+    {
+      "id": "HI13-C",
+      "parent_control": "HI13",
+      "input_mutation": "ldd output is empty, contains blank lines, relative paths, malformed parentheses/address, or unknown warning rows, separately.",
+      "route": "pure_ldd_parser",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "Parser after retaining raw output",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "pure_refusal",
+      "additional_assertion": "Pure parsing has zero mocked and actual starts; raw inputs remain unchanged. It proves parser logic only.",
+      "source_parent_sha256": "05260a2b5a3a41808e1e22727982941b747ea36346d115c50a7b53123f1d66de"
+    },
+    {
+      "id": "HI13-D",
+      "parent_control": "HI13",
+      "input_mutation": "Duplicate/conflicting SONAME, resolved path, interpreter, or vDSO row, separately.",
+      "route": "pure_ldd_parser",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "Parser after retaining raw output",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "pure_refusal",
+      "additional_assertion": "Pure parsing has zero mocked and actual starts; raw inputs remain unchanged. It proves parser logic only.",
+      "source_parent_sha256": "05260a2b5a3a41808e1e22727982941b747ea36346d115c50a7b53123f1d66de"
+    },
+    {
+      "id": "HI13-E",
+      "parent_control": "HI13",
+      "input_mutation": "Omit the interpreter or one expected library, or add one unapproved library path, separately.",
+      "route": "pure_ldd_parser",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "Parser after retaining raw output",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "pure_refusal",
+      "additional_assertion": "Pure parsing has zero mocked and actual starts; raw inputs remain unchanged. It proves parser logic only.",
+      "source_parent_sha256": "05260a2b5a3a41808e1e22727982941b747ea36346d115c50a7b53123f1d66de"
+    },
+    {
+      "id": "HI13-F",
+      "parent_control": "HI13",
+      "input_mutation": "Use wrong vDSO name, whitespace/NUL path, path normalization alias, or invalid UTF-8, separately.",
+      "route": "pure_ldd_parser",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "Parser after retaining raw output",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "pure_refusal",
+      "additional_assertion": "Pure parsing has zero mocked and actual starts; raw inputs remain unchanged. It proves parser logic only.",
+      "source_parent_sha256": "05260a2b5a3a41808e1e22727982941b747ea36346d115c50a7b53123f1d66de"
+    },
+    {
+      "id": "HI13-G",
+      "parent_control": "HI13",
+      "input_mutation": "Complete the valid version mock, then return the ldd fixture with an unapproved extra library row.",
+      "route": "two_command_mocked_observation",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "Parser after retaining raw output",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 1,
+          "total": 2
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Affected ldd direct start is one; full mocked sequence has two starts; retain raw ldd logs and refuse HOST/completion.",
+      "source_parent_sha256": "05260a2b5a3a41808e1e22727982941b747ea36346d115c50a7b53123f1d66de"
+    },
+    {
+      "id": "HI14-A",
+      "parent_control": "HI14",
+      "input_mutation": "Raise a known prelaunch refusal before entering supervisor/Popen; retain explicit boundary-not-entered proof.",
+      "route": "mocked_launch_boundary",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Launch/start evidence boundary",
+      "expected_state": "NO_START",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "authenticated_refusal",
+      "additional_assertion": "PROVEN_ZERO is based on positive boundary proof, not a missing callback.",
+      "source_parent_sha256": "d17319f8d799f02daa7271e405c45db51334c414df6c14f56429342838f0a7f9"
+    },
+    {
+      "id": "HI14-B",
+      "parent_control": "HI14",
+      "input_mutation": "Invoke callback with a positive mocked PID/group, then raise a callback failure unrelated to persistence.",
+      "route": "mocked_launch_boundary",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Launch/start evidence boundary",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Retained actual start/final receipt proves one; cause and process receipt remain unchanged; cleanup still required; never recast as zero.",
+      "source_parent_sha256": "d17319f8d799f02daa7271e405c45db51334c414df6c14f56429342838f0a7f9"
+    },
+    {
+      "id": "HI14-C",
+      "parent_control": "HI14",
+      "input_mutation": "Enter launch boundary then lose callback and final process receipt; only the earlier intent survives.",
+      "route": "mocked_interrupted_launch_window",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Launch/start evidence boundary",
+      "expected_state": "UNKNOWN",
+      "counts": {
+        "affected_command_exact": null,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "UNKNOWN",
+        "mocked_sequence_starts": {
+          "node_version": null,
+          "shared_libraries": 0,
+          "total": null
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "unknown_attempt",
+      "additional_assertion": "Exact count null, lower bound zero; aggregate exact count also null; no retry or second command.",
+      "source_parent_sha256": "d17319f8d799f02daa7271e405c45db51334c414df6c14f56429342838f0a7f9"
+    },
+    {
+      "id": "HI14-D",
+      "parent_control": "HI14",
+      "input_mutation": "Deliver a second start callback or other evidence of more than one direct start for one command.",
+      "route": "mocked_launch_boundary",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Launch/start evidence boundary",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 2,
+        "affected_command_observed_lower_bound": 2,
+        "affected_command_state": "INVALID_MULTIPLE_STARTS",
+        "mocked_sequence_starts": {
+          "node_version": 2,
+          "shared_libraries": 0,
+          "total": 2
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Retain actual anomaly; reject instead of truncating to one or projecting a valid count enum.",
+      "source_parent_sha256": "d17319f8d799f02daa7271e405c45db51334c414df6c14f56429342838f0a7f9"
+    },
+    {
+      "id": "HI15-A",
+      "parent_control": "HI15",
+      "input_mutation": "Mock active-work timeout at the three-second active deadline.",
+      "route": "mocked_clock_and_supervisor",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Original five-second command deadline",
+      "expected_state": "TIMEOUT",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Same Clock(total_ms=5000), active end started+3, cancel_after_ms=None; two-second cleanup remains inside total; timeout category and actual receipt retained.",
+      "source_parent_sha256": "c66bd8c53302d47dc9b6611cb0bf74791b1de8f48a7bed84c71b96743673ada2"
+    },
+    {
+      "id": "HI15-B",
+      "parent_control": "HI15",
+      "input_mutation": "Mock total command elapsed strictly greater than five seconds or a negative interval, separately.",
+      "route": "mocked_clock_and_supervisor",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Original five-second command deadline",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Same Clock(total_ms=5000), active end started+3, cancel_after_ms=None; two-second cleanup remains inside total; timeout category and actual receipt retained.",
+      "source_parent_sha256": "c66bd8c53302d47dc9b6611cb0bf74791b1de8f48a7bed84c71b96743673ada2"
+    },
+    {
+      "id": "HI15-C",
+      "parent_control": "HI15",
+      "input_mutation": "Mock cleanup elapsed strictly greater than 2000 ms.",
+      "route": "mocked_clock_and_supervisor",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Original five-second command deadline",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Same Clock(total_ms=5000), active end started+3, cancel_after_ms=None; two-second cleanup remains inside total; timeout category and actual receipt retained.",
+      "source_parent_sha256": "c66bd8c53302d47dc9b6611cb0bf74791b1de8f48a7bed84c71b96743673ada2"
+    },
+    {
+      "id": "HI15-D",
+      "parent_control": "HI15",
+      "input_mutation": "Exhaust command clock during final launch-binding before the supervisor boundary; retain explicit prelaunch proof.",
+      "route": "mocked_clock_and_supervisor",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Original five-second command deadline",
+      "expected_state": "TIMEOUT",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "The prelaunch command-clock timeout is a visible CHI-PROCESS/TIMEOUT with PROVEN_ZERO; no new allowance, supervisor delegation or retry.",
+      "source_parent_sha256": "c66bd8c53302d47dc9b6611cb0bf74791b1de8f48a7bed84c71b96743673ada2"
+    },
+    {
+      "id": "HI15-E",
+      "parent_control": "HI15",
+      "input_mutation": "Retain positive callback PID/start, then exhaust command clock during callback work and return an explicit mocked supervisor TIMEOUT.",
+      "route": "mocked_clock_and_supervisor",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Original five-second command deadline",
+      "expected_state": "TIMEOUT",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "Retained callback proves one; timeout never becomes zero; no fresh clock, retry or second command; preserve original timeout cause and receipt.",
+      "source_parent_sha256": "c66bd8c53302d47dc9b6611cb0bf74791b1de8f48a7bed84c71b96743673ada2"
+    },
+    {
+      "id": "HI16-A",
+      "parent_control": "HI16",
+      "input_mutation": "Combined stdout/stderr is 4 MiB plus one byte.",
+      "route": "mocked_process_output_or_bounded_serialization",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "Capture/projection before success receipt",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "No silent truncation into success; raw evidence and actual counts retained with explicit finalized/unknown state.",
+      "source_parent_sha256": "03e23ce2ad6dde41bc6c367ba4ea9e6c9483ba9a50b37c703170d345149949f6"
+    },
+    {
+      "id": "HI16-B",
+      "parent_control": "HI16",
+      "input_mutation": "Observed, retained, and actual raw byte lengths disagree, one field per subcase.",
+      "route": "mocked_process_output_or_bounded_serialization",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "Capture/projection before success receipt",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "No silent truncation into success; raw evidence and actual counts retained with explicit finalized/unknown state.",
+      "source_parent_sha256": "03e23ce2ad6dde41bc6c367ba4ea9e6c9483ba9a50b37c703170d345149949f6"
+    },
+    {
+      "id": "HI16-C",
+      "parent_control": "HI16",
+      "input_mutation": "Inspection serialization exceeds 8 MiB or ordinary evidence document exceeds 16 MiB, separately.",
+      "route": "mocked_process_output_or_bounded_serialization",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "Capture/projection before success receipt",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "No silent truncation into success; raw evidence and actual counts retained with explicit finalized/unknown state.",
+      "source_parent_sha256": "03e23ce2ad6dde41bc6c367ba4ea9e6c9483ba9a50b37c703170d345149949f6"
+    },
+    {
+      "id": "HI16-D",
+      "parent_control": "HI16",
+      "input_mutation": "Retained stream counts are negative, boolean, noninteger, or exceed bounds, separately.",
+      "route": "mocked_process_output_or_bounded_serialization",
+      "expected_category": "CHI-OUTPUT",
+      "expected_boundary": "Capture/projection before success receipt",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "No silent truncation into success; raw evidence and actual counts retained with explicit finalized/unknown state.",
+      "source_parent_sha256": "03e23ce2ad6dde41bc6c367ba4ea9e6c9483ba9a50b37c703170d345149949f6"
+    },
+    {
+      "id": "HI17-A",
+      "parent_control": "HI17",
+      "input_mutation": "Mock process return code is nonzero or process error is nonnull, separately.",
+      "route": "mocked_process_receipt",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Actual receipt validation before projection",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "No reconstructed success field; original raw receipt/exception stays unchanged; exact count one comes from the separate retained start.",
+      "source_parent_sha256": "9bc1b736f595fe333b7e990ad8fa73b94e5abf1ea00e9f239d189dda3d4eb692"
+    },
+    {
+      "id": "HI17-B",
+      "parent_control": "HI17",
+      "input_mutation": "Mock cleanup passed/group_absent/reaped is false or handles remain open, one field per subcase.",
+      "route": "mocked_process_receipt",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Actual receipt validation before projection",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "No reconstructed success field; original raw receipt/exception stays unchanged; exact count one comes from the separate retained start.",
+      "source_parent_sha256": "9bc1b736f595fe333b7e990ad8fa73b94e5abf1ea00e9f239d189dda3d4eb692"
+    },
+    {
+      "id": "HI17-C",
+      "parent_control": "HI17",
+      "input_mutation": "Omit/alter process PID/group/end time/argv/environment/cwd/label, separately, while retaining an independent earlier positive start.",
+      "route": "mocked_process_receipt",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Actual receipt validation before projection",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "No reconstructed success field; original raw receipt/exception stays unchanged; exact count one comes from the separate retained start.",
+      "source_parent_sha256": "9bc1b736f595fe333b7e990ad8fa73b94e5abf1ea00e9f239d189dda3d4eb692"
+    },
+    {
+      "id": "HI17-D",
+      "parent_control": "HI17",
+      "input_mutation": "Supervisor loses final process record and raises after the earlier positive start receipt is durable.",
+      "route": "mocked_process_receipt",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Actual receipt validation before projection",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "No reconstructed success field; original raw receipt/exception stays unchanged; exact count one comes from the separate retained start.",
+      "source_parent_sha256": "9bc1b736f595fe333b7e990ad8fa73b94e5abf1ea00e9f239d189dda3d4eb692"
+    },
+    {
+      "id": "HI17-E",
+      "parent_control": "HI17",
+      "input_mutation": "Mock success timestamps are unzoned, reversed, future, or disagree with monotonic interval, separately.",
+      "route": "mocked_process_receipt",
+      "expected_category": "CHI-PROCESS",
+      "expected_boundary": "Actual receipt validation before projection",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "started_failure",
+      "additional_assertion": "No reconstructed success field; original raw receipt/exception stays unchanged; exact count one comes from the separate retained start.",
+      "source_parent_sha256": "9bc1b736f595fe333b7e990ad8fa73b94e5abf1ea00e9f239d189dda3d4eb692"
+    },
+    {
+      "id": "HI18-A",
+      "parent_control": "HI18",
+      "input_mutation": "Inject failure writing/fsyncing reservation, preflight or intent before supervisor entry, one operation per subcase.",
+      "route": "isolated_writer_fault_before_launch",
+      "expected_category": "CHI-EVIDENCE",
+      "expected_boundary": "Immutable evidence finalization",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "evidence_unfinalized",
+      "additional_assertion": "No child; retain any committed records; return evidence_finalized=false; never claim durable failure when persistence failed.",
+      "source_parent_sha256": "2b0b5728ff8c30905e6fa394658b277a536acd5fe55239f3d250601bcf4dd786"
+    },
+    {
+      "id": "HI18-B",
+      "parent_control": "HI18",
+      "input_mutation": "After callback with positive PID, fail start-ledger write; preserve actual PID in the supervisor final receipt/outer capture.",
+      "route": "mocked_start_with_isolated_writer_fault",
+      "expected_category": "CHI-EVIDENCE",
+      "expected_boundary": "Immutable evidence finalization",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "evidence_unfinalized",
+      "additional_assertion": "Category CHI-EVIDENCE even if supervisor wraps callback error; count stays one; cleanup and original cause/receipt retained.",
+      "source_parent_sha256": "2b0b5728ff8c30905e6fa394658b277a536acd5fe55239f3d250601bcf4dd786"
+    },
+    {
+      "id": "HI18-C",
+      "parent_control": "HI18",
+      "input_mutation": "After a positive mocked start, fail process-outcome/postflight/failure write or directory fsync, separately.",
+      "route": "mocked_start_with_isolated_writer_fault",
+      "expected_category": "CHI-EVIDENCE",
+      "expected_boundary": "Immutable evidence finalization",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "evidence_unfinalized",
+      "additional_assertion": "Preserve earlier committed artifacts and actual start; no second command; return failed/unknown evidence state.",
+      "source_parent_sha256": "2b0b5728ff8c30905e6fa394658b277a536acd5fe55239f3d250601bcf4dd786"
+    },
+    {
+      "id": "HI18-D",
+      "parent_control": "HI18",
+      "input_mutation": "No-replace rename raises after an uncertain reply; read back exact source/destination pair, including destination-equal, destination-conflict and absent cases.",
+      "route": "real_isolated_publication_fault",
+      "expected_category": "CHI-EVIDENCE",
+      "expected_boundary": "Immutable evidence finalization",
+      "expected_state": "UNKNOWN",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "evidence_unfinalized",
+      "additional_assertion": "Retain intended bytes/hash and original exception/readback; no retry; never delete another writer inode; no success merely because destination exists.",
+      "source_parent_sha256": "2b0b5728ff8c30905e6fa394658b277a536acd5fe55239f3d250601bcf4dd786"
+    },
+    {
+      "id": "HI18-E",
+      "parent_control": "HI18",
+      "input_mutation": "After both successful mocked commands and all earlier records, fail final completion marker write, fsync or parent fsync, separately.",
+      "route": "two_command_mocked_observation_with_final_writer_fault",
+      "expected_category": "CHI-EVIDENCE",
+      "expected_boundary": "Immutable evidence finalization",
+      "expected_state": "UNKNOWN",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 1,
+          "total": 2
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "evidence_unfinalized",
+      "additional_assertion": "One start each, aggregate two; existing HOST is not successful package completion; no OBSERVED_UNAPPROVED success return.",
+      "source_parent_sha256": "2b0b5728ff8c30905e6fa394658b277a536acd5fe55239f3d250601bcf4dd786"
+    },
+    {
+      "id": "HI18-F",
+      "parent_control": "HI18",
+      "input_mutation": "Interrupt launch-to-callback and make failure publication unavailable; only durable intent remains.",
+      "route": "mocked_interruption_with_writer_fault",
+      "expected_category": "CHI-EVIDENCE",
+      "expected_boundary": "Immutable evidence finalization",
+      "expected_state": "UNKNOWN",
+      "counts": {
+        "affected_command_exact": null,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "UNKNOWN",
+        "mocked_sequence_starts": {
+          "node_version": null,
+          "shared_libraries": 0,
+          "total": null
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "evidence_unfinalized",
+      "additional_assertion": "Exact null, lower bound zero; preserve records and caller capture; no synthesized process receipt or zero.",
+      "source_parent_sha256": "2b0b5728ff8c30905e6fa394658b277a536acd5fe55239f3d250601bcf4dd786"
+    },
+    {
+      "id": "HI18-G",
+      "parent_control": "HI18",
+      "input_mutation": "After a retained mocked start, supervisor raw outcome bytes are malformed/partial or disagree with returned/attached process record; wrapper committed-record publication must not overwrite or repair raw.",
+      "route": "mocked_start_with_isolated_writer_fault",
+      "expected_category": "CHI-EVIDENCE",
+      "expected_boundary": "Immutable evidence finalization",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 1,
+          "shared_libraries": 0,
+          "total": 1
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "evidence_unfinalized",
+      "additional_assertion": "Preserve exact raw bytes, original process object/exception and mismatch/failure evidence. No reconstructed success, next command or byte replacement; output authority stays within declared pair.",
+      "source_parent_sha256": "2b0b5728ff8c30905e6fa394658b277a536acd5fe55239f3d250601bcf4dd786"
+    },
+    {
+      "id": "HI19-A",
+      "parent_control": "HI19",
+      "input_mutation": "Read-only reconcile a retained prelaunch refusal with positive proof supervisor boundary was not entered.",
+      "route": "read_only_reconcile_of_frozen_incomplete_records",
+      "expected_category": "CHI-EVIDENCE",
+      "expected_boundary": "Recovery, never automatic relaunch",
+      "expected_state": "NO_START",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0,
+        "historical_counts_are_retained_fixture_values": true
+      },
+      "evidence_policy": "immutable_reconciliation",
+      "additional_assertion": "Reconcile makes no subprocess/group signal/write/delete/rename and no replay. Earlier source/evidence bytes remain unchanged. PID absence cannot supply completion or historical zero.",
+      "source_parent_sha256": "3736fa3da79957acfb35c58f4faf2a602ffe23ab1e9375250001ac8c5cb263c5"
+    },
+    {
+      "id": "HI19-B",
+      "parent_control": "HI19",
+      "input_mutation": "Read-only reconcile intent-only records after the launch boundary may have been crossed.",
+      "route": "read_only_reconcile_of_frozen_incomplete_records",
+      "expected_category": "CHI-EVIDENCE",
+      "expected_boundary": "Recovery, never automatic relaunch",
+      "expected_state": "UNKNOWN",
+      "counts": {
+        "affected_command_exact": null,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "UNKNOWN",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0,
+        "historical_counts_are_retained_fixture_values": true
+      },
+      "evidence_policy": "immutable_reconciliation",
+      "additional_assertion": "Reconcile makes no subprocess/group signal/write/delete/rename and no replay. Earlier source/evidence bytes remain unchanged. PID absence cannot supply completion or historical zero.",
+      "source_parent_sha256": "3736fa3da79957acfb35c58f4faf2a602ffe23ab1e9375250001ac8c5cb263c5"
+    },
+    {
+      "id": "HI19-C",
+      "parent_control": "HI19",
+      "input_mutation": "Read-only reconcile retained positive start but no final receipt/completion.",
+      "route": "read_only_reconcile_of_frozen_incomplete_records",
+      "expected_category": "CHI-EVIDENCE",
+      "expected_boundary": "Recovery, never automatic relaunch",
+      "expected_state": "UNKNOWN",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0,
+        "historical_counts_are_retained_fixture_values": true
+      },
+      "evidence_policy": "immutable_reconciliation",
+      "additional_assertion": "Reconcile makes no subprocess/group signal/write/delete/rename and no replay. Earlier source/evidence bytes remain unchanged. PID absence cannot supply completion or historical zero.",
+      "source_parent_sha256": "3736fa3da79957acfb35c58f4faf2a602ffe23ab1e9375250001ac8c5cb263c5"
+    },
+    {
+      "id": "HI19-D",
+      "parent_control": "HI19",
+      "input_mutation": "Read-only reconcile partial final record, failed disk-finalization, or missing referenced artifact, separately.",
+      "route": "read_only_reconcile_of_frozen_incomplete_records",
+      "expected_category": "CHI-EVIDENCE",
+      "expected_boundary": "Recovery, never automatic relaunch",
+      "expected_state": "UNKNOWN",
+      "counts": {
+        "affected_command_exact": 1,
+        "affected_command_observed_lower_bound": 1,
+        "affected_command_state": "OBSERVED_ONE",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0,
+        "historical_counts_are_retained_fixture_values": true
+      },
+      "evidence_policy": "immutable_reconciliation",
+      "additional_assertion": "Reconcile makes no subprocess/group signal/write/delete/rename and no replay. Earlier source/evidence bytes remain unchanged. PID absence cannot supply completion or historical zero.",
+      "source_parent_sha256": "3736fa3da79957acfb35c58f4faf2a602ffe23ab1e9375250001ac8c5cb263c5"
+    },
+    {
+      "id": "HI19-E",
+      "parent_control": "HI19",
+      "input_mutation": "Read-only reconcile lost publication reply whose destination happens to exist but final durable completion is unproven.",
+      "route": "read_only_reconcile_of_frozen_incomplete_records",
+      "expected_category": "CHI-EVIDENCE",
+      "expected_boundary": "Recovery, never automatic relaunch",
+      "expected_state": "UNKNOWN",
+      "counts": {
+        "affected_command_exact": null,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "UNKNOWN",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0,
+        "historical_counts_are_retained_fixture_values": true
+      },
+      "evidence_policy": "immutable_reconciliation",
+      "additional_assertion": "Reconcile makes no subprocess/group signal/write/delete/rename and no replay. Earlier source/evidence bytes remain unchanged. PID absence cannot supply completion or historical zero.",
+      "source_parent_sha256": "3736fa3da79957acfb35c58f4faf2a602ffe23ab1e9375250001ac8c5cb263c5"
+    },
+    {
+      "id": "HI19-F",
+      "parent_control": "HI19",
+      "input_mutation": "Mock process-group/PID absence while earlier launch state was unknown; repeat with changed boot identity.",
+      "route": "read_only_reconcile_of_frozen_incomplete_records",
+      "expected_category": "CHI-EVIDENCE",
+      "expected_boundary": "Recovery, never automatic relaunch",
+      "expected_state": "UNKNOWN",
+      "counts": {
+        "affected_command_exact": null,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "UNKNOWN",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0,
+        "historical_counts_are_retained_fixture_values": true
+      },
+      "evidence_policy": "immutable_reconciliation",
+      "additional_assertion": "Reconcile makes no subprocess/group signal/write/delete/rename and no replay. Earlier source/evidence bytes remain unchanged. PID absence cannot supply completion or historical zero.",
+      "source_parent_sha256": "3736fa3da79957acfb35c58f4faf2a602ffe23ab1e9375250001ac8c5cb263c5"
+    },
+    {
+      "id": "HI20-A",
+      "parent_control": "HI20",
+      "input_mutation": "Add/remove one inspection/process/cleanup key from each closed P06 object, as separate subcases.",
+      "route": "static_projection_and_consumer_contract",
+      "expected_category": "CHI-COMPAT",
+      "expected_boundary": "Consumer compatibility and separate approval boundary",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "pure_refusal",
+      "additional_assertion": "No compatible success projection or implied qualification. Plan-selection rejection of wrong schema uses CHI-PLAN at HI01; direct compatibility predicates use CHI-COMPAT.",
+      "source_parent_sha256": "762d4f0dee5bfe699c49a19ba8412c0f8382a34a488080a2996cae62f634fd29"
+    },
+    {
+      "id": "HI20-B",
+      "parent_control": "HI20",
+      "input_mutation": "Add/remove one HOST/runtime/platform/python/roles key from each closed P06 object, as separate subcases.",
+      "route": "static_projection_and_consumer_contract",
+      "expected_category": "CHI-COMPAT",
+      "expected_boundary": "Consumer compatibility and separate approval boundary",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "pure_refusal",
+      "additional_assertion": "No compatible success projection or implied qualification. Plan-selection rejection of wrong schema uses CHI-PLAN at HI01; direct compatibility predicates use CHI-COMPAT.",
+      "source_parent_sha256": "762d4f0dee5bfe699c49a19ba8412c0f8382a34a488080a2996cae62f634fd29"
+    },
+    {
+      "id": "HI20-C",
+      "parent_control": "HI20",
+      "input_mutation": "Mismatch roles, aliases and resolved file sets; duplicate/empty required role arrays; interpreter included as shared-library role; one mutation per subcase.",
+      "route": "static_projection_and_consumer_contract",
+      "expected_category": "CHI-COMPAT",
+      "expected_boundary": "Consumer compatibility and separate approval boundary",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "pure_refusal",
+      "additional_assertion": "No compatible success projection or implied qualification. Plan-selection rejection of wrong schema uses CHI-PLAN at HI01; direct compatibility predicates use CHI-COMPAT.",
+      "source_parent_sha256": "762d4f0dee5bfe699c49a19ba8412c0f8382a34a488080a2996cae62f634fd29"
+    },
+    {
+      "id": "HI20-D",
+      "parent_control": "HI20",
+      "input_mutation": "Use stale boot identity, HOST timestamp preceding inspection finishes, future or unzoned time, as separate subcases.",
+      "route": "static_projection_and_consumer_contract",
+      "expected_category": "CHI-COMPAT",
+      "expected_boundary": "Consumer compatibility and separate approval boundary",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "pure_refusal",
+      "additional_assertion": "No compatible success projection or implied qualification. Plan-selection rejection of wrong schema uses CHI-PLAN at HI01; direct compatibility predicates use CHI-COMPAT.",
+      "source_parent_sha256": "762d4f0dee5bfe699c49a19ba8412c0f8382a34a488080a2996cae62f634fd29"
+    },
+    {
+      "id": "HI20-E",
+      "parent_control": "HI20",
+      "input_mutation": "Add approved=true or qualification fields to the closed HOST/inspection object to promote observed data into approval.",
+      "route": "static_projection_and_consumer_contract",
+      "expected_category": "CHI-COMPAT",
+      "expected_boundary": "Consumer compatibility and separate approval boundary",
+      "expected_state": "REJECTED",
+      "counts": {
+        "affected_command_exact": 0,
+        "affected_command_observed_lower_bound": 0,
+        "affected_command_state": "PROVEN_ZERO",
+        "mocked_sequence_starts": {
+          "node_version": 0,
+          "shared_libraries": 0,
+          "total": 0
+        },
+        "actual_OS_child_starts": 0,
+        "actual_Node_starts": 0,
+        "actual_ldd_starts": 0,
+        "actual_checker_starts": 0
+      },
+      "evidence_policy": "pure_refusal",
+      "additional_assertion": "Closed P06 compatibility shape rejects extra approval fields with CHI-COMPAT; successful sidecar remains OBSERVED_UNAPPROVED. Wrong executable-plan schema is independently covered by HI01-D.",
+      "source_parent_sha256": "762d4f0dee5bfe699c49a19ba8412c0f8382a34a488080a2996cae62f634fd29"
+    }
+  ],
+  "coverage": {
+    "parent_controls": [
+      "HI01",
+      "HI02",
+      "HI03",
+      "HI04",
+      "HI05",
+      "HI06",
+      "HI07",
+      "HI08",
+      "HI09",
+      "HI10",
+      "HI11",
+      "HI12",
+      "HI13",
+      "HI14",
+      "HI15",
+      "HI16",
+      "HI17",
+      "HI18",
+      "HI19",
+      "HI20"
+    ],
+    "parent_count": 20,
+    "material_variant_count": 109,
+    "positive_control_count": 5
+  },
+  "expectation_not_fixture_authority": "This fixes independent expected behavior. It is not an approved operational inspection plan, a claim that concrete candidate fixtures are already reviewed, or permission to run a real child.",
+  "supersedes": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/CONTROL-FREEZE-001.json",
+    "sha256": "31f6ad5774e2bef6a4c7d2d382102848963e93caaade85290f1012c16e8faa2e",
+    "disposition": "Retained prerelease expectation draft; no author execution was authorized against it."
+  },
+  "revision_reason": [
+    "Separate prelaunch clock exhaustion (proven zero) from exhaustion after a retained callback (observed one). Preserve exact TIMEOUT only for injected timeout outcomes; invalid successful receipts remain REJECTED.",
+    "Keep HI20 compatibility mutation separate from the already frozen HI01 wrong-plan-schema refusal.",
+    "Director confirmed supervisor_outcome is closed {raw, committed}, with raw at cwd/LABEL.process.json and a distinct predeclared atomic wrapper record. Add exact shape/path/raw-preservation cases."
+  ],
+  "director_confirmed_nested_output_shape": {
+    "supervisor_outcome": {
+      "raw": "Exact command cwd / (label + .process.json); unchanged supervisor-owned raw bytes.",
+      "committed": "Distinct explicitly predeclared wrapper atomic outcome path."
+    },
+    "rules": [
+      "Both paths belong to the explicit output inventory.",
+      "No swapping/overlap/aliasing of raw and committed.",
+      "Preserve malformed/incomplete raw bytes without repair or rewriting.",
+      "No existing P06 output/schema change or unlisted success path."
+    ]
+  }
+}

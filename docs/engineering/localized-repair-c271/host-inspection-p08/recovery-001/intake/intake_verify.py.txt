@@ -1,0 +1,130 @@
+"""Read-only P07 archive/receipt reconciliation for the P08 intake boundary."""
+from __future__ import annotations
+
+import hashlib
+import json
+import stat
+import sys
+import zipfile
+from datetime import datetime, timezone
+from pathlib import Path, PurePosixPath
+
+ROOT = Path('/workspace/scratch/8838dfc6e876')
+REPO = ROOT / 'OntoKin'
+EXTRACTED = ROOT / 'recovery_input/p07'
+ZIP = ROOT / 'recovery_input/OntoKin/OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20.zip'
+RECEIPT = ROOT / 'recovery_input/OntoKin/OntoKin_C271_P07_Delivery_Receipt_2026-11-20.json'
+P07 = Path('docs/engineering/localized-repair-c271/host-inspection-p07')
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+checks = []
+def check(name, passed, detail=None):
+    checks.append({'name': name, 'passed': bool(passed), 'detail': detail})
+
+zip_bytes = ZIP.read_bytes()
+receipt_bytes = RECEIPT.read_bytes()
+receipt = json.loads(receipt_bytes)
+manifest = json.loads((EXTRACTED / 'MANIFEST-SHA256.json').read_bytes())
+source_manifest = json.loads((EXTRACTED / 'SOURCE-MANIFEST.json').read_bytes())
+check('supplied ZIP identity', sha(zip_bytes) == 'be774f33019e41fc65011fe3a1014edd36ac3298181b04236583f4e39b88d675', {'bytes': len(zip_bytes), 'sha256': sha(zip_bytes)})
+check('supplied terminal receipt identity', sha(receipt_bytes) == '08a569cbd069ce009c028e54a146b80fee817d59c7fc9915762dcfd65c7058e1', {'bytes': len(receipt_bytes), 'sha256': sha(receipt_bytes)})
+check('receipt ZIP binding', receipt['core_delivery']['file']['sha256'] == sha(zip_bytes) and receipt['core_delivery']['file']['bytes'] == len(zip_bytes))
+
+with zipfile.ZipFile(ZIP) as z:
+    infos = z.infolist()
+    names = [i.filename for i in infos]
+    check('ZIP CRC', z.testzip() is None)
+    check('ZIP names unique and safe', len(set(names)) == len(names) and all(not n.startswith('/') and '\\' not in n and str(PurePosixPath(n)) == n and '..' not in PurePosixPath(n).parts for n in names))
+    check('ZIP no directory/link/special payload', all(not i.is_dir() and stat.S_ISREG(i.external_attr >> 16) for i in infos))
+    declared = {f['path']: f for f in manifest['files']}
+    check('manifest exact inventory', set(names) == set(declared) | {'MANIFEST-SHA256.json'} and len(declared) == len(manifest['files']), {'entries': len(names), 'payloads': len(declared)})
+    archive_mismatches = []
+    extraction_mismatches = []
+    for name, binding in declared.items():
+        data = z.read(name)
+        info = z.getinfo(name)
+        mode = oct(stat.S_IMODE(info.external_attr >> 16))
+        if len(data) != binding['bytes'] or sha(data) != binding['sha256'] or mode != binding['mode']:
+            archive_mismatches.append(name)
+        path = EXTRACTED / name
+        if not path.is_file() or path.is_symlink() or path.read_bytes() != data:
+            extraction_mismatches.append(name)
+    check('manifest payload size/hash/mode', not archive_mismatches, archive_mismatches)
+    check('provided extraction exact bytes', not extraction_mismatches, extraction_mismatches)
+    extracted_names = {str(p.relative_to(EXTRACTED)) for p in EXTRACTED.rglob('*') if p.is_file()}
+    check('provided extraction exact inventory', extracted_names == set(names))
+
+source_mismatches = []
+current_differences = []
+for f in source_manifest['files']:
+    data = (EXTRACTED / f['archive_path']).read_bytes()
+    blob = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+    if len(data) != f['bytes'] or sha(data) != f['sha256'] or blob != f['git_blob']:
+        source_mismatches.append(f['archive_path'])
+    current = REPO / f['source_path']
+    if not current.is_file() or current.read_bytes() != data:
+        current_differences.append(f['source_path'])
+check('source snapshot descriptors', not source_mismatches, {'files': len(source_manifest['files']), 'mismatches': source_mismatches})
+checkpoint = json.loads((EXTRACTED / 'CHECKPOINT.json').read_bytes())
+snapshot_revision_mismatches = []
+for f in source_manifest['files']:
+    expected = checkpoint['main'] if f['archive_path'].startswith('observed-main/') else checkpoint['source']
+    if f['commit'] != expected['commit'] or f['tree'] != expected['tree']:
+        snapshot_revision_mismatches.append(f['archive_path'])
+check('source snapshot declared revision agreement', not snapshot_revision_mismatches, {'branch_snapshots': 142, 'observed_main_snapshots': 2, 'mismatches': snapshot_revision_mismatches})
+
+embedded_mismatches = []
+for f in receipt['post_freeze_records']:
+    content = f['content'].encode(f['encoding'])
+    if len(content) != f['bytes'] or sha(content) != f['sha256']:
+        embedded_mismatches.append(f['path'])
+check('terminal embedded post-freeze evidence exact', not embedded_mismatches, {'records': len(receipt['post_freeze_records']), 'mismatches': embedded_mismatches})
+post_rows = receipt['post_freeze_package_review_in_git']
+post_paths = {row['path'] for row in receipt['publication_request_recovery']['request_model']['tree_elements']}
+post_mismatches = []
+for f in post_rows:
+    path = f.get('repository_path', f.get('path'))
+    if path is None:
+        raise ValueError('Unrecognized terminal source descriptor')
+    post_paths.add(path)
+    data = (REPO / path).read_bytes()
+    blob = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+    if len(data) != f['bytes'] or sha(data) != f['sha256'] or blob != f['blob']:
+        post_mismatches.append(path)
+check('terminal source records exact current bytes', not post_mismatches, {'records': len(post_rows), 'mismatches': post_mismatches})
+check('current snapshot differences explained by terminal receipt', set(current_differences).issubset(post_paths), current_differences)
+canonical = receipt['canonical_delivery_record']
+data = (REPO / canonical['path']).read_bytes()
+check('canonical P07 delivery binding', sha(data) == canonical['sha256'] and len(data) == canonical['bytes'])
+check('canonical P07 delivery equals terminal core delivery', json.loads(data) == receipt['core_delivery'])
+
+adoption = json.loads((REPO / P07 / 'ADOPTION.json').read_bytes())
+accepted_mismatches = []
+for f in adoption['accepted_payloads']:
+    rel = P07 / f['path']
+    current = (REPO / rel).read_bytes()
+    frozen = (EXTRACTED / 'repository' / rel).read_bytes()
+    if current != frozen or sha(current) != f['sha256'] or len(current) != f['size_bytes']:
+        accepted_mismatches.append(str(rel))
+check('accepted P07 design payloads unchanged and adopted', not accepted_mismatches, {'files': len(adoption['accepted_payloads']), 'mismatches': accepted_mismatches})
+check('P07 independent acceptance exact', sha((REPO / P07 / adoption['independent_review']).read_bytes()) == adoption['independent_review_sha256'] and adoption['status'] == 'accepted_design_only')
+check('phase/parent/recovery boundaries', receipt['outcome'] == 'complete_partial_delivery' and receipt['phase_complete'] and not receipt['parent_complete'] and receipt['current_unknown_operations'] == [] and receipt['core_delivery']['parent_requirements'] == {'R01':'done','R02':'done','R03':'not_done','R04':'not_done','R05':'not_done'})
+
+result = {
+    'schema': 'ontokin.c271.p08.independent-intake/1',
+    'recorded_at_utc': datetime.now(timezone.utc).isoformat(),
+    'reviewer': '/root/implementation_review',
+    'purpose': 'Intake reconciliation only, before P08 early save; no implementation review or product tests.',
+    'runtime': {'executable': sys.executable, 'version': sys.version},
+    'director_supplied_state': {'branch': 'work/c271-missing-import-digest-control', 'head': 'c99f44aaec10445b96deb2b451b1a860a1027401', 'main': 'e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d', 'main_lease': 'not_acquired'},
+    'live_Git_query_performed_by_reviewer': False,
+    'verdict': 'PASS_INTAKE' if all(c['passed'] for c in checks) else 'BLOCKED_INTAKE',
+    'checks': checks,
+    'historical_unknowns_preserved': receipt['historical_unknowns'],
+    'scope_limit': 'No repository edits, Git/index/publication, imports of project code, Node/ldd, host observation, runtime preparation, product tests, integration or closure.',
+}
+out = ROOT / 'review_work/INTAKE-VERIFICATION.json'
+out.write_text(json.dumps(result, indent=2) + '\n')
+print(json.dumps({'verdict': result['verdict'], 'groups': len(checks), 'failed': [c for c in checks if not c['passed']], 'artifact': str(out)}, indent=2))

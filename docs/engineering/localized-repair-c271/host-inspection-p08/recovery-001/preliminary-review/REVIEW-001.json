@@ -1,0 +1,105 @@
+{
+  "schema": "ontokin.c271.p08.preliminary-static-review/1",
+  "reviewer": "/root/implementation_review",
+  "candidate": {
+    "path": "/workspace/scratch/8838dfc6e876/session/PRELIMINARY-MODULE-001.py",
+    "bytes": 53013,
+    "sha256": "b0838122bf76d052712379d39dbd82a5c93a1d76eb22d57205ad23ce83ac1a7d",
+    "lines": 897
+  },
+  "verdict": "MANDATORY_STATIC_CORRECTIONS_NO_FINAL_ACCEPTANCE",
+  "findings": [
+    {
+      "id": "PRE-01",
+      "priority": "high",
+      "lines": [
+        775,
+        789,
+        819,
+        829
+      ],
+      "title": "Present RTLD candidates lack required ELF roots"
+    },
+    {
+      "id": "PRE-02",
+      "priority": "high",
+      "lines": [
+        432,
+        451
+      ],
+      "title": "Symlink target normalization omits traversed components"
+    },
+    {
+      "id": "PRE-03",
+      "priority": "high",
+      "lines": [
+        595,
+        611,
+        634,
+        639
+      ],
+      "title": "PT_DYNAMIC load mapping unchecked"
+    },
+    {
+      "id": "PRE-04",
+      "priority": "medium",
+      "lines": [
+        727,
+        734
+      ],
+      "title": "Glob materialization precedes bound"
+    },
+    {
+      "id": "PRE-05",
+      "priority": "high",
+      "conditional_scope": "Can be resolved by explicit later integrated predicate; none in reviewed prefix",
+      "lines": [
+        538,
+        561,
+        689,
+        740,
+        743,
+        852
+      ],
+      "title": "Loader descriptors not tied to HOST roles/files"
+    },
+    {
+      "id": "PRE-06",
+      "priority": "medium",
+      "lines": [
+        260,
+        275,
+        354,
+        410,
+        855,
+        895
+      ],
+      "title": "Strict value types and pure parser expected shape incomplete"
+    }
+  ],
+  "report": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/preliminary/REVIEW-001.md",
+    "bytes": 9387,
+    "sha256": "7ea51ddf7b946cf91d613a56ca803233eec0e54cb2eb2cf381a9246c4c059601"
+  },
+  "performed": [
+    "Read exact source text lines 1-897",
+    "Read back snapshot SHA-256",
+    "Compared against accepted P07 design and independent freeze 002"
+  ],
+  "not_performed": [
+    "candidate import",
+    "compile",
+    "tests",
+    "host qualification",
+    "runtime preparation",
+    "Node/ldd",
+    "Git/index/publication"
+  ],
+  "pending": [
+    "complete candidate source review",
+    "independent exact candidate/fixture mapping",
+    "authorized focused execution",
+    "final package review"
+  ]
+}

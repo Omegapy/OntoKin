@@ -1,0 +1,271 @@
+"""Independently freeze accepted P07 expectations; never import candidate code."""
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib
+import json
+
+ROOT = Path('/workspace/scratch/8838dfc6e876')
+REPO = ROOT / 'OntoKin'
+OUT = ROOT / 'review_work'
+P07 = 'docs/engineering/localized-repair-c271/host-inspection-p07/'
+matrix = json.loads((REPO / P07 / 'CONTROL-MATRIX.json').read_bytes())
+parents = {row['id']: row for row in matrix['controls'] if row['id'].startswith('HI')}
+
+def descriptor(path):
+    data = path.read_bytes()
+    return {'path': str(path), 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
+
+def counts(exact=0, lower=0, state='PROVEN_ZERO', node=0, ldd=0):
+    return {'affected_command_exact': exact, 'affected_command_observed_lower_bound': lower,
+            'affected_command_state': state,
+            'mocked_sequence_starts': {'node_version': node, 'shared_libraries': ldd,
+                                       'total': None if node is None or ldd is None else node + ldd},
+            'actual_OS_child_starts': 0, 'actual_Node_starts': 0, 'actual_ldd_starts': 0,
+            'actual_checker_starts': 0}
+
+rows = []
+def add(parent, suffix, mutation, route, *, count=None, evidence='authenticated_refusal', expected=None, category=None, boundary=None, assertion=None):
+    row = parents[parent]
+    rows.append({'id': parent + '-' + suffix, 'parent_control': parent,
+                 'input_mutation': mutation, 'route': route,
+                 'expected_category': category or row['expected_error_category'],
+                 'expected_boundary': boundary or row['expected_boundary'],
+                 'expected_state': expected or 'REJECTED',
+                 'counts': count or counts(), 'evidence_policy': evidence,
+                 'additional_assertion': assertion,
+                 'source_parent_sha256': hashlib.sha256(json.dumps(row, sort_keys=True, separators=(',', ':')).encode()).hexdigest()})
+
+for suffix, mutation in [
+ ('A','Omit --plan / call API without a selected plan path.'),
+ ('B','Omit --plan-sha256 / supply an empty expected comparator.'),
+ ('C','Keep exact positive plan bytes D0 but supply a different well-formed expected digest.'),
+ ('D','Replace executable inspection-plan schema with the adopted nonexecutable P07 qualification design schema, with matching externally supplied negative-fixture digest.'),
+ ('E','Add an unknown top-level key or remove one required key, as separate subcases.'),
+ ('F','Replace a required concrete field with null or a literal unresolved template, as separate subcases.'),
+ ('G','Use relative plan path, relative descriptor path, or unknown CLI option, as separate subcases.')]:
+    add('HI01',suffix,mutation,'in_process_CLI_or_plan_input',evidence='unauthenticated_refusal',assertion='No attempt root/output may be trusted or created; no project bootstrap or supervisor delegation; capture refusal through caller-owned output.')
+
+add('HI02','A','Starting from approved bytes with external D0, change one valid isolated plan field, recompute coherent local descriptors/observed digest D1, and retain external D0.','canonical_JSON_mutation',evidence='unauthenticated_refusal',assertion='Comparison against external D0 must fail before output/source/process authority. Computing D1 does not approve it.')
+add('HI02','B','Insert approved=true, expected-plan-digest, or signature/self-approval key in otherwise canonical plan; supply its digest only as a negative-control comparator.','canonical_JSON_mutation',evidence='unauthenticated_refusal',assertion='Closed shape rejects every self-approval field. No sibling review file is automatically adopted.')
+
+for suffix, mutation in [
+ ('A','Plan path is a symlink to a regular fixture file.'),
+ ('B','Plan path is a FIFO or another nonregular isolated fixture; exercise a nonblocking bounded refusal.'),
+ ('C','Plan file has a second hardlink.'),
+ ('D','Raw plan JSON contains duplicate keys at top level and in a nested object, as separate subcases.'),
+ ('E','Raw plan contains invalid UTF-8 bytes.'),
+ ('F','Raw plan contains NaN, Infinity, or -Infinity, as separate subcases.'),
+ ('G','Plan exceeds 16 MiB by one byte.'),
+ ('H','Change file bytes/size/inode during the checked read through a synchronized filesystem seam.'),
+ ('I','Use a boolean for a size/count field or noncanonical JSON serialization, as separate subcases.')]:
+    add('HI03',suffix,mutation,'isolated_filesystem_or_raw_JSON',evidence='unauthenticated_refusal',assertion='Bounded read, no FIFO wait, no output consumption, no successful decoded plan.')
+
+for suffix, mutation in [
+ ('A','Plan source.root differs from the module-derived canonical checkout.'),
+ ('B','Source commit or tree disagrees with independently mocked Git identity reads, as separate subcases.'),
+ ('C','Remove/change bound author entry point, provider, supervisor, or preparer source, one member per subcase.'),
+ ('D','Omit a required source inventory member or add an extra member, as separate subcases.'),
+ ('E','Mock tracked dirty or untracked executable-source Git status, as separate subcases.'),
+ ('F','Alter one of the five allowed source argv/read operations or admit an extra/fetch/mutating command.'),
+ ('G','Source guard requests a sixth read, or any one source read has a timeout above five seconds.')]:
+    add('HI04',suffix,mutation,'isolated_source_files_with_Git_reads_mocked',assertion='Target source predicates remain active; no actual Git process starts; reject before Node/ldd; protected repository files are never mutated.')
+
+for suffix, mutation in [
+ ('A','Change selected Node candidate digest, size, or executable mode, as separate subcases.'),
+ ('B','Change runtime executable path to a relative, linked, nonprivate, or non-task-specific destination, as separate subcases.'),
+ ('C','Declare a Node version other than v24.22.1.'),
+ ('D','Change source archive digest or size from P05 constants, as separate subcases.'),
+ ('E','Change installation-receipt source/destination binding or declare installed content inconsistent with the runtime descriptor.')]:
+    add('HI05',suffix,mutation,'isolated_descriptor_or_file_mutation',assertion='Version output may not forgive an identity mismatch; no installation or runtime execution.')
+
+for suffix, mutation in [
+ ('A','Remove or change ldd/declared inspector-interpreter file binding, separately.'),
+ ('B','ldd shebang contains an argument, uses /usr/bin/env, or selects a different interpreter, separately.'),
+ ('C','Python executable/version or admitted Python runtime/startup/extension input changes, separately.'),
+ ('D','One of the seven metadata package versions differs, is missing, duplicated, or comes from an unbound metadata path, separately.'),
+ ('E','Git executable or its admitted executable/loader input binding changes or is absent.'),
+ ('F','Inject a nonapproved launcher variable or bind an unreviewed site/.pth/startup path.'),
+ ('G','The operational ldd path is linked or not a private regular file.')]:
+    add('HI06',suffix,mutation,'isolated_files_metadata_and_static_records',assertion='Read metadata without site/package import; no suspect binary is run; every actual imported executable input must remain bound.')
+
+for suffix, mutation in [
+ ('A','Synthetic ELF contains one DT_NEEDED edge missing from the declared map.'),
+ ('B','ELF PT_INTERP differs from the bound interpreter.'),
+ ('C','Change a frozen loader cache/config/include file or introduce a required-absent include, separately.'),
+ ('D','Add/remove/change a relevant search-directory entry or alter a significant alias hop, separately.'),
+ ('E','Add/change a possible inspector external command or RTLDLIST candidate not covered by the closure.'),
+ ('F','Required-absent /etc/ld.so.preload appears or its admitted empty content becomes nonempty, separately.'),
+ ('G','Remove/change one transitive runtime/inspector/loader file or one required-absence path guard.')]:
+    add('HI07',suffix,mutation,'synthetic_ELF_and_isolated_static_closure',assertion='No observed output may expand this frozen closure; detection occurs before affected command.')
+
+for suffix, mutation in [
+ ('A','Static platform record is non-Linux or libc is not the admitted glibc profile, separately.'),
+ ('B','Malformed ELF header/class/endian/table bounds, no interpreter, or duplicate interpreter, separately.'),
+ ('C','Synthetic dynamic table/string table is out of bounds, unterminated, conflicting, or unbounded, separately.'),
+ ('D','Declare unsupported audit/filter/auxiliary loader feature, ambiguous RPATH/RUNPATH token, or architecture mismatch, separately.'),
+ ('E','Static map cannot explain cache/hwcaps/search alternatives or contains ambiguous resolution.'),
+ ('F','A library path has whitespace/NUL/noncanonical components that current consumers cannot represent, separately.')]:
+    add('HI08',suffix,mutation,'pure_ELF_parser_or_static_record',assertion='Specific unsupported reason; no normalization or schema widening to force acceptance.')
+
+for suffix, mutation in [
+ ('A','Evidence parent/attempt/output is relative, escaping, or inside source/runtime/dependencies, separately.'),
+ ('B','Attempt root, stage, or output already exists with a sentinel file, separately.'),
+ ('C','Evidence ancestor device/inode/mode/alias identity differs from the approved plan.'),
+ ('D','Insert a competing target immediately before no-replace reservation/prelaunch publication.')]:
+    add('HI09',suffix,mutation,'real_isolated_filesystem',evidence='authenticated_refusal',assertion='Competing content and all sentinels remain byte-identical; no overwrite, retry, unchecked parent creation, or foreign cleanup.')
+
+for suffix, mutation in [
+ ('A','Change bound file bytes after durable preflight and before the final launch check.'),
+ ('B','Change alias/ancestor inode after preflight and before final launch check.'),
+ ('C','Create a required-absent loader/search/output candidate after preflight and before final launch check.')]:
+    add('HI10',suffix,mutation,'synchronized_isolated_filesystem_mutation',assertion='Final recheck refuses before supervisor boundary; actual/proven count zero; retain preflight and refusal.')
+
+one = counts(1,1,'OBSERVED_ONE',1,0)
+two_affected = counts(1,1,'OBSERVED_ONE',1,1)
+unknown = counts(None,0,'UNKNOWN',None,0)
+for suffix, mutation in [
+ ('A','After a retained mocked Node-version start, change source/runtime/dependency bytes or binding identity, separately.'),
+ ('B','After retained mocked start, change loader/alias/boot identity, separately.'),
+ ('C','Return a mocked supervisor failure and simultaneously cause postflight drift.')]:
+    add('HI11',suffix,mutation,'mocked_supervisor_with_real_or_frozen_identity_drift',count=one,evidence='started_failure',assertion='Preserve unmodified process outcome before drift refusal; attach original failure when both occur; ldd is never delegated.')
+
+for suffix, mutation in [
+ ('A','Version stdout is v24.22.0\\n instead of exactly v24.22.1\\n.'),
+ ('B','Version stdout has an extra line, missing newline, leading/trailing bytes, or extra whitespace, separately.'),
+ ('C','Version stderr is nonempty.'),
+ ('D','Version stdout or stderr is invalid UTF-8.')]:
+    add('HI12',suffix,mutation,'mocked_node_version_response',count=one,evidence='started_failure',assertion='Retain raw bytes unchanged; no second command and no compatible successful version inspection.')
+
+for suffix, mutation in [
+ ('A','ldd stdout contains not found, statically linked, or not a dynamic executable, separately.'),
+ ('B','ldd stderr is nonempty, including not found.'),
+ ('C','ldd output is empty, contains blank lines, relative paths, malformed parentheses/address, or unknown warning rows, separately.'),
+ ('D','Duplicate/conflicting SONAME, resolved path, interpreter, or vDSO row, separately.'),
+ ('E','Omit the interpreter or one expected library, or add one unapproved library path, separately.'),
+ ('F','Use wrong vDSO name, whitespace/NUL path, path normalization alias, or invalid UTF-8, separately.')]:
+    add('HI13',suffix,mutation,'pure_ldd_parser',count=counts(),evidence='pure_refusal',assertion='Pure parsing has zero mocked and actual starts; raw inputs remain unchanged. It proves parser logic only.')
+add('HI13','G','Complete the valid version mock, then return the ldd fixture with an unapproved extra library row.','two_command_mocked_observation',count=two_affected,evidence='started_failure',assertion='Affected ldd direct start is one; full mocked sequence has two starts; retain raw ldd logs and refuse HOST/completion.')
+
+add('HI14','A','Raise a known prelaunch refusal before entering supervisor/Popen; retain explicit boundary-not-entered proof.','mocked_launch_boundary',count=counts(),evidence='authenticated_refusal',expected='NO_START',assertion='PROVEN_ZERO is based on positive boundary proof, not a missing callback.')
+add('HI14','B','Invoke callback with a positive mocked PID/group, then raise a callback failure unrelated to persistence.','mocked_launch_boundary',count=one,evidence='started_failure',assertion='Retained actual start/final receipt proves one; cause and process receipt remain unchanged; cleanup still required; never recast as zero.')
+add('HI14','C','Enter launch boundary then lose callback and final process receipt; only the earlier intent survives.','mocked_interrupted_launch_window',count=unknown,evidence='unknown_attempt',expected='UNKNOWN',assertion='Exact count null, lower bound zero; aggregate exact count also null; no retry or second command.')
+add('HI14','D','Deliver a second start callback or other evidence of more than one direct start for one command.','mocked_launch_boundary',count={'affected_command_exact':2,'affected_command_observed_lower_bound':2,'affected_command_state':'INVALID_MULTIPLE_STARTS','mocked_sequence_starts':{'node_version':2,'shared_libraries':0,'total':2},'actual_OS_child_starts':0,'actual_Node_starts':0,'actual_ldd_starts':0,'actual_checker_starts':0},evidence='started_failure',assertion='Retain actual anomaly; reject instead of truncating to one or projecting a valid count enum.')
+
+for suffix, mutation in [
+ ('A','Mock active-work timeout at the three-second active deadline.'),
+ ('B','Mock total command elapsed strictly greater than five seconds or a negative interval, separately.'),
+ ('C','Mock cleanup elapsed strictly greater than 2000 ms.'),
+ ('D','Exhaust command clock during final launch-binding/start callback work; no new allowance or retry.')]:
+    add('HI15',suffix,mutation,'mocked_clock_and_supervisor',count=one,evidence='started_failure',expected='TIMEOUT',assertion='Same Clock(total_ms=5000), active end started+3, cancel_after_ms=None; two-second cleanup remains inside total; timeout category and actual receipt retained.')
+
+for suffix, mutation in [
+ ('A','Combined stdout/stderr is 4 MiB plus one byte.'),
+ ('B','Observed, retained, and actual raw byte lengths disagree, one field per subcase.'),
+ ('C','Inspection serialization exceeds 8 MiB or ordinary evidence document exceeds 16 MiB, separately.'),
+ ('D','Retained stream counts are negative, boolean, noninteger, or exceed bounds, separately.')]:
+    add('HI16',suffix,mutation,'mocked_process_output_or_bounded_serialization',count=one,evidence='started_failure',assertion='No silent truncation into success; raw evidence and actual counts retained with explicit finalized/unknown state.')
+
+for suffix, mutation in [
+ ('A','Mock process return code is nonzero or process error is nonnull, separately.'),
+ ('B','Mock cleanup passed/group_absent/reaped is false or handles remain open, one field per subcase.'),
+ ('C','Omit/alter process PID/group/end time/argv/environment/cwd/label, separately, while retaining an independent earlier positive start.'),
+ ('D','Supervisor loses final process record and raises after the earlier positive start receipt is durable.'),
+ ('E','Mock success timestamps are unzoned, reversed, future, or disagree with monotonic interval, separately.')]:
+    add('HI17',suffix,mutation,'mocked_process_receipt',count=one,evidence='started_failure',assertion='No reconstructed success field; original raw receipt/exception stays unchanged; exact count one comes from the separate retained start.')
+
+add('HI18','A','Inject failure writing/fsyncing reservation, preflight or intent before supervisor entry, one operation per subcase.','isolated_writer_fault_before_launch',count=counts(),evidence='evidence_unfinalized',assertion='No child; retain any committed records; return evidence_finalized=false; never claim durable failure when persistence failed.')
+add('HI18','B','After callback with positive PID, fail start-ledger write; preserve actual PID in the supervisor final receipt/outer capture.','mocked_start_with_isolated_writer_fault',count=one,evidence='evidence_unfinalized',assertion='Category CHI-EVIDENCE even if supervisor wraps callback error; count stays one; cleanup and original cause/receipt retained.')
+add('HI18','C','After a positive mocked start, fail process-outcome/postflight/failure write or directory fsync, separately.','mocked_start_with_isolated_writer_fault',count=one,evidence='evidence_unfinalized',assertion='Preserve earlier committed artifacts and actual start; no second command; return failed/unknown evidence state.')
+add('HI18','D','No-replace rename raises after an uncertain reply; read back exact source/destination pair, including destination-equal, destination-conflict and absent cases.','real_isolated_publication_fault',count=counts(),evidence='evidence_unfinalized',expected='UNKNOWN',assertion='Retain intended bytes/hash and original exception/readback; no retry; never delete another writer inode; no success merely because destination exists.')
+add('HI18','E','After both successful mocked commands and all earlier records, fail final completion marker write, fsync or parent fsync, separately.','two_command_mocked_observation_with_final_writer_fault',count=two_affected,evidence='evidence_unfinalized',expected='UNKNOWN',assertion='One start each, aggregate two; existing HOST is not successful package completion; no OBSERVED_UNAPPROVED success return.')
+add('HI18','F','Interrupt launch-to-callback and make failure publication unavailable; only durable intent remains.','mocked_interruption_with_writer_fault',count=unknown,evidence='evidence_unfinalized',expected='UNKNOWN',assertion='Exact null, lower bound zero; preserve records and caller capture; no synthesized process receipt or zero.')
+
+for suffix, mutation, record_count in [
+ ('A','Read-only reconcile a retained prelaunch refusal with positive proof supervisor boundary was not entered.',counts()),
+ ('B','Read-only reconcile intent-only records after the launch boundary may have been crossed.',counts(None,0,'UNKNOWN',None,0)),
+ ('C','Read-only reconcile retained positive start but no final receipt/completion.',counts(1,1,'OBSERVED_ONE',1,0)),
+ ('D','Read-only reconcile partial final record, failed disk-finalization, or missing referenced artifact, separately.',counts(1,1,'OBSERVED_ONE',1,0)),
+ ('E','Read-only reconcile lost publication reply whose destination happens to exist but final durable completion is unproven.',counts(None,0,'UNKNOWN',None,0)),
+ ('F','Mock process-group/PID absence while earlier launch state was unknown; repeat with changed boot identity.',counts(None,0,'UNKNOWN',None,0))]:
+    record_count['mocked_sequence_starts']={'node_version':0,'shared_libraries':0,'total':0}
+    record_count['historical_counts_are_retained_fixture_values']=True
+    add('HI19',suffix,mutation,'read_only_reconcile_of_frozen_incomplete_records',count=record_count,evidence='immutable_reconciliation',expected='NO_START' if suffix=='A' else 'UNKNOWN',assertion='Reconcile makes no subprocess/group signal/write/delete/rename and no replay. Earlier source/evidence bytes remain unchanged. PID absence cannot supply completion or historical zero.')
+
+for suffix, mutation in [
+ ('A','Add/remove one inspection/process/cleanup key from each closed P06 object, as separate subcases.'),
+ ('B','Add/remove one HOST/runtime/platform/python/roles key from each closed P06 object, as separate subcases.'),
+ ('C','Mismatch roles, aliases and resolved file sets; duplicate/empty required role arrays; interpreter included as shared-library role; one mutation per subcase.'),
+ ('D','Use stale boot identity, HOST timestamp preceding inspection finishes, future or unzoned time, as separate subcases.'),
+ ('E','Treat observed HOST/result digest as execution approval or feed observed result/design freeze to plan-selection API.')]:
+    add('HI20',suffix,mutation,'static_projection_and_consumer_contract',count=counts(),evidence='pure_refusal',assertion='No compatible success projection or implied qualification. Plan-selection rejection of wrong schema uses CHI-PLAN at HI01; direct compatibility predicates use CHI-COMPAT.')
+
+positive = [
+ {'id':'HI-P01','route':'static_plan_validation','expected':'STATIC_READY; recursively immutable validated value; exact plan/constants/closed shapes honored; no fresh attempt/output paths consumed.','actual_OS_child_starts':0,'mocked_Node_ldd_starts':0,'limitations':'Git identity and host facts may be explicitly mocked; source/shape/content predicates under test may not be replaced by true-returning mocks.'},
+ {'id':'HI-P02','route':'pure_ldd_parser','expected':'Accept exact frozen valid ldd grammar; one interpreter, exact unique SONAME/path set, optional exact vDSO; preserve input bytes.','actual_OS_child_starts':0,'mocked_Node_ldd_starts':0},
+ {'id':'HI-P03','route':'two_command_mocked_observation','expected':'One ordered mocked version start and one mocked ldd start; success receipts preserve supplied actual fixture fields; HOST/sidecars are complete and unapproved; completion marker durable and last.','actual_OS_child_starts':0,'mocked_Node_starts':1,'mocked_ldd_starts':1,'mocked_checker_starts':0,'limitations':'Compatibility/state-machine proof only; generated fixture HOST is never a real host observation or an approved configuration.'},
+ {'id':'HI-P04','route':'real_isolated_no_replace_writer','expected':'Owned fresh regular-file publication with file fsync, no-replace rename, parent fsync and exact readback; race preserves another writer; every output inode stays under authorized ancestor.','actual_OS_child_starts':0,'mocked_Node_ldd_starts':0},
+ {'id':'HI-P05','route':'static_module_and_CLI_boundary','expected':'Import/new-module entry point introduces no child launch, source output, approval, installer, generic command/fallback/retry or protected-source change. CLI static is default; observe is explicit.','actual_OS_child_starts':0,'mocked_Node_ldd_starts':0},
+]
+
+environment={'PATH':'/usr/bin:/bin','LANG':'C.UTF-8','LC_ALL':'C.UTF-8','TZ':'UTC','UV_THREADPOOL_SIZE':'2'}
+ldd_raw='\tlinux-vdso.so.1 (0x7fff3000)\n\tlibc.so.6 => /fixture/lib/libc.so.6 (0x7f1000)\n\t/fixture/lib/ld-linux-x86-64.so.2 (0x7f2000)\n'
+baseline = {'schema':'ontokin.c271.p08.independent-fixture-semantics/1','kind':'synthetic_control_fixture_not_a_host_observation','version_stdout':'v24.22.1\n','version_stderr':'','ldd_stdout':ldd_raw,'ldd_stderr':'','expected_ldd_semantics':{'sonames':{'libc.so.6':'/fixture/lib/libc.so.6'},'interpreter':'/fixture/lib/ld-linux-x86-64.so.2','vdso':'linux-vdso.so.1','file_paths':['/fixture/lib/libc.so.6','/fixture/lib/ld-linux-x86-64.so.2']},'environment':environment,'mock_process':{'argv':['/fixture/runtime/node','--version'],'cwd':'/fixture/evidence/attempt/node_version','environment':environment,'label':'host-node-version','start_monotonic':1000.0,'pid':4242,'process_group':4242,'returncode':0,'observed_log_bytes':len(b'v24.22.1\n'),'retained_log_bytes':len(b'v24.22.1\n'),'cleanup':{'passed':True,'process_group_absent':True,'reaped':True,'elapsed_ms':1.0},'handles_closed':True,'error':None,'end_monotonic':1000.1},'inspection_times':{'started_at_utc':'2026-11-21T00:00:00+00:00','finished_at_utc':'2026-11-21T00:00:00.100000+00:00','host_observed_at_utc':'2026-11-21T00:00:00.200000+00:00'},'path_binding_rule':'Virtual fixture paths identify semantics only; author freezes actual temporary-root substitution and exact generated plan/fixture hashes before execution. This is not an executable plan.'}
+(OUT / 'INDEPENDENT-FIXTURE-SEMANTICS-001.json').write_text(json.dumps(baseline,indent=2)+'\n')
+
+freeze={
+ 'schema':'ontokin.c271.p08.independent-control-expectations/1',
+ 'recorded_at_utc':datetime.now(timezone.utc).isoformat(),
+ 'reviewer':'/root/implementation_review',
+ 'state':'FROZEN_EXPECTATIONS_BEFORE_AUTHOR_EXECUTION',
+ 'purpose':'Independent HI01-HI20 oracles and material subcases for bounded static/filesystem/mocked P08 controls.',
+ 'source_commit_supplied_by_director':'c99f44aaec10445b96deb2b451b1a860a1027401',
+ 'sources':[descriptor(REPO / P07 / n) for n in ['ADOPTION.json','HOST-INSPECTION-DESIGN.md','QUALIFICATION-PLAN.md','CONTROL-MATRIX.json']]+[descriptor(ROOT/'implementation_work/IMPLEMENTATION-PLAN.md'),descriptor(REPO/'prototypes/static_tray_v01/supervisor.py'),descriptor(REPO/'docs/engineering/localized-repair-c271/current-host-p06/SCHEMA.json')],
+ 'early_save':{'confirmation_authority':'Director message confirmed saved-byte SHA-256 before this work; local receipt read during field update still had null readback field.','library_file_id':'libfile_fde3_f-01d687884cb48191b1215aaa97725b6c_2ab2a24d43748191957f9bcc356b59de','version':0,'bytes':635513,'sha256':'998a29a4badf6636f583f86a0d71b2c6716491350c91fce7799f3b48d9d10141'},
+ 'fixture_semantics':descriptor(OUT/'INDEPENDENT-FIXTURE-SEMANTICS-001.json'),
+ 'execution_boundary':{'actual_project_subprocesses_in_HI':0,'all_Git_Node_ldd_checker_supervisor_process_creation_and_group_operations':'mocked or guarded to fail if invoked','no_product_imports_or_tests_performed_by_this_freeze':True,'no_real_host_plan_or_HOST_approval':True},
+ 'before_author_execution':[
+   'Freeze exact candidate module/tests bytes and map every selected ID to test method/subcase, concrete positive fixture bytes or deterministic generation source, mutation, resulting fixture hashes, and exact mock seams.',
+   'Independent inspection must verify that every mutation reaches the claimed target predicate and is not masked by an earlier unrelated refusal; observed results cannot select the expected category afterward.',
+   'Concrete nested schema layouts may implement the accepted P07 requirements; protected P06 consumers/schemas and all adopted preservation boundaries stay unchanged.',
+   'Keep separate denominators for actual OS starts (always zero here), mocked affected-command starts, full mocked sequence totals, and historical record counts. Pure parser/projection tests claim no launch-path coverage.',
+   'Preserve this immutable freeze; any material oracle change requires a separately explained new revision before affected execution.'
+ ],
+ 'global_acceptance':[
+   'HostInspectionError is RuntimeError and never supervisor.Stop; preserve original cause and unmodified original process_record.',
+   'No failure or uncertainty produces successful compatible inspection/HOST approval, proceeds to next command, retries, replaces another path, or erases earlier evidence.',
+   'PROVEN_ZERO requires retained positive prelaunch proof. OBSERVED_ONE requires retained positive PID/start or final process receipt. Missing callback/receipt after possible launch is UNKNOWN exact null/lower bound zero.',
+   'Successful observation requires exactly one start each, successful cleanup and exact raw/observed/retained log counts, unchanged bindings and completed durable publication.',
+   'H0/H1/H2/H3, original seven methods, P06-H01/H02/H03, Gate R, main integration and parent closure remain unrun/unmet.'
+ ],
+ 'evidence_policies':{
+  'unauthenticated_refusal':'No plan-owned filesystem destination trusted or created; structured caller-captured refusal has evidence_finalized=false and visible cause; zero process boundary.',
+  'authenticated_refusal':'Keep reservation/preflight/intent already durable and immutable; retain exact refusal if possible; no success/next command; if persistence fails, evidence_finalized=false.',
+  'pure_refusal':'Return the exact category with original bytes unchanged; no filesystem/process authority or qualification claimed.',
+  'started_failure':'Retain actual start, raw stdout/stderr and unmodified supervisor outcome/exception before later validation; preserve postflight/failure evidence; zero next-command starts.',
+  'unknown_attempt':'Retain intent and every actual surviving record; exact launch count null with explicit lower bound; state UNKNOWN, no completion, no retry or invented termination.',
+  'evidence_unfinalized':'Preserve every committed artifact and attempted bytes/hash/exception/readback available; evidence_finalized=false if failure cannot durably complete; no success; caller captures error.',
+  'immutable_reconciliation':'Only read and compare bound evidence/process status under the admitted boot identity; no writes/deletes/signals/launches, and no promotion based on PID absence.'
+ },
+ 'positive_controls':positive,
+ 'control_variants':rows,
+ 'coverage':{'parent_controls':sorted(parents),'parent_count':len(parents),'material_variant_count':len(rows),'positive_control_count':len(positive)},
+ 'expectation_not_fixture_authority':'This fixes independent expected behavior. It is not an approved operational inspection plan, a claim that concrete candidate fixtures are already reviewed, or permission to run a real child.'
+}
+(OUT/'CONTROL-FREEZE-001.json').write_text(json.dumps(freeze,indent=2)+'\n')
+lines=['# C271 P08 independent control expectation freeze','',
+       'This freezes the HI control oracles before author execution. All actual project child starts remain zero. Mocked starts and historical unresolved starts use separate counts. It is not a real-host plan or a qualification result.','',
+       'The exact candidate and deterministic fixture/hash-to-control mapping must be inspected before focused execution. A helper/parser test establishes only that helper boundary; it cannot stand in for an integrated admission or persistence check.','',
+       f'Coverage: {len(parents)} accepted HI controls, {len(rows)} material variants, {len(positive)} positive controls.','',
+       '| Parent | Required boundary | Material variants | Expected category |','| --- | --- | ---: | --- |']
+for p,row in parents.items():
+    lines.append(f"| {p} | {row['requirement']} | {sum(x['parent_control']==p for x in rows)} | {row['expected_error_category']} |")
+lines+=['','## Key count and durability decisions','',
+        '- HI14 separates a proven prelaunch zero, an observed callback start, and a lost launch-to-callback window with exact null/lower bound zero.',
+        '- HI18 separately covers prelaunch persistence failure, start-ledger failure, postlaunch publication failure, uncertain no-replace replies, and final completion-marker failure. A final-marker failure after two successful command mocks has one start per command and two total; it still cannot return successful observation.',
+        '- HI19 reconciliation launches nothing and changes no evidence. The inspected fixture can contain zero, one, or unknown historical starts. A missing process group cannot prove a successful earlier completion.',
+        '- HI13 pure parser cases have zero starts. Its integrated malformed-ldd variant has a preceding successful version mock, then one ldd mock: two mocked direct starts total.',
+        '- If a launch record or cleanup outcome is uncertain, preserve that uncertainty. If the filesystem cannot finalize failure evidence, report evidence_finalized=false and retain the caller-capture boundary.','',
+        'Every variant, mutation, route, category, count, evidence policy and additional assertion is in `CONTROL-FREEZE-001.json`. `INDEPENDENT-FIXTURE-SEMANTICS-001.json` fixes synthetic positive ldd/version/process semantics without pretending virtual fixture paths are actual authorized host paths.','',
+        'Root and implementer must retain this freeze unchanged. Any material correction is a new explained revision before affected execution. No production/test source was edited or imported by the reviewer.']
+(OUT/'CONTROL-FREEZE-001.md').write_text('\n'.join(lines)+'\n')
+print(json.dumps({'freeze':descriptor(OUT/'CONTROL-FREEZE-001.json'),'fixture_semantics':descriptor(OUT/'INDEPENDENT-FIXTURE-SEMANTICS-001.json'),'variants':len(rows),'positives':len(positive)},indent=2))

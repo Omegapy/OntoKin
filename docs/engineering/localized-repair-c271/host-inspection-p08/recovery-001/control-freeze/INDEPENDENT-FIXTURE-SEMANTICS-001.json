@@ -1,0 +1,62 @@
+{
+  "schema": "ontokin.c271.p08.independent-fixture-semantics/1",
+  "kind": "synthetic_control_fixture_not_a_host_observation",
+  "version_stdout": "v24.22.1\n",
+  "version_stderr": "",
+  "ldd_stdout": "\tlinux-vdso.so.1 (0x7fff3000)\n\tlibc.so.6 => /fixture/lib/libc.so.6 (0x7f1000)\n\t/fixture/lib/ld-linux-x86-64.so.2 (0x7f2000)\n",
+  "ldd_stderr": "",
+  "expected_ldd_semantics": {
+    "sonames": {
+      "libc.so.6": "/fixture/lib/libc.so.6"
+    },
+    "interpreter": "/fixture/lib/ld-linux-x86-64.so.2",
+    "vdso": "linux-vdso.so.1",
+    "file_paths": [
+      "/fixture/lib/libc.so.6",
+      "/fixture/lib/ld-linux-x86-64.so.2"
+    ]
+  },
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "UV_THREADPOOL_SIZE": "2"
+  },
+  "mock_process": {
+    "argv": [
+      "/fixture/runtime/node",
+      "--version"
+    ],
+    "cwd": "/fixture/evidence/attempt/node_version",
+    "environment": {
+      "PATH": "/usr/bin:/bin",
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "TZ": "UTC",
+      "UV_THREADPOOL_SIZE": "2"
+    },
+    "label": "host-node-version",
+    "start_monotonic": 1000.0,
+    "pid": 4242,
+    "process_group": 4242,
+    "returncode": 0,
+    "observed_log_bytes": 9,
+    "retained_log_bytes": 9,
+    "cleanup": {
+      "passed": true,
+      "process_group_absent": true,
+      "reaped": true,
+      "elapsed_ms": 1.0
+    },
+    "handles_closed": true,
+    "error": null,
+    "end_monotonic": 1000.1
+  },
+  "inspection_times": {
+    "started_at_utc": "2026-11-21T00:00:00+00:00",
+    "finished_at_utc": "2026-11-21T00:00:00.100000+00:00",
+    "host_observed_at_utc": "2026-11-21T00:00:00.200000+00:00"
+  },
+  "path_binding_rule": "Virtual fixture paths identify semantics only; author freezes actual temporary-root substitution and exact generated plan/fixture hashes before execution. This is not an executable plan."
+}

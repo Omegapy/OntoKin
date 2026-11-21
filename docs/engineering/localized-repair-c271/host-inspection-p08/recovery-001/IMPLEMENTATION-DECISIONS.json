@@ -1,0 +1,32 @@
+{
+  "schema": "ontokin.c271.p08-implementation-decisions/1",
+  "recorded_at_utc": "2026-11-21 15:05:40 UTC",
+  "decisions": [
+    {
+      "id": "P08-D01",
+      "topic": "Concrete supervisor_outcome paths",
+      "decision": "Use a closed {raw, committed} nested path pair under each command's supervisor_outcome. The raw path is exactly cwd/LABEL.process.json; committed is a distinct predeclared wrapper-owned atomic evidence path.",
+      "basis": "P07 explicitly requires preserving the unchanged supervisor raw receipt and a separate durable wrapper record; its nested evidence output shapes were left for HI implementation.",
+      "constraints": [
+        "Both normalized paths are frozen by the external plan and inventoried.",
+        "Preserve raw bytes; malformed/incomplete receipts never become fabricated success.",
+        "No P06 schema or protected source change; no additional launch or unlisted publication."
+      ],
+      "independent_review": "pending exact candidate",
+      "verification_required": [
+        "missing/extra/swapped/overlapping paths",
+        "raw and committed outcome preservation",
+        "failure blocks next command"
+      ]
+    },
+    {
+      "id": "P08-D02",
+      "topic": "Session wording correction",
+      "decision": "The source-time SESSION sentence accidentally said source work begins after control freeze. The phase authorization permits implementation after confirmed early save and requires independent controls/candidate mapping before meaningful test execution. Correct that sentence explicitly in the next checkpoint.",
+      "basis": "PHASE.json and Director worker authorization; no source/contract/execution gate is weakened. Implementation started after early save; no tests were run before the freeze.",
+      "prior_record": "ba9ce189755641f50593b09e205e4dac1230ae3e:docs/workflow/tasks/C271/P08-SESSION.md",
+      "recorded_at_utc": "2026-11-21T15:09:02.933226+00:00"
+    }
+  ],
+  "claim_scope": "Concrete implementation detail under accepted design, not a contract amendment, executable host approval or new phase."
+}

@@ -1,0 +1,157 @@
+{
+  "schema": "ontokin.c271.p08.independent-intake/1",
+  "recorded_at_utc": "2026-11-21T14:58:40.734582+00:00",
+  "reviewer": "/root/implementation_review",
+  "purpose": "Intake reconciliation only, before P08 early save; no implementation review or product tests.",
+  "runtime": {
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+  },
+  "director_supplied_state": {
+    "branch": "work/c271-missing-import-digest-control",
+    "head": "c99f44aaec10445b96deb2b451b1a860a1027401",
+    "main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+    "main_lease": "not_acquired"
+  },
+  "live_Git_query_performed_by_reviewer": false,
+  "verdict": "BLOCKED_INTAKE",
+  "checks": [
+    {
+      "name": "supplied ZIP identity",
+      "passed": true,
+      "detail": {
+        "bytes": 957300,
+        "sha256": "be774f33019e41fc65011fe3a1014edd36ac3298181b04236583f4e39b88d675"
+      }
+    },
+    {
+      "name": "supplied terminal receipt identity",
+      "passed": true,
+      "detail": {
+        "bytes": 128133,
+        "sha256": "08a569cbd069ce009c028e54a146b80fee817d59c7fc9915762dcfd65c7058e1"
+      }
+    },
+    {
+      "name": "receipt ZIP binding",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ZIP CRC",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ZIP names unique and safe",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ZIP no directory/link/special payload",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest exact inventory",
+      "passed": true,
+      "detail": {
+        "entries": 261,
+        "payloads": 260
+      }
+    },
+    {
+      "name": "manifest payload size/hash/mode",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "provided extraction exact bytes",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "provided extraction exact inventory",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source snapshot descriptors",
+      "passed": true,
+      "detail": {
+        "files": 144,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "source snapshot frozen revision agreement",
+      "passed": false,
+      "detail": null
+    },
+    {
+      "name": "terminal embedded post-freeze evidence exact",
+      "passed": true,
+      "detail": {
+        "records": 24,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "terminal source records exact current bytes",
+      "passed": true,
+      "detail": {
+        "records": 7,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "current snapshot differences explained by terminal receipt",
+      "passed": true,
+      "detail": [
+        "docs/workflow/CURRENT.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/PHASE.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/README.md",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/WORKER-DISPOSITIONS.json",
+        "docs/workflow/CURRENT.json",
+        "docs/workflow/tasks/C271/P07-SESSION.md",
+        "docs/workflow/tasks/C271/PLAN.md",
+        "docs/workflow/tasks/C271/REQUIREMENTS.md",
+        "docs/workflow/tasks/C271/task.json"
+      ]
+    },
+    {
+      "name": "canonical P07 delivery binding",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "canonical P07 delivery equals terminal core delivery",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "accepted P07 design payloads unchanged and adopted",
+      "passed": true,
+      "detail": {
+        "files": 9,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "P07 independent acceptance exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "phase/parent/recovery boundaries",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "historical_unknowns_preserved": [
+    "Historical C270 broad-driver completion remains unknown.",
+    "Global prior-process termination remains unestablished."
+  ],
+  "scope_limit": "No repository edits, Git/index/publication, imports of project code, Node/ldd, host observation, runtime preparation, product tests, integration or closure."
+}
