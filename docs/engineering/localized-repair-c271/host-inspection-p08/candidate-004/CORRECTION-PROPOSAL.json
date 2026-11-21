@@ -1,0 +1,26 @@
+{
+  "schema": "ontokin.c271.p08.run-failure-correction-proposal/1",
+  "status": "INERT_NOT_APPLIED_AWAITING_ROOT_GRANT",
+  "run": "run-001",
+  "candidate": "candidate-003",
+  "reason": "unittest.mock.patch.object treats its second parameter as one attribute name; it does not traverse dot-separated names. The observation helper therefore errors before observation setup for39 methods/64 error records.",
+  "current_file": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-003/test_current_host_inspection_v01.py",
+  "current_sha256": "76582b5d0f075022f7a06e37b9b8df8a6a8e03792ea36817e3ac54f72643f777",
+  "proposed_sha256": "797eb208670f6f74f14c9b5849485bd6cf3522a265d4129618c4b50ddc0a739a",
+  "proposed_size_bytes": 139313,
+  "line": 468,
+  "old": "patch.object(inspection, \"_EvidenceStore.write\", new=writing)",
+  "new": "patch.object(inspection._EvidenceStore, \"write\", new=writing)",
+  "production_change": false,
+  "oracle_change": false,
+  "fixture_recipe_change": "Only resolve the same intended _EvidenceStore.write patch target; writer wrapper behavior and every input/assertion remain unchanged.",
+  "next_steps_after_authorization": [
+    "Apply exact one-line test fix only",
+    "Freeze candidate004 module/test/map/dispositions with unchanged source and expectations",
+    "Prepare run002 wrapper/intent with fresh evidence root and updated identities; preserve run001",
+    "Independent exact-delta review, root clean publication and new explicit one-attempt grant"
+  ],
+  "source_edits": 0,
+  "candidate_imports": 0,
+  "new_test_runs": 0
+}

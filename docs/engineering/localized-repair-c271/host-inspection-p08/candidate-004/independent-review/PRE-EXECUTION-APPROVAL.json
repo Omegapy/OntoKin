@@ -1,0 +1,123 @@
+{
+  "schema": "ontokin.c271.p08.independent-preexecution-approval/1",
+  "recorded_at_utc": "2026-11-21T16:24:42.098621+00:00",
+  "reviewer": "/root/implementation_review",
+  "verdict": "APPROVED_FOR_ONE_BOUNDED_FOCUSED_RUN_AFTER_ROOT_CLEAN_SOURCE_AND_EXPLICIT_GRANT",
+  "active": true,
+  "candidate": "candidate-004",
+  "run": "run-002",
+  "prior_attempt": "candidate003/run001 preserved failed attempt; previous grant exhausted",
+  "inputs": [
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-004/current_host_inspection_v01.py",
+      "bytes": 147900,
+      "sha256": "b2f4c869fd03919047db797bd3a80616cbe16f6b17689fe61d40754b27f97a39"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-004/test_current_host_inspection_v01.py",
+      "bytes": 139313,
+      "sha256": "797eb208670f6f74f14c9b5849485bd6cf3522a265d4129618c4b50ddc0a739a"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-004/CONTROL-MAP.json",
+      "bytes": 532303,
+      "sha256": "9f9adb0979c228b6eede5f75db8a0649ddd3cebd73f239d29020e1c53a6c35b0"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-004/REVIEW-DISPOSITIONS.json",
+      "bytes": 23567,
+      "sha256": "6bdb99c9870a117a4dd5055b6058d3579e994fc4cc3802d994d929a86fb22ea3"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-004/FREEZE-MANIFEST.json",
+      "bytes": 2416,
+      "sha256": "717531625db8c7cf3c247134ef19072fd2bd17d04ea3d5a7e6aab6ee7955b3c3"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/run_focused_guarded.py",
+      "bytes": 2686,
+      "sha256": "27489064a600ea3cfba73381fa1f75cc781cdc72303bd97ee200c6ebdb4aafdd"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/RUN-INTENT-002.json",
+      "bytes": 2310,
+      "sha256": "24a3391f82cf3fd818178d58779d0698b2447c6f9214d01e0b24c33b5f4a4518"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/run_once_bounded_002.py",
+      "bytes": 9707,
+      "sha256": "4a339f9c323e47be7be5e65251292f20efcbb3906ccede99c0b534ab88d8fbc8"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/CONCRETE-SHAPES-AND-CORRESPONDENCE.md",
+      "bytes": 7815,
+      "sha256": "9c717a18aeedb0e3bdb92957c952e8e4a9341318abfc5cc3f071b9cd1d57de9a"
+    }
+  ],
+  "report": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/candidate-004/PRE-EXECUTION-REVIEW.md",
+    "bytes": 6221,
+    "sha256": "64346dcf2d2a70b623cdf70b7f3bbfbb263fe7600382b7c4c8ba9c14472d67c6"
+  },
+  "static_verification": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/candidate-004/STATIC-VERIFICATION.json",
+    "bytes": 129472,
+    "sha256": "bf473cfe915a4f264c8e5a20bccbd0d170ab239f6101317ffbbaac2fdcd51bc9"
+  },
+  "failed_attempt_review": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/run-001/REVIEW.md",
+    "bytes": 5683,
+    "sha256": "829fd947baab794d187bed2ab9409581aa9626d9919aa9b708d1aa94b385ac9d"
+  },
+  "failed_attempt_corrected_verification": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/run-001/VERIFICATION-002.json",
+    "bytes": 54620,
+    "sha256": "db7ec8d4cc3967fbff09b0215a12d5e4d674799e414b97d15cc2eb6cfa931b4b"
+  },
+  "selected_counts": {
+    "original_negative_variants": 109,
+    "positive_controls": 5,
+    "supplemental_groups": 16,
+    "scoped_regressions": 5,
+    "test_methods": 135
+  },
+  "selection": "tests.test_current_host_inspection_v01 through exact guarded runner; all135 methods; failfast unchanged",
+  "preexecution_findings_resolved": [
+    "PRE-01..PRE-14",
+    "DTR-01..DTR-09",
+    "C01-01..C01-05",
+    "named PATH Git alias/guard relation",
+    "C02-01",
+    "RUN001-FIXTURE-TARGET"
+  ],
+  "mandatory_residual_static_findings": [],
+  "approved_qualifications": {
+    "P08-D05": "Only HI17-D and HI18-A/B/C exact state changes to UNKNOWN; known counts unchanged.",
+    "P08-D06": "AS_RECORDED describes retained graph only; durability UNKNOWN, evidence_finalized false, approval false; no write/fsync/retry/log-tail authority.",
+    "P08-D07": "HI16-C size-only route: actual OS0, new mocked supervisor0, supplied synthetic PID1. Preserve original generic count reference; exact size/refusal guards unchanged."
+  },
+  "root_conditions": [
+    "Clean published source checkpoint with exact reviewed module/test bytes and protected-source preservation.",
+    "Root review and explicit one-attempt grant of exact run002 outer wrapper; fresh retained run002 paths.",
+    "Only mapped135 focused methods via unchanged pre-import guarded runner;180-second outer bound; no failfast change.",
+    "Preserve complete command/environment/logs/results/fixtures/manifests/source/map/oracle snapshots.",
+    "Stop after any result; preserve failures/unknowns; no silent replay or unreviewed change."
+  ],
+  "review_activity": {
+    "candidate_imports": 0,
+    "candidate_compilations": 0,
+    "tests_run": 0,
+    "project_process_starts": 0,
+    "source_edits": 0,
+    "git_operations": 0
+  },
+  "not_authorized": [
+    "Actual Node/ldd or operational host observations",
+    "Runtime preparation or installation",
+    "Original seven methods or complete routine",
+    "H0/H1 qualification or R03 acceptance",
+    "Integration, PR merge or parent closure"
+  ],
+  "implementation_acceptance": false,
+  "base_freeze_sha256_unchanged": true
+}

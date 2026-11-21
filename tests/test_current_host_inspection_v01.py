@@ -465,7 +465,7 @@ class HostInspectionControls(unittest.TestCase):
             stack.enter_context(patch.object(inspection, "_platform", return_value=self.fixture.platform))
             if launch:
                 stack.enter_context(patch.object(inspection, "_launch_check", side_effect=launch))
-            stack.enter_context(patch.object(inspection, "_EvidenceStore.write", new=writing))
+            stack.enter_context(patch.object(inspection._EvidenceStore, "write", new=writing))
             yield validated, controller, writes
 
     def observe(self):
