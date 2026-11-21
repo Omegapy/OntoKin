@@ -1,0 +1,300 @@
+{
+  "schema": "ontokin.p08.startup-independent-delivery-audit/1",
+  "recorded_at_utc": "2026-11-21T18:40:53.039044+00:00",
+  "reviewer": "/root/p08_delivery_audit",
+  "scope": "Prior P08 package and delivery reconciliation; no product acceptance or H0 execution.",
+  "command": "python3 audits/p08_delivery/verify_delivery.py",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "inputs": [
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/incoming/OntoKin/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21.zip",
+      "bytes": 14680844,
+      "sha256": "037d7ff2b2b64f61f1b53b5fdae93b3d16a32bdb6fd681f45f824e2652d425b5"
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/incoming/OntoKin/OntoKin_C271_P08_Delivery_Receipt_2026-11-21.json",
+      "bytes": 2062098,
+      "sha256": "e5a7017a847992a25dbd9f65b19dd32ca730578d56406b44e0f4beff68592114"
+    }
+  ],
+  "checks": [
+    {
+      "name": "archive exact expected identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "unique safe regular ZIP entries",
+      "passed": true,
+      "detail": {
+        "entries": 4370,
+        "bad_paths": [],
+        "duplicates": [],
+        "nonregular": []
+      }
+    },
+    {
+      "name": "ZIP CRC integrity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest rows unique",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest exact ZIP and fresh extraction inventory",
+      "passed": true,
+      "detail": {
+        "payloads": 4369,
+        "extracted_files": 4370,
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "name": "required root files",
+      "passed": true,
+      "detail": [
+        "README-START-HERE.md",
+        "CHECKPOINT.json",
+        "HANDOFF.md",
+        "NEXT-TASK.md",
+        "RECOVERY-STATUS.md",
+        "PROMPT-1-CONTINUE.md",
+        "PROMPT-2-RECOVER.md",
+        "HISTORICAL-DEPENDENCIES.json",
+        "MANIFEST-SHA256.json"
+      ]
+    },
+    {
+      "name": "all fresh payload sizes and SHA256",
+      "passed": true,
+      "detail": {
+        "checked": 4369,
+        "failures": []
+      }
+    },
+    {
+      "name": "provided extraction agrees with original ZIP payload",
+      "passed": true,
+      "detail": {
+        "checked": 4369,
+        "failures": []
+      }
+    },
+    {
+      "name": "source manifest bytes and Git blob identities",
+      "passed": true,
+      "detail": {
+        "snapshots": 281,
+        "failures": [],
+        "recorded_revision_groups": [
+          {
+            "commit": "3ed2670bf9bf4326dab126d3466699053f6b4320",
+            "tree": "a9d2eac50b0555b47fb99aed4711b06fa94a9ab8",
+            "files": 279
+          },
+          {
+            "commit": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+            "tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+            "files": 2
+          }
+        ]
+      }
+    },
+    {
+      "name": "source manifest exact repository inventory",
+      "passed": false,
+      "detail": null
+    },
+    {
+      "name": "all mapped recovery bytes",
+      "passed": true,
+      "detail": {
+        "mapped_files": 4075,
+        "failures": []
+      }
+    },
+    {
+      "name": "receipt saved archive and prompt identities",
+      "passed": true,
+      "detail": {
+        "files": 3,
+        "failures": []
+      }
+    },
+    {
+      "name": "standalone prompt byte equality with ZIP members",
+      "passed": true,
+      "detail": [
+        {
+          "file_name": "OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Continue.md",
+          "archive_member": "PROMPT-1-CONTINUE.md",
+          "equal": true,
+          "bytes": 3513,
+          "sha256": "287e4b35a7043fa58ce694ea2f4a792af3a8b1d2aaae0ff76c58a9efd3dfdcfd"
+        },
+        {
+          "file_name": "OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Recover.md",
+          "archive_member": "PROMPT-2-RECOVER.md",
+          "equal": true,
+          "bytes": 4345,
+          "sha256": "575b9f078befec3f6d8b742d46cf4cace244c29f6d5715055cb7b1367eafa028"
+        }
+      ]
+    },
+    {
+      "name": "postfreeze receipt evidence decoded and every size/hash verified",
+      "passed": true,
+      "detail": {
+        "files": 179,
+        "bytes": 7697285,
+        "failures": []
+      }
+    },
+    {
+      "name": "embedded canonical P08 delivery receipt identity",
+      "passed": true,
+      "detail": {
+        "path": "/workspace/scratch/e33f906d0e8e/audits/p08_delivery/postfreeze_decoded/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
+        "repository_path": "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
+        "bytes": 44957,
+        "sha256": "4d8898cc6dea617142094450d0c8846013448809aca1ddc7fd6cd3e835c0c584",
+        "url": "https://github.com/Omegapy/OntoKin/blob/2c6bbfb7aa1d402ce47ffdc24adb4d89b8a81c1e/docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
+      }
+    },
+    {
+      "name": "frozen source and receipt boundary consistency",
+      "passed": true,
+      "detail": {
+        "frozen_source": "3ed2670bf9bf4326dab126d3466699053f6b4320",
+        "receipt_commit": "2c6bbfb7aa1d402ce47ffdc24adb4d89b8a81c1e",
+        "accepted_code_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
+        "frozen_delivery": "save_pending",
+        "later_phase_status": "complete_partial_delivery"
+      }
+    },
+    {
+      "name": "independent exact package acceptance binds actual ZIP",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recorded saved-byte gates after independent package review",
+      "passed": true,
+      "detail": "Recorded prior observations; no fresh Library query by this verifier."
+    },
+    {
+      "name": "late metadata failure retained with separate correction and passing receipt checks",
+      "passed": true,
+      "detail": {
+        "failure": "current.snapshot_date: expected an explicit UTC timestamp",
+        "initial_commit": "be159c31db3ef26f66adbcb641e326e2b6ebc198",
+        "corrected_commit": "2c6bbfb7aa1d402ce47ffdc24adb4d89b8a81c1e",
+        "before": "2026-11-21",
+        "after": "2026-11-21T17:16:40.093675+00:00"
+      }
+    }
+  ],
+  "limitations": [
+    "Remote refs, Git trees, and Library save are not observed directly by this verifier.",
+    "Git blob hashes and recorded source bindings are checked locally; commit/tree membership requires the Director live readback.",
+    "No product test, installed executable, archived script, or archived fixture is executed.",
+    "No full offline restoration or product qualification is claimed."
+  ],
+  "observed_archive_state": {
+    "source": {
+      "commit": "3ed2670bf9bf4326dab126d3466699053f6b4320",
+      "tree": "a9d2eac50b0555b47fb99aed4711b06fa94a9ab8",
+      "url": "https://github.com/Omegapy/OntoKin/tree/3ed2670bf9bf4326dab126d3466699053f6b4320"
+    },
+    "main": {
+      "commit": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+      "observed_at_utc": "2026-11-21 16:35:29 UTC"
+    },
+    "branch": {
+      "name": "work/c271-missing-import-digest-control",
+      "head": "3ed2670bf9bf4326dab126d3466699053f6b4320",
+      "disposition": "retained"
+    },
+    "pull_request": {
+      "number": 274,
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "mergeable_reported": false,
+      "merged_at": null,
+      "url": "https://github.com/Omegapy/OntoKin/pull/274"
+    },
+    "issue": {
+      "number": 273,
+      "state": "open",
+      "url": "https://github.com/Omegapy/OntoKin/issues/273"
+    },
+    "phase_status": "implementation_accepted_delivery_pending",
+    "parent_status": "in_progress",
+    "parent_requirements": {
+      "R01": "done",
+      "R02": "done",
+      "R03": "not_done",
+      "R04": "not_done",
+      "R05": "not_done"
+    },
+    "unknown_operations": {
+      "current": [],
+      "historical": [
+        "C270 broad-driver completion remains unknown.",
+        "Global prior-process termination remains unestablished."
+      ]
+    }
+  },
+  "separate_receipt_state": {
+    "phase_status": "complete_partial_delivery",
+    "parent_status": "in_progress",
+    "archive_source_commit": "3ed2670bf9bf4326dab126d3466699053f6b4320",
+    "archive_source_tree": "a9d2eac50b0555b47fb99aed4711b06fa94a9ab8",
+    "receipt_commit": "2c6bbfb7aa1d402ce47ffdc24adb4d89b8a81c1e",
+    "receipt_tree": "03f8751715eb2196f8d56f12868cc572d3392dd8",
+    "parent_requirements": {
+      "R01": "done",
+      "R02": "done",
+      "R03": "not_done",
+      "R04": "not_done",
+      "R05": "not_done"
+    },
+    "parent_plan": {
+      "P01": "done",
+      "P02": "in_progress"
+    },
+    "main_integration_performed": false,
+    "branch_disposition": "retained",
+    "historical_unknowns": [
+      "C270 broad-driver completion remains unknown.",
+      "Global prior-process termination remains unestablished."
+    ],
+    "next_action": "In a fresh chat, reconcile the saved P08 ZIP and separate receipt with live GitHub, confirm new early recovery, then select only H0: prepare exact static installation plans with independently frozen archive/member inventories; use the existing preparer dry-run/apply as selected; inspect the actual source/Python/ldd/loader input files without running Node/ldd; and obtain independent review of the exact executable inspection plan and separate review digest. Stop before H1 Node/ldd execution or actual host observation; later qualification remains separate.",
+    "remaining_delivery_actions_at_file_freeze": [
+      "Save this terminal receipt to the existing OntoKin folder and verify exact returned bytes.",
+      "Update only existing P08 PR/issue current blocks with confirmed artifact/receipt links and verify readback; preserve all other history.",
+      "Confirm clean retained branch, report actual limits and stop."
+    ]
+  },
+  "fresh_extraction": "/workspace/scratch/e33f906d0e8e/audits/p08_delivery/fresh_extract",
+  "postfreeze_evidence_directory": "/workspace/scratch/e33f906d0e8e/audits/p08_delivery/postfreeze_decoded",
+  "passed": false,
+  "counts": {
+    "checks": 19,
+    "failed": 1,
+    "zip_entries": 4370,
+    "payloads": 4369,
+    "source_snapshots": 281,
+    "recovery_files": 4075,
+    "postfreeze_files": 179
+  }
+}

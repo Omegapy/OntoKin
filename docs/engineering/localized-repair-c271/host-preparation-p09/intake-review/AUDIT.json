@@ -1,0 +1,385 @@
+{
+  "schema": "ontokin.p08.startup-independent-reconciliation/1",
+  "recorded_at_utc": "2026-11-21T18:43:19.333248+00:00",
+  "reviewer": "/root/p08_delivery_audit",
+  "role": "Independent Investigator/Reviewer for startup reconciliation only",
+  "verdict": "P08_PARTIAL_DELIVERY_COMPLETE_PARENT_UNFINISHED",
+  "checks": [
+    {
+      "name": "corrected source inventory covers repository and observed-main",
+      "passed": true,
+      "detail": {
+        "source_snapshots": 281,
+        "repository_snapshots": 279,
+        "observed_main_snapshots": [
+          "observed-main/STATUS.md",
+          "observed-main/docs/workflow/CURRENT.json"
+        ],
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "name": "initial audit has only the explained inventory-scope failure",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "authentic checkout canonical receipt equals independently decoded receipt bytes",
+      "passed": true,
+      "detail": {
+        "path": "/workspace/scratch/e33f906d0e8e/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
+        "bytes": 44957,
+        "sha256": "4d8898cc6dea617142094450d0c8846013448809aca1ddc7fd6cd3e835c0c584"
+      }
+    },
+    {
+      "name": "authentic checkout CURRENT equals exact corrected receipt bytes",
+      "passed": true,
+      "detail": {
+        "path": "/workspace/scratch/e33f906d0e8e/OntoKin/docs/workflow/CURRENT.json",
+        "bytes": 32627,
+        "sha256": "7828773e75dfce43b6cad490e79dd827b9a2d699713ae97de4a740d4d83d2636"
+      }
+    },
+    {
+      "name": "connector CURRENT semantically matches authentic bytes",
+      "passed": true,
+      "detail": {
+        "connector_identity": {
+          "path": "/workspace/scratch/e33f906d0e8e/live-branch/docs/workflow/CURRENT.json",
+          "bytes": 32628,
+          "sha256": "5f604e25a4759e5a221b7a002bc9787b95ccd59a83518acc9c1dd681ca90bbd7"
+        },
+        "authentic_identity": {
+          "path": "/workspace/scratch/e33f906d0e8e/OntoKin/docs/workflow/CURRENT.json",
+          "bytes": 32627,
+          "sha256": "7828773e75dfce43b6cad490e79dd827b9a2d699713ae97de4a740d4d83d2636"
+        },
+        "difference": "Connector-materialized file has one extra trailing newline.",
+        "exact_extra_newline": true,
+        "byte_authority_used": "authentic checkout and decoded exact receipt evidence"
+      }
+    },
+    {
+      "name": "late correction exactly changes only snapshot_date",
+      "passed": true,
+      "detail": {
+        "changed_fields": [
+          "snapshot_date"
+        ],
+        "before": "2026-11-21",
+        "after": "2026-11-21T17:16:40.093675+00:00",
+        "independent_review": "postfreeze_decoded/review_work/receipt-metadata-correction/ACTUAL-CORRECTION-REVIEW.json"
+      }
+    },
+    {
+      "name": "failed initial receipt check preserved in current repository",
+      "passed": true,
+      "detail": {
+        "path": "/workspace/scratch/e33f906d0e8e/OntoKin/docs/engineering/localized-repair-c271/host-inspection-p08/delivery-verification/receipt-metadata-correction/CHECKS.json",
+        "bytes": 2409,
+        "sha256": "39435b45e6bd683d940da81492f7c6ff4376be59c35658594ee84858b67a44bc"
+      }
+    },
+    {
+      "name": "accepted production and test bytes unchanged at corrected receipt checkout",
+      "passed": true,
+      "detail": [
+        {
+          "path": "/workspace/scratch/e33f906d0e8e/OntoKin/prototypes/static_tray_v01/current_host_inspection_v01.py",
+          "matches_frozen_and_receipt": true,
+          "bytes": 147900,
+          "sha256": "b2f4c869fd03919047db797bd3a80616cbe16f6b17689fe61d40754b27f97a39"
+        },
+        {
+          "path": "/workspace/scratch/e33f906d0e8e/OntoKin/tests/test_current_host_inspection_v01.py",
+          "matches_frozen_and_receipt": true,
+          "bytes": 139313,
+          "sha256": "797eb208670f6f74f14c9b5849485bd6cf3522a265d4129618c4b50ddc0a739a"
+        }
+      ]
+    },
+    {
+      "name": "fresh Director branch observations match terminal receipt identities",
+      "passed": true,
+      "detail": {
+        "main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+        "work/c271-missing-import-digest-control": "2c6bbfb7aa1d402ce47ffdc24adb4d89b8a81c1e"
+      }
+    },
+    {
+      "name": "fresh PR and issue remain open with unfinished branch retained",
+      "passed": true,
+      "detail": {
+        "pr": {
+          "number": 274,
+          "state": "open",
+          "draft": true,
+          "merged_at": null
+        },
+        "issue": {
+          "number": 273,
+          "state": "open"
+        }
+      }
+    },
+    {
+      "name": "PR and issue current blocks agree and confirm matching terminal receipt identity",
+      "passed": true,
+      "detail": {
+        "terminal_receipt": {
+          "path": "/workspace/scratch/e33f906d0e8e/incoming/OntoKin/OntoKin_C271_P08_Delivery_Receipt_2026-11-21.json",
+          "bytes": 2062098,
+          "sha256": "e5a7017a847992a25dbd9f65b19dd32ca730578d56406b44e0f4beff68592114"
+        },
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-171106f562c481919cca9d7da77435de_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "library_file_id": "libfile_fde3_f-171106f562c481919cca9d7da77435de_2ab2a24d43748191957f9bcc356b59de",
+        "backing_file_id": "file_000000005c2c81f595d1ed3dac21afad",
+        "version": 0,
+        "pr_updated_at": "2026-11-21T17:21:48Z",
+        "issue_updated_at": "2026-11-21T17:21:49Z"
+      }
+    },
+    {
+      "name": "live CURRENT marks P08 delivery complete with matching frozen archive identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "parent unfinished requirements preserved",
+      "passed": true,
+      "detail": {
+        "status": "in_progress",
+        "requirements": {
+          "R01": "done",
+          "R02": "done",
+          "R03": "not_done",
+          "R04": "not_done",
+          "R05": "not_done"
+        },
+        "plan": {
+          "P01": "done",
+          "P02": "in_progress"
+        }
+      }
+    }
+  ],
+  "checks_passed": true,
+  "mechanical_verification": {
+    "path": "/workspace/scratch/e33f906d0e8e/audits/p08_delivery/VERIFICATION.json",
+    "bytes": 10446,
+    "sha256": "e492c04cb96b57813959b490f80f86b2ad009cf5df952d8420623c5f97cec15e"
+  },
+  "mechanical_verification_correction": {
+    "artifact": {
+      "path": "/workspace/scratch/e33f906d0e8e/audits/p08_delivery/VERIFICATION.json",
+      "bytes": 10446,
+      "sha256": "e492c04cb96b57813959b490f80f86b2ad009cf5df952d8420623c5f97cec15e"
+    },
+    "verifier": {
+      "path": "/workspace/scratch/e33f906d0e8e/audits/p08_delivery/verify_delivery.py",
+      "bytes": 13790,
+      "sha256": "67acc75624eb4de5645704e1e0a2e25f124be2745c8d2d45631fd72f76bcad5d"
+    },
+    "failed_check": "source manifest exact repository inventory",
+    "cause": "Reviewer assumed all source-manifest entries were under repository/. The manifest also binds two intended observed-main snapshots.",
+    "disposition": "Invalid audit assumption corrected by explicit repository/ plus observed-main/ inventory comparison. Original script/report preserved unchanged. No package defect, source change, or product retest.",
+    "other_initial_checks_passed": 18
+  },
+  "read_set": [
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/startup/AGENTS.md",
+      "bytes": 7069,
+      "sha256": "52ffbd4b816b56083ddb9ea551ab9522ba08fa80769f85663431cbde37881a8f"
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/startup/GOAL.md",
+      "bytes": 11741,
+      "sha256": "a767ce02e6b219d1eceac1e4718d1c50573a475836d4ade3aabd6730b56de243"
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/startup/ROLE.md",
+      "bytes": 1684,
+      "sha256": "27a941b2f40a86c28b953e00ccef0551390d11098286152ada7773582a535d86"
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/startup/docs/workflow/PROTOCOL.md",
+      "bytes": 11712,
+      "sha256": "4a1b4f03f43a971d24a3576933089bb39f1ed676bda400166d721fec60d80aac"
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/startup/docs/workflow/HANDOFF.md",
+      "bytes": 6066,
+      "sha256": "0a6d0a9fe524f694876bad2f2b4b860cbb57afcc48e3d801c8764700dd95c77a"
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/startup/docs/workflow/templates/WORKER.md",
+      "bytes": 2549,
+      "sha256": "2c6ec47f6ebfe9b88d821c01a39b4132fd47ebb4b32c1b56f3d2840615d216d4"
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/p08/README-START-HERE.md",
+      "bytes": 2186,
+      "sha256": "2834d307adb695d397e6d2c5d934276638417135838246becfd2325af5fc575f"
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/p08/HANDOFF.md",
+      "bytes": 9714,
+      "sha256": "805ba175e1f8228f433c0d548f13836ac6db6ba8ef09d992c915bc47022fe82c"
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/p08/NEXT-TASK.md",
+      "bytes": 2336,
+      "sha256": "0bb6596a05c851c49a91236cdd455143b1373c2e13ff6918642d8082a0601db4"
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/p08/RECOVERY-STATUS.md",
+      "bytes": 1971,
+      "sha256": "48febfd6752b78d08e2a1d829d14b405462c13a7c83fc497a689d441292adcc7"
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/p08/repository/docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md",
+      "bytes": 23696,
+      "sha256": "cfb4200ea3745cfe590d9059cd272e244a2ba3cd8c9969f8df5982dc58a69bc1"
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/p08/repository/docs/engineering/localized-repair-c271/current-host-p06/OPERATIONS.md",
+      "bytes": 4488,
+      "sha256": "7197072cf7740679f3990824f2de1f50d7602543778d20abdfa4f179516c6988"
+    }
+  ],
+  "source_observation_provenance": {
+    "description": "Fresh GitHub API readbacks and authentic checkout provided by Director; this reviewer read and hashed them without Git operations.",
+    "files": [
+      {
+        "path": "/workspace/scratch/e33f906d0e8e/session/BRANCHES.json",
+        "bytes": 429,
+        "sha256": "fdc0f433b0fa883bc7f4b764bbd8a124ec3b094e392ee83042a94ee619ede675"
+      },
+      {
+        "path": "/workspace/scratch/e33f906d0e8e/session/PRS.json",
+        "bytes": 44626,
+        "sha256": "90c5859a03b931faaba218d548df5aaf309137b5a1be2d076372a3bb5d57d931"
+      },
+      {
+        "path": "/workspace/scratch/e33f906d0e8e/session/ISSUE273.json",
+        "bytes": 33965,
+        "sha256": "1beeba11420e39b04e55fa9c1bc6bbb0f656a13de133fd5f0a1d24ec044abbb9"
+      }
+    ],
+    "repo": "/workspace/scratch/e33f906d0e8e/OntoKin",
+    "observed_branch_commit": "2c6bbfb7aa1d402ce47ffdc24adb4d89b8a81c1e",
+    "direct_fresh_Library_query_by_reviewer": false
+  },
+  "delivery_boundaries": [
+    {
+      "kind": "accepted implementation",
+      "commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
+      "scope": "135 focused static/filesystem/mocked methods, historical execution only."
+    },
+    {
+      "kind": "immutable archive source",
+      "commit": "3ed2670bf9bf4326dab126d3466699053f6b4320",
+      "tree": "a9d2eac50b0555b47fb99aed4711b06fa94a9ab8",
+      "archive_sha256": "037d7ff2b2b64f61f1b53b5fdae93b3d16a32bdb6fd681f45f824e2652d425b5",
+      "frozen_status": "save_pending"
+    },
+    {
+      "kind": "initial receipt publication with retained failed workflow check",
+      "commit": "be159c31db3ef26f66adbcb641e326e2b6ebc198",
+      "error": "current.snapshot_date: expected an explicit UTC timestamp"
+    },
+    {
+      "kind": "separate metadata correction",
+      "commit": "2c6bbfb7aa1d402ce47ffdc24adb4d89b8a81c1e",
+      "tree": "03f8751715eb2196f8d56f12868cc572d3392dd8",
+      "scope": "Only existing canonical field CURRENT.snapshot_date plus separately retained failure/review evidence; frozen archive and accepted code unchanged."
+    },
+    {
+      "kind": "terminal receipt save and current-block confirmation",
+      "identity": {
+        "path": "/workspace/scratch/e33f906d0e8e/incoming/OntoKin/OntoKin_C271_P08_Delivery_Receipt_2026-11-21.json",
+        "bytes": 2062098,
+        "sha256": "e5a7017a847992a25dbd9f65b19dd32ca730578d56406b44e0f4beff68592114"
+      },
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-171106f562c481919cca9d7da77435de_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "evidence": [
+        "PR274-CURRENT-OBSERVED.md",
+        "ISSUE273-CURRENT-OBSERVED.md"
+      ],
+      "self_reference_boundary": "The receipt cannot contain its future own Library identity; current PR/issue blocks supply that final confirmation."
+    }
+  ],
+  "prior_delivery_blockers": [],
+  "historical_unknown_operations": [
+    {
+      "operation": "C270 broad-driver completion",
+      "status": "unknown",
+      "source": "p08/RECOVERY-STATUS.md and terminal receipt historical_unknowns",
+      "instruction": "Do not infer success, failure, or termination; reconcile original evidence before any retry."
+    },
+    {
+      "operation": "Global prior-process termination",
+      "status": "unestablished",
+      "source": "p08/RECOVERY-STATUS.md and terminal receipt historical_unknowns",
+      "instruction": "Do not treat absence of a callback/current log as proof of zero launches or global termination."
+    }
+  ],
+  "current_unknown_operations": {
+    "P08_at_terminal_receipt": [],
+    "historical_workers": "P08 implementation runs stopped and accepted; later package review/save/correction completed in separate receipt. Old frozen awaiting-build/review states are superseded by dated receipt evidence.",
+    "reviewer_this_assignment": [],
+    "limit": "No global process census performed; historical uncertainty remains explicitly open."
+  },
+  "unfinished_gates": [
+    "H0 exact static runtime/dependency preparation and independent inspection-plan review.",
+    "H1 actual host observation; H2 operational freeze; H3 actual Gate H, including original seven outcomes.",
+    "Complete required routine and independent parent R03 acceptance.",
+    "R04 reviewed main integration with lease and resulting-main verification.",
+    "R05 final parent delivery/closure and applicable branch lifecycle."
+  ],
+  "historical_failures_preserved": [
+    "P08 draft/candidate findings and withdrawn candidate002 approval, candidate003 map refresh failure.",
+    "Run001: 64 setup errors across 39 of 135 methods; distinct corrected run002 retained. No rerun by this reviewer.",
+    "Initial final-source check identity refusal; separate later exact-source checks.",
+    "Rejected package attempt001 FPKG-01 and source-recovery audit helper failure; corrected attempt002 retained separately.",
+    "Initial receipt be159c31 workflow timestamp failure, metadata reviewer lookup failure, and exact later correction/check records.",
+    "Earlier P02 routine unit timeout/documentation failure and P03/P04 historical runtime refusal remain historical outcomes; later phase delivery does not relabel those runs."
+  ],
+  "exact_next_action": {
+    "precondition": "Director completes current startup reconciliation and confirms a new early recovery ZIP before substantial H0 work.",
+    "first_technical_action": "Authenticate the retained P05 Node archive and unchanged C195 dependency archive, then independently freeze their exact archive/member inventories and concrete task-specific destination/absence guards before running the existing preparer.",
+    "H0_only": "Prepare exact install plans; use existing preparer dry-run/apply only as selected and reviewed; statically inspect actual source, Python, ldd, loader/ELF files; freeze the complete executable inspection plan and separately supplied review digest for independent review.",
+    "acceptance": "Exact paths, identities, commands, environment, closure, absence guards and fresh evidence destinations concrete; independent static review accepts the complete H0 plan.",
+    "stop": "Stop before H1 Node/ldd execution or actual host observation, any probe/checker, original-seven execution, full routine, integration or parent closure.",
+    "concrete_H0_gate_dependencies": [
+      "Confirmed new early recovery",
+      "Authenticated external Node/dependency archives and inventories",
+      "Complete actual host static closure",
+      "Independent exact inspection-plan review and separate digest"
+    ],
+    "scope_limit": "This audit does not execute H0 or establish its input availability. Missing or unexplained closure must be recorded as a specific blocker in the selected phase."
+  },
+  "preservation_notes": [
+    "Frozen ZIP and separate receipt stay unchanged; no rebuild is needed for receipt-only late observations.",
+    "Source snapshots are selected online continuation inputs, not a complete offline backup.",
+    "C262 and rejected package attempt001 remain external historical dependencies; this audit did not download or reverify those external bytes.",
+    "The compressed run stores are covered by ZIP payload hashes and retained prior independent stream verification; this startup audit does not repeat archived utility execution or recreate fixture paths/special entries."
+  ],
+  "audit_lookup_history": [
+    "Initial broad inventory/receipt reads produced truncated display; subsequent JSON parsing selected required fields and the verifier inspected every manifest entry.",
+    "One rg query included nonexistent current-host-p05/inputs; exit 2 is a read-only lookup error, not an artifact defect. No inferred source path was executed.",
+    "Initial source inventory comparison incorrectly excluded observed-main/; failed verifier/report retained, corrected comparison is recorded above."
+  ],
+  "actions_not_performed": [
+    "Git commands or mutations",
+    "GitHub writes",
+    "Node or ldd execution",
+    "product tests",
+    "dependency installation",
+    "child workers",
+    "global startup or delivery"
+  ],
+  "ownership_disposition": "Only audits/p08_delivery files created. Reviewer stopped after reports; no worker/process/write remains active."
+}

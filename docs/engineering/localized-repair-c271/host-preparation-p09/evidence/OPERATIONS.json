@@ -1,0 +1,39 @@
+{
+  "schema": "ontokin.c271.p09-h0-preparation-worker-operations/1",
+  "worker": "/root/h0_preparation",
+  "workdir": "/workspace/scratch/e33f906d0e8e",
+  "writes_owned": "/workspace/scratch/e33f906d0e8e/h0_work",
+  "initial_read_only_selection": [
+    {"command": "command -v python3", "exit_code": 0, "stdout": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3\n"},
+    {"command": "printenv CODEX_PRIMARY_RUNTIME_PYTHON", "exit_code": 0, "stdout": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3\n"},
+    {"command": "ls -ld h0_work h0_source h0_installed h0_evidence", "exit_code": 2, "observation": "h0_source existed; h0_work, h0_installed and h0_evidence absent at that moment. This was directory-state enumeration, not a runtime/preparer attempt. Root subsequently created its parent directories; worker created only h0_work."},
+    {"command": "mkdir -m 700 /workspace/scratch/e33f906d0e8e/h0_work", "exit_code": 0}
+  ],
+  "inspection_attempts": [
+    {
+      "id": "python-static-001",
+      "argv": ["/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3", "-I", "-S", "-B", "/workspace/scratch/e33f906d0e8e/h0_work/static_python_prerequisite_inspection_001.py"],
+      "cwd": "/workspace/scratch/e33f906d0e8e",
+      "stdout": "/workspace/scratch/e33f906d0e8e/h0_work/python-static-001.stdout.txt",
+      "stderr": "/workspace/scratch/e33f906d0e8e/h0_work/python-static-001.stderr.txt",
+      "exit_code": 1,
+      "environment": "Inherited shell environment, not fully captured before launch; absolute interpreter and -I -S -B selected explicitly. No claim of operational launcher approval.",
+      "script_sha256": "5f1e01f7d6cc0c56b726e0946f3af1ae50b49a68dce6ce1e569b5253b7dd9aa8",
+      "outcome": "AssertionError before result JSON/snapshot creation; preserved failure"
+    },
+    {
+      "id": "python-static-002",
+      "argv": ["/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3", "-I", "-S", "-B", "/workspace/scratch/e33f906d0e8e/h0_work/static_python_elf_diagnostic_002.py"],
+      "cwd": "/workspace/scratch/e33f906d0e8e",
+      "stdout": "/workspace/scratch/e33f906d0e8e/h0_work/python-static-002.stdout.txt",
+      "stderr": "/workspace/scratch/e33f906d0e8e/h0_work/python-static-002.stderr.txt",
+      "exit_code": 0,
+      "environment": "Inherited shell environment, not fully captured before launch; absolute interpreter and -I -S -B selected explicitly. No claim of operational launcher approval.",
+      "script_sha256": "27695ae5b6bc3e19c8f608168898f8d07d1c1e1d0521cd496d833b3de91ec452",
+      "outcome": "Raw ELF metadata and exact image snapshot preserved; static prerequisite blocker identified"
+    }
+  ],
+  "other_actions": "Read-only governing-contract/source inspection via cat/sed/rg, source/evidence hashing via sha256sum, and task-local evidence creation using apply_patch. No Git mutations, Library writes, child agents, product module imports, runtime probes or checker/test invocations.",
+  "unresolved_operations": [],
+  "stop": "Director confirmed substantive H0 stop after H0-PYTHON-ELF-STRTAB-001; only evidence/report finalization permitted"
+}

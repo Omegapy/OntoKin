@@ -3,8 +3,8 @@
   "id": "C271",
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
-  "status": "in_progress",
-  "owner": "c271-p08-8838dfc6e876",
+  "status": "blocked",
+  "owner": "c271-p09-e33f906d0e8e",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -58,7 +58,9 @@
         "docs/engineering/localized-repair-c271/host-inspection-p07/review/REVIEW-002.json",
         "docs/engineering/localized-repair-c271/host-inspection-p08/EXECUTION-CHECKS.json",
         "docs/engineering/localized-repair-c271/host-inspection-p08/independent-review/IMPLEMENTATION-ACCEPTANCE.json",
-        "docs/engineering/localized-repair-c271/host-inspection-p08/candidate004-repository-checks/CHECKS.json"
+        "docs/engineering/localized-repair-c271/host-inspection-p08/candidate004-repository-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/host-preparation-p09/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/PYTHON-BLOCKER-VERIFICATION.json"
       ]
     },
     {
@@ -88,7 +90,8 @@
         "docs/engineering/localized-repair-c271/host-inspection-p07/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json",
         "docs/engineering/localized-repair-c271/host-inspection-p08/EARLY-RECOVERY-RECEIPT.json",
-        "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
+        "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/host-preparation-p09/EARLY-RECOVERY-RECEIPT.json"
       ]
     }
   ],
@@ -414,6 +417,28 @@
         "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
       ],
       "scope": "P08 partial phase delivery only; parent R03/R04/R05 and integration remain open."
+    },
+    {
+      "name": "P09 independent archive inventories",
+      "command": "Exact read-only inventory commands retained in independent-review JSON records",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/NODE-RAW-ARCHIVE-INVENTORY.json",
+        "docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/C195-RAW-ARCHIVE-INVENTORY.json"
+      ],
+      "scope": "2 Node and730 C195 members only; no install or host qualification"
+    },
+    {
+      "name": "P09 H0 static selected-host eligibility",
+      "command": "Independent raw ELF metadata and static source predicate inspection; no product parser invocation",
+      "result": "failed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-preparation-p09/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/PYTHON-BLOCKER-VERIFICATION.json"
+      ],
+      "scope": "Independent evidence audit passed43 checks; required H0 prerequisite is blocked, not waived"
     }
   ],
   "completion": {
@@ -434,38 +459,40 @@
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e"
   },
-  "next_action": "In a fresh chat, reconcile the saved P08 ZIP and separate receipt with live GitHub, confirm new early recovery, then select only H0: prepare exact static installation plans with independently frozen archive/member inventories; use the existing preparer dry-run/apply as selected; inspect the actual source/Python/ldd/loader input files without running Node/ldd; and obtain independent review of the exact executable inspection plan and separate review digest. Stop before H1 Node/ldd execution or actual host observation; later qualification remains separate.",
+  "next_action": "In a fresh chat, reconcile the saved P09 blocked handoff and separate receipt with live GitHub, confirm new early recovery, then select one bounded correction for H0-PYTHON-ELF-STRTAB-001: independently freeze exact positive/refusal fixtures and review finite ELF dynamic-string-table mapping across adjacent PT_LOAD segments in read_elf_metadata, preserving strict bounds, ambiguity/truncation refusals and all other guards. Implement only that reviewed correction, obtain focused regression and independent exact-source review, then save a partial handoff and stop. Re-establish H0 in a later phase; do not start H1, probes, original-seven execution, the full routine, integration or parent closure.",
   "session_phase": {
-    "schema": "ontokin.c271.p08-phase/1",
+    "schema": "ontokin.c271.p09-phase/1",
     "task": "C271",
-    "phase": "C271-P08-host-inspection-implementation",
-    "owner": "c271-p08-8838dfc6e876",
-    "declared_at_utc": "2026-11-21 14:59:00 UTC",
+    "phase": "C271-P09-H0-static-preparation",
+    "owner": "c271-p09-e33f906d0e8e",
+    "declared_at_utc": "2026-11-21T18:41:13.616505+00:00",
     "client_filename_date": "2026-11-21",
     "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
     "starting_main_tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
-    "starting_branch": "c99f44aaec10445b96deb2b451b1a860a1027401",
+    "starting_branch": "2c6bbfb7aa1d402ce47ffdc24adb4d89b8a81c1e",
+    "starting_branch_tree": "03f8751715eb2196f8d56f12868cc572d3392dd8",
     "branch": "work/c271-missing-import-digest-control",
-    "scope": "Implement only the accepted P07 host-inspection record authoring module and focused static/filesystem/mocked-process controls; independent review and partial saved delivery.",
+    "scope": "H0 only: authenticate exact runtime archives and independent member inventories, prepare exact static installation plans, select existing preparer dry-run/apply only after review, inspect actual source/Python/ldd/loader files without Node/ldd execution, independently review concrete executable inspection plan and separate review digest.",
     "acceptance": [
-      "P08-I01: strict externally bound plan validation and immutable validated plan; concrete nested shapes preserve accepted design and existing consumers.",
-      "P08-I02: finite ELF/loader/path/metadata checks and strict pure ldd parser with all required refusal boundaries.",
-      "P08-I03: bounded two-command orchestration and durable no-replace evidence with exact or explicitly unknown launch counts; tested only with mocks in P08.",
-      "P08-I04: independently selected controls and review of exact candidate, preserve failures and protected original bytes, applicable documentary/focused checks pass.",
-      "P08-I05: conditional retained-branch publication; verified ZIP and matching prompts saved with a separate delivery receipt; parent and PR remain open."
+      "P09-H0-01: exact archive/member identities independently frozen before preparation; no dependency or source substitutions",
+      "P09-H0-02: reviewed task-local installation plans and selected preparer outcomes with complete failures/receipts",
+      "P09-H0-03: exact source/Python/ldd/loader closure, required absences, expected commands and fresh evidence destinations concrete",
+      "P09-H0-04: independent review of exact executable inspection plan and separate review digest, or concrete unresolved H0 blocker",
+      "P09-H0-05: applicable documentary/workflow checks, retained-branch checkpoint, verified saved partial ZIP/prompts and separate receipt"
     ],
+    "stop": "Stop before H1 actual host observation or any Node/ldd launch; at complete reviewed H0 or first concrete blocker/unplanned expansion, finish partial delivery and stop.",
     "constraints": [
-      "Only production addition prototypes/static_tray_v01/current_host_inspection_v01.py and focused tests/test_current_host_inspection_v01.py; scope-specific documentation permitted.",
-      "Do not change existing provider/probe/preparer, original seven methods/helpers, frozen evidence or contracts, dependency pins, numerical/lifecycle/source budgets.",
-      "No actual runtime installation/preparation, host observations, Node/ldd launches, original seven-method execution, full routine, native/model trials, hosted CI, main lease/integration or parent closure.",
-      "One bounded phase and no nested fanout; root owns Git/index/canonical state/publication."
+      "No production/test/helper/contract/dependency-pin edits",
+      "No Node/ldd invocation, probes/checkers, original-seven execution, full routine, native/model/hosted work",
+      "No main lease/integration/parent closure",
+      "Preserve all historical failures/unknowns, strict P06 schemas, original scientific/lifecycle checks and 100000-operation/30000-ms source ceilings",
+      "No nested workers; root alone canonical Git/index/state/publication/delivery"
     ],
-    "stop": "After independently accepted implementation and verified partial saved delivery, or first concrete unresolved blocker/unplanned expansion. H0 preparation and later gates belong to a fresh chat.",
-    "status": "complete_partial_delivery",
+    "status": "blocked_delivery_pending",
     "early_recovery": "confirmed",
     "main_lease_held": false,
     "integration_allowed": false,
-    "parent_status": "in_progress",
+    "parent_status": "blocked",
     "parent_requirements": {
       "R01": "done",
       "R02": "done",
@@ -477,100 +504,36 @@
       "P01": "done",
       "P02": "in_progress"
     },
-    "workers": {
-      "/root/host_implementation": "New module/test implementation and focused evidence; waits for early-save authorization.",
-      "/root/implementation_review": "Independent intake/control freeze and exact implementation/package review.",
-      "/root/handoff_engineer": "Early/final package construction and source/archive verification."
-    },
     "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/EARLY-RECOVERY-RECEIPT.json",
-    "implementation_accepted": true,
-    "accepted_candidate": "candidate-004",
-    "accepted_source_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
-    "technical_phase_complete": true,
-    "outcome": "docs/engineering/localized-repair-c271/host-inspection-p08/PHASE-OUTCOME.json",
-    "phase_complete": true,
-    "delivery_status": "saved",
-    "delivery_receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
+    "early_receipt": "docs/engineering/localized-repair-c271/host-preparation-p09/EARLY-RECOVERY-RECEIPT.json",
+    "workers": {
+      "/root/h0_preparation": "Stopped; exact image and both static diagnostic attempts preserved",
+      "/root/p08_delivery_audit": "Independent archive inventories and static blocker verified; final package/state review remains assigned",
+      "/root/handoff_engineer": "Early package verified; final package preparation only"
+    },
+    "execution_source": {
+      "root": "/workspace/scratch/e33f906d0e8e/h0_source",
+      "commit": "2c6bbfb7aa1d402ce47ffdc24adb4d89b8a81c1e",
+      "tree": "03f8751715eb2196f8d56f12868cc572d3392dd8",
+      "arrangement": "Detached clean source; canonical records use separate checkout"
+    },
+    "technical_work_stopped": true,
+    "technical_status": "blocked",
+    "blocker_id": "H0-PYTHON-ELF-STRTAB-001",
+    "H0_accepted": false,
+    "executable_inspection_plan_created": false,
+    "H1_approved": false,
+    "next_action": "In a fresh chat, reconcile the saved P09 blocked handoff and separate receipt with live GitHub, confirm new early recovery, then select one bounded correction for H0-PYTHON-ELF-STRTAB-001: independently freeze exact positive/refusal fixtures and review finite ELF dynamic-string-table mapping across adjacent PT_LOAD segments in read_elf_metadata, preserving strict bounds, ambiguity/truncation refusals and all other guards. Implement only that reviewed correction, obtain focused regression and independent exact-source review, then save a partial handoff and stop. Re-establish H0 in a later phase; do not start H1, probes, original-seven execution, the full routine, integration or parent closure.",
+    "independent_review": "docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/PYTHON-BLOCKER-VERIFICATION.json"
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "saved",
+    "status": "pending",
     "folder": "OntoKin",
     "partial": true,
-    "phase_complete": true,
-    "receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
-    "technical_phase_complete": true,
-    "artifact_delivery_status": "saved_and_readback_verified",
-    "archive": {
-      "file_name": "OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21.zip",
-      "local_path": "/workspace/scratch/8838dfc6e876/packages/final-attempt-002/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21.zip",
-      "bytes": 14680844,
-      "sha256": "037d7ff2b2b64f61f1b53b5fdae93b3d16a32bdb6fd681f45f824e2652d425b5",
-      "archive_member": null,
-      "purpose": "create_library_file",
-      "status": "saved",
-      "file_id": "file_000000001c6c81f587b7ebcf29a9412d",
-      "library_file_id": "libfile_fde3_f-982d91a7579881919c3980713a6f6e00_2ab2a24d43748191957f9bcc356b59de",
-      "local_metadata_applied": true,
-      "path": "/OntoKin/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21.zip",
-      "current_version_number": 0,
-      "upload_status": "succeeded",
-      "version": 0,
-      "confirmed_at_utc": "2026-11-21T17:12:09.403422+00:00",
-      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-982d91a7579881919c3980713a6f6e00_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-      "saved_bytes_readback_equal": true,
-      "local_bytes_unchanged_after_save": true,
-      "destination_metadata_observed": true,
-      "saved_readback_path": "/workspace/scratch/8838dfc6e876/saved_readback/final-core-attempt-001/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21.zip"
-    },
-    "matching_prompts": [
-      {
-        "file_name": "OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Continue.md",
-        "local_path": "/workspace/scratch/8838dfc6e876/packages/final-attempt-002/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Continue.md",
-        "bytes": 3513,
-        "sha256": "287e4b35a7043fa58ce694ea2f4a792af3a8b1d2aaae0ff76c58a9efd3dfdcfd",
-        "archive_member": "PROMPT-1-CONTINUE.md",
-        "purpose": "create_library_file",
-        "status": "saved",
-        "file_id": "file_00000000b6e081f59a54b5a9c39dbcc9",
-        "library_file_id": "libfile_fde3_f-4881a0f872bc8191a6da81f329430392_2ab2a24d43748191957f9bcc356b59de",
-        "local_metadata_applied": true,
-        "path": "/OntoKin/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Continue.md",
-        "current_version_number": 0,
-        "upload_status": "succeeded",
-        "version": 0,
-        "confirmed_at_utc": "2026-11-21T17:12:09.403422+00:00",
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4881a0f872bc8191a6da81f329430392_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "saved_bytes_readback_equal": true,
-        "local_bytes_unchanged_after_save": true,
-        "destination_metadata_observed": true,
-        "saved_readback_path": "/workspace/scratch/8838dfc6e876/saved_readback/final-core-attempt-001/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Continue.md"
-      },
-      {
-        "file_name": "OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Recover.md",
-        "local_path": "/workspace/scratch/8838dfc6e876/packages/final-attempt-002/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Recover.md",
-        "bytes": 4345,
-        "sha256": "575b9f078befec3f6d8b742d46cf4cace244c29f6d5715055cb7b1367eafa028",
-        "archive_member": "PROMPT-2-RECOVER.md",
-        "purpose": "create_library_file",
-        "status": "saved",
-        "file_id": "file_00000000c7ac81fb9fa472b9ebfacffb",
-        "library_file_id": "libfile_fde3_f-01634c5291048191acb86fba327b80ab_2ab2a24d43748191957f9bcc356b59de",
-        "local_metadata_applied": true,
-        "path": "/OntoKin/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Recover.md",
-        "current_version_number": 0,
-        "upload_status": "succeeded",
-        "version": 0,
-        "confirmed_at_utc": "2026-11-21T17:12:09.403422+00:00",
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-01634c5291048191acb86fba327b80ab_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "saved_bytes_readback_equal": true,
-        "local_bytes_unchanged_after_save": true,
-        "destination_metadata_observed": true,
-        "saved_readback_path": "/workspace/scratch/8838dfc6e876/saved_readback/final-core-attempt-001/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Recover.md"
-      }
-    ]
+    "phase_complete": false,
+    "receipt": "docs/engineering/localized-repair-c271/host-preparation-p09/P09-DELIVERY.json"
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
@@ -1023,6 +986,64 @@
       "technical_phase_complete": true,
       "phase_complete": true,
       "delivery_receipt": "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json"
+    },
+    {
+      "schema": "ontokin.c271.p08-phase/1",
+      "task": "C271",
+      "phase": "C271-P08-host-inspection-implementation",
+      "owner": "c271-p08-8838dfc6e876",
+      "declared_at_utc": "2026-11-21 14:59:00 UTC",
+      "client_filename_date": "2026-11-21",
+      "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "starting_main_tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+      "starting_branch": "c99f44aaec10445b96deb2b451b1a860a1027401",
+      "branch": "work/c271-missing-import-digest-control",
+      "scope": "Implement only the accepted P07 host-inspection record authoring module and focused static/filesystem/mocked-process controls; independent review and partial saved delivery.",
+      "acceptance": [
+        "P08-I01: strict externally bound plan validation and immutable validated plan; concrete nested shapes preserve accepted design and existing consumers.",
+        "P08-I02: finite ELF/loader/path/metadata checks and strict pure ldd parser with all required refusal boundaries.",
+        "P08-I03: bounded two-command orchestration and durable no-replace evidence with exact or explicitly unknown launch counts; tested only with mocks in P08.",
+        "P08-I04: independently selected controls and review of exact candidate, preserve failures and protected original bytes, applicable documentary/focused checks pass.",
+        "P08-I05: conditional retained-branch publication; verified ZIP and matching prompts saved with a separate delivery receipt; parent and PR remain open."
+      ],
+      "constraints": [
+        "Only production addition prototypes/static_tray_v01/current_host_inspection_v01.py and focused tests/test_current_host_inspection_v01.py; scope-specific documentation permitted.",
+        "Do not change existing provider/probe/preparer, original seven methods/helpers, frozen evidence or contracts, dependency pins, numerical/lifecycle/source budgets.",
+        "No actual runtime installation/preparation, host observations, Node/ldd launches, original seven-method execution, full routine, native/model trials, hosted CI, main lease/integration or parent closure.",
+        "One bounded phase and no nested fanout; root owns Git/index/canonical state/publication."
+      ],
+      "stop": "After independently accepted implementation and verified partial saved delivery, or first concrete unresolved blocker/unplanned expansion. H0 preparation and later gates belong to a fresh chat.",
+      "status": "complete_partial_delivery",
+      "early_recovery": "confirmed",
+      "main_lease_held": false,
+      "integration_allowed": false,
+      "parent_status": "in_progress",
+      "parent_requirements": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "not_done",
+        "R04": "not_done",
+        "R05": "not_done"
+      },
+      "parent_plan": {
+        "P01": "done",
+        "P02": "in_progress"
+      },
+      "workers": {
+        "/root/host_implementation": "New module/test implementation and focused evidence; waits for early-save authorization.",
+        "/root/implementation_review": "Independent intake/control freeze and exact implementation/package review.",
+        "/root/handoff_engineer": "Early/final package construction and source/archive verification."
+      },
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/EARLY-RECOVERY-RECEIPT.json",
+      "implementation_accepted": true,
+      "accepted_candidate": "candidate-004",
+      "accepted_source_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
+      "technical_phase_complete": true,
+      "outcome": "docs/engineering/localized-repair-c271/host-inspection-p08/PHASE-OUTCOME.json",
+      "phase_complete": true,
+      "delivery_status": "saved",
+      "delivery_receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
     }
   ],
   "prior_phase_deliveries": [
@@ -1436,6 +1457,85 @@
       ],
       "outcome": "complete_partial_delivery",
       "terminal_verification_location": "https://github.com/Omegapy/OntoKin/pull/274"
+    },
+    {
+      "required": true,
+      "kind": "browser-session",
+      "status": "saved",
+      "folder": "OntoKin",
+      "partial": true,
+      "phase_complete": true,
+      "receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
+      "technical_phase_complete": true,
+      "artifact_delivery_status": "saved_and_readback_verified",
+      "archive": {
+        "file_name": "OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21.zip",
+        "local_path": "/workspace/scratch/8838dfc6e876/packages/final-attempt-002/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21.zip",
+        "bytes": 14680844,
+        "sha256": "037d7ff2b2b64f61f1b53b5fdae93b3d16a32bdb6fd681f45f824e2652d425b5",
+        "archive_member": null,
+        "purpose": "create_library_file",
+        "status": "saved",
+        "file_id": "file_000000001c6c81f587b7ebcf29a9412d",
+        "library_file_id": "libfile_fde3_f-982d91a7579881919c3980713a6f6e00_2ab2a24d43748191957f9bcc356b59de",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21.zip",
+        "current_version_number": 0,
+        "upload_status": "succeeded",
+        "version": 0,
+        "confirmed_at_utc": "2026-11-21T17:12:09.403422+00:00",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-982d91a7579881919c3980713a6f6e00_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "saved_bytes_readback_equal": true,
+        "local_bytes_unchanged_after_save": true,
+        "destination_metadata_observed": true,
+        "saved_readback_path": "/workspace/scratch/8838dfc6e876/saved_readback/final-core-attempt-001/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21.zip"
+      },
+      "matching_prompts": [
+        {
+          "file_name": "OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Continue.md",
+          "local_path": "/workspace/scratch/8838dfc6e876/packages/final-attempt-002/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Continue.md",
+          "bytes": 3513,
+          "sha256": "287e4b35a7043fa58ce694ea2f4a792af3a8b1d2aaae0ff76c58a9efd3dfdcfd",
+          "archive_member": "PROMPT-1-CONTINUE.md",
+          "purpose": "create_library_file",
+          "status": "saved",
+          "file_id": "file_00000000b6e081f59a54b5a9c39dbcc9",
+          "library_file_id": "libfile_fde3_f-4881a0f872bc8191a6da81f329430392_2ab2a24d43748191957f9bcc356b59de",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Continue.md",
+          "current_version_number": 0,
+          "upload_status": "succeeded",
+          "version": 0,
+          "confirmed_at_utc": "2026-11-21T17:12:09.403422+00:00",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4881a0f872bc8191a6da81f329430392_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "saved_bytes_readback_equal": true,
+          "local_bytes_unchanged_after_save": true,
+          "destination_metadata_observed": true,
+          "saved_readback_path": "/workspace/scratch/8838dfc6e876/saved_readback/final-core-attempt-001/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Continue.md"
+        },
+        {
+          "file_name": "OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Recover.md",
+          "local_path": "/workspace/scratch/8838dfc6e876/packages/final-attempt-002/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Recover.md",
+          "bytes": 4345,
+          "sha256": "575b9f078befec3f6d8b742d46cf4cace244c29f6d5715055cb7b1367eafa028",
+          "archive_member": "PROMPT-2-RECOVER.md",
+          "purpose": "create_library_file",
+          "status": "saved",
+          "file_id": "file_00000000c7ac81fb9fa472b9ebfacffb",
+          "library_file_id": "libfile_fde3_f-01634c5291048191acb86fba327b80ab_2ab2a24d43748191957f9bcc356b59de",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Recover.md",
+          "current_version_number": 0,
+          "upload_status": "succeeded",
+          "version": 0,
+          "confirmed_at_utc": "2026-11-21T17:12:09.403422+00:00",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-01634c5291048191acb86fba327b80ab_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "saved_bytes_readback_equal": true,
+          "local_bytes_unchanged_after_save": true,
+          "destination_metadata_observed": true,
+          "saved_readback_path": "/workspace/scratch/8838dfc6e876/saved_readback/final-core-attempt-001/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Recover.md"
+        }
+      ]
     }
   ],
   "prior_blocked_reason": "Required routine gate failed: unit timeout at 900 seconds and isolated documentation copy omitted five tracked instruction files, producing 21 missing local links.",
@@ -1448,5 +1548,6 @@
       "phase": "C271-P04-historical-runtime-recovery",
       "reason": "Exact historical Node was not recovered from the inspected P04 sources; unchanged C225 runtime binding remains unsatisfied. Full routine and independent R03 acceptance remain unmet. A separately reviewed current-host execution decision is the next proposed bounded step."
     }
-  ]
+  ],
+  "blocked_reason": "H0-PYTHON-ELF-STRTAB-001: selected Python dynamic string table spans adjacent PT_LOAD segments; accepted inspector requires one containing segment. H0 approval remains unmet."
 }

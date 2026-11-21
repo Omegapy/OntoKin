@@ -1,0 +1,92 @@
+{
+  "schema": "ontokin.c271.p09-h0-static-blocker/1",
+  "phase": "C271-P09-H0-static-preparation",
+  "worker": "/root/h0_preparation",
+  "state": "BLOCKED_STATIC_PREREQUISITE",
+  "blocker_id": "H0-PYTHON-ELF-STRTAB-001",
+  "early_save_confirmed_at_utc": "2026-11-21T18:46:28.445406+00:00",
+  "root_stop_confirmed": true,
+  "selected_python": {
+    "selection": "Existing python3 on task PATH, also CODEX_PRIMARY_RUNTIME_PYTHON; no alternative search",
+    "named_path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "resolved_path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+    "size_bytes": 30894944,
+    "mode": "0o755",
+    "snapshot_path": "selected-python.bin",
+    "snapshot_mode": "0o600"
+  },
+  "accepted_implementation": {
+    "source_root": "/workspace/scratch/e33f906d0e8e/h0_source",
+    "source_commit_reported_and_confirmed_by_director": "2c6bbfb7aa1d402ce47ffdc24adb4d89b8a81c1e",
+    "source_tree_reported_and_confirmed_by_director": "03f8751715eb2196f8d56f12868cc572d3392dd8",
+    "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "sha256": "b2f4c869fd03919047db797bd3a80616cbe16f6b17689fe61d40754b27f97a39",
+    "size_bytes": 147900,
+    "admitted_mapping_predicate_lines": [701, 702, 703, 704, 705],
+    "python_parser_call_lines": [1194, 1195],
+    "initial_validation_call_lines": [1393],
+    "exception_category_lines": [121],
+    "predicate": "One PT_LOAD segment must contain the complete DT_STRTAB through DT_STRTAB + DT_STRSZ range; len(set(mappings)) must equal 1",
+    "static_refusal_category": "CHI-UNSUPPORTED",
+    "static_refusal_reason": "Ambiguous/unmapped ELF string table"
+  },
+  "static_evidence": {
+    "dynamic_string_table_address": 4191704,
+    "dynamic_string_table_size": 42266,
+    "dynamic_string_table_end_exclusive": 4233970,
+    "first_load": {"virtual_start": 4190208, "virtual_end_exclusive": 4194304, "file_offset": 0, "file_size": 4096},
+    "second_load": {"virtual_start": 4194304, "virtual_end_exclusive": 4328816, "file_offset": 4096, "file_size": 134512},
+    "containing_load_segments": [],
+    "matching_mappings_count": 0,
+    "diagnostic": "PYTHON-ELF-DIAGNOSTIC-002.json",
+    "diagnostic_sha256": "cd0330223bc36a1dbaf4752b822fe40aacbb04a8b2d17eaec57d59d4c4308dd5",
+    "interpretation": "The selected interpreter's string table spans adjacent load segments. This fails the accepted parser's finite single-segment mapping predicate. It does not imply a malformed ELF image or an unsafe interpreter."
+  },
+  "evidence_classification": {
+    "observed": "Exact selected image bytes, SHA-256/size/mode, raw ELF program headers and dynamic entries",
+    "source_backed_inference": "The current accepted parser cannot accept this image at its full-string-table PT_LOAD containment guard",
+    "production_execution_result": null,
+    "production_execution_result_reason": "No accepted product module or parser was imported or invoked by this worker",
+    "initial_reader_failure": "Attempt001 raised AssertionError at the same full-range containment calculation; stderr/source remain immutable",
+    "followup_diagnostic": "Attempt002 reads and reports raw headers/dynamic entries without requiring the unsupported mapping, and preserves exact input bytes; it is a static diagnosis, not a runtime retry"
+  },
+  "known_attempts": [
+    {"id": "python-static-001", "exit_code": 1, "stdout": "python-static-001.stdout.txt", "stderr": "python-static-001.stderr.txt", "script": "static_python_prerequisite_inspection_001.py", "intended_json_report_created": false},
+    {"id": "python-static-002", "exit_code": 0, "stdout": "python-static-002.stdout.txt", "stderr": "python-static-002.stderr.txt", "script": "static_python_elf_diagnostic_002.py", "intended_json_report_created": true}
+  ],
+  "worker_execution_counts": {
+    "independent_python_inspection_children": 2,
+    "production_module_imports": 0,
+    "accepted_parser_invocations": 0,
+    "preparer_invocations": 0,
+    "runtime_installations": 0,
+    "node_direct_starts": 0,
+    "ldd_direct_starts": 0,
+    "checker_starts": 0,
+    "original_seven_method_runs": 0,
+    "full_routine_runs": 0,
+    "native_model_hosted_operations": 0
+  },
+  "independent_archive_inventory_status": {
+    "reviewer": "/root/p08_delivery_audit",
+    "reported_state": "COMPLETE_WITH_NO_FINDINGS",
+    "node_inventory": "/workspace/scratch/e33f906d0e8e/audits/h0_review/NODE-RAW-ARCHIVE-INVENTORY.json",
+    "node_inventory_sha256": "66136dc88c177c0c6f18ba253e5e046c629407f0c62c0e26bbf76f4a35c4f203",
+    "c195_inventory": "/workspace/scratch/e33f906d0e8e/audits/h0_review/C195-RAW-ARCHIVE-INVENTORY.json",
+    "c195_inventory_sha256": "b2de4eb1a6c3b00d1e937f1ba9cd52f1c2137a676925710791b3a1c993933674",
+    "preparation_worker_claim": "Reviewer result received; worker did not reproduce or approve the independent inventory"
+  },
+  "unmet_h0_work": [
+    "Operational installation plan authoring and independent review",
+    "Existing preparer dry-run/apply selection and outcomes",
+    "Exact runtime/dependency installation receipts",
+    "Python metadata and complete startup/native-extension closure",
+    "ldd, Git, loader cache/configuration/hwcaps/alias closure",
+    "Executable inspection plan, absence/path guards, separate external review digest"
+  ],
+  "operational_inspection_plan_created": false,
+  "h1_approval": false,
+  "known_unresolved_worker_operations": [],
+  "next_action_proposal": "Fresh bounded review of support for finite ELF string-table ranges spanning adjacent PT_LOAD mappings, preserving all bounds and refusal semantics; source/contract amendment and focused independent review as applicable. This phase neither starts nor authorizes that change."
+}

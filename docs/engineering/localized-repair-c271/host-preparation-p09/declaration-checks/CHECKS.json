@@ -1,0 +1,45 @@
+{
+  "source_base": "2c6bbfb7aa1d402ce47ffdc24adb4d89b8a81c1e",
+  "source_state": "working documentary declaration",
+  "checked_at_utc": "2026-11-21T18:47:57.831563+00:00",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.116,
+      "stdout": "workflow.stdout.txt",
+      "stderr": "workflow.stderr.txt"
+    },
+    {
+      "name": "documents",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.891,
+      "stdout": "documents.stdout.txt",
+      "stderr": "documents.stderr.txt"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.038,
+      "stdout": "whitespace.stdout.txt",
+      "stderr": "whitespace.stderr.txt"
+    }
+  ],
+  "passed": true
+}
