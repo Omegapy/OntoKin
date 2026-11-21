@@ -53,7 +53,9 @@
         "docs/engineering/localized-repair-c271/current-host-p05/published-source-checks/CHECKS.json",
         "docs/engineering/localized-repair-c271/current-host-p06/PHASE-OUTCOME.json",
         "docs/engineering/localized-repair-c271/current-host-p06/EXECUTION-CHECKS.json",
-        "docs/engineering/localized-repair-c271/current-host-p06/INDEPENDENT-REVIEW.json"
+        "docs/engineering/localized-repair-c271/current-host-p06/INDEPENDENT-REVIEW.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/review/REVIEW-002.json"
       ]
     },
     {
@@ -79,7 +81,8 @@
         "docs/engineering/localized-repair-c271/current-host-p05/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json",
         "docs/engineering/localized-repair-c271/current-host-p06/EARLY-RECOVERY-RECEIPT.json",
-        "docs/engineering/localized-repair-c271/current-host-p06/P06-DELIVERY.json"
+        "docs/engineering/localized-repair-c271/current-host-p06/P06-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/EARLY-RECOVERY-RECEIPT.json"
       ]
     }
   ],
@@ -338,6 +341,29 @@
         "docs/engineering/localized-repair-c271/current-host-p06/INDEPENDENT-REVIEW.json"
       ],
       "scope": "P06 only: 66 focused methods, 64 selected controls, 145 effective variants, 2 final source checks; original seven outcomes/full routine/R03 remain unrun or unaccepted."
+    },
+    {
+      "name": "P07 source-backed host-inspection design and independent review",
+      "command": "Retained static artifact/source/schema checks and independent review; no product execution",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/DESIGN-STATIC-CHECKS.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/review/REVIEW-002.json"
+      ],
+      "scope": "26 author and 13 independent static groups; accepted design only. Actual runtime, original seven, complete routine and R03-R05 remain unmet."
+    },
+    {
+      "name": "P07 documentary records and protected source",
+      "command": "python3 -B tools/chat_workflow.py check; python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py; git diff --check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p07/design-record-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/design-record-checks/SOURCE-BOUNDARY.json"
+      ],
+      "scope": "Declared documentary working snapshot only; final published-source checks follow. No product execution or R03 acceptance."
     }
   ],
   "completion": {
@@ -355,7 +381,7 @@
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1"
   },
-  "next_action": "Complete only the declared P07 host-inspection design and independently reviewed staged qualification plan, documentary checks, conditional publication and verified saved partial handoff; stop before implementation or runtime execution.",
+  "next_action": "Finish P07 documentary checks, conditional retained-branch publication and verified saved partial delivery; then stop. In a fresh chat select only the accepted HI implementation phase before any runtime preparation or Node/ldd.",
   "session_phase": {
     "schema": "ontokin.c271.p07-phase/1",
     "task": "C271",
@@ -383,7 +409,7 @@
       "Keep independently approved execution inputs separate from observations and explicit about still-unbound future host fields",
       "One parent-chat phase; no nested worker fanout; root alone canonical Git/index/state/publication/delivery"
     ],
-    "status": "in_progress",
+    "status": "technical_design_complete_delivery_pending",
     "early_recovery": "confirmed",
     "early_save_confirmed": true,
     "early_receipt": "docs/engineering/localized-repair-c271/host-inspection-p07/EARLY-RECOVERY-RECEIPT.json",
@@ -408,7 +434,12 @@
       "/root/intake_review": "Independent intake complete; independent exact design and later package review; disjoint audit paths only",
       "/root/package_builder": "Early/final package engineering and byte/source verification; packaging/packages only"
     },
-    "stop": "At independently reviewed design or first concrete blocker/unplanned expansion, finish publication and verified partial saved delivery, then stop. No implementation or second phase in this chat."
+    "stop": "At independently reviewed design or first concrete blocker/unplanned expansion, finish publication and verified partial saved delivery, then stop. No implementation or second phase in this chat.",
+    "design_adoption": "docs/engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json",
+    "independent_review": "docs/engineering/localized-repair-c271/host-inspection-p07/review/REVIEW-002.json",
+    "mandatory_open_findings": 0,
+    "technical_phase_complete": true,
+    "phase_complete": false
   },
   "delivery": {
     "required": true,
@@ -417,7 +448,8 @@
     "folder": "OntoKin",
     "partial": true,
     "phase_complete": false,
-    "receipt": "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json"
+    "receipt": "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json",
+    "technical_phase_complete": true
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",

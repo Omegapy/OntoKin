@@ -1,0 +1,1050 @@
+{
+  "schema": "ontokin.c271.p07-control-design/1",
+  "executable": false,
+  "status": "design_candidate_for_independent_review",
+  "controls": [
+    {
+      "id": "CH01",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "executable bytes",
+      "adopted_input_mutation": "Change the selected executable digest or byte count",
+      "adopted_expected": "Static preparation fails before version/ldd/checker execution",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "real isolated file/input mutation",
+      "source_refs": [
+        "S08",
+        "S10"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH02",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "executable mode/path",
+      "adopted_input_mutation": "Wrong executable mode, resolved path, symlink or alias binding",
+      "adopted_expected": "Refuse before preparation processes and checker execution",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "real isolated file/input mutation",
+      "source_refs": [
+        "S08",
+        "S10"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH03",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "supported version",
+      "adopted_input_mutation": "Declared version differs from v24.22.1; separately simulate an observed version mismatch at the command boundary",
+      "adopted_expected": "Declared mismatch refuses before launch; simulated observed mismatch is failed preparation and cannot establish actual runtime behavior",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "real config mutation plus labeled mocked response control",
+      "source_refs": [
+        "S08",
+        "S09"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH04",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "runtime closure",
+      "adopted_input_mutation": "Remove or mutate a bound shared library, loader configuration, or required alias",
+      "adopted_expected": "Preparation/execution preflight refuses; no checker starts",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "real isolated file/input mutation",
+      "source_refs": [
+        "S08",
+        "S09"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH05",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "inspector provenance",
+      "adopted_input_mutation": "Change ldd/inspector/interpreter binding or inject environment overrides",
+      "adopted_expected": "Refuse before affected inspection command or checker",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "real isolated config/input mutation",
+      "source_refs": [
+        "S08",
+        "S09"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH06",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "dependency inventory",
+      "adopted_input_mutation": "Omit, append, mutate or rename one of the exact24 dependency files or add an extra directory",
+      "adopted_expected": "Refuse incomplete or changed dependency tree before checker",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "real isolated dependency mutation",
+      "source_refs": [
+        "S08",
+        "S09",
+        "S10",
+        "S21"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH07",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "dependency path safety",
+      "adopted_input_mutation": "Create a symlink/hardlink/special/traversing/duplicate archive entry or unexpected mode",
+      "adopted_expected": "Refuse extraction/installation before executing any recovered code",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "real isolated archive/filesystem control",
+      "source_refs": [
+        "S10"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH08",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "installation state",
+      "adopted_input_mutation": "Use partial, extra, changed, symlinked or inaccessible existing destination; race no-replace publication",
+      "adopted_expected": "Refuse without replacing/deleting original content; record observed state; unknown rename stays unknown until readback",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "real isolated filesystem control",
+      "source_refs": [
+        "S10"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH09",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "source ownership",
+      "adopted_input_mutation": "Use another checkout/root/commit/tree, untracked executable file, changed provider/probe or copied source mismatch",
+      "adopted_expected": "Refuse source or workspace derivation before checker",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "real isolated source/input mutation",
+      "source_refs": [
+        "S08",
+        "S09",
+        "S12"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH10",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "time of use",
+      "adopted_input_mutation": "Change source/runtime/dependency/config after preflight or between checks",
+      "adopted_expected": "Invalidate current attempt; prelaunch change yields zero new starts; postlaunch change prevents qualification and remains failed evidence",
+      "adopted_expected_checker_starts": null,
+      "adopted_evidence_kind": "real isolated mutation with explicit synchronization",
+      "source_refs": [
+        "S08",
+        "S09"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution.",
+      "unresolved_count_rule": "Expand into finite subcases with exact non-null start count before any executable plan; do not execute this aggregate design row."
+    },
+    {
+      "id": "CH11-P",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "schema and manifest identity",
+      "adopted_input_mutation": "Use old/unknown schema, altered manifest bytes/digest or self-declared unapproved configuration",
+      "adopted_expected": "Parent manifest/source preflight refuses before checker; old provider keeps rejecting new schema",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "real isolated parent-side manifest mutation",
+      "source_refs": [
+        "S08",
+        "S15"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH11-C",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "schema and manifest identity",
+      "adopted_input_mutation": "Use old/unknown schema, altered manifest bytes/digest or self-declared unapproved configuration",
+      "adopted_expected": "Direct new probe records one actual Node start and rejects schema/binding before dynamic reader imports; no successful qualification",
+      "adopted_expected_checker_starts": 1,
+      "adopted_evidence_kind": "separately declared direct-probe negative",
+      "source_refs": [
+        "S09"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution.",
+      "later_route": "Direct probe bypasses parent guard only as a separately approved negative; P06-H01/H02 remain independently accounted."
+    },
+    {
+      "id": "CH12",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "options and launch",
+      "adopted_input_mutation": "Alter environment/limit/options/role/flags/argv/slot ordering/count/case/route/result destination",
+      "adopted_expected": "Refuse exact manifest/launch binding before checker",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "real isolated manifest mutation",
+      "source_refs": [
+        "S08",
+        "S09",
+        "S15",
+        "S22"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH13",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "selection absent",
+      "adopted_input_mutation": "Omit config, digest, driver explicit selection or provide malformed/unknown selection",
+      "adopted_expected": "Driver preparation/direct original-module setup fails visibly; no skip or substitute methods",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "real CLI/environment control",
+      "source_refs": [
+        "S08",
+        "S12",
+        "S13"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH14",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "workspace derivation",
+      "adopted_input_mutation": "Retarget isolated provider/probe to original checkout or edit parent config in place",
+      "adopted_expected": "Refuse unbound derived root or parent/config hash mismatch",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "real isolated workspace/control",
+      "source_refs": [
+        "S08",
+        "S09",
+        "S12"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH15",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "negative GLB reference",
+      "adopted_input_mutation": "Run original Q01 negative with exactly +0.001 designated matrix translation and explanatory scope only",
+      "adopted_expected": "Original test passes through real rejection: exact intended matrix_0_3 finding; no relaxed numerical check",
+      "adopted_expected_checker_starts": 1,
+      "adopted_evidence_kind": "original method, real Node checker",
+      "source_refs": [
+        "S09",
+        "S13",
+        "S17"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution.",
+      "later_route": "Original unchanged method identities; all seven outcomes in complete original module/cohort; no replacement suite."
+    },
+    {
+      "id": "CH16",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "positive real reader cases",
+      "adopted_input_mutation": "Run original Q01/Q03 synthetic case without mutations",
+      "adopted_expected": "Both retained libraries read actual bytes, complete probes/hash/numerical/input-preservation and cleanup predicates pass",
+      "adopted_expected_checker_starts": 2,
+      "adopted_evidence_kind": "original methods, real Node checkers",
+      "source_refs": [
+        "S09",
+        "S13",
+        "S17"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution.",
+      "later_route": "Original unchanged method identities; all seven outcomes in complete original module/cohort; no replacement suite."
+    },
+    {
+      "id": "CH17",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "coordinator finalization",
+      "adopted_input_mutation": "Run all original four seams including write-failure/pending-marker and remaining-alarm checks",
+      "adopted_expected": "All four original test outcomes recorded; mocked seams labeled, no native cleanup claim",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "original mocked coordinator methods",
+      "source_refs": [
+        "S13",
+        "S15"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution.",
+      "later_route": "Original unchanged method identities; all seven outcomes in complete original module/cohort; no replacement suite."
+    },
+    {
+      "id": "CH18",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "discovery completeness",
+      "adopted_input_mutation": "Exclude a module/class, rename/remove a required method, hide a skip/expected failure or change a generated case inventory",
+      "adopted_expected": "Inventory/acceptance refuses even if aggregate process exits0",
+      "adopted_expected_checker_starts": 0,
+      "adopted_evidence_kind": "actual discovery inventory and controlled evidence mutation",
+      "source_refs": [
+        "S08",
+        "S12",
+        "S16"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution."
+    },
+    {
+      "id": "CH19",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "process/output/finalization failure",
+      "adopted_input_mutation": "Exercise all mapped supervisor timeout/log/output/cleanup and uncertain finalization obligations selected for changed boundary",
+      "adopted_expected": "Original limits/consequences retained; no unknown child or pending marker is labeled passed; all process attempts retained",
+      "adopted_expected_checker_starts": null,
+      "adopted_evidence_kind": "existing tests plus independently predeclared meaningful fault controls",
+      "source_refs": [
+        "S08",
+        "S11",
+        "S13",
+        "S15"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution.",
+      "unresolved_count_rule": "Expand into finite subcases with exact non-null start count before any executable plan; do not execute this aggregate design row."
+    },
+    {
+      "id": "CH20",
+      "kind": "adopted_P05_obligation",
+      "adopted_requirement": "input/output limits",
+      "adopted_input_mutation": "Oversize/mutate job/manifest/audit/GLB/result/log or introduce external resource fetch",
+      "adopted_expected": "Original pre-import/read/write/output refusals and limits retained; record attempted and actual starts by stage",
+      "adopted_expected_checker_starts": null,
+      "adopted_evidence_kind": "real bounded input mutation or labeled process boundary control",
+      "source_refs": [
+        "S08",
+        "S09",
+        "S11"
+      ],
+      "p07_status": "design_preserved_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "actual_p07_node_starts": 0,
+      "acceptance": "Preserve adopted predicate. Freeze each actual variant, exact inputs, stage/error selector and process count before later execution. Separately decide identity-based P06 static/mock reuse; never infer host execution.",
+      "unresolved_count_rule": "Expand into finite subcases with exact non-null start count before any executable plan; do not execute this aggregate design row."
+    },
+    {
+      "id": "P06-H01",
+      "kind": "retained_P06_direct_host_gate",
+      "source_refs": [
+        "S23",
+        "S09",
+        "S13"
+      ],
+      "retained_disposition": "NOT_RUN_GATE_H",
+      "retained_frozen_expected": {
+        "code": "CH-SELECTION",
+        "delegated_supervisor_calls": 0,
+        "no_reader_imports": true,
+        "no_self_approval": true,
+        "one_actual_Node_start_required_later": true,
+        "real_node_starts": 1,
+        "stage": "JS_before_dynamic_reader_imports",
+        "status": "NOT_RUN_P06"
+      },
+      "retained_execution_count": 0,
+      "p07_status": "NOT_RUN_GATE_H",
+      "actual_p07_node_starts": 0,
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "design_variant": "Coherent isolated config/manifest/job rewrite D1; preserve approved CLI comparator D0; expected CH-SELECTION: manifest digest is not external approval."
+    },
+    {
+      "id": "P06-H02",
+      "kind": "retained_P06_direct_host_gate",
+      "source_refs": [
+        "S23",
+        "S09",
+        "S13"
+      ],
+      "retained_disposition": "NOT_RUN_GATE_H",
+      "retained_frozen_expected": {
+        "code": "DECLARED_JS_REFUSAL",
+        "delegated_supervisor_calls": 0,
+        "no_reader_imports": true,
+        "real_node_starts": 1,
+        "stage": "JS_argument_or_binding_before_imports",
+        "status": "NOT_RUN_P06"
+      },
+      "retained_execution_count": 0,
+      "p07_status": "NOT_RUN_GATE_H",
+      "actual_p07_node_starts": 0,
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "design_variant": "Coherent isolated unsupported config schema; separately approve negative-only config comparator; expected Current-host binding: wrong configuration contract/schema before report initialization."
+    },
+    {
+      "id": "P06-H03",
+      "kind": "retained_P06_direct_host_gate",
+      "source_refs": [
+        "S23",
+        "S09",
+        "S13"
+      ],
+      "retained_disposition": "NOT_RUN_GATE_H",
+      "retained_frozen_expected": {
+        "code": "ORIGINAL_METHOD_OUTCOMES",
+        "delegated_supervisor_calls": null,
+        "host_qualification_not_inferred_from_mocks": true,
+        "original_negative_exact_matrix_0_3_required": true,
+        "real_node_starts": 3,
+        "stage": "runtime_qualification",
+        "status": "NOT_RUN_P06",
+        "three_CPU_start_denominator_separate": true
+      },
+      "retained_execution_count": 0,
+      "p07_status": "NOT_RUN_GATE_H",
+      "actual_p07_node_starts": 0,
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "design_variant": "Complete original seven-method cohort; exactly three real CPU starts; intended matrix_0_3 negative plus independent measurement and receipt audit."
+    },
+    {
+      "id": "HI01",
+      "kind": "new_host_authoring_control",
+      "requirement": "Plan selection",
+      "input_mutation": "Omit plan or expected digest; wrong digest; wrong schema; executable-plan template/null field",
+      "expected_error_category": "CHI-PLAN",
+      "expected_boundary": "Before trusting output path",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "real CLI/input mutation",
+      "expected_boundary_direct_starts": 0,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI02",
+      "kind": "new_host_authoring_control",
+      "requirement": "No self-approval",
+      "input_mutation": "Coherently rewrite plan and local self-description while retaining external approved comparator",
+      "expected_error_category": "CHI-PLAN",
+      "expected_boundary": "Before source/process preparation",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "real JSON mutation",
+      "expected_boundary_direct_starts": 0,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI03",
+      "kind": "new_host_authoring_control",
+      "requirement": "Safe plan read",
+      "input_mutation": "Symlink/FIFO/special/hardlink plan, duplicate JSON keys, invalid UTF-8, nonfinite number, oversize or changed-while-read file",
+      "expected_error_category": "CHI-PLAN",
+      "expected_boundary": "Bounded read before child",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "real isolated filesystem/JSON control",
+      "expected_boundary_direct_starts": 0,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI04",
+      "kind": "new_host_authoring_control",
+      "requirement": "Bound source",
+      "input_mutation": "Wrong root/commit/tree; missing or changed author/provider/helper; dirty/untracked executable source; source inventory extra/missing",
+      "expected_error_category": "CHI-SOURCE",
+      "expected_boundary": "Before Node/ldd",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "real isolated source control",
+      "expected_boundary_direct_starts": 0,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI05",
+      "kind": "new_host_authoring_control",
+      "requirement": "Exact candidate",
+      "input_mutation": "Change selected Node digest/size/mode/path; different declared version; wrong saved archive identity",
+      "expected_error_category": "CHI-RUNTIME",
+      "expected_boundary": "Before version command",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "real isolated input mutation",
+      "expected_boundary_direct_starts": 0,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI06",
+      "kind": "new_host_authoring_control",
+      "requirement": "Inspector and Python",
+      "input_mutation": "Missing/changed ldd/interpreter/Python/Git runtime binding; unsupported shebang argument/env dispatch; Python pins mismatch",
+      "expected_error_category": "CHI-INSPECTOR",
+      "expected_boundary": "Before affected command",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "real file/metadata mutation; no suspect binary execution",
+      "expected_boundary_direct_starts": 0,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI07",
+      "kind": "new_host_authoring_control",
+      "requirement": "Loader resolution",
+      "input_mutation": "Unbound DT_NEEDED edge/interpreter/cache/config/search entry/alias hop/RTLD candidate; nonempty preload; missing or changed input",
+      "expected_error_category": "CHI-LOADER",
+      "expected_boundary": "Before affected command",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "real isolated static-closure fixtures",
+      "expected_boundary_direct_starts": 0,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI08",
+      "kind": "new_host_authoring_control",
+      "requirement": "Unsupported host",
+      "input_mutation": "Non-Linux/glibc, malformed/unsupported ELF feature, unexplained hwcaps/cache rule, ambiguous resolution, unrepresentable path",
+      "expected_error_category": "CHI-UNSUPPORTED",
+      "expected_boundary": "Static closure gate",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "pure parser/static-record controls",
+      "expected_boundary_direct_starts": 0,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI09",
+      "kind": "new_host_authoring_control",
+      "requirement": "Evidence path",
+      "input_mutation": "Relative/escaping/source/runtime/dependency output; preexisting target, changed ancestor; no-replace conflict",
+      "expected_error_category": "CHI-PATH",
+      "expected_boundary": "Before command or publication as specified",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "real isolated filesystem controls; sentinels unchanged",
+      "expected_boundary_direct_starts": 0,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI10",
+      "kind": "new_host_authoring_control",
+      "requirement": "Prelaunch time of use",
+      "input_mutation": "Synchronously change a bound file/alias/required absence after preflight and before launch",
+      "expected_error_category": "CHI-DRIFT",
+      "expected_boundary": "Final launch check",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "real isolated synchronized mutation",
+      "expected_boundary_direct_starts": 0,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI11",
+      "kind": "new_host_authoring_control",
+      "requirement": "Postlaunch time of use",
+      "input_mutation": "Change bound source/runtime/loader/boot/dependency identity after an observed start",
+      "expected_error_category": "CHI-DRIFT",
+      "expected_boundary": "Postflight after retaining actual process evidence",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "labelled mocked process-boundary control initially; actual-host mutation subcase requires later separate freeze",
+      "expected_boundary_direct_starts": 1,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI12",
+      "kind": "new_host_authoring_control",
+      "requirement": "Version result",
+      "input_mutation": "Wrong version output, extra lines/nonempty stderr, invalid UTF-8 or actual selected-source mismatch",
+      "expected_error_category": "CHI-OUTPUT",
+      "expected_boundary": "After retained command outcome",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "labelled mocked response control; not proof of another real Node version",
+      "expected_boundary_direct_starts": 1,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI13",
+      "kind": "new_host_authoring_control",
+      "requirement": "ldd grammar",
+      "input_mutation": "not found in either stream; empty/relative/malformed/unknown line; duplicate SONAME/path; unexpected/absent interpreter; new path; nonempty stderr",
+      "expected_error_category": "CHI-OUTPUT",
+      "expected_boundary": "Parser after retaining raw output",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "pure parser/mocked response controls plus later actual H1 positive",
+      "expected_boundary_direct_starts": 1,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI14",
+      "kind": "new_host_authoring_control",
+      "requirement": "Launch failure",
+      "input_mutation": "Failure before Popen; separately callback failure immediately after actual start",
+      "expected_error_category": "CHI-PROCESS",
+      "expected_boundary": "Launch/start evidence boundary",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "mocked boundaries with separate zero/one-start subcases",
+      "expected_boundary_direct_starts": null,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ],
+      "unresolved_count_rule": "This aggregate design row is nonexecutable; independently split/freeze each subcase with exact 0 or 1 direct start before execution.",
+      "unknown_start_count_control": "Include a retained interrupted launch-to-callback state: exact actual count null, observed lower bound zero, status UNKNOWN; no synthetic zero, success or retry."
+    },
+    {
+      "id": "HI15",
+      "kind": "new_host_authoring_control",
+      "requirement": "Deadline",
+      "input_mutation": "Active-work timeout, exhausted total clock, late return or cleanup exceeding 2,000 ms",
+      "expected_error_category": "CHI-PROCESS",
+      "expected_boundary": "Original five-second command deadline",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "labelled mocked supervisor outcomes initially; no Node qualification inferred",
+      "expected_boundary_direct_starts": 1,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI16",
+      "kind": "new_host_authoring_control",
+      "requirement": "Output limits",
+      "input_mutation": "Combined output over 4 MiB, observed/retained/raw counts differ, oversized inspection or evidence serialization",
+      "expected_error_category": "CHI-OUTPUT",
+      "expected_boundary": "Capture/projection before success receipt",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "labelled process-output and bounded serialization controls",
+      "expected_boundary_direct_starts": 1,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI17",
+      "kind": "new_host_authoring_control",
+      "requirement": "Cleanup and receipt",
+      "input_mutation": "Nonzero exit, group remains, not reaped, handles open, missing PID/end time/process record or changed argv/environment/cwd",
+      "expected_error_category": "CHI-PROCESS",
+      "expected_boundary": "Actual receipt validation before projection",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "labelled mocked receipt controls; all raw evidence preserved",
+      "expected_boundary_direct_starts": 1,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    },
+    {
+      "id": "HI18",
+      "kind": "new_host_authoring_control",
+      "requirement": "Evidence failure",
+      "input_mutation": "Write/fsync/atomic rename/readback failure before or after start; callback ledger failure; final completion-marker failure",
+      "expected_error_category": "CHI-EVIDENCE",
+      "expected_boundary": "Immutable evidence finalization",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "real isolated filesystem faults plus labelled process boundary; exact zero/one-start subcases",
+      "expected_boundary_direct_starts": null,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ],
+      "unresolved_count_rule": "This aggregate design row is nonexecutable; independently split/freeze each subcase with exact 0 or 1 direct start before execution.",
+      "unknown_start_count_control": "Include a retained interrupted launch-to-callback state: exact actual count null, observed lower bound zero, status UNKNOWN; no synthetic zero, success or retry."
+    },
+    {
+      "id": "HI19",
+      "kind": "new_host_authoring_control",
+      "requirement": "Interrupted or unknown",
+      "input_mutation": "Author killed after intent/start; lost reply; partial final record; disk unable to finalize; subsequent reconcile call",
+      "expected_error_category": "CHI-EVIDENCE",
+      "expected_boundary": "Recovery, never automatic relaunch",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "retained controlled incomplete records; later actual process fault requires separate approval/count",
+      "expected_boundary_direct_starts": null,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ],
+      "unresolved_count_rule": "This aggregate design row is nonexecutable; independently split/freeze each subcase with exact 0 or 1 direct start before execution.",
+      "unknown_start_count_control": "Include a retained interrupted launch-to-callback state: exact actual count null, observed lower bound zero, status UNKNOWN; no synthetic zero, success or retry."
+    },
+    {
+      "id": "HI20",
+      "kind": "new_host_authoring_control",
+      "requirement": "Strict output projection",
+      "input_mutation": "Extra/missing inspection process/cleanup/host keys; roles/aliases/files mismatch; stale boot/time; unapproved HOST reused as authority",
+      "expected_error_category": "CHI-COMPAT",
+      "expected_boundary": "Consumer compatibility and separate approval boundary",
+      "mode": "future HI focused controls unless an explicit later actual-host subcase is frozen",
+      "evidence_kind": "schema/static-consumer controls; successful receipt fabrication forbidden",
+      "expected_boundary_direct_starts": 0,
+      "expected_real_node_ldd_starts_in_HI": 0,
+      "actual_p07_node_starts": 0,
+      "p07_status": "design_not_executed",
+      "future_fixture_status": "requires_independent_exact_fixture_freeze",
+      "required_outcome": "Visible failure with original cause/receipt retained; never a P06-compatible success receipt or host qualification; uncertainty remains UNKNOWN. No retry or replacement.",
+      "source_refs": [
+        "S01",
+        "S06",
+        "S08",
+        "S09",
+        "S10",
+        "S11"
+      ]
+    }
+  ],
+  "coverage": {
+    "P05_control_ids": [
+      "CH01",
+      "CH02",
+      "CH03",
+      "CH04",
+      "CH05",
+      "CH06",
+      "CH07",
+      "CH08",
+      "CH09",
+      "CH10",
+      "CH11-P",
+      "CH11-C",
+      "CH12",
+      "CH13",
+      "CH14",
+      "CH15",
+      "CH16",
+      "CH17",
+      "CH18",
+      "CH19",
+      "CH20"
+    ],
+    "P06_host_ids": [
+      "P06-H01",
+      "P06-H02",
+      "P06-H03"
+    ],
+    "new_authoring_ids": [
+      "HI01",
+      "HI02",
+      "HI03",
+      "HI04",
+      "HI05",
+      "HI06",
+      "HI07",
+      "HI08",
+      "HI09",
+      "HI10",
+      "HI11",
+      "HI12",
+      "HI13",
+      "HI14",
+      "HI15",
+      "HI16",
+      "HI17",
+      "HI18",
+      "HI19",
+      "HI20"
+    ]
+  },
+  "shared_invariants": {
+    "original_methods": [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries",
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries",
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference",
+      "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup",
+      "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_result_write_failure_leaves_predecessor_gate_blocked",
+      "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm",
+      "test_static_tray_readback_v01.ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending"
+    ],
+    "original_body_hashes": {
+      "ReadbackCoordinatorSeams.run_seam": "2f39cde2f0f4a18eb54b003e2628b22c47d49495d862d25e38223b5a056817a5",
+      "ReadbackCoordinatorSeams.test_result_write_failure_leaves_predecessor_gate_blocked": "222b654a8da505965f0821be4e7b61eefeb1a5f12e767c72e6123feba909f06d",
+      "ReadbackCoordinatorSeams.test_host_alarm_cannot_interrupt_supervisor_cleanup": "29665028886624307beacb4debb33b8582f91bf60951149c0160ae957ed68f98",
+      "ReadbackCoordinatorSeams.test_success_finalization_uses_remaining_outer_alarm": "f4a5d8242e91d3792039b94f2f75c8002b7cc5e1b432ce3cc91d46d65d3f1f55",
+      "ReadbackCoordinatorSeams.test_uncertain_marker_removal_recreates_pending": "5e3041a6f1e57db4c4c03e97927e1aa88c6d8dfe2b431e71b38319e3851b75bc",
+      "ReadbackCPUControls.check_case": "53a03c60a7473af90ba88f2fddf225713036d417cf3c13a0c1e8a6a3105946a4",
+      "ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries": "e7793b38ebedd196c228ce6841642c2546c8ef1f5db552b1b1f824a30087fd34",
+      "ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries": "e09a9c173e4879558da9206549f085a840639a314c22e525fccabc498c7e3dd4",
+      "ReadbackCPUControls.test_three_rejects_changed_synthetic_reference": "8b2de031c533e1308efeef130047b0a2b4fcfc1cb6cd2f576e7b3ef832ec05d9"
+    },
+    "exact_external_files": 24,
+    "same_selected_Node_build": {
+      "NODE_SHA256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+      "NODE_BYTES": 126951512,
+      "NODE_VERSION": "v24.22.1",
+      "NODE_ARCHIVE_SHA256": "100ae976555b388472c3e875aeda67bd7d8c9229a968a11661fb852624adaeb5",
+      "NODE_ARCHIVE_BYTES": 45186132
+    },
+    "source_operation_limit": 100000,
+    "source_time_ms": 30000,
+    "CPU_outer_ms": 30000,
+    "CPU_child_ms": 28000,
+    "CPU_cleanup_ms": 2000,
+    "inspection_total_ms": 5000,
+    "inspection_active_ms": 3000,
+    "inspection_cleanup_ms": 2000,
+    "no_native_schedule_authority": true
+  },
+  "no_execution_authority": "Every future fixture, expected result and process count must be independently frozen against exact implementation/host inputs. A design row or retained mock pass is not an executable plan or an actual host result.",
+  "new_attempt_count_contract": {
+    "actual_direct_starts": [
+      0,
+      1,
+      null
+    ],
+    "observed_direct_starts": [
+      0,
+      1
+    ],
+    "start_count_state": [
+      "PROVEN_ZERO",
+      "OBSERVED_ONE",
+      "UNKNOWN"
+    ],
+    "proof_rule": "A completed pre-launch refusal proves zero. A retained positive PID/start or final process receipt proves one. An interrupted launch-to-callback window has exact null and observed lower bound zero, never an inferred zero. Unknown aggregate exact count remains null.",
+    "success_rule": "Successful inspection requires exact observed one per preparation command."
+  }
+}

@@ -7,3 +7,7 @@ The [phase declaration](../../../engineering/localized-repair-c271/host-inspecti
 The [early receipt](../../../engineering/localized-repair-c271/host-inspection-p07/EARLY-RECOVERY-RECEIPT.json) confirms saved exact-byte recovery before substantive design. Root alone owns canonical Git/index/state and publication. Three real workers have disjoint design, review and packaging paths; no nested fanout or invented model settings.
 
 Current phase is in progress. Gate H authoring implementation and actual host qualification, original seven outcomes, Gate R/R03 complete routine, R04 integration and R05 parent closure remain unfulfilled. No main lease is held. Preserve the prior full-routine failures, exact historical runtime refusal and unknown C270 broad-driver/global-process outcomes.
+
+## Design acceptance
+
+Candidate-002 is independently accepted for design only, with P07-R01 resolved and no mandatory finding open. The [adoption](../../../engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json) binds unchanged reviewed files and their exact manifest. Twenty-six author checks and thirteen independent static groups passed. The [outcome](../../../engineering/localized-repair-c271/host-inspection-p07/PHASE-OUTCOME.json) retains the publication/delivery boundary. No runtime or original-method result is claimed.
