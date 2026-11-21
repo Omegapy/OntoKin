@@ -1,5 +1,5 @@
 """Exercise local-check failure reporting and isolation with real child processes."""
-from contextlib import redirect_stderr, redirect_stdout
+from contextlib import nullcontext, redirect_stderr, redirect_stdout
 import io
 import json
 import os
@@ -26,7 +26,19 @@ class LocalChecksTests(unittest.TestCase):
         self.output = self.directory / "evidence"
 
     def execute(self, steps, *, timeout=10, force_agent=False):
-        with patch.object(checks, "build_plan", return_value=steps), redirect_stdout(io.StringIO()):
+        # These synthetic repositories exercise the generic driver, not readback.
+        # Bind the new provider seam explicitly while retaining real test children.
+        selection = self.directory / "mocked-readback-selection.json"
+        binding = None
+        if any(step.id == "unit-tests" for step in steps):
+            selection.write_text('{"scope": "mocked driver-test preparation boundary"}\n')
+            binding = {"config_path": str(selection),
+                       "config_sha256": checks.file_identity(selection)["sha256"].removeprefix("sha256:")}
+        preparation = (patch.object(checks, "prepare_readback_selection", return_value=binding)
+                       if binding else nullcontext())
+        derivation = (patch.object(checks, "bind_readback_workspace", return_value=binding)
+                      if binding else nullcontext())
+        with patch.object(checks, "build_plan", return_value=steps), preparation, derivation, redirect_stdout(io.StringIO()):
             code = checks.run(self.root, self.output, False, timeout, force_agent=force_agent)
         return code, json.loads((self.output / "summary.json").read_text(encoding="utf-8"))
 

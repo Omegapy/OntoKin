@@ -16,8 +16,10 @@ import unittest
 from unittest.mock import patch
 
 from prototypes.static_tray_v01.canonical import ROOT, json_bytes
-from prototypes.static_tray_v01.format_check import build_manifest, verify_manifest
-from prototypes.static_tray_v01.supervisor import Clock, Stop, run_process, sha256_file
+from prototypes.static_tray_v01.current_host_readback_v01 import (
+    guarded_run_process as run_process, setup_cpu_cohort, finish_cpu_cohort,
+)
+from prototypes.static_tray_v01.supervisor import Clock, Stop, sha256_file
 from tests.test_static_tray_reader_v01 import synthetic, audit
 from prototypes.static_tray_v01 import format_check
 from prototypes.static_tray_v01.transaction import write_new
@@ -101,26 +103,16 @@ class ReadbackCoordinatorSeams(unittest.TestCase):
             format_check.verify_predecessors(lock, "lock-hash", "N02")
 
 
-@unittest.skipUnless(NODE.is_file() and DEPS.is_dir() and HOST.is_file(), "Retained exact Node/readback dependencies are unavailable")
 class ReadbackCPUControls(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        destination = os.environ.get("STATIC_TRAY_READBACK_CPU_OUTPUT")
-        if destination:
-            cls.root = Path(destination)
-            cls.root.mkdir(parents=True, exist_ok=False)
-            cls.temporary = None
-        else:
-            cls.temporary = tempfile.TemporaryDirectory(prefix="static-tray-readback-cpu-")
-            cls.root = Path(cls.temporary.name)
-        cls.manifest_path = cls.root / "supplemental-cpu.json"
-        cls.manifest, cls.manifest_hash = build_manifest(cls.manifest_path, node=NODE, dependencies_root=DEPS,
-            schedule_root=cls.root / "unused-native-schedule", host_inventory=HOST)
-        verify_manifest(cls.manifest_path, schedule_root=cls.root / "unused-native-schedule")
+        # Selection and host observation are separately approved inputs. Missing
+        # prerequisites are visible setup errors, never skipped original methods.
+        setup_cpu_cohort(cls)
 
     @classmethod
     def tearDownClass(cls):
-        if cls.temporary: cls.temporary.cleanup()
+        finish_cpu_cohort(cls)
 
     def check_case(self, case, *, changed_reference=False):
         label = case + ("-changed-reference" if changed_reference else "-positive")
