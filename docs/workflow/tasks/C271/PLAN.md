@@ -107,3 +107,11 @@ The frozen partial handoff and its two matching prompts have been saved and read
 This record is authored before its own publication checks and the external terminal receipt. Delivery therefore remains delivery_confirmation_pending here. The later OntoKin_C271_P06_Delivery_Receipt_2026-11-20.zip will retain the complete postfreeze audit and actual publication/check observations; its saved location will be recorded in PR #274 and issue #273. It supersedes pending delivery observations without changing the frozen development ZIP.
 
 The technical phase is complete. C271 stays open: R03–R05 remain not_done, P02 remains in_progress, and no next development phase begins in this chat.
+
+## P07 host-inspection design — November 20, 2026
+
+Director `c271-p07-522363862012` resumes the retained branch at `3d9d5eacaff25244916f99912ef92947e1582592`, against unchanged main `e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d`. P06's later saved terminal receipt is verified and reconciled; its frozen pending fields retain their historical meaning. The new early recovery ZIP is confirmed saved and read back before substantive design. Exact scope and acceptance are in [P07 PHASE.json](../../../engineering/localized-repair-c271/host-inspection-p07/PHASE.json).
+
+This phase produces only the source-backed design of the missing host-observation/inspection-record authoring entry point and a reviewed staged Gate H qualification plan. Independent input selection must precede any future inspection; an observed host record or self-computed configuration digest cannot approve execution. Preserve the strict current consumer schemas, exact selected runtime and dependencies, original seven methods, direct-host controls, numerical/lifecycle rules, historical failures and source budgets.
+
+Acceptance is independent design review with mandatory findings resolved (or an explicit concrete blocker), applicable documentary/workflow checks, protected-source equality, conditional retained-branch publication and a verified saved partial handoff with matching prompts and separate receipt. No implementation, runtime installation, Node/ldd, original-method execution, full routine, main lease, integration or parent closure is selected. Stop after this design phase's delivery. R01/R02 remain done; R03-R05 remain not_done and parent P02 remains in_progress.
