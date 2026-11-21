@@ -94,6 +94,14 @@ const ORIGINAL_METHOD_IDS = Object.keys(ORIGINAL_BODIES).filter(name => name.inc
 function requireValue(condition, message) {
   if (!condition) throw Error('Current-host binding: ' + message);
 }
+function requireSelection(condition, message) {
+  if (!condition) {
+    const error = Error('CH-SELECTION: ' + message);
+    error.name = 'CurrentHostBindingError';
+    error.code = 'CH-SELECTION';
+    throw error;
+  }
+}
 function plainObject(value, name) {
   requireValue(value !== null && typeof value === 'object' && !Array.isArray(value), name + ' must be an object');
   return value;
@@ -159,12 +167,15 @@ function fileBytes(filename, maximum, binding = null, retain = true, rejectHardl
     requireValue(before.size === binding.size_bytes && '0o' + (before.mode & 0o7777).toString(8) === binding.mode,
       'file size or mode differs: ' + filename);
   }
-  const fd = fs.openSync(filename, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW);
+  const fd = fs.openSync(filename, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
   const parts = [], hash = crypto.createHash('sha256');
   let total = 0;
   try {
     const opened = fs.fstatSync(fd);
-    requireValue(opened.dev === before.dev && opened.ino === before.ino && opened.size === before.size,
+    requireValue(opened.isFile() && (!rejectHardlink || opened.nlink === 1) &&
+      opened.dev === before.dev && opened.ino === before.ino && opened.size === before.size &&
+      opened.mode === before.mode && opened.nlink === before.nlink &&
+      opened.mtimeMs === before.mtimeMs && opened.ctimeMs === before.ctimeMs,
       'file changed while opening: ' + filename);
     const block = Buffer.alloc(1024 * 1024);
     for (;;) {
@@ -176,9 +187,13 @@ function fileBytes(filename, maximum, binding = null, retain = true, rejectHardl
       if (retain) parts.push(Buffer.from(block.subarray(0, size)));
     }
     const after = fs.fstatSync(fd), named = fs.lstatSync(filename);
-    requireValue(total === before.size && after.dev === before.dev && after.ino === before.ino &&
+    requireValue(total === before.size && after.isFile() && named.isFile() &&
+      after.nlink === before.nlink && named.nlink === before.nlink &&
+      after.dev === before.dev && after.ino === before.ino &&
       after.size === before.size && after.mode === before.mode && after.mtimeMs === before.mtimeMs &&
       after.ctimeMs === before.ctimeMs && named.dev === before.dev && named.ino === before.ino &&
+      named.size === before.size && named.mode === before.mode && named.mtimeMs === before.mtimeMs &&
+      named.ctimeMs === before.ctimeMs &&
       !named.isSymbolicLink() && fs.realpathSync(filename) === filename, 'file changed during read: ' + filename);
   } finally { fs.closeSync(fd); }
   const observed = hash.digest('hex');
@@ -341,9 +356,18 @@ function verifyDependencies(config, sourceInventory) {
 }
 
 function elfInterpreter(filename) {
-  const fd = fs.openSync(filename, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW);
+  absolute(filename, 'ELF path');
+  const before = fs.lstatSync(filename);
+  requireValue(before.isFile() && !before.isSymbolicLink() && fs.realpathSync(filename) === filename,
+    'ELF file is not canonical and regular');
+  const sameFile = info => info.isFile() && info.dev === before.dev && info.ino === before.ino &&
+    info.size === before.size && info.mode === before.mode && info.nlink === before.nlink &&
+    info.mtimeMs === before.mtimeMs && info.ctimeMs === before.ctimeMs;
+  const fd = fs.openSync(filename, fs.constants.O_RDONLY | fs.constants.O_NOFOLLOW | fs.constants.O_NONBLOCK);
   try {
-    const size = fs.fstatSync(fd).size;
+    const opened = fs.fstatSync(fd);
+    requireValue(sameFile(opened), 'ELF file changed while opening');
+    const size = opened.size;
     const read = (offset, length) => {
       requireValue(Number.isSafeInteger(offset) && Number.isSafeInteger(length) && offset >= 0 && length >= 0 &&
         length <= 65536 && offset + length <= size, 'ELF field exceeds file bounds');
@@ -373,7 +397,11 @@ function elfInterpreter(filename) {
       requireValue(bytes[length - 1] === 0 && !bytes.subarray(0, -1).includes(0) && bytes.subarray(0, -1).every(c => c < 128), 'invalid ELF interpreter string');
       names.push(bytes.subarray(0, -1).toString('ascii'));
     }
-    requireValue(names.length === 1, 'expected exactly one ELF interpreter'); return names[0];
+    requireValue(names.length === 1, 'expected exactly one ELF interpreter');
+    const after = fs.fstatSync(fd), named = fs.lstatSync(filename);
+    requireValue(sameFile(after) && sameFile(named) && !named.isSymbolicLink() &&
+      fs.realpathSync(filename) === filename, 'ELF file changed during inspection');
+    return names[0];
   } finally { fs.closeSync(fd); }
 }
 
@@ -560,9 +588,11 @@ function verifyWorkspace(config) {
 }
 
 function approvedEnvelope(args) {
-  requireValue(args.length === 4 && args[0] === '--expected-config-sha256' && args[2] === '--job',
+  requireSelection(args.length === 4 && args[0] === '--expected-config-sha256' && args[2] === '--job',
     'expected exactly --expected-config-sha256 DIGEST --job FILE');
-  const expectedDigest = digest(args[1], 'externally selected configuration digest');
+  const expectedDigest = args[1];
+  requireSelection(typeof expectedDigest === 'string' && SHA_PATTERN.test(expectedDigest),
+    'externally selected configuration digest is not a lowercase SHA-256');
   const jobPath = absolute(args[3], 'job');
   const job = strictJSON(fileBytes(jobPath, 32768), 'job');
   exactKeys(job, JOB_KEYS, 'job');
@@ -572,10 +602,10 @@ function approvedEnvelope(args) {
   requireValue(sha(manifestBytes) === job.supplemental_manifest_sha256, 'job manifest bytes differ');
   const manifest = strictJSON(manifestBytes, 'manifest');
   exactKeys(manifest.selection, ['path','sha256'], 'manifest selection');
-  requireValue(manifest.selection.sha256 === expectedDigest, 'manifest digest is not external approval');
+  requireSelection(manifest.selection.sha256 === expectedDigest, 'manifest digest is not external approval');
   const configPath = absolute(manifest.selection.path, 'configuration');
   const configBytes = fileBytes(configPath, 1024 * 1024);
-  requireValue(sha(configBytes) === expectedDigest, 'configuration is not approved by the external digest');
+  requireSelection(sha(configBytes) === expectedDigest, 'configuration is not approved by the external digest');
   const config = strictJSON(configBytes, 'configuration');
   exactKeys(config, CONFIG_KEYS, 'configuration');
   requireValue(config.schema === CONFIG_SCHEMA && config.contract === CONTRACT, 'wrong configuration contract/schema');
@@ -597,12 +627,13 @@ function approvedEnvelope(args) {
 
 function verifyBootstrap(envelope, manifest) {
   const {config, expectedDigest} = envelope;
-  requireValue(sha(fileBytes(envelope.configPath, 1024 * 1024)) === expectedDigest, 'configuration changed after selection');
+  requireSelection(sha(fileBytes(envelope.configPath, 1024 * 1024)) === expectedDigest, 'configuration changed after selection');
   exactKeys(manifest, MANIFEST_KEYS, 'manifest');
   requireValue(manifest.schema === MANIFEST_SCHEMA && manifest.contract === CONTRACT && manifest.profile === 'ontokin.static-tray/0.1.0' &&
     manifest.scope === 'Three original synthetic CPU cases only; twelve native slots are structural, never execution authority',
     'manifest schema/profile/scope differs');
-  same(manifest.selection, {path:envelope.configPath, sha256:expectedDigest}, 'manifest approval selection');
+  requireSelection(stable(manifest.selection) === stable({path:envelope.configPath, sha256:expectedDigest}),
+    'manifest approval selection differs');
   for (const field of ['source','host','methods','dependencies']) same(manifest[field], config[field], 'manifest ' + field);
   same(manifest.limits, LIMITS, 'manifest limits'); same(manifest.environment, ENVIRONMENT, 'manifest environment');
   same(manifest.validator_options, VALIDATOR_OPTIONS, 'validator options'); same(manifest.three_options, THREE_OPTIONS, 'Three options');
