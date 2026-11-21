@@ -7,3 +7,7 @@ The [phase](../../../engineering/localized-repair-c271/validation-recovery-20261
 Root owns canonical state, Git index/publication and saves. `/root/validation_prepare` owns the minimal tool/test correction and preparation evidence, `/root/intake_review` owns independent review, and `/root/package_builder` owns scratch archives. No nested fanout. The fresh checkout has no surviving unpublished local work; the prior unpublished equivalent commit and historical process unknowns remain preserved in the incoming handoff.
 
 This phase ends at R03 acceptance or a concrete blocker, followed by verified saved partial delivery. Integration and parent closure are excluded. Required failures are never waived by focused tests or archive audits.
+
+## P03 observed technical boundary
+
+The minimal copy repair passed 31 focused methods and the actual isolated documentation check on published clean candidate `fea1aa6fb3712c5283dde197295b2d3cbf925d36`. All seven Python pins were prepared. Unchanged C225 preflight refused the available Node binary; an official same-version download also differs from the exact historical pin. Bounded retained-archive inspection identified no matching executable. Full routine remains not_run in P03, with original P02 failures preserved. Technical work stops at this prerequisite blocker; only review, publication and verified partial delivery remain. Parent R03–R05 remain unmet, and no integration is authorized in this phase. See [outcome](../../../engineering/localized-repair-c271/validation-recovery-20261120/PHASE-OUTCOME.json).

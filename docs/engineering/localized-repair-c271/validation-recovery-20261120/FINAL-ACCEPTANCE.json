@@ -1,0 +1,132 @@
+{
+  "schema": "ontokin.c271.p03-independent-final-acceptance/1",
+  "reviewer": "/root/intake_review",
+  "recorded_at_utc": "2026-11-21T00:18:58.063320+00:00",
+  "candidate": {
+    "commit": "fea1aa6fb3712c5283dde197295b2d3cbf925d36",
+    "tree": "d4fe9aa7f2166a46d7a141ad001b13c71d43a6b6",
+    "parent": "72084140cd3ae64defc698e410f8806a8b338b72"
+  },
+  "verdict": "not_eligible_for_R03_acceptance",
+  "minimal_repair_approved_for_retained_partial": true,
+  "partial_handoff_supported": true,
+  "R03_accepted": false,
+  "integration_approved": false,
+  "parent_closure_approved": false,
+  "mandatory_code_findings": [],
+  "criteria": [
+    {
+      "id": "copy_repair",
+      "result": "passed",
+      "evidence": [
+        "../candidate/CANDIDATE-AUDIT.json",
+        "EVIDENCE-AUDIT.json"
+      ],
+      "meaning": "Only inventories and one regression test changed; actual candidate isolated documentation passed."
+    },
+    {
+      "id": "focused_regression",
+      "result": "passed",
+      "methods": 31,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "evidence": "EVIDENCE-AUDIT.json"
+    },
+    {
+      "id": "python_pins",
+      "result": "passed_for_preparation",
+      "packages": 7,
+      "evidence": "../candidate/INSTALLED-PYTHON-BINDINGS.json"
+    },
+    {
+      "id": "historical_runtime_prerequisites",
+      "result": "failed",
+      "evidence": "/workspace/scratch/7010345bc259/validation/readback-preflight.json"
+    },
+    {
+      "id": "complete_required_routine",
+      "result": "not_run_in_P03",
+      "prior_P02_result": "failed_and_preserved",
+      "evidence": "/workspace/scratch/7010345bc259/validation/CHECKS.json"
+    },
+    {
+      "id": "working_blocked_records",
+      "result": "passed_with_finalization_pending",
+      "evidence": "WORKING-RECORD-REVIEW.json"
+    },
+    {
+      "id": "final_saved_phase_delivery",
+      "result": "not_reviewed_pending"
+    }
+  ],
+  "mandatory_unresolved_findings": [
+    {
+      "id": "C271-P03-B01-exact-node-build",
+      "description": "Exact historical Node prerequisite is unresolved. The unchanged helper refused the current binary; downloaded same-version bytes also differ.",
+      "required_node_bytes": 126939688,
+      "required_node_sha256": "61ab14cd750fc24d5db53490ec5fc40f756e4b6e136b78cf7004265471d9bd1d",
+      "evidence": [
+        "EVIDENCE-AUDIT.json",
+        "../candidate/CANDIDATE-AUDIT.json"
+      ]
+    },
+    {
+      "id": "C271-P03-B02-complete-routine-unmet",
+      "description": "Required complete routine result remains unmet. P03 did not launch it with unqualified prerequisites; P02 unit timeout and failed aggregate remain preserved and unwaived.",
+      "evidence": [
+        "EVIDENCE-AUDIT.json",
+        "/workspace/scratch/7010345bc259/validation/CHECKS.json"
+      ]
+    }
+  ],
+  "historical_finding_disposition": {
+    "C271-P02-RV-001": "Unresolved: no completed successful full-suite outcome replaces the original 900-second timeout.",
+    "C271-P02-RV-002": "Demonstrated copy defect repaired and actual isolated documents passed at this candidate; original failure remains immutable and overall routine acceptance is still unmet."
+  },
+  "evidence_review": {
+    "final_predicates": 73,
+    "failed_final_predicates": 0,
+    "candidate_inventory_files_verified": 18811,
+    "working_record_predicates": 18,
+    "working_record_failed_predicates": 0,
+    "prior_working_review_predicates": 59,
+    "counts_are_product_tests": false,
+    "checker_attempt_history": "REVIEW-ATTEMPTS.json"
+  },
+  "preservation": {
+    "original_P02_failure_archive_unchanged": true,
+    "all_existing_tests_preserved": true,
+    "frozen_controls_and_pins_unchanged": true,
+    "source_operation_limit": 100000,
+    "source_time_limit_ms": 30000
+  },
+  "remote_evidence": {
+    "director_observed_pr274_head": "fea1aa6fb3712c5283dde197295b2d3cbf925d36",
+    "independent_remote_read_by_this_worker": false,
+    "receipt": "/workspace/scratch/7010345bc259/session/PUBLISH-01-READBACK.json",
+    "note": "Director successful remote readback is durably recorded and reconciles the preserved pending intent; local source/object identity independently verified."
+  },
+  "state_boundary": {
+    "parent": "blocked_open",
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done",
+    "branch": "work/c271-missing-import-digest-control",
+    "branch_disposition": "retained_unmerged",
+    "PR274": "open_draft_unmerged",
+    "issue273": "open",
+    "integration_performed": false,
+    "main_lease_held": false
+  },
+  "next_action": "Complete truthful partial-state publication, fresh applicable record checks and verified saved P03 handoff/receipt, then stop. A fresh bounded phase must qualify exact retained prerequisites or a separately reviewed current-host approach before any complete routine attempt.",
+  "limits": [
+    "No independent product replay by reviewer.",
+    "Local Git objects, complete copied inventory and durable Director remote readback were inspected; no remote tool was invoked by this reviewer.",
+    "Prepared working records are not a later published revision.",
+    "Final ZIP/save/receipt is not reviewed here.",
+    "No full H22/C260, product, release, compatibility, native or comparative qualification."
+  ]
+}

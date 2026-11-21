@@ -1,0 +1,221 @@
+{
+  "source": {
+    "available": true,
+    "local_head": "fea1aa6fb3712c5283dde197295b2d3cbf925d36",
+    "local_tree": "d4fe9aa7f2166a46d7a141ad001b13c71d43a6b6",
+    "tracked_worktree_status": "",
+    "untracked_source_files": [],
+    "head_is_base_revision": true,
+    "source_inventory_includes_untracked_files": true,
+    "remote_head_verified": false
+  },
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "python_executable": "/workspace/scratch/7010345bc259/validation_env/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "checks": [
+    {
+      "name": "focused-local-driver",
+      "command": [
+        "/workspace/scratch/7010345bc259/validation_env/bin/python",
+        "-B",
+        "-m",
+        "unittest",
+        "tests.test_local_checks",
+        "-v"
+      ],
+      "cwd": "/workspace/scratch/7010345bc259/OntoKin",
+      "started_at_utc": "2026-11-21T00:12:58.531685+00:00",
+      "seconds": 2.083,
+      "returncode": 0,
+      "stdout": "focused-local-driver.stdout.log",
+      "stderr": "focused-local-driver.stderr.log",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c29667944f5fe6ab5a4910afee5c5510407773f0009458cb580e8800b689b4f8"
+    },
+    {
+      "name": "workflow",
+      "command": [
+        "/workspace/scratch/7010345bc259/validation_env/bin/python",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/7010345bc259/OntoKin",
+      "started_at_utc": "2026-11-21T00:13:00.615380+00:00",
+      "seconds": 0.074,
+      "returncode": 0,
+      "stdout": "workflow.stdout.log",
+      "stderr": "workflow.stderr.log",
+      "stdout_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "native-reader-setup",
+      "command": [
+        "/workspace/scratch/7010345bc259/validation_env/bin/python",
+        "-I",
+        "-B",
+        "tools/check_native_reader_setup.py"
+      ],
+      "cwd": "/workspace/scratch/7010345bc259/OntoKin",
+      "started_at_utc": "2026-11-21T00:13:00.689815+00:00",
+      "seconds": 0.028,
+      "returncode": 0,
+      "stdout": "native-reader-setup.stdout.log",
+      "stderr": "native-reader-setup.stderr.log",
+      "stdout_sha256": "5c80245ab5424efe1d0cca0f408956ed0cb9698ff52b40ba51ff10daa7e760b2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "isolated-documents",
+      "command": [
+        "/workspace/scratch/7010345bc259/validation_env/bin/python",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/7010345bc259/validation/isolated-documents/workspace",
+      "started_at_utc": "2026-11-21T00:13:11.983941+00:00",
+      "seconds": 2.197,
+      "returncode": 0,
+      "stdout": "isolated-documents.stdout.log",
+      "stderr": "isolated-documents.stderr.log",
+      "stdout_sha256": "34320aa13b82caf0a4c309267b7961ea28633ff055e46ffd43fc30d887276165",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "readback-prerequisites",
+      "command": [
+        "/workspace/scratch/7010345bc259/validation_env/bin/python",
+        "-B",
+        "docs/engineering/readback-prerequisites-c225/restore_readback_prerequisites.py",
+        "--repo",
+        "/workspace/scratch/7010345bc259/OntoKin",
+        "--report",
+        "/workspace/scratch/7010345bc259/validation/readback-preflight.json"
+      ],
+      "cwd": "/workspace/scratch/7010345bc259/OntoKin",
+      "started_at_utc": "2026-11-21T00:13:14.183888+00:00",
+      "seconds": 0.204,
+      "returncode": 1,
+      "stdout": "readback-prerequisites.stdout.log",
+      "stderr": "readback-prerequisites.stderr.log",
+      "stdout_sha256": "a88f0d1eeee186d0ef00755f204fdadb2739da45c21055e63cc65a6b2a6e6ff2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scope": "Focused repair verification and prerequisite diagnosis; not a complete routine driver run",
+  "copy_verification": {
+    "required_files": [
+      {
+        "path": "CHATGPT-START-HERE.md",
+        "bytes": 2665,
+        "sha256": "99a69a4cfa633fb515ca08725b43b6193051249c279a4b31a9412d56e6593ce0"
+      },
+      {
+        "path": "ROLE.md",
+        "bytes": 1683,
+        "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf"
+      },
+      {
+        "path": ".agents/skills/ontokin-session/SKILL.md",
+        "bytes": 1346,
+        "sha256": "4ce5917b05f94b1676e81102cc8518371e509dc8ac4a4f6bcfdf3881faacfc13"
+      },
+      {
+        "path": ".agents/skills/ontokin-delivery/SKILL.md",
+        "bytes": 1277,
+        "sha256": "7b7300a46e4f966314b74707a414f5fc72425c8eab4464cf12b20def9697529e"
+      },
+      {
+        "path": ".agents/skills/ontokin-learning/SKILL.md",
+        "bytes": 2478,
+        "sha256": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de"
+      }
+    ],
+    "workspace_git": {
+      "available": true,
+      "local_head": "fea1aa6fb3712c5283dde197295b2d3cbf925d36",
+      "local_tree": "d4fe9aa7f2166a46d7a141ad001b13c71d43a6b6",
+      "tracked_worktree_status": "",
+      "untracked_source_files": [],
+      "head_is_base_revision": true,
+      "source_inventory_includes_untracked_files": true,
+      "remote_head_verified": false
+    },
+    "source_index_independent": true
+  },
+  "readback_preflight": {
+    "schema": "ontokin.c225.retained-readback-preparation/0.1",
+    "recorded_at_utc": "2026-11-21T00:13:14.229010+00:00",
+    "apply_requested": false,
+    "historical_host_inventory_only": true,
+    "source_repository": "/workspace/scratch/7010345bc259/OntoKin",
+    "targets": {
+      "dependencies": "/workspace/scratch/801d9d641f68/incoming-audit/work/prior-replay/evidence/c195-validation/receiving",
+      "host": "/workspace/scratch/801d9d641f68/c199-independent-preflight/HOST-RUNTIME-INVENTORY.json"
+    },
+    "operation_log": [],
+    "execution_counts": {
+      "node": 0,
+      "ldd": 0,
+      "test_methods": 0,
+      "native": 0,
+      "product_source": 0
+    },
+    "source_commit": "fea1aa6fb3712c5283dde197295b2d3cbf925d36",
+    "source_tree": "d4fe9aa7f2166a46d7a141ad001b13c71d43a6b6",
+    "source_clean": true,
+    "source_bindings": {
+      "docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json": {
+        "sha256": "21fd6bad8738ed51d4ced8036a0fcde5dd046823f55f71de52b9b81df659ccd5",
+        "size_bytes": 19901,
+        "mode": "0o644"
+      },
+      "docs/engineering/ownership-recovery-c195/evidence/recorded-evidence.tar.xz": {
+        "sha256": "b1e54a6cfef133f7004b1988c90bc718fc954409843c2bcac3772d42e904a0c9",
+        "size_bytes": 2611764,
+        "mode": "0o644"
+      },
+      "docs/engineering/static-tray-qualification-c199/evidence/preflight/HOST-RUNTIME-INVENTORY.json": {
+        "sha256": "2ed86412f09c74f5d3fb038f50e6417872b8eace0f89d7f168c79923efb14994",
+        "size_bytes": 2706604,
+        "mode": "0o644"
+      },
+      "tests/test_static_tray_readback_v01.py": {
+        "sha256": "2f0abd812aa668b7abf9e249315acdb9c0fd175adb59672ab1c454679d494394",
+        "size_bytes": 9812,
+        "mode": "0o644"
+      },
+      "prototypes/static_tray_v01/format_check.py": {
+        "sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447",
+        "size_bytes": 15959,
+        "mode": "0o644"
+      },
+      "prototypes/static_tray_v01/readback.mjs": {
+        "sha256": "156c988ffc478adafe59c495a07e0a48f5ac77c12829d85d147838578b523b4c",
+        "size_bytes": 11537,
+        "mode": "0o644"
+      }
+    },
+    "passed": false,
+    "outcome": "REFUSED_OR_FAILED",
+    "error": "ValueError: Binding differs: /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "rollback": []
+  },
+  "source_after": {
+    "available": true,
+    "local_head": "fea1aa6fb3712c5283dde197295b2d3cbf925d36",
+    "local_tree": "d4fe9aa7f2166a46d7a141ad001b13c71d43a6b6",
+    "tracked_worktree_status": "",
+    "untracked_source_files": [],
+    "head_is_base_revision": true,
+    "source_inventory_includes_untracked_files": true,
+    "remote_head_verified": false
+  },
+  "source_unchanged": true,
+  "required_routine": {
+    "status": "not_run",
+    "reason": "Exact historical Node runtime binding unresolved; no unprepared aggregate attempt or skipped prerequisite waiver",
+    "prior_P02_result": "failed and preserved"
+  }
+}

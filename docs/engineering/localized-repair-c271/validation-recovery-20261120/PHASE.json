@@ -21,7 +21,7 @@
     "Per-source limits remain 100000 operations/30000 ms",
     "No hosted CI, native apps/model trials or other H groups"
   ],
-  "status": "in_progress",
+  "status": "blocked_pending_saved_partial_handoff",
   "main_lease_held": false,
   "early_recovery": "confirmed",
   "early_save_confirmed": true,
@@ -30,5 +30,18 @@
     "/root/validation_prepare": "Validation prerequisites and minimal copy repair with focused coverage",
     "/root/intake_review": "Independent incoming and repaired-candidate review",
     "/root/package_builder": "Early/final archive preparation and verification"
-  }
+  },
+  "parent_status": "blocked",
+  "code_candidate": "fea1aa6fb3712c5283dde197295b2d3cbf925d36",
+  "code_candidate_tree": "d4fe9aa7f2166a46d7a141ad001b13c71d43a6b6",
+  "technical_work_stopped": true,
+  "full_routine_executed": false,
+  "independent_r03_accepted": false,
+  "blocking_findings": [
+    "C271-P03-B01-exact-node-build",
+    "C271-P03-B02-complete-routine-unmet"
+  ],
+  "next_action": "In a fresh bounded C271 validation-preparation phase, obtain the authenticated historical Node build with SHA-256 61ab14cd750fc24d5db53490ec5fc40f756e4b6e136b78cf7004265471d9bd1d (126939688 bytes) and establish unchanged C225 runtime/path/alias checks. If those bytes cannot be recovered, define a separately reviewed current-host qualification approach while preserving all frozen historical records and expectations. Only after prerequisites pass, run the complete required routine driver with a justified 3600-second per-command timeout and obtain independent R03 acceptance. Retain per-source limits and every required test; no blind rerun or pin replacement.",
+  "independent_review_complete": true,
+  "independent_acceptance_record": "docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json"
 }

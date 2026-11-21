@@ -1,0 +1,33 @@
+{
+  "source_base": "fea1aa6fb3712c5283dde197295b2d3cbf925d36",
+  "scope": "Working-tree record preflight after evidence assembly; clean published-source checks follow",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "returncode": 0,
+      "seconds": 0.118,
+      "log": "workflow.log",
+      "bytes": 148,
+      "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "returncode": 0,
+      "seconds": 2.501,
+      "log": "documentation.log",
+      "bytes": 6608,
+      "sha256": "6b20d40e3629ae2746bc505c24935a05e0580f8991295ba1de480c031ff865df"
+    }
+  ]
+}
