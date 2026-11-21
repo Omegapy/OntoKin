@@ -1,0 +1,182 @@
+{
+  "schema": "ontokin.c271.p06-execution-checks/1",
+  "recorded_at_utc": "2026-11-21T05:26:02.599203+00:00",
+  "technical_candidate": {
+    "commit": "113e1b855d97773307c8c2fced00e886a809bce1",
+    "tree": "5e3dd09d054dc149a5ca322160a14a1d64d67b2c"
+  },
+  "adversarial_candidate": {
+    "commit": "d76e76d9d432d3a74e69347e817eb1ae7a57de66",
+    "tree": "1aa3352b28d7c5e9a82ecc8084b5c15e0bdddfe9"
+  },
+  "focused_python_tests": [
+    {
+      "group": "test_local_checks.py",
+      "candidate": "d76e76d9d432d3a74e69347e817eb1ae7a57de66",
+      "methods": 31,
+      "passed": true,
+      "skips": 0,
+      "log": {
+        "audit_path": "audit/root-focused/attempt-001/test_local_checks.py.log",
+        "sha256": "5aca39c35a0ac3fcce08eb7da3b1d3414ff48213d62f2f3cdaadd89b38e7f34f",
+        "size_bytes": 5323
+      }
+    },
+    {
+      "group": "test_current_host_readback_provider.py",
+      "candidate": "d76e76d9d432d3a74e69347e817eb1ae7a57de66",
+      "methods": 25,
+      "passed": true,
+      "skips": 0,
+      "log": {
+        "audit_path": "audit/root-focused/attempt-001/test_current_host_readback_provider.py.log",
+        "sha256": "cca92b6c7e94e3a1e0b496ebfe20b83fd0ea2629e27392becc2d0cc6f1361e2a",
+        "size_bytes": 4328
+      }
+    },
+    {
+      "group": "test_current_host_readback_driver.py",
+      "candidate": "113e1b855d97773307c8c2fced00e886a809bce1",
+      "methods": 10,
+      "passed": true,
+      "skips": 0,
+      "log": {
+        "audit_path": "audit/root-focused/attempt-002/driver-tests.log",
+        "sha256": "e74670fd38ed975d6b66bcc4d099bbf9cf5ad43bf0c983782afb5a981fd0d8ce",
+        "size_bytes": 2077
+      }
+    }
+  ],
+  "total_distinct_focused_methods_passed": 66,
+  "candidate_delta": "Two platform metadata fixture lines only; production bytes,10 test identities and39 assertions unchanged. Earlier results remain attributed to the exact revision executed.",
+  "delta_review": {
+    "audit_path": "audit/root-focused/attempt-002/INDEPENDENT-REVIEW.json",
+    "sha256": "c3b90c71b63d9832d242341a8b654274a0f26f5a96b91d0d2929c46d47313c35",
+    "size_bytes": 2817
+  },
+  "independent_controls": {
+    "original_ids": 65,
+    "selected_original_ids": 62,
+    "selected_supplemental_ids": 2,
+    "passing_selected_ids": 64,
+    "effective_passing_variants": 145,
+    "not_run_ids": [
+      "P06-H01",
+      "P06-H02",
+      "P06-H03"
+    ],
+    "counts": {
+      "parent_passed": 55,
+      "workspace_passed": 89,
+      "corrected_adapter_passed": 1,
+      "final_source_rebind_passed": 2
+    },
+    "frozen_plan": {
+      "audit_path": "audit/independent-controls/CONTROL-PLAN.json",
+      "sha256": "cc10a288a15c3ac8d1a7deca2b2eb5961b3e2a0809fe0820c6851b3463b656a1",
+      "size_bytes": 49519
+    },
+    "final_rebind": {
+      "audit_path": "audit/independent-controls/runs/final-candidate-003/final-rebind-RESULTS.json",
+      "sha256": "a36ca85e969cd8e12160378ff0dc924890f7fa5537019cfab3d12fdbf019fe2b",
+      "size_bytes": 4996
+    }
+  },
+  "original_readback_obligations": {
+    "method_bodies_executed": 0,
+    "coordinator_methods_executed": 0,
+    "cpu_methods_executed": 0,
+    "loader_ids_enumerated": 7,
+    "function_helper_ast_identities_preserved": 9,
+    "protected_js_segments": 15,
+    "protected_historical_files": 15,
+    "enumeration_is_execution": false
+  },
+  "actual_final_driver_copy": {
+    "files": 18941,
+    "provider_derivation_executed": true,
+    "only_mock": "provider._verify_host",
+    "checker_starts": 0,
+    "complete_immutable_equality": true
+  },
+  "documentary_checks_at_candidate_002": [
+    {
+      "name": "workflow",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "log_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "name": "documents",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "log_sha256": "126ebac4d880e3aad5222f964c9181d38b4f476090ea7ad0216ecae9fc635ada"
+    },
+    {
+      "name": "whitespace",
+      "argv": [
+        "git",
+        "diff",
+        "--check",
+        "80a344d3c1f6a1cda490ab1bd276decb8a13f5bd",
+        "HEAD"
+      ],
+      "passed": true,
+      "exit_code": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "preserved_failures": [
+    {
+      "audit_path": "audit/record-checks/initial-declaration-attempt-001/RESULT.json",
+      "sha256": "577eaa316a35558c14375f829cabc9c404868f8591624ed1cd04a1d999fc142a",
+      "size_bytes": 280
+    },
+    {
+      "audit_path": "audit/root-focused/attempt-001/CHECKS.json",
+      "sha256": "fc7175d83e63c42bd091af14ff1adfa29a6e55f65b6717d978159ce074cfca9c",
+      "size_bytes": 5049
+    },
+    {
+      "audit_path": "audit/root-focused/attempt-001/test_current_host_readback_driver.py.log",
+      "sha256": "4407cc56329e8e52bae7a5aeb125cdd8d7d311d3f9321b0a693a23daadf2694d",
+      "size_bytes": 17906
+    },
+    {
+      "audit_path": "audit/independent-controls/runs/attempt-001/parent-RESULTS.json",
+      "sha256": "8861b5861501192e20b22d36d2244bddd95238198a784fb8cf35453532c866af",
+      "size_bytes": 49642
+    },
+    {
+      "audit_path": "audit/candidate-003/LOCAL-FETCH-ATTEMPT-001.json",
+      "sha256": "cf88e23addd51850fd16bdb04e24b2635448179eec4bd63d99f7ef76a71d7371",
+      "size_bytes": 534
+    }
+  ],
+  "limits": {
+    "node_executions": 0,
+    "ldd_executions": 0,
+    "actual_runtime_installations": 0,
+    "host_qualified": false,
+    "javascript_syntax_executed": false,
+    "original_seven_method_suite_executed": false,
+    "full_discovery_executed": false,
+    "full_routine_executed": false,
+    "native_or_model_trials": false,
+    "hosted_actions_invoked": false,
+    "main_integration": false,
+    "R03_accepted": false
+  },
+  "raw_evidence_location": "Every audit_path is preserved directly or by an exact original-path recovery mapping in the saved P06 handoff."
+}

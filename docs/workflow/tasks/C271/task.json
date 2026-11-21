@@ -50,7 +50,10 @@
         "docs/engineering/localized-repair-c271/current-host-p05/ADOPTION.json",
         "docs/engineering/localized-repair-c271/current-host-p05/PHASE-OUTCOME.json",
         "docs/engineering/localized-repair-c271/current-host-p05/review/DESIGN-REVIEW.json",
-        "docs/engineering/localized-repair-c271/current-host-p05/published-source-checks/CHECKS.json"
+        "docs/engineering/localized-repair-c271/current-host-p05/published-source-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/current-host-p06/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/current-host-p06/EXECUTION-CHECKS.json",
+        "docs/engineering/localized-repair-c271/current-host-p06/INDEPENDENT-REVIEW.json"
       ]
     },
     {
@@ -74,7 +77,8 @@
         "docs/engineering/localized-repair-c271/runtime-recovery-p04/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json",
         "docs/engineering/localized-repair-c271/current-host-p05/EARLY-RECOVERY-RECEIPT.json",
-        "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
+        "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/current-host-p06/EARLY-RECOVERY-RECEIPT.json"
       ]
     }
   ],
@@ -322,6 +326,17 @@
         "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
       ],
       "scope": "P05 partial delivery only. Parent R03-R05 and complete routine/integration remain open."
+    },
+    {
+      "name": "P06 focused implementation verification and independent review",
+      "command": "Exact frozen commands and candidate-attributed controls in current-host-p06/EXECUTION-CHECKS.json",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p06/EXECUTION-CHECKS.json",
+        "docs/engineering/localized-repair-c271/current-host-p06/INDEPENDENT-REVIEW.json"
+      ],
+      "scope": "P06 only: 66 focused methods, 64 selected controls, 145 effective variants, 2 final source checks; original seven outcomes/full routine/R03 remain unrun or unaccepted."
     }
   ],
   "completion": {
@@ -335,9 +350,10 @@
       "docs/engineering/localized-repair-c271/validation-recovery-20261120/P03-DELIVERY.json",
       "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json",
       "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
-    ]
+    ],
+    "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1"
   },
-  "next_action": "Complete only P06 adopted provider/probe/safe-preparer and original test/driver bindings; freeze independent controls before focused execution, preserve exact original method/helper bodies and historical pins, obtain independent review and verified saved partial handoff. Actual host qualification, complete routine/R03 acceptance and integration remain later gates.",
+  "next_action": "Finish only P06 record publication, verified partial handoff/prompts and separate receipt, then stop. In a fresh bounded chat, reconcile the saved P06 receipt and live retained branch, confirm early recovery, then design/review the missing Gate H host-observation and inspection-record authoring entry point and freeze the actual-host qualification plan before any Node/ldd execution. Original seven-method outcomes, the complete routine/R03, R04 integration and R05 closure remain separate gates.",
   "session_phase": {
     "schema": "ontokin.c271.p06-phase/1",
     "task": "C271",
@@ -377,7 +393,7 @@
       "P01": "done",
       "P02": "in_progress"
     },
-    "status": "in_progress",
+    "status": "technical_complete_delivery_pending",
     "early_recovery": "confirmed",
     "main_lease_held": false,
     "integration_allowed": false,
@@ -391,10 +407,19 @@
       "/root/package_builder": "Early/final packages; independent argv reading and disjoint JavaScript probe"
     },
     "approval_channel_resolution": "Explicitly bound --expected-config-sha256 DIGEST before terminal --job FILE; permitted schema/bootstrap adaptation, external expected digest cannot originate solely in manifest",
-    "technical_work_stopped": false,
-    "implementation_performed": false,
+    "technical_work_stopped": true,
+    "implementation_performed": true,
     "runtime_qualified": false,
-    "independent_r03_accepted": false
+    "independent_r03_accepted": false,
+    "candidate_disposition": "Independent P06-only acceptance; actual host and parent gates remain open",
+    "independent_review_accepted": true,
+    "mandatory_open_findings": 0,
+    "technical_candidate": {
+      "commit": "113e1b855d97773307c8c2fced00e886a809bce1",
+      "tree": "5e3dd09d054dc149a5ca322160a14a1d64d67b2c"
+    },
+    "outcome": "docs/engineering/localized-repair-c271/current-host-p06/PHASE-OUTCOME.json",
+    "next_development_action": "In a fresh bounded chat, reconcile the saved P06 receipt and live retained branch, confirm early recovery, then design/review the missing Gate H host-observation and inspection-record authoring entry point and freeze the actual-host qualification plan before any Node/ldd execution. Original seven-method outcomes, the complete routine/R03, R04 integration and R05 closure remain separate gates."
   },
   "delivery": {
     "required": true,
