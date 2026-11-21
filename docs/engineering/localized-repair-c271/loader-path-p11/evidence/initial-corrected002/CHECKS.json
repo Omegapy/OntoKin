@@ -1,0 +1,78 @@
+{
+  "scope": "P11-corrected-records-targeted",
+  "started_at_utc": "2026-11-21T22:54:08.307988+00:00",
+  "head": "e0119f376441fee0fc3956852ac63110ab141011",
+  "head_tree": "d976520ede52f9227ce2df5bab974d6e1bc2ef79",
+  "index_tree": "684f67e4a12ac8c135bf119e5f1726f244fc147c",
+  "status_before": "A  docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json\nA  docs/engineering/localized-repair-c271/loader-path-p11/PHASE.json\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/CHECKS.json\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/documents.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/documents.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/protected_source.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/protected_source.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/whitespace.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/whitespace.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/workflow.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/workflow.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/CHECKS.json\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/documents.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/documents.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/protected_source.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/protected_source.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/whitespace.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/whitespace.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/workflow.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/workflow.stdout.txt\nM  docs/workflow/CURRENT.json\nA  docs/workflow/tasks/C271/P11-SESSION.md\nM  docs/workflow/tasks/C271/PLAN.md\nM  docs/workflow/tasks/C271/REQUIREMENTS.md\nM  docs/workflow/tasks/C271/task.json",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ],
+      "cwd": "/workspace/scratch/2ad494d5da19/OntoKin",
+      "started_at_utc": "2026-11-21T22:54:08.383149+00:00",
+      "ended_at_utc": "2026-11-21T22:54:08.472570+00:00",
+      "returncode": 0,
+      "stdout": "session_evidence/checks/initial-corrected002/workflow.stdout.txt",
+      "stdout_sha256": "dbcaa1cd44885eb989c54d37bfd3c48daab47ee82fdb38bac1efe0aba902aa55",
+      "stderr": "session_evidence/checks/initial-corrected002/workflow.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "cwd": "/workspace/scratch/2ad494d5da19/OntoKin",
+      "started_at_utc": "2026-11-21T22:54:08.472824+00:00",
+      "ended_at_utc": "2026-11-21T22:54:08.479478+00:00",
+      "returncode": 0,
+      "stdout": "session_evidence/checks/initial-corrected002/whitespace.stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "session_evidence/checks/initial-corrected002/whitespace.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "protected_source",
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "e0119f376441fee0fc3956852ac63110ab141011",
+        "--",
+        "prototypes",
+        "ontokin",
+        "tests",
+        "tools",
+        ".github"
+      ],
+      "cwd": "/workspace/scratch/2ad494d5da19/OntoKin",
+      "started_at_utc": "2026-11-21T22:54:08.479573+00:00",
+      "ended_at_utc": "2026-11-21T22:54:08.487099+00:00",
+      "returncode": 0,
+      "stdout": "session_evidence/checks/initial-corrected002/protected_source.stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "session_evidence/checks/initial-corrected002/protected_source.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "protected_untracked": [],
+  "status_after": "A  docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json\nA  docs/engineering/localized-repair-c271/loader-path-p11/PHASE.json\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/CHECKS.json\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/documents.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/documents.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/protected_source.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/protected_source.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/whitespace.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/whitespace.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/workflow.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/workflow.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/CHECKS.json\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/documents.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/documents.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/protected_source.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/protected_source.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/whitespace.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/whitespace.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/workflow.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/workflow.stdout.txt\nM  docs/workflow/CURRENT.json\nA  docs/workflow/tasks/C271/P11-SESSION.md\nM  docs/workflow/tasks/C271/PLAN.md\nM  docs/workflow/tasks/C271/REQUIREMENTS.md\nM  docs/workflow/tasks/C271/task.json",
+  "product_execution": false,
+  "passed": true,
+  "finished_at_utc": "2026-11-21T22:54:08.534434+00:00"
+}

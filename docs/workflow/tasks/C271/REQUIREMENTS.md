@@ -185,3 +185,9 @@ In a fresh bounded phase, reconcile the P10 handoff and live GitHub and confirm 
 ## P10 confirmed partial delivery
 
 The final archive and matching prompts passed mechanical and independent package review, were saved in OntoKin, and exact returned bytes and folder metadata matched. The separate P10-DELIVERY.json records actual identities. P10 is complete_partial_delivery; C271 remains blocked/open with R03–R05 not_done. No second phase was started.
+
+## P11 loader-path decision and controls — 2026-11-21
+
+P11 is active on `work/c271-missing-import-digest-control` under Director `c271-p11-2ad494d5da19`. Its early recovery ZIP passed independent review and exact saved-byte readback before design/control construction. Acceptance is a source-backed finite decision, frozen inert positive/boundary/refusal inputs and independent expectations, independent exact-artifact review, documentary/protected-source checks, and verified partial delivery. The phase stops there. Production implementation and H0 re-establishment belong to later phases.
+
+The existing `H0-PYTHON-RPATH-TOKEN-001` refusal remains unresolved. R01/R02 remain done; R03/R04/R05 remain not_done. P01 remains done and P02 in_progress. Parent C271 remains blocked, PR #274 draft/open, issue #273 open, and no main lease is held. See `docs/engineering/localized-repair-c271/loader-path-p11/PHASE.json` and its `EARLY-RECOVERY-RECEIPT.json`.

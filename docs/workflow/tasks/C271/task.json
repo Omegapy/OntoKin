@@ -4,7 +4,7 @@
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
   "status": "blocked",
-  "owner": "c271-p10-7b9b58d10704",
+  "owner": "c271-p11-2ad494d5da19",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -493,7 +493,47 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
       ],
-      "scope": "P10 partial delivery only. R03–R05 and integration remain open."
+      "scope": "P10 partial delivery only. R03\u2013R05 and integration remain open."
+    },
+    {
+      "name": "P11 independent intake and verified early recovery",
+      "command": "Independent retained-evidence and archive audits; ordered save and exact downloaded-byte readback",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json"
+      ],
+      "scope": "Incoming P10 intake 22 checks; early package 15 groups. No product execution or parent acceptance."
+    },
+    {
+      "name": "P11 initial workflow record validation",
+      "command": "python3 -B tools/chat_workflow.py check --json",
+      "result": "failed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/CHECKS.json"
+      ],
+      "scope": "Explicit UTC timestamp schema finding; retained exact initial candidate patch. No product execution."
+    },
+    {
+      "name": "P11 initial record correction validation",
+      "command": "python3 -B tools/chat_workflow.py check --json",
+      "result": "failed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/CHECKS.json"
+      ],
+      "scope": "Preserved next-action status and evidence-path schema findings; no product execution."
+    },
+    {
+      "name": "P11 corrected workflow records and source boundary",
+      "command": "python3 -B tools/chat_workflow.py check --json; git diff --cached --check; protected-source comparison",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected002/CHECKS.json"
+      ],
+      "scope": "Targeted correction after preserved record-format failures. No product execution."
     }
   ],
   "completion": {
@@ -516,38 +556,41 @@
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
     "elf_mapping_implementation_commit": "fdacc11349079be21bcce755b18ca660df4d96a2"
   },
-  "next_action": "In a fresh bounded phase, reconcile the P10 handoff and live GitHub and confirm new early recovery. Independently review the selected Python RPATH $ORIGIN/../lib refusal and freeze a finite decision and positive/refusal controls before any loader-path correction or input substitution. H0 remains unaccepted; re-establish it only after the prerequisite is resolved. H1 and the complete routine remain later gates. Do not begin this phase in the P10 chat.",
+  "next_action": "Complete and independently review the finite loader-path decision and inert positive/boundary/refusal controls. Verify documentary checks and protected source, publish on the retained branch, save the final partial handoff and separate receipt, then stop.",
   "session_phase": {
-    "schema": "ontokin.c271.p10-phase/1",
+    "schema": "ontokin.c271.p11-phase/1",
     "task": "C271",
-    "phase": "C271-P10-ELF-string-table-correction",
-    "owner": "c271-p10-7b9b58d10704",
-    "declared_at_utc": "2026-11-21T20:02:44Z",
+    "phase": "C271-P11-loader-path-decision",
+    "owner": "c271-p11-2ad494d5da19",
+    "declared_at_utc": "2026-11-21T22:41:35.622787+00:00",
     "client_filename_date": "2026-11-21",
     "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
     "starting_main_tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
-    "starting_branch": "ffd234b17723e8370cc0afa6cf19c1a161719892",
-    "starting_branch_tree": "f94fcbb0c26a1355dc17d39d882402207e01cdc5",
+    "starting_branch": "e0119f376441fee0fc3956852ac63110ab141011",
+    "starting_branch_tree": "d976520ede52f9227ce2df5bab974d6e1bc2ef79",
     "branch": "work/c271-missing-import-digest-control",
-    "scope": "Correct only bounded ELF dynamic string-table file mapping across adjacent PT_LOAD segments in read_elf_metadata, with independently frozen fixtures, focused regression and independent exact-source review.",
+    "scope": "Source-backed static decision and independently frozen finite positive/refusal controls for H0-PYTHON-RPATH-TOKEN-001 before any loader-path implementation or input substitution.",
     "acceptance": [
-      "P10-01: Confirm verified early recovery before fixture construction, implementation or behavioral execution.",
-      "P10-02: Independently freeze exact positive/boundary/refusal fixture bytes and expected metadata/refusals, review finite correction design before implementation.",
-      "P10-03: Implement only reviewed mapping correction; preserve file/table/string bounds, uniquely determined file mapping, gap/ambiguous/truncated refusal, callback/resource guards and all unaffected production/test/contract bytes.",
-      "P10-04: Run focused static/filesystem/mocked regression and frozen controls with exact source/input/environment/command/results; independent final-source/evidence review, mandatory findings resolved.",
-      "P10-05: Required workflow/documentation/whitespace checks, conditional retained-branch checkpoint, independent final-package review, verified ZIP/prompts saved with separate receipt and stop."
+      "P11-D01: Reconcile P10 delivery/live state and confirm verified early recovery before substantive design or fixture construction.",
+      "P11-D02: Trace the observed RPATH refusal and specify a finite versioned decision with exact path-origin, normalization, identity, loader-search and refusal rules; preserve existing strict consumers and historical behavior.",
+      "P11-D03: Freeze independent positive/boundary/refusal input bytes and expected outcomes before later implementation; enumerate exact change surface and legacy-preservation checks.",
+      "P11-D04: Independent exact design/control review with mandatory findings resolved, static evidence/protected-source checks and required documentation/workflow checks.",
+      "P11-D05: Conditional checkpoint on retained branch; independently verify final ZIP and matching prompts, confirm save/readback, publish separate receipt and stop."
     ],
     "constraints": [
-      "No H0 re-establishment, H1, Node/ldd, probes/checkers, original-seven/full routine, installation, native/model/hosted execution, main lease/integration or parent closure",
-      "Original tests and scientific/lifecycle guards, P05/P06/P07 contracts, dependency pins, all historical failures and 100000-operation/30000-ms source ceilings unchanged",
-      "Root owns Git/index/canonical state/publication/delivery; workers disjoint files; no nested fanout",
-      "Do not retry native git push: diagnosed credential failure preserved in P09; use available conditional API publication"
+      "No production/test/helper implementation edits, existing contract/fixture/pin changes or input substitution in P11; new design/control documents and inert independent fixture bytes only.",
+      "No host runtime preparation, installation, Node/ldd, probes, H0 acceptance, H1, original seven methods, full routine, native/model/hosted execution, main lease/integration or parent closure.",
+      "Retain all prior failures/unknowns and source ceilings of 100000 operations/30000 ms; required full routine remains unmet under R03.",
+      "Root owns canonical state/Git/index/publication/delivery; real workers own disjoint paths, no nested workers.",
+      "Do not retry the diagnosed unavailable native push; publish with conditional GitHub API ref update."
     ],
-    "status": "complete_partial_delivery",
+    "status": "in_progress",
     "early_recovery": "confirmed_saved_and_independently_accepted",
+    "early_save_confirmed": true,
     "main_lease_held": false,
     "integration_allowed": false,
     "parent_status": "blocked",
+    "parent_complete": false,
     "parent_requirements": {
       "R01": "done",
       "R02": "done",
@@ -559,151 +602,104 @@
       "P01": "done",
       "P02": "in_progress"
     },
-    "stop": "Stop after independently reviewed correction and verified partial delivery, or first concrete unresolved blocker/unplanned expansion. Re-establish H0 only in a later fresh phase.",
+    "stop": "Stop after independently accepted decision/control freeze or first unresolved design blocker, and verified partial delivery. Implement only in a later fresh phase.",
     "workers": {
-      "/root/intake_audit": "Independent intake/early audit and focused-runner preparation; final package audit assigned separately",
-      "/root/elf_review": "Independent fixtures/design, legacy baseline, candidate oracle and final source/evidence review",
-      "/root/handoff_engineer": "Early and final package builder; no Library or repository writes"
+      "/root/intake_audit": "Independent intake and recovery audit, then independent design/package review",
+      "/root/handoff_engineer": "Early/final package engineering only",
+      "/root/loader_design": "Independent source-backed design and inert-control author; released only after exact early save/readback"
     },
     "current_unknown_operations": [],
     "historical_unknowns": [
       "C270 broad-driver completion remains unknown",
       "Global prior-process termination remains unestablished"
     ],
-    "early_package_finding": "Independent reviewer identified omitted unique intake-audit scripts/evidence; corrected distinct archive required before substantial work",
-    "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/EARLY-RECOVERY-RECEIPT.json",
-    "independent_early_review": "session_p10/early_review/attempt002/REVIEW.json",
     "phase_table": [
       {
-        "gate": "P10-01 early recovery",
-        "state": "passed",
-        "evidence": "EARLY-RECOVERY-RECEIPT.json"
-      },
-      {
-        "gate": "P10-02 independent fixtures/design",
+        "gate": "P11-D01",
         "state": "passed",
         "evidence": [
-          "ORACLE-FREEZE.json",
-          "INDEPENDENT-DESIGN-APPROVAL.md"
+          "docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json"
         ]
       },
       {
-        "gate": "P10-03 finite implementation",
-        "state": "passed",
-        "evidence": [
-          "INDEPENDENT-PREEXECUTION-REVIEW.json",
-          "evidence/INDEPENDENT-CANDIDATE-REPORT.json"
-        ]
+        "gate": "P11-D02",
+        "state": "in_progress"
       },
       {
-        "gate": "P10-04 focused regression and final-source review",
-        "state": "passed",
-        "evidence": [
-          "evidence/focused001/OUTCOME.json",
-          "evidence/INDEPENDENT-CANDIDATE-REPORT.json",
-          "INDEPENDENT-FINAL-REVIEW.json"
-        ]
+        "gate": "P11-D03",
+        "state": "not_started"
       },
       {
-        "gate": "P10-05 published checkpoint and partial delivery",
-        "state": "passed",
-        "evidence": [
-          "FINAL-PACKAGE-VERIFICATION.json",
-          "FINAL-PACKAGE-REVIEW.json",
-          "P10-DELIVERY.json"
-        ]
+        "gate": "P11-D04",
+        "state": "not_started"
+      },
+      {
+        "gate": "P11-D05",
+        "state": "not_started"
       }
     ],
-    "oracle_sha256": "35b8535599cc24276dfe66e57b9ed80348c12d429e9a61441c4f449a7cb4ce8a",
-    "baseline": "BASELINE-REPORT.json",
-    "code_sha256": "0c2ef54a227e2e05a7eb1f71a4fedd934399aa27d98ec7a3845f93a4dbfbb612",
-    "behavioral_source": "fdacc11349079be21bcce755b18ca660df4d96a2",
-    "behavioral_tree": "be6534bc800ad8be7b7ee4938d289b852503e534",
-    "technical_checks_passed": true,
-    "independent_final_review": "accepted",
-    "remaining_blocker": {
-      "id": "H0-PYTHON-RPATH-TOKEN-001",
-      "status": "observed_unresolved",
-      "evidence": "docs/engineering/localized-repair-c271/elf-string-table-p10/evidence/INDEPENDENT-CANDIDATE-REPORT.json",
-      "fact": "The inert selected Python image now passes string-table mapping, then returns CHI-UNSUPPORTED / Unreviewed loader token expansion for RPATH $ORIGIN/../lib.",
-      "scope": "Static regression observation only; neither a prepared runtime nor accepted H0."
+    "exact_next_action": "Complete and independently review the finite loader-path decision and inert positive/boundary/refusal controls. Verify documentary checks and protected source, publish on the retained branch, save the final partial handoff and separate receipt, then stop.",
+    "observed_main": {
+      "commit": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+      "observed_at_utc": "2026-11-21T22:41:35.622787+00:00",
+      "evidence": "recovery/session_evidence/startup/reconcile_0.json"
     },
-    "next_action": "In a fresh bounded phase, reconcile the P10 handoff and live GitHub and confirm new early recovery. Independently review the selected Python RPATH $ORIGIN/../lib refusal and freeze a finite decision and positive/refusal controls before any loader-path correction or input substitution. H0 remains unaccepted; re-establish it only after the prerequisite is resolved. H1 and the complete routine remain later gates. Do not begin this phase in the P10 chat.",
-    "updated_at_utc": "2026-11-21T20:27:02.901409Z",
-    "no_second_phase": true,
-    "final_review": "docs/engineering/localized-repair-c271/elf-string-table-p10/INDEPENDENT-FINAL-REVIEW.json",
-    "final_save_confirmed": true,
-    "final_receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json",
-    "completed_at_utc": "2026-11-21T20:48:10.140149Z"
+    "pull_request": {
+      "number": 274,
+      "state": "open",
+      "draft": true,
+      "merged": false
+    },
+    "scope_issue": {
+      "number": 273,
+      "state": "open"
+    },
+    "delivery": {
+      "status": "save_pending",
+      "partial": true,
+      "separate_receipt_required": true
+    },
+    "known_failures_this_session": [
+      {
+        "kind": "read_only_library_materialization_schema",
+        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/CHECKS.json",
+        "disposition": "Rejected before transfer; exact full Library list resolved and current download helper succeeded; no unknown write"
+      },
+      {
+        "kind": "startup_output_truncation",
+        "disposition": "Missing portions reloaded in bounded chunks; no required prose or rule excluded. STATUS anchor-only lines excluded as allowed."
+      },
+      {
+        "id": "P11-RECORD-001",
+        "kind": "documentary_schema_error",
+        "detail": "Initial CURRENT snapshot_date used a calendar date; the existing validator requires an explicit UTC timestamp. Corrected only the timestamp; failed run and exact candidate patch retained.",
+        "evidence": "session_evidence/checks/initial/CHECKS.json",
+        "status": "corrected_targeted_recheck_passed",
+        "resolution_evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected002/CHECKS.json"
+      },
+      {
+        "id": "P11-RECORD-002",
+        "kind": "documentary_schema_and_evidence_path_error",
+        "detail": "Initial correction exposed two further existing schema requirements: next_action.status allows awaiting_user_direction/blocked/ready, and task evidence must use repository paths. Set ready for authorized phase work and retained the original check evidence under the P11 repository evidence directory.",
+        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/CHECKS.json",
+        "status": "corrected_targeted_recheck_passed",
+        "resolution_evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected002/CHECKS.json"
+      }
+    ],
+    "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json",
+    "updated_at_utc": "2026-11-21T22:51:46.538639+00:00"
   },
   "delivery": {
     "required": true,
     "kind": "online_browser_session",
-    "status": "saved",
+    "status": "save_pending",
     "folder": "OntoKin",
     "partial": true,
-    "phase_complete": true,
-    "technical_phase_complete": true,
-    "early_receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/EARLY-RECOVERY-RECEIPT.json",
-    "receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json",
-    "files": [
-      {
-        "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/final/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21.zip",
-        "purpose": "create_library_file",
-        "status": "succeeded",
-        "file_id": "file_000000001fb881fd9d4f31cc54d5432d",
-        "library_file_id": "libfile_fde3_f-484e03c1ac9481918eadc89e4e21415d_2ab2a24d43748191957f9bcc356b59de",
-        "file_name": "OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21.zip",
-        "local_metadata_applied": true,
-        "path": "/OntoKin/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21.zip",
-        "current_version_number": 0,
-        "version": 0,
-        "bytes": 10556884,
-        "sha256": "42739db560ae8a46706d41ded21038d44a8a8a61ac45d6792374a7e31306c275",
-        "readback_path": "/workspace/scratch/7b9b58d10704/session_p10/final_readback/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21.zip",
-        "folder_metadata_verified": true,
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-484e03c1ac9481918eadc89e4e21415d_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "saved_bytes_readback_equal": true
-      },
-      {
-        "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/final/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Continue.md",
-        "purpose": "create_library_file",
-        "status": "succeeded",
-        "file_id": "file_0000000037a881fd8a92e122dae06af7",
-        "library_file_id": "libfile_fde3_f-061a9924fd14819199c2ffe341140f69_2ab2a24d43748191957f9bcc356b59de",
-        "file_name": "OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Continue.md",
-        "local_metadata_applied": true,
-        "path": "/OntoKin/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Continue.md",
-        "current_version_number": 0,
-        "version": 0,
-        "bytes": 6813,
-        "sha256": "fc430582b07a0ae9c072af7ba3f6124516139463091b80dbf60664e76a824aae",
-        "readback_path": "/workspace/scratch/7b9b58d10704/session_p10/final_readback/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Continue.md",
-        "folder_metadata_verified": true,
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-061a9924fd14819199c2ffe341140f69_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "saved_bytes_readback_equal": true
-      },
-      {
-        "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/final/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Recover.md",
-        "purpose": "create_library_file",
-        "status": "succeeded",
-        "file_id": "file_00000000b62481fda8fcca2882cc2fca",
-        "library_file_id": "libfile_fde3_f-b0511835d0b0819183b064429be92414_2ab2a24d43748191957f9bcc356b59de",
-        "file_name": "OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Recover.md",
-        "local_metadata_applied": true,
-        "path": "/OntoKin/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Recover.md",
-        "current_version_number": 0,
-        "version": 0,
-        "bytes": 7402,
-        "sha256": "de08a177bb5201e49608f920dba188fb09b6bc7a8bf7ad062fe8ddaba3de0790",
-        "readback_path": "/workspace/scratch/7b9b58d10704/session_p10/final_readback/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Recover.md",
-        "folder_metadata_verified": true,
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-b0511835d0b0819183b064429be92414_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "saved_bytes_readback_equal": true
-      }
-    ],
-    "confirmed_at_utc": "2026-11-21T20:48:10.140149Z"
+    "phase_complete": false,
+    "technical_phase_complete": false,
+    "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json",
+    "receipt": null
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
@@ -1283,6 +1279,126 @@
       "delivery_status": "saved_and_readback_verified",
       "phase_boundary_reached": true,
       "delivery_receipt": "docs/engineering/localized-repair-c271/host-preparation-p09/P09-DELIVERY.json"
+    },
+    {
+      "schema": "ontokin.c271.p10-phase/1",
+      "task": "C271",
+      "phase": "C271-P10-ELF-string-table-correction",
+      "owner": "c271-p10-7b9b58d10704",
+      "declared_at_utc": "2026-11-21T20:02:44Z",
+      "client_filename_date": "2026-11-21",
+      "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "starting_main_tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+      "starting_branch": "ffd234b17723e8370cc0afa6cf19c1a161719892",
+      "starting_branch_tree": "f94fcbb0c26a1355dc17d39d882402207e01cdc5",
+      "branch": "work/c271-missing-import-digest-control",
+      "scope": "Correct only bounded ELF dynamic string-table file mapping across adjacent PT_LOAD segments in read_elf_metadata, with independently frozen fixtures, focused regression and independent exact-source review.",
+      "acceptance": [
+        "P10-01: Confirm verified early recovery before fixture construction, implementation or behavioral execution.",
+        "P10-02: Independently freeze exact positive/boundary/refusal fixture bytes and expected metadata/refusals, review finite correction design before implementation.",
+        "P10-03: Implement only reviewed mapping correction; preserve file/table/string bounds, uniquely determined file mapping, gap/ambiguous/truncated refusal, callback/resource guards and all unaffected production/test/contract bytes.",
+        "P10-04: Run focused static/filesystem/mocked regression and frozen controls with exact source/input/environment/command/results; independent final-source/evidence review, mandatory findings resolved.",
+        "P10-05: Required workflow/documentation/whitespace checks, conditional retained-branch checkpoint, independent final-package review, verified ZIP/prompts saved with separate receipt and stop."
+      ],
+      "constraints": [
+        "No H0 re-establishment, H1, Node/ldd, probes/checkers, original-seven/full routine, installation, native/model/hosted execution, main lease/integration or parent closure",
+        "Original tests and scientific/lifecycle guards, P05/P06/P07 contracts, dependency pins, all historical failures and 100000-operation/30000-ms source ceilings unchanged",
+        "Root owns Git/index/canonical state/publication/delivery; workers disjoint files; no nested fanout",
+        "Do not retry native git push: diagnosed credential failure preserved in P09; use available conditional API publication"
+      ],
+      "status": "complete_partial_delivery",
+      "early_recovery": "confirmed_saved_and_independently_accepted",
+      "main_lease_held": false,
+      "integration_allowed": false,
+      "parent_status": "blocked",
+      "parent_requirements": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "not_done",
+        "R04": "not_done",
+        "R05": "not_done"
+      },
+      "parent_plan": {
+        "P01": "done",
+        "P02": "in_progress"
+      },
+      "stop": "Stop after independently reviewed correction and verified partial delivery, or first concrete unresolved blocker/unplanned expansion. Re-establish H0 only in a later fresh phase.",
+      "workers": {
+        "/root/intake_audit": "Independent intake/early audit and focused-runner preparation; final package audit assigned separately",
+        "/root/elf_review": "Independent fixtures/design, legacy baseline, candidate oracle and final source/evidence review",
+        "/root/handoff_engineer": "Early and final package builder; no Library or repository writes"
+      },
+      "current_unknown_operations": [],
+      "historical_unknowns": [
+        "C270 broad-driver completion remains unknown",
+        "Global prior-process termination remains unestablished"
+      ],
+      "early_package_finding": "Independent reviewer identified omitted unique intake-audit scripts/evidence; corrected distinct archive required before substantial work",
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/EARLY-RECOVERY-RECEIPT.json",
+      "independent_early_review": "session_p10/early_review/attempt002/REVIEW.json",
+      "phase_table": [
+        {
+          "gate": "P10-01 early recovery",
+          "state": "passed",
+          "evidence": "EARLY-RECOVERY-RECEIPT.json"
+        },
+        {
+          "gate": "P10-02 independent fixtures/design",
+          "state": "passed",
+          "evidence": [
+            "ORACLE-FREEZE.json",
+            "INDEPENDENT-DESIGN-APPROVAL.md"
+          ]
+        },
+        {
+          "gate": "P10-03 finite implementation",
+          "state": "passed",
+          "evidence": [
+            "INDEPENDENT-PREEXECUTION-REVIEW.json",
+            "evidence/INDEPENDENT-CANDIDATE-REPORT.json"
+          ]
+        },
+        {
+          "gate": "P10-04 focused regression and final-source review",
+          "state": "passed",
+          "evidence": [
+            "evidence/focused001/OUTCOME.json",
+            "evidence/INDEPENDENT-CANDIDATE-REPORT.json",
+            "INDEPENDENT-FINAL-REVIEW.json"
+          ]
+        },
+        {
+          "gate": "P10-05 published checkpoint and partial delivery",
+          "state": "passed",
+          "evidence": [
+            "FINAL-PACKAGE-VERIFICATION.json",
+            "FINAL-PACKAGE-REVIEW.json",
+            "P10-DELIVERY.json"
+          ]
+        }
+      ],
+      "oracle_sha256": "35b8535599cc24276dfe66e57b9ed80348c12d429e9a61441c4f449a7cb4ce8a",
+      "baseline": "BASELINE-REPORT.json",
+      "code_sha256": "0c2ef54a227e2e05a7eb1f71a4fedd934399aa27d98ec7a3845f93a4dbfbb612",
+      "behavioral_source": "fdacc11349079be21bcce755b18ca660df4d96a2",
+      "behavioral_tree": "be6534bc800ad8be7b7ee4938d289b852503e534",
+      "technical_checks_passed": true,
+      "independent_final_review": "accepted",
+      "remaining_blocker": {
+        "id": "H0-PYTHON-RPATH-TOKEN-001",
+        "status": "observed_unresolved",
+        "evidence": "docs/engineering/localized-repair-c271/elf-string-table-p10/evidence/INDEPENDENT-CANDIDATE-REPORT.json",
+        "fact": "The inert selected Python image now passes string-table mapping, then returns CHI-UNSUPPORTED / Unreviewed loader token expansion for RPATH $ORIGIN/../lib.",
+        "scope": "Static regression observation only; neither a prepared runtime nor accepted H0."
+      },
+      "next_action": "In a fresh bounded phase, reconcile the P10 handoff and live GitHub and confirm new early recovery. Independently review the selected Python RPATH $ORIGIN/../lib refusal and freeze a finite decision and positive/refusal controls before any loader-path correction or input substitution. H0 remains unaccepted; re-establish it only after the prerequisite is resolved. H1 and the complete routine remain later gates. Do not begin this phase in the P10 chat.",
+      "updated_at_utc": "2026-11-21T20:27:02.901409Z",
+      "no_second_phase": true,
+      "final_review": "docs/engineering/localized-repair-c271/elf-string-table-p10/INDEPENDENT-FINAL-REVIEW.json",
+      "final_save_confirmed": true,
+      "final_receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json",
+      "completed_at_utc": "2026-11-21T20:48:10.140149Z"
     }
   ],
   "prior_phase_deliveries": [
@@ -1791,6 +1907,77 @@
       "confirmed_at_utc": "2026-11-21T19:20:20.127589+00:00",
       "archive_library_file_id": "libfile_fde3_f-6ce009b09ccc8191955ae8cd95d781be_2ab2a24d43748191957f9bcc356b59de",
       "supplemental_terminal_receipt_file_name": "OntoKin_C271_P09_Delivery_Receipt_2026-11-21.json"
+    },
+    {
+      "phase": "C271-P10-ELF-string-table-correction",
+      "delivery": {
+        "required": true,
+        "kind": "online_browser_session",
+        "status": "saved",
+        "folder": "OntoKin",
+        "partial": true,
+        "phase_complete": true,
+        "technical_phase_complete": true,
+        "early_receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/EARLY-RECOVERY-RECEIPT.json",
+        "receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json",
+        "files": [
+          {
+            "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/final/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21.zip",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_000000001fb881fd9d4f31cc54d5432d",
+            "library_file_id": "libfile_fde3_f-484e03c1ac9481918eadc89e4e21415d_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21.zip",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21.zip",
+            "current_version_number": 0,
+            "version": 0,
+            "bytes": 10556884,
+            "sha256": "42739db560ae8a46706d41ded21038d44a8a8a61ac45d6792374a7e31306c275",
+            "readback_path": "/workspace/scratch/7b9b58d10704/session_p10/final_readback/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21.zip",
+            "folder_metadata_verified": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-484e03c1ac9481918eadc89e4e21415d_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+            "saved_bytes_readback_equal": true
+          },
+          {
+            "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/final/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Continue.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_0000000037a881fd8a92e122dae06af7",
+            "library_file_id": "libfile_fde3_f-061a9924fd14819199c2ffe341140f69_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Continue.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Continue.md",
+            "current_version_number": 0,
+            "version": 0,
+            "bytes": 6813,
+            "sha256": "fc430582b07a0ae9c072af7ba3f6124516139463091b80dbf60664e76a824aae",
+            "readback_path": "/workspace/scratch/7b9b58d10704/session_p10/final_readback/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Continue.md",
+            "folder_metadata_verified": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-061a9924fd14819199c2ffe341140f69_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+            "saved_bytes_readback_equal": true
+          },
+          {
+            "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/final/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Recover.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_00000000b62481fda8fcca2882cc2fca",
+            "library_file_id": "libfile_fde3_f-b0511835d0b0819183b064429be92414_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Recover.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Recover.md",
+            "current_version_number": 0,
+            "version": 0,
+            "bytes": 7402,
+            "sha256": "de08a177bb5201e49608f920dba188fb09b6bc7a8bf7ad062fe8ddaba3de0790",
+            "readback_path": "/workspace/scratch/7b9b58d10704/session_p10/final_readback/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Recover.md",
+            "folder_metadata_verified": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-b0511835d0b0819183b064429be92414_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+            "saved_bytes_readback_equal": true
+          }
+        ],
+        "confirmed_at_utc": "2026-11-21T20:48:10.140149Z"
+      }
     }
   ],
   "prior_blocked_reason": "Required routine gate failed: unit timeout at 900 seconds and isolated documentation copy omitted five tracked instruction files, producing 21 missing local links.",

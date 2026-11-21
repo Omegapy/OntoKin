@@ -1,0 +1,94 @@
+{
+  "scope": "P11-initial-records",
+  "started_at_utc": "2026-11-21T22:52:48.584074+00:00",
+  "head": "e0119f376441fee0fc3956852ac63110ab141011",
+  "head_tree": "d976520ede52f9227ce2df5bab974d6e1bc2ef79",
+  "index_tree": "2bbc2c228f70997d100f0b1e28519b58afe4e73e",
+  "status_before": "A  docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json\nA  docs/engineering/localized-repair-c271/loader-path-p11/PHASE.json\nM  docs/workflow/CURRENT.json\nA  docs/workflow/tasks/C271/P11-SESSION.md\nM  docs/workflow/tasks/C271/PLAN.md\nM  docs/workflow/tasks/C271/REQUIREMENTS.md\nM  docs/workflow/tasks/C271/task.json",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ],
+      "cwd": "/workspace/scratch/2ad494d5da19/OntoKin",
+      "started_at_utc": "2026-11-21T22:52:48.844643+00:00",
+      "ended_at_utc": "2026-11-21T22:52:48.952450+00:00",
+      "returncode": 1,
+      "stdout": "session_evidence/checks/initial/workflow.stdout.txt",
+      "stdout_sha256": "e05ffe0317cbd7098b02dfe2e790e93c84a76df01a481b4b6b5f159ef5e3f9a2",
+      "stderr": "session_evidence/checks/initial/workflow.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "documents",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/2ad494d5da19/OntoKin",
+      "started_at_utc": "2026-11-21T22:52:48.952596+00:00",
+      "ended_at_utc": "2026-11-21T22:52:51.383223+00:00",
+      "returncode": 0,
+      "stdout": "session_evidence/checks/initial/documents.stdout.txt",
+      "stdout_sha256": "4d83e9054fc8cc8cc76587aebf79dcb1fb3e44faab2d2c741fb3b74c4db3e230",
+      "stderr": "session_evidence/checks/initial/documents.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "cwd": "/workspace/scratch/2ad494d5da19/OntoKin",
+      "started_at_utc": "2026-11-21T22:52:51.383357+00:00",
+      "ended_at_utc": "2026-11-21T22:52:51.392561+00:00",
+      "returncode": 0,
+      "stdout": "session_evidence/checks/initial/whitespace.stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "session_evidence/checks/initial/whitespace.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "protected_source",
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "e0119f376441fee0fc3956852ac63110ab141011",
+        "--",
+        "prototypes",
+        "ontokin",
+        "tests",
+        "tools",
+        ".github"
+      ],
+      "cwd": "/workspace/scratch/2ad494d5da19/OntoKin",
+      "started_at_utc": "2026-11-21T22:52:51.392653+00:00",
+      "ended_at_utc": "2026-11-21T22:52:51.400006+00:00",
+      "returncode": 0,
+      "stdout": "session_evidence/checks/initial/protected_source.stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "session_evidence/checks/initial/protected_source.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "protected_untracked": [],
+  "status_after": "A  docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json\nA  docs/engineering/localized-repair-c271/loader-path-p11/PHASE.json\nM  docs/workflow/CURRENT.json\nA  docs/workflow/tasks/C271/P11-SESSION.md\nM  docs/workflow/tasks/C271/PLAN.md\nM  docs/workflow/tasks/C271/REQUIREMENTS.md\nM  docs/workflow/tasks/C271/task.json",
+  "product_execution": false,
+  "passed": false,
+  "finished_at_utc": "2026-11-21T22:52:51.454710+00:00"
+}
