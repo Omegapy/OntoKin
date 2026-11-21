@@ -31,3 +31,11 @@ No Node or `ldd` command, actual runtime installation, JavaScript syntax executi
 Gate H first needs a reviewed way to observe the actual host and author fresh host/inspection records, with a frozen execution plan and explicit configuration digest. That authoring entry point remains unimplemented. The actual executable destination, host/runtime/dependency closure, direct-probe refusals and original seven-method outcomes must then qualify. Gate R retains the complete routine and independent R03 acceptance. R04 integration and R05 parent closure remain separate.
 
 P06 stops at this implementation boundary and its verified partial handoff. The branch and draft PR #274 remain retained/open/unmerged; issue #273 and C271 remain open. Main remains `e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d`; no main lease is held. R01/R02 remain done, R03–R05 remain not_done, and plan P02 remains in_progress. Historical C270 broad-driver completion and global prior-process termination remain unknown.
+
+## P06 saved archive and terminal confirmation
+
+The frozen partial handoff and its two matching prompts have been saved and read back byte for byte. The [saved-artifact receipt](P06-DELIVERY.json) records their identities. The development ZIP is 20,034,456 bytes with SHA-256 a2521923356df2a1d2070e2b81e0292fb3909f8dbc1f4cc290165a1548c675a7; its source checkpoint remains 36c5bede78fe55c368f6428e3c2fc3d4a806d36f.
+
+This record is authored before its own publication checks and the external terminal receipt. Delivery therefore remains delivery_confirmation_pending here. The later OntoKin_C271_P06_Delivery_Receipt_2026-11-20.zip will retain the complete postfreeze audit and actual publication/check observations; its saved location will be recorded in PR #274 and issue #273. It supersedes pending delivery observations without changing the frozen development ZIP.
+
+The technical phase is complete. C271 stays open: R03–R05 remain not_done, P02 remains in_progress, and no next development phase begins in this chat.

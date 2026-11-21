@@ -99,3 +99,11 @@ The [phase outcome](../../../engineering/localized-repair-c271/current-host-p06/
 None of the original three CPU or four coordinator methods ran. Seven loader IDs, nine function/helper AST identities, 15 protected JavaScript segments and 15 historical files were preserved. Actual Node/ldd, host qualification, full routine/R03 acceptance and integration remain unrun/unaccepted. Host-observation and inspection-record authoring is an explicit unfinished Gate H prerequisite.
 
 Technical work has stopped. Finish only required record checks, verified partial ZIP and matching prompts, and the separate saved receipt. Parent R01/R02 remain done; R03-R05 remain not_done; P02 remains in_progress. No second phase begins here.
+
+## P06 saved archive and terminal confirmation
+
+The frozen partial handoff and its two matching prompts have been saved and read back byte for byte. The [saved-artifact receipt](../../../engineering/localized-repair-c271/current-host-p06/P06-DELIVERY.json) records their identities. The development ZIP is 20,034,456 bytes with SHA-256 a2521923356df2a1d2070e2b81e0292fb3909f8dbc1f4cc290165a1548c675a7; its source checkpoint remains 36c5bede78fe55c368f6428e3c2fc3d4a806d36f.
+
+This record is authored before its own publication checks and the external terminal receipt. Delivery therefore remains delivery_confirmation_pending here. The later OntoKin_C271_P06_Delivery_Receipt_2026-11-20.zip will retain the complete postfreeze audit and actual publication/check observations; its saved location will be recorded in PR #274 and issue #273. It supersedes pending delivery observations without changing the frozen development ZIP.
+
+The technical phase is complete. C271 stays open: R03–R05 remain not_done, P02 remains in_progress, and no next development phase begins in this chat.
