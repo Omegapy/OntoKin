@@ -1,0 +1,2879 @@
+{
+  "actual_target_executions": 0,
+  "cases": [
+    {
+      "actual": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": "/fixture/ld.so",
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "check_calls": 6,
+      "expected_for_this_run_mode": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": "/fixture/ld.so",
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": "/fixture/ld.so",
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "id": "P01_single_legacy",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P01_single_legacy.bin",
+        "sha256": "c1679ce6c42d0dace35053000a16a78b5fa8dce54487cbe3655ddf7802e806fa",
+        "size_bytes": 4134
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P01_single_legacy.bin",
+        "sha256": "c1679ce6c42d0dace35053000a16a78b5fa8dce54487cbe3655ddf7802e806fa",
+        "size_bytes": 4134
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        },
+        {
+          "offset": 640,
+          "requested_bytes": 15,
+          "returned_bytes": 15
+        },
+        {
+          "offset": 4096,
+          "requested_bytes": 38,
+          "returned_bytes": 38
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "id": "P02_adjacent_contiguous",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P02_adjacent_contiguous.bin",
+        "sha256": "1a418b22c42097d76510c7293ac17fca994eb1b7d55947ac323a041d379fc71f",
+        "size_bytes": 4134
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P02_adjacent_contiguous.bin",
+        "sha256": "1a418b22c42097d76510c7293ac17fca994eb1b7d55947ac323a041d379fc71f",
+        "size_bytes": 4134
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "id": "P03_adjacent_separated",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P03_adjacent_separated.bin",
+        "sha256": "37ee44865d81f777044ca5af97f1457c79f72e04027955d679f9537962d9ee49",
+        "size_bytes": 8224
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P03_adjacent_separated.bin",
+        "sha256": "37ee44865d81f777044ca5af97f1457c79f72e04027955d679f9537962d9ee49",
+        "size_bytes": 8224
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "id": "P04_three_reverse_offsets",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P04_three_reverse_offsets.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P04_three_reverse_offsets.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 280,
+          "returned_bytes": 280
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "id": "P05_nul_at_next_segment",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P05_nul_at_next_segment.bin",
+        "sha256": "66a8cd3042998678b08d8174556b038af4cae0e7f01b61cac37048ac36713a7b",
+        "size_bytes": 8218
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P05_nul_at_next_segment.bin",
+        "sha256": "66a8cd3042998678b08d8174556b038af4cae0e7f01b61cac37048ac36713a7b",
+        "size_bytes": 8218
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "id": "P06_clipped_outer_segments",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P06_clipped_outer_segments.bin",
+        "sha256": "857c77ee43b886f3dbfa3dbd963315cd6a84b22cea72c0351c8bc566f1c7e712",
+        "size_bytes": 8228
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P06_clipped_outer_segments.bin",
+        "sha256": "857c77ee43b886f3dbfa3dbd963315cd6a84b22cea72c0351c8bc566f1c7e712",
+        "size_bytes": 8228
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "check_calls": 5,
+      "expected_for_this_run_mode": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "id": "P07_identical_duplicate",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P07_identical_duplicate.bin",
+        "sha256": "d73e79fa65d208068cb2513746ac0672289b5f83fce08a471fcdabfc58a1099e",
+        "size_bytes": 4134
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P07_identical_duplicate.bin",
+        "sha256": "d73e79fa65d208068cb2513746ac0672289b5f83fce08a471fcdabfc58a1099e",
+        "size_bytes": 4134
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        },
+        {
+          "offset": 4096,
+          "requested_bytes": 38,
+          "returned_bytes": 38
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "check_calls": 5,
+      "expected_for_this_run_mode": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "id": "P08_consistent_inner_overlap",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P08_consistent_inner_overlap.bin",
+        "sha256": "629b65e7f2fe9a5433be8042813c8729801abf4c480a36958c8c6bab94274ac5",
+        "size_bytes": 4134
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P08_consistent_inner_overlap.bin",
+        "sha256": "629b65e7f2fe9a5433be8042813c8729801abf4c480a36958c8c6bab94274ac5",
+        "size_bytes": 4134
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        },
+        {
+          "offset": 4096,
+          "requested_bytes": 38,
+          "returned_bytes": 38
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "id": "P09_consistent_overlap_join",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P09_consistent_overlap_join.bin",
+        "sha256": "fc37d928416d2f79a9e4a360843bccbbea51949dfd079c74e0fb6b921eeeda9b",
+        "size_bytes": 4134
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P09_consistent_overlap_join.bin",
+        "sha256": "fc37d928416d2f79a9e4a360843bccbbea51949dfd079c74e0fb6b921eeeda9b",
+        "size_bytes": 4134
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 280,
+          "returned_bytes": 280
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "check_calls": 5,
+      "expected_for_this_run_mode": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "id": "P10_zero_sized_loads",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P10_zero_sized_loads.bin",
+        "sha256": "90ef8129970f00dbcbb6a955eea5c4693752404c8c0ce0867b6844216fa2eed8",
+        "size_bytes": 8192
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P10_zero_sized_loads.bin",
+        "sha256": "90ef8129970f00dbcbb6a955eea5c4693752404c8c0ce0867b6844216fa2eed8",
+        "size_bytes": 8192
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 336,
+          "returned_bytes": 336
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        },
+        {
+          "offset": 4096,
+          "requested_bytes": 38,
+          "returned_bytes": 38
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "check_calls": 5,
+      "expected_for_this_run_mode": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "id": "P11_exact_start_boundary",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P11_exact_start_boundary.bin",
+        "sha256": "a350e2f70bb4ede41c28d0c60db53a51da698616e1432e544508f5848c972293",
+        "size_bytes": 8200
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P11_exact_start_boundary.bin",
+        "sha256": "a350e2f70bb4ede41c28d0c60db53a51da698616e1432e544508f5848c972293",
+        "size_bytes": 8200
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        },
+        {
+          "offset": 4096,
+          "requested_bytes": 38,
+          "returned_bytes": 38
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [
+            "/fixture/one",
+            "/fixture/two"
+          ],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "id": "P12_rpath_cross",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P12_rpath_cross.bin",
+        "sha256": "7f6c7740880b81fd6f6bb7a6a4903dcbbce61e81a480f65164dffab8ce710772",
+        "size_bytes": 8214
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P12_rpath_cross.bin",
+        "sha256": "7f6c7740880b81fd6f6bb7a6a4903dcbbce61e81a480f65164dffab8ce710772",
+        "size_bytes": 8214
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 112,
+          "returned_bytes": 112
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [
+            "/fixture/one",
+            "/fixture/two"
+          ],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "id": "P13_runpath_cross",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P13_runpath_cross.bin",
+        "sha256": "5212c05855ac931669a4763c36e6fee9d2e478431e1a9967fb4fa3b6000e38ab",
+        "size_bytes": 8214
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P13_runpath_cross.bin",
+        "sha256": "5212c05855ac931669a4763c36e6fee9d2e478431e1a9967fb4fa3b6000e38ab",
+        "size_bytes": 8214
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 112,
+          "returned_bytes": 112
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "crossing-soname.so",
+          "type": 3
+        }
+      },
+      "id": "P14_soname_cross",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P14_soname_cross.bin",
+        "sha256": "98fccdc9602780b908d52a21dfeaf5f289daa18ef0b8b16dc8b7dfcb8aee742e",
+        "size_bytes": 8207
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P14_soname_cross.bin",
+        "sha256": "98fccdc9602780b908d52a21dfeaf5f289daa18ef0b8b16dc8b7dfcb8aee742e",
+        "size_bytes": 8207
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": null,
+          "type": 3
+        }
+      },
+      "id": "P15_maximum_headers",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P15_maximum_headers.bin",
+        "sha256": "f0a2a8b5a836506cbc9c19293292d999ae46416fd748768a242a8078a6b48817",
+        "size_bytes": 16638
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P15_maximum_headers.bin",
+        "sha256": "f0a2a8b5a836506cbc9c19293292d999ae46416fd748768a242a8078a6b48817",
+        "size_bytes": 16638
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 14336,
+          "returned_bytes": 14336
+        },
+        {
+          "offset": 14592,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": null,
+          "type": 3
+        }
+      },
+      "id": "P16_string_4096",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P16_string_4096.bin",
+        "sha256": "788397c78b120c915b53f94011399c3d2b2e7aef90070e5b6daa28017c08cc38",
+        "size_bytes": 22578
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/P16_string_4096.bin",
+        "sha256": "788397c78b120c915b53f94011399c3d2b2e7aef90070e5b6daa28017c08cc38",
+        "size_bytes": 22578
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 280,
+          "returned_bytes": 280
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "id": "N01_internal_gap",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N01_internal_gap.bin",
+        "sha256": "fc944b34c532dc6b58f33f9cae7ed7fd9d438c9dacf5347648f7d07474ce3cf6",
+        "size_bytes": 8223
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N01_internal_gap.bin",
+        "sha256": "fc944b34c532dc6b58f33f9cae7ed7fd9d438c9dacf5347648f7d07474ce3cf6",
+        "size_bytes": 8223
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "id": "N02_missing_prefix",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N02_missing_prefix.bin",
+        "sha256": "b2015b8e686bbde01e13079be41776d629e74ae48ee7e84de432ea0e8c1803d5",
+        "size_bytes": 4133
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N02_missing_prefix.bin",
+        "sha256": "b2015b8e686bbde01e13079be41776d629e74ae48ee7e84de432ea0e8c1803d5",
+        "size_bytes": 4133
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 168,
+          "returned_bytes": 168
+        },
+        {
+          "offset": 256,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "id": "N03_memory_only_tail",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N03_memory_only_tail.bin",
+        "sha256": "122f026e6a5c6b17e3f32da5dcef417a093780eb17fb53828d9eebd2ff0689b4",
+        "size_bytes": 4133
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N03_memory_only_tail.bin",
+        "sha256": "122f026e6a5c6b17e3f32da5dcef417a093780eb17fb53828d9eebd2ff0689b4",
+        "size_bytes": 4133
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 168,
+          "returned_bytes": 168
+        },
+        {
+          "offset": 256,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "id": "N04_only_memory",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N04_only_memory.bin",
+        "sha256": "28893f7c78bcd735dc3fbd0ce143e73d184c2fb285ec684224119942622b0b77",
+        "size_bytes": 4096
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N04_only_memory.bin",
+        "sha256": "28893f7c78bcd735dc3fbd0ce143e73d184c2fb285ec684224119942622b0b77",
+        "size_bytes": 4096
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 168,
+          "returned_bytes": 168
+        },
+        {
+          "offset": 256,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "id": "N05_conflicting_full",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N05_conflicting_full.bin",
+        "sha256": "0ecd9f0902ae8528837dce0b977bb6e91687b76ee18d0fb2375e2ffd04433ed5",
+        "size_bytes": 8230
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N05_conflicting_full.bin",
+        "sha256": "0ecd9f0902ae8528837dce0b977bb6e91687b76ee18d0fb2375e2ffd04433ed5",
+        "size_bytes": 8230
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "check_calls": 5,
+      "expected_for_this_run_mode": {
+        "outcome": "metadata",
+        "value": {
+          "class": 64,
+          "endian": "little",
+          "interpreter": null,
+          "machine": 62,
+          "needed": [
+            "libalpha.so",
+            "libbeta.so"
+          ],
+          "rpath": [],
+          "runpath": [],
+          "soname": "libfixture.so",
+          "type": 3
+        }
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "id": "N06_conflicting_inner",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N06_conflicting_inner.bin",
+        "sha256": "e44b978d748bca038ed1250adfba4592c210e9c2ffbc902e6a5908c83581c945",
+        "size_bytes": 8200
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N06_conflicting_inner.bin",
+        "sha256": "e44b978d748bca038ed1250adfba4592c210e9c2ffbc902e6a5908c83581c945",
+        "size_bytes": 8200
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        },
+        {
+          "offset": 4096,
+          "requested_bytes": 38,
+          "returned_bytes": 38
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "id": "N07_conflicting_join",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N07_conflicting_join.bin",
+        "sha256": "c0e07fe5a1652f6dd58acfddb3ef6449671777982748cf6fbdc316c50e5c1aa1",
+        "size_bytes": 12292
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N07_conflicting_join.bin",
+        "sha256": "c0e07fe5a1652f6dd58acfddb3ef6449671777982748cf6fbdc316c50e5c1aa1",
+        "size_bytes": 12292
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 280,
+          "returned_bytes": 280
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Dynamic string table exceeds bound",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Dynamic string table exceeds bound",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Dynamic string table exceeds bound",
+        "state": "REJECTED"
+      },
+      "id": "N08_zero_table_size",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N08_zero_table_size.bin",
+        "sha256": "60ada3cad773db4cdce004c0a5188084af866963df55b2631077d1c544910fb3",
+        "size_bytes": 4134
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N08_zero_table_size.bin",
+        "sha256": "60ada3cad773db4cdce004c0a5188084af866963df55b2631077d1c544910fb3",
+        "size_bytes": 4134
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 168,
+          "returned_bytes": 168
+        },
+        {
+          "offset": 256,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Dynamic string table exceeds bound",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Dynamic string table exceeds bound",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Dynamic string table exceeds bound",
+        "state": "REJECTED"
+      },
+      "id": "N09_over_table_limit",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N09_over_table_limit.bin",
+        "sha256": "ae2383fe620c094284507e28dc4040a9c88c758178c7ebff6698e5398bebdcc5",
+        "size_bytes": 4134
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N09_over_table_limit.bin",
+        "sha256": "ae2383fe620c094284507e28dc4040a9c88c758178c7ebff6698e5398bebdcc5",
+        "size_bytes": 4134
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 168,
+          "returned_bytes": 168
+        },
+        {
+          "offset": 256,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "ELF string offset escapes table",
+        "state": "REJECTED"
+      },
+      "id": "N10_string_offset_end",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N10_string_offset_end.bin",
+        "sha256": "161982f1f0bea7051b24123f4a8e4c1395d43571d229fdb48892d7fe984b1757",
+        "size_bytes": 8224
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N10_string_offset_end.bin",
+        "sha256": "161982f1f0bea7051b24123f4a8e4c1395d43571d229fdb48892d7fe984b1757",
+        "size_bytes": 8224
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Invalid ELF segment bounds/alignment",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Invalid ELF segment bounds/alignment",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Invalid ELF segment bounds/alignment",
+        "state": "REJECTED"
+      },
+      "id": "N11_second_piece_file_bounds",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N11_second_piece_file_bounds.bin",
+        "sha256": "0e11e70136b7a994782e8505490ebcd96ea64428840d8c45d1c087b8c29a7ca0",
+        "size_bytes": 8224
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N11_second_piece_file_bounds.bin",
+        "sha256": "0e11e70136b7a994782e8505490ebcd96ea64428840d8c45d1c087b8c29a7ca0",
+        "size_bytes": 8224
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Invalid dynamic string",
+        "state": "REJECTED"
+      },
+      "id": "N12_unterminated_cross",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N12_unterminated_cross.bin",
+        "sha256": "0b3dcd9bb9065ecf785664d46708325d3e9202ef1f1892d0cda8dadb232a5862",
+        "size_bytes": 8198
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N12_unterminated_cross.bin",
+        "sha256": "0b3dcd9bb9065ecf785664d46708325d3e9202ef1f1892d0cda8dadb232a5862",
+        "size_bytes": 8198
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Cannot parse bounded ELF metadata",
+        "state": "REJECTED"
+      },
+      "id": "N13_nonascii_cross",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N13_nonascii_cross.bin",
+        "sha256": "8d3eafdc553a6b53d0a41d1e26532d819f85fe9e0fb81e29521dfdf4677bcbb0",
+        "size_bytes": 8197
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N13_nonascii_cross.bin",
+        "sha256": "8d3eafdc553a6b53d0a41d1e26532d819f85fe9e0fb81e29521dfdf4677bcbb0",
+        "size_bytes": 8197
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Invalid dynamic string",
+        "state": "REJECTED"
+      },
+      "id": "N14_string_4097",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N14_string_4097.bin",
+        "sha256": "e12063b80bfcc3340a9908bf7fa8710f95a869271ac2026723f33f4b54acf435",
+        "size_bytes": 22579
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N14_string_4097.bin",
+        "sha256": "e12063b80bfcc3340a9908bf7fa8710f95a869271ac2026723f33f4b54acf435",
+        "size_bytes": 22579
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 280,
+          "returned_bytes": 280
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Unreviewed loader token expansion",
+        "state": "REJECTED"
+      },
+      "id": "N15_rpath_token_cross",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N15_rpath_token_cross.bin",
+        "sha256": "185c255dc6043a8c86627a0565e3db78117adf3bf336f3caa0bbf52636b0524f",
+        "size_bytes": 8203
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N15_rpath_token_cross.bin",
+        "sha256": "185c255dc6043a8c86627a0565e3db78117adf3bf336f3caa0bbf52636b0524f",
+        "size_bytes": 8203
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 112,
+          "returned_bytes": 112
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Conflicting legacy and modern search paths",
+        "state": "REJECTED"
+      },
+      "id": "N16_conflicting_paths",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N16_conflicting_paths.bin",
+        "sha256": "da15f1c48204b60a17e64c3211203be0ed6e5a42a9e42c8e401ca7d1fc880dcd",
+        "size_bytes": 8245
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N16_conflicting_paths.bin",
+        "sha256": "da15f1c48204b60a17e64c3211203be0ed6e5a42a9e42c8e401ca7d1fc880dcd",
+        "size_bytes": 8245
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 224,
+          "returned_bytes": 224
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 128,
+          "returned_bytes": 128
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Unsupported ELF program table",
+        "state": "REJECTED"
+      },
+      "check_calls": 1,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Unsupported ELF program table",
+        "state": "REJECTED"
+      },
+      "fault": null,
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Unsupported ELF program table",
+        "state": "REJECTED"
+      },
+      "id": "N17_header_limit",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N17_header_limit.bin",
+        "sha256": "14d4796db185866c2ad9cd6a56e3f121253db7cd0e926d45de92df379bfd2ef9",
+        "size_bytes": 4134
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/N17_header_limit.bin",
+        "sha256": "14d4796db185866c2ad9cd6a56e3f121253db7cd0e926d45de92df379bfd2ef9",
+        "size_bytes": 4134
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": {
+        "kind": "short_read",
+        "piece_file_offsets": [
+          12288,
+          8192,
+          4096
+        ],
+        "piece_index": 0
+      },
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Truncated ELF range",
+        "state": "REJECTED"
+      },
+      "id": "F01_short_first_piece",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F01_short_first_piece.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F01_short_first_piece.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 280,
+          "returned_bytes": 280
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": {
+        "kind": "short_read",
+        "piece_file_offsets": [
+          12288,
+          8192,
+          4096
+        ],
+        "piece_index": 1
+      },
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Truncated ELF range",
+        "state": "REJECTED"
+      },
+      "id": "F02_short_later_piece",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F02_short_later_piece.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F02_short_later_piece.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 280,
+          "returned_bytes": 280
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-PLAN",
+        "outcome": "refusal",
+        "reason": "Frozen independent deadline",
+        "state": "TIMEOUT"
+      },
+      "check_calls": 1,
+      "expected_for_this_run_mode": {
+        "code": "CHI-PLAN",
+        "outcome": "refusal",
+        "reason": "Frozen independent deadline",
+        "state": "TIMEOUT"
+      },
+      "fault": {
+        "kind": "deadline_initial",
+        "piece_file_offsets": [
+          12288,
+          8192,
+          4096
+        ],
+        "piece_index": null
+      },
+      "fault_triggered": true,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-PLAN",
+        "outcome": "refusal",
+        "reason": "Frozen independent deadline",
+        "state": "TIMEOUT"
+      },
+      "id": "F03_deadline_initial",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F03_deadline_initial.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F03_deadline_initial.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": true,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [],
+      "same_deadline_instance_propagated": true
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": {
+        "kind": "deadline_after_piece",
+        "piece_file_offsets": [
+          12288,
+          8192,
+          4096
+        ],
+        "piece_index": 0
+      },
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-PLAN",
+        "outcome": "refusal",
+        "reason": "Frozen independent deadline",
+        "state": "TIMEOUT"
+      },
+      "id": "F04_deadline_between",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F04_deadline_between.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F04_deadline_between.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 280,
+          "returned_bytes": 280
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": {
+        "kind": "deadline_after_piece",
+        "piece_file_offsets": [
+          12288,
+          8192,
+          4096
+        ],
+        "piece_index": 2
+      },
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-PLAN",
+        "outcome": "refusal",
+        "reason": "Frozen independent deadline",
+        "state": "TIMEOUT"
+      },
+      "id": "F05_deadline_final",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F05_deadline_final.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F05_deadline_final.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 280,
+          "returned_bytes": 280
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": {
+        "kind": "mutate_after_piece",
+        "piece_file_offsets": [
+          12288,
+          8192,
+          4096
+        ],
+        "piece_index": 0
+      },
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-LOADER",
+        "outcome": "refusal",
+        "reason": "ELF changed during inspection",
+        "state": "REJECTED"
+      },
+      "id": "F06_drift_between",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F06_drift_between.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F06_drift_between.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 280,
+          "returned_bytes": 280
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    },
+    {
+      "actual": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "check_calls": 3,
+      "expected_for_this_run_mode": {
+        "code": "CHI-UNSUPPORTED",
+        "outcome": "refusal",
+        "reason": "Ambiguous/unmapped ELF string table",
+        "state": "REJECTED"
+      },
+      "fault": {
+        "kind": "mutate_after_piece",
+        "piece_file_offsets": [
+          12288,
+          8192,
+          4096
+        ],
+        "piece_index": 2
+      },
+      "fault_triggered": false,
+      "file_descriptors_closed": true,
+      "frozen_expected": {
+        "code": "CHI-LOADER",
+        "outcome": "refusal",
+        "reason": "ELF changed during inspection",
+        "state": "REJECTED"
+      },
+      "id": "F07_drift_final",
+      "input_after": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F07_drift_final.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "input_before": {
+        "mode": "0o600",
+        "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001/cases/F07_drift_final.bin",
+        "sha256": "08f3f532b6cef508c9e15216230efa0bbf762fa418a3a3ed6b7e9e684bb174bd",
+        "size_bytes": 12294
+      },
+      "mandatory_fault_trigger_passed": true,
+      "matches_frozen_intended_behavior": false,
+      "matches_run_mode_expectation": true,
+      "passed": true,
+      "read_operations": [
+        {
+          "offset": 0,
+          "requested_bytes": 64,
+          "returned_bytes": 64
+        },
+        {
+          "offset": 64,
+          "requested_bytes": 280,
+          "returned_bytes": 280
+        },
+        {
+          "offset": 512,
+          "requested_bytes": 96,
+          "returned_bytes": 96
+        }
+      ],
+      "same_deadline_instance_propagated": null
+    }
+  ],
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-I",
+    "-S",
+    "-B",
+    "/workspace/scratch/7b9b58d10704/session_p10/elf_review/run_oracle.py",
+    "--source",
+    "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline_source.py",
+    "--source-sha256",
+    "b2f4c869fd03919047db797bd3a80616cbe16f6b17689fe61d40754b27f97a39",
+    "--mode",
+    "baseline",
+    "--output",
+    "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline001",
+    "--selected-python",
+    "/workspace/scratch/7b9b58d10704/handoff_p09/recovery/h0_work/selected-python.bin"
+  ],
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PATH": "/usr/bin:/bin",
+    "TZ": "UTC",
+    "UV_THREADPOOL_SIZE": "2"
+  },
+  "frozen_intended_behavior_matches": 16,
+  "frozen_intended_behavior_mismatches": [
+    "P02_adjacent_contiguous",
+    "P03_adjacent_separated",
+    "P04_three_reverse_offsets",
+    "P05_nul_at_next_segment",
+    "P06_clipped_outer_segments",
+    "P09_consistent_overlap_join",
+    "P12_rpath_cross",
+    "P13_runpath_cross",
+    "P14_soname_cross",
+    "P15_maximum_headers",
+    "P16_string_4096",
+    "N06_conflicting_inner",
+    "N10_string_offset_end",
+    "N12_unterminated_cross",
+    "N13_nonascii_cross",
+    "N14_string_4097",
+    "N15_rpath_token_cross",
+    "N16_conflicting_paths",
+    "F01_short_first_piece",
+    "F02_short_later_piece",
+    "F04_deadline_between",
+    "F05_deadline_final",
+    "F06_drift_between",
+    "F07_drift_final"
+  ],
+  "mode": "baseline",
+  "oracle_sha256": "35b8535599cc24276dfe66e57b9ed80348c12d429e9a61441c4f449a7cb4ce8a",
+  "parser_invocations": 41,
+  "passed": true,
+  "platform": {
+    "machine": "x86_64",
+    "release": "6.18.57",
+    "sysname": "Linux",
+    "version": "#1 SMP Tue Oct 20 21:56:04 UTC 2026"
+  },
+  "process_attempts": [],
+  "product_module_imports": 1,
+  "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "recorded_at_utc": "2026-11-21T20:18:02.842582+00:00",
+  "reviewer": "/root/elf_review",
+  "run_mode_expectation_failures": [],
+  "runner": {
+    "mode": "0o644",
+    "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/run_oracle.py",
+    "sha256": "cf54c9fe9c94311efe6713afaea7a23ea0707b028f04811ea297a42d4782335f",
+    "size_bytes": 11486
+  },
+  "schema": "ontokin.c271.p10-independent-parser-run/1",
+  "scope": "Static read_elf_metadata calls only; no H0, H1, image execution, Node, ldd, checker or original/full routine",
+  "selected_python": {
+    "actual": {
+      "code": "CHI-UNSUPPORTED",
+      "outcome": "refusal",
+      "reason": "Ambiguous/unmapped ELF string table",
+      "state": "REJECTED"
+    },
+    "check_calls": 4,
+    "fault": null,
+    "fault_triggered": false,
+    "file_descriptors_closed": true,
+    "frozen_expected": {
+      "code": "CHI-UNSUPPORTED",
+      "outcome": "refusal",
+      "reason": "Ambiguous/unmapped ELF string table",
+      "state": "REJECTED"
+    },
+    "id": "SELECTED_PYTHON_STATIC",
+    "input_after": {
+      "mode": "0o644",
+      "path": "/workspace/scratch/7b9b58d10704/handoff_p09/recovery/h0_work/selected-python.bin",
+      "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+      "size_bytes": 30894944
+    },
+    "input_before": {
+      "mode": "0o644",
+      "path": "/workspace/scratch/7b9b58d10704/handoff_p09/recovery/h0_work/selected-python.bin",
+      "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+      "size_bytes": 30894944
+    },
+    "matches_frozen_intended_behavior": true,
+    "passed": true,
+    "read_operations": [
+      {
+        "offset": 0,
+        "requested_bytes": 64,
+        "returned_bytes": 64
+      },
+      {
+        "offset": 64,
+        "requested_bytes": 840,
+        "returned_bytes": 840
+      },
+      {
+        "offset": 904,
+        "requested_bytes": 592,
+        "returned_bytes": 592
+      },
+      {
+        "offset": 114800,
+        "requested_bytes": 28,
+        "returned_bytes": 28
+      }
+    ],
+    "same_deadline_instance_propagated": null
+  },
+  "source": {
+    "mode": "0o644",
+    "path": "/workspace/scratch/7b9b58d10704/session_p10/elf_review/baseline_source.py",
+    "sha256": "b2f4c869fd03919047db797bd3a80616cbe16f6b17689fe61d40754b27f97a39",
+    "size_bytes": 147900
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema": "ontokin.c271.p10-verification-plan/1",
+  "implementation_scope": "ELF string-table mapping block only",
+  "new_cases": 40,
+  "existing_methods": 135,
+  "expected_focused_methods": 175,
+  "predeclared_oracle_sha256": "35b8535599cc24276dfe66e57b9ed80348c12d429e9a61441c4f449a7cb4ce8a",
+  "baseline_source": "ffd234b17723e8370cc0afa6cf19c1a161719892",
+  "checks": [
+    {
+      "name": "independent original-source baseline",
+      "status": "complete",
+      "comparison": "16 match intended corrected behavior, 24 differ; every legacy prediction matched",
+      "evidence": "BASELINE-REPORT.json"
+    },
+    {
+      "name": "guarded two-module regression",
+      "status": "pending",
+      "modules": [
+        "tests.test_current_host_inspection_v01",
+        "tests.test_current_host_elf_mapping_v01"
+      ],
+      "process_operations": "forbidden inside project/test execution"
+    },
+    {
+      "name": "independent candidate oracle and selected image static refusal",
+      "status": "pending",
+      "selected_expected": "CHI-UNSUPPORTED: Unreviewed loader token expansion"
+    },
+    {
+      "name": "workflow records",
+      "status": "pending",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ]
+    },
+    {
+      "name": "documentation/navigation",
+      "status": "pending",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ]
+    },
+    {
+      "name": "whitespace",
+      "status": "pending",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ]
+    }
+  ],
+  "unrun_required_parent_gate": "Complete tools/check_local.py remains mandatory before integration; P10 focused evidence does not waive it",
+  "limits": [
+    "No H0/H1, image execution, Node/ldd, original-seven, full routine, installation, hosted CI, main lease or integration"
+  ],
+  "source_freeze": "clean candidate publication and complete relevant input manifest precede guarded run"
+}

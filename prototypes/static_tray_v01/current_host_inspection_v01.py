@@ -700,10 +700,25 @@ def read_elf_metadata(path, *, check=lambda: None, require_interpreter=False):
             return found[0] if found else None
         straddr, strsize = single(5, required=True), single(10, required=True)
         _require(0 < strsize <= 4 * 1024 * 1024, "UNSUPPORTED", "Dynamic string table exceeds bound")
-        mappings = [fileoff + straddr - virtual for virtual, fileoff, size in segments
-                    if virtual <= straddr and straddr + strsize <= virtual + size]
-        _require(len(set(mappings)) == 1, "UNSUPPORTED", "Ambiguous/unmapped ELF string table")
-        strings = read(mappings[0], strsize)
+        # Partition the virtual table at every file-backed segment boundary.
+        # Coincident mappings may name the same bytes; conflicting offsets
+        # or a gap must refuse even when another segment spans the table.
+        strend = straddr + strsize
+        boundaries = {straddr, strend}
+        for virtual, fileoff, size in segments:
+            check()
+            first, last = max(straddr, virtual), min(strend, virtual + size)
+            if first < last:
+                boundaries.update((first, last))
+        ordered = sorted(boundaries)
+        pieces = []
+        for first, last in zip(ordered, ordered[1:]):
+            check()
+            mappings = {fileoff + first - virtual for virtual, fileoff, size in segments
+                        if virtual <= first and last <= virtual + size}
+            _require(len(mappings) == 1, "UNSUPPORTED", "Ambiguous/unmapped ELF string table")
+            pieces.append(read(next(iter(mappings)), last - first))
+        strings = b"".join(pieces)
         def string(position):
             _require(0 <= position < len(strings), "UNSUPPORTED", "ELF string offset escapes table")
             end = strings.find(b"\0", position)

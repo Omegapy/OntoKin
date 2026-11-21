@@ -1,0 +1,85 @@
+{
+  "schema": "ontokin.c271.p10-early-gate-acceptance/1",
+  "worker": "/root/intake_audit",
+  "verdict": "accepted_and_director_save_confirmed",
+  "checks": [
+    {
+      "name": "Independent exact artifact review accepted",
+      "passed": true
+    },
+    {
+      "name": "Combined saved receipt contains exactly both accepted artifacts",
+      "passed": true
+    },
+    {
+      "name": "Both recorded saved readbacks match independently reviewed identities",
+      "passed": true
+    },
+    {
+      "name": "Receipt preserves pre-implementation boundary and source",
+      "passed": true
+    }
+  ],
+  "archive": {
+    "path": "/workspace/scratch/7b9b58d10704/deliverables_p10/early-attempt002/OntoKin_C271_P10_ELF_Early_Recovery_2026-11-21_Attempt002.zip",
+    "bytes": 2481023,
+    "sha256": "23d398f141b579bdebdae86e208fb301dacd02e98b0c881a1fd9c754e33eebe5"
+  },
+  "supplement": {
+    "path": "/workspace/scratch/7b9b58d10704/deliverables_p10/early-attempt002/OntoKin_C271_P10_Early_Correction_Supplement_2026-11-21.json",
+    "bytes": 15127,
+    "sha256": "11065d152383c79fb099cd385368ea0d6f2d0e636016b286ba5b7985b1d08f65"
+  },
+  "combined_receipt": {
+    "path": "/workspace/scratch/7b9b58d10704/session_p10/EARLY-RECOVERY-RECEIPT.json",
+    "bytes": 2492,
+    "sha256": "37187a172f3fcaa2e30418bf71110c7aa9fdd71ef1c131957746b0d3f688130a",
+    "payload": {
+      "schema": "ontokin.c271.p10-early-receipt/2",
+      "status": "saved_and_exact_readback_verified",
+      "confirmed_at_utc": "2026-11-21T20:11:29.084562+00:00",
+      "files": [
+        {
+          "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/early-attempt002/OntoKin_C271_P10_ELF_Early_Recovery_2026-11-21_Attempt002.zip",
+          "purpose": "create_library_file",
+          "status": "succeeded",
+          "file_id": "file_0000000060a881fd9f14c7bf52371a7f",
+          "library_file_id": "libfile_fde3_f-e73591c3ad1481918557dbd47711d2db_2ab2a24d43748191957f9bcc356b59de",
+          "file_name": "OntoKin_C271_P10_ELF_Early_Recovery_2026-11-21_Attempt002.zip",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P10_ELF_Early_Recovery_2026-11-21_Attempt002.zip",
+          "current_version_number": 0,
+          "version": 0,
+          "bytes": 2481023,
+          "sha256": "23d398f141b579bdebdae86e208fb301dacd02e98b0c881a1fd9c754e33eebe5",
+          "saved_bytes_readback_equal": true,
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-e73591c3ad1481918557dbd47711d2db_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+        },
+        {
+          "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/early-attempt002/OntoKin_C271_P10_Early_Correction_Supplement_2026-11-21.json",
+          "purpose": "create_library_file",
+          "status": "succeeded",
+          "file_id": "file_0000000049b081fd9c59f6303bb86971",
+          "library_file_id": "libfile_fde3_f-dfee96acbff88191a70c6c007da9ef98_2ab2a24d43748191957f9bcc356b59de",
+          "file_name": "OntoKin_C271_P10_Early_Correction_Supplement_2026-11-21.json",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P10_Early_Correction_Supplement_2026-11-21.json",
+          "current_version_number": 0,
+          "version": 0,
+          "bytes": 15127,
+          "sha256": "11065d152383c79fb099cd385368ea0d6f2d0e636016b286ba5b7985b1d08f65",
+          "saved_bytes_readback_equal": true,
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-dfee96acbff88191a70c6c007da9ef98_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+        }
+      ],
+      "source_revision": "ffd234b17723e8370cc0afa6cf19c1a161719892",
+      "boundary": "Before fixture construction, source implementation or behavioral execution",
+      "original_saved_attempt": "EARLY-RECOVERY-RECEIPT-001.json",
+      "finding": "ER-27 resolved by corrected ZIP plus exact current phase supplemental record",
+      "independent_review": "session_p10/early_review/attempt002/REVIEW.json"
+    }
+  },
+  "prior_finding": "ER-27 resolved; retain original rejection and immutable attempts.",
+  "boundary": "The independent worker verified exact local package/supplement; Director performed save and exact returned-byte verification, now reconciled by the combined receipt. No separate worker live Library operation.",
+  "next_action": "Director may release the bounded P10 independent fixture/design assignment. H0/H1 and all broader gates remain excluded."
+}
