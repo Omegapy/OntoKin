@@ -29,6 +29,7 @@ class CurrentHostDriverBindingTests(unittest.TestCase):
         # Isolate metadata subprocesses from the checker-start counter.
         with patch.object(checks, "prepare_workspace") as copy, \
                 patch.object(checks, "git_metadata", return_value={"available": False, "scope": "mocked metadata leaf"}), \
+                patch.object(checks.platform, "platform", return_value="mocked platform metadata leaf"), \
                 patch.object(checks.subprocess, "Popen") as child, redirect_stdout(io.StringIO()):
             result = checks.run(self.root, self.output, False, 5, **selection)
         copy.assert_not_called()
@@ -130,6 +131,7 @@ class CurrentHostDriverBindingTests(unittest.TestCase):
                     patch.object(checks, "prepare_readback_selection", return_value=selection), \
                     patch.object(checks, "bind_readback_workspace", return_value=selection), \
                     patch.object(checks, "git_metadata", return_value={"available": False, "scope": "mocked metadata leaf"}), \
+                    patch.object(checks.platform, "platform", return_value="mocked platform metadata leaf"), \
                     patch.object(checks, "inventory", side_effect=inventory), \
                     patch.object(checks.subprocess, "Popen") as child, redirect_stdout(io.StringIO()):
                 code = checks.run(self.root, output, False, 5)
