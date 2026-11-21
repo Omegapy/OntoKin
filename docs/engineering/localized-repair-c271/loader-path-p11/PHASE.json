@@ -25,7 +25,7 @@
     "Root owns canonical state/Git/index/publication/delivery; real workers own disjoint paths, no nested workers.",
     "Do not retry the diagnosed unavailable native push; publish with conditional GitHub API ref update."
   ],
-  "status": "in_progress",
+  "status": "technical_complete_delivery_pending",
   "early_recovery": "confirmed_saved_and_independently_accepted",
   "early_save_confirmed": true,
   "main_lease_held": false,
@@ -47,7 +47,8 @@
   "workers": {
     "/root/intake_audit": "Independent intake and recovery audit, then independent design/package review",
     "/root/handoff_engineer": "Early/final package engineering only",
-    "/root/loader_design": "Independent source-backed design and inert-control author; released only after exact early save/readback"
+    "/root/loader_design": "Independent source-backed design and inert-control author; released only after exact early save/readback",
+    "/root": "Director: canonical records, index/Git publication, verification and Library delivery"
   },
   "current_unknown_operations": [],
   "historical_unknowns": [
@@ -64,27 +65,40 @@
     },
     {
       "gate": "P11-D02",
-      "state": "in_progress"
+      "state": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/ADOPTION.json",
+        "docs/engineering/localized-repair-c271/loader-path-p11/review/REVIEW.json"
+      ]
     },
     {
       "gate": "P11-D03",
-      "state": "not_started"
+      "state": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/CANDIDATE-MANIFEST.json",
+        "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/EXPECTATIONS.json"
+      ]
     },
     {
       "gate": "P11-D04",
-      "state": "not_started"
+      "state": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/review/REVIEW.json",
+        "docs/engineering/localized-repair-c271/loader-path-p11/evidence/technical-corrected/CHECKS.json",
+        "docs/engineering/localized-repair-c271/loader-path-p11/evidence/transport_review/REVIEW.json"
+      ]
     },
     {
       "gate": "P11-D05",
-      "state": "not_started"
+      "state": "publication_and_delivery_pending"
     }
   ],
-  "exact_next_action": "Complete and independently review the finite loader-path decision and inert positive/boundary/refusal controls. Verify documentary checks and protected source, publish on the retained branch, save the final partial handoff and separate receipt, then stop.",
+  "exact_next_action": "Complete P11 documentary/source-boundary checks and conditional retained-branch publication. Independently verify the final ZIP/prompts, save and exactly read them back, record the separate receipt, and stop. Do not begin implementation in this chat.",
   "observed_main": {
     "commit": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
     "tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
-    "observed_at_utc": "2026-11-21T22:41:35.622787+00:00",
-    "evidence": "recovery/session_evidence/startup/reconcile_0.json"
+    "observed_at_utc": "2026-11-21T23:32:46.714Z",
+    "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/live_boundary/branches.json"
   },
   "pull_request": {
     "number": 274,
@@ -104,7 +118,7 @@
   "known_failures_this_session": [
     {
       "kind": "read_only_library_materialization_schema",
-      "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/CHECKS.json",
+      "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/startup/initial-library-materialize-error.json",
       "disposition": "Rejected before transfer; exact full Library list resolved and current download helper succeeded; no unknown write"
     },
     {
@@ -115,7 +129,7 @@
       "id": "P11-RECORD-001",
       "kind": "documentary_schema_error",
       "detail": "Initial CURRENT snapshot_date used a calendar date; the existing validator requires an explicit UTC timestamp. Corrected only the timestamp; failed run and exact candidate patch retained.",
-      "evidence": "session_evidence/checks/initial/CHECKS.json",
+      "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/CHECKS.json",
       "status": "corrected_targeted_recheck_passed",
       "resolution_evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected002/CHECKS.json"
     },
@@ -126,8 +140,76 @@
       "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/CHECKS.json",
       "status": "corrected_targeted_recheck_passed",
       "resolution_evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected002/CHECKS.json"
+    },
+    {
+      "id": "P11-RECORD-003",
+      "kind": "diagnostic_evidence_reference",
+      "detail": "Director preservation review found that an index-based record correction had assigned the first record-check evidence path to the earlier Library read error. Restored exact diagnostic pointers by stable kind/id; original published opening checkpoint remains in Git history.",
+      "status": "corrected",
+      "original_checkpoint": "aa38a9886be8e1c39270ce062b7e73f2fac24626",
+      "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/startup/initial-library-materialize-error.json"
+    },
+    {
+      "kind": "read_only_github_resource_path",
+      "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/startup/encoded-branch-url-refusal.json",
+      "disposition": "Connector rejected encoded branch path. Existing approved branches-collection endpoint confirmed exact head; no write retry or unknown operation."
+    },
+    {
+      "kind": "author_fixture_boundary_error",
+      "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/design/static001.stdout.json",
+      "disposition": "Original candidate001 bytes retained; corrected in later frozen candidates."
+    },
+    {
+      "kind": "independent_design_control_findings",
+      "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/review/candidate002/REVIEW.json",
+      "disposition": "Five findings resolved by exact candidate004; earlier findings and all attempts retained."
+    },
+    {
+      "kind": "reviewer_helper_overstrict_inode_comparison",
+      "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/review/candidate004/REVISION-REVIEW.json",
+      "disposition": "Initial 404/405 result preserved; targeted followup cleared the helper false positive without changing candidate or oracle."
+    },
+    {
+      "kind": "withdrawn_extra_document_size_policy",
+      "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/review/DOCUMENT-CAP-DECISION.json",
+      "disposition": "User question led to reuse of the unchanged existing 16 MiB reader; candidate003 and withdrawn controls retained."
+    },
+    {
+      "id": "P11-RECORD-004",
+      "kind": "raw_patch_evidence_whitespace",
+      "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/technical-candidate/CHECKS.json",
+      "disposition": "Corrected through independently verified lossless Git transport; all four ordinary record checks passed. Frozen raw bytes and whitespace guard remain unchanged."
     }
   ],
   "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json",
-  "updated_at_utc": "2026-11-21T22:51:46.538639+00:00"
+  "updated_at_utc": "2026-11-21T23:51:46.555149+00:00",
+  "accepted_candidate": {
+    "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/CANDIDATE-MANIFEST.json",
+    "bytes": 35041,
+    "sha256": "e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de"
+  },
+  "adoption": "docs/engineering/localized-repair-c271/loader-path-p11/ADOPTION.json",
+  "independent_final_design_review": {
+    "path": "docs/engineering/localized-repair-c271/loader-path-p11/review/REVIEW.json",
+    "sha256": "b9e6db3125acb05c2fab420a608e404810e234c9e4abdcee10a61838c6712a58",
+    "reviewer": "/root/intake_audit",
+    "blocking_findings": []
+  },
+  "post_delivery_next_action": "In a fresh bounded phase, reconcile the P11 ZIP, its separate terminal receipt and live GitHub, then confirm new early recovery. Implement only the accepted candidate004 decision through its FUTURE-SURFACE.json on the retained branch. Consume all 97 frozen controls without rewriting their expected outcomes, retain all 175 existing inspection/mapping methods and obtain independent exact-source review. Verify and save a partial handoff, then stop before H0 re-establishment, H1, runtime installation, Node/ldd, original-seven/full routine, main lease, integration or parent closure. Stop at a concrete blocker if the reviewed surface is insufficient; do not substitute inputs.",
+  "worker_dispositions": {
+    "/root": "Active on canonical acceptance/publication/delivery; no second technical phase",
+    "/root/loader_design": "Completed; candidate004 and all prior payload/support bytes frozen",
+    "/root/intake_audit": "Design and transport reviews completed; final-package review pending",
+    "/root/handoff_engineer": "Packaging and terminal tools ready; final build awaits exact published source"
+  },
+  "worker_dispositions_recorded_at_utc": "2026-11-21T23:51:46.555149+00:00",
+  "next_phase_acceptance": [
+    "New early recovery confirmed before implementation.",
+    "Only the accepted module/new focused test surface changes; exact pins and all other protected behavior preserved.",
+    "All 97 frozen controls and 175 existing inspection/mapping methods retain their intended scopes and pass required independent review.",
+    "Required documentary/provenance checks, conditional branch publication and verified partial handoff complete."
+  ],
+  "next_phase_stop": "Stop after that bounded implementation/control phase or its first concrete blocker; no H0/H1/full-routine/integration in the same chat.",
+  "technical_checks_passed": true,
+  "independent_final_review": "accepted"
 }

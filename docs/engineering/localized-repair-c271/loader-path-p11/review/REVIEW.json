@@ -1,0 +1,181 @@
+{
+  "schema": "ontokin.c271.p11-independent-design-review/1",
+  "reviewer": "/root/intake_audit",
+  "verdict": "accepted_design_and_frozen_inert_controls_only",
+  "candidate": {
+    "path": "session_evidence/loader_design/candidate004/CANDIDATE-MANIFEST.json",
+    "size_bytes": 35041,
+    "sha256": "e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de"
+  },
+  "report": {
+    "path": "session_evidence/design_review/REPORT.md",
+    "size_bytes": 11043,
+    "sha256": "fde4e6472e232e43aa0710135c939d877b9ed6dc35ff4415ed4f09d3e96b7f3a"
+  },
+  "scope": "P11 bounded design and preimplementation inert controls; no implementation or operational qualification",
+  "blocking_findings": [],
+  "resolved_findings": {
+    "DR-01": "Corrected isolated raw byte bound",
+    "DR-02": "Complete logical ancestor guard sets",
+    "DR-03": "Explicit new-profile ASCII/byte/component semantics",
+    "DR-04": "Component pair added; unsupported extra document cap withdrawn in favor of inherited16MiB behavior",
+    "DR-05": "Frozen private materialization contract preserves exact bytes and inert modes"
+  },
+  "claims": [
+    {
+      "id": "DRC01",
+      "verdict": "pass",
+      "claim": "Exact frozen candidate manifest and every payload/support binding verified",
+      "evidence": "candidate004/STATIC-REVIEW.json"
+    },
+    {
+      "id": "DRC02",
+      "verdict": "pass",
+      "claim": "Independent raw ELF and auxiliary-vector decoding agrees with frozen construction and expectations",
+      "evidence": [
+        "candidate004/ELF-FACTS.json",
+        "candidate004/AUXV-FACTS.json"
+      ]
+    },
+    {
+      "id": "DRC03",
+      "verdict": "pass",
+      "claim": "All93 original expected records reproduce their original serialized bytes; exactly4 new controls",
+      "evidence": "candidate004/REVISION-REVIEW.json"
+    },
+    {
+      "id": "DRC04",
+      "verdict": "pass",
+      "claim": "P07/N69 byte boundary is isolated and complete logical ancestors supplied",
+      "evidence": "candidate004/REVISION-CHECKS.json"
+    },
+    {
+      "id": "DRC05",
+      "verdict": "pass",
+      "claim": "P09/N75 component boundary is isolated; ASCII origin/suffix refusals coherent",
+      "evidence": [
+        "candidate004/REVISION-CHECKS.json",
+        "candidate004/REVISION-FOLLOWUP.json"
+      ]
+    },
+    {
+      "id": "DRC06",
+      "verdict": "pass",
+      "claim": "Existing16MiB document reader and canonical/identity/callback/shape guards inherited; withdrawn4MiB policy not adopted",
+      "evidence": [
+        "DOCUMENT-CAP-DECISION.json",
+        "candidate004/INDEPENDENT-DOCUMENT-DIFF.diff"
+      ]
+    },
+    {
+      "id": "DRC07",
+      "verdict": "pass",
+      "claim": "Published primary source supports direct-origin and search semantics without proving actual host eligibility",
+      "evidence": [
+        "PREPARATION.json",
+        "candidate002/REPORT.md",
+        "REPORT.md"
+      ]
+    },
+    {
+      "id": "DRC08",
+      "verdict": "pass",
+      "claim": "Exact selected-image role/pin, raw-versus-derived metadata, origin/alias/kernel proof and nonselecting finite closure are distinct",
+      "evidence": [
+        "candidate002/REPORT.md",
+        "REPORT.md"
+      ]
+    },
+    {
+      "id": "DRC09",
+      "verdict": "pass",
+      "claim": "Both raw parser entry points, pre-helper proof, full rechecks and final witness are explicitly covered",
+      "evidence": [
+        "LEGACY-BOUNDARIES.json",
+        "REPORT.md"
+      ]
+    },
+    {
+      "id": "DRC10",
+      "verdict": "pass",
+      "claim": "Strict new schema/profile pairing preserves public defaults and closed P06 consumers",
+      "evidence": "REPORT.md"
+    },
+    {
+      "id": "DRC11",
+      "verdict": "pass",
+      "claim": "Future edit paths explicit and not authorized for implementation in P11",
+      "evidence": "REPORT.md"
+    },
+    {
+      "id": "DRC12",
+      "verdict": "pass",
+      "claim": "Physical0600 fixture modes have a precise private materialization contract separate from real0755 subject",
+      "evidence": "candidate004/REVISION-CHECKS.json"
+    },
+    {
+      "id": "DRC13",
+      "verdict": "pass",
+      "claim": "Original candidate001 failure, candidate002 inadequacies, withdrawn003 and reviewer failures are preserved",
+      "evidence": [
+        "FAILURE-PRESERVATION.json",
+        "candidate002/REVIEW.json",
+        "candidate004/REVISION-REVIEW.json",
+        "ATTEMPTS.json"
+      ]
+    },
+    {
+      "id": "DRC14",
+      "verdict": "pass",
+      "claim": "All16 cited local and22 protected source identities match; no product code/tests executed by reviewer",
+      "evidence": "candidate004/STATIC-REVIEW.json"
+    }
+  ],
+  "checks": {
+    "independent_static_total": 1675,
+    "independent_static_passed": 1675,
+    "initial_revision_total": 405,
+    "initial_revision_passed": 404,
+    "initial_revision_failed": 1,
+    "targeted_followup_passed": true,
+    "outstanding_revision_findings": 0,
+    "note": "Initial reviewer-helper false positive is preserved and separately resolved; no candidate or oracle change."
+  },
+  "counts": {
+    "ELF_images": 26,
+    "auxv_assets": 8,
+    "cases": 97,
+    "fixtures": 131,
+    "local_sources": 16,
+    "payload": 146,
+    "protected_sources": 22,
+    "supporting_files": 29
+  },
+  "old_oracle_projection_sha256": "57cd7b319d03cbe1f4f43bdd291be181af68be2405acc7e9e9812c29955b38bb",
+  "prior_reviews_preserved": [
+    "candidate002/REVIEW.json",
+    "candidate002/REPORT.md",
+    "candidate002/CASE-SEMANTICS.json"
+  ],
+  "withdrawn003": {
+    "payloads_verified": 148,
+    "supports_verified": 12,
+    "state": "unaccepted historical attempt only"
+  },
+  "future_obligations": [
+    "Separate implementation phase and independent implementation review",
+    "Consume exact frozen controls without oracle repair",
+    "Retain all135 inspection and40 P10 mapping methods and inherited guards",
+    "Reconstruct exact selected Python and complete actual runtime/closure/variant/origin inputs before H0",
+    "Refuse if actual variant completeness or nonselection cannot be established",
+    "H0/H1, original seven/full routine/R03, integration/R04 and parent closure/R05 remain unmet"
+  ],
+  "product_imports": 0,
+  "product_calls": 0,
+  "host_observations": 0,
+  "target_executions": 0,
+  "runtime_preparation": false,
+  "library_or_git_writes": false,
+  "source_revision": "e0119f376441fee0fc3956852ac63110ab141011",
+  "required_next_action": "Root may adopt exact candidate004 design/control bytes and complete the P11 final recovery handoff; then stop at the phase boundary."
+}

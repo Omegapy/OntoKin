@@ -27,3 +27,11 @@ Deliver a finite source-backed decision and independently frozen controls, indep
 The ZIP was saved to the existing OntoKin folder and its downloaded copy matched all 899,708 bytes and SHA-256 `f8047061fd25c770c92baf260cce31351dc4a5dcb5bbbb7006e4188b9848ae94`. The independent early review passed 15 groups. The separate receipt preserves the later review, saved-byte evidence and complete worker roster; the third worker was held before substantive design/control work and released only after readback.
 
 Actual workers: `/root/handoff_engineer` owns packaging; `/root/loader_design` owns the decision and inert controls; `/root/intake_audit` owns independent reviews. Root alone owns canonical records, Git/index, publication and Library saves. No uncertain current operation exists. Historical unknowns remain recorded.
+
+## P11 reviewed design boundary
+
+Candidate004 is independently accepted for design and 97 frozen inert controls; its manifest SHA-256 is `e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de`. All 93 original expected outcomes are retained. The five review findings were resolved without product changes. The new variant document reuses the existing 16 MiB reader; the extra 4 MiB proposal was withdrawn after the user questioned its need.
+
+The author ran 1,149 static artifact checks; the independent reviewer ran 1,675 static checks and retained all failed attempts and targeted corrections. These are not product-test or host-qualification results. The existing 175 inspection/mapping methods remain future implementation obligations. See `docs/engineering/localized-repair-c271/loader-path-p11/ADOPTION.json` and `review/REVIEW.json`.
+
+Documentary checks, conditional branch publication and verified P11 delivery still precede the stop. Parent requirements and plan states remain unchanged: R01/R02 done; R03/R04/R05 not_done; P01 done; P02 in_progress. H0 is unaccepted, H1 unapproved, PR274 draft/open and issue273 open. No main lease or integration is allowed in this phase.

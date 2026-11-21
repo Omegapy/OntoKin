@@ -1,0 +1,73 @@
+{
+  "schema": "ontokin.c271.p11-transport-review-attempts/1",
+  "attempts": [
+    {
+      "id": "RUN001",
+      "command": "python -I -S -B session_evidence/transport_review/verify_transport.py",
+      "exit_code": 0,
+      "stdout": "RUN001.stdout.json",
+      "stderr": "RUN001.stderr.txt",
+      "result": "52 independent checks passed; all materialized files exact."
+    }
+  ],
+  "failed_attempts": [],
+  "read_only_git_observations": [
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stderr": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-0.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-0.stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "exit_code": 0,
+      "stderr": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-1.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-1.stdout.txt",
+      "stdout_sha256": "fcc6e198cc01414e9355a9ec9f1b33c0e89b5d4ef5abcd4eadb0fa77bf151c4f"
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "--get",
+        "core.whitespace"
+      ],
+      "exit_code": 1,
+      "stderr": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-2.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-2.stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "check-attr",
+        "whitespace",
+        "--",
+        "docs/engineering/localized-repair-c271/loader-path-p11/transport/2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417.base64.json",
+        "docs/engineering/localized-repair-c271/loader-path-p11/transport/2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417.base64.json",
+        "docs/engineering/localized-repair-c271/loader-path-p11/transport/aa1edcfbcf800cbbe9fdd9aa66bdb574f97b0a3c4d2e8b9da43d233ba68d3c5b.base64.json"
+      ],
+      "exit_code": 0,
+      "stderr": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-3.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-3.stdout.txt",
+      "stdout_sha256": "760c65e11312d5394723dc0241b39bbc53f995daa95543f3bfa3d27093bad598"
+    }
+  ],
+  "product_execution": false,
+  "git_writes": false
+}

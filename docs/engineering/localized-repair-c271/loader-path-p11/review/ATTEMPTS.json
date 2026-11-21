@@ -1,0 +1,81 @@
+{
+  "schema": "ontokin.c271.p11-review-attempt-history/1",
+  "reviewer": "/root/intake_audit",
+  "attempts": [
+    {
+      "id": "preparation",
+      "result": "completed",
+      "record": "PREPARATION.json",
+      "note": "Preserves initial source retrieval failures and exact read-set."
+    },
+    {
+      "id": "candidate002-exploratory-name",
+      "result": "FileNotFoundError",
+      "attempted_path": "session_evidence/loader_design/candidate002/fixture_inputs/P01_exact_selected_rule.json",
+      "correction": "Read exact fixture manifest and used P01_nonselecting_base.json. No candidate file changed. Interactive tool error is in conversation; this record preserves its synopsis."
+    },
+    {
+      "id": "source-and-case-output-truncations",
+      "result": "some broad grouped source reads, web renderer response, and initial case-delta print exceeded output budget",
+      "correction": "Relevant passages and all case categories reread in bounded outputs; complete computed facts retained in candidate002/CASE-FACTS.json. Long JSON-pointer strings caused one later delta output truncation; bounded field summaries were read instead."
+    },
+    {
+      "id": "STATIC-RUN001",
+      "command": "python -I -S -B session_evidence/design_review/audit_candidate.py candidate002",
+      "exit_code": 0,
+      "stdout": "STATIC-RUN001.stdout.json",
+      "stderr": "STATIC-RUN001.stderr.txt",
+      "result": "1573 independent static checks passed; adequacy adjudicated separately."
+    },
+    {
+      "id": "SEMANTIC-RUN001",
+      "command": "python -I -S -B session_evidence/design_review/review_case_semantics002.py",
+      "exit_code": 1,
+      "stdout": "SEMANTIC-RUN001.stdout.json",
+      "stderr": "SEMANTIC-RUN001.stderr.txt",
+      "result": "80/83 static assertions pass. Three real control adequacy failures preserved as DR-01/DR-02; no oracle changed."
+    },
+    {
+      "id": "document-cap-reassessment",
+      "result": "User-directed correction to proposal",
+      "record": "DOCUMENT-CAP-DECISION.json",
+      "note": "Existing16MiB reader is sufficient; unsupported4MiB policy withdrawn without forcing an unnecessary new control seam. Candidate003 preserved by author."
+    },
+    {
+      "id": "candidate004-read-output-truncation",
+      "result": "Revision inventory and full text-diff output exceeded chosen output budgets",
+      "correction": "Machine-checked complete inventories and exact text diff; reread every changed normative DECISION/CONTROL passage in bounded ranges and inspected new HI03 source anchors."
+    },
+    {
+      "id": "STATIC-RUN002",
+      "command": "python -I -S -B session_evidence/design_review/audit_candidate.py candidate004",
+      "exit_code": 0,
+      "stdout": "STATIC-RUN002.stdout.json",
+      "stderr": "STATIC-RUN002.stderr.txt",
+      "result": "1675 independent static checks passed."
+    },
+    {
+      "id": "REVISION-RUN001",
+      "command": "python -I -S -B session_evidence/design_review/verify_revision004.py",
+      "exit_code": 1,
+      "stdout": "REVISION-RUN001.stdout.json",
+      "stderr": "REVISION-RUN001.stderr.txt",
+      "result": "404/405 checks passed; sole helper assertion overconstrained a fresh valid synthetic inode."
+    },
+    {
+      "id": "REVISION-RUN002",
+      "command": "python -I -S -B session_evidence/design_review/revision_followup.py",
+      "exit_code": 0,
+      "stdout": "REVISION-RUN002.stdout.json",
+      "stderr": "REVISION-RUN002.stderr.txt",
+      "result": "Targeted observed-difference correction passed; original helper failure, input bytes and expectations unchanged."
+    }
+  ],
+  "product_imports": 0,
+  "product_execution": 0,
+  "host_observations": 0,
+  "target_starts": 0,
+  "source_writes": 0,
+  "git_writes": 0,
+  "library_writes": 0
+}

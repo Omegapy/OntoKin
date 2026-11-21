@@ -1,0 +1,31 @@
+{
+  "reviewer": "/root",
+  "recorded_at_utc": "2026-11-21T22:58:19.622384+00:00",
+  "purpose": "Independent Director source verification for P11 decision review; no host qualification or product execution.",
+  "sources": [
+    {
+      "id": "ROOT-W01",
+      "url": "https://sources.debian.org/src/glibc/2.36-8/sysdeps/unix/sysv/linux/dl-origin.c/",
+      "web_ref": "turn207641486view0",
+      "version": "glibc 2.36-8",
+      "observed_support": "Linux origin calculation attempts /proc/self/exe; fallback handling exists. The proposed finite profile must refuse fallback rather than assume all launch paths behave identically."
+    },
+    {
+      "id": "ROOT-W02",
+      "url": "https://sourceware.org/pipermail/libc-alpha/2025-March/165169.html",
+      "web_ref": "turn207641486view1",
+      "publication_date": "2025-03-11",
+      "observed_support": "Upstream patch discussion explicitly distinguishes direct executable origin from explicit-loader/ldd origin and proposes canonicalization changes. The post is not proof of deployment on a selected host."
+    },
+    {
+      "id": "ROOT-W03",
+      "url": "https://man7.org/linux/man-pages/man8/ld.so.8.html",
+      "web_ref": "turn207641486view2",
+      "observed_support": "The manual distinguishes RPATH from RUNPATH search inheritance and documents ORIGIN expansion and hardware-capability search paths. A new origin rule cannot safely be implemented as string substitution alone."
+    }
+  ],
+  "limitations": [
+    "No actual host loader version, variant list, directory inventory, launch identity or H0 condition is established by these sources.",
+    "An independently bounded nonselecting added path is a design restriction; it is not a general dynamic-loader implementation."
+  ]
+}

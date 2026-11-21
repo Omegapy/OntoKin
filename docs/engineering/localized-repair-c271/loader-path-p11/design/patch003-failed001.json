@@ -1,0 +1,11 @@
+{
+  "schema": "ontokin.c271.p11-author-tool-failure/1",
+  "operation": "apply_patch for candidate003 prose revision",
+  "error": "apply_patch verification failed: invalid patch: multiple operations target /workspace/scratch/2ad494d5da19/session_evidence/loader_design/candidate003/README.md",
+  "cause": "A single patch attempted both Delete File and Add File for README.md instead of one Update File operation.",
+  "intended_targets": ["candidate003/DECISION.md", "candidate003/CONTROL-CONTRACT.md", "candidate003/README.md", "candidate003/MATERIALIZATION.md"],
+  "mutation_occurred": false,
+  "verification": "A subsequent read found none of the proposed new markers; patch validation failed before applying any change.",
+  "disposition": "Preserve this failed tool attempt. Apply separate valid updates to mutable candidate003; no candidate002 or its support path was targeted.",
+  "product_execution": false
+}

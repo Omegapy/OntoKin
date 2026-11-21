@@ -1,0 +1,128 @@
+{
+  "schema": "ontokin.c271.p11-independent-design-review/1",
+  "reviewer": "/root/intake_audit",
+  "candidate": {
+    "mode": "0o644",
+    "path": "/workspace/scratch/2ad494d5da19/session_evidence/loader_design/candidate002/CANDIDATE-MANIFEST.json",
+    "sha256": "563e84cc83f31a202cc0eead9102b66b08050ea011dfbbf4ed6fc19db318c8f4",
+    "size_bytes": 30583
+  },
+  "verdict": "revision_required",
+  "design_supported_subject_to_control_corrections": true,
+  "findings": [
+    {
+      "id": "DR-01",
+      "severity": "blocking_for_adoption",
+      "title": "N69 pre-normalization byte limit is masked",
+      "evidence": "candidate002/CASE-SEMANTICS.json",
+      "details": "Raw4097, subject4097, variants4113/4101; only raw may exceed in corrected isolated negative."
+    },
+    {
+      "id": "DR-02",
+      "severity": "blocking_for_adoption",
+      "title": "P07 positive has incomplete synthetic ancestor guards",
+      "evidence": "candidate002/CASE-SEMANTICS.json",
+      "details": "P07/N69 need67 directory guards, supply5, miss63, have1 extra."
+    },
+    {
+      "id": "DR-03",
+      "severity": "blocking_for_adoption",
+      "title": "New path byte-count domain is not explicit",
+      "evidence": "candidate002 DECISION sections4/6 versus source _absolute",
+      "details": "Define ASCII-only new paths or a precise byte encoding/count; preserve old _absolute and add encoding refusal."
+    },
+    {
+      "id": "DR-04",
+      "severity": "blocking_for_adoption",
+      "title": "Claim of every new finite ceiling lacks two controls",
+      "evidence": "candidate002 CONTROL-CONTRACT / FIXTURE-MANIFEST",
+      "details": "4MiB variant read and128/129 pre-normalization component boundaries absent; dedicated raw-read seam must not claim schema/profile admission."
+    },
+    {
+      "id": "DR-05",
+      "severity": "blocking_until_transport_contract_recorded",
+      "title": "Physical0600 fixture modes need explicit Git transport handling",
+      "evidence": "candidate002 mode manifests and CONTROL-CONTRACT",
+      "details": "Exact Git bytes may be materialized exclusively into fresh private0600 copies and reverified; source and operational subject remain unmodified."
+    }
+  ],
+  "integrity_checks": {
+    "total": 1573,
+    "passed": 1573,
+    "failures": []
+  },
+  "semantic_checks": {
+    "total": 83,
+    "passed": 80,
+    "failed": [
+      {
+        "case": "P07_expansion_4096_bytes",
+        "details": {
+          "extraneous_count": 1,
+          "given_count": 5,
+          "missing_count": 63,
+          "needed_directory_count": 67
+        },
+        "pass": false,
+        "review_statement": "All synthetic existing ancestor directories required for this origin are explicitly guarded."
+      },
+      {
+        "case": "N69_expansion_4097_bytes",
+        "details": {
+          "extraneous_count": 1,
+          "given_count": 5,
+          "missing_count": 63,
+          "needed_directory_count": 67
+        },
+        "pass": false,
+        "review_statement": "All synthetic existing ancestor directories required for this origin are explicitly guarded."
+      },
+      {
+        "case": "N69_expansion_4097_bytes",
+        "details": {
+          "pre_normalization": {
+            "characters": 4097,
+            "parts_including_root": 68,
+            "utf8_bytes": 4097
+          },
+          "subject": {
+            "characters": 4097,
+            "parts_including_root": 67,
+            "utf8_bytes": 4097
+          },
+          "variant/1": {
+            "characters": 4113,
+            "parts_including_root": 68,
+            "utf8_bytes": 4113
+          },
+          "variant/2": {
+            "characters": 4101,
+            "parts_including_root": 68,
+            "utf8_bytes": 4101
+          }
+        },
+        "pass": false,
+        "review_statement": "Only pre-normalization exceeds the byte ceiling; no second path can mask a missing check."
+      }
+    ]
+  },
+  "checked_counts": {
+    "ELF_images": 26,
+    "auxv_assets": 8,
+    "cases": 93,
+    "fixtures": 127,
+    "local_sources": 16,
+    "payload": 139,
+    "protected_sources": 22,
+    "supporting_files": 14
+  },
+  "source_revision": "e0119f376441fee0fc3956852ac63110ab141011",
+  "scope": "Versioned design and inert preimplementation controls only",
+  "product_execution": false,
+  "host_qualification": false,
+  "actual_selected_image_eligibility": "unestablished",
+  "legacy_175_tests": "not_run; required in a later authorized implementation phase",
+  "all_current_author_and_reviewer_failures_preserved": true,
+  "report": "REPORT.md",
+  "required_next_action": "Review a distinct immutable candidate correcting DR-01 through DR-05; compare every old expectation record and all changed bytes before acceptance."
+}

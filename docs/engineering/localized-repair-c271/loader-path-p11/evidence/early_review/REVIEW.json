@@ -1,0 +1,248 @@
+{
+  "schema": "ontokin.c271.p11-independent-early-package-review/1",
+  "reviewer": "/root/intake_audit",
+  "created_at_utc": "2026-11-21T22:48:00.387094+00:00",
+  "verdict": "accepted_for_save_with_external_receipt_clarification",
+  "archive": {
+    "path": "/workspace/scratch/2ad494d5da19/deliverables/early/OntoKin_C271_P11_Loader_Path_Early_Recovery_2026-11-21.zip",
+    "bytes": 899708,
+    "sha256": "f8047061fd25c770c92baf260cce31351dc4a5dcb5bbbb7006e4188b9848ae94"
+  },
+  "checks": [
+    {
+      "id": "ER01-frozen-archive-identity",
+      "passed": true,
+      "observed": {
+        "file": "/workspace/scratch/2ad494d5da19/deliverables/early/OntoKin_C271_P11_Loader_Path_Early_Recovery_2026-11-21.zip",
+        "bytes": 899708,
+        "sha256": "f8047061fd25c770c92baf260cce31351dc4a5dcb5bbbb7006e4188b9848ae94"
+      }
+    },
+    {
+      "id": "ER02-archive-safety-integrity",
+      "passed": true,
+      "observed": {
+        "entries": 117,
+        "unsafe": [],
+        "duplicates": [],
+        "crc_failure": null
+      }
+    },
+    {
+      "id": "ER03-complete-manifest",
+      "passed": true,
+      "observed": {
+        "payloads": 116,
+        "mismatches": []
+      }
+    },
+    {
+      "id": "ER04-required-root-files",
+      "passed": true,
+      "observed": [
+        "README-START-HERE.md",
+        "CHECKPOINT.json",
+        "HANDOFF.md",
+        "NEXT-TASK.md",
+        "RECOVERY-STATUS.md",
+        "PROMPT-1-CONTINUE.md",
+        "PROMPT-2-RECOVER.md",
+        "HISTORICAL-DEPENDENCIES.json",
+        "MANIFEST-SHA256.json"
+      ]
+    },
+    {
+      "id": "ER05-source-snapshot-git-binding",
+      "passed": true,
+      "observed": {
+        "snapshots": 75,
+        "mismatches": []
+      }
+    },
+    {
+      "id": "ER06-required-source-coverage",
+      "passed": true,
+      "observed": [
+        "CHATGPT-START-HERE.md",
+        "AGENTS.md",
+        "GOAL.md",
+        "STATUS.md",
+        "ROLE.md",
+        "docs/workflow/registry.json",
+        "docs/workflow/CURRENT.json",
+        "docs/workflow/PROTOCOL.md",
+        "docs/workflow/HANDOFF.md",
+        "docs/workflow/BROWSER-PROMPTS.md",
+        "docs/workflow/tasks/C271/REQUIREMENTS.md",
+        "docs/workflow/tasks/C271/PLAN.md",
+        "docs/workflow/tasks/C271/task.json"
+      ]
+    },
+    {
+      "id": "ER07-exact-prior-dependencies",
+      "passed": true,
+      "observed": {
+        "prior_review_sha256": "8a95b8e9c72378cb197f98fc72c045ada45215459d2063f15af56aadaf8e9948",
+        "prior_intake_reused": true,
+        "all_p10_payloads_reaudited": false
+      }
+    },
+    {
+      "id": "ER08-complete-recovery-source-map",
+      "passed": true,
+      "observed": {
+        "embedded": 29,
+        "external": 6735,
+        "total": 6764,
+        "mismatches": []
+      }
+    },
+    {
+      "id": "ER09-current-session-evidence-coverage",
+      "passed": true,
+      "observed": {
+        "missing_before_freeze": [],
+        "postfreeze_external_evidence": [
+          "session_evidence/startup/EARLY-LIVE-REFS.json"
+        ],
+        "old_original_failure_retained": true
+      }
+    },
+    {
+      "id": "ER10-intake-startup-declaration-preserved",
+      "passed": true,
+      "observed": {
+        "required_unique_files": [
+          "session_evidence/PHASE.json",
+          "session_evidence/declare_phase.py",
+          "session_evidence/intake_audit/REVIEW-RUN001.json",
+          "session_evidence/intake_audit/REVIEW.json",
+          "session_evidence/intake_audit/REPORT.md",
+          "session_evidence/intake_audit/audit_intake.py",
+          "session_evidence/intake_audit/audit_followup.py",
+          "session_evidence/startup/READ-SET.json",
+          "session_evidence/startup/initial_1.json",
+          "OntoKin/docs/engineering/localized-repair-c271/loader-path-p11/PHASE.json",
+          "OntoKin/docs/workflow/tasks/C271/P11-SESSION.md"
+        ],
+        "mismatches": []
+      }
+    },
+    {
+      "id": "ER11-phase-checkpoint-agreement",
+      "passed": true,
+      "observed": {
+        "disagreements": [],
+        "source": "e0119f376441fee0fc3956852ac63110ab141011",
+        "main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+        "phase": "C271-P11-loader-path-decision",
+        "delivery": {
+          "status": "save_pending",
+          "partial": true,
+          "filename": "OntoKin_C271_P11_Loader_Path_Early_Recovery_2026-11-21.zip",
+          "receipt_policy": "Freeze once. Later separate receipt must prove exact saved bytes and readback. Do not rebuild solely to insert that receipt."
+        }
+      }
+    },
+    {
+      "id": "ER12-selected-python-external-dependency",
+      "passed": true,
+      "observed": {
+        "selected_python": {
+          "bytes": 30894944,
+          "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+          "archive_library_file_id": "libfile_fde3_f-6ce009b09ccc8191955ae8cd95d781be_2ab2a24d43748191957f9bcc356b59de",
+          "archive_sha256": "906cde26c8ddca52c68ff87c9836e28feabdb132fc8dd130ce3b46e7f9851c56",
+          "archive_member": "recovery/h0_work/selected-python.bin",
+          "recovery_mode": "0600",
+          "embedded": false,
+          "purpose": "Inert exact positive fixture input available from the prior archive; no runtime execution or approval.",
+          "current_static_observation_mode": "0o644",
+          "archive_member_mode_boundary": "Original archived recovery mode 0600; current extracted inert input was observed 0644. No runtime installation/qualification or historical filesystem restoration is claimed.",
+          "candidate_result": "CHI-UNSUPPORTED: Unreviewed loader token expansion for raw RPATH $ORIGIN/../lib"
+        },
+        "p09_archive": "libfile_fde3_f-6ce009b09ccc8191955ae8cd95d781be_2ab2a24d43748191957f9bcc356b59de"
+      }
+    },
+    {
+      "id": "ER13-complete-matching-prompts",
+      "passed": true,
+      "observed": [
+        {
+          "member": "PROMPT-1-CONTINUE.md",
+          "standalone": "/workspace/scratch/2ad494d5da19/deliverables/early/OntoKin_C271_P11_Loader_Path_Early_Recovery_2026-11-21_Continue.md",
+          "equal": true,
+          "bytes": 4463,
+          "sha256": "62ae1b83175b80babee7a98bc6089d7a315d752c0c10fdcf20ce4a7e50ca8f3b"
+        },
+        {
+          "member": "PROMPT-2-RECOVER.md",
+          "standalone": "/workspace/scratch/2ad494d5da19/deliverables/early/OntoKin_C271_P11_Loader_Path_Early_Recovery_2026-11-21_Recover.md",
+          "equal": true,
+          "bytes": 4689,
+          "sha256": "fc5fea797250a50376a209cfde253ac772f6725838883799dd745c24ff8fb876"
+        }
+      ]
+    },
+    {
+      "id": "ER14-recovery-instructions-human-review",
+      "passed": true,
+      "observed": {
+        "read_in_full": [
+          "README-START-HERE.md",
+          "HANDOFF.md",
+          "RECOVERY-STATUS.md",
+          "NEXT-TASK.md",
+          "PROMPT-1-CONTINUE.md",
+          "PROMPT-2-RECOVER.md"
+        ],
+        "observations": [
+          "All documents identify online continuation, task C271, phase P11 and exact branch/main.",
+          "First action is confirming early save before finite design/control work; implementation is later.",
+          "Both complete prompts contain one-phase stop, historical failure retention and delivery-only recovery.",
+          "Pending save fields correctly defer future identity/readback to a separate receipt.",
+          "Current unknown operations are empty as declared, historical process unknowns are retained.",
+          "Frozen worker roster has two workers; later external receipt must identify the held loader_design worker and disposition."
+        ]
+      }
+    },
+    {
+      "id": "ER15-unpublished-repository-bytes",
+      "passed": true,
+      "observed": {
+        "tracked_patch_equal": true,
+        "tracked_patch_bytes": 0,
+        "untracked_files": [
+          "docs/engineering/localized-repair-c271/loader-path-p11/PHASE.json",
+          "docs/workflow/tasks/C271/P11-SESSION.md"
+        ],
+        "unmapped": []
+      }
+    }
+  ],
+  "blocking_findings": [],
+  "required_external_receipt_items": [
+    "Record independent review and exact saved ZIP/prompt identities, folder placement, version and byte readback.",
+    "Retain postfreeze EARLY-LIVE-REFS.json showing unchanged refs.",
+    "Identify /root/loader_design as held before substantive design/control work at early-save boundary; include complete current roster/dispositions.",
+    "Retain builder/verifier outputs and this review as postfreeze evidence; do not claim these future bytes were embedded in the frozen ZIP."
+  ],
+  "worker_observation": {
+    "source": "collaboration.list_agents at review time",
+    "root": "running",
+    "handoff_engineer": "completed early build, pending final assignment",
+    "intake_audit": "running this review",
+    "loader_design": "running; Director explicitly reports held before substantive design/control work, no technical output bytes"
+  },
+  "limits": [
+    "No Library save, live GitHub observation, Git mutation or project behavior execution by reviewer.",
+    "P10 exact identities and prior verified payload digests reused; no repeated incoming intake audit.",
+    "P09 selected binary and C262 remain external dependencies, not newly materialized or executed.",
+    "Current evidence coverage is bounded by recorded freeze and declared exclusions; postfreeze evidence belongs in external receipt/final package."
+  ],
+  "command": [
+    "python3",
+    "-B",
+    "/workspace/scratch/2ad494d5da19/session_evidence/early_review/review_early.py"
+  ]
+}

@@ -1,0 +1,965 @@
+{
+  "candidate": "candidate002",
+  "check_count": 83,
+  "checks": [
+    {
+      "case": "N16_kernel_inode_mismatch",
+      "details": null,
+      "expected_rule": "LP-KERNEL-IDENTITY",
+      "pass": true,
+      "review_statement": "The kernel file inode differs from the subject inode."
+    },
+    {
+      "case": "N70_name_union_over_bound",
+      "details": {
+        "candidate_product": 4097,
+        "declared_guard_count": 5,
+        "maximum_needed_per_image": 256,
+        "needed_names": 4097,
+        "present_variants": 1,
+        "search_directories": 1,
+        "suffixes": 3,
+        "variants": 3
+      },
+      "expected_rule": "LP-BOUND",
+      "pass": true,
+      "review_statement": "Only the named early cardinality ceiling is exceeded; later shape/closure checks are deliberately not reached."
+    },
+    {
+      "case": "N44_origin_whitespace",
+      "details": {
+        "rpath": [
+          "$ORIGIN/../lib "
+        ],
+        "runpath": []
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N53_missing_needed_name",
+      "details": {
+        "extra": [],
+        "missing": [
+          "libbeta.so"
+        ]
+      },
+      "expected_rule": "LP-NAMES",
+      "pass": true,
+      "review_statement": "The claimed dependency-name union is missing a name or adds an undeclared name."
+    },
+    {
+      "case": "N25_synthetic_fails_real_pin",
+      "details": null,
+      "expected_rule": "LP-SELECTED-PIN",
+      "pass": true,
+      "review_statement": "Operational admission is requested for synthetic bytes that differ from the exact real pin."
+    },
+    {
+      "case": "N72_candidate_product_over_bound",
+      "details": {
+        "candidate_product": 32896,
+        "declared_guard_count": 5,
+        "maximum_needed_per_image": 256,
+        "needed_names": 257,
+        "present_variants": 128,
+        "search_directories": 1,
+        "suffixes": 128,
+        "variants": 128
+      },
+      "expected_rule": "LP-BOUND",
+      "pass": true,
+      "review_statement": "Only the named early cardinality ceiling is exceeded; later shape/closure checks are deliberately not reached."
+    },
+    {
+      "case": "N32_at_secure_boolean",
+      "details": null,
+      "expected_rule": "LP-CLOSED-SHAPE",
+      "pass": true,
+      "review_statement": "The named closed-shape/type distinction is present."
+    },
+    {
+      "case": "N35_origin_lib_token",
+      "details": {
+        "rpath": [
+          "$ORIGIN/../$LIB"
+        ],
+        "runpath": []
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N54_extra_needed_name",
+      "details": {
+        "extra": [
+          "libunknown.so"
+        ],
+        "missing": []
+      },
+      "expected_rule": "LP-NAMES",
+      "pass": true,
+      "review_statement": "The claimed dependency-name union is missing a name or adds an undeclared name."
+    },
+    {
+      "case": "N61_candidate_directory",
+      "details": [
+        {
+          "entry": {
+            "device": 101,
+            "inode": 150,
+            "kind": "directory",
+            "mode": "0o644",
+            "target": null
+          },
+          "name": "libbeta.so",
+          "path": "/fixture/app/lib"
+        }
+      ],
+      "expected_rule": "LP-CANDIDATE",
+      "pass": true,
+      "review_statement": "A declared needed basename exists at the intended base/hwcaps/TLS/extension candidate location."
+    },
+    {
+      "case": "N28_auxv_duplicate_secure",
+      "details": {
+        "pair_count": 3,
+        "remainder_bytes": 0,
+        "secure_values": [
+          0,
+          0
+        ],
+        "size_bytes": 48,
+        "terminator_indexes": [
+          2
+        ],
+        "terminator_values": [
+          0
+        ]
+      },
+      "expected_rule": "LP-AUXV",
+      "pass": true,
+      "review_statement": "The independent little-endian auxiliary decoder confirms the named secure/shape/length cause."
+    },
+    {
+      "case": "N71_suffixes_over_bound",
+      "details": {
+        "candidate_product": 2,
+        "declared_guard_count": 5,
+        "maximum_needed_per_image": 2,
+        "needed_names": 2,
+        "present_variants": 1,
+        "search_directories": 1,
+        "suffixes": 129,
+        "variants": 3
+      },
+      "expected_rule": "LP-BOUND",
+      "pass": true,
+      "review_statement": "Only the named early cardinality ceiling is exceeded; later shape/closure checks are deliberately not reached."
+    },
+    {
+      "case": "N62_candidate_special",
+      "details": [
+        {
+          "entry": {
+            "device": 101,
+            "inode": 150,
+            "kind": "special",
+            "mode": "0o644",
+            "target": null
+          },
+          "name": "libbeta.so",
+          "path": "/fixture/app/lib"
+        }
+      ],
+      "expected_rule": "LP-CANDIDATE",
+      "pass": true,
+      "review_statement": "A declared needed basename exists at the intended base/hwcaps/TLS/extension candidate location."
+    },
+    {
+      "case": "N17_evidence_copy_origin",
+      "details": null,
+      "expected_rule": "LP-ORIGIN",
+      "pass": true,
+      "review_statement": "The asserted origin differs from the immediate subject parent."
+    },
+    {
+      "case": "N08_wrong_role_shared_object",
+      "details": null,
+      "expected_rule": "LP-ROLE",
+      "pass": true,
+      "review_statement": "The token subject is a different operational role."
+    },
+    {
+      "case": "N05_external_digest_mismatch",
+      "details": null,
+      "expected_rule": "LP-EXTERNAL-DIGEST",
+      "pass": true,
+      "review_statement": "The named external binding observation is false."
+    },
+    {
+      "case": "N10_wrong_role_ldd_target",
+      "details": null,
+      "expected_rule": "LP-ROLE",
+      "pass": true,
+      "review_statement": "The token subject is a different operational role."
+    },
+    {
+      "case": "N45_origin_runpath",
+      "details": {
+        "rpath": [],
+        "runpath": [
+          "$ORIGIN/../lib"
+        ]
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N04_origin_unknown_key",
+      "details": null,
+      "expected_rule": "LP-CLOSED-SHAPE",
+      "pass": true,
+      "review_statement": "The named closed-shape/type distinction is present."
+    },
+    {
+      "case": "N51_expanded_mismatch",
+      "details": null,
+      "expected_rule": "LP-EXPANDED",
+      "pass": true,
+      "review_statement": "The derived directory claim is wrong or absent from bound search directories."
+    },
+    {
+      "case": "N59_candidate_file",
+      "details": [
+        {
+          "entry": {
+            "device": 101,
+            "inode": 150,
+            "kind": "file",
+            "mode": "0o644",
+            "target": null
+          },
+          "name": "libbeta.so",
+          "path": "/fixture/app/lib"
+        }
+      ],
+      "expected_rule": "LP-CANDIDATE",
+      "pass": true,
+      "review_statement": "A declared needed basename exists at the intended base/hwcaps/TLS/extension candidate location."
+    },
+    {
+      "case": "N42_origin_relative",
+      "details": {
+        "rpath": [
+          "../lib"
+        ],
+        "runpath": []
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N09_wrong_role_node",
+      "details": null,
+      "expected_rule": "LP-ROLE",
+      "pass": true,
+      "review_statement": "The token subject is a different operational role."
+    },
+    {
+      "case": "N06_variant_descriptor_mismatch",
+      "details": null,
+      "expected_rule": "LP-VARIANT-BINDING",
+      "pass": true,
+      "review_statement": "The named external binding observation is false."
+    },
+    {
+      "case": "N15_kernel_unavailable",
+      "details": null,
+      "expected_rule": "LP-KERNEL-EXE",
+      "pass": true,
+      "review_statement": "The kernel executable path is foreign, deleted, or unavailable as named."
+    },
+    {
+      "case": "N63_hwcaps_candidate",
+      "details": [
+        {
+          "entry": {
+            "device": 101,
+            "inode": 123,
+            "kind": "file",
+            "mode": "0o644",
+            "target": null
+          },
+          "name": "libalpha.so",
+          "path": "/fixture/app/lib/glibc-hwcaps/x86-64-v2"
+        }
+      ],
+      "expected_rule": "LP-CANDIDATE",
+      "pass": true,
+      "review_statement": "A declared needed basename exists at the intended base/hwcaps/TLS/extension candidate location."
+    },
+    {
+      "case": "N26_secure_mode",
+      "details": {
+        "pair_count": 3,
+        "remainder_bytes": 0,
+        "secure_values": [
+          1
+        ],
+        "size_bytes": 48,
+        "terminator_indexes": [
+          2
+        ],
+        "terminator_values": [
+          0
+        ]
+      },
+      "expected_rule": "LP-SECURE",
+      "pass": true,
+      "review_statement": "The independent little-endian auxiliary decoder confirms the named secure/shape/length cause."
+    },
+    {
+      "case": "N19_leaf_symlink",
+      "details": null,
+      "expected_rule": "LP-ALIAS",
+      "pass": true,
+      "review_statement": "The named subject/origin/ancestor/sibling alias or hardlink is present as inert JSON."
+    },
+    {
+      "case": "N38_origin_twice",
+      "details": {
+        "rpath": [
+          "$ORIGIN/$ORIGIN/../lib"
+        ],
+        "runpath": []
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N57_source_variant_unknown",
+      "details": null,
+      "expected_rule": "LP-VARIANT-SEMANTICS",
+      "pass": true,
+      "review_statement": "The synthetic source-review completeness state is unsupported."
+    },
+    {
+      "case": "N58_absence_changed",
+      "details": null,
+      "expected_rule": "LP-ABSENCE",
+      "pass": true,
+      "review_statement": "A declared absence observation has changed to false."
+    },
+    {
+      "case": "N48_origin_df1_origin",
+      "details": {
+        "duplicate_tags": [],
+        "flags": [],
+        "flags1": [
+          129
+        ]
+      },
+      "expected_rule": "LEGACY-ELF-GUARD",
+      "pass": true,
+      "review_statement": "Independent dynamic-table decoding confirms the pre-existing flag/tag/uniqueness refusal."
+    },
+    {
+      "case": "N60_candidate_symlink",
+      "details": [
+        {
+          "entry": {
+            "device": 101,
+            "inode": 150,
+            "kind": "symlink",
+            "mode": "0o644",
+            "target": "/fixture/system/libbeta.so"
+          },
+          "name": "libbeta.so",
+          "path": "/fixture/app/lib"
+        }
+      ],
+      "expected_rule": "LP-CANDIDATE",
+      "pass": true,
+      "review_statement": "A declared needed basename exists at the intended base/hwcaps/TLS/extension candidate location."
+    },
+    {
+      "case": "N73_selected_machine_mismatch",
+      "details": null,
+      "expected_rule": "LP-SUBJECT-MACHINE",
+      "pass": true,
+      "review_statement": "The independently decoded image machine is AArch64, while the new selected-subject rule requires x86-64."
+    },
+    {
+      "case": "N20_origin_symlink",
+      "details": null,
+      "expected_rule": "LP-ALIAS",
+      "pass": true,
+      "review_statement": "The named subject/origin/ancestor/sibling alias or hardlink is present as inert JSON."
+    },
+    {
+      "case": "N46_origin_both",
+      "details": {
+        "rpath": [
+          "$ORIGIN/../lib"
+        ],
+        "runpath": [
+          "/fixture/other"
+        ]
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N12_explicit_loader",
+      "details": null,
+      "expected_rule": "LP-INVOCATION",
+      "pass": true,
+      "review_statement": "The subject invocation is explicit-loader, which the proposal excludes."
+    },
+    {
+      "case": "N65_extension_candidate",
+      "details": [
+        {
+          "entry": {
+            "device": 101,
+            "inode": 151,
+            "kind": "file",
+            "mode": "0o644",
+            "target": null
+          },
+          "name": "libgamma.so",
+          "path": "/fixture/app/lib"
+        }
+      ],
+      "expected_rule": "LP-CANDIDATE",
+      "pass": true,
+      "review_statement": "A declared needed basename exists at the intended base/hwcaps/TLS/extension candidate location."
+    },
+    {
+      "case": "N43_origin_double_parent",
+      "details": {
+        "rpath": [
+          "$ORIGIN/../../lib"
+        ],
+        "runpath": []
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N33_braced_origin",
+      "details": {
+        "rpath": [
+          "${ORIGIN}/../lib"
+        ],
+        "runpath": []
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N18_cwd_origin",
+      "details": null,
+      "expected_rule": "LP-ORIGIN",
+      "pass": true,
+      "review_statement": "The asserted origin differs from the immediate subject parent."
+    },
+    {
+      "case": "N39_origin_empty_entry",
+      "details": {
+        "rpath": [
+          "$ORIGIN/../lib",
+          ""
+        ],
+        "runpath": []
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N01_old_schema_new_profile",
+      "details": null,
+      "expected_rule": "LP-SCHEMA-PROFILE",
+      "pass": true,
+      "review_statement": "Only the schema is the old version while the profile is new."
+    },
+    {
+      "case": "N11_wrong_role_git",
+      "details": null,
+      "expected_rule": "LP-ROLE",
+      "pass": true,
+      "review_statement": "The token subject is a different operational role."
+    },
+    {
+      "case": "N29_auxv_unterminated",
+      "details": {
+        "pair_count": 2,
+        "remainder_bytes": 0,
+        "secure_values": [
+          0
+        ],
+        "size_bytes": 32,
+        "terminator_indexes": [],
+        "terminator_values": []
+      },
+      "expected_rule": "LP-AUXV",
+      "pass": true,
+      "review_statement": "The independent little-endian auxiliary decoder confirms the named secure/shape/length cause."
+    },
+    {
+      "case": "N30_auxv_truncated",
+      "details": {
+        "pair_count": 1,
+        "remainder_bytes": 1,
+        "secure_values": [
+          0
+        ],
+        "size_bytes": 17,
+        "terminator_indexes": [],
+        "terminator_values": []
+      },
+      "expected_rule": "LP-AUXV",
+      "pass": true,
+      "review_statement": "The independent little-endian auxiliary decoder confirms the named secure/shape/length cause."
+    },
+    {
+      "case": "N67_soname_token",
+      "details": null,
+      "expected_rule": "LP-NAME-TOKEN",
+      "pass": true,
+      "review_statement": "A dependency or SONAME contains a token and must fail before ordinary name-union agreement."
+    },
+    {
+      "case": "N40_origin_duplicate",
+      "details": {
+        "rpath": [
+          "$ORIGIN/../lib",
+          "$ORIGIN/../lib"
+        ],
+        "runpath": []
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N03_origin_field_missing",
+      "details": null,
+      "expected_rule": "LP-CLOSED-SHAPE",
+      "pass": true,
+      "review_statement": "The named closed-shape/type distinction is present."
+    },
+    {
+      "case": "N13_kernel_loader_path",
+      "details": null,
+      "expected_rule": "LP-KERNEL-EXE",
+      "pass": true,
+      "review_statement": "The kernel executable path is foreign, deleted, or unavailable as named."
+    },
+    {
+      "case": "N66_needed_token",
+      "details": null,
+      "expected_rule": "LP-NAME-TOKEN",
+      "pass": true,
+      "review_statement": "A dependency or SONAME contains a token and must fail before ordinary name-union agreement."
+    },
+    {
+      "case": "N31_auxv_over_bound",
+      "details": {
+        "pair_count": 257,
+        "remainder_bytes": 0,
+        "secure_values": [
+          0
+        ],
+        "size_bytes": 4112,
+        "terminator_indexes": [
+          256
+        ],
+        "terminator_values": [
+          0
+        ]
+      },
+      "expected_rule": "LP-BOUND",
+      "pass": true,
+      "review_statement": "The independent little-endian auxiliary decoder confirms the named secure/shape/length cause."
+    },
+    {
+      "case": "N34_origin_lib",
+      "details": {
+        "rpath": [
+          "$ORIGIN/lib"
+        ],
+        "runpath": []
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N23_sibling_lib_symlink",
+      "details": null,
+      "expected_rule": "LP-ALIAS",
+      "pass": true,
+      "review_statement": "The named subject/origin/ancestor/sibling alias or hardlink is present as inert JSON."
+    },
+    {
+      "case": "N69_expansion_4097_bytes",
+      "details": null,
+      "expected_rule": "LP-BOUND",
+      "pass": true,
+      "review_statement": "The pre-normalization string is 4097 bytes; refusal is valid but is not isolated in candidate002."
+    },
+    {
+      "case": "N64_tls_candidate",
+      "details": [
+        {
+          "entry": {
+            "device": 101,
+            "inode": 123,
+            "kind": "file",
+            "mode": "0o644",
+            "target": null
+          },
+          "name": "libbeta.so",
+          "path": "/fixture/app/lib/tls/x86_64"
+        }
+      ],
+      "expected_rule": "LP-CANDIDATE",
+      "pass": true,
+      "review_statement": "A declared needed basename exists at the intended base/hwcaps/TLS/extension candidate location."
+    },
+    {
+      "case": "N55_missing_variant",
+      "details": null,
+      "expected_rule": "LP-VARIANTS",
+      "pass": true,
+      "review_statement": "The variant inventory omits a suffix or gives an unrelated path."
+    },
+    {
+      "case": "N14_kernel_deleted",
+      "details": null,
+      "expected_rule": "LP-KERNEL-EXE",
+      "pass": true,
+      "review_statement": "The kernel executable path is foreign, deleted, or unavailable as named."
+    },
+    {
+      "case": "N36_origin_platform_token",
+      "details": {
+        "rpath": [
+          "$ORIGIN/../$PLATFORM"
+        ],
+        "runpath": []
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N21_ancestor_symlink",
+      "details": null,
+      "expected_rule": "LP-ALIAS",
+      "pass": true,
+      "review_statement": "The named subject/origin/ancestor/sibling alias or hardlink is present as inert JSON."
+    },
+    {
+      "case": "N02_new_schema_old_profile",
+      "details": null,
+      "expected_rule": "LP-SCHEMA-PROFILE",
+      "pass": true,
+      "review_statement": "Only the profile is old while the schema is new."
+    },
+    {
+      "case": "N68_second_token_image",
+      "details": null,
+      "expected_rule": "LP-ROLE",
+      "pass": true,
+      "review_statement": "An image other than the subject has token-bearing raw metadata."
+    },
+    {
+      "case": "N47_origin_df_origin",
+      "details": {
+        "duplicate_tags": [],
+        "flags": [
+          1
+        ],
+        "flags1": [
+          1
+        ]
+      },
+      "expected_rule": "LEGACY-ELF-GUARD",
+      "pass": true,
+      "review_statement": "Independent dynamic-table decoding confirms the pre-existing flag/tag/uniqueness refusal."
+    },
+    {
+      "case": "N50_origin_duplicate_tag",
+      "details": {
+        "duplicate_tags": [
+          15
+        ],
+        "flags": [],
+        "flags1": [
+          1
+        ]
+      },
+      "expected_rule": "LEGACY-ELF-GUARD",
+      "pass": true,
+      "review_statement": "Independent dynamic-table decoding confirms the pre-existing flag/tag/uniqueness refusal."
+    },
+    {
+      "case": "N07_rationale_descriptor_mismatch",
+      "details": null,
+      "expected_rule": "LP-VARIANT-BINDING",
+      "pass": true,
+      "review_statement": "The named external binding observation is false."
+    },
+    {
+      "case": "N56_wrong_variant_path",
+      "details": null,
+      "expected_rule": "LP-VARIANTS",
+      "pass": true,
+      "review_statement": "The variant inventory omits a suffix or gives an unrelated path."
+    },
+    {
+      "case": "N41_origin_literal_mix",
+      "details": {
+        "rpath": [
+          "$ORIGIN/../lib",
+          "/fixture/other"
+        ],
+        "runpath": []
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N24_subject_binding_mismatch",
+      "details": null,
+      "expected_rule": "LP-SUBJECT-BINDING",
+      "pass": true,
+      "review_statement": "The declared subject binding does not match."
+    },
+    {
+      "case": "N52_expanded_unbound",
+      "details": null,
+      "expected_rule": "LP-EXPANDED",
+      "pass": true,
+      "review_statement": "The derived directory claim is wrong or absent from bound search directories."
+    },
+    {
+      "case": "N37_origin_unknown_token",
+      "details": {
+        "rpath": [
+          "$UNKNOWN/../lib"
+        ],
+        "runpath": []
+      },
+      "expected_rule": "LP-RAW-RPATH",
+      "pass": true,
+      "review_statement": "Independent ELF decoding does not yield the sole admitted RPATH with absent RUNPATH."
+    },
+    {
+      "case": "N22_hardlink_subject",
+      "details": null,
+      "expected_rule": "LP-ALIAS",
+      "pass": true,
+      "review_statement": "The named subject/origin/ancestor/sibling alias or hardlink is present as inert JSON."
+    },
+    {
+      "case": "N27_auxv_missing_secure",
+      "details": {
+        "pair_count": 2,
+        "remainder_bytes": 0,
+        "secure_values": [],
+        "size_bytes": 32,
+        "terminator_indexes": [
+          1
+        ],
+        "terminator_values": [
+          0
+        ]
+      },
+      "expected_rule": "LP-AUXV",
+      "pass": true,
+      "review_statement": "The independent little-endian auxiliary decoder confirms the named secure/shape/length cause."
+    },
+    {
+      "case": "N49_origin_unknown_tag",
+      "details": {
+        "duplicate_tags": [],
+        "flags": [],
+        "flags1": [
+          1
+        ]
+      },
+      "expected_rule": "LEGACY-ELF-GUARD",
+      "pass": true,
+      "review_statement": "Independent dynamic-table decoding confirms the pre-existing flag/tag/uniqueness refusal."
+    },
+    {
+      "case": "L04_origin_still_refuses",
+      "details": null,
+      "expected_rule": "LEGACY-UNCHANGED",
+      "pass": true,
+      "review_statement": "Legacy refusal and exact reason match the current source guard ordering."
+    },
+    {
+      "case": "L05_braced_still_refuses",
+      "details": null,
+      "expected_rule": "LEGACY-UNCHANGED",
+      "pass": true,
+      "review_statement": "Legacy refusal and exact reason match the current source guard ordering."
+    },
+    {
+      "case": "L06_both_tags_refuse",
+      "details": null,
+      "expected_rule": "LEGACY-UNCHANGED",
+      "pass": true,
+      "review_statement": "Legacy refusal and exact reason match the current source guard ordering."
+    },
+    {
+      "case": "L07_origin_flag_refuses",
+      "details": null,
+      "expected_rule": "LEGACY-UNCHANGED",
+      "pass": true,
+      "review_statement": "Legacy refusal and exact reason match the current source guard ordering."
+    },
+    {
+      "case": "D01_postapproval_new_candidate",
+      "details": null,
+      "expected_rule": "LP-RECHECK",
+      "pass": true,
+      "review_statement": "Exact preapproval state and a changed after-observation support the retained CHI-DRIFT cause."
+    },
+    {
+      "case": "D02_origin_inode_changed",
+      "details": null,
+      "expected_rule": "LP-RECHECK",
+      "pass": true,
+      "review_statement": "Exact preapproval state and a changed after-observation support the retained CHI-DRIFT cause."
+    },
+    {
+      "case": "D03_kernel_origin_changed",
+      "details": null,
+      "expected_rule": "LP-RECHECK",
+      "pass": true,
+      "review_statement": "Exact preapproval state and a changed after-observation support the retained CHI-DRIFT cause."
+    },
+    {
+      "case": "P07_expansion_4096_bytes",
+      "details": {
+        "extraneous_count": 1,
+        "given_count": 5,
+        "missing_count": 63,
+        "needed_directory_count": 67
+      },
+      "pass": false,
+      "review_statement": "All synthetic existing ancestor directories required for this origin are explicitly guarded."
+    },
+    {
+      "case": "N69_expansion_4097_bytes",
+      "details": {
+        "extraneous_count": 1,
+        "given_count": 5,
+        "missing_count": 63,
+        "needed_directory_count": 67
+      },
+      "pass": false,
+      "review_statement": "All synthetic existing ancestor directories required for this origin are explicitly guarded."
+    },
+    {
+      "case": "N69_expansion_4097_bytes",
+      "details": {
+        "pre_normalization": {
+          "characters": 4097,
+          "parts_including_root": 68,
+          "utf8_bytes": 4097
+        },
+        "subject": {
+          "characters": 4097,
+          "parts_including_root": 67,
+          "utf8_bytes": 4097
+        },
+        "variant/1": {
+          "characters": 4113,
+          "parts_including_root": 68,
+          "utf8_bytes": 4113
+        },
+        "variant/2": {
+          "characters": 4101,
+          "parts_including_root": 68,
+          "utf8_bytes": 4101
+        }
+      },
+      "pass": false,
+      "review_statement": "Only pre-normalization exceeds the byte ceiling; no second path can mask a missing check."
+    }
+  ],
+  "claim": "Case-specific supplied causes and exact old-source refusal correspondence; not a product run or a complete loader implementation.",
+  "failed": [
+    {
+      "case": "P07_expansion_4096_bytes",
+      "details": {
+        "extraneous_count": 1,
+        "given_count": 5,
+        "missing_count": 63,
+        "needed_directory_count": 67
+      },
+      "pass": false,
+      "review_statement": "All synthetic existing ancestor directories required for this origin are explicitly guarded."
+    },
+    {
+      "case": "N69_expansion_4097_bytes",
+      "details": {
+        "extraneous_count": 1,
+        "given_count": 5,
+        "missing_count": 63,
+        "needed_directory_count": 67
+      },
+      "pass": false,
+      "review_statement": "All synthetic existing ancestor directories required for this origin are explicitly guarded."
+    },
+    {
+      "case": "N69_expansion_4097_bytes",
+      "details": {
+        "pre_normalization": {
+          "characters": 4097,
+          "parts_including_root": 68,
+          "utf8_bytes": 4097
+        },
+        "subject": {
+          "characters": 4097,
+          "parts_including_root": 67,
+          "utf8_bytes": 4097
+        },
+        "variant/1": {
+          "characters": 4113,
+          "parts_including_root": 68,
+          "utf8_bytes": 4113
+        },
+        "variant/2": {
+          "characters": 4101,
+          "parts_including_root": 68,
+          "utf8_bytes": 4101
+        }
+      },
+      "pass": false,
+      "review_statement": "Only pre-normalization exceeds the byte ceiling; no second path can mask a missing check."
+    }
+  ],
+  "host_observations": 0,
+  "passed": 80,
+  "product_calls": 0,
+  "product_imports": 0,
+  "schema": "ontokin.c271.p11-independent-static-case-semantics/1"
+}

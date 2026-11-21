@@ -1,0 +1,16 @@
+{
+  "schema": "ontokin.c271.p11-design-adjustment/1",
+  "recorded_at_utc": "2026-11-21T23:32:06.471785+00:00",
+  "trigger": "User asked why a new document-size limit was being introduced.",
+  "decision": "Reuse the existing 16 MiB _document/LIMITS.document_bytes ceiling. Withdraw the proposed separate 4 MiB variant-document cap and its private bounded-reader seam.",
+  "rationale": [
+    "A finite predecode read bound remains necessary to bound input memory and processing work.",
+    "No measured or source-backed requirement for the smaller distinct limit was identified.",
+    "Existing bounded read, callback, descriptor identity, canonical JSON and closed-shape checks remain unchanged.",
+    "Independent suffix/name/path/product ceilings bound the new semantic work."
+  ],
+  "scope": "P11 design/control revision only; no executable implementation or host qualification.",
+  "review_evidence": "session_evidence/design_review/DOCUMENT-CAP-DECISION.json",
+  "history_policy": "Retain candidate003 with its exact withdrawn 4 MiB fixtures and logs. Adopt only the later independently accepted candidate; all original 93 expectations must remain unchanged.",
+  "state": "candidate004_expected; final independent review pending"
+}

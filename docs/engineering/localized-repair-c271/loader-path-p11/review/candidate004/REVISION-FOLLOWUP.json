@@ -1,0 +1,33 @@
+{
+  "all_revision_requirements_resolved": true,
+  "candidate_manifest_sha256": "e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de",
+  "candidate_or_oracle_modified": false,
+  "disposition": "Reviewer-helper false positive. The initial context permits any coherent fresh directory identity. Requiring an unrelated ancestor inode to equal P01 was not a design requirement. The ASCII refusal remains isolated.",
+  "host_observations": 0,
+  "new_check": {
+    "fresh_directory_identity_valid": true,
+    "no_other_difference": true,
+    "only_known_initial_failure": true,
+    "pass": true
+  },
+  "observed_only_additional_difference": {
+    "new": 1001,
+    "old": 102,
+    "path": "/fixture",
+    "pointer": "/guards/1/inode"
+  },
+  "original_check_count": 405,
+  "original_passed": 404,
+  "original_result": "REVISION-REVIEW.json",
+  "preserved_original_failure": [
+    {
+      "check": "N76_nonascii_origin: context differs only by coherent non-ASCII path relocation",
+      "details": null,
+      "pass": false
+    }
+  ],
+  "product_calls": 0,
+  "reviewer_initial_script_modified": false,
+  "schema": "ontokin.c271.p11-independent-review-helper-correction/1",
+  "target_executions": 0
+}

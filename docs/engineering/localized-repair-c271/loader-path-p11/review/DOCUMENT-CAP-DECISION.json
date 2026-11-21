@@ -1,0 +1,32 @@
+{
+  "schema": "ontokin.c271.p11-independent-design-decision-followup/1",
+  "reviewer": "/root/intake_audit",
+  "trigger": "User questioned the proposed new document-size ceiling; Director requested independent reuse assessment before adoption.",
+  "decision": "Reuse existing16MiB document reader cap; withdraw proposed4MiB variant-document cap and dedicated bounded_variant_read seam.",
+  "existing_source": {
+    "path": "OntoKin/prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "sha256": "0c2ef54a227e2e05a7eb1f71a4fedd934399aa27d98ec7a3845f93a4dbfbb612",
+    "size_bytes": 148602,
+    "source_revision": "e0119f376441fee0fc3956852ac63110ab141011",
+    "anchors": [
+      "LIMITS document_bytes =16*1024*1024",
+      "_document(descriptor, maximum=16*1024*1024, ...)",
+      "_read_file bounded regular-file read, check callbacks, byte and identity validation",
+      "_decode canonical JSON check"
+    ]
+  },
+  "rationale": [
+    "No concrete observed input, source-backed need, or measured resource constraint justifies a separate smaller4MiB cap.",
+    "The existing reader already has a finite16MiB byte cap and the same deadline/callback/identity safeguards.",
+    "Closed variant schema, finite suffix/name/path/product limits bound later semantic work.",
+    "Direct reuse avoids a new policy branch and a synthetic bounded-read seam that has no operational need."
+  ],
+  "finding_disposition": {
+    "DR-04_document_portion": "Resolve by withdrawing unsupported proposed ceiling and its all-new-ceilings coverage claim; no new16MiB controls required for unchanged existing reader behavior.",
+    "DR-04_component_portion": "Remains mandatory because the newly derived pre-normalization path needs explicit128/129-component isolation.",
+    "other_findings": "Unchanged; final exact candidate still requires independent verification."
+  },
+  "preservation": "Candidate002 review remains unchanged. Retain assembled candidate00399-case attempt and logs if created. Do not alter any frozen candidate or expectation history.",
+  "product_execution": false,
+  "host_qualification": false
+}

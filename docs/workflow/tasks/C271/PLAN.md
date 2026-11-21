@@ -191,3 +191,11 @@ The final archive and matching prompts passed mechanical and independent package
 P11 is active on `work/c271-missing-import-digest-control` under Director `c271-p11-2ad494d5da19`. Its early recovery ZIP passed independent review and exact saved-byte readback before design/control construction. Acceptance is a source-backed finite decision, frozen inert positive/boundary/refusal inputs and independent expectations, independent exact-artifact review, documentary/protected-source checks, and verified partial delivery. The phase stops there. Production implementation and H0 re-establishment belong to later phases.
 
 The existing `H0-PYTHON-RPATH-TOKEN-001` refusal remains unresolved. R01/R02 remain done; R03/R04/R05 remain not_done. P01 remains done and P02 in_progress. Parent C271 remains blocked, PR #274 draft/open, issue #273 open, and no main lease is held. See `docs/engineering/localized-repair-c271/loader-path-p11/PHASE.json` and its `EARLY-RECOVERY-RECEIPT.json`.
+
+## P11 reviewed design boundary
+
+Candidate004 is independently accepted for design and 97 frozen inert controls; its manifest SHA-256 is `e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de`. All 93 original expected outcomes are retained. The five review findings were resolved without product changes. The new variant document reuses the existing 16 MiB reader; the extra 4 MiB proposal was withdrawn after the user questioned its need.
+
+The author ran 1,149 static artifact checks; the independent reviewer ran 1,675 static checks and retained all failed attempts and targeted corrections. These are not product-test or host-qualification results. The existing 175 inspection/mapping methods remain future implementation obligations. See `docs/engineering/localized-repair-c271/loader-path-p11/ADOPTION.json` and `review/REVIEW.json`.
+
+Documentary checks, conditional branch publication and verified P11 delivery still precede the stop. Parent requirements and plan states remain unchanged: R01/R02 done; R03/R04/R05 not_done; P01 done; P02 in_progress. H0 is unaccepted, H1 unapproved, PR274 draft/open and issue273 open. No main lease or integration is allowed in this phase.

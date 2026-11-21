@@ -1,0 +1,150 @@
+{
+  "boundary_measurements": {
+    "N69_expansion_4097_bytes": {
+      "max_supplied_bytes": 4093,
+      "max_supplied_components_including_root": 67,
+      "nonascii_paths": [],
+      "over_byte_limit": [
+        "raw"
+      ],
+      "over_component_limit": [],
+      "raw_bytes": 4097,
+      "raw_components_including_root": 68,
+      "required_guard_count": 67,
+      "supplied_guard_count": 67
+    },
+    "N75_expansion_129_components": {
+      "max_supplied_bytes": 629,
+      "max_supplied_components_including_root": 128,
+      "nonascii_paths": [],
+      "over_byte_limit": [],
+      "over_component_limit": [
+        "raw"
+      ],
+      "raw_bytes": 633,
+      "raw_components_including_root": 129,
+      "required_guard_count": 128,
+      "supplied_guard_count": 128
+    },
+    "N76_nonascii_origin": {
+      "max_supplied_bytes": 41,
+      "max_supplied_components_including_root": 6,
+      "nonascii_paths": [
+        "subject",
+        "kernel",
+        "origin",
+        "raw",
+        "expanded/0",
+        "variant/0",
+        "variant/1",
+        "variant/2",
+        "guard/2",
+        "guard/3",
+        "guard/4",
+        "search/0",
+        "absence/0",
+        "absence/1"
+      ],
+      "over_byte_limit": [],
+      "over_component_limit": [],
+      "raw_bytes": 25,
+      "raw_components_including_root": 6,
+      "required_guard_count": 5,
+      "supplied_guard_count": 5
+    },
+    "N77_nonascii_variant_suffix": {
+      "max_supplied_bytes": 26,
+      "max_supplied_components_including_root": 5,
+      "nonascii_paths": [
+        "variant/1",
+        "absence/0"
+      ],
+      "over_byte_limit": [],
+      "over_component_limit": [],
+      "raw_bytes": 23,
+      "raw_components_including_root": 6,
+      "required_guard_count": 5,
+      "supplied_guard_count": 5
+    },
+    "P07_expansion_4096_bytes": {
+      "max_supplied_bytes": 4092,
+      "max_supplied_components_including_root": 67,
+      "nonascii_paths": [],
+      "over_byte_limit": [],
+      "over_component_limit": [],
+      "raw_bytes": 4096,
+      "raw_components_including_root": 68,
+      "required_guard_count": 67,
+      "supplied_guard_count": 67
+    },
+    "P09_expansion_128_components": {
+      "max_supplied_bytes": 627,
+      "max_supplied_components_including_root": 127,
+      "nonascii_paths": [],
+      "over_byte_limit": [],
+      "over_component_limit": [],
+      "raw_bytes": 631,
+      "raw_components_including_root": 128,
+      "required_guard_count": 127,
+      "supplied_guard_count": 127
+    }
+  },
+  "candidate": "candidate004",
+  "check_count": 405,
+  "claim": "Exact delta, correction adequacy and failure preservation; no implemented profile or host qualification claim.",
+  "failed": [
+    {
+      "check": "N76_nonascii_origin: context differs only by coherent non-ASCII path relocation",
+      "details": null,
+      "pass": false
+    }
+  ],
+  "fixture_delta": {
+    "added": [
+      "fixture_inputs/N75_expansion_129_components.json",
+      "fixture_inputs/N76_nonascii_origin.json",
+      "fixture_inputs/N77_nonascii_variant_suffix.json",
+      "fixture_inputs/P09_expansion_128_components.json"
+    ],
+    "changed": [
+      "fixture_inputs/N69_expansion_4097_bytes.json",
+      "fixture_inputs/P07_expansion_4096_bytes.json"
+    ]
+  },
+  "host_observations": 0,
+  "manifest_sha256": "e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de",
+  "old_expectation_projection_sha256": "57cd7b319d03cbe1f4f43bdd291be181af68be2405acc7e9e9812c29955b38bb",
+  "passed": 404,
+  "payload_delta": {
+    "added": [
+      "MATERIALIZATION.md",
+      "REVISION-004.diff",
+      "REVISION-004.json",
+      "fixture_inputs/N75_expansion_129_components.json",
+      "fixture_inputs/N76_nonascii_origin.json",
+      "fixture_inputs/N77_nonascii_variant_suffix.json",
+      "fixture_inputs/P09_expansion_128_components.json"
+    ],
+    "changed": [
+      "AUTHORING-ERRORS.json",
+      "CONSTRUCTION.json",
+      "CONTROL-CONTRACT.md",
+      "DECISION.md",
+      "EXPECTATIONS.json",
+      "FIXTURE-MANIFEST.json",
+      "FUTURE-SURFACE.json",
+      "README.md",
+      "REVIEW-REQUEST.json",
+      "SOURCES.json",
+      "fixture_inputs/N69_expansion_4097_bytes.json",
+      "fixture_inputs/P07_expansion_4096_bytes.json"
+    ],
+    "removed": [],
+    "unchanged_count": 127
+  },
+  "product_calls": 0,
+  "schema": "ontokin.c271.p11-independent-revision-check/1",
+  "target_executions": 0,
+  "withdrawn003_payloads": 148,
+  "withdrawn003_supports": 12
+}

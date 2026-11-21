@@ -1,0 +1,188 @@
+{
+  "absence_guards": {
+    "/fixture/app/lib/glibc-hwcaps": {
+      "absent": true,
+      "parent": "/fixture/app/lib",
+      "parent_device": 101,
+      "parent_inode": 105
+    },
+    "/fixture/app/lib/tls": {
+      "absent": true,
+      "parent": "/fixture/app/lib",
+      "parent_device": 101,
+      "parent_inode": 105
+    }
+  },
+  "approved_before": null,
+  "assumptions": [
+    "Synthetic rule seam only; operational selected-image pin is not bypassed",
+    "Synthetic loader suffix review is complete for this finite logical context",
+    "All inherited P07 source and non-origin closure checks are separately required"
+  ],
+  "closure_images": [
+    {
+      "id": "python",
+      "needed": [
+        "libalpha.so",
+        "libbeta.so"
+      ],
+      "soname": null
+    },
+    {
+      "id": "libalpha",
+      "needed": [
+        "libbeta.so"
+      ],
+      "soname": "libalpha.so"
+    },
+    {
+      "id": "libbeta",
+      "needed": [],
+      "soname": "libbeta.so"
+    }
+  ],
+  "expanded_claim": [
+    "/fixture/app/lib"
+  ],
+  "fault": null,
+  "guards": [
+    {
+      "device": 101,
+      "inode": 100,
+      "kind": "directory",
+      "mode": "0o755",
+      "path": "/",
+      "target": null
+    },
+    {
+      "device": 101,
+      "inode": 102,
+      "kind": "directory",
+      "mode": "0o755",
+      "path": "/fixture",
+      "target": null
+    },
+    {
+      "device": 101,
+      "inode": 103,
+      "kind": "directory",
+      "mode": "0o755",
+      "path": "/fixture/app",
+      "target": null
+    },
+    {
+      "device": 101,
+      "inode": 104,
+      "kind": "symlink",
+      "mode": "0o755",
+      "path": "/fixture/app/bin",
+      "target": "/other/bin"
+    },
+    {
+      "device": 101,
+      "inode": 105,
+      "kind": "directory",
+      "mode": "0o755",
+      "path": "/fixture/app/lib",
+      "target": null
+    }
+  ],
+  "image": {
+    "mode": "0o600",
+    "path": "fixture_inputs/python_origin.bin",
+    "sha256": "76c848f8da3c76c8132e39b0c87b5299f7e09953f0f44ca4fb51f94e17974887",
+    "size_bytes": 4135
+  },
+  "kernel": {
+    "at_secure_claim": 0,
+    "auxv": {
+      "mode": "0o600",
+      "path": "fixture_inputs/auxv_zero.bin",
+      "sha256": "62a5525a4719df3347ae9eac673a218104215605de6da765ff54674fef71a0cf",
+      "size_bytes": 48
+    },
+    "proc_exe_path": "/fixture/app/bin/python",
+    "proc_file_identity": {
+      "device": 101,
+      "inode": 107
+    },
+    "read_status": "read"
+  },
+  "needed_names_claim": [
+    "libalpha.so",
+    "libbeta.so"
+  ],
+  "operational": false,
+  "origin_claim": "/fixture/app/bin",
+  "phase": "initial",
+  "plan_selection": {
+    "external_digest_matches": true,
+    "origin_object_present": true,
+    "origin_object_unknown_keys": [],
+    "profile": "linux-glibc-declared-python-origin-rpath-v1",
+    "rationale_descriptor_matches": true,
+    "schema": "ontokin.current-host-readback-inspection-plan/0.1.1",
+    "shared_libraries_stdout_predicate": "linux-glibc-declared-closure-v1",
+    "variant_descriptor_matches": true
+  },
+  "schema": "ontokin.c271.p11-portable-rule-context/1",
+  "search_directories": {
+    "/fixture/app/lib": {
+      "device": 101,
+      "entries": {},
+      "inode": 105,
+      "mode": "0o755"
+    }
+  },
+  "subject": {
+    "actual_bytes": {
+      "mode": "0o600",
+      "path": "fixture_inputs/python_origin.bin",
+      "sha256": "76c848f8da3c76c8132e39b0c87b5299f7e09953f0f44ca4fb51f94e17974887",
+      "size_bytes": 4135
+    },
+    "descriptor_matches": true,
+    "device": 101,
+    "inode": 107,
+    "invocation": "linux-direct-main",
+    "kind": "file",
+    "mode": "0o755",
+    "nlink": 1,
+    "operational_pin": {
+      "mode": "0o755",
+      "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+      "size_bytes": 30894944
+    },
+    "path": "/fixture/app/bin/python",
+    "role": "author_python"
+  },
+  "variant_review": {
+    "completeness": "synthetic_declared_complete",
+    "loader_identity": "synthetic-loader-v1",
+    "source_review_identity": "synthetic-review-v1",
+    "suffixes": [
+      "",
+      "glibc-hwcaps/x86-64-v2",
+      "tls/x86_64"
+    ]
+  },
+  "variants": [
+    {
+      "path": "/fixture/app/lib",
+      "state": "directory",
+      "suffix": ""
+    },
+    {
+      "absent_at": "/fixture/app/lib/glibc-hwcaps",
+      "path": "/fixture/app/lib/glibc-hwcaps/x86-64-v2",
+      "state": "absent",
+      "suffix": "glibc-hwcaps/x86-64-v2"
+    },
+    {
+      "absent_at": "/fixture/app/lib/tls",
+      "path": "/fixture/app/lib/tls/x86_64",
+      "state": "absent",
+      "suffix": "tls/x86_64"
+    }
+  ]
+}

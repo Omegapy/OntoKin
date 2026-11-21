@@ -1,0 +1,1110 @@
+{
+  "author": "/root/loader_design",
+  "cases": {
+    "D01_postapproval_new_candidate": {
+      "cause_code": "CHI-LOADER",
+      "code": "CHI-DRIFT",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RECHECK",
+      "stage": "recheck",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "D02_origin_inode_changed": {
+      "cause_code": "CHI-PATH",
+      "code": "CHI-DRIFT",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RECHECK",
+      "stage": "recheck",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "D03_kernel_origin_changed": {
+      "cause_code": "CHI-INSPECTOR",
+      "code": "CHI-DRIFT",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RECHECK",
+      "stage": "recheck",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "F01_before_variant_read": {
+      "exception_identity": "SENTINEL-P11-DEADLINE",
+      "host_qualified": false,
+      "outcome": "propagated_callback",
+      "stage": "before_variant_read",
+      "target_starts": 0
+    },
+    "F02_during_candidate_scan": {
+      "exception_identity": "SENTINEL-P11-DEADLINE",
+      "host_qualified": false,
+      "outcome": "propagated_callback",
+      "stage": "during_candidate_scan",
+      "target_starts": 0
+    },
+    "F03_before_final_identity": {
+      "exception_identity": "SENTINEL-P11-DEADLINE",
+      "host_qualified": false,
+      "outcome": "propagated_callback",
+      "stage": "before_final_identity",
+      "target_starts": 0
+    },
+    "L01_no_search_paths": {
+      "host_qualified": false,
+      "outcome": "metadata",
+      "target_starts": 0,
+      "value": {
+        "class": 64,
+        "endian": "little",
+        "interpreter": "/fixture/ld-linux-x86-64.so.2",
+        "machine": 62,
+        "needed": [
+          "libalpha.so",
+          "libbeta.so"
+        ],
+        "rpath": [],
+        "runpath": [],
+        "soname": null,
+        "type": 2
+      }
+    },
+    "L02_absolute_rpath": {
+      "host_qualified": false,
+      "outcome": "metadata",
+      "target_starts": 0,
+      "value": {
+        "class": 64,
+        "endian": "little",
+        "interpreter": "/fixture/ld-linux-x86-64.so.2",
+        "machine": 62,
+        "needed": [
+          "libalpha.so",
+          "libbeta.so"
+        ],
+        "rpath": [
+          "/fixture/app/lib"
+        ],
+        "runpath": [],
+        "soname": null,
+        "type": 2
+      }
+    },
+    "L03_absolute_runpath": {
+      "host_qualified": false,
+      "outcome": "metadata",
+      "target_starts": 0,
+      "value": {
+        "class": 64,
+        "endian": "little",
+        "interpreter": "/fixture/ld-linux-x86-64.so.2",
+        "machine": 62,
+        "needed": [
+          "libalpha.so",
+          "libbeta.so"
+        ],
+        "rpath": [],
+        "runpath": [
+          "/fixture/app/lib"
+        ],
+        "soname": null,
+        "type": 2
+      }
+    },
+    "L04_origin_still_refuses": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "reason": "Unreviewed loader token expansion",
+      "rule_id": "LEGACY-UNCHANGED",
+      "stage": "legacy_parser",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "L05_braced_still_refuses": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "reason": "Unreviewed loader token expansion",
+      "rule_id": "LEGACY-UNCHANGED",
+      "stage": "legacy_parser",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "L06_both_tags_refuse": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "reason": "Conflicting legacy and modern search paths",
+      "rule_id": "LEGACY-UNCHANGED",
+      "stage": "legacy_parser",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "L07_origin_flag_refuses": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "reason": "Unsupported dynamic flags",
+      "rule_id": "LEGACY-UNCHANGED",
+      "stage": "legacy_parser",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N01_old_schema_new_profile": {
+      "code": "CHI-PLAN",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-SCHEMA-PROFILE",
+      "stage": "profile_selection",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N02_new_schema_old_profile": {
+      "code": "CHI-PLAN",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-SCHEMA-PROFILE",
+      "stage": "profile_selection",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N03_origin_field_missing": {
+      "code": "CHI-PLAN",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-CLOSED-SHAPE",
+      "stage": "profile_selection",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N04_origin_unknown_key": {
+      "code": "CHI-PLAN",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-CLOSED-SHAPE",
+      "stage": "profile_selection",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N05_external_digest_mismatch": {
+      "code": "CHI-PLAN",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-EXTERNAL-DIGEST",
+      "stage": "plan_authentication",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N06_variant_descriptor_mismatch": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-VARIANT-BINDING",
+      "stage": "variant_binding",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N07_rationale_descriptor_mismatch": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-VARIANT-BINDING",
+      "stage": "variant_binding",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N08_wrong_role_shared_object": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-ROLE",
+      "stage": "subject_context",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N09_wrong_role_node": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-ROLE",
+      "stage": "subject_context",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N10_wrong_role_ldd_target": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-ROLE",
+      "stage": "subject_context",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N11_wrong_role_git": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-ROLE",
+      "stage": "subject_context",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N12_explicit_loader": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-INVOCATION",
+      "stage": "subject_context",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N13_kernel_loader_path": {
+      "code": "CHI-INSPECTOR",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-KERNEL-EXE",
+      "stage": "kernel_origin",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N14_kernel_deleted": {
+      "code": "CHI-INSPECTOR",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-KERNEL-EXE",
+      "stage": "kernel_origin",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N15_kernel_unavailable": {
+      "code": "CHI-INSPECTOR",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-KERNEL-EXE",
+      "stage": "kernel_origin",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N16_kernel_inode_mismatch": {
+      "code": "CHI-INSPECTOR",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-KERNEL-IDENTITY",
+      "stage": "kernel_origin",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N17_evidence_copy_origin": {
+      "code": "CHI-PATH",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-ORIGIN",
+      "stage": "origin_binding",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N18_cwd_origin": {
+      "code": "CHI-PATH",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-ORIGIN",
+      "stage": "origin_binding",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N19_leaf_symlink": {
+      "code": "CHI-PATH",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-ALIAS",
+      "stage": "origin_binding",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N20_origin_symlink": {
+      "code": "CHI-PATH",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-ALIAS",
+      "stage": "origin_binding",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N21_ancestor_symlink": {
+      "code": "CHI-PATH",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-ALIAS",
+      "stage": "origin_binding",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N22_hardlink_subject": {
+      "code": "CHI-PATH",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-ALIAS",
+      "stage": "origin_binding",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N23_sibling_lib_symlink": {
+      "code": "CHI-PATH",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-ALIAS",
+      "stage": "origin_binding",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N24_subject_binding_mismatch": {
+      "code": "CHI-INSPECTOR",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-SUBJECT-BINDING",
+      "stage": "subject_binding",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N25_synthetic_fails_real_pin": {
+      "code": "CHI-INSPECTOR",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-SELECTED-PIN",
+      "stage": "subject_binding",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N26_secure_mode": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-SECURE",
+      "stage": "kernel_origin",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N27_auxv_missing_secure": {
+      "code": "CHI-INSPECTOR",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-AUXV",
+      "stage": "kernel_origin",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N28_auxv_duplicate_secure": {
+      "code": "CHI-INSPECTOR",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-AUXV",
+      "stage": "kernel_origin",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N29_auxv_unterminated": {
+      "code": "CHI-INSPECTOR",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-AUXV",
+      "stage": "kernel_origin",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N30_auxv_truncated": {
+      "code": "CHI-INSPECTOR",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-AUXV",
+      "stage": "kernel_origin",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N31_auxv_over_bound": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-BOUND",
+      "stage": "bounds",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N32_at_secure_boolean": {
+      "code": "CHI-PLAN",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-CLOSED-SHAPE",
+      "stage": "profile_selection",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N33_braced_origin": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N34_origin_lib": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N35_origin_lib_token": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N36_origin_platform_token": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N37_origin_unknown_token": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N38_origin_twice": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N39_origin_empty_entry": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N40_origin_duplicate": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N41_origin_literal_mix": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N42_origin_relative": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N43_origin_double_parent": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N44_origin_whitespace": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N45_origin_runpath": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N46_origin_both": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-RAW-RPATH",
+      "stage": "raw_metadata_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N47_origin_df_origin": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LEGACY-ELF-GUARD",
+      "stage": "elf_metadata",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N48_origin_df1_origin": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LEGACY-ELF-GUARD",
+      "stage": "elf_metadata",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N49_origin_unknown_tag": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LEGACY-ELF-GUARD",
+      "stage": "elf_metadata",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N50_origin_duplicate_tag": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LEGACY-ELF-GUARD",
+      "stage": "elf_metadata",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N51_expanded_mismatch": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-EXPANDED",
+      "stage": "expanded_binding",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N52_expanded_unbound": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-EXPANDED",
+      "stage": "expanded_binding",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N53_missing_needed_name": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-NAMES",
+      "stage": "name_union",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N54_extra_needed_name": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-NAMES",
+      "stage": "name_union",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N55_missing_variant": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-VARIANTS",
+      "stage": "variant_inventory",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N56_wrong_variant_path": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-VARIANTS",
+      "stage": "variant_inventory",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N57_source_variant_unknown": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-VARIANT-SEMANTICS",
+      "stage": "variant_review",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N58_absence_changed": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-ABSENCE",
+      "stage": "variant_inventory",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N59_candidate_file": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-CANDIDATE",
+      "stage": "nonselecting",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N60_candidate_symlink": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-CANDIDATE",
+      "stage": "nonselecting",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N61_candidate_directory": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-CANDIDATE",
+      "stage": "nonselecting",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N62_candidate_special": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-CANDIDATE",
+      "stage": "nonselecting",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N63_hwcaps_candidate": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-CANDIDATE",
+      "stage": "nonselecting",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N64_tls_candidate": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-CANDIDATE",
+      "stage": "nonselecting",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N65_extension_candidate": {
+      "code": "CHI-LOADER",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-CANDIDATE",
+      "stage": "nonselecting",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N66_needed_token": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-NAME-TOKEN",
+      "stage": "name_union",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N67_soname_token": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-NAME-TOKEN",
+      "stage": "name_union",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N68_second_token_image": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-ROLE",
+      "stage": "subject_context",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N69_expansion_4097_bytes": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-BOUND",
+      "stage": "bounds",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N70_name_union_over_bound": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-BOUND",
+      "stage": "bounds",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N71_suffixes_over_bound": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-BOUND",
+      "stage": "bounds",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N72_candidate_product_over_bound": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-BOUND",
+      "stage": "bounds",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N73_selected_machine_mismatch": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-SUBJECT-MACHINE",
+      "stage": "subject_context",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N74_variant_reader_over_bound": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-BOUND",
+      "stage": "bounds",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N75_expansion_129_components": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-BOUND",
+      "stage": "bounds",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N76_nonascii_origin": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-PATH-ASCII",
+      "stage": "new_path_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "N77_nonascii_variant_suffix": {
+      "code": "CHI-UNSUPPORTED",
+      "host_qualified": false,
+      "outcome": "refusal",
+      "rule_id": "LP-PATH-ASCII",
+      "stage": "new_path_policy",
+      "state": "REJECTED",
+      "target_starts": 0
+    },
+    "P01_nonselecting_base": {
+      "accepted_for": "synthetic_private_rule_only",
+      "expanded_rpath": [
+        "/fixture/app/lib"
+      ],
+      "host_qualified": false,
+      "metadata": {
+        "class": 64,
+        "endian": "little",
+        "interpreter": "/fixture/ld-linux-x86-64.so.2",
+        "machine": 62,
+        "needed": [
+          "libalpha.so",
+          "libbeta.so"
+        ],
+        "rpath": [
+          "$ORIGIN/../lib"
+        ],
+        "runpath": [],
+        "soname": null,
+        "type": 2
+      },
+      "nonselecting": true,
+      "origin": "/fixture/app/bin",
+      "outcome": "rule_acceptance",
+      "raw_rpath": [
+        "$ORIGIN/../lib"
+      ],
+      "runpath": [],
+      "target_starts": 0
+    },
+    "P02_unrelated_entry": {
+      "accepted_for": "synthetic_private_rule_only",
+      "expanded_rpath": [
+        "/fixture/app/lib"
+      ],
+      "host_qualified": false,
+      "metadata": {
+        "class": 64,
+        "endian": "little",
+        "interpreter": "/fixture/ld-linux-x86-64.so.2",
+        "machine": 62,
+        "needed": [
+          "libalpha.so",
+          "libbeta.so"
+        ],
+        "rpath": [
+          "$ORIGIN/../lib"
+        ],
+        "runpath": [],
+        "soname": null,
+        "type": 2
+      },
+      "nonselecting": true,
+      "origin": "/fixture/app/bin",
+      "outcome": "rule_acceptance",
+      "raw_rpath": [
+        "$ORIGIN/../lib"
+      ],
+      "runpath": [],
+      "target_starts": 0
+    },
+    "P03_present_hwcaps_empty": {
+      "accepted_for": "synthetic_private_rule_only",
+      "expanded_rpath": [
+        "/fixture/app/lib"
+      ],
+      "host_qualified": false,
+      "metadata": {
+        "class": 64,
+        "endian": "little",
+        "interpreter": "/fixture/ld-linux-x86-64.so.2",
+        "machine": 62,
+        "needed": [
+          "libalpha.so",
+          "libbeta.so"
+        ],
+        "rpath": [
+          "$ORIGIN/../lib"
+        ],
+        "runpath": [],
+        "soname": null,
+        "type": 2
+      },
+      "nonselecting": true,
+      "origin": "/fixture/app/bin",
+      "outcome": "rule_acceptance",
+      "raw_rpath": [
+        "$ORIGIN/../lib"
+      ],
+      "runpath": [],
+      "target_starts": 0
+    },
+    "P04_extension_name_covered": {
+      "accepted_for": "synthetic_private_rule_only",
+      "expanded_rpath": [
+        "/fixture/app/lib"
+      ],
+      "host_qualified": false,
+      "metadata": {
+        "class": 64,
+        "endian": "little",
+        "interpreter": "/fixture/ld-linux-x86-64.so.2",
+        "machine": 62,
+        "needed": [
+          "libalpha.so",
+          "libbeta.so"
+        ],
+        "rpath": [
+          "$ORIGIN/../lib"
+        ],
+        "runpath": [],
+        "soname": null,
+        "type": 2
+      },
+      "nonselecting": true,
+      "origin": "/fixture/app/bin",
+      "outcome": "rule_acceptance",
+      "raw_rpath": [
+        "$ORIGIN/../lib"
+      ],
+      "runpath": [],
+      "target_starts": 0
+    },
+    "P05_allowed_flags_preserved": {
+      "accepted_for": "synthetic_private_rule_only",
+      "expanded_rpath": [
+        "/fixture/app/lib"
+      ],
+      "host_qualified": false,
+      "metadata": {
+        "class": 64,
+        "endian": "little",
+        "interpreter": "/fixture/ld-linux-x86-64.so.2",
+        "machine": 62,
+        "needed": [
+          "libalpha.so",
+          "libbeta.so"
+        ],
+        "rpath": [
+          "$ORIGIN/../lib"
+        ],
+        "runpath": [],
+        "soname": null,
+        "type": 2
+      },
+      "nonselecting": true,
+      "origin": "/fixture/app/bin",
+      "outcome": "rule_acceptance",
+      "raw_rpath": [
+        "$ORIGIN/../lib"
+      ],
+      "runpath": [],
+      "target_starts": 0
+    },
+    "P06_auxv_256_pairs": {
+      "accepted_for": "synthetic_private_rule_only",
+      "expanded_rpath": [
+        "/fixture/app/lib"
+      ],
+      "host_qualified": false,
+      "metadata": {
+        "class": 64,
+        "endian": "little",
+        "interpreter": "/fixture/ld-linux-x86-64.so.2",
+        "machine": 62,
+        "needed": [
+          "libalpha.so",
+          "libbeta.so"
+        ],
+        "rpath": [
+          "$ORIGIN/../lib"
+        ],
+        "runpath": [],
+        "soname": null,
+        "type": 2
+      },
+      "nonselecting": true,
+      "origin": "/fixture/app/bin",
+      "outcome": "rule_acceptance",
+      "raw_rpath": [
+        "$ORIGIN/../lib"
+      ],
+      "runpath": [],
+      "target_starts": 0
+    },
+    "P07_expansion_4096_bytes": {
+      "accepted_for": "synthetic_private_rule_only",
+      "expanded_rpath": [
+        "/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/lib"
+      ],
+      "host_qualified": false,
+      "metadata": {
+        "class": 64,
+        "endian": "little",
+        "interpreter": "/fixture/ld-linux-x86-64.so.2",
+        "machine": 62,
+        "needed": [
+          "libalpha.so",
+          "libbeta.so"
+        ],
+        "rpath": [
+          "$ORIGIN/../lib"
+        ],
+        "runpath": [],
+        "soname": null,
+        "type": 2
+      },
+      "nonselecting": true,
+      "origin": "/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb/bin",
+      "outcome": "rule_acceptance",
+      "raw_rpath": [
+        "$ORIGIN/../lib"
+      ],
+      "runpath": [],
+      "target_starts": 0
+    },
+    "P08_variant_reader_4mib": {
+      "accepted_for": "new_profile_variant_byte_reader_only",
+      "canonical_decode_or_shape_acceptance": false,
+      "host_qualified": false,
+      "outcome": "bounded_read",
+      "sha256": "dfdc89141b6f1d32bfa44b2c567d6fdab3bf78822f6e19900c58f90b219a9ef9",
+      "size_bytes": 4194304,
+      "target_starts": 0
+    },
+    "P09_expansion_128_components": {
+      "accepted_for": "synthetic_private_rule_only",
+      "expanded_rpath": [
+        "/p000/p001/p002/p003/p004/p005/p006/p007/p008/p009/p010/p011/p012/p013/p014/p015/p016/p017/p018/p019/p020/p021/p022/p023/p024/p025/p026/p027/p028/p029/p030/p031/p032/p033/p034/p035/p036/p037/p038/p039/p040/p041/p042/p043/p044/p045/p046/p047/p048/p049/p050/p051/p052/p053/p054/p055/p056/p057/p058/p059/p060/p061/p062/p063/p064/p065/p066/p067/p068/p069/p070/p071/p072/p073/p074/p075/p076/p077/p078/p079/p080/p081/p082/p083/p084/p085/p086/p087/p088/p089/p090/p091/p092/p093/p094/p095/p096/p097/p098/p099/p100/p101/p102/p103/p104/p105/p106/p107/p108/p109/p110/p111/p112/p113/p114/p115/p116/p117/p118/p119/p120/p121/p122/p123/lib"
+      ],
+      "host_qualified": false,
+      "metadata": {
+        "class": 64,
+        "endian": "little",
+        "interpreter": "/fixture/ld-linux-x86-64.so.2",
+        "machine": 62,
+        "needed": [
+          "libalpha.so",
+          "libbeta.so"
+        ],
+        "rpath": [
+          "$ORIGIN/../lib"
+        ],
+        "runpath": [],
+        "soname": null,
+        "type": 2
+      },
+      "nonselecting": true,
+      "origin": "/p000/p001/p002/p003/p004/p005/p006/p007/p008/p009/p010/p011/p012/p013/p014/p015/p016/p017/p018/p019/p020/p021/p022/p023/p024/p025/p026/p027/p028/p029/p030/p031/p032/p033/p034/p035/p036/p037/p038/p039/p040/p041/p042/p043/p044/p045/p046/p047/p048/p049/p050/p051/p052/p053/p054/p055/p056/p057/p058/p059/p060/p061/p062/p063/p064/p065/p066/p067/p068/p069/p070/p071/p072/p073/p074/p075/p076/p077/p078/p079/p080/p081/p082/p083/p084/p085/p086/p087/p088/p089/p090/p091/p092/p093/p094/p095/p096/p097/p098/p099/p100/p101/p102/p103/p104/p105/p106/p107/p108/p109/p110/p111/p112/p113/p114/p115/p116/p117/p118/p119/p120/p121/p122/p123/bin",
+      "outcome": "rule_acceptance",
+      "raw_rpath": [
+        "$ORIGIN/../lib"
+      ],
+      "runpath": [],
+      "target_starts": 0
+    }
+  },
+  "derived_from_production_output": false,
+  "production_parser_calls": 0,
+  "schema": "ontokin.c271.p11-independent-expectations/1"
+}

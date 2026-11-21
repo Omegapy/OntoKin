@@ -1,0 +1,206 @@
+{
+  "candidate_manifest_sha256": "e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de",
+  "check_count": 52,
+  "derived_materialized_files": "Exact reproducible copies; keep in recovery or map to original raw sources, do not blindly copy these raw whitespace-bearing files into Git.",
+  "execution_scope": "Reviewer static decoding/copy and read-only Git guard observations only; no product code/tests or target execution.",
+  "failed": [],
+  "fresh_materialization": [
+    {
+      "envelope": "transport/2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417.base64.json",
+      "materialized": {
+        "ctime_ns": 1795304956431996366,
+        "device": 27,
+        "inode": 1854356,
+        "mode": "0o644",
+        "mtime_ns": 1795304956431996366,
+        "nlink": 1,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/fresh_materialized/design/candidate004/REVISION-004.diff",
+        "regular": true,
+        "sha256": "2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417",
+        "size_bytes": 38093,
+        "symlink": false
+      },
+      "reproducible_from": "session_evidence/loader_design/candidate004/REVISION-004.diff"
+    },
+    {
+      "envelope": "transport/2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417.base64.json",
+      "materialized": {
+        "ctime_ns": 1795304956432396990,
+        "device": 27,
+        "inode": 1854359,
+        "mode": "0o644",
+        "mtime_ns": 1795304956432396990,
+        "nlink": 1,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/fresh_materialized/review/candidate004/INDEPENDENT-DOCUMENT-DIFF.diff",
+        "regular": true,
+        "sha256": "2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417",
+        "size_bytes": 38093,
+        "symlink": false
+      },
+      "reproducible_from": "session_evidence/design_review/candidate004/INDEPENDENT-DOCUMENT-DIFF.diff"
+    },
+    {
+      "envelope": "transport/aa1edcfbcf800cbbe9fdd9aa66bdb574f97b0a3c4d2e8b9da43d233ba68d3c5b.base64.json",
+      "materialized": {
+        "ctime_ns": 1795304956432716862,
+        "device": 27,
+        "inode": 1854362,
+        "mode": "0o644",
+        "mtime_ns": 1795304956432716862,
+        "nlink": 1,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/fresh_materialized/evidence/technical-candidate/whitespace.stdout.txt",
+        "regular": true,
+        "sha256": "aa1edcfbcf800cbbe9fdd9aa66bdb574f97b0a3c4d2e8b9da43d233ba68d3c5b",
+        "size_bytes": 8718,
+        "symlink": false
+      },
+      "reproducible_from": "session_evidence/checks/technical-candidate/whitespace.stdout.txt"
+    }
+  ],
+  "git_observations": [
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stderr": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-0.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-0.stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "exit_code": 0,
+      "stderr": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-1.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-1.stdout.txt",
+      "stdout_sha256": "fcc6e198cc01414e9355a9ec9f1b33c0e89b5d4ef5abcd4eadb0fa77bf151c4f"
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "--get",
+        "core.whitespace"
+      ],
+      "exit_code": 1,
+      "stderr": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-2.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-2.stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "check-attr",
+        "whitespace",
+        "--",
+        "docs/engineering/localized-repair-c271/loader-path-p11/transport/2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417.base64.json",
+        "docs/engineering/localized-repair-c271/loader-path-p11/transport/2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417.base64.json",
+        "docs/engineering/localized-repair-c271/loader-path-p11/transport/aa1edcfbcf800cbbe9fdd9aa66bdb574f97b0a3c4d2e8b9da43d233ba68d3c5b.base64.json"
+      ],
+      "exit_code": 0,
+      "stderr": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-3.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "/workspace/scratch/2ad494d5da19/session_evidence/transport_review/git-read-3.stdout.txt",
+      "stdout_sha256": "760c65e11312d5394723dc0241b39bbc53f995daa95543f3bfa3d27093bad598"
+    }
+  ],
+  "git_or_config_writes": false,
+  "instructions": {
+    "ctime_ns": 1795304794881654194,
+    "device": 27,
+    "inode": 1854288,
+    "mode": "0o644",
+    "mtime_ns": 1795304794881654194,
+    "nlink": 1,
+    "path": "/workspace/scratch/2ad494d5da19/OntoKin/docs/engineering/localized-repair-c271/loader-path-p11/GIT-TRANSPORT.md",
+    "regular": true,
+    "sha256": "007a4c04c648eebcf6e9e9b802680d90e4aa0fd22cee6c0c2c06ec6fb0d22d32",
+    "size_bytes": 1556,
+    "symlink": false
+  },
+  "mapping": {
+    "ctime_ns": 1795304794881611570,
+    "device": 27,
+    "inode": 1853819,
+    "mode": "0o644",
+    "mtime_ns": 1795304794881611570,
+    "nlink": 1,
+    "path": "/workspace/scratch/2ad494d5da19/OntoKin/docs/engineering/localized-repair-c271/loader-path-p11/GIT-TRANSPORT.json",
+    "regular": true,
+    "sha256": "19cd1889972985c10b5b346a12773fd7b279ec3e608acc00fff57082cb115f43",
+    "size_bytes": 2233,
+    "symlink": false
+  },
+  "oracle_sha256": "dfb285f41a58a1f7254aaae4aa022f91afdc72fb7d5dad2f3d6b1e8257d14137",
+  "originals_modified": false,
+  "passed": 52,
+  "records": {
+    "design/candidate004/REVISION-004.diff": {
+      "decoded_sha256": "2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417",
+      "decoded_size_bytes": 38093,
+      "envelope": {
+        "path": "/workspace/scratch/2ad494d5da19/OntoKin/docs/engineering/localized-repair-c271/loader-path-p11/transport/2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417.base64.json",
+        "sha256": "70f9c5dd9813dccdb8b07fdea99a34b4f59d30d79d6d6116c268d0b4f21c232a",
+        "size_bytes": 51014
+      },
+      "mapping": {
+        "decoded_sha256": "2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417",
+        "decoded_size_bytes": 38093,
+        "envelope_relative_path": "transport/2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417.base64.json",
+        "envelope_sha256": "70f9c5dd9813dccdb8b07fdea99a34b4f59d30d79d6d6116c268d0b4f21c232a",
+        "materialized_mode": "0o644",
+        "materialized_relative_path": "design/candidate004/REVISION-004.diff",
+        "unaltered_original_recovery_path": "session_evidence/loader_design/candidate004/REVISION-004.diff"
+      }
+    },
+    "evidence/technical-candidate/whitespace.stdout.txt": {
+      "decoded_sha256": "aa1edcfbcf800cbbe9fdd9aa66bdb574f97b0a3c4d2e8b9da43d233ba68d3c5b",
+      "decoded_size_bytes": 8718,
+      "envelope": {
+        "path": "/workspace/scratch/2ad494d5da19/OntoKin/docs/engineering/localized-repair-c271/loader-path-p11/transport/aa1edcfbcf800cbbe9fdd9aa66bdb574f97b0a3c4d2e8b9da43d233ba68d3c5b.base64.json",
+        "sha256": "9b181e50b5745299b77edd88436a37ee57000f1a26547342c2dcef9dbe09d092",
+        "size_bytes": 11845
+      },
+      "mapping": {
+        "decoded_sha256": "aa1edcfbcf800cbbe9fdd9aa66bdb574f97b0a3c4d2e8b9da43d233ba68d3c5b",
+        "decoded_size_bytes": 8718,
+        "envelope_relative_path": "transport/aa1edcfbcf800cbbe9fdd9aa66bdb574f97b0a3c4d2e8b9da43d233ba68d3c5b.base64.json",
+        "envelope_sha256": "9b181e50b5745299b77edd88436a37ee57000f1a26547342c2dcef9dbe09d092",
+        "materialized_mode": "0o644",
+        "materialized_relative_path": "evidence/technical-candidate/whitespace.stdout.txt",
+        "unaltered_original_recovery_path": "session_evidence/checks/technical-candidate/whitespace.stdout.txt"
+      }
+    },
+    "review/candidate004/INDEPENDENT-DOCUMENT-DIFF.diff": {
+      "decoded_sha256": "2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417",
+      "decoded_size_bytes": 38093,
+      "envelope": {
+        "path": "/workspace/scratch/2ad494d5da19/OntoKin/docs/engineering/localized-repair-c271/loader-path-p11/transport/2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417.base64.json",
+        "sha256": "70f9c5dd9813dccdb8b07fdea99a34b4f59d30d79d6d6116c268d0b4f21c232a",
+        "size_bytes": 51014
+      },
+      "mapping": {
+        "decoded_sha256": "2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417",
+        "decoded_size_bytes": 38093,
+        "envelope_relative_path": "transport/2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417.base64.json",
+        "envelope_sha256": "70f9c5dd9813dccdb8b07fdea99a34b4f59d30d79d6d6116c268d0b4f21c232a",
+        "materialized_mode": "0o644",
+        "materialized_relative_path": "review/candidate004/INDEPENDENT-DOCUMENT-DIFF.diff",
+        "unaltered_original_recovery_path": "session_evidence/design_review/candidate004/INDEPENDENT-DOCUMENT-DIFF.diff"
+      }
+    }
+  },
+  "reviewer": "/root/intake_audit",
+  "schema": "ontokin.c271.p11-independent-git-transport-review/1",
+  "verdict": "pass"
+}
