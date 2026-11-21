@@ -1,0 +1,2023 @@
+{
+  "scope": "Selected retained mocked-observation artifacts, read-only summary. Full per-method pass and exact bytes are bound in VERIFICATION.json. Counts here are synthetic supervisor/history counts, not actual OS starts. Successful result.json remains immutable PENDING_COMPLETION; completion.json supplies the recorded transition. Read-only reconciliation durability remains UNKNOWN per D06.",
+  "rows": [
+    {
+      "method": "test_HI_P03",
+      "file": "evidence/attempt/completion.json",
+      "sha256": "1fed3b61d2952f6d32f402b6efea59e99db158508410088e480d0bc4d310df4f",
+      "state": "OBSERVED_UNAPPROVED",
+      "evidence_finalized": true,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 2,
+          "observed_lower_bound": 2
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 2,
+          "observed_lower_bound": 2
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        }
+      },
+      "command_attempt_count": 2,
+      "failures": [],
+      "completion_fields": {
+        "actual_counts": {
+          "attempted_launches": {
+            "exact": 2,
+            "observed_lower_bound": 2
+          },
+          "checker_starts": {
+            "exact": 0,
+            "observed_lower_bound": 0
+          },
+          "direct_starts": {
+            "exact": 2,
+            "observed_lower_bound": 2
+          },
+          "node_version": {
+            "exact": 1,
+            "observed_lower_bound": 1
+          },
+          "shared_libraries": {
+            "exact": 1,
+            "observed_lower_bound": 1
+          }
+        },
+        "evidence_finalized": true,
+        "schema": "ontokin.current-host-readback-inspection-completion/0.1.0",
+        "state": "OBSERVED_UNAPPROVED"
+      }
+    },
+    {
+      "method": "test_HI_P03",
+      "file": "evidence/attempt/node_version/inspection.json",
+      "sha256": "4b62b9dbe5ec84c71fedd18fca8209950a6ba024da3dda82d6563b5a9e0a0913",
+      "state": null,
+      "evidence_finalized": null,
+      "actual_counts": null,
+      "command_attempt_count": null,
+      "failures": [],
+      "sidecar_projection": {
+        "schema": "ontokin.current-host-readback-inspection/0.1.0"
+      }
+    },
+    {
+      "method": "test_HI_P03",
+      "file": "evidence/attempt/result.json",
+      "sha256": "054f5694c8d0f2b7d888d22d4239635515d038fa23e1bdda407055874bad6483",
+      "state": "PENDING_COMPLETION",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 2,
+          "observed_lower_bound": 2
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 2,
+          "observed_lower_bound": 2
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        }
+      },
+      "command_attempt_count": 2,
+      "failures": []
+    },
+    {
+      "method": "test_HI_P03",
+      "file": "evidence/attempt/shared_libraries/inspection.json",
+      "sha256": "c0df8e70f803fb9a2c0e5144f48e44fe0351857d0179ef61d04f7abc549c1b14",
+      "state": null,
+      "evidence_finalized": null,
+      "actual_counts": null,
+      "command_attempt_count": null,
+      "failures": [],
+      "sidecar_projection": {
+        "schema": "ontokin.current-host-readback-inspection/0.1.0"
+      }
+    },
+    {
+      "method": "test_HI14_D",
+      "file": "evidence/attempt/result.json",
+      "sha256": "534f9996a8d73f0932262d9732e228fc71e1ec8869405b6f5867a2bc88c46278",
+      "state": "REJECTED",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": null,
+          "observed_lower_bound": 2
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": null,
+          "observed_lower_bound": 2
+        },
+        "node_version": {
+          "exact": null,
+          "observed_lower_bound": 2
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-PROCESS",
+          "state": "REJECTED",
+          "details": {
+            "contract_violation": {
+              "callback_count": 2,
+              "callback_receipts": [
+                {
+                  "argv": [
+                    "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/runtime/bin/node",
+                    "--version"
+                  ],
+                  "cleanup": null,
+                  "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/evidence/attempt/node_version",
+                  "environment": {
+                    "LANG": "C.UTF-8",
+                    "LC_ALL": "C.UTF-8",
+                    "PATH": "/usr/bin:/bin",
+                    "TZ": "UTC",
+                    "UV_THREADPOOL_SIZE": "2"
+                  },
+                  "error": null,
+                  "handles_closed": false,
+                  "label": "host-node-version",
+                  "observed_log_bytes": 0,
+                  "pid": 4242,
+                  "process_group": 4242,
+                  "retained_log_bytes": 0,
+                  "returncode": null,
+                  "start_monotonic": 1000.0
+                },
+                {
+                  "argv": [
+                    "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/runtime/bin/node",
+                    "--version"
+                  ],
+                  "cleanup": null,
+                  "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/evidence/attempt/node_version",
+                  "environment": {
+                    "LANG": "C.UTF-8",
+                    "LC_ALL": "C.UTF-8",
+                    "PATH": "/usr/bin:/bin",
+                    "TZ": "UTC",
+                    "UV_THREADPOOL_SIZE": "2"
+                  },
+                  "error": null,
+                  "handles_closed": false,
+                  "label": "host-node-version",
+                  "observed_log_bytes": 0,
+                  "pid": 4342,
+                  "process_group": 4342,
+                  "retained_log_bytes": 0,
+                  "returncode": null,
+                  "start_monotonic": 1000.0
+                }
+              ],
+              "final_process": {
+                "argv": [
+                  "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/runtime/bin/node",
+                  "--version"
+                ],
+                "cleanup": {
+                  "elapsed_ms": 1.0,
+                  "passed": true,
+                  "process_group_absent": true,
+                  "reaped": true
+                },
+                "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/evidence/attempt/node_version",
+                "end_monotonic": 1000.1,
+                "environment": {
+                  "LANG": "C.UTF-8",
+                  "LC_ALL": "C.UTF-8",
+                  "PATH": "/usr/bin:/bin",
+                  "TZ": "UTC",
+                  "UV_THREADPOOL_SIZE": "2"
+                },
+                "error": null,
+                "handles_closed": true,
+                "label": "host-node-version",
+                "observed_log_bytes": 9,
+                "pid": 4242,
+                "process_group": 4242,
+                "retained_log_bytes": 9,
+                "returncode": 0,
+                "start_monotonic": 1000.0
+              },
+              "normal_count_projection_available": false,
+              "observed_distinct_pids": [
+                4242,
+                4342
+              ],
+              "observed_distinct_start_count": {
+                "exact": 2,
+                "observed_lower_bound": 2
+              },
+              "observed_start_lower_bound": 2,
+              "total_direct_start_count_complete": false
+            },
+            "supervisor_failure": {
+              "code": "MOCK-FAILURE",
+              "reason": "Invalid or repeated actual start callback",
+              "state": "REJECTED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI14_D",
+      "file": "multiple-then-drift/evidence/attempt/result.json",
+      "sha256": "dc057212823fb10053ece0b519e90a08884a4546f47cff1d3403ba596f12059c",
+      "state": "REJECTED",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": null,
+          "observed_lower_bound": 2
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": null,
+          "observed_lower_bound": 2
+        },
+        "node_version": {
+          "exact": null,
+          "observed_lower_bound": 2
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-DRIFT",
+          "state": "REJECTED",
+          "details": {
+            "contract_violation": {
+              "callback_count": 2,
+              "callback_receipts": [
+                {
+                  "argv": [
+                    "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-drift/runtime/bin/node",
+                    "--version"
+                  ],
+                  "cleanup": null,
+                  "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-drift/evidence/attempt/node_version",
+                  "environment": {
+                    "LANG": "C.UTF-8",
+                    "LC_ALL": "C.UTF-8",
+                    "PATH": "/usr/bin:/bin",
+                    "TZ": "UTC",
+                    "UV_THREADPOOL_SIZE": "2"
+                  },
+                  "error": null,
+                  "handles_closed": false,
+                  "label": "host-node-version",
+                  "observed_log_bytes": 0,
+                  "pid": 4242,
+                  "process_group": 4242,
+                  "retained_log_bytes": 0,
+                  "returncode": null,
+                  "start_monotonic": 1000.0
+                },
+                {
+                  "argv": [
+                    "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-drift/runtime/bin/node",
+                    "--version"
+                  ],
+                  "cleanup": null,
+                  "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-drift/evidence/attempt/node_version",
+                  "environment": {
+                    "LANG": "C.UTF-8",
+                    "LC_ALL": "C.UTF-8",
+                    "PATH": "/usr/bin:/bin",
+                    "TZ": "UTC",
+                    "UV_THREADPOOL_SIZE": "2"
+                  },
+                  "error": null,
+                  "handles_closed": false,
+                  "label": "host-node-version",
+                  "observed_log_bytes": 0,
+                  "pid": 4342,
+                  "process_group": 4342,
+                  "retained_log_bytes": 0,
+                  "returncode": null,
+                  "start_monotonic": 1000.0
+                }
+              ],
+              "final_process": {
+                "argv": [
+                  "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-drift/runtime/bin/node",
+                  "--version"
+                ],
+                "cleanup": {
+                  "elapsed_ms": 1.0,
+                  "passed": true,
+                  "process_group_absent": true,
+                  "reaped": true
+                },
+                "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-drift/evidence/attempt/node_version",
+                "end_monotonic": 1000.1,
+                "environment": {
+                  "LANG": "C.UTF-8",
+                  "LC_ALL": "C.UTF-8",
+                  "PATH": "/usr/bin:/bin",
+                  "TZ": "UTC",
+                  "UV_THREADPOOL_SIZE": "2"
+                },
+                "error": null,
+                "handles_closed": true,
+                "label": "host-node-version",
+                "observed_log_bytes": 9,
+                "pid": 4242,
+                "process_group": 4242,
+                "retained_log_bytes": 9,
+                "returncode": 0,
+                "start_monotonic": 1000.0
+              },
+              "normal_count_projection_available": false,
+              "observed_distinct_pids": [
+                4242,
+                4342
+              ],
+              "observed_distinct_start_count": {
+                "exact": 2,
+                "observed_lower_bound": 2
+              },
+              "observed_start_lower_bound": 2,
+              "total_direct_start_count_complete": false
+            },
+            "supervisor_failure": {
+              "code": "MOCK-FAILURE",
+              "reason": "Invalid or repeated actual start callback",
+              "state": "REJECTED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI14_D",
+      "file": "multiple-then-failure/evidence/attempt/result.json",
+      "sha256": "c5f1e7ffc6bbdd7b4780b24fa223f26e8f162f0019c8765641c6a3777834c90b",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": null,
+          "observed_lower_bound": 2
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": null,
+          "observed_lower_bound": 2
+        },
+        "node_version": {
+          "exact": null,
+          "observed_lower_bound": 2
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "contract_violation": {
+              "callback_count": 2,
+              "callback_receipts": [
+                {
+                  "argv": [
+                    "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-failure/runtime/bin/node",
+                    "--version"
+                  ],
+                  "cleanup": null,
+                  "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-failure/evidence/attempt/node_version",
+                  "environment": {
+                    "LANG": "C.UTF-8",
+                    "LC_ALL": "C.UTF-8",
+                    "PATH": "/usr/bin:/bin",
+                    "TZ": "UTC",
+                    "UV_THREADPOOL_SIZE": "2"
+                  },
+                  "error": null,
+                  "handles_closed": false,
+                  "label": "host-node-version",
+                  "observed_log_bytes": 0,
+                  "pid": 4242,
+                  "process_group": 4242,
+                  "retained_log_bytes": 0,
+                  "returncode": null,
+                  "start_monotonic": 1000.0
+                },
+                {
+                  "argv": [
+                    "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-failure/runtime/bin/node",
+                    "--version"
+                  ],
+                  "cleanup": null,
+                  "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-failure/evidence/attempt/node_version",
+                  "environment": {
+                    "LANG": "C.UTF-8",
+                    "LC_ALL": "C.UTF-8",
+                    "PATH": "/usr/bin:/bin",
+                    "TZ": "UTC",
+                    "UV_THREADPOOL_SIZE": "2"
+                  },
+                  "error": null,
+                  "handles_closed": false,
+                  "label": "host-node-version",
+                  "observed_log_bytes": 0,
+                  "pid": 4342,
+                  "process_group": 4342,
+                  "retained_log_bytes": 0,
+                  "returncode": null,
+                  "start_monotonic": 1000.0
+                }
+              ],
+              "final_process": {
+                "argv": [
+                  "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-failure/runtime/bin/node",
+                  "--version"
+                ],
+                "cleanup": {
+                  "elapsed_ms": 1.0,
+                  "passed": true,
+                  "process_group_absent": true,
+                  "reaped": true
+                },
+                "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-failure/evidence/attempt/node_version",
+                "end_monotonic": 1000.1,
+                "environment": {
+                  "LANG": "C.UTF-8",
+                  "LC_ALL": "C.UTF-8",
+                  "PATH": "/usr/bin:/bin",
+                  "TZ": "UTC",
+                  "UV_THREADPOOL_SIZE": "2"
+                },
+                "error": null,
+                "handles_closed": true,
+                "label": "host-node-version",
+                "observed_log_bytes": 9,
+                "pid": 4242,
+                "process_group": 4242,
+                "retained_log_bytes": 9,
+                "returncode": 0,
+                "start_monotonic": 1000.0
+              },
+              "normal_count_projection_available": false,
+              "observed_distinct_pids": [
+                4242,
+                4342
+              ],
+              "observed_distinct_start_count": {
+                "exact": 2,
+                "observed_lower_bound": 2
+              },
+              "observed_start_lower_bound": 2,
+              "total_direct_start_count_complete": false
+            },
+            "original_failure": {
+              "cause": null,
+              "code": "CHI-PROCESS",
+              "details": {
+                "contract_violation": {
+                  "callback_count": 2,
+                  "callback_receipts": [
+                    {
+                      "argv": [
+                        "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-failure/runtime/bin/node",
+                        "--version"
+                      ],
+                      "cleanup": null,
+                      "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-failure/evidence/attempt/node_version",
+                      "environment": {
+                        "LANG": "C.UTF-8",
+                        "LC_ALL": "C.UTF-8",
+                        "PATH": "/usr/bin:/bin",
+                        "TZ": "UTC",
+                        "UV_THREADPOOL_SIZE": "2"
+                      },
+                      "error": null,
+                      "handles_closed": false,
+                      "label": "host-node-version",
+                      "observed_log_bytes": 0,
+                      "pid": 4242,
+                      "process_group": 4242,
+                      "retained_log_bytes": 0,
+                      "returncode": null,
+                      "start_monotonic": 1000.0
+                    },
+                    {
+                      "argv": [
+                        "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-failure/runtime/bin/node",
+                        "--version"
+                      ],
+                      "cleanup": null,
+                      "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-failure/evidence/attempt/node_version",
+                      "environment": {
+                        "LANG": "C.UTF-8",
+                        "LC_ALL": "C.UTF-8",
+                        "PATH": "/usr/bin:/bin",
+                        "TZ": "UTC",
+                        "UV_THREADPOOL_SIZE": "2"
+                      },
+                      "error": null,
+                      "handles_closed": false,
+                      "label": "host-node-version",
+                      "observed_log_bytes": 0,
+                      "pid": 4342,
+                      "process_group": 4342,
+                      "retained_log_bytes": 0,
+                      "returncode": null,
+                      "start_monotonic": 1000.0
+                    }
+                  ],
+                  "final_process": {
+                    "argv": [
+                      "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-failure/runtime/bin/node",
+                      "--version"
+                    ],
+                    "cleanup": {
+                      "elapsed_ms": 1.0,
+                      "passed": true,
+                      "process_group_absent": true,
+                      "reaped": true
+                    },
+                    "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-failure/evidence/attempt/node_version",
+                    "end_monotonic": 1000.1,
+                    "environment": {
+                      "LANG": "C.UTF-8",
+                      "LC_ALL": "C.UTF-8",
+                      "PATH": "/usr/bin:/bin",
+                      "TZ": "UTC",
+                      "UV_THREADPOOL_SIZE": "2"
+                    },
+                    "error": null,
+                    "handles_closed": true,
+                    "label": "host-node-version",
+                    "observed_log_bytes": 9,
+                    "pid": 4242,
+                    "process_group": 4242,
+                    "retained_log_bytes": 9,
+                    "returncode": 0,
+                    "start_monotonic": 1000.0
+                  },
+                  "normal_count_projection_available": false,
+                  "observed_distinct_pids": [
+                    4242,
+                    4342
+                  ],
+                  "observed_distinct_start_count": {
+                    "exact": 2,
+                    "observed_lower_bound": 2
+                  },
+                  "observed_start_lower_bound": 2,
+                  "total_direct_start_count_complete": false
+                },
+                "supervisor_failure": {
+                  "code": "MOCK-FAILURE",
+                  "reason": "Invalid or repeated actual start callback",
+                  "state": "REJECTED"
+                }
+              },
+              "reason": "Direct-start contract violation; normal count projection is unavailable",
+              "state": "REJECTED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI14_D",
+      "file": "multiple-then-outcome/evidence/attempt/result.json",
+      "sha256": "5b2af663636f86d6babb9241a1e17a999bcdaa7d1ac514db0b660bb31bd0db3f",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": null,
+          "observed_lower_bound": 2
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": null,
+          "observed_lower_bound": 2
+        },
+        "node_version": {
+          "exact": null,
+          "observed_lower_bound": 2
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "contract_violation": {
+              "callback_count": 2,
+              "callback_receipts": [
+                {
+                  "argv": [
+                    "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-outcome/runtime/bin/node",
+                    "--version"
+                  ],
+                  "cleanup": null,
+                  "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-outcome/evidence/attempt/node_version",
+                  "environment": {
+                    "LANG": "C.UTF-8",
+                    "LC_ALL": "C.UTF-8",
+                    "PATH": "/usr/bin:/bin",
+                    "TZ": "UTC",
+                    "UV_THREADPOOL_SIZE": "2"
+                  },
+                  "error": null,
+                  "handles_closed": false,
+                  "label": "host-node-version",
+                  "observed_log_bytes": 0,
+                  "pid": 4242,
+                  "process_group": 4242,
+                  "retained_log_bytes": 0,
+                  "returncode": null,
+                  "start_monotonic": 1000.0
+                },
+                {
+                  "argv": [
+                    "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-outcome/runtime/bin/node",
+                    "--version"
+                  ],
+                  "cleanup": null,
+                  "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-outcome/evidence/attempt/node_version",
+                  "environment": {
+                    "LANG": "C.UTF-8",
+                    "LC_ALL": "C.UTF-8",
+                    "PATH": "/usr/bin:/bin",
+                    "TZ": "UTC",
+                    "UV_THREADPOOL_SIZE": "2"
+                  },
+                  "error": null,
+                  "handles_closed": false,
+                  "label": "host-node-version",
+                  "observed_log_bytes": 0,
+                  "pid": 4342,
+                  "process_group": 4342,
+                  "retained_log_bytes": 0,
+                  "returncode": null,
+                  "start_monotonic": 1000.0
+                }
+              ],
+              "final_process": {
+                "argv": [
+                  "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-outcome/runtime/bin/node",
+                  "--version"
+                ],
+                "cleanup": {
+                  "elapsed_ms": 1.0,
+                  "passed": true,
+                  "process_group_absent": true,
+                  "reaped": true
+                },
+                "cwd": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI14_D/multiple-then-outcome/evidence/attempt/node_version",
+                "end_monotonic": 1000.1,
+                "environment": {
+                  "LANG": "C.UTF-8",
+                  "LC_ALL": "C.UTF-8",
+                  "PATH": "/usr/bin:/bin",
+                  "TZ": "UTC",
+                  "UV_THREADPOOL_SIZE": "2"
+                },
+                "error": null,
+                "handles_closed": true,
+                "label": "host-node-version",
+                "observed_log_bytes": 9,
+                "pid": 4242,
+                "process_group": 4242,
+                "retained_log_bytes": 9,
+                "returncode": 0,
+                "start_monotonic": 1000.0
+              },
+              "normal_count_projection_available": false,
+              "observed_distinct_pids": [
+                4242,
+                4342
+              ],
+              "observed_distinct_start_count": {
+                "exact": 2,
+                "observed_lower_bound": 2
+              },
+              "observed_start_lower_bound": 2,
+              "total_direct_start_count_complete": false
+            },
+            "supervisor_failure": {
+              "code": "MOCK-FAILURE",
+              "reason": "Invalid or repeated actual start callback",
+              "state": "REJECTED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI17_D",
+      "file": "evidence/attempt/result.json",
+      "sha256": "8e0c7b1f63e2972037e52fbcdf7522dad5931ba177b168c037c3deb451cc5a62",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-PROCESS",
+          "state": "UNKNOWN",
+          "details": {
+            "supervisor_failure": {
+              "reason": "mocked lost final supervisor write",
+              "type": "OSError"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_A",
+      "file": "evidence/attempt/result.json",
+      "sha256": "33031875cadcf30a632894f22741e9a22d4f5030de0756bfdbfdad7d9651c393",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "node_version": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 0,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "destination": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt/reserved.json",
+            "destination_after": {
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt/reserved.json",
+              "state": "absent"
+            },
+            "failure": {
+              "reason": "[Errno 28] Frozen isolated short/full-disk write failure",
+              "type": "OSError"
+            },
+            "intended_binding": {
+              "mode": "0o600",
+              "sha256": "c8ea8048ecc76d4ed0408766e75c5d240e31f12ab40a91e1fcfaca302a8f5c8d",
+              "size_bytes": 898
+            },
+            "owned_temporary": [
+              27,
+              3175207
+            ],
+            "retry": false,
+            "source": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt/.reserved.json.28cbe8caefff4bb6a83b61c244ae9f88.tmp",
+            "source_after": {
+              "binding": {
+                "mode": "0o600",
+                "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt/.reserved.json.28cbe8caefff4bb6a83b61c244ae9f88.tmp",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "size_bytes": 0
+              },
+              "device": 27,
+              "inode": 3175207,
+              "kind": "file",
+              "mode": "0o600",
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt/.reserved.json.28cbe8caefff4bb6a83b61c244ae9f88.tmp",
+              "state": "observed",
+              "target": null
+            },
+            "state": "UNKNOWN"
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_A",
+      "file": "evidence/attempt-2/result.json",
+      "sha256": "8d9d201d13c75a11049c6a9216fb64f164dd76ef1244d5d22a4bae2748e5068f",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "node_version": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 0,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "destination": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-2/reserved.json",
+            "destination_after": {
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-2/reserved.json",
+              "state": "absent"
+            },
+            "failure": {
+              "reason": "[Errno 5] Frozen isolated fsync failure",
+              "type": "OSError"
+            },
+            "intended_binding": {
+              "mode": "0o600",
+              "sha256": "0d983b9a10153d1983172e3c3fbc0105addcc026ad57059b223036a58cd65604",
+              "size_bytes": 906
+            },
+            "owned_temporary": [
+              27,
+              3175214
+            ],
+            "retry": false,
+            "source": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-2/.reserved.json.53c97459a0544df5811accd80c4091ca.tmp",
+            "source_after": {
+              "binding": {
+                "mode": "0o600",
+                "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-2/.reserved.json.53c97459a0544df5811accd80c4091ca.tmp",
+                "sha256": "0d983b9a10153d1983172e3c3fbc0105addcc026ad57059b223036a58cd65604",
+                "size_bytes": 906
+              },
+              "device": 27,
+              "inode": 3175214,
+              "kind": "file",
+              "mode": "0o600",
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-2/.reserved.json.53c97459a0544df5811accd80c4091ca.tmp",
+              "state": "observed",
+              "target": null
+            },
+            "state": "UNKNOWN"
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_A",
+      "file": "evidence/attempt-3/result.json",
+      "sha256": "2f50ca414de748f8325202b8bdd39e8cc91606008c93f798d85ae9188c6d4832",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "node_version": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 0,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "destination": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-3/reserved.json",
+            "destination_after": {
+              "binding": {
+                "mode": "0o600",
+                "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-3/reserved.json",
+                "sha256": "b6dc193457f33db138ffdc838700db1ba296056e2b09f019b7f615f34cfcf524",
+                "size_bytes": 906
+              },
+              "device": 27,
+              "inode": 3175220,
+              "kind": "file",
+              "mode": "0o600",
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-3/reserved.json",
+              "state": "observed",
+              "target": null
+            },
+            "failure": {
+              "reason": "[Errno 5] Frozen isolated fsync failure",
+              "type": "OSError"
+            },
+            "intended_binding": {
+              "mode": "0o600",
+              "sha256": "b6dc193457f33db138ffdc838700db1ba296056e2b09f019b7f615f34cfcf524",
+              "size_bytes": 906
+            },
+            "owned_temporary": [
+              27,
+              3175220
+            ],
+            "retry": false,
+            "source": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-3/.reserved.json.208cc4fe39a84c978c2f1018dd919ae1.tmp",
+            "source_after": {
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-3/.reserved.json.208cc4fe39a84c978c2f1018dd919ae1.tmp",
+              "state": "absent"
+            },
+            "state": "UNKNOWN"
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_A",
+      "file": "evidence/attempt-4/result.json",
+      "sha256": "f02bca42d1b423a58deedb399d5d71447f542dbe674bb8d3d5b8dee1b7a93ac8",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "node_version": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 0,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "destination": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-4/preflight.json",
+            "destination_after": {
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-4/preflight.json",
+              "state": "absent"
+            },
+            "failure": {
+              "reason": "[Errno 28] Frozen isolated short/full-disk write failure",
+              "type": "OSError"
+            },
+            "intended_binding": {
+              "mode": "0o600",
+              "sha256": "c41dfbe61012793de02d0841bb3897243ecf2621d5842956413fa347a389f7de",
+              "size_bytes": 4094
+            },
+            "owned_temporary": [
+              27,
+              3175227
+            ],
+            "retry": false,
+            "source": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-4/.preflight.json.3f231a2e61f94422b95fef2c1bb87b0f.tmp",
+            "source_after": {
+              "binding": {
+                "mode": "0o600",
+                "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-4/.preflight.json.3f231a2e61f94422b95fef2c1bb87b0f.tmp",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "size_bytes": 0
+              },
+              "device": 27,
+              "inode": 3175227,
+              "kind": "file",
+              "mode": "0o600",
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-4/.preflight.json.3f231a2e61f94422b95fef2c1bb87b0f.tmp",
+              "state": "observed",
+              "target": null
+            },
+            "state": "UNKNOWN"
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_A",
+      "file": "evidence/attempt-5/result.json",
+      "sha256": "b843ef0a2c579d32d098473cfe7dac3336abd18602ed4a5ad9d56544e1c36437",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "node_version": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 0,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "destination": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-5/preflight.json",
+            "destination_after": {
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-5/preflight.json",
+              "state": "absent"
+            },
+            "failure": {
+              "reason": "[Errno 5] Frozen isolated fsync failure",
+              "type": "OSError"
+            },
+            "intended_binding": {
+              "mode": "0o600",
+              "sha256": "9e904f6921dfc619ab2c88cf6a8fbb4bcafc0813a3d2d18c45e29db34979a3aa",
+              "size_bytes": 4094
+            },
+            "owned_temporary": [
+              27,
+              3175234
+            ],
+            "retry": false,
+            "source": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-5/.preflight.json.7851f66fe4a442c4ba746bade9cee1c1.tmp",
+            "source_after": {
+              "binding": {
+                "mode": "0o600",
+                "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-5/.preflight.json.7851f66fe4a442c4ba746bade9cee1c1.tmp",
+                "sha256": "9e904f6921dfc619ab2c88cf6a8fbb4bcafc0813a3d2d18c45e29db34979a3aa",
+                "size_bytes": 4094
+              },
+              "device": 27,
+              "inode": 3175234,
+              "kind": "file",
+              "mode": "0o600",
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-5/.preflight.json.7851f66fe4a442c4ba746bade9cee1c1.tmp",
+              "state": "observed",
+              "target": null
+            },
+            "state": "UNKNOWN"
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_A",
+      "file": "evidence/attempt-6/result.json",
+      "sha256": "772a7a83bd53da58f5384748f72cc5b547656c8ae95ae39c58acd7065db25a11",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "node_version": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 0,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "destination": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-6/preflight.json",
+            "destination_after": {
+              "binding": {
+                "mode": "0o600",
+                "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-6/preflight.json",
+                "sha256": "53407b5cc7083b3956e4139b50ba65f0254528682eaacbe0d514fe59a7e6ec57",
+                "size_bytes": 4094
+              },
+              "device": 27,
+              "inode": 3175241,
+              "kind": "file",
+              "mode": "0o600",
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-6/preflight.json",
+              "state": "observed",
+              "target": null
+            },
+            "failure": {
+              "reason": "[Errno 5] Frozen isolated fsync failure",
+              "type": "OSError"
+            },
+            "intended_binding": {
+              "mode": "0o600",
+              "sha256": "53407b5cc7083b3956e4139b50ba65f0254528682eaacbe0d514fe59a7e6ec57",
+              "size_bytes": 4094
+            },
+            "owned_temporary": [
+              27,
+              3175241
+            ],
+            "retry": false,
+            "source": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-6/.preflight.json.52ee5efd10fe457da20ef99db56c8720.tmp",
+            "source_after": {
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-6/.preflight.json.52ee5efd10fe457da20ef99db56c8720.tmp",
+              "state": "absent"
+            },
+            "state": "UNKNOWN"
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_A",
+      "file": "evidence/attempt-7/result.json",
+      "sha256": "1b0714381725cb4685e192aba53e5d821d8c9ad8b7e7bb72460f5fb2872c8f97",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "node_version": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "destination": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-7/node_version/intent.json",
+            "destination_after": {
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-7/node_version/intent.json",
+              "state": "absent"
+            },
+            "failure": {
+              "reason": "[Errno 28] Frozen isolated short/full-disk write failure",
+              "type": "OSError"
+            },
+            "intended_binding": {
+              "mode": "0o600",
+              "sha256": "83be246c577b7087791a68c06c83f3c97bc3016534f6a078df873ebd2c3bb623",
+              "size_bytes": 976
+            },
+            "owned_temporary": [
+              27,
+              3175249
+            ],
+            "retry": false,
+            "source": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-7/node_version/.intent.json.1d0c6f2d03ae4f469763d1909325d26b.tmp",
+            "source_after": {
+              "binding": {
+                "mode": "0o600",
+                "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-7/node_version/.intent.json.1d0c6f2d03ae4f469763d1909325d26b.tmp",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                "size_bytes": 0
+              },
+              "device": 27,
+              "inode": 3175249,
+              "kind": "file",
+              "mode": "0o600",
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-7/node_version/.intent.json.1d0c6f2d03ae4f469763d1909325d26b.tmp",
+              "state": "observed",
+              "target": null
+            },
+            "state": "UNKNOWN"
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_A",
+      "file": "evidence/attempt-8/result.json",
+      "sha256": "287c11d958c4f83438a463529b71f06379a45a2c7002fa1354f8a69519193adc",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "node_version": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "destination": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-8/node_version/intent.json",
+            "destination_after": {
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-8/node_version/intent.json",
+              "state": "absent"
+            },
+            "failure": {
+              "reason": "[Errno 5] Frozen isolated fsync failure",
+              "type": "OSError"
+            },
+            "intended_binding": {
+              "mode": "0o600",
+              "sha256": "5bb2025fb84e5cb93eebfc83bf88b8c46eefe9dcd00ba1b10495c9a3918eec66",
+              "size_bytes": 976
+            },
+            "owned_temporary": [
+              27,
+              3175259
+            ],
+            "retry": false,
+            "source": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-8/node_version/.intent.json.50f0df44c3c4418680c4e2866ebec486.tmp",
+            "source_after": {
+              "binding": {
+                "mode": "0o600",
+                "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-8/node_version/.intent.json.50f0df44c3c4418680c4e2866ebec486.tmp",
+                "sha256": "5bb2025fb84e5cb93eebfc83bf88b8c46eefe9dcd00ba1b10495c9a3918eec66",
+                "size_bytes": 976
+              },
+              "device": 27,
+              "inode": 3175259,
+              "kind": "file",
+              "mode": "0o600",
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-8/node_version/.intent.json.50f0df44c3c4418680c4e2866ebec486.tmp",
+              "state": "observed",
+              "target": null
+            },
+            "state": "UNKNOWN"
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_A",
+      "file": "evidence/attempt-9/result.json",
+      "sha256": "b43c6b8289bb3c2fb01f7e26ca5f07c407fa23cfa0c1f5a7d19bb5f8d2915bf7",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "node_version": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "destination": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-9/node_version/intent.json",
+            "destination_after": {
+              "binding": {
+                "mode": "0o600",
+                "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-9/node_version/intent.json",
+                "sha256": "9c5a03df80a8a6c13f01f2892b6dd8900ec4adcebd57a81f9e1aaf5c73545511",
+                "size_bytes": 976
+              },
+              "device": 27,
+              "inode": 3175269,
+              "kind": "file",
+              "mode": "0o600",
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-9/node_version/intent.json",
+              "state": "observed",
+              "target": null
+            },
+            "failure": {
+              "reason": "[Errno 5] Frozen isolated fsync failure",
+              "type": "OSError"
+            },
+            "intended_binding": {
+              "mode": "0o600",
+              "sha256": "9c5a03df80a8a6c13f01f2892b6dd8900ec4adcebd57a81f9e1aaf5c73545511",
+              "size_bytes": 976
+            },
+            "owned_temporary": [
+              27,
+              3175269
+            ],
+            "retry": false,
+            "source": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-9/node_version/.intent.json.7e1bf8edc1dc4dc584b6446478ec6a73.tmp",
+            "source_after": {
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_A/evidence/attempt-9/node_version/.intent.json.7e1bf8edc1dc4dc584b6446478ec6a73.tmp",
+              "state": "absent"
+            },
+            "state": "UNKNOWN"
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_B",
+      "file": "evidence/attempt/result.json",
+      "sha256": "ffd979fe843da03ba45fdc71a6858d41b5e1d657ef57e43cd1ad65e7c497b362",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "supervisor_failure": {
+              "code": "MOCK-FAILURE",
+              "reason": "Mocked post-start evidence failure",
+              "state": "REJECTED"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_C",
+      "file": "evidence/attempt/result.json",
+      "sha256": "4a8f761e2376e97836b9bc1930c867dbe2d9ff0611875d96ed1840849365fee7",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {}
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_C",
+      "file": "evidence/attempt-2/result.json",
+      "sha256": "ff473ed357f8492a65673d429fff2197977ed2f57b1e8a1400d1450e19ddc4b6",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "original_failure": {
+              "cause": null,
+              "code": "CHI-EVIDENCE",
+              "details": {},
+              "reason": "Mocked post-start evidence failure",
+              "state": "UNKNOWN"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_C",
+      "file": "evidence/attempt-3/result.json",
+      "sha256": "1af717af8efd1b9fc432b6ecd0272d2b5377161af8da30b800037a8f4f10e7a8",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "original_failure": {
+              "cause": {
+                "code": "MOCK-TIMEOUT",
+                "reason": "Mocked supervisor failure",
+                "state": "TIMEOUT"
+              },
+              "code": "CHI-PROCESS",
+              "details": {
+                "supervisor_failure": {
+                  "code": "MOCK-TIMEOUT",
+                  "reason": "Mocked supervisor failure",
+                  "state": "TIMEOUT"
+                }
+              },
+              "reason": "Delegated supervisor did not complete successfully",
+              "state": "TIMEOUT"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_C",
+      "file": "evidence/attempt-4/result.json",
+      "sha256": "80c68778d89da2a2c76602e5eaa66c1e939b87e9a769811dc0d8e2209ce6eba3",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "destination": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_C/evidence/attempt-4/node_version/supervisor-outcome.json",
+            "destination_after": {
+              "binding": {
+                "mode": "0o600",
+                "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_C/evidence/attempt-4/node_version/supervisor-outcome.json",
+                "sha256": "a4a3580158eca21a5e39b6a2246aa4ffe57a83d1773cb89e59f55269c8058d22",
+                "size_bytes": 3132
+              },
+              "device": 27,
+              "inode": 3175436,
+              "kind": "file",
+              "mode": "0o600",
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_C/evidence/attempt-4/node_version/supervisor-outcome.json",
+              "state": "observed",
+              "target": null
+            },
+            "failure": {
+              "reason": "[Errno 5] Frozen isolated fsync failure",
+              "type": "OSError"
+            },
+            "intended_binding": {
+              "mode": "0o600",
+              "sha256": "a4a3580158eca21a5e39b6a2246aa4ffe57a83d1773cb89e59f55269c8058d22",
+              "size_bytes": 3132
+            },
+            "owned_temporary": [
+              27,
+              3175436
+            ],
+            "retry": false,
+            "source": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_C/evidence/attempt-4/node_version/.supervisor-outcome.json.f2834e0191434a3192f0c9be59a2dbbc.tmp",
+            "source_after": {
+              "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_C/evidence/attempt-4/node_version/.supervisor-outcome.json.f2834e0191434a3192f0c9be59a2dbbc.tmp",
+              "state": "absent"
+            },
+            "state": "UNKNOWN"
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_C",
+      "file": "evidence/attempt-5/result.json",
+      "sha256": "cb38c318657d5d77f894745a6db47d85597922b59afae7ca4e97e6bfc037c463",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "original_failure": {
+              "cause": {
+                "reason": "[Errno 5] Frozen isolated fsync failure",
+                "type": "OSError"
+              },
+              "code": "CHI-EVIDENCE",
+              "details": {
+                "destination": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_C/evidence/attempt-5/node_version/postflight.json",
+                "destination_after": {
+                  "binding": {
+                    "mode": "0o600",
+                    "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_C/evidence/attempt-5/node_version/postflight.json",
+                    "sha256": "26ea7cbc1e19b43657599b2ebc9571118f4388ef787a93ce9eb71e0cce06d348",
+                    "size_bytes": 2918
+                  },
+                  "device": 27,
+                  "inode": 3175453,
+                  "kind": "file",
+                  "mode": "0o600",
+                  "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_C/evidence/attempt-5/node_version/postflight.json",
+                  "state": "observed",
+                  "target": null
+                },
+                "failure": {
+                  "reason": "[Errno 5] Frozen isolated fsync failure",
+                  "type": "OSError"
+                },
+                "intended_binding": {
+                  "mode": "0o600",
+                  "sha256": "26ea7cbc1e19b43657599b2ebc9571118f4388ef787a93ce9eb71e0cce06d348",
+                  "size_bytes": 2918
+                },
+                "owned_temporary": [
+                  27,
+                  3175453
+                ],
+                "retry": false,
+                "source": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_C/evidence/attempt-5/node_version/.postflight.json.14da2cf706ce40cd8dcbd180c615ae3f.tmp",
+                "source_after": {
+                  "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures/test_HI18_C/evidence/attempt-5/node_version/.postflight.json.14da2cf706ce40cd8dcbd180c615ae3f.tmp",
+                  "state": "absent"
+                },
+                "state": "UNKNOWN"
+              },
+              "reason": "Atomic evidence publication failed; readback retained, no retry",
+              "state": "UNKNOWN"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_C",
+      "file": "evidence/attempt-6/result.json",
+      "sha256": "9fc40608447108d438fbfdebb03311ff5c9a117171137262ae912b3d771c8dac",
+      "state": "UNKNOWN",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        }
+      },
+      "command_attempt_count": 1,
+      "failures": [
+        {
+          "code": "CHI-EVIDENCE",
+          "state": "UNKNOWN",
+          "details": {
+            "original_failure": {
+              "cause": {
+                "code": "MOCK-TIMEOUT",
+                "reason": "Mocked supervisor failure",
+                "state": "TIMEOUT"
+              },
+              "code": "CHI-PROCESS",
+              "details": {
+                "supervisor_failure": {
+                  "code": "MOCK-TIMEOUT",
+                  "reason": "Mocked supervisor failure",
+                  "state": "TIMEOUT"
+                }
+              },
+              "reason": "Delegated supervisor did not complete successfully",
+              "state": "TIMEOUT"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "method": "test_HI18_E",
+      "file": "evidence/attempt/result.json",
+      "sha256": "79c9fe6ca49ac959a1f34705dde2ddfa97456f87480e3707228ce95805864024",
+      "state": "PENDING_COMPLETION",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 2,
+          "observed_lower_bound": 2
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 2,
+          "observed_lower_bound": 2
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        }
+      },
+      "command_attempt_count": 2,
+      "failures": []
+    },
+    {
+      "method": "test_HI18_E",
+      "file": "evidence/attempt-2/result.json",
+      "sha256": "bdf1245c1ebecc28fbe1d08abc7ff5432779da0c246f3c3a560c0119d9daa450",
+      "state": "PENDING_COMPLETION",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 2,
+          "observed_lower_bound": 2
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 2,
+          "observed_lower_bound": 2
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        }
+      },
+      "command_attempt_count": 2,
+      "failures": []
+    },
+    {
+      "method": "test_HI18_E",
+      "file": "evidence/attempt-3/completion.json",
+      "sha256": "ce8456d2add0a9409bfee5f25c94db7d3a451fe442c9a9b971a12565b46bee35",
+      "state": "OBSERVED_UNAPPROVED",
+      "evidence_finalized": true,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 2,
+          "observed_lower_bound": 2
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 2,
+          "observed_lower_bound": 2
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        }
+      },
+      "command_attempt_count": 2,
+      "failures": [],
+      "completion_fields": {
+        "actual_counts": {
+          "attempted_launches": {
+            "exact": 2,
+            "observed_lower_bound": 2
+          },
+          "checker_starts": {
+            "exact": 0,
+            "observed_lower_bound": 0
+          },
+          "direct_starts": {
+            "exact": 2,
+            "observed_lower_bound": 2
+          },
+          "node_version": {
+            "exact": 1,
+            "observed_lower_bound": 1
+          },
+          "shared_libraries": {
+            "exact": 1,
+            "observed_lower_bound": 1
+          }
+        },
+        "evidence_finalized": true,
+        "schema": "ontokin.current-host-readback-inspection-completion/0.1.0",
+        "state": "OBSERVED_UNAPPROVED"
+      }
+    },
+    {
+      "method": "test_HI18_E",
+      "file": "evidence/attempt-3/result.json",
+      "sha256": "ee40847af0b1afd69ffc24e8089b81dd6a878b9fe978566306f7a7de766a6d56",
+      "state": "PENDING_COMPLETION",
+      "evidence_finalized": false,
+      "actual_counts": {
+        "attempted_launches": {
+          "exact": 2,
+          "observed_lower_bound": 2
+        },
+        "checker_starts": {
+          "exact": 0,
+          "observed_lower_bound": 0
+        },
+        "direct_starts": {
+          "exact": 2,
+          "observed_lower_bound": 2
+        },
+        "node_version": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        },
+        "shared_libraries": {
+          "exact": 1,
+          "observed_lower_bound": 1
+        }
+      },
+      "command_attempt_count": 2,
+      "failures": []
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "schema": "ontokin.c271.p08.independent-implementation-acceptance/1",
+  "recorded_at_utc": "2026-11-21T16:30:49.026919+00:00",
+  "reviewer": "/root/implementation_review",
+  "verdict": "ACCEPTED_FOR_BOUNDED_P08_IMPLEMENTATION_SCOPE",
+  "candidate": "candidate-004",
+  "source_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
+  "source_tree": "5fcd7efc9037ed4f63fc39aa2b92f527256147b5",
+  "scope": "Accepted host-inspection authoring module plus focused static/filesystem/mocked tests only.",
+  "inputs": [
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-004/current_host_inspection_v01.py",
+      "bytes": 147900,
+      "sha256": "b2f4c869fd03919047db797bd3a80616cbe16f6b17689fe61d40754b27f97a39"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-004/test_current_host_inspection_v01.py",
+      "bytes": 139313,
+      "sha256": "797eb208670f6f74f14c9b5849485bd6cf3522a265d4129618c4b50ddc0a739a"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-004/CONTROL-MAP.json",
+      "bytes": 532303,
+      "sha256": "9f9adb0979c228b6eede5f75db8a0649ddd3cebd73f239d29020e1c53a6c35b0"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-004/REVIEW-DISPOSITIONS.json",
+      "bytes": 23567,
+      "sha256": "6bdb99c9870a117a4dd5055b6058d3579e994fc4cc3802d994d929a86fb22ea3"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-004/FREEZE-MANIFEST.json",
+      "bytes": 2416,
+      "sha256": "717531625db8c7cf3c247134ef19072fd2bd17d04ea3d5a7e6aab6ee7955b3c3"
+    }
+  ],
+  "run_outcome": {
+    "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/OUTCOME.json",
+    "bytes": 9496,
+    "sha256": "6fdd29cf01db6ac6e4687775e325a649cd4ca241ce1c18f1a00987a2b3cef42c"
+  },
+  "run_result": {
+    "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures-result.json",
+    "bytes": 603,
+    "sha256": "bdb1c97610acd162a03c10ed49af08af9cca51d36721a97fd54c2c927d66a8b0"
+  },
+  "root_run_grant": {
+    "path": "/workspace/scratch/8838dfc6e876/session/RUN-GRANT-002.json",
+    "bytes": 1460,
+    "sha256": "b4fed3c7f8a870ebb6c419a37f196e8a26d5ea6dfde05ecf206591b9f7728fa6"
+  },
+  "preexecution_approval": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/candidate-004/PRE-EXECUTION-APPROVAL.json",
+    "bytes": 5467,
+    "sha256": "3fce897348f59cedb8a73285d4d6f0cbb2958e68b3da3e9f7fa847fd624a3341"
+  },
+  "report": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/run-002/IMPLEMENTATION-REVIEW.md",
+    "bytes": 10723,
+    "sha256": "37e8da5ae7a22c3ee3e49d53037a931dd488ea8ebb74ce09d11e9732e79e70ff"
+  },
+  "audit": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/run-002/VERIFICATION.json",
+    "bytes": 80805,
+    "sha256": "0b45aacdc614ac2779d663964b69ca5666d6eb3fd42b2a73921dfc1fbe2eb6e0"
+  },
+  "selected_retained_states": {
+    "path": "/workspace/scratch/8838dfc6e876/review_work/run-002/RETAINED-STATE-SUMMARY.json",
+    "bytes": 71655,
+    "sha256": "bd319f5b8d39ba07077900cd04f6f2fa6156e87ad083ff732299bb1bcd339e48"
+  },
+  "selected_counts": {
+    "original_negative_variants": 109,
+    "positive_controls": 5,
+    "supplemental_groups": 16,
+    "scoped_regressions": 5,
+    "test_methods": 135
+  },
+  "actual_result": {
+    "test_methods": 135,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "timed_out": false,
+    "outer_runner_launches": 1,
+    "guard_counter_count": 16,
+    "guard_counter_nonzero": 0,
+    "actual_project_process_operations": 0,
+    "fixture_manifests": 135,
+    "fixture_entries": 14185,
+    "fixture_mismatches": 0,
+    "suite_seconds": 8.288,
+    "outer_elapsed_seconds": 8.592660743000124
+  },
+  "resolved_findings": [
+    "PRE-01..PRE-14",
+    "DTR-01..DTR-09",
+    "C01-01..C01-05",
+    "named PATH Git alias/guard relation",
+    "C02-01",
+    "RUN001-FIXTURE-TARGET"
+  ],
+  "mandatory_residual_findings": [],
+  "qualifications": {
+    "P08-D05": "Only HI17-D and HI18-A/B/C exact state changes to UNKNOWN; known counts unchanged.",
+    "P08-D06": "AS_RECORDED describes retained graph only; durability UNKNOWN, evidence_finalized false, approval false; no write/fsync/retry/log-tail authority.",
+    "P08-D07": "HI16-C size-only route: actual OS0, new mocked supervisor0, supplied synthetic PID1. Preserve original generic count reference; exact size/refusal guards unchanged."
+  },
+  "preserved_failure": {
+    "run": "run-001",
+    "candidate": "candidate-003",
+    "error_records": 64,
+    "distinct_error_methods": 39,
+    "review": {
+      "path": "/workspace/scratch/8838dfc6e876/review_work/run-001/REVIEW.md",
+      "bytes": 5683,
+      "sha256": "829fd947baab794d187bed2ab9409581aa9626d9919aa9b708d1aa94b385ac9d"
+    },
+    "corrected_audit": {
+      "path": "/workspace/scratch/8838dfc6e876/review_work/run-001/VERIFICATION-002.json",
+      "bytes": 54620,
+      "sha256": "db7ec8d4cc3967fbff09b0215a12d5e4d674799e414b97d15cc2eb6cfa931b4b"
+    },
+    "interpretation": "Failed fixture setup before affected observation routes; unchanged original evidence retained."
+  },
+  "review_activity": {
+    "candidate_imports": 0,
+    "candidate_compilations": 0,
+    "tests_run": 0,
+    "project_process_starts": 0,
+    "source_edits": 0,
+    "git_operations": 0
+  },
+  "implementation_accepted": true,
+  "actual_host_qualified": false,
+  "host_material_approved": false,
+  "parent_closed": false,
+  "R03_R05_complete": false,
+  "final_saved_package_verified_by_this_record": false,
+  "remaining_gates": [
+    "Root handoff reconciliation",
+    "Independent final package review",
+    "Exact final saved-byte verification"
+  ],
+  "no_additional_execution_authorized": true
+}

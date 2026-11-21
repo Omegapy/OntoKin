@@ -9,3 +9,7 @@ Capabilities: authenticated GitHub reads and branch/PR/issue mutations; expected
 The early recovery save is confirmed before code edits/tests. Runtime qualification, original seven outcomes, the routine, integration and parent closure remain open. Implementation begins after confirmed early recovery; meaningful focused execution waits for the independent expectation freeze and exact candidate/fixture mapping review. No unresolved current write exists at startup. Root owns all index/commits/canonical documents. Workers own disjoint source, review and packaging paths as recorded in PHASE.
 
 Stop after P08 implementation review, publication and saved partial delivery. Preserve failures and unique unpublished bytes in the final archive or exact Git source. No second phase.
+
+## P08 technical outcome — 2026-11-21
+
+The exact candidate `cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e` is independently accepted within the P08 static/filesystem/mocked scope. All 135 focused methods passed; the first setup-failed attempt and its one-line test correction remain retained. See `docs/engineering/localized-repair-c271/host-inspection-p08/PHASE-OUTCOME.json` and its linked execution/review records. Final verified ZIP, saved-byte readback and separate receipt remain pending at this source snapshot. C271/R03-R05 and P02 stay open. Finish delivery and stop; H0 preparation and exact plan review belong to a fresh chat.

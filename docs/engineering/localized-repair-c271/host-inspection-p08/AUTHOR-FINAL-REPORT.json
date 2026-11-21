@@ -1,0 +1,153 @@
+{
+  "schema": "ontokin.c271.p08.author-final-report/1",
+  "status": "AUTHOR_IMPLEMENTATION_COMPLETE_PENDING_INDEPENDENT_POST_RUN_ACCEPTANCE",
+  "bounded_phase": "C271-P08 host-inspection record authoring module and focused static/filesystem/mocked controls",
+  "source_checkpoint": {
+    "commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
+    "tree": "5fcd7efc9037ed4f63fc39aa2b92f527256147b5",
+    "root_confirmed_clean_and_remote_readback": true
+  },
+  "owned_repository_files": [
+    {
+      "path": "/workspace/scratch/8838dfc6e876/OntoKin/prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "sha256": "b2f4c869fd03919047db797bd3a80616cbe16f6b17689fe61d40754b27f97a39",
+      "size_bytes": 147900
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/OntoKin/tests/test_current_host_inspection_v01.py",
+      "sha256": "797eb208670f6f74f14c9b5849485bd6cf3522a265d4129618c4b50ddc0a739a",
+      "size_bytes": 139313
+    }
+  ],
+  "public_APIs": [
+    "validate_inspection_plan",
+    "inspect_host",
+    "parse_ldd_output",
+    "reconcile_attempt",
+    "main"
+  ],
+  "candidate_map": {
+    "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-004/CONTROL-MAP.json",
+    "sha256": "9f9adb0979c228b6eede5f75db8a0649ddd3cebd73f239d29020e1c53a6c35b0",
+    "size_bytes": 532303
+  },
+  "dispositions": {
+    "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-004/REVIEW-DISPOSITIONS.json",
+    "sha256": "6bdb99c9870a117a4dd5055b6058d3579e994fc4cc3802d994d929a86fb22ea3",
+    "size_bytes": 23567
+  },
+  "freeze_manifest": {
+    "path": "/workspace/scratch/8838dfc6e876/implementation_work/candidate-004/FREEZE-MANIFEST.json",
+    "sha256": "717531625db8c7cf3c247134ef19072fd2bd17d04ea3d5a7e6aab6ee7955b3c3",
+    "size_bytes": 2416
+  },
+  "concrete_shapes_and_source_correspondence": {
+    "path": "/workspace/scratch/8838dfc6e876/implementation_work/CONCRETE-SHAPES-AND-CORRESPONDENCE.md",
+    "sha256": "9c717a18aeedb0e3bdb92957c952e8e4a9341318abfc5cc3f071b9cd1d57de9a",
+    "size_bytes": 7815
+  },
+  "guarded_runner": {
+    "path": "/workspace/scratch/8838dfc6e876/implementation_work/run_focused_guarded.py",
+    "sha256": "27489064a600ea3cfba73381fa1f75cc781cdc72303bd97ee200c6ebdb4aafdd",
+    "size_bytes": 2686
+  },
+  "successful_run": {
+    "id": "run-002",
+    "outcome": {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/OUTCOME.json",
+      "sha256": "6fdd29cf01db6ac6e4687775e325a649cd4ca241ce1c18f1a00987a2b3cef42c",
+      "size_bytes": 9496
+    },
+    "result": {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/fixtures-result.json",
+      "sha256": "bdb1c97610acd162a03c10ed49af08af9cca51d36721a97fd54c2c927d66a8b0",
+      "size_bytes": 603
+    },
+    "stdout": {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/stdout.log",
+      "sha256": "667f1d73f26ce7bbf76eeb8f12c32e35dda5eb9175c87c846980684c5b79964e",
+      "size_bytes": 509
+    },
+    "stderr": {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002/stderr.log",
+      "sha256": "026c8f762d4fc4e31a823468ee52633dcba88ecd218ddcc05519eaad26dd00f6",
+      "size_bytes": 20644
+    },
+    "tests_run": 135,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suite_seconds": 8.288,
+    "outer_seconds": 8.592660743000124,
+    "timeout_seconds": 180,
+    "timed_out": false,
+    "exit_code": 0,
+    "guarded_project_process_operations": 0,
+    "outer_python_runner_launches": 1,
+    "method_groups": {
+      "frozen_negative_variants": 109,
+      "frozen_positives": 5,
+      "review_supplement_groups": 16,
+      "scoped_review_regressions": 5
+    },
+    "retained_fixture_manifests": 135,
+    "retention_root": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-002",
+    "source_postflight_all_match": true
+  },
+  "preserved_failed_run": {
+    "id": "run-001",
+    "outcome": {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-001/OUTCOME.json",
+      "sha256": "2a35f611b1b206c55d40c0c5d35a8ba3fc2e77408201060579eed5647da5a680",
+      "size_bytes": 9501
+    },
+    "current_failure_inventory": {
+      "path": "/workspace/scratch/8838dfc6e876/implementation_work/runs/run-001/FAILURE-INVENTORY-002.json",
+      "sha256": "72bb22a73400f799d30fdda3815b9f986653cacab7ac21c0b570c84905b353e8",
+      "size_bytes": 141537
+    },
+    "tests_run": 135,
+    "error_records": 64,
+    "distinct_methods_with_errors": 39,
+    "failures": 0,
+    "skipped": 0,
+    "guarded_project_process_operations": 0,
+    "cause": "Observation fixture passed a dotted class-method string to patch.object on the module, so setup failed before affected observation routes.",
+    "correction": "One test line now calls patch.object(inspection._EvidenceStore, \"write\", new=writing). Production bytes and expected outcomes did not change.",
+    "root_authorized_and_independently_reviewed_before_run_002": true,
+    "candidate_003_and_all_run_001_bytes_retained": true
+  },
+  "review_status": {
+    "pre_execution_candidate_004_approval": {
+      "path": "/workspace/scratch/8838dfc6e876/review_work/candidate-004/PRE-EXECUTION-APPROVAL.json",
+      "sha256": "3fce897348f59cedb8a73285d4d6f0cbb2958e68b3da3e9f7fa847fd624a3341",
+      "size_bytes": 5467
+    },
+    "post_run_acceptance": "PENDING_INDEPENDENT_REVIEW; author does not claim acceptance"
+  },
+  "boundaries": {
+    "project_subprocess_Node_ldd_checker_operations": "FORBIDDEN_IN_FOCUSED_TESTS; all guards reported zero",
+    "fixtures": "Synthetic host/ELF/runtime/process data; actual isolated filesystem and record-writing predicates; explicit mocked host prerequisites and supervisor callbacks.",
+    "helper_only_controls": "Establish only their named predicates; do not imply operational plan admission or real host qualification.",
+    "HI16_C": "Pure live serialization bounds, zero new mocked starts and one supplied synthetic process PID; separate integrated controls cover process accounting.",
+    "reconciliation": "Read-only graph/content observations retain durability_state UNKNOWN and evidence_finalized false; do not grant approval or relaunch.",
+    "storage": "Both run roots and all immutable candidates remain unchanged; root owns durable packaging and publication."
+  },
+  "deferred": [
+    "real host inspection/observations/H0",
+    "real host qualification",
+    "runtime preparation",
+    "actual Node or ldd start",
+    "original seven methods",
+    "check_local/full routine",
+    "integration/main lease or merge",
+    "parent C271 closure",
+    "R03/R04/R05 acceptance"
+  ],
+  "after_success": {
+    "source_edits": 0,
+    "additional_test_runs": 0,
+    "replay_performed": false
+  },
+  "ownership": "Root owns Git/index/commits/publication, canonical workflow records, final acceptance and evidence packaging."
+}

@@ -1,0 +1,96 @@
+{
+  "schema": "ontokin.c271.p08-run002-verified-store/1",
+  "status": "packed_and_stream_verified",
+  "recorded_at_utc": "2026-11-21T16:30:26.893554+00:00",
+  "store_path": "/workspace/scratch/8838dfc6e876/package_work/retained-evidence/run-002-attempt-001",
+  "pack_attempts": 1,
+  "pack_exit_code": 0,
+  "stream_verify_exit_code": 0,
+  "original_fixture_entries": 14457,
+  "regular_file_references": 9815,
+  "unique_blobs": 2213,
+  "logical_bytes_including_duplicates": 303593282,
+  "distinct_logical_bytes_streamed": 235252981,
+  "compressed_blob_bytes": 2676643,
+  "stored_files_including_inventory": 2370,
+  "total_store_bytes": 49850439,
+  "separate_records": 153,
+  "source_inventory_stable": true,
+  "original_paths_restored": 0,
+  "special_entries_created": 0,
+  "identities": [
+    {
+      "path": "/workspace/scratch/8838dfc6e876/package_work/retained-evidence/run-002-attempt-001/STORE-INVENTORY.json",
+      "bytes": 514473,
+      "sha256": "51f8d9d36a485abc69469a74c6b149c1e32fb44b4d1118b97d6555cd246f7e17"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/package_work/retained-evidence/run-002-attempt-001/EVIDENCE-MANIFEST.json",
+      "bytes": 41844736,
+      "sha256": "d698f53872fac5d36bcf3bba18ed2cf91daa43ccdb8f4b3974d4a4bd27baf901"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/package_work/retained-evidence/run-002-attempt-001/PACK-REPORT.json",
+      "bytes": 759,
+      "sha256": "836993630a1a85025830dae72d75912d32f95ea097a1fa2f96c07a26cde56c26"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/package_work/root-run002-stream-verification.json",
+      "bytes": 1168,
+      "sha256": "183eca9287522dd6944e008f098435046f5432f8dbefdef3283f43e911e9f38f"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/run002-packing-preparation/PACK.stdout.log",
+      "bytes": 326,
+      "sha256": "df15b60a1ab8c38bd89921901ed8f5b2b8531adb01eedfc76ebd8b7eb45e6647"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/run002-packing-preparation/PACK.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/run002-packing-preparation/VERIFY.stdout.log",
+      "bytes": 283103,
+      "sha256": "17558b3fa749f1cdf4611f88d06b056db67bca52c0a235ed8e84b607e94ded28"
+    },
+    {
+      "path": "/workspace/scratch/8838dfc6e876/session/run002-packing-preparation/VERIFY.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "/workspace/scratch/8838dfc6e876/package_work/retained_evidence_store.py",
+        "pack",
+        "--approved-spec",
+        "/workspace/scratch/8838dfc6e876/session/run002-packing-preparation/PACK-SPEC-APPROVED.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "/workspace/scratch/8838dfc6e876/package_work/retained_evidence_store.py",
+        "verify",
+        "--store",
+        "/workspace/scratch/8838dfc6e876/package_work/retained-evidence/run-002-attempt-001",
+        "--report",
+        "/workspace/scratch/8838dfc6e876/package_work/root-run002-stream-verification.json"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "limits": [
+    "No original paths or special files are restored by the verifier.",
+    "Live FIFO/socket/device state, original host inode recreation and exact allocation restoration are not claimed.",
+    "Each regular file was hashed; byte-identical files share one lossless blob."
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "schema": "ontokin.c271.p08-phase-outcome/1",
+  "phase": "C271-P08-host-inspection-implementation",
+  "recorded_at_utc": "2026-11-21T16:32:28.655368+00:00",
+  "owner": "c271-p08-8838dfc6e876",
+  "status": "technical_complete_delivery_pending",
+  "implementation_accepted": true,
+  "accepted_candidate": "candidate-004",
+  "accepted_source_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
+  "accepted_source_tree": "5fcd7efc9037ed4f63fc39aa2b92f527256147b5",
+  "acceptance": {
+    "P08-I01": "passed",
+    "P08-I02": "passed",
+    "P08-I03": "passed_with_mocked_process_scope",
+    "P08-I04": "passed",
+    "P08-I05": "pending_final_package_and_saved_receipt"
+  },
+  "evidence": {
+    "execution": "EXECUTION-CHECKS.json",
+    "independent_review": "independent-review/IMPLEMENTATION-ACCEPTANCE.json",
+    "repository_checks": "candidate004-repository-checks/CHECKS.json",
+    "early_recovery": "EARLY-RECOVERY-RECEIPT.json",
+    "run001": "evidence/run-001/OUTCOME.json",
+    "run002": "evidence/run-002/OUTCOME.json",
+    "lossless_stores": [
+      "evidence/run-001/LOSSLESS-EVIDENCE.json",
+      "evidence/run-002/LOSSLESS-EVIDENCE.json"
+    ]
+  },
+  "focused_methods_passed": 135,
+  "focused_failures": 0,
+  "focused_errors": 0,
+  "focused_skips": 0,
+  "actual_project_operations_in_guarded_runs": 0,
+  "protected_existing_code_unchanged": true,
+  "changes": [
+    "Added current_host_inspection_v01.py authoring and read-only recovery APIs.",
+    "Added focused static/filesystem/mocked tests and exact mapping/review evidence.",
+    "Retained failed and passing attempts with complete regular-file bytes and special-entry metadata."
+  ],
+  "prior_failed_attempt": {
+    "run": "run-001",
+    "methods": 135,
+    "error_records": 64,
+    "distinct_affected_methods": 39,
+    "cause": "Shared mock target was a literal dotted module attribute.",
+    "correction": "One test fixture line, independently reviewed; production bytes and oracles unchanged.",
+    "preserved": true
+  },
+  "known_limits": [
+    "No actual runtime installation, H0 preparation, host inspection or Node/ldd execution.",
+    "Original seven methods and full required routine not run in P08; R03 not accepted.",
+    "No native/model trial, hosted job, main lease, integration or parent closure.",
+    "Read-only reconciliation exposes unknown durability and false evidence finalization/approval.",
+    "HI16-C supplies synthetic process evidence for size-only checks; it has zero new mocked starts.",
+    "Lossless stores preserve regular bytes and entry metadata; no live special-file state or original inode recreation is claimed."
+  ],
+  "main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+  "branch": "work/c271-missing-import-digest-control",
+  "main_lease": "not_acquired",
+  "pull_request": {
+    "number": 274,
+    "state": "open",
+    "draft": true,
+    "merged": false
+  },
+  "issue": {
+    "number": 273,
+    "state": "open"
+  },
+  "parent_status": "in_progress",
+  "parent_requirements": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "parent_plan_P02": "in_progress",
+  "historical_unknowns": [
+    "C270 broad-driver completion remains unknown.",
+    "Global prior-process termination remains unestablished."
+  ],
+  "current_failed_or_unknown_run_retried": false,
+  "next_action": "In a fresh chat, reconcile the saved P08 ZIP and separate receipt with live GitHub, confirm new early recovery, then perform only H0 static preparation and independent review of the exact inspection plan. H1 actual observation and later qualification remain separate gates.",
+  "this_chat_stop": "Finish verified partial saved delivery and its separate receipt, then stop. No next phase is authorized in this chat."
+}

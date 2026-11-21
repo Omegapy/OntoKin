@@ -1,0 +1,73 @@
+{
+  "schema": "ontokin.c271.p08-execution-checks/1",
+  "recorded_at_utc": "2026-11-21T16:27:49.386422+00:00",
+  "tested_source_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
+  "candidate": "candidate-004",
+  "focused_result": "passed",
+  "selected_test_module": "tests.test_current_host_inspection_v01",
+  "methods": 135,
+  "method_groups": {
+    "original_negative_variants": 109,
+    "positive_controls": 5,
+    "supplemental_groups": 16,
+    "scoped_regressions": 5
+  },
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "run": "evidence/run-002/OUTCOME.json",
+  "outer_elapsed_seconds": 8.592660743000124,
+  "project_process_guard_counters": {
+    "os.fork": 0,
+    "os.forkpty": 0,
+    "os.kill": 0,
+    "os.killpg": 0,
+    "os.posix_spawn": 0,
+    "os.posix_spawnp": 0,
+    "os.system": 0,
+    "os.wait": 0,
+    "os.wait3": 0,
+    "os.wait4": 0,
+    "os.waitpid": 0,
+    "subprocess.Popen": 0,
+    "subprocess.call": 0,
+    "subprocess.check_call": 0,
+    "subprocess.check_output": 0,
+    "subprocess.run": 0
+  },
+  "actual_node_ldd_starts": 0,
+  "prior_failed_attempt": {
+    "source_commit": "b842e558c525c44990463120a8ee10643cf91ec8",
+    "candidate": "candidate-003",
+    "run": "evidence/run-001/OUTCOME.json",
+    "methods": 135,
+    "error_records": 64,
+    "distinct_affected_methods": 39,
+    "assertion_failures": 0,
+    "cause": "Shared test mock targeted a literal dotted module attribute.",
+    "correction": "Single fixture target line corrected; production and frozen expectations unchanged.",
+    "retained": true
+  },
+  "documentary_checks": "candidate004-repository-checks/CHECKS.json",
+  "protected_existing_code_unchanged": true,
+  "independent_post_run_review": {
+    "status": "accepted",
+    "path": "independent-review/IMPLEMENTATION-ACCEPTANCE.json",
+    "sha256": "f26ae6d3cf5185bb689b86e020a108c0eebc3f17ba3aeb774b3c3e73046bac2c"
+  },
+  "qualifications": [
+    "Every test uses static/synthetic/filesystem/mocked boundaries; no real host observation is established.",
+    "HI16-C size route supplies a synthetic PID receipt with zero new mocked starts; separate state-machine controls verify count transitions.",
+    "Read-only reconciliation reports content consistency with durability UNKNOWN/evidence_finalized false and approval false."
+  ],
+  "deferred": [
+    "H0 static preparation and independent operational inspection-plan review",
+    "H1 actual Node/ldd observations and host qualification",
+    "Original seven readback methods",
+    "Full tools/check_local.py routine and R03 acceptance",
+    "Main integration, R04/R05 and parent closure"
+  ],
+  "parent_status": "in_progress",
+  "authorized_guarded_runner_children": 2,
+  "harness_counter_scope": "Sum of outer_runner_launch_count from run001 and run002; tool-host wrapper processes are outside these counters."
+}

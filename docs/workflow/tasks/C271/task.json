@@ -55,7 +55,10 @@
         "docs/engineering/localized-repair-c271/current-host-p06/EXECUTION-CHECKS.json",
         "docs/engineering/localized-repair-c271/current-host-p06/INDEPENDENT-REVIEW.json",
         "docs/engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json",
-        "docs/engineering/localized-repair-c271/host-inspection-p07/review/REVIEW-002.json"
+        "docs/engineering/localized-repair-c271/host-inspection-p07/review/REVIEW-002.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p08/EXECUTION-CHECKS.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p08/independent-review/IMPLEMENTATION-ACCEPTANCE.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p08/candidate004-repository-checks/CHECKS.json"
       ]
     },
     {
@@ -388,6 +391,18 @@
         "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json"
       ],
       "scope": "P07 design delivery only. C271 R03-R05 and P02 remain open; later receipt-publication checks follow separately."
+    },
+    {
+      "name": "P08 focused host-inspection implementation and independent review",
+      "command": "Exact guarded 135-method command and snapshots in host-inspection-p08/evidence/run-002/OUTCOME.json",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p08/EXECUTION-CHECKS.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p08/independent-review/IMPLEMENTATION-ACCEPTANCE.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p08/candidate004-repository-checks/CHECKS.json"
+      ],
+      "scope": "P08 static/filesystem/mocked implementation only; 135 methods, 0 failures/errors/skips, 0 actual project operations under guards. Actual host, original seven, full routine/R03 and integration remain open."
     }
   ],
   "completion": {
@@ -404,9 +419,10 @@
       "docs/engineering/localized-repair-c271/current-host-p06/P06-DELIVERY.json",
       "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json"
     ],
-    "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1"
+    "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
+    "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e"
   },
-  "next_action": "Implement only the accepted P07 host-inspection authoring module and focused static/filesystem/mocked controls, obtain independent review, publish and save one partial handoff. Stop before H0 preparation or Node/ldd.",
+  "next_action": "Finish P08 final package verification and confirmed saved partial delivery, then stop. In a fresh chat, reconcile the saved P08 ZIP and separate receipt with live GitHub, confirm new early recovery, then perform only H0 static preparation and independent review of the exact inspection plan. H1 actual observation and later qualification remain separate gates.",
   "session_phase": {
     "schema": "ontokin.c271.p08-phase/1",
     "task": "C271",
@@ -433,7 +449,7 @@
       "One bounded phase and no nested fanout; root owns Git/index/canonical state/publication."
     ],
     "stop": "After independently accepted implementation and verified partial saved delivery, or first concrete unresolved blocker/unplanned expansion. H0 preparation and later gates belong to a fresh chat.",
-    "status": "in_progress",
+    "status": "technical_complete_delivery_pending",
     "early_recovery": "confirmed",
     "main_lease_held": false,
     "integration_allowed": false,
@@ -455,7 +471,12 @@
       "/root/handoff_engineer": "Early/final package construction and source/archive verification."
     },
     "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/EARLY-RECOVERY-RECEIPT.json"
+    "early_receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/EARLY-RECOVERY-RECEIPT.json",
+    "implementation_accepted": true,
+    "accepted_candidate": "candidate-004",
+    "accepted_source_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
+    "technical_phase_complete": true,
+    "outcome": "docs/engineering/localized-repair-c271/host-inspection-p08/PHASE-OUTCOME.json"
   },
   "delivery": {
     "required": true,
@@ -464,7 +485,8 @@
     "folder": "OntoKin",
     "partial": true,
     "phase_complete": false,
-    "receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
+    "receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
+    "technical_phase_complete": true
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
