@@ -228,6 +228,48 @@ class LocalChecksTests(unittest.TestCase):
         for name in paths:
             self.assertEqual((self.output / "workspace" / name).read_bytes(), (self.root / name).read_bytes())
 
+    def test_workflow_instruction_targets_survive_workspace_isolation(self):
+        paths = ("CHATGPT-START-HERE.md", "ROLE.md",
+                 ".agents/skills/ontokin-session/SKILL.md",
+                 ".agents/skills/ontokin-delivery/SKILL.md",
+                 ".agents/skills/ontokin-learning/SKILL.md")
+        for name in paths:
+            source = self.root / name
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_bytes(b"# Required workflow instruction: " + name.encode("utf-8") + b"\n")
+        original = self.initialize_git(self.root)
+        excluded = (".agents/.env", ".agents/.env.local", ".agents/.cache/session.tmp",
+                    ".agents/node_modules/package/index.js", ".agents/.venv/installed.py",
+                    ".agents/__pycache__/module.pyc", "temporary-worker/notes.txt")
+        for name in excluded:
+            source = self.root / name
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_bytes(b"Unrelated local fixture; must stay outside the copied inputs.\n")
+        source_index = self.root / ".git/index"
+        before_index = (source_index.read_bytes(), source_index.stat().st_mtime_ns)
+        code, summary = self.execute([])
+        self.assertEqual(code, 0, summary)
+        workspace = self.output / "workspace"
+        before = json.loads((self.output / "source-before.json").read_text())
+        recorded = {item["path"] for item in before["files"]}
+        self.assertTrue(set(paths) <= recorded, set(paths) - recorded)
+        self.assertEqual(checks.inventory(workspace), before)
+        for name in paths:
+            self.assertEqual((workspace / name).read_bytes(), (self.root / name).read_bytes())
+        for name in excluded:
+            self.assertNotIn(name, recorded)
+            self.assertFalse((workspace / name).exists(), name)
+        self.assertEqual(summary["workspace_git"]["tracked_worktree_status"], "")
+        for name in ("git", "workspace_git", "git_after"):
+            self.assertEqual(summary[name]["local_head"], original["local_head"])
+            self.assertEqual(summary[name]["local_tree"], original["local_tree"])
+        self.assertFalse(source_index.samefile(workspace / ".git/index"))
+        checks.git_read(workspace, "update-index", "--assume-unchanged", "ROLE.md")
+        self.assertNotEqual((workspace / ".git/index").read_bytes(), before_index[0])
+        self.assertEqual((source_index.read_bytes(), source_index.stat().st_mtime_ns), before_index)
+        self.assertEqual(checks.git_read(workspace, "rev-parse", "HEAD"), original["local_head"])
+        self.assertTrue(summary["source_unchanged"])
+
     def test_top_level_fixture_can_be_read_by_isolated_child(self):
         fixture = self.root / "fixtures/static_tray_v01/native/Q01/ontokin/source.json"
         fixture.parent.mkdir(parents=True)

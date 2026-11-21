@@ -45,3 +45,11 @@ The final partial delivery is pending its separate `docs/engineering/localized-r
 ### P02 delivery confirmed after source freeze
 
 The ZIP and two matching prompts are confirmed saved; the separate `docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json` identifies the exact files and verification. Earlier pending-delivery text records the frozen source boundary. The phase session is complete_partial_delivery; C271 remains blocked/open, R03–R05 remain not_done and P02 remains in_progress. No required failure was waived and no integration occurred. Resume the recorded validation-recovery action only in a fresh bounded phase.
+
+## P03 validation recovery — November 20, 2026
+
+The fresh continuation request resumes C271 on the retained branch at `72084140cd3ae64defc698e410f8806a8b338b72`. Director `c271-p03-7010345bc259` owns this single R03 recovery phase. The early recovery ZIP is confirmed saved before technical edits, tests and environment preparation.
+
+Authorized work: correct the demonstrated isolated-workspace omission of five tracked instruction files, add focused regression coverage that demonstrates the original failure, prepare the exact declared verification dependencies and historical readback inputs, establish a justified complete routine run, and obtain independent review. Preserve frozen control/oracle bytes, prior failures, all applicable tests, source semantics and the 100,000-operation / 30,000-ms per-source limits. No dependency pin or historical acceptance change is authorized.
+
+Acceptance is successful focused copy/isolation coverage, authenticated prerequisites, complete required results and independent R03 acceptance. Stop at R03 acceptance or a concrete unresolved prerequisite/unplanned expansion, then verify/save the partial handoff and matching prompts with a separate receipt. R04 integration belongs to a later phase. R01/R02 remain done; R03–R05 stay open until their own gates pass. P02 remains the parent plan step in progress. No main lease, native/model trial, hosted CI, other H group or second phase is selected.
