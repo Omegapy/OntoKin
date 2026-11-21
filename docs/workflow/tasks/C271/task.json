@@ -4,7 +4,7 @@
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
   "status": "in_progress",
-  "owner": "c271-p07-522363862012",
+  "owner": "c271-p08-8838dfc6e876",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -83,7 +83,8 @@
         "docs/engineering/localized-repair-c271/current-host-p06/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/current-host-p06/P06-DELIVERY.json",
         "docs/engineering/localized-repair-c271/host-inspection-p07/EARLY-RECOVERY-RECEIPT.json",
-        "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json"
+        "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p08/EARLY-RECOVERY-RECEIPT.json"
       ]
     }
   ],
@@ -405,42 +406,37 @@
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1"
   },
-  "next_action": "In a fresh bounded chat, reconcile this delivery and terminal confirmation, then implement only the accepted HI authoring module and focused controls, with new early recovery and independent review. Stop before runtime preparation, Node/ldd or qualification.",
+  "next_action": "Implement only the accepted P07 host-inspection authoring module and focused static/filesystem/mocked controls, obtain independent review, publish and save one partial handoff. Stop before H0 preparation or Node/ldd.",
   "session_phase": {
-    "schema": "ontokin.c271.p07-phase/1",
+    "schema": "ontokin.c271.p08-phase/1",
     "task": "C271",
-    "phase": "C271-P07-host-inspection-design",
-    "owner": "c271-p07-522363862012",
-    "declared_at_utc": "2026-11-21T06:15:05.202429+00:00",
-    "client_filename_date": "2026-11-20",
+    "phase": "C271-P08-host-inspection-implementation",
+    "owner": "c271-p08-8838dfc6e876",
+    "declared_at_utc": "2026-11-21 14:59:00 UTC",
+    "client_filename_date": "2026-11-21",
     "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
     "starting_main_tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
-    "starting_branch": "3d9d5eacaff25244916f99912ef92947e1582592",
-    "starting_branch_tree": "8e65c9c18031ebddf694b9f7e9fb555b33886911",
+    "starting_branch": "c99f44aaec10445b96deb2b451b1a860a1027401",
     "branch": "work/c271-missing-import-digest-control",
-    "scope": "Documentation-only design and independent review of the missing host-observation and inspection-record authoring entry point, with a frozen staged Gate H qualification plan before any Node/ldd execution",
+    "scope": "Implement only the accepted P07 host-inspection record authoring module and focused static/filesystem/mocked-process controls; independent review and partial saved delivery.",
     "acceptance": [
-      "P07-D01: exact source-backed authoring interface and record contracts compatible with the existing strict P06 consumers",
-      "P07-D02: independently selected static command/input plan precedes future inspection starts; observed host/configuration bytes do not approve themselves",
-      "P07-D03: staged actual-host qualification plan preserves exact runtime/dependencies, original seven methods, direct-host controls, process/failure accounting, and later Gate R obligations",
-      "P07-D04: independent review resolves mandatory findings, or names the concrete unresolved design blocker; documentation/workflow checks and protected-source comparison pass",
-      "P07-D05: reviewed conditional retained-branch publication, verified final partial ZIP and matching prompts, confirmed save and separate receipt, then stop"
+      "P08-I01: strict externally bound plan validation and immutable validated plan; concrete nested shapes preserve accepted design and existing consumers.",
+      "P08-I02: finite ELF/loader/path/metadata checks and strict pure ldd parser with all required refusal boundaries.",
+      "P08-I03: bounded two-command orchestration and durable no-replace evidence with exact or explicitly unknown launch counts; tested only with mocks in P08.",
+      "P08-I04: independently selected controls and review of exact candidate, preserve failures and protected original bytes, applicable documentary/focused checks pass.",
+      "P08-I05: conditional retained-branch publication; verified ZIP and matching prompts saved with a separate delivery receipt; parent and PR remain open."
     ],
     "constraints": [
-      "No runtime, provider, probe, preparer, driver, test, historical contract, dependency, or frozen evidence changes in P07",
-      "No Node or ldd execution, runtime installation, original-method execution, full routine, native/model trial, hosted CI, main lease, integration, or parent closure",
-      "Preserve source 100000-operation/30000-ms limits and all original numerical/lifecycle predicates",
-      "Keep independently approved execution inputs separate from observations and explicit about still-unbound future host fields",
-      "One parent-chat phase; no nested worker fanout; root alone canonical Git/index/state/publication/delivery"
+      "Only production addition prototypes/static_tray_v01/current_host_inspection_v01.py and focused tests/test_current_host_inspection_v01.py; scope-specific documentation permitted.",
+      "Do not change existing provider/probe/preparer, original seven methods/helpers, frozen evidence or contracts, dependency pins, numerical/lifecycle/source budgets.",
+      "No actual runtime installation/preparation, host observations, Node/ldd launches, original seven-method execution, full routine, native/model trials, hosted CI, main lease/integration or parent closure.",
+      "One bounded phase and no nested fanout; root owns Git/index/canonical state/publication."
     ],
-    "status": "complete_partial_delivery",
+    "stop": "After independently accepted implementation and verified partial saved delivery, or first concrete unresolved blocker/unplanned expansion. H0 preparation and later gates belong to a fresh chat.",
+    "status": "in_progress",
     "early_recovery": "confirmed",
-    "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c271/host-inspection-p07/EARLY-RECOVERY-RECEIPT.json",
     "main_lease_held": false,
     "integration_allowed": false,
-    "runtime_qualification_selected": false,
-    "full_routine_selected": false,
     "parent_status": "in_progress",
     "parent_requirements": {
       "R01": "done",
@@ -454,84 +450,21 @@
       "P02": "in_progress"
     },
     "workers": {
-      "/root/host_design": "Author source-backed host-inspection design and staged qualification plan; audit/host-design only",
-      "/root/intake_review": "Independent intake complete; independent exact design and later package review; disjoint audit paths only",
-      "/root/package_builder": "Early/final package engineering and byte/source verification; packaging/packages only"
+      "/root/host_implementation": "New module/test implementation and focused evidence; waits for early-save authorization.",
+      "/root/implementation_review": "Independent intake/control freeze and exact implementation/package review.",
+      "/root/handoff_engineer": "Early/final package construction and source/archive verification."
     },
-    "stop": "At independently reviewed design or first concrete blocker/unplanned expansion, finish publication and verified partial saved delivery, then stop. No implementation or second phase in this chat.",
-    "design_adoption": "docs/engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json",
-    "independent_review": "docs/engineering/localized-repair-c271/host-inspection-p07/review/REVIEW-002.json",
-    "mandatory_open_findings": 0,
-    "technical_phase_complete": true,
-    "phase_complete": true,
-    "delivery_receipt": "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json"
+    "early_save_confirmed": true,
+    "early_receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/EARLY-RECOVERY-RECEIPT.json"
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "saved",
+    "status": "pending",
     "folder": "OntoKin",
     "partial": true,
-    "phase_complete": true,
-    "receipt": "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json",
-    "technical_phase_complete": true,
-    "file": {
-      "file_name": "OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20.zip",
-      "file_id": "file_00000000648c81f58dded27bc1e9cf3f",
-      "library_file_id": "libfile_fde3_f-fbf41b87736881919b8d5c9452e9b82b_2ab2a24d43748191957f9bcc356b59de",
-      "path": "/OntoKin/OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20.zip",
-      "local_metadata_applied": true,
-      "version": 0,
-      "bytes": 957300,
-      "sha256": "be774f33019e41fc65011fe3a1014edd36ac3298181b04236583f4e39b88d675",
-      "confirmed_at_utc": "2026-11-21T06:46:39.149383+00:00",
-      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fbf41b87736881919b8d5c9452e9b82b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-      "status": "saved",
-      "upload_status": "succeeded",
-      "saved_bytes_readback_equal": true,
-      "local_bytes_unchanged_after_save": true,
-      "destination_metadata_observed": true
-    },
-    "matching_prompts": [
-      {
-        "file_name": "OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Continue.md",
-        "file_id": "file_000000009a7081f5bca6a5d3b80ac0a8",
-        "library_file_id": "libfile_fde3_f-de6af10340948191a6bfff3451a692de_2ab2a24d43748191957f9bcc356b59de",
-        "path": "/OntoKin/OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Continue.md",
-        "local_metadata_applied": true,
-        "version": 0,
-        "bytes": 4794,
-        "sha256": "21fbd0af232a99143d86e02ba4f22e7c9814eeca1b4fd5ffdf5dbd7b63cd1a3b",
-        "confirmed_at_utc": "2026-11-21T06:46:39.149383+00:00",
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-de6af10340948191a6bfff3451a692de_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "status": "saved",
-        "upload_status": "succeeded",
-        "saved_bytes_readback_equal": true,
-        "local_bytes_unchanged_after_save": true,
-        "destination_metadata_observed": true,
-        "archive_member": "PROMPT-1-CONTINUE.md"
-      },
-      {
-        "file_name": "OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Recover.md",
-        "file_id": "file_00000000fe7081f5872824bd5d8fe887",
-        "library_file_id": "libfile_fde3_f-78303a21c9248191b9db2d1a63f6a4b2_2ab2a24d43748191957f9bcc356b59de",
-        "path": "/OntoKin/OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Recover.md",
-        "local_metadata_applied": true,
-        "version": 0,
-        "bytes": 5020,
-        "sha256": "d98b51e6d41a1da33da6cb23b328fcd76d66b5a509ba4cdda490b751547cee28",
-        "confirmed_at_utc": "2026-11-21T06:46:39.149383+00:00",
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-78303a21c9248191b9db2d1a63f6a4b2_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "status": "saved",
-        "upload_status": "succeeded",
-        "saved_bytes_readback_equal": true,
-        "local_bytes_unchanged_after_save": true,
-        "destination_metadata_observed": true,
-        "archive_member": "PROMPT-2-RECOVER.md"
-      }
-    ],
-    "outcome": "complete_partial_delivery",
-    "terminal_verification_location": "https://github.com/Omegapy/OntoKin/pull/274"
+    "phase_complete": false,
+    "receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
@@ -924,6 +857,66 @@
       "recorded_delivery_at_utc": "2026-11-21T05:47:01.555706+00:00",
       "status_at_source_checkpoint": "delivery_confirmation_pending",
       "terminal_delivery_reconciliation": "docs/engineering/localized-repair-c271/host-inspection-p07/P06-DELIVERY-RECONCILIATION.json"
+    },
+    {
+      "schema": "ontokin.c271.p07-phase/1",
+      "task": "C271",
+      "phase": "C271-P07-host-inspection-design",
+      "owner": "c271-p07-522363862012",
+      "declared_at_utc": "2026-11-21T06:15:05.202429+00:00",
+      "client_filename_date": "2026-11-20",
+      "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "starting_main_tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+      "starting_branch": "3d9d5eacaff25244916f99912ef92947e1582592",
+      "starting_branch_tree": "8e65c9c18031ebddf694b9f7e9fb555b33886911",
+      "branch": "work/c271-missing-import-digest-control",
+      "scope": "Documentation-only design and independent review of the missing host-observation and inspection-record authoring entry point, with a frozen staged Gate H qualification plan before any Node/ldd execution",
+      "acceptance": [
+        "P07-D01: exact source-backed authoring interface and record contracts compatible with the existing strict P06 consumers",
+        "P07-D02: independently selected static command/input plan precedes future inspection starts; observed host/configuration bytes do not approve themselves",
+        "P07-D03: staged actual-host qualification plan preserves exact runtime/dependencies, original seven methods, direct-host controls, process/failure accounting, and later Gate R obligations",
+        "P07-D04: independent review resolves mandatory findings, or names the concrete unresolved design blocker; documentation/workflow checks and protected-source comparison pass",
+        "P07-D05: reviewed conditional retained-branch publication, verified final partial ZIP and matching prompts, confirmed save and separate receipt, then stop"
+      ],
+      "constraints": [
+        "No runtime, provider, probe, preparer, driver, test, historical contract, dependency, or frozen evidence changes in P07",
+        "No Node or ldd execution, runtime installation, original-method execution, full routine, native/model trial, hosted CI, main lease, integration, or parent closure",
+        "Preserve source 100000-operation/30000-ms limits and all original numerical/lifecycle predicates",
+        "Keep independently approved execution inputs separate from observations and explicit about still-unbound future host fields",
+        "One parent-chat phase; no nested worker fanout; root alone canonical Git/index/state/publication/delivery"
+      ],
+      "status": "complete_partial_delivery",
+      "early_recovery": "confirmed",
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/host-inspection-p07/EARLY-RECOVERY-RECEIPT.json",
+      "main_lease_held": false,
+      "integration_allowed": false,
+      "runtime_qualification_selected": false,
+      "full_routine_selected": false,
+      "parent_status": "in_progress",
+      "parent_requirements": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "not_done",
+        "R04": "not_done",
+        "R05": "not_done"
+      },
+      "parent_plan": {
+        "P01": "done",
+        "P02": "in_progress"
+      },
+      "workers": {
+        "/root/host_design": "Author source-backed host-inspection design and staged qualification plan; audit/host-design only",
+        "/root/intake_review": "Independent intake complete; independent exact design and later package review; disjoint audit paths only",
+        "/root/package_builder": "Early/final package engineering and byte/source verification; packaging/packages only"
+      },
+      "stop": "At independently reviewed design or first concrete blocker/unplanned expansion, finish publication and verified partial saved delivery, then stop. No implementation or second phase in this chat.",
+      "design_adoption": "docs/engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json",
+      "independent_review": "docs/engineering/localized-repair-c271/host-inspection-p07/review/REVIEW-002.json",
+      "mandatory_open_findings": 0,
+      "technical_phase_complete": true,
+      "phase_complete": true,
+      "delivery_receipt": "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json"
     }
   ],
   "prior_phase_deliveries": [
@@ -1270,6 +1263,73 @@
       },
       "status_at_source_checkpoint": "delivery_confirmation_pending",
       "terminal_delivery_reconciliation": "docs/engineering/localized-repair-c271/host-inspection-p07/P06-DELIVERY-RECONCILIATION.json"
+    },
+    {
+      "required": true,
+      "kind": "browser-session",
+      "status": "saved",
+      "folder": "OntoKin",
+      "partial": true,
+      "phase_complete": true,
+      "receipt": "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json",
+      "technical_phase_complete": true,
+      "file": {
+        "file_name": "OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20.zip",
+        "file_id": "file_00000000648c81f58dded27bc1e9cf3f",
+        "library_file_id": "libfile_fde3_f-fbf41b87736881919b8d5c9452e9b82b_2ab2a24d43748191957f9bcc356b59de",
+        "path": "/OntoKin/OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20.zip",
+        "local_metadata_applied": true,
+        "version": 0,
+        "bytes": 957300,
+        "sha256": "be774f33019e41fc65011fe3a1014edd36ac3298181b04236583f4e39b88d675",
+        "confirmed_at_utc": "2026-11-21T06:46:39.149383+00:00",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fbf41b87736881919b8d5c9452e9b82b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "status": "saved",
+        "upload_status": "succeeded",
+        "saved_bytes_readback_equal": true,
+        "local_bytes_unchanged_after_save": true,
+        "destination_metadata_observed": true
+      },
+      "matching_prompts": [
+        {
+          "file_name": "OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Continue.md",
+          "file_id": "file_000000009a7081f5bca6a5d3b80ac0a8",
+          "library_file_id": "libfile_fde3_f-de6af10340948191a6bfff3451a692de_2ab2a24d43748191957f9bcc356b59de",
+          "path": "/OntoKin/OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Continue.md",
+          "local_metadata_applied": true,
+          "version": 0,
+          "bytes": 4794,
+          "sha256": "21fbd0af232a99143d86e02ba4f22e7c9814eeca1b4fd5ffdf5dbd7b63cd1a3b",
+          "confirmed_at_utc": "2026-11-21T06:46:39.149383+00:00",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-de6af10340948191a6bfff3451a692de_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "status": "saved",
+          "upload_status": "succeeded",
+          "saved_bytes_readback_equal": true,
+          "local_bytes_unchanged_after_save": true,
+          "destination_metadata_observed": true,
+          "archive_member": "PROMPT-1-CONTINUE.md"
+        },
+        {
+          "file_name": "OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Recover.md",
+          "file_id": "file_00000000fe7081f5872824bd5d8fe887",
+          "library_file_id": "libfile_fde3_f-78303a21c9248191b9db2d1a63f6a4b2_2ab2a24d43748191957f9bcc356b59de",
+          "path": "/OntoKin/OntoKin_C271_P07_Host_Inspection_Design_Handoff_2026-11-20_Recover.md",
+          "local_metadata_applied": true,
+          "version": 0,
+          "bytes": 5020,
+          "sha256": "d98b51e6d41a1da33da6cb23b328fcd76d66b5a509ba4cdda490b751547cee28",
+          "confirmed_at_utc": "2026-11-21T06:46:39.149383+00:00",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-78303a21c9248191b9db2d1a63f6a4b2_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "status": "saved",
+          "upload_status": "succeeded",
+          "saved_bytes_readback_equal": true,
+          "local_bytes_unchanged_after_save": true,
+          "destination_metadata_observed": true,
+          "archive_member": "PROMPT-2-RECOVER.md"
+        }
+      ],
+      "outcome": "complete_partial_delivery",
+      "terminal_verification_location": "https://github.com/Omegapy/OntoKin/pull/274"
     }
   ],
   "prior_blocked_reason": "Required routine gate failed: unit timeout at 900 seconds and isolated documentation copy omitted five tracked instruction files, producing 21 missing local links.",

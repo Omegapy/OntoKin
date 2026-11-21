@@ -1,0 +1,11 @@
+# C271 P08 session checkpoint
+
+Director: `c271-p08-8838dfc6e876`. Source branch: `work/c271-missing-import-digest-control`, starting head `c99f44aaec10445b96deb2b451b1a860a1027401`; main `e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d`. [Phase](../../../engineering/localized-repair-c271/host-inspection-p08/PHASE.json), [live startup evidence](../../../engineering/localized-repair-c271/host-inspection-p08/STARTUP-OBSERVATION.json), [read-set](../../../engineering/localized-repair-c271/host-inspection-p08/READ-SET.json).
+
+The supplied link was the P07 continuation prompt. Its actual development ZIP and separate terminal receipt were resolved and verified. Independent intake accepted all declared payload/source identities; old frozen save_pending fields are reconciled by the later receipt. An authentic clone had no unpublished local work. Exactly main and the retained C271 branch were returned across complete branch-search pagination. PR274 remains draft/open/unmerged and issue273 open. Main lease remains released; none is acquired. Previous workers are recorded stopped in the verified terminal receipt; historical C270 broad-driver completion/global termination remain unknown.
+
+Capabilities: authenticated GitHub reads and branch/PR/issue mutations; expected-head nonforce ref update tool; terminal with CPython 3.12.14/Linux x86-64; three actual independent-context subagents; ZIP creation/extraction; confirmed save and exact saved-byte readback. Merge tooling is available but outside this phase. Branch deletion is not selected or probed. Workflow observation is only the tool's first PR-triggered page for the exact starting head; empty results do not establish all hosted activity. No paid/hosted execution selected.
+
+The early recovery save is confirmed before code edits/tests. Runtime qualification, original seven outcomes, the routine, integration and parent closure remain open. Source work begins after independent control freeze; no unresolved current write exists at startup. Root owns all index/commits/canonical documents. Workers own disjoint source, review and packaging paths as recorded in PHASE.
+
+Stop after P08 implementation review, publication and saved partial delivery. Preserve failures and unique unpublished bytes in the final archive or exact Git source. No second phase.
