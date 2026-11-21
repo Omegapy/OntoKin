@@ -1,8 +1,9 @@
 # C271 P10 — bounded ELF string-table correction
 
-The implementation and independent evidence review are accepted. Final published
-record checks and saved partial delivery are pending at this source snapshot;
-P10-DELIVERY.json will record the later actual save without rebuilding its ZIP.
+The implementation, independent evidence review and partial delivery are complete.
+P10-DELIVERY.json records the actual saved ZIP and matching prompts. The archive
+remains frozen at its earlier source snapshot; the separate receipt supplies the
+confirmed save identities and later publication evidence.
 
 Read RESULTS.md for the outcome and limits, PHASE.json for the declared gates,
 EXECUTION-CHECKS.json for test provenance, and INDEPENDENT-FINAL-REVIEW.json for

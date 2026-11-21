@@ -95,7 +95,8 @@
         "docs/engineering/localized-repair-c271/host-inspection-p08/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
         "docs/engineering/localized-repair-c271/host-preparation-p09/EARLY-RECOVERY-RECEIPT.json",
-        "docs/engineering/localized-repair-c271/elf-string-table-p10/EARLY-RECOVERY-RECEIPT.json"
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
       ]
     }
   ],
@@ -483,6 +484,16 @@
         "docs/engineering/localized-repair-c271/elf-string-table-p10/INDEPENDENT-FINAL-REVIEW.json"
       ],
       "scope": "Bounded mapping phase only; no parent R03 or integration approval."
+    },
+    {
+      "name": "P10 independently verified partial handoff save",
+      "command": "Frozen archive and independent recovery audits; exact returned Library bytes, metadata and prompt comparisons",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
+      ],
+      "scope": "P10 partial delivery only. R03–R05 and integration remain open."
     }
   ],
   "completion": {
@@ -498,7 +509,8 @@
       "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json",
       "docs/engineering/localized-repair-c271/current-host-p06/P06-DELIVERY.json",
       "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json",
-      "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
+      "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
@@ -531,7 +543,7 @@
       "Root owns Git/index/canonical state/publication/delivery; workers disjoint files; no nested fanout",
       "Do not retry native git push: diagnosed credential failure preserved in P09; use available conditional API publication"
     ],
-    "status": "technical_complete_delivery_pending",
+    "status": "complete_partial_delivery",
     "early_recovery": "confirmed_saved_and_independently_accepted",
     "main_lease_held": false,
     "integration_allowed": false,
@@ -595,7 +607,12 @@
       },
       {
         "gate": "P10-05 published checkpoint and partial delivery",
-        "state": "record_checks_passed; final_publication_package_review_and_save_pending"
+        "state": "passed",
+        "evidence": [
+          "FINAL-PACKAGE-VERIFICATION.json",
+          "FINAL-PACKAGE-REVIEW.json",
+          "P10-DELIVERY.json"
+        ]
       }
     ],
     "oracle_sha256": "35b8535599cc24276dfe66e57b9ed80348c12d429e9a61441c4f449a7cb4ce8a",
@@ -615,17 +632,78 @@
     "next_action": "In a fresh bounded phase, reconcile the P10 handoff and live GitHub and confirm new early recovery. Independently review the selected Python RPATH $ORIGIN/../lib refusal and freeze a finite decision and positive/refusal controls before any loader-path correction or input substitution. H0 remains unaccepted; re-establish it only after the prerequisite is resolved. H1 and the complete routine remain later gates. Do not begin this phase in the P10 chat.",
     "updated_at_utc": "2026-11-21T20:27:02.901409Z",
     "no_second_phase": true,
-    "final_review": "docs/engineering/localized-repair-c271/elf-string-table-p10/INDEPENDENT-FINAL-REVIEW.json"
+    "final_review": "docs/engineering/localized-repair-c271/elf-string-table-p10/INDEPENDENT-FINAL-REVIEW.json",
+    "final_save_confirmed": true,
+    "final_receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json",
+    "completed_at_utc": "2026-11-21T20:48:10.140149Z"
   },
   "delivery": {
     "required": true,
     "kind": "online_browser_session",
-    "status": "pending",
+    "status": "saved",
     "folder": "OntoKin",
     "partial": true,
-    "phase_complete": false,
+    "phase_complete": true,
     "technical_phase_complete": true,
-    "early_receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/EARLY-RECOVERY-RECEIPT.json"
+    "early_receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/EARLY-RECOVERY-RECEIPT.json",
+    "receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json",
+    "files": [
+      {
+        "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/final/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21.zip",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_000000001fb881fd9d4f31cc54d5432d",
+        "library_file_id": "libfile_fde3_f-484e03c1ac9481918eadc89e4e21415d_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21.zip",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21.zip",
+        "current_version_number": 0,
+        "version": 0,
+        "bytes": 10556884,
+        "sha256": "42739db560ae8a46706d41ded21038d44a8a8a61ac45d6792374a7e31306c275",
+        "readback_path": "/workspace/scratch/7b9b58d10704/session_p10/final_readback/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21.zip",
+        "folder_metadata_verified": true,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-484e03c1ac9481918eadc89e4e21415d_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "saved_bytes_readback_equal": true
+      },
+      {
+        "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/final/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Continue.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_0000000037a881fd8a92e122dae06af7",
+        "library_file_id": "libfile_fde3_f-061a9924fd14819199c2ffe341140f69_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Continue.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Continue.md",
+        "current_version_number": 0,
+        "version": 0,
+        "bytes": 6813,
+        "sha256": "fc430582b07a0ae9c072af7ba3f6124516139463091b80dbf60664e76a824aae",
+        "readback_path": "/workspace/scratch/7b9b58d10704/session_p10/final_readback/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Continue.md",
+        "folder_metadata_verified": true,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-061a9924fd14819199c2ffe341140f69_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "saved_bytes_readback_equal": true
+      },
+      {
+        "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/final/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Recover.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_00000000b62481fda8fcca2882cc2fca",
+        "library_file_id": "libfile_fde3_f-b0511835d0b0819183b064429be92414_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Recover.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Recover.md",
+        "current_version_number": 0,
+        "version": 0,
+        "bytes": 7402,
+        "sha256": "de08a177bb5201e49608f920dba188fb09b6bc7a8bf7ad062fe8ddaba3de0790",
+        "readback_path": "/workspace/scratch/7b9b58d10704/session_p10/final_readback/OntoKin_C271_P10_ELF_Mapping_Handoff_2026-11-21_Recover.md",
+        "folder_metadata_verified": true,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-b0511835d0b0819183b064429be92414_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "saved_bytes_readback_equal": true
+      }
+    ],
+    "confirmed_at_utc": "2026-11-21T20:48:10.140149Z"
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",

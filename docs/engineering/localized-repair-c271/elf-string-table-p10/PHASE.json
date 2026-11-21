@@ -24,7 +24,7 @@
     "Root owns Git/index/canonical state/publication/delivery; workers disjoint files; no nested fanout",
     "Do not retry native git push: diagnosed credential failure preserved in P09; use available conditional API publication"
   ],
-  "status": "technical_complete_delivery_pending",
+  "status": "complete_partial_delivery",
   "early_recovery": "confirmed_saved_and_independently_accepted",
   "main_lease_held": false,
   "integration_allowed": false,
@@ -88,7 +88,12 @@
     },
     {
       "gate": "P10-05 published checkpoint and partial delivery",
-      "state": "record_checks_passed; final_publication_package_review_and_save_pending"
+      "state": "passed",
+      "evidence": [
+        "FINAL-PACKAGE-VERIFICATION.json",
+        "FINAL-PACKAGE-REVIEW.json",
+        "P10-DELIVERY.json"
+      ]
     }
   ],
   "oracle_sha256": "35b8535599cc24276dfe66e57b9ed80348c12d429e9a61441c4f449a7cb4ce8a",
@@ -108,5 +113,8 @@
   "next_action": "In a fresh bounded phase, reconcile the P10 handoff and live GitHub and confirm new early recovery. Independently review the selected Python RPATH $ORIGIN/../lib refusal and freeze a finite decision and positive/refusal controls before any loader-path correction or input substitution. H0 remains unaccepted; re-establish it only after the prerequisite is resolved. H1 and the complete routine remain later gates. Do not begin this phase in the P10 chat.",
   "updated_at_utc": "2026-11-21T20:27:02.901409Z",
   "no_second_phase": true,
-  "final_review": "docs/engineering/localized-repair-c271/elf-string-table-p10/INDEPENDENT-FINAL-REVIEW.json"
+  "final_review": "docs/engineering/localized-repair-c271/elf-string-table-p10/INDEPENDENT-FINAL-REVIEW.json",
+  "final_save_confirmed": true,
+  "final_receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json",
+  "completed_at_utc": "2026-11-21T20:48:10.140149Z"
 }

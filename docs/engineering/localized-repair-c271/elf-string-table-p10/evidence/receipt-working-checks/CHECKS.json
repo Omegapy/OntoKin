@@ -1,0 +1,46 @@
+{
+  "source_base": "d07c51e5c75bb4f25928be4008e08ca83bd8df8c",
+  "source_state": "working receipt and partial-delivery records",
+  "checked_at_utc": "2026-11-21T20:48:41.743320+00:00",
+  "checks": [
+    {
+      "name": "workflow",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.158,
+      "stdout": "workflow.stdout",
+      "stderr": "workflow.stderr"
+    },
+    {
+      "name": "documents",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.757,
+      "stdout": "documents.stdout",
+      "stderr": "documents.stderr"
+    },
+    {
+      "name": "whitespace",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.064,
+      "stdout": "whitespace.stdout",
+      "stderr": "whitespace.stderr"
+    }
+  ],
+  "passed": true
+}
