@@ -1,0 +1,13 @@
+{
+  "schema": "ontokin.c271.p08.static-inspection-attempts/1",
+  "attempts": [
+    {
+      "purpose": "Print selected P06 JSON schema definitions without importing candidate",
+      "failure": "KeyError: process",
+      "cause": "Reviewer selected a top-level process definition, but process schema is inline under inspection.",
+      "retained_observation": "The command printed inspection including its full process schema, host, and hostRuntime before the lookup failure. Those actual definitions supplied the review evidence.",
+      "effect": "No source modification, candidate import, compilation, test or project execution.",
+      "disposition": "No retry needed; use actual printed inline process definition."
+    }
+  ]
+}

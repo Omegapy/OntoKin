@@ -1,0 +1,24 @@
+{
+  "schema": "ontokin.c271.p08-root-static-review-notes/1",
+  "recorded_at_utc": "2026-11-21T15:20:32.474768+00:00",
+  "reviewer": "root",
+  "snapshot": "session/PRELIMINARY-MODULE-002.py",
+  "snapshot_sha256": "dec9ef7b94b9cadac00840fc22613f13c34f48d442bf3d4ef2d3bbd3bb454e02",
+  "read_complete_lines": [
+    1,
+    1994
+  ],
+  "method": "Read-only source inspection; no import, compilation, process, or test execution.",
+  "source_context_confirmed": "Original supervisor JSON uses canonical sort/separators/ASCII serialization; unchanged callback supplies the actual PID before pipe/log setup.",
+  "questions_sent_to_independent_reviewer": [
+    "PRE-03 PT_LOAD file/virtual alignment congruence appears missing.",
+    "PRE-04 glob.iglob may materialize unbounded directory data before yielding.",
+    "Source Git reads occur before full static loader closure and path guard validation.",
+    "Source, metadata, evidence and reconciliation traversals need deadline/entry-bound review.",
+    "Snapshot construction follows final static deadline check without a callback.",
+    "Failure handler may attempt result publication again after uncertain first result publication.",
+    "Completion and process reconciliation relationships, array cardinalities and PID/argv agreement need exact checks."
+  ],
+  "verdict": "NOT_ACCEPTED_PENDING_CONTROLS_AND_INDEPENDENT_REVIEW",
+  "note": "Questions are not claimed as executed reproductions; independent review will confirm required corrections against P07."
+}
