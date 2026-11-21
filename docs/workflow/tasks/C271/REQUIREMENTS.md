@@ -137,3 +137,14 @@ Stop after independently accepted implementation and confirmed partial delivery,
 ## P08 technical outcome — 2026-11-21
 
 The exact candidate `cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e` is independently accepted within the P08 static/filesystem/mocked scope. All 135 focused methods passed; the first setup-failed attempt and its one-line test correction remain retained. See `docs/engineering/localized-repair-c271/host-inspection-p08/PHASE-OUTCOME.json` and its linked execution/review records. Final verified ZIP, saved-byte readback and separate receipt remain pending at this source snapshot. C271/R03-R05 and P02 stay open. Finish delivery and stop; H0 preparation and exact plan review belong to a fresh chat.
+
+
+## P08 saved delivery — 2026-11-21
+
+The corrected attempt002 ZIP and matching prompts are saved and exact saved-byte readbacks match the reviewed artifacts. Independent implementation acceptance and all 135 passing focused methods remain unchanged. Attempt001 package rejection FPKG-01, its unchanged archive, and the earlier failed test run remain preserved. The separate receipt is `docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json`. The archive source is `3ed2670bf9bf4326dab126d3466699053f6b4320`; accepted code is `cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e`. The later receipt commit and final observations are recorded separately.
+
+This completes only P08 partial delivery. C271 remains `in_progress`; R03/R04/R05 remain `not_done`, P02 remains `in_progress`, PR #274 remains draft/open/unmerged and issue #273 remains open. No main integration or actual host/runtime work was performed.
+
+In a fresh chat, reconcile the saved P08 ZIP and separate receipt with live GitHub, confirm new early recovery, then select only H0: prepare exact static installation plans with independently frozen archive/member inventories; use the existing preparer dry-run/apply as selected; inspect the actual source/Python/ldd/loader input files without running Node/ldd; and obtain independent review of the exact executable inspection plan and separate review digest. Stop before H1 Node/ldd execution or actual host observation; later qualification remains separate.
+
+Stop this chat at the saved P08 boundary.

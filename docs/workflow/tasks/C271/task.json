@@ -87,7 +87,8 @@
         "docs/engineering/localized-repair-c271/current-host-p06/P06-DELIVERY.json",
         "docs/engineering/localized-repair-c271/host-inspection-p07/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json",
-        "docs/engineering/localized-repair-c271/host-inspection-p08/EARLY-RECOVERY-RECEIPT.json"
+        "docs/engineering/localized-repair-c271/host-inspection-p08/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
       ]
     }
   ],
@@ -403,6 +404,16 @@
         "docs/engineering/localized-repair-c271/host-inspection-p08/candidate004-repository-checks/CHECKS.json"
       ],
       "scope": "P08 static/filesystem/mocked implementation only; 135 methods, 0 failures/errors/skips, 0 actual project operations under guards. Actual host, original seven, full routine/R03 and integration remain open."
+    },
+    {
+      "name": "P08 corrected package verification, independent review and saved-byte readback",
+      "command": "Exact attempt002 archive verification, independent audit and saved-file SHA256 comparison recorded in P08-DELIVERY.json",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
+      ],
+      "scope": "P08 partial phase delivery only; parent R03/R04/R05 and integration remain open."
     }
   ],
   "completion": {
@@ -417,12 +428,13 @@
       "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json",
       "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json",
       "docs/engineering/localized-repair-c271/current-host-p06/P06-DELIVERY.json",
-      "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json"
+      "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e"
   },
-  "next_action": "Finish P08 final package verification and confirmed saved partial delivery, then stop. In a fresh chat, reconcile the saved P08 ZIP and separate receipt with live GitHub, confirm new early recovery, then perform only H0 static preparation and independent review of the exact inspection plan. H1 actual observation and later qualification remain separate gates.",
+  "next_action": "In a fresh chat, reconcile the saved P08 ZIP and separate receipt with live GitHub, confirm new early recovery, then select only H0: prepare exact static installation plans with independently frozen archive/member inventories; use the existing preparer dry-run/apply as selected; inspect the actual source/Python/ldd/loader input files without running Node/ldd; and obtain independent review of the exact executable inspection plan and separate review digest. Stop before H1 Node/ldd execution or actual host observation; later qualification remains separate.",
   "session_phase": {
     "schema": "ontokin.c271.p08-phase/1",
     "task": "C271",
@@ -449,7 +461,7 @@
       "One bounded phase and no nested fanout; root owns Git/index/canonical state/publication."
     ],
     "stop": "After independently accepted implementation and verified partial saved delivery, or first concrete unresolved blocker/unplanned expansion. H0 preparation and later gates belong to a fresh chat.",
-    "status": "technical_complete_delivery_pending",
+    "status": "complete_partial_delivery",
     "early_recovery": "confirmed",
     "main_lease_held": false,
     "integration_allowed": false,
@@ -476,17 +488,89 @@
     "accepted_candidate": "candidate-004",
     "accepted_source_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
     "technical_phase_complete": true,
-    "outcome": "docs/engineering/localized-repair-c271/host-inspection-p08/PHASE-OUTCOME.json"
+    "outcome": "docs/engineering/localized-repair-c271/host-inspection-p08/PHASE-OUTCOME.json",
+    "phase_complete": true,
+    "delivery_status": "saved",
+    "delivery_receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "pending",
+    "status": "saved",
     "folder": "OntoKin",
     "partial": true,
-    "phase_complete": false,
+    "phase_complete": true,
     "receipt": "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
-    "technical_phase_complete": true
+    "technical_phase_complete": true,
+    "artifact_delivery_status": "saved_and_readback_verified",
+    "archive": {
+      "file_name": "OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21.zip",
+      "local_path": "/workspace/scratch/8838dfc6e876/packages/final-attempt-002/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21.zip",
+      "bytes": 14680844,
+      "sha256": "037d7ff2b2b64f61f1b53b5fdae93b3d16a32bdb6fd681f45f824e2652d425b5",
+      "archive_member": null,
+      "purpose": "create_library_file",
+      "status": "saved",
+      "file_id": "file_000000001c6c81f587b7ebcf29a9412d",
+      "library_file_id": "libfile_fde3_f-982d91a7579881919c3980713a6f6e00_2ab2a24d43748191957f9bcc356b59de",
+      "local_metadata_applied": true,
+      "path": "/OntoKin/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21.zip",
+      "current_version_number": 0,
+      "upload_status": "succeeded",
+      "version": 0,
+      "confirmed_at_utc": "2026-11-21T17:12:09.403422+00:00",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-982d91a7579881919c3980713a6f6e00_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "saved_bytes_readback_equal": true,
+      "local_bytes_unchanged_after_save": true,
+      "destination_metadata_observed": true,
+      "saved_readback_path": "/workspace/scratch/8838dfc6e876/saved_readback/final-core-attempt-001/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21.zip"
+    },
+    "matching_prompts": [
+      {
+        "file_name": "OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Continue.md",
+        "local_path": "/workspace/scratch/8838dfc6e876/packages/final-attempt-002/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Continue.md",
+        "bytes": 3513,
+        "sha256": "287e4b35a7043fa58ce694ea2f4a792af3a8b1d2aaae0ff76c58a9efd3dfdcfd",
+        "archive_member": "PROMPT-1-CONTINUE.md",
+        "purpose": "create_library_file",
+        "status": "saved",
+        "file_id": "file_00000000b6e081f59a54b5a9c39dbcc9",
+        "library_file_id": "libfile_fde3_f-4881a0f872bc8191a6da81f329430392_2ab2a24d43748191957f9bcc356b59de",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Continue.md",
+        "current_version_number": 0,
+        "upload_status": "succeeded",
+        "version": 0,
+        "confirmed_at_utc": "2026-11-21T17:12:09.403422+00:00",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4881a0f872bc8191a6da81f329430392_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "saved_bytes_readback_equal": true,
+        "local_bytes_unchanged_after_save": true,
+        "destination_metadata_observed": true,
+        "saved_readback_path": "/workspace/scratch/8838dfc6e876/saved_readback/final-core-attempt-001/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Continue.md"
+      },
+      {
+        "file_name": "OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Recover.md",
+        "local_path": "/workspace/scratch/8838dfc6e876/packages/final-attempt-002/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Recover.md",
+        "bytes": 4345,
+        "sha256": "575b9f078befec3f6d8b742d46cf4cace244c29f6d5715055cb7b1367eafa028",
+        "archive_member": "PROMPT-2-RECOVER.md",
+        "purpose": "create_library_file",
+        "status": "saved",
+        "file_id": "file_00000000c7ac81fb9fa472b9ebfacffb",
+        "library_file_id": "libfile_fde3_f-01634c5291048191acb86fba327b80ab_2ab2a24d43748191957f9bcc356b59de",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Recover.md",
+        "current_version_number": 0,
+        "upload_status": "succeeded",
+        "version": 0,
+        "confirmed_at_utc": "2026-11-21T17:12:09.403422+00:00",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-01634c5291048191acb86fba327b80ab_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "saved_bytes_readback_equal": true,
+        "local_bytes_unchanged_after_save": true,
+        "destination_metadata_observed": true,
+        "saved_readback_path": "/workspace/scratch/8838dfc6e876/saved_readback/final-core-attempt-001/OntoKin_C271_P08_Host_Inspection_Implementation_Handoff_2026-11-21_Recover.md"
+      }
+    ]
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",

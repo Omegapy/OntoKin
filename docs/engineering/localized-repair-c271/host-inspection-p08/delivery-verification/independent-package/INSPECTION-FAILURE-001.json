@@ -1,0 +1,21 @@
+{
+  "schema": "ontokin.c271.p08-reviewer-inspection-failure/1",
+  "recorded_at_utc": "2026-11-21T17:07:09.005133+00:00",
+  "classification": "reviewer_readonly_probe_path_assumption",
+  "operation": "Read active prose followed by JSON map shape inspection",
+  "incorrect_path": "/workspace/scratch/8838dfc6e876/review_work/final-package/attempt-002/extracted/RECOVERY-MAP.json",
+  "observed_error": "FileNotFoundError: [Errno 2] No such file or directory: '/workspace/scratch/8838dfc6e876/review_work/final-package/attempt-002/extracted/RECOVERY-MAP.json'",
+  "exit_code": 1,
+  "preceding_successful_reads": [
+    "README-START-HERE.md",
+    "NEXT-TASK.md",
+    "PROMPT-1-CONTINUE.md",
+    "PROMPT-2-RECOVER.md",
+    "MANIFEST-SHA256.json"
+  ],
+  "correct_path_as_declared_in_README": "RECOVERY-FILE-MAP.json",
+  "correction": "Preserve this failure, then inspect only the correctly named recovery map and still-unread source/store map shapes. No archive change or audit-reader rerun.",
+  "archive_defect": false,
+  "candidate_or_fixture_execution": false,
+  "mutations": 0
+}
