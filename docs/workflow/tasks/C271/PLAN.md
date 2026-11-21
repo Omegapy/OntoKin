@@ -49,3 +49,11 @@ Acceptance is successful focused copy/isolation coverage, authenticated prerequi
 ## P03 observed technical boundary
 
 The minimal copy repair passed 31 focused methods and the actual isolated documentation check on published clean candidate `fea1aa6fb3712c5283dde197295b2d3cbf925d36`. All seven Python pins were prepared. Unchanged C225 preflight refused the available Node binary; an official same-version download also differs from the exact historical pin. Bounded retained-archive inspection identified no matching executable. Full routine remains not_run in P03, with original P02 failures preserved. Technical work stops at this prerequisite blocker; only review, publication and verified partial delivery remain. Parent R03–R05 remain unmet, and no integration is authorized in this phase. See [outcome](../../../engineering/localized-repair-c271/validation-recovery-20261120/PHASE-OUTCOME.json).
+
+## P04 historical-runtime prerequisite recovery — November 20, 2026
+
+The fresh continuation request resumes the retained C271 branch at `6d4324e8fd835351da2db165bf0907a3bf1916bc`, against unchanged main `e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d`. Director `c271-p04-005a7eaf6603` owns one bounded prerequisite phase. The early ZIP was confirmed saved before substantive runtime searches.
+
+Search surviving runtime files and retained C262 nested Git objects not covered by P03. Authenticate any exact historical Node bytes and the full unchanged C225 source/runtime/path/alias requirements. If the existing absolute bindings qualify, unchanged preparation and post-verification are permitted. A recovered executable elsewhere alone is not valid restoration. Do not replace shared runtimes, use mount namespaces, alter historical guards, tests, dependency pins, frozen controls or source budgets.
+
+Acceptance is a reviewed exact prerequisite qualification or a precisely scoped negative finding with a concrete next action, plus applicable record checks and a verified saved partial handoff with matching prompts and a separate receipt. Stop at this prerequisite checkpoint or first concrete blocker/unplanned expansion. Full routine execution and R04 integration are later phases. R01/R02 remain done; R03–R05 and the parent stay open. Preserve all original failures and historical process uncertainties.
