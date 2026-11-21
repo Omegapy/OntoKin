@@ -87,3 +87,7 @@ The independently reviewed [current-host design](../../../engineering/localized-
 ### P05 core save; completion pending
 
 The immutable handoff ZIP and both byte-matching prompts are saved and read back. The [separate receipt](../../../engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json) records their exact identities. Independent package review accepted 29 checks and requires PK-01: preserve three complete public workflow metadata originals in a verified saved companion. P05 remains `core_saved_companion_pending`; finish only that delivery and final-state gate, then stop. Parent R03-R05 remain not_done.
+
+### P05 verified partial delivery
+
+The [separate receipt](../../../engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json) now binds the saved immutable ZIP, both exact prompts and the independently verified saved companion. The companion supplies the complete public workflow originals required by PK-01; frozen ZIP/source bytes remain unchanged. Only P05 is complete. C271 remains in_progress, R03-R05 remain not_done, P02 remains in_progress, the branch is retained and PR274/issue273 remain open. Final publication/readback and the terminal metadata receipt preserve the postfreeze boundary. Stop here; the adopted implementation begins only in a fresh bounded chat.

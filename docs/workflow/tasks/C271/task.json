@@ -310,6 +310,18 @@
         "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
       ],
       "scope": "Core ZIP and prompts only; required corrected companion and final phase completion remain pending"
+    },
+    {
+      "name": "P05 required corrected companion and saved partial delivery",
+      "command": "Independent exact companion recovery/source review and confirmed save/readback; final source/state publication follows with external terminal evidence",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p05/companion-review/COMPANION-REVIEW.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/COMPANION-VERIFICATION.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
+      ],
+      "scope": "P05 partial delivery only. Parent R03-R05 and complete routine/integration remain open."
     }
   ],
   "completion": {
@@ -325,7 +337,7 @@
       "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
     ]
   },
-  "next_action": "Finish P05 delivery only: verify and save the required corrected companion, publish final receipt/state and stop. The adopted provider implementation belongs in a fresh chat.",
+  "next_action": "In a fresh bounded C271 chat, reconcile live GitHub and the saved P05 handoff, required companion and terminal receipt; confirm new early recovery; then implement only the adopted current-host provider, separate probe, safe preparer and original-test/driver bindings under IMPLEMENTATION-PLAN.md. Freeze independent controls before selected execution. Preserve original method/helper bodies and historical guards. Stop at reviewed implementation evidence or a concrete blocker and verified partial delivery. Actual host qualification, full routine/R03 acceptance and R04/R05 closure remain separate gates.",
   "session_phase": {
     "schema": "ontokin.c271.p05-phase/1",
     "task": "C271",
@@ -365,7 +377,7 @@
       "P02": "in_progress"
     },
     "early_recovery": "confirmed",
-    "status": "core_saved_companion_pending",
+    "status": "complete_partial_delivery",
     "main_lease_held": false,
     "integration_allowed": false,
     "full_routine_selected": false,
@@ -382,22 +394,26 @@
     "implementation_performed": false,
     "runtime_qualified": false,
     "independent_r03_accepted": false,
-    "next_action": "In a fresh bounded C271 phase, reconcile live GitHub and this P05 saved receipt, confirm new early recovery, then implement the accepted current-host provider, separate probe, safe preparer and explicit test/driver binding under IMPLEMENTATION-PLAN.md. Freeze meaningful positive/refusal controls independently before selected execution; preserve every original method/helper body, historical guard and dependency byte. Stop at reviewed implementation evidence or a concrete blocker and verified partial delivery. Host qualification, the complete routine/R03 acceptance and R04/R05 closure remain separate gates; do not begin them in this P05 chat.",
+    "next_action": "In a fresh bounded C271 chat, reconcile live GitHub and the saved P05 handoff, required companion and terminal receipt; confirm new early recovery; then implement only the adopted current-host provider, separate probe, safe preparer and original-test/driver bindings under IMPLEMENTATION-PLAN.md. Freeze independent controls before selected execution. Preserve original method/helper bodies and historical guards. Stop at reviewed implementation evidence or a concrete blocker and verified partial delivery. Actual host qualification, full routine/R03 acceptance and R04/R05 closure remain separate gates.",
     "final_handoff_saved": true,
-    "delivery_confirmed": false,
-    "phase_complete": false,
+    "delivery_confirmed": true,
+    "phase_complete": true,
     "delivery_receipt": "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json",
     "handoff_source_revision": "405c0c9ec35e50b4dd13b8779a31f822dc45f61f",
-    "independent_package_review": "accepted_core_companion_pending"
+    "independent_package_review": "accepted_core_and_corrected_saved_companion",
+    "completed_at_utc": "2026-11-21T03:58:54.298703+00:00",
+    "required_companion_saved": true,
+    "companion_library_file_id": "libfile_fde3_f-ce436883e8d48191a8b111f5f9f54a9b_2ab2a24d43748191957f9bcc356b59de",
+    "next_phase_started": false
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "pending",
+    "status": "saved",
     "folder": "OntoKin",
     "partial": true,
     "core_handoff_saved": true,
-    "phase_complete": false,
+    "phase_complete": true,
     "receipt": "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json",
     "handoff": {
       "file_name": "OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20.zip",
@@ -445,10 +461,33 @@
         "archive_member": "PROMPT-2-RECOVER.md"
       }
     ],
-    "pending_gates": [
-      "PK-01 companion verified and saved",
-      "Final receipt/state checks"
-    ]
+    "required_companion_saved": true,
+    "companion": {
+      "file_name": "OntoKin_C271_P05_Delivery_Receipt_2026-11-20.json",
+      "file_id": "file_000000000d6481f6adbb12ab39f65bf6",
+      "library_file_id": "libfile_fde3_f-ce436883e8d48191a8b111f5f9f54a9b_2ab2a24d43748191957f9bcc356b59de",
+      "version": 0,
+      "path": "/OntoKin/OntoKin_C271_P05_Delivery_Receipt_2026-11-20.json",
+      "bytes": 1405358,
+      "sha256": "91eea0532cb8d7e9d751426a523ae2d492f2b4ffa5659dfbb3e71d620d16cfc6",
+      "saved_at_utc": "2026-11-21T03:58:39.434277+00:00",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-ce436883e8d48191a8b111f5f9f54a9b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "local_metadata_applied": true,
+      "destination_metadata_observed": true,
+      "local_bytes_unchanged_after_save": true
+    },
+    "source_revision": "405c0c9ec35e50b4dd13b8779a31f822dc45f61f",
+    "source_tree": "ce3d5bfb1769ebbd1f50f86297002d30a95cbcfd",
+    "post_record_observation_gates": {
+      "status_at_record_authoring": "pending",
+      "required_observations": [
+        "Final conditional receipt publication and expected-head readback",
+        "Fresh checks on the clean published final receipt source",
+        "Verified saved terminal metadata receipt"
+      ],
+      "completion_evidence": "OntoKin_C271_P05_Companion_Saved_2026-11-20.json plus actual live GitHub state",
+      "boundary": "These observations follow this record own publication. Reconcile the exact later terminal receipt; do not rebuild frozen artifacts or begin another development phase in this chat."
+    }
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
