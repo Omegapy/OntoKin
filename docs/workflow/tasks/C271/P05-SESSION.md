@@ -20,3 +20,7 @@ Root owns canonical task/index/remote writes; workers own disjoint design-map, r
 The [adoption decision](../../../engineering/localized-repair-c271/current-host-p05/ADOPTION.md) now accepts the exact contract and map. Independent review passed 46 static checks and resolved five mandatory findings, preserving every prior candidate. The earlier table above is the bootstrap history. Design and review are now complete; documentary checks, publication and final partial delivery remain pending at this source checkpoint. No implementation, actual discovery, product test, Node, ldd, installation, full routine or integration occurred.
 
 The [phase outcome](../../../engineering/localized-repair-c271/current-host-p05/PHASE-OUTCOME.json) records limits and the fresh-chat implementation action. The parent requirements and plan remain unchanged: R01/R02 done, R03-R05 not_done; P01 done, P02 in_progress. The separate receipt will complete P05 delivery without closing C271.
+
+### P05 core save; completion pending
+
+The immutable handoff ZIP and both byte-matching prompts are saved and read back. The [separate receipt](../../../engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json) records their exact identities. Independent package review accepted 29 checks and requires PK-01: preserve three complete public workflow metadata originals in a verified saved companion. P05 remains `core_saved_companion_pending`; finish only that delivery and final-state gate, then stop. Parent R03-R05 remain not_done.

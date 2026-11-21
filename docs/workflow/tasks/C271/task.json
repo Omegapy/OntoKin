@@ -49,7 +49,8 @@
         "docs/engineering/localized-repair-c271/runtime-recovery-p04/WORKING-RECORD-REVIEW.json",
         "docs/engineering/localized-repair-c271/current-host-p05/ADOPTION.json",
         "docs/engineering/localized-repair-c271/current-host-p05/PHASE-OUTCOME.json",
-        "docs/engineering/localized-repair-c271/current-host-p05/review/DESIGN-REVIEW.json"
+        "docs/engineering/localized-repair-c271/current-host-p05/review/DESIGN-REVIEW.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/published-source-checks/CHECKS.json"
       ]
     },
     {
@@ -72,7 +73,8 @@
         "docs/engineering/localized-repair-c271/validation-recovery-20261120/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/runtime-recovery-p04/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json",
-        "docs/engineering/localized-repair-c271/current-host-p05/EARLY-RECOVERY-RECEIPT.json"
+        "docs/engineering/localized-repair-c271/current-host-p05/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
       ]
     }
   ],
@@ -287,6 +289,27 @@
         "docs/engineering/localized-repair-c271/current-host-p05/review/DESIGN-REVIEW.json"
       ],
       "scope": "46 static design checks; no behavioral execution, runtime qualification or R03 acceptance"
+    },
+    {
+      "name": "P05 clean published-source documentary checks",
+      "command": "python3 -B tools/chat_workflow.py check; python3 -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py; git diff --check",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p05/published-source-checks/CHECKS.json"
+      ],
+      "scope": "Clean source 405c0c9ec35e50b4dd13b8779a31f822dc45f61f only; not product or R03 acceptance"
+    },
+    {
+      "name": "P05 immutable core package and save",
+      "command": "Independent 29-check package audit, prepared ordered upload, exact destination metadata and local hash/xattr verification",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p05/package-review/PACKAGE-REVIEW.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
+      ],
+      "scope": "Core ZIP and prompts only; required corrected companion and final phase completion remain pending"
     }
   ],
   "completion": {
@@ -298,10 +321,11 @@
       "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json",
       "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json",
       "docs/engineering/localized-repair-c271/validation-recovery-20261120/P03-DELIVERY.json",
-      "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json"
+      "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
     ]
   },
-  "next_action": "Finish the P05 verified partial handoff and separate receipt, then stop. In a fresh bounded C271 phase, reconcile live GitHub and this P05 saved receipt, confirm new early recovery, then implement the accepted current-host provider, separate probe, safe preparer and explicit test/driver binding under IMPLEMENTATION-PLAN.md. Freeze meaningful positive/refusal controls independently before selected execution; preserve every original method/helper body, historical guard and dependency byte. Stop at reviewed implementation evidence or a concrete blocker and verified partial delivery. Host qualification, the complete routine/R03 acceptance and R04/R05 closure remain separate gates; do not begin them in this P05 chat.",
+  "next_action": "Finish P05 delivery only: verify and save the required corrected companion, publish final receipt/state and stop. The adopted provider implementation belongs in a fresh chat.",
   "session_phase": {
     "schema": "ontokin.c271.p05-phase/1",
     "task": "C271",
@@ -341,7 +365,7 @@
       "P02": "in_progress"
     },
     "early_recovery": "confirmed",
-    "status": "design_accepted_delivery_pending",
+    "status": "core_saved_companion_pending",
     "main_lease_held": false,
     "integration_allowed": false,
     "full_routine_selected": false,
@@ -358,7 +382,13 @@
     "implementation_performed": false,
     "runtime_qualified": false,
     "independent_r03_accepted": false,
-    "next_action": "In a fresh bounded C271 phase, reconcile live GitHub and this P05 saved receipt, confirm new early recovery, then implement the accepted current-host provider, separate probe, safe preparer and explicit test/driver binding under IMPLEMENTATION-PLAN.md. Freeze meaningful positive/refusal controls independently before selected execution; preserve every original method/helper body, historical guard and dependency byte. Stop at reviewed implementation evidence or a concrete blocker and verified partial delivery. Host qualification, the complete routine/R03 acceptance and R04/R05 closure remain separate gates; do not begin them in this P05 chat."
+    "next_action": "In a fresh bounded C271 phase, reconcile live GitHub and this P05 saved receipt, confirm new early recovery, then implement the accepted current-host provider, separate probe, safe preparer and explicit test/driver binding under IMPLEMENTATION-PLAN.md. Freeze meaningful positive/refusal controls independently before selected execution; preserve every original method/helper body, historical guard and dependency byte. Stop at reviewed implementation evidence or a concrete blocker and verified partial delivery. Host qualification, the complete routine/R03 acceptance and R04/R05 closure remain separate gates; do not begin them in this P05 chat.",
+    "final_handoff_saved": true,
+    "delivery_confirmed": false,
+    "phase_complete": false,
+    "delivery_receipt": "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json",
+    "handoff_source_revision": "405c0c9ec35e50b4dd13b8779a31f822dc45f61f",
+    "independent_package_review": "accepted_core_companion_pending"
   },
   "delivery": {
     "required": true,
@@ -366,7 +396,59 @@
     "status": "pending",
     "folder": "OntoKin",
     "partial": true,
-    "receipt": "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
+    "core_handoff_saved": true,
+    "phase_complete": false,
+    "receipt": "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json",
+    "handoff": {
+      "file_name": "OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20.zip",
+      "file_id": "file_00000000deb481f5b577db5d16ba838e",
+      "library_file_id": "libfile_fde3_f-ae36f58493d48191a707b8b0025bbe1e_2ab2a24d43748191957f9bcc356b59de",
+      "path": "/OntoKin/OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20.zip",
+      "version": 0,
+      "bytes": 50969509,
+      "sha256": "d8c44804a4e8b967ddc460e83dae038db9795c6a06b6a8df39f2117229c59e44",
+      "saved_at_utc": "2026-11-21T03:46:42.977437+00:00",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-ae36f58493d48191a707b8b0025bbe1e_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "local_metadata_applied": true,
+      "destination_metadata_observed": true,
+      "local_bytes_unchanged_after_save": true
+    },
+    "prompts": [
+      {
+        "file_name": "OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20_Continue.md",
+        "file_id": "file_00000000c32081f595a97eb91215a3f7",
+        "library_file_id": "libfile_fde3_f-7c4da2691a608191be8923b1be2f78de_2ab2a24d43748191957f9bcc356b59de",
+        "path": "/OntoKin/OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20_Continue.md",
+        "version": 0,
+        "bytes": 6412,
+        "sha256": "4e7e0bf1a965b38ab6feff51adec77c09aa4fd8e9c99d5c0a3f71415d2bc70de",
+        "saved_at_utc": "2026-11-21T03:46:42.967661+00:00",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-7c4da2691a608191be8923b1be2f78de_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_metadata_applied": true,
+        "destination_metadata_observed": true,
+        "local_bytes_unchanged_after_save": true,
+        "archive_member": "PROMPT-1-CONTINUE.md"
+      },
+      {
+        "file_name": "OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20_Recover.md",
+        "file_id": "file_000000004e1081f59bcf1124417dbac4",
+        "library_file_id": "libfile_fde3_f-64f48a4b049881918a7035bdda1df04d_2ab2a24d43748191957f9bcc356b59de",
+        "path": "/OntoKin/OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20_Recover.md",
+        "version": 0,
+        "bytes": 6794,
+        "sha256": "e24432eaa5e9c75cc0df221eb3b0c1efcfd06cded029102f911bb930dbb2fd1c",
+        "saved_at_utc": "2026-11-21T03:46:42.970255+00:00",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-64f48a4b049881918a7035bdda1df04d_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_metadata_applied": true,
+        "destination_metadata_observed": true,
+        "local_bytes_unchanged_after_save": true,
+        "archive_member": "PROMPT-2-RECOVER.md"
+      }
+    ],
+    "pending_gates": [
+      "PK-01 companion verified and saved",
+      "Final receipt/state checks"
+    ]
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",

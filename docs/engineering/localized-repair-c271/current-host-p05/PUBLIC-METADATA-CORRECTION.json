@@ -1,0 +1,58 @@
+{
+  "schema": "ontokin.c271.p05-public-authorization-filter-correction/1",
+  "recorded_at_utc": "2026-11-21T03:43:50.433535+00:00",
+  "boundary": "Postfreeze companion-only correction; accepted technical source, frozen final ZIP and old helper bytes unchanged.",
+  "final_zip": "OntoKin_C271_P05_Current_Host_Design_Handoff_2026-11-20.zip",
+  "final_zip_bytes": 50969509,
+  "final_zip_sha256": "d8c44804a4e8b967ddc460e83dae038db9795c6a06b6a8df39f2117229c59e44",
+  "old_helper_sha256": "1b7ff39608110926a427e32bf181af45f8a853cc7bb98dda8721af78c7382baf",
+  "old_helper_location": {
+    "kind": "file",
+    "path": "recovery-originals/package-work/build_delivery_companion.py"
+  },
+  "corrected_helper_path": "package-work/build_delivery_companion.py",
+  "corrected_helper_sha256": "eedb9b4955dfd550f3d58bc2b26ff436a0856cea2d42a40140e28c150417016c",
+  "false_positive": "A key-name-only credential filter removed three public workflow authorization fields. These are task selection/retry descriptions, not transport credentials.",
+  "exact_originals_to_preserve_in_companion": [
+    {
+      "original_path": "operations/BOOTSTRAP-TREE-PAYLOAD.json",
+      "bytes": 110958,
+      "sha256": "a91fbc12c4e14168e3c6e4d6d340e9a346f6d067b3e861502abd3b88b46d8106",
+      "result": "exact nonsecret original preserved without filtering"
+    },
+    {
+      "original_path": "operations/DESIGN-TREE-PAYLOAD.json",
+      "bytes": 343395,
+      "sha256": "0e3148b72343001ab40237d23bf755f23bb75f2733f22855b5b768509293dceb",
+      "result": "exact nonsecret original preserved without filtering"
+    },
+    {
+      "original_path": "package-work/final-freeze-attempt-001/RECONCILIATION.json",
+      "bytes": 2528,
+      "sha256": "6a2143f9164aa685bd96a546590e660fc3373e7cbb71a8b76c2588a0bfef4bb4",
+      "result": "exact nonsecret original preserved without filtering"
+    }
+  ],
+  "allowlist": [
+    {
+      "context": "Canonical C271 task authorization and exactly corresponding BOOTSTRAP/DESIGN serialized tree content",
+      "exact_value_sha256": "51ab9b57fc7325ee61a6db980fac9a7f13c441214df9ac1d3197dbe6c2922c1f",
+      "source_commit": "405c0c9ec35e50b4dd13b8779a31f822dc45f61f",
+      "source_path": "docs/workflow/tasks/C271/task.json"
+    },
+    {
+      "context": "Exact failed-attempt reconciliation authorization field only",
+      "exact_value_sha256": "0d0867244d217dc9af86b2002223eb2a5e66560055727e99af72bebd608f9ffd",
+      "source_path": "package-work/final-freeze-attempt-001/RECONCILIATION.json"
+    }
+  ],
+  "checks": {
+    "all_three_originals_roundtrip_exact": "passed",
+    "canonical_task_json_exact": "passed",
+    "actual_transfer_token_exclusion": "passed",
+    "unrelated_transport_authorization_cookie_and_token_exclusion": "passed"
+  },
+  "required_companion_behavior": "All three complete originals must be exact embedded text or verified equality aliases. A sanitized omission is not acceptance.",
+  "companion_freeze": "not performed",
+  "library_save": "not performed"
+}

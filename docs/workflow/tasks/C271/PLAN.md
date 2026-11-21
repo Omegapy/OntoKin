@@ -75,3 +75,7 @@ Acceptance is a complete source-backed design and method/predicate mapping indep
 ### P05 design acceptance checkpoint
 
 The independently reviewed [current-host design](../../../engineering/localized-repair-c271/current-host-p05/ADOPTION.md) is accepted for a later bounded implementation phase. It preserves original test/scientific/lifecycle obligations and historical source guards. P05 has no operational implementation, host qualification or product-test result. The [phase outcome](../../../engineering/localized-repair-c271/current-host-p05/PHASE-OUTCOME.json) records the next action and remaining gates. Final P05 saved delivery is pending at this checkpoint; parent R03-R05 and P02 remain open.
+
+### P05 core save; completion pending
+
+The immutable handoff ZIP and both byte-matching prompts are saved and read back. The [separate receipt](../../../engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json) records their exact identities. Independent package review accepted 29 checks and requires PK-01: preserve three complete public workflow metadata originals in a verified saved companion. P05 remains `core_saved_companion_pending`; finish only that delivery and final-state gate, then stop. Parent R03-R05 remain not_done.
