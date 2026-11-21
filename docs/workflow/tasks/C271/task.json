@@ -43,7 +43,10 @@
         "docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTEGRATION-REVIEW.json",
         "docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json",
         "docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE-OUTCOME.json",
-        "docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json"
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json",
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/TECHNICAL-REVIEW-SUMMARY.json",
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/WORKING-RECORD-REVIEW.json"
       ]
     },
     {
@@ -238,6 +241,16 @@
         "docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json"
       ],
       "scope": "Narrow repair approved for retained partial delivery; R03 not eligible because exact runtime prerequisite and complete routine remain unmet. Evidence inspection passed; it is not a product test run."
+    },
+    {
+      "name": "P04 exact historical runtime qualification",
+      "command": "Read-only source/runtime bindings plus bounded local/C262 nested-object investigation; no helper or test execution",
+      "result": "failed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/PHASE-OUTCOME.json"
+      ],
+      "scope": "The evidence inspection supports a scoped no-match finding. Runtime qualification and R03 acceptance are not established."
     }
   ],
   "completion": {
@@ -251,7 +264,7 @@
       "docs/engineering/localized-repair-c271/validation-recovery-20261120/P03-DELIVERY.json"
     ]
   },
-  "next_action": "Recover and authenticate the exact historical Node runtime and unchanged C225 preparation prerequisites through bounded inspection of surviving local binaries, declared C262 archive dependencies and nested retained Git objects not covered by P03. If recovered, verify unchanged C225 preparation and post-readback. Stop at qualified prerequisite checkpoint or concrete blocker.",
+  "next_action": "In a fresh bounded C271 phase, adopt an independently reviewed, separately versioned current-host execution contract and complete per-method/predicate mapping for the original hardcoded readback cohort. Preserve original C199/C225 records, helper guards and historical test/source bytes. Do not count a replacement-only suite, skipped original methods or rewritten pins as R03. Implement and verify only the design selected for that fresh phase; a complete default routine requires its own declared eligible environment and full inventory. Repeat exact-runtime recovery only if a new authenticated source becomes available.",
   "session_phase": {
     "schema": "ontokin.c271.p04-phase/1",
     "task": "C271",
@@ -293,7 +306,7 @@
     "early_recovery": "confirmed",
     "integration_allowed": false,
     "full_routine_selected": false,
-    "status": "in_progress",
+    "status": "blocked_pending_publication_and_delivery",
     "early_save_confirmed": true,
     "early_receipt": "docs/engineering/localized-repair-c271/runtime-recovery-p04/EARLY-RECOVERY-RECEIPT.json",
     "parent_status": "blocked",
@@ -301,7 +314,16 @@
       "/root/github_reconcile": "Independent live-state reconciliation, prerequisite criteria and evidence/package review",
       "/root/package_builder": "Early and final archive builder; no source or remote writes",
       "/root/runtime_recovery": "Exact runtime search through surviving executables and retained nested archive/Git objects"
-    }
+    },
+    "technical_work_stopped": true,
+    "exact_runtime_recovered": false,
+    "C225_qualified": false,
+    "full_routine_executed": false,
+    "next_action": "In a fresh bounded C271 phase, adopt an independently reviewed, separately versioned current-host execution contract and complete per-method/predicate mapping for the original hardcoded readback cohort. Preserve original C199/C225 records, helper guards and historical test/source bytes. Do not count a replacement-only suite, skipped original methods or rewritten pins as R03. Implement and verify only the design selected for that fresh phase; a complete default routine requires its own declared eligible environment and full inventory. Repeat exact-runtime recovery only if a new authenticated source becomes available.",
+    "independent_scoped_evidence_review": "accepted",
+    "independent_r03_accepted": false,
+    "independent_working_record_review": "accepted",
+    "working_record_review": "docs/engineering/localized-repair-c271/runtime-recovery-p04/WORKING-RECORD-REVIEW.json"
   },
   "delivery": {
     "required": true,
@@ -634,5 +656,11 @@
     }
   ],
   "prior_blocked_reason": "Required routine gate failed: unit timeout at 900 seconds and isolated documentation copy omitted five tracked instruction files, producing 21 missing local links.",
-  "blocked_reason": "Exact historical Node binary is unavailable among checked inputs; unchanged C225 prerequisite refused current binary. Complete required routine run remains unmet."
+  "blocked_reason": "Exact historical Node was not recovered from the inspected P04 sources; unchanged C225 runtime binding remains unsatisfied. Full routine and independent R03 acceptance remain unmet. A separately reviewed current-host execution decision is the next proposed bounded step.",
+  "blocked_reason_history": [
+    {
+      "phase": "C271-P03-validation-recovery",
+      "reason": "Exact historical Node binary is unavailable among checked inputs; unchanged C225 prerequisite refused current binary. Complete required routine run remains unmet."
+    }
+  ]
 }
