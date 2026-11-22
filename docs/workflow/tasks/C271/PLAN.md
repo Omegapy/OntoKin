@@ -342,3 +342,17 @@ One accepted raw-input observation returned metadata for the exact pinned Python
 ## P19 final partial delivery
 
 The immutable P19 ZIP and its byte-identical Continue/Recover prompts were independently verified, saved and read back. The [separate actual receipt](../../../engineering/localized-repair-c271/actual-input-p19/P19-DELIVERY.json) binds their identities, versions, sizes, SHA256 and source revision. This advances P19 delivery only. C271 remains blocked, R03–R05 remain not_done and P02 remains in_progress. The required rpds-py input-readiness failure, unaccepted H0 and original full-routine failures remain unchanged. Stop this chat; the first next fresh-chat action is bounded review of a separate environment satisfying the unchanged seven-package lock.
+
+## P20 isolated verification environment — November 22, 2026
+
+P19 final delivery is reconciled from its exact ZIP, saved terminal receipt and live PR274/issue273 markers. This session owns one bounded phase on the retained C271 branch: independently review and prepare a separate verification environment against the unchanged seven-package lock, preserving the shared runtime. The confirmed early recovery precedes preparation.
+
+Acceptance: bind exact Python/installer/lock inputs, fresh external destinations and wheel provenance; independently approve concrete commands; preserve one actual result and verify static package identities, or stop at the first concrete blocker. Then independently review the outcome, pass documentary/workflow checks, conditionally publish the retained branch, and save the verified phase ZIP plus separate receipt. See `docs/engineering/localized-repair-c271/environment-p20/PHASE.json`.
+
+The phase ends at prepared static environment evidence or the first concrete blocker. H0 operational-plan admission, H1, original-seven/full routine, main integration and parent closure remain separate gates. R03–R05 remain not_done and P02 remains in_progress. No production, test, lock, adopted contract or historical expectation changes are authorized in P20.
+
+### P20 observed preparation result
+
+The one independently approved attempt completed three preparation commands with exit 0. All seven locked wheels and installed versions matched; raw RECORD/inventory checks verified 293 installed files, including generated scripts, and 27 native artifacts as data. All 463 declared original input descriptors matched before/after. Independent outcome review passed 15 static groups. The exact wheel inputs will accompany the final handoff; installed environment directories are excluded.
+
+The parent is in_progress; R03–R05 remain not_done and P02 remains in_progress. The shared-runtime mismatch and original routine failure are preserved. Technical preparation stops here. Complete H0/H1, product/full-routine execution, integration and closure remain separate gates.

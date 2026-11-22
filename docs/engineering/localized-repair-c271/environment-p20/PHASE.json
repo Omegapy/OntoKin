@@ -1,0 +1,234 @@
+{
+  "schema": "ontokin.c271.p20-phase/1",
+  "task": "C271",
+  "phase": "C271-P20-isolated-verification-environment",
+  "owner": "c271-p20-371612fd9cb3",
+  "declared_at_utc": "2026-11-22T21:44:08.430722+00:00",
+  "starting_revision": "4bf7cb0023d1747be16c8752795819dd9a0cca37",
+  "starting_tree": "14e66a0982b95957b74a670c2738d49e7007bb7c",
+  "observed_main": {
+    "sha": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+    "tree": "7302cf8f36c45dd76112ad442e42e48379ac8367",
+    "observed_at_utc": "2026-11-22T21:43:31.601560+00:00"
+  },
+  "branch": "work/c271-missing-import-digest-control",
+  "scope": "Review and prepare an isolated verification environment satisfying the unchanged seven-package lock; preserve shared runtime and prior failures",
+  "acceptance": [
+    "A01: reconcile P19 final delivery and current GitHub; complete assigned full required reads; independently verify and confirm early saved recovery before technical work",
+    "A02: independently approve exact environment preparation inputs, destination, wheel provenance, installer invocation, allowed observations and stop conditions",
+    "A03: execute only approved isolated preparation with unchanged seven pins; verify exact wheel/package identities and shared-runtime preservation, or retain first concrete blocker",
+    "A04: independent result and documentary review; documentation/workflow/preservation checks; conditional retained-branch publication and exact readback",
+    "A05: independent final ZIP audit, confirmed ZIP and matching prompts save/readback, separate receipt publication; stop"
+  ],
+  "stop": "Verified isolated preparation/static package identity evidence or first concrete new blocker; then only documentary verification/publication/delivery",
+  "constraints": [
+    "No production/test/lock/contract changes",
+    "No shared-runtime package installation or replacement",
+    "No H0 operational plan acceptance, H1, original-seven/full routine, Node, ldd, direct-loader, native/model/hosted execution",
+    "No main lease, merge, deletion, parent closure or second phase",
+    "Root owns Git/index/canonical writes and Library; three independent workers own separate evidence directories; no nested fanout"
+  ],
+  "parent_status": "in_progress",
+  "parent_complete": false,
+  "requirements": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "parent_plan": {
+    "P01": "done",
+    "P02": "in_progress"
+  },
+  "phase_complete": false,
+  "early_save_confirmed": true,
+  "phase_table": [
+    {
+      "gate": "A01",
+      "state": "passed",
+      "evidence": [
+        "state/LIVE-START.json",
+        "state/READSET-ROOT.json",
+        "ledger_review/READSET.json",
+        "environment_review/READSET.json",
+        "recovery_audit/P19-RECONCILIATION.json"
+      ]
+    },
+    {
+      "gate": "A02",
+      "state": "passed",
+      "evidence": [
+        "environment_review/PREPARATION-REVIEW.json",
+        "preparation/PREPARATION-PLAN.json"
+      ]
+    },
+    {
+      "gate": "A03",
+      "state": "passed",
+      "evidence": [
+        "preparation/RESULT.json",
+        "environment_review/OUTCOME-REVIEW.json"
+      ],
+      "criterion": "One accepted preparation attempt and independent static outcome audit"
+    },
+    {
+      "gate": "A04",
+      "state": "in_progress"
+    },
+    {
+      "gate": "A05",
+      "state": "not_started"
+    }
+  ],
+  "pr": {
+    "number": 274,
+    "draft": true,
+    "state": "open",
+    "merged": false
+  },
+  "issue": {
+    "number": 273,
+    "state": "open"
+  },
+  "main_lease_held": false,
+  "current_unknown_operations": [],
+  "historical_unknown_operations": [
+    "C270 ancillary broad-driver completion",
+    "Global prior-process termination",
+    "P13 read-only difflib completion; do not retry"
+  ],
+  "workers": [
+    {
+      "id": "/root/recovery_audit",
+      "role": "independent recovery and package audit",
+      "owned": "recovery_audit/",
+      "status": "completed_early_review_no_active_command",
+      "next_action": "Await final package audit"
+    },
+    {
+      "id": "/root/ledger_review",
+      "role": "full active ledgers and documentary review",
+      "owned": "ledger_review/",
+      "status": "awaiting_documentary_candidate_review",
+      "next_action": "Independently inspect exact P20 records and preservation evidence"
+    },
+    {
+      "id": "/root/environment_review",
+      "role": "full requirements/plan/contracts and exact environment preparation review",
+      "owned": "environment_review/",
+      "status": "completed_no_active_command",
+      "next_action": "None; technical phase stopped"
+    }
+  ],
+  "next_action": "Complete independent P20 outcome/documentary reviews, required checks, conditional retained-branch publication, and verified saved handoff. Do not start H0 in this chat.",
+  "capabilities": {
+    "repository": "authentic clean Git clone plus GitHub connector",
+    "conditional_branch_update": "GitHub expected_sha with force=false available; not yet exercised P20",
+    "native_push": "previously diagnosed unavailable; not retried",
+    "terminal": "CPython3.12.14 Linux x86_64 available",
+    "subagents": "three real inherited-model workers",
+    "zip": "stdlib ZIP create and integrity checks",
+    "library": "P20 early ZIP independently accepted, saved in OntoKin, and read back byte-identically before preparation; final save pending",
+    "merge_deletion": "not selected"
+  },
+  "startup_reconciliation": {
+    "P19_delivery": "confirmed_complete_partial_delivery",
+    "recovery_audit": "recovery_audit/P19-RECONCILIATION.json",
+    "recovery_audit_check_groups": 66,
+    "active_task": "C271 on retained branch; main CURRENT is historical C270 because C271 is unmerged",
+    "main_integration_owner": "released; P20 does not acquire lease",
+    "unpublished_product_work": "none at clean authentic checkout",
+    "current_unknown_operations": [],
+    "required_reads": "Director and assigned worker full readsets complete; zero unresolved required gaps"
+  },
+  "active_child_commands": [],
+  "unknown_writes": [],
+  "early_recovery": {
+    "schema": "ontokin.c271.p20-early-delivery/1",
+    "status": "confirmed",
+    "confirmed_at_utc": "2026-11-22T21:48:54.776146+00:00",
+    "local_path": "/workspace/scratch/371612fd9cb3/deliverables/early/OntoKin_C271_P20_Isolated_Environment_Early_Recovery_2026-11-22.zip",
+    "purpose": "create_library_file",
+    "file_id": "file_00000000412881f68ddcd898a87c1cf7",
+    "library_file_id": "libfile_fde3_f-9acb23b93afc81919c1ed2037d350809_2ab2a24d43748191957f9bcc356b59de",
+    "file_name": "OntoKin_C271_P20_Isolated_Environment_Early_Recovery_2026-11-22.zip",
+    "local_metadata_applied": true,
+    "path": "/OntoKin/OntoKin_C271_P20_Isolated_Environment_Early_Recovery_2026-11-22.zip",
+    "current_version_number": 0,
+    "bytes": 573053,
+    "sha256": "5adcb5041a30daa972c94994eaa0889b2cf17fe1afae20d46c858ccd1e057710",
+    "version": 0,
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-9acb23b93afc81919c1ed2037d350809_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "source_revision": "4bf7cb0023d1747be16c8752795819dd9a0cca37",
+    "source_tree": "14e66a0982b95957b74a670c2738d49e7007bb7c",
+    "saved_bytes_readback_equal": true,
+    "early_before_technical_work": true,
+    "independent_review": "recovery_audit/EARLY-REVIEW.json",
+    "independent_checks_passed": 35,
+    "original_xattrs": {
+      "user.library-file-version": "0",
+      "user.library-file-id": "libfile_fde3_f-9acb23b93afc81919c1ed2037d350809_2ab2a24d43748191957f9bcc356b59de"
+    },
+    "upload_status": "succeeded",
+    "receipt_field_correction": "The upload succeeded status had overwritten the separately established confirmed/readback status during dictionary construction; raw upload result and original receipt preserved"
+  },
+  "technical_phase_complete": true,
+  "status": "technical_preparation_accepted_documentary_publication_pending",
+  "first_next_phase_action": "In a fresh chat, reconcile P20 saved delivery and bind the prepared isolated environment (or recreate only from the seven packaged hash-locked wheels if its temporary paths no longer exist). Independently review the actual interpreter, package roots, native/loader closure and source inputs for a complete H0 operational plan under the adopted current-host profile before any H1 or full-routine execution.",
+  "observed_preparation": {
+    "status": "prepared_static_identity_verified",
+    "direct_preparation_commands": 3,
+    "commands_exit_zero": 3,
+    "wheel_count": 7,
+    "installed_package_count": 7,
+    "installed_files": 293,
+    "native_artifacts_hashed_without_loading": 27,
+    "before_after_input_descriptors": 463,
+    "descriptor_failures": 0,
+    "pycache_prefix_absent": true,
+    "h0_accepted": false,
+    "h1_executed": false,
+    "full_routine_executed": false,
+    "shared_runtime_repaired": false,
+    "shared_runtime_note": "Original rpds-py 2026.6.3 metadata remains unchanged; separate environment has 2026.5.1",
+    "environment": {
+      "cfg": {
+        "path": "/workspace/scratch/371612fd9cb3/isolated-p20/pyvenv.cfg",
+        "bytes": 372,
+        "sha256": "881258f7f16a34f4ad4486cea8e17622a9dfb1d8ebaf9e138d15e4b1fa0fbb77",
+        "mode": "0o644"
+      },
+      "cfg_text": "home = /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin\ninclude-system-site-packages = false\nversion = 3.12.14\nexecutable = /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12\ncommand = /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 -m venv --without-pip /workspace/scratch/371612fd9cb3/isolated-p20\n",
+      "python_alias": "/workspace/scratch/371612fd9cb3/isolated-p20/bin/python",
+      "resolved_python": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "site_empty_before_install": true
+    },
+    "result_sha256": "1ea0fb576d85816e09693afc9e6c23eef379dd3ae8f035d287f124d07af1cd17"
+  },
+  "outcome_review": {
+    "path": "docs/engineering/localized-repair-c271/environment-p20/reviews/OUTCOME-REVIEW.json",
+    "verdict": "accepted_prepared_static_identity_evidence",
+    "reviewer": "/root/environment_review",
+    "checks_passed": 15,
+    "sha256": "4c73a310f463d296a346b69f70c01d572d6d3a36ab59fbc0cf1a0e34f862fdb1"
+  },
+  "artifact_resolution": {
+    "repository_paths": "Paths beginning docs/ are repository-relative; inspect the exact source_revision declared by each evidence record.",
+    "session_paths": "Other relative paths in this PHASE.json are relative to the P20 session. The final handoff preserves them under recovery/session/. Absolute paths identify actual observed inputs and are not future-host authority.",
+    "published_canonical_root": "docs/engineering/localized-repair-c271/environment-p20/",
+    "canonical_copies": {
+      "state/PHASE.json": "PHASE.json",
+      "state/EARLY-RECOVERY-RECEIPT.json": "EARLY-RECOVERY-RECEIPT.json",
+      "state/LIVE-START.json": "startup/LIVE-START.json",
+      "state/READSET-ROOT.json": "startup/READSET-ROOT.json",
+      "recovery_audit/P19-RECONCILIATION.json": "startup/P19-RECONCILIATION.json",
+      "recovery_audit/EARLY-REVIEW.json": "startup/EARLY-REVIEW.json",
+      "environment_review/PREPARATION-REVIEW.json": "reviews/PREPARATION-REVIEW.json",
+      "environment_review/OUTCOME-REVIEW.json": "reviews/OUTCOME-REVIEW.json",
+      "preparation/RESULT.json": "preparation/RESULT.json",
+      "preparation/PREPARATION-PLAN.json": "preparation/PREPARATION-PLAN.json"
+    },
+    "other_session_files": "Recover from the final handoff ZIP; final receipt is P20-DELIVERY.json in the canonical root. Until that save is confirmed, early recovery and this active session remain distinct evidence."
+  }
+}

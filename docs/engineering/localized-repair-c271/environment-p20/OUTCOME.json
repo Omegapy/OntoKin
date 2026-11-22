@@ -1,0 +1,76 @@
+{
+  "schema": "ontokin.c271.p20-outcome/1",
+  "recorded_at_utc": "2026-11-22T22:00:00.309299+00:00",
+  "phase": "C271-P20-isolated-verification-environment",
+  "source_revision": "4bf7cb0023d1747be16c8752795819dd9a0cca37",
+  "source_tree": "14e66a0982b95957b74a670c2738d49e7007bb7c",
+  "scope": "Review and prepare an isolated verification environment satisfying the unchanged seven-package lock; preserve shared runtime and prior failures",
+  "verdict": "isolated_environment_preparation_and_static_identity_accepted",
+  "technical_phase_complete": true,
+  "parent_status": "in_progress",
+  "parent_complete": false,
+  "observed": {
+    "status": "prepared_static_identity_verified",
+    "direct_preparation_commands": 3,
+    "commands_exit_zero": 3,
+    "wheel_count": 7,
+    "installed_package_count": 7,
+    "installed_files": 293,
+    "native_artifacts_hashed_without_loading": 27,
+    "before_after_input_descriptors": 463,
+    "descriptor_failures": 0,
+    "pycache_prefix_absent": true,
+    "h0_accepted": false,
+    "h1_executed": false,
+    "full_routine_executed": false,
+    "shared_runtime_repaired": false,
+    "shared_runtime_note": "Original rpds-py 2026.6.3 metadata remains unchanged; separate environment has 2026.5.1",
+    "environment": {
+      "cfg": {
+        "path": "/workspace/scratch/371612fd9cb3/isolated-p20/pyvenv.cfg",
+        "bytes": 372,
+        "sha256": "881258f7f16a34f4ad4486cea8e17622a9dfb1d8ebaf9e138d15e4b1fa0fbb77",
+        "mode": "0o644"
+      },
+      "cfg_text": "home = /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin\ninclude-system-site-packages = false\nversion = 3.12.14\nexecutable = /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12\ncommand = /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 -m venv --without-pip /workspace/scratch/371612fd9cb3/isolated-p20\n",
+      "python_alias": "/workspace/scratch/371612fd9cb3/isolated-p20/bin/python",
+      "resolved_python": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "site_empty_before_install": true
+    },
+    "result_sha256": "1ea0fb576d85816e09693afc9e6c23eef379dd3ae8f035d287f124d07af1cd17"
+  },
+  "independent_review": {
+    "path": "docs/engineering/localized-repair-c271/environment-p20/reviews/OUTCOME-REVIEW.json",
+    "verdict": "accepted_prepared_static_identity_evidence",
+    "reviewer": "/root/environment_review",
+    "checks_passed": 15,
+    "sha256": "4c73a310f463d296a346b69f70c01d572d6d3a36ab59fbc0cf1a0e34f862fdb1"
+  },
+  "raw_result": "docs/engineering/localized-repair-c271/environment-p20/preparation/RESULT.json",
+  "worktree_disclosure": "P20 documentary task/current/requirements/plan records and evidence were uncommitted during preparation. Production, tests and lock bytes remained at the starting Git revision. No clean-source operational admission is claimed.",
+  "historical_evidence": {
+    "P19_shared_rpds_mismatch": "unchanged; rpds-py 2026.6.3 remains in shared runtime",
+    "original_full_routine": "failed; unchanged",
+    "N57": "external independent review only, not a runtime pass or skip"
+  },
+  "not_run": [
+    "ordinary-provider metadata agreement",
+    "complete H0 operational-plan admission",
+    "H1",
+    "original-seven/full routine",
+    "installed native-library loading",
+    "OntoKin product tests",
+    "Node",
+    "ldd",
+    "direct-loader command",
+    "native/model/hosted trial",
+    "main integration"
+  ],
+  "next_phase_action": "In a fresh chat, reconcile P20 saved delivery and bind the prepared isolated environment (or recreate only from the seven packaged hash-locked wheels if its temporary paths no longer exist). Independently review the actual interpreter, package roots, native/loader closure and source inputs for a complete H0 operational plan under the adopted current-host profile before any H1 or full-routine execution.",
+  "current_unknown_operations": [],
+  "historical_unknown_operations": [
+    "C270 ancillary broad-driver completion",
+    "Global prior-process termination",
+    "P13 read-only difflib completion; do not retry"
+  ]
+}

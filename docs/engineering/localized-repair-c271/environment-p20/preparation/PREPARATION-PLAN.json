@@ -1,0 +1,177 @@
+{
+  "schema": "ontokin.c271.p20-preparation-plan/1",
+  "source_revision": "4bf7cb0023d1747be16c8752795819dd9a0cca37",
+  "scope": "One isolated environment preparation attempt only; stop on first concrete failure; no retry/substitution",
+  "lock": {
+    "path": "/workspace/scratch/371612fd9cb3/repo/tools/native-reader-verification-linux-cp312.lock",
+    "bytes": 779,
+    "sha256": "a7f17491000c2e139ccc5d213ca0e8a6f917e5befb4b878fef29f5ff72ae780f"
+  },
+  "pins": [
+    {
+      "name": "attrs",
+      "version": "26.1.0",
+      "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309"
+    },
+    {
+      "name": "jsonschema",
+      "version": "4.26.0",
+      "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce"
+    },
+    {
+      "name": "jsonschema-specifications",
+      "version": "2025.9.1",
+      "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe"
+    },
+    {
+      "name": "referencing",
+      "version": "0.37.0",
+      "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231"
+    },
+    {
+      "name": "rpds-py",
+      "version": "2026.5.1",
+      "sha256": "b6825cc329b290e93c5f6a9be2393118a763f6ccf6abd83704e0c102ca583644"
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0",
+      "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8"
+    },
+    {
+      "name": "Pillow",
+      "version": "13.0.0",
+      "sha256": "42d63be3af4f9b951b199b0a9d23365d37ab14687e6d77b74940432c8515c4ca"
+    }
+  ],
+  "wheelhouse": "/workspace/scratch/371612fd9cb3/wheelhouse-p20",
+  "venv": "/workspace/scratch/371612fd9cb3/isolated-p20",
+  "work": "/workspace/scratch/371612fd9cb3/preparation-work-p20",
+  "pip_runner": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pip/__pip-runner__.py",
+  "pip_version": "26.2.2",
+  "installer_inventory_sha256": "ef50665bbd4e122d7f57db54d536c6f7ef2e63f151a5ee3b05a2e9aeaa0a326d",
+  "inherited_environment_keys": [
+    "PATH",
+    "HTTPS_PROXY",
+    "HTTP_PROXY",
+    "ALL_PROXY",
+    "NO_PROXY",
+    "SSL_CERT_FILE",
+    "SSL_CERT_DIR"
+  ],
+  "environment_rule": "Only these current host infrastructure keys are inherited unchanged; credential-bearing proxy values are not copied to evidence. No PYTHONPATH/PYTHONHOME/PIP_* ambient setting is inherited. No HOME override. TLS verification remains enabled.",
+  "fixed_environment": {
+    "PIP_CONFIG_FILE": "/dev/null",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TMPDIR": "/workspace/scratch/371612fd9cb3/preparation-work-p20/tmp",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8"
+  },
+  "commands": [
+    {
+      "name": "download_locked_wheels",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-I",
+        "-S",
+        "-B",
+        "-X",
+        "pycache_prefix=/workspace/scratch/371612fd9cb3/preparation-work-p20/fresh-pycache",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pip/__pip-runner__.py",
+        "--isolated",
+        "--disable-pip-version-check",
+        "--no-input",
+        "--no-cache-dir",
+        "download",
+        "--index-url",
+        "https://pypi.org/simple",
+        "--only-binary=:all:",
+        "--require-hashes",
+        "--no-deps",
+        "--retries",
+        "0",
+        "--timeout",
+        "20",
+        "--dest",
+        "/workspace/scratch/371612fd9cb3/wheelhouse-p20",
+        "-r",
+        "/workspace/scratch/371612fd9cb3/repo/tools/native-reader-verification-linux-cp312.lock"
+      ],
+      "cwd": "/workspace/scratch/371612fd9cb3/preparation-work-p20",
+      "timeout_seconds": 120
+    },
+    {
+      "name": "create_empty_venv",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-I",
+        "-S",
+        "-B",
+        "-X",
+        "pycache_prefix=/workspace/scratch/371612fd9cb3/preparation-work-p20/fresh-pycache",
+        "-m",
+        "venv",
+        "--without-pip",
+        "--symlinks",
+        "/workspace/scratch/371612fd9cb3/isolated-p20"
+      ],
+      "cwd": "/workspace/scratch/371612fd9cb3/preparation-work-p20",
+      "timeout_seconds": 30
+    },
+    {
+      "name": "install_locked_wheels",
+      "argv": [
+        "/workspace/scratch/371612fd9cb3/isolated-p20/bin/python",
+        "-I",
+        "-B",
+        "-X",
+        "pycache_prefix=/workspace/scratch/371612fd9cb3/preparation-work-p20/fresh-pycache",
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/pip/__pip-runner__.py",
+        "--isolated",
+        "--disable-pip-version-check",
+        "--no-input",
+        "--no-cache-dir",
+        "install",
+        "--no-index",
+        "--find-links",
+        "/workspace/scratch/371612fd9cb3/wheelhouse-p20",
+        "--only-binary=:all:",
+        "--require-hashes",
+        "--no-deps",
+        "--no-compile",
+        "--report",
+        "/workspace/scratch/371612fd9cb3/phase-p20/preparation/PIP-INSTALL-REPORT.json",
+        "-r",
+        "/workspace/scratch/371612fd9cb3/repo/tools/native-reader-verification-linux-cp312.lock"
+      ],
+      "cwd": "/workspace/scratch/371612fd9cb3/preparation-work-p20",
+      "timeout_seconds": 120
+    }
+  ],
+  "startup_boundary": "Download Python uses -I -S -B and exact __pip-runner__ with bundled pip imports. Empty venv is created without pip/system-site. Installation Python omits -S only to select venv scheme; site directory must be verified empty before launch. No subsequent environment interpreter is launched after installation. Controller remains -I -S -B and reads METADATA/WHEEL/RECORD/native bytes as data.",
+  "expected_result": "All seven wheel hashes and metadata pins, full installed RECORD hashes and inventory, unchanged selected shared input hashes; no target commands",
+  "prohibited": [
+    "source builds",
+    "dependency resolution beyond seven exact pins",
+    "shared runtime mutation",
+    "package imports by controller",
+    "Node",
+    "ldd",
+    "direct loader",
+    "H0/H1",
+    "original-seven/full routine",
+    "native/model/hosted runs",
+    "main integration"
+  ],
+  "pycache_prefix": "/workspace/scratch/371612fd9cb3/preparation-work-p20/fresh-pycache",
+  "cache_policy": "All preparation Python invocations use -B plus -X pycache_prefix at the same absent task-local path. This prevents reading ambient cached pip bytecode; the prefix must remain absent.",
+  "controller_argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "-I",
+    "-S",
+    "-B",
+    "-X",
+    "pycache_prefix=/workspace/scratch/371612fd9cb3/preparation-work-p20/fresh-pycache",
+    "/workspace/scratch/371612fd9cb3/phase-p20/preparation/prepare_isolated.py"
+  ]
+}

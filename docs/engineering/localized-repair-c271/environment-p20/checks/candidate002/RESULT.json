@@ -1,0 +1,32 @@
+{
+  "schema": "ontokin.c271.p20-documentary-delta-checks/1",
+  "recorded_at_utc": "2026-11-22T22:04:29.672749+00:00",
+  "candidate_manifest": "phase-p20/state/DOCUMENTARY-CANDIDATE-002.json",
+  "candidate_manifest_sha256": "458d8c3149b310c2982bc9949f87324347512bd502269b67047c3f13f6f99d6d",
+  "capture": "Recorded from the completed direct exec_command tool returns; no rerun and no invented separate stdout/stderr channels",
+  "checks": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "returncode": 0,
+      "tool_chunk_id": "e4fc0f",
+      "combined_output": "Workflow structure passed (12 tasks).\nLocal structural check only; live GitHub state and the truth of cited evidence require separate verification.\n"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "returncode": 0,
+      "tool_chunk_id": "cc46f1",
+      "combined_output": ""
+    }
+  ],
+  "documentation_reuse": "Only PHASE.json/CURRENT.json metadata changed from candidate001. The Markdown source and documentation-checker inputs remain unchanged; a fresh resulting published-source documentation check is still planned."
+}

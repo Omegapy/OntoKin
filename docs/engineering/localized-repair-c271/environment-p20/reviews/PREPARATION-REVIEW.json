@@ -1,0 +1,151 @@
+{
+  "schema": "ontokin.c271.p20.preparation-review/1",
+  "reviewer": "/root/environment_review",
+  "recorded_at_utc": "2026-11-22T21:55:35.735596+00:00",
+  "verdict": "accepted_for_one_preparation_attempt",
+  "candidate": "candidate003",
+  "plan_sha256": "ec11a4a45be52b1a9027030d562a3beb5ba88157bb7a3a93cabcde174e81aef7",
+  "script_sha256": "2ca9931fb9d0b049ab65238006457a7ce0b08c3751e5907a06e22fb688d260cd",
+  "input_inventory_sha256": "ef50665bbd4e122d7f57db54d536c6f7ef2e63f151a5ee3b05a2e9aeaa0a326d",
+  "early_receipt_sha256": "35767d92aa72f5eb6a50483b1b817563ce57557aa436ed2c48636fc070666d88",
+  "scope": "One isolated preparation attempt using exactly PREPARATION-PLAN.controller_argv and its three declared child commands; stop at prepared static identity evidence or first concrete blocker.",
+  "checks": [
+    {
+      "id": "PR01",
+      "result": "passed",
+      "detail": "Exact candidate003 plan/script hashes match Director freeze; script parsed as source only."
+    },
+    {
+      "id": "PR02",
+      "result": "passed",
+      "detail": "Confirmed early receipt retains original saved archive identity and successful byte readback; preceding inconsistent receipt retained."
+    },
+    {
+      "id": "PR03",
+      "result": "passed",
+      "detail": "Input inventory digest is checked by candidate before trusting declared preparation input identities."
+    },
+    {
+      "id": "PR04",
+      "result": "passed",
+      "detail": "Independent current read of all 463 declared input rows matches every supplied SHA-256, byte count and mode."
+    },
+    {
+      "id": "PR05",
+      "result": "passed",
+      "detail": "Seven names, versions and wheel hashes remain the unchanged native-reader lock."
+    },
+    {
+      "id": "PR06",
+      "result": "passed",
+      "detail": "Direct selected Python remains the exact canonical P11 hash/size/mode. Empty venv uses symlinks, without pip or system site packages."
+    },
+    {
+      "id": "PR07",
+      "result": "passed",
+      "detail": "Exact pip runner redirects pip imports to bound source; DEBUNDLED=False. PIP_CONFIG_FILE=/dev/null bypasses all config-file loading in inspected source."
+    },
+    {
+      "id": "PR08",
+      "result": "passed",
+      "detail": "All controller/child argv use -B and fresh explicit -X pycache_prefix. Controller validates its cache policy; prefix is absent before attempt and checked after commands/finalization."
+    },
+    {
+      "id": "PR09",
+      "result": "passed",
+      "detail": "Download uses explicit public index, wheel-only, exact hashes, no dependencies, no cache, no input, bounded timeout and zero network retries."
+    },
+    {
+      "id": "PR10",
+      "result": "passed",
+      "detail": "Install uses reviewed local wheelhouse only, no index, no dependencies, no compile and empty venv site before launch; no later venv interpreter launch."
+    },
+    {
+      "id": "PR11",
+      "result": "passed",
+      "detail": "Wheel audit rejects traversal, duplicate members, symlinks, startup hooks and incorrect package/hash inventory before installing."
+    },
+    {
+      "id": "PR12",
+      "result": "passed",
+      "detail": "Postinstall reader uses stdlib raw metadata/RECORD/file bytes; verifies all seven versions and all RECORD hashes, includes bin scripts, rejects unrecorded site files and marks native files as data."
+    },
+    {
+      "id": "PR13",
+      "result": "passed",
+      "detail": "All 12 declared fresh destination/output paths are currently absent; external task-owned destinations preserve shared inputs; captured logs use exclusive create."
+    },
+    {
+      "id": "PR14",
+      "result": "passed",
+      "detail": "One attempt only, stops on first failed operation or mismatch, retains result and post-checks; no product/Node/ldd/direct-loader/full-routine invocation appears in commands."
+    },
+    {
+      "id": "PR15",
+      "result": "passed",
+      "detail": "Source revision identifies base product bytes; Director discloses uncommitted documentary records. This is preparation, not clean-source H0 admission."
+    }
+  ],
+  "checks_passed": 15,
+  "mandatory_findings_remaining": [],
+  "resolved_findings": [
+    "P20-ER-001: inconsistent authored early receipt status corrected with prior receipt preserved",
+    "P20-ER-002: input inventory digest explicitly bound",
+    "P20-ER-003: existing pip bytecode bypassed with guarded fresh pycache prefix and -B",
+    "P20-ER-004: original file SHA/size/mode descriptors checked",
+    "P20-ER-005: all RECORD-resolved files, including bin scripts, inventoried"
+  ],
+  "source_snapshots": [
+    {
+      "path": "preparation-review/candidate003/PREPARATION-PLAN.json",
+      "bytes": 6831,
+      "sha256": "ec11a4a45be52b1a9027030d562a3beb5ba88157bb7a3a93cabcde174e81aef7"
+    },
+    {
+      "path": "preparation-review/candidate003/prepare_isolated.py",
+      "bytes": 12266,
+      "sha256": "2ca9931fb9d0b049ab65238006457a7ce0b08c3751e5907a06e22fb688d260cd"
+    },
+    {
+      "path": "preparation-review/candidate003/INPUT-INVENTORY.json",
+      "bytes": 134027,
+      "sha256": "ef50665bbd4e122d7f57db54d536c6f7ef2e63f151a5ee3b05a2e9aeaa0a326d"
+    },
+    {
+      "path": "preparation-review/candidate003/EARLY-RECOVERY-RECEIPT.json",
+      "bytes": 1691,
+      "sha256": "35767d92aa72f5eb6a50483b1b817563ce57557aa436ed2c48636fc070666d88"
+    }
+  ],
+  "reviewed_controller_argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "-I",
+    "-S",
+    "-B",
+    "-X",
+    "pycache_prefix=/workspace/scratch/371612fd9cb3/preparation-work-p20/fresh-pycache",
+    "/workspace/scratch/371612fd9cb3/phase-p20/preparation/prepare_isolated.py"
+  ],
+  "current_fresh_paths": [
+    "/workspace/scratch/371612fd9cb3/preparation-work-p20",
+    "/workspace/scratch/371612fd9cb3/wheelhouse-p20",
+    "/workspace/scratch/371612fd9cb3/isolated-p20",
+    "/workspace/scratch/371612fd9cb3/preparation-work-p20/fresh-pycache",
+    "/workspace/scratch/371612fd9cb3/phase-p20/preparation/RESULT.json",
+    "/workspace/scratch/371612fd9cb3/phase-p20/preparation/PIP-INSTALL-REPORT.json",
+    "/workspace/scratch/371612fd9cb3/phase-p20/preparation/download_locked_wheels.stdout.log",
+    "/workspace/scratch/371612fd9cb3/phase-p20/preparation/download_locked_wheels.stderr.log",
+    "/workspace/scratch/371612fd9cb3/phase-p20/preparation/create_empty_venv.stdout.log",
+    "/workspace/scratch/371612fd9cb3/phase-p20/preparation/create_empty_venv.stderr.log",
+    "/workspace/scratch/371612fd9cb3/phase-p20/preparation/install_locked_wheels.stdout.log",
+    "/workspace/scratch/371612fd9cb3/phase-p20/preparation/install_locked_wheels.stderr.log"
+  ],
+  "runtime_evidence_limit": "Review is static. No installer, product, package import, target invocation or recovered script was executed by reviewer. The 463 observations are file identity checks, not product tests.",
+  "approval_limits": [
+    "Preparation evidence does not establish H0/H1, ordinary-provider metadata agreement, full loader closure, host qualification, original-seven/full routine, R03, integration or parent closure.",
+    "Existing installer and interpreter remain supplied-host tools; no vendor-authentication or whole-host security claim.",
+    "Child command list records the controller direct preparation launches. It is not exhaustive process tracing inside package-manager internals.",
+    "If the operation fails or its outcome becomes unknown, preserve partial state and stop; this acceptance authorizes no retry or in-place repair."
+  ],
+  "next_action": "Director may run the exact one-attempt controller after its own frozen-input readback, retain complete result/logs and request outcome review."
+}
