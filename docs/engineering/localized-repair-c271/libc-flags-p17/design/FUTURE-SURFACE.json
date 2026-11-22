@@ -1,0 +1,63 @@
+{
+  "schema": "ontokin.c271.p17-future-surface/1",
+  "decision": "P17-FLAGS-001",
+  "implementation_in_p17": false,
+  "new_pair": {
+    "plan_schema": "ontokin.current-host-readback-inspection-plan/0.1.3",
+    "resolution_profile": "linux-glibc-declared-python-origin-rpath-libc-plt-static-tls-v1"
+  },
+  "preceding_design_dependency": "P16-ELF-001, adopted tag design and frozen controls; not implemented at retained inspection source a8274d56076562a91d26b3cdd2f614fce6fd509733e4939b225dff2ddca09db4",
+  "proposed_production_edit_paths": ["prototypes/static_tray_v01/current_host_inspection_v01.py"],
+  "proposed_new_test_paths": ["tests/test_current_host_libc_static_tls_flags_v01.py"],
+  "p16_implementation_surface_separately_preserved": "P16 FUTURE-SURFACE.json, including its proposed tests/test_current_host_libc_plt_metadata_v01.py",
+  "existing_test_oracle_edits_allowed": false,
+  "old_contract_pin_limit_consumer_edits_allowed": false,
+  "new_resource_caps": [],
+  "operational_json_key_additions": [],
+  "surface": [
+    {
+      "symbols": ["new exact schema/profile constants", "_plan_shape", "new private fixed-profile selector"],
+      "change": "Add only the /0.1.3 pair. Reuse the unchanged closed libc_plt/0.1.0 object and origin_rpath requirements. Preserve /0.1.0, /0.1.1 and P16 /0.1.2 as distinct exact pairs; do not rewrite plan bytes or add a caller mask/approval field.",
+      "controls": ["S01-S05", "all original P16 selector controls on their unchanged routes"]
+    },
+    {
+      "symbols": ["_select_origin_profile", "_prepare_origin_policy", "_check_author_runtime", "_check_resolution", "P16 private binding/policy constructor", "_validate", "_recheck", "_launch_check"],
+      "change": "Recognize the new pair as requiring the complete unchanged P11/P13 and P16 proof. Derive selected dependency/alias/file/image/interpreter/loader/pin proof from actual Python metadata before raw libc parsing and before helpers/Git/commands. Recreate proof at every complete recheck; preserve snapshots and final launch guards.",
+      "controls": ["B01-B05", "D01", "all inherited origin and P16 binding/recheck controls", "independent exact caller-order/source review"]
+    },
+    {
+      "symbols": ["new private fixed static-TLS metadata reader", "_read_elf_metadata", "_read_plan_elf_metadata", "private callback checkpoints"],
+      "change": "Only for the new bound libc subject, add exact DT_FLAGS value24 to existing absence/0/8 while retaining at-most-one entry and every flags1 rule. Do not expand the global mask or alter P16 predicate. Keep structure, architecture, unknown tags and trio earlier; strings/path/identity later. No TLS/PT_TLS/relocation validator or output-key addition.",
+      "controls": ["P01-P05", "N01-N16", "L01-L04", "X01-X02", "F01-F03", "every original P16 metadata/fault case on its original route"]
+    },
+    {
+      "symbols": ["new independently reviewed test adapter"],
+      "change": "Consume all original frozen bytes and expectations. Bind actual symbols and exact adapter source; distinguish private synthetic metadata, selector, mocked binding/dispatch and actual callback reachability. No fixture pin substitution, case-ID exception synthesis, or product-runtime approval from a synthetic label.",
+      "controls": ["all41 P17 controls", "unchanged historical N57 external accounting"]
+    }
+  ],
+  "later_required_checks": [
+    "All135 inherited inspection methods and40 mapping methods, unchanged.",
+    "All96 P13-applicable origin runtime controls, with historical N57 separately external.",
+    "All73 original P16 controls unchanged; P16 N16 still requires flags24 refusal.",
+    "All41 P17 controls with independently reviewed adapter and exact source binding.",
+    "Applicable provider/driver compatibility and documentary/workflow checks for the actual future change."
+  ],
+  "mandatory_preservation": [
+    "Public parser signature/default; /0.1.0 and /0.1.1 behavior; P16 /0.1.2 design and every older refusal/oracle.",
+    "P16 selected-role, both exact pins, early proof, immutable descriptors, fresh recheck and no cached admission.",
+    "All existing file/table/string/mapping/path/identity/callback/descriptor-close guards.",
+    "Existing DT_FLAGS_1 mask0x08000001 and at-most-one flags/flags1 entries.",
+    "P06 closed HOST/inspection/provider/JavaScript shapes and unchanged command stdout_predicate.",
+    "Original-seven/helper/scientific bodies, Python/Node/archive/dependency/package pins, environments and every budget.",
+    "All failures, prior attempts, old contracts, frozen fixtures and expectations."
+  ],
+  "next_eligible_fresh_phase": "After separate adoption, select bounded implementation of P16 tag design and P17 flags extension together with exact frozen/inherited controls and independent review; stop before H0/H1 or first concrete design blocker.",
+  "not_authorized_now_or_by_primitive_success": [
+    "Production/test implementation or product/parser/test execution in P17.",
+    "New host inspection/H0/H1, runtime preparation/install, Node/ldd/direct-loader execution.",
+    "TLS allocation/layout/relocation or executable safety certification.",
+    "Input substitution, original-seven/full routine, native/model/hosted execution.",
+    "Main lease/integration, branch deletion, R03-R05 or parent closure."
+  ]
+}

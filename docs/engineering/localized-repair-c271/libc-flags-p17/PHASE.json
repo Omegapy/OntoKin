@@ -41,7 +41,7 @@
   "integration_allowed": false,
   "phase_complete": false,
   "early_save_confirmed": true,
-  "status": "design_in_progress",
+  "status": "design_adopted_delivery_pending",
   "acceptance": [
     {
       "id": "P17-A01",
@@ -71,19 +71,19 @@
     },
     {
       "gate": "P17-A02",
-      "state": "in_progress"
+      "state": "passed"
     },
     {
       "gate": "P17-A03",
-      "state": "not_started"
+      "state": "passed"
     },
     {
       "gate": "P17-A04",
-      "state": "not_started"
+      "state": "pending"
     },
     {
       "gate": "P17-A05",
-      "state": "not_started"
+      "state": "pending"
     }
   ],
   "constraints": [
@@ -94,7 +94,7 @@
   ],
   "capabilities": {
     "repository_read": "observed GitHub and authentic Git checkout",
-    "git_data_write": "available create tree/commit and expected_sha nonforce ref tools; no write attempted yet",
+    "git_data_write": "Observed successful conditional nonforce phase-start publication and exact branch/parent/tree readback",
     "native_push": "historically unsupported; not retried",
     "terminal_documentation_checks": true,
     "subagents": true,
@@ -107,22 +107,22 @@
     {
       "worker": "/root/handoff_audit",
       "scope": "independent predecessor/early/final package audit",
-      "state": "intake and early review complete; idle"
+      "state": "intake/early/startup review complete; final documentary/package review pending"
     },
     {
       "worker": "/root/records_review",
       "scope": "full active ledger startup reading and reconciliation",
-      "state": "startup complete; independent technical review active"
+      "state": "startup and independent exact technical review complete; no product execution"
     },
     {
       "worker": "/root",
       "scope": "canonical coordination and delivery",
-      "state": "coordinating source design/review and documentary publication; early recovery confirmed"
+      "state": "technical adoption complete; documentary publication and delivery only"
     },
     {
       "worker": "/root/flags_design",
       "scope": "source-backed flags decision and frozen inert controls",
-      "state": "active design; no implementation"
+      "state": "complete; exact frozen candidate; no active operation or unknown write"
     }
   ],
   "current_unknown_operations": [],
@@ -131,7 +131,7 @@
     "Global prior-process termination",
     "P13 read-only difflib completion; do not retry"
   ],
-  "next_action": "Source-backed flags decision and frozen controls; no implementation",
+  "next_action": "Only documentary verification, conditional branch publication and verified P17 partial delivery remain in this chat.",
   "early_recovery": {
     "local_path": "/workspace/scratch/bbea56c9165d/deliverables/early-attempt002/OntoKin_C271_P17_Libc_Flags_Early_Recovery_2026-11-22.zip",
     "purpose": "create_library_file",
@@ -147,5 +147,15 @@
     "saved_bytes_readback_equal": true,
     "version": 0,
     "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-42ecbc3d31788191838aeb897662c986_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
-  }
+  },
+  "phase_start_checkpoint": {
+    "commit": "4d259aff76af30381c0796f1527740f76cca1d9a",
+    "tree": "34ac559497ee18df46e850a2d942d64ef8cece0a",
+    "parent": "81425ebd42c2b746b1b432231d02a1a7f6b5d6ff",
+    "conditional_nonforce": true,
+    "exact_remote_readback": true
+  },
+  "technical_complete": true,
+  "adoption": "docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json",
+  "technical_boundary_at_utc": "2026-11-22T18:44:36.450224+00:00"
 }

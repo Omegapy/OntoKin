@@ -1,0 +1,65 @@
+{
+  "schema": "ontokin.c271.p17-director-primary-confirmation/1",
+  "reader": "/root",
+  "at_utc": "2026-11-22T18:32:36.070374+00:00",
+  "archive_sha256": "f24aa441021121a79266f0d75242706cab8843a47901fefe74527491807f1998",
+  "sources": [
+    {
+      "path": "elf/elf.h",
+      "archive_member": "glibc-2.41/elf/elf.h",
+      "bytes": 196094,
+      "sha256": "1490fa24d00c6e1a803edd0402e24f11bcf9de0683953f83a726a9c5462fe46c",
+      "exact_archive_bytes": true
+    },
+    {
+      "path": "elf/get-dynamic-info.h",
+      "archive_member": "glibc-2.41/elf/get-dynamic-info.h",
+      "bytes": 6248,
+      "sha256": "b1dfce5fd79e795bdb44bab5c6eaa86ffe0bb37cbf6eade765e217d03a620c65",
+      "exact_archive_bytes": true
+    },
+    {
+      "path": "elf/dl-static-tls.h",
+      "archive_member": "glibc-2.41/elf/dl-static-tls.h",
+      "bytes": 2192,
+      "sha256": "0a7e0f87819dddf76b6238116e1284f83bc3464360fa580e9b8174e8663d1f17",
+      "exact_archive_bytes": true
+    },
+    {
+      "path": "elf/dl-reloc.c",
+      "archive_member": "glibc-2.41/elf/dl-reloc.c",
+      "bytes": 12835,
+      "sha256": "197069c157c77e3ede5ad2a753a247ce539cefe8e820db78baaa66b16cfaba90",
+      "exact_archive_bytes": true
+    },
+    {
+      "path": "sysdeps/x86_64/dl-machine.h",
+      "archive_member": "glibc-2.41/sysdeps/x86_64/dl-machine.h",
+      "bytes": 24634,
+      "sha256": "1545fc722187437ac1c73b5e022fa409ace5998c21915e9d3133c23d0f4413a7",
+      "exact_archive_bytes": true
+    },
+    {
+      "path": "COPYING.LIB",
+      "archive_member": "glibc-2.41/COPYING.LIB",
+      "bytes": 26530,
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+      "exact_archive_bytes": true
+    }
+  ],
+  "inspected_sections": {
+    "elf/elf.h": "998-1004",
+    "elf/get-dynamic-info.h": "100-188",
+    "elf/dl-static-tls.h": "full",
+    "elf/dl-reloc.c": "20-148",
+    "sysdeps/x86_64/dl-machine.h": "350-409",
+    "current_host_inspection_v01.py": "1140-1190"
+  },
+  "observations": [
+    "DF_STATIC_TLS is 0x10 and DF_BIND_NOW is 0x8; observed0x18 is their combination",
+    "General dynamic-info path stores flags and translates BIND_NOW; ld.so bootstrap retains a narrower assertion",
+    "Static-TLS relocation uses allocation/availability checks and can fail; metadata recognition cannot prove TLS runtime safety",
+    "Current OntoKin reader refuses flags outside0x8; earlier unknown-tag check prevents claiming the real-libc flags refusal was observed"
+  ],
+  "scope": "Independent Director static source inspection only; no product or host execution; full candidate review remains separate"
+}

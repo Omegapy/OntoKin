@@ -1,0 +1,251 @@
+{
+  "cases": [
+    {
+      "context": "contexts/P01_exact_18.json",
+      "id": "P01_exact_18",
+      "purpose": "Exact retained flags combination, synthetic metadata-only positive.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/P02_absent_flags.json",
+      "id": "P02_absent_flags",
+      "purpose": "Both optional flags entries absent; prior absence behavior retained.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/P03_zero_flags.json",
+      "id": "P03_zero_flags",
+      "purpose": "Explicit DT_FLAGS zero remains accepted.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/P04_bind_now.json",
+      "id": "P04_bind_now",
+      "purpose": "Prior DT_FLAGS 8 remains accepted.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/P05_flags1_allowed.json",
+      "id": "P05_flags1_allowed",
+      "purpose": "Exact 24 combined with all previously allowed flags1 bits.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N01_static_only.json",
+      "id": "N01_static_only",
+      "purpose": "Lone static-TLS bit is outside the exact extra combination.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N02_origin_bit.json",
+      "id": "N02_origin_bit",
+      "purpose": "Added DF_ORIGIN bit remains refused.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N03_symbolic_bit.json",
+      "id": "N03_symbolic_bit",
+      "purpose": "Added DF_SYMBOLIC bit remains refused.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N04_textrel_bit.json",
+      "id": "N04_textrel_bit",
+      "purpose": "Added DF_TEXTREL bit remains refused.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N05_unknown_bit.json",
+      "id": "N05_unknown_bit",
+      "purpose": "Added unknown bit 0x20 remains refused.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N06_high_bit.json",
+      "id": "N06_high_bit",
+      "purpose": "High unsigned bit is not truncated into an accepted value.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N07_u64_max.json",
+      "id": "N07_u64_max",
+      "purpose": "Maximum encoded unsigned value remains refused.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N08_duplicate_equal.json",
+      "id": "N08_duplicate_equal",
+      "purpose": "Equal duplicate flags do not become one entry.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N09_duplicate_mixed.json",
+      "id": "N09_duplicate_mixed",
+      "purpose": "Mixed duplicate flags remain refused.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N10_flags1_origin.json",
+      "id": "N10_flags1_origin",
+      "purpose": "Unchanged flags1 policy refuses DF_1_ORIGIN.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N11_flags1_duplicate.json",
+      "id": "N11_flags1_duplicate",
+      "purpose": "Unchanged flags1 multiplicity refuses equal duplicates.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N12_unknown_before_flags.json",
+      "id": "N12_unknown_before_flags",
+      "purpose": "Unknown tag remains earlier than a separately bad flags value.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N13_trio_before_flags.json",
+      "id": "N13_trio_before_flags",
+      "purpose": "P16 missing-trio check remains earlier than bad flags.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N14_arch_before_flags.json",
+      "id": "N14_arch_before_flags",
+      "purpose": "P16 architecture check remains earlier than bad flags.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N15_later_strings.json",
+      "id": "N15_later_strings",
+      "purpose": "Accepted flags do not bypass the following string-table mapping guard.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/N16_later_token.json",
+      "id": "N16_later_token",
+      "purpose": "Accepted flags do not authorize token expansion in libc RPATH.",
+      "route": "static_tls_metadata"
+    },
+    {
+      "context": "contexts/L01_p16_18.json",
+      "id": "L01_p16_18",
+      "purpose": "P16 private trio route keeps its original flags refusal.",
+      "route": "p16_libc_plt_metadata"
+    },
+    {
+      "context": "contexts/L02_public_18.json",
+      "id": "L02_public_18",
+      "purpose": "Tagless public-route control isolates the old flags refusal.",
+      "route": "legacy_public_metadata"
+    },
+    {
+      "context": "contexts/L03_literal_18.json",
+      "id": "L03_literal_18",
+      "purpose": "Tagless /0.1.0 reader dispatch retains old flags refusal.",
+      "route": "legacy_literal_plan_reader"
+    },
+    {
+      "context": "contexts/L04_origin_other_18.json",
+      "id": "L04_origin_other_18",
+      "purpose": "Tagless non-Python /0.1.1 reader retains old flags refusal.",
+      "route": "legacy_origin_other_reader"
+    },
+    {
+      "context": "contexts/S01_exact_pair.json",
+      "id": "S01_exact_pair",
+      "purpose": "Select only the new exact pair with unchanged closed object.",
+      "route": "new_profile_rule"
+    },
+    {
+      "context": "contexts/S02_new_schema_old_profile.json",
+      "id": "S02_new_schema_old_profile",
+      "purpose": "No mixed new-schema / P16-profile pair.",
+      "route": "new_profile_rule"
+    },
+    {
+      "context": "contexts/S03_old_schema_new_profile.json",
+      "id": "S03_old_schema_new_profile",
+      "purpose": "No mixed P16-schema / new-profile pair.",
+      "route": "new_profile_rule"
+    },
+    {
+      "context": "contexts/S04_extra_mask.json",
+      "id": "S04_extra_mask",
+      "purpose": "No caller-selected flags mask in the unchanged closed object.",
+      "route": "new_profile_rule"
+    },
+    {
+      "context": "contexts/S05_missing_object.json",
+      "id": "S05_missing_object",
+      "purpose": "The pinned libc/loader object is still required.",
+      "route": "new_profile_rule"
+    },
+    {
+      "context": "contexts/B01_new_mocked_bindings.json",
+      "id": "B01_new_mocked_bindings",
+      "purpose": "All mocked P16 role/alias/file/image/pin relations remain required.",
+      "route": "new_binding_relations"
+    },
+    {
+      "context": "contexts/B02_unselected_row.json",
+      "id": "B02_unselected_row",
+      "purpose": "An unused same-hash row cannot select the new route.",
+      "route": "new_binding_relations"
+    },
+    {
+      "context": "contexts/B03_wrong_libc_pin.json",
+      "id": "B03_wrong_libc_pin",
+      "purpose": "Coherent wrong libc pin still refuses before raw admission.",
+      "route": "new_binding_relations"
+    },
+    {
+      "context": "contexts/B04_wrong_loader_pin.json",
+      "id": "B04_wrong_loader_pin",
+      "purpose": "Coherent wrong loader pin still refuses before raw admission.",
+      "route": "new_binding_relations"
+    },
+    {
+      "context": "contexts/B05_synthetic_pin.json",
+      "id": "B05_synthetic_pin",
+      "purpose": "Synthetic bytes cannot satisfy the unchanged real libc pin.",
+      "route": "new_binding_relations"
+    },
+    {
+      "context": "contexts/D01_new_recheck.json",
+      "id": "D01_new_recheck",
+      "purpose": "Fresh binding drift must reach existing outer wrapper before new raw admission.",
+      "route": "new_recheck_boundary"
+    },
+    {
+      "context": "contexts/X01_subject_dispatch.json",
+      "id": "X01_subject_dispatch",
+      "purpose": "New pair dispatches its exact subject to the new fixed raw reader.",
+      "route": "new_plan_reader_dispatch"
+    },
+    {
+      "context": "contexts/X02_other_dispatch.json",
+      "id": "X02_other_dispatch",
+      "purpose": "Another image under the new pair keeps its old reader and flags refusal.",
+      "route": "new_plan_reader_dispatch"
+    },
+    {
+      "context": "contexts/F01_before_flags.json",
+      "id": "F01_before_flags",
+      "purpose": "Inject only after the actual reader reaches the named boundary; close that descriptor exactly once.",
+      "route": "new_metadata_fault"
+    },
+    {
+      "context": "contexts/F02_during_flags.json",
+      "id": "F02_during_flags",
+      "purpose": "Inject only after the actual reader reaches the named boundary; close that descriptor exactly once.",
+      "route": "new_metadata_fault"
+    },
+    {
+      "context": "contexts/F03_final_identity.json",
+      "id": "F03_final_identity",
+      "purpose": "Inject only after the actual reader reaches the named boundary; close that descriptor exactly once.",
+      "route": "new_metadata_fault"
+    }
+  ],
+  "schema": "ontokin.c271.p17-controls/1"
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "ontokin.c271.p17-learning-review/1",
+  "reviewed_at_utc": "2026-11-22T18:44:36.450224+00:00",
+  "lookup": "libc flags TLS",
+  "readset": "recovery/session/LEARNING-READSET.json in the final handoff",
+  "existing_memory": "memory-c271-loader-source-admission-boundary",
+  "decision": "Retain the exact-build-specific design lesson in this phase; no global memory or knowledge edit.",
+  "reason": "The existing memory already separates observed P15 tag refusal from predicted later flags refusal. This phase adopts metadata recognition only and has no implementation/runtime evidence to generalize.",
+  "lesson": "An additional accepted bit pattern may require exact-value equality: allowing24 does not imply allowing16. A static metadata rule cannot prove TLS runtime allocation.",
+  "evidence": [
+    "ADOPTION.json",
+    "design/DECISION.md",
+    "design/CONTROL-CONTRACT.md",
+    "review/REVIEW.json"
+  ],
+  "new_runtime_capability_claim": false
+}

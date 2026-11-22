@@ -1,0 +1,180 @@
+{
+  "schema": "ontokin.c271.p17-independent-technical-review/1",
+  "reviewer": "/root/records_review",
+  "at_utc": "2026-11-22T18:43:58.332532+00:00",
+  "verdict": "accepted_bounded_design_and_frozen_inert_controls_only",
+  "mandatory_findings": [],
+  "candidate_manifest": {
+    "path": "/workspace/scratch/bbea56c9165d/work/records-review/technical/candidate001/frozen-bytes/CANDIDATE-MANIFEST.json",
+    "bytes": 17522,
+    "sha256": "5561dcd3cf718362f0716bb0c3ebf7fcf273befa1f6348f9996331d151b7c89b"
+  },
+  "expectations": {
+    "path": "/workspace/scratch/bbea56c9165d/work/records-review/technical/candidate001/frozen-bytes/EXPECTATIONS.json",
+    "bytes": 22313,
+    "sha256": "9ec492d20fe2184414d818fca3ff37bcfdf1a20416dcb042d0bc2667456c9bd8"
+  },
+  "review": {
+    "path": "/workspace/scratch/bbea56c9165d/work/records-review/technical/candidate001/REPORT.md",
+    "bytes": 2134,
+    "sha256": "57ec3e994956ee427742f5d0011e3226b58831d6114892493ce532bbf7885c04"
+  },
+  "readset": {
+    "path": "/workspace/scratch/bbea56c9165d/work/records-review/technical/candidate001/READSET-FINAL.json",
+    "bytes": 41897,
+    "sha256": "7061bb0e1f2d787f089bfd325c808c9eae1e0341aa7d5cb190e482a8f85e9a64"
+  },
+  "primary_audit": {
+    "path": "/workspace/scratch/bbea56c9165d/work/records-review/technical/candidate001/AUDIT-ATTEMPT002.json",
+    "bytes": 223386,
+    "sha256": "88e15a05722d0ed04bb0fd0e21a0968e8edbce081e8cb269d432c56aeb8c2ce3"
+  },
+  "supplemental_audit": {
+    "path": "/workspace/scratch/bbea56c9165d/work/records-review/technical/candidate001/SUPPLEMENTAL-CHECKS.json",
+    "bytes": 11806,
+    "sha256": "38cda293a956d51e6c4e5ada288565696799d36c86868feba1a9d8c588247f24"
+  },
+  "audit_source": {
+    "path": "/workspace/scratch/bbea56c9165d/work/records-review/technical/candidate001/audit_independent.py",
+    "bytes": 21689,
+    "sha256": "328c3119c6e560a2e01bdd3041c902fbc2a6d80bf718a1fdcb2707d2d822d689"
+  },
+  "static_assertions": {
+    "primary_passed": 1555,
+    "supplemental_passed": 100,
+    "total_passed": 1655,
+    "unresolved_failures": 0
+  },
+  "retained_attempts": [
+    {
+      "report": {
+        "path": "/workspace/scratch/bbea56c9165d/work/records-review/technical/candidate001/AUDIT-ATTEMPT001.json",
+        "bytes": 91234,
+        "sha256": "6fd8bd7064a1d10675886b5dcd026b9c1cccadf0741730b7fd7fba21d232689c"
+      },
+      "source": {
+        "path": "/workspace/scratch/bbea56c9165d/work/records-review/technical/candidate001/audit_independent_attempt001.py",
+        "bytes": 21689,
+        "sha256": "f82cc31075f53d805ff6e0191b06634ad75e9f97af8468ec6080304bb367b4b3"
+      },
+      "state": "reviewer_tooling_error_resolved",
+      "reason": "Reviewer reconstruction used string offsets21/31 instead of22/32; fixed after direct inert-byte inspection. Original failure and source retained; candidate unchanged."
+    },
+    {
+      "report": {
+        "path": "/workspace/scratch/bbea56c9165d/work/records-review/technical/candidate001/AUDIT-ATTEMPT002.json",
+        "bytes": 223386,
+        "sha256": "88e15a05722d0ed04bb0fd0e21a0968e8edbce081e8cb269d432c56aeb8c2ce3"
+      },
+      "state": "passed"
+    }
+  ],
+  "manual_review": [
+    {
+      "area": "finite flags rule",
+      "finding": "Exactly24 added beside absent/0/8, not mask0x18; lone16, extra bits, u64 extremes and duplicateflags retain literal refusal.",
+      "evidence": [
+        "DECISION.md",
+        "CONTROL-CONTRACT.md",
+        "N01-N11",
+        "P01-P05"
+      ]
+    },
+    {
+      "area": "version routing and inherited contracts",
+      "finding": "New/0.1.3 pair is separate from P16/0.1.2 and old routes. P16 N16, all73 controls, original flags1 mask, public defaults and fixed ldd stdout predicate are preserved.",
+      "evidence": [
+        "FUTURE-SURFACE.json",
+        "L01-L04",
+        "S01-S05",
+        "verified P16 archive"
+      ]
+    },
+    {
+      "area": "exact binding and rechecks",
+      "finding": "Unchanged exact libc/loader pins, selected author-Python dependency and role/alias/image/file proof required before raw reading and helpers/Git/commands; complete recheck derives fresh proof.",
+      "evidence": [
+        "DECISION.md binding section",
+        "P16 inherited contracts",
+        "B01-B05",
+        "D01"
+      ]
+    },
+    {
+      "area": "primary-source support",
+      "finding": "Exact retained glibc definitions and relocation helpers support a narrow metadata rule, with static TLS runtime feasibility explicitly left unproved. Exact package/source association limits are stated.",
+      "evidence": [
+        "SOURCE-EVIDENCE.md",
+        "six exact upstream members",
+        "independently checked80activepatches",
+        "../INPUT-VERIFICATION.json"
+      ]
+    },
+    {
+      "area": "failure order and callback cleanup",
+      "finding": "Structural and P16 architecture/unknown/trio guards precede flags; string/path checks remain later. Fault controls require actual named reachability, identical exception and one real descriptor close in future adapter execution.",
+      "evidence": [
+        "N12-N16",
+        "F01-F03",
+        "CONTROL-CONTRACT.md"
+      ]
+    },
+    {
+      "area": "mocked and synthetic limits",
+      "finding": "NoPT_TLS synthetic positive tests metadata only; exact operational pin excludes it. B andX controls disclose pure relation/mock seams; no actual binding success or whole-plan approval is claimed.",
+      "evidence": [
+        "P01",
+        "B01-B05",
+        "X01-X02",
+        "CONTROL-CONTRACT.md"
+      ]
+    },
+    {
+      "area": "future scope",
+      "finding": "Only a fresh adopted implementation phase may implement combinedP16/P17 surface with inherited controls and independent exact-source/adapter review. No host or second phase is authorized now.",
+      "evidence": [
+        "FUTURE-SURFACE.json",
+        "DECISION.md final section"
+      ]
+    }
+  ],
+  "execution_boundary": {
+    "product_imports": 0,
+    "product_parser_calls": 0,
+    "policy_evaluations": 0,
+    "product_tests": 0,
+    "recovered_script_or_binary_executions": 0,
+    "current_host_inspections": 0,
+    "repository_or_canonical_writes": 0,
+    "git_mutations": 0,
+    "remote_writes": 0
+  },
+  "remaining_gates": [
+    "separate Director adoption",
+    "future combinedP16/P17 implementation and exact adapter/source review",
+    "H0",
+    "H1",
+    "GateH originalseven",
+    "complete routine R03",
+    "R04 integration",
+    "R05 parent delivery/closure"
+  ],
+  "parent_status": "open_uncompleted",
+  "final_candidate_readback": "Exact closed92-file candidate and92-member archive verified; all bytes unchanged.",
+  "passed": true,
+  "design_only": true,
+  "candidate_archive": {
+    "path": "/workspace/scratch/bbea56c9165d/work/flags-design/CANDIDATE001.zip",
+    "bytes": 166919,
+    "sha256": "d59d4d71a9f73065a000ae3de8233beb82ad5a33a3b526de93debb845f0d86c4"
+  },
+  "archive_readback": {
+    "path": "/workspace/scratch/bbea56c9165d/work/records-review/technical/candidate001/ARCHIVE-READBACK.json",
+    "bytes": 541,
+    "sha256": "6f0e09b9effd219591b3e5c69d5cf6bb6a7eb1a4e7af2eba7043aac84cc21910"
+  },
+  "supplemental_findings": [],
+  "active_operations": [],
+  "unknown_writes": [],
+  "worker_state": "stopped_after_final_review"
+}
