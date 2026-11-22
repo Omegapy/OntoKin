@@ -1,0 +1,161 @@
+{
+  "author": "/root/design_author",
+  "controls": [
+    {
+      "expected": {
+        "differences": [
+          {
+            "negative": "unsupported",
+            "path": "/variant_review/completeness",
+            "positive": "synthetic_declared_complete"
+          }
+        ]
+      },
+      "id": "B01",
+      "inputs": [
+        "E10",
+        "E11"
+      ],
+      "kind": "static_context_difference"
+    },
+    {
+      "expected": {
+        "bytes": 3338,
+        "equal": true,
+        "operational_document": false,
+        "sha256": "e33cb05c8e73031f7c720ecee68094ced82f5d3679af4bc1ebf95bca5b0eaa3c"
+      },
+      "id": "B02",
+      "inputs": [
+        "E10",
+        "E11"
+      ],
+      "kind": "static_review_neutral_equality"
+    },
+    {
+      "expected": {
+        "equal_fields": [
+          "plan_selection",
+          "subject",
+          "kernel",
+          "image",
+          "variants",
+          "guards",
+          "absence_guards",
+          "search_directories",
+          "closure_images",
+          "needed_names_claim",
+          "variant_review.loader_identity",
+          "variant_review.source_review_identity",
+          "variant_review.suffixes"
+        ]
+      },
+      "id": "B03",
+      "inputs": [
+        "E10",
+        "E11"
+      ],
+      "kind": "static_binding_equality"
+    },
+    {
+      "expected": {
+        "independent_semantic_review_required": true,
+        "rationale_content_completeness_parser": false,
+        "variant_keys": [
+          "schema",
+          "loader",
+          "source_review",
+          "suffixes"
+        ]
+      },
+      "id": "B04",
+      "inputs": [
+        "E04",
+        "E12",
+        "E13",
+        "E17"
+      ],
+      "kind": "source_boundary_review"
+    },
+    {
+      "expected": {
+        "N57_source_variant_unknown": "not_established_by_supplied_inputs",
+        "P01_nonselecting_base": "not_established_by_supplied_inputs",
+        "independent_semantic_review_required": true,
+        "runtime_outcome": null
+      },
+      "id": "B05",
+      "inputs": [
+        "E03",
+        "E10",
+        "E11",
+        "E14",
+        "E18"
+      ],
+      "kind": "source_evidence_sufficiency_review"
+    },
+    {
+      "expected": {
+        "available_candidate_payloads": 145,
+        "external_candidate_payloads": 1,
+        "fixture_files": 131,
+        "future_runtime_primitive": 96,
+        "independent_review_only": [
+          "N57_source_variant_unknown"
+        ],
+        "original_cases": 97,
+        "original_expectations_changed": false,
+        "supporting_files": 29
+      },
+      "id": "B06",
+      "inputs": [
+        "E07",
+        "E08",
+        "E09",
+        "CONTROL-MAPPING.json"
+      ],
+      "kind": "static_total_mapping_and_preservation"
+    },
+    {
+      "expected": {
+        "document_bytes": 16777216,
+        "protected_sources_changed": false,
+        "source_ms": 30000,
+        "source_operations": 100000
+      },
+      "id": "B07",
+      "inputs": [
+        "E04",
+        "E06",
+        "E12",
+        "E15"
+      ],
+      "kind": "static_protected_source_and_limit_preservation"
+    },
+    {
+      "expected": {
+        "candidate_state": "proposed_pending_independent_review_and_director_adoption",
+        "host_qualification": "not_established",
+        "independent_semantic_review_required": true,
+        "n57_historical_oracle_satisfied": false,
+        "runtime_execution": "not_run"
+      },
+      "id": "B08",
+      "inputs": [
+        "DECISION.md",
+        "CONTROL-CONTRACT.md",
+        "CONTROL-MAPPING.json"
+      ],
+      "kind": "applicability_and_adoption_review"
+    }
+  ],
+  "decision": "ontokin.c271.review-runtime-boundary-decision/1",
+  "expected_values_origin": "Literal documentary control specification authored from frozen source facts; not derived from product execution.",
+  "limits": [
+    "Structural checks do not replace independent semantic review.",
+    "No real positive source-completeness review or operational plan is supplied.",
+    "No product runtime outcome is produced."
+  ],
+  "operational": false,
+  "schema": "ontokin.c271.p13-review-boundary-controls/1"
+}

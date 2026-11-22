@@ -4,15 +4,17 @@
   "latest_task": "C271",
   "active_task": "C271",
   "observed_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
-  "snapshot_date": "2026-11-22T01:02:52.937939+00:00",
+  "snapshot_date": "2026-11-22T01:41:57.953080Z",
   "next_action": {
-    "status": "ready",
-    "summary": "P12 blocked before implementation; exact partial ZIP and prompts saved and verified. Finish terminal confirmation and stop; parent C271 remains blocked.",
-    "suggested_task": "Confirm the separate P12 terminal receipt save/readback and final branch state, then stop this chat. Reconcile that receipt before treating source-time pending fields as current. Only a fresh bounded phase may clarify the N57 source-review/policy-admission contract; production implementation, host work, full routine and integration remain later gates.",
+    "status": "blocked",
+    "summary": "Finish documentary/preservation checks, conditionally publish the reviewed P13 checkpoint, verify and save final partial ZIP/prompts plus separate receipt, then stop.",
+    "suggested_task": "C271",
     "sources": [
       "docs/workflow/tasks/C271/task.json",
       "docs/engineering/localized-repair-c271/loader-path-p12/P12-DELIVERY.json",
-      "docs/engineering/localized-repair-c271/loader-path-p12/BLOCKER.json"
+      "docs/engineering/localized-repair-c271/loader-path-p12/BLOCKER.json",
+      "docs/engineering/localized-repair-c271/review-boundary-p13/PHASE.json",
+      "docs/engineering/localized-repair-c271/review-boundary-p13/ADOPTION.json"
     ]
   },
   "historical_handoff": {
@@ -185,32 +187,43 @@
     "terminal_receipt_location_source": "https://github.com/Omegapy/OntoKin/pull/274"
   },
   "latest_recovery": {
-    "local_path": "/workspace/scratch/378b783967ca/deliverables_p12/early/OntoKin_C271_P12_Loader_Path_Early_Recovery_2026-11-21.zip",
+    "local_path": "/workspace/scratch/82b6b514e749/deliverables/early-attempt002/OntoKin_C271_P13_Review_Policy_Early_Recovery_2026-11-21_Attempt002.zip",
     "purpose": "create_library_file",
     "status": "succeeded",
-    "file_id": "file_000000003fa481f5a0ac5da11aad1f71",
-    "library_file_id": "libfile_fde3_f-97be9b98302081919820c72168c7a7bd_2ab2a24d43748191957f9bcc356b59de",
-    "file_name": "OntoKin_C271_P12_Loader_Path_Early_Recovery_2026-11-21.zip",
-    "local_metadata_applied": true,
-    "path": "/OntoKin/OntoKin_C271_P12_Loader_Path_Early_Recovery_2026-11-21.zip",
+    "file_id": "file_000000008c2881f598dd0d049a5e627d",
+    "library_file_id": "libfile_fde3_f-b9f648bc3ff88191b0028e67a7958681_2ab2a24d43748191957f9bcc356b59de",
+    "file_name": "OntoKin_C271_P13_Review_Policy_Early_Recovery_2026-11-21_Attempt002.zip",
+    "local_metadata_applied": false,
+    "path": "/OntoKin/OntoKin_C271_P13_Review_Policy_Early_Recovery_2026-11-21_Attempt002.zip",
     "current_version_number": 0,
-    "schema": "ontokin.c271.p12-early-recovery-receipt/1",
-    "confirmed_at_utc": "2026-11-22T00:38:39.579893+00:00",
-    "bytes": 793843,
-    "sha256": "9adb6a6f8f937253fc4dd76f412346f9767606aa45e3555e2fa81811a5b584d7",
+    "schema": "ontokin.c271.p13-early-recovery-receipt/1",
+    "confirmed_at_utc": "2026-11-22T01:28:32.207196+00:00",
+    "bytes": 3563888,
+    "sha256": "05e38a85815bbd9026ce565237ebaf1586a48d479429834d15f85d1a0b8d58ca",
     "version": 0,
     "saved_bytes_readback_equal": true,
-    "readback_path": "/workspace/scratch/378b783967ca/saved_readback_p12/early/OntoKin_C271_P12_Loader_Path_Early_Recovery_2026-11-21.zip",
-    "source_revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
-    "source_tree": "c3aed39729812e3c2abf2a4a4332d75052c4f19d",
-    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-97be9b98302081919820c72168c7a7bd_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "readback_path": "/workspace/scratch/82b6b514e749/readback/early/OntoKin_C271_P13_Review_Policy_Early_Recovery_2026-11-21_Attempt002.zip",
+    "readback_metadata_applied": true,
+    "readback_version_xattr": "0",
+    "source_revision": "ef127e60e461dd24d73a40d5fd5b7bfe1cde79fb",
+    "source_tree": "0727d39bf37c6c951478affac3a5506104d8eea7",
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-b9f648bc3ff88191b0028e67a7958681_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
     "independent_review": {
-      "path": "docs/engineering/localized-repair-c271/loader-path-p12/evidence/early-review/AUDIT.json",
-      "sha256": "21ba0eb9d2fa0b44952c649810eb672f931b5b4b61f1f4dc3b2e0d4b212f7536",
       "verdict": "accepted",
-      "groups_passed": 20
+      "check_groups_passed": 46,
+      "audit": {
+        "path": "/workspace/scratch/82b6b514e749/reviews/early/attempt002/AUDIT.json",
+        "bytes": 233542,
+        "sha256": "ed8821983a661e12b0deec887cfafa3b21a91cefce2eafb2260465b7688f7e07"
+      },
+      "report": {
+        "path": "/workspace/scratch/82b6b514e749/reviews/early/attempt002/REPORT.md",
+        "bytes": 5333,
+        "sha256": "19af631382837e2dbf503348cc8b3be520c2fe8f34521759661c2ba02ffb4470"
+      }
     },
-    "boundary": "Independent early package review, successful save and exact downloaded-byte comparison completed before implementation release."
+    "boundary": "Confirmed before substantive P13 design or production changes. Attempt001 rejected and retained in this archive. Online continuation only.",
+    "metadata_operation_note": "Returned transfer metadata was successfully applied to its exact readback workspace_path. Applying that same transfer object to the separate source path was rejected with workspace_path mismatch; no bytes changed and no retry or metadata rewrite was performed."
   },
   "older_handoffs": [
     {
@@ -688,40 +701,32 @@
     }
   ],
   "previous_recovery": {
-    "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/early-attempt002/OntoKin_C271_P10_ELF_Early_Recovery_2026-11-21_Attempt002.zip",
+    "local_path": "/workspace/scratch/378b783967ca/deliverables_p12/early/OntoKin_C271_P12_Loader_Path_Early_Recovery_2026-11-21.zip",
     "purpose": "create_library_file",
     "status": "succeeded",
-    "file_id": "file_0000000060a881fd9f14c7bf52371a7f",
-    "library_file_id": "libfile_fde3_f-e73591c3ad1481918557dbd47711d2db_2ab2a24d43748191957f9bcc356b59de",
-    "file_name": "OntoKin_C271_P10_ELF_Early_Recovery_2026-11-21_Attempt002.zip",
+    "file_id": "file_000000003fa481f5a0ac5da11aad1f71",
+    "library_file_id": "libfile_fde3_f-97be9b98302081919820c72168c7a7bd_2ab2a24d43748191957f9bcc356b59de",
+    "file_name": "OntoKin_C271_P12_Loader_Path_Early_Recovery_2026-11-21.zip",
     "local_metadata_applied": true,
-    "path": "/OntoKin/OntoKin_C271_P10_ELF_Early_Recovery_2026-11-21_Attempt002.zip",
+    "path": "/OntoKin/OntoKin_C271_P12_Loader_Path_Early_Recovery_2026-11-21.zip",
     "current_version_number": 0,
+    "schema": "ontokin.c271.p12-early-recovery-receipt/1",
+    "confirmed_at_utc": "2026-11-22T00:38:39.579893+00:00",
+    "bytes": 793843,
+    "sha256": "9adb6a6f8f937253fc4dd76f412346f9767606aa45e3555e2fa81811a5b584d7",
     "version": 0,
-    "bytes": 2481023,
-    "sha256": "23d398f141b579bdebdae86e208fb301dacd02e98b0c881a1fd9c754e33eebe5",
     "saved_bytes_readback_equal": true,
-    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-e73591c3ad1481918557dbd47711d2db_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-    "source_revision": "ffd234b17723e8370cc0afa6cf19c1a161719892",
-    "phase": "C271-P10-ELF-string-table-correction",
-    "confirmed_at_utc": "2026-11-21T20:11:29.084562+00:00",
-    "receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/EARLY-RECOVERY-RECEIPT.json",
-    "supplement": {
-      "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/early-attempt002/OntoKin_C271_P10_Early_Correction_Supplement_2026-11-21.json",
-      "purpose": "create_library_file",
-      "status": "succeeded",
-      "file_id": "file_0000000049b081fd9c59f6303bb86971",
-      "library_file_id": "libfile_fde3_f-dfee96acbff88191a70c6c007da9ef98_2ab2a24d43748191957f9bcc356b59de",
-      "file_name": "OntoKin_C271_P10_Early_Correction_Supplement_2026-11-21.json",
-      "local_metadata_applied": true,
-      "path": "/OntoKin/OntoKin_C271_P10_Early_Correction_Supplement_2026-11-21.json",
-      "current_version_number": 0,
-      "version": 0,
-      "bytes": 15127,
-      "sha256": "11065d152383c79fb099cd385368ea0d6f2d0e636016b286ba5b7985b1d08f65",
-      "saved_bytes_readback_equal": true,
-      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-dfee96acbff88191a70c6c007da9ef98_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
-    }
+    "readback_path": "/workspace/scratch/378b783967ca/saved_readback_p12/early/OntoKin_C271_P12_Loader_Path_Early_Recovery_2026-11-21.zip",
+    "source_revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+    "source_tree": "c3aed39729812e3c2abf2a4a4332d75052c4f19d",
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-97be9b98302081919820c72168c7a7bd_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "independent_review": {
+      "path": "docs/engineering/localized-repair-c271/loader-path-p12/evidence/early-review/AUDIT.json",
+      "sha256": "21ba0eb9d2fa0b44952c649810eb672f931b5b4b61f1f4dc3b2e0d4b212f7536",
+      "verdict": "accepted",
+      "groups_passed": 20
+    },
+    "boundary": "Independent early package review, successful save and exact downloaded-byte comparison completed before implementation release."
   },
   "older_recoveries": [
     {
@@ -868,6 +873,42 @@
       "receipt": "docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json",
       "saved_bytes_readback_equal": true,
       "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-492c198488408191985f3c5b0b58e1a0_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+    },
+    {
+      "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/early-attempt002/OntoKin_C271_P10_ELF_Early_Recovery_2026-11-21_Attempt002.zip",
+      "purpose": "create_library_file",
+      "status": "succeeded",
+      "file_id": "file_0000000060a881fd9f14c7bf52371a7f",
+      "library_file_id": "libfile_fde3_f-e73591c3ad1481918557dbd47711d2db_2ab2a24d43748191957f9bcc356b59de",
+      "file_name": "OntoKin_C271_P10_ELF_Early_Recovery_2026-11-21_Attempt002.zip",
+      "local_metadata_applied": true,
+      "path": "/OntoKin/OntoKin_C271_P10_ELF_Early_Recovery_2026-11-21_Attempt002.zip",
+      "current_version_number": 0,
+      "version": 0,
+      "bytes": 2481023,
+      "sha256": "23d398f141b579bdebdae86e208fb301dacd02e98b0c881a1fd9c754e33eebe5",
+      "saved_bytes_readback_equal": true,
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-e73591c3ad1481918557dbd47711d2db_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "source_revision": "ffd234b17723e8370cc0afa6cf19c1a161719892",
+      "phase": "C271-P10-ELF-string-table-correction",
+      "confirmed_at_utc": "2026-11-21T20:11:29.084562+00:00",
+      "receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/EARLY-RECOVERY-RECEIPT.json",
+      "supplement": {
+        "local_path": "/workspace/scratch/7b9b58d10704/deliverables_p10/early-attempt002/OntoKin_C271_P10_Early_Correction_Supplement_2026-11-21.json",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_0000000049b081fd9c59f6303bb86971",
+        "library_file_id": "libfile_fde3_f-dfee96acbff88191a70c6c007da9ef98_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P10_Early_Correction_Supplement_2026-11-21.json",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P10_Early_Correction_Supplement_2026-11-21.json",
+        "current_version_number": 0,
+        "version": 0,
+        "bytes": 15127,
+        "sha256": "11065d152383c79fb099cd385368ea0d6f2d0e636016b286ba5b7985b1d08f65",
+        "saved_bytes_readback_equal": true,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-dfee96acbff88191a70c6c007da9ef98_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+      }
     }
   ]
 }

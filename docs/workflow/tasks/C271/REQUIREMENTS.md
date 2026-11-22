@@ -232,3 +232,9 @@ Finish only this phase's documentary checks, conditional publication, independen
 The exact blocked handoff ZIP and matching Continue/Recover prompts are independently reviewed, saved and read back byte-for-byte. The [delivery receipt](../../../engineering/localized-repair-c271/loader-path-p12/P12-DELIVERY.json) binds their identities to source `09e04b394194b7a21dc203dd7bba2e548ca1c168`. Separate terminal confirmation remains pending at this source snapshot and must be reconciled from the later saved receipt.
 
 P12 stopped before implementation. The 97 controls and 175 existing methods were not run; all existing production/test source and frozen expectations remain unchanged. C271 and R03–R05 remain blocked/unmet. After terminal confirmation, stop this chat. The next fresh phase is independently reviewed clarification of the N57 source-review/policy-admission boundary, before production or host work.
+
+## P13 review-to-policy clarification
+
+The one bounded design phase is accepted through a separate exact-manifest adoption after 26 author and 34 independent static check groups passed. Completeness remains an external independent-review prerequisite;96 future runtime obligations retain their original oracles and N57 retains its unchanged historical oracle as one external review obligation. All97 original records and 131 fixtures remain unchanged. No runtime pass or actual-loader completeness proof is claimed.
+
+The early recovery was independently verified, saved and read back before design. Finish documentary/preservation checks, conditional retained-branch publication and verified partial delivery, then stop. Production implementation, H0/H1, full routine, integration and parent R03-R05 remain unmet. Exact current state: `docs/engineering/localized-repair-c271/review-boundary-p13/PHASE.json`; adoption: `docs/engineering/localized-repair-c271/review-boundary-p13/ADOPTION.json`.

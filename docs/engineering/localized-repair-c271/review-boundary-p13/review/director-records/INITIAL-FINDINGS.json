@@ -1,0 +1,106 @@
+{
+  "schema": "ontokin.c271.p13-director-records-review-attempt/1",
+  "reviewer": "/root/intake_review",
+  "verdict": "pending_documentary_correction",
+  "adoption_sha256": "5d4c56b08650287e4300975e0eceb14b4e8fb510b979d15ae236f3147529fa87",
+  "semantic_boundary": "Adoption matches the accepted exact manifest and explicit96+1 allocation. No design reopening or product execution required.",
+  "reviewed_files": [
+    {
+      "path": "docs/engineering/localized-repair-c271/review-boundary-p13/ADOPTION.json",
+      "bytes": 3786,
+      "sha256": "5d4c56b08650287e4300975e0eceb14b4e8fb510b979d15ae236f3147529fa87",
+      "snapshot": "snapshots/docs/engineering/localized-repair-c271/review-boundary-p13/ADOPTION.json"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/review-boundary-p13/PHASE.json",
+      "bytes": 11817,
+      "sha256": "3a78a11f9e77ec72c5d31c63b299c5da9b1d786a75d58c870c56e859291a63ad",
+      "snapshot": "snapshots/docs/engineering/localized-repair-c271/review-boundary-p13/PHASE.json"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/review-boundary-p13/PHASE-OUTCOME.json",
+      "bytes": 3552,
+      "sha256": "7698edbd7e1a555a7e2cb2ec39d6a269cdab8c6a7c5cc6c9e55a7e0da5c16804",
+      "snapshot": "snapshots/docs/engineering/localized-repair-c271/review-boundary-p13/PHASE-OUTCOME.json"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/review-boundary-p13/SESSION.md",
+      "bytes": 2812,
+      "sha256": "7629ef44f28c5f39a8f75eb51448fe1a0070aa8a141eedb6be7a3268679ecabd",
+      "snapshot": "snapshots/docs/engineering/localized-repair-c271/review-boundary-p13/SESSION.md"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/P13-SESSION.md",
+      "bytes": 364,
+      "sha256": "ef9792fbb2a3f4bc2c829d2b6a6156c71dce4b9a6e86a69c465aa24a835736ef",
+      "snapshot": "snapshots/docs/workflow/tasks/C271/P13-SESSION.md"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/task.json",
+      "bytes": 177400,
+      "sha256": "4ad61eb5ec86052736ddff39c9233a134e07a574b4a327ab471740718f5cf662",
+      "snapshot": "snapshots/docs/workflow/tasks/C271/task.json"
+    },
+    {
+      "path": "docs/workflow/CURRENT.json",
+      "bytes": 58963,
+      "sha256": "e54850971a558969f42a70a7212205dd6fff544ccc93a03e3092725e5e07db99",
+      "snapshot": "snapshots/docs/workflow/CURRENT.json"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "bytes": 39890,
+      "sha256": "efd06d3b6ef453c5cbc6533c9cb848c3a5f14a98750c7a368cc71a820d3190cc",
+      "snapshot": "snapshots/docs/workflow/tasks/C271/REQUIREMENTS.md"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/PLAN.md",
+      "bytes": 40872,
+      "sha256": "7f46a7905bba9cb02775811ed96660f27fa8f9191dacf3f2d096298d4bc2a08b",
+      "snapshot": "snapshots/docs/workflow/tasks/C271/PLAN.md"
+    }
+  ],
+  "findings": [
+    {
+      "id": "P13-DOC-001",
+      "severity": "blocking_documentary",
+      "title": "Current records retain stale startup dispositions",
+      "paths": [
+        "docs/engineering/localized-repair-c271/review-boundary-p13/PHASE.json",
+        "docs/workflow/tasks/C271/task.json"
+      ],
+      "observations": [
+        {
+          "field": "workers./root/design_author",
+          "value": "Design-only author; waiting for early-save release",
+          "conflict": "The candidate is already independently accepted and the author explicitly reported no unresolved work."
+        },
+        {
+          "field": "capabilities.library_save_tools_available_not_yet_exercised",
+          "value": true,
+          "conflict": "The same current record includes confirmed early save/readback."
+        },
+        {
+          "field": "task.remaining_h0_constraint.status",
+          "value": "unchanged_H0_unaccepted_P12_design_control_blocker",
+          "conflict": "Separate ADOPTION resolves N57 design applicability while leaving implementation/H0 unmet."
+        }
+      ],
+      "required": "Update current dispositions or clearly label inherited observations as source-time history; keep H0/implementation unmet without presenting resolved design uncertainty as current."
+    },
+    {
+      "id": "P13-DOC-002",
+      "severity": "blocking_documentary",
+      "title": "Unestablished causal attribution for inventory error",
+      "paths": [
+        "docs/engineering/localized-repair-c271/review-boundary-p13/PHASE.json",
+        "docs/workflow/tasks/C271/task.json"
+      ],
+      "field": "known_failures_this_session.read_only_directory_inventory_race.disposition",
+      "observed_text": "An optional listing encountered FileNotFoundError while reviewer reorganized its output path; no writes or missing required input. Do not infer process state from that observation.",
+      "reviewer_observation": "Reviewer created new directories and deliberate dangling-symlink fixtures; no review directory was removed, renamed or reorganized. The claimed causal explanation has not been established.",
+      "required": "Retain the actual error without attributing it to reorganization unless retained evidence proves that cause."
+    }
+  ],
+  "writes": "Only own review evidence; no root-owned source edits."
+}

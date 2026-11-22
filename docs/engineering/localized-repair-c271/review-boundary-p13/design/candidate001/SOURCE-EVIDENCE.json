@@ -1,0 +1,79 @@
+{
+  "actual_host_evidence_created": false,
+  "actual_source_review_from_supplied_contexts": {
+    "N57_source_variant_unknown": "not_established_by_supplied_inputs",
+    "P01_nonselecting_base": "not_established_by_supplied_inputs",
+    "basis": "Both contexts are operational:false and contain synthetic identities; E03 and E18 record no actual plan or external expected digest. The completeness labels are not evidence."
+  },
+  "evidence_kind": "static source/context inspection only",
+  "exact_case_differences": [
+    {
+      "negative": "unsupported",
+      "path": "/variant_review/completeness",
+      "positive": "synthetic_declared_complete"
+    }
+  ],
+  "original_n57_oracle": {
+    "code": "CHI-UNSUPPORTED",
+    "host_qualified": false,
+    "outcome": "refusal",
+    "rule_id": "LP-VARIANT-SEMANTICS",
+    "stage": "variant_review",
+    "state": "REJECTED",
+    "target_starts": 0
+  },
+  "product_calls": 0,
+  "product_imports": 0,
+  "proposed_operational_variant_keys": [
+    "schema",
+    "loader",
+    "source_review",
+    "suffixes"
+  ],
+  "rationale_boundary": {
+    "excerpt": "def _check_resolution(plan, author_runtime, *, check=lambda: None):\n    host, resolution = plan[\"host_static\"], plan[\"host_static\"][\"resolution\"]\n    _binding_shape(resolution[\"rationale\"], \"LOADER\", descriptor=True)\n    review, _ = _read_file(resolution[\"rationale\"][\"path\"], LIMITS[\"document_bytes\"], category=\"LOADER\", check=check)\n    _require(review and hashlib.sha256(review).hexdigest() == resolution[\"rationale\"][\"sha256\"], \"LOADER\", \"Static resolution review differs\")\n    _bound(resolution[\"rationale\"][\"path\"], _binding(resolution[\"rationale\"]), category=\"LOADER\", check=check)\n",
+    "first_line": 850,
+    "independent_cross_check": "E13",
+    "last_line": 855,
+    "observation": "Nonempty bytes, SHA-256 and descriptor/file binding are checked; these statements do not parse the rationale for source completeness.",
+    "source": "E12"
+  },
+  "review_neutral_contexts": {
+    "equal": true,
+    "method": "Deep-copy each context in memory; remove only /variant_review/completeness; UTF-8 JSON, sorted keys, compact separators, ensure_ascii true, no trailing newline.",
+    "negative": {
+      "bytes": 3338,
+      "sha256": "e33cb05c8e73031f7c720ecee68094ced82f5d3679af4bc1ebf95bca5b0eaa3c"
+    },
+    "operational_document_created": false,
+    "original_inputs_written": false,
+    "positive": {
+      "bytes": 3338,
+      "sha256": "e33cb05c8e73031f7c720ecee68094ced82f5d3679af4bc1ebf95bca5b0eaa3c"
+    }
+  },
+  "schema": "ontokin.c271.p13-boundary-source-evidence/1",
+  "source_anchors": [
+    {
+      "anchor": "section 3, four-field variant object and source review; section 5, independent completeness obligation; section 7, machine policy and caller ordering",
+      "source": "E04"
+    },
+    {
+      "anchor": "route table; synthetic context interpretation; frozen oracle; future 175-method obligation",
+      "source": "E05"
+    },
+    {
+      "anchor": "preservation matrix K01-K08; new variant-document caller and test adapter are future surface only",
+      "source": "E06"
+    },
+    {
+      "anchor": "module docstring: rationale is not tool-generated approval; review honesty is trust boundary; LIMITS; _document; _plan_shape; _check_resolution",
+      "source": "E12"
+    },
+    {
+      "anchor": "gaps: no actual loader source/build/suffix review or complete selected closure",
+      "source": "E14"
+    }
+  ],
+  "source_revision": "ef127e60e461dd24d73a40d5fd5b7bfe1cde79fb"
+}
