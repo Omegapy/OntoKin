@@ -1,0 +1,79 @@
+{
+  "schema": "ontokin.c271.p12-package-verification/1",
+  "status": "passed",
+  "verified_at_utc": "2026-11-22T00:59:13.288210+00:00",
+  "source_commit": "09e04b394194b7a21dc203dd7bba2e548ca1c168",
+  "source_tree": "ae7a01657b6f545640eba2b7e30e5800dacda37f",
+  "observed_main": {
+    "commit": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+    "tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+    "observed_at_utc": "2026-11-22T00:34:49.431990+00:00",
+    "evidence": "session_p12/startup/early-branches.json"
+  },
+  "archive": {
+    "path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
+    "filename": "OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
+    "bytes": 2075115,
+    "sha256": "337f8fd00f91987c6a70ba91a9439a5da29bc91a81507d4a92d2d9bc17cbb323"
+  },
+  "prompts": [
+    {
+      "path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Continue.md",
+      "member": "PROMPT-1-CONTINUE.md",
+      "bytes": 5223,
+      "sha256": "18a638004be6cb4a935e4e3049e517ea7832d5e32d32fb6ad83777ebd916e3e8",
+      "matches_archive_member": true
+    },
+    {
+      "path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Recover.md",
+      "member": "PROMPT-2-RECOVER.md",
+      "bytes": 5757,
+      "sha256": "048b145380663743d6d81ab755b6cd3eb833d2ef80495039640e928ef8ea8467",
+      "matches_archive_member": true
+    }
+  ],
+  "payload_files": 399,
+  "source_snapshots": 316,
+  "recovery_files": 825,
+  "manifest_entries": 398,
+  "recovery_aliases": {
+    "payload": 662,
+    "external_archive": 70
+  },
+  "checks": {
+    "required_roots": "passed",
+    "phase_source_agreement": "passed",
+    "zip_crc": "passed",
+    "safe_paths_duplicates_exact_inventory": "passed",
+    "all_payload_bytes_hashes": "passed",
+    "fresh_extraction": "passed",
+    "git_blob_bytes_and_modes": "passed",
+    "recovery_source_stability": "passed",
+    "private_original_mode_restoration": "passed",
+    "prior_archive_and_terminal_receipt_exact_bytes": "passed",
+    "matching_prompt_bytes": "passed",
+    "independent_review": "pending",
+    "library_save_readback": "not_run",
+    "product_tests": "not_run_by_packager"
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/scratch/378b783967ca/session_p12/packaging/build_handoff.py",
+    "--config",
+    "/workspace/scratch/378b783967ca/session_p12/packaging/CORRECTED-FINAL-CONFIG.json"
+  ],
+  "config_sha256": "1dc2b9b7790d55565d2d90645ec26a0587f40383482cb8c7ded0b1f84f1a9844",
+  "frozen_at_utc": "2026-11-22T00:59:10.554225+00:00",
+  "writes_limited_to": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected",
+  "limitations": [
+    "This is packaging verification, not product qualification or independent review.",
+    "Ordinary ZIP extraction does not restore recovery modes; the explicit verified private restoration did.",
+    "The current ZIP cannot contain its later save receipt.",
+    "No full offline or complete historical restoration is claimed."
+  ]
+}

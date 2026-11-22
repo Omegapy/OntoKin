@@ -1,0 +1,325 @@
+{
+  "schema": "ontokin.c271.p12-independent-corrected-package-delta-review/1",
+  "reviewer": "/root/intake_review",
+  "completed_at_utc": "2026-11-22T01:01:45.177038+00:00",
+  "archive": {
+    "path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
+    "bytes": 2075115,
+    "sha256": "337f8fd00f91987c6a70ba91a9439a5da29bc91a81507d4a92d2d9bc17cbb323"
+  },
+  "previous_archive": {
+    "path": "/workspace/scratch/378b783967ca/deliverables_p12/final/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
+    "bytes": 1840636,
+    "sha256": "cb7fdb60de7e116c9d89ccb0aead793fef1bdfc38cdb927f8c8477a123040ea7"
+  },
+  "source_commit": "09e04b394194b7a21dc203dd7bba2e548ca1c168",
+  "source_tree": "ae7a01657b6f545640eba2b7e30e5800dacda37f",
+  "verdict": "accepted_corrected_partial_handoff_save_pending",
+  "finding": {
+    "id": "P12-PACKAGE-001",
+    "state": "closed",
+    "resolution": "Only the two inaccurate active descriptions were corrected; successful materialization and actual documentary-review issues are now distinguished. Original archive and erroneous drafts remain preserved history."
+  },
+  "checks": [
+    {
+      "name": "exact_old_and_corrected_archive_identities",
+      "passed": true,
+      "evidence": {
+        "old": {
+          "path": "/workspace/scratch/378b783967ca/deliverables_p12/final/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
+          "bytes": 1840636,
+          "sha256": "cb7fdb60de7e116c9d89ccb0aead793fef1bdfc38cdb927f8c8477a123040ea7"
+        },
+        "corrected": {
+          "path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
+          "bytes": 2075115,
+          "sha256": "337f8fd00f91987c6a70ba91a9439a5da29bc91a81507d4a92d2d9bc17cbb323"
+        }
+      }
+    },
+    {
+      "name": "safe_corrected_zip_and_full_manifest",
+      "passed": true,
+      "evidence": {
+        "members": 399,
+        "manifest_payloads": 398,
+        "mode": "0644",
+        "root_manifest_excluded_only": [
+          "MANIFEST-SHA256.json"
+        ]
+      }
+    },
+    {
+      "name": "complete_independent_file_delta",
+      "passed": true,
+      "evidence": {
+        "added": [
+          "recovery/deliverables_p12/final/PACKAGE-VERIFICATION.json",
+          "recovery/deliverables_p12/final/RESTORATION.stdout.json",
+          "recovery/session_p12/packaging/CORRECTED-FINAL-CONFIG.json",
+          "recovery/session_p12/packaging/correct_package_narrative.py",
+          "recovery/session_p12/packaging/correction-001/FINDING-AND-CORRECTION.json",
+          "recovery/session_p12/packaging/correction-001/FIXED-RECOVERY-INVENTORY.json",
+          "recovery/session_p12/packaging/final-documents/HANDOFF.md",
+          "recovery/session_p12/packaging/final-documents/RECOVERY-STATUS.md",
+          "recovery/session_p12/review/final-package/AUDIT.json",
+          "recovery/session_p12/review/final-package/PAYLOAD-CHECKS.json",
+          "recovery/session_p12/review/final-package/RECOVERY-CHECKS.json",
+          "recovery/session_p12/review/final-package/REPORT.md",
+          "recovery/session_p12/review/final-package/RESTORATION.stdout.json",
+          "recovery/session_p12/review/final-package/SOURCE-CHECKS.json",
+          "recovery/session_p12/review/final-package/audit_package.py"
+        ],
+        "removed": [],
+        "changed": [
+          "CHECKPOINT.json",
+          "HANDOFF.md",
+          "HISTORICAL-DEPENDENCIES.json",
+          "MANIFEST-SHA256.json",
+          "PACKAGE-BOUNDARY.json",
+          "RECOVERY-FILE-MAP.json",
+          "RECOVERY-STATUS.md"
+        ],
+        "unchanged_count": 377,
+        "builder_diff": {
+          "path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/COMPLETE-FILE-DIFF.json",
+          "bytes": 48828,
+          "sha256": "9f3287c17b69d62e262b55e85db8dd779c778a65bb4fce12e23161ff9d1fac60"
+        }
+      }
+    },
+    {
+      "name": "reuse_exact_verified_316_git_snapshots",
+      "passed": true,
+      "evidence": {
+        "prior_independent_audit": {
+          "path": "/workspace/scratch/378b783967ca/session_p12/review/final-package/AUDIT.json",
+          "bytes": 11901,
+          "sha256": "4fd5942b5f93dde82acd38e8f1a61ef47dbacba43d070a877fe97aa1a89b4342"
+        },
+        "source": "09e04b394194b7a21dc203dd7bba2e548ca1c168",
+        "tree": "ae7a01657b6f545640eba2b7e30e5800dacda37f",
+        "reused_source_check": "All exact Git bytes/blob/modes were independently verified for the unchanged first candidate."
+      }
+    },
+    {
+      "name": "unchanged_phase_limits_and_checkpoint",
+      "passed": true,
+      "evidence": {
+        "checkpoint_only_changed_field": [
+          "frozen_at_utc"
+        ],
+        "current_action": "Independently verify the final partial handoff ZIP and matching prompts, confirm all saves and exact readback, publish the separate delivery receipt, and stop. No design clarification or implementation begins in this chat.",
+        "future_action": "In a fresh bounded phase, reconcile this P12 blocker handoff and its separate receipt with live GitHub, confirm new early recovery, then independently clarify the N57 review-to-policy boundary in a separately versioned decision. Specify a genuine source-bound admission predicate and matching portable controls, or explicitly classify completeness as an independent-review-only gate. Preserve the original97 expectations and all prior candidates/failures as history. Obtain exact independent design/control review and verified partial delivery. Stop before production implementation, H0/H1, runtime preparation, original-seven/full routine or integration."
+      }
+    },
+    {
+      "name": "P12_PACKAGE_001_closed",
+      "passed": true,
+      "evidence": {
+        "finding": "P12-PACKAGE-001",
+        "state": "closed",
+        "corrections": [
+          {
+            "member": "HANDOFF.md",
+            "before": "The accepted corpus was privately materialized with exact bytes and declared modes. Its original unsuccessful helper attempt and corrected attempt remain recorded.",
+            "after": "The accepted corpus was privately materialized with exact bytes and declared modes. The materialization attempt completed successfully. Separate failed and overstrict documentary reviewer-script attempts and their corrected rechecks remain recorded.",
+            "exact_single_replacement": true
+          },
+          {
+            "member": "RECOVERY-STATUS.md",
+            "before": "It includes the initial materialization failure, corrected materialization receipt, author question, independent adjudication, check outputs, publication intentions/readbacks, scripts and delivery observations available before freeze.",
+            "after": "It includes the successful materialization attempt and receipt, preserved documentary reviewer-script failures/limitations and corrected rechecks, author question, independent adjudication, check outputs, publication intentions/readbacks, scripts and delivery observations available before freeze.",
+            "exact_single_replacement": true
+          }
+        ],
+        "rationale": "Correctly separates successful corpus materialization from the preserved documentary-review script failures/limitations."
+      }
+    },
+    {
+      "name": "original_rejected_candidate_preserved",
+      "passed": true,
+      "evidence": {
+        "new_dependency": {
+          "file_name": "OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
+          "local_path": "/workspace/scratch/378b783967ca/deliverables_p12/final/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
+          "bytes": 1840636,
+          "sha256": "cb7fdb60de7e116c9d89ccb0aead793fef1bdfc38cdb927f8c8477a123040ea7",
+          "source_revision": "09e04b394194b7a21dc203dd7bba2e548ca1c168",
+          "source_tree": "ae7a01657b6f545640eba2b7e30e5800dacda37f",
+          "embedded": false,
+          "library_save": "not_claimed",
+          "retained_unchanged": true,
+          "purpose": "Rejected first final-package candidate preserved for the separate terminal recovery evidence. Its first review and original build records remain included; no future save/receipt is claimed.",
+          "finding": "recovery/session_p12/packaging/correction-001/FINDING-AND-CORRECTION.json"
+        },
+        "limit": "Original archive durable preservation is assigned to the later separate terminal receipt; this package makes no save claim."
+      }
+    },
+    {
+      "name": "all_802_old_recovery_identities_preserved",
+      "passed": true,
+      "evidence": {
+        "identity_fields": [
+          "original_path",
+          "relative_path",
+          "bytes",
+          "sha256",
+          "source_mode"
+        ],
+        "exact_whole_rows_unchanged": 800,
+        "alias_relocations": [
+          {
+            "path": "session_p12/packaging/final-documents/HANDOFF.md",
+            "old_payload": "HANDOFF.md",
+            "new_payload": "recovery/session_p12/packaging/final-documents/HANDOFF.md",
+            "old_bytes_preserved": true,
+            "source_mode": "0644"
+          },
+          {
+            "path": "session_p12/packaging/final-documents/RECOVERY-STATUS.md",
+            "old_payload": "RECOVERY-STATUS.md",
+            "new_payload": "recovery/session_p12/packaging/final-documents/RECOVERY-STATUS.md",
+            "old_bytes_preserved": true,
+            "source_mode": "0644"
+          }
+        ],
+        "reuse": "The first audit restored and verified all 802 original byte/mode identities. Only these two aliases move to preserved draft copies; their payloads are checked above."
+      }
+    },
+    {
+      "name": "bounded_23_new_recovery_rows",
+      "passed": true,
+      "evidence": {
+        "new_paths": [
+          "deliverables_p12/final/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Continue.md",
+          "deliverables_p12/final/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Recover.md",
+          "deliverables_p12/final/PACKAGE-VERIFICATION.json",
+          "deliverables_p12/final/RESTORATION.stderr.txt",
+          "deliverables_p12/final/RESTORATION.stdout.json",
+          "session_p12/packaging/CORRECTED-FINAL-CONFIG.json",
+          "session_p12/packaging/correct_package_narrative.py",
+          "session_p12/packaging/corrected-documents/HANDOFF.md",
+          "session_p12/packaging/corrected-documents/NEXT-TASK.md",
+          "session_p12/packaging/corrected-documents/PROMPT-1-CONTINUE.md",
+          "session_p12/packaging/corrected-documents/PROMPT-2-RECOVER.md",
+          "session_p12/packaging/corrected-documents/README-START-HERE.md",
+          "session_p12/packaging/corrected-documents/RECOVERY-STATUS.md",
+          "session_p12/packaging/correction-001/FINDING-AND-CORRECTION.json",
+          "session_p12/packaging/correction-001/FIXED-RECOVERY-INVENTORY.json",
+          "session_p12/review/final-package/AUDIT.json",
+          "session_p12/review/final-package/PAYLOAD-CHECKS.json",
+          "session_p12/review/final-package/RECOVERY-CHECKS.json",
+          "session_p12/review/final-package/REPORT.md",
+          "session_p12/review/final-package/RESTORATION.stderr.txt",
+          "session_p12/review/final-package/RESTORATION.stdout.json",
+          "session_p12/review/final-package/SOURCE-CHECKS.json",
+          "session_p12/review/final-package/audit_package.py"
+        ],
+        "all_recovery_paths": 825
+      }
+    },
+    {
+      "name": "all_new_payload_and_source_identities",
+      "passed": true,
+      "evidence": {
+        "count": 23,
+        "modes": {
+          "0644": 23
+        }
+      }
+    },
+    {
+      "name": "private_new_and_relocated_recovery",
+      "passed": true,
+      "evidence": {
+        "new_files": 23,
+        "relocated_old_drafts": 2,
+        "private_root_mode": "0700",
+        "helper_unchanged": true,
+        "old_full_restoration_repeated": false,
+        "payloads_executed": false,
+        "original_paths_written": false
+      }
+    },
+    {
+      "name": "prompts_and_next_action_unchanged",
+      "passed": true,
+      "evidence": {
+        "prompts": [
+          {
+            "path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Continue.md",
+            "bytes": 5223,
+            "sha256": "18a638004be6cb4a935e4e3049e517ea7832d5e32d32fb6ad83777ebd916e3e8",
+            "member": "PROMPT-1-CONTINUE.md",
+            "unchanged_and_exact": true
+          },
+          {
+            "path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Recover.md",
+            "bytes": 5757,
+            "sha256": "048b145380663743d6d81ab755b6cd3eb833d2ef80495039640e928ef8ea8467",
+            "member": "PROMPT-2-RECOVER.md",
+            "unchanged_and_exact": true
+          }
+        ],
+        "future_design_only_limits": "Reused unchanged independently reviewed prompts, README and NEXT-TASK."
+      }
+    },
+    {
+      "name": "builder_full_restoration_evidence_agrees",
+      "passed": true,
+      "evidence": {
+        "builder_record": {
+          "path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/PACKAGE-VERIFICATION.json",
+          "bytes": 3466,
+          "sha256": "15eb784a9ae0fc25f43236a18810720e322a8b0b3fc7b481a6f786346ddd2fbd"
+        },
+        "restoration_stdout": {
+          "path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/RESTORATION.stdout.json",
+          "bytes": 250890,
+          "sha256": "9b86b864b4ae7ad8d7106997fb019a23b7ef61b83290f751d76bab732923eda5"
+        },
+        "qualification": "Builder evidence inspected; independent current review restored 23 new plus two relocated entries and reused the exact unchanged prior 802-file proof."
+      }
+    }
+  ],
+  "groups_passed": 13,
+  "counts": {
+    "members": 399,
+    "manifest_payloads": 398,
+    "git_snapshots": 316,
+    "recovery_paths": 825,
+    "old_recovery_identities_preserved": 802,
+    "old_rows_entirely_equal": 800,
+    "old_draft_alias_relocations": 2,
+    "new_recovery_paths": 23,
+    "private_delta_restored": 25,
+    "added_payloads": 15,
+    "removed_payloads": 0,
+    "changed_payloads": 7,
+    "unchanged_payloads": 377
+  },
+  "prompts": [
+    {
+      "path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Continue.md",
+      "bytes": 5223,
+      "sha256": "18a638004be6cb4a935e4e3049e517ea7832d5e32d32fb6ad83777ebd916e3e8",
+      "member": "PROMPT-1-CONTINUE.md",
+      "unchanged_and_exact": true
+    },
+    {
+      "path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Recover.md",
+      "bytes": 5757,
+      "sha256": "048b145380663743d6d81ab755b6cd3eb833d2ef80495039640e928ef8ea8467",
+      "member": "PROMPT-2-RECOVER.md",
+      "unchanged_and_exact": true
+    }
+  ],
+  "limitations": [
+    "Current review is bounded to exact delta/new evidence and reuses the prior independently verified source and full restoration proof.",
+    "The final ZIP/prompts have no reviewed save/readback receipt yet; those remain external observations.",
+    "The rejected first ZIP is retained locally with exact identity and is assigned to the terminal receipt for durable preservation; no embedded original archive or successful save is claimed here.",
+    "No product execution, H0/H1, full routine, main integration, second phase or parent closure is authorized or observed."
+  ],
+  "pending_writes": []
+}

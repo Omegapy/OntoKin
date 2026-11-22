@@ -1,0 +1,111 @@
+{
+  "schema": "ontokin.c271.p12-record-checks/1",
+  "started_at_utc": "2026-11-22T01:02:53.458929+00:00",
+  "source_head": "09e04b394194b7a21dc203dd7bba2e548ca1c168",
+  "index_tree": "fe16344e7bfada441b6f81924fac5d7f9cc17916",
+  "working_state": "A  docs/engineering/localized-repair-c271/loader-path-p12/P12-DELIVERY.json\nM  docs/engineering/localized-repair-c271/loader-path-p12/PHASE-OUTCOME.json\nM  docs/engineering/localized-repair-c271/loader-path-p12/PHASE.json\nM  docs/engineering/localized-repair-c271/loader-path-p12/README.md\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/FINAL-PACKAGE-VERIFICATION.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package-attempt001/AUDIT.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package-attempt001/PAYLOAD-CHECKS.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package-attempt001/RECOVERY-CHECKS.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package-attempt001/REPORT.md\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package-attempt001/RESTORATION.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package-attempt001/RESTORATION.stdout.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package-attempt001/SOURCE-CHECKS.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package-attempt001/audit_package.py\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package/AUDIT.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package/FILE-DELTA.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package/PAYLOAD-CHECKS.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package/RECOVERY-DELTA.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package/REPORT.md\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package/review_delta.py\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/published-blocked-record-checks/CHECKS.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/published-blocked-record-checks/documentation.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/published-blocked-record-checks/documentation.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/published-blocked-record-checks/staged-whitespace.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/published-blocked-record-checks/staged-whitespace.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/published-blocked-record-checks/whitespace.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/published-blocked-record-checks/whitespace.stdout.txt\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/published-blocked-record-checks/workflow.stderr.txt\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/published-blocked-record-checks/workflow.stdout.txt\nM  docs/workflow/CURRENT.json\nM  docs/workflow/tasks/C271/P12-SESSION.md\nM  docs/workflow/tasks/C271/PLAN.md\nM  docs/workflow/tasks/C271/REQUIREMENTS.md\nM  docs/workflow/tasks/C271/task.json\n",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "checks": [
+    {
+      "name": "workflow",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ],
+      "returncode": 0,
+      "seconds": 0.10941165099939099,
+      "result": "passed",
+      "logs": [
+        {
+          "path": "workflow.stdout.txt",
+          "bytes": 185,
+          "sha256": "dbcaa1cd44885eb989c54d37bfd3c48daab47ee82fdb38bac1efe0aba902aa55"
+        },
+        {
+          "path": "workflow.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "name": "documentation",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "returncode": 0,
+      "seconds": 2.690678383998602,
+      "result": "passed",
+      "logs": [
+        {
+          "path": "documentation.stdout.txt",
+          "bytes": 6609,
+          "sha256": "7dc9b231ffd1526be5f8609da02141e16272f1127060f72e4ce797b9ebd9706a"
+        },
+        {
+          "path": "documentation.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "name": "whitespace",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "seconds": 0.010251173998767626,
+      "result": "passed",
+      "logs": [
+        {
+          "path": "whitespace.stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "whitespace.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "name": "staged-whitespace",
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "returncode": 2,
+      "seconds": 0.010171873998842784,
+      "result": "failed",
+      "logs": [
+        {
+          "path": "staged-whitespace.stdout.txt",
+          "bytes": 142,
+          "sha256": "1a22ee73fb908a43915bf09076694bfe62e12b663b51e0139b7374d1c2990b30"
+        },
+        {
+          "path": "staged-whitespace.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    }
+  ],
+  "completed_at_utc": "2026-11-22T01:02:56.628109+00:00",
+  "passed": false
+}

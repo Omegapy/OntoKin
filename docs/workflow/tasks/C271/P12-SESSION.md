@@ -18,3 +18,10 @@ Independent review confirms `P12-N57-POLICY-BINDING-001`: N57 and positive P01 d
 No production/test source, frozen expectation, dependency pin or existing limit changed. All942 source/test/tool files and the accepted candidate manifest remain unchanged. The97 frozen behavior controls and175 existing methods were not run; private materialization and static identity checks are not product tests. Parent C271/R03-R05 remain blocked/unmet. The full routine stays mandatory.
 
 Finish only this phase's documentary checks, conditional publication, independent package verification, confirmed saved partial ZIP/prompts and separate receipt, then stop. A later fresh design clarification must specify the genuine independently reviewed policy-admission boundary or explicitly classify source completeness as a review-only obligation, under a separately reviewed version while preserving the original97 records. No clarification or implementation occurs in this P12 chat. See `docs/engineering/localized-repair-c271/loader-path-p12/PHASE-OUTCOME.json` and `BLOCKER.json`.
+
+
+## P12 saved partial delivery
+
+The exact blocked handoff ZIP and matching Continue/Recover prompts are independently reviewed, saved and read back byte-for-byte. The [delivery receipt](../../../engineering/localized-repair-c271/loader-path-p12/P12-DELIVERY.json) binds their identities to source `09e04b394194b7a21dc203dd7bba2e548ca1c168`. Separate terminal confirmation remains pending at this source snapshot and must be reconciled from the later saved receipt.
+
+P12 stopped before implementation. The 97 controls and 175 existing methods were not run; all existing production/test source and frozen expectations remain unchanged. C271 and R03–R05 remain blocked/unmet. After terminal confirmation, stop this chat. The next fresh phase is independently reviewed clarification of the N57 source-review/policy-admission boundary, before production or host work.

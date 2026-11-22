@@ -623,6 +623,18 @@
         "docs/engineering/localized-repair-c271/loader-path-p12/evidence/SOURCE-BOUNDARY.json"
       ],
       "limit": "Pass accepts the blocker diagnosis only. No implementation/97-control/175-method/H0/R03 acceptance."
+    },
+    {
+      "name": "P12 exact-source documentary and saved package verification",
+      "command": "Four recorded source-bound documentary checks; independent exact package audit; saved-file byte and prompt-member comparison",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p12/P12-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package/AUDIT.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/published-blocked-record-checks/CHECKS.json"
+      ],
+      "limit": "Documentary and delivery checks only. No product, H0/H1, full-routine, integration or parent acceptance."
     }
   ],
   "completion": {
@@ -647,7 +659,7 @@
     "elf_mapping_implementation_commit": "fdacc11349079be21bcce755b18ca660df4d96a2",
     "loader_path_decision_commit": "e7508fb23c64563549631a1be46a3523593e2d9f"
   },
-  "next_action": "Finish independent documentary boundary review, required record checks, conditional branch publication and exact readback. Verify/freeze/save the final partial ZIP and matching prompts, publish the separate receipt, and stop. No clarification or implementation begins in this chat.",
+  "next_action": "Confirm the separate P12 terminal receipt save/readback and final branch state, then stop this chat. Reconcile that receipt before treating source-time pending fields as current. Only a fresh bounded phase may clarify the N57 source-review/policy-admission contract; production implementation, host work, full routine and integration remain later gates.",
   "session_phase": {
     "schema": "ontokin.c271.p12-phase/1",
     "task": "C271",
@@ -690,7 +702,7 @@
       "Root owns canonical task/CURRENT, Git/index, publication and delivery. Actual workers own disjoint assigned files; no nested fanout.",
       "Do not repeat diagnosed unavailable native push; use conditional nonforce GitHub API ref updates with expected head."
     ],
-    "status": "blocked_delivery_pending",
+    "status": "blocked_delivery_confirmation_pending",
     "early_save_confirmed": true,
     "parent_status": "blocked",
     "parent_complete": false,
@@ -718,12 +730,12 @@
       "state": "open"
     },
     "stop": "Stop after this bounded implementation/control phase and verified partial delivery, or at its first concrete blocker. No later runtime/integration phase in this chat.",
-    "exact_next_action": "Finish independent documentary boundary review, required record checks, conditional branch publication and exact readback. Verify/freeze/save the final partial ZIP and matching prompts, publish the separate receipt, and stop. No clarification or implementation begins in this chat.",
+    "exact_next_action": "Confirm the separate P12 terminal receipt save/readback and final branch state, then stop this chat. Reconcile that receipt before treating source-time pending fields as current. Only a fresh bounded phase may clarify the N57 source-review/policy-admission contract; production implementation, host work, full routine and integration remain later gates.",
     "workers": {
-      "/root": "Director: documentary verification, publication and saved delivery only",
-      "/root/loader_implementation": "Completed at N57 blocker; no source/test edits or product execution; no active process or unknown operation",
-      "/root/intake_review": "Independent blocker adjudication complete; documentary/final-package review follows",
-      "/root/package_engineer": "Preparing final package; waits exact source freeze"
+      "/root": "Completing separate terminal receipt and final state confirmation; no further technical phase",
+      "/root/loader_implementation": "Stopped at confirmed blocker; no code changes, tests or active processes",
+      "/root/intake_review": "Blocker, documentary and exact final-package reviews accepted",
+      "/root/package_engineer": "Final immutable ZIP and matching prompts verified; no pending package work"
     },
     "current_unknown_operations": [],
     "historical_unknowns": [
@@ -752,15 +764,22 @@
       },
       {
         "gate": "P12-A04",
-        "state": "blocker_review_accepted_documentary_publication_pending",
+        "state": "passed_blocker_documentary_review_record_checks_conditional_publication_readback",
         "evidence": [
           "docs/engineering/localized-repair-c271/loader-path-p12/evidence/review/ADJUDICATION.json",
-          "docs/engineering/localized-repair-c271/loader-path-p12/evidence/SOURCE-BOUNDARY.json"
+          "docs/engineering/localized-repair-c271/loader-path-p12/evidence/SOURCE-BOUNDARY.json",
+          "docs/engineering/localized-repair-c271/loader-path-p12/evidence/documentary-boundary/AUDIT.json",
+          "session_p12/checks/published-blocked-source/CHECKS.json",
+          "session_p12/publication/blocked/VERIFICATION.json"
         ]
       },
       {
         "gate": "P12-A05",
-        "state": "final_package_review_save_and_receipt_pending"
+        "state": "final_zip_and_matching_prompts_reviewed_saved_readback_verified_terminal_receipt_pending",
+        "evidence": [
+          "docs/engineering/localized-repair-c271/loader-path-p12/P12-DELIVERY.json",
+          "docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package/AUDIT.json"
+        ]
       }
     ],
     "selected_design": {
@@ -801,6 +820,12 @@
         "id": "P12-N57-POLICY-BINDING-001",
         "evidence": "docs/engineering/localized-repair-c271/loader-path-p12/BLOCKER.json",
         "disposition": "Confirmed by independent review; technical phase stopped. No test outcome or expectation changed."
+      },
+      {
+        "kind": "documentary_current_state_correction",
+        "id": "P12-DOC-001",
+        "evidence": "docs/engineering/localized-repair-c271/loader-path-p12/evidence/blocked-record-checks/DOCUMENTARY-CORRECTION.json",
+        "disposition": "Corrected stale scope statement; independent review closed finding. Original observed wording and candidate remain preserved."
       }
     ],
     "observed_main": {
@@ -809,8 +834,8 @@
       "observed_at_utc": "2026-11-22T00:34:49.431990+00:00",
       "evidence": "session_p12/startup/early-branches.json"
     },
-    "source_commit": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
-    "source_tree": "c3aed39729812e3c2abf2a4a4332d75052c4f19d",
+    "source_commit": "09e04b394194b7a21dc203dd7bba2e548ca1c168",
+    "source_tree": "ae7a01657b6f545640eba2b7e30e5800dacda37f",
     "prior_terminal_receipt": {
       "file_name": "OntoKin_C271_P11_Delivery_Receipt_2026-11-21.json",
       "library_file_id": "libfile_fde3_f-6c84b3949d548191ab5c978242124e7d_2ab2a24d43748191957f9bcc356b59de",
@@ -820,7 +845,7 @@
       "sha256": "55d46239b1950b032a7fa9496b37e49a638b0d8162497b74be9aa29b9c208fd8",
       "verification": "docs/engineering/localized-repair-c271/loader-path-p12/evidence/intake/AUDIT.json"
     },
-    "updated_at_utc": "2026-11-22T00:48:24.666844+00:00",
+    "updated_at_utc": "2026-11-22T01:02:52.937939+00:00",
     "early_recovery": "confirmed_saved_and_independently_accepted",
     "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json",
     "blocker": {
@@ -852,7 +877,96 @@
     "frozen_97_controls": "not_run",
     "existing_175_methods": "not_run",
     "post_delivery_next_action": "In a fresh bounded phase, reconcile this P12 blocker handoff and its separate receipt with live GitHub, confirm new early recovery, then independently clarify the N57 review-to-policy boundary in a separately versioned decision. Specify a genuine source-bound admission predicate and matching portable controls, or explicitly classify completeness as an independent-review-only gate. Preserve the original97 expectations and all prior candidates/failures as history. Obtain exact independent design/control review and verified partial delivery. Stop before production implementation, H0/H1, runtime preparation, original-seven/full routine or integration.",
-    "next_phase_stop": "Stop after separately reviewed clarification/control freeze and saved partial handoff, or its first unresolved blocker; production implementation and actual host gates remain later phases."
+    "next_phase_stop": "Stop after separately reviewed clarification/control freeze and saved partial handoff, or its first unresolved blocker; production implementation and actual host gates remain later phases.",
+    "published_blocker_checkpoint": {
+      "commit": "09e04b394194b7a21dc203dd7bba2e548ca1c168",
+      "tree": "ae7a01657b6f545640eba2b7e30e5800dacda37f",
+      "record_checks": "all_four_passed_at_exact_published_source",
+      "documentary_review": "accepted_14_of_14_groups_after_one_correction",
+      "source_boundary": "942_existing_source_test_tool_files_and_all_frozen_controls_unchanged",
+      "parent_complete": false
+    },
+    "delivery": {
+      "required": true,
+      "kind": "online_browser_session",
+      "status": "delivery_confirmation_pending",
+      "folder": "OntoKin",
+      "partial": true,
+      "phase_complete": false,
+      "technical_phase_complete": false,
+      "phase_stop_reached": true,
+      "technical_result": "blocked_before_implementation",
+      "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json",
+      "receipt": "docs/engineering/localized-repair-c271/loader-path-p12/P12-DELIVERY.json",
+      "core_saved_and_readback_verified": true,
+      "confirmed_at_utc": "2026-11-22T01:02:44.788331+00:00",
+      "archive": {
+        "local_path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_00000000897c81f58cad16de814d541f",
+        "library_file_id": "libfile_fde3_f-09b2accb4c888191905fc46853b65d7a_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
+        "current_version_number": 0,
+        "bytes": 2075115,
+        "sha256": "337f8fd00f91987c6a70ba91a9439a5da29bc91a81507d4a92d2d9bc17cbb323",
+        "version": 0,
+        "readback_path": "/workspace/scratch/378b783967ca/saved_readback_p12/final/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
+        "saved_bytes_readback_equal": true,
+        "local_bytes_unchanged_after_save": true,
+        "folder_metadata_verified": true,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-09b2accb4c888191905fc46853b65d7a_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+      },
+      "matching_prompts": [
+        {
+          "local_path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Continue.md",
+          "purpose": "create_library_file",
+          "status": "succeeded",
+          "file_id": "file_00000000374481f59d3803b1037ac986",
+          "library_file_id": "libfile_fde3_f-7607928fc3d88191974f562f14e3e2ed_2ab2a24d43748191957f9bcc356b59de",
+          "file_name": "OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Continue.md",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Continue.md",
+          "current_version_number": 0,
+          "bytes": 5223,
+          "sha256": "18a638004be6cb4a935e4e3049e517ea7832d5e32d32fb6ad83777ebd916e3e8",
+          "version": 0,
+          "readback_path": "/workspace/scratch/378b783967ca/saved_readback_p12/final/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Continue.md",
+          "saved_bytes_readback_equal": true,
+          "local_bytes_unchanged_after_save": true,
+          "folder_metadata_verified": true,
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-7607928fc3d88191974f562f14e3e2ed_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "matches_archive_member": "PROMPT-1-CONTINUE.md"
+        },
+        {
+          "local_path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Recover.md",
+          "purpose": "create_library_file",
+          "status": "succeeded",
+          "file_id": "file_00000000524881f5ada149b8f5fa4edc",
+          "library_file_id": "libfile_fde3_f-be6630d330948191a0ccf24a6e216eab_2ab2a24d43748191957f9bcc356b59de",
+          "file_name": "OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Recover.md",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Recover.md",
+          "current_version_number": 0,
+          "bytes": 5757,
+          "sha256": "048b145380663743d6d81ab755b6cd3eb833d2ef80495039640e928ef8ea8467",
+          "version": 0,
+          "readback_path": "/workspace/scratch/378b783967ca/saved_readback_p12/final/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Recover.md",
+          "saved_bytes_readback_equal": true,
+          "local_bytes_unchanged_after_save": true,
+          "folder_metadata_verified": true,
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-be6630d330948191a0ccf24a6e216eab_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "matches_archive_member": "PROMPT-2-RECOVER.md"
+        }
+      ],
+      "source_revision": "09e04b394194b7a21dc203dd7bba2e548ca1c168",
+      "source_tree": "ae7a01657b6f545640eba2b7e30e5800dacda37f",
+      "terminal_receipt_filename": "OntoKin_C271_P12_Delivery_Receipt_2026-11-21.json",
+      "terminal_receipt_status": "not_yet_saved_at_this_source_snapshot",
+      "terminal_receipt_location_source": "https://github.com/Omegapy/OntoKin/pull/274"
+    }
   },
   "delivery": {
     "required": true,
@@ -861,70 +975,79 @@
     "folder": "OntoKin",
     "partial": true,
     "phase_complete": false,
-    "technical_phase_complete": true,
-    "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json",
-    "receipt": "docs/engineering/localized-repair-c271/loader-path-p11/P11-DELIVERY.json",
+    "technical_phase_complete": false,
+    "phase_stop_reached": true,
+    "technical_result": "blocked_before_implementation",
+    "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json",
+    "receipt": "docs/engineering/localized-repair-c271/loader-path-p12/P12-DELIVERY.json",
     "core_saved_and_readback_verified": true,
+    "confirmed_at_utc": "2026-11-22T01:02:44.788331+00:00",
     "archive": {
-      "local_path": "/workspace/scratch/2ad494d5da19/deliverables/final/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21.zip",
+      "local_path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
       "purpose": "create_library_file",
       "status": "succeeded",
-      "file_id": "file_0000000057c481f5945344a7792715dc",
-      "library_file_id": "libfile_fde3_f-75eebb75e4cc8191a2137b335331dd9b_2ab2a24d43748191957f9bcc356b59de",
-      "file_name": "OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21.zip",
+      "file_id": "file_00000000897c81f58cad16de814d541f",
+      "library_file_id": "libfile_fde3_f-09b2accb4c888191905fc46853b65d7a_2ab2a24d43748191957f9bcc356b59de",
+      "file_name": "OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
       "local_metadata_applied": true,
-      "path": "/OntoKin/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21.zip",
+      "path": "/OntoKin/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
       "current_version_number": 0,
-      "bytes": 5606509,
-      "sha256": "4eddd353047fb8d6aa316544c8b54d655eb53a1613f9c522bbed0edc1ab1249e",
+      "bytes": 2075115,
+      "sha256": "337f8fd00f91987c6a70ba91a9439a5da29bc91a81507d4a92d2d9bc17cbb323",
       "version": 0,
-      "readback_path": "saved_readback/final/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21.zip",
+      "readback_path": "/workspace/scratch/378b783967ca/saved_readback_p12/final/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21.zip",
       "saved_bytes_readback_equal": true,
       "local_bytes_unchanged_after_save": true,
       "folder_metadata_verified": true,
-      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-75eebb75e4cc8191a2137b335331dd9b_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-09b2accb4c888191905fc46853b65d7a_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
     },
     "matching_prompts": [
       {
-        "local_path": "/workspace/scratch/2ad494d5da19/deliverables/final/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Continue.md",
+        "local_path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Continue.md",
         "purpose": "create_library_file",
         "status": "succeeded",
-        "file_id": "file_00000000162081f590962158572cf3b6",
-        "library_file_id": "libfile_fde3_f-b858882181288191a71c33e0cb2db1da_2ab2a24d43748191957f9bcc356b59de",
-        "file_name": "OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Continue.md",
+        "file_id": "file_00000000374481f59d3803b1037ac986",
+        "library_file_id": "libfile_fde3_f-7607928fc3d88191974f562f14e3e2ed_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Continue.md",
         "local_metadata_applied": true,
-        "path": "/OntoKin/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Continue.md",
+        "path": "/OntoKin/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Continue.md",
         "current_version_number": 0,
-        "bytes": 5673,
-        "sha256": "0d0b6bbf3d5e0cdbd550f8777d37b54cea3db339e9b121bfbb5461e46b966237",
+        "bytes": 5223,
+        "sha256": "18a638004be6cb4a935e4e3049e517ea7832d5e32d32fb6ad83777ebd916e3e8",
         "version": 0,
-        "readback_path": "saved_readback/final/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Continue.md",
+        "readback_path": "/workspace/scratch/378b783967ca/saved_readback_p12/final/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Continue.md",
         "saved_bytes_readback_equal": true,
         "local_bytes_unchanged_after_save": true,
         "folder_metadata_verified": true,
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-b858882181288191a71c33e0cb2db1da_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-7607928fc3d88191974f562f14e3e2ed_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "matches_archive_member": "PROMPT-1-CONTINUE.md"
       },
       {
-        "local_path": "/workspace/scratch/2ad494d5da19/deliverables/final/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Recover.md",
+        "local_path": "/workspace/scratch/378b783967ca/deliverables_p12/final-corrected/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Recover.md",
         "purpose": "create_library_file",
         "status": "succeeded",
-        "file_id": "file_00000000795c81f59f0ad5977e7e2e20",
-        "library_file_id": "libfile_fde3_f-8c6878b8a6d08191b33d6ab11aa4aaa9_2ab2a24d43748191957f9bcc356b59de",
-        "file_name": "OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Recover.md",
+        "file_id": "file_00000000524881f5ada149b8f5fa4edc",
+        "library_file_id": "libfile_fde3_f-be6630d330948191a0ccf24a6e216eab_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Recover.md",
         "local_metadata_applied": true,
-        "path": "/OntoKin/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Recover.md",
+        "path": "/OntoKin/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Recover.md",
         "current_version_number": 0,
-        "bytes": 5899,
-        "sha256": "9cae6e7f92ab216cbae6e917152e58a9ad4fb261ecaff70190f5d85509e3bbda",
+        "bytes": 5757,
+        "sha256": "048b145380663743d6d81ab755b6cd3eb833d2ef80495039640e928ef8ea8467",
         "version": 0,
-        "readback_path": "saved_readback/final/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Recover.md",
+        "readback_path": "/workspace/scratch/378b783967ca/saved_readback_p12/final/OntoKin_C271_P12_Loader_Path_Blocked_Handoff_2026-11-21_Recover.md",
         "saved_bytes_readback_equal": true,
         "local_bytes_unchanged_after_save": true,
         "folder_metadata_verified": true,
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-8c6878b8a6d08191b33d6ab11aa4aaa9_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-be6630d330948191a0ccf24a6e216eab_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "matches_archive_member": "PROMPT-2-RECOVER.md"
       }
     ],
-    "terminal_receipt_filename": "OntoKin_C271_P11_Delivery_Receipt_2026-11-21.json"
+    "source_revision": "09e04b394194b7a21dc203dd7bba2e548ca1c168",
+    "source_tree": "ae7a01657b6f545640eba2b7e30e5800dacda37f",
+    "terminal_receipt_filename": "OntoKin_C271_P12_Delivery_Receipt_2026-11-21.json",
+    "terminal_receipt_status": "not_yet_saved_at_this_source_snapshot",
+    "terminal_receipt_location_source": "https://github.com/Omegapy/OntoKin/pull/274"
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
@@ -2440,6 +2563,90 @@
           }
         ],
         "confirmed_at_utc": "2026-11-21T20:48:10.140149Z"
+      }
+    },
+    {
+      "phase": "C271-P11-loader-path-decision",
+      "delivery": {
+        "required": true,
+        "kind": "online_browser_session",
+        "status": "delivery_confirmation_pending",
+        "folder": "OntoKin",
+        "partial": true,
+        "phase_complete": false,
+        "technical_phase_complete": true,
+        "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json",
+        "receipt": "docs/engineering/localized-repair-c271/loader-path-p11/P11-DELIVERY.json",
+        "core_saved_and_readback_verified": true,
+        "archive": {
+          "local_path": "/workspace/scratch/2ad494d5da19/deliverables/final/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21.zip",
+          "purpose": "create_library_file",
+          "status": "succeeded",
+          "file_id": "file_0000000057c481f5945344a7792715dc",
+          "library_file_id": "libfile_fde3_f-75eebb75e4cc8191a2137b335331dd9b_2ab2a24d43748191957f9bcc356b59de",
+          "file_name": "OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21.zip",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21.zip",
+          "current_version_number": 0,
+          "bytes": 5606509,
+          "sha256": "4eddd353047fb8d6aa316544c8b54d655eb53a1613f9c522bbed0edc1ab1249e",
+          "version": 0,
+          "readback_path": "saved_readback/final/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21.zip",
+          "saved_bytes_readback_equal": true,
+          "local_bytes_unchanged_after_save": true,
+          "folder_metadata_verified": true,
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-75eebb75e4cc8191a2137b335331dd9b_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+        },
+        "matching_prompts": [
+          {
+            "local_path": "/workspace/scratch/2ad494d5da19/deliverables/final/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Continue.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_00000000162081f590962158572cf3b6",
+            "library_file_id": "libfile_fde3_f-b858882181288191a71c33e0cb2db1da_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Continue.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Continue.md",
+            "current_version_number": 0,
+            "bytes": 5673,
+            "sha256": "0d0b6bbf3d5e0cdbd550f8777d37b54cea3db339e9b121bfbb5461e46b966237",
+            "version": 0,
+            "readback_path": "saved_readback/final/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Continue.md",
+            "saved_bytes_readback_equal": true,
+            "local_bytes_unchanged_after_save": true,
+            "folder_metadata_verified": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-b858882181288191a71c33e0cb2db1da_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+          },
+          {
+            "local_path": "/workspace/scratch/2ad494d5da19/deliverables/final/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Recover.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_00000000795c81f59f0ad5977e7e2e20",
+            "library_file_id": "libfile_fde3_f-8c6878b8a6d08191b33d6ab11aa4aaa9_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Recover.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Recover.md",
+            "current_version_number": 0,
+            "bytes": 5899,
+            "sha256": "9cae6e7f92ab216cbae6e917152e58a9ad4fb261ecaff70190f5d85509e3bbda",
+            "version": 0,
+            "readback_path": "saved_readback/final/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21_Recover.md",
+            "saved_bytes_readback_equal": true,
+            "local_bytes_unchanged_after_save": true,
+            "folder_metadata_verified": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-8c6878b8a6d08191b33d6ab11aa4aaa9_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+          }
+        ],
+        "terminal_receipt_filename": "OntoKin_C271_P11_Delivery_Receipt_2026-11-21.json"
+      },
+      "reconciled_by": {
+        "file_name": "OntoKin_C271_P11_Delivery_Receipt_2026-11-21.json",
+        "library_file_id": "libfile_fde3_f-6c84b3949d548191ab5c978242124e7d_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_00000000905c81f7aa094310513be026",
+        "version": 0,
+        "bytes": 8723877,
+        "sha256": "55d46239b1950b032a7fa9496b37e49a638b0d8162497b74be9aa29b9c208fd8",
+        "verification": "docs/engineering/localized-repair-c271/loader-path-p12/evidence/intake/AUDIT.json"
       }
     }
   ],
