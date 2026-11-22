@@ -1,0 +1,115 @@
+{
+  "schema": "ontokin.c271.p21.h0-independent-decision/1",
+  "reviewer": "/root/h0_review",
+  "recorded_at_utc": "2026-11-22 23:42:52 UTC",
+  "verdict": "h0_unaccepted_missing_declared_installation_evidence",
+  "h0_accepted": false,
+  "operational_plan_created": false,
+  "operational_plan_validated": false,
+  "h1_approved": false,
+  "technical_phase_stopped": true,
+  "runtime_failure_observed": false,
+  "static_rebind_gate": {
+    "verdict": "accepted_static_rebind_evidence_only",
+    "accepted": true,
+    "evidence": "OUTCOME-REVIEW.json",
+    "result_sha256": "7568bb68dfe6d8143a91a7de30523fdec467dc236f96b488744d4f1fd3aa2cc1"
+  },
+  "blocker": {
+    "id": "H0-INSTALLATION-RECEIPTS-001",
+    "kind": "missing_required_operational_plan_inputs",
+    "predicate": "Both runtime.install_receipt and dependencies.install_receipt must bind actual accepted source-matching unchanged-preparer plan/report indexes. Neither pair is available among the declared and boundedly reviewed inputs.",
+    "required_purposes": [
+      "selected-node",
+      "retained-dependencies"
+    ],
+    "required_index_schema": "ontokin.current-host-readback-inspection-installation/0.1.0",
+    "required_index_keys": [
+      "schema",
+      "plan",
+      "report"
+    ],
+    "required_report_states": [
+      "INSTALLED_EXACT",
+      "ALREADY_PRESENT_EXACT"
+    ],
+    "insufficient_report_state": "DRY_RUN_READY",
+    "source_equality": "Installation selected.source must equal the eventual H0 plan.source as an entire object: root, commit, tree and inventory descriptor. Matching one source module hash does not satisfy this relation.",
+    "diagnostic_limit": "No public inspector/preparer was invoked for this finding. No CHI runtime exception, executed refusal, failed ELF read or invalid executable is claimed.",
+    "unavailable_declared_inputs": [
+      "selected-node installation plan",
+      "selected-node actual successful report",
+      "selected-node descriptor index",
+      "retained-dependencies installation plan",
+      "retained-dependencies actual successful report",
+      "retained-dependencies descriptor index"
+    ]
+  },
+  "source_evidence": [
+    {
+      "path": "repo/prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206",
+      "coverage": "_check_installation, _check_installed_tree, _check_runtime_dependencies and _plan_shape; read as source"
+    },
+    {
+      "path": "repo/tools/prepare_current_host_readback.py",
+      "sha256": "fd4da23dde3cd75a95c3f5edc071028e5884da62932c32cba4be928e72f87bb3",
+      "coverage": "_plan_shape, _source, install_plan and main; read as source"
+    },
+    {
+      "path": "repo/docs/engineering/localized-repair-c271/host-preparation-p09/RESULTS.md",
+      "sha256": "31c8ae1cdf3ca19fb90bc2dd5666978ef82b6251477b3fb36ae069dc3f4ce8c5",
+      "coverage": "full"
+    },
+    {
+      "path": "repo/docs/engineering/localized-repair-c271/host-preparation-p09/evidence/H0-PREPARATION-REPORT.md",
+      "sha256": "9620475bc9e9bcea9e2a60574a74324f1ddde9e719424a4128b5f40f5d617828",
+      "coverage": "full"
+    },
+    {
+      "path": "phase-p21/ledger_review/INSTALLATION-SOURCE-REVIEW.md",
+      "sha256": "32b8a26a53c55e955f62f27a3f7db5572cdc8f7148f007a6ccc4df02bea77f7e",
+      "coverage": "full"
+    },
+    {
+      "path": "phase-p21/ledger_review/INSTALLATION-SOURCE-REVIEW.json",
+      "sha256": "22ed5c43a614bcca62744f6d65fb1874e36182cc69d618ceba3674f8b2a68f0c",
+      "coverage": "complete JSON parsed; substantive provenance/source-comparison/declared-path/search/remedy records inspected"
+    }
+  ],
+  "evidence_assessment": [
+    "P07 is an explicitly nonexecutable design with unavailable operational receipt/destination/source fields.",
+    "P09 explicitly produced no operational installation plan, installation or executable inspection plan. Archive-member observations are not successful preparer outcomes.",
+    "P19 is raw actual-input observation; its source file identity is not a complete H0 source object or installation receipt.",
+    "P20 installed seven Python verification distributions, separate from the selected Node and exact retained 24 readback dependency files.",
+    "P21's successful rebind preserves selected Python/environment/source inputs; it cannot manufacture the absent Node/dependency receipts."
+  ],
+  "absence_scope": {
+    "finding": "Unavailable among declared sources and bounded evidence scopes recorded by /root/ledger_review, with no other exact receipt paths supplied by Director.",
+    "global_absence_claim": false,
+    "installed_tree_absence_claim": false,
+    "new_host_traversal_by_h0_reviewer": false,
+    "historical_path_absence": "Three exact P09 locations were reported lstat-absent by ledger reviewer; this H0 reviewer did not repeat those host observations."
+  },
+  "why_stop": "Director's selected P21 boundary excludes preparer invocation or Node/dependency installation. Completing those missing required inputs would expand the phase. The honest stopping point is this concrete plan-input blocker; no placeholder operational plan is fabricated.",
+  "next_fresh_scope": {
+    "name": "Bound and prepare exact Node/readback-dependency input evidence",
+    "selection": "For a fresh separately selected bounded phase; not execution authority in P21.",
+    "work": "Reconcile live source and delivery, confirm new early recovery, recover authenticated P05 Node and C195 archives, freeze one clean actual source object and complete member/destination inventories, and independently review exact unchanged-preparer plans before any preparation.",
+    "existing_exact_case": "If selected trees already exist exactly, the reviewed unchanged preparer without --apply may produce fresh ALREADY_PRESENT_EXACT reports.",
+    "absent_case": "If a selected destination is absent, reviewed nonreplacing preparation may produce INSTALLED_EXACT only within the future explicitly selected preparation scope. A no-apply DRY_RUN_READY result alone is insufficient.",
+    "stop": "Accepted exact plan/report/index evidence for both inputs or first concrete blocker, then verified partial delivery. No H1, original-seven/full routine, integration or parent closure.",
+    "preservation": "Keep old plans/reports unchanged. Use the same frozen clean source object for preparation and later H0 review; never relabel a historical report by changing its source fields."
+  },
+  "remaining_gates": {
+    "H0": "unaccepted",
+    "H1": "not_approved",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done",
+    "P02": "in_progress",
+    "N57": "external independent-review obligation, no runtime pass or skip"
+  },
+  "director_state_recommendation": "Record C271 blocked on H0-INSTALLATION-RECEIPTS-001 with static rebind accepted; parent/issue open, PR draft/unmerged, branch retained. Director owns canonical state.",
+  "current_review_operations": "No active reviewer process, unknown reviewer write or technical run remains. No new host observation, preparer, install, Node/ldd/loader, product or package invocation was made during outcome review."
+}

@@ -3,8 +3,8 @@
   "id": "C271",
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
-  "status": "in_progress",
-  "owner": "c271-p20-371612fd9cb3",
+  "status": "blocked",
+  "owner": "c271-p21-f0af7d5d28fc",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -78,7 +78,10 @@
         "docs/engineering/localized-repair-c271/libc-flags-p17/review/REVIEW.json",
         "docs/engineering/localized-repair-c271/actual-input-p19/PHASE-OUTCOME.json",
         "docs/engineering/localized-repair-c271/environment-p20/OUTCOME.json",
-        "docs/engineering/localized-repair-c271/environment-p20/reviews/OUTCOME-REVIEW.json"
+        "docs/engineering/localized-repair-c271/environment-p20/reviews/OUTCOME-REVIEW.json",
+        "docs/engineering/localized-repair-c271/h0-plan-p21/OUTCOME.json",
+        "docs/engineering/localized-repair-c271/h0-plan-p21/reviews/OUTCOME-REVIEW.json",
+        "docs/engineering/localized-repair-c271/h0-plan-p21/reviews/H0-DECISION.json"
       ]
     },
     {
@@ -124,7 +127,8 @@
         "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json",
         "docs/engineering/localized-repair-c271/actual-input-p19/PHASE-OUTCOME.json",
         "docs/engineering/localized-repair-c271/environment-p20/EARLY-RECOVERY-RECEIPT.json",
-        "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json"
+        "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/h0-plan-p21/EARLY-RECOVERY-RECEIPT.json"
       ]
     }
   ],
@@ -521,7 +525,7 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
       ],
-      "scope": "P10 partial delivery only. R03\u2013R05 and integration remain open."
+      "scope": "P10 partial delivery only. R03–R05 and integration remain open."
     },
     {
       "name": "P11 independent intake and verified early recovery",
@@ -846,7 +850,7 @@
         "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
         "docs/engineering/localized-repair-c271/libc-tags-p16/FINAL-READBACK-VERIFICATION.json"
       ],
-      "limit": "P16 partial delivery only. Parent R03\u2013R05 and P02 remain open. This receipt checkpoint requires its own conditional publication/readback; late evidence is preserved separately."
+      "limit": "P16 partial delivery only. Parent R03–R05 and P02 remain open. This receipt checkpoint requires its own conditional publication/readback; late evidence is preserved separately."
     },
     {
       "name": "P17 startup reconciliation and independently verified early recovery",
@@ -967,6 +971,18 @@
         "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json"
       ],
       "scope": "Saved partial core only. Separate receipt publication/terminal confirmation remain pending; no H0/H1, R03, integration or parent completion."
+    },
+    {
+      "name": "P21 exact prepared-environment preservation",
+      "status": "passed",
+      "command": "Reviewed rebind_inputs.py through exact prelaunch wrapper",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/h0-plan-p21/rebind/RESULT.json"
+      ],
+      "source_revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "observed_result": "656 descriptor comparisons passed; 293 installed files, seven packages/wheels; no H0/H1 qualification",
+      "required": true
     }
   ],
   "completion": {
@@ -1054,55 +1070,44 @@
       "tree": "6f32eb119773a0661590f0645eabeebbc6cce178"
     }
   },
-  "next_action": "Publish and verify the separate P20 delivery receipt, reconcile live PR274/issue273 and terminal delivery evidence, then stop this chat. The next fresh phase remains actual-environment rebinding and complete H0 plan review; no technical work resumes here.",
+  "next_action": "Finish only P21 documentary review/checks, conditional retained-branch publication/readback, independent final ZIP audit, confirmed ZIP and matching prompts save/readback, and separate receipt; then stop this chat.",
   "session_phase": {
-    "phase": "C271-P20-isolated-verification-environment",
-    "owner": "c271-p20-371612fd9cb3",
-    "status": "core_saved_receipt_publication_pending",
+    "phase": "C271-P21-h0-operational-plan-review",
+    "owner": "c271-p21-f0af7d5d28fc",
+    "status": "blocked_H0_input_provenance_finalization_pending",
     "phase_complete": false,
     "technical_phase_complete": true,
-    "source_revision": "4bf7cb0023d1747be16c8752795819dd9a0cca37",
-    "phase_record": "docs/engineering/localized-repair-c271/environment-p20/PHASE.json",
-    "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c271/environment-p20/EARLY-RECOVERY-RECEIPT.json",
-    "scope": "Review and prepare an isolated verification environment satisfying the unchanged seven-package lock; preserve shared runtime and prior failures",
-    "stopping_point": "Verified isolated preparation/static package identity evidence or first concrete new blocker; then only documentary verification/publication/delivery",
+    "scope": "Bind P20 prepared isolated environment and review actual interpreter, package roots, native/loader closure and source inputs for a complete H0 operational plan under the adopted current-host profile",
+    "stop": "Independently accepted complete H0 operational plan or first concrete blocker; then only documentary review, publication and saved delivery",
     "current_unknown_operations": [],
-    "historical_unknowns": [
+    "historical_unknown_operations": [
       "C270 ancillary broad-driver completion",
       "Global prior-process termination",
       "P13 read-only difflib completion; do not retry"
     ],
     "main_lease_held": false,
-    "next_action": "Publish and verify the separate P20 delivery receipt, reconcile live PR274/issue273 and terminal delivery evidence, then stop this chat. The next fresh phase remains actual-environment rebinding and complete H0 plan review; no technical work resumes here.",
-    "parent_status": "in_progress",
-    "outcome": "docs/engineering/localized-repair-c271/environment-p20/OUTCOME.json",
-    "independent_review": "docs/engineering/localized-repair-c271/environment-p20/reviews/OUTCOME-REVIEW.json",
-    "first_next_phase_action": "In a fresh chat, reconcile P20 saved delivery and bind the prepared isolated environment (or recreate only from the seven packaged hash-locked wheels if its temporary paths no longer exist). Independently review the actual interpreter, package roots, native/loader closure and source inputs for a complete H0 operational plan under the adopted current-host profile before any H1 or full-routine execution.",
+    "next_action": "Finish only P21 documentary review/checks, conditional retained-branch publication/readback, independent final ZIP audit, confirmed ZIP and matching prompts save/readback, and separate receipt; then stop this chat.",
+    "parent_status": "blocked",
+    "first_next_phase_action": "In a fresh chat, reconcile P21 delivery and recover the exact retained Node and C195 dependency archive inputs identified by P09. Freeze one clean source object for both preparation and the later H0 plan; independently review a complete source-bound plan for the unchanged preparer, fresh isolated destinations or exact existing trees, and report/index paths. Prepare or verify only those Node and 24-file readback-dependency inputs and obtain independent review of actual successful source-bound receipts. Stop at that prerequisite checkpoint or first concrete blocker, before H0/H1, original-seven/full routine, main integration or another phase.",
     "active_child_commands": [],
-    "handoff_source_revision": "4a202685ce4a346c9efc3081abf967ccfdaf6b61",
-    "final_delivery_receipt": "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
-    "final_save_confirmed": true,
-    "receipt_publication": "pending_after_this_source_snapshot"
+    "source_revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+    "phase_record": "docs/engineering/localized-repair-c271/h0-plan-p21/PHASE.json",
+    "early_save_confirmed": true,
+    "early_receipt": "docs/engineering/localized-repair-c271/h0-plan-p21/EARLY-RECOVERY-RECEIPT.json",
+    "outcome": "docs/engineering/localized-repair-c271/h0-plan-p21/OUTCOME.json",
+    "independent_review": "docs/engineering/localized-repair-c271/h0-plan-p21/reviews/H0-DECISION.json"
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
     "folder": "OntoKin",
     "partial": true,
-    "phase": "C271-P20-isolated-verification-environment",
-    "status": "saved_and_exact_readback_verified_receipt_publication_pending",
+    "phase": "C271-P21-h0-operational-plan-review",
+    "status": "final_save_pending",
     "phase_complete": false,
-    "early_receipt": "docs/engineering/localized-repair-c271/environment-p20/EARLY-RECOVERY-RECEIPT.json",
-    "receipt": "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
-    "technical_phase_complete": true,
-    "core_saved_and_readback_verified": true,
-    "confirmed_at_utc": "2026-11-22T22:13:32.910712+00:00",
-    "source_revision": "4a202685ce4a346c9efc3081abf967ccfdaf6b61",
-    "source_tree": "83a25d08ade59c2390be6f8d40dd7857f5eed82e",
-    "zip_library_file_id": "libfile_fde3_f-29c70da7c76c8191ba986c2f84420c50_2ab2a24d43748191957f9bcc356b59de",
-    "zip_sha256": "1a37a3e5e535c74fba366382ae8a1c3a80c6b1150caa436e24a5a98a03f7f632",
-    "receipt_publication": "pending_after_this_source_snapshot"
+    "early_receipt": "docs/engineering/localized-repair-c271/h0-plan-p21/EARLY-RECOVERY-RECEIPT.json",
+    "receipt": "docs/engineering/localized-repair-c271/h0-plan-p21/P21-DELIVERY.json",
+    "technical_phase_complete": true
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
@@ -3358,6 +3363,36 @@
       "pointer": "/session_phase",
       "source_sha256": "21e860df8b3d5f864bbd0f2d0247cc0c062abf9413856fb1f5053a00a25a3f71",
       "disposition": "P19 partial delivery complete; exact source preserved in Git"
+    },
+    {
+      "phase": "C271-P20-isolated-verification-environment",
+      "owner": "c271-p20-371612fd9cb3",
+      "status": "core_saved_receipt_publication_pending",
+      "phase_complete": false,
+      "technical_phase_complete": true,
+      "source_revision": "4bf7cb0023d1747be16c8752795819dd9a0cca37",
+      "phase_record": "docs/engineering/localized-repair-c271/environment-p20/PHASE.json",
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/environment-p20/EARLY-RECOVERY-RECEIPT.json",
+      "scope": "Review and prepare an isolated verification environment satisfying the unchanged seven-package lock; preserve shared runtime and prior failures",
+      "stopping_point": "Verified isolated preparation/static package identity evidence or first concrete new blocker; then only documentary verification/publication/delivery",
+      "current_unknown_operations": [],
+      "historical_unknowns": [
+        "C270 ancillary broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only difflib completion; do not retry"
+      ],
+      "main_lease_held": false,
+      "next_action": "Publish and verify the separate P20 delivery receipt, reconcile live PR274/issue273 and terminal delivery evidence, then stop this chat. The next fresh phase remains actual-environment rebinding and complete H0 plan review; no technical work resumes here.",
+      "parent_status": "in_progress",
+      "outcome": "docs/engineering/localized-repair-c271/environment-p20/OUTCOME.json",
+      "independent_review": "docs/engineering/localized-repair-c271/environment-p20/reviews/OUTCOME-REVIEW.json",
+      "first_next_phase_action": "In a fresh chat, reconcile P20 saved delivery and bind the prepared isolated environment (or recreate only from the seven packaged hash-locked wheels if its temporary paths no longer exist). Independently review the actual interpreter, package roots, native/loader closure and source inputs for a complete H0 operational plan under the adopted current-host profile before any H1 or full-routine execution.",
+      "active_child_commands": [],
+      "handoff_source_revision": "4a202685ce4a346c9efc3081abf967ccfdaf6b61",
+      "final_delivery_receipt": "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
+      "final_save_confirmed": true,
+      "receipt_publication": "pending_after_this_source_snapshot"
     }
   ],
   "prior_phase_deliveries": [
@@ -4265,6 +4300,25 @@
       "pointer": "/delivery",
       "source_sha256": "21e860df8b3d5f864bbd0f2d0247cc0c062abf9413856fb1f5053a00a25a3f71",
       "disposition": "P19 saved final ZIP and terminal receipt independently reconciled in P20"
+    },
+    {
+      "required": true,
+      "kind": "browser-session",
+      "folder": "OntoKin",
+      "partial": true,
+      "phase": "C271-P20-isolated-verification-environment",
+      "status": "saved_and_exact_readback_verified_receipt_publication_pending",
+      "phase_complete": false,
+      "early_receipt": "docs/engineering/localized-repair-c271/environment-p20/EARLY-RECOVERY-RECEIPT.json",
+      "receipt": "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
+      "technical_phase_complete": true,
+      "core_saved_and_readback_verified": true,
+      "confirmed_at_utc": "2026-11-22T22:13:32.910712+00:00",
+      "source_revision": "4a202685ce4a346c9efc3081abf967ccfdaf6b61",
+      "source_tree": "83a25d08ade59c2390be6f8d40dd7857f5eed82e",
+      "zip_library_file_id": "libfile_fde3_f-29c70da7c76c8191ba986c2f84420c50_2ab2a24d43748191957f9bcc356b59de",
+      "zip_sha256": "1a37a3e5e535c74fba366382ae8a1c3a80c6b1150caa436e24a5a98a03f7f632",
+      "receipt_publication": "pending_after_this_source_snapshot"
     }
   ],
   "prior_blocked_reason": "Required routine gate failed: unit timeout at 900 seconds and isolated documentation copy omitted five tracked instruction files, producing 21 missing local links.",
@@ -4317,12 +4371,11 @@
     }
   ],
   "remaining_h0_constraint": {
-    "status": "actual_environment_rebinding_and_complete_H0_review_pending",
-    "evidence": "docs/engineering/localized-repair-c271/environment-p20/OUTCOME.json",
-    "scope": "P20 establishes separate-environment preparation and static identities only; original shared mismatch and earlier routine failures remain preserved",
-    "next_phase_action": "In a fresh chat, reconcile P20 saved delivery and bind the prepared isolated environment (or recreate only from the seven packaged hash-locked wheels if its temporary paths no longer exist). Independently review the actual interpreter, package roots, native/loader closure and source inputs for a complete H0 operational plan under the adopted current-host profile before any H1 or full-routine execution."
+    "status": "missing_declared_Node_and_dependency_installation_evidence",
+    "evidence": "docs/engineering/localized-repair-c271/h0-plan-p21/reviews/H0-DECISION.json",
+    "next_phase_action": "In a fresh chat, reconcile P21 delivery and recover the exact retained Node and C195 dependency archive inputs identified by P09. Freeze one clean source object for both preparation and the later H0 plan; independently review a complete source-bound plan for the unchanged preparer, fresh isolated destinations or exact existing trees, and report/index paths. Prepare or verify only those Node and 24-file readback-dependency inputs and obtain independent review of actual successful source-bound receipts. Stop at that prerequisite checkpoint or first concrete blocker, before H0/H1, original-seven/full routine, main integration or another phase."
   },
-  "blocked_reason": null,
+  "blocked_reason": "A complete H0 plan cannot be accepted from the supplied inputs: the required selected-node and retained-dependencies installation plan/report/index evidence is unavailable among the declared sources reviewed. P09 stopped before producing it, and its declared source/archive paths are now absent. This is a bounded provenance gap, not a runtime failure or proof that no inputs exist elsewhere.",
   "prior_h0_constraints": [
     {
       "id": "H0-PYTHON-RPATH-TOKEN-001",
@@ -4357,6 +4410,12 @@
       "pointer": "/remaining_h0_constraint",
       "source_sha256": "21e860df8b3d5f864bbd0f2d0247cc0c062abf9413856fb1f5053a00a25a3f71",
       "disposition": "P19 actual mismatch and its scope remain unchanged; separate P20 readiness evidence added"
+    },
+    {
+      "status": "actual_environment_rebinding_and_complete_H0_review_pending",
+      "evidence": "docs/engineering/localized-repair-c271/environment-p20/OUTCOME.json",
+      "scope": "P20 establishes separate-environment preparation and static identities only; original shared mismatch and earlier routine failures remain preserved",
+      "next_phase_action": "In a fresh chat, reconcile P20 saved delivery and bind the prepared isolated environment (or recreate only from the seven packaged hash-locked wheels if its temporary paths no longer exist). Independently review the actual interpreter, package roots, native/loader closure and source inputs for a complete H0 operational plan under the adopted current-host profile before any H1 or full-routine execution."
     }
   ],
   "phase_reconciliations": [
@@ -4406,6 +4465,15 @@
       "actual_evidence": "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
       "status": "final_save_confirmed_receipt_publication_pending",
       "scope": "Only matching P20 final-save-pending fields superseded. Future receipt publication, technical outcomes and parent gates are not inferred."
+    },
+    {
+      "phase": "C271-P20-isolated-verification-environment",
+      "status": "confirmed_complete_partial_delivery",
+      "source_pending_fields": "Retained unchanged in prior phase/delivery records; superseded only by matching live terminal markers and materialized exact receipt",
+      "evidence": "docs/engineering/localized-repair-c271/h0-plan-p21/startup/P20-RECONCILIATION.json",
+      "terminal_library_file_id": "libfile_fde3_f-6b94c12461ac8191b0a99787852ec131_2ab2a24d43748191957f9bcc356b59de",
+      "terminal_sha256": "d7bd6652f6acc0b09ed5a38af8117d649e18ec0cee6fe0e6b72b889adfb7a8ec",
+      "receipt_commit": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9"
     }
   ],
   "p20_outcome_recorded": true

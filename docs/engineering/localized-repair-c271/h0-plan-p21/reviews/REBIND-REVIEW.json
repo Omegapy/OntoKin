@@ -1,0 +1,260 @@
+{
+  "schema": "ontokin.c271.p21.rebind-review/1",
+  "reviewer": "/root/h0_review",
+  "recorded_at_utc": "2026-11-22 23:38:57 UTC",
+  "verdict": "accepted_for_execution",
+  "candidate": "candidate002_with_explicit_wrapper",
+  "plan_sha256": "6a53347329b2f522445705963c5205e7b5632f3400eefc158b63f62096d7fc7b",
+  "script_sha256": "c0e4a3c1a81198b2824f91fc5a05d49557ae2303cbbc73289bcd497edee72d50",
+  "plan_path": "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/PLAN.json",
+  "script_path": "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/rebind_inputs.py",
+  "scope": "Exactly one preservation-only data rebind of the surviving P20 isolated environment. This accepts the invocation, not any result, H0 plan, native closure, ordinary-provider package lookup or H1.",
+  "findings": [],
+  "mandatory_findings_remaining": [],
+  "approved_argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "-I",
+    "-S",
+    "-B",
+    "-X",
+    "pycache_prefix=/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/absent-pycache",
+    "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/rebind_inputs.py",
+    "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/PLAN.json",
+    "6a53347329b2f522445705963c5205e7b5632f3400eefc158b63f62096d7fc7b"
+  ],
+  "approved_environment": {
+    "PATH": "/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "UV_THREADPOOL_SIZE": "2"
+  },
+  "approved_cwd": "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind",
+  "approved_limits": {
+    "outer_timeout_seconds": 60,
+    "attempts": 1,
+    "retries": 0,
+    "child_processes_inside_controller": 0,
+    "product_imports": 0,
+    "third_party_package_imports": 0,
+    "node_ldd_direct_loader_starts": 0,
+    "installs": 0,
+    "outer_cleanup_timeout_seconds": 5,
+    "direct_controller_starts_by_wrapper": 1
+  },
+  "approved_outputs": {
+    "controller_result": "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/RESULT.json",
+    "wrapper_result": "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/LAUNCH-RESULT.json",
+    "stdout": "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/stdout.log",
+    "stderr": "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/stderr.log",
+    "pycache_prefix": "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/absent-pycache",
+    "pycache_must_remain_absent": true
+  },
+  "invocation_conditions": [
+    "Invoke only the approved exact wrapper/plan/digest. The reviewed wrapper checks canonical Python, controller, wrapper and early-receipt descriptors before its one explicit clean child launch.",
+    "RESULT, LAUNCH-RESULT, stdout, stderr and cache prefix must be absent; the wrapper enforces no overwrite/retry.",
+    "Allow the declared 60-second child timeout and at most five-second post-kill capture. Unknown termination or missing final result/outer record remains failed or unknown; never infer zero starts or retry.",
+    "Preserve plan, script, wrapper, output/log hashes and any nonzero/timeout/error evidence. Request independent outcome review before relying on the result."
+  ],
+  "early_recovery": {
+    "status": "confirmed_saved_and_byte_read_back",
+    "receipt_sha256": "ec4332458f093267c3de04f0383bc519db16ebae6cc68d5c50d945a60fe67f43",
+    "zip_sha256": "6f67cd2451b302c9f8f1629dee36a6513b7e402504a0e673236e406857e5c342",
+    "source_revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+    "read_in_full": true
+  },
+  "independently_observed_preaudit": {
+    "canonical_python": {
+      "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "bytes": 30894944,
+      "mode": "0o755",
+      "kind": "regular file",
+      "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7"
+    },
+    "script_and_plan_hashes_equal_submitted": true,
+    "result_and_cache_absent": true
+  },
+  "checks": [
+    {
+      "id": "RR01",
+      "passed": true,
+      "detail": "Entire unchanged script (8223 bytes), updated plan (10297 bytes) and wrapper (5139 bytes) read and exact SHA256 identities checked."
+    },
+    {
+      "id": "RR02",
+      "passed": true,
+      "detail": "Early receipt was fully read; confirmed saved/byte-read-back status and source identity agree."
+    },
+    {
+      "id": "RR03",
+      "passed": true,
+      "detail": "Canonical Python stat/hash as data matches selected pin before acceptance; no interpreter invocation."
+    },
+    {
+      "id": "RR04",
+      "passed": true,
+      "detail": "Both referenced P20 JSON documents were fully parsed as data; exact bound digests and all used key/descriptor shapes agree."
+    },
+    {
+      "id": "RR05",
+      "passed": true,
+      "detail": {
+        "planned_target_descriptors": 323,
+        "installed_files": 293,
+        "site_files": 292,
+        "metadata_roots": 7,
+        "native_files_flagged_as_data": 27,
+        "packaged_wheels": 7,
+        "current_source_files": 14
+      }
+    },
+    {
+      "id": "RR06",
+      "passed": true,
+      "detail": "Seven prior package names/versions agree with unchanged lock; metadata paths occur in exact installed file inventory; no replacement pins."
+    },
+    {
+      "id": "RR07",
+      "passed": true,
+      "detail": "All seven declared wheel hashes equal the exact lock values and source input descriptors retain the accepted module/lock identities."
+    },
+    {
+      "id": "RR08",
+      "passed": true,
+      "detail": "Controller imports only declared standard-library modules. Source contains no product/third-party import, subprocess, installation or target invocation."
+    },
+    {
+      "id": "RR09",
+      "passed": true,
+      "detail": "Explicit isolated/no-site/no-bytecode launcher and fresh cache prefix; exact five-variable environment and cwd are frozen in reviewed plan."
+    },
+    {
+      "id": "RR10",
+      "passed": true,
+      "detail": "Records two required Python aliases, canonical interpreter, venv config, seven metadata roots, installed file contents, shared historical metadata/pth as inert data, wheels and selected source before/after."
+    },
+    {
+      "id": "RR11",
+      "passed": true,
+      "detail": "Complete site file set rejects additional/missing files and symlink directories/nonregular files; alias/directory observations are compared before/after."
+    },
+    {
+      "id": "RR12",
+      "passed": true,
+      "detail": "First exception produces blocked_first_observed_failure with prior checks retained; controller result uses exclusive creation; no automatic retry."
+    },
+    {
+      "id": "RR13",
+      "passed": true,
+      "detail": "Success label and result limits explicitly exclude ordinary-provider metadata discovery, native compatibility, operational dispatch and H0 acceptance."
+    },
+    {
+      "id": "RR14",
+      "passed": true,
+      "detail": "Candidate002 plan delta only adds exact wrapper descriptor, wrapper result/stdout/stderr paths and prelaunch requirement text; all controller inputs/pins/commands unchanged."
+    },
+    {
+      "id": "RR15",
+      "passed": true,
+      "detail": "Wrapper verifies external plan digest and reviewer script/plan/wrapper identity, then prehashes canonical Python/controller/wrapper/early receipt before Popen."
+    },
+    {
+      "id": "RR16",
+      "passed": true,
+      "detail": "Wrapper enforces exact five-variable environment, literal child argv/cwd and 60-second timeout, and rejects occupied output/cache destinations."
+    },
+    {
+      "id": "RR17",
+      "passed": true,
+      "detail": "Exactly one direct child call; stdin DEVNULL; actual PID retained; timeout kills that controller, attempts bounded five-second reaping/capture, and marks unresolved termination explicitly. No automatic retry."
+    },
+    {
+      "id": "RR18",
+      "passed": true,
+      "detail": "Wrapper captures exclusive stdout/stderr, hashes result plus postrun plan/controller/Python, and returns failure for nonzero/timeout/drift. Outcome still requires independent review."
+    }
+  ],
+  "structural_data_checks": [
+    [
+      "plan schema",
+      true
+    ],
+    [
+      "bound prior result",
+      true
+    ],
+    [
+      "bound prior inventory",
+      true
+    ],
+    [
+      "all metadata targets installed",
+      true
+    ],
+    [
+      "exact pins",
+      true
+    ],
+    [
+      "installed file uniqueness",
+      true
+    ],
+    [
+      "native actual descriptor count",
+      true
+    ],
+    [
+      "fresh explicit prefix",
+      true
+    ],
+    [
+      "controller argument",
+      true
+    ],
+    [
+      "env keys",
+      true
+    ],
+    [
+      "seven wheels",
+      true
+    ],
+    [
+      "target-only read source",
+      true
+    ],
+    [
+      "sites count",
+      true
+    ]
+  ],
+  "reviewer_authoring_erratum": {
+    "kind": "reviewer_reference_index_error",
+    "detail": "Initial JavaScript structural check assumed -X at argv_prefix index 5; correct position is 4. Candidate argv was correct; no script was executed."
+  },
+  "limits": [
+    "Time-bounded static preservation check, not kernel-enforced immutability or an exhaustive concurrent-mutation detector.",
+    "Directory inventories record current directory modes; comparison is of exact file sets and before/after observed directories, not a historical directory-inode proof.",
+    "No complete author stdlib/extension/import or native-loader closure is established.",
+    "Zero controller-child and product/package-import statements are supported by exact source review; they are not an OS-wide execution trace.",
+    "The current selected Python was only hashed as data by this reviewer. The reviewed controller has not run.",
+    "Wrapper launch records count its one selected controller; generic tool/orchestration processes are not counted as target/checker starts."
+  ],
+  "next_action": "Director executes once under the stated guard, preserves every outcome, then supplies RESULT plus complete outer invocation/log receipt for independent outcome review.",
+  "ownership": "Review only; no canonical state, Git/index, integration, main lease or publication.",
+  "wrapper_sha256": "39409b895e32ab9b19225950053b4a7f2bec771478ad2bc4523b7c3142f01bd1",
+  "wrapper_path": "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/run_reviewed_rebind.py",
+  "prior_review": {
+    "path": "rebind-candidate001/REBIND-REVIEW.json",
+    "sha256": "6df5e74241a39dfddcfe36d25eeb27fc40fd0d5120bafebbe0d451fde179fed5",
+    "disposition": "superseded only by the new exact plan/wrapper binding; original candidate remains unexecuted and preserved"
+  },
+  "approved_outer_argv": [
+    "python3",
+    "-B",
+    "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/run_reviewed_rebind.py",
+    "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/PLAN.json",
+    "6a53347329b2f522445705963c5205e7b5632f3400eefc158b63f62096d7fc7b"
+  ],
+  "outer_launcher_scope": "Existing generic orchestration Python for the reviewed wrapper; not claimed as an authenticated qualification interpreter. The wrapper hashes the pinned canonical child Python before its one direct launch."
+}

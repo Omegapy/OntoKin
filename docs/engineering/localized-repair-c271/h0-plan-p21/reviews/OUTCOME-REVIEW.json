@@ -1,0 +1,198 @@
+{
+  "schema": "ontokin.c271.p21.h0-outcome-review/1",
+  "reviewer": "/root/h0_review",
+  "recorded_at_utc": "2026-11-22 23:42:52 UTC",
+  "verdict": "accepted_static_rebind_evidence_only",
+  "independent_gate_accepted": true,
+  "accepted_gate": "P21 one-attempt surviving-P20-environment static preservation rebind",
+  "technical_phase_stopped": true,
+  "candidate": "candidate002_with_explicit_wrapper",
+  "approval": {
+    "path": "phase-p21/h0_review/REBIND-REVIEW.json",
+    "sha256": "25d9767327645c8730077be05c312cb27148b1f129b029fea15d3ce38fe12d01"
+  },
+  "bindings": {
+    "plan_sha256": "6a53347329b2f522445705963c5205e7b5632f3400eefc158b63f62096d7fc7b",
+    "script_sha256": "c0e4a3c1a81198b2824f91fc5a05d49557ae2303cbbc73289bcd497edee72d50",
+    "wrapper_sha256": "39409b895e32ab9b19225950053b4a7f2bec771478ad2bc4523b7c3142f01bd1",
+    "result_sha256": "7568bb68dfe6d8143a91a7de30523fdec467dc236f96b488744d4f1fd3aa2cc1",
+    "launch_result_sha256": "ba780ef9873328f179d189ede41d4cf28600df533dffdfe9be540d9191a5d316"
+  },
+  "observed": {
+    "direct_selected_controller_starts": 1,
+    "controller_exit_code": 0,
+    "termination_observed": true,
+    "controller_pid": 5,
+    "descriptor_comparisons": 656,
+    "descriptor_rows_per_pass": 328,
+    "target_descriptors_per_pass": 323,
+    "mismatches": 0,
+    "installed_files": 293,
+    "site_files": 292,
+    "package_metadata_rows": 7,
+    "native_artifacts_hashed_as_data": 27,
+    "packaged_wheels": 7,
+    "selected_source_files": 14,
+    "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "canonical_python_sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+    "aliases_before_after_equal": true,
+    "site_file_inventory_before_after_equal": true,
+    "plan_script_python_postrun_equal": true,
+    "stderr_bytes": 0,
+    "installed_environment_interpreter_launched": false,
+    "ordinary_provider_metadata_lookup_performed": false,
+    "product_imports": 0,
+    "installed_third_party_package_imports": 0,
+    "child_processes_inside_controller": 0,
+    "node_ldd_direct_loader_starts": 0,
+    "installations": 0,
+    "h0_accepted": false,
+    "h1_executed": false,
+    "full_routine_executed": false
+  },
+  "review_method": "Read entire exact script/plan/wrapper before execution. After execution, parse the complete result and launch records as data; independently reconcile every one of 656 expected/actual rows against frozen P20 and P21 input records, exact order/category/bytes/hash/mode, package rows, site inventory, aliases, argv/env/cwd, time order, counts and receipt/log hashes. No rebind retry or further current-host observation was performed.",
+  "audit": {
+    "assertions": [
+      [
+        "result_hash_binding",
+        true
+      ],
+      [
+        "approval_binding",
+        true
+      ],
+      [
+        "all_656_rows",
+        true
+      ],
+      [
+        "metadata_7",
+        true
+      ],
+      [
+        "exact_site_before_after",
+        true
+      ],
+      [
+        "alias_before_after",
+        true
+      ],
+      [
+        "inner_argv_cwd",
+        true
+      ],
+      [
+        "outer_argv_cwd_env",
+        true
+      ],
+      [
+        "successful_one_launch",
+        true
+      ],
+      [
+        "bound_limit",
+        true
+      ],
+      [
+        "input_preserved",
+        true
+      ],
+      [
+        "success_scope",
+        true
+      ],
+      [
+        "counts",
+        true
+      ],
+      [
+        "time_order",
+        true
+      ],
+      [
+        "empty_stderr",
+        true
+      ]
+    ],
+    "check_rows": 656,
+    "row_findings": [],
+    "expected_target_descriptors": 323,
+    "all_passed": true,
+    "categories": {
+      "bound_document": 4,
+      "canonical_python": 1,
+      "before_venv_config": 1,
+      "before_installed_file": 293,
+      "before_shared_metadata": 7,
+      "before_shared_pth": 1,
+      "before_locked_wheel": 7,
+      "before_current_source": 14,
+      "after_venv_config": 1,
+      "after_installed_file": 293,
+      "after_shared_metadata": 7,
+      "after_shared_pth": 1,
+      "after_locked_wheel": 7,
+      "after_current_source": 14,
+      "canonical_python_after": 1,
+      "bound_document_after": 4
+    },
+    "current_host_reobservation": false
+  },
+  "evidence": [
+    {
+      "path": "phase-p21/rebind/RESULT.json",
+      "sha256": "7568bb68dfe6d8143a91a7de30523fdec467dc236f96b488744d4f1fd3aa2cc1"
+    },
+    {
+      "path": "phase-p21/rebind/LAUNCH-RESULT.json",
+      "sha256": "ba780ef9873328f179d189ede41d4cf28600df533dffdfe9be540d9191a5d316"
+    },
+    {
+      "path": "phase-p21/rebind/stdout.log",
+      "sha256": "87ebaca79f120c19522a63b63a35caea4625a861e80f3e3b4bc03667f920ee84"
+    },
+    {
+      "path": "phase-p21/rebind/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "phase-p21/rebind/PLAN.json",
+      "sha256": "6a53347329b2f522445705963c5205e7b5632f3400eefc158b63f62096d7fc7b"
+    },
+    {
+      "path": "phase-p21/rebind/rebind_inputs.py",
+      "sha256": "c0e4a3c1a81198b2824f91fc5a05d49557ae2303cbbc73289bcd497edee72d50"
+    },
+    {
+      "path": "phase-p21/rebind/run_reviewed_rebind.py",
+      "sha256": "39409b895e32ab9b19225950053b4a7f2bec771478ad2bc4523b7c3142f01bd1"
+    },
+    {
+      "path": "phase-p21/ledger_review/INSTALLATION-SOURCE-REVIEW.md",
+      "sha256": "32b8a26a53c55e955f62f27a3f7db5572cdc8f7148f007a6ccc4df02bea77f7e"
+    },
+    {
+      "path": "phase-p21/ledger_review/INSTALLATION-SOURCE-REVIEW.json",
+      "sha256": "22ed5c43a614bcca62744f6d65fb1874e36182cc69d618ceba3674f8b2a68f0c"
+    }
+  ],
+  "mandatory_findings": [],
+  "preserved_limits": [
+    "Accepted only static preservation of the selected inputs; not all 463 P20 installer inputs or a whole-environment executable audit.",
+    "Seven package versions are explicit metadata observations, not ordinary-provider lookup or loaded compatibility.",
+    "27 installed native artifacts were read as data; no native-loader resolution or runtime qualification follows.",
+    "One selected controller start excludes generic orchestration/tool processes and is not an OS-wide execution trace.",
+    "Original P19 shared rpds mismatch, earlier failed full routines and historical unknown operations retain their status."
+  ],
+  "not_accepted": [
+    "Complete H0 operational plan",
+    "Complete author/native/loader/source closure",
+    "H1 observation",
+    "H2/H3 qualification",
+    "Original-seven/full routine or R03",
+    "Integration/R04",
+    "Parent closure/R05"
+  ],
+  "next_action": "Stop technical work. Use H0-DECISION for the missing-installation-evidence blocker; complete documentary review, publication and verified partial delivery, then stop this chat.",
+  "ownership": "No Git/index/canonical mutation, integration, main lease, remote publication or installation by reviewer."
+}

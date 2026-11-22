@@ -1,0 +1,405 @@
+{
+  "schema": "ontokin.c271.p21-installation-source-review/1",
+  "reviewer": "/root/ledger_review",
+  "reviewed_at_utc": "2026-11-22T23:39:49.194214+00:00",
+  "decision": "advisory_missing_declared_installation_evidence",
+  "h0_acceptance": false,
+  "runtime_failure_observed": false,
+  "summary": "No valid current-source Node or retained-dependency installation plan/report/index pair is available among the declared historical sources reviewed. P09 produced no such pair; P19 and P20 records have different purposes. This is an input-provenance finding for the independent H0 reviewer, not an executed runtime refusal.",
+  "current_candidate_source_identity": {
+    "root": "/workspace/scratch/f0af7d5d28fc/repo",
+    "commit": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+    "tree": "cf9371c486b13fa95d1ff0934c8f2fbd4ac4411d",
+    "inventory_descriptor_status": "No complete current H0 source.inventory descriptor was supplied to this installation-source review. This record is a candidate identity summary, not an executable source object."
+  },
+  "exact_source_contract": {
+    "inspection_source": {
+      "path": "/workspace/scratch/f0af7d5d28fc/repo/prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "bytes": 196305,
+      "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206",
+      "mode": "0o644",
+      "revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "read_coverage": "Targeted source: _check_installation, _check_installed_tree, _check_runtime_dependencies; exact complete file hashed as data."
+    },
+    "preparer_source": {
+      "path": "/workspace/scratch/f0af7d5d28fc/repo/tools/prepare_current_host_readback.py",
+      "bytes": 19788,
+      "sha256": "fd4da23dde3cd75a95c3f5edc071028e5884da62932c32cba4be928e72f87bb3",
+      "mode": "0o644",
+      "revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "read_coverage": "Targeted source: plan shape, source verification, install_plan and CLI; exact complete file hashed as data."
+    },
+    "required_purposes": [
+      "selected-node",
+      "retained-dependencies"
+    ],
+    "installation_index_schema": "ontokin.current-host-readback-inspection-installation/0.1.0",
+    "index_keys": [
+      "schema",
+      "plan",
+      "report"
+    ],
+    "preparer_plan_schema": "ontokin.current-host-readback-install/0.1.0",
+    "source_object_keys": [
+      "root",
+      "commit",
+      "tree",
+      "inventory"
+    ],
+    "inventory_descriptor_keys": [
+      "path",
+      "sha256",
+      "size_bytes",
+      "mode"
+    ],
+    "equality_expression": "selected[\"source\"] == plan[\"source\"]",
+    "equality_meaning": "Exact full object equality, including inventory descriptor and absolute source root; equal product-module bytes alone are insufficient.",
+    "report_requirements": {
+      "schema": "ontokin.current-host-readback-install-result/0.1.0",
+      "passed": true,
+      "state_one_of": [
+        "INSTALLED_EXACT",
+        "ALREADY_PRESENT_EXACT"
+      ],
+      "execution_counts": {
+        "node": 0,
+        "ldd": 0,
+        "checkers": 0
+      }
+    },
+    "additional_bindings": [
+      "Exact purpose and report pathname",
+      "Archive descriptor and complete members count/expanded bytes",
+      "Selected Node destination, two exact files and pinned executable",
+      "Exact retained dependency destination, 24-file inventory and directory inventory",
+      "Current installed tree file hashes, lengths, modes, exact path set and root mode"
+    ],
+    "dry_run_ready_is_successful_installation_evidence": false,
+    "source_code_inspected_as_data_only": true
+  },
+  "declared_plan_report_paths": {
+    "selected_node_plan": null,
+    "selected_node_report": null,
+    "selected_node_index": null,
+    "retained_dependencies_plan": null,
+    "retained_dependencies_report": null,
+    "retained_dependencies_index": null,
+    "reason": "No exact paths to such artifacts are supplied in the declared P07/P09/P19/P20 material. Root independently confirmed no additional known exact paths on 2026-11-22. Null means unavailable to this review, not permission to fill an executable plan."
+  },
+  "source_comparisons": [
+    {
+      "record": "P07 qualification design",
+      "schema": "ontokin.c271.p07-qualification-design/1",
+      "executable": false,
+      "authoritative_fields": {
+        "implementation_commit": null,
+        "implementation_tree": null,
+        "source_root": null,
+        "source_inventory": null,
+        "python_executable": null,
+        "python_runtime_inventory": null,
+        "python_metadata_inventory": null,
+        "node_destination": null,
+        "node_install_receipt": null,
+        "dependency_destination": null,
+        "dependency_install_receipt": null,
+        "boot_platform": null,
+        "ldd_inspector_interpreter_closure": null,
+        "loader_resolution_map": null,
+        "inspection_plan_descriptor": null,
+        "independent_inspection_review": null,
+        "inspection_plan_expected_sha256": null,
+        "actual_inspection_receipts": null,
+        "host_descriptor": null,
+        "operational_config_descriptor": null,
+        "operational_config_expected_sha256": null,
+        "qualification_execution_plan": null,
+        "independent_fixture_inventory": null,
+        "runtime_discovery_collector": null,
+        "per_method_outcome_collector": null,
+        "numerical_auditor": null,
+        "evidence_parent": null,
+        "actual_output_paths": null
+      },
+      "current_source_equality": "not_applicable_no_operational_source_object",
+      "reason": "Source root/commit/tree/inventory and both installation receipt fields are null design placeholders."
+    },
+    {
+      "record": "P09 selected input locations",
+      "authoritative_fields": {
+        "source_root": "/workspace/scratch/e33f906d0e8e/h0_source",
+        "commit": "2c6bbfb7aa1d402ce47ffdc24adb4d89b8a81c1e",
+        "tree": "03f8751715eb2196f8d56f12868cc572d3392dd8"
+      },
+      "current_source_equality": "false_for_root_commit_tree",
+      "inventory_descriptor": "not present in this locations record",
+      "reason": "Historical source path and identities differ from the P21 candidate. P09 explicitly stopped before producing installation plans or reports."
+    },
+    {
+      "record": "P19 raw observation plan",
+      "schema": "ontokin.c271.p19-observation-plan/1",
+      "source_revision": "2f791017c6559bfd47937b32b1862cfe98a81551",
+      "current_source_equality": "not_applicable_raw_observation_schema",
+      "reason": "An inspection-module file descriptor and source_revision do not constitute the complete H0 source object or a preparer plan/report pair.",
+      "authoritative_source_fields": {
+        "source_revision": "2f791017c6559bfd47937b32b1862cfe98a81551",
+        "source": {
+          "path": "/workspace/scratch/816157c5a30b/OntoKin/prototypes/static_tray_v01/current_host_inspection_v01.py",
+          "bytes": 196305,
+          "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206"
+        }
+      }
+    },
+    {
+      "record": "P20 isolated Python preparation plan",
+      "schema": "ontokin.c271.p20-preparation-plan/1",
+      "source_revision": "4bf7cb0023d1747be16c8752795819dd9a0cca37",
+      "venv": "/workspace/scratch/371612fd9cb3/isolated-p20",
+      "current_source_equality": "not_applicable_python_environment_preparation",
+      "reason": "Seven locked Python packages are a separate prerequisite. The plan is neither selected-node nor retained-dependencies installation evidence."
+    },
+    {
+      "record": "P21 static P20 rebind plan",
+      "schema": "ontokin.c271.p21-static-rebind-plan/1",
+      "source_revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "current_source_equality": "same_revision_only_not_H0_source_object",
+      "reason": "The revision matches P21, but this read-only Python-environment preservation plan supplies no Node/dependency installation index or accepted preparer report."
+    }
+  ],
+  "historical_archive_inventory_data": [
+    {
+      "label": "P09 Node archive inventory",
+      "declared_archive": {
+        "identity_before": [
+          27,
+          3547245,
+          33188,
+          1,
+          45186132,
+          1795286793861721898,
+          1795286794108134170
+        ],
+        "mode": "0o644",
+        "path": "/workspace/scratch/e33f906d0e8e/inputs/OntoKin/OntoKin_C271_P05_Node_Candidate_2026-11-20.tar.gz",
+        "sha256": "100ae976555b388472c3e875aeda67bd7d8c9229a968a11661fb852624adaeb5",
+        "size_bytes": 45186132,
+        "unchanged_after": true
+      },
+      "member_count": 2,
+      "all_targets_null": true,
+      "is_installation_plan": false,
+      "is_installation_report": false,
+      "boundary": "Raw archive inventory only. All target mappings are deliberately null; independent plan review must accept the selected target map separately. No extraction, installation, Node/ldd, product import or product test occurred."
+    },
+    {
+      "label": "P09 C195 archive inventory",
+      "declared_archive": {
+        "identity_before": [
+          27,
+          3546347,
+          33188,
+          1,
+          2611764,
+          1795286792197739833,
+          1795286792197739833
+        ],
+        "mode": "0o644",
+        "path": "/workspace/scratch/e33f906d0e8e/h0_source/docs/engineering/ownership-recovery-c195/evidence/recorded-evidence.tar.xz",
+        "sha256": "b1e54a6cfef133f7004b1988c90bc718fc954409843c2bcac3772d42e904a0c9",
+        "size_bytes": 2611764,
+        "unchanged_after": true
+      },
+      "member_count": 730,
+      "all_targets_null": true,
+      "is_installation_plan": false,
+      "is_installation_report": false,
+      "boundary": "Raw archive inventory only. All target mappings are deliberately null; independent plan review must accept the selected target map separately. No extraction, installation, Node/ldd, product import or product test occurred."
+    }
+  ],
+  "exact_historical_path_observations": [
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/h0_source",
+      "lstat": "FileNotFoundError",
+      "present": false,
+      "meaning": "This exact declared historical pathname is absent at review; no global absence claim."
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/inputs/OntoKin/OntoKin_C271_P05_Node_Candidate_2026-11-20.tar.gz",
+      "lstat": "FileNotFoundError",
+      "present": false,
+      "meaning": "This exact declared historical pathname is absent at review; no global absence claim."
+    },
+    {
+      "path": "/workspace/scratch/e33f906d0e8e/h0_source/docs/engineering/ownership-recovery-c195/evidence/recorded-evidence.tar.xz",
+      "lstat": "FileNotFoundError",
+      "present": false,
+      "meaning": "This exact declared historical pathname is absent at review; no global absence claim."
+    }
+  ],
+  "search_boundary": {
+    "published_scope": "/workspace/scratch/f0af7d5d28fc/repo/docs/engineering/localized-repair-c271",
+    "supplemental_scopes": [
+      "/workspace/scratch/f0af7d5d28fc/handoff",
+      "/workspace/scratch/816157c5a30b/technical",
+      "/workspace/scratch/816157c5a30b/operational_review",
+      "/workspace/scratch/bbea56c9165d/work",
+      "/workspace/scratch/bbea56c9165d/inputs",
+      "/workspace/scratch/cf3e30ae3c50/implementation",
+      "/workspace/scratch/fd30b8a094f0/p16-session"
+    ],
+    "method": "Read declared provenance records and perform bounded filename/text searches in retained OntoKin evidence. No matching actual selected-node/retained-dependencies JSON plan or successful installation report found. No further workspace search after root instruction.",
+    "not_established": "No proof that installation evidence or an installed tree does not exist elsewhere. No archive-wide search, global host traversal or installed-tree qualification was undertaken."
+  },
+  "remedy_and_scope": {
+    "current_phase_permission": "Root explicitly confirms no preparation or installation in P21. This reviewer has no execution authorization.",
+    "historical_evidence_rule": "Preserve prior records unchanged. Do not relabel a historical receipt or replace its source object to imply a current-source preparer execution.",
+    "conditional_future_exact_tree_case": "If separately selected exact installed Node/dependency trees survive, a future independently reviewed current-source plan and fresh report destinations may permit the unchanged preparer without --apply to record ALREADY_PRESENT_EXACT. This still authenticates archives and full inventories; no such tree or new report is established here.",
+    "conditional_future_absent_tree_case": "If the selected destination is absent, no-apply produces DRY_RUN_READY, which cannot satisfy _check_installation. A separately authorized and reviewed installation would be required to obtain INSTALLED_EXACT; it is outside P21.",
+    "partial_or_changed_tree_case": "Refuse partial/changed/extra/symlinked/inaccessible content; no in-place repair, silent substitution or pin/source-policy relaxation.",
+    "scope_expansion_required_for_preparer_or_installation_in_current_phase": true,
+    "allowed_next_action": "Root finishes the already-selected read-only P20 environment rebind. The H0 reviewer then decides whether the absent installation evidence is the first concrete complete-plan blocker and identifies the next bounded phase. No preparer or installation is run in P21."
+  },
+  "preserved_gates": {
+    "H0": "unaccepted",
+    "H1": "not_authorized",
+    "original_seven": "not_run_by_this_review",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done",
+    "N57": "independent external review; no pass or skip inferred"
+  },
+  "execution_accounting_this_review": {
+    "product_imports": 0,
+    "preparer_invocations": 0,
+    "inspection_invocations": 0,
+    "node": 0,
+    "ldd": 0,
+    "installations": 0,
+    "shared_runtime_mutations": 0,
+    "git_mutations": 0,
+    "remote_mutations": 0,
+    "active_commands_at_completion": []
+  },
+  "artifact_identities": [
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/repo/prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "bytes": 196305,
+      "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206",
+      "mode": "0o644",
+      "revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "read_coverage": "Targeted source: _check_installation, _check_installed_tree, _check_runtime_dependencies; exact complete file hashed as data."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/repo/tools/prepare_current_host_readback.py",
+      "bytes": 19788,
+      "sha256": "fd4da23dde3cd75a95c3f5edc071028e5884da62932c32cba4be928e72f87bb3",
+      "mode": "0o644",
+      "revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "read_coverage": "Targeted source: plan shape, source verification, install_plan and CLI; exact complete file hashed as data."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/repo/prototypes/static_tray_v01/current_host_readback_v01.py",
+      "bytes": 65533,
+      "sha256": "2a8144624ea00f3f350a6b7f482c993665b4049b363b93bc399ed0cd7a14ba78",
+      "mode": "0o644",
+      "revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "read_coverage": "Targeted source: immutable Node/dependency pins and dependency_inventory reference; exact complete file hashed as data."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/repo/docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.json",
+      "bytes": 21142,
+      "sha256": "358fead51a8c6d68cec21ddf1df75b8e41d5d758d80185148283ef1571ba4c82",
+      "mode": "0o644",
+      "revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "read_coverage": "Structured keys schema, executable, future_runtime_bindings, unavailable_fields_reason, artifact_note; large full display truncated and no full semantic-read claim."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/repo/docs/engineering/localized-repair-c271/host-preparation-p09/H0-INPUT-LOCATIONS.json",
+      "bytes": 510,
+      "sha256": "db742dfe19b426a1a10271fac4b417a6987db7d7b74ca51cef39e6ba57186c09",
+      "mode": "0o644",
+      "revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "read_coverage": "Full JSON."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/repo/docs/engineering/localized-repair-c271/host-preparation-p09/RESULTS.md",
+      "bytes": 2941,
+      "sha256": "31c8ae1cdf3ca19fb90bc2dd5666978ef82b6251477b3fb36ae069dc3f4ce8c5",
+      "mode": "0o644",
+      "revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "read_coverage": "Full text earlier in this task."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/repo/docs/engineering/localized-repair-c271/host-preparation-p09/evidence/H0-PREPARATION-REPORT.md",
+      "bytes": 5028,
+      "sha256": "9620475bc9e9bcea9e2a60574a74324f1ddde9e719424a4128b5f40f5d617828",
+      "mode": "0o644",
+      "revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "read_coverage": "Targeted report statements on missing installation plan/receipt, selected source, operation counts and stop boundary."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/repo/docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/NODE-RAW-ARCHIVE-INVENTORY.json",
+      "bytes": 3106,
+      "sha256": "66136dc88c177c0c6f18ba253e5e046c629407f0c62c0e26bbf76f4a35c4f203",
+      "mode": "0o644",
+      "revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "read_coverage": "Top-level metadata and every member target mapping processed as data; Node member bindings inspected."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/repo/docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/C195-RAW-ARCHIVE-INVENTORY.json",
+      "bytes": 625640,
+      "sha256": "b2de4eb1a6c3b00d1e937f1ba9cd52f1c2137a676925710791b3a1c993933674",
+      "mode": "0o644",
+      "revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "read_coverage": "Top-level metadata and every member target mapping processed as data; no claim of individually reviewing all 730 file contents."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/repo/docs/engineering/localized-repair-c271/actual-input-p19/observation/OBSERVATION-PLAN.json",
+      "bytes": 2707,
+      "sha256": "946fd14dc1022ddb1e9cc4d8f22a0c0a2746efb3b0b9c08db62cd70c17945aab",
+      "mode": "0o644",
+      "revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "read_coverage": "Full JSON earlier in this task."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/repo/docs/engineering/localized-repair-c271/environment-p20/preparation/PREPARATION-PLAN.json",
+      "bytes": 6831,
+      "sha256": "ec11a4a45be52b1a9027030d562a3beb5ba88157bb7a3a93cabcde174e81aef7",
+      "mode": "0o644",
+      "revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+      "read_coverage": "Structured top-level schema, source_revision, scope, paths, expected_result and operation-boundary fields."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/phase-p21/h0_review/SOURCE-SUPPLEMENT.md",
+      "bytes": 8353,
+      "sha256": "697bd0f4aeeb33ebaff9347e22a06c60d6d567f481a1d4607d79696ad46d3fa7",
+      "mode": "0o644",
+      "revision": null,
+      "read_coverage": "Full text earlier in this task."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/phase-p21/state/PHASE.json",
+      "bytes": 4625,
+      "sha256": "1fea0ffc707371afcb73dde52c69d55f7af4ccf92f26ee78546c9eecf9080d66",
+      "mode": "0o644",
+      "revision": null,
+      "read_coverage": "Full JSON at review."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/phase-p21/state/EARLY-RECOVERY-RECEIPT.json",
+      "bytes": 1252,
+      "sha256": "ec4332458f093267c3de04f0383bc519db16ebae6cc68d5c50d945a60fe67f43",
+      "mode": "0o644",
+      "revision": null,
+      "read_coverage": "Full JSON earlier in this task."
+    },
+    {
+      "path": "/workspace/scratch/f0af7d5d28fc/phase-p21/rebind/PLAN.json",
+      "bytes": 10297,
+      "sha256": "6a53347329b2f522445705963c5205e7b5632f3400eefc158b63f62096d7fc7b",
+      "mode": "0o644",
+      "revision": null,
+      "read_coverage": "Full JSON at review; independent root operation, not launched by this reviewer."
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "schema": "ontokin.c271.p21-record-checks/1",
+  "source_revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9",
+  "candidate_index_tree": "3f23812accbd6f834a9058b6358d27e5ca0243b9",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/f0af7d5d28fc/repo",
+      "started_at_utc": "2026-11-22T23:47:11.118702+00:00",
+      "finished_at_utc": "2026-11-22T23:47:11.251621+00:00",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/workspace/scratch/f0af7d5d28fc/phase-p21/checks/candidate003/workflow.stdout.txt",
+        "bytes": 148,
+        "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/f0af7d5d28fc/phase-p21/checks/candidate003/workflow.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/f0af7d5d28fc/repo",
+      "started_at_utc": "2026-11-22T23:47:11.119521+00:00",
+      "finished_at_utc": "2026-11-22T23:47:13.621027+00:00",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/workspace/scratch/f0af7d5d28fc/phase-p21/checks/candidate003/documentation.stdout.txt",
+        "bytes": 6609,
+        "sha256": "60e7588decb6c20f56354e6f76e3c4d0ffb1cd9f112cb4aeb23905af64b3f8c3"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/f0af7d5d28fc/phase-p21/checks/candidate003/documentation.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "cwd": "/workspace/scratch/f0af7d5d28fc/repo",
+      "started_at_utc": "2026-11-22T23:47:11.122628+00:00",
+      "finished_at_utc": "2026-11-22T23:47:11.146344+00:00",
+      "exit_code": 0,
+      "stdout": {
+        "path": "/workspace/scratch/f0af7d5d28fc/phase-p21/checks/candidate003/whitespace.stdout.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/f0af7d5d28fc/phase-p21/checks/candidate003/whitespace.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "all_passed": true,
+  "scope": "Workflow/documentation/whitespace only; no product or full routine"
+}

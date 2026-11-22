@@ -1,0 +1,111 @@
+{
+  "schema": "ontokin.c271.p21-early-review/1",
+  "reviewer": "/root/recovery_audit",
+  "at_utc": "2026-11-22T23:29:51.421557+00:00",
+  "verdict": "accepted_for_save",
+  "archive": {
+    "path": "deliverables/early/OntoKin_C271_P21_H0_Plan_Early_Recovery_2026-11-22.zip",
+    "bytes": 19437918,
+    "sha256": "6f67cd2451b302c9f8f1629dee36a6513b7e402504a0e673236e406857e5c342"
+  },
+  "byte_audit": "early-resolved/BYTE-AUDIT.json",
+  "counts": {
+    "members": 862,
+    "source_bindings": 106,
+    "check_groups": 24,
+    "passed": 24
+  },
+  "substantive_gates": {
+    "integrity_safe_unique_inventory_and_all_hashes": "passed",
+    "fresh_extraction": "passed",
+    "106_exact_revision_path_source_bindings": "passed",
+    "session_and_reconcile_recovery_map_744_files": "passed",
+    "separate_predecessor_receipt_exact_dependency_binding": "passed",
+    "required_root_metadata_and_reusable_next_action": "passed",
+    "scope_stop_parent_and_delivery_pending_honest": "passed"
+  },
+  "builder_review": {
+    "path": "phase-p21/build_handoff.py",
+    "bytes": 11880,
+    "sha256": "01350fe2701309453ac0b563100c3714c16df8ad05fcada332d794b6552098a9",
+    "full_code_read_as_data": true,
+    "executed_by_this_worker": false
+  },
+  "readset": [
+    {
+      "member": "README-START-HERE.md",
+      "bytes": 1372,
+      "sha256": "4be948b2deae5ec01a3e0ffbab63f71290bad0f6257b79f7fd07fa06aa396fe5",
+      "full_read": true
+    },
+    {
+      "member": "CHECKPOINT.json",
+      "bytes": 4793,
+      "sha256": "137a0ca5e94b2e4c0985b50f9fe007ed54bf7dc92707a1f835b8d9b0e5d56cb1",
+      "full_read": true
+    },
+    {
+      "member": "HANDOFF.md",
+      "bytes": 534,
+      "sha256": "32da79cb644741bed03e5d4f138c5fbb123ce14690850aff849ae266a7c9aa02",
+      "full_read": true
+    },
+    {
+      "member": "NEXT-TASK.md",
+      "bytes": 746,
+      "sha256": "3647b0d341f0cf1252921ed24cf38b638fdba2836eb9ccd92715a698ace2d1c4",
+      "full_read": true
+    },
+    {
+      "member": "RECOVERY-STATUS.md",
+      "bytes": 1111,
+      "sha256": "65ca9cbc5138576efb09ad4136fba06a45af31669f6ccbb6949e7d39c8e5b7c7",
+      "full_read": true
+    },
+    {
+      "member": "PROMPT-1-CONTINUE.md",
+      "bytes": 2494,
+      "sha256": "abfd1e6e49ac1503e49b314169c95e89cfbaa1f4fdd46a206793eb150299a6ff",
+      "full_read": true
+    },
+    {
+      "member": "PROMPT-2-RECOVER.md",
+      "bytes": 2720,
+      "sha256": "5247e70d03744758d6e5cfd9a5c3c1bbffe2f84ccf76151e618ee66e66e57c04",
+      "full_read": true
+    },
+    {
+      "member": "HISTORICAL-DEPENDENCIES.json",
+      "bytes": 4999,
+      "sha256": "9f5d456600a4510e467317b49167449b4e72cbf25785b7a386f928e1bbd0f031",
+      "full_read": true
+    },
+    {
+      "member": "MANIFEST-SHA256.json",
+      "bytes": 217976,
+      "sha256": "eab4b332f55e6fea7a55f29759c76aa3f4c2f9a6ceb71a34cac452366721a0cf",
+      "full_read": true
+    },
+    {
+      "member": "SOURCE-MANIFEST.json",
+      "bytes": 46708,
+      "sha256": "69547ee6a6aaa540eaa0fbd838282df5a3531e2e755612a45931ea46d3240f8a",
+      "full_read": true
+    },
+    {
+      "member": "RECOVERY-FILE-MAP.json",
+      "bytes": 406886,
+      "sha256": "d6cb052387c0314691474b54a156b10dd448f9358a095f0255ea543369b7f657",
+      "full_read": true
+    }
+  ],
+  "initial_failure_resolution": "early/BYTE-AUDIT.json preserves an auditor prefix assumption: map covers recovery/session plus recovery/reconcile, not session alone. The separately embedded predecessor receipt is fully manifest-covered and matches historical dependency size/hash. No payload changed; the corrected audit passes.",
+  "prompt_resolution": "Exact checkpoint appendix supplies concrete filename, revision, receipt path, bounded action and stop. Template placeholders are nonblocking; Director will replace them and clarify early/final receipt pointers in final builder.",
+  "save_state": "not_yet_confirmed; root must save and read back exact frozen bytes before substantive work",
+  "worker_disposition": "completed_early_audit_no_active_command; available for final audit",
+  "limits": [
+    "No product/runtime/Node/ldd execution, installation, Git mutation or Library write",
+    "No H0/H1/full routine qualification",
+    "Only current package save suitability accepted"
+  ]
+}
