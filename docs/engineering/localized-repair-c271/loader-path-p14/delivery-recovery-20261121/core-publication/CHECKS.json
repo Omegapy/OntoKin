@@ -1,0 +1,73 @@
+{
+  "schema": "ontokin.c271.p14-recovery-record-checks/1",
+  "at_utc": "2026-11-22T04:47:01.388577+00:00",
+  "source_commit": "e26dc6369a8d6ba88ea779b26a8c655121ae5dbc",
+  "checked_staged_tree": "f7348aa84a02a3d2770b722ca6b1246e7c9ba3ed",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "started_at_utc": "2026-11-22T04:46:58.222497+00:00",
+      "exit_code": 0,
+      "passed": true,
+      "stdout_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "started_at_utc": "2026-11-22T04:46:58.315170+00:00",
+      "exit_code": 0,
+      "passed": true,
+      "stdout_sha256": "fbd0fcc4ed9194df7f4ec6017565626b7597b1222c9e192626165145492d6f30",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "working-whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_at_utc": "2026-11-22T04:47:01.330554+00:00",
+      "exit_code": 0,
+      "passed": true,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "staged-whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "started_at_utc": "2026-11-22T04:47:01.355248+00:00",
+      "exit_code": 0,
+      "passed": true,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "all_passed": true,
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "product_source_unchanged_from": "e26dc6369a8d6ba88ea779b26a8c655121ae5dbc",
+  "runtime_tests": "not_rerun",
+  "H0_H1": "not_run",
+  "full_routine": "not_run",
+  "main_integration": "not_performed"
+}

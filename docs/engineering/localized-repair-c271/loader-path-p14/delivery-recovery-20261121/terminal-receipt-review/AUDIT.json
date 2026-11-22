@@ -1,0 +1,380 @@
+{
+  "checks": [
+    {
+      "expected": {
+        "bytes": 1821141,
+        "sha256": "cf9cc66071751f63d179c172986c7e4f5b610efcfe96c893e9fad792e0e5bef2"
+      },
+      "name": "exact_receipt_identity_and_unambiguous_json",
+      "observed": {
+        "bytes": 1821141,
+        "sha256": "cf9cc66071751f63d179c172986c7e4f5b610efcfe96c893e9fad792e0e5bef2"
+      },
+      "passed": true
+    },
+    {
+      "name": "strict_base64_embedded_zip_identity",
+      "observed": {
+        "bytes": 1356061,
+        "sha256": "7de551ac4398ae4f0e44db6b7a284caa012abf4c537e05244e03a9977ee6260a"
+      },
+      "passed": true
+    },
+    {
+      "all_modes": "regular0644",
+      "encrypted": false,
+      "members": 145,
+      "name": "safe_unique_inert_zip_structure",
+      "passed": true
+    },
+    {
+      "manifest_payloads": 144,
+      "name": "exact_manifest_inventory_and_counts",
+      "passed": true,
+      "uncompressed_bytes_including_manifest": 19645560
+    },
+    {
+      "bad": [],
+      "evidence": {
+        "bytes": 34218,
+        "path": "/workspace/scratch/bef4a6dd8f04/recovery/terminal_receipt_review/PAYLOAD-VERIFICATION.json",
+        "sha256": "1d759f27735c874fe759b7747a77760342c8bda0d1a05d2a444eafe59295b992"
+      },
+      "name": "all_crc_payload_hashes_and_fresh_extraction",
+      "passed": true,
+      "verified": 145
+    },
+    {
+      "bad": [],
+      "count": 136,
+      "evidence": {
+        "bytes": 47219,
+        "path": "/workspace/scratch/bef4a6dd8f04/recovery/terminal_receipt_review/SOURCE-BINDINGS.json",
+        "sha256": "2f765d40e61d5a4e01fe91797c0e33ff3e933da7924387cea4058b00b2126649"
+      },
+      "name": "all_selected_source_bytes_unchanged",
+      "passed": true
+    },
+    {
+      "bindings": {
+        "package/BUILD-CONFIG.json": "recovery/package-work/TERMINAL-RECEIPT-CONFIG.json",
+        "package/RECEIPT-PREFLIGHT-CONTENT-CHECK.json": "recovery/package-work/RECEIPT-PREFLIGHT-CONTENT-CHECK.json",
+        "package/RECEIPT-PREFLIGHT-INSPECTION-FAILURE.json": "recovery/package-work/RECEIPT-PREFLIGHT-INSPECTION-FAILURE.json",
+        "package/build_terminal_receipt.py": "recovery/package-work/build_terminal_receipt.py"
+      },
+      "environment_record": "package/ENVIRONMENT.json",
+      "name": "builder_script_config_and_failed_preflight_preserved",
+      "passed": true,
+      "scope": "Compared as inert bytes only; no embedded helper executed."
+    },
+    {
+      "confirmed_at": "2026-11-22 04:45:01 UTC",
+      "name": "saved_files_receipt_identity",
+      "passed": true,
+      "saved_count": 3
+    },
+    {
+      "bad": [],
+      "evidence": {
+        "bytes": 1454,
+        "path": "/workspace/scratch/bef4a6dd8f04/recovery/terminal_receipt_review/SAVED-FILE-BINDINGS.json",
+        "sha256": "1c2dc830c2394c016cc7c073774e4f06c35e76222220b542fdfbd5e2749bc0ac"
+      },
+      "name": "three_final_upload_ids_versions_and_exact_byte_readbacks",
+      "passed": true
+    },
+    {
+      "name": "unchanged_final_zip_and_matching_saved_prompts",
+      "passed": true,
+      "source_commit": "e26dc6369a8d6ba88ea779b26a8c655121ae5dbc",
+      "source_tree": "0271ee6a507f83015eea06b63b1bed51753ba419"
+    },
+    {
+      "confirmed_at": "2026-11-22 04:36:22 UTC",
+      "identity": {
+        "bytes": 81161841,
+        "file_id": "file_00000000191881f5b9c774e1d7196a81",
+        "library_file_id": "libfile_fde3_f-c8807711ae6c81918f89e401615170f8_2ab2a24d43748191957f9bcc356b59de",
+        "sha256": "638251a2baa543fd22121882425097c77af39a440c753510fd7cc21bd178e456",
+        "version": 0
+      },
+      "name": "early_saved_identity_upload_and_readback",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "bytes": 1081,
+        "path": "/workspace/scratch/bef4a6dd8f04/recovery/terminal_receipt_review/ALIASES-VERIFICATION.json",
+        "sha256": "2e9412e410baa4147bfc591c52f9a0a44add5bfa5fcbcc9c3536f253af5a2a89"
+      },
+      "name": "two_exact_external_duplicate_aliases",
+      "passed": true
+    },
+    {
+      "aliased_files": 2,
+      "explicit_nonextract_exclusions": [
+        {
+          "bytes": 2331,
+          "path": "recovery/evidence/PRE-FINAL-LIBRARY-INVENTORY.json",
+          "sha256": "f501e0dbd795151a1018782b863649a9943b6269a68b234676908a3f561e843e"
+        },
+        {
+          "bytes": 62648,
+          "path": "recovery/evidence/initial-library-list.json",
+          "sha256": "106e2f642fbe669aaf45b7d2f34bd18617e9e46604f71cb308e8b089f3fa0e35"
+        },
+        {
+          "bytes": 81103726,
+          "path": "recovery/independent_review/early-attempt002/restored-attempt001.zip",
+          "sha256": "31e42f4a4efdfdcee8ca139dbd12067fa9f3a73e5d588049691fe187da3cea76"
+        }
+      ],
+      "name": "complete_new_evidence_inventory",
+      "passed": true,
+      "selected_files": 136,
+      "uncovered": []
+    },
+    {
+      "array_and_script_members": [
+        "PAYLOAD-VERIFICATION.json",
+        "RECOVERY-VERIFICATION.json",
+        "EXCLUSIONS-VERIFICATION.json",
+        "SOURCE-VERIFICATION.json",
+        "SYMLINK-VERIFICATION.json",
+        "AUDIT.json",
+        "FINAL-AUDIT.json",
+        "DERIVED-READ-CHUNKS-RESOLUTION.json",
+        "SPECIAL-FIXTURE-RESOLUTION.json",
+        "review_final.py",
+        "resolve_findings.py",
+        "review.stdout",
+        "review.stderr",
+        "resolution.stdout",
+        "resolution.stderr"
+      ],
+      "failed_attempt_members": [
+        "recovery/independent_review/early/AUDIT.json",
+        "recovery/independent_review/early/REPORT.md",
+        "recovery/independent_review/implementation/audit-attempt001/AUDIT.json",
+        "recovery/independent_review/implementation/audit-attempt001/HARNESS-FINDING.json",
+        "recovery/independent_review/implementation/audit-attempt001/audit_reuse.py",
+        "package/RECEIPT-PREFLIGHT-INSPECTION-FAILURE.json"
+      ],
+      "name": "full_arrays_initial_findings_resolutions_and_failures",
+      "passed": true
+    },
+    {
+      "boundary": "Prior accepted audit proves reconstruction. This review verifies exact dependency and restored identities without executing its helper.",
+      "early_builder_bindings": {
+        "EARLY-BUILD-CONFIG.json": "recovery/package/BUILD-CONFIG.json",
+        "build_delivery_recovery.py": "recovery/package/build_delivery_recovery.py",
+        "correct_early_attempt002.py": "recovery/package/correct_early_attempt002.py",
+        "restore_early_attempt001.py": "recovery/package/restore_early_attempt001.py"
+      },
+      "failed_archive": {
+        "bytes": 81103726,
+        "sha256": "31e42f4a4efdfdcee8ca139dbd12067fa9f3a73e5d588049691fe187da3cea76"
+      },
+      "name": "early_builder_and_failed_archive_preserved_externally",
+      "passed": true,
+      "reconstruction_member": "recovery/early-attempt001/ZIP-RECONSTRUCTION.json"
+    },
+    {
+      "HEAD": "f0fb9a634269b515476f2fc467556ccea789c2d8",
+      "checkout_clean": true,
+      "commit": "f0fb9a634269b515476f2fc467556ccea789c2d8",
+      "conditional_nonforce_confirmed": true,
+      "main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "name": "actual_core_commit_tree_parent_remote_and_clean_checkout",
+      "parent": "e26dc6369a8d6ba88ea779b26a8c655121ae5dbc",
+      "passed": true,
+      "tree": "f7348aa84a02a3d2770b722ca6b1246e7c9ba3ed"
+    },
+    {
+      "bad": [],
+      "changed_count": 45,
+      "evidence": {
+        "bytes": 16393,
+        "path": "/workspace/scratch/bef4a6dd8f04/recovery/terminal_receipt_review/CORE-FILE-BINDINGS.json",
+        "sha256": "561127030c0151d5607d5d2113a16db615412d74bab53439953906f55908da41"
+      },
+      "name": "all45_core_changed_files_exact_git_readback",
+      "passed": true
+    },
+    {
+      "checks_count": 4,
+      "log_bindings": [
+        {
+          "expected_equal": true,
+          "member": "recovery/publication/core/workflow.stdout",
+          "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+        },
+        {
+          "expected_equal": true,
+          "member": "recovery/publication/core/workflow.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "expected_equal": true,
+          "member": "recovery/publication/core/documentation.stdout",
+          "sha256": "fbd0fcc4ed9194df7f4ec6017565626b7597b1222c9e192626165145492d6f30"
+        },
+        {
+          "expected_equal": true,
+          "member": "recovery/publication/core/documentation.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "expected_equal": true,
+          "member": "recovery/publication/core/working-whitespace.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "expected_equal": true,
+          "member": "recovery/publication/core/working-whitespace.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "expected_equal": true,
+          "member": "recovery/publication/core/staged-whitespace.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "expected_equal": true,
+          "member": "recovery/publication/core/staged-whitespace.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "name": "four_checks_exact_tree_and_logs",
+      "passed": true,
+      "scope": "Evidence verification only; no check command rerun."
+    },
+    {
+      "groups_passed": 26,
+      "name": "26_group_independent_core_review_binding",
+      "passed": true,
+      "reviewed_tree": "f7348aa84a02a3d2770b722ca6b1246e7c9ba3ed",
+      "reviewer": "/root/evidence_review"
+    },
+    {
+      "boundary": "Original failed audits remain retained; these counts are artifact/reuse reviews, not new runtime methods.",
+      "counts": {
+        "early_recovery": 17,
+        "final_package": 22,
+        "implementation_evidence_reuse": 35
+      },
+      "name": "earlier_independent_review_bindings",
+      "passed": true
+    },
+    {
+      "changed_paths_scope": "45 documentary files only",
+      "name": "product_source_and_original_final_unchanged",
+      "passed": true,
+      "runtime_execution_this_audit": false
+    },
+    {
+      "name": "truthful_self_save_review_and_external_confirmation_boundary",
+      "passed": true,
+      "remaining": [
+        "accepted exact receipt save",
+        "exact saved byte readback",
+        "matching independent review and receipt identity in external terminal confirmation",
+        "final branch/main check and stop"
+      ]
+    },
+    {
+      "N57": {
+        "actual_loader_completeness": "unestablished",
+        "historical_oracle_satisfied": false,
+        "runtime_pass": false,
+        "runtime_skip": false
+      },
+      "name": "parent_operational_limits_and_no_next_phase",
+      "next_fresh_chat_action": "Bounded H0 preparation and independent actual-loader completeness/source-and-plan review. Establish complete loader variants and an eligible externally digested plan; stop before H1 or at the first concrete blocker.",
+      "passed": true,
+      "unrun": [
+        "H0/H1",
+        "runtime installations",
+        "Node/ldd",
+        "original-seven/full routine",
+        "native/model/hosted execution",
+        "main integration"
+      ]
+    },
+    {
+      "at_freeze": {
+        "/root": "Director; core publication confirmed. Owns terminal receipt review/save/readback and external confirmation.",
+        "/root/evidence_review": "Implementation and core-record reviews complete; terminal receipt review remains separate.",
+        "/root/package_engineer": "Freezing terminal receipt; stops on return with no active job.",
+        "/root/remote_reconciliation": "State and final-package review complete; no main integration authority."
+      },
+      "historical_unknowns": [
+        "C270 broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only difflib completion",
+        "Previous P14 worker termination is established only as stated in retained reports"
+      ],
+      "name": "current_operation_and_worker_boundary",
+      "observation_source": "collaboration.list_agents observed during this audit; global historical process termination not inferred.",
+      "observed_now": {
+        "/root": "running Director delivery finalization",
+        "/root/evidence_review": "completed core-record review",
+        "/root/package_engineer": "completed frozen receipt; reported no active process or unknown write",
+        "/root/remote_reconciliation": "this bounded terminal audit; stops on return"
+      },
+      "passed": true
+    },
+    {
+      "name": "receipt_and_dependencies_unchanged_after_audit",
+      "passed": true,
+      "receipt": {
+        "bytes": 1821141,
+        "sha256": "cf9cc66071751f63d179c172986c7e4f5b610efcfe96c893e9fad792e0e5bef2"
+      }
+    }
+  ],
+  "completed_at_utc": "2026-11-22T04:58:40.619884+00:00",
+  "embedded_zip": {
+    "bytes": 1356061,
+    "exact_external_aliases": 2,
+    "manifest_payloads": 144,
+    "members": 145,
+    "selected_files": 136,
+    "sha256": "7de551ac4398ae4f0e44db6b7a284caa012abf4c537e05244e03a9977ee6260a"
+  },
+  "failed": 0,
+  "limits": [
+    "No embedded payload/helper execution",
+    "No product tests, host checks or full routine",
+    "No Git/index/Library writes",
+    "No new milestone or nested worker",
+    "Receipt self-save/readback and later external confirmation remain pending until Director completes them"
+  ],
+  "mandatory_findings": [],
+  "material_receipt_change_required": false,
+  "observations": [
+    {
+      "identity": {
+        "bytes": 13378,
+        "sha256": "78a264b72aec0d4fe3c6cca4673fa50e54b73670be320c12c6e0a377cedad332"
+      },
+      "kind": "nonessential_preparatory_inventory",
+      "preservation": "Exact copy included in terminal review evidence as PREPARATORY-INVENTORY-COPY.json. Its only pending-input observation (core READBACK unavailable at preparation) is already retained in package/RECEIPT-PREFLIGHT-CONTENT-CHECK.json and resolved by the confirmed core readback. It adds no lost unique product work and does not require rebuilding the receipt.",
+      "source": "/workspace/scratch/bef4a6dd8f04/recovery/package-work/TERMINAL-RECEIPT-PREFLIGHT.json"
+    },
+    {
+      "effect": "Read-only broad rg inventory included many reproducible extraction trees; no files changed. Focused independent inventories exclude extraction trees and account for all substantive new evidence.",
+      "kind": "preliminary_path_inventory_output_truncated"
+    }
+  ],
+  "passed": 25,
+  "receipt": {
+    "bytes": 1821141,
+    "path": "/workspace/scratch/bef4a6dd8f04/deliverables/receipt/OntoKin_C271_P14_Delivery_Receipt_2026-11-21.json",
+    "sha256": "cf9cc66071751f63d179c172986c7e4f5b610efcfe96c893e9fad792e0e5bef2"
+  },
+  "reviewer": "/root/remote_reconciliation",
+  "schema": "ontokin.c271.p14-independent-terminal-receipt-review/1",
+  "verdict": "accepted_for_exact_save_and_terminal_confirmation",
+  "worker_stop_state": "On return this reviewer has no active process or unknown write. Other workers were observed completed; Director owns remaining delivery and final stop."
+}

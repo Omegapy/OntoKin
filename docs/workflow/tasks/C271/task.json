@@ -105,7 +105,8 @@
         "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/review-boundary-p13/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/review-boundary-p13/P13-DELIVERY.json",
-        "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json"
+        "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/loader-path-p14/P14-TERMINAL-CONFIRMATION.json"
       ]
     }
   ],
@@ -750,7 +751,8 @@
       "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
       "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json",
       "docs/engineering/localized-repair-c271/loader-path-p11/P11-DELIVERY.json",
-      "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json"
+      "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/loader-path-p14/P14-TERMINAL-CONFIRMATION.json"
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
@@ -766,7 +768,7 @@
       "tree": "0271ee6a507f83015eea06b63b1bed51753ba419"
     }
   },
-  "next_action": "Finish the separate P14 terminal receipt, confirm its exact saved bytes, publish terminal confirmation, then stop. Stop after terminal receipt confirmation. In a fresh main chat, resume C271 with one bounded H0 preparation and independent actual-loader source/plan review. Establish the complete actual-loader variant set and an eligible externally digested plan; stop before H1 or at the first concrete blocker.",
+  "next_action": "P14 partial delivery is complete. Stop this chat. In a fresh main chat, resume C271 with one bounded H0 preparation and independent actual-loader source/plan review; establish complete loader variants and an eligible externally digested operational plan, stopping before H1 or at the first concrete blocker.",
   "session_phase": {
     "schema": "ontokin.c271.p14-phase/1",
     "task": "C271",
@@ -809,7 +811,7 @@
       "Existing 16 MiB document reader, 100000-operation/30000-ms source ceilings and all P11 limits remain unchanged.",
       "Root owns Git/index, canonical files, conditional publication and saving. Workers have disjoint assignments, inherited model settings, no nested fanout."
     ],
-    "status": "core_delivery_confirmed_terminal_receipt_pending",
+    "status": "complete_partial_delivery",
     "parent_status": "blocked",
     "parent_complete": false,
     "requirements": {
@@ -836,7 +838,7 @@
       "state": "open"
     },
     "stop": "First concrete scope/design blocker or independent implementation acceptance plus verified partial delivery; no second phase.",
-    "exact_next_action": "Finish the separate P14 terminal receipt, confirm its exact saved bytes, publish terminal confirmation, then stop. Stop after terminal receipt confirmation. In a fresh main chat, resume C271 with one bounded H0 preparation and independent actual-loader source/plan review. Establish the complete actual-loader variant set and an eligible externally digested plan; stop before H1 or at the first concrete blocker.",
+    "exact_next_action": "P14 partial delivery is complete. Stop this chat. In a fresh main chat, resume C271 with one bounded H0 preparation and independent actual-loader source/plan review; establish complete loader variants and an eligible externally digested operational plan, stopping before H1 or at the first concrete blocker.",
     "historical_unknowns": [
       "C270 broad-driver completion remains unknown",
       "Global prior-process termination remains unestablished",
@@ -881,11 +883,10 @@
       "Four documentary/workflow/working-whitespace/staged-whitespace commands passed on the retained prepublication snapshot; final exact-tree checks precede conditional publication.",
       "Independent documentary review accepted21 check groups; exact audit/report copies verified by the Director.",
       "First publication attempt rejected before dispatch at the16MiB connector limit. Exact accepted archive split into three parts; concatenation matches all original bytes. Branch remains unchanged.",
-      "Recovery independently accepted the unchanged final ZIP and source-bound historical evidence; exact ZIP and matching prompts saved/read back. Separate terminal receipt remains pending."
+      "Recovery independently accepted the unchanged final ZIP and source-bound historical evidence; exact ZIP and matching prompts saved/read back. Separate terminal receipt remains pending.",
+      "Separate terminal receipt independently accepted25 groups, saved version0 and exactly read back. Matching terminal confirmation prepared; preserve parent gates and stop after publication."
     ],
-    "incomplete_steps": [
-      "Separate terminal receipt review/save/readback and factual terminal confirmation; stop"
-    ],
+    "incomplete_steps": [],
     "phase_table": [
       {
         "gate": "P14-A01",
@@ -905,7 +906,7 @@
       },
       {
         "gate": "P14-A05",
-        "state": "core_saved_terminal_receipt_pending"
+        "state": "passed_confirmed_saved_delivery_and_terminal_receipt"
       }
     ],
     "evidence": {
@@ -925,14 +926,14 @@
       "publication_parts_review": "docs/engineering/localized-repair-c271/loader-path-p14/evidence/director-implementation-review/attempt002/AUDIT.json"
     },
     "worker_state": {
-      "/root": "Director: remaining terminal receipt and confirmation only",
-      "/root/remote_reconciliation": "State and final package review completed; no active process or unknown write",
-      "/root/evidence_review": "Early and implementation evidence reuse review completed; no product execution or unknown write",
-      "/root/package_engineer": "Early recovery completed; terminal receipt packaging assigned; no source/publication authority"
+      "/root": "Director publishes final confirmation/readback then stops",
+      "/root/remote_reconciliation": "Completed; no active process or unknown write",
+      "/root/evidence_review": "Completed; no active process or unknown write",
+      "/root/package_engineer": "Completed; no active process or unknown write"
     },
     "current_unknown_operations": [],
     "current_jobs": [
-      "Director terminal receipt and factual confirmation only; no product/host work"
+      "Director terminal record publication/readback and final publication-evidence save; stop afterward"
     ],
     "startup_failures": "docs/engineering/localized-repair-c271/loader-path-p14/evidence/STARTUP-FAILURES.json",
     "early_save_confirmed": true,
@@ -963,7 +964,7 @@
       "source_tree": "2881aa68f3dbb44eb57d373fb2bfbd373ac375b8",
       "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-b464e08f29cc81918e4502145fc1844f_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
     },
-    "updated_at_utc": "2026-11-22T04:46:08.370505+00:00",
+    "updated_at_utc": "2026-11-22T05:00:55.764218+00:00",
     "evidence_reference_base": "Repository-relative paths; in a ZIP, prefix repository/.",
     "next_fresh_chat_action": "Reconcile the confirmed P14 handoff and live GitHub state; declare one bounded H0 preparation/source-and-plan review phase. First establish source-complete loader variants for the actual bound loader, then determine whether the real selected Python, guarded origin, kernel identity and nonselection evidence can form an eligible versioned plan. Stop before H1 or at the first concrete blocker.",
     "implementation_outcome": {
@@ -1073,7 +1074,7 @@
       "final_handoff": "pending"
     },
     "recovery_owner": "c271-p14-recovery-bef4a6dd8f04",
-    "phase_complete": false,
+    "phase_complete": true,
     "published_source": {
       "commit": "e26dc6369a8d6ba88ea779b26a8c655121ae5dbc",
       "tree": "0271ee6a507f83015eea06b63b1bed51753ba419",
@@ -1081,18 +1082,77 @@
       "source_unchanged_in_recovery": true
     },
     "recovery_evidence": "docs/engineering/localized-repair-c271/loader-path-p14/delivery-recovery-20261121/SESSION.json",
-    "delivery_receipt": "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json"
+    "delivery_receipt": "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json",
+    "terminal_confirmation": "docs/engineering/localized-repair-c271/loader-path-p14/P14-TERMINAL-CONFIRMATION.json",
+    "terminal_receipt": {
+      "schema": "ontokin.c271.p14-terminal-save-confirmation/1",
+      "local_path": "/workspace/scratch/bef4a6dd8f04/deliverables/receipt/OntoKin_C271_P14_Delivery_Receipt_2026-11-21.json",
+      "purpose": "create_library_file",
+      "status": "succeeded",
+      "file_id": "file_000000009f0081f6a2a94ce7111fe8d1",
+      "library_file_id": "libfile_fde3_f-d03df76f2e148191b32028c88e03d2aa_2ab2a24d43748191957f9bcc356b59de",
+      "file_name": "OntoKin_C271_P14_Delivery_Receipt_2026-11-21.json",
+      "local_metadata_applied": true,
+      "path": "/OntoKin/OntoKin_C271_P14_Delivery_Receipt_2026-11-21.json",
+      "current_version_number": 0,
+      "bytes": 1821141,
+      "sha256": "cf9cc66071751f63d179c172986c7e4f5b610efcfe96c893e9fad792e0e5bef2",
+      "version": 0,
+      "readback_path": "/workspace/scratch/bef4a6dd8f04/recovery/readback/terminal/OntoKin_C271_P14_Delivery_Receipt_2026-11-21.json",
+      "saved_bytes_readback_equal": true,
+      "confirmed_at_utc": "2026-11-22 04:59:57 UTC",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-d03df76f2e148191b32028c88e03d2aa_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "independent_review": {
+        "reviewer": "/root/remote_reconciliation",
+        "groups_passed": 25,
+        "mandatory_findings": [],
+        "report": "recovery/terminal_receipt_review/REPORT.md",
+        "audit": "recovery/terminal_receipt_review/AUDIT.json",
+        "receipt_sha256": "cf9cc66071751f63d179c172986c7e4f5b610efcfe96c893e9fad792e0e5bef2"
+      },
+      "core_checkpoint": "f0fb9a634269b515476f2fc467556ccea789c2d8",
+      "source_revision": "e26dc6369a8d6ba88ea779b26a8c655121ae5dbc"
+    }
   },
   "delivery": {
     "required": true,
     "kind": "development_handoff_zip",
-    "status": "core_saved_terminal_receipt_pending",
+    "status": "saved",
     "folder": "OntoKin",
     "partial": true,
-    "phase_complete": false,
+    "phase_complete": true,
     "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p14/delivery-recovery-20261121/EARLY-RECOVERY-RECEIPT.json",
     "receipt": "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json",
-    "terminal_confirmation": "docs/engineering/localized-repair-c271/loader-path-p14/P14-TERMINAL-CONFIRMATION.json"
+    "terminal_confirmation": "docs/engineering/localized-repair-c271/loader-path-p14/P14-TERMINAL-CONFIRMATION.json",
+    "terminal_receipt": {
+      "schema": "ontokin.c271.p14-terminal-save-confirmation/1",
+      "local_path": "/workspace/scratch/bef4a6dd8f04/deliverables/receipt/OntoKin_C271_P14_Delivery_Receipt_2026-11-21.json",
+      "purpose": "create_library_file",
+      "status": "succeeded",
+      "file_id": "file_000000009f0081f6a2a94ce7111fe8d1",
+      "library_file_id": "libfile_fde3_f-d03df76f2e148191b32028c88e03d2aa_2ab2a24d43748191957f9bcc356b59de",
+      "file_name": "OntoKin_C271_P14_Delivery_Receipt_2026-11-21.json",
+      "local_metadata_applied": true,
+      "path": "/OntoKin/OntoKin_C271_P14_Delivery_Receipt_2026-11-21.json",
+      "current_version_number": 0,
+      "bytes": 1821141,
+      "sha256": "cf9cc66071751f63d179c172986c7e4f5b610efcfe96c893e9fad792e0e5bef2",
+      "version": 0,
+      "readback_path": "/workspace/scratch/bef4a6dd8f04/recovery/readback/terminal/OntoKin_C271_P14_Delivery_Receipt_2026-11-21.json",
+      "saved_bytes_readback_equal": true,
+      "confirmed_at_utc": "2026-11-22 04:59:57 UTC",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-d03df76f2e148191b32028c88e03d2aa_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "independent_review": {
+        "reviewer": "/root/remote_reconciliation",
+        "groups_passed": 25,
+        "mandatory_findings": [],
+        "report": "recovery/terminal_receipt_review/REPORT.md",
+        "audit": "recovery/terminal_receipt_review/AUDIT.json",
+        "receipt_sha256": "cf9cc66071751f63d179c172986c7e4f5b610efcfe96c893e9fad792e0e5bef2"
+      },
+      "core_checkpoint": "f0fb9a634269b515476f2fc467556ccea789c2d8",
+      "source_revision": "e26dc6369a8d6ba88ea779b26a8c655121ae5dbc"
+    }
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",

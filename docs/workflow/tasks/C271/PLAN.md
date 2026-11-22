@@ -252,3 +252,8 @@ Candidate003 passed the adopted 96 mapped runtime controls and 175 inherited met
 ## P14 delivery recovery checkpoint
 
 The interrupted implementation is published at `e26dc6369a8d6ba88ea779b26a8c655121ae5dbc`. Its unchanged final ZIP and matching prompts passed independent review, saving and exact readback. The [separate P14 receipt](../../../engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json) records the actual identities. Terminal receipt confirmation remains the only session step at this checkpoint; finish it and stop. R01/R02 remain done; R03/R04/R05 remain not_done, P02 remains in_progress and parent C271 remains blocked/open. No production, test, contract, main or integration-lease change occurred during this recovery. The next technical action belongs to a fresh chat: bounded H0 preparation and independent actual-loader source/plan review before H1.
+
+<!-- C271-P14-TERMINAL-DELIVERY -->
+## P14 terminal delivery confirmed
+
+The separate terminal receipt has independent acceptance and exact saved-byte readback. [Terminal confirmation](../../../engineering/localized-repair-c271/loader-path-p14/P14-TERMINAL-CONFIRMATION.json) records its identity and the core publication. P14 delivery is complete; C271 remains blocked/open with R03–R05 unfinished. Stop this chat. No H0/H1, full routine, integration or new milestone occurred.
