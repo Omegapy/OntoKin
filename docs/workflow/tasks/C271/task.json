@@ -71,7 +71,9 @@
         "docs/engineering/localized-repair-c271/loader-path-p14/delivery-recovery-20261121/implementation-review/AUDIT.json",
         "docs/engineering/localized-repair-c271/host-loader-p15/PHASE-OUTCOME.json",
         "docs/engineering/localized-repair-c271/host-loader-p15/SOURCE-COMPLETENESS-DECISION.json",
-        "docs/engineering/localized-repair-c271/host-loader-p15/BLOCKER-DECISION.json"
+        "docs/engineering/localized-repair-c271/host-loader-p15/BLOCKER-DECISION.json",
+        "docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json",
+        "docs/engineering/localized-repair-c271/libc-tags-p16/review/candidate001/REVIEW.json"
       ]
     },
     {
@@ -509,7 +511,7 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
       ],
-      "scope": "P10 partial delivery only. R03\u2013R05 and integration remain open."
+      "scope": "P10 partial delivery only. R03–R05 and integration remain open."
     },
     {
       "name": "P11 independent intake and verified early recovery",
@@ -791,6 +793,39 @@
         "docs/engineering/localized-repair-c271/host-loader-p15/FINAL-READBACK-VERIFICATION.json"
       ],
       "limit": "Partial phase delivery only. R03-R05 and the parent remain open; receipt checkpoint publication/readback follows."
+    },
+    {
+      "name": "P16 author source and inert-control integrity",
+      "command": "Recorded data-only source/package audit and inert construction/inventory checks",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/SOURCE-AUDIT-002.json",
+        "docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/STATIC-INTEGRITY-AUDIT.json"
+      ],
+      "limit": "46 source/package and 810 integrity assertions; no product parser/test or host execution."
+    },
+    {
+      "name": "P16 independent exact source/design/control review",
+      "command": "Independent source review, raw reconstruction and 1493 static assertions over the frozen 73-control candidate",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-tags-p16/review/candidate001/REVIEW.json",
+        "docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json"
+      ],
+      "limit": "No mandatory findings; bounded tag-only design adoption. No implementation, flags exception, H0/H1 or R03 acceptance."
+    },
+    {
+      "name": "P16 documentary preflight",
+      "command": "Recorded workflow, documentation-link and unstaged/staged whitespace checks",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-tags-p16/documentary-checks/preflight002/CHECKS.json",
+        "docs/engineering/localized-repair-c271/libc-tags-p16/DOCUMENTARY-FAILURES.json"
+      ],
+      "limit": "Exact preflight tree 65815331ffd1de9052b1b1d0203b23822a28ee07 passed all four commands. First failure and raw bytes preserved. Final staged-tree review/checks and publication remain separate; no product tests."
     }
   ],
   "completion": {
@@ -812,7 +847,8 @@
       "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json",
       "docs/engineering/localized-repair-c271/loader-path-p14/P14-TERMINAL-CONFIRMATION.json",
       "docs/engineering/localized-repair-c271/host-loader-p15/P15-DELIVERY.json",
-      "docs/engineering/localized-repair-c271/host-loader-p15/P15-TERMINAL-CONFIRMATION.json"
+      "docs/engineering/localized-repair-c271/host-loader-p15/P15-TERMINAL-CONFIRMATION.json",
+      "docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json"
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
@@ -826,16 +862,30 @@
       "review": "docs/engineering/localized-repair-c271/loader-path-p14/evidence/INDEPENDENT-IMPLEMENTATION-REVIEW.md",
       "commit": "e26dc6369a8d6ba88ea779b26a8c655121ae5dbc",
       "tree": "0271ee6a507f83015eea06b63b1bed51753ba419"
+    },
+    "libc_tag_decision": {
+      "adoption": "docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json",
+      "candidate_manifest_sha256": "61b18ceb15d3ee05d3022c60941ccbbce9c3e08bac148c7750da9f6588091156",
+      "implementation_performed": false
     }
   },
-  "next_action": "Complete only the declared P16 source-backed tag compatibility decision and frozen inert controls, or retain the first design blocker; then independent review and documentary delivery.",
+  "next_action": "Finish only P16 documentary publication and verified final ZIP/prompts/receipt delivery, then stop. Once separate delivery is confirmed, the next fresh-chat action is the bounded DT_FLAGS/DF_STATIC_TLS decision recorded in ADOPTION.json; no implementation is selected now.",
   "session_phase": {
-    "id": "C271-P16-libc-dynamic-tag-compatibility-decision",
-    "status": "in_progress",
+    "schema": "ontokin.c271.p16-phase/1",
+    "task": "C271",
+    "phase": "C271-P16-libc-dynamic-tag-compatibility-decision",
     "owner": "c271-p16-fd30b8a094f0",
+    "declared_at_utc": "2026-11-22T16:37:11.431485+00:00",
+    "branch": "work/c271-missing-import-digest-control",
     "starting_branch": "0d5a3053ced2805f4cc04b77f361bb07dbdc7999",
-    "phase_file": "docs/engineering/localized-repair-c271/libc-tags-p16/PHASE.json",
-    "early_recovery": "docs/engineering/localized-repair-c271/libc-tags-p16/EARLY-RECOVERY-RECEIPT.json",
+    "source_revision": "0d5a3053ced2805f4cc04b77f361bb07dbdc7999",
+    "source_tree": "429b01242d98329e32dbe31be45e9f7c2f52aed4",
+    "observed_main": {
+      "commit": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+      "tree": "7302cf8f36c45dd76112ad442e42e48379ac8367",
+      "observed_at_utc": "2026-11-22T16:37:11.431485+00:00",
+      "evidence": "recovery/state/main.json"
+    },
     "scope": "One source-backed compatibility decision and frozen inert control set for the P15 rejected libc dynamic tags, or a precise design blocker. No production implementation or host qualification.",
     "acceptance": [
       {
@@ -860,11 +910,169 @@
       }
     ],
     "stop": "Stop after reviewed compatibility decision and frozen inert controls, or first concrete design blocker/unplanned expansion; then documentary publication and delivery only.",
-    "source_revision": "0d5a3053ced2805f4cc04b77f361bb07dbdc7999",
-    "main_lease_held": false
+    "constraints": [
+      "No production/test/previous-contract/dependency-pin/limit/expected-result modifications",
+      "No product parser execution, input substitution, new host inspection/H0, H1, runtime installation, Node/ldd, original-seven/full routine, native/model/hosted execution",
+      "No main lease, integration, branch deletion or parent closure",
+      "R01/R02 remain done; R03/R04/R05 not_done; P01 done; P02 in_progress",
+      "Root owns canonical records, Git/index, publication and Library; workers have disjoint scratch paths; no nested fanout"
+    ],
+    "parent_status": "blocked",
+    "parent_complete": false,
+    "phase_complete": false,
+    "requirements": {
+      "R01": "done",
+      "R02": "done",
+      "R03": "not_done",
+      "R04": "not_done",
+      "R05": "not_done"
+    },
+    "parent_plan": {
+      "P01": "done",
+      "P02": "in_progress"
+    },
+    "pull_request": {
+      "number": 274,
+      "state": "open",
+      "draft": true,
+      "merged": false
+    },
+    "scope_issue": {
+      "number": 273,
+      "state": "open"
+    },
+    "main_lease_held": false,
+    "integration_allowed": false,
+    "early_save_confirmed": true,
+    "phase_table": [
+      {
+        "gate": "P16-A01",
+        "state": "passed"
+      },
+      {
+        "gate": "P16-A02",
+        "state": "passed_tag_design_and_controls"
+      },
+      {
+        "gate": "P16-A03",
+        "state": "passed_no_mandatory_findings"
+      },
+      {
+        "gate": "P16-A04",
+        "state": "preflight_checks_passed_final_staged_review_and_publication_pending"
+      },
+      {
+        "gate": "P16-A05",
+        "state": "final_delivery_pending"
+      }
+    ],
+    "current_jobs": [
+      {
+        "worker": "/root/tag_design",
+        "state": "candidate001 frozen; completed; no active operation",
+        "owned": "p16-session/tag-design/"
+      },
+      {
+        "worker": "/root/design_review",
+        "state": "formal source/design/control review complete; no active operation",
+        "owned": "p16-session/design-review/"
+      },
+      {
+        "worker": "/root/receipt_review",
+        "state": "prior audits and final preflight complete; pending bounded documentary and final-package assignments",
+        "owned": "p16-session/receipt-review/"
+      },
+      {
+        "worker": "/root",
+        "state": "documentary verification, conditional publication and verified delivery only"
+      }
+    ],
+    "current_unknown_operations": [],
+    "historical_unknowns": [
+      "C270 ancillary broad-driver completion",
+      "Global prior-process termination",
+      "P13 read-only character-level difflib completion; do not retry"
+    ],
+    "capabilities": {
+      "authentic_checkout": true,
+      "repository_read": true,
+      "git_data_write_tools": "observed successful conditional phase-start publication and exact readback",
+      "conditional_nonforce_ref_tool": "available",
+      "subagents": true,
+      "terminal_documentation_checks": true,
+      "zip_create_verify": true,
+      "library_read": "observed",
+      "library_save": "observed early save and exact readback",
+      "native_push": "historically unsupported; no retry",
+      "merge_deletion": "not selected"
+    },
+    "delivery": {
+      "status": "early_confirmed_final_pending",
+      "external_receipt_required": true,
+      "repository_receipt": "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json"
+    },
+    "exact_next_action": "Finish only P16 documentary publication and verified final ZIP/prompts/receipt delivery, then stop. Once separate delivery is confirmed, the next fresh-chat action is the bounded DT_FLAGS/DF_STATIC_TLS decision recorded in ADOPTION.json; no implementation is selected now.",
+    "readset": "MAIN-READ-SET.json plus delegated receipt/tag/design review readsets",
+    "main_branch_relation": "Main current C270 state is expected while C271 is unmerged. Licensing PR275 is on main only; future integration must reconcile it.",
+    "early_recovery": {
+      "local_path": "/workspace/scratch/fd30b8a094f0/deliverables/early-attempt001/OntoKin_C271_P16_Libc_Tag_Early_Recovery_2026-11-22.zip",
+      "purpose": "create_library_file",
+      "status": "succeeded",
+      "file_id": "file_00000000f38c821288a2532425f9f100",
+      "library_file_id": "libfile_fde3_f-37fd1e8b05448191834cbcbacb3a284c_2ab2a24d43748191957f9bcc356b59de",
+      "file_name": "OntoKin_C271_P16_Libc_Tag_Early_Recovery_2026-11-22.zip",
+      "local_metadata_applied": true,
+      "path": "/OntoKin/OntoKin_C271_P16_Libc_Tag_Early_Recovery_2026-11-22.zip",
+      "current_version_number": 0,
+      "schema": "ontokin.c271.p16-early-recovery-receipt/1",
+      "bytes": 49917552,
+      "sha256": "8cf4fa4e248260411191ec7583eeca4334c0ea6e9cebd38eccc17f3495e342a9",
+      "source_revision": "0d5a3053ced2805f4cc04b77f361bb07dbdc7999",
+      "version": 0,
+      "saved_bytes_readback_equal": true,
+      "independent_review": "receipt-review/early-attempt001/AUDIT.json",
+      "independent_package_assertions": 1580,
+      "confirmed_at_utc": "2026-11-22T16:42:51.012042+00:00",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-37fd1e8b05448191834cbcbacb3a284c_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+    },
+    "status": "technical_boundary_complete_delivery_pending",
+    "updated_at_utc": "2026-11-22T17:24:43.165798+00:00",
+    "technical_stop_at_utc": "2026-11-22T17:24:43.165798+00:00",
+    "technical_stop": "Independent acceptance and separate Director adoption of the exact bounded tag-only design and frozen controls; no implementation.",
+    "next_fresh_chat_action": "In a fresh parent chat, reconcile the confirmed P16 receipt and current GitHub, then select one bounded source-backed DT_FLAGS/DF_STATIC_TLS compatibility decision for the exact retained libc 0x18. Preserve P16 and older flags refusals, pins, limits and expectations; the decision may retain refusal. Stop before implementation, new H0/H1 or the first concrete design blocker.",
+    "evidence": {
+      "adoption": "docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json",
+      "candidate": "docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/CANDIDATE-MANIFEST.json",
+      "independent_review": "docs/engineering/localized-repair-c271/libc-tags-p16/review/candidate001/REVIEW.json",
+      "learning": "docs/engineering/localized-repair-c271/libc-tags-p16/LEARNING-REVIEW.json",
+      "documentary_preflight": "docs/engineering/localized-repair-c271/libc-tags-p16/documentary-checks/preflight002/CHECKS.json",
+      "failed_documentary_attempt": "docs/engineering/localized-repair-c271/libc-tags-p16/DOCUMENTARY-FAILURES.json"
+    },
+    "technical_counts": {
+      "author_integrity_assertions": 810,
+      "bytes_excluding_manifest": 1074121,
+      "controls": 73,
+      "elf_images": 47,
+      "files_excluding_manifest": 169,
+      "fixture_files": 120,
+      "routes": {
+        "binding_relations": 15,
+        "external_digest": 1,
+        "legacy_literal_plan_reader": 1,
+        "legacy_origin_plan_reader": 1,
+        "legacy_public_metadata": 3,
+        "libc_plt_metadata": 34,
+        "metadata_fault": 8,
+        "new_profile_rule": 8,
+        "recheck_boundary": 2
+      },
+      "source_identity_assertions": 46,
+      "independent_static_assertions": 1493,
+      "product_tests_executed": 0
+    }
   },
   "delivery": {
-    "status": "early_confirmed_final_pending",
+    "status": "technical_boundary_complete_final_delivery_pending",
     "phase": "C271-P16-libc-dynamic-tag-compatibility-decision",
     "receipt": "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
     "parent_complete": false
@@ -3540,7 +3748,8 @@
       "reason": "P12-N57-POLICY-BINDING-001: The accepted operational variant schema contains only schema, loader, source_review and suffixes. The sole distinguishing synthetic label is outside those inputs; all representable synthetic observations/bindings remain equal. Neither context supplies an actual operational plan or actual plan digest. The decision assigns completeness to independent source review but defines no machine-observable rejected-policy admission contract. Faithfully obtaining different production results for these frozen cases is therefore unspecified under the authorized surface.",
       "disposition": "Preserved; P13 separately adopts review-only completeness and explicit 96+1 applicability. No runtime/host result."
     },
-    "Parent R03 remains unmet: actual host qualification and the full routine are unaccepted. P14 candidate003 is independently accepted for the finite adopted implementation scope. Actual-loader source completeness, operational plan eligibility, H0/H1 and later parent gates remain open."
+    "Parent R03 remains unmet: actual host qualification and the full routine are unaccepted. P14 candidate003 is independently accepted for the finite adopted implementation scope. Actual-loader source completeness, operational plan eligibility, H0/H1 and later parent gates remain open.",
+    "Parent R03 remains unmet. P15 externally accepted exact-loader suffix completeness, then confirmed actual libc admission refusal at the dynamic-tag allowlist. H0, operational-plan adoption, H1 and the full routine remain unaccepted; no repair was attempted."
   ],
   "remaining_h0_constraint": {
     "id": "P15-H0-LIBC-DYNAMIC-TAG-001",
@@ -3552,7 +3761,7 @@
     "fact": "Actual mapped libc is rejected by the unchanged dynamic-tag allowlist; first excluded tag0x70000000 at offset1980896. The later dynamic-flags predicate was not reached.",
     "scope": "Source suffix-union acceptance remains narrow. Complete inventory/plan eligibility and H0/H1 remain unaccepted."
   },
-  "blocked_reason": "Parent R03 remains unmet. P15 externally accepted exact-loader suffix completeness, then confirmed actual libc admission refusal at the dynamic-tag allowlist. H0, operational-plan adoption, H1 and the full routine remain unaccepted; no repair was attempted.",
+  "blocked_reason": "Parent R03 remains unmet. P16 adopts only a reviewed tag-specific design and frozen controls; no implementation or input admission occurred. The exact retained libc flags 0x18 remain outside the unchanged mask, a predicted later constraint rather than the P15 observed refusal. Operational-plan adoption, H0/H1, full routine and integration remain unaccepted.",
   "prior_h0_constraints": [
     {
       "id": "H0-PYTHON-RPATH-TOKEN-001",

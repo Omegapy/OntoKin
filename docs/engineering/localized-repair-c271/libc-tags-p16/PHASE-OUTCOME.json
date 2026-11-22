@@ -1,0 +1,61 @@
+{
+  "schema": "ontokin.c271.p16-phase-outcome/1",
+  "recorded_at_utc": "2026-11-22T17:24:43.165798+00:00",
+  "technical_status": "reviewed_design_adopted",
+  "candidate": {
+    "bytes": 36725,
+    "sha256": "61b18ceb15d3ee05d3022c60941ccbbce9c3e08bac148c7750da9f6588091156"
+  },
+  "review": {
+    "path": "review/candidate001/REVIEW.json",
+    "bytes": 7983,
+    "sha256": "8b5cb788767cbe42d0a7f17c2ad7f4b134ce4200941570b7c41d968aee04c5d1",
+    "manifest": {
+      "bytes": 1859,
+      "sha256": "adb1ba567e8378371ed1a6df0e310200fcd9cc999f00997f2da84e36421c8162"
+    },
+    "mandatory_findings": 0,
+    "static_assertions": 1493
+  },
+  "scope": "Exactly three x86-64 PLT dynamic tags, as opaque dependency metadata, under a new separately versioned opt-in profile bound to the actual selected author-Python libc dependency and exact libc/loader pins. Complete once-only trio is a conservative selected-image policy. Every old route, flag mask, later guard, source contract, pin, limit and expectation remains unchanged.",
+  "counts": {
+    "author_integrity_assertions": 810,
+    "bytes_excluding_manifest": 1074121,
+    "controls": 73,
+    "elf_images": 47,
+    "files_excluding_manifest": 169,
+    "fixture_files": 120,
+    "routes": {
+      "binding_relations": 15,
+      "external_digest": 1,
+      "legacy_literal_plan_reader": 1,
+      "legacy_origin_plan_reader": 1,
+      "legacy_public_metadata": 3,
+      "libc_plt_metadata": 34,
+      "metadata_fault": 8,
+      "new_profile_rule": 8,
+      "recheck_boundary": 2
+    },
+    "source_identity_assertions": 46,
+    "independent_static_assertions": 1493,
+    "product_tests_executed": 0
+  },
+  "next_fresh_chat_action": "In a fresh parent chat, reconcile the confirmed P16 receipt and current GitHub, then select one bounded source-backed DT_FLAGS/DF_STATIC_TLS compatibility decision for the exact retained libc 0x18. Preserve P16 and older flags refusals, pins, limits and expectations; the decision may retain refusal. Stop before implementation, new H0/H1 or the first concrete design blocker.",
+  "documentary_verification": {
+    "preflight_passed": true,
+    "checks": "docs/engineering/localized-repair-c271/libc-tags-p16/documentary-checks/preflight002/CHECKS.json",
+    "source_tree": "65815331ffd1de9052b1b1d0203b23822a28ee07",
+    "final_staged_checks": "pending"
+  },
+  "publication": "pending",
+  "final_delivery": "pending",
+  "parent_status": "blocked",
+  "R03_R04_R05": "not_done",
+  "P02": "in_progress",
+  "limits": [
+    "Source/package association is not a reproduced build or signature verification.",
+    "PLT metadata recognition does not validate executable PLT/GOT/relocation safety or observe runtime rewriting.",
+    "Synthetic primitive positives do not establish real-input or plan acceptance.",
+    "All inherited runtime, full-routine and parent requirements remain pending."
+  ]
+}

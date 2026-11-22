@@ -1,0 +1,1645 @@
+{
+  "archive_sha256": "f24aa441021121a79266f0d75242706cab8843a47901fefe74527491807f1998",
+  "files": [
+    {
+      "member": "glibc-2.41/elf/dynamic-link.h",
+      "bytes": 8344,
+      "sha256": "4b99c1a6fa264e86627a8d34fc406f26941d026523e84dc9edb6214d9ae01c42"
+    },
+    {
+      "member": "glibc-2.41/elf/get-dynamic-info.h",
+      "bytes": 6248,
+      "sha256": "b1dfce5fd79e795bdb44bab5c6eaa86ffe0bb37cbf6eade765e217d03a620c65"
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86/cpu-features.c",
+      "bytes": 42147,
+      "sha256": "9b7a604d9a1ece010f8520f9a75660051dc83d172f59aefab660cc9b9e9742a5"
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86/dl-tunables.list",
+      "bytes": 2804,
+      "sha256": "50a11e932939e0febaded2d85fce849c06a13e98a0d3297ebe71e44d2cf5c70f"
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86_64/dl-dtprocnum.h",
+      "bytes": 983,
+      "sha256": "bf878a9f344a53e7e92fa33bec1c007f31ea513ce6a8abf099da06a58529fce8"
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86_64/configure.ac",
+      "bytes": 3345,
+      "sha256": "9ba11407548d64f697c0eddea4305d0c3f089339af1b730ccf467c76046a00b5"
+    },
+    {
+      "member": "glibc-2.41/elf/dl-tunables.c",
+      "bytes": 11710,
+      "sha256": "57c4d9bd54ef9d45d1d741bc90616e4c300c47904f4c78325dcd732bb16ac293"
+    },
+    {
+      "member": "glibc-2.41/sysdeps/generic/ldsodefs.h",
+      "bytes": 53291,
+      "sha256": "21de59362a3d831a4c47bc076d3a03112edf19fe01069439a997bdf40ab9dd0c"
+    }
+  ],
+  "patch_archive_sha256": "dda4153511bfd543502d18e5bc9323110996fe9c531f14ae3fad6eb17f027c7d",
+  "active_patch_count": 80,
+  "patches": [
+    {
+      "member": "debian/patches/git-updates.diff",
+      "bytes": 623020,
+      "sha256": "c3c28ea3a3a9ae8478ff7c051202bafefe165e60e11f707389751e7c850956de",
+      "headers": [
+        "--- /dev/null",
+        "+++ b/ADVISORIES",
+        "--- a/Makeconfig",
+        "+++ b/Makeconfig",
+        "--- a/NEWS",
+        "+++ b/NEWS",
+        "--- a/advisories/GLIBC-SA-2023-0001",
+        "+++ /dev/null",
+        "--- a/advisories/GLIBC-SA-2023-0002",
+        "+++ /dev/null",
+        "--- a/advisories/GLIBC-SA-2023-0003",
+        "+++ /dev/null",
+        "--- a/advisories/GLIBC-SA-2023-0004",
+        "+++ /dev/null",
+        "--- a/advisories/GLIBC-SA-2023-0005",
+        "+++ /dev/null",
+        "--- a/advisories/GLIBC-SA-2024-0001",
+        "+++ /dev/null",
+        "--- a/advisories/GLIBC-SA-2024-0002",
+        "+++ /dev/null",
+        "--- a/advisories/GLIBC-SA-2024-0003",
+        "+++ /dev/null",
+        "--- a/advisories/GLIBC-SA-2024-0004",
+        "+++ /dev/null",
+        "--- a/advisories/GLIBC-SA-2024-0005",
+        "+++ /dev/null",
+        "--- a/advisories/GLIBC-SA-2024-0006",
+        "+++ /dev/null",
+        "--- a/advisories/GLIBC-SA-2024-0007",
+        "+++ /dev/null",
+        "--- a/advisories/GLIBC-SA-2024-0008",
+        "+++ /dev/null",
+        "--- a/advisories/GLIBC-SA-2025-0001",
+        "+++ /dev/null",
+        "--- a/advisories/README",
+        "+++ /dev/null",
+        "--- a/assert/Makefile",
+        "+++ b/assert/Makefile",
+        "--- /dev/null",
+        "+++ b/assert/tst-assert-sa-2025-0001.c",
+        "--- a/benchtests/atanh-inputs",
+        "+++ b/benchtests/atanh-inputs",
+        "--- a/benchtests/sinh-inputs",
+        "+++ b/benchtests/sinh-inputs",
+        "--- a/config.make.in",
+        "+++ b/config.make.in",
+        "--- a/configure",
+        "+++ b/configure",
+        "--- a/configure.ac",
+        "+++ b/configure.ac",
+        "--- a/ctype/Makefile",
+        "+++ b/ctype/Makefile",
+        "--- a/ctype/ctype-info.c",
+        "+++ b/ctype/ctype-info.c",
+        "--- /dev/null",
+        "+++ b/ctype/tst-ctype-tls-dlmopen.c",
+        "--- /dev/null",
+        "+++ b/ctype/tst-ctype-tls-dlopen-static.c",
+        "--- /dev/null",
+        "+++ b/ctype/tst-ctype-tls-mod.c",
+        "--- /dev/null",
+        "+++ b/ctype/tst-ctype-tls-skeleton.c",
+        "--- a/elf/Makefile",
+        "+++ b/elf/Makefile",
+        "--- a/elf/dl-close.c",
+        "+++ b/elf/dl-close.c",
+        "--- a/elf/dl-debug-symbols.S",
+        "+++ b/elf/dl-debug-symbols.S",
+        "--- a/elf/dl-debug.c",
+        "+++ b/elf/dl-debug.c",
+        "--- /dev/null",
+        "+++ b/elf/dl-debug_state.c",
+        "--- /dev/null",
+        "+++ b/elf/dl-execstack-tunable.c",
+        "--- a/elf/dl-execstack.c",
+        "+++ b/elf/dl-execstack.c",
+        "--- a/elf/dl-find_object.c",
+        "+++ b/elf/dl-find_object.c",
+        "--- a/elf/dl-find_object.h",
+        "+++ b/elf/dl-find_object.h",
+        "--- a/elf/dl-load.c",
+        "+++ b/elf/dl-load.c",
+        "--- a/elf/dl-lookup.c",
+        "+++ b/elf/dl-lookup.c",
+        "--- a/elf/dl-open.c",
+        "+++ b/elf/dl-open.c",
+        "--- a/elf/dl-reloc-static-pie.c",
+        "+++ b/elf/dl-reloc-static-pie.c",
+        "--- a/elf/dl-support.c",
+        "+++ b/elf/dl-support.c",
+        "--- a/elf/dl-tls.c",
+        "+++ b/elf/dl-tls.c",
+        "--- a/elf/dl-tunables.list",
+        "+++ b/elf/dl-tunables.list",
+        "--- a/elf/dl-version.c",
+        "+++ b/elf/dl-version.c",
+        "--- a/elf/rtld.c",
+        "+++ b/elf/rtld.c",
+        "--- a/elf/sprof.c",
+        "+++ b/elf/sprof.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-audit-tlsdesc-dlopen2.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-auditmod-tlsdesc2.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-dlmopen4-nonpic.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-dlmopen4-pic.c",
+        "--- a/elf/tst-dlmopen4.c",
+        "+++ b/elf/tst-dlmopen4.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-dlopen-constructor-null-mod1.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-dlopen-constructor-null-mod2.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-dlopen-constructor-null.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-dlopen-sgid-mod.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-dlopen-sgid.c",
+        "--- a/elf/tst-env-setuid-tunables.c",
+        "+++ b/elf/tst-env-setuid-tunables.c",
+        "--- a/elf/tst-env-setuid.c",
+        "+++ b/elf/tst-env-setuid.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-execstack-prog-static-tunable.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-execstack-tunable.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-link-map-contiguous-ldso.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-link-map-contiguous-libc.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-link-map-contiguous-main.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-pie-bss-static.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-pie-bss.c",
+        "--- a/elf/tst-rtld-list-tunables.exp",
+        "+++ b/elf/tst-rtld-list-tunables.exp",
+        "--- /dev/null",
+        "+++ b/elf/tst-tls23-mod.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-tls23.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-tls23.h",
+        "--- /dev/null",
+        "+++ b/elf/tst-version-hash-zero-linkmod.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-version-hash-zero-linkmod.map",
+        "--- /dev/null",
+        "+++ b/elf/tst-version-hash-zero-mod.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-version-hash-zero-mod.map",
+        "--- /dev/null",
+        "+++ b/elf/tst-version-hash-zero-refmod.c",
+        "--- /dev/null",
+        "+++ b/elf/tst-version-hash-zero.c",
+        "--- a/iconv/Makefile",
+        "+++ b/iconv/Makefile",
+        "--- a/iconv/iconv_prog.c",
+        "+++ b/iconv/iconv_prog.c",
+        "--- a/iconv/loop.c",
+        "+++ b/iconv/loop.c",
+        "--- a/iconv/tst-iconv_prog-buffer.sh",
+        "+++ b/iconv/tst-iconv_prog-buffer.sh",
+        "--- a/iconv/tst-iconv_prog.sh",
+        "+++ b/iconv/tst-iconv_prog.sh",
+        "--- a/iconvdata/Makefile",
+        "+++ b/iconvdata/Makefile",
+        "--- a/iconvdata/ansi_x3.110.c",
+        "+++ b/iconvdata/ansi_x3.110.c",
+        "--- a/iconvdata/ibm1364.c",
+        "+++ b/iconvdata/ibm1364.c",
+        "--- /dev/null",
+        "+++ b/iconvdata/tst-bug33980.c",
+        "--- a/include/ctype.h",
+        "+++ b/include/ctype.h",
+        "--- a/include/dlfcn.h",
+        "+++ b/include/dlfcn.h",
+        "--- a/include/link.h",
+        "+++ b/include/link.h",
+        "--- a/include/rpc/rpc.h",
+        "+++ b/include/rpc/rpc.h",
+        "--- a/io/fcntl.c",
+        "+++ b/io/fcntl.c",
+        "--- a/libio/Makefile",
+        "+++ b/libio/Makefile",
+        "--- /dev/null",
+        "+++ b/libio/bug-wgenops-bz33998.c",
+        "--- a/libio/wgenops.c",
+        "+++ b/libio/wgenops.c",
+        "--- a/locale/lc-ctype.c",
+        "+++ b/locale/lc-ctype.c",
+        "--- a/locale/localeinfo.h",
+        "+++ b/locale/localeinfo.h",
+        "--- a/locale/uselocale.c",
+        "+++ b/locale/uselocale.c",
+        "--- a/locale/xlocale.c",
+        "+++ b/locale/xlocale.c",
+        "--- a/localedata/Makefile",
+        "+++ b/localedata/Makefile",
+        "--- a/localedata/locales/bg_BG",
+        "+++ b/localedata/locales/bg_BG",
+        "--- /dev/null",
+        "+++ b/localedata/tst-bz12701-lc.c",
+        "--- /dev/null",
+        "+++ b/localedata/tst-bz12701-lc2.c",
+        "--- a/malloc/malloc.c",
+        "+++ b/malloc/malloc.c",
+        "--- a/malloc/tst-malloc-too-large.c",
+        "+++ b/malloc/tst-malloc-too-large.c",
+        "--- a/math/auto-libm-test-in",
+        "+++ b/math/auto-libm-test-in",
+        "--- a/math/auto-libm-test-out-log10p1",
+        "+++ b/math/auto-libm-test-out-log10p1",
+        "--- a/math/auto-libm-test-out-sinh",
+        "+++ b/math/auto-libm-test-out-sinh",
+        "--- a/math/auto-libm-test-out-tan",
+        "+++ b/math/auto-libm-test-out-tan",
+        "--- a/math/bits/mathcalls-macros.h",
+        "+++ b/math/bits/mathcalls-macros.h",
+        "--- a/misc/tst-preadvwritev2-common.c",
+        "+++ b/misc/tst-preadvwritev2-common.c",
+        "--- a/nptl/Makefile",
+        "+++ b/nptl/Makefile",
+        "--- a/nptl/cancellation.c",
+        "+++ b/nptl/cancellation.c",
+        "--- a/nptl/pthread_cancel.c",
+        "+++ b/nptl/pthread_cancel.c",
+        "--- a/nptl/pthread_getattr_np.c",
+        "+++ b/nptl/pthread_getattr_np.c",
+        "--- a/nptl/pthread_mutex_trylock.c",
+        "+++ b/nptl/pthread_mutex_trylock.c",
+        "--- a/nss/Makefile",
+        "+++ b/nss/Makefile",
+        "--- a/nss/getXXbyYY_r.c",
+        "+++ b/nss/getXXbyYY_r.c",
+        "--- a/nss/nss_database.c",
+        "+++ b/nss/nss_database.c",
+        "--- a/nss/nss_database.h",
+        "+++ b/nss/nss_database.h",
+        "--- /dev/null",
+        "+++ b/nss/tst-nss-malloc-failure-getlogin_r.c",
+        "--- a/posix/Makefile",
+        "+++ b/posix/Makefile",
+        "--- a/posix/environ.c",
+        "+++ b/posix/environ.c",
+        "--- a/posix/fork.c",
+        "+++ b/posix/fork.c",
+        "--- a/posix/regcomp.c",
+        "+++ b/posix/regcomp.c",
+        "--- /dev/null",
+        "+++ b/posix/tst-regcomp-bracket-free.c",
+        "--- /dev/null",
+        "+++ b/posix/tst-wordexp-reuse.c",
+        "--- a/posix/wordexp.c",
+        "+++ b/posix/wordexp.c",
+        "--- a/resolv/Makefile",
+        "+++ b/resolv/Makefile",
+        "--- a/resolv/nss_dns/dns-host.c",
+        "+++ b/resolv/nss_dns/dns-host.c",
+        "--- a/resolv/nss_dns/dns-network.c",
+        "+++ b/resolv/nss_dns/dns-network.c",
+        "--- /dev/null",
+        "+++ b/resolv/tst-resolv-dns-section.c",
+        "--- /dev/null",
+        "+++ b/resolv/tst-resolv-invalid-ptr.c",
+        "--- a/resolv/tst-resolv-network.c",
+        "+++ b/resolv/tst-resolv-network.c",
+        "--- a/stdio-common/Makefile",
+        "+++ b/stdio-common/Makefile",
+        "--- a/stdio-common/printf-parsemb.c",
+        "+++ b/stdio-common/printf-parsemb.c",
+        "--- /dev/null",
+        "+++ b/stdio-common/tst-bz12701-c.c",
+        "--- /dev/null",
+        "+++ b/stdio-common/tst-bz12701-c2.c",
+        "--- /dev/null",
+        "+++ b/stdio-common/tst-vfscanf-bz34008.c",
+        "--- a/stdio-common/vfscanf-internal.c",
+        "+++ b/stdio-common/vfscanf-internal.c",
+        "--- a/stdlib/Makefile",
+        "+++ b/stdlib/Makefile",
+        "--- a/stdlib/abort.c",
+        "+++ b/stdlib/abort.c",
+        "--- a/stdlib/getenv.c",
+        "+++ b/stdlib/getenv.c",
+        "--- /dev/null",
+        "+++ b/stdlib/tst-getenv-static.c",
+        "--- a/stdlib/tst-secure-getenv.c",
+        "+++ b/stdlib/tst-secure-getenv.c",
+        "--- a/string/strerror.c",
+        "+++ b/string/strerror.c",
+        "--- a/sunrpc/rpc_thread.c",
+        "+++ b/sunrpc/rpc_thread.c",
+        "--- a/support/Makefile",
+        "+++ b/support/Makefile",
+        "--- a/support/capture_subprocess.h",
+        "+++ b/support/capture_subprocess.h",
+        "--- a/support/resolv_test.c",
+        "+++ b/support/resolv_test.c",
+        "--- a/support/support_capture_subprocess.c",
+        "+++ b/support/support_capture_subprocess.c",
+        "--- a/support/test-container.c",
+        "+++ b/support/test-container.c",
+        "--- /dev/null",
+        "+++ b/support/xfmemopen.c",
+        "--- a/support/xstdio.h",
+        "+++ b/support/xstdio.h",
+        "--- a/sysdeps/aarch64/Makefile",
+        "+++ b/sysdeps/aarch64/Makefile",
+        "--- a/sysdeps/aarch64/__longjmp.S",
+        "+++ b/sysdeps/aarch64/__longjmp.S",
+        "--- a/sysdeps/aarch64/fpu/acos_advsimd.c",
+        "+++ b/sysdeps/aarch64/fpu/acos_advsimd.c",
+        "--- a/sysdeps/aarch64/fpu/acos_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/acos_sve.c",
+        "--- a/sysdeps/aarch64/fpu/acosh_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/acosh_sve.c",
+        "--- a/sysdeps/aarch64/fpu/asin_advsimd.c",
+        "+++ b/sysdeps/aarch64/fpu/asin_advsimd.c",
+        "--- a/sysdeps/aarch64/fpu/asin_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/asin_sve.c",
+        "--- a/sysdeps/aarch64/fpu/asinf_advsimd.c",
+        "+++ b/sysdeps/aarch64/fpu/asinf_advsimd.c",
+        "--- a/sysdeps/aarch64/fpu/asinh_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/asinh_sve.c",
+        "--- a/sysdeps/aarch64/fpu/atan2_advsimd.c",
+        "+++ b/sysdeps/aarch64/fpu/atan2_advsimd.c",
+        "--- a/sysdeps/aarch64/fpu/atan2_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/atan2_sve.c",
+        "--- a/sysdeps/aarch64/fpu/atan2f_advsimd.c",
+        "+++ b/sysdeps/aarch64/fpu/atan2f_advsimd.c",
+        "--- a/sysdeps/aarch64/fpu/atan2f_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/atan2f_sve.c",
+        "--- a/sysdeps/aarch64/fpu/atan_advsimd.c",
+        "+++ b/sysdeps/aarch64/fpu/atan_advsimd.c",
+        "--- a/sysdeps/aarch64/fpu/atan_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/atan_sve.c",
+        "--- a/sysdeps/aarch64/fpu/atanf_advsimd.c",
+        "+++ b/sysdeps/aarch64/fpu/atanf_advsimd.c",
+        "--- a/sysdeps/aarch64/fpu/atanf_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/atanf_sve.c",
+        "--- a/sysdeps/aarch64/fpu/atanh_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/atanh_sve.c",
+        "--- a/sysdeps/aarch64/fpu/cosh_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/cosh_sve.c",
+        "--- a/sysdeps/aarch64/fpu/coshf_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/coshf_sve.c",
+        "--- a/sysdeps/aarch64/fpu/erfcf_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/erfcf_sve.c",
+        "--- a/sysdeps/aarch64/fpu/exp10_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/exp10_sve.c",
+        "--- a/sysdeps/aarch64/fpu/exp10f_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/exp10f_sve.c",
+        "--- a/sysdeps/aarch64/fpu/exp2_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/exp2_sve.c",
+        "--- a/sysdeps/aarch64/fpu/exp2f_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/exp2f_sve.c",
+        "--- a/sysdeps/aarch64/fpu/exp_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/exp_sve.c",
+        "--- a/sysdeps/aarch64/fpu/expf_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/expf_sve.c",
+        "--- a/sysdeps/aarch64/fpu/expm1_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/expm1_sve.c",
+        "--- a/sysdeps/aarch64/fpu/log1p_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/log1p_sve.c",
+        "--- a/sysdeps/aarch64/fpu/pow_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/pow_sve.c",
+        "--- a/sysdeps/aarch64/fpu/powf_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/powf_sve.c",
+        "--- a/sysdeps/aarch64/fpu/sinh_advsimd.c",
+        "+++ b/sysdeps/aarch64/fpu/sinh_advsimd.c",
+        "--- a/sysdeps/aarch64/fpu/sinh_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/sinh_sve.c",
+        "--- a/sysdeps/aarch64/fpu/sv_expf_inline.h",
+        "+++ b/sysdeps/aarch64/fpu/sv_expf_inline.h",
+        "--- a/sysdeps/aarch64/fpu/sv_log1p_inline.h",
+        "+++ b/sysdeps/aarch64/fpu/sv_log1p_inline.h",
+        "--- a/sysdeps/aarch64/fpu/sv_math.h",
+        "+++ b/sysdeps/aarch64/fpu/sv_math.h",
+        "--- a/sysdeps/aarch64/fpu/tan_advsimd.c",
+        "+++ b/sysdeps/aarch64/fpu/tan_advsimd.c",
+        "--- a/sysdeps/aarch64/fpu/tanh_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/tanh_sve.c",
+        "--- a/sysdeps/aarch64/fpu/tanpi_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/tanpi_sve.c",
+        "--- a/sysdeps/aarch64/fpu/tanpif_sve.c",
+        "+++ b/sysdeps/aarch64/fpu/tanpif_sve.c",
+        "--- a/sysdeps/aarch64/multiarch/Makefile",
+        "+++ b/sysdeps/aarch64/multiarch/Makefile",
+        "--- a/sysdeps/aarch64/multiarch/ifunc-impl-list.c",
+        "+++ b/sysdeps/aarch64/multiarch/ifunc-impl-list.c",
+        "--- a/sysdeps/aarch64/multiarch/memset.c",
+        "+++ b/sysdeps/aarch64/multiarch/memset.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/aarch64/multiarch/memset_sve_zva64.S",
+        "--- a/sysdeps/aarch64/preconfigure",
+        "+++ b/sysdeps/aarch64/preconfigure",
+        "--- a/sysdeps/aarch64/setjmp.S",
+        "+++ b/sysdeps/aarch64/setjmp.S",
+        "--- /dev/null",
+        "+++ b/sysdeps/aarch64/tst-sme-clone.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/aarch64/tst-sme-clone3.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/aarch64/tst-sme-fork.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/aarch64/tst-sme-helper.h",
+        "--- a/sysdeps/aarch64/tst-sme-jmp.c",
+        "+++ b/sysdeps/aarch64/tst-sme-jmp.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/aarch64/tst-sme-signal.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/aarch64/tst-sme-skeleton.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/aarch64/tst-sme-vfork.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/aarch64/tst-sme-za-state.c",
+        "--- a/sysdeps/arm/find_exidx.c",
+        "+++ b/sysdeps/arm/find_exidx.c",
+        "--- a/sysdeps/generic/ldsodefs.h",
+        "+++ b/sysdeps/generic/ldsodefs.h",
+        "--- a/sysdeps/generic/libc-tsd.h",
+        "+++ /dev/null",
+        "--- a/sysdeps/i386/Makefile",
+        "+++ b/sysdeps/i386/Makefile",
+        "--- a/sysdeps/i386/Versions",
+        "+++ b/sysdeps/i386/Versions",
+        "--- /dev/null",
+        "+++ b/sysdeps/i386/dl-tls-get-addr.c",
+        "--- a/sysdeps/i386/dl-tls.h",
+        "+++ b/sysdeps/i386/dl-tls.h",
+        "--- a/sysdeps/i386/dl-tlsdesc-dynamic.h",
+        "+++ b/sysdeps/i386/dl-tlsdesc-dynamic.h",
+        "--- a/sysdeps/i386/dl-tlsdesc.S",
+        "+++ b/sysdeps/i386/dl-tlsdesc.S",
+        "--- /dev/null",
+        "+++ b/sysdeps/i386/tls-get-addr-wrapper.h",
+        "--- /dev/null",
+        "+++ b/sysdeps/i386/tls_get_addr.S",
+        "--- /dev/null",
+        "+++ b/sysdeps/i386/tls_get_addr.h",
+        "--- a/sysdeps/ieee754/dbl-64/e_atanh.c",
+        "+++ b/sysdeps/ieee754/dbl-64/e_atanh.c",
+        "--- a/sysdeps/ieee754/dbl-64/e_sinh.c",
+        "+++ b/sysdeps/ieee754/dbl-64/e_sinh.c",
+        "--- a/sysdeps/ieee754/dbl-64/math_config.h",
+        "+++ b/sysdeps/ieee754/dbl-64/math_config.h",
+        "--- a/sysdeps/ieee754/dbl-64/s_fma.c",
+        "+++ b/sysdeps/ieee754/dbl-64/s_fma.c",
+        "--- a/sysdeps/ieee754/dbl-64/s_tanh.c",
+        "+++ b/sysdeps/ieee754/dbl-64/s_tanh.c",
+        "--- a/sysdeps/ieee754/flt-32/e_sinhf.c",
+        "+++ b/sysdeps/ieee754/flt-32/e_sinhf.c",
+        "--- a/sysdeps/ieee754/flt-32/s_log10p1f.c",
+        "+++ b/sysdeps/ieee754/flt-32/s_log10p1f.c",
+        "--- a/sysdeps/ieee754/flt-32/s_tanf.c",
+        "+++ b/sysdeps/ieee754/flt-32/s_tanf.c",
+        "--- a/sysdeps/loongarch/preconfigure",
+        "+++ b/sysdeps/loongarch/preconfigure",
+        "--- a/sysdeps/loongarch/preconfigure.ac",
+        "+++ b/sysdeps/loongarch/preconfigure.ac",
+        "--- a/sysdeps/mach/hurd/dl-execstack.c",
+        "+++ b/sysdeps/mach/hurd/dl-execstack.c",
+        "--- a/sysdeps/nptl/bits/thread-shared-types.h",
+        "+++ b/sysdeps/nptl/bits/thread-shared-types.h",
+        "--- a/sysdeps/nptl/dl-tls_init_tp.c",
+        "+++ b/sysdeps/nptl/dl-tls_init_tp.c",
+        "--- a/sysdeps/nptl/pthread.h",
+        "+++ b/sysdeps/nptl/pthread.h",
+        "--- a/sysdeps/powerpc/Makefile",
+        "+++ b/sysdeps/powerpc/Makefile",
+        "--- a/sysdeps/powerpc/powerpc64/le/power10/memchr.S",
+        "+++ /dev/null",
+        "--- a/sysdeps/powerpc/powerpc64/le/power10/strcmp.S",
+        "+++ b/sysdeps/powerpc/powerpc64/le/power10/strcmp.S",
+        "--- a/sysdeps/powerpc/powerpc64/le/power10/strlen.S",
+        "+++ b/sysdeps/powerpc/powerpc64/le/power10/strlen.S",
+        "--- a/sysdeps/powerpc/powerpc64/le/power10/strncmp.S",
+        "+++ b/sysdeps/powerpc/powerpc64/le/power10/strncmp.S",
+        "--- a/sysdeps/powerpc/powerpc64/multiarch/Makefile",
+        "+++ b/sysdeps/powerpc/powerpc64/multiarch/Makefile",
+        "--- a/sysdeps/powerpc/powerpc64/multiarch/ifunc-impl-list.c",
+        "+++ b/sysdeps/powerpc/powerpc64/multiarch/ifunc-impl-list.c",
+        "--- a/sysdeps/powerpc/powerpc64/multiarch/memchr-power10.S",
+        "+++ /dev/null",
+        "--- a/sysdeps/powerpc/powerpc64/multiarch/memchr.c",
+        "+++ b/sysdeps/powerpc/powerpc64/multiarch/memchr.c",
+        "--- a/sysdeps/powerpc/powerpc64/multiarch/strcmp-power10.S",
+        "+++ b/sysdeps/powerpc/powerpc64/multiarch/strcmp-power10.S",
+        "--- a/sysdeps/powerpc/powerpc64/multiarch/strncmp-power10.S",
+        "+++ b/sysdeps/powerpc/powerpc64/multiarch/strncmp-power10.S",
+        "--- a/sysdeps/pthread/Makefile",
+        "+++ b/sysdeps/pthread/Makefile",
+        "--- /dev/null",
+        "+++ b/sysdeps/pthread/tst-cancel32.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/pthread/tst-stack2-mod.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/pthread/tst-stack2.c",
+        "--- a/sysdeps/riscv/dl-machine.h",
+        "+++ b/sysdeps/riscv/dl-machine.h",
+        "--- a/sysdeps/sparc/sparc32/start.S",
+        "+++ b/sysdeps/sparc/sparc32/start.S",
+        "--- a/sysdeps/sparc/sparc64/start.S",
+        "+++ b/sysdeps/sparc/sparc64/start.S",
+        "--- a/sysdeps/unix/sysv/linux/Makefile",
+        "+++ b/sysdeps/unix/sysv/linux/Makefile",
+        "--- a/sysdeps/unix/sysv/linux/aarch64/Makefile",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/Makefile",
+        "--- a/sysdeps/unix/sysv/linux/aarch64/clone.S",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/clone.S",
+        "--- a/sysdeps/unix/sysv/linux/aarch64/clone3.S",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/clone3.S",
+        "--- a/sysdeps/unix/sysv/linux/aarch64/cpu-features.c",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/cpu-features.c",
+        "--- a/sysdeps/unix/sysv/linux/aarch64/setcontext.S",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/setcontext.S",
+        "--- a/sysdeps/unix/sysv/linux/aarch64/sysdep.h",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/sysdep.h",
+        "--- a/sysdeps/unix/sysv/linux/aarch64/tst-aarch64-pkey.c",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-aarch64-pkey.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-abort.sh",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-disabled-static.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-disabled.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-dlopen-disabled.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-dlopen-enforced.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-dlopen-optional-off.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-dlopen-optional-on.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-dlopen-override.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-dlopen.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-enforced-abort.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-enforced-static-abort.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-enforced-static.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-enforced.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-helper.h",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-mod1.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-mod2.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-mod3.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-noreturn.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-optional-off.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-optional-on.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-optional-static-off.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-optional-static-on.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-override-static.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-override.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-shared-disabled.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-shared-enforced-abort.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-shared-optional.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-shared-override.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-shared.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/tst-gcs-skeleton.c",
+        "--- a/sysdeps/unix/sysv/linux/aarch64/vfork.S",
+        "+++ b/sysdeps/unix/sysv/linux/aarch64/vfork.S",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/alpha/bits/cloexec.h",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/bits/cloexec.h",
+        "--- a/sysdeps/unix/sysv/linux/bits/fcntl-linux.h",
+        "+++ b/sysdeps/unix/sysv/linux/bits/fcntl-linux.h",
+        "--- a/sysdeps/unix/sysv/linux/bits/sched.h",
+        "+++ b/sysdeps/unix/sysv/linux/bits/sched.h",
+        "--- a/sysdeps/unix/sysv/linux/dl-execstack.c",
+        "+++ b/sysdeps/unix/sysv/linux/dl-execstack.c",
+        "--- a/sysdeps/unix/sysv/linux/getlogin_r.c",
+        "+++ b/sysdeps/unix/sysv/linux/getlogin_r.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/hppa/bits/cloexec.h",
+        "--- a/sysdeps/unix/sysv/linux/rseq-internal.h",
+        "+++ b/sysdeps/unix/sysv/linux/rseq-internal.h",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/sparc/bits/cloexec.h",
+        "--- a/sysdeps/unix/sysv/linux/sys/mount.h",
+        "+++ b/sysdeps/unix/sysv/linux/sys/mount.h",
+        "--- a/sysdeps/unix/sysv/linux/tst-mount.c",
+        "+++ b/sysdeps/unix/sysv/linux/tst-mount.c",
+        "--- a/sysdeps/unix/sysv/linux/tst-rseq.c",
+        "+++ b/sysdeps/unix/sysv/linux/tst-rseq.c",
+        "--- a/sysdeps/x86/Makefile",
+        "+++ b/sysdeps/x86/Makefile",
+        "--- a/sysdeps/x86/Versions",
+        "+++ b/sysdeps/x86/Versions",
+        "--- a/sysdeps/x86/bits/floatn.h",
+        "+++ b/sysdeps/x86/bits/floatn.h",
+        "--- a/sysdeps/x86/cpu-features.c",
+        "+++ b/sysdeps/x86/cpu-features.c",
+        "--- a/sysdeps/x86/cpu-tunables.c",
+        "+++ b/sysdeps/x86/cpu-tunables.c",
+        "--- a/sysdeps/x86/dl-diagnostics-cpu.c",
+        "+++ b/sysdeps/x86/dl-diagnostics-cpu.c",
+        "--- a/sysdeps/x86/include/cpu-features.h",
+        "+++ b/sysdeps/x86/include/cpu-features.h",
+        "--- a/sysdeps/x86/sysdep.h",
+        "+++ b/sysdeps/x86/sysdep.h",
+        "--- /dev/null",
+        "+++ b/sysdeps/x86/tst-gnu2-tls2-x86-noxsave.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/x86/tst-gnu2-tls2-x86-noxsavec.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/x86/tst-gnu2-tls2-x86-noxsavexsavec.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/x86/tst-tls23.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/x86/tst-tls23.h",
+        "--- a/sysdeps/x86_64/Makefile",
+        "+++ b/sysdeps/x86_64/Makefile",
+        "--- a/sysdeps/x86_64/Versions",
+        "+++ b/sysdeps/x86_64/Versions",
+        "--- a/sysdeps/x86_64/dl-tlsdesc-dynamic.h",
+        "+++ b/sysdeps/x86_64/dl-tlsdesc-dynamic.h",
+        "--- a/sysdeps/x86_64/dl-tlsdesc.S",
+        "+++ b/sysdeps/x86_64/dl-tlsdesc.S",
+        "--- a/sysdeps/x86_64/dl-trampoline-save.h",
+        "+++ /dev/null",
+        "--- a/sysdeps/x86_64/dl-trampoline.S",
+        "+++ b/sysdeps/x86_64/dl-trampoline.S",
+        "--- a/sysdeps/x86_64/fpu/multiarch/Makefile",
+        "+++ b/sysdeps/x86_64/fpu/multiarch/Makefile",
+        "--- /dev/null",
+        "+++ b/sysdeps/x86_64/fpu/multiarch/e_atanh-fma.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/x86_64/fpu/multiarch/e_atanh.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/x86_64/fpu/multiarch/e_sinh-fma.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/x86_64/fpu/multiarch/e_sinh.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/x86_64/fpu/multiarch/s_tanh-fma.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/x86_64/fpu/multiarch/s_tanh.c",
+        "--- a/sysdeps/x86_64/multiarch/ifunc-impl-list.c",
+        "+++ b/sysdeps/x86_64/multiarch/ifunc-impl-list.c",
+        "--- a/sysdeps/x86_64/multiarch/ifunc-wmemset.h",
+        "+++ b/sysdeps/x86_64/multiarch/ifunc-wmemset.h",
+        "--- a/sysdeps/x86_64/tst-auditmod10b.c",
+        "+++ b/sysdeps/x86_64/tst-auditmod10b.c",
+        "--- a/time/strftime_l.c",
+        "+++ b/time/strftime_l.c"
+      ],
+      "relevant": true
+    },
+    {
+      "member": "debian/patches/locale/check-unknown-symbols.diff",
+      "bytes": 1136,
+      "sha256": "1e012e5e754684ace8d1906e350598a68e481bf04bae23721d114ea37f9a5860",
+      "headers": [
+        "--- a/locale/programs/ld-collate.c",
+        "+++ b/locale/programs/ld-collate.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/locale/locale-print-LANGUAGE.diff",
+      "bytes": 1131,
+      "sha256": "7380447b8f845724bb7aa66e6a5b30098e3aecad6d1c748d0391218891ecf033",
+      "headers": [
+        "--- a/locale/programs/locale.c",
+        "+++ b/locale/programs/locale.c",
+        "--- a/locale/tst-locale-locpath.sh",
+        "+++ b/locale/tst-locale-locpath.sh"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/locale/LC_IDENTIFICATION-optional-fields.diff",
+      "bytes": 1052,
+      "sha256": "0d34232f355bcef85e0dbb2cd989b05b256338512b7d4f9955b3da2cd2143c1e",
+      "headers": [
+        "--- a/locale/programs/ld-identification.c",
+        "+++ b/locale/programs/ld-identification.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/localedata/sort-UTF8-first.diff",
+      "bytes": 1546,
+      "sha256": "03f3214e4b1df6d7cd05a40881f7ab7c0843b125ccc3f455169e41a634911f5c",
+      "headers": [
+        "--- a/localedata/SUPPORTED",
+        "+++ b/localedata/SUPPORTED"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/localedata/supported.diff",
+      "bytes": 1482,
+      "sha256": "f10d7153e7f2e91c6a078fd690e466250c60cb9b54f7967aa8ec70d4697cb91e",
+      "headers": [
+        "--- a/localedata/SUPPORTED",
+        "+++ b/localedata/SUPPORTED"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/localedata/locale-eu_FR.diff",
+      "bytes": 3832,
+      "sha256": "ffb46b48511ee84cf343682f7bdadd1c19e278520c156fece975fd4064292fb3",
+      "headers": [
+        "--- /dev/null",
+        "+++ b/localedata/locales/eu_FR",
+        "--- a/localedata/SUPPORTED",
+        "+++ b/localedata/SUPPORTED",
+        "--- /dev/null",
+        "+++ b/localedata/locales/eu_FR@euro"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/localedata/locale-ku_TR.diff",
+      "bytes": 2751,
+      "sha256": "f509f475f69f08a785440e40a0c112bb1d13f34631496883456d377c2f031784",
+      "headers": [
+        "--- a/localedata/locales/ku_TR",
+        "+++ b/localedata/locales/ku_TR"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/localedata/fo_FO-date_fmt.diff",
+      "bytes": 726,
+      "sha256": "4f7c6c5644fe6669563584b770406005cac0d8edd7e8212242492fb1a0c05c96",
+      "headers": [
+        "--- a/localedata/locales/fo_FO",
+        "+++ b/localedata/locales/fo_FO"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/localedata/locales-fr.diff",
+      "bytes": 2049,
+      "sha256": "6553fa58f80b7f9202d8b32b32ca477e31c8dbda724235c13e28d84820d7c58e",
+      "headers": [
+        "--- a/localedata/locales/fr_BE",
+        "+++ b/localedata/locales/fr_BE",
+        "--- a/localedata/locales/fr_CH",
+        "+++ b/localedata/locales/fr_CH",
+        "--- a/localedata/locales/fr_FR",
+        "+++ b/localedata/locales/fr_FR",
+        "--- a/localedata/locales/fr_LU",
+        "+++ b/localedata/locales/fr_LU"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/localedata/locale-en_DK.diff",
+      "bytes": 1525,
+      "sha256": "60886407b1a099a1944bee532ae7fa5e021bc6accaaee2e19c5806e79b03bcd9",
+      "headers": [
+        "--- a/localedata/SUPPORTED",
+        "+++ b/localedata/SUPPORTED",
+        "--- a/localedata/locales/en_DK",
+        "+++ b/localedata/locales/en_DK"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/localedata/locale-zh_TW.diff",
+      "bytes": 547,
+      "sha256": "da2a0d947d065fbfeb39f5ba69482e6fffb5340ba52d101a84dec4e2c2ba365a",
+      "headers": [
+        "--- a/localedata/locales/zh_TW",
+        "+++ b/localedata/locales/zh_TW"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/localedata/tailor-iso14651_t1.diff",
+      "bytes": 85111,
+      "sha256": "6d0cd73fc196be181b8605f3db9417da3fd371d86f70365052c89ffafe5d6162",
+      "headers": [
+        "--- a/localedata/locales/ar_SA",
+        "+++ b/localedata/locales/ar_SA",
+        "--- a/localedata/locales/sl_SI",
+        "+++ b/localedata/locales/sl_SI"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/localedata/submitted-es_MX-decimal_point.diff",
+      "bytes": 498,
+      "sha256": "b16bf4fb56c3c8a48317a3e926bb742c94a52e38f02c516d61dda2c2bba3c455",
+      "headers": [
+        "--- a/localedata/locales/es_MX",
+        "+++ b/localedata/locales/es_MX"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/alpha/local-gcc4.1.diff",
+      "bytes": 1831,
+      "sha256": "9f2bb61ef79d39ebd75e2988541c5e0e7cdd52e2c8d0caa913e8ef457f9a4fed",
+      "headers": [
+        "--- a/sysdeps/unix/sysv/linux/alpha/ioperm.c",
+        "+++ b/sysdeps/unix/sysv/linux/alpha/ioperm.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/alpha/submitted-dl-support.diff",
+      "bytes": 629,
+      "sha256": "e1f29d99b180314d205c04995ea9e66762307f549df579f9caa2040f8332952d",
+      "headers": [
+        "--- a/sysdeps/unix/sysv/linux/alpha/dl-support.c",
+        "+++ /dev/null"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/alpha/submitted-fts64.diff",
+      "bytes": 341,
+      "sha256": "fd5c7265ab941829881ee57a1e3b3ac26d55f5478430cd2a8f14bc6f8ee36998",
+      "headers": [
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/alpha/fts.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/alpha/fts64.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/alpha/submitted-makecontext.diff",
+      "bytes": 675,
+      "sha256": "850621247bac6c82a88d85b71b426accd277bda5b57c2c19708eca6a8e499f28",
+      "headers": [
+        "--- a/sysdeps/unix/sysv/linux/alpha/makecontext.S",
+        "+++ b/sysdeps/unix/sysv/linux/alpha/makecontext.S"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/arm/local-sigaction.diff",
+      "bytes": 855,
+      "sha256": "3927c011f6971adf4f164cd5522976e3078d0efa3cfcf5c90cb930fb798701c6",
+      "headers": [
+        "--- a/sysdeps/unix/sysv/linux/arm/libc_sigaction.c",
+        "+++ b/sysdeps/unix/sysv/linux/arm/libc_sigaction.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/arm/unsubmitted-ldso-multilib.diff",
+      "bytes": 602,
+      "sha256": "af842dd5fc858cefbcbeb7371c49d149f3f76d845cfc891a8905839100d3eae4",
+      "headers": [
+        "--- a/elf/dl-load.c",
+        "+++ b/elf/dl-load.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/arm/local-arm-futex.diff",
+      "bytes": 1035,
+      "sha256": "627c5938baf5ccb990525e2ba2ee71de3db63a70fa1bc04000b5cbda439f710c",
+      "headers": [
+        "--- glibc-2.21.orig/sysdeps/unix/sysv/linux/arm/kernel-features.h",
+        "+++ glibc-2.21/sysdeps/unix/sysv/linux/arm/kernel-features.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/git-proc_reauth.diff",
+      "bytes": 3604,
+      "sha256": "df5219e5cd401981ac9d12b699b78674b78bb91264944302915cb2b5005b3602",
+      "headers": [
+        "--- glibc-2.31.orig/hurd/hurdsig.c",
+        "+++ glibc-2.31/hurd/hurdsig.c",
+        "--- glibc-2.31.orig/sysdeps/mach/hurd/spawni.c",
+        "+++ glibc-2.31/sysdeps/mach/hurd/spawni.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/git-mig-strncpy.diff",
+      "bytes": 799,
+      "sha256": "25b2360fbc2aec689b4b8f304979c1848ffddc4520da2821420a95a1a2f0fe1b",
+      "headers": [
+        "--- a/mach/mig_strncpy.c",
+        "+++ b/mach/mig_strncpy.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/git-pthread_sigmask_nothread.diff",
+      "bytes": 665,
+      "sha256": "9272f6a75e7d4c9d5f61c8f02fd97266cf3956117d219e20ea1136f398fdcb30",
+      "headers": [
+        "--- glibc-upstream.orig/sysdeps/mach/hurd/htl/pt-sigstate.c",
+        "+++ glibc-upstream/sysdeps/mach/hurd/htl/pt-sigstate.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/git-rt-timedwait-realtime.diff",
+      "bytes": 1711,
+      "sha256": "b1ace84214bcdb73879bf2a080410599a98e8aa552f109854c80504eb1108a2f",
+      "headers": [
+        "--- a/rt/aio_suspend.c",
+        "+++ b/rt/aio_suspend.c",
+        "--- a/sysdeps/nptl/aio_misc.h",
+        "+++ b/sysdeps/nptl/aio_misc.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/git-pthread_setcancel.diff",
+      "bytes": 2306,
+      "sha256": "4f36183745ccf463c199f0a760637a6387b548800854ccca2176d2980e8de1c4",
+      "headers": [
+        "--- a/htl/pt-setcancelstate.c",
+        "+++ b/htl/pt-setcancelstate.c",
+        "--- a/htl/pt-setcanceltype.c",
+        "+++ b/htl/pt-setcanceltype.c",
+        "--- a/sysdeps/htl/pthreadP.h",
+        "+++ b/sysdeps/htl/pthreadP.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/git-dup-refcnt.diff",
+      "bytes": 5032,
+      "sha256": "4a91e550eee1b5e40ceea28feba59f96cad24d8afb3765a9253a382ea3395b09",
+      "headers": [
+        "--- a/sysdeps/mach/hurd/dup3.c",
+        "+++ b/sysdeps/mach/hurd/dup3.c",
+        "--- a/sysdeps/mach/hurd/fcntl.c",
+        "+++ b/sysdeps/mach/hurd/fcntl.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/git-xstate.diff",
+      "bytes": 22661,
+      "sha256": "d7b77631fd22a91c01fcfc5e08de53393614ea0cb4cb2c9231292efbb4cc0f12",
+      "headers": [
+        "--- a/hurd/Makefile",
+        "+++ b/hurd/Makefile",
+        "--- /dev/null",
+        "+++ b/hurd/test-sig-rpc-interrupted.c",
+        "--- /dev/null",
+        "+++ b/hurd/test-sig-xstate.c",
+        "--- /dev/null",
+        "+++ b/hurd/test-xstate.h",
+        "--- a/sysdeps/mach/hurd/i386/bits/sigcontext.h",
+        "+++ b/sysdeps/mach/hurd/i386/bits/sigcontext.h",
+        "--- a/sysdeps/mach/hurd/i386/sigreturn.c",
+        "+++ b/sysdeps/mach/hurd/i386/sigreturn.c",
+        "--- a/sysdeps/mach/hurd/x86/trampoline.c",
+        "+++ b/sysdeps/mach/hurd/x86/trampoline.c",
+        "--- a/sysdeps/mach/hurd/x86_64/bits/sigcontext.h",
+        "+++ b/sysdeps/mach/hurd/x86_64/bits/sigcontext.h",
+        "--- a/sysdeps/mach/hurd/x86_64/sigreturn.c",
+        "+++ b/sysdeps/mach/hurd/x86_64/sigreturn.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/git-utime-EINVAL.diff",
+      "bytes": 6470,
+      "sha256": "0e3aa20cbfe3d83ffc433a039749994166a0d3900643f4bf6fc57055ce1e182a",
+      "headers": [
+        "--- a/sysdeps/mach/hurd/futimens.c",
+        "+++ b/sysdeps/mach/hurd/futimens.c",
+        "--- a/sysdeps/mach/hurd/futimes.c",
+        "+++ b/sysdeps/mach/hurd/futimes.c",
+        "--- a/sysdeps/mach/hurd/utime-helper.c",
+        "+++ b/sysdeps/mach/hurd/utime-helper.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/git-xstate-initialized.diff",
+      "bytes": 3730,
+      "sha256": "faf58f2224ec24a6c90d678f20aa6b410fe15e566629661d50ac0b5665c58491",
+      "headers": [
+        "--- a/sysdeps/mach/hurd/i386/sigreturn.c",
+        "+++ b/sysdeps/mach/hurd/i386/sigreturn.c",
+        "--- a/sysdeps/mach/hurd/x86_64/sigreturn.c",
+        "+++ b/sysdeps/mach/hurd/x86_64/sigreturn.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/git-signal-fpe-exceptions.diff",
+      "bytes": 1897,
+      "sha256": "982943f73a61ff3944b345151847a7e8c593ce97984ced014cc1cb067546df4f",
+      "headers": [
+        "--- glibc-2.41.orig/sysdeps/mach/hurd/x86/trampoline.c",
+        "+++ glibc-2.41/sysdeps/mach/hurd/x86/trampoline.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/git-symlink-eexist.diff",
+      "bytes": 859,
+      "sha256": "dd1bff2b5d8ccd2671cde1c6727d02c21331825d9c679433cd076899ff8516d5",
+      "headers": [
+        "--- a/sysdeps/mach/hurd/symlinkat.c",
+        "+++ b/sysdeps/mach/hurd/symlinkat.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/git-rename.diff",
+      "bytes": 1686,
+      "sha256": "9d38d74aff588caa3270479dc1f87db63cde0c225a2ece88862e37f086b6e8b9",
+      "headers": [
+        "--- a/sysdeps/mach/hurd/renameat2.c",
+        "+++ b/sysdeps/mach/hurd/renameat2.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/local-pthread_once.diff",
+      "bytes": 6571,
+      "sha256": "cb0e08c2d9730f5fcaba1bee5b8c6355ef36d77d825a14f1c36c27e12ad862d3",
+      "headers": [
+        "--- a/htl/Makefile",
+        "+++ b/htl/Makefile",
+        "--- a/htl/Versions",
+        "+++ b/htl/Versions",
+        "--- a/sysdeps/htl/libc-lockP.h",
+        "+++ b/sysdeps/htl/libc-lockP.h",
+        "--- a/sysdeps/htl/pt-once.c",
+        "+++ b/sysdeps/htl/pt-once.c",
+        "--- a/sysdeps/mach/hurd/i386/libc.abilist",
+        "+++ b/sysdeps/mach/hurd/i386/libc.abilist",
+        "--- a/sysdeps/mach/hurd/i386/libpthread.abilist",
+        "+++ b/sysdeps/mach/hurd/i386/libpthread.abilist",
+        "--- a/sysdeps/mach/hurd/x86_64/libc.abilist",
+        "+++ b/sysdeps/mach/hurd/x86_64/libc.abilist",
+        "--- a/sysdeps/mach/hurd/x86_64/libpthread.abilist",
+        "+++ b/sysdeps/mach/hurd/x86_64/libpthread.abilist"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/local-64b-align.diff",
+      "bytes": 1932,
+      "sha256": "76453cfc583c57e5c5f5e648bd186b45dff28265e80525421230d2959c961b71",
+      "headers": [
+        "--- glibc-2.41.orig/mach/Makefile",
+        "+++ glibc-2.41/mach/Makefile",
+        "--- glibc-2.41.orig/hurd/Makefile",
+        "+++ glibc-2.41/hurd/Makefile"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/local-enable-ldconfig.diff",
+      "bytes": 879,
+      "sha256": "b023aa6e9b45b2e95d01fd1a8feb2b13cf13a6509f27f06d7f653008f3920556",
+      "headers": [
+        "--- a/sysdeps/mach/hurd/configure",
+        "+++ b/sysdeps/mach/hurd/configure",
+        "--- a/sysdeps/mach/hurd/configure.ac",
+        "+++ b/sysdeps/mach/hurd/configure.ac"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/tg-sysvshm.diff",
+      "bytes": 21953,
+      "sha256": "160a37b38e8c2d5432d73e43adfc0125948c109bb8052053d0917bfcf17461e4",
+      "headers": [
+        "--- a/hurd/Makefile",
+        "+++ b/hurd/Makefile",
+        "--- /dev/null",
+        "+++ b/hurd/sysvshm.c",
+        "--- /dev/null",
+        "+++ b/hurd/sysvshm.h",
+        "--- /dev/null",
+        "+++ b/sysdeps/mach/hurd/ftok.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/mach/hurd/shmat.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/mach/hurd/shmctl.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/mach/hurd/shmdt.c",
+        "--- /dev/null",
+        "+++ b/sysdeps/mach/hurd/shmget.c",
+        "--- a/sysdeps/mach/hurd/bits/posix_opt.h",
+        "+++ b/sysdeps/mach/hurd/bits/posix_opt.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/tg-thread-cancel.diff",
+      "bytes": 2887,
+      "sha256": "864d1320e4c51e569bdf58e4b7747781e3559b9d392686cba901c00f158bf651",
+      "headers": [
+        "--- a/hurd/hurdexec.c",
+        "+++ b/hurd/hurdexec.c",
+        "--- a/hurd/thread-cancel.c",
+        "+++ b/hurd/thread-cancel.c",
+        "--- a/sysdeps/mach/hurd/jmp-unwind.c",
+        "+++ b/sysdeps/mach/hurd/jmp-unwind.c",
+        "--- a/sysdeps/mach/hurd/spawni.c",
+        "+++ b/sysdeps/mach/hurd/spawni.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/local-disable-ioctls.diff",
+      "bytes": 1115,
+      "sha256": "87ff956297b6b9dacb95897c4f9899c73e00c5928391f53b4fb0f85922f32e65",
+      "headers": [
+        "--- a/sysdeps/mach/hurd/bits/ioctls.h",
+        "+++ b/sysdeps/mach/hurd/bits/ioctls.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/tg-sendmsg-SCM_CREDS.diff",
+      "bytes": 7539,
+      "sha256": "a6f0801f305ddfcdd4aefadc3f19994d669c5681354200c8ce56a4b4179d10fc",
+      "headers": [
+        "--- a/sysdeps/mach/hurd/recvmsg.c",
+        "+++ b/sysdeps/mach/hurd/recvmsg.c",
+        "--- a/sysdeps/mach/hurd/sendmsg.c",
+        "+++ b/sysdeps/mach/hurd/sendmsg.c",
+        "--- a/hurd/Makefile",
+        "+++ b/hurd/Makefile"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/tg-mach-hurd-link.diff",
+      "bytes": 987,
+      "sha256": "58e3929cfb0dd3573e9bef0877a9d5480cedf451193bcfcb12adefff8193016b",
+      "headers": [
+        "--- a/Makerules",
+        "+++ b/Makerules"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/local-ED.diff",
+      "bytes": 1239,
+      "sha256": "f1a99a0f668ae4967f45257ddb3ddbf67fe9e825fbd95613175e35bc7210ae26",
+      "headers": [
+        "--- a/sysdeps/mach/hurd/bits/errno.h",
+        "+++ b/sysdeps/mach/hurd/bits/errno.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/local-madvise_warn.diff",
+      "bytes": 553,
+      "sha256": "b9b226e5aa805bc6a884055f41ae8e013ac74f6299ce10fa29686fe78414527c",
+      "headers": [
+        "--- a/misc/madvise.c",
+        "+++ b/misc/madvise.c",
+        "--- a/posix/posix_madvise.c",
+        "+++ b/posix/posix_madvise.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/local-usr.diff",
+      "bytes": 1177,
+      "sha256": "7ff001cfd98568907adb7be727c84dc1c71420d9aefe2d0ceb0efc13c7c9a35c",
+      "headers": [
+        "--- glibc-2.27.orig/sysdeps/mach/hurd/i386/libc.abilist",
+        "+++ glibc-2.27/sysdeps/mach/hurd/i386/libc.abilist",
+        "--- glibc-2.38/sysdeps/mach/hurd/x86_64/libc.abilist.original2\t2024-02-19 00:38:23.000000000 +0000",
+        "+++ glibc-2.38/sysdeps/mach/hurd/x86_64/libc.abilist\t2024-02-19 00:38:30.000000000 +0000"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/tg-ifaddrs_v6.diff",
+      "bytes": 10986,
+      "sha256": "ec0b3065898fbe48af62def4ed85ad1edf06ae53e989a4caeab16d9bc9b31290",
+      "headers": [
+        "--- /dev/null",
+        "+++ b/sysdeps/mach/hurd/ifaddrs.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/unsubmitted-clock_t_centiseconds.diff",
+      "bytes": 1820,
+      "sha256": "af3139bf83e29c1be1b34058f1c6965fb26ac22a059566ff546d6daca284fe1f",
+      "headers": [
+        "--- a/sysdeps/mach/hurd/getclktck.c",
+        "+++ b/sysdeps/mach/hurd/getclktck.c",
+        "--- a/sysdeps/mach/hurd/setitimer.c",
+        "+++ b/sysdeps/mach/hurd/setitimer.c",
+        "--- a/sysdeps/mach/hurd/times.c",
+        "+++ b/sysdeps/mach/hurd/times.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/submitted-path_mounted.diff",
+      "bytes": 1439,
+      "sha256": "bf1d4aa6f8abc7190f20fe048e45fe887a0c31e4c0dc7407adf823214a54c4a3",
+      "headers": [
+        "--- a/sysdeps/generic/paths.h",
+        "+++ b/sysdeps/generic/paths.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/submitted-bind_umask2.diff",
+      "bytes": 1626,
+      "sha256": "d4f6e790a8bf02d189d133fbaa03548a0cf72c720702e0f0ea97c8d2b5914ca3",
+      "headers": [
+        "--- a/sysdeps/mach/hurd/bind.c",
+        "+++ b/sysdeps/mach/hurd/bind.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/tg-bootstrap.diff",
+      "bytes": 775,
+      "sha256": "e17d0aa99e83a25772e6caf3e10f4dc55156905611b37733237d2fad8a89e0dc",
+      "headers": [
+        "--- a/sysdeps/mach/Makefile",
+        "+++ b/sysdeps/mach/Makefile"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/tg-libc_rwlock_recursive.diff",
+      "bytes": 3694,
+      "sha256": "d30527ddf52e46b6367a2c885fc4a92761d9abc8e6fed6842e792a1bb4017d7e",
+      "headers": [
+        "--- a/sysdeps/mach/libc-lock.h",
+        "+++ b/sysdeps/mach/libc-lock.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/local-no_unsupported_ioctls.diff",
+      "bytes": 2190,
+      "sha256": "0a711a3a2fe4859735cb895082c97f454b5946ac5fd35f4c4cd36f458dfb336e",
+      "headers": [
+        "--- a/sysdeps/mach/hurd/bits/ioctls.h",
+        "+++ b/sysdeps/mach/hurd/bits/ioctls.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/hurd-i386/local-stack_chk_guard.diff",
+      "bytes": 1434,
+      "sha256": "7f1bb2efbb7444247b9f8a6aaa4d2b2cd21ae29abe58adad6813106b52f2cadd",
+      "headers": [
+        "--- glibc-2.32.orig/sysdeps/mach/hurd/dl-sysdep.c",
+        "+++ glibc-2.32/sysdeps/mach/hurd/dl-sysdep.c",
+        "--- glibc-2.32.orig/sysdeps/mach/hurd/i386/ld.abilist",
+        "+++ glibc-2.32/sysdeps/mach/hurd/i386/ld.abilist",
+        "--- glibc-2.38/sysdeps/mach/hurd/x86_64/ld.abilist.original\t2024-02-19 00:30:47.000000000 +0000",
+        "+++ glibc-2.38/sysdeps/mach/hurd/x86_64/ld.abilist\t2024-02-19 08:48:42.000000000 +0000"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/i386/local-biarch.diff",
+      "bytes": 507,
+      "sha256": "e04e9f90c9521a562706b0ae14f6fcaf683bec3418949d8c2cf81b5745813259",
+      "headers": [
+        "--- /dev/null",
+        "+++ b/sysdeps/unix/sysv/linux/i386/dl-cache.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/i386/unsubmitted-quiet-ldconfig.diff",
+      "bytes": 383,
+      "sha256": "4499f8d53dbd7317b4edc1dfd98f31389f60c09e54c70a77baa544987a339032",
+      "headers": [
+        "--- a/sysdeps/x86/readelflib.c",
+        "+++ b/sysdeps/x86/readelflib.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/i386/local-setcontext-revert-eax-ecx-edx.patch",
+      "bytes": 3142,
+      "sha256": "a19bc16a1d8bfb0da5f2819a83b7bb04fdbf1db8487eddcdbfe3ffab4a82b295",
+      "headers": [
+        "--- a/sysdeps/unix/sysv/linux/i386/getcontext.S",
+        "+++ b/sysdeps/unix/sysv/linux/i386/getcontext.S",
+        "--- a/sysdeps/unix/sysv/linux/i386/setcontext.S",
+        "+++ b/sysdeps/unix/sysv/linux/i386/setcontext.S",
+        "--- a/sysdeps/unix/sysv/linux/i386/swapcontext.S",
+        "+++ b/sysdeps/unix/sysv/linux/i386/swapcontext.S",
+        "--- a/sysdeps/unix/sysv/linux/i386/ucontext_i.sym",
+        "+++ b/sysdeps/unix/sysv/linux/i386/ucontext_i.sym"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/m68k/local-reloc.diff",
+      "bytes": 806,
+      "sha256": "286055e52c8b7bd5677e99c1fdde1fe639f5e4dbca0f22cb707f053366c770df",
+      "headers": [
+        "--- a/sysdeps/m68k/dl-machine.h",
+        "+++ b/sysdeps/m68k/dl-machine.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/mips/submitted-rld_map.diff",
+      "bytes": 674,
+      "sha256": "1ee338abf51f73f455040cb6d94d39bb77b456bcae7bf7a7279a41bcc79ddd9d",
+      "headers": [
+        "--- a/sysdeps/mips/dl-debug.h",
+        "+++ b/sysdeps/mips/dl-debug.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/powerpc/local-powerpc8xx-dcbz.diff",
+      "bytes": 915,
+      "sha256": "c8f2edfc4fe17f0abf22290c0879a8d1b55f9b66bc9b82e7cd04869d7b6c16a3",
+      "headers": [
+        "--- a/sysdeps/unix/sysv/linux/powerpc/dl-auxv.h",
+        "+++ b/sysdeps/unix/sysv/linux/powerpc/dl-auxv.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/sh4/local-fpscr_values.diff",
+      "bytes": 964,
+      "sha256": "27454c3a56b3a1d115cfac1185e1e37d66976d1060cc54270b4ac6680d275ecd",
+      "headers": [
+        "--- a/sysdeps/unix/sysv/linux/sh/sysdep.S",
+        "+++ b/sysdeps/unix/sysv/linux/sh/sysdep.S",
+        "--- a/sysdeps/unix/sysv/linux/sh/Versions",
+        "+++ b/sysdeps/unix/sysv/linux/sh/Versions",
+        "--- a/sysdeps/unix/sysv/linux/sh/le/libc.abilist",
+        "+++ b/sysdeps/unix/sysv/linux/sh/le/libc.abilist"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/all/local-alias-et_EE.diff",
+      "bytes": 420,
+      "sha256": "dcd995608e0ac2fc2f72d86b96ec044898ce4430eca77b4e86b98331fc3b8ff1",
+      "headers": [
+        "--- a/intl/locale.alias",
+        "+++ b/intl/locale.alias"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/all/local-remove-manual.diff",
+      "bytes": 8078,
+      "sha256": "f4cac3b4b80413d5a981d93cfd828bae7a8337e3711186580d6bdba44e943f4a",
+      "headers": [
+        "--- /dev/null",
+        "+++ b/manual/Makefile",
+        "--- a/stdio-common/Makefile",
+        "+++ b/stdio-common/Makefile",
+        "--- a/sysdeps/mach/hurd/Makefile",
+        "+++ b/sysdeps/mach/hurd/Makefile",
+        "--- a/elf/Makefile",
+        "+++ b/elf/Makefile"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/all/local-ru_RU.diff",
+      "bytes": 717,
+      "sha256": "f73fdd29b5d61fdfecfdc82d6292db6376200b9b53c96e82b13fd8fb230a1d80",
+      "headers": [
+        "--- a/intl/locale.alias",
+        "+++ b/intl/locale.alias"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/all/local-ldd.diff",
+      "bytes": 891,
+      "sha256": "221c95bcddc9535e62212eb8d5e4552533145ee27bc6da9b87492adc9b3b9bfd",
+      "headers": [
+        "--- a/elf/ldd.bash.in",
+        "+++ b/elf/ldd.bash.in"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-asserth-decls.diff",
+      "bytes": 1152,
+      "sha256": "226126f69c8097a5dffda444914b2c58e004f7100d228544d5f1d7d178192e91",
+      "headers": [
+        "--- a/assert/assert.h",
+        "+++ b/assert/assert.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-fhs-linux-paths.diff",
+      "bytes": 1026,
+      "sha256": "c1c2eff1d40d6913adfcb928176e1a9d9bb63a14a23a84dc576010fd1999b5b8",
+      "headers": [
+        "--- a/sysdeps/unix/sysv/linux/paths.h",
+        "+++ b/sysdeps/unix/sysv/linux/paths.h",
+        "--- a/sysdeps/generic/paths.h",
+        "+++ b/sysdeps/generic/paths.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-fhs-nscd.diff",
+      "bytes": 855,
+      "sha256": "9756e24882ac856b01bc9c9d3f2f5a19b41524970f4f918173e3255787fe0beb",
+      "headers": [
+        "--- a/nscd/nscd.h",
+        "+++ b/nscd/nscd.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-ld-multiarch.diff",
+      "bytes": 1355,
+      "sha256": "f7c72262826010174c8e432e93bee93254bf60beb96d0294f0418dfc9472b51a",
+      "headers": [
+        "--- a/Makeconfig",
+        "+++ b/Makeconfig",
+        "--- a/elf/Makefile",
+        "+++ b/elf/Makefile"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-stubs_h.diff",
+      "bytes": 432,
+      "sha256": "37b1bfd845bdc7317b585c7bfc07079c18212a4c26f7ab70fcfdbf4f2066482c",
+      "headers": [
+        "--- a/include/stubs-prologue.h",
+        "+++ b/include/stubs-prologue.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-tcsetaddr.diff",
+      "bytes": 2904,
+      "sha256": "92ed0adbd55da898809932cce39a3f0914462bf09a1f53d0f4697c359496eddc",
+      "headers": [
+        "--- a/sysdeps/unix/sysv/linux/tcsetattr.c",
+        "+++ b/sysdeps/unix/sysv/linux/tcsetattr.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-nss-overflow.diff",
+      "bytes": 1991,
+      "sha256": "17e5e2d97e30f27e8bcc2d891650cb68dce20827018a179a0a706d6c24f053fc",
+      "headers": [
+        "--- a/nss/nss_files/files-parse.c",
+        "+++ b/nss/nss_files/files-parse.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/submitted-missing-etc-hosts.diff",
+      "bytes": 306,
+      "sha256": "1a7d9783b9270b97dbe6df55441f8a47d0cab7ae443720259c75e8ce53f5b477",
+      "headers": [
+        "--- a/nss/nss_files/files-hosts.c",
+        "+++ b/nss/nss_files/files-hosts.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/submitted-nptl-invalid-td.patch",
+      "bytes": 891,
+      "sha256": "b4d8993b2dbfaa9585acd2f88067a65538d4f75e4f97a838541af555c63ac6a2",
+      "headers": [
+        "--- a/sysdeps/nptl/pthreadP.h",
+        "+++ b/sysdeps/nptl/pthreadP.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-ldconfig-multiarch.diff",
+      "bytes": 1558,
+      "sha256": "214e510b8ac7624f2dac8983f2abc7db0a0c72e18f8c2abd0af0bb63d633ee58",
+      "headers": [
+        "--- a/elf/ldconfig.c",
+        "+++ b/elf/ldconfig.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-disable-libnss-db.diff",
+      "bytes": 478,
+      "sha256": "3d9654f23dc0b65f5f91a06e07a9bbee188e1f47317351058a9f3078bc811ba3",
+      "headers": [
+        "--- a/nss/Makefile",
+        "+++ b/nss/Makefile"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-revert-bz13979.diff",
+      "bytes": 1205,
+      "sha256": "f10c9b712b83b9430b22bc0b8a4d7553a94122f1e67d960b4270b5a5e2a4fc72",
+      "headers": [
+        "--- a/include/features.h",
+        "+++ b/include/features.h"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/unsubmitted-ldso-machine-mismatch.diff",
+      "bytes": 556,
+      "sha256": "5e79fa2421af1a2c6d9a055c7e6d2b0351eea5bf9a40c7ec5d3387f2f533ed63",
+      "headers": [
+        "--- a/elf/dl-load.c",
+        "+++ b/elf/dl-load.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-ldconfig-ignore-ld.so.diff",
+      "bytes": 1810,
+      "sha256": "d7f3513bf212a124f085bded16f012933c164fe3c500fc54b51b9d4a8787f613",
+      "headers": [
+        "--- a/elf/ldconfig.c",
+        "+++ b/elf/ldconfig.c"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-bootstrap-headers.diff",
+      "bytes": 3245,
+      "sha256": "4651f6bfd4bb62bd7e8372f970a1f5c4a6f4753c96d3577c29a35f123792469b",
+      "headers": [
+        "--- /dev/null",
+        "+++ b/include/stubs-bootstrap.h",
+        "--- a/Makefile",
+        "+++ b/Makefile"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-test-install.diff",
+      "bytes": 641,
+      "sha256": "ecea70be891e06f0961f713b3dcd8851bc010db8b0c17bb336de00724fc7f167",
+      "headers": [
+        "--- glibc-2.30.orig/Makefile",
+        "+++ glibc-2.30/Makefile"
+      ],
+      "relevant": false
+    },
+    {
+      "member": "debian/patches/any/local-cross.patch",
+      "bytes": 722,
+      "sha256": "bc6ee0c521a5e705ad4745820563a15a33645e5358a86254beb8a350c9dbd98c",
+      "headers": [
+        "--- a/malloc/Makefile",
+        "+++ b/malloc/Makefile"
+      ],
+      "relevant": false
+    }
+  ]
+}

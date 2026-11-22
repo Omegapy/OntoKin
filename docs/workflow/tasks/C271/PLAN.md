@@ -282,3 +282,12 @@ Select only a source-backed decision for the three exact libc tags rejected by P
 Acceptance and ownership are in [P16 PHASE.json](../../../engineering/localized-repair-c271/libc-tags-p16/PHASE.json). Independent exact-design/control review, documentary/workflow/whitespace and protected-source checks, conditional branch publication, verified partial ZIP and matching prompts, and a separate actual receipt complete only this phase. Root owns canonical records, Git/index and saving; three real workers have disjoint scratch assignments and no nested fanout.
 
 Stop after this reviewed decision/control boundary or the first concrete blocker, then delivery only. No production/test implementation or parser execution, input substitution, H0/H1, installation, Node/ldd, original-seven/full routine, native/model/hosted execution, main lease/integration or parent closure. R01/R02 stay done; R03–R05 not_done; P01 done and P02 in_progress; PR274 stays draft/open and issue273 open. Main licensing PR275 remains a future integration reconciliation obligation.
+
+<!-- C271-P16-TECHNICAL-OUTCOME -->
+## P16 reviewed tag-only design — November 22, 2026
+
+[Director adoption](../../../engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json) accepts the exact independently reviewed candidate001 and its 73 inert controls. All 169 payload files, 47 raw ELF constructions and literal expectations were independently checked through 1,493 static assertions. The author recorded 810 integrity and 46 source/package assertions. These are data/source checks, not product-test passes.
+
+The proposed new opt-in profile recognizes only the three bound x86-64 PLT tags as opaque dependency metadata after actual selected-role and exact libc/loader binding. Older routes, original flag masks, all guards, pins, limits and historical expectations remain unchanged. The per-case `image` descriptor is authoritative for future raw-reader controls; `actual_fixture_bytes` is the shared baseline reference, as the independent review explains.
+
+No implementation or host acceptance occurred. The retained libc flags `0x18` would fail the unchanged later flag predicate; P15 observed only the earlier tag refusal. A separate source-backed DT_FLAGS/DF_STATIC_TLS decision is the next fresh phase before implementation. This supersedes only the candidate's scheduling sentence and adopts no flag exception. Finish P16 publication and verified delivery, then stop. Parent R03–R05 remain not_done and P02 remains in_progress.

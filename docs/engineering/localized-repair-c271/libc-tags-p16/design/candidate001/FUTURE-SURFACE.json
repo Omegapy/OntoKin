@@ -1,0 +1,69 @@
+{
+  "schema": "ontokin.c271.libc-plt-future-surface/1",
+  "decision": "P16-ELF-001",
+  "implementation_in_p16": false,
+  "proposed_production_edit_paths": [
+    "prototypes/static_tray_v01/current_host_inspection_v01.py"
+  ],
+  "proposed_new_test_paths": [
+    "tests/test_current_host_libc_plt_metadata_v01.py"
+  ],
+  "existing_test_edits_allowed": false,
+  "existing_contract_pin_limit_expectation_edits_allowed": false,
+  "new_resource_caps": [],
+  "surface": [
+    {
+      "symbols": ["new exact libc-PLT schema/profile/object constants", "new fixed libc and loader pins", "_plan_shape", "new private exact libc-PLT selector"],
+      "change": "Add only the exact /0.1.2 and combined profile pair plus one closed libc_plt object. Preserve both existing profile routes, top-level contract, old errors and command stdout_predicate. New selector is a private primitive, not an operational approval check.",
+      "controls": "S01-S08, inherited complete plan controls; independent source review of old route branches"
+    },
+    {
+      "symbols": ["_select_origin_profile", "_prepare_origin_policy", "_check_author_runtime", "_required_paths", "_check_plan_guards", "_validate", "_recheck", "_launch_check"],
+      "change": "Recognize the combined new pair as requiring every existing origin constraint and early/recheck/kernel/path behavior. Reuse origin validation without mutating a plan into an older schema, altering its descriptor or extending origin admission to libc. Old inputs retain their exact branch behavior.",
+      "controls": "All 96 existing P13-applicable origin controls; L01-L05; direct source and caller-order review"
+    },
+    {
+      "symbols": ["new private libc dependency-role/descriptor/pin primitive", "new private libc policy constructor", "_check_resolution"],
+      "change": "For the new combined profile only, parse/bind actual selected Python metadata before constructing the libc policy. Resolve its libc.so.6 edge through the declared role and equal host/runtime aliases/files and unique image rows. Bind the actual interpreter and exact loader. Compare fixed pins and use unchanged _bound on actual files before private libc raw parsing. Then retain complete closure checks. No filename-only or same-hash-unused-row admission.",
+      "controls": "B01-B16; no synthetic-to-operational pin substitution; independent source proof of binding before raw libc primitive and helper/Git/command effects"
+    },
+    {
+      "symbols": ["new private fixed-trio ELF metadata reader", "new private fixed-trio dynamic rule", "new private callback checkpoints", "_read_elf_metadata", "_read_plan_elf_metadata"],
+      "change": "Provide an internal fixed rule for the three tags on x86-64 ET_DYN. A private optional policy input may extend the existing plan reader without changing old calls. The subject-only raw helper never combines with the Python RPATH rule. Preserve public read_elf_metadata signature/default behavior. Order: old structural guards, new architecture, old unknown-feature predicate with precisely three additions, once-only complete trio, unchanged flags, all later old metadata/identity guards. Values remain opaque and add no output fields, dereferences, allocations or value-sized scans.",
+      "controls": "L01-L05, P01-P07, N01-N27, F01-F08; exact metadata shape and old errors"
+    },
+    {
+      "symbols": ["_check_resolution", "_validate", "_recheck", "_input_snapshot", "_required_paths", "_launch_check"],
+      "change": "Recreate the policy and complete proof at each existing full recheck. Both new descriptors must already be identical to files and aliases covered by existing snapshots/guards; prove that coverage explicitly. Keep actual file identity checks at launch within the unchanged clock. No cache of earlier accepted raw metadata or policy. No added output or approval document.",
+      "controls": "D01-D02 and all inherited drift/clock/process/path controls; source review must show actual new binding primitive is invoked"
+    },
+    {
+      "symbols": ["new focused test adapter only"],
+      "change": "Consume all frozen control bytes/expectations at the exact declared boundaries. Identify mocked observations and require actual fault reachability and same-fd cleanup. Bind actual adapter source. Implement no host-positive case or N57 runtime selector.",
+      "controls": "Frozen CONTROLS/EXPECTATIONS/FIXTURE-MANIFEST identities and independent adapter review"
+    }
+  ],
+  "mandatory_preservation": [
+    "Original public/default parser signature, metadata fields, tag and flag decisions for both earlier plan/profile routes",
+    "DT_FLAGS mask 0x8; DT_FLAGS_1 mask 0x1 | 0x08000000; multiplicity, errors and order",
+    "All prior ELF file/table/string/mapping/short-read/identity/fd/callback guards",
+    "Every P11 origin/variant/name-union/nonselection/path/kernel rule and P13 external review-only boundary",
+    "P06 closed HOST/inspection/manifest/provider/JavaScript contracts and actual source bindings",
+    "Original seven methods/helper/scientific bodies, selected Python/Node/archive/dependency/package pins, command environment/options and every budget",
+    "Every prior source/test/fixture/expectation byte and failed/historical attempt"
+  ],
+  "later_required_checks": [
+    "Complete inherited 135 inspection and 40 ELF mapping methods",
+    "All 96 unchanged P13-applicable origin runtime controls, with N57 externally accounted for and never called a runtime pass/skip",
+    "Every P16 frozen control without oracle edits, with independent adapter and exact-source review",
+    "Applicable provider/driver compatibility and documentary/workflow checks for the actual future changed scope"
+  ],
+  "not_authorized_by_this_design_phase": [
+    "Any production or test implementation now",
+    "Product imports/parser/test execution now",
+    "Current-host H0 or H1, Node/ldd, installation or alternative input selection",
+    "Original-seven/full routine, R03 acceptance, native/model/hosted execution",
+    "Main lease/integration, branch deletion or parent closure",
+    "Flag-mask expansion, PLT executable validation, arbitrary new tags or a general dynamic-loader emulator"
+  ]
+}

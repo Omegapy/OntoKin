@@ -79,36 +79,40 @@
     },
     {
       "gate": "P16-A02",
-      "state": "in_progress"
+      "state": "passed_tag_design_and_controls"
     },
     {
       "gate": "P16-A03",
-      "state": "not_started"
+      "state": "passed_no_mandatory_findings"
     },
     {
       "gate": "P16-A04",
-      "state": "not_started"
+      "state": "preflight_checks_passed_final_staged_review_and_publication_pending"
     },
     {
       "gate": "P16-A05",
-      "state": "not_started"
+      "state": "final_delivery_pending"
     }
   ],
   "current_jobs": [
     {
-      "worker": "/root/receipt_review",
-      "state": "intake/early audits accepted; paused for final package",
-      "owned": "p16-session/receipt-review/"
-    },
-    {
       "worker": "/root/tag_design",
-      "state": "source-backed decision and inert control candidate authoring",
+      "state": "candidate001 frozen; completed; no active operation",
       "owned": "p16-session/tag-design/"
     },
     {
       "worker": "/root/design_review",
-      "state": "independent exact-source review; candidate review pending",
+      "state": "formal source/design/control review complete; no active operation",
       "owned": "p16-session/design-review/"
+    },
+    {
+      "worker": "/root/receipt_review",
+      "state": "prior audits and final preflight complete; pending bounded documentary and final-package assignments",
+      "owned": "p16-session/receipt-review/"
+    },
+    {
+      "worker": "/root",
+      "state": "documentary verification, conditional publication and verified delivery only"
     }
   ],
   "current_unknown_operations": [],
@@ -120,7 +124,7 @@
   "capabilities": {
     "authentic_checkout": true,
     "repository_read": true,
-    "git_data_write_tools": "available, not yet invoked in P16",
+    "git_data_write_tools": "observed successful conditional phase-start publication and exact readback",
     "conditional_nonforce_ref_tool": "available",
     "subagents": true,
     "terminal_documentation_checks": true,
@@ -135,7 +139,7 @@
     "external_receipt_required": true,
     "repository_receipt": "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json"
   },
-  "exact_next_action": "Complete only the declared P16 source-backed tag compatibility decision and frozen inert controls, or retain the first design blocker; then independent review and documentary delivery.",
+  "exact_next_action": "Finish only P16 documentary publication and verified final ZIP/prompts/receipt delivery, then stop. Once separate delivery is confirmed, the next fresh-chat action is the bounded DT_FLAGS/DF_STATIC_TLS decision recorded in ADOPTION.json; no implementation is selected now.",
   "readset": "MAIN-READ-SET.json plus delegated receipt/tag/design review readsets",
   "main_branch_relation": "Main current C270 state is expected while C271 is unmerged. Licensing PR275 is on main only; future integration must reconcile it.",
   "early_recovery": {
@@ -159,6 +163,39 @@
     "confirmed_at_utc": "2026-11-22T16:42:51.012042+00:00",
     "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-37fd1e8b05448191834cbcbacb3a284c_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
   },
-  "status": "in_progress",
-  "updated_at_utc": "2026-11-22T16:48:15.616991+00:00"
+  "status": "technical_boundary_complete_delivery_pending",
+  "updated_at_utc": "2026-11-22T17:24:43.165798+00:00",
+  "technical_stop_at_utc": "2026-11-22T17:24:43.165798+00:00",
+  "technical_stop": "Independent acceptance and separate Director adoption of the exact bounded tag-only design and frozen controls; no implementation.",
+  "next_fresh_chat_action": "In a fresh parent chat, reconcile the confirmed P16 receipt and current GitHub, then select one bounded source-backed DT_FLAGS/DF_STATIC_TLS compatibility decision for the exact retained libc 0x18. Preserve P16 and older flags refusals, pins, limits and expectations; the decision may retain refusal. Stop before implementation, new H0/H1 or the first concrete design blocker.",
+  "evidence": {
+    "adoption": "docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json",
+    "candidate": "docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/CANDIDATE-MANIFEST.json",
+    "independent_review": "docs/engineering/localized-repair-c271/libc-tags-p16/review/candidate001/REVIEW.json",
+    "learning": "docs/engineering/localized-repair-c271/libc-tags-p16/LEARNING-REVIEW.json",
+    "documentary_preflight": "docs/engineering/localized-repair-c271/libc-tags-p16/documentary-checks/preflight002/CHECKS.json",
+    "failed_documentary_attempt": "docs/engineering/localized-repair-c271/libc-tags-p16/DOCUMENTARY-FAILURES.json"
+  },
+  "technical_counts": {
+    "author_integrity_assertions": 810,
+    "bytes_excluding_manifest": 1074121,
+    "controls": 73,
+    "elf_images": 47,
+    "files_excluding_manifest": 169,
+    "fixture_files": 120,
+    "routes": {
+      "binding_relations": 15,
+      "external_digest": 1,
+      "legacy_literal_plan_reader": 1,
+      "legacy_origin_plan_reader": 1,
+      "legacy_public_metadata": 3,
+      "libc_plt_metadata": 34,
+      "metadata_fault": 8,
+      "new_profile_rule": 8,
+      "recheck_boundary": 2
+    },
+    "source_identity_assertions": 46,
+    "independent_static_assertions": 1493,
+    "product_tests_executed": 0
+  }
 }

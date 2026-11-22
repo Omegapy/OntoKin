@@ -1,0 +1,74 @@
+{
+  "schema": "ontokin.c271.p16-documentary-checks/1",
+  "source_parent": "f3f84d4cb58bcce318f2bc92135e83000e9db466",
+  "candidate_staged_tree": "65815331ffd1de9052b1b1d0203b23822a28ee07",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "started_at_utc": "2026-11-22T17:27:27.482293+00:00",
+      "exit_code": 0,
+      "stdout": "01-stdout.txt",
+      "stderr": "01-stderr.txt",
+      "stdout_bytes": 148,
+      "stderr_bytes": 0,
+      "stdout_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "started_at_utc": "2026-11-22T17:27:27.584881+00:00",
+      "exit_code": 0,
+      "stdout": "02-stdout.txt",
+      "stderr": "02-stderr.txt",
+      "stdout_bytes": 6609,
+      "stderr_bytes": 0,
+      "stdout_sha256": "25e2cbe1429341570417d570743a3eb3c181f977bbbf8fde9137d4bffcb392b3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_at_utc": "2026-11-22T17:27:29.876969+00:00",
+      "exit_code": 0,
+      "stdout": "03-stdout.txt",
+      "stderr": "03-stderr.txt",
+      "stdout_bytes": 0,
+      "stderr_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "started_at_utc": "2026-11-22T17:27:29.888420+00:00",
+      "exit_code": 0,
+      "stdout": "04-stdout.txt",
+      "stderr": "04-stderr.txt",
+      "stdout_bytes": 0,
+      "stderr_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scope": "Documentation, workflow and whitespace only. No product parser, runtime tests or host qualification.",
+  "candidate_tree_after_checks": "65815331ffd1de9052b1b1d0203b23822a28ee07",
+  "passed": true
+}

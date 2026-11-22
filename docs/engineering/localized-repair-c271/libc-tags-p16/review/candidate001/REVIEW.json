@@ -1,0 +1,177 @@
+{
+  "candidate_manifest": {
+    "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/candidate001/CANDIDATE-MANIFEST.json",
+    "sha256": "61b18ceb15d3ee05d3022c60941ccbbce9c3e08bac148c7750da9f6588091156",
+    "size_bytes": 36725
+  },
+  "evidence": [
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/design-review/candidate001/inspect_static.py",
+      "sha256": "148b62b69d9c07271a3c76b5b006fb97578891726470992ad5fee229fc0ad56b",
+      "size_bytes": 14448
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/design-review/candidate001/STATIC-INSPECTION.json",
+      "sha256": "2873f7a9686773f2f9c47ec26e18d2562108010d269a81aae43baf6d93f0e787",
+      "size_bytes": 161823
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/design-review/candidate001/CASE-INSPECTION.json",
+      "sha256": "d10c58230924ca293bc8efb4a7006e370d68d208fe75fcc09779ef5e73d09df1",
+      "size_bytes": 330745
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/design-review/candidate001/STATIC-READSET.json",
+      "sha256": "107abba05deb118e46f3f39fce55df1fc19bd61db584a7becd80a4a278a25ef3",
+      "size_bytes": 59714
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/design-review/candidate001/SOURCE-PATCH-COMPARISON.json",
+      "sha256": "870c1528eef300eeebc8f0e042e1ca2362f9aeb14ddb86374290138c3a55f5cd",
+      "size_bytes": 18375
+    }
+  ],
+  "frozen_expectations": {
+    "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/candidate001/EXPECTATIONS.json",
+    "sha256": "33a17cc66604f8b57be88dae7dd05a4bec066c0eaa191fc08400cfc79e18137e",
+    "size_bytes": 40991
+  },
+  "future_gates_preserved": [
+    "Separate Director adoption",
+    "Separate flags compatibility decision recommended before implementation",
+    "Fresh implementation and independently reviewed actual adapter",
+    "Unchanged 135 inspection +40 mapping +96 P13-applicable origin runtime controls",
+    "Historical N57 external accounting, no runtime pass or skip",
+    "Exact operational plan and independently supplied expected digest",
+    "Complete finite source/closure review and current-host H0/H1 gates"
+  ],
+  "independent_static_evidence": {
+    "active_patch_members_compared": 80,
+    "assertion_count": 1493,
+    "controls": 73,
+    "elf_images": 47,
+    "failed_count": 0,
+    "fixture_files": 120,
+    "not_product_test_counts": true,
+    "passed_count": 1493,
+    "payload_bytes": 1074121,
+    "payload_files": 169,
+    "protected_paths_compared": 31,
+    "upstream_members_compared": 18
+  },
+  "mandatory_finding_count": 0,
+  "mandatory_findings": [],
+  "no_authority_granted": {
+    "Node_ldd_direct_loader_execution": true,
+    "R03_R05_or_parent_closure": true,
+    "current_host_H0_H1": true,
+    "flags_exception": true,
+    "main_integration": true,
+    "operational_plan_acceptance": true,
+    "original_seven_full_routine": true,
+    "product_or_author_script_execution": true,
+    "production_or_test_implementation": true
+  },
+  "nonblocking_observations": [
+    {
+      "affected_controls": [
+        "L04_public_tagless_x86",
+        "L05_public_tagless_aarch64",
+        "P02_opaque_zero_values",
+        "P03_opaque_u64_max_values",
+        "P04_opaque_inconsistent_values",
+        "P05_original_flag_masks",
+        "P06_absent_flags",
+        "P07_reordered_trio",
+        "N01_aarch64_collision",
+        "N02_et_exec",
+        "N03_reserved_processor_hole",
+        "N04_other_processor_tag",
+        "N05_unknown_os_tag",
+        "N06_missing_plt",
+        "N07_missing_pltsz",
+        "N08_missing_pltent",
+        "N09_absent_trio",
+        "N10_duplicate_plt_equal",
+        "N11_duplicate_pltsz_equal",
+        "N12_duplicate_pltent_equal",
+        "N13_duplicate_plt_unequal",
+        "N14_unknown_before_missing",
+        "N15_arch_before_unknown",
+        "N16_flags_0x18_preserved",
+        "N17_flags1_origin_preserved",
+        "N18_duplicate_flags",
+        "N19_duplicate_flags1",
+        "N20_unmapped_string_table",
+        "N21_duplicate_needed",
+        "N22_slash_needed",
+        "N23_libc_origin_token",
+        "N24_both_search_paths",
+        "N25_program_table_invalid",
+        "N26_dynamic_unterminated",
+        "N27_duplicate_soname"
+      ],
+      "candidate_paths": [
+        "build_inert_controls.py",
+        "CONTROL-CONTRACT.md",
+        "fixture_inputs/P02_opaque_zero_values.json"
+      ],
+      "disposition": "Shared baseline reference for the mocked-binding distinction, not the per-case raw reader input. Future adapter uses the frozen image descriptor. No candidate or expectation change needed.",
+      "id": "N01",
+      "observation": "actual_fixture_bytes repeats the baseline synthetic descriptor; in 35 mutated-image contexts it differs from the separate image descriptor. Every image descriptor, actual image, fixture manifest and construction record agrees.",
+      "severity": "nonblocking_provenance_note"
+    },
+    {
+      "candidate_paths": [
+        "DECISION.md section 6",
+        "EXPECTATIONS.json::N16_flags_0x18_preserved"
+      ],
+      "id": "N02",
+      "observation": "Exact P15 libc DT_FLAGS is 0x18; unchanged accepted mask is 0x8. A later flags refusal follows by source comparison if tag admission succeeds. P15 itself observed the earlier tag refusal only.",
+      "recommendation": "A separate bounded source-backed DT_FLAGS/DF_STATIC_TLS decision should precede implementation. Director ADOPTION/HANDOFF may supersede the scheduling sentence without changing frozen candidate001. No flags exception is adopted.",
+      "severity": "nonblocking_next_phase_ordering"
+    }
+  ],
+  "report": {
+    "path": "/workspace/scratch/fd30b8a094f0/p16-session/design-review/candidate001/REVIEW.md",
+    "sha256": "98918bc5fbff3807421b45d14dc0a8f9afa3a07c6a0ada80bde400dcc258324a",
+    "size_bytes": 16257
+  },
+  "reviewed_at_utc": "2026-11-22T17:21:58.915350+00:00",
+  "reviewed_claims": {
+    "all_literal_control_expectations_consistent_with_stated_scope": true,
+    "complete_early_and_recheck_proof_required": true,
+    "exact_three_tags_on_x86_64_et_dyn_only": true,
+    "existing_flag_masks_unchanged": true,
+    "legacy_public_and_profile_behavior_preserved_as_obligations": true,
+    "new_schema_profile_and_closed_object_implementable": true,
+    "new_value_caps_needed_for_this_claim": false,
+    "operational_binding_distinct_from_mocked_primitive_controls": true,
+    "role_alias_file_loader_pins_before_raw_primitive_required": true,
+    "runtime_or_plt_structural_safety_proved": false,
+    "values_remain_opaque_for_dependency_metadata": true
+  },
+  "reviewer": "/root/design_review",
+  "schema": "ontokin.c271.p16.independent-candidate-review/1",
+  "source_basis": {
+    "current_main_distinction": "Observed main70ca7e68ff95df876f801137369d176fe5b2bab3 correctly retains C270 while C271 is unmerged; active branch/task/PR govern unfinished C271 scope.",
+    "inspection_source": {
+      "path": "/workspace/scratch/fd30b8a094f0/OntoKin/prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "sha256": "a8274d56076562a91d26b3cdd2f614fce6fd509733e4939b225dff2ddca09db4",
+      "size_bytes": 183913
+    },
+    "phase_start_checkpoint_reported_by_director": "f3f84d4cb58bcce318f2bc92135e83000e9db466",
+    "prior_source_review": {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/design-review/attempt001/SOURCE-REVIEW.md",
+      "sha256": "09a76d9adc156541cf89c6bc63c81da629d8349434ebd6ad9dd5b28d6599a4be",
+      "size_bytes": 9080
+    },
+    "prior_source_review_manifest": {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/design-review/attempt001/SOURCE-EVIDENCE-MANIFEST.json",
+      "sha256": "1a4c45d071161038fdb77d6e96db4b101c1a13358c7595053887dda532ceaea1",
+      "size_bytes": 5382
+    },
+    "retained_source_commit": "0d5a3053ced2805f4cc04b77f361bb07dbdc7999"
+  },
+  "verdict": "accept_bounded_tag_design_and_inert_controls_for_separate_director_adoption"
+}

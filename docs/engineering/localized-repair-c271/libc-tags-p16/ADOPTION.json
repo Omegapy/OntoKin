@@ -1,0 +1,76 @@
+{
+  "schema": "ontokin.c271.p16-director-adoption/1",
+  "decision": "P16-ELF-001",
+  "adopted_at_utc": "2026-11-22T17:24:43.165798+00:00",
+  "owner": "c271-p16-fd30b8a094f0",
+  "status": "adopted_bounded_tag_design_and_frozen_controls_only",
+  "candidate": "design/candidate001",
+  "candidate_manifest": {
+    "bytes": 36725,
+    "sha256": "61b18ceb15d3ee05d3022c60941ccbbce9c3e08bac148c7750da9f6588091156"
+  },
+  "candidate_expectations": {
+    "bytes": 40991,
+    "sha256": "33a17cc66604f8b57be88dae7dd05a4bec066c0eaa191fc08400cfc79e18137e"
+  },
+  "independent_review": {
+    "path": "review/candidate001/REVIEW.json",
+    "bytes": 7983,
+    "sha256": "8b5cb788767cbe42d0a7f17c2ad7f4b134ce4200941570b7c41d968aee04c5d1",
+    "manifest": {
+      "bytes": 1859,
+      "sha256": "adb1ba567e8378371ed1a6df0e310200fcd9cc999f00997f2da84e36421c8162"
+    },
+    "mandatory_findings": 0,
+    "static_assertions": 1493
+  },
+  "source_revision": "0d5a3053ced2805f4cc04b77f361bb07dbdc7999",
+  "phase_start_checkpoint": "f3f84d4cb58bcce318f2bc92135e83000e9db466",
+  "adopted_scope": "Exactly three x86-64 PLT dynamic tags, as opaque dependency metadata, under a new separately versioned opt-in profile bound to the actual selected author-Python libc dependency and exact libc/loader pins. Complete once-only trio is a conservative selected-image policy. Every old route, flag mask, later guard, source contract, pin, limit and expectation remains unchanged.",
+  "new_pair": {
+    "plan_schema": "ontokin.current-host-readback-inspection-plan/0.1.2",
+    "resolution_profile": "linux-glibc-declared-python-origin-rpath-libc-plt-v1"
+  },
+  "nonblocking_review_dispositions": [
+    {
+      "id": "N01",
+      "disposition": "The per-case image descriptor selects the raw reader input. actual_fixture_bytes is a shared baseline reference for mocked binding provenance, and differs from image in 35 mutated contexts. Retain all original bytes and expectations; a future adapter must not substitute the shared baseline descriptor."
+    },
+    {
+      "id": "N02",
+      "disposition": "Supersede only DECISION.md section 6 next-step sequencing: perform a separate source-backed flags compatibility decision before implementation. No flag semantics, mask expansion or exception is adopted."
+    }
+  ],
+  "observed_refusal": "P15 observed CHI-UNSUPPORTED / Unreviewed ELF dynamic loader feature at the first tag. Its later flags predicate did not run.",
+  "inferred_later_constraint": "Retained DT_FLAGS=0x18 is outside unchanged mask 0x8, so the same exact libc would still be refused after successful tag recognition. This is static source inference, not a new product or host observation.",
+  "next_fresh_chat_action": "In a fresh parent chat, reconcile the confirmed P16 receipt and current GitHub, then select one bounded source-backed DT_FLAGS/DF_STATIC_TLS compatibility decision for the exact retained libc 0x18. Preserve P16 and older flags refusals, pins, limits and expectations; the decision may retain refusal. Stop before implementation, new H0/H1 or the first concrete design blocker.",
+  "implementation_performed": false,
+  "product_tests_run": false,
+  "H0_accepted": false,
+  "H1_approved": false,
+  "operational_plan_accepted": false,
+  "parent_complete": false,
+  "main_lease_held": false,
+  "integration_allowed": false,
+  "limits": [
+    "Source/package association is not a reproduced build or signature verification.",
+    "PLT metadata recognition does not validate executable PLT/GOT/relocation safety or observe runtime rewriting.",
+    "Synthetic primitive positives do not establish real-input or plan acceptance.",
+    "All inherited runtime, full-routine and parent requirements remain pending."
+  ],
+  "candidate_archive": {
+    "path": "docs/engineering/localized-repair-c271/libc-tags-p16/design/CANDIDATE001.zip",
+    "bytes": 264916,
+    "sha256": "05d1cbe971678b8f505795e436f2bd096b81848f68b4f9da6adc64392f6fb5af",
+    "members": 170,
+    "crc_and_every_member_byte_and_inert_mode_verified": true
+  },
+  "independent_evidence_archive": {
+    "path": "docs/engineering/localized-repair-c271/libc-tags-p16/REVIEW-EVIDENCE.zip",
+    "bytes": 552993,
+    "sha256": "cd7ddffa637fb01b8a5dd3600e4f7962e3f9eddd942cd5e2778fe66ab688b967",
+    "members": 45,
+    "crc_and_every_member_byte_and_inert_mode_verified": true
+  },
+  "materialization": "EVIDENCE-MATERIALIZATION.md"
+}

@@ -1,0 +1,28 @@
+{
+  "schema": "ontokin.c271.p16-documentary-failures/1",
+  "first_attempt": "verification/core-preflight001",
+  "source_tree": "46cad59c8583fba72e039119d7b0063b2ee7bd87",
+  "archive": {
+    "path": "docs/engineering/localized-repair-c271/libc-tags-p16/DOCUMENTARY-PREFLIGHT001.zip",
+    "bytes": 920531,
+    "sha256": "ec0c52e8dbc775d6d39641851973273ee75ed0f49fbb0ba37ee2ca670e2740d9"
+  },
+  "failures": [
+    {
+      "check": "workflow",
+      "observation": "snapshot_date required an explicit UTC timestamp, not a date",
+      "resolution": "Corrected CURRENT snapshot_date to the actual UTC timestamp."
+    },
+    {
+      "check": "cached whitespace",
+      "observation": "1267 notices in four verbatim upstream/patch source files",
+      "resolution": "Preserved exact source bytes in verified inert archives; no whitespace rule, source byte or expectation changed."
+    }
+  ],
+  "followup": {
+    "checks": "docs/engineering/localized-repair-c271/libc-tags-p16/documentary-checks/preflight002/CHECKS.json",
+    "passed": true,
+    "tree": "65815331ffd1de9052b1b1d0203b23822a28ee07"
+  },
+  "limits": "Final staged-tree checks and independent documentary review remain separate."
+}

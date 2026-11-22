@@ -1,0 +1,101 @@
+{
+  "archive": "/workspace/scratch/fd30b8a094f0/incoming/p15/recovery/session/source-provenance/downloads-attempt001/glibc_2.41.orig.tar.xz",
+  "sha256": "f24aa441021121a79266f0d75242706cab8843a47901fefe74527491807f1998",
+  "regular_files_scanned": 20048,
+  "uncompressed_bytes_scanned": 242115126,
+  "all_tag_reference_files": [
+    {
+      "member": "glibc-2.41/ChangeLog.old/ChangeLog.28",
+      "bytes": 307618,
+      "sha256": "768567794a4bd50320eedb6774765e28118311639c33617abfffa28b239e8d9e",
+      "matches": [
+        {
+          "line": 1501,
+          "text": "\t(DT_X86_64_PLT): New."
+        },
+        {
+          "line": 1502,
+          "text": "\t(DT_X86_64_PLTSZ): New."
+        },
+        {
+          "line": 1503,
+          "text": "\t(DT_X86_64_PLTENT): New."
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/elf/elf.h",
+      "bytes": 196094,
+      "sha256": "1490fa24d00c6e1a803edd0402e24f11bcf9de0683953f83a726a9c5462fe46c",
+      "matches": [
+        {
+          "line": 3658,
+          "text": "#define DT_X86_64_PLT\t\t(DT_LOPROC + 0)"
+        },
+        {
+          "line": 3659,
+          "text": "#define DT_X86_64_PLTSZ\t\t(DT_LOPROC + 1)"
+        },
+        {
+          "line": 3660,
+          "text": "#define DT_X86_64_PLTENT\t(DT_LOPROC + 3)"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86_64/Makefile",
+      "bytes": 17492,
+      "sha256": "c6407b9c65de48d62d61c3ac9e193a9c777506b60cbce7213d7c53266f0c08c3",
+      "matches": [
+        {
+          "line": 5,
+          "text": "# Always generate DT_X86_64_PLT* tags."
+        },
+        {
+          "line": 7,
+          "text": "# Never generate DT_X86_64_PLT* tags on ld.so to avoid changing its own"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86_64/dl-machine.h",
+      "bytes": 24634,
+      "sha256": "1545fc722187437ac1c73b5e022fa409ace5998c21915e9d3133c23d0f4413a7",
+      "matches": [
+        {
+          "line": 686,
+          "text": "  /* Adjust DT_X86_64_PLT address and DT_X86_64_PLTSZ values.  */"
+        },
+        {
+          "line": 724,
+          "text": "  /* Ignore DT_X86_64_PLT if the lazy binding is enabled.  */"
+        },
+        {
+          "line": 728,
+          "text": "  /* Ignore DT_X86_64_PLT if PLT rewrite isn't enabled.  */"
+        },
+        {
+          "line": 736,
+          "text": "  /* Ignore DT_X86_64_PLT if there is no R_X86_64_JUMP_SLOT.  */"
+        },
+        {
+          "line": 740,
+          "text": "  /* Ignore DT_X86_64_PLT if"
+        },
+        {
+          "line": 743,
+          "text": "     3. DT_X86_64_PLTENT isn't available or its value is smaller than"
+        },
+        {
+          "line": 745,
+          "text": "     4. DT_X86_64_PLTSZ isn't available or its value is smaller than"
+        },
+        {
+          "line": 746,
+          "text": "\tDT_X86_64_PLTENT's value or isn't a multiple of DT_X86_64_PLTENT's"
+        }
+      ]
+    }
+  ],
+  "scope": "independent raw archive byte/source scan; no product import/downloaded code execution"
+}

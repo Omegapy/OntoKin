@@ -1,0 +1,517 @@
+{
+  "cases": [
+    {
+      "expectation": "L01_public_trio_refuses",
+      "id": "L01_public_trio_refuses",
+      "input": "fixture_inputs/L01_public_trio_refuses.json",
+      "mutation": "Exact trio on unchanged public route",
+      "route": "legacy_public_metadata"
+    },
+    {
+      "expectation": "L02_old_literal_plan_refuses",
+      "id": "L02_old_literal_plan_refuses",
+      "input": "fixture_inputs/L02_old_literal_plan_refuses.json",
+      "mutation": "Old literal plan reader has no new policy",
+      "route": "legacy_literal_plan_reader"
+    },
+    {
+      "expectation": "L03_old_origin_plan_refuses",
+      "id": "L03_old_origin_plan_refuses",
+      "input": "fixture_inputs/L03_old_origin_plan_refuses.json",
+      "mutation": "Old origin policy subject is Python, not this image",
+      "route": "legacy_origin_plan_reader"
+    },
+    {
+      "expectation": "L04_public_tagless_x86",
+      "id": "L04_public_tagless_x86",
+      "input": "fixture_inputs/L04_public_tagless_x86.json",
+      "mutation": "Remove the entire trio on old public route",
+      "route": "legacy_public_metadata"
+    },
+    {
+      "expectation": "L05_public_tagless_aarch64",
+      "id": "L05_public_tagless_aarch64",
+      "input": "fixture_inputs/L05_public_tagless_aarch64.json",
+      "mutation": "Old supported AArch64 metadata without processor tags",
+      "route": "legacy_public_metadata"
+    },
+    {
+      "expectation": "P01_opaque_p15_values",
+      "id": "P01_opaque_p15_values",
+      "input": "fixture_inputs/P01_opaque_p15_values.json",
+      "mutation": "P15 tuple as opaque values; synthetic PLT address exceeds file size",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "P02_opaque_zero_values",
+      "id": "P02_opaque_zero_values",
+      "input": "fixture_inputs/P02_opaque_zero_values.json",
+      "mutation": "All three opaque values are zero",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "P03_opaque_u64_max_values",
+      "id": "P03_opaque_u64_max_values",
+      "input": "fixture_inputs/P03_opaque_u64_max_values.json",
+      "mutation": "All three opaque values are 2^64-1",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "P04_opaque_inconsistent_values",
+      "id": "P04_opaque_inconsistent_values",
+      "input": "fixture_inputs/P04_opaque_inconsistent_values.json",
+      "mutation": "Address 5, byte size 3, entry size 7 are not validated as executable PLT",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "P05_original_flag_masks",
+      "id": "P05_original_flag_masks",
+      "input": "fixture_inputs/P05_original_flag_masks.json",
+      "mutation": "Every permitted inherited flag bit remains permitted at the primitive",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "P06_absent_flags",
+      "id": "P06_absent_flags",
+      "input": "fixture_inputs/P06_absent_flags.json",
+      "mutation": "Absent optional flag entries remain permitted",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "P07_reordered_trio",
+      "id": "P07_reordered_trio",
+      "input": "fixture_inputs/P07_reordered_trio.json",
+      "mutation": "Reverse only the three tag entries",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N01_aarch64_collision",
+      "id": "N01_aarch64_collision",
+      "input": "fixture_inputs/N01_aarch64_collision.json",
+      "mutation": "Only machine changes to 183; processor numbers collide",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N02_et_exec",
+      "id": "N02_et_exec",
+      "input": "fixture_inputs/N02_et_exec.json",
+      "mutation": "Only ELF type changes to ET_EXEC",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N03_reserved_processor_hole",
+      "id": "N03_reserved_processor_hole",
+      "input": "fixture_inputs/N03_reserved_processor_hole.json",
+      "mutation": "Append only 0x70000002; no processor-range allowance",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N04_other_processor_tag",
+      "id": "N04_other_processor_tag",
+      "input": "fixture_inputs/N04_other_processor_tag.json",
+      "mutation": "Append only 0x70000004",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N05_unknown_os_tag",
+      "id": "N05_unknown_os_tag",
+      "input": "fixture_inputs/N05_unknown_os_tag.json",
+      "mutation": "Append only unsupported OS-range 0x6ffffefc",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N06_missing_plt",
+      "id": "N06_missing_plt",
+      "input": "fixture_inputs/N06_missing_plt.json",
+      "mutation": "Remove only DT_X86_64_PLT",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N07_missing_pltsz",
+      "id": "N07_missing_pltsz",
+      "input": "fixture_inputs/N07_missing_pltsz.json",
+      "mutation": "Remove only DT_X86_64_PLTSZ",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N08_missing_pltent",
+      "id": "N08_missing_pltent",
+      "input": "fixture_inputs/N08_missing_pltent.json",
+      "mutation": "Remove only DT_X86_64_PLTENT",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N09_absent_trio",
+      "id": "N09_absent_trio",
+      "input": "fixture_inputs/N09_absent_trio.json",
+      "mutation": "No trio on the subject-only private primitive",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N10_duplicate_plt_equal",
+      "id": "N10_duplicate_plt_equal",
+      "input": "fixture_inputs/N10_duplicate_plt_equal.json",
+      "mutation": "Append equal PLT duplicate",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N11_duplicate_pltsz_equal",
+      "id": "N11_duplicate_pltsz_equal",
+      "input": "fixture_inputs/N11_duplicate_pltsz_equal.json",
+      "mutation": "Append equal PLTSZ duplicate",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N12_duplicate_pltent_equal",
+      "id": "N12_duplicate_pltent_equal",
+      "input": "fixture_inputs/N12_duplicate_pltent_equal.json",
+      "mutation": "Append equal PLTENT duplicate",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N13_duplicate_plt_unequal",
+      "id": "N13_duplicate_plt_unequal",
+      "input": "fixture_inputs/N13_duplicate_plt_unequal.json",
+      "mutation": "Append unequal PLT duplicate",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N14_unknown_before_missing",
+      "id": "N14_unknown_before_missing",
+      "input": "fixture_inputs/N14_unknown_before_missing.json",
+      "mutation": "Unknown tag with incomplete trio freezes precedence",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N15_arch_before_unknown",
+      "id": "N15_arch_before_unknown",
+      "input": "fixture_inputs/N15_arch_before_unknown.json",
+      "mutation": "Architecture collision with unknown tag freezes precedence",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N16_flags_0x18_preserved",
+      "id": "N16_flags_0x18_preserved",
+      "input": "fixture_inputs/N16_flags_0x18_preserved.json",
+      "mutation": "Only DT_FLAGS changes to retained raw 0x18; synthetic later-boundary control",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N17_flags1_origin_preserved",
+      "id": "N17_flags1_origin_preserved",
+      "input": "fixture_inputs/N17_flags1_origin_preserved.json",
+      "mutation": "Only DT_FLAGS_1 changes to forbidden bit 0x80",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N18_duplicate_flags",
+      "id": "N18_duplicate_flags",
+      "input": "fixture_inputs/N18_duplicate_flags.json",
+      "mutation": "Two otherwise permitted DT_FLAGS entries",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N19_duplicate_flags1",
+      "id": "N19_duplicate_flags1",
+      "input": "fixture_inputs/N19_duplicate_flags1.json",
+      "mutation": "Two otherwise permitted DT_FLAGS_1 entries",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N20_unmapped_string_table",
+      "id": "N20_unmapped_string_table",
+      "input": "fixture_inputs/N20_unmapped_string_table.json",
+      "mutation": "Only declared string address is outside mapped data",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N21_duplicate_needed",
+      "id": "N21_duplicate_needed",
+      "input": "fixture_inputs/N21_duplicate_needed.json",
+      "mutation": "Duplicate the one needed name",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N22_slash_needed",
+      "id": "N22_slash_needed",
+      "input": "fixture_inputs/N22_slash_needed.json",
+      "mutation": "Needed name contains slash",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N23_libc_origin_token",
+      "id": "N23_libc_origin_token",
+      "input": "fixture_inputs/N23_libc_origin_token.json",
+      "mutation": "Libc still receives no Python-origin token permission",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N24_both_search_paths",
+      "id": "N24_both_search_paths",
+      "input": "fixture_inputs/N24_both_search_paths.json",
+      "mutation": "Literal RPATH and RUNPATH coexist",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N25_program_table_invalid",
+      "id": "N25_program_table_invalid",
+      "input": "fixture_inputs/N25_program_table_invalid.json",
+      "mutation": "Only e_phnum is zero; structural guard precedes tags",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N26_dynamic_unterminated",
+      "id": "N26_dynamic_unterminated",
+      "input": "fixture_inputs/N26_dynamic_unterminated.json",
+      "mutation": "Dynamic segment ends without DT_NULL",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "N27_duplicate_soname",
+      "id": "N27_duplicate_soname",
+      "input": "fixture_inputs/N27_duplicate_soname.json",
+      "mutation": "Duplicate SONAME reaches unchanged later singleton guard",
+      "route": "libc_plt_metadata"
+    },
+    {
+      "expectation": "S01_new_pair_and_shape",
+      "id": "S01_new_pair_and_shape",
+      "input": "fixture_inputs/S01_new_pair_and_shape.json",
+      "mutation": "Exact new pair and closed object",
+      "route": "new_profile_rule"
+    },
+    {
+      "expectation": "S02_new_schema_old_profile",
+      "id": "S02_new_schema_old_profile",
+      "input": "fixture_inputs/S02_new_schema_old_profile.json",
+      "mutation": "New schema with old profile at new selector seam",
+      "route": "new_profile_rule"
+    },
+    {
+      "expectation": "S03_old_schema_new_profile",
+      "id": "S03_old_schema_new_profile",
+      "input": "fixture_inputs/S03_old_schema_new_profile.json",
+      "mutation": "Old schema with new profile at new selector seam",
+      "route": "new_profile_rule"
+    },
+    {
+      "expectation": "S04_unknown_schema",
+      "id": "S04_unknown_schema",
+      "input": "fixture_inputs/S04_unknown_schema.json",
+      "mutation": "Unknown schema at new selector seam; not full plan error ordering",
+      "route": "new_profile_rule"
+    },
+    {
+      "expectation": "S05_missing_policy",
+      "id": "S05_missing_policy",
+      "input": "fixture_inputs/S05_missing_policy.json",
+      "mutation": "Missing new object",
+      "route": "new_profile_rule"
+    },
+    {
+      "expectation": "S06_unknown_approval_key",
+      "id": "S06_unknown_approval_key",
+      "input": "fixture_inputs/S06_unknown_approval_key.json",
+      "mutation": "Unrecognized object member confers no authority",
+      "route": "new_profile_rule"
+    },
+    {
+      "expectation": "S07_unknown_object_schema",
+      "id": "S07_unknown_object_schema",
+      "input": "fixture_inputs/S07_unknown_object_schema.json",
+      "mutation": "Only object schema differs",
+      "route": "new_profile_rule"
+    },
+    {
+      "expectation": "S08_descriptor_boolean_size",
+      "id": "S08_descriptor_boolean_size",
+      "input": "fixture_inputs/S08_descriptor_boolean_size.json",
+      "mutation": "Boolean is not an integer byte count",
+      "route": "new_profile_rule"
+    },
+    {
+      "expectation": "B01_mocked_relations",
+      "id": "B01_mocked_relations",
+      "input": "fixture_inputs/B01_mocked_relations.json",
+      "mutation": "Logical exact relation without real file observation",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B02_not_python_needed",
+      "id": "B02_not_python_needed",
+      "input": "fixture_inputs/B02_not_python_needed.json",
+      "mutation": "Actual Python metadata lacks libc needed name",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B03_missing_selected_edge",
+      "id": "B03_missing_selected_edge",
+      "input": "fixture_inputs/B03_missing_selected_edge.json",
+      "mutation": "Selected needed edge is absent",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B04_unselected_same_hash_row",
+      "id": "B04_unselected_same_hash_row",
+      "input": "fixture_inputs/B04_unselected_same_hash_row.json",
+      "mutation": "Same-hash unused image does not match the selected edge",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B05_missing_dependency_role",
+      "id": "B05_missing_dependency_role",
+      "input": "fixture_inputs/B05_missing_dependency_role.json",
+      "mutation": "Mapped name has no inspector/shared dependency role",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B06_alias_records_disagree",
+      "id": "B06_alias_records_disagree",
+      "input": "fixture_inputs/B06_alias_records_disagree.json",
+      "mutation": "Only full runtime alias record changes",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B07_host_file_disagrees",
+      "id": "B07_host_file_disagrees",
+      "input": "fixture_inputs/B07_host_file_disagrees.json",
+      "mutation": "Only host file binding changes",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B08_libc_image_row_disagrees",
+      "id": "B08_libc_image_row_disagrees",
+      "input": "fixture_inputs/B08_libc_image_row_disagrees.json",
+      "mutation": "Only libc image row descriptor changes",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B09_interpreter_relation_differs",
+      "id": "B09_interpreter_relation_differs",
+      "input": "fixture_inputs/B09_interpreter_relation_differs.json",
+      "mutation": "Actual selected Python interpreter differs",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B10_loader_image_row_disagrees",
+      "id": "B10_loader_image_row_disagrees",
+      "input": "fixture_inputs/B10_loader_image_row_disagrees.json",
+      "mutation": "Only loader image row descriptor changes",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B11_coherent_wrong_libc_pin",
+      "id": "B11_coherent_wrong_libc_pin",
+      "input": "fixture_inputs/B11_coherent_wrong_libc_pin.json",
+      "mutation": "Every logical subject binding agrees on an unselected hash",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B12_coherent_wrong_loader_pin",
+      "id": "B12_coherent_wrong_loader_pin",
+      "input": "fixture_inputs/B12_coherent_wrong_loader_pin.json",
+      "mutation": "Every logical loader binding agrees on an unselected hash",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B13_forbidden_extension_role",
+      "id": "B13_forbidden_extension_role",
+      "input": "fixture_inputs/B13_forbidden_extension_role.json",
+      "mutation": "Selected path is also an author extension role",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B14_coherent_wrong_libc_mode",
+      "id": "B14_coherent_wrong_libc_mode",
+      "input": "fixture_inputs/B14_coherent_wrong_libc_mode.json",
+      "mutation": "Every logical subject binding agrees on nonoperational mode",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B15_synthetic_cannot_meet_real_pin",
+      "id": "B15_synthetic_cannot_meet_real_pin",
+      "input": "fixture_inputs/B15_synthetic_cannot_meet_real_pin.json",
+      "mutation": "Coherent synthetic file descriptors still differ from fixed operational pin",
+      "route": "binding_relations"
+    },
+    {
+      "expectation": "B16_external_digest_mismatch",
+      "id": "B16_external_digest_mismatch",
+      "input": "fixture_inputs/B16_external_digest_mismatch.json",
+      "mutation": "Existing external comparator remains separate from observed digest",
+      "route": "external_digest"
+    },
+    {
+      "expectation": "D01_subject_binding_drift",
+      "id": "D01_subject_binding_drift",
+      "input": "fixture_inputs/D01_subject_binding_drift.json",
+      "mutation": "Fresh libc binding mismatch must reach the existing drift wrapper",
+      "route": "recheck_boundary"
+    },
+    {
+      "expectation": "D02_loader_binding_drift",
+      "id": "D02_loader_binding_drift",
+      "input": "fixture_inputs/D02_loader_binding_drift.json",
+      "mutation": "Fresh loader binding mismatch must reach the existing drift wrapper",
+      "route": "recheck_boundary"
+    },
+    {
+      "expectation": "F01_callback_before_header_read",
+      "id": "F01_callback_before_header_read",
+      "input": "fixture_inputs/F01_callback_before_header_read.json",
+      "mutation": "Raise sentinel at existing first read callback after open",
+      "route": "metadata_fault"
+    },
+    {
+      "expectation": "F02_callback_before_tag_policy",
+      "id": "F02_callback_before_tag_policy",
+      "input": "fixture_inputs/F02_callback_before_tag_policy.json",
+      "mutation": "Raise sentinel at new policy entry checkpoint",
+      "route": "metadata_fault"
+    },
+    {
+      "expectation": "F03_callback_during_tag_scan",
+      "id": "F03_callback_during_tag_scan",
+      "input": "fixture_inputs/F03_callback_during_tag_scan.json",
+      "mutation": "Raise preconstructed HostInspectionError during actual new scan; preserve object and details",
+      "route": "metadata_fault"
+    },
+    {
+      "expectation": "F04_callback_before_final_identity",
+      "id": "F04_callback_before_final_identity",
+      "input": "fixture_inputs/F04_callback_before_final_identity.json",
+      "mutation": "Raise sentinel just before final identity check",
+      "route": "metadata_fault"
+    },
+    {
+      "expectation": "F05_short_dynamic_read",
+      "id": "F05_short_dynamic_read",
+      "input": "fixture_inputs/F05_short_dynamic_read.json",
+      "mutation": "Only dynamic-table pread returns one fewer byte",
+      "route": "metadata_fault"
+    },
+    {
+      "expectation": "F06_final_descriptor_identity",
+      "id": "F06_final_descriptor_identity",
+      "input": "fixture_inputs/F06_final_descriptor_identity.json",
+      "mutation": "Change only final fstat inode observation",
+      "route": "metadata_fault"
+    },
+    {
+      "expectation": "F07_final_named_path_identity",
+      "id": "F07_final_named_path_identity",
+      "input": "fixture_inputs/F07_final_named_path_identity.json",
+      "mutation": "Change only final lstat inode observation",
+      "route": "metadata_fault"
+    },
+    {
+      "expectation": "F08_dynamic_read_oserror",
+      "id": "F08_dynamic_read_oserror",
+      "input": "fixture_inputs/F08_dynamic_read_oserror.json",
+      "mutation": "Only dynamic-table pread raises the bound OSError; inherited wrapper retains cause",
+      "route": "metadata_fault"
+    }
+  ],
+  "schema": "ontokin.c271.libc-plt-controls/1",
+  "status": "frozen_inert_obligations_not_executed"
+}

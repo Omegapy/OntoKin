@@ -1,0 +1,1359 @@
+{
+  "schema": "ontokin.c271.p16-primary-source-audit/1",
+  "worker": "/root/tag_design",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-I",
+    "-B",
+    "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/verify_source_inputs.py",
+    "--incoming",
+    "/workspace/scratch/fd30b8a094f0/incoming/p15",
+    "--selected",
+    "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001",
+    "--output",
+    "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/SOURCE-AUDIT-002.json"
+  ],
+  "script_sha256": "386fa2a34ae5fdf46945ed616c7fdc0815ccf614b983a8949009e20ea98c89b7",
+  "environment": {
+    "python_executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "linux",
+    "os_name": "posix"
+  },
+  "archives": [
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/incoming/p15/recovery/session/source-provenance/downloads-attempt001/glibc_2.41.orig.tar.xz",
+      "bytes": 20323540,
+      "sha256": "f24aa441021121a79266f0d75242706cab8843a47901fefe74527491807f1998"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/incoming/p15/recovery/session/source-provenance/downloads-attempt001/glibc_2.41-12+deb13u4.debian.tar.xz",
+      "bytes": 499524,
+      "sha256": "dda4153511bfd543502d18e5bc9323110996fe9c531f14ae3fad6eb17f027c7d"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/incoming/p15/recovery/session/source-provenance/downloads-attempt001/glibc_2.41-12+deb13u4.dsc",
+      "bytes": 7576,
+      "sha256": "0915324aa646bb99abfaa9aa6ecb734b30babd28454a3e51f3152912370fbd3e"
+    }
+  ],
+  "regular_upstream_members_scanned": 20048,
+  "upstream_bytes_scanned": 242115126,
+  "scan_patterns": [
+    "DT_X86_64_",
+    "plt_rewrite",
+    "ELF_DYNAMIC_AFTER_RELOC"
+  ],
+  "symbol_matches": [
+    {
+      "member": "glibc-2.41/ChangeLog.old/ChangeLog.28",
+      "bytes": 307618,
+      "sha256": "768567794a4bd50320eedb6774765e28118311639c33617abfffa28b239e8d9e",
+      "hits": [
+        {
+          "line": 884,
+          "text": "\t[! ELF_DYNAMIC_AFTER_RELOC && ! RTLD_BOOTSTRAP  &&  SHARED](x86_64_rewrite_plt): Modified function."
+        },
+        {
+          "line": 1450,
+          "text": "\t[! ELF_DYNAMIC_AFTER_RELOC && ! RTLD_BOOTSTRAP  &&  SHARED](x86_64_rewrite_plt): Modified function."
+        },
+        {
+          "line": 1495,
+          "text": "\telf: Add ELF_DYNAMIC_AFTER_RELOC to rewrite PLT"
+        },
+        {
+          "line": 1499,
+          "text": "\t[RESOLVE_MAP][! ELF_DYNAMIC_AFTER_RELOC](ELF_DYNAMIC_AFTER_RELOC): New."
+        },
+        {
+          "line": 1501,
+          "text": "\t(DT_X86_64_PLT): New."
+        },
+        {
+          "line": 1502,
+          "text": "\t(DT_X86_64_PLTSZ): New."
+        },
+        {
+          "line": 1503,
+          "text": "\t(DT_X86_64_PLTENT): New."
+        },
+        {
+          "line": 1504,
+          "text": "\t(DT_X86_64_NUM): New."
+        },
+        {
+          "line": 1510,
+          "text": "\t(dl_plt_rewrite_control): New."
+        },
+        {
+          "line": 1524,
+          "text": "\t[! ELF_DYNAMIC_AFTER_RELOC && ! RTLD_BOOTSTRAP  &&  SHARED](ELF_DYNAMIC_AFTER_RELOC): New."
+        },
+        {
+          "line": 1525,
+          "text": "\t[! ELF_DYNAMIC_AFTER_RELOC && ! RTLD_BOOTSTRAP  &&  SHARED](JMP32_INSN_OPCODE): New."
+        },
+        {
+          "line": 1526,
+          "text": "\t[! ELF_DYNAMIC_AFTER_RELOC && ! RTLD_BOOTSTRAP  &&  SHARED](JMP32_INSN_SIZE): New."
+        },
+        {
+          "line": 1527,
+          "text": "\t[! ELF_DYNAMIC_AFTER_RELOC && ! RTLD_BOOTSTRAP  &&  SHARED](JMPABS_INSN_OPCODE): New."
+        },
+        {
+          "line": 1528,
+          "text": "\t[! ELF_DYNAMIC_AFTER_RELOC && ! RTLD_BOOTSTRAP  &&  SHARED](JMPABS_INSN_SIZE): New."
+        },
+        {
+          "line": 1529,
+          "text": "\t[! ELF_DYNAMIC_AFTER_RELOC && ! RTLD_BOOTSTRAP  &&  SHARED](INT3_INSN_OPCODE): New."
+        },
+        {
+          "line": 1530,
+          "text": "\t[! ELF_DYNAMIC_AFTER_RELOC && ! RTLD_BOOTSTRAP  &&  SHARED](x86_64_reloc_symbol_name): New."
+        },
+        {
+          "line": 1531,
+          "text": "\t[! ELF_DYNAMIC_AFTER_RELOC && ! RTLD_BOOTSTRAP  &&  SHARED](x86_64_rewrite_plt): New."
+        },
+        {
+          "line": 1532,
+          "text": "\t[! ELF_DYNAMIC_AFTER_RELOC && ! RTLD_BOOTSTRAP  &&  SHARED](x86_64_rewrite_plt_in_place): New."
+        },
+        {
+          "line": 1533,
+          "text": "\t[! ELF_DYNAMIC_AFTER_RELOC && ! RTLD_BOOTSTRAP  &&  SHARED](x86_64_dynamic_after_reloc): New."
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/NEWS",
+      "bytes": 390085,
+      "sha256": "67f0f88bd7a335781eabe1573ed871362ad578218e4be68160eee3da7a219381",
+      "hits": [
+        {
+          "line": 513,
+          "text": "* A new tunable, glibc.cpu.plt_rewrite, can be used to enable PLT"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/elf/dynamic-link.h",
+      "bytes": 8344,
+      "sha256": "4b99c1a6fa264e86627a8d34fc406f26941d026523e84dc9edb6214d9ae01c42",
+      "hits": [
+        {
+          "line": 180,
+          "text": "# ifndef ELF_DYNAMIC_AFTER_RELOC"
+        },
+        {
+          "line": 181,
+          "text": "#  define ELF_DYNAMIC_AFTER_RELOC(map, lazy)"
+        },
+        {
+          "line": 199,
+          "text": "    ELF_DYNAMIC_AFTER_RELOC ((map), (edr_lazy));\t\t\t      \\"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/elf/elf.h",
+      "bytes": 196094,
+      "sha256": "1490fa24d00c6e1a803edd0402e24f11bcf9de0683953f83a726a9c5462fe46c",
+      "hits": [
+        {
+          "line": 3658,
+          "text": "#define DT_X86_64_PLT\t\t(DT_LOPROC + 0)"
+        },
+        {
+          "line": 3659,
+          "text": "#define DT_X86_64_PLTSZ\t\t(DT_LOPROC + 1)"
+        },
+        {
+          "line": 3660,
+          "text": "#define DT_X86_64_PLTENT\t(DT_LOPROC + 3)"
+        },
+        {
+          "line": 3661,
+          "text": "#define DT_X86_64_NUM\t\t4"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/elf/tst-glibcelf.py",
+      "bytes": 10767,
+      "sha256": "137595d5248da677bf1e98b08495f195ae905373699e62d8d5a11f124f9ad7a4",
+      "hits": [
+        {
+          "line": 190,
+          "text": "DT_X86_64_NUM"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/scripts/glibcelf.py",
+      "bytes": 33097,
+      "sha256": "70f318f3bea3f9542f853fba9ebf8213191c26f0a436f9137b9b9bfb8aeac554",
+      "hits": [
+        {
+          "line": 456,
+          "text": "DT_X86_64_NUM"
+        },
+        {
+          "line": 467,
+          "text": "_register_elf_h(DtX86_64, prefix='DT_X86_64_', skip=_dt_skip, parent=Dt)"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/sysdeps/unix/sysv/linux/x86_64/dl-plt-rewrite.h",
+      "bytes": 1534,
+      "sha256": "9aca14aa5dd2d9ff4b1050c6fc1b36934c6113071c03d83637049e4b814e199b",
+      "hits": [
+        {
+          "line": 22,
+          "text": "dl_plt_rewrite_supported (void)"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86/cpu-features.c",
+      "bytes": 42147,
+      "sha256": "9b7a604d9a1ece010f8520f9a75660051dc83d172f59aefab660cc9b9e9742a5",
+      "hits": [
+        {
+          "line": 40,
+          "text": "TUNABLE_CALLBACK (set_plt_rewrite) (tunable_val_t *valp)"
+        },
+        {
+          "line": 43,
+          "text": "     dl_plt_rewrite_supported() since it may generate"
+        },
+        {
+          "line": 46,
+          "text": "  if (valp->numval != 0 && dl_plt_rewrite_supported ())"
+        },
+        {
+          "line": 50,
+          "text": "      GL (dl_x86_feature_control).plt_rewrite"
+        },
+        {
+          "line": 52,
+          "text": "\t\t ? plt_rewrite_jmpabs"
+        },
+        {
+          "line": 53,
+          "text": "\t\t : plt_rewrite_jmp);"
+        },
+        {
+          "line": 1310,
+          "text": "  TUNABLE_GET (plt_rewrite, tunable_val_t *,"
+        },
+        {
+          "line": 1311,
+          "text": "\t       TUNABLE_CALLBACK (set_plt_rewrite));"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86/dl-tunables.list",
+      "bytes": 2804,
+      "sha256": "50a11e932939e0febaded2d85fce849c06a13e98a0d3297ebe71e44d2cf5c70f",
+      "hits": [
+        {
+          "line": 72,
+          "text": "    plt_rewrite {"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86_64/Makefile",
+      "bytes": 17492,
+      "sha256": "c6407b9c65de48d62d61c3ac9e193a9c777506b60cbce7213d7c53266f0c08c3",
+      "hits": [
+        {
+          "line": 5,
+          "text": "# Always generate DT_X86_64_PLT* tags."
+        },
+        {
+          "line": 7,
+          "text": "# Never generate DT_X86_64_PLT* tags on ld.so to avoid changing its own"
+        },
+        {
+          "line": 203,
+          "text": "tst-plt-rewrite1-ENV = GLIBC_TUNABLES=glibc.cpu.plt_rewrite=1 LD_DEBUG=files:bindings"
+        },
+        {
+          "line": 213,
+          "text": "tst-plt-rewrite2-ENV = GLIBC_TUNABLES=glibc.cpu.plt_rewrite=2"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86_64/dl-dtprocnum.h",
+      "bytes": 983,
+      "sha256": "bf878a9f344a53e7e92fa33bec1c007f31ea513ce6a8abf099da06a58529fce8",
+      "hits": [
+        {
+          "line": 21,
+          "text": "#define DT_THISPROCNUM DT_X86_64_NUM"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86_64/dl-machine.h",
+      "bytes": 24634,
+      "sha256": "1545fc722187437ac1c73b5e022fa409ace5998c21915e9d3133c23d0f4413a7",
+      "hits": [
+        {
+          "line": 40,
+          "text": "#define DT_X86_64(x) (DT_X86_64_##x - DT_LOPROC + DT_NUM)"
+        },
+        {
+          "line": 554,
+          "text": "#if !defined ELF_DYNAMIC_AFTER_RELOC && !defined RTLD_BOOTSTRAP \\"
+        },
+        {
+          "line": 556,
+          "text": "# define ELF_DYNAMIC_AFTER_RELOC(map, lazy) \\"
+        },
+        {
+          "line": 576,
+          "text": "x86_64_rewrite_plt (struct link_map *map, ElfW(Addr) plt_rewrite)"
+        },
+        {
+          "line": 640,
+          "text": "\t    if (GL(dl_x86_feature_control).plt_rewrite"
+        },
+        {
+          "line": 641,
+          "text": "\t\t!= plt_rewrite_jmpabs)"
+        },
+        {
+          "line": 686,
+          "text": "  /* Adjust DT_X86_64_PLT address and DT_X86_64_PLTSZ values.  */"
+        },
+        {
+          "line": 724,
+          "text": "  /* Ignore DT_X86_64_PLT if the lazy binding is enabled.  */"
+        },
+        {
+          "line": 728,
+          "text": "  /* Ignore DT_X86_64_PLT if PLT rewrite isn't enabled.  */"
+        },
+        {
+          "line": 729,
+          "text": "  if (__glibc_likely (GL(dl_x86_feature_control).plt_rewrite"
+        },
+        {
+          "line": 730,
+          "text": "\t\t      == plt_rewrite_none))"
+        },
+        {
+          "line": 736,
+          "text": "  /* Ignore DT_X86_64_PLT if there is no R_X86_64_JUMP_SLOT.  */"
+        },
+        {
+          "line": 740,
+          "text": "  /* Ignore DT_X86_64_PLT if"
+        },
+        {
+          "line": 743,
+          "text": "     3. DT_X86_64_PLTENT isn't available or its value is smaller than"
+        },
+        {
+          "line": 745,
+          "text": "     4. DT_X86_64_PLTSZ isn't available or its value is smaller than"
+        },
+        {
+          "line": 746,
+          "text": "\tDT_X86_64_PLTENT's value or isn't a multiple of DT_X86_64_PLTENT's"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86_64/dl-plt-rewrite.h",
+      "bytes": 919,
+      "sha256": "50f57f0b71960e241c09a1af0eda9179a526299ec7d09ac680831a69c9cbaa3a",
+      "hits": [
+        {
+          "line": 22,
+          "text": "dl_plt_rewrite_supported (void)"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86_64/dl-procruntime.c",
+      "bytes": 2252,
+      "sha256": "277d9474af5361781c638d040bc1a0900725f77f265a1c782f5a8d13d5c800a5",
+      "hits": [
+        {
+          "line": 69,
+          "text": "    .plt_rewrite = plt_rewrite_none,"
+        }
+      ]
+    },
+    {
+      "member": "glibc-2.41/sysdeps/x86_64/feature-control.h",
+      "bytes": 1662,
+      "sha256": "40a8fb01bbe0485700bfa5b032928a37fcb9a2f05fd5685fa41a74ffa029fbc4",
+      "hits": [
+        {
+          "line": 36,
+          "text": "enum dl_plt_rewrite_control"
+        },
+        {
+          "line": 39,
+          "text": "  plt_rewrite_none,"
+        },
+        {
+          "line": 41,
+          "text": "  plt_rewrite_jmp,"
+        },
+        {
+          "line": 43,
+          "text": "  plt_rewrite_jmpabs"
+        },
+        {
+          "line": 50,
+          "text": "  enum dl_plt_rewrite_control plt_rewrite : 2;"
+        }
+      ]
+    }
+  ],
+  "selected_sources": [
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/elf/dl-tunables.c",
+      "member": "glibc-2.41/elf/dl-tunables.c",
+      "bytes": 11710,
+      "sha256": "57c4d9bd54ef9d45d1d741bc90616e4c300c47904f4c78325dcd732bb16ac293"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/elf/dl-tunables.h",
+      "member": "glibc-2.41/elf/dl-tunables.h",
+      "bytes": 6104,
+      "sha256": "96468a5bfb95d69d6ec15ad94f57774530c593e8a2791bae4d9b4fb05fd6883f"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/elf/dynamic-link.h",
+      "member": "glibc-2.41/elf/dynamic-link.h",
+      "bytes": 8344,
+      "sha256": "4b99c1a6fa264e86627a8d34fc406f26941d026523e84dc9edb6214d9ae01c42"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/elf/elf.h",
+      "member": "glibc-2.41/elf/elf.h",
+      "bytes": 196094,
+      "sha256": "1490fa24d00c6e1a803edd0402e24f11bcf9de0683953f83a726a9c5462fe46c"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/elf/get-dynamic-info.h",
+      "member": "glibc-2.41/elf/get-dynamic-info.h",
+      "bytes": 6248,
+      "sha256": "b1dfce5fd79e795bdb44bab5c6eaa86ffe0bb37cbf6eade765e217d03a620c65"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/scripts/gen-tunables.awk",
+      "member": "glibc-2.41/scripts/gen-tunables.awk",
+      "bytes": 4874,
+      "sha256": "2f61e87026f247fd213e83e655b1203dc9e48b6e8d0af0fead846e7c61d499a8"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/sysdeps/unix/sysv/linux/x86_64/Implies",
+      "member": "glibc-2.41/sysdeps/unix/sysv/linux/x86_64/Implies",
+      "bytes": 60,
+      "sha256": "94209b8414a50bd173b81f004dfa9b67c32b60b693e486f498686d42218c5edd"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/sysdeps/unix/sysv/linux/x86_64/dl-plt-rewrite.h",
+      "member": "glibc-2.41/sysdeps/unix/sysv/linux/x86_64/dl-plt-rewrite.h",
+      "bytes": 1534,
+      "sha256": "9aca14aa5dd2d9ff4b1050c6fc1b36934c6113071c03d83637049e4b814e199b"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/sysdeps/x86/cpu-features.c",
+      "member": "glibc-2.41/sysdeps/x86/cpu-features.c",
+      "bytes": 42147,
+      "sha256": "9b7a604d9a1ece010f8520f9a75660051dc83d172f59aefab660cc9b9e9742a5"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/sysdeps/x86/dl-tunables.list",
+      "member": "glibc-2.41/sysdeps/x86/dl-tunables.list",
+      "bytes": 2804,
+      "sha256": "50a11e932939e0febaded2d85fce849c06a13e98a0d3297ebe71e44d2cf5c70f"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/sysdeps/x86_64/Implies",
+      "member": "glibc-2.41/sysdeps/x86_64/Implies",
+      "bytes": 67,
+      "sha256": "10cae987dff61361f6bdb042897ec69791ded7c5031f0dc2a21e1d2f64bb25e9"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/sysdeps/x86_64/Makefile",
+      "member": "glibc-2.41/sysdeps/x86_64/Makefile",
+      "bytes": 17492,
+      "sha256": "c6407b9c65de48d62d61c3ac9e193a9c777506b60cbce7213d7c53266f0c08c3"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/sysdeps/x86_64/configure.ac",
+      "member": "glibc-2.41/sysdeps/x86_64/configure.ac",
+      "bytes": 3345,
+      "sha256": "9ba11407548d64f697c0eddea4305d0c3f089339af1b730ccf467c76046a00b5"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/sysdeps/x86_64/dl-dtprocnum.h",
+      "member": "glibc-2.41/sysdeps/x86_64/dl-dtprocnum.h",
+      "bytes": 983,
+      "sha256": "bf878a9f344a53e7e92fa33bec1c007f31ea513ce6a8abf099da06a58529fce8"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/sysdeps/x86_64/dl-machine.h",
+      "member": "glibc-2.41/sysdeps/x86_64/dl-machine.h",
+      "bytes": 24634,
+      "sha256": "1545fc722187437ac1c73b5e022fa409ace5998c21915e9d3133c23d0f4413a7"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/sysdeps/x86_64/dl-plt-rewrite.h",
+      "member": "glibc-2.41/sysdeps/x86_64/dl-plt-rewrite.h",
+      "bytes": 919,
+      "sha256": "50f57f0b71960e241c09a1af0eda9179a526299ec7d09ac680831a69c9cbaa3a"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/sysdeps/x86_64/dl-procruntime.c",
+      "member": "glibc-2.41/sysdeps/x86_64/dl-procruntime.c",
+      "bytes": 2252,
+      "sha256": "277d9474af5361781c638d040bc1a0900725f77f265a1c782f5a8d13d5c800a5"
+    },
+    {
+      "path": "/workspace/scratch/fd30b8a094f0/p16-session/tag-design/source-attempt001/upstream/sysdeps/x86_64/feature-control.h",
+      "member": "glibc-2.41/sysdeps/x86_64/feature-control.h",
+      "bytes": 1662,
+      "sha256": "40a8fb01bbe0485700bfa5b032928a37fcb9a2f05fd5685fa41a74ffa029fbc4"
+    }
+  ],
+  "active_patch_count": 80,
+  "series_sha256": "cb7488954191709b6759021fbec3fecfa04727b94d039f339b1f31e4f1e9d00b",
+  "patches": [
+    {
+      "patch": "git-updates.diff",
+      "bytes": 623020,
+      "sha256": "c3c28ea3a3a9ae8478ff7c051202bafefe165e60e11f707389751e7c850956de",
+      "selected_path_headers": [
+        {
+          "line": 16204,
+          "path": "sysdeps/x86/cpu-features.c"
+        },
+        {
+          "line": 16205,
+          "path": "sysdeps/x86/cpu-features.c"
+        },
+        {
+          "line": 16963,
+          "path": "sysdeps/x86_64/Makefile"
+        },
+        {
+          "line": 16964,
+          "path": "sysdeps/x86_64/Makefile"
+        }
+      ],
+      "symbol_hits": [
+        {
+          "line": 16983,
+          "text": " tst-plt-rewrite2-ENV = GLIBC_TUNABLES=glibc.cpu.plt_rewrite=2"
+        },
+        {
+          "line": 16991,
+          "text": "+\t\t| grep GLIBC_ABI_DT_X86_64_PLT > $@; \\"
+        },
+        {
+          "line": 17005,
+          "text": "+  GLIBC_ABI_DT_X86_64_PLT {"
+        }
+      ]
+    },
+    {
+      "patch": "locale/check-unknown-symbols.diff",
+      "bytes": 1136,
+      "sha256": "1e012e5e754684ace8d1906e350598a68e481bf04bae23721d114ea37f9a5860",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "locale/locale-print-LANGUAGE.diff",
+      "bytes": 1131,
+      "sha256": "7380447b8f845724bb7aa66e6a5b30098e3aecad6d1c748d0391218891ecf033",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "locale/LC_IDENTIFICATION-optional-fields.diff",
+      "bytes": 1052,
+      "sha256": "0d34232f355bcef85e0dbb2cd989b05b256338512b7d4f9955b3da2cd2143c1e",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "localedata/sort-UTF8-first.diff",
+      "bytes": 1546,
+      "sha256": "03f3214e4b1df6d7cd05a40881f7ab7c0843b125ccc3f455169e41a634911f5c",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "localedata/supported.diff",
+      "bytes": 1482,
+      "sha256": "f10d7153e7f2e91c6a078fd690e466250c60cb9b54f7967aa8ec70d4697cb91e",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "localedata/locale-eu_FR.diff",
+      "bytes": 3832,
+      "sha256": "ffb46b48511ee84cf343682f7bdadd1c19e278520c156fece975fd4064292fb3",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "localedata/locale-ku_TR.diff",
+      "bytes": 2751,
+      "sha256": "f509f475f69f08a785440e40a0c112bb1d13f34631496883456d377c2f031784",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "localedata/fo_FO-date_fmt.diff",
+      "bytes": 726,
+      "sha256": "4f7c6c5644fe6669563584b770406005cac0d8edd7e8212242492fb1a0c05c96",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "localedata/locales-fr.diff",
+      "bytes": 2049,
+      "sha256": "6553fa58f80b7f9202d8b32b32ca477e31c8dbda724235c13e28d84820d7c58e",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "localedata/locale-en_DK.diff",
+      "bytes": 1525,
+      "sha256": "60886407b1a099a1944bee532ae7fa5e021bc6accaaee2e19c5806e79b03bcd9",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "localedata/locale-zh_TW.diff",
+      "bytes": 547,
+      "sha256": "da2a0d947d065fbfeb39f5ba69482e6fffb5340ba52d101a84dec4e2c2ba365a",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "localedata/tailor-iso14651_t1.diff",
+      "bytes": 85111,
+      "sha256": "6d0cd73fc196be181b8605f3db9417da3fd371d86f70365052c89ffafe5d6162",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "localedata/submitted-es_MX-decimal_point.diff",
+      "bytes": 498,
+      "sha256": "b16bf4fb56c3c8a48317a3e926bb742c94a52e38f02c516d61dda2c2bba3c455",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "alpha/local-gcc4.1.diff",
+      "bytes": 1831,
+      "sha256": "9f2bb61ef79d39ebd75e2988541c5e0e7cdd52e2c8d0caa913e8ef457f9a4fed",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "alpha/submitted-dl-support.diff",
+      "bytes": 629,
+      "sha256": "e1f29d99b180314d205c04995ea9e66762307f549df579f9caa2040f8332952d",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "alpha/submitted-fts64.diff",
+      "bytes": 341,
+      "sha256": "fd5c7265ab941829881ee57a1e3b3ac26d55f5478430cd2a8f14bc6f8ee36998",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "alpha/submitted-makecontext.diff",
+      "bytes": 675,
+      "sha256": "850621247bac6c82a88d85b71b426accd277bda5b57c2c19708eca6a8e499f28",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "arm/local-sigaction.diff",
+      "bytes": 855,
+      "sha256": "3927c011f6971adf4f164cd5522976e3078d0efa3cfcf5c90cb930fb798701c6",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "arm/unsubmitted-ldso-multilib.diff",
+      "bytes": 602,
+      "sha256": "af842dd5fc858cefbcbeb7371c49d149f3f76d845cfc891a8905839100d3eae4",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "arm/local-arm-futex.diff",
+      "bytes": 1035,
+      "sha256": "627c5938baf5ccb990525e2ba2ee71de3db63a70fa1bc04000b5cbda439f710c",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/git-proc_reauth.diff",
+      "bytes": 3604,
+      "sha256": "df5219e5cd401981ac9d12b699b78674b78bb91264944302915cb2b5005b3602",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/git-mig-strncpy.diff",
+      "bytes": 799,
+      "sha256": "25b2360fbc2aec689b4b8f304979c1848ffddc4520da2821420a95a1a2f0fe1b",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/git-pthread_sigmask_nothread.diff",
+      "bytes": 665,
+      "sha256": "9272f6a75e7d4c9d5f61c8f02fd97266cf3956117d219e20ea1136f398fdcb30",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/git-rt-timedwait-realtime.diff",
+      "bytes": 1711,
+      "sha256": "b1ace84214bcdb73879bf2a080410599a98e8aa552f109854c80504eb1108a2f",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/git-pthread_setcancel.diff",
+      "bytes": 2306,
+      "sha256": "4f36183745ccf463c199f0a760637a6387b548800854ccca2176d2980e8de1c4",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/git-dup-refcnt.diff",
+      "bytes": 5032,
+      "sha256": "4a91e550eee1b5e40ceea28feba59f96cad24d8afb3765a9253a382ea3395b09",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/git-xstate.diff",
+      "bytes": 22661,
+      "sha256": "d7b77631fd22a91c01fcfc5e08de53393614ea0cb4cb2c9231292efbb4cc0f12",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/git-utime-EINVAL.diff",
+      "bytes": 6470,
+      "sha256": "0e3aa20cbfe3d83ffc433a039749994166a0d3900643f4bf6fc57055ce1e182a",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/git-xstate-initialized.diff",
+      "bytes": 3730,
+      "sha256": "faf58f2224ec24a6c90d678f20aa6b410fe15e566629661d50ac0b5665c58491",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/git-signal-fpe-exceptions.diff",
+      "bytes": 1897,
+      "sha256": "982943f73a61ff3944b345151847a7e8c593ce97984ced014cc1cb067546df4f",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/git-symlink-eexist.diff",
+      "bytes": 859,
+      "sha256": "dd1bff2b5d8ccd2671cde1c6727d02c21331825d9c679433cd076899ff8516d5",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/git-rename.diff",
+      "bytes": 1686,
+      "sha256": "9d38d74aff588caa3270479dc1f87db63cde0c225a2ece88862e37f086b6e8b9",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/local-pthread_once.diff",
+      "bytes": 6571,
+      "sha256": "cb0e08c2d9730f5fcaba1bee5b8c6355ef36d77d825a14f1c36c27e12ad862d3",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/local-64b-align.diff",
+      "bytes": 1932,
+      "sha256": "76453cfc583c57e5c5f5e648bd186b45dff28265e80525421230d2959c961b71",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/local-enable-ldconfig.diff",
+      "bytes": 879,
+      "sha256": "b023aa6e9b45b2e95d01fd1a8feb2b13cf13a6509f27f06d7f653008f3920556",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/tg-sysvshm.diff",
+      "bytes": 21953,
+      "sha256": "160a37b38e8c2d5432d73e43adfc0125948c109bb8052053d0917bfcf17461e4",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/tg-thread-cancel.diff",
+      "bytes": 2887,
+      "sha256": "864d1320e4c51e569bdf58e4b7747781e3559b9d392686cba901c00f158bf651",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/local-disable-ioctls.diff",
+      "bytes": 1115,
+      "sha256": "87ff956297b6b9dacb95897c4f9899c73e00c5928391f53b4fb0f85922f32e65",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/tg-sendmsg-SCM_CREDS.diff",
+      "bytes": 7539,
+      "sha256": "a6f0801f305ddfcdd4aefadc3f19994d669c5681354200c8ce56a4b4179d10fc",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/tg-mach-hurd-link.diff",
+      "bytes": 987,
+      "sha256": "58e3929cfb0dd3573e9bef0877a9d5480cedf451193bcfcb12adefff8193016b",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/local-ED.diff",
+      "bytes": 1239,
+      "sha256": "f1a99a0f668ae4967f45257ddb3ddbf67fe9e825fbd95613175e35bc7210ae26",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/local-madvise_warn.diff",
+      "bytes": 553,
+      "sha256": "b9b226e5aa805bc6a884055f41ae8e013ac74f6299ce10fa29686fe78414527c",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/local-usr.diff",
+      "bytes": 1177,
+      "sha256": "7ff001cfd98568907adb7be727c84dc1c71420d9aefe2d0ceb0efc13c7c9a35c",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/tg-ifaddrs_v6.diff",
+      "bytes": 10986,
+      "sha256": "ec0b3065898fbe48af62def4ed85ad1edf06ae53e989a4caeab16d9bc9b31290",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/unsubmitted-clock_t_centiseconds.diff",
+      "bytes": 1820,
+      "sha256": "af3139bf83e29c1be1b34058f1c6965fb26ac22a059566ff546d6daca284fe1f",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/submitted-path_mounted.diff",
+      "bytes": 1439,
+      "sha256": "bf1d4aa6f8abc7190f20fe048e45fe887a0c31e4c0dc7407adf823214a54c4a3",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/submitted-bind_umask2.diff",
+      "bytes": 1626,
+      "sha256": "d4f6e790a8bf02d189d133fbaa03548a0cf72c720702e0f0ea97c8d2b5914ca3",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/tg-bootstrap.diff",
+      "bytes": 775,
+      "sha256": "e17d0aa99e83a25772e6caf3e10f4dc55156905611b37733237d2fad8a89e0dc",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/tg-libc_rwlock_recursive.diff",
+      "bytes": 3694,
+      "sha256": "d30527ddf52e46b6367a2c885fc4a92761d9abc8e6fed6842e792a1bb4017d7e",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/local-no_unsupported_ioctls.diff",
+      "bytes": 2190,
+      "sha256": "0a711a3a2fe4859735cb895082c97f454b5946ac5fd35f4c4cd36f458dfb336e",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "hurd-i386/local-stack_chk_guard.diff",
+      "bytes": 1434,
+      "sha256": "7f1bb2efbb7444247b9f8a6aaa4d2b2cd21ae29abe58adad6813106b52f2cadd",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "i386/local-biarch.diff",
+      "bytes": 507,
+      "sha256": "e04e9f90c9521a562706b0ae14f6fcaf683bec3418949d8c2cf81b5745813259",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "i386/unsubmitted-quiet-ldconfig.diff",
+      "bytes": 383,
+      "sha256": "4499f8d53dbd7317b4edc1dfd98f31389f60c09e54c70a77baa544987a339032",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "i386/local-setcontext-revert-eax-ecx-edx.patch",
+      "bytes": 3142,
+      "sha256": "a19bc16a1d8bfb0da5f2819a83b7bb04fdbf1db8487eddcdbfe3ffab4a82b295",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "m68k/local-reloc.diff",
+      "bytes": 806,
+      "sha256": "286055e52c8b7bd5677e99c1fdde1fe639f5e4dbca0f22cb707f053366c770df",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "mips/submitted-rld_map.diff",
+      "bytes": 674,
+      "sha256": "1ee338abf51f73f455040cb6d94d39bb77b456bcae7bf7a7279a41bcc79ddd9d",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "powerpc/local-powerpc8xx-dcbz.diff",
+      "bytes": 915,
+      "sha256": "c8f2edfc4fe17f0abf22290c0879a8d1b55f9b66bc9b82e7cd04869d7b6c16a3",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "sh4/local-fpscr_values.diff",
+      "bytes": 964,
+      "sha256": "27454c3a56b3a1d115cfac1185e1e37d66976d1060cc54270b4ac6680d275ecd",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "all/local-alias-et_EE.diff",
+      "bytes": 420,
+      "sha256": "dcd995608e0ac2fc2f72d86b96ec044898ce4430eca77b4e86b98331fc3b8ff1",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "all/local-remove-manual.diff",
+      "bytes": 8078,
+      "sha256": "f4cac3b4b80413d5a981d93cfd828bae7a8337e3711186580d6bdba44e943f4a",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "all/local-ru_RU.diff",
+      "bytes": 717,
+      "sha256": "f73fdd29b5d61fdfecfdc82d6292db6376200b9b53c96e82b13fd8fb230a1d80",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "all/local-ldd.diff",
+      "bytes": 891,
+      "sha256": "221c95bcddc9535e62212eb8d5e4552533145ee27bc6da9b87492adc9b3b9bfd",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-asserth-decls.diff",
+      "bytes": 1152,
+      "sha256": "226126f69c8097a5dffda444914b2c58e004f7100d228544d5f1d7d178192e91",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-fhs-linux-paths.diff",
+      "bytes": 1026,
+      "sha256": "c1c2eff1d40d6913adfcb928176e1a9d9bb63a14a23a84dc576010fd1999b5b8",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-fhs-nscd.diff",
+      "bytes": 855,
+      "sha256": "9756e24882ac856b01bc9c9d3f2f5a19b41524970f4f918173e3255787fe0beb",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-ld-multiarch.diff",
+      "bytes": 1355,
+      "sha256": "f7c72262826010174c8e432e93bee93254bf60beb96d0294f0418dfc9472b51a",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-stubs_h.diff",
+      "bytes": 432,
+      "sha256": "37b1bfd845bdc7317b585c7bfc07079c18212a4c26f7ab70fcfdbf4f2066482c",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-tcsetaddr.diff",
+      "bytes": 2904,
+      "sha256": "92ed0adbd55da898809932cce39a3f0914462bf09a1f53d0f4697c359496eddc",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-nss-overflow.diff",
+      "bytes": 1991,
+      "sha256": "17e5e2d97e30f27e8bcc2d891650cb68dce20827018a179a0a706d6c24f053fc",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/submitted-missing-etc-hosts.diff",
+      "bytes": 306,
+      "sha256": "1a7d9783b9270b97dbe6df55441f8a47d0cab7ae443720259c75e8ce53f5b477",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/submitted-nptl-invalid-td.patch",
+      "bytes": 891,
+      "sha256": "b4d8993b2dbfaa9585acd2f88067a65538d4f75e4f97a838541af555c63ac6a2",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-ldconfig-multiarch.diff",
+      "bytes": 1558,
+      "sha256": "214e510b8ac7624f2dac8983f2abc7db0a0c72e18f8c2abd0af0bb63d633ee58",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-disable-libnss-db.diff",
+      "bytes": 478,
+      "sha256": "3d9654f23dc0b65f5f91a06e07a9bbee188e1f47317351058a9f3078bc811ba3",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-revert-bz13979.diff",
+      "bytes": 1205,
+      "sha256": "f10c9b712b83b9430b22bc0b8a4d7553a94122f1e67d960b4270b5a5e2a4fc72",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/unsubmitted-ldso-machine-mismatch.diff",
+      "bytes": 556,
+      "sha256": "5e79fa2421af1a2c6d9a055c7e6d2b0351eea5bf9a40c7ec5d3387f2f533ed63",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-ldconfig-ignore-ld.so.diff",
+      "bytes": 1810,
+      "sha256": "d7f3513bf212a124f085bded16f012933c164fe3c500fc54b51b9d4a8787f613",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-bootstrap-headers.diff",
+      "bytes": 3245,
+      "sha256": "4651f6bfd4bb62bd7e8372f970a1f5c4a6f4753c96d3577c29a35f123792469b",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-test-install.diff",
+      "bytes": 641,
+      "sha256": "ecea70be891e06f0961f713b3dcd8851bc010db8b0c17bb336de00724fc7f167",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    },
+    {
+      "patch": "any/local-cross.patch",
+      "bytes": 722,
+      "sha256": "bc6ee0c521a5e705ad4745820563a15a33645e5358a86254beb8a350c9dbd98c",
+      "selected_path_headers": [],
+      "symbol_hits": []
+    }
+  ],
+  "package": {
+    "path": "/workspace/scratch/fd30b8a094f0/incoming/p15/recovery/session/package-retrieval/libc6_2.41-12+deb13u4_amd64.deb.inert",
+    "bytes": 2846580,
+    "sha256": "967aa62605721081c3eb2a17650611a792aa802d76a6511d1840242623d204c9"
+  },
+  "libc": {
+    "capture": "/workspace/scratch/fd30b8a094f0/incoming/p15/recovery/session/h0-static-admission-attempt001/current-python-loaded-libc.elf.inert",
+    "bytes": 1995216,
+    "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
+    "selected_tags": [
+      {
+        "offset": 1980896,
+        "tag": 1879048192,
+        "value": 163840
+      },
+      {
+        "offset": 1980912,
+        "tag": 1879048193,
+        "value": 976
+      },
+      {
+        "offset": 1980928,
+        "tag": 1879048195,
+        "value": 16
+      }
+    ]
+  },
+  "loader": {
+    "capture": "/workspace/scratch/fd30b8a094f0/incoming/p15/recovery/session/h0-static-admission-attempt001/bound-loader.elf.inert",
+    "bytes": 225672,
+    "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307"
+  },
+  "assertions": [
+    {
+      "name": "archive pin: glibc_2.41.orig.tar.xz",
+      "passed": true
+    },
+    {
+      "name": "archive pin: glibc_2.41-12+deb13u4.debian.tar.xz",
+      "passed": true
+    },
+    {
+      "name": "archive pin: glibc_2.41-12+deb13u4.dsc",
+      "passed": true
+    },
+    {
+      "name": "descriptor checksum: glibc_2.41.orig.tar.xz",
+      "passed": true
+    },
+    {
+      "name": "descriptor checksum: glibc_2.41-12+deb13u4.debian.tar.xz",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: elf/dl-tunables.c",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: elf/dl-tunables.h",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: elf/dynamic-link.h",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: elf/elf.h",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: elf/get-dynamic-info.h",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: scripts/gen-tunables.awk",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: sysdeps/unix/sysv/linux/x86_64/Implies",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: sysdeps/unix/sysv/linux/x86_64/dl-plt-rewrite.h",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: sysdeps/x86/cpu-features.c",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: sysdeps/x86/dl-tunables.list",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: sysdeps/x86_64/Implies",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: sysdeps/x86_64/Makefile",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: sysdeps/x86_64/configure.ac",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: sysdeps/x86_64/dl-dtprocnum.h",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: sysdeps/x86_64/dl-machine.h",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: sysdeps/x86_64/dl-plt-rewrite.h",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: sysdeps/x86_64/dl-procruntime.c",
+      "passed": true
+    },
+    {
+      "name": "selected source byte equality: sysdeps/x86_64/feature-control.h",
+      "passed": true
+    },
+    {
+      "name": "complete selected source inventory",
+      "passed": true
+    },
+    {
+      "name": "complete relevant patch sections: git-updates-tag-context.diff",
+      "passed": true
+    },
+    {
+      "name": "complete relevant patch sections: git-updates-versions-context.diff",
+      "passed": true
+    },
+    {
+      "name": "binary package pin",
+      "passed": true
+    },
+    {
+      "name": "ar header",
+      "passed": true
+    },
+    {
+      "name": "ar member header",
+      "passed": true
+    },
+    {
+      "name": "unique ar member: debian-binary",
+      "passed": true
+    },
+    {
+      "name": "ar member size: debian-binary",
+      "passed": true
+    },
+    {
+      "name": "ar member header",
+      "passed": true
+    },
+    {
+      "name": "unique ar member: control.tar.xz",
+      "passed": true
+    },
+    {
+      "name": "ar member size: control.tar.xz",
+      "passed": true
+    },
+    {
+      "name": "ar member header",
+      "passed": true
+    },
+    {
+      "name": "unique ar member: data.tar.xz",
+      "passed": true
+    },
+    {
+      "name": "ar member size: data.tar.xz",
+      "passed": true
+    },
+    {
+      "name": "ar final position",
+      "passed": true
+    },
+    {
+      "name": "package/source association",
+      "passed": true
+    },
+    {
+      "name": "captured libc equals exact package member",
+      "passed": true
+    },
+    {
+      "name": "captured loader equals exact package member",
+      "passed": true
+    },
+    {
+      "name": "captured libc pin",
+      "passed": true
+    },
+    {
+      "name": "captured loader pin",
+      "passed": true
+    },
+    {
+      "name": "captured libc architecture",
+      "passed": true
+    },
+    {
+      "name": "captured libc one dynamic table",
+      "passed": true
+    },
+    {
+      "name": "retained exact tag tuple",
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "later_flags_predicate_evaluated": false,
+  "product_module_imported": false,
+  "product_parser_called": false,
+  "target_execution": false,
+  "current_host_input_opened": false,
+  "limitations": [
+    "Source-to-binary association rests on retained official HTTPS/package/source records, not a reproduced build or verified OpenPGP signature.",
+    "Automated full-byte symbol scans do not mean every upstream file was manually read.",
+    "Exact retained capture equality is not current-host equality or host qualification."
+  ]
+}

@@ -1,0 +1,176 @@
+[
+  {
+    "member": "glibc-2.41/ChangeLog.old/ChangeLog.28",
+    "bytes": 307618,
+    "sha256": "768567794a4bd50320eedb6774765e28118311639c33617abfffa28b239e8d9e",
+    "matches": [
+      {
+        "line": 1510,
+        "text": "\t(dl_plt_rewrite_control): New."
+      }
+    ]
+  },
+  {
+    "member": "glibc-2.41/NEWS",
+    "bytes": 390085,
+    "sha256": "67f0f88bd7a335781eabe1573ed871362ad578218e4be68160eee3da7a219381",
+    "matches": [
+      {
+        "line": 516,
+        "text": "* A new tunable, glibc.cpu.plt_rewrite, can be used to enable PLT"
+      }
+    ]
+  },
+  {
+    "member": "glibc-2.41/sysdeps/unix/sysv/linux/x86_64/dl-plt-rewrite.h",
+    "bytes": 1534,
+    "sha256": "9aca14aa5dd2d9ff4b1050c6fc1b36934c6113071c03d83637049e4b814e199b",
+    "matches": [
+      {
+        "line": 22,
+        "text": "dl_plt_rewrite_supported (void)"
+      }
+    ]
+  },
+  {
+    "member": "glibc-2.41/sysdeps/x86/cpu-features.c",
+    "bytes": 42147,
+    "sha256": "9b7a604d9a1ece010f8520f9a75660051dc83d172f59aefab660cc9b9e9742a5",
+    "matches": [
+      {
+        "line": 40,
+        "text": "TUNABLE_CALLBACK (set_plt_rewrite) (tunable_val_t *valp)"
+      },
+      {
+        "line": 43,
+        "text": "     dl_plt_rewrite_supported() since it may generate"
+      },
+      {
+        "line": 46,
+        "text": "  if (valp->numval != 0 && dl_plt_rewrite_supported ())"
+      },
+      {
+        "line": 50,
+        "text": "      GL (dl_x86_feature_control).plt_rewrite"
+      },
+      {
+        "line": 52,
+        "text": "\t\t ? plt_rewrite_jmpabs"
+      },
+      {
+        "line": 53,
+        "text": "\t\t : plt_rewrite_jmp);"
+      },
+      {
+        "line": 1310,
+        "text": "  TUNABLE_GET (plt_rewrite, tunable_val_t *,"
+      },
+      {
+        "line": 1311,
+        "text": "\t       TUNABLE_CALLBACK (set_plt_rewrite));"
+      }
+    ]
+  },
+  {
+    "member": "glibc-2.41/sysdeps/x86/dl-tunables.list",
+    "bytes": 2804,
+    "sha256": "50a11e932939e0febaded2d85fce849c06a13e98a0d3297ebe71e44d2cf5c70f",
+    "matches": [
+      {
+        "line": 72,
+        "text": "    plt_rewrite {"
+      }
+    ]
+  },
+  {
+    "member": "glibc-2.41/sysdeps/x86_64/Makefile",
+    "bytes": 17492,
+    "sha256": "c6407b9c65de48d62d61c3ac9e193a9c777506b60cbce7213d7c53266f0c08c3",
+    "matches": [
+      {
+        "line": 203,
+        "text": "tst-plt-rewrite1-ENV = GLIBC_TUNABLES=glibc.cpu.plt_rewrite=1 LD_DEBUG=files:bindings"
+      },
+      {
+        "line": 213,
+        "text": "tst-plt-rewrite2-ENV = GLIBC_TUNABLES=glibc.cpu.plt_rewrite=2"
+      }
+    ]
+  },
+  {
+    "member": "glibc-2.41/sysdeps/x86_64/dl-machine.h",
+    "bytes": 24634,
+    "sha256": "1545fc722187437ac1c73b5e022fa409ace5998c21915e9d3133c23d0f4413a7",
+    "matches": [
+      {
+        "line": 576,
+        "text": "x86_64_rewrite_plt (struct link_map *map, ElfW(Addr) plt_rewrite)"
+      },
+      {
+        "line": 640,
+        "text": "\t    if (GL(dl_x86_feature_control).plt_rewrite"
+      },
+      {
+        "line": 641,
+        "text": "\t\t!= plt_rewrite_jmpabs)"
+      },
+      {
+        "line": 729,
+        "text": "  if (__glibc_likely (GL(dl_x86_feature_control).plt_rewrite"
+      },
+      {
+        "line": 730,
+        "text": "\t\t      == plt_rewrite_none))"
+      }
+    ]
+  },
+  {
+    "member": "glibc-2.41/sysdeps/x86_64/dl-plt-rewrite.h",
+    "bytes": 919,
+    "sha256": "50f57f0b71960e241c09a1af0eda9179a526299ec7d09ac680831a69c9cbaa3a",
+    "matches": [
+      {
+        "line": 22,
+        "text": "dl_plt_rewrite_supported (void)"
+      }
+    ]
+  },
+  {
+    "member": "glibc-2.41/sysdeps/x86_64/dl-procruntime.c",
+    "bytes": 2252,
+    "sha256": "277d9474af5361781c638d040bc1a0900725f77f265a1c782f5a8d13d5c800a5",
+    "matches": [
+      {
+        "line": 69,
+        "text": "    .plt_rewrite = plt_rewrite_none,"
+      }
+    ]
+  },
+  {
+    "member": "glibc-2.41/sysdeps/x86_64/feature-control.h",
+    "bytes": 1662,
+    "sha256": "40a8fb01bbe0485700bfa5b032928a37fcb9a2f05fd5685fa41a74ffa029fbc4",
+    "matches": [
+      {
+        "line": 36,
+        "text": "enum dl_plt_rewrite_control"
+      },
+      {
+        "line": 39,
+        "text": "  plt_rewrite_none,"
+      },
+      {
+        "line": 41,
+        "text": "  plt_rewrite_jmp,"
+      },
+      {
+        "line": 43,
+        "text": "  plt_rewrite_jmpabs"
+      },
+      {
+        "line": 50,
+        "text": "  enum dl_plt_rewrite_control plt_rewrite : 2;"
+      }
+    ]
+  }
+]
