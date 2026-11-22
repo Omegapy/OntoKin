@@ -7,8 +7,8 @@
   "client_filename_date": "2026-11-21",
   "branch": "work/c271-missing-import-digest-control",
   "starting_branch": "875c81c506d4e5431b909e190ce294c61312029e",
-  "source_revision": "875c81c506d4e5431b909e190ce294c61312029e",
-  "source_tree": "257967a192b269cc578ab9e68d509224e313e1f0",
+  "source_revision": "0474280a2087299004324419ea345ab7c716bc9a",
+  "source_tree": "0670b1107a5805278d966c47ce4cf1f4d781b10d",
   "observed_main": {
     "commit": "70ca7e68ff95df876f801137369d176fe5b2bab3",
     "tree": "7302cf8f36c45dd76112ad442e42e48379ac8367",
@@ -61,7 +61,7 @@
   ],
   "parent_status": "blocked",
   "parent_complete": false,
-  "status": "technical_stop_independently_confirmed_documentary_delivery_pending",
+  "status": "complete_partial_delivery",
   "early_save_confirmed": true,
   "phase_table": [
     {
@@ -78,19 +78,20 @@
     },
     {
       "gate": "P15-A04",
-      "state": "passed_candidate_checks_and_independent_review_exact_final_publication_pending"
+      "state": "passed_exact_staged_checks_conditional_publication_and_readback"
     },
     {
       "gate": "P15-A05",
-      "state": "pending"
+      "state": "passed_confirmed_saved_files_and_exact_readback_receipt_in_this_checkpoint"
     }
   ],
   "delivery": {
-    "status": "save_pending",
+    "status": "saved_and_exact_readback_verified",
     "external_receipt_required": true,
-    "repository_receipt": "docs/engineering/localized-repair-c271/host-loader-p15/P15-DELIVERY.json"
+    "repository_receipt": "docs/engineering/localized-repair-c271/host-loader-p15/P15-DELIVERY.json",
+    "terminal_confirmation": "docs/engineering/localized-repair-c271/host-loader-p15/P15-TERMINAL-CONFIRMATION.json"
   },
-  "exact_next_action": "Finish only P15 independent blocker/outcome review, documentary checks, conditional branch publication and verified partial handoff with separate receipt; then stop. In a fresh chat, select one bounded source-backed compatibility decision for the rejected actual libc processor-specific dynamic tags before any implementation or further H0/H1.",
+  "exact_next_action": "P15 delivery is confirmed. Stop this chat after publishing and verifying this receipt. In a fresh chat, reconcile live GitHub and select only the recorded bounded source-backed compatibility decision for the exact rejected libc tags.",
   "historical_unknowns": [
     "C270 broad-driver completion",
     "Global prior-process termination",
@@ -98,10 +99,10 @@
   ],
   "current_unknown_operations": [],
   "worker_state": {
-    "/root": "Director documentary publication and delivery only; technical work stopped",
-    "/root/state_reconciliation": "Completed startup/source/documentary work;53 documentary groups passed; no active jobs",
-    "/root/receipt_reconciliation": "Early/package-preflight complete; available for final artifact review",
-    "/root/loader_review": "Source and first-blocker reviews completed; no active jobs or unknown operations"
+    "/root": "Director receipt publication and final confirmation only; no technical phase remains active",
+    "/root/state_reconciliation": "Completed; no active worker job or unknown operation",
+    "/root/receipt_reconciliation": "Completed; no active worker job or unknown operation",
+    "/root/loader_review": "Completed; no active worker job or unknown operation"
   },
   "capabilities": {
     "authentic_checkout": true,
@@ -148,7 +149,9 @@
     "Unchanged production ELF data reader accepted exact loader metadata, then refused actual mapped libc at its dynamic-feature allowlist; stopped immediately with raw bytes/tags and complete typed refusal preserved.",
     "Independent inert-byte/source review confirmed first failed allowed-tag predicate; later dynamic-flags predicate was not reached. Technical work stopped; no outcome correction required.",
     "Scoped source/admission-boundary memory lesson adopted from worker evidence; generic recovery/save lessons reused without duplication.",
-    "Independent documentary audit passed53 groups;20396 baseline file blob/mode identities outside5 permitted existing document paths unchanged; all4 candidate documentary commands passed."
+    "Independent documentary audit passed53 groups;20396 baseline file blob/mode identities outside5 permitted existing document paths unchanged; all4 candidate documentary commands passed.",
+    "Final exact staged tree0670b110 passed four documentary commands and was conditionally published as0474280a; parent/tree/branch readback match; local worktree is clean.",
+    "Final Attempt002 ZIP and matching prompts independently accepted, saved with actual identities and exact readback; separate receipt prepared. Original failed final archive is losslessly reconstructable and independently verified."
   ],
   "evidence": {
     "state_review": "state-review/AUDIT.json",
@@ -166,7 +169,11 @@
     "independent_blocker": "loader-review/blocker-attempt001/BLOCKER-DECISION.json",
     "learning": "LEARNING-ADOPTION.json",
     "documentary_review": "documentary-review/AUDIT.json",
-    "documentary_checks": "verification/prepublication001/CHECKS.json"
+    "documentary_checks": "verification/prepublication001/CHECKS.json",
+    "final_staged_checks": "verification/prepublication002/CHECKS.json",
+    "publication": "publication/core/REMOTE-READBACK.json",
+    "final_package_review": "final-package-review/attempt002/AUDIT.json",
+    "saved_readback": "delivery/FINAL-READBACK-VERIFICATION.json"
   },
   "technical_stop_at_utc": "2026-11-22T06:00:55.597739+00:00",
   "technical_stop": "First actual input refusal: mapped libc.so.6 has processor-specific dynamic tags excluded by the unchanged reader; CHI-UNSUPPORTED / Unreviewed ELF dynamic loader feature. No further H0 prerequisites inspected.",
@@ -193,10 +200,9 @@
   },
   "next_fresh_chat_action": "Reconcile saved P15 receipt and live GitHub. Review the actual libc dynamic tags rejected at the first predicate against the adopted host-inspection contract and exact source; define a bounded compatibility decision and frozen controls, or retain a precise blocker. Preserve historical results and all pins/limits; do not automatically widen the reader allowlist. Stop before implementation, H0/H1 or at the first design blocker.",
   "current_jobs": [
-    "Director final staged checks/conditional publication and delivery",
-    "Independent final package/save receipt review to be assigned"
+    "Pending at this source-time record: conditionally publish and verify this delivery receipt, confirm live PR/issue state, preserve post-freeze evidence, then stop."
   ],
-  "phase_complete": false,
+  "phase_complete": true,
   "updated_at_utc": "2026-11-22T06:10:02.981029+00:00",
   "requirements": {
     "R01": "done",
@@ -215,5 +221,26 @@
     "tree": "7302cf8f36c45dd76112ad442e42e48379ac8367",
     "observed_at_utc": "2026-11-22T06:18:36.569Z",
     "evidence": "recovery/reconciliation/core-live-main.json"
+  },
+  "published_source": {
+    "commit": "0474280a2087299004324419ea345ab7c716bc9a",
+    "tree": "0670b1107a5805278d966c47ce4cf1f4d781b10d",
+    "changed_paths": 32,
+    "conditional_nonforce": true,
+    "exact_remote_readback": true,
+    "worktree_clean": true
+  },
+  "package_attempt": "final-attempt002",
+  "prior_final_package": {
+    "attempt": "final-attempt001",
+    "file_name": "OntoKin_C271_P15_H0_Loader_Review_Handoff_2026-11-21.zip",
+    "bytes": 48916090,
+    "sha256": "440da098ebc5c637d30bdb7d9cd869bd455c3615c4faf6cd7eb43bdd7c3de32b",
+    "saved": false,
+    "findings": [
+      "Root HANDOFF phase-declaration link targeted nonexistent ZIP-root PHASE.json",
+      "Current-jobs wording could be read as completed delivery despite explicit save_pending status"
+    ],
+    "preservation": "Lossless raw ZIP reassembly recipe and retained override records under recovery/session/final-history/attempt001; exact reconstruction must pass before save."
   }
 }

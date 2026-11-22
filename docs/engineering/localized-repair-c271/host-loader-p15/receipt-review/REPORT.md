@@ -1,0 +1,13 @@
+# P15 independent saved-delivery receipt review
+
+**Verdict: accepted_for_conditional_receipt_publication — 19/19 checks passed; 0 mandatory findings.**
+
+The three saved version-0 files have matching actual save results, materialization identities, OntoKin folder paths and exact returned bytes. The final ZIP remains 49,067,300 bytes with SHA-256 `d1f978b059b5b11a3b344532a550b9593d7a53ed221dca751c73aa6510de36c5`. Both separately saved prompts equal their archived members and name the exact Attempt002 ZIP. The accepted package audit is retained unchanged (25 passing groups); all six canonical review copies are byte-identical. The independently reconstructed failed first ZIP still matches its original 48,916,090-byte identity and SHA-256 `440da098ebc5c637d30bdb7d9cd869bd455c3615c4faf6cd7eb43bdd7c3de32b`. No archive scan or reconstruction was repeated.
+
+The canonical receipt and stop record correctly confirm **saved partial phase delivery**. They identify core commit `0474280a2087299004324419ea345ab7c716bc9a` and tree `0670b1107a5805278d966c47ce4cf1f4d781b10d`, with the exact previously verified core publication and four source-time checks. They explicitly leave current receipt publication/readback and later standalone confirmation pending; they do not invent that future publication SHA. The 15 currently staged paths are documentary, the tracked worktree matches the staged candidate, and the source HEAD remains the core commit. Root's reported staged tree is recorded as reported, not independently recomputed.
+
+CURRENT promotes P15, preserves P14 verbatim as previous_handoff, moves the exact former P13 previous record into older_handoffs, and retains all older and historical records. PLAN, REQUIREMENTS and P15-SESSION retain prior source-time text and append the confirmed delivery boundary. Parent requirement definitions and statuses are unchanged: R01/R02 done; R03–R05 not_done; P02 in_progress; parent blocked. PR274 remains recorded draft/open/unmerged, issue273 open, branch retained; no main lease or integration is claimed.
+
+Only final documentary checks, conditional receipt publication and exact readback, final live-state confirmation, and verified separate preservation of post-freeze evidence remain. The next fresh chat may select the bounded compatibility decision for the first rejected libc tags, stopping before implementation/H0/H1 or the first design blocker. This review performs no technical gate decision, publication, canonical/index mutation or new runtime work.
+
+Evidence and all saved IDs are in AUDIT.json; exact reviewed file and member identities are in READSET.json.
