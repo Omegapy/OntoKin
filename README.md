@@ -6,6 +6,15 @@ OntoKin (pronounced **ON-toh-kin**) gives an agent editable `.ok` source that na
 
 For example, an agent can change one component in a reusable assembly, reject a value with the wrong unit, preserve an unchanged sibling and retrieve an artifact tied to the accepted source. Engines and specialist tools provide rendering, general simulation and gameplay.
 
+## Licensing and attribution
+
+Original OntoKin code, scripts, tests, configuration and code examples are licensed
+under the **Apache License 2.0** ([LICENSE](LICENSE), [LICENSE-CODE](LICENSE-CODE)).
+Original explanatory documentation is licensed under **CC BY 4.0**
+([LICENSE-DOCS](LICENSE-DOCS)). Copyright 2026 **Alexander Samuel Ricciardi**
+(GitHub: **Omegapy**). [NOTICE](NOTICE) records attribution; [LICENSING.md](LICENSING.md)
+explains the scope and third-party license exceptions.
+
 ## How the pieces fit
 
 | Stage | Responsibility |
