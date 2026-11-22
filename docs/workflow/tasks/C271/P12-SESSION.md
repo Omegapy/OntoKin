@@ -1,0 +1,12 @@
+# C271 P12 session
+
+
+Director `c271-p12-378b783967ca` resumes the retained branch from `79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae`, against unchanged main `e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d`. Independent intake accepts P11 delivery using the exact saved terminal receipt and live PR274/issue273 confirmation. A new early recovery ZIP is saved, exact-byte readback matches, and all20 independent package groups passed before implementation release.
+
+Implement only accepted P11 candidate004 through `docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/FUTURE-SURFACE.json`: the inspection module and a distinct focused test file. Keep the97 frozen expectations and all175 existing inspection/mapping methods unchanged. Preserve the public parser default, old schema/profile, P06 closed consumers, exact operational pins/commands, existing16MiB document reader and all source/resource/identity guards.
+
+Acceptance: execute the97 frozen controls and175 existing methods with exact source/input/environment/command evidence; obtain independent exact-source and adapter review; pass scoped documentary/workflow/protected-source checks; conditionally publish the retained branch; independently verify and save the partial handoff and matching prompts with a separate receipt. All failures and prior source-time records remain preserved. The full routine is still mandatory under R03 and is not selected in this phase.
+
+Stop after this implementation/control phase and verified partial delivery, or at its first concrete design/surface blocker. No input substitution, H0 re-establishment, H1, runtime installation/preparation, Node/ldd, original-seven/full routine, native/model/hosted execution, main lease/integration or parent closure. R01/R02 remain done; R03-R05 remain not_done and P02 in_progress. PR274 remains draft/open/unmerged, issue273 open, branch retained. Root alone owns canonical records, Git/index, publication and delivery; real workers own disjoint implementation, review and packaging paths. Exact gates are in `docs/engineering/localized-repair-c271/loader-path-p12/PHASE.json`.
+
+Read-set and live reconciliation are retained in `docs/engineering/localized-repair-c271/loader-path-p12/READ-SET.json` and `RECONCILIATION.json`. The main instructions are unchanged from the observed main revision; only STATUS navigation-anchor-only lines were excluded as authorized. No full offline restoration claim is made.

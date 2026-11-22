@@ -4,7 +4,7 @@
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
   "status": "blocked",
-  "owner": "c271-p11-2ad494d5da19",
+  "owner": "c271-p12-378b783967ca",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -96,7 +96,8 @@
         "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
         "docs/engineering/localized-repair-c271/host-preparation-p09/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/elf-string-table-p10/EARLY-RECOVERY-RECEIPT.json",
-        "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json"
       ]
     }
   ],
@@ -493,7 +494,7 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
       ],
-      "scope": "P10 partial delivery only. R03–R05 and integration remain open."
+      "scope": "P10 partial delivery only. R03\u2013R05 and integration remain open."
     },
     {
       "name": "P11 independent intake and verified early recovery",
@@ -588,6 +589,24 @@
         "docs/engineering/localized-repair-c271/loader-path-p11/evidence/final-package-review/REVIEW.json"
       ],
       "scope": "P11 core partial handoff only. Separate terminal confirmation follows; no product test, H0 or R03 acceptance."
+    },
+    {
+      "name": "P12 early recovery and prior delivery reconciliation",
+      "command": "Independent exact archive/receipt/source audit; confirmed saved early ZIP and exact readback comparison",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/intake/AUDIT.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/early-review/AUDIT.json"
+      ]
+    },
+    {
+      "name": "P12 frozen loader-path controls and existing inspection regression",
+      "command": "Exact guarded source-attributed commands to be recorded before execution",
+      "result": "not_run",
+      "required": true,
+      "evidence": []
     }
   ],
   "completion": {
@@ -612,39 +631,51 @@
     "elf_mapping_implementation_commit": "fdacc11349079be21bcce755b18ca660df4d96a2",
     "loader_path_decision_commit": "e7508fb23c64563549631a1be46a3523593e2d9f"
   },
-  "next_action": "Publish and verify this receipt-only branch checkpoint, capture and verify the separate terminal receipt with the recovery-mode clarification, save it and verify its exact returned bytes, reconcile PR274/issue273 metadata, then stop. A later matching terminal receipt may supersede only these source-time delivery-pending fields. Do not begin another phase here.",
+  "next_action": "Implement only accepted P11 candidate004 through FUTURE-SURFACE; freeze exact implementation source before executing all97 frozen controls and all175 existing inspection/mapping methods. Obtain independent review and verified partial delivery, then stop.",
   "session_phase": {
-    "schema": "ontokin.c271.p11-phase/1",
+    "schema": "ontokin.c271.p12-phase/1",
     "task": "C271",
-    "phase": "C271-P11-loader-path-decision",
-    "owner": "c271-p11-2ad494d5da19",
-    "declared_at_utc": "2026-11-21T22:41:35.622787+00:00",
+    "phase": "C271-P12-loader-path-implementation",
+    "owner": "c271-p12-378b783967ca",
+    "declared_at_utc": "2026-11-22T00:34:33.963351+00:00",
     "client_filename_date": "2026-11-21",
     "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
     "starting_main_tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
-    "starting_branch": "e0119f376441fee0fc3956852ac63110ab141011",
-    "starting_branch_tree": "d976520ede52f9227ce2df5bab974d6e1bc2ef79",
+    "starting_branch": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+    "starting_branch_tree": "c3aed39729812e3c2abf2a4a4332d75052c4f19d",
     "branch": "work/c271-missing-import-digest-control",
-    "scope": "Source-backed static decision and independently frozen finite positive/refusal controls for H0-PYTHON-RPATH-TOKEN-001 before any loader-path implementation or input substitution.",
+    "scope": "Implement only accepted P11 candidate004 loader-path decision through its FUTURE-SURFACE.json; run immutable 97 controls and preserve all 175 existing inspection/mapping methods.",
     "acceptance": [
-      "P11-D01: Reconcile P10 delivery/live state and confirm verified early recovery before substantive design or fixture construction.",
-      "P11-D02: Trace the observed RPATH refusal and specify a finite versioned decision with exact path-origin, normalization, identity, loader-search and refusal rules; preserve existing strict consumers and historical behavior.",
-      "P11-D03: Freeze independent positive/boundary/refusal input bytes and expected outcomes before later implementation; enumerate exact change surface and legacy-preservation checks.",
-      "P11-D04: Independent exact design/control review with mandatory findings resolved, static evidence/protected-source checks and required documentation/workflow checks.",
-      "P11-D05: Conditional checkpoint on retained branch; independently verify final ZIP and matching prompts, confirm save/readback, publish separate receipt and stop."
+      {
+        "id": "P12-A01",
+        "criterion": "Reconcile exact P11 handoff/terminal receipt with live GitHub and confirm independently verified saved early recovery before implementation."
+      },
+      {
+        "id": "P12-A02",
+        "criterion": "Implement only the accepted module and new test surface; preserve public parser default, old plan/profile, closed consumers, pins, existing paths/limits and all frozen oracle bytes."
+      },
+      {
+        "id": "P12-A03",
+        "criterion": "Execute all 97 frozen controls and complete 175 existing inspection/mapping methods; preserve exact source/input/environment/commands/logs, all failed attempts and scoped execution limits."
+      },
+      {
+        "id": "P12-A04",
+        "criterion": "Independent exact-source/evidence review resolves mandatory findings; required documentary/workflow/protected-source checks pass; conditionally publish retained branch and verify exact readback."
+      },
+      {
+        "id": "P12-A05",
+        "criterion": "Independently verify/freeze final ZIP and matching prompts, confirm saves and exact readback, publish separate receipt; stop with parent gates open."
+      }
     ],
     "constraints": [
-      "No production/test/helper implementation edits, existing contract/fixture/pin changes or input substitution in P11; new design/control documents and inert independent fixture bytes only.",
-      "No host runtime preparation, installation, Node/ldd, probes, H0 acceptance, H1, original seven methods, full routine, native/model/hosted execution, main lease/integration or parent closure.",
-      "Retain all prior failures/unknowns and source ceilings of 100000 operations/30000 ms; required full routine remains unmet under R03.",
-      "Root owns canonical state/Git/index/publication/delivery; real workers own disjoint paths, no nested workers.",
-      "Do not retry the diagnosed unavailable native push; publish with conditional GitHub API ref update."
+      "No H0 re-establishment, H1, runtime installation/preparation, Node/ldd, probes, original-seven/full-routine, native/model/hosted execution, main lease/integration, or parent closure.",
+      "No source/consumer/test/contract/pin change beyond FUTURE-SURFACE; no expectation rewriting or easier input substitution. Stop at concrete surface/design blocker.",
+      "Preserve ordinary source ceilings 100000 operations/30000 ms, all historical failed/unrun/unknown outcomes. Required full routine remains unmet R03.",
+      "Root owns canonical task/CURRENT, Git/index, publication and delivery. Actual workers own disjoint assigned files; no nested fanout.",
+      "Do not repeat diagnosed unavailable native push; use conditional nonforce GitHub API ref updates with expected head."
     ],
-    "status": "delivery_confirmation_pending",
-    "early_recovery": "confirmed_saved_and_independently_accepted",
+    "status": "implementation_in_progress",
     "early_save_confirmed": true,
-    "main_lease_held": false,
-    "integration_allowed": false,
     "parent_status": "blocked",
     "parent_complete": false,
     "parent_requirements": {
@@ -658,67 +689,8 @@
       "P01": "done",
       "P02": "in_progress"
     },
-    "stop": "Stop after independently accepted decision/control freeze or first unresolved design blocker, and verified partial delivery. Implement only in a later fresh phase.",
-    "workers": {
-      "/root/intake_audit": "Independent intake and recovery audit, then independent design/package review",
-      "/root/handoff_engineer": "Early/final package engineering only",
-      "/root/loader_design": "Independent source-backed design and inert-control author; released only after exact early save/readback",
-      "/root": "Director: canonical records, index/Git publication, verification and Library delivery"
-    },
-    "current_unknown_operations": [],
-    "historical_unknowns": [
-      "C270 broad-driver completion remains unknown",
-      "Global prior-process termination remains unestablished"
-    ],
-    "phase_table": [
-      {
-        "gate": "P11-D01",
-        "state": "passed",
-        "evidence": [
-          "docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json"
-        ]
-      },
-      {
-        "gate": "P11-D02",
-        "state": "passed",
-        "evidence": [
-          "docs/engineering/localized-repair-c271/loader-path-p11/ADOPTION.json",
-          "docs/engineering/localized-repair-c271/loader-path-p11/review/REVIEW.json"
-        ]
-      },
-      {
-        "gate": "P11-D03",
-        "state": "passed",
-        "evidence": [
-          "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/CANDIDATE-MANIFEST.json",
-          "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/EXPECTATIONS.json"
-        ]
-      },
-      {
-        "gate": "P11-D04",
-        "state": "passed",
-        "evidence": [
-          "docs/engineering/localized-repair-c271/loader-path-p11/review/REVIEW.json",
-          "docs/engineering/localized-repair-c271/loader-path-p11/evidence/technical-corrected/CHECKS.json",
-          "docs/engineering/localized-repair-c271/loader-path-p11/evidence/transport_review/REVIEW.json"
-        ]
-      },
-      {
-        "gate": "P11-D05",
-        "state": "core_saved_terminal_confirmation_pending",
-        "evidence": [
-          "docs/engineering/localized-repair-c271/loader-path-p11/P11-DELIVERY.json",
-          "docs/engineering/localized-repair-c271/loader-path-p11/evidence/final-package-review/REVIEW.json"
-        ]
-      }
-    ],
-    "exact_next_action": "Publish and verify this receipt-only branch checkpoint, capture and verify the separate terminal receipt with the recovery-mode clarification, save it and verify its exact returned bytes, reconcile PR274/issue273 metadata, then stop. A later matching terminal receipt may supersede only these source-time delivery-pending fields. Do not begin another phase here.",
-    "observed_main": {
-      "commit": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
-      "tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
-      "observed_at_utc": "2026-11-21T23:32:46.714Z",
-      "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/live_boundary/branches.json"
-    },
+    "main_lease_held": false,
+    "integration_allowed": false,
     "pull_request": {
       "number": 274,
       "state": "open",
@@ -729,127 +701,95 @@
       "number": 273,
       "state": "open"
     },
-    "delivery": {
-      "status": "core_saved_terminal_confirmation_pending",
-      "partial": true,
-      "receipt": "docs/engineering/localized-repair-c271/loader-path-p11/P11-DELIVERY.json",
-      "core_saved_and_readback_verified": true,
-      "separate_terminal_receipt_required": true
+    "stop": "Stop after this bounded implementation/control phase and verified partial delivery, or at its first concrete blocker. No later runtime/integration phase in this chat.",
+    "exact_next_action": "Implement only accepted P11 candidate004 through FUTURE-SURFACE; freeze exact implementation source before executing all97 frozen controls and all175 existing inspection/mapping methods. Obtain independent review and verified partial delivery, then stop.",
+    "workers": {
+      "/root": "Director and canonical writer",
+      "/root/intake_review": "Independent intake/early review complete; exact-source/control/preservation review assigned",
+      "/root/package_engineer": "Early/final package engineering only",
+      "/root/loader_implementation": "Implementer: only inspection module, new focused test and owned scratch evidence"
+    },
+    "current_unknown_operations": [],
+    "historical_unknowns": [
+      "C270 broad-driver completion remains unknown",
+      "Global prior-process termination remains unestablished"
+    ],
+    "phase_table": [
+      {
+        "gate": "P12-A01",
+        "state": "passed",
+        "evidence": [
+          "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json",
+          "docs/engineering/localized-repair-c271/loader-path-p12/evidence/intake/AUDIT.json",
+          "docs/engineering/localized-repair-c271/loader-path-p12/evidence/early-review/AUDIT.json"
+        ]
+      },
+      {
+        "gate": "P12-A02",
+        "state": "in_progress"
+      },
+      {
+        "gate": "P12-A03",
+        "state": "not_run"
+      },
+      {
+        "gate": "P12-A04",
+        "state": "not_started"
+      },
+      {
+        "gate": "P12-A05",
+        "state": "not_started"
+      }
+    ],
+    "selected_design": {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004",
+      "manifest_sha256": "e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de"
+    },
+    "capabilities": {
+      "authenticated_git_checkout": true,
+      "repository_reads": true,
+      "git_data_write_tools_available": true,
+      "expected_head_ref_update_available": true,
+      "terminal_tests": true,
+      "real_subagents": true,
+      "zip_creation_verification": true,
+      "library_materialization_observed": true,
+      "library_save_tools_available": true,
+      "main_merge_not_selected": true,
+      "branch_deletion_not_selected": true
+    },
+    "environment": {
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
     },
     "known_failures_this_session": [
       {
-        "kind": "read_only_library_materialization_schema",
-        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/startup/initial-library-materialize-error.json",
-        "disposition": "Rejected before transfer; exact full Library list resolved and current download helper succeeded; no unknown write"
-      },
-      {
         "kind": "startup_output_truncation",
-        "disposition": "Missing portions reloaded in bounded chunks; no required prose or rule excluded. STATUS anchor-only lines excluded as allowed."
-      },
-      {
-        "id": "P11-RECORD-001",
-        "kind": "documentary_schema_error",
-        "detail": "Initial CURRENT snapshot_date used a calendar date; the existing validator requires an explicit UTC timestamp. Corrected only the timestamp; failed run and exact candidate patch retained.",
-        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/CHECKS.json",
-        "status": "corrected_targeted_recheck_passed",
-        "resolution_evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected002/CHECKS.json"
-      },
-      {
-        "id": "P11-RECORD-002",
-        "kind": "documentary_schema_and_evidence_path_error",
-        "detail": "Initial correction exposed two further existing schema requirements: next_action.status allows awaiting_user_direction/blocked/ready, and task evidence must use repository paths. Set ready for authorized phase work and retained the original check evidence under the P11 repository evidence directory.",
-        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/CHECKS.json",
-        "status": "corrected_targeted_recheck_passed",
-        "resolution_evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected002/CHECKS.json"
-      },
-      {
-        "id": "P11-RECORD-003",
-        "kind": "diagnostic_evidence_reference",
-        "detail": "Director preservation review found that an index-based record correction had assigned the first record-check evidence path to the earlier Library read error. Restored exact diagnostic pointers by stable kind/id; original published opening checkpoint remains in Git history.",
-        "status": "corrected",
-        "original_checkpoint": "aa38a9886be8e1c39270ce062b7e73f2fac24626",
-        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/startup/initial-library-materialize-error.json"
-      },
-      {
-        "kind": "read_only_github_resource_path",
-        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/startup/encoded-branch-url-refusal.json",
-        "disposition": "Connector rejected encoded branch path. Existing approved branches-collection endpoint confirmed exact head; no write retry or unknown operation."
-      },
-      {
-        "kind": "author_fixture_boundary_error",
-        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/design/static001.stdout.json",
-        "disposition": "Original candidate001 bytes retained; corrected in later frozen candidates."
-      },
-      {
-        "kind": "independent_design_control_findings",
-        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/review/candidate002/REVIEW.json",
-        "disposition": "Five findings resolved by exact candidate004; earlier findings and all attempts retained."
-      },
-      {
-        "kind": "reviewer_helper_overstrict_inode_comparison",
-        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/review/candidate004/REVISION-REVIEW.json",
-        "disposition": "Initial 404/405 result preserved; targeted followup cleared the helper false positive without changing candidate or oracle."
-      },
-      {
-        "kind": "withdrawn_extra_document_size_policy",
-        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/review/DOCUMENT-CAP-DECISION.json",
-        "disposition": "User question led to reuse of the unchanged existing 16 MiB reader; candidate003 and withdrawn controls retained."
-      },
-      {
-        "id": "P11-RECORD-004",
-        "kind": "raw_patch_evidence_whitespace",
-        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/technical-candidate/CHECKS.json",
-        "disposition": "Corrected through independently verified lossless Git transport; all four ordinary record checks passed. Frozen raw bytes and whitespace guard remain unchanged."
-      },
-      {
-        "id": "P11-PACKAGE-001",
-        "kind": "mode_transport_audit_assumption",
-        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/final-package-review/REVIEW-RUN001.json",
-        "disposition": "Initial 26/27 audit preserved. Exact bytes and original-mode metadata were intact; the independent private-restoration followup and mandatory terminal clarification resolve the source-mode/ZIP-mode distinction without modifying the archive or weakening guards."
-      },
-      {
-        "id": "P11-READ-001",
-        "kind": "read_only_workflow_catalog_refusal",
-        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/late-observation/WORKFLOWS.json",
-        "disposition": "Connector rejected this GET endpoint. No write, unknown operation or hosted CI success is inferred."
+        "disposition": "Required missing instruction prose reloaded in bounded windows; complete API evidence retained in startup files. No write uncertainty or technical test failure."
       }
     ],
-    "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json",
-    "updated_at_utc": "2026-11-22T00:15:23.257523+00:00",
-    "accepted_candidate": {
-      "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/CANDIDATE-MANIFEST.json",
-      "bytes": 35041,
-      "sha256": "e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de"
+    "observed_main": {
+      "commit": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+      "observed_at_utc": "2026-11-22T00:34:49.431990+00:00",
+      "evidence": "session_p12/startup/early-branches.json"
     },
-    "adoption": "docs/engineering/localized-repair-c271/loader-path-p11/ADOPTION.json",
-    "independent_final_design_review": {
-      "path": "docs/engineering/localized-repair-c271/loader-path-p11/review/REVIEW.json",
-      "sha256": "b9e6db3125acb05c2fab420a608e404810e234c9e4abdcee10a61838c6712a58",
-      "reviewer": "/root/intake_audit",
-      "blocking_findings": []
+    "source_commit": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+    "source_tree": "c3aed39729812e3c2abf2a4a4332d75052c4f19d",
+    "prior_terminal_receipt": {
+      "file_name": "OntoKin_C271_P11_Delivery_Receipt_2026-11-21.json",
+      "library_file_id": "libfile_fde3_f-6c84b3949d548191ab5c978242124e7d_2ab2a24d43748191957f9bcc356b59de",
+      "file_id": "file_00000000905c81f7aa094310513be026",
+      "version": 0,
+      "bytes": 8723877,
+      "sha256": "55d46239b1950b032a7fa9496b37e49a638b0d8162497b74be9aa29b9c208fd8",
+      "verification": "docs/engineering/localized-repair-c271/loader-path-p12/evidence/intake/AUDIT.json"
     },
-    "post_delivery_next_action": "In a fresh bounded phase, reconcile the P11 ZIP, its separate terminal receipt and live GitHub, then confirm new early recovery. Implement only the accepted candidate004 decision through its FUTURE-SURFACE.json on the retained branch. Consume all 97 frozen controls without rewriting their expected outcomes, retain all 175 existing inspection/mapping methods and obtain independent exact-source review. Verify and save a partial handoff, then stop before H0 re-establishment, H1, runtime installation, Node/ldd, original-seven/full routine, main lease, integration or parent closure. Stop at a concrete blocker if the reviewed surface is insufficient; do not substitute inputs.",
-    "worker_dispositions": {
-      "/root": "Only terminal receipt publication/verification/delivery remains; no second technical phase.",
-      "/root/loader_design": "Completed; all candidate004 and earlier bytes frozen.",
-      "/root/intake_audit": "Completed independent intake, early, design, transport and final package reviews.",
-      "/root/handoff_engineer": "Completed immutable package and mode-transport diagnosis; no source writes."
-    },
-    "worker_dispositions_recorded_at_utc": "2026-11-22T00:15:23.257523+00:00",
-    "next_phase_acceptance": [
-      "New early recovery confirmed before implementation.",
-      "Only the accepted module/new focused test surface changes; exact pins and all other protected behavior preserved.",
-      "All 97 frozen controls and 175 existing inspection/mapping methods retain their intended scopes and pass required independent review.",
-      "Required documentary/provenance checks, conditional branch publication and verified partial handoff complete."
-    ],
-    "next_phase_stop": "Stop after that bounded implementation/control phase or its first concrete blocker; no H0/H1/full-routine/integration in the same chat.",
-    "technical_checks_passed": true,
-    "independent_final_review": "accepted",
-    "technical_checkpoint": {
-      "commit": "e7508fb23c64563549631a1be46a3523593e2d9f",
-      "tree": "06c7db644326a5e03bffe8ad53ea4fa0004e7065",
-      "verified": true
-    }
+    "updated_at_utc": "2026-11-22T00:40:49.655411+00:00",
+    "early_recovery": "confirmed_saved_and_independently_accepted",
+    "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json"
   },
   "delivery": {
     "required": true,
@@ -1621,6 +1561,244 @@
       "final_save_confirmed": true,
       "final_receipt": "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json",
       "completed_at_utc": "2026-11-21T20:48:10.140149Z"
+    },
+    {
+      "schema": "ontokin.c271.p11-phase/1",
+      "task": "C271",
+      "phase": "C271-P11-loader-path-decision",
+      "owner": "c271-p11-2ad494d5da19",
+      "declared_at_utc": "2026-11-21T22:41:35.622787+00:00",
+      "client_filename_date": "2026-11-21",
+      "starting_main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "starting_main_tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+      "starting_branch": "e0119f376441fee0fc3956852ac63110ab141011",
+      "starting_branch_tree": "d976520ede52f9227ce2df5bab974d6e1bc2ef79",
+      "branch": "work/c271-missing-import-digest-control",
+      "scope": "Source-backed static decision and independently frozen finite positive/refusal controls for H0-PYTHON-RPATH-TOKEN-001 before any loader-path implementation or input substitution.",
+      "acceptance": [
+        "P11-D01: Reconcile P10 delivery/live state and confirm verified early recovery before substantive design or fixture construction.",
+        "P11-D02: Trace the observed RPATH refusal and specify a finite versioned decision with exact path-origin, normalization, identity, loader-search and refusal rules; preserve existing strict consumers and historical behavior.",
+        "P11-D03: Freeze independent positive/boundary/refusal input bytes and expected outcomes before later implementation; enumerate exact change surface and legacy-preservation checks.",
+        "P11-D04: Independent exact design/control review with mandatory findings resolved, static evidence/protected-source checks and required documentation/workflow checks.",
+        "P11-D05: Conditional checkpoint on retained branch; independently verify final ZIP and matching prompts, confirm save/readback, publish separate receipt and stop."
+      ],
+      "constraints": [
+        "No production/test/helper implementation edits, existing contract/fixture/pin changes or input substitution in P11; new design/control documents and inert independent fixture bytes only.",
+        "No host runtime preparation, installation, Node/ldd, probes, H0 acceptance, H1, original seven methods, full routine, native/model/hosted execution, main lease/integration or parent closure.",
+        "Retain all prior failures/unknowns and source ceilings of 100000 operations/30000 ms; required full routine remains unmet under R03.",
+        "Root owns canonical state/Git/index/publication/delivery; real workers own disjoint paths, no nested workers.",
+        "Do not retry the diagnosed unavailable native push; publish with conditional GitHub API ref update."
+      ],
+      "status": "delivery_confirmation_pending",
+      "early_recovery": "confirmed_saved_and_independently_accepted",
+      "early_save_confirmed": true,
+      "main_lease_held": false,
+      "integration_allowed": false,
+      "parent_status": "blocked",
+      "parent_complete": false,
+      "parent_requirements": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "not_done",
+        "R04": "not_done",
+        "R05": "not_done"
+      },
+      "parent_plan": {
+        "P01": "done",
+        "P02": "in_progress"
+      },
+      "stop": "Stop after independently accepted decision/control freeze or first unresolved design blocker, and verified partial delivery. Implement only in a later fresh phase.",
+      "workers": {
+        "/root/intake_audit": "Independent intake and recovery audit, then independent design/package review",
+        "/root/handoff_engineer": "Early/final package engineering only",
+        "/root/loader_design": "Independent source-backed design and inert-control author; released only after exact early save/readback",
+        "/root": "Director: canonical records, index/Git publication, verification and Library delivery"
+      },
+      "current_unknown_operations": [],
+      "historical_unknowns": [
+        "C270 broad-driver completion remains unknown",
+        "Global prior-process termination remains unestablished"
+      ],
+      "phase_table": [
+        {
+          "gate": "P11-D01",
+          "state": "passed",
+          "evidence": [
+            "docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json"
+          ]
+        },
+        {
+          "gate": "P11-D02",
+          "state": "passed",
+          "evidence": [
+            "docs/engineering/localized-repair-c271/loader-path-p11/ADOPTION.json",
+            "docs/engineering/localized-repair-c271/loader-path-p11/review/REVIEW.json"
+          ]
+        },
+        {
+          "gate": "P11-D03",
+          "state": "passed",
+          "evidence": [
+            "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/CANDIDATE-MANIFEST.json",
+            "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/EXPECTATIONS.json"
+          ]
+        },
+        {
+          "gate": "P11-D04",
+          "state": "passed",
+          "evidence": [
+            "docs/engineering/localized-repair-c271/loader-path-p11/review/REVIEW.json",
+            "docs/engineering/localized-repair-c271/loader-path-p11/evidence/technical-corrected/CHECKS.json",
+            "docs/engineering/localized-repair-c271/loader-path-p11/evidence/transport_review/REVIEW.json"
+          ]
+        },
+        {
+          "gate": "P11-D05",
+          "state": "core_saved_terminal_confirmation_pending",
+          "evidence": [
+            "docs/engineering/localized-repair-c271/loader-path-p11/P11-DELIVERY.json",
+            "docs/engineering/localized-repair-c271/loader-path-p11/evidence/final-package-review/REVIEW.json"
+          ]
+        }
+      ],
+      "exact_next_action": "Publish and verify this receipt-only branch checkpoint, capture and verify the separate terminal receipt with the recovery-mode clarification, save it and verify its exact returned bytes, reconcile PR274/issue273 metadata, then stop. A later matching terminal receipt may supersede only these source-time delivery-pending fields. Do not begin another phase here.",
+      "observed_main": {
+        "commit": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+        "tree": "9345594c980f121fae2f087b40e4c78adb8f7925",
+        "observed_at_utc": "2026-11-21T23:32:46.714Z",
+        "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/live_boundary/branches.json"
+      },
+      "pull_request": {
+        "number": 274,
+        "state": "open",
+        "draft": true,
+        "merged": false
+      },
+      "scope_issue": {
+        "number": 273,
+        "state": "open"
+      },
+      "delivery": {
+        "status": "core_saved_terminal_confirmation_pending",
+        "partial": true,
+        "receipt": "docs/engineering/localized-repair-c271/loader-path-p11/P11-DELIVERY.json",
+        "core_saved_and_readback_verified": true,
+        "separate_terminal_receipt_required": true
+      },
+      "known_failures_this_session": [
+        {
+          "kind": "read_only_library_materialization_schema",
+          "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/startup/initial-library-materialize-error.json",
+          "disposition": "Rejected before transfer; exact full Library list resolved and current download helper succeeded; no unknown write"
+        },
+        {
+          "kind": "startup_output_truncation",
+          "disposition": "Missing portions reloaded in bounded chunks; no required prose or rule excluded. STATUS anchor-only lines excluded as allowed."
+        },
+        {
+          "id": "P11-RECORD-001",
+          "kind": "documentary_schema_error",
+          "detail": "Initial CURRENT snapshot_date used a calendar date; the existing validator requires an explicit UTC timestamp. Corrected only the timestamp; failed run and exact candidate patch retained.",
+          "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/CHECKS.json",
+          "status": "corrected_targeted_recheck_passed",
+          "resolution_evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected002/CHECKS.json"
+        },
+        {
+          "id": "P11-RECORD-002",
+          "kind": "documentary_schema_and_evidence_path_error",
+          "detail": "Initial correction exposed two further existing schema requirements: next_action.status allows awaiting_user_direction/blocked/ready, and task evidence must use repository paths. Set ready for authorized phase work and retained the original check evidence under the P11 repository evidence directory.",
+          "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/CHECKS.json",
+          "status": "corrected_targeted_recheck_passed",
+          "resolution_evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected002/CHECKS.json"
+        },
+        {
+          "id": "P11-RECORD-003",
+          "kind": "diagnostic_evidence_reference",
+          "detail": "Director preservation review found that an index-based record correction had assigned the first record-check evidence path to the earlier Library read error. Restored exact diagnostic pointers by stable kind/id; original published opening checkpoint remains in Git history.",
+          "status": "corrected",
+          "original_checkpoint": "aa38a9886be8e1c39270ce062b7e73f2fac24626",
+          "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/startup/initial-library-materialize-error.json"
+        },
+        {
+          "kind": "read_only_github_resource_path",
+          "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/startup/encoded-branch-url-refusal.json",
+          "disposition": "Connector rejected encoded branch path. Existing approved branches-collection endpoint confirmed exact head; no write retry or unknown operation."
+        },
+        {
+          "kind": "author_fixture_boundary_error",
+          "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/design/static001.stdout.json",
+          "disposition": "Original candidate001 bytes retained; corrected in later frozen candidates."
+        },
+        {
+          "kind": "independent_design_control_findings",
+          "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/review/candidate002/REVIEW.json",
+          "disposition": "Five findings resolved by exact candidate004; earlier findings and all attempts retained."
+        },
+        {
+          "kind": "reviewer_helper_overstrict_inode_comparison",
+          "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/review/candidate004/REVISION-REVIEW.json",
+          "disposition": "Initial 404/405 result preserved; targeted followup cleared the helper false positive without changing candidate or oracle."
+        },
+        {
+          "kind": "withdrawn_extra_document_size_policy",
+          "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/review/DOCUMENT-CAP-DECISION.json",
+          "disposition": "User question led to reuse of the unchanged existing 16 MiB reader; candidate003 and withdrawn controls retained."
+        },
+        {
+          "id": "P11-RECORD-004",
+          "kind": "raw_patch_evidence_whitespace",
+          "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/technical-candidate/CHECKS.json",
+          "disposition": "Corrected through independently verified lossless Git transport; all four ordinary record checks passed. Frozen raw bytes and whitespace guard remain unchanged."
+        },
+        {
+          "id": "P11-PACKAGE-001",
+          "kind": "mode_transport_audit_assumption",
+          "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/final-package-review/REVIEW-RUN001.json",
+          "disposition": "Initial 26/27 audit preserved. Exact bytes and original-mode metadata were intact; the independent private-restoration followup and mandatory terminal clarification resolve the source-mode/ZIP-mode distinction without modifying the archive or weakening guards."
+        },
+        {
+          "id": "P11-READ-001",
+          "kind": "read_only_workflow_catalog_refusal",
+          "evidence": "docs/engineering/localized-repair-c271/loader-path-p11/evidence/late-observation/WORKFLOWS.json",
+          "disposition": "Connector rejected this GET endpoint. No write, unknown operation or hosted CI success is inferred."
+        }
+      ],
+      "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json",
+      "updated_at_utc": "2026-11-22T00:15:23.257523+00:00",
+      "accepted_candidate": {
+        "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/CANDIDATE-MANIFEST.json",
+        "bytes": 35041,
+        "sha256": "e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de"
+      },
+      "adoption": "docs/engineering/localized-repair-c271/loader-path-p11/ADOPTION.json",
+      "independent_final_design_review": {
+        "path": "docs/engineering/localized-repair-c271/loader-path-p11/review/REVIEW.json",
+        "sha256": "b9e6db3125acb05c2fab420a608e404810e234c9e4abdcee10a61838c6712a58",
+        "reviewer": "/root/intake_audit",
+        "blocking_findings": []
+      },
+      "post_delivery_next_action": "In a fresh bounded phase, reconcile the P11 ZIP, its separate terminal receipt and live GitHub, then confirm new early recovery. Implement only the accepted candidate004 decision through its FUTURE-SURFACE.json on the retained branch. Consume all 97 frozen controls without rewriting their expected outcomes, retain all 175 existing inspection/mapping methods and obtain independent exact-source review. Verify and save a partial handoff, then stop before H0 re-establishment, H1, runtime installation, Node/ldd, original-seven/full routine, main lease, integration or parent closure. Stop at a concrete blocker if the reviewed surface is insufficient; do not substitute inputs.",
+      "worker_dispositions": {
+        "/root": "Only terminal receipt publication/verification/delivery remains; no second technical phase.",
+        "/root/loader_design": "Completed; all candidate004 and earlier bytes frozen.",
+        "/root/intake_audit": "Completed independent intake, early, design, transport and final package reviews.",
+        "/root/handoff_engineer": "Completed immutable package and mode-transport diagnosis; no source writes."
+      },
+      "worker_dispositions_recorded_at_utc": "2026-11-22T00:15:23.257523+00:00",
+      "next_phase_acceptance": [
+        "New early recovery confirmed before implementation.",
+        "Only the accepted module/new focused test surface changes; exact pins and all other protected behavior preserved.",
+        "All 97 frozen controls and 175 existing inspection/mapping methods retain their intended scopes and pass required independent review.",
+        "Required documentary/provenance checks, conditional branch publication and verified partial handoff complete."
+      ],
+      "next_phase_stop": "Stop after that bounded implementation/control phase or its first concrete blocker; no H0/H1/full-routine/integration in the same chat.",
+      "technical_checks_passed": true,
+      "independent_final_review": "accepted",
+      "technical_checkpoint": {
+        "commit": "e7508fb23c64563549631a1be46a3523593e2d9f",
+        "tree": "06c7db644326a5e03bffe8ad53ea4fa0004e7065",
+        "verified": true
+      }
     }
   ],
   "prior_phase_deliveries": [
@@ -2220,10 +2398,10 @@
   ],
   "remaining_h0_constraint": {
     "id": "H0-PYTHON-RPATH-TOKEN-001",
-    "status": "observed_unresolved",
+    "status": "implementation_prerequisite_in_progress_H0_unaccepted",
     "evidence": "docs/engineering/localized-repair-c271/elf-string-table-p10/evidence/INDEPENDENT-CANDIDATE-REPORT.json",
     "fact": "The inert selected Python image now passes string-table mapping, then returns CHI-UNSUPPORTED / Unreviewed loader token expansion for RPATH $ORIGIN/../lib.",
-    "scope": "Static regression observation only; neither a prepared runtime nor accepted H0."
+    "scope": "P12 only implements the accepted finite rule. Actual host eligibility, loader variants and complete library inventory remain unestablished until a later H0 phase."
   },
   "blocked_reason": "The inert selected Python image now passes string-table mapping, then returns CHI-UNSUPPORTED / Unreviewed loader token expansion for RPATH $ORIGIN/../lib."
 }

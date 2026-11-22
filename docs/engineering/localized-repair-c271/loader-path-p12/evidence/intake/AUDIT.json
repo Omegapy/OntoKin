@@ -1,0 +1,446 @@
+{
+  "schema": "ontokin.c271.p12-independent-intake-audit/1",
+  "reviewer": "/root/intake_review",
+  "scope": "P11 handoff, terminal receipt and branch intake only; no implementation or product execution",
+  "started_at_utc": "2026-11-22T00:36:11.328827+00:00",
+  "completed_at_utc": "2026-11-22T00:36:46.993926+00:00",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "argv": [
+      "verify_intake.py"
+    ]
+  },
+  "source_revision": "e7508fb23c64563549631a1be46a3523593e2d9f",
+  "terminal_revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+  "main_revision": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+  "observed_local_head_at_audit_end": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+  "governing_readset": [
+    {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "path": "AGENTS.md",
+      "bytes": 7068,
+      "sha256": "ce0fef82308e1c329dcf0514c99e81e89c340bbb550cf0cdcdb589599ae42822",
+      "read_in_full": true
+    },
+    {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "path": "ROLE.md",
+      "bytes": 1683,
+      "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf",
+      "read_in_full": true
+    },
+    {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "path": "docs/workflow/PROTOCOL.md",
+      "bytes": 11711,
+      "sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad",
+      "read_in_full": true
+    },
+    {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "path": "docs/workflow/HANDOFF.md",
+      "bytes": 6065,
+      "sha256": "d87e35055bbba590a4c6b738aba239030315fdade5a6ac2e618a83be48342bac",
+      "read_in_full": true
+    },
+    {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "path": ".agents/skills/ontokin-delivery/SKILL.md",
+      "bytes": 1277,
+      "sha256": "7b7300a46e4f966314b74707a414f5fc72425c8eab4464cf12b20def9697529e",
+      "read_in_full": true
+    }
+  ],
+  "input_identities": [
+    {
+      "path": "/workspace/scratch/378b783967ca/input/OntoKin_C271_P11_Loader_Path_Handoff_2026-11-21.zip",
+      "bytes": 5606509,
+      "sha256": "4eddd353047fb8d6aa316544c8b54d655eb53a1613f9c522bbed0edc1ab1249e"
+    },
+    {
+      "path": "/workspace/scratch/378b783967ca/receipts-input/OntoKin/OntoKin_C271_P11_Delivery_Receipt_2026-11-21.json",
+      "bytes": 8723877,
+      "sha256": "55d46239b1950b032a7fa9496b37e49a638b0d8162497b74be9aa29b9c208fd8"
+    },
+    {
+      "path": "/workspace/scratch/378b783967ca/session_p12/startup/pr274.json",
+      "bytes": 44753,
+      "sha256": "cdbcbdfc7788b025a14fe6bdba808b23b8f7bd1b3cda92b6c7ac900f8f53bb48"
+    },
+    {
+      "path": "/workspace/scratch/378b783967ca/session_p12/startup/issue273.json",
+      "bytes": 44779,
+      "sha256": "f455fbe5b1b859a99a2ee5be50cf76757eb79f438b446003c7f24fcda2554cbd"
+    },
+    {
+      "path": "/workspace/scratch/378b783967ca/session_p12/startup/pr274_comments.json",
+      "bytes": 325,
+      "sha256": "60e5e1cb7153efa86c78da0a8c606be30e6e43642e3cd3fc6155a97843a3da52"
+    },
+    {
+      "path": "/workspace/scratch/378b783967ca/session_p12/startup/library-folder.json",
+      "bytes": 8790,
+      "sha256": "b10bc2728a7b054b8582f372914a3615982c482ada131ad2de8a1415e3cec7a9"
+    }
+  ],
+  "checks": [
+    {
+      "id": "I01-archive-identity",
+      "result": "pass",
+      "detail": {
+        "bytes": 5606509,
+        "sha256": "4eddd353047fb8d6aa316544c8b54d655eb53a1613f9c522bbed0edc1ab1249e"
+      }
+    },
+    {
+      "id": "I02-terminal-receipt-identity",
+      "result": "pass",
+      "detail": {
+        "bytes": 8723877,
+        "sha256": "55d46239b1950b032a7fa9496b37e49a638b0d8162497b74be9aa29b9c208fd8"
+      }
+    },
+    {
+      "id": "A01-integrity",
+      "result": "pass",
+      "detail": {
+        "members": 1626,
+        "uncompressed_bytes": 73820831
+      }
+    },
+    {
+      "id": "A02-safe-unique-ordinary-members",
+      "result": "pass",
+      "detail": {
+        "members": 1626
+      }
+    },
+    {
+      "id": "A03-inert-transport-modes",
+      "result": "pass",
+      "detail": {
+        "0o644": 1626
+      }
+    },
+    {
+      "id": "A04-exact-manifest-inventory",
+      "result": "pass",
+      "detail": {
+        "payloads": 1625
+      }
+    },
+    {
+      "id": "A05-required-root-files",
+      "result": "pass",
+      "detail": {
+        "required": [
+          "CHECKPOINT.json",
+          "HANDOFF.md",
+          "HISTORICAL-DEPENDENCIES.json",
+          "MANIFEST-SHA256.json",
+          "NEXT-TASK.md",
+          "PROMPT-1-CONTINUE.md",
+          "PROMPT-2-RECOVER.md",
+          "README-START-HERE.md",
+          "RECOVERY-STATUS.md"
+        ],
+        "missing": []
+      }
+    },
+    {
+      "id": "A06-all-payload-byte-hashes",
+      "result": "pass",
+      "detail": {
+        "checked": 1625,
+        "mismatches": []
+      }
+    },
+    {
+      "id": "A07-extracted-copy-exact",
+      "result": "pass",
+      "detail": {
+        "checked": 1626,
+        "mismatches": [],
+        "extra": [],
+        "missing": []
+      }
+    },
+    {
+      "id": "A08-source-and-terminal-identities",
+      "result": "pass",
+      "detail": {
+        "source": "e7508fb23c64563549631a1be46a3523593e2d9f",
+        "terminal": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae"
+      }
+    },
+    {
+      "id": "A09-receipt-binds-exact-archive",
+      "result": "pass",
+      "detail": {
+        "bytes": 380166,
+        "sha256": "20a782c8d571d1cf87e2718cf07a9cf282d3a4eee5425dda2718ac01a59e99c5"
+      }
+    },
+    {
+      "id": "S01-all-frozen-git-snapshots",
+      "result": "pass",
+      "detail": {
+        "snapshots": 800,
+        "source_revisions": [
+          "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+          "e7508fb23c64563549631a1be46a3523593e2d9f"
+        ],
+        "failures": []
+      }
+    },
+    {
+      "id": "S02-terminal-source-ancestor",
+      "result": "pass",
+      "detail": {
+        "source": "e7508fb23c64563549631a1be46a3523593e2d9f",
+        "terminal": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae"
+      }
+    },
+    {
+      "id": "S03-transition-delta-inventory",
+      "result": "pass",
+      "detail": {
+        "paths": 55
+      }
+    },
+    {
+      "id": "S04-transition-exact-git-bytes",
+      "result": "pass",
+      "detail": {
+        "paths": 55,
+        "errors": []
+      }
+    },
+    {
+      "id": "R01-embedded-receipt-blobs",
+      "result": "pass",
+      "detail": {
+        "blobs": 83,
+        "bytes": 5365305,
+        "errors": []
+      }
+    },
+    {
+      "id": "R02-receipt-commit-objects",
+      "result": "pass",
+      "detail": {
+        "commits": 2,
+        "errors": []
+      }
+    },
+    {
+      "id": "R03-recovery-map-safe-complete-links",
+      "result": "pass",
+      "detail": {
+        "rows": 8118,
+        "embedded": 813,
+        "external": 7305,
+        "errors": []
+      }
+    },
+    {
+      "id": "R04-transport-original-mode-boundary",
+      "result": "pass",
+      "detail": {
+        "embedded_0600": 532,
+        "embedded_0644": 281,
+        "no_private_restoration_performed": true
+      }
+    },
+    {
+      "id": "R05-postfreeze-byte-source-references",
+      "result": "pass",
+      "detail": {
+        "rows": 11422,
+        "byte_source_counts": {
+          "frozen_recovery_entry": 4805,
+          "embedded_blob": 75,
+          "frozen_archive": 2,
+          "frozen_payload_member": 6540
+        },
+        "errors": [],
+        "external_aliases_are_locator_checks_only": true
+      }
+    },
+    {
+      "id": "R06-supplement-authentication",
+      "result": "pass",
+      "detail": {
+        "path": "session_evidence/packaging/final-review-followup/RECOVERY-MODE-RESTORATION.md",
+        "sha256": "c2ba5026577a11710891dcbb16c040b8cd4748b11a458ae85c37c53f404b52b4"
+      }
+    },
+    {
+      "id": "D01-current-terminal-file-metadata",
+      "result": "pass",
+      "detail": {
+        "id": "file_00000000905c81f7aa094310513be026",
+        "kind": "file",
+        "name": "OntoKin_C271_P11_Delivery_Receipt_2026-11-21.json",
+        "path": "/OntoKin/OntoKin_C271_P11_Delivery_Receipt_2026-11-21.json",
+        "file_id": "file_00000000905c81f7aa094310513be026",
+        "library_file_id": "libfile_fde3_f-6c84b3949d548191ab5c978242124e7d_2ab2a24d43748191957f9bcc356b59de",
+        "library_artifact_type": "other",
+        "version_id": "0",
+        "mime_type": "application/json",
+        "size_bytes": 8723877,
+        "created_at": "2026-11-22T00:20:56.867320+00:00",
+        "modified_at": "2026-11-22T00:20:56.867320+00:00",
+        "model_generated": true,
+        "surface": "library"
+      }
+    },
+    {
+      "id": "D02-current-public-terminal-confirmation",
+      "result": "pass",
+      "detail": {
+        "pr_updated_at": "2026-11-22T00:22:17Z",
+        "issue_updated_at": "2026-11-22T00:22:19Z",
+        "section_sha256": "5c6ef309771f30b31a464021ab93c7641c60e88b8ce042a23a689c4ce4ca91f6"
+      }
+    },
+    {
+      "id": "D03-open-unmerged-disposition",
+      "result": "pass",
+      "detail": {
+        "pr": {
+          "number": 274,
+          "state": "open",
+          "draft": true,
+          "merged": false,
+          "head": "work/c271-missing-import-digest-control",
+          "base": "main"
+        },
+        "issue_state": "open"
+      }
+    },
+    {
+      "id": "D04-canonical-source-time-pending-is-historical",
+      "result": "pass",
+      "detail": {
+        "interpretation": "The later matching public confirmation and current exact file readback supersede only P11 delivery-pending fields, not acceptance gates."
+      }
+    },
+    {
+      "id": "D05-parent-gates-remain-unmet",
+      "result": "pass",
+      "detail": {
+        "parent_status": "blocked",
+        "requirements": {
+          "R01": "done",
+          "R02": "done",
+          "R03": "not_done",
+          "R04": "not_done",
+          "R05": "not_done"
+        },
+        "plan": {
+          "P01": "done",
+          "P02": "in_progress"
+        }
+      }
+    },
+    {
+      "id": "D06-next-phase-matches-accepted-surface",
+      "result": "pass",
+      "detail": {
+        "production": [
+          "prototypes/static_tray_v01/current_host_inspection_v01.py"
+        ],
+        "new_test": [
+          "tests/test_current_host_loader_path_v01.py"
+        ],
+        "next_action": "In a fresh bounded phase, reconcile the P11 ZIP, its separate terminal receipt and live GitHub, then confirm new early recovery. Implement only the accepted candidate004 decision through its FUTURE-SURFACE.json on the retained branch. Consume all 97 frozen controls without rewriting their expected outcomes, retain all 175 existing inspection/mapping methods and obtain independent exact-source review. Verify and save a partial handoff, then stop before H0 re-establishment, H1, runtime installation, Node/ldd, original-seven/full routine, main lease, integration or parent closure. Stop at a concrete blocker if the reviewed surface is insufficient; do not substitute inputs."
+      }
+    },
+    {
+      "id": "D07-unknowns-retained",
+      "result": "pass",
+      "detail": {
+        "current_known_unknown_operations": [],
+        "historical_unknowns": [
+          "C270 broad-driver completion remains unknown",
+          "Global prior-process termination remains unestablished"
+        ],
+        "limit": "No evidence establishes global prior-process termination."
+      }
+    },
+    {
+      "id": "C01-accepted-manifest-identity",
+      "result": "pass",
+      "detail": {
+        "bytes": 35041,
+        "sha256": "e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de"
+      }
+    },
+    {
+      "id": "C02-frozen-oracles-retained",
+      "result": "pass",
+      "detail": {
+        "old_records": 93,
+        "accepted_records": 97,
+        "changed_old_records": []
+      }
+    },
+    {
+      "id": "C03-protected-source-baseline",
+      "result": "pass",
+      "detail": {
+        "protected_files": 942,
+        "baseline_revision": "e0119f376441fee0fc3956852ac63110ab141011",
+        "mismatches": []
+      }
+    },
+    {
+      "id": "C04-remaining-technical-boundaries",
+      "result": "pass",
+      "detail": {
+        "scope": "accepted_design_and_frozen_inert_controls_only",
+        "reader": "Reuse the existing 16 MiB _document/LIMITS.document_bytes reader and all inherited guards. No separate 4 MiB policy or byte-reader seam.",
+        "remaining_blocker": "H0-PYTHON-RPATH-TOKEN-001 remains unresolved in unchanged executable behavior."
+      }
+    }
+  ],
+  "check_summary": {
+    "pass": 32
+  },
+  "verdict": "accepted_for_early_recovery_then_bounded_P12",
+  "blocking_findings": [],
+  "prior_phase_result": "P11 complete_partial_delivery; C271 parent remains blocked and incomplete",
+  "future_preconditions": [
+    "P12 early recovery ZIP must be independently verified, saved and exactly read back before substantive implementation.",
+    "Apply authenticated private materialization before consuming recovered P11 fixtures; this intake did not restore physical modes.",
+    "Reconcile live branch ownership and unresolved write outcomes before publication."
+  ],
+  "limits": [
+    "Root performed live service queries and readback; reviewer independently inspects their preserved responses and exact downloaded bytes.",
+    "7,305 external P11 recovery aliases have authenticated locators but were not all materialized in this audit.",
+    "P10/P09/C262 external archive bytes were not independently downloaded or reverified by this reviewer.",
+    "Prior C270 broad-driver completion and global process termination remain unknown.",
+    "No project imports, product tests, host preparation, H0/H1, Node/ldd, runtime installation, original-seven/full routine, main lease/integration or parent closure occurred.",
+    "No repository, index, ref, canonical record, Library or PR was changed by this reviewer."
+  ],
+  "intake_observation_failures_preserved": [
+    {
+      "id": "IR-OBS-001",
+      "kind": "output_truncation",
+      "detail": "Initial combined CURRENT/file inventory output exceeded the display budget. Relevant state and archive inventories were subsequently inspected through bounded structured queries; no source or evidence was changed."
+    },
+    {
+      "id": "IR-OBS-002",
+      "kind": "output_truncation",
+      "detail": "A preliminary receipt pretty-print included compressed blob payloads and was truncated. All 83 blobs are instead decoded and hashed in R01; no execution occurred."
+    },
+    {
+      "id": "IR-OBS-003",
+      "kind": "read_only_helper_shape_error",
+      "detail": "Preliminary service-output inspection assumed issue structuredContent had a direct body, producing KeyError: body after the PR read. The observed issue schema nests body in structuredContent.issue; the corrected read succeeded and D02 verifies exact matching P11 sections."
+    }
+  ]
+}

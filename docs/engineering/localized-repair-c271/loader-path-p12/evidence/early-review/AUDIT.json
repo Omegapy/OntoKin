@@ -1,0 +1,291 @@
+{
+  "schema": "ontokin.c271.p12-independent-early-review/1",
+  "reviewer": "/root/intake_review",
+  "started_at_utc": "2026-11-22T00:39:40.877028+00:00",
+  "completed_at_utc": "2026-11-22T00:39:41.269249+00:00",
+  "archive": {
+    "path": "/workspace/scratch/378b783967ca/deliverables_p12/early/OntoKin_C271_P12_Loader_Path_Early_Recovery_2026-11-21.zip",
+    "bytes": 793843,
+    "sha256": "9adb6a6f8f937253fc4dd76f412346f9767606aa45e3555e2fa81811a5b584d7"
+  },
+  "source_revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+  "source_tree": "c3aed39729812e3c2abf2a4a4332d75052c4f19d",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "argv": [
+      "review_early.py"
+    ]
+  },
+  "checks": [
+    {
+      "id": "EP01-external-archive-identity",
+      "result": "pass",
+      "detail": {
+        "bytes": 793843,
+        "sha256": "9adb6a6f8f937253fc4dd76f412346f9767606aa45e3555e2fa81811a5b584d7"
+      }
+    },
+    {
+      "id": "EP02-crc-safe-unique-ordinary",
+      "result": "pass",
+      "detail": {
+        "members": 250,
+        "transport_modes": {
+          "0o644": 250
+        }
+      }
+    },
+    {
+      "id": "EP03-exact-manifest",
+      "result": "pass",
+      "detail": {
+        "payloads_excluding_manifest": 249,
+        "members_including_manifest": 250
+      }
+    },
+    {
+      "id": "EP04-payload-byte-identity",
+      "result": "pass",
+      "detail": {
+        "checked": 249,
+        "errors": []
+      }
+    },
+    {
+      "id": "EP05-required-roots",
+      "result": "pass",
+      "detail": {
+        "required": [
+          "README-START-HERE.md",
+          "CHECKPOINT.json",
+          "HANDOFF.md",
+          "NEXT-TASK.md",
+          "RECOVERY-STATUS.md",
+          "PROMPT-1-CONTINUE.md",
+          "PROMPT-2-RECOVER.md",
+          "HISTORICAL-DEPENDENCIES.json",
+          "MANIFEST-SHA256.json"
+        ]
+      }
+    },
+    {
+      "id": "EP06-required-snapshots",
+      "result": "pass",
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "id": "EP07-exact-git-sources",
+      "result": "pass",
+      "detail": {
+        "snapshots": 218,
+        "errors": []
+      }
+    },
+    {
+      "id": "EP08-phase-boundary",
+      "result": "pass",
+      "detail": {
+        "phase": "C271-P12-loader-path-implementation",
+        "status": "early_recovery_pending",
+        "source": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+        "phase_input_sha256": "f8142b04f934c409aabe1141e1c9673fdba20f413be165a96425b0502925fd9b"
+      }
+    },
+    {
+      "id": "EP09-unmet-gates-and-stop",
+      "result": "pass",
+      "detail": {
+        "requirements": {
+          "R01": "done",
+          "R02": "done",
+          "R03": "not_done",
+          "R04": "not_done",
+          "R05": "not_done"
+        },
+        "next_action": "Independently verify and save the new early recovery ZIP, verify exact returned bytes and receipt, then release implementation within FUTURE-SURFACE.",
+        "stop": "Stop after this bounded implementation/control phase and verified partial delivery, or at its first concrete blocker. No later runtime/integration phase in this chat."
+      }
+    },
+    {
+      "id": "EP10-current-operations-historical-unknowns",
+      "result": "pass",
+      "detail": {
+        "current_known_unknown_operations": [],
+        "historical_unknowns": [
+          "C270 broad-driver completion remains unknown",
+          "Global prior-process termination remains unestablished"
+        ],
+        "ownership": {
+          "/root": "Director and canonical writer",
+          "/root/intake_review": "Independent intake, early/final package and exact-source review",
+          "/root/package_engineer": "Early/final package engineering only"
+        }
+      }
+    },
+    {
+      "id": "EP11-self-contained-next-actions",
+      "result": "pass",
+      "detail": {
+        "manual_full_read": [
+          "README-START-HERE.md",
+          "HANDOFF.md",
+          "NEXT-TASK.md",
+          "RECOVERY-STATUS.md",
+          "PROMPT-1-CONTINUE.md",
+          "PROMPT-2-RECOVER.md",
+          "RESTORE-RECOVERY.py"
+        ],
+        "technical_expansion_found": false
+      }
+    },
+    {
+      "id": "EP12-matching-prompts",
+      "result": "pass",
+      "detail": [
+        {
+          "path": "/workspace/scratch/378b783967ca/deliverables_p12/early/OntoKin_C271_P12_Loader_Path_Early_Recovery_2026-11-21_Continue.md",
+          "member": "PROMPT-1-CONTINUE.md",
+          "bytes": 4137,
+          "sha256": "12d234b31c694f0cdf441ad1871c08124a815cae5f83159bfdb952113e52c8aa",
+          "matches": true
+        },
+        {
+          "path": "/workspace/scratch/378b783967ca/deliverables_p12/early/OntoKin_C271_P12_Loader_Path_Early_Recovery_2026-11-21_Recover.md",
+          "member": "PROMPT-2-RECOVER.md",
+          "bytes": 4989,
+          "sha256": "23d76313e34d9a0de9dac1cf7add669da104ba38bf5fb034aaebadfe8fdad7c0",
+          "matches": true
+        }
+      ]
+    },
+    {
+      "id": "EP13-external-input-identities",
+      "result": "pass",
+      "detail": {
+        "p11_archive": "4eddd353047fb8d6aa316544c8b54d655eb53a1613f9c522bbed0edc1ab1249e",
+        "p11_terminal": "55d46239b1950b032a7fa9496b37e49a638b0d8162497b74be9aa29b9c208fd8",
+        "c262_preserved_external": true,
+        "older_dependencies_not_freshly_downloaded": true
+      }
+    },
+    {
+      "id": "EP14-accepted-design-and-oracle",
+      "result": "pass",
+      "detail": {
+        "candidate_manifest_sha256": "e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de",
+        "controls": 97
+      }
+    },
+    {
+      "id": "EP15-recovery-map",
+      "result": "pass",
+      "detail": {
+        "files": 19,
+        "errors": [],
+        "exclusions": [
+          {
+            "path": "session_p12/intake-review/AUDIT.json",
+            "reason": "Independent audit was still being finalized at authorized freeze; its final review belongs to external postfreeze evidence."
+          },
+          {
+            "path": "session_p12/intake-review/PUBLIC-P11-CONFIRMATION.md",
+            "reason": "Independent audit was still being finalized at authorized freeze; its final review belongs to external postfreeze evidence."
+          },
+          {
+            "path": "session_p12/intake-review/SOURCE-CHECKS.json",
+            "reason": "Independent audit was still being finalized at authorized freeze; its final review belongs to external postfreeze evidence."
+          },
+          {
+            "path": "session_p12/intake-review/TERMINAL-METADATA.json",
+            "reason": "Independent audit was still being finalized at authorized freeze; its final review belongs to external postfreeze evidence."
+          },
+          {
+            "path": "session_p12/intake-review/verify_intake.py",
+            "reason": "Independent audit was still being finalized at authorized freeze; its final review belongs to external postfreeze evidence."
+          }
+        ]
+      }
+    },
+    {
+      "id": "EP16-fresh-extraction",
+      "result": "pass",
+      "detail": {
+        "destination": "/workspace/scratch/378b783967ca/session_p12/intake-review/early/fresh-package",
+        "members": 250,
+        "root_mode": "0o700"
+      }
+    },
+    {
+      "id": "EP17-actual-private-mode-restoration",
+      "result": "pass",
+      "detail": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/workspace/scratch/378b783967ca/session_p12/intake-review/early/fresh-package/RESTORE-RECOVERY.py",
+          "/workspace/scratch/378b783967ca/session_p12/intake-review/early/fresh-package",
+          "/workspace/scratch/378b783967ca/session_p12/intake-review/early/private-original-modes",
+          "--restore-original-modes"
+        ],
+        "returncode": 0,
+        "files": 19,
+        "errors": [],
+        "root_mode": "0o700",
+        "payloads_executed": false,
+        "original_paths_written": false
+      }
+    },
+    {
+      "id": "EP18-frozen-archive-unchanged",
+      "result": "pass",
+      "detail": {
+        "bytes": 793843,
+        "sha256": "9adb6a6f8f937253fc4dd76f412346f9767606aa45e3555e2fa81811a5b584d7"
+      }
+    },
+    {
+      "id": "EP19-saved-exact-readback",
+      "result": "pass",
+      "detail": {
+        "readback": "/workspace/scratch/378b783967ca/saved_readback_p12/early/OntoKin_C271_P12_Loader_Path_Early_Recovery_2026-11-21.zip",
+        "bytes": 793843,
+        "sha256": "9adb6a6f8f937253fc4dd76f412346f9767606aa45e3555e2fa81811a5b584d7",
+        "library_file_id": "libfile_fde3_f-97be9b98302081919820c72168c7a7bd_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_000000003fa481f5a0ac5da11aad1f71",
+        "version": 0,
+        "confirmed_at_utc": "2026-11-22T00:38:39.579893+00:00",
+        "external_receipt_identity": {
+          "bytes": 1456,
+          "sha256": "e8af8ccbab62b535642f324a22a4e263bbfb6c6e98dadb8232899627d5529ae3"
+        },
+        "upload_result_identity": {
+          "bytes": 556,
+          "sha256": "840c54ef61bf164687270b1f8487a1f96c1838ca09385c3ffb09533bda3211c4"
+        }
+      }
+    },
+    {
+      "id": "EP20-save-result-agreement",
+      "result": "pass",
+      "detail": {
+        "returned_save_matches_external_receipt": true
+      }
+    }
+  ],
+  "check_summary": {
+    "pass": 20
+  },
+  "blocking_findings": [],
+  "verdict": "accepted_early_package_and_exact_saved_readback",
+  "late_evidence_boundary": "Intake review, early review, upload/save/readback observations postdate the frozen package. Preserve them externally; no rebuild merely for their later identities.",
+  "limits": [
+    "Online continuation only; no full historical restoration.",
+    "All 19 selected embedded recovery rows restored privately. External historical archives were not restored.",
+    "No product imports, product tests, runtime/host preparation, H0/H1, Node/ldd, original-seven/full routine, main lease/integration or parent closure.",
+    "Matching standalone prompt bytes verified; this review claims a saved ZIP, not saved early standalone prompts unless separately evidenced.",
+    "Writes limited to reviewer-owned early directory; original source paths and frozen ZIP untouched."
+  ]
+}
