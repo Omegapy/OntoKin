@@ -1,0 +1,78 @@
+{
+  "schema": "ontokin.c271.p20-documentary-checks/1",
+  "source_revision": "4a202685ce4a346c9efc3081abf967ccfdaf6b61",
+  "base_revision": "4bf7cb0023d1747be16c8752795819dd9a0cca37",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/371612fd9cb3/repo",
+      "started_at_utc": "2026-11-22T22:10:08.005422+00:00",
+      "finished_at_utc": "2026-11-22T22:10:08.133370+00:00",
+      "exit_code": 0,
+      "stdout": {
+        "path": "checks/published-core/workflow.stdout.txt",
+        "bytes": 148,
+        "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+      },
+      "stderr": {
+        "path": "checks/published-core/workflow.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/371612fd9cb3/repo",
+      "started_at_utc": "2026-11-22T22:10:08.005696+00:00",
+      "finished_at_utc": "2026-11-22T22:10:10.838725+00:00",
+      "exit_code": 0,
+      "stdout": {
+        "path": "checks/published-core/documentation.stdout.txt",
+        "bytes": 6609,
+        "sha256": "1e4ba4e0a9fd824eaf7eccbcf56eef27a3b152a30ebcbb31c1f7811c092f359f"
+      },
+      "stderr": {
+        "path": "checks/published-core/documentation.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "4bf7cb0023d1747be16c8752795819dd9a0cca37",
+        "4a202685ce4a346c9efc3081abf967ccfdaf6b61"
+      ],
+      "cwd": "/workspace/scratch/371612fd9cb3/repo",
+      "started_at_utc": "2026-11-22T22:10:08.006111+00:00",
+      "finished_at_utc": "2026-11-22T22:10:08.033428+00:00",
+      "exit_code": 0,
+      "stdout": {
+        "path": "checks/published-core/whitespace.stdout.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "checks/published-core/whitespace.stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "all_passed": true,
+  "scope": "Workflow, documentation, and authored-whitespace only; no product, H0/H1, or full routine."
+}

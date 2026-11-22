@@ -1,0 +1,154 @@
+{
+  "schema": "ontokin.c271.p20-receipt-proposal-review/1",
+  "reviewer": "/root/ledger_review",
+  "reviewed_at_utc": "2026-11-22T22:18:11.565366+00:00",
+  "verdict": "accepted_for_director_apply_and_documentary_checks",
+  "proposal": {
+    "path": "/workspace/scratch/371612fd9cb3/phase-p20/ledger_review/delivery-proposals/8da061d81798c5bd-002/PROPOSAL.json",
+    "bytes": 2816,
+    "sha256": "fcccf4890080632a9fd2c90e6586f7fd3b66889dbce0dacd10194bba06e7d628"
+  },
+  "input_receipt": {
+    "path": "/workspace/scratch/371612fd9cb3/phase-p20/state/FINAL-SAVE-RECEIPT.json",
+    "bytes": 9058,
+    "sha256": "8da061d81798c5bd1e6ce8d567f6cefc6b2ca9a98d98bb06e8f33598bbfa3d6b"
+  },
+  "helper": {
+    "path": "/workspace/scratch/371612fd9cb3/phase-p20/ledger_review/prepare_delivery_updates.py",
+    "sha256": "03b2b07c23138d384a3eae682ed28f234055bea0551d4c943955aa233d1db1ba"
+  },
+  "base_revision": "4a202685ce4a346c9efc3081abf967ccfdaf6b61",
+  "files": [
+    {
+      "path": "docs/workflow/CURRENT.json",
+      "bytes": 107424,
+      "sha256": "78b3d7f28d1900a10165ddc5075d8dfa7494128bd6fdb397f1423e20aab95271"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/task.json",
+      "bytes": 261038,
+      "sha256": "60774181c4c9e9f1055658da9996a6f993af5bd0c9a5ec90489c3ed4520f826d"
+    },
+    {
+      "path": "STATUS.md",
+      "bytes": 15084,
+      "sha256": "56aacdb536ce0148e584d8453e6d99e3cfa95202eaf67e30c5012100464cefae"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/environment-p20/PHASE.json",
+      "bytes": 14538,
+      "sha256": "3a00baed0c47baf99e4ff1c1c95604e9f8a23f0dc5067e571e0178f5f84af8da"
+    }
+  ],
+  "checks": [
+    {
+      "name": "exact_four_file_scope",
+      "passed": true,
+      "detail": "CURRENT, C271 task, STATUS, PHASE only; no REQUIREMENTS/PLAN or implementation edit."
+    },
+    {
+      "name": "proposal_manifest_bindings",
+      "passed": true,
+      "detail": "All four exact proposed byte counts and SHA-256 identities match the manifest."
+    },
+    {
+      "name": "immutable_core_bindings",
+      "passed": true,
+      "detail": "Source commit and all four exact core source descriptors match."
+    },
+    {
+      "name": "canonical_source_untouched",
+      "passed": true,
+      "detail": "Canonical working/index bytes remain at the published core; worker generated proposals only."
+    },
+    {
+      "name": "actual_receipt_binding",
+      "passed": true,
+      "detail": "Root-owned canonical receipt equals the observed confirmed-save input; no replacement receipt generated."
+    },
+    {
+      "name": "current_protected_fields",
+      "passed": true,
+      "detail": "All other CURRENT fields, including task/main observations and early/historical recovery records, are unchanged."
+    },
+    {
+      "name": "one_rotation",
+      "passed": true,
+      "detail": "Exact P19 latest becomes previous once; displaced P18 survives through immutable core path/pointer/hash."
+    },
+    {
+      "name": "actual_latest_handoff",
+      "passed": true,
+      "detail": "Latest P20 metadata derives from actual confirmed save; future publication remains pending."
+    },
+    {
+      "name": "current_history_append_only",
+      "passed": true,
+      "detail": "Only one observed P20 save/delivery-boundary paragraph is appended."
+    },
+    {
+      "name": "task_protected_fields",
+      "passed": true,
+      "detail": "All other task fields including parent plan, branch, ownership, histories and permissions remain exact."
+    },
+    {
+      "name": "requirements_preserved",
+      "passed": true,
+      "detail": "Requirements are unchanged except one actual receipt evidence reference on R05; no status or criterion is accepted."
+    },
+    {
+      "name": "plan_and_parent_open",
+      "passed": true,
+      "detail": "C271 remains in_progress with P02 in_progress; no closure."
+    },
+    {
+      "name": "historical_checks_preserved",
+      "passed": true,
+      "detail": "Prior checks, failures and reconciliations are exact ordered prefixes. One observed save check and one source-time reconciliation are added."
+    },
+    {
+      "name": "completion_preserved",
+      "passed": true,
+      "detail": "Only evidence is appended; main merge/branch disposition/completion gates retain source values."
+    },
+    {
+      "name": "phase_session_scope_preserved",
+      "passed": true,
+      "detail": "Technical source, scope, current/historical unknowns, workers, completion flags and next fresh H0 action remain unchanged."
+    },
+    {
+      "name": "phase_protected_fields",
+      "passed": true,
+      "detail": "Technical result, immutable preparation evidence, lease, history and worker source snapshot are preserved."
+    },
+    {
+      "name": "pending_gate_truth",
+      "passed": true,
+      "detail": "A04 records observed core publication/checks. A05 is pending separate receipt publication and terminal confirmation. Technical preparation alone is complete."
+    },
+    {
+      "name": "source_time_pending_retained",
+      "passed": true,
+      "detail": "Whole source-time PHASE record uses the correct empty JSON Pointer and exact Git source descriptor; prior first proposal with / is superseded."
+    },
+    {
+      "name": "status_and_lease_preserved",
+      "passed": true,
+      "detail": "Only the current STATUS paragraph changes. Every other line, including the lease section, is byte-identical."
+    },
+    {
+      "name": "fresh_h0_boundary",
+      "passed": true,
+      "detail": "The next technical work is actual prepared-input binding and independent complete H0 plan review in a fresh chat; no H0/H1/full routine is started or accepted."
+    }
+  ],
+  "passed_groups": 20,
+  "failed_groups": 0,
+  "canonical_repository_writes": false,
+  "technical_execution": false,
+  "phase_complete": false,
+  "parent_complete": false,
+  "remaining_delivery": "Director applies exact four-file proposal plus already copied actual evidence, runs documentary checks, conditionally publishes and verifies readback, then records observed terminal save and live metadata. No technical phase restarts.",
+  "supersedes_proposal": "/workspace/scratch/371612fd9cb3/phase-p20/ledger_review/delivery-proposals/8da061d81798c5bd/PROPOSAL.json",
+  "supersession_reason": "Whole-document source preservation uses empty JSON Pointer; all first proposal artifacts remain retained."
+}

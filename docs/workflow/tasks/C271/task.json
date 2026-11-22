@@ -123,7 +123,8 @@
         "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
         "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json",
         "docs/engineering/localized-repair-c271/actual-input-p19/PHASE-OUTCOME.json",
-        "docs/engineering/localized-repair-c271/environment-p20/EARLY-RECOVERY-RECEIPT.json"
+        "docs/engineering/localized-repair-c271/environment-p20/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json"
       ]
     }
   ],
@@ -956,6 +957,16 @@
         "docs/engineering/localized-repair-c271/environment-p20/reviews/OUTCOME-REVIEW.json"
       ],
       "scope": "Three preparation commands exit0; seven unchanged wheel/package pins; 293 installed files; 463 unchanged original input descriptors; no H0/H1/product/full-routine acceptance"
+    },
+    {
+      "name": "P20 independently verified saved partial ZIP and matching prompt readbacks",
+      "command": "Actual independent package audit and confirmed saved-byte/prompt-member comparisons recorded in P20-DELIVERY.json",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json"
+      ],
+      "scope": "Saved partial core only. Separate receipt publication/terminal confirmation remain pending; no H0/H1, R03, integration or parent completion."
     }
   ],
   "completion": {
@@ -988,7 +999,8 @@
       "docs/engineering/localized-repair-c271/libc-implementation-p18/review/REVIEW.json",
       "docs/engineering/localized-repair-c271/libc-implementation-p18/P18-DELIVERY.json",
       "docs/engineering/localized-repair-c271/actual-input-p19/P19-DELIVERY.json",
-      "docs/engineering/localized-repair-c271/environment-p20/OUTCOME.json"
+      "docs/engineering/localized-repair-c271/environment-p20/OUTCOME.json",
+      "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json"
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
@@ -1042,11 +1054,11 @@
       "tree": "6f32eb119773a0661590f0645eabeebbc6cce178"
     }
   },
-  "next_action": "Complete independent P20 outcome/documentary reviews, required checks, conditional retained-branch publication, and verified saved handoff. Do not start H0 in this chat.",
+  "next_action": "Publish and verify the separate P20 delivery receipt, reconcile live PR274/issue273 and terminal delivery evidence, then stop this chat. The next fresh phase remains actual-environment rebinding and complete H0 plan review; no technical work resumes here.",
   "session_phase": {
     "phase": "C271-P20-isolated-verification-environment",
     "owner": "c271-p20-371612fd9cb3",
-    "status": "technical_preparation_accepted_documentary_publication_pending",
+    "status": "core_saved_receipt_publication_pending",
     "phase_complete": false,
     "technical_phase_complete": true,
     "source_revision": "4bf7cb0023d1747be16c8752795819dd9a0cca37",
@@ -1062,12 +1074,16 @@
       "P13 read-only difflib completion; do not retry"
     ],
     "main_lease_held": false,
-    "next_action": "Complete independent P20 outcome/documentary reviews, required checks, conditional retained-branch publication, and verified saved handoff. Do not start H0 in this chat.",
+    "next_action": "Publish and verify the separate P20 delivery receipt, reconcile live PR274/issue273 and terminal delivery evidence, then stop this chat. The next fresh phase remains actual-environment rebinding and complete H0 plan review; no technical work resumes here.",
     "parent_status": "in_progress",
     "outcome": "docs/engineering/localized-repair-c271/environment-p20/OUTCOME.json",
     "independent_review": "docs/engineering/localized-repair-c271/environment-p20/reviews/OUTCOME-REVIEW.json",
     "first_next_phase_action": "In a fresh chat, reconcile P20 saved delivery and bind the prepared isolated environment (or recreate only from the seven packaged hash-locked wheels if its temporary paths no longer exist). Independently review the actual interpreter, package roots, native/loader closure and source inputs for a complete H0 operational plan under the adopted current-host profile before any H1 or full-routine execution.",
-    "active_child_commands": []
+    "active_child_commands": [],
+    "handoff_source_revision": "4a202685ce4a346c9efc3081abf967ccfdaf6b61",
+    "final_delivery_receipt": "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
+    "final_save_confirmed": true,
+    "receipt_publication": "pending_after_this_source_snapshot"
   },
   "delivery": {
     "required": true,
@@ -1075,10 +1091,18 @@
     "folder": "OntoKin",
     "partial": true,
     "phase": "C271-P20-isolated-verification-environment",
-    "status": "early_saved_final_pending",
+    "status": "saved_and_exact_readback_verified_receipt_publication_pending",
     "phase_complete": false,
     "early_receipt": "docs/engineering/localized-repair-c271/environment-p20/EARLY-RECOVERY-RECEIPT.json",
-    "receipt": "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json"
+    "receipt": "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
+    "technical_phase_complete": true,
+    "core_saved_and_readback_verified": true,
+    "confirmed_at_utc": "2026-11-22T22:13:32.910712+00:00",
+    "source_revision": "4a202685ce4a346c9efc3081abf967ccfdaf6b61",
+    "source_tree": "83a25d08ade59c2390be6f8d40dd7857f5eed82e",
+    "zip_library_file_id": "libfile_fde3_f-29c70da7c76c8191ba986c2f84420c50_2ab2a24d43748191957f9bcc356b59de",
+    "zip_sha256": "1a37a3e5e535c74fba366382ae8a1c3a80c6b1150caa436e24a5a98a03f7f632",
+    "receipt_publication": "pending_after_this_source_snapshot"
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
@@ -4369,6 +4393,19 @@
       "status": "complete_partial_delivery",
       "evidence": "docs/engineering/localized-repair-c271/environment-p20/startup/P19-RECONCILIATION.json",
       "scope": "Matching P19 save-pending fields only; parent gates and failures unchanged"
+    },
+    {
+      "phase": "C271-P20-isolated-verification-environment",
+      "source_revision": "4a202685ce4a346c9efc3081abf967ccfdaf6b61",
+      "source_pending_paths": [
+        "docs/workflow/tasks/C271/task.json#/delivery",
+        "docs/workflow/tasks/C271/task.json#/session_phase/status",
+        "docs/engineering/localized-repair-c271/environment-p20/PHASE.json#/status"
+      ],
+      "source_sha256": "2fabea6f54448442c43855df17df82f1216c9244bee7826563018ac62bc688e8",
+      "actual_evidence": "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
+      "status": "final_save_confirmed_receipt_publication_pending",
+      "scope": "Only matching P20 final-save-pending fields superseded. Future receipt publication, technical outcomes and parent gates are not inferred."
     }
   ],
   "p20_outcome_recorded": true

@@ -74,11 +74,18 @@
     },
     {
       "gate": "A04",
-      "state": "in_progress"
+      "state": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json"
+      ],
+      "criterion": "Independent documentary acceptance, exact core publication/readback, and fresh published-source checks recorded in the receipt"
     },
     {
       "gate": "A05",
-      "state": "not_started"
+      "state": "zip_and_prompts_saved_receipt_publication_pending",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json"
+      ]
     }
   ],
   "pr": {
@@ -121,15 +128,15 @@
       "next_action": "None; technical phase stopped"
     }
   ],
-  "next_action": "Complete independent P20 outcome/documentary reviews, required checks, conditional retained-branch publication, and verified saved handoff. Do not start H0 in this chat.",
+  "next_action": "Publish and verify the separate P20 delivery receipt, reconcile live PR274/issue273 and terminal delivery evidence, then stop this chat. The next fresh phase remains actual-environment rebinding and complete H0 plan review; no technical work resumes here.",
   "capabilities": {
     "repository": "authentic clean Git clone plus GitHub connector",
-    "conditional_branch_update": "GitHub expected_sha with force=false available; not yet exercised P20",
+    "conditional_branch_update": "Observed exact nonforce core publication/readback; separate receipt publication remains pending",
     "native_push": "previously diagnosed unavailable; not retried",
     "terminal": "CPython3.12.14 Linux x86_64 available",
     "subagents": "three real inherited-model workers",
     "zip": "stdlib ZIP create and integrity checks",
-    "library": "P20 early ZIP independently accepted, saved in OntoKin, and read back byte-identically before preparation; final save pending",
+    "library": "Early and final ZIP/prompt saves and exact readbacks confirmed; separate receipt publication and terminal confirmation remain pending",
     "merge_deletion": "not selected"
   },
   "startup_reconciliation": {
@@ -174,7 +181,7 @@
     "receipt_field_correction": "The upload succeeded status had overwritten the separately established confirmed/readback status during dictionary construction; raw upload result and original receipt preserved"
   },
   "technical_phase_complete": true,
-  "status": "technical_preparation_accepted_documentary_publication_pending",
+  "status": "core_saved_receipt_publication_pending",
   "first_next_phase_action": "In a fresh chat, reconcile P20 saved delivery and bind the prepared isolated environment (or recreate only from the seven packaged hash-locked wheels if its temporary paths no longer exist). Independently review the actual interpreter, package roots, native/loader closure and source inputs for a complete H0 operational plan under the adopted current-host profile before any H1 or full-routine execution.",
   "observed_preparation": {
     "status": "prepared_static_identity_verified",
@@ -227,8 +234,51 @@
       "environment_review/PREPARATION-REVIEW.json": "reviews/PREPARATION-REVIEW.json",
       "environment_review/OUTCOME-REVIEW.json": "reviews/OUTCOME-REVIEW.json",
       "preparation/RESULT.json": "preparation/RESULT.json",
-      "preparation/PREPARATION-PLAN.json": "preparation/PREPARATION-PLAN.json"
+      "preparation/PREPARATION-PLAN.json": "preparation/PREPARATION-PLAN.json",
+      "state/FINAL-SAVE-RECEIPT.json": "P20-DELIVERY.json",
+      "recovery_audit/FINAL-REVIEW.json": "reviews/FINAL-REVIEW.json",
+      "recovery_audit/FINAL-READSET.json": "reviews/FINAL-READSET.json"
     },
-    "other_session_files": "Recover from the final handoff ZIP; final receipt is P20-DELIVERY.json in the canonical root. Until that save is confirmed, early recovery and this active session remain distinct evidence."
-  }
+    "other_session_files": "Recover source-time session files from the confirmed final handoff ZIP. Final audit/check/save records created after freeze are retained in the canonical root. The separate receipt publication and terminal confirmation remain pending."
+  },
+  "publication": {
+    "status": "verified",
+    "schema": "ontokin.c271.p20-publication-readback/1",
+    "at_utc": "2026-11-22T22:10:00.733853+00:00",
+    "source_revision": "4a202685ce4a346c9efc3081abf967ccfdaf6b61",
+    "source_tree": "83a25d08ade59c2390be6f8d40dd7857f5eed82e",
+    "reviewed_files": 49,
+    "all_published_bytes_equal": true,
+    "local_worktree_clean": true,
+    "branch": "work/c271-missing-import-digest-control",
+    "previous_revision": "4bf7cb0023d1747be16c8752795819dd9a0cca37",
+    "conditional_update": true,
+    "force": false,
+    "evidence": {
+      "path": "/workspace/scratch/371612fd9cb3/phase-p20/publication/core/READBACK.json",
+      "bytes": 495,
+      "sha256": "442b443c27663ab72f23c3b6ec55d314e5f4fcb4cbcd9a59118e142ca474a8d6"
+    }
+  },
+  "final_delivery": {
+    "receipt": "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
+    "confirmed_at_utc": "2026-11-22T22:13:32.910712+00:00",
+    "source_revision": "4a202685ce4a346c9efc3081abf967ccfdaf6b61",
+    "source_tree": "83a25d08ade59c2390be6f8d40dd7857f5eed82e",
+    "zip_library_file_id": "libfile_fde3_f-29c70da7c76c8191ba986c2f84420c50_2ab2a24d43748191957f9bcc356b59de",
+    "zip_sha256": "1a37a3e5e535c74fba366382ae8a1c3a80c6b1150caa436e24a5a98a03f7f632",
+    "saved_bytes_readback_equal": true,
+    "partial": true,
+    "parent_complete": false,
+    "receipt_publication": "pending_after_this_source_snapshot"
+  },
+  "core_source_pending_record": {
+    "phase": "C271-P20-isolated-verification-environment",
+    "source_revision": "4a202685ce4a346c9efc3081abf967ccfdaf6b61",
+    "source_path": "docs/engineering/localized-repair-c271/environment-p20/PHASE.json",
+    "pointer": "",
+    "source_sha256": "ab13bf3852ed756a80124f2aeec72cb93d5abd973652911bd41606c707b55dff",
+    "disposition": "Exact source-time pending state preserved before this observed save update"
+  },
+  "workers_recorded_at_source_revision": "4a202685ce4a346c9efc3081abf967ccfdaf6b61"
 }
