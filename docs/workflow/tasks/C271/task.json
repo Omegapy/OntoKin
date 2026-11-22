@@ -876,6 +876,21 @@
         "docs/engineering/localized-repair-c271/libc-flags-p17/delivery-checks/PACKAGE-REVIEW.json"
       ],
       "limit": "Core checks and saved partial delivery only. This later receipt delta still requires its own review, checks and publication. No runtime, integration or parent acceptance."
+    },
+    {
+      "phase": "C271-P18",
+      "name": "Bounded libc metadata implementation and independent exact-source/adapter review",
+      "command": "Exact author commands and independent guarded method list retained in P18 evidence; see REQUEST and RESULTS",
+      "result": "passed",
+      "required": true,
+      "methods": 412,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-implementation-p18/implementation/frozen-control-run/RESULTS.json",
+        "docs/engineering/localized-repair-c271/libc-implementation-p18/implementation/inherited-run/RESULTS.json",
+        "docs/engineering/localized-repair-c271/libc-implementation-p18/review/REVIEW.json",
+        "docs/engineering/localized-repair-c271/libc-implementation-p18/review/attempt001/RESULT.json"
+      ],
+      "scope": "Implementation only. Zero failures/errors/skips. No actual-host qualification, H0/H1, complete routine, integration or parent closure. N57 external."
     }
   ],
   "completion": {
@@ -903,7 +918,9 @@
       "docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json",
       "docs/engineering/localized-repair-c271/libc-flags-p17/PHASE-OUTCOME.json",
       "docs/engineering/localized-repair-c271/libc-flags-p17/review/REVIEW.json",
-      "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json"
+      "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/libc-implementation-p18/PHASE-OUTCOME.json",
+      "docs/engineering/localized-repair-c271/libc-implementation-p18/review/REVIEW.json"
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
@@ -931,9 +948,32 @@
       "implementation_performed": false,
       "commit": "4770a5ea7027ea25d64ef0c339ca360e367dc0cd",
       "tree": "1edd32774c559f68f4a339503b38cdcc77a700ea"
+    },
+    "libc_metadata_implementation": {
+      "candidate": "candidate001",
+      "files": [
+        {
+          "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+          "bytes": 196305,
+          "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206"
+        },
+        {
+          "path": "tests/test_current_host_libc_plt_metadata_v01.py",
+          "bytes": 27946,
+          "sha256": "661b7a96aae871e83fcfc4f1fcf975467ac81400961dad81c19283d13f2978d7"
+        },
+        {
+          "path": "tests/test_current_host_libc_static_tls_flags_v01.py",
+          "bytes": 1211,
+          "sha256": "d91ad24b3fc62d1b8abd4e8ac5aa68a8459d20a54224a102dbd3ba181a0523d5"
+        }
+      ],
+      "review": "docs/engineering/localized-repair-c271/libc-implementation-p18/review/REVIEW.json",
+      "commit": "pending_publication",
+      "actual_host_qualified": false
     }
   },
-  "next_action": "Implement adopted P16/P17 only; run frozen/inherited controls; independently review exact source/adapters; stop before H0/H1 or first concrete design blocker",
+  "next_action": "Finish documentary verification, conditional branch publication and verified final partial delivery only; stop this chat. Fresh phase: reconcile final receipt and live state, then review actual inputs and operational-plan eligibility before any H0/H1 progression.",
   "session_phase": {
     "schema": "ontokin.c271.p18-phase/1",
     "task": "C271",
@@ -991,7 +1031,7 @@
     ],
     "phase_complete": false,
     "early_save_confirmed": true,
-    "status": "implementation_ready",
+    "status": "technical_complete_publication_and_delivery_pending",
     "current_unknown_operations": [],
     "historical_unknowns": [
       "C270 ancillary broad-driver completion",
@@ -1002,32 +1042,32 @@
       {
         "id": "/root/handoff_audit",
         "scope": "independent recovery/package audit",
-        "state": "P17 startup audit complete; independent early archive audit running"
+        "state": "early accepted; final frozen package review pending"
       },
       {
         "id": "/root/ledger_review",
         "scope": "full active CURRENT/task ledger startup",
-        "state": "Full ledger startup complete; independent implementation review pending"
+        "state": "independent exact-source/adapter review complete and accepted; no mandatory findings"
       },
       {
         "id": "/root/implementation",
         "scope": "full active PLAN and design read; later isolated production/adapters",
-        "state": "Full PLAN/design startup complete; held before technical work"
+        "state": "candidate001 frozen; implementation complete; no active process or unknown write"
       }
     ],
     "capabilities": {
       "repository_read": "GitHub connector plus authentic Git checkout",
-      "git_data_write": "available connector create-tree/commit and expected-SHA nonforce ref tools; this phase not yet exercised",
+      "git_data_write": "Observed successful expected-parent nonforce publication with exact tree/24-file readback",
       "native_push": "previously diagnosed unavailable; not retried",
       "branch_pr_read": "observed",
-      "terminal_tests": "available; product checks not started",
+      "terminal_tests": "114 author frozen +271 author inherited; independent guarded412 all passed; no actual-host or full-routine execution",
       "subagents": "three real launched workers; inherited model, fresh context",
       "zip": "available",
       "library_read": "actual P17 ZIP/receipt/audit materializations",
       "library_save": "Accepted early002 and rejected early001 saved with exact readbacks; receipt binds both",
       "merge_deletion": "not selected"
     },
-    "next_action": "Implement adopted P16/P17 only; run frozen/inherited controls; independently review exact source/adapters; stop before H0/H1 or first concrete design blocker",
+    "next_action": "Finish documentary verification, conditional branch publication and verified final partial delivery only; stop this chat. Fresh phase: reconcile final receipt and live state, then review actual inputs and operational-plan eligibility before any H0/H1 progression.",
     "startup_reconciliation": {
       "P17_delivery": "confirmed complete_partial_delivery by actual saved-byte readbacks,62-group audit and live PR/issue markers",
       "required_readsets": [
@@ -1052,22 +1092,31 @@
       },
       {
         "gate": "P18-A02",
-        "state": "not_started",
-        "criterion": "adopted implementation with preservation"
+        "state": "passed",
+        "criterion": "adopted implementation with preservation",
+        "evidence": [
+          "docs/engineering/localized-repair-c271/libc-implementation-p18/implementation/STATIC-PRESERVATION.json",
+          "docs/engineering/localized-repair-c271/libc-implementation-p18/PHASE-OUTCOME.json"
+        ]
       },
       {
         "gate": "P18-A03",
-        "state": "not_started",
-        "criterion": "frozen/inherited checks and independent review"
+        "state": "passed",
+        "criterion": "frozen/inherited checks and independent review",
+        "evidence": [
+          "docs/engineering/localized-repair-c271/libc-implementation-p18/review/REVIEW.json",
+          "docs/engineering/localized-repair-c271/libc-implementation-p18/review/attempt001/RESULT.json",
+          "docs/engineering/localized-repair-c271/libc-implementation-p18/review/OBSERVATION-AUDIT.json"
+        ]
       },
       {
         "gate": "P18-A04",
-        "state": "not_started",
+        "state": "pending_publication",
         "criterion": "documentary verification and conditional publication"
       },
       {
         "gate": "P18-A05",
-        "state": "not_started",
+        "state": "pending_final_delivery",
         "criterion": "verified saved final handoff and separate receipt"
       }
     ],
@@ -1083,7 +1132,7 @@
           "observation time and gate table missing",
           "startup/limits/reconciliation narrative incomplete"
         ],
-        "preservation": "exact original will be saved alongside corrected attempt002; separate early receipt records both"
+        "preservation": "Exact rejected attempt001 was separately saved and read back; EARLY-RECOVERY-RECEIPT.json records its actual identity alongside accepted attempt002."
       }
     ],
     "early_recovery": {
@@ -1102,83 +1151,108 @@
       "saved_bytes_readback_equal": true,
       "disposition": "accepted_early_recovery",
       "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-ffad1555e82c81918dadcf0c01fd1fb2_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+    },
+    "phase_start_checkpoint": {
+      "status": "confirmed",
+      "at_utc": "2026-11-22T19:26:41.056844+00:00",
+      "commit": "cd49c26e39fda0d0cfc875dbae83d618b9877198",
+      "tree": "56665edcd07d4704da24560fcd0dd7fd0a933c71",
+      "parent": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+      "exact_files_verified": 24,
+      "conditional_nonforce": true,
+      "remote_heads": [
+        "70ca7e68ff95df876f801137369d176fe5b2bab3\trefs/heads/main",
+        "cd49c26e39fda0d0cfc875dbae83d618b9877198\trefs/heads/work/c271-missing-import-digest-control"
+      ],
+      "unpublished_work": "Other workers own unstaged implementation paths; mixed reset preserved working bytes"
+    },
+    "implementation_ownership": {
+      "/root/implementation": [
+        "prototypes/static_tray_v01/current_host_inspection_v01.py",
+        "tests/test_current_host_libc_plt_metadata_v01.py"
+      ],
+      "/root": [
+        "tests/test_current_host_libc_static_tls_flags_v01.py",
+        "canonical records, Git/index, publication and delivery"
+      ],
+      "/root/ledger_review": [
+        "independent exact-source/adapter review and27 inert compatibility checks in separate scratch"
+      ],
+      "/root/handoff_audit": [
+        "independent saved recovery and final package/receipt audits"
+      ]
+    },
+    "additional_compatibility_checks": {
+      "selected": 27,
+      "provider_selection_and_files": 18,
+      "driver_selection_and_refusal": 9,
+      "explicitly_not_selected": "real Python child method, installer cohort, original-seven/full routine",
+      "reason": "Relevant closed provider/driver selection and prelaunch accounting; no host execution"
+    },
+    "technical_phase_complete": true,
+    "technical_accepted_at_utc": "2026-11-22T19:42:33.481438+00:00",
+    "candidate": "candidate001",
+    "source_files": [
+      {
+        "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+        "bytes": 196305,
+        "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206"
+      },
+      {
+        "path": "tests/test_current_host_libc_plt_metadata_v01.py",
+        "bytes": 27946,
+        "sha256": "661b7a96aae871e83fcfc4f1fcf975467ac81400961dad81c19283d13f2978d7"
+      },
+      {
+        "path": "tests/test_current_host_libc_static_tls_flags_v01.py",
+        "bytes": 1211,
+        "sha256": "d91ad24b3fc62d1b8abd4e8ac5aa68a8459d20a54224a102dbd3ba181a0523d5"
+      }
+    ],
+    "technical_review": {
+      "path": "docs/engineering/localized-repair-c271/libc-implementation-p18/review/REVIEW.json",
+      "bytes": 6102,
+      "sha256": "6d4d7123a82b4ee4003cc7374f809f138b776847f8eb0da27192a00d3ed9bc58",
+      "verdict": "pass",
+      "mandatory_findings": 0,
+      "design_blockers": 0,
+      "independent_methods": 412,
+      "observation_rows": 114
+    },
+    "verification": {
+      "P16": 73,
+      "P17": 41,
+      "inherited_inspection": 135,
+      "inherited_mapping": 40,
+      "inherited_origin": 96,
+      "provider_and_driver_compatibility": 27,
+      "independent_total": 412,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "forbidden_process_attempts": 0,
+      "source_changes_during_run": 0,
+      "actual_host_qualified": false,
+      "python": "CPython 3.12.14",
+      "platform": "Linux x86_64, glibc 2.41",
+      "N57": "external only"
+    },
+    "first_next_phase_action": "After confirmed P18 delivery, use a fresh chat for a bounded actual-input and operational-plan review for H0. Reconcile current host facts and exact adopted profile under independent review; stop at the first new blocker or the H0 boundary, before H1 or the complete routine.",
+    "learning_disposition": {
+      "status": "no_new_generalizable_lesson",
+      "reason": "Implements the already adopted P16/P17 decisions and existing P15 lesson: complete static inventory is not operational admission, and the first failed predicate retains its meaning. No memory change is justified."
     }
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "core_saved_terminal_delivery_pending",
+    "status": "P18_final_pending",
     "folder": "OntoKin",
     "partial": true,
-    "early_receipt": "docs/engineering/localized-repair-c271/libc-flags-p17/EARLY-RECOVERY-RECEIPT.json",
-    "receipt": "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json",
-    "terminal_receipt_filename": "OntoKin_C271_P17_Delivery_Receipt_2026-11-22.json",
-    "saved_files": [
-      {
-        "local_path": "/workspace/scratch/bbea56c9165d/deliverables/final-attempt001/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
-        "purpose": "create_library_file",
-        "status": "succeeded",
-        "file_id": "file_000000002fa081f5ac62a78c16cdd666",
-        "library_file_id": "libfile_fde3_f-39c0a0c7938c8191a29279c2b6e87303_2ab2a24d43748191957f9bcc356b59de",
-        "file_name": "OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
-        "local_metadata_applied": true,
-        "path": "/OntoKin/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
-        "current_version_number": 0,
-        "bytes": 20868218,
-        "sha256": "b13e30cc0c8f7aeb702d31221742e2ed022e4b4d811c5bdad1e5c1909ed5589e",
-        "version": 0,
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-39c0a0c7938c8191a29279c2b6e87303_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "readback_path": "/workspace/scratch/bbea56c9165d/readback/final/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
-        "saved_bytes_readback_equal": true,
-        "readback_metadata_applied": true,
-        "folder_metadata_verified": true,
-        "role": "handoff_zip"
-      },
-      {
-        "local_path": "/workspace/scratch/bbea56c9165d/deliverables/final-attempt001/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Continue.md",
-        "purpose": "create_library_file",
-        "status": "succeeded",
-        "file_id": "file_000000002cb081f5ba77891b71b40369",
-        "library_file_id": "libfile_fde3_f-a51fa48d1a508191a11e4a86cd017651_2ab2a24d43748191957f9bcc356b59de",
-        "file_name": "OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Continue.md",
-        "local_metadata_applied": true,
-        "path": "/OntoKin/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Continue.md",
-        "current_version_number": 0,
-        "bytes": 2064,
-        "sha256": "d0f8eba2dab1aa17be6a9ebb1d5c3099b2424a827e220acda0af0b1cc2036255",
-        "version": 0,
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-a51fa48d1a508191a11e4a86cd017651_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "readback_path": "/workspace/scratch/bbea56c9165d/readback/final/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Continue.md",
-        "saved_bytes_readback_equal": true,
-        "readback_metadata_applied": true,
-        "folder_metadata_verified": true,
-        "role": "continue_prompt",
-        "matching_zip_member": "PROMPT-1-CONTINUE.md",
-        "zip_member_bytes_equal": true
-      },
-      {
-        "local_path": "/workspace/scratch/bbea56c9165d/deliverables/final-attempt001/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Recover.md",
-        "purpose": "create_library_file",
-        "status": "succeeded",
-        "file_id": "file_0000000020e081f5947f4e443db44efe",
-        "library_file_id": "libfile_fde3_f-795ed787cec08191921124af40cc1c64_2ab2a24d43748191957f9bcc356b59de",
-        "file_name": "OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Recover.md",
-        "local_metadata_applied": true,
-        "path": "/OntoKin/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Recover.md",
-        "current_version_number": 0,
-        "bytes": 2062,
-        "sha256": "10d8367b848f6048440a9491cf0e04fc2f63cd279bc709bb2ce37cbcaa3914be",
-        "version": 0,
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-795ed787cec08191921124af40cc1c64_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "readback_path": "/workspace/scratch/bbea56c9165d/readback/final/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Recover.md",
-        "saved_bytes_readback_equal": true,
-        "readback_metadata_applied": true,
-        "folder_metadata_verified": true,
-        "role": "recover_prompt",
-        "matching_zip_member": "PROMPT-2-RECOVER.md",
-        "zip_member_bytes_equal": true
-      }
-    ]
+    "early_receipt": "docs/engineering/localized-repair-c271/libc-implementation-p18/EARLY-RECOVERY-RECEIPT.json",
+    "receipt": "docs/engineering/localized-repair-c271/libc-implementation-p18/P18-DELIVERY.json",
+    "terminal_receipt_filename": "OntoKin_C271_P18_Delivery_Receipt_2026-11-22.json",
+    "saved_files": []
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
@@ -4231,6 +4305,82 @@
       "early_receipt": "docs/engineering/localized-repair-c271/libc-tags-p16/EARLY-RECOVERY-RECEIPT.json",
       "receipt": "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
       "terminal_receipt_filename": "OntoKin_C271_P16_Delivery_Receipt_2026-11-22.json"
+    },
+    {
+      "required": true,
+      "kind": "browser-session",
+      "status": "core_saved_terminal_delivery_pending",
+      "folder": "OntoKin",
+      "partial": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/libc-flags-p17/EARLY-RECOVERY-RECEIPT.json",
+      "receipt": "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json",
+      "terminal_receipt_filename": "OntoKin_C271_P17_Delivery_Receipt_2026-11-22.json",
+      "saved_files": [
+        {
+          "local_path": "/workspace/scratch/bbea56c9165d/deliverables/final-attempt001/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
+          "purpose": "create_library_file",
+          "status": "succeeded",
+          "file_id": "file_000000002fa081f5ac62a78c16cdd666",
+          "library_file_id": "libfile_fde3_f-39c0a0c7938c8191a29279c2b6e87303_2ab2a24d43748191957f9bcc356b59de",
+          "file_name": "OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
+          "current_version_number": 0,
+          "bytes": 20868218,
+          "sha256": "b13e30cc0c8f7aeb702d31221742e2ed022e4b4d811c5bdad1e5c1909ed5589e",
+          "version": 0,
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-39c0a0c7938c8191a29279c2b6e87303_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "readback_path": "/workspace/scratch/bbea56c9165d/readback/final/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
+          "saved_bytes_readback_equal": true,
+          "readback_metadata_applied": true,
+          "folder_metadata_verified": true,
+          "role": "handoff_zip"
+        },
+        {
+          "local_path": "/workspace/scratch/bbea56c9165d/deliverables/final-attempt001/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Continue.md",
+          "purpose": "create_library_file",
+          "status": "succeeded",
+          "file_id": "file_000000002cb081f5ba77891b71b40369",
+          "library_file_id": "libfile_fde3_f-a51fa48d1a508191a11e4a86cd017651_2ab2a24d43748191957f9bcc356b59de",
+          "file_name": "OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Continue.md",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Continue.md",
+          "current_version_number": 0,
+          "bytes": 2064,
+          "sha256": "d0f8eba2dab1aa17be6a9ebb1d5c3099b2424a827e220acda0af0b1cc2036255",
+          "version": 0,
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-a51fa48d1a508191a11e4a86cd017651_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "readback_path": "/workspace/scratch/bbea56c9165d/readback/final/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Continue.md",
+          "saved_bytes_readback_equal": true,
+          "readback_metadata_applied": true,
+          "folder_metadata_verified": true,
+          "role": "continue_prompt",
+          "matching_zip_member": "PROMPT-1-CONTINUE.md",
+          "zip_member_bytes_equal": true
+        },
+        {
+          "local_path": "/workspace/scratch/bbea56c9165d/deliverables/final-attempt001/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Recover.md",
+          "purpose": "create_library_file",
+          "status": "succeeded",
+          "file_id": "file_0000000020e081f5947f4e443db44efe",
+          "library_file_id": "libfile_fde3_f-795ed787cec08191921124af40cc1c64_2ab2a24d43748191957f9bcc356b59de",
+          "file_name": "OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Recover.md",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Recover.md",
+          "current_version_number": 0,
+          "bytes": 2062,
+          "sha256": "10d8367b848f6048440a9491cf0e04fc2f63cd279bc709bb2ce37cbcaa3914be",
+          "version": 0,
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-795ed787cec08191921124af40cc1c64_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "readback_path": "/workspace/scratch/bbea56c9165d/readback/final/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Recover.md",
+          "saved_bytes_readback_equal": true,
+          "readback_metadata_applied": true,
+          "folder_metadata_verified": true,
+          "role": "recover_prompt",
+          "matching_zip_member": "PROMPT-2-RECOVER.md",
+          "zip_member_bytes_equal": true
+        }
+      ]
     }
   ],
   "prior_blocked_reason": "Required routine gate failed: unit timeout at 900 seconds and isolated documentation copy omitted five tracked instruction files, producing 21 missing local links.",
@@ -4260,7 +4410,13 @@
     },
     "Parent R03 remains unmet: actual host qualification and the full routine are unaccepted. P14 candidate003 is independently accepted for the finite adopted implementation scope. Actual-loader source completeness, operational plan eligibility, H0/H1 and later parent gates remain open.",
     "Parent R03 remains unmet. P15 externally accepted exact-loader suffix completeness, then confirmed actual libc admission refusal at the dynamic-tag allowlist. H0, operational-plan adoption, H1 and the full routine remain unaccepted; no repair was attempted.",
-    "Parent R03 remains unmet. P16 adopts only a reviewed tag-specific design and frozen controls; no implementation or input admission occurred. The exact retained libc flags 0x18 remain outside the unchanged mask, a predicted later constraint rather than the P15 observed refusal. Operational-plan adoption, H0/H1, full routine and integration remain unaccepted."
+    "Parent R03 remains unmet. P16 adopts only a reviewed tag-specific design and frozen controls; no implementation or input admission occurred. The exact retained libc flags 0x18 remain outside the unchanged mask, a predicted later constraint rather than the P15 observed refusal. Operational-plan adoption, H0/H1, full routine and integration remain unaccepted.",
+    {
+      "phase": "P17",
+      "reason": "Parent R03 remains unmet. P16 tags and P17 exact flags24 are adopted designs with frozen controls, not implemented or runtime-qualified. The observed P15 tag refusal and inferred later flags refusal retain their distinct status. Operational-plan adoption, H0/H1, complete routine, integration and parent delivery remain unaccepted.",
+      "superseded_at_utc": "2026-11-22T19:42:33.481438+00:00",
+      "scope": "P18 implementation evidence only; host and parent gates remain open"
+    }
   ],
   "remaining_h0_constraint": {
     "id": "P15-H0-LIBC-DYNAMIC-TAG-001",
@@ -4270,9 +4426,14 @@
       "docs/engineering/localized-repair-c271/host-loader-p15/BLOCKER-DECISION.json"
     ],
     "fact": "Actual mapped libc is rejected by the unchanged dynamic-tag allowlist; first excluded tag0x70000000 at offset1980896. The later dynamic-flags predicate was not reached.",
-    "scope": "Source suffix-union acceptance remains narrow. Complete inventory/plan eligibility and H0/H1 remain unaccepted."
+    "scope": "Source suffix-union acceptance remains narrow. Complete inventory/plan eligibility and H0/H1 remain unaccepted.",
+    "P18_update": {
+      "implementation": "accepted on frozen synthetic and inert controls",
+      "actual_host_reassessment": "not performed",
+      "evidence": "docs/engineering/localized-repair-c271/libc-implementation-p18/PHASE-OUTCOME.json"
+    }
   },
-  "blocked_reason": "Parent R03 remains unmet. P16 tags and P17 exact flags24 are adopted designs with frozen controls, not implemented or runtime-qualified. The observed P15 tag refusal and inferred later flags refusal retain their distinct status. Operational-plan adoption, H0/H1, complete routine, integration and parent delivery remain unaccepted.",
+  "blocked_reason": "Parent R03 remains unmet. Adopted P16/P17 metadata behavior is now implemented and independently checked by 412 selected methods on exact candidate001 bytes. Actual-input operational-plan eligibility, H0/H1, complete routine, integration and parent delivery remain unaccepted. Historical P15 actual tag refusal and its unreached later flags predicate retain their original meaning.",
   "prior_h0_constraints": [
     {
       "id": "H0-PYTHON-RPATH-TOKEN-001",

@@ -1,0 +1,90 @@
+{
+  "schema": "ontokin.c271.p18-outcome/1",
+  "at_utc": "2026-11-22T19:42:33.481438+00:00",
+  "status": "implementation_accepted_delivery_pending",
+  "candidate": "candidate001",
+  "source_files": [
+    {
+      "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "bytes": 196305,
+      "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206"
+    },
+    {
+      "path": "tests/test_current_host_libc_plt_metadata_v01.py",
+      "bytes": 27946,
+      "sha256": "661b7a96aae871e83fcfc4f1fcf975467ac81400961dad81c19283d13f2978d7"
+    },
+    {
+      "path": "tests/test_current_host_libc_static_tls_flags_v01.py",
+      "bytes": 1211,
+      "sha256": "d91ad24b3fc62d1b8abd4e8ac5aa68a8459d20a54224a102dbd3ba181a0523d5"
+    }
+  ],
+  "source_documentary_base": "cd49c26e39fda0d0cfc875dbae83d618b9877198",
+  "adopted_designs": [
+    "docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json",
+    "docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json"
+  ],
+  "behavior": "Separate explicit 0.1.2 PLT and 0.1.3 PLT/static-TLS plan/profile pairs; selected actual Python libc dependency and pinned libc/loader binding before private parser admission. Exact three tags are opaque metadata. Only 0.1.3 adds exact DT_FLAGS=24; 0.1.2 retains its original refusal.",
+  "accepted_by": "Director after independent exact-source and adapter review",
+  "review": {
+    "path": "docs/engineering/localized-repair-c271/libc-implementation-p18/review/REVIEW.json",
+    "bytes": 6102,
+    "sha256": "6d4d7123a82b4ee4003cc7374f809f138b776847f8eb0da27192a00d3ed9bc58",
+    "verdict": "pass",
+    "mandatory_findings": 0,
+    "design_blockers": 0,
+    "independent_methods": 412,
+    "observation_rows": 114
+  },
+  "verification": {
+    "P16": 73,
+    "P17": 41,
+    "inherited_inspection": 135,
+    "inherited_mapping": 40,
+    "inherited_origin": 96,
+    "provider_and_driver_compatibility": 27,
+    "independent_total": 412,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "forbidden_process_attempts": 0,
+    "source_changes_during_run": 0,
+    "actual_host_qualified": false,
+    "python": "CPython 3.12.14",
+    "platform": "Linux x86_64, glibc 2.41",
+    "N57": "external only"
+  },
+  "not_established": [
+    "actual host qualification",
+    "operational plan admission",
+    "dynamic loading",
+    "PT_TLS layout",
+    "relocation behavior",
+    "H0",
+    "H1",
+    "original-seven/full routine",
+    "integration readiness",
+    "parent completion"
+  ],
+  "preservation": "Existing tests, fixture archives, literal expectations, pins, budgets, consumers and inherited failures are unchanged. N57 remains external.",
+  "parent": {
+    "status": "blocked",
+    "requirements": {
+      "R01": "done",
+      "R02": "done",
+      "R03": "not_done",
+      "R04": "not_done",
+      "R05": "not_done"
+    },
+    "plan": {
+      "P01": "done",
+      "P02": "in_progress"
+    },
+    "complete": false
+  },
+  "publication": "pending expected-parent nonforce update of retained branch",
+  "final_delivery": "pending independent package audit and actual saved bytes",
+  "stop": "No second technical phase in this chat",
+  "next": "After confirmed P18 delivery, use a fresh chat for a bounded actual-input and operational-plan review for H0. Reconcile current host facts and exact adopted profile under independent review; stop at the first new blocker or the H0 boundary, before H1 or the complete routine."
+}

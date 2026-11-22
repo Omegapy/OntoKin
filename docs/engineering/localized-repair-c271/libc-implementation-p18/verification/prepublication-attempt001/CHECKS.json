@@ -1,0 +1,118 @@
+{
+  "schema": "ontokin.c271.p18-record-checks/1",
+  "label": "implementation-prepublication",
+  "started_at_utc": "2026-11-22T19:43:04.304220+00:00",
+  "cwd": "/workspace/scratch/cf3e30ae3c50/OntoKin",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "head": "cd49c26e39fda0d0cfc875dbae83d618b9877198",
+  "tree": "56665edcd07d4704da24560fcd0dd7fd0a933c71",
+  "status_before": " M STATUS.md\n M docs/engineering/localized-repair-c271/libc-implementation-p18/PHASE.json\n M docs/workflow/CURRENT.json\n M docs/workflow/tasks/C271/PLAN.md\n M docs/workflow/tasks/C271/REQUIREMENTS.md\n M docs/workflow/tasks/C271/task.json\n M prototypes/static_tray_v01/current_host_inspection_v01.py\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/EVIDENCE-MAP.json\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/OUTCOME.md\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/PHASE-OUTCOME.json\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/PRESERVATION.json\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/history/\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/implementation/\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/review/\n?? tests/test_current_host_libc_plt_metadata_v01.py\n?? tests/test_current_host_libc_static_tls_flags_v01.py\n",
+  "source_files": [
+    {
+      "path": "STATUS.md",
+      "bytes": 14445,
+      "sha256": "724dccc8e663e60479e56c8632268cc9d96820d6b8b44afafd4a52280333901e"
+    },
+    {
+      "path": "docs/workflow/CURRENT.json",
+      "bytes": 94641,
+      "sha256": "65e5839dc9ccf22805c0dea1b89337c89190b5f728064724d8c33cc92be577e7"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/task.json",
+      "bytes": 260659,
+      "sha256": "d6baebbffe3b80655d8051b92ea676da4af3550538e62be1b5685a9faf83b3c7"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/PLAN.md",
+      "bytes": 55728,
+      "sha256": "db5a42b201e6f92da06f9a4aa8f928159b4e424c2dc9a725387a7c4753e789ec"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "bytes": 54572,
+      "sha256": "88d01ea81606f2002476bef7a6a119aaaaf7557c7d6e6071af489f9b444b510d"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/libc-implementation-p18/PHASE.json",
+      "bytes": 12028,
+      "sha256": "7d79eacd7c4c0e2b01c182d2b62a98fb4f5db36a32a94c01553e23bea54193e2"
+    },
+    {
+      "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "bytes": 196305,
+      "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206"
+    },
+    {
+      "path": "tests/test_current_host_libc_plt_metadata_v01.py",
+      "bytes": 27946,
+      "sha256": "661b7a96aae871e83fcfc4f1fcf975467ac81400961dad81c19283d13f2978d7"
+    },
+    {
+      "path": "tests/test_current_host_libc_static_tls_flags_v01.py",
+      "bytes": 1211,
+      "sha256": "d91ad24b3fc62d1b8abd4e8ac5aa68a8459d20a54224a102dbd3ba181a0523d5"
+    }
+  ],
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "started_at_utc": "2026-11-22T19:43:04.358433+00:00",
+      "exit_code": 1,
+      "log": "workflow.log",
+      "log_bytes": 219,
+      "log_sha256": "acb499901aecc2ddc2f012ca04d25653e2e383723ad1c554b27f90b1fb466558"
+    },
+    {
+      "name": "documents",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "started_at_utc": "2026-11-22T19:43:04.467855+00:00",
+      "exit_code": 0,
+      "log": "documents.log",
+      "log_bytes": 6609,
+      "log_sha256": "89c5cd7c1f321fa4a5d8cb8128c7bbcb1d8e7b3ab58288a724f2cd20bc1ef40b"
+    },
+    {
+      "name": "worktree-whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_at_utc": "2026-11-22T19:43:06.800543+00:00",
+      "exit_code": 0,
+      "log": "worktree-whitespace.log",
+      "log_bytes": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "staged-whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "started_at_utc": "2026-11-22T19:43:06.826749+00:00",
+      "exit_code": 0,
+      "log": "staged-whitespace.log",
+      "log_bytes": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "source_files_unchanged": true,
+  "passed": false,
+  "finished_at_utc": "2026-11-22T19:43:06.834523+00:00"
+}

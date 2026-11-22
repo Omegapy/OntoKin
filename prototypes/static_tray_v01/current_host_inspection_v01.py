@@ -79,8 +79,18 @@ VERSION = "/0.1.0"
 CONTRACT = "ontokin.current-host-readback/0.1.0"
 PLAN_SCHEMA = PREFIX + "inspection-plan" + VERSION
 ORIGIN_PLAN_SCHEMA = PREFIX + "inspection-plan/0.1.1"
+LIBC_PLT_PLAN_SCHEMA = PREFIX + "inspection-plan/0.1.2"
+LIBC_STATIC_TLS_PLAN_SCHEMA = PREFIX + "inspection-plan/0.1.3"
 CLOSURE_PROFILE = "linux-glibc-declared-closure-v1"
 ORIGIN_PROFILE = "linux-glibc-declared-python-origin-rpath-v1"
+LIBC_PLT_PROFILE = "linux-glibc-declared-python-origin-rpath-libc-plt-v1"
+LIBC_STATIC_TLS_PROFILE = "linux-glibc-declared-python-origin-rpath-libc-plt-static-tls-v1"
+LIBC_PLT_SCHEMA = PREFIX + "libc-plt" + VERSION
+LIBC_PLT_TAGS = frozenset((0x70000000, 0x70000001, 0x70000003))
+LIBC = {"sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
+        "size_bytes": 1995216, "mode": "0o755"}
+LIBC_LOADER = {"sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+               "size_bytes": 225672, "mode": "0o755"}
 ORIGIN_SCHEMA = PREFIX + "python-origin-rpath" + VERSION
 ORIGIN_VARIANT_SCHEMA = PREFIX + "origin-variants" + VERSION
 ORIGIN_RPATH = "$ORIGIN/../lib"
@@ -367,7 +377,8 @@ def _strings(value, category, *, nonempty=False):
 
 def _plan_shape(plan):
     _keys(plan, PLAN_KEYS)
-    _require(plan["schema"] in (PLAN_SCHEMA, ORIGIN_PLAN_SCHEMA) and plan["contract"] == CONTRACT, "PLAN", "Unsupported executable inspection plan")
+    _require(plan["schema"] in (PLAN_SCHEMA, ORIGIN_PLAN_SCHEMA, LIBC_PLT_PLAN_SCHEMA, LIBC_STATIC_TLS_PLAN_SCHEMA)
+             and plan["contract"] == CONTRACT, "PLAN", "Unsupported executable inspection plan")
     _require(plan["environment"] == ENVIRONMENT and _canonical(plan["limits"]) == _canonical(LIMITS), "PLAN", "Fixed environment or limits differ")
     _keys(plan["source"], "root commit tree inventory".split())
     root = _absolute(plan["source"]["root"], "SOURCE")
@@ -409,7 +420,7 @@ def _plan_shape(plan):
         _require(resolution["profile"] == CLOSURE_PROFILE, "UNSUPPORTED", "Unsupported closure profile")
     else:
         _select_origin_profile(plan["schema"], resolution)
-        _origin_keys(resolution, resolution_keys + ["origin_rpath"])
+        _origin_keys(resolution, resolution_keys + ["origin_rpath"] + (["libc_plt"] if _uses_libc_profile(plan) else []))
     _keys(plan["evidence"], "parent attempt_root ancestor_identities outputs outer_capture".split(), "PATH")
     evidence = plan["evidence"]
     parent, attempt = (_absolute(evidence[key], "PATH") for key in ("parent", "attempt_root"))
@@ -661,8 +672,13 @@ def _select_origin_profile(schema, resolution):
         _origin_require("origin_rpath" not in resolution, "PLAN", "profile_selection",
                         "LP-CLOSED-SHAPE", "The old profile has no origin rule")
         return None
-    _origin_require(schema == ORIGIN_PLAN_SCHEMA and profile == ORIGIN_PROFILE,
-                    "PLAN", "profile_selection", "LP-SCHEMA-PROFILE", "Unsupported inspection schema/profile pair")
+    if schema == LIBC_PLT_PLAN_SCHEMA:
+        _select_libc_plt_profile(schema, resolution)
+    elif schema == LIBC_STATIC_TLS_PLAN_SCHEMA:
+        _select_libc_static_tls_profile(schema, resolution)
+    else:
+        _origin_require(schema == ORIGIN_PLAN_SCHEMA and profile == ORIGIN_PROFILE,
+                        "PLAN", "profile_selection", "LP-SCHEMA-PROFILE", "Unsupported inspection schema/profile pair")
     origin = resolution.get("origin_rpath")
     _origin_keys(origin, ORIGIN_KEYS)
     _origin_require(origin["schema"] == ORIGIN_SCHEMA, "PLAN", "profile_selection",
@@ -685,6 +701,116 @@ def _select_origin_profile(schema, resolution):
                     and type(origin["variants"]) is list and type(origin["needed_names"]) is list,
                     "PLAN", "profile_selection", "LP-CLOSED-SHAPE", "Invalid origin field type or kernel expectation")
     return origin
+
+
+def _uses_libc_profile(plan):
+    return plan.get("schema") in (LIBC_PLT_PLAN_SCHEMA, LIBC_STATIC_TLS_PLAN_SCHEMA)
+
+
+def _uses_origin_profile(plan):
+    return plan.get("schema") == ORIGIN_PLAN_SCHEMA or _uses_libc_profile(plan)
+
+
+def _libc_plt_shape(value):
+    """Closed data shape only; this selector authenticates no actual file."""
+    def shape(condition):
+        _origin_require(condition, "PLAN", "profile_selection", "PLT-SHAPE", "Invalid libc PLT policy shape")
+    shape(type(value) is dict and set(value) == {"schema", "subject", "loader"})
+    shape(value["schema"] == LIBC_PLT_SCHEMA)
+    for key in ("subject", "loader"):
+        descriptor = value[key]
+        shape(type(descriptor) is dict and set(descriptor) == {"path", "sha256", "size_bytes", "mode"})
+        shape(type(descriptor["path"]) is str and type(descriptor["sha256"]) is str
+              and re.fullmatch(r"[0-9a-f]{64}", descriptor["sha256"]) is not None
+              and type(descriptor["size_bytes"]) is int and descriptor["size_bytes"] >= 0
+              and type(descriptor["mode"]) is str and re.fullmatch(r"0o[0-7]{3,4}", descriptor["mode"]) is not None)
+        try:
+            _absolute(descriptor["path"], links=True)
+        except HostInspectionError:
+            shape(False)
+    return value
+
+
+def _select_libc_plt_profile(schema, resolution):
+    _origin_require(schema == LIBC_PLT_PLAN_SCHEMA and type(resolution) is dict
+                    and resolution.get("profile") == LIBC_PLT_PROFILE,
+                    "PLAN", "profile_selection", "PLT-PROFILE", "Unsupported libc PLT schema/profile pair")
+    return _libc_plt_shape(resolution.get("libc_plt"))
+
+
+def _select_libc_static_tls_profile(schema, resolution):
+    _origin_require(schema == LIBC_STATIC_TLS_PLAN_SCHEMA and type(resolution) is dict
+                    and resolution.get("profile") == LIBC_STATIC_TLS_PROFILE,
+                    "PLAN", "profile_selection", "FLAGS-PROFILE", "Unsupported libc static-TLS schema/profile pair")
+    return _libc_plt_shape(resolution.get("libc_plt"))
+
+
+def _check_libc_plt_bindings(*, subject, loader, python_descriptor, actual_python_needed,
+                            actual_python_interpreter, python_resolved_needed, dependency_role_names,
+                            forbidden_resolved_paths, host_aliases, runtime_aliases, host_files,
+                            runtime_files, libc_image_descriptor, loader_image_descriptor, runtime_interpreter):
+    """Pure relation proof. Only the caller can supply actual observed metadata."""
+    named = python_resolved_needed.get("libc.so.6") if isinstance(python_resolved_needed, Mapping) else None
+    interpreter = actual_python_interpreter
+    subject_path, loader_path = subject["path"], loader["path"]
+    _origin_require("libc.so.6" in actual_python_needed and type(named) is str
+                    and named in dependency_role_names and named in host_aliases and named in runtime_aliases
+                    and host_aliases[named].get("resolved_path") == subject_path
+                    and runtime_aliases[named].get("resolved_path") == subject_path
+                    and type(interpreter) is str and interpreter == runtime_interpreter
+                    and interpreter in host_aliases and interpreter in runtime_aliases
+                    and host_aliases[interpreter].get("resolved_path") == loader_path
+                    and runtime_aliases[interpreter].get("resolved_path") == loader_path
+                    and subject_path not in forbidden_resolved_paths
+                    and subject_path not in (python_descriptor["path"], loader_path),
+                    "INSPECTOR", "libc_plt_binding", "PLT-ROLE", "Selected libc is not the bound author-Python dependency")
+    _origin_require(host_aliases[named] == runtime_aliases[named]
+                    and host_aliases[interpreter] == runtime_aliases[interpreter]
+                    and subject == libc_image_descriptor and loader == loader_image_descriptor
+                    and host_files.get(subject_path) == runtime_files.get(subject_path) == _binding(subject)
+                    and host_files.get(loader_path) == runtime_files.get(loader_path) == _binding(loader),
+                    "INSPECTOR", "libc_plt_binding", "PLT-DESCRIPTORS", "Libc PLT descriptors or aliases disagree")
+    _origin_require(_binding(subject) == LIBC and _binding(loader) == LIBC_LOADER,
+                    "INSPECTOR", "libc_plt_binding", "PLT-PIN", "Libc PLT input is not the selected libc/loader pair")
+
+
+def _prepare_libc_plt_policy(plan, runtime, python_metadata, *, check=lambda: None):
+    """Bind the selected edge and actual files anew inside each resolution proof."""
+    host, schema = plan["host_static"], plan["schema"]
+    resolution = host["resolution"]
+    selector = _select_libc_static_tls_profile if schema == LIBC_STATIC_TLS_PLAN_SCHEMA else _select_libc_plt_profile
+    value = selector(schema, resolution)
+    def image(path):
+        matches = []
+        for row in resolution["images"]:
+            check()
+            if row["file"]["path"] == path:
+                matches.append(row)
+        _origin_require(len(matches) == 1, "INSPECTOR", "libc_plt_binding", "PLT-DESCRIPTORS",
+                        "Libc PLT descriptors or aliases disagree")
+        return matches[0]
+    python = plan["author"]["python_descriptor"]
+    python_row = image(python["path"])
+    forbidden = [host["roles"][name] for name in ROLE_SCALARS]
+    forbidden += [plan["author"]["git_descriptor"]["path"], plan["author"]["entry_point"],
+                  runtime["interpreter"], *runtime["extension_files"]]
+    forbidden += [aliases[name]["resolved_path"] for aliases in (host["aliases"], runtime["aliases"])
+                  for name in tuple(forbidden) if name in aliases]
+    _check_libc_plt_bindings(
+        subject=value["subject"], loader=value["loader"], python_descriptor=python,
+        actual_python_needed=python_metadata["needed"], actual_python_interpreter=python_metadata["interpreter"],
+        python_resolved_needed=python_row["resolved_needed"],
+        dependency_role_names=host["roles"]["inspector_runtime"] + host["roles"]["shared_libraries"],
+        forbidden_resolved_paths=forbidden, host_aliases=host["aliases"], runtime_aliases=runtime["aliases"],
+        host_files=host["files"], runtime_files=runtime["files"],
+        libc_image_descriptor=image(value["subject"]["path"])["file"],
+        loader_image_descriptor=image(value["loader"]["path"])["file"], runtime_interpreter=runtime["interpreter"])
+    # Descriptor equality above proves these are existing host/runtime files;
+    # existing snapshots and launch guards therefore cover both canonical paths.
+    for key in ("subject", "loader"):
+        descriptor = value[key]
+        _bound(descriptor["path"], _binding(descriptor), category="INSPECTOR", private=False, check=check)
+    return _freeze({"schema": schema, "subject": value["subject"], "loader": value["loader"]})
 
 
 def _check_origin_bounds(origin, suffixes=None, images=None, *, check=lambda: None):
@@ -1073,7 +1199,29 @@ def _read_origin_elf_metadata(path, *, check=lambda: None, require_interpreter=F
         raise
 
 
-def _read_plan_elf_metadata(path, policy, *, check=lambda: None, require_interpreter=False):
+def _libc_metadata_checkpoint(check, stage):
+    """Private named test seam; the unchanged zero-argument deadline is the action."""
+    check()
+
+
+def _read_libc_plt_elf_metadata(path, *, check=lambda: None, require_interpreter=False):
+    """Fixed x86-64 trio metadata primitive; does not establish file admission."""
+    return _read_elf_metadata(path, check=check, require_interpreter=require_interpreter,
+                              libc_profile=LIBC_PLT_PLAN_SCHEMA)
+
+
+def _read_libc_static_tls_elf_metadata(path, *, check=lambda: None, require_interpreter=False):
+    """Separate fixed flags-24 primitive, without any TLS or relocation validation."""
+    return _read_elf_metadata(path, check=check, require_interpreter=require_interpreter,
+                              libc_profile=LIBC_STATIC_TLS_PLAN_SCHEMA)
+
+
+def _read_plan_elf_metadata(path, policy, *, check=lambda: None, require_interpreter=False, libc_policy=None):
+    if libc_policy is not None and str(path) == libc_policy["subject"]["path"]:
+        if libc_policy["schema"] == LIBC_STATIC_TLS_PLAN_SCHEMA:
+            return _read_libc_static_tls_elf_metadata(path, check=check, require_interpreter=require_interpreter)
+        _require(libc_policy["schema"] == LIBC_PLT_PLAN_SCHEMA, "PLAN", "Unsupported private libc metadata policy")
+        return _read_libc_plt_elf_metadata(path, check=check, require_interpreter=require_interpreter)
     if policy is None:
         return read_elf_metadata(path, check=check, require_interpreter=require_interpreter)
     if str(path) == policy["subject"]["path"]:
@@ -1097,7 +1245,9 @@ def _read_plan_elf_metadata(path, policy, *, check=lambda: None, require_interpr
         raise
 
 
-def _read_elf_metadata(path, *, check=lambda: None, require_interpreter=False, path_rule=None):
+def _read_elf_metadata(path, *, check=lambda: None, require_interpreter=False, path_rule=None, libc_profile=None):
+    _require(libc_profile in (None, LIBC_PLT_PLAN_SCHEMA, LIBC_STATIC_TLS_PLAN_SCHEMA)
+             and (libc_profile is None or path_rule is None), "PLAN", "Unsupported private libc metadata policy")
     path = _absolute(path, "LOADER")
     fd = None
     try:
@@ -1159,12 +1309,37 @@ def _read_elf_metadata(path, *, check=lambda: None, require_interpreter=False, p
         # another image. Audit/filter/auxiliary and other unknown tags can.
         ordinary = set(range(1, 31)) | {32, 33, 34, 35, 36, 37, 0x6FFFFEF5, 0x6FFFFFF0,
                     0x6FFFFFF9, 0x6FFFFFFA, 0x6FFFFFFB, 0x6FFFFFFC, 0x6FFFFFFD, 0x6FFFFFFE, 0x6FFFFFFF}
+        if libc_profile is not None:
+            _libc_metadata_checkpoint(check, "before_libc_plt_tag_policy")
+            _origin_require(machine == 62 and elf_type == 3, "UNSUPPORTED", "libc_plt_tags", "PLT-ARCH",
+                            "Libc PLT metadata requires x86-64 ET_DYN")
+            ordinary |= LIBC_PLT_TAGS
         _require(all(tag in ordinary for tag, _ in entries), "UNSUPPORTED", "Unreviewed ELF dynamic loader feature")
+        if libc_profile is not None:
+            counts = dict.fromkeys(LIBC_PLT_TAGS, 0)
+            for tag, _ in entries:
+                _libc_metadata_checkpoint(check, "during_libc_plt_tag_scan")
+                if tag in counts:
+                    counts[tag] += 1
+            _origin_require(all(count == 1 for count in counts.values()), "UNSUPPORTED", "libc_plt_tags", "PLT-TRIO",
+                            "Libc PLT metadata requires one complete tag trio")
         # DT_FLAGS: ORIGIN and loader-side binding modes need separate review.
-        flags = [value for tag, value in entries if tag == 30]
-        flags1 = [value for tag, value in entries if tag == 0x6FFFFFFB]
-        _require(len(flags) <= 1 and len(flags1) <= 1 and all(value & ~8 == 0 for value in flags)
-                 and all(value & ~(1 | 0x08000000) == 0 for value in flags1), "UNSUPPORTED", "Unsupported dynamic flags")
+        if libc_profile == LIBC_STATIC_TLS_PLAN_SCHEMA:
+            _libc_metadata_checkpoint(check, "before_libc_static_tls_flags")
+            flags, flags1 = [], []
+            for tag, value in entries:
+                _libc_metadata_checkpoint(check, "during_libc_static_tls_flags")
+                if tag == 30:
+                    flags.append(value)
+                elif tag == 0x6FFFFFFB:
+                    flags1.append(value)
+            _require(len(flags) <= 1 and len(flags1) <= 1 and all(value in (0, 8, 24) for value in flags)
+                     and all(value & ~(1 | 0x08000000) == 0 for value in flags1), "UNSUPPORTED", "Unsupported dynamic flags")
+        else:
+            flags = [value for tag, value in entries if tag == 30]
+            flags1 = [value for tag, value in entries if tag == 0x6FFFFFFB]
+            _require(len(flags) <= 1 and len(flags1) <= 1 and all(value & ~8 == 0 for value in flags)
+                     and all(value & ~(1 | 0x08000000) == 0 for value in flags1), "UNSUPPORTED", "Unsupported dynamic flags")
         def single(tag, *, required=False):
             found = [value for key, value in entries if key == tag]
             _require(len(found) <= 1 and (not required or len(found) == 1), "UNSUPPORTED", "Duplicate/missing dynamic metadata")
@@ -1218,6 +1393,8 @@ def _read_elf_metadata(path, *, check=lambda: None, require_interpreter=False, p
         result = {"class": 64, "endian": "little", "machine": machine, "type": elf_type,
                   "interpreter": interpreters[0] if interpreters else None, "needed": needed,
                   "soname": string(soname) if soname is not None else None, **paths}
+        if libc_profile is not None:
+            _libc_metadata_checkpoint(check, "before_final_elf_identity")
         _require(_identity(before) == _identity(os.fstat(fd)) == _identity(path.lstat()), "LOADER", "ELF changed during inspection")
         check()
         return result
@@ -1333,7 +1510,7 @@ def _check_loader_inputs(inputs, searches, *, check=lambda: None):
 def _check_resolution(plan, author_runtime, *, check=lambda: None):
     host, resolution = plan["host_static"], plan["host_static"]["resolution"]
     policy, origin_images = None, None
-    if plan.get("schema") == ORIGIN_PLAN_SCHEMA:
+    if _uses_origin_profile(plan):
         policy = _prepare_origin_policy(plan, author_runtime, check=check)
         origin = _thaw(policy)
         _origin_require(type(resolution["images"]) is list and 0 < len(resolution["images"]) <= 512,
@@ -1348,12 +1525,31 @@ def _check_resolution(plan, author_runtime, *, check=lambda: None):
             declared[name] = row["metadata"]
         _check_origin_bounds(origin, images=declared, check=check)
         origin_images = {}
+        libc_policy = None
+        if _uses_libc_profile(plan):
+            # Read the selected Python first, regardless of declared image order.
+            # Its observed dependency and interpreter bind the private libc rule.
+            python_name = origin["subject"]["path"]
+            _origin_require(python_name in declared, "LOADER", "name_union", "LP-NAMES", "Origin subject closure is missing")
+            python_row = next(row for row in resolution["images"] if row["file"]["path"] == python_name)
+            descriptor = python_row["file"]
+            _require(host["files"].get(python_name) == _binding(descriptor), "LOADER", "Origin image is absent from host files")
+            _bound(python_name, _binding(descriptor), category="LOADER", private=False, check=check)
+            actual_python = _read_plan_elf_metadata(python_name, policy, check=check)
+            _require(python_row["metadata"] == actual_python, "LOADER", "Declared ELF metadata differs")
+            libc_policy = _prepare_libc_plt_policy(plan, author_runtime, actual_python, check=check)
+            origin_images[python_name] = actual_python
         for row in resolution["images"]:
             check()
             descriptor, name = row["file"], row["file"]["path"]
             _require(host["files"].get(name) == _binding(descriptor), "LOADER", "Origin image is absent from host files")
             _bound(name, _binding(descriptor), category="LOADER", private=False, check=check)
-            actual = _read_plan_elf_metadata(name, policy, check=check)
+            if name in origin_images:
+                actual = origin_images[name]
+            elif libc_policy is None:
+                actual = _read_plan_elf_metadata(name, policy, check=check)
+            else:
+                actual = _read_plan_elf_metadata(name, policy, check=check, libc_policy=libc_policy)
             _require(row["metadata"] == actual, "LOADER", "Declared ELF metadata differs")
             origin_images[name] = actual
         subject_name = origin["subject"]["path"]
@@ -1732,7 +1928,7 @@ def _check_author_runtime(plan, inventory, *, loaded=False, check=lambda: None):
         _strings(runtime[key], "INSPECTOR", nonempty=True)
     named = [author["python_descriptor"]["path"], runtime["interpreter"]] + runtime["startup_files"] + runtime["extension_files"] + runtime["loader_inputs"]
     _check_alias_files(runtime["files"], runtime["aliases"], set(named), category="INSPECTOR", check=check)
-    policy = _prepare_origin_policy(plan, runtime, check=check) if plan.get("schema") == ORIGIN_PLAN_SCHEMA else None
+    policy = _prepare_origin_policy(plan, runtime, check=check) if _uses_origin_profile(plan) else None
     _require(_read_plan_elf_metadata(author["python_descriptor"]["path"], policy, check=check)["interpreter"] == runtime["interpreter"],
              "INSPECTOR", "Python interpreter binding differs")
     if loaded:
@@ -1920,7 +2116,7 @@ def _required_paths(plan, author_runtime, metadata, extra):
     paths.extend(metadata["paths"])
     paths.extend(row["path"] for row in plan["evidence"]["outer_capture"].values())
     paths.extend(extra)
-    if plan.get("schema") == ORIGIN_PLAN_SCHEMA:
+    if _uses_origin_profile(plan):
         origin = plan["host_static"]["resolution"]["origin_rpath"]
         paths.extend([origin["origin"], str(PurePosixPath(origin["origin"]).parent),
                       *origin["expanded_rpath"], origin["variant_review"]["path"],
@@ -1934,7 +2130,7 @@ def _required_paths(plan, author_runtime, metadata, extra):
 
 def _check_plan_guards(plan, required, *, check=lambda: None):
     """An absent variant is guarded at its first missing component, never later."""
-    if plan.get("schema") == ORIGIN_PLAN_SCHEMA:
+    if _uses_origin_profile(plan):
         origin = plan["host_static"]["resolution"]["origin_rpath"]
         descendants = {row["path"] for row in origin["variants"]
                        if row["state"] == "absent" and row["path"] != row["absent_at"]}
@@ -1959,7 +2155,7 @@ def _validate(plan_path, expected_plan_sha256, *, fresh, git_reads=True):
     _plan_shape(plan)
     inventory = _check_source_files(plan, check=check)
     author_runtime = _check_author_runtime(plan, inventory, check=check)
-    if plan["schema"] == ORIGIN_PLAN_SCHEMA:
+    if _uses_origin_profile(plan):
         _check_host_static(plan, check=check)
         _check_author_host_bindings(plan, author_runtime)
         _, early_paths = _check_resolution(plan, author_runtime, check=check)
@@ -1983,7 +2179,7 @@ def _validate(plan_path, expected_plan_sha256, *, fresh, git_reads=True):
     check()
     metadata["expected_resolution"] = expected_resolution
     metadata["extra_paths"] = extra
-    if plan["schema"] == ORIGIN_PLAN_SCHEMA:
+    if _uses_origin_profile(plan):
         origin = plan["host_static"]["resolution"]["origin_rpath"]
         metadata["origin_kernel_witness"] = _check_kernel_origin(origin, _origin_subject_observation(origin["subject"]["path"]), check=check)
     metadata["input_snapshot"] = _input_snapshot(plan, inventory, author_runtime, metadata, extra, check=check)
@@ -2007,10 +2203,10 @@ def _recheck(validated, *, check=lambda: None, fresh=False):
     try:
         _bound(validated.descriptor["path"], _binding(validated.descriptor), check=check)
         inventory = _check_source_files(plan, check=check)
-        if plan.get("schema") != ORIGIN_PLAN_SCHEMA:
+        if not _uses_origin_profile(plan):
             _require(_git_state(ROOT) == _thaw(validated._git_state), "SOURCE", "Source ref/index witness changed")
         runtime = _check_author_runtime(plan, inventory, loaded=True, check=check)
-        if plan.get("schema") == ORIGIN_PLAN_SCHEMA:
+        if _uses_origin_profile(plan):
             _check_host_static(plan, check=check)
             _check_author_host_bindings(plan, runtime)
             _, early_paths = _check_resolution(plan, runtime, check=check)
@@ -2034,7 +2230,7 @@ def _recheck(validated, *, check=lambda: None, fresh=False):
         raise HostInspectionError("DRIFT", "An admitted input changed before/after the command", cause=exc,
                                   state=getattr(exc, "state", "REJECTED"),
                                   details={"stage": "recheck", "rule_id": "LP-RECHECK"}
-                                  if plan.get("schema") == ORIGIN_PLAN_SCHEMA else None) from exc
+                                  if _uses_origin_profile(plan) else None) from exc
     return {"passed": True, "plan": _thaw(validated.descriptor), "source_commit": plan["source"]["commit"],
             "boot_id": plan["host_static"]["platform"]["boot_id"]}
 
@@ -2077,7 +2273,7 @@ def _launch_check(validated, clock, stage_end):
                 _require(actual == expected, "DRIFT", "Bound file/path changed immediately before launch")
         _require(_platform() == plan["host_static"]["platform"], "DRIFT", "Host reboot/platform drift before launch")
         _check_guards(plan["host_static"]["path_guards"], [], check=lambda: clock.check(stage_end))
-        if plan.get("schema") == ORIGIN_PLAN_SCHEMA:
+        if _uses_origin_profile(plan):
             origin = plan["host_static"]["resolution"]["origin_rpath"]
             subject = _origin_subject_observation(origin["subject"]["path"])
             try:
