@@ -1,0 +1,46 @@
+{
+  "schema": "ontokin.c271.p19-independent-preexec-review/1",
+  "reviewer": "/root/operational_review",
+  "candidate": "candidate001",
+  "verdict": "changes_required",
+  "execution_authorized": false,
+  "review_kind": "static_source_and_plan_only",
+  "candidate_files": [
+    {
+      "path": "technical/observe_inputs.py",
+      "bytes": 12817,
+      "sha256": "3f3c3af47fa1ef6ac78f3ac6672a3654160be8362dcf6b6a183d7dffe25e6fd7",
+      "coverage": "full_untruncated",
+      "lines": 193
+    },
+    {
+      "path": "technical/OBSERVATION-PLAN.json",
+      "bytes": 2327,
+      "sha256": "3de3cfc09ebac9d34df0115b472427bdfc14af75906f4a521dc568498213bdd2",
+      "coverage": "full_untruncated",
+      "lines": 49
+    }
+  ],
+  "mandatory_findings": [
+    {
+      "id": "PX-01",
+      "subject": "postflight_failures_do_not_block_success",
+      "required": "Preserve earlier blocker; record postflight failures; make any failed final recheck block an otherwise successful result and exit."
+    },
+    {
+      "id": "PX-02",
+      "subject": "consumed_lock_digest_not_checked",
+      "required": "Compare actual bounded-read lock bytes to the independently frozen lock digest before parsing pins."
+    },
+    {
+      "id": "PX-03",
+      "subject": "package_directory_limit_checked_after_unbounded_materialization",
+      "required": "Enforce4096 limit and check deadline during enumeration; sort only bounded entries."
+    }
+  ],
+  "product_or_observation_execution_performed": false,
+  "host_inputs_inspected_by_reviewer": false,
+  "h0_accepted": false,
+  "h1_approved": false,
+  "report": "PREEXEC-REVIEW.md"
+}

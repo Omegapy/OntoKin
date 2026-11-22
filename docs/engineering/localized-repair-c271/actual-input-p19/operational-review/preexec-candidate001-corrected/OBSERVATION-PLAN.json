@@ -1,0 +1,43 @@
+{
+  "schema": "ontokin.c271.p19-observation-plan/1",
+  "kind": "raw_actual_input_review_not_operational_H0",
+  "script": {
+    "path": "/workspace/scratch/816157c5a30b/technical/observe_inputs.py",
+    "bytes": 12122,
+    "sha256": "9ffe5b8137bb25b05fcc122049698aa8c6506415f044c7b023d1e8e33cb01212"
+  },
+  "source_revision": "2f791017c6559bfd47937b32b1862cfe98a81551",
+  "source": {
+    "path": "/workspace/scratch/816157c5a30b/OntoKin/prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "bytes": 196305,
+    "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206"
+  },
+  "lock": {
+    "path": "/workspace/scratch/816157c5a30b/OntoKin/tools/native-reader-verification-linux-cp312.lock",
+    "sha256": "a7f17491000c2e139ccc5d213ca0e8a6f917e5befb4b878fef29f5ff72ae780f"
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "-I",
+    "-S",
+    "-B",
+    "/workspace/scratch/816157c5a30b/technical/observe_inputs.py"
+  ],
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "UV_THREADPOOL_SIZE": "2"
+  },
+  "cwd": "/workspace/scratch/816157c5a30b",
+  "output": "/workspace/scratch/816157c5a30b/technical/attempt001",
+  "output_must_be_absent": true,
+  "static_seconds": 60,
+  "process_starts_permitted_inside_observation": 0,
+  "stopping_rule": "First input identity/metadata refusal or mismatch, before later input checks; preserve result and no retry. Success requires further full H0 review, never H0 acceptance.",
+  "parent_gates_unchanged": true,
+  "review_status": "pending_independent_review",
+  "invocation_guard": "Outer director wrapper must compare exact reviewer-approved script/source/lock hashes, absent output path, then launch once with frozen argv/env/cwd. Source-only metadata observation, not plan admission.",
+  "package_limit": "Name/version readiness in selected interpreter standard site-packages only; no complete dist-info inventory or later ordinary-provider lookup proof"
+}

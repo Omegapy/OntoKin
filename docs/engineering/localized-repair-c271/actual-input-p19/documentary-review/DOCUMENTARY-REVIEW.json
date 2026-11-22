@@ -1,0 +1,271 @@
+{
+  "schema": "ontokin.c271.p19-documentary-review/1",
+  "reviewer": "/root/ledger_review",
+  "reviewed_at_utc": "2026-11-22T21:01:29Z",
+  "verdict": "accepted_documentary_candidate_for_partial_delivery_only",
+  "candidate": "candidate002",
+  "mandatory_findings_remaining": [],
+  "scope": "Independent documentary delta review of the five canonical records and retained P19 outcome evidence. No product execution, tests, actual-host reread, Git operation, canonical mutation or publication by this reviewer.",
+  "workspace": "/workspace/scratch/816157c5a30b",
+  "source_baseline": "2f791017c6559bfd47937b32b1862cfe98a81551",
+  "observed_main": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+  "branch": "work/c271-missing-import-digest-control",
+  "binding": {
+    "manifest": {
+      "path": "state/DOCUMENTARY-CANDIDATE.json",
+      "bytes": 1372,
+      "sha256": "cca4000163893a5e09b96a1ab367b7b42f6de0223bf7c6414a56d3a19b45d6f7"
+    },
+    "prior_candidate": {
+      "path": "state/documentary-candidate001.zip",
+      "bytes": 116829,
+      "sha256": "ae68a01509596e108747d65d723c81ceeb9e81929ddfc7f090aab3f0e4750ae7"
+    },
+    "exact_baseline_provenance": "Root supplied reconcile/exact-active as direct git show of the stated revision. Reviewer independently hashed these supplied files and reviewed complete deltas; reviewer did not invoke Git or independently contact the remote.",
+    "canonical_root": "OntoKin/",
+    "baseline_root": "reconcile/exact-active/",
+    "files": [
+      {
+        "path": "STATUS.md",
+        "baseline_bytes": 14549,
+        "baseline_sha256": "a5551ed3277d21a9f53143246b6f88dd8a07051d68c894cc1c879ecee79298a5",
+        "candidate_bytes": 14630,
+        "candidate_sha256": "7a59822a43f6d3ebabc5f43bf862a8047aa2daf7314022f92c95502e39120fce"
+      },
+      {
+        "path": "docs/workflow/CURRENT.json",
+        "baseline_bytes": 99631,
+        "baseline_sha256": "0c64a278ed45593f3c89fb8613d505ab1b6f59c1aef98256ee7792e5456bbdb0",
+        "candidate_bytes": 101121,
+        "candidate_sha256": "5f126581550566ccc6bfaf9c508d0f240353cc76e0d9141fd6a0628e37173d53"
+      },
+      {
+        "path": "docs/workflow/tasks/C271/task.json",
+        "baseline_bytes": 273350,
+        "baseline_sha256": "f15168dc62d70ad2da3716d2635396f8945d1fbf7811b3ec38ca0150b615bb0d",
+        "candidate_bytes": 268229,
+        "candidate_sha256": "413744faf9c06a33c178b6e297b964c48575661dd5f69608ec4947fc728834ba"
+      },
+      {
+        "path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+        "baseline_bytes": 55224,
+        "baseline_sha256": "f22216f586eaae41cada406297f4f208630536d350e09dfb96a0623e4a6b7188",
+        "candidate_bytes": 57428,
+        "candidate_sha256": "af42584922e0958dbb93cfda3f78152c9db95e9fbe3b8098e46ac7f892bbf570"
+      },
+      {
+        "path": "docs/workflow/tasks/C271/PLAN.md",
+        "baseline_bytes": 56380,
+        "baseline_sha256": "76432bddcb73a27fbdde71d8631bac72c4515164835204415799780fcd3faa72",
+        "candidate_bytes": 58584,
+        "candidate_sha256": "1e594163bbbff1f4450d5985fef63623770a97bea5782bd9e62310302e58789a"
+      }
+    ],
+    "all_candidate_file_hashes_match_manifest": true,
+    "phase": {
+      "path": "OntoKin/docs/engineering/localized-repair-c271/actual-input-p19/PHASE.json",
+      "bytes": 14177,
+      "sha256": "639a6166c40fd025c31a937d1226ce08ac566a147ffedcfe822a7aa3d39971fb",
+      "root_copy": "state/PHASE.json",
+      "root_copy_sha256_equal": true
+    }
+  },
+  "read_coverage": {
+    "method": "Full assigned governing/startup reads; complete exact-baseline-to-candidate001 deltas for all five canonical records; complete candidate001-to-candidate002 deltas for every changed file and PHASE; direct SHA256 and byte-size checks. This is a manual documentary review, not a newly executed test suite.",
+    "original_full_readset": {
+      "path": "ledger_review/READSET.json",
+      "bytes": 7507,
+      "sha256": "bdd2e2e0669d768a5f0af93567a0151d04bb3199a3b96b79cfe8938540add52a",
+      "files": 14,
+      "total_source_bytes": 462217
+    },
+    "original_report": {
+      "path": "ledger_review/REPORT.md",
+      "bytes": 16997,
+      "sha256": "df05a2f843522562421e7b80e7a324bc9930aea048d58ad4d1ba202e4e7ae7e3"
+    },
+    "scope_review": {
+      "path": "ledger_review/P19-SCOPE-REVIEW.md",
+      "sha256": "4e9ab421fd8b725b203f13b90532e5213ed959ba2d324152a1ea36770c93dad6"
+    },
+    "retained_task_delta": {
+      "path": "ledger_review/DOCUMENTARY-TASK-DIFF.txt",
+      "bytes": 51245,
+      "lines": 928,
+      "sha256": "b7d50ee17cfb724c3603da6e8af41241857ecc85b7b812ae7aec0fb98eb56502",
+      "coverage": "All 928 lines read in bounded windows 1-300, 301-650, 651-928; baseline to candidate001. Candidate002 changes read separately in full."
+    },
+    "other_canonical_deltas": "STATUS, CURRENT, REQUIREMENTS and PLAN exact-baseline deltas read completely. Candidate002 leaves STATUS unchanged and makes only the reviewed corrections.",
+    "readset_boundary": "Original materialized snapshots have one additional trailing newline compared with exact Git blobs. Baseline hashes in this review bind the exact-active files; original READSET hashes continue to bind their original local bytes.",
+    "supplemental_search_limit": "One later broad rg search was truncated and is excluded from full-coverage claims. Relevant current checks, phase gates and evidence-resolution fields were then read in exact bounded sed windows. Full-delta coverage was already complete."
+  },
+  "evidence_root": "OntoKin/docs/engineering/localized-repair-c271/actual-input-p19/",
+  "retained_evidence": [
+    {
+      "path": "PHASE-OUTCOME.json",
+      "bytes": 4236,
+      "sha256": "5b0542b4e885d75e9d24d9499f910b2ea5041ba41ded6827a79552217e169d7c",
+      "read": "full"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 4633,
+      "sha256": "8b24a8c9a75a3552d527c50682a1bb669739b0aa1c7691c8ad6dc133e4000cb8",
+      "read": "full"
+    },
+    {
+      "path": "README.md",
+      "bytes": 633,
+      "sha256": "f7b3300283e17e9639c8a03e2e12eb49d624d56effe40b6f161e6a1dfea86e14",
+      "read": "full"
+    },
+    {
+      "path": "operational-review/OUTCOME-REVIEW.json",
+      "bytes": 3535,
+      "sha256": "57a42235af02afe36a78cb718b8d3327591cf8f23c7297fe4191f98fd18a417f",
+      "read": "full"
+    },
+    {
+      "path": "observation/attempt001/RESULT.json",
+      "bytes": 16242,
+      "sha256": "dbfe893da8e3c51091b386ff28a74752cc3c99742668a003128c316e0c9214b1",
+      "read": "Full root technical/attempt001/RESULT.json; canonical copy independently hashed equal"
+    }
+  ],
+  "resolved_findings": [
+    {
+      "id": "DOC-P19-001",
+      "severity": "required_wording_correction",
+      "candidate001": "Both appended REQUIREMENTS and PLAN paragraphs said every parent gate remained unaccepted, contradicting completed R01 and R02.",
+      "candidate002": "Both now say H0 and the remaining parent gates remain unaccepted.",
+      "status": "resolved_verified_in_complete_delta"
+    },
+    {
+      "id": "DOC-P19-002",
+      "severity": "current_state_consistency",
+      "candidate001": "Current next actions and embedded observed_result still requested retained-result review after the independent 41-check review had been accepted.",
+      "candidate002": "Current next actions now request documentary review/checks/publication/delivery only. Both Markdown records acknowledge accepted result review. PHASE.observed_result is synchronized to PHASE-OUTCOME, including its independent-review reference and hash.",
+      "status": "resolved_verified_in_complete_delta"
+    }
+  ],
+  "earlier_scope_findings_resolved": [
+    "library_save now states confirmed early save and byte-identical readback before technical work.",
+    "artifact_resolution identifies recovery/session as archive base and the canonical actual-input-p19 evidence prefix."
+  ],
+  "manual_review_conclusions": [
+    {
+      "criterion": "Parent acceptance preserved",
+      "result": "accepted",
+      "detail": "C271 blocked; R01/R02 done; R03/R04/R05 not_done; P01 done; P02 in_progress; completion.merge_commit null and retained branch unchanged."
+    },
+    {
+      "criterion": "Main/C271 distinction preserved",
+      "result": "accepted",
+      "detail": "Main's C270 CURRENT remains a separate unmerged state. No main pointer change, integration or lease is claimed."
+    },
+    {
+      "criterion": "Old requirements, plans and nested history preserved",
+      "result": "accepted",
+      "detail": "Requirement descriptions/acceptance/status and parent plan remain intact. Existing historical checks and nested objects remain; JSON escape changes to en dashes do not change decoded content."
+    },
+    {
+      "criterion": "P18 exact reference preservation",
+      "result": "accepted",
+      "detail": "Prior session_phase and delivery are retained by full revision, path and object pointer. prior_session_phases binds the exact prior task SHA256 f15168dc62d70ad2da3716d2635396f8945d1fbf7811b3ec38ca0150b615bb0d, independently matched to supplied exact baseline. P18 reconciliation supersedes only matching later-delivery markers."
+    },
+    {
+      "criterion": "Earlier H0 blocker history preserved",
+      "result": "accepted",
+      "detail": "Old remaining_h0_constraint is preserved by exact reference; prior blocked_reason is retained. Historic P15 tag refusal and unreached flags predicate retain their original meaning."
+    },
+    {
+      "criterion": "Technical result represented truthfully",
+      "result": "accepted",
+      "detail": "One candidate003 raw observation, three raw metadata readers, five package rows, first four matched, fifth mismatch, final two unexamined, ten post-read matches, zero forbidden process attempts and zero target starts."
+    },
+    {
+      "criterion": "Raw metadata does not become qualification",
+      "result": "accepted",
+      "detail": "No operational policy admission, complete loader closure, operational plan, H0, H1, actual-host qualification or TLS execution evidence is claimed."
+    },
+    {
+      "criterion": "Readiness failure remains visible",
+      "result": "accepted",
+      "detail": "P19 actual-input readiness is result failed and required true. Independent retained-artifact audit is separately passed and required true; it does not erase the readiness failure."
+    },
+    {
+      "criterion": "P19-A03 meaning is bounded",
+      "result": "accepted",
+      "detail": "Passed means independent acceptance of the exact first-blocker evidence, expressly not H0 acceptance."
+    },
+    {
+      "criterion": "N57 boundary preserved",
+      "result": "accepted",
+      "detail": "External review only, neither runtime pass nor skip."
+    },
+    {
+      "criterion": "No technical expansion in this phase",
+      "result": "accepted",
+      "detail": "No installation, shared-runtime replacement, source/test/lock change, H1, Node/ldd/direct-loader target launch, full routine, native/model/hosted execution or main integration."
+    },
+    {
+      "criterion": "Early/final delivery state truthful",
+      "result": "accepted",
+      "detail": "Early P19 save is confirmed. Final ZIP, publication and separate receipt remain pending at the candidate snapshot. CURRENT retains P18 as latest final handoff until P19 final delivery actually succeeds."
+    },
+    {
+      "criterion": "Evidence paths resolved",
+      "result": "accepted",
+      "detail": "PHASE has archive-session and canonical-prefix resolution. Git references include exact revision/path/pointer."
+    },
+    {
+      "criterion": "Fresh-phase proposal bounded",
+      "result": "accepted",
+      "detail": "Review a separate verification-environment preparation plan for unchanged seven-package pins, including rpds-py 2026.5.1; independently review inputs/destinations/authority before preparation, then rebind actual inputs before H0/H1. This is a proposed next phase, not current authorization to install."
+    }
+  ],
+  "observed_result": {
+    "category": "blocked_actual_input_readiness",
+    "code": "PACKAGE_METADATA_PIN_MISMATCH",
+    "package": "rpds-py",
+    "expected_version": "2026.5.1",
+    "observed_version": "2026.6.3",
+    "matching_metadata_versions": 4,
+    "unexamined_packages": [
+      "typing_extensions",
+      "Pillow"
+    ],
+    "raw_metadata_readers_returned": 3,
+    "post_read_checks": 10,
+    "post_read_failures": 0,
+    "target_starts": 0,
+    "forbidden_process_operation_attempts": 0,
+    "observation_invocations": 1,
+    "observation_returncode": 2,
+    "h0_accepted": false,
+    "operational_plan_created": false,
+    "operational_policy_admitted": false,
+    "h1_approved": false,
+    "parent_complete": false,
+    "process_count_caveat": "One approved isolated Python observation process was launched. Zero target starts does not mean zero operating-system processes.",
+    "independent_operational_review": {
+      "reviewer": "/root/operational_review",
+      "reported_checks": 41,
+      "reported_failures": 0,
+      "sha256": "57a42235af02afe36a78cb718b8d3327591cf8f23c7297fe4191f98fd18a417f"
+    }
+  },
+  "remaining_actions": [
+    "Root records this documentary verdict and completes affected exact-candidate documentary/workflow/whitespace and preservation checks. This reviewer did not execute those validators.",
+    "Conditionally publish only the retained branch using authorized expected-head handling; verify exact published source. No merge, issue closure or branch deletion.",
+    "Independently audit and freeze the final partial-handoff ZIP and matching prompts; save and read back exact bytes; publish the separate receipt and terminal confirmation using observed identities.",
+    "Stop this chat after verified partial delivery. Any technical continuation belongs to the proposed fresh bounded phase."
+  ],
+  "limits": [
+    "Acceptance binds the exact candidate002 bytes above, not unseen later edits or a future commit.",
+    "No independent live PR/issue/main query by this reviewer; root and recovery-audit supplied reconciled live observations.",
+    "No final ZIP audit, final save/readback or publication is certified by this report.",
+    "No parent R03/R04/R05 acceptance or H0/H1/full-routine success is granted."
+  ]
+}
+

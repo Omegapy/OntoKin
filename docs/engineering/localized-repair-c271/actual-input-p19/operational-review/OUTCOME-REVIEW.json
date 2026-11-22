@@ -1,0 +1,109 @@
+{
+  "schema": "ontokin.c271.p19-independent-outcome-review/1",
+  "reviewer": "/root/operational_review",
+  "verdict": "accepted_blocked_actual_input_readiness_observation",
+  "candidate": "candidate003",
+  "attempt": "attempt001",
+  "mandatory_findings": [],
+  "first_blocker": {
+    "category": "InputBlocker",
+    "code": "PACKAGE_METADATA_PIN_MISMATCH",
+    "package": "rpds-py",
+    "required_version": "2026.5.1",
+    "observed_version": "2026.6.3",
+    "lock_position": 5,
+    "not_production_refusal": true
+  },
+  "package_metadata": {
+    "matches": 4,
+    "mismatches": 1,
+    "later_metadata_not_inspected": [
+      "typing_extensions",
+      "Pillow"
+    ],
+    "full_dist_info_or_import_qualification": false
+  },
+  "raw_metadata_readers": {
+    "returned": [
+      "python",
+      "loader",
+      "libc"
+    ],
+    "operational_policy_admitted": false,
+    "complete_loader_selection_proved": false
+  },
+  "execution": {
+    "returncode": 2,
+    "actual_observation_invocations": 1,
+    "observation_retries": 0,
+    "guarded_child_target_operation_attempts": 0,
+    "ten_post_read_rechecks_passed": true,
+    "prelaunch_assertion_failure_retained_separately": true
+  },
+  "evidence": {
+    "plan": {
+      "path": "technical/OBSERVATION-PLAN.json",
+      "bytes": 2707,
+      "sha256": "946fd14dc1022ddb1e9cc4d8f22a0c0a2746efb3b0b9c08db62cd70c17945aab"
+    },
+    "script": {
+      "path": "technical/observe_inputs.py",
+      "bytes": 12873,
+      "sha256": "c14b171df87d47dbd78d6a73946c72c32add8891d6d52b0a7e1da697cdd1e287"
+    },
+    "launch_intent": {
+      "path": "technical/LAUNCH-INTENT.json",
+      "bytes": 933,
+      "sha256": "71a470f9ba22625365b37fed642e14f7be9fb0f9d8dd274d7b98d68b003fb55b"
+    },
+    "launch_result": {
+      "path": "technical/LAUNCH-RESULT.json",
+      "bytes": 324,
+      "sha256": "8bc570d854da524c932cd18c017cb06ccad5749fe16cee06f91848637efa7ce1"
+    },
+    "result": {
+      "path": "technical/attempt001/RESULT.json",
+      "bytes": 16242,
+      "sha256": "dbfe893da8e3c51091b386ff28a74752cc3c99742668a003128c316e0c9214b1"
+    },
+    "independent_preexec_review": {
+      "path": "operational_review/PREEXEC-REVIEW-003.json",
+      "bytes": 1404,
+      "sha256": "ed0f0465e7f8c690e5a413dd71579eb09b2ea45664310bb063318961e2c5f51d"
+    },
+    "audit": {
+      "path": "operational_review/OUTCOME-AUDIT.json",
+      "bytes": 9749,
+      "sha256": "2584149fb4a3c3ba2335e7e3a68cc79ff546d465583d383011b99755e5893074"
+    },
+    "audit_source": {
+      "path": "operational_review/audit_retained_outcome.py",
+      "bytes": 11155,
+      "sha256": "db652c4c9d12505d195d70d3b84ff5af39d077f539ce33179ad281f3c01d06ab"
+    },
+    "report": {
+      "path": "operational_review/OUTCOME-REVIEW.md",
+      "bytes": 8283,
+      "sha256": "5acd3feccb44a98e55e85532c31b4f64c2f6b13b404302e06b6133572468fbce"
+    }
+  },
+  "independent_artifact_checks": {
+    "passed": 41,
+    "failed": 0,
+    "not_product_tests": true
+  },
+  "reviewer_host_reruns": 0,
+  "reviewer_product_imports_or_runs": 0,
+  "h0_accepted": false,
+  "h1_approved": false,
+  "N57": "external_only_not_evaluated",
+  "parent_requirements": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "technical_stop": true,
+  "next_action": "Finish documentary publication and verified partial delivery. Fresh phase may review concrete unchanged seven-pin recovery/preparation compatible with selected interpreter and consumer lookup; no repair/install/substitution/retry now."
+}

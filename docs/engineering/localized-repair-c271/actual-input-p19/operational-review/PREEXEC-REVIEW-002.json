@@ -1,0 +1,29 @@
+{
+  "schema": "ontokin.c271.p19-independent-preexec-review/1",
+  "reviewer": "/root/operational_review",
+  "candidate": "candidate002",
+  "script": {
+    "bytes": 12817,
+    "sha256": "3f3c3af47fa1ef6ac78f3ac6672a3654160be8362dcf6b6a183d7dffe25e6fd7"
+  },
+  "plan": {
+    "bytes": 2327,
+    "sha256": "3de3cfc09ebac9d34df0115b472427bdfc14af75906f4a521dc568498213bdd2"
+  },
+  "coverage": "Complete independent diff from fully read candidate001; full updated plan read",
+  "verdict": "changes_required",
+  "resolved": [
+    "PX-01",
+    "PX-02"
+  ],
+  "mandatory_findings": [
+    {
+      "id": "PX-03",
+      "status": "not_fully_resolved",
+      "reason": "Path.iterdir on selected CPython3.12 materializes names through os.listdir before yielding. Use os.scandir context for streamed bounded enumeration, then sort bounded Paths."
+    }
+  ],
+  "product_or_observation_execution_performed": false,
+  "h0_accepted": false,
+  "h1_approved": false
+}

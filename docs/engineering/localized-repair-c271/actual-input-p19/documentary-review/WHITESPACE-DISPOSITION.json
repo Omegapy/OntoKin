@@ -1,0 +1,157 @@
+{
+  "schema": "ontokin.c271.p19-whitespace-disposition/1",
+  "reviewer": "/root/ledger_review",
+  "reviewed_at_utc": "2026-11-22T21:07:03Z",
+  "verdict": "accepted_preservation_of_original_formatting",
+  "substantive_blocker_from_listed_diagnostics": false,
+  "actual_merge_conflict_found_in_reviewed_files": false,
+  "mandatory_findings_remaining": [],
+  "workspace": "/workspace/scratch/816157c5a30b",
+  "repository_root": "OntoKin/",
+  "method": "Read the complete retained full-stage result/stdout/stderr. Compare SHA256 of all eight flagged canonical paths against their six retained originals. Read both complete METADATA files; inspect exact report header and EOF lines with visible whitespace. No Git invocation, current-host reread, product execution, test or canonical mutation by reviewer.",
+  "full_staged_check": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "returncode": 2,
+    "passed": false,
+    "result_path": "state/checks/full-staged-whitespace/RESULT.json",
+    "result_sha256": "e1ea203c663201afa128637a488ef09b9cae440ae76e59fc432473cef6cd05c5",
+    "stdout_path": "state/checks/full-staged-whitespace/stdout.log",
+    "stdout_sha256": "72d23df42049344bcabc334c112f249d8b4490b5d21607488e5249ac96d9e3c9",
+    "stderr_path": "state/checks/full-staged-whitespace/stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diagnostic_count": 12,
+    "affected_paths": 8,
+    "classes": {
+      "Markdown_hard_break_spaces": 8,
+      "original_blank_EOF_lines": 3,
+      "RST_underline_false_positive": 1
+    }
+  },
+  "findings": [
+    {
+      "path": "docs/engineering/localized-repair-c271/actual-input-p19/documentary-review/DOCUMENTARY-REVIEW.json",
+      "lines": [
+        271
+      ],
+      "diagnostic": "new blank line at EOF",
+      "classification": "retained_original_blank_line",
+      "original": "ledger_review/DOCUMENTARY-REVIEW.json",
+      "bytes": 14208,
+      "sha256": "2a11cbedcfac4f208632847c04ad2d2fe039934ce5f0678f60cb3ae57b177a15",
+      "copies_equal": true
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/actual-input-p19/documentary-review/DOCUMENTARY-REVIEW.md",
+      "lines": [
+        86
+      ],
+      "diagnostic": "new blank line at EOF",
+      "classification": "retained_original_blank_line",
+      "original": "ledger_review/DOCUMENTARY-REVIEW.md",
+      "bytes": 9396,
+      "sha256": "e624b6190276d066df3adf75670200f9871f0fe7e12f82de6076caab0d495786",
+      "copies_equal": true
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/actual-input-p19/documentary-review/P19-SCOPE-REVIEW.md",
+      "lines": [
+        3
+      ],
+      "diagnostic": "trailing whitespace",
+      "classification": "Markdown_two_space_hard_break",
+      "original": "ledger_review/P19-SCOPE-REVIEW.md",
+      "bytes": 7334,
+      "sha256": "4e9ab421fd8b725b203f13b90532e5213ed959ba2d324152a1ea36770c93dad6",
+      "copies_equal": true
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/actual-input-p19/documentary-review/REPORT.md",
+      "lines": [
+        3,
+        4,
+        5
+      ],
+      "diagnostic": "trailing whitespace",
+      "classification": "Markdown_two_space_hard_break",
+      "original": "ledger_review/REPORT.md",
+      "bytes": 16997,
+      "sha256": "df05a2f843522562421e7b80e7a324bc9930aea048d58ad4d1ba202e4e7ae7e3",
+      "copies_equal": true
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/actual-input-p19/observation/attempt001/METADATA-jsonschema.txt",
+      "lines": [
+        168
+      ],
+      "diagnostic": "leftover conflict marker",
+      "classification": "false_positive_RST_section_underline",
+      "original": "technical/attempt001/METADATA-jsonschema.txt",
+      "bytes": 7592,
+      "sha256": "05b189866ca98a96da3934bf6b83687ced3ff85325273b77e16b705f6d8b26d2",
+      "copies_equal": true,
+      "raw_observation_hash_matches": true,
+      "context": "Description-Content-Type is text/x-rst. Line 167 is v4.26.0; line 168 is its seven-equals underline. No opening or closing merge-conflict markers occur in the complete file."
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/actual-input-p19/observation/attempt001/METADATA-rpds-py.txt",
+      "lines": [
+        99
+      ],
+      "diagnostic": "new blank line at EOF",
+      "classification": "retained_original_blank_line",
+      "original": "technical/attempt001/METADATA-rpds-py.txt",
+      "bytes": 4147,
+      "sha256": "f8be7b17da3980b2c48596941411a43c70ac41b1e2d530aa531f2c15eab2eb1c",
+      "copies_equal": true,
+      "raw_observation_hash_matches": true
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/actual-input-p19/startup/LEDGER-REVIEW.md",
+      "lines": [
+        3,
+        4,
+        5
+      ],
+      "diagnostic": "trailing whitespace",
+      "classification": "Markdown_two_space_hard_break",
+      "original": "ledger_review/REPORT.md",
+      "bytes": 16997,
+      "sha256": "df05a2f843522562421e7b80e7a324bc9930aea048d58ad4d1ba202e4e7ae7e3",
+      "copies_equal": true
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/actual-input-p19/startup/P19-SCOPE-REVIEW.md",
+      "lines": [
+        3
+      ],
+      "diagnostic": "trailing whitespace",
+      "classification": "Markdown_two_space_hard_break",
+      "original": "ledger_review/P19-SCOPE-REVIEW.md",
+      "bytes": 7334,
+      "sha256": "4e9ab421fd8b725b203f13b90532e5213ed959ba2d324152a1ea36770c93dad6",
+      "copies_equal": true
+    }
+  ],
+  "disposition": {
+    "preserve_original_bytes": true,
+    "rationale": "The spaces implement Markdown hard breaks. The EOF lines are harmless original formatting in already hash-bound reviewer/raw-input evidence. The seven equals are a package-description RST heading underline, not an unresolved merge. Trimming or rewriting these files would change the exact evidence identities without fixing a substantive defect.",
+    "authored_path_whitespace_check": "Accept a separately recorded check over the five authored canonical records and new authored evidence/scripts, excluding enumerated exact retained third-party/auditor bytes. Retain the explicit included/excluded path scope and result. This disposition does not certify an unseen future scoped check.",
+    "reporting_rule": "Keep the complete full-stage failure and this disposition. State any authored-path pass separately; do not report a whole-stage whitespace pass or suppress the original diagnostics.",
+    "test_or_oracle_change": false,
+    "substantive_policy_change": false
+  },
+  "unchanged_limits": {
+    "documentary_candidate": "candidate002 acceptance remains bounded to the hashes in DOCUMENTARY-REVIEW.json; this disposition changes no canonical file",
+    "technical_blocker": "PACKAGE_METADATA_PIN_MISMATCH for rpds-py remains unresolved",
+    "parent_status": "blocked",
+    "h0_accepted": false,
+    "parent_complete": false,
+    "further_technical_work_authorized": false
+  },
+  "next_action": "Root may finish the separately scoped authored-file check and the remaining publication/delivery steps. Preserve exact raw/reviewer evidence and the failed full-stage result. No further technical work; stop after verified partial delivery."
+}

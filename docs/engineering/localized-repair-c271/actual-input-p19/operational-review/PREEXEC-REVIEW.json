@@ -1,0 +1,47 @@
+{
+  "schema": "ontokin.c271.p19-independent-preexec-review/1",
+  "reviewer": "/root/operational_review",
+  "candidate": "candidate001",
+  "verdict": "changes_required",
+  "execution_authorized": false,
+  "review_kind": "static_source_and_plan_only",
+  "candidate_files": [
+    {
+      "path": "technical/candidate001/observe_inputs.py",
+      "bytes": 12122,
+      "sha256": "9ffe5b8137bb25b05fcc122049698aa8c6506415f044c7b023d1e8e33cb01212",
+      "coverage": "full_untruncated",
+      "lines": 184
+    },
+    {
+      "path": "technical/candidate001/OBSERVATION-PLAN.json",
+      "bytes": 2050,
+      "sha256": "06c79df44367500b7c3825755a9d9299b2cd6a11cc456f8eb56f715169735d09",
+      "coverage": "full_untruncated",
+      "lines": 43
+    }
+  ],
+  "mandatory_findings": [
+    {
+      "id": "PX-01",
+      "subject": "postflight_failures_do_not_block_success",
+      "required": "Preserve earlier blocker; record postflight failures; make any failed final recheck block an otherwise successful result and exit."
+    },
+    {
+      "id": "PX-02",
+      "subject": "consumed_lock_digest_not_checked",
+      "required": "Compare actual bounded-read lock bytes to the independently frozen lock digest before parsing pins."
+    },
+    {
+      "id": "PX-03",
+      "subject": "package_directory_limit_checked_after_unbounded_materialization",
+      "required": "Enforce4096 limit and check deadline during enumeration; sort only bounded entries."
+    }
+  ],
+  "product_or_observation_execution_performed": false,
+  "host_inputs_inspected_by_reviewer": false,
+  "h0_accepted": false,
+  "h1_approved": false,
+  "report": "PREEXEC-REVIEW.md",
+  "provenance_correction": "Initial evidence-copy command raced the Director candidate002 update. PREEXEC-REVIEW-WRITE-RACE.json and preexec-candidate001 retain that mislabeled late copy. This corrected record binds the exact candidate001 originally read; original review findings and report are unchanged."
+}

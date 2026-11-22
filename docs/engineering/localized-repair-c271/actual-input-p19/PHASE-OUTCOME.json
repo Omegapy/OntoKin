@@ -1,0 +1,96 @@
+{
+  "schema": "ontokin.c271.p19-outcome/1",
+  "phase": "C271-P19-actual-input-h0-review",
+  "recorded_at_utc": "2026-11-22T20:56:42.893903+00:00",
+  "verdict": "stopped_at_first_concrete_input_blocker",
+  "technical_phase_stopped": true,
+  "source_revision": "2f791017c6559bfd47937b32b1862cfe98a81551",
+  "source_tree": "8be07a4fb8b7b8880e3dbe528d9ef0aac3755e34",
+  "production_source": {
+    "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "bytes": 196305,
+    "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206",
+    "unchanged": true
+  },
+  "worktree_disclosure": "Five canonical documentary records and new P19 evidence were uncommitted. Production/tests/lock bytes were unchanged. This observation is not clean-source operational admission.",
+  "observation": {
+    "candidate": "candidate003",
+    "script_sha256": "c14b171df87d47dbd78d6a73946c72c32add8891d6d52b0a7e1da697cdd1e287",
+    "plan_sha256": "946fd14dc1022ddb1e9cc4d8f22a0c0a2746efb3b0b9c08db62cd70c17945aab",
+    "attempts": 1,
+    "returncode": 2,
+    "raw_metadata_readers": 3,
+    "package_metadata_rows": 5,
+    "matching_package_versions": 4,
+    "remaining_package_versions_not_read": [
+      "typing_extensions",
+      "Pillow"
+    ],
+    "post_read_identity_hash_checks": 10,
+    "post_read_failures": 0,
+    "forbidden_process_operation_attempts": 0,
+    "direct_target_starts": 0,
+    "evidence": "docs/engineering/localized-repair-c271/actual-input-p19/observation/attempt001/RESULT.json"
+  },
+  "first_blocker": {
+    "type": "InputBlocker",
+    "code": "PACKAGE_METADATA_PIN_MISMATCH",
+    "details": {
+      "name": "rpds-py",
+      "expected_version": "2026.5.1",
+      "candidate_roots": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/rpds_py-2026.6.3.dist-info"
+      ],
+      "metadata_path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/rpds_py-2026.6.3.dist-info/METADATA",
+      "metadata_sha256": "f8be7b17da3980b2c48596941411a43c70ac41b1e2d530aa531f2c15eab2eb1c",
+      "identity": {
+        "device": 27,
+        "inode": 9223372036854976565,
+        "size_bytes": 4147,
+        "mode": "0o644",
+        "mtime_ns": 1795159144000000000,
+        "ctime_ns": 1795159144000000000,
+        "nlink": 1
+      },
+      "observed_names": [
+        "rpds-py"
+      ],
+      "observed_versions": [
+        "2026.6.3"
+      ]
+    },
+    "message": "PACKAGE_METADATA_PIN_MISMATCH"
+  },
+  "bounded_positive_result": "Exact current pinned Python, loader and libc bytes returned raw metadata through the selected primitives; this is not operational policy dispatch or complete loader closure.",
+  "h0_accepted": false,
+  "operational_plan_created": false,
+  "operational_policy_admitted": false,
+  "h1_approved": false,
+  "actual_host_qualified": false,
+  "N57": "external review only; neither runtime pass nor skip",
+  "not_run": [
+    "last two package metadata reads after first mismatch",
+    "complete dist-info/loader/source inventories",
+    "public operational plan validation",
+    "H1",
+    "Node",
+    "ldd",
+    "direct loader command",
+    "installation",
+    "original-seven/full routine",
+    "native/model/hosted execution",
+    "main integration"
+  ],
+  "required_next_review": "Documentary acceptance/checks, conditional branch publication and verified saved partial handoff",
+  "next_phase_action": "In a fresh chat, review a bounded preparation plan for a separate verification environment that satisfies the unchanged seven-package lock, including rpds-py 2026.5.1. Preserve the current mismatch; independently review exact inputs/destinations and installation authority before preparation. Then rebind actual inputs before any complete H0 plan or H1 invocation.",
+  "parent_status": "blocked",
+  "parent_complete": false,
+  "independent_review": {
+    "verdict": "accepted_blocked_input_readiness_evidence",
+    "reviewer": "/root/operational_review",
+    "checks": 41,
+    "failures": 0,
+    "path": "docs/engineering/localized-repair-c271/actual-input-p19/operational-review/OUTCOME-REVIEW.json",
+    "sha256": "57a42235af02afe36a78cb718b8d3327591cf8f23c7297fe4191f98fd18a417f"
+  }
+}

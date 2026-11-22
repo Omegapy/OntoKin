@@ -326,3 +326,15 @@ This accepts bounded implementation only. Actual-input and operational-plan elig
 ## P18 saved core handoff — November 22, 2026
 
 The independently accepted final ZIP and both matching prompts are saved in OntoKin with exact byte readbacks and folder metadata. The [separate receipt](../../../engineering/localized-repair-c271/libc-implementation-p18/P18-DELIVERY.json) binds their actual identities and the published technical source. Receipt publication, fresh published-record checks and terminal receipt/audit confirmation follow this source-time record. The frozen archive is not rebuilt for later evidence. C271 remains blocked/open; R03–R05 and P02 remain unchanged. Stop after confirmed partial delivery; no second phase.
+
+## P19 actual-input and H0 review — November 22, 2026
+
+P18 delivery is confirmed by matching saved receipts and live PR/issue markers; only its matching pending delivery fields are superseded. Resume the retained branch at `2f791017c6559bfd47937b32b1862cfe98a81551`. The selected phase and acceptance gates are in [P19 PHASE](../../../engineering/localized-repair-c271/actual-input-p19/PHASE.json); its independently accepted early recovery was saved and read back before technical authoring.
+
+Freeze and independently review exact read-only current-input checks under the adopted 0.1.3 metadata policy, then retain the first mismatch or review complete H0 eligibility. A raw metadata result cannot admit an operational plan. Stop on the first new concrete blocker or at the H0 static-plan boundary. No production/tests/pins/limits/expectation changes, installation, input substitution, H1, target process, original-seven/full routine, main integration or parent closure. R01/R02 remain done; R03–R05 remain not_done, P01 done and P02 in_progress. N57 remains external review only.
+
+Required finish: independent exact evidence review; documentation/workflow/whitespace and preservation checks; conditional retained-branch publication and readback; independently verified final ZIP, matching prompts and actual separate receipt; stop. Parent C271 and issue273 stay open.
+
+### P19 observed stopping point
+
+One accepted raw-input observation returned metadata for the exact pinned Python, loader and libc. The fifth package METADATA then mismatched the unchanged lock: rpds-py 2026.6.3 versus required 2026.5.1. The first four package versions match; the last two were not inspected. All ten post-read checks match and no target start/forbidden process operation occurred. [P19 outcome](../../../engineering/localized-repair-c271/actual-input-p19/PHASE-OUTCOME.json) preserves the failed readiness result, raw outputs and earlier harness review fixes. Stop substantive work here. Independent retained-result review accepted the stopped outcome with 41 checks. Documentary review, checks, publication and final partial delivery remain for this chat. H0 and the remaining parent gates remain unaccepted.
