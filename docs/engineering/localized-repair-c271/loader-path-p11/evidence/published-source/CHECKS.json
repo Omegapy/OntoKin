@@ -1,0 +1,94 @@
+{
+  "scope": "P11-clean-published-technical-source",
+  "started_at_utc": "2026-11-21T23:56:43.358947+00:00",
+  "head": "e7508fb23c64563549631a1be46a3523593e2d9f",
+  "head_tree": "06c7db644326a5e03bffe8ad53ea4fa0004e7065",
+  "index_tree": "06c7db644326a5e03bffe8ad53ea4fa0004e7065",
+  "status_before": "",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ],
+      "cwd": "/workspace/scratch/2ad494d5da19/OntoKin",
+      "started_at_utc": "2026-11-21T23:56:43.416095+00:00",
+      "ended_at_utc": "2026-11-21T23:56:43.515321+00:00",
+      "returncode": 0,
+      "stdout": "session_evidence/checks/published/workflow.stdout.txt",
+      "stdout_sha256": "dbcaa1cd44885eb989c54d37bfd3c48daab47ee82fdb38bac1efe0aba902aa55",
+      "stderr": "session_evidence/checks/published/workflow.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "documents",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/2ad494d5da19/OntoKin",
+      "started_at_utc": "2026-11-21T23:56:43.515506+00:00",
+      "ended_at_utc": "2026-11-21T23:56:45.851547+00:00",
+      "returncode": 0,
+      "stdout": "session_evidence/checks/published/documents.stdout.txt",
+      "stdout_sha256": "d38d1e863824478a29d9e58b792ecc7ed75035f3ed67af49f4cda6de350c32e8",
+      "stderr": "session_evidence/checks/published/documents.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "cwd": "/workspace/scratch/2ad494d5da19/OntoKin",
+      "started_at_utc": "2026-11-21T23:56:45.851678+00:00",
+      "ended_at_utc": "2026-11-21T23:56:45.857077+00:00",
+      "returncode": 0,
+      "stdout": "session_evidence/checks/published/whitespace.stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "session_evidence/checks/published/whitespace.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "protected_source",
+      "command": [
+        "git",
+        "diff",
+        "--exit-code",
+        "e0119f376441fee0fc3956852ac63110ab141011",
+        "--",
+        "prototypes",
+        "ontokin",
+        "tests",
+        "tools",
+        ".github"
+      ],
+      "cwd": "/workspace/scratch/2ad494d5da19/OntoKin",
+      "started_at_utc": "2026-11-21T23:56:45.857172+00:00",
+      "ended_at_utc": "2026-11-21T23:56:45.864937+00:00",
+      "returncode": 0,
+      "stdout": "session_evidence/checks/published/protected_source.stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "session_evidence/checks/published/protected_source.stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "protected_untracked": [],
+  "status_after": "",
+  "product_execution": false,
+  "passed": true,
+  "finished_at_utc": "2026-11-21T23:56:45.915496+00:00"
+}

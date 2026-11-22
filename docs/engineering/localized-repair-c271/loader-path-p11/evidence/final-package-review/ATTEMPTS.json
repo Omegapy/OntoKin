@@ -1,0 +1,103 @@
+{
+  "aggregation_correction": {
+    "draft": {
+      "bytes": 12945,
+      "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/CHECKS-AGGREGATE-DRAFT001.json",
+      "sha256": "9667ade8c707a5ebd2d7947214ce6e0623c9ac2a9c3e0e09c80047f1292190e6"
+    },
+    "final_checks": {
+      "bytes": 12926,
+      "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/CHECKS.json",
+      "sha256": "ed10b5d56adadd656a18093963a09e42280ea811f1e2e4121179031eb4438801"
+    },
+    "finding": "Final aggregation initially wrote pass rather than the established passed key for adjudicated FP12. A serialization check raised KeyError: pass on other rows. No verification result changed. Final CHECKS now uses the original passed schema consistently; initial failed RUN001 remains unchanged."
+  },
+  "attempts": [
+    {
+      "attempt": "RUN001",
+      "checks": {
+        "bytes": 62454,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/CHECKS-RUN001.json",
+        "sha256": "a2d50af92923e31a7fa85bda14514cb1769d0b6227965c8074864d3285831656"
+      },
+      "coverage": {
+        "bytes": 1649,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/COVERAGE-RUN001.json",
+        "sha256": "d3e83a0f60766207ffed63bda9bd3fa25a572290ab6af098c275c343f205e145"
+      },
+      "result": "26/27 groups passed. FP12 incorrectly equated transport permissions with separately recorded original permissions. Fresh extraction remains unchanged.",
+      "review": {
+        "bytes": 54922,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/REVIEW-RUN001.json",
+        "sha256": "b122c8811bf0b02fbcf1bc504ce3f2f72336bceab6187619f311f5f90421e1d2"
+      },
+      "script": {
+        "bytes": 24325,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/audit_final.py",
+        "sha256": "db8e3481574555a89c6ead1fc7968bc2f31cfe661d3a4a45d82a5575c8dcdac0"
+      },
+      "status": "completed_with_failed_mode_assumption",
+      "stderr": {
+        "bytes": 0,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/RUN001.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 53125,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/RUN001.stdout.json",
+        "sha256": "18de1de3dfae0cc181c8fd340c37229af139f65e02ae69adda3401596556dc4a"
+      }
+    },
+    {
+      "attempt": "RUN002",
+      "result": "Created813 fresh private copies before a candidate support read failed. The helper expected an external zero-byte support alias to exist in the embedded-only tree. This is not a missing archive mapping. mode_restored/ is retained unchanged.",
+      "script": {
+        "bytes": 10405,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/restore_modes_followup.py",
+        "sha256": "ae04cb5c0dc73c41dc2dc6f22448b4bd91f56d3a393fd13d11f18bda4d3ad85e"
+      },
+      "status": "reviewer_helper_path_failure",
+      "stderr": {
+        "bytes": 910,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/RUN002.stderr.txt",
+        "sha256": "c2ac90480fec01a2ec21930efd0f9cd96b8e52979f54d5693d8addc77df24df6"
+      },
+      "stdout": {
+        "bytes": 0,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/RUN002.stdout.json",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "attempt": "RUN003",
+      "report": {
+        "bytes": 2380,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/MODE-FOLLOWUP.json",
+        "sha256": "c43bedc7a8aa92e1d7f8fe0bdae19093ba57b47649426217b14a725efaab5c1f"
+      },
+      "result": "834/834 checks passed. Fresh mode_restored_run003/ has813 embedded rows plus9 independently resolved external candidate support rows.110 receipt aliases also decoded and verified.",
+      "script": {
+        "bytes": 13406,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/restore_modes_run003.py",
+        "sha256": "b06657b5f2450ca704f8f6b8a5c1c3d152205e6536bbc7e3727e65940dae426c"
+      },
+      "status": "passed",
+      "stderr": {
+        "bytes": 0,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/RUN003.stderr.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 2380,
+        "path": "/workspace/scratch/2ad494d5da19/session_evidence/final_package_review/RUN003.stdout.json",
+        "sha256": "c43bedc7a8aa92e1d7f8fe0bdae19093ba57b47649426217b14a725efaab5c1f"
+      }
+    }
+  ],
+  "no_original_package_or_author_file_mutation": true,
+  "original_scripts_and_logs_retained": true,
+  "running_reviewer_processes": 0,
+  "schema": "ontokin.c271.p11-final-review-attempts/1",
+  "uncertain_reviewer_operations": [],
+  "unused_initial_helper_branch": "audit_final.py contains an uncalled receipt-byte helper with an incorrect data_base64 field guess. Initial external checks used authenticated metadata; RUN003 directly decodes the actual encoding/bytes/payload fields for all110 receipt aliases."
+}

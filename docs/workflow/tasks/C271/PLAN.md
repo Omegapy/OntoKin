@@ -199,3 +199,11 @@ Candidate004 is independently accepted for design and 97 frozen inert controls; 
 The author ran 1,149 static artifact checks; the independent reviewer ran 1,675 static checks and retained all failed attempts and targeted corrections. These are not product-test or host-qualification results. The existing 175 inspection/mapping methods remain future implementation obligations. See `docs/engineering/localized-repair-c271/loader-path-p11/ADOPTION.json` and `review/REVIEW.json`.
 
 Documentary checks, conditional branch publication and verified P11 delivery still precede the stop. Parent requirements and plan states remain unchanged: R01/R02 done; R03/R04/R05 not_done; P01 done; P02 in_progress. H0 is unaccepted, H1 unapproved, PR274 draft/open and issue273 open. No main lease or integration is allowed in this phase.
+
+## P11 verified core delivery
+
+The frozen design/control handoff from `e7508fb23c64563549631a1be46a3523593e2d9f` and both matching prompts are saved and exact-byte readback verified. [P11-DELIVERY.json](../../../engineering/localized-repair-c271/loader-path-p11/P11-DELIVERY.json) records the concrete identities, independent package disposition and source checks. ZIP transport permissions are intentionally inert; recorded original modes must be restored and checked in a fresh private evidence tree before consumption. The initial mode-audit finding and its independent restoration followup are retained.
+
+This source snapshot precedes its own receipt-only publication checks and separate terminal save. Complete only that confirmation and stop; a matching later terminal receipt supersedes these pending delivery observations. C271 stays blocked/open, R03-R05 not_done and P02 in_progress. The accepted design keeps the existing 16 MiB reader. No product implementation, test rerun, H0/H1, full routine, main lease or integration occurred.
+
+After confirmed terminal delivery, the next fresh phase may implement only accepted candidate004 through its FUTURE-SURFACE.json, with all97 frozen controls and175 existing inspection/mapping methods, a new early recovery and independent exact-source review. Stop before H0 re-establishment or further runtime/integration work.
