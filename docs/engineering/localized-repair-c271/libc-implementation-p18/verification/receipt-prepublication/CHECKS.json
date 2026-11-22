@@ -1,0 +1,118 @@
+{
+  "schema": "ontokin.c271.p18-record-checks/1",
+  "label": "receipt-prepublication",
+  "started_at_utc": "2026-11-22T19:56:32.340145+00:00",
+  "cwd": "/workspace/scratch/cf3e30ae3c50/OntoKin",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "head": "5b4d6aa459203c5700c71444f6cd9d662e783a83",
+  "tree": "6f32eb119773a0661590f0645eabeebbc6cce178",
+  "status_before": " M STATUS.md\n M docs/engineering/localized-repair-c271/libc-implementation-p18/PHASE.json\n M docs/workflow/CURRENT.json\n M docs/workflow/tasks/C271/PLAN.md\n M docs/workflow/tasks/C271/REQUIREMENTS.md\n M docs/workflow/tasks/C271/task.json\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/P18-DELIVERY.json\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/delivery/\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/package-review/\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/publication/\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/review/RECORD-REVIEW.json\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/review/RECORD-REVIEW.md\n?? docs/engineering/localized-repair-c271/libc-implementation-p18/verification/implementation-published/\n",
+  "source_files": [
+    {
+      "path": "STATUS.md",
+      "bytes": 14549,
+      "sha256": "a5551ed3277d21a9f53143246b6f88dd8a07051d68c894cc1c879ecee79298a5"
+    },
+    {
+      "path": "docs/workflow/CURRENT.json",
+      "bytes": 99631,
+      "sha256": "0c64a278ed45593f3c89fb8613d505ab1b6f59c1aef98256ee7792e5456bbdb0"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/task.json",
+      "bytes": 273350,
+      "sha256": "f15168dc62d70ad2da3716d2635396f8945d1fbf7811b3ec38ca0150b615bb0d"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/PLAN.md",
+      "bytes": 56380,
+      "sha256": "76432bddcb73a27fbdde71d8631bac72c4515164835204415799780fcd3faa72"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "bytes": 55224,
+      "sha256": "f22216f586eaae41cada406297f4f208630536d350e09dfb96a0623e4a6b7188"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/libc-implementation-p18/PHASE.json",
+      "bytes": 18551,
+      "sha256": "41d94c15af566240f304705e68085c631fb3b23d043ff0dc0a78875850b2bf71"
+    },
+    {
+      "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "bytes": 196305,
+      "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206"
+    },
+    {
+      "path": "tests/test_current_host_libc_plt_metadata_v01.py",
+      "bytes": 27946,
+      "sha256": "661b7a96aae871e83fcfc4f1fcf975467ac81400961dad81c19283d13f2978d7"
+    },
+    {
+      "path": "tests/test_current_host_libc_static_tls_flags_v01.py",
+      "bytes": 1211,
+      "sha256": "d91ad24b3fc62d1b8abd4e8ac5aa68a8459d20a54224a102dbd3ba181a0523d5"
+    }
+  ],
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "started_at_utc": "2026-11-22T19:56:32.457935+00:00",
+      "exit_code": 0,
+      "log": "workflow.log",
+      "log_bytes": 148,
+      "log_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "name": "documents",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "started_at_utc": "2026-11-22T19:56:32.617285+00:00",
+      "exit_code": 0,
+      "log": "documents.log",
+      "log_bytes": 6609,
+      "log_sha256": "6c7881ee40e20e3b4ebf99991ae84fdf8a613c3035873682bac237f4789bb135"
+    },
+    {
+      "name": "worktree-whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_at_utc": "2026-11-22T19:56:35.201112+00:00",
+      "exit_code": 0,
+      "log": "worktree-whitespace.log",
+      "log_bytes": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "staged-whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "started_at_utc": "2026-11-22T19:56:35.221646+00:00",
+      "exit_code": 0,
+      "log": "staged-whitespace.log",
+      "log_bytes": 0,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "source_files_unchanged": true,
+  "passed": true,
+  "finished_at_utc": "2026-11-22T19:56:35.235475+00:00"
+}
