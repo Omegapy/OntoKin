@@ -1,0 +1,22 @@
+{
+  "id": "P12-N57-POLICY-BINDING-001",
+  "status": "confirmed_unresolved",
+  "control": "N57_source_variant_unknown",
+  "positive": "P01_nonselecting_base",
+  "sole_context_difference": "variant_review.completeness",
+  "positive_value": "synthetic_declared_complete",
+  "negative_value": "unsupported",
+  "frozen_negative_expectation": {
+    "outcome": "refusal",
+    "code": "CHI-UNSUPPORTED",
+    "stage": "variant_review",
+    "rule_id": "LP-VARIANT-SEMANTICS"
+  },
+  "finding": "The accepted operational variant schema contains only schema, loader, source_review and suffixes. The sole distinguishing synthetic label is outside those inputs; all representable synthetic observations/bindings remain equal. Neither context supplies an actual operational plan or actual plan digest. The decision assigns completeness to independent source review but defines no machine-observable rejected-policy admission contract. Faithfully obtaining different production results for these frozen cases is therefore unspecified under the authorized surface.",
+  "source_evidence": [
+    "docs/engineering/localized-repair-c271/loader-path-p12/evidence/implementation/N57-SURFACE-QUESTION.json",
+    "docs/engineering/localized-repair-c271/loader-path-p12/evidence/review/ADJUDICATION.json"
+  ],
+  "director_decision": "Stop technical P12 at its declared concrete design/surface boundary. Preserve all frozen outcomes; introduce no production policy/flag, substituted input, adapter-authored refusal or modified expectation.",
+  "limits": "This is a static contract/control mapping finding, not a failing product test or evidence about any actual host loader."
+}

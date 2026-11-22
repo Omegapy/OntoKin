@@ -1,0 +1,32 @@
+{
+  "schema": "ontokin.c271.p12-n57-rationale-semantics/1",
+  "source": {
+    "path": "/workspace/scratch/378b783967ca/session_p12/review/n57-adjudication/sources/production-baseline.py",
+    "bytes": 148602,
+    "sha256": "0c2ef54a227e2e05a7eb1f71a4fedd934399aa27d98ec7a3845f93a4dbfbb612"
+  },
+  "source_revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+  "function": "_check_resolution",
+  "function_start": 850,
+  "function_end": 968,
+  "excerpt_first_line": 850,
+  "excerpt_last_line": 855,
+  "excerpt": "def _check_resolution(plan, author_runtime, *, check=lambda: None):\n    host, resolution = plan[\"host_static\"], plan[\"host_static\"][\"resolution\"]\n    _binding_shape(resolution[\"rationale\"], \"LOADER\", descriptor=True)\n    review, _ = _read_file(resolution[\"rationale\"][\"path\"], LIMITS[\"document_bytes\"], category=\"LOADER\", check=check)\n    _require(review and hashlib.sha256(review).hexdigest() == resolution[\"rationale\"][\"sha256\"], \"LOADER\", \"Static resolution review differs\")\n    _bound(resolution[\"rationale\"][\"path\"], _binding(resolution[\"rationale\"]), category=\"LOADER\", check=check)\n",
+  "review_variable_occurrences": [
+    {
+      "line": 853,
+      "context": "Store"
+    },
+    {
+      "line": 854,
+      "context": "Load"
+    },
+    {
+      "line": 854,
+      "context": "Load"
+    }
+  ],
+  "method": "Static AST parse and source inspection only; production module was not imported or executed.",
+  "observation": "The existing rationale path has descriptor validation, bounded file reading, a nonempty-byte and SHA256 condition, and descriptor binding. Its review bytes are not parsed for a completeness decision. The local review variable has one assignment and two loads in the nonempty/SHA256 condition, then is unused.",
+  "limit": "This does not assert that no later reviewed design could establish an admission boundary. No such operational selector or review-result representation is adopted by the frozen control contract here."
+}

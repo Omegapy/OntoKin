@@ -1,7 +1,9 @@
-# C271 P12: finite loader-path implementation
+# C271 P12: loader-path implementation blocked
 
-This bounded phase implements only the independently accepted P11 candidate004 rule for the selected Python `$ORIGIN/../lib` input, under a separate reviewed plan/profile. The default reader and old profile retain their behavior.
+P12 stopped before implementation at `P12-N57-POLICY-BINDING-001`. Frozen N57 requires a result based on a synthetic completeness label outside the accepted closed operational input contract. Independent review confirms the missing production admission boundary.
 
-[Phase and acceptance](PHASE.json), [startup reconciliation](RECONCILIATION.json), [early recovery receipt](EARLY-RECOVERY-RECEIPT.json), and [instruction read-set](READ-SET.json) record the actual source and execution boundary. No implementation test result is claimed at this opening checkpoint.
+[Blocker](BLOCKER.json), [phase outcome](PHASE-OUTCOME.json), [independent review](evidence/review/ADJUDICATION.json), [author report](evidence/implementation/REPORT.md), [source preservation](evidence/SOURCE-BOUNDARY.json) and [early recovery](EARLY-RECOVERY-RECEIPT.json) record the exact evidence.
 
-Parent C271 remains blocked with R03-R05 unmet. Stop after this phase and verified partial delivery; host qualification, full routine and integration remain later gates.
+No code, tests or expectations changed. All942 existing source/test/tool files remain unchanged. The97 frozen behavior controls and175 existing methods were not run. This finding does not qualify H0/H1, pass the full routine, integrate the branch or close C271.
+
+Complete only documentary publication and verified saved partial delivery, then stop. The next fresh phase is independently reviewed design/control clarification; it begins no production or host work.

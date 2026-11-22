@@ -1,0 +1,245 @@
+{
+  "schema": "ontokin.c271.p12-independent-n57-adjudication/1",
+  "reviewer": "/root/intake_review",
+  "recorded_at_utc": "2026-11-22T00:44:23.332250+00:00",
+  "reviewed_revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+  "accepted_candidate_manifest_sha256": "e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de",
+  "inputs": {
+    "fixture_inputs/P01_nonselecting_base.json": {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "repository_path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/fixture_inputs/P01_nonselecting_base.json",
+      "bytes": 4552,
+      "sha256": "ffae051f6da02526bd8b5b52313d004063f900fa84ebe779f24aeb0df59d72de"
+    },
+    "fixture_inputs/N57_source_variant_unknown.json": {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "repository_path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/fixture_inputs/N57_source_variant_unknown.json",
+      "bytes": 4536,
+      "sha256": "85a0c7f2b1055f39328c42a3c95e405d474e67b6ba7e442eec4c271d018953a5"
+    },
+    "DECISION.md": {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "repository_path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/DECISION.md",
+      "bytes": 25570,
+      "sha256": "1a712aba7f8bea6dfaf5e5b93889d26d2731e5eda8330334228a6ad29d52679f"
+    },
+    "CONTROL-CONTRACT.md": {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "repository_path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/CONTROL-CONTRACT.md",
+      "bytes": 10332,
+      "sha256": "80f5ed8657046a2d22653d036509f6fc1dc2e8e73418a5e9b5cea5ef3720e9bb"
+    },
+    "FUTURE-SURFACE.json": {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "repository_path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/FUTURE-SURFACE.json",
+      "bytes": 7285,
+      "sha256": "8190e5b4bcb0762e10d556923f9a534106252fb60fee9333fffc55c8c71d90f9"
+    },
+    "EXPECTATIONS.json": {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "repository_path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/EXPECTATIONS.json",
+      "bytes": 38359,
+      "sha256": "dfb285f41a58a1f7254aaae4aa022f91afdc72fb7d5dad2f3d6b1e8257d14137"
+    },
+    "FIXTURE-MANIFEST.json": {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "repository_path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/FIXTURE-MANIFEST.json",
+      "bytes": 96086,
+      "sha256": "ea377d25e96631b70cd8909a5375fa3fd0feadf7f017f0673d8a094335186594"
+    },
+    "CANDIDATE-MANIFEST.json": {
+      "revision": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+      "repository_path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/CANDIDATE-MANIFEST.json",
+      "bytes": 35041,
+      "sha256": "e7b505aa768d0656db6c4dfaf7541e796aefee7148878a6fdf380d6ab0b911de"
+    }
+  },
+  "frozen_case": {
+    "expected_key": "N57_source_variant_unknown",
+    "id": "N57_source_variant_unknown",
+    "image": {
+      "mode": "0o600",
+      "path": "fixture_inputs/python_origin.bin",
+      "sha256": "76c848f8da3c76c8132e39b0c87b5299f7e09953f0f44ca4fb51f94e17974887",
+      "size_bytes": 4135
+    },
+    "input": {
+      "mode": "0o600",
+      "path": "fixture_inputs/N57_source_variant_unknown.json",
+      "sha256": "85a0c7f2b1055f39328c42a3c95e405d474e67b6ba7e442eec4c271d018953a5",
+      "size_bytes": 4536
+    },
+    "mutation": "Actual-loader suffix completeness has not been justified",
+    "purpose": "Actual-loader suffix completeness has not been justified",
+    "route": "origin_rule"
+  },
+  "frozen_expected": {
+    "code": "CHI-UNSUPPORTED",
+    "host_qualified": false,
+    "outcome": "refusal",
+    "rule_id": "LP-VARIANT-SEMANTICS",
+    "stage": "variant_review",
+    "state": "REJECTED",
+    "target_starts": 0
+  },
+  "exact_case_differences": [
+    {
+      "path": "/variant_review/completeness",
+      "positive": "synthetic_declared_complete",
+      "negative": "unsupported"
+    }
+  ],
+  "comparison_after_removing_only_synthetic_completeness": {
+    "equal": true,
+    "positive": {
+      "bytes": 3338,
+      "sha256": "e33cb05c8e73031f7c720ecee68094ced82f5d3679af4bc1ebf95bca5b0eaa3c"
+    },
+    "negative": {
+      "bytes": 3338,
+      "sha256": "e33cb05c8e73031f7c720ecee68094ced82f5d3679af4bc1ebf95bca5b0eaa3c"
+    },
+    "qualification": "Comparison of frozen logical contexts only; no operational plan projection is invented or executed."
+  },
+  "supporting_clauses": [
+    {
+      "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/DECISION.md",
+      "line": 49,
+      "text": "The separate variant document has exactly `schema, loader, source_review, suffixes`. Schema is `ontokin.current-host-readback-origin-variants/0.1.0`. `loader` is the descriptor of the resolved Python ELF interpreter, already bound in host files/images. `source_review` is the same descriptor as the existing `resolution.rationale`, so the exact independently reviewed rationale remains attached. `suffixes` is the complete finite union of possible search suffixes for that exact loader/platform, including the empty suffix for the base directory. Strings are sorted, unique relative POSIX paths, with no empty components, `.`, `..`, `$`, NUL or whitespace; the sole empty string denotes the base."
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/DECISION.md",
+      "line": 85,
+      "text": "Existing `glibc-hwcaps` descendant inventory checks remain. The variant review additionally covers legacy hardware and TLS suffixes where relevant. Presence of any relevant directory omitted from the reviewed inventory, or inability to justify the complete suffix set, refuses. The tool compares the supplied variant rows against the separately bound suffix list; **completeness of that source-backed list remains an independent-review obligation**, as it already is for P07's finite loader map. Portable controls do not claim to prove an actual loader's compiled suffix list."
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/DECISION.md",
+      "line": 55,
+      "text": "The external expected plan digest authenticates all fields and referenced descriptors. No field in these objects constitutes approval. A changed variant inventory, rationale, origin, image, closure or output path needs a new separately reviewed plan and fresh attempt. Existing P06 HOST, inspection, manifest, provider, JavaScript consumer and success/failure sidecar schemas remain unchanged. Origin inputs remain in the externally bound inspection plan; they are not projected as new HOST keys. [L01\u2013L06]"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/DECISION.md",
+      "line": 109,
+      "text": "`_plan_shape` selects only a supported exact schema/profile pair and the new closed object shape. `_validate` already authenticates the external plan digest before that selection. A private preparation helper derives a subject-only immutable policy after checking the source/plan binding and context. Both `_check_author_runtime` calls and `_check_resolution` must use that same plan-dependent admission. A caller-provided context flag is never proof of admission."
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/DECISION.md",
+      "line": 53,
+      "text": "The variant source review must explain the actual loader's compiled/default/hardware/TLS alternatives and why its suffix union is complete. It binds the loader bytes and source/version or inspected implementation evidence. A libc version string or these generic W01\u2013W05 references alone is insufficient. If completeness cannot be justified, the new profile is unsupported. The tool checks the exact reviewed inventory and facts; it does not infer loader implementation from an assertion in JSON."
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/DECISION.md",
+      "line": 53,
+      "text": "The variant source review must explain the actual loader's compiled/default/hardware/TLS alternatives and why its suffix union is complete. It binds the loader bytes and source/version or inspected implementation evidence. A libc version string or these generic W01\u2013W05 references alone is insufficient. If completeness cannot be justified, the new profile is unsupported. The tool checks the exact reviewed inventory and facts; it does not infer loader implementation from an assertion in JSON."
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/CONTROL-CONTRACT.md",
+      "line": 15,
+      "text": "The origin-rule contexts use `ontokin.c271.p11-portable-rule-context/1`, deliberately different from any operational plan. The legacy contexts have a separate explicitly nonoperational schema name. Their `operational:false`, logical identities, asserted synthetic suffix model and selected seam are not valid inspection-plan fields. A later test adapter must bind its actual source and show how each supplied observation reaches the actual production helper. It may not replace the real image pin with the synthetic hash in production or call an origin-helper result a whole-plan pass. No positive whole-profile/H0 fixture exists because the real origin/closure/variant inventory is not yet established."
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/CONTROL-CONTRACT.md",
+      "line": 25,
+      "text": "`code`, `stage` and `rule_id` are the normative future selectors for new refusals. `rule_id` can be retained in the existing error `details` object; no error-schema change is needed. Where a legacy reason is supplied, it is exact and must remain unchanged. Callback sentinel tests operate at the new raw helper boundary so exception identity is observable; the existing top-level wrapper's behavior remains a separate preserved obligation."
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/CONTROL-CONTRACT.md",
+      "line": 15,
+      "text": "The origin-rule contexts use `ontokin.c271.p11-portable-rule-context/1`, deliberately different from any operational plan. The legacy contexts have a separate explicitly nonoperational schema name. Their `operational:false`, logical identities, asserted synthetic suffix model and selected seam are not valid inspection-plan fields. A later test adapter must bind its actual source and show how each supplied observation reaches the actual production helper. It may not replace the real image pin with the synthetic hash in production or call an origin-helper result a whole-plan pass. No positive whole-profile/H0 fixture exists because the real origin/closure/variant inventory is not yet established."
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/FUTURE-SURFACE.json",
+      "line": 107,
+      "text": "        \"new variant-document admission caller\","
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/FUTURE-SURFACE.json",
+      "line": 140,
+      "text": "        \"new independently reviewed adapter/tests only\""
+    }
+  ],
+  "current_source_observation": {
+    "production": {
+      "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "baseline": {
+        "bytes": 148602,
+        "sha256": "0c2ef54a227e2e05a7eb1f71a4fedd934399aa27d98ec7a3845f93a4dbfbb612"
+      },
+      "observed": {
+        "bytes": 148602,
+        "sha256": "0c2ef54a227e2e05a7eb1f71a4fedd934399aa27d98ec7a3845f93a4dbfbb612"
+      },
+      "unchanged": true
+    },
+    "existing_tests": [
+      {
+        "path": "tests/test_current_host_inspection_v01.py",
+        "baseline": {
+          "bytes": 139313,
+          "sha256": "797eb208670f6f74f14c9b5849485bd6cf3522a265d4129618c4b50ddc0a739a"
+        },
+        "observed": {
+          "bytes": 139313,
+          "sha256": "797eb208670f6f74f14c9b5849485bd6cf3522a265d4129618c4b50ddc0a739a"
+        },
+        "unchanged": true
+      },
+      {
+        "path": "tests/test_current_host_elf_mapping_v01.py",
+        "baseline": {
+          "bytes": 5937,
+          "sha256": "6860891b40f2bc63c4dd8b62c2e3f05fd8ac2d0616e39dd13d363b288c1e8826"
+        },
+        "observed": {
+          "bytes": 5937,
+          "sha256": "6860891b40f2bc63c4dd8b62c2e3f05fd8ac2d0616e39dd13d363b288c1e8826"
+        },
+        "unchanged": true
+      }
+    ],
+    "new_test_path": "tests/test_current_host_loader_path_v01.py",
+    "new_test_present": false
+  },
+  "findings": [
+    {
+      "id": "P12-DESIGN-001",
+      "severity": "blocking",
+      "title": "N57 lacks an adopted observable production predicate",
+      "observed": "Only /variant_review/completeness changes from synthetic_declared_complete to unsupported. External digest, variant/rationale descriptor matches, all suffixes/guards/paths and other logical fields are identical.",
+      "inference": "The adopted four-field operational variant object has no review-result selector. Completeness is an external independent-review obligation. No adopted policy-construction result or operational observation defines the N57 distinction at variant_review.",
+      "rejected_workarounds": [
+        "Do not add a completeness or approval field to the closed operational document.",
+        "Do not map the synthetic label directly to a raised oracle error.",
+        "Do not create policy=None solely because the label says unsupported and claim a source-backed admission check.",
+        "Do not mutate suffixes, loader identity, rationale identity or the expected outcome to reach an existing refusal.",
+        "Do not call unchanged suffix-descriptor authenticity a proof that source completeness was established."
+      ],
+      "required_disposition": "Stop technical P12 at the concrete design/surface blocker; preserve all 97 cases and existing implementation. A later separately reviewed clarification must define the review-to-policy boundary and faithful control mapping or explicitly classify this as an external-review obligation. No clarification is adopted here."
+    }
+  ],
+  "verdict": "bounded_implementation_blocked_by_frozen_design_control_binding",
+  "checks": {
+    "accepted_manifest_identity": true,
+    "one_exact_mutation": true,
+    "remaining_context_identical": true,
+    "frozen_oracle_exact": true,
+    "production_unchanged": true,
+    "existing_tests_unchanged": true,
+    "new_test_absent": true
+  },
+  "execution": {
+    "product_imports": 0,
+    "product_methods": 0,
+    "target_starts": 0,
+    "H0_H1": false,
+    "runtime_preparation": false,
+    "Node_ldd": false,
+    "full_routine": false,
+    "main_integration": false
+  },
+  "limits": [
+    "This is independent static adjudication of a frozen contract/control gap, not a failed runtime or product test.",
+    "No future implementation candidate exists for behavioral review in the observed source.",
+    "No broader loader policy, new schema field, expectation change or second technical phase is adopted."
+  ]
+}

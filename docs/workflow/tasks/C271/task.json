@@ -63,7 +63,9 @@
         "docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/PYTHON-BLOCKER-VERIFICATION.json",
         "docs/engineering/localized-repair-c271/elf-string-table-p10/EXECUTION-CHECKS.json",
         "docs/engineering/localized-repair-c271/elf-string-table-p10/PHASE-OUTCOME.json",
-        "docs/engineering/localized-repair-c271/elf-string-table-p10/INDEPENDENT-FINAL-REVIEW.json"
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/INDEPENDENT-FINAL-REVIEW.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/review/ADJUDICATION.json"
       ]
     },
     {
@@ -606,7 +608,21 @@
       "command": "Exact guarded source-attributed commands to be recorded before execution",
       "result": "not_run",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p12/PHASE-OUTCOME.json"
+      ],
+      "limit": "Not run: technical phase stopped before implementation at P12-N57-POLICY-BINDING-001. Existing sources and expectations remain unchanged."
+    },
+    {
+      "name": "P12 independent N57 mapping-blocker review",
+      "command": "Independent exact frozen-context diff, closed-schema/source analysis and source preservation; no product import or behavioral execution",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/review/ADJUDICATION.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/SOURCE-BOUNDARY.json"
+      ],
+      "limit": "Pass accepts the blocker diagnosis only. No implementation/97-control/175-method/H0/R03 acceptance."
     }
   ],
   "completion": {
@@ -631,7 +647,7 @@
     "elf_mapping_implementation_commit": "fdacc11349079be21bcce755b18ca660df4d96a2",
     "loader_path_decision_commit": "e7508fb23c64563549631a1be46a3523593e2d9f"
   },
-  "next_action": "Implement only accepted P11 candidate004 through FUTURE-SURFACE; freeze exact implementation source before executing all97 frozen controls and all175 existing inspection/mapping methods. Obtain independent review and verified partial delivery, then stop.",
+  "next_action": "Finish independent documentary boundary review, required record checks, conditional branch publication and exact readback. Verify/freeze/save the final partial ZIP and matching prompts, publish the separate receipt, and stop. No clarification or implementation begins in this chat.",
   "session_phase": {
     "schema": "ontokin.c271.p12-phase/1",
     "task": "C271",
@@ -674,7 +690,7 @@
       "Root owns canonical task/CURRENT, Git/index, publication and delivery. Actual workers own disjoint assigned files; no nested fanout.",
       "Do not repeat diagnosed unavailable native push; use conditional nonforce GitHub API ref updates with expected head."
     ],
-    "status": "implementation_in_progress",
+    "status": "blocked_delivery_pending",
     "early_save_confirmed": true,
     "parent_status": "blocked",
     "parent_complete": false,
@@ -702,12 +718,12 @@
       "state": "open"
     },
     "stop": "Stop after this bounded implementation/control phase and verified partial delivery, or at its first concrete blocker. No later runtime/integration phase in this chat.",
-    "exact_next_action": "Implement only accepted P11 candidate004 through FUTURE-SURFACE; freeze exact implementation source before executing all97 frozen controls and all175 existing inspection/mapping methods. Obtain independent review and verified partial delivery, then stop.",
+    "exact_next_action": "Finish independent documentary boundary review, required record checks, conditional branch publication and exact readback. Verify/freeze/save the final partial ZIP and matching prompts, publish the separate receipt, and stop. No clarification or implementation begins in this chat.",
     "workers": {
-      "/root": "Director and canonical writer",
-      "/root/intake_review": "Independent intake/early review complete; exact-source/control/preservation review assigned",
-      "/root/package_engineer": "Early/final package engineering only",
-      "/root/loader_implementation": "Implementer: only inspection module, new focused test and owned scratch evidence"
+      "/root": "Director: documentary verification, publication and saved delivery only",
+      "/root/loader_implementation": "Completed at N57 blocker; no source/test edits or product execution; no active process or unknown operation",
+      "/root/intake_review": "Independent blocker adjudication complete; documentary/final-package review follows",
+      "/root/package_engineer": "Preparing final package; waits exact source freeze"
     },
     "current_unknown_operations": [],
     "historical_unknowns": [
@@ -719,26 +735,32 @@
         "gate": "P12-A01",
         "state": "passed",
         "evidence": [
-          "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json",
-          "docs/engineering/localized-repair-c271/loader-path-p12/evidence/intake/AUDIT.json",
-          "docs/engineering/localized-repair-c271/loader-path-p12/evidence/early-review/AUDIT.json"
+          "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json"
         ]
       },
       {
         "gate": "P12-A02",
-        "state": "in_progress"
+        "state": "blocked_before_implementation",
+        "evidence": [
+          "docs/engineering/localized-repair-c271/loader-path-p12/BLOCKER.json",
+          "docs/engineering/localized-repair-c271/loader-path-p12/evidence/review/ADJUDICATION.json"
+        ]
       },
       {
         "gate": "P12-A03",
-        "state": "not_run"
+        "state": "not_run_due_to_confirmed_design_control_blocker"
       },
       {
         "gate": "P12-A04",
-        "state": "not_started"
+        "state": "blocker_review_accepted_documentary_publication_pending",
+        "evidence": [
+          "docs/engineering/localized-repair-c271/loader-path-p12/evidence/review/ADJUDICATION.json",
+          "docs/engineering/localized-repair-c271/loader-path-p12/evidence/SOURCE-BOUNDARY.json"
+        ]
       },
       {
         "gate": "P12-A05",
-        "state": "not_started"
+        "state": "final_package_review_save_and_receipt_pending"
       }
     ],
     "selected_design": {
@@ -768,6 +790,17 @@
       {
         "kind": "startup_output_truncation",
         "disposition": "Required missing instruction prose reloaded in bounded windows; complete API evidence retained in startup files. No write uncertainty or technical test failure."
+      },
+      {
+        "kind": "publication_request_read_truncation",
+        "evidence": "docs/engineering/localized-repair-c271/loader-path-p12/evidence/opening-publication/READ-FAILURE.json",
+        "disposition": "JSON parse failed before any remote write. Exact file was safely read in smaller chunks; intended Git tree/commit/nonforce update and readback passed."
+      },
+      {
+        "kind": "accepted_design_control_binding_gap",
+        "id": "P12-N57-POLICY-BINDING-001",
+        "evidence": "docs/engineering/localized-repair-c271/loader-path-p12/BLOCKER.json",
+        "disposition": "Confirmed by independent review; technical phase stopped. No test outcome or expectation changed."
       }
     ],
     "observed_main": {
@@ -787,9 +820,39 @@
       "sha256": "55d46239b1950b032a7fa9496b37e49a638b0d8162497b74be9aa29b9c208fd8",
       "verification": "docs/engineering/localized-repair-c271/loader-path-p12/evidence/intake/AUDIT.json"
     },
-    "updated_at_utc": "2026-11-22T00:40:49.655411+00:00",
+    "updated_at_utc": "2026-11-22T00:48:24.666844+00:00",
     "early_recovery": "confirmed_saved_and_independently_accepted",
-    "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json"
+    "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json",
+    "blocker": {
+      "id": "P12-N57-POLICY-BINDING-001",
+      "status": "confirmed_unresolved",
+      "control": "N57_source_variant_unknown",
+      "positive": "P01_nonselecting_base",
+      "sole_context_difference": "variant_review.completeness",
+      "positive_value": "synthetic_declared_complete",
+      "negative_value": "unsupported",
+      "frozen_negative_expectation": {
+        "outcome": "refusal",
+        "code": "CHI-UNSUPPORTED",
+        "stage": "variant_review",
+        "rule_id": "LP-VARIANT-SEMANTICS"
+      },
+      "finding": "The accepted operational variant schema contains only schema, loader, source_review and suffixes. The sole distinguishing synthetic label is outside those inputs; all representable synthetic observations/bindings remain equal. Neither context supplies an actual operational plan or actual plan digest. The decision assigns completeness to independent source review but defines no machine-observable rejected-policy admission contract. Faithfully obtaining different production results for these frozen cases is therefore unspecified under the authorized surface.",
+      "source_evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/implementation/N57-SURFACE-QUESTION.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/review/ADJUDICATION.json"
+      ],
+      "director_decision": "Stop technical P12 at its declared concrete design/surface boundary. Preserve all frozen outcomes; introduce no production policy/flag, substituted input, adapter-authored refusal or modified expectation.",
+      "limits": "This is a static contract/control mapping finding, not a failing product test or evidence about any actual host loader."
+    },
+    "technical_phase_complete": false,
+    "session_stop_reached": true,
+    "product_implementation_changes": false,
+    "product_tests_run": false,
+    "frozen_97_controls": "not_run",
+    "existing_175_methods": "not_run",
+    "post_delivery_next_action": "In a fresh bounded phase, reconcile this P12 blocker handoff and its separate receipt with live GitHub, confirm new early recovery, then independently clarify the N57 review-to-policy boundary in a separately versioned decision. Specify a genuine source-bound admission predicate and matching portable controls, or explicitly classify completeness as an independent-review-only gate. Preserve the original97 expectations and all prior candidates/failures as history. Obtain exact independent design/control review and verified partial delivery. Stop before production implementation, H0/H1, runtime preparation, original-seven/full routine or integration.",
+    "next_phase_stop": "Stop after separately reviewed clarification/control freeze and saved partial handoff, or its first unresolved blocker; production implementation and actual host gates remain later phases."
   },
   "delivery": {
     "required": true,
@@ -2394,14 +2457,19 @@
       "phase": "P09",
       "reason": "H0-PYTHON-ELF-STRTAB-001: selected Python dynamic string table spans adjacent PT_LOAD segments; accepted inspector requires one containing segment. H0 approval remains unmet.",
       "disposition": "P10 narrow correction candidate independently reviewed; validation pending"
+    },
+    {
+      "phase": "P12",
+      "reason": "The inert selected Python image now passes string-table mapping, then returns CHI-UNSUPPORTED / Unreviewed loader token expansion for RPATH $ORIGIN/../lib.",
+      "disposition": "Original loader refusal remains; implementation stopped before changes at separate N57 contract/control gap."
     }
   ],
   "remaining_h0_constraint": {
     "id": "H0-PYTHON-RPATH-TOKEN-001",
-    "status": "implementation_prerequisite_in_progress_H0_unaccepted",
+    "status": "unchanged_H0_unaccepted_P12_design_control_blocker",
     "evidence": "docs/engineering/localized-repair-c271/elf-string-table-p10/evidence/INDEPENDENT-CANDIDATE-REPORT.json",
     "fact": "The inert selected Python image now passes string-table mapping, then returns CHI-UNSUPPORTED / Unreviewed loader token expansion for RPATH $ORIGIN/../lib.",
-    "scope": "P12 only implements the accepted finite rule. Actual host eligibility, loader variants and complete library inventory remain unestablished until a later H0 phase."
+    "scope": "P12 stopped before implementation at the confirmed N57 policy-admission contract blocker. Actual host eligibility, loader variants and complete library inventory remain unestablished until a later H0 phase."
   },
-  "blocked_reason": "The inert selected Python image now passes string-table mapping, then returns CHI-UNSUPPORTED / Unreviewed loader token expansion for RPATH $ORIGIN/../lib."
+  "blocked_reason": "P12-N57-POLICY-BINDING-001: The accepted operational variant schema contains only schema, loader, source_review and suffixes. The sole distinguishing synthetic label is outside those inputs; all representable synthetic observations/bindings remain equal. Neither context supplies an actual operational plan or actual plan digest. The decision assigns completeness to independent source review but defines no machine-observable rejected-policy admission contract. Faithfully obtaining different production results for these frozen cases is therefore unspecified under the authorized surface."
 }

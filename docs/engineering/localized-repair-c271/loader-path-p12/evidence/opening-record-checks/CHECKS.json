@@ -1,0 +1,111 @@
+{
+  "schema": "ontokin.c271.p12-record-checks/1",
+  "started_at_utc": "2026-11-22T00:41:11.109613+00:00",
+  "source_head": "79292cf456df6e0f49524fcb1fcfd1fd2f7b08ae",
+  "index_tree": "0c9c9404e04889898e7a33b75fa7d57d1d19eb5c",
+  "working_state": "A  docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/PHASE.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/READ-SET.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/README.md\nA  docs/engineering/localized-repair-c271/loader-path-p12/RECONCILIATION.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/early-review/AUDIT.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/intake/AUDIT.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/intake/PHASE-REVIEW.json\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/intake/REPORT.md\nA  docs/engineering/localized-repair-c271/loader-path-p12/evidence/intake/SOURCE-CHECKS.json\nM  docs/workflow/CURRENT.json\nA  docs/workflow/tasks/C271/P12-SESSION.md\nM  docs/workflow/tasks/C271/PLAN.md\nM  docs/workflow/tasks/C271/REQUIREMENTS.md\nM  docs/workflow/tasks/C271/task.json\n",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "checks": [
+    {
+      "name": "workflow",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check",
+        "--json"
+      ],
+      "returncode": 0,
+      "seconds": 0.09824564700011251,
+      "result": "passed",
+      "logs": [
+        {
+          "path": "workflow.stdout.txt",
+          "bytes": 185,
+          "sha256": "dbcaa1cd44885eb989c54d37bfd3c48daab47ee82fdb38bac1efe0aba902aa55"
+        },
+        {
+          "path": "workflow.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "name": "documentation",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "returncode": 0,
+      "seconds": 2.5034175589998995,
+      "result": "passed",
+      "logs": [
+        {
+          "path": "documentation.stdout.txt",
+          "bytes": 6609,
+          "sha256": "9e3e7e7e219cccf1ed85b7cd820de4c0224f2cdad98bc6a78b7cbfce252adad1"
+        },
+        {
+          "path": "documentation.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "name": "whitespace",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "seconds": 0.011344479999934265,
+      "result": "passed",
+      "logs": [
+        {
+          "path": "whitespace.stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "whitespace.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    },
+    {
+      "name": "staged-whitespace",
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "returncode": 0,
+      "seconds": 0.01362292200064985,
+      "result": "passed",
+      "logs": [
+        {
+          "path": "staged-whitespace.stdout.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "staged-whitespace.stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ]
+    }
+  ],
+  "completed_at_utc": "2026-11-22T00:41:13.815865+00:00",
+  "passed": true
+}
