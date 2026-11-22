@@ -1,0 +1,58 @@
+{
+  "schema": "ontokin.c271.p19-final-builder-review/1",
+  "auditor": "/root/recovery_audit",
+  "reviewed_at_utc": "2026-11-22T21:10:55.024384+00:00",
+  "verdict": "builder_acceptable_with_prefreeze_state_finalization",
+  "inspected_files": [
+    {
+      "path": "state/build_package.py",
+      "bytes": 14749,
+      "sha256": "1f8546eafbcfe36a0802a135fb067c0ac27db6fd474d72e925b4a5ed8ea70808",
+      "read_complete": true
+    },
+    {
+      "path": "state/PHASE.json",
+      "bytes": 14448,
+      "sha256": "94b2b2f71021ad309b8bf47d95bcceda7f94e4107d09cef3ac68d1aca7f77d2e",
+      "read_complete": true
+    },
+    {
+      "path": "state/OPERATIONS.json",
+      "bytes": 2188,
+      "sha256": "45f427d473581b1c6d33d174a5e467db31c912b3bbeeb471f12d335bfb280e68",
+      "read_complete": true
+    }
+  ],
+  "observed_strengths": [
+    "Exact source bytes and blob identities come from git show/rev-parse at frozen HEAD; lock file is now included.",
+    "Final P19 canonical evidence is selected, all six session evidence roots are retained, and prior failed evidence remains included.",
+    "Archive replacement is refused; member inventory and hashes are checked against a fresh extraction.",
+    "Manifest excludes itself; later review/save receipts remain external, preserving the freeze boundary.",
+    "Final prose inputs are required and absent inputs fail before archive creation."
+  ],
+  "findings": [
+    {
+      "id": "FBR-01",
+      "severity": "required_prefreeze_record_update",
+      "location": "state/PHASE.json workers; generated RECOVERY-STATUS.md",
+      "finding": "Current workers contain only identity, role and owned directory. Generated recovery prose says actual worker status is identified, but completed versus pending assignments are not explicit.",
+      "required_action": "Before freeze record current dispositions: operational and documentary reviews completed; final package reviewer pending/active; any current process/write state. Preserve current_unknown_operations separately.",
+      "scope": "Recovery-state clarity; no technical blocker."
+    },
+    {
+      "id": "FBR-02",
+      "severity": "provenance_robustness_note",
+      "location": "state/build_package.py final core evidence path selection",
+      "finding": "Final P19 path list is taken from mutable git ls-files index while bytes are taken from frozen revision. No actual omission is established.",
+      "suggested_action": "Select final evidence paths with git ls-tree -r --name-only at revision, or verify exact equality against that revision before freeze.",
+      "scope": "Avoid mixed index/revision inventory; a clean published checkout and equality check resolve the concern."
+    }
+  ],
+  "pending_expected_gate": "Core publication and exact readback are still pending. Final PHASE and prose must record the actual published source, verification, technical stop and final-save pending state before builder invocation.",
+  "execution_limits": [
+    "No recovered or observation script execution.",
+    "No source or index mutations.",
+    "No host-input inspection or Library operation.",
+    "Final ZIP not yet built; this is not final package acceptance."
+  ]
+}

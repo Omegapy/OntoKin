@@ -930,6 +930,18 @@
         "docs/engineering/localized-repair-c271/actual-input-p19/operational-review/OUTCOME-AUDIT.json"
       ],
       "scope": "Accepted first-blocker evidence only; no host reread or product execution; no H0 admission."
+    },
+    {
+      "name": "P19 independently verified saved partial handoff and exact prompt readbacks",
+      "command": "Independent final archive audit plus actual Library save/readback; no product rerun",
+      "result": "passed",
+      "required": true,
+      "scope": "P19 partial delivery only. Required actual-input readiness failed; H0 and R03-R05 remain unmet.",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/actual-input-p19/P19-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/actual-input-p19/delivery/PACKAGE-ACCEPTANCE.json",
+        "docs/engineering/localized-repair-c271/actual-input-p19/delivery/SAVED-ARTIFACTS.json"
+      ]
     }
   ],
   "completion": {
@@ -960,7 +972,8 @@
       "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json",
       "docs/engineering/localized-repair-c271/libc-implementation-p18/PHASE-OUTCOME.json",
       "docs/engineering/localized-repair-c271/libc-implementation-p18/review/REVIEW.json",
-      "docs/engineering/localized-repair-c271/libc-implementation-p18/P18-DELIVERY.json"
+      "docs/engineering/localized-repair-c271/libc-implementation-p18/P18-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/actual-input-p19/P19-DELIVERY.json"
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
@@ -1014,7 +1027,7 @@
       "tree": "6f32eb119773a0661590f0645eabeebbc6cce178"
     }
   },
-  "next_action": "Complete independent documentary review and required checks; conditionally publish and save verified final P19 partial handoff; stop. No further technical inspection in this chat.",
+  "next_action": "Stop this chat after terminal delivery confirmation. In a fresh chat, review bounded preparation of a separate verification environment satisfying the unchanged seven-package lock, including rpds-py 2026.5.1; preserve the shared runtime and rebind inputs before any complete H0 plan.",
   "session_phase": {
     "schema": "ontokin.c271.p19-phase/1",
     "task": "C271",
@@ -1058,9 +1071,9 @@
     },
     "parent_status": "blocked",
     "parent_complete": false,
-    "phase_complete": false,
+    "phase_complete": true,
     "technical_phase_complete": true,
-    "status": "technical_stop_independently_accepted_delivery_pending",
+    "status": "delivered_partial_parent_blocked",
     "early_save_confirmed": true,
     "pr": {
       "number": 274,
@@ -1083,28 +1096,34 @@
       {
         "id": "/root/recovery_audit",
         "role": "independent predecessor, early and final package audit",
-        "owned": "recovery_audit"
+        "owned": "recovery_audit",
+        "status": "completed_no_active_process",
+        "disposition": "Independent final ZIP audit accepted; actual saved-byte verification recorded separately"
       },
       {
         "id": "/root/ledger_review",
         "role": "full active ledger reads and independent documentary review",
-        "owned": "ledger_review"
+        "owned": "ledger_review",
+        "status": "completed_no_active_process",
+        "disposition": "Candidate002 and whitespace disposition accepted; may review delivery-only delta later"
       },
       {
         "id": "/root/operational_review",
         "role": "full requirements/plan/contracts and independent actual-input/plan review",
-        "owned": "operational_review"
+        "owned": "operational_review",
+        "status": "completed_no_active_process",
+        "disposition": "Accepted actual result; 41 checks, zero failures; no technical work left in this phase"
       }
     ],
     "capabilities": {
       "repository_read": "GitHub connector and authentic clone at observed refs",
-      "conditional_publication": "Git Data expected_sha with force=false available; not yet exercised this phase",
+      "conditional_publication": "Git Data non-force expected-SHA branch publication succeeded and exact fetched tree/112 file bindings verified",
       "native_push": "previously diagnosed unavailable; not retried",
       "terminal": "CPython 3.12.14 and local commands available",
       "subagents": "three actual fresh-context workers, inherited model",
       "zip": "available",
       "library_read": "actual P18 ZIP/receipt/audit materialized",
-      "library_save": "P19 early ZIP accepted independently and confirmed saved with byte-identical readback before technical work",
+      "library_save": "Early recovery and exact final ZIP/prompts confirmed saved in the existing OntoKin folder with byte-identical readbacks",
       "merge_deletion": "not selected"
     },
     "phase_table": [
@@ -1139,16 +1158,27 @@
       },
       {
         "gate": "P19-A04",
-        "state": "not_started",
-        "criterion": "documentary verification and conditional publication"
+        "state": "passed",
+        "criterion": "Independent documentary acceptance, published workflow/document checks, explicit authored-path whitespace pass plus accepted preserved-format disposition, and exact non-force branch publication",
+        "evidence": [
+          "state/publication/core-attempt002/READBACK.json",
+          "state/checks/published-core/workflow/RESULT.json",
+          "state/checks/published-core/documentation/RESULT.json",
+          "ledger_review/WHITESPACE-DISPOSITION.json"
+        ]
       },
       {
         "gate": "P19-A05",
-        "state": "not_started",
-        "criterion": "verified saved final ZIP and separate receipt"
+        "state": "passed",
+        "criterion": "Independently accepted immutable ZIP and matching prompts saved and byte-read-back; this separate receipt published on the retained branch",
+        "evidence": [
+          "docs/engineering/localized-repair-c271/actual-input-p19/P19-DELIVERY.json",
+          "docs/engineering/localized-repair-c271/actual-input-p19/delivery/PACKAGE-ACCEPTANCE.json",
+          "docs/engineering/localized-repair-c271/actual-input-p19/delivery/SAVED-ARTIFACTS.json"
+        ]
       }
     ],
-    "next_action": "Complete independent documentary review and required checks; conditionally publish and save verified final P19 partial handoff; stop. No further technical inspection in this chat.",
+    "next_action": "Stop this chat after terminal delivery confirmation. In a fresh chat, review bounded preparation of a separate verification environment satisfying the unchanged seven-package lock, including rpds-py 2026.5.1; preserve the shared runtime and rebind inputs before any complete H0 plan.",
     "startup_reconciliation": {
       "P18_delivery": "confirmed_complete_partial_delivery",
       "evidence": [
@@ -1326,6 +1356,52 @@
       "failures": 0,
       "path": "docs/engineering/localized-repair-c271/actual-input-p19/operational-review/OUTCOME-REVIEW.json",
       "sha256": "57a42235af02afe36a78cb718b8d3327591cf8f23c7297fe4191f98fd18a417f"
+    },
+    "documentary_review": {
+      "verdict": "accepted",
+      "reviewer": "/root/ledger_review",
+      "path": "docs/engineering/localized-repair-c271/actual-input-p19/documentary-review/DOCUMENTARY-REVIEW.json",
+      "sha256": "2a11cbedcfac4f208632847c04ad2d2fe039934ce5f0678f60cb3ae57b177a15"
+    },
+    "publication": {
+      "schema": "ontokin.c271.p19-publication-readback/1",
+      "at_utc": "2026-11-22T21:11:19.176010+00:00",
+      "label": "core-attempt002",
+      "repository": "Omegapy/OntoKin",
+      "branch": "work/c271-missing-import-digest-control",
+      "commit": "89c4f0019697241609822a5a50bee43a3d4b82bf",
+      "tree": "038bf9cf077813647ecf056f93cc86fc0a9528b5",
+      "parent": "2f791017c6559bfd47937b32b1862cfe98a81551",
+      "exact_changed_files": 112,
+      "all_manifest_bytes_modes_blobs_verified": true,
+      "fetched_remote_ref_equal": true,
+      "local_checkout_clean": true,
+      "force": false,
+      "main_mutated": false,
+      "status": "confirmed"
+    },
+    "active_child_commands": [],
+    "documentary_checks": {
+      "workflow": "passed at published core",
+      "documentation": "passed at published core",
+      "authored_whitespace": "passed explicit scope: 39 included paths; 68 retained evidence paths excluded",
+      "full_staged_whitespace": "failed return code 2; 12 diagnostics, eight paths, independently accepted preserved original formatting; no whole-stage pass claim",
+      "preservation": "45 checks passed",
+      "limits": "No product qualification, full routine or hosted CI pass"
+    },
+    "effective_when": "This delivery record is published on the retained branch after independent receipt-delta acceptance; no parent acceptance is implied.",
+    "final_delivery": {
+      "receipt": "docs/engineering/localized-repair-c271/actual-input-p19/P19-DELIVERY.json",
+      "zip_sha256": "a4b41f2768d7782fa8da5b04fb9db1ff9b9db4fe2de5b7d853773a5834212a46",
+      "zip_library_file_id": "libfile_fde3_f-5b9681f90a808191843b35644ad3e218_2ab2a24d43748191957f9bcc356b59de",
+      "source_revision": "89c4f0019697241609822a5a50bee43a3d4b82bf",
+      "source_tree": "038bf9cf077813647ecf056f93cc86fc0a9528b5",
+      "partial": true,
+      "parent_complete": false
+    },
+    "receipt_delta_review": {
+      "required_before_publication": true,
+      "path": "docs/engineering/localized-repair-c271/actual-input-p19/delivery/review/DELIVERY-REVIEW.json"
     }
   },
   "delivery": {
@@ -1333,10 +1409,14 @@
     "kind": "browser-session",
     "folder": "OntoKin",
     "partial": true,
-    "status": "early_recovery_confirmed_final_pending",
-    "phase_complete": false,
+    "status": "confirmed_saved_partial_delivery",
+    "phase_complete": true,
+    "receipt": "docs/engineering/localized-repair-c271/actual-input-p19/P19-DELIVERY.json",
     "early_receipt": "docs/engineering/localized-repair-c271/actual-input-p19/EARLY-RECOVERY-RECEIPT.json",
-    "future_final_receipt": "docs/engineering/localized-repair-c271/actual-input-p19/P19-DELIVERY.json"
+    "source_revision": "89c4f0019697241609822a5a50bee43a3d4b82bf",
+    "zip_library_file_id": "libfile_fde3_f-5b9681f90a808191843b35644ad3e218_2ab2a24d43748191957f9bcc356b59de",
+    "zip_sha256": "a4b41f2768d7782fa8da5b04fb9db1ff9b9db4fe2de5b7d853773a5834212a46",
+    "published_source_checks_and_terminal_confirmation": "Later exact publication checks and terminal receipt/PR markers; no product gate waiver"
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
@@ -4607,6 +4687,17 @@
         "docs/engineering/localized-repair-c271/actual-input-p19/history/PR274-BEFORE-P19.json",
         "docs/engineering/localized-repair-c271/actual-input-p19/history/ISSUE273-BEFORE-P19.json"
       ]
+    },
+    {
+      "at_utc": "2026-11-22T21:20:31.762169+00:00",
+      "phase": "C271-P19-actual-input-h0-review",
+      "source_revision": "89c4f0019697241609822a5a50bee43a3d4b82bf",
+      "source_pending_paths": [
+        "docs/workflow/tasks/C271/task.json#delivery",
+        "docs/engineering/localized-repair-c271/actual-input-p19/PHASE.json"
+      ],
+      "actual_evidence": "docs/engineering/localized-repair-c271/actual-input-p19/P19-DELIVERY.json",
+      "scope": "Matching P19 delivery only; original source-time records, failed observation and parent gates preserved"
     }
   ]
 }
