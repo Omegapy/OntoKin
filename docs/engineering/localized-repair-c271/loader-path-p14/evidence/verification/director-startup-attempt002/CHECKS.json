@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-22T03:38:58.430889+00:00",
+  "scope": "Director documentary files only; source under separate worker edit excluded",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "docs/"
+      ],
+      "exit_code": 0,
+      "passed": true
+    }
+  ]
+}

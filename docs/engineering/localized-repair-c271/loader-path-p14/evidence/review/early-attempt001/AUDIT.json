@@ -1,0 +1,194 @@
+{
+  "archive": {
+    "bytes": 3370213,
+    "path": "/workspace/scratch/29fbc446c948/deliverables/early-attempt001/OntoKin_C271_P14_Loader_Path_Early_Recovery_2026-11-21.zip",
+    "sha256": "962f122f141ec27ce979f7878e53c2a0b29356ed69127ac6fd6e93fcc799af72"
+  },
+  "checks": [
+    {
+      "detail": {
+        "bytes": 3370213,
+        "sha256": "962f122f141ec27ce979f7878e53c2a0b29356ed69127ac6fd6e93fcc799af72"
+      },
+      "id": "archive_identity",
+      "passed": true
+    },
+    {
+      "detail": {
+        "members": 297
+      },
+      "id": "unique_safe_inventory",
+      "passed": true
+    },
+    {
+      "detail": "Every outer member is an inert regular 0644 file; historical Git/fixture modes remain separate metadata.",
+      "id": "inert_regular_members",
+      "passed": true
+    },
+    {
+      "detail": "CRC and decompression checked for every member.",
+      "id": "zip_integrity",
+      "passed": true
+    },
+    {
+      "detail": {
+        "payloads": 296
+      },
+      "id": "manifest_inventory",
+      "passed": true
+    },
+    {
+      "detail": [],
+      "id": "all_payload_hashes",
+      "passed": true
+    },
+    {
+      "detail": [],
+      "id": "required_roots",
+      "passed": true
+    },
+    {
+      "detail": "Extracted every safe member to a new private directory and independently compared returned bytes. No payload executed.",
+      "id": "fresh_extraction",
+      "passed": true
+    },
+    {
+      "detail": {
+        "commits": {
+          "4023a878ccc9980726e3b56102b41faa51be0eb1": "2881aa68f3dbb44eb57d373fb2bfbd373ac375b8",
+          "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d": "9345594c980f121fae2f087b40e4c78adb8f7925"
+        },
+        "errors": [],
+        "snapshots": 239
+      },
+      "id": "exact_git_snapshots",
+      "passed": true
+    },
+    {
+      "detail": "Every repository/observed-main member occurs in the exact source manifest.",
+      "id": "all_snapshot_paths_bound",
+      "passed": true
+    },
+    {
+      "detail": {
+        "bytes": 1911,
+        "sha256": "fd28cea64098c72c75f559ddbefc21577ea2a9f36de1fad50e876dba959b3e6f"
+      },
+      "id": "matching_prompt_continue",
+      "passed": true
+    },
+    {
+      "detail": {
+        "bytes": 2137,
+        "sha256": "4a811c7537270f17e5c5ba5366b8f66a1de3e0bcd5b3ac8afddbf5bd5adb772f"
+      },
+      "id": "matching_prompt_recover",
+      "passed": true
+    },
+    {
+      "detail": {
+        "bytes": 4640,
+        "sha256": "ba3544eead5b85780d46cfaec3fd4046c42fc04ac7ea525fb5ff7d947e588fff"
+      },
+      "id": "phase_identity",
+      "passed": false
+    },
+    {
+      "detail": "All declared phase fields preserved in checkpoint.",
+      "id": "checkpoint_phase_consistency",
+      "passed": true
+    },
+    {
+      "detail": {
+        "errors": [],
+        "files": 43
+      },
+      "id": "recovery_file_map",
+      "passed": true
+    },
+    {
+      "detail": "Unique startup phase, failures, observations and completed worker evidence are present; derived read chunks have explicit exclusions.",
+      "id": "unique_startup_coverage",
+      "passed": true
+    },
+    {
+      "detail": "Unpublished phase file and tracked patch retained against declared source revision.",
+      "id": "unpublished_phase_recoverable",
+      "passed": true
+    },
+    {
+      "detail": "Included exact P13 archive and terminal receipt match the Git-pinned terminal confirmation.",
+      "id": "p13_predecessor_identities",
+      "passed": true
+    },
+    {
+      "detail": "P13 terminal confirmation resolves its prior frozen save_pending fields without closing parent C271.",
+      "id": "p13_delivery_reconciled",
+      "passed": true
+    },
+    {
+      "detail": "Receipt core equals the exact Git-pinned P13-DELIVERY.json.",
+      "id": "p13_core_receipt_binding",
+      "passed": true
+    },
+    {
+      "detail": "Historical dependency descriptors remain unchanged; full offline recovery is expressly not claimed.",
+      "id": "inherited_dependencies_exact",
+      "passed": true
+    },
+    {
+      "detail": "Explicit external diff and inert transport/recorded fixture-mode distinction retained.",
+      "id": "inherited_mode_and_external_boundary",
+      "passed": true
+    },
+    {
+      "detail": "FAIL: criteria do not supply completed/pending states, observed-main timestamp/evidence or current worker/operation status.",
+      "id": "checkpoint_required_status",
+      "passed": false
+    },
+    {
+      "detail": "FAIL: unqualified final-delivery-only instruction contradicts this early package continuation into implementation after confirmed save.",
+      "id": "next_action_unambiguous",
+      "passed": false
+    }
+  ],
+  "command": "python3 -I -B /workspace/scratch/29fbc446c948/p14-session/review/early-attempt001/review_early.py",
+  "created_at_utc": "2026-11-22T03:32:11.575003+00:00",
+  "environment": {
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+  },
+  "failed": 3,
+  "limits": [
+    "Only package/metadata/Git bytes were read; no product, payload, host or restored code executed.",
+    "This review does not claim current Library save or fresh remote readback; P13 reconciliation is supported by its exact Git-pinned confirmation.",
+    "No historical full offline closure is required or claimed.",
+    "No mutations outside assigned review directory; no Git/index mutation."
+  ],
+  "mandatory_findings": [
+    {
+      "finding": "Checkpoint omits explicit completed/incomplete gate states, observed-main observation time/evidence, and current worker/operation dispositions. HANDOFF and RECOVERY-STATUS falsely direct recovery to the checkpoint for those omitted facts.",
+      "id": "P14-EARLY-001",
+      "paths": [
+        "CHECKPOINT.json",
+        "HANDOFF.md",
+        "RECOVERY-STATUS.md"
+      ],
+      "required_change": "Add a concise explicit phase table, observed main SHA/tree/time with evidence reference, current worker states and known current unknown operations (explicitly none when known); distinguish historical unknowns. Preserve existing observations and source-time fields.",
+      "severity": "mandatory"
+    },
+    {
+      "finding": "The early-package first action says save/readback then implement, but the same file unconditionally says incomplete P14 delivery means delivery-only and stop. This makes early recovery stop before its selected implementation phase.",
+      "id": "P14-EARLY-002",
+      "paths": [
+        "NEXT-TASK.md"
+      ],
+      "required_change": "Apply delivery-only recovery only when the final phase boundary has been reached. State that an early package resumes the declared phase after the early save gate and live reconciliation.",
+      "severity": "mandatory"
+    }
+  ],
+  "passed": 21,
+  "reviewer": "/root/independent_review",
+  "schema": "ontokin.c271.p14-independent-early-package-review/1",
+  "verdict": "rejected_pending_recovery_instruction_corrections"
+}

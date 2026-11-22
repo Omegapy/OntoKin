@@ -347,3 +347,7 @@ The [source acceptance development record](engineering/reach-source-acceptance-v
 retains fresh integration and regression runs, failed source-export probes,
 legacy protocol-test corrections and the exact checkout recovery. Its source
 corpus mapping and execution outcomes are distinct from complete release acceptance.
+
+## Current C271 loader-path prerequisite
+
+[C271 P14](engineering/localized-repair-c271/loader-path-p14/README.md) records the bounded implementation of the independently reviewed Python origin-RPATH rule and its focused verification. Actual host qualification, the complete routine and integration remain separate gates.
