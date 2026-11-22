@@ -291,3 +291,8 @@ Stop after this reviewed decision/control boundary or the first concrete blocker
 The proposed new opt-in profile recognizes only the three bound x86-64 PLT tags as opaque dependency metadata after actual selected-role and exact libc/loader binding. Older routes, original flag masks, all guards, pins, limits and historical expectations remain unchanged. The per-case `image` descriptor is authoritative for future raw-reader controls; `actual_fixture_bytes` is the shared baseline reference, as the independent review explains.
 
 No implementation or host acceptance occurred. The retained libc flags `0x18` would fail the unchanged later flag predicate; P15 observed only the earlier tag refusal. A separate source-backed DT_FLAGS/DF_STATIC_TLS decision is the next fresh phase before implementation. This supersedes only the candidate's scheduling sentence and adopts no flag exception. Finish P16 publication and verified delivery, then stop. Parent R03–R05 remain not_done and P02 remains in_progress.
+
+<!-- C271-P16-DELIVERY -->
+## P16 confirmed partial delivery — November 22, 2026
+
+The immutable final handoff and both matching prompts are independently verified, saved in the existing OntoKin folder and byte-identical on returned-file checks. [Separate actual receipt](../../../engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json) binds their stable identities, versions, exact hashes, technical source and evidence limits. Receipt checkpoint publication/readback and terminal preservation finish this chat. Parent R03–R05 remain not_done, P02 in_progress, PR274 draft/open and issue273 open. After confirmed delivery, select only the recorded bounded flags decision in a fresh parent chat; no second phase begins here.

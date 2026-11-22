@@ -27,3 +27,7 @@ The [phase record](PHASE.json) records acceptance gates and actual delivery stat
 ## Exact evidence storage
 
 The complete frozen candidate and independent source evidence are preserved in verified archives, with readable records beside them. Follow [evidence materialization](EVIDENCE-MATERIALIZATION.md) before any later use. This keeps verbatim source and patch whitespace intact and preserves the failed documentary preflight separately.
+
+## Confirmed partial delivery
+
+The final ZIP and matching Continue/Recover prompts passed independent package review, saving and exact returned-byte verification in the existing OntoKin folder. The [actual delivery receipt](P16-DELIVERY.json) records their identities and limits. Its technical source is `6936405f0b9d35bb3748c4a8f57a3e2fb59e32c8`. Parent requirements and integration remain open. This chat ends after the separate receipt checkpoint and terminal evidence are confirmed.

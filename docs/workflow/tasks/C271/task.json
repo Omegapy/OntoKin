@@ -114,7 +114,8 @@
         "docs/engineering/localized-repair-c271/loader-path-p14/P14-TERMINAL-CONFIRMATION.json",
         "docs/engineering/localized-repair-c271/host-loader-p15/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/host-loader-p15/P15-DELIVERY.json",
-        "docs/engineering/localized-repair-c271/host-loader-p15/P15-TERMINAL-CONFIRMATION.json"
+        "docs/engineering/localized-repair-c271/host-loader-p15/P15-TERMINAL-CONFIRMATION.json",
+        "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json"
       ]
     }
   ],
@@ -826,6 +827,17 @@
         "docs/engineering/localized-repair-c271/libc-tags-p16/DOCUMENTARY-FAILURES.json"
       ],
       "limit": "Exact preflight tree 65815331ffd1de9052b1b1d0203b23822a28ee07 passed all four commands. First failure and raw bytes preserved. Final staged-tree review/checks and publication remain separate; no product tests."
+    },
+    {
+      "name": "P16 verified partial handoff and exact saved readback",
+      "command": "Independent frozen package audit, prepared saves, exact returned ZIP bytes, matching prompt-member bytes and folder/version metadata verification",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/libc-tags-p16/FINAL-READBACK-VERIFICATION.json"
+      ],
+      "limit": "P16 partial delivery only. Parent R03–R05 and P02 remain open. This receipt checkpoint requires its own conditional publication/readback; late evidence is preserved separately."
     }
   ],
   "completion": {
@@ -848,7 +860,8 @@
       "docs/engineering/localized-repair-c271/loader-path-p14/P14-TERMINAL-CONFIRMATION.json",
       "docs/engineering/localized-repair-c271/host-loader-p15/P15-DELIVERY.json",
       "docs/engineering/localized-repair-c271/host-loader-p15/P15-TERMINAL-CONFIRMATION.json",
-      "docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json"
+      "docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json",
+      "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json"
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
@@ -866,10 +879,12 @@
     "libc_tag_decision": {
       "adoption": "docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json",
       "candidate_manifest_sha256": "61b18ceb15d3ee05d3022c60941ccbbce9c3e08bac148c7750da9f6588091156",
-      "implementation_performed": false
+      "implementation_performed": false,
+      "commit": "6936405f0b9d35bb3748c4a8f57a3e2fb59e32c8",
+      "tree": "4dd88c2ee4b91d44fb18917df8691d9d04d1a15a"
     }
   },
-  "next_action": "Finish only P16 documentary publication and verified final ZIP/prompts/receipt delivery, then stop. Once separate delivery is confirmed, the next fresh-chat action is the bounded DT_FLAGS/DF_STATIC_TLS decision recorded in ADOPTION.json; no implementation is selected now.",
+  "next_action": "P16 ZIP and matching prompts have confirmed saves and exact readback. Publish and verify this separate receipt checkpoint, preserve terminal late evidence, then stop this chat. In a fresh parent chat, reconcile the receipt and GitHub before selecting the recorded bounded DT_FLAGS/DF_STATIC_TLS decision; no implementation is selected now.",
   "session_phase": {
     "schema": "ontokin.c271.p16-phase/1",
     "task": "C271",
@@ -878,13 +893,13 @@
     "declared_at_utc": "2026-11-22T16:37:11.431485+00:00",
     "branch": "work/c271-missing-import-digest-control",
     "starting_branch": "0d5a3053ced2805f4cc04b77f361bb07dbdc7999",
-    "source_revision": "0d5a3053ced2805f4cc04b77f361bb07dbdc7999",
-    "source_tree": "429b01242d98329e32dbe31be45e9f7c2f52aed4",
+    "source_revision": "6936405f0b9d35bb3748c4a8f57a3e2fb59e32c8",
+    "source_tree": "4dd88c2ee4b91d44fb18917df8691d9d04d1a15a",
     "observed_main": {
       "commit": "70ca7e68ff95df876f801137369d176fe5b2bab3",
       "tree": "7302cf8f36c45dd76112ad442e42e48379ac8367",
-      "observed_at_utc": "2026-11-22T16:37:11.431485+00:00",
-      "evidence": "recovery/state/main.json"
+      "observed_at_utc": "2026-11-22T17:33:22.948Z",
+      "evidence": "publication/core/LIVE-main.json"
     },
     "scope": "One source-backed compatibility decision and frozen inert control set for the P15 rejected libc dynamic tags, or a precise design blocker. No production implementation or host qualification.",
     "acceptance": [
@@ -919,7 +934,7 @@
     ],
     "parent_status": "blocked",
     "parent_complete": false,
-    "phase_complete": false,
+    "phase_complete": true,
     "requirements": {
       "R01": "done",
       "R02": "done",
@@ -959,32 +974,17 @@
       },
       {
         "gate": "P16-A04",
-        "state": "preflight_checks_passed_final_staged_review_and_publication_pending"
+        "state": "passed_exact_staged_checks_independent_review_conditional_publication_readback"
       },
       {
         "gate": "P16-A05",
-        "state": "final_delivery_pending"
+        "state": "passed_independent_package_audit_saved_zip_and_prompts_exact_readback_receipt_in_this_checkpoint"
       }
     ],
     "current_jobs": [
       {
-        "worker": "/root/tag_design",
-        "state": "candidate001 frozen; completed; no active operation",
-        "owned": "p16-session/tag-design/"
-      },
-      {
-        "worker": "/root/design_review",
-        "state": "formal source/design/control review complete; no active operation",
-        "owned": "p16-session/design-review/"
-      },
-      {
-        "worker": "/root/receipt_review",
-        "state": "prior audits and final preflight complete; pending bounded documentary and final-package assignments",
-        "owned": "p16-session/receipt-review/"
-      },
-      {
         "worker": "/root",
-        "state": "documentary verification, conditional publication and verified delivery only"
+        "state": "Receipt checkpoint publication/readback and terminal evidence saving remain at this record authorship; then stop. Earlier technical workers and final package auditor are complete."
       }
     ],
     "current_unknown_operations": [],
@@ -1007,11 +1007,12 @@
       "merge_deletion": "not selected"
     },
     "delivery": {
-      "status": "early_confirmed_final_pending",
+      "status": "saved_and_exact_readback_verified",
       "external_receipt_required": true,
-      "repository_receipt": "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json"
+      "repository_receipt": "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
+      "terminal_receipt_filename": "OntoKin_C271_P16_Delivery_Receipt_2026-11-22.json"
     },
-    "exact_next_action": "Finish only P16 documentary publication and verified final ZIP/prompts/receipt delivery, then stop. Once separate delivery is confirmed, the next fresh-chat action is the bounded DT_FLAGS/DF_STATIC_TLS decision recorded in ADOPTION.json; no implementation is selected now.",
+    "exact_next_action": "P16 ZIP and matching prompts have confirmed saves and exact readback. Publish and verify this separate receipt checkpoint, preserve terminal late evidence, then stop this chat. In a fresh parent chat, reconcile the receipt and GitHub before selecting the recorded bounded DT_FLAGS/DF_STATIC_TLS decision; no implementation is selected now.",
     "readset": "MAIN-READ-SET.json plus delegated receipt/tag/design review readsets",
     "main_branch_relation": "Main current C270 state is expected while C271 is unmerged. Licensing PR275 is on main only; future integration must reconcile it.",
     "early_recovery": {
@@ -1035,8 +1036,8 @@
       "confirmed_at_utc": "2026-11-22T16:42:51.012042+00:00",
       "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-37fd1e8b05448191834cbcbacb3a284c_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
     },
-    "status": "technical_boundary_complete_delivery_pending",
-    "updated_at_utc": "2026-11-22T17:24:43.165798+00:00",
+    "status": "complete_partial_delivery",
+    "updated_at_utc": "2026-11-22T17:44:17.758331+00:00",
     "technical_stop_at_utc": "2026-11-22T17:24:43.165798+00:00",
     "technical_stop": "Independent acceptance and separate Director adoption of the exact bounded tag-only design and frozen controls; no implementation.",
     "next_fresh_chat_action": "In a fresh parent chat, reconcile the confirmed P16 receipt and current GitHub, then select one bounded source-backed DT_FLAGS/DF_STATIC_TLS compatibility decision for the exact retained libc 0x18. Preserve P16 and older flags refusals, pins, limits and expectations; the decision may retain refusal. Stop before implementation, new H0/H1 or the first concrete design blocker.",
@@ -1046,7 +1047,13 @@
       "independent_review": "docs/engineering/localized-repair-c271/libc-tags-p16/review/candidate001/REVIEW.json",
       "learning": "docs/engineering/localized-repair-c271/libc-tags-p16/LEARNING-REVIEW.json",
       "documentary_preflight": "docs/engineering/localized-repair-c271/libc-tags-p16/documentary-checks/preflight002/CHECKS.json",
-      "failed_documentary_attempt": "docs/engineering/localized-repair-c271/libc-tags-p16/DOCUMENTARY-FAILURES.json"
+      "failed_documentary_attempt": "docs/engineering/localized-repair-c271/libc-tags-p16/DOCUMENTARY-FAILURES.json",
+      "documentary_final": "verification/core-final002/CHECKS.json",
+      "protected_source": "verification/CORE-FINAL002-PROTECTED.json",
+      "documentary_review": "receipt-review/core-final001/AUDIT.json",
+      "publication": "publication/core/READBACK.json",
+      "final_package_review": "receipt-review/final-package001/AUDIT.json",
+      "saved_readback": "library/FINAL-READBACK-VERIFICATION.json"
     },
     "technical_counts": {
       "author_integrity_assertions": 810,
@@ -1069,13 +1076,49 @@
       "source_identity_assertions": 46,
       "independent_static_assertions": 1493,
       "product_tests_executed": 0
-    }
+    },
+    "published_source": {
+      "commit": "6936405f0b9d35bb3748c4a8f57a3e2fb59e32c8",
+      "tree": "4dd88c2ee4b91d44fb18917df8691d9d04d1a15a",
+      "parent": "f3f84d4cb58bcce318f2bc92135e83000e9db466",
+      "conditional_nonforce": true,
+      "exact_remote_readback": true,
+      "worktree_clean": true,
+      "readback": "publication/core/READBACK.json"
+    },
+    "evidence_reference_base": "Session paths are relative to recovery/session in the handoff ZIP unless explicitly repository-relative.",
+    "hosted_status": {
+      "commit": "6936405f0b9d35bb3748c4a8f57a3e2fb59e32c8",
+      "combined_status": "pending",
+      "status_count": 0,
+      "workflow_runs": 0,
+      "CI_pass_claimed": false,
+      "evidence": [
+        "publication/core/FREEZE-status.json",
+        "publication/core/FREEZE-runs.json"
+      ]
+    },
+    "final_package": {
+      "file_name": "OntoKin_C271_P16_Libc_Tag_Decision_Handoff_2026-11-22.zip",
+      "bytes": 11165382,
+      "sha256": "95bc1eacb755bb83d0908b5ec20fe68b4860d05a890babf7bb43aa4c94092ee8",
+      "source_revision": "6936405f0b9d35bb3748c4a8f57a3e2fb59e32c8",
+      "library_file_id": "libfile_fde3_f-f9ec9ea47be081918e2f1ce73223e7c8_2ab2a24d43748191957f9bcc356b59de"
+    },
+    "source_time_limit": "This source-time receipt records actual saved artifacts. Reconcile its actual commit/ref identity and later terminal receipt before retrying a publication or save."
   },
   "delivery": {
-    "status": "technical_boundary_complete_final_delivery_pending",
+    "required": true,
+    "kind": "verified partial phase handoff",
+    "status": "saved_and_exact_readback_verified",
+    "folder": "/OntoKin",
+    "partial": true,
+    "phase_complete": true,
+    "parent_complete": false,
     "phase": "C271-P16-libc-dynamic-tag-compatibility-decision",
+    "early_receipt": "docs/engineering/localized-repair-c271/libc-tags-p16/EARLY-RECOVERY-RECEIPT.json",
     "receipt": "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
-    "parent_complete": false
+    "terminal_receipt_filename": "OntoKin_C271_P16_Delivery_Receipt_2026-11-22.json"
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",

@@ -1,6 +1,6 @@
 {
   "schema": "ontokin.c271.p16-phase-outcome/1",
-  "recorded_at_utc": "2026-11-22T17:24:43.165798+00:00",
+  "recorded_at_utc": "2026-11-22T17:35:12.739895+00:00",
   "technical_status": "reviewed_design_adopted",
   "candidate": {
     "bytes": 36725,
@@ -42,13 +42,25 @@
   },
   "next_fresh_chat_action": "In a fresh parent chat, reconcile the confirmed P16 receipt and current GitHub, then select one bounded source-backed DT_FLAGS/DF_STATIC_TLS compatibility decision for the exact retained libc 0x18. Preserve P16 and older flags refusals, pins, limits and expectations; the decision may retain refusal. Stop before implementation, new H0/H1 or the first concrete design blocker.",
   "documentary_verification": {
-    "preflight_passed": true,
-    "checks": "docs/engineering/localized-repair-c271/libc-tags-p16/documentary-checks/preflight002/CHECKS.json",
-    "source_tree": "65815331ffd1de9052b1b1d0203b23822a28ee07",
-    "final_staged_checks": "pending"
+    "passed": true,
+    "checks": "verification/core-final002/CHECKS.json",
+    "tree": "4dd88c2ee4b91d44fb18917df8691d9d04d1a15a",
+    "independent_review": "receipt-review/core-final001/AUDIT.json"
   },
-  "publication": "pending",
-  "final_delivery": "pending",
+  "publication": {
+    "commit": "6936405f0b9d35bb3748c4a8f57a3e2fb59e32c8",
+    "tree": "4dd88c2ee4b91d44fb18917df8691d9d04d1a15a",
+    "parent": "f3f84d4cb58bcce318f2bc92135e83000e9db466",
+    "conditional_nonforce": true,
+    "exact_remote_readback": true,
+    "worktree_clean": true,
+    "readback": "publication/core/READBACK.json"
+  },
+  "final_delivery": {
+    "status": "saved_and_exact_readback_verified",
+    "receipt": "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
+    "zip": "libfile_fde3_f-f9ec9ea47be081918e2f1ce73223e7c8_2ab2a24d43748191957f9bcc356b59de"
+  },
   "parent_status": "blocked",
   "R03_R04_R05": "not_done",
   "P02": "in_progress",
@@ -57,5 +69,7 @@
     "PLT metadata recognition does not validate executable PLT/GOT/relocation safety or observe runtime rewriting.",
     "Synthetic primitive positives do not establish real-input or plan acceptance.",
     "All inherited runtime, full-routine and parent requirements remain pending."
-  ]
+  ],
+  "phase_complete": true,
+  "parent_complete": false
 }
