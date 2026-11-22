@@ -49,9 +49,36 @@
   "original_control_count": 97,
   "future_runtime_obligations": 96,
   "external_review_obligations": 1,
-  "required_checks": "pending_recorded_documentary_and_preservation_gates",
-  "publication": "pending_conditional_retained_branch_checkpoint",
-  "delivery": "pending_verified_partial_handoff_and_separate_receipt",
+  "required_checks": {
+    "checked_index_tree": "fe1987dc094d2efea5497b3a410f55c9be942e21",
+    "published_source_tree": "fe1987dc094d2efea5497b3a410f55c9be942e21",
+    "identical": true,
+    "documentary_checks_passed": 4,
+    "protected_files_unchanged": 942,
+    "published_changed_files_verified": 36,
+    "check_report": {
+      "path": "/workspace/scratch/82b6b514e749/verification/prepublication-final/CHECKS.json",
+      "bytes": 7425,
+      "sha256": "1dbf445394b54b03c212ad339e55c7a7b77cb5e83b759f6e8d41bbc96c1249e2"
+    },
+    "publication_readback": {
+      "path": "/workspace/scratch/82b6b514e749/publication/source-checkpoint/READBACK.json",
+      "bytes": 9734,
+      "sha256": "e38c8042e0ae13befc3455e8c14c43641d6f0021bb581bbee3316ed508f862b6"
+    }
+  },
+  "publication": {
+    "source_commit": "23476c3e6ee72962b40d868c48be5d7c34f06b47",
+    "source_tree": "fe1987dc094d2efea5497b3a410f55c9be942e21",
+    "conditional_nonforce": true,
+    "exact_readback": true
+  },
+  "delivery": {
+    "status": "core_saved_terminal_confirmation_pending",
+    "receipt": "docs/engineering/localized-repair-c271/review-boundary-p13/P13-DELIVERY.json",
+    "core_saved_and_readback_verified": true,
+    "terminal_receipt_status": "not_yet_saved_at_this_source_snapshot"
+  },
   "parent_status": "blocked",
   "requirements": {
     "R01": "done",
@@ -62,7 +89,7 @@
   },
   "main_lease_held": false,
   "integration": false,
-  "next_action": "Finish documentary/preservation checks, conditionally publish the reviewed P13 checkpoint, verify and save final partial ZIP/prompts plus separate receipt, then stop.",
+  "next_action": "Verify and conditionally publish the core delivery record; save/read back the separate terminal receipt, confirm exact final GitHub state, then stop.",
   "after_delivery": "In a fresh chat, reconcile the exact P13 handoff and separate terminal confirmation, read ADOPTION.json and the accepted mapping, then select one bounded implementation phase. Actual source-completeness review, H0/H1, original-seven/full routine and integration retain separate later gates.",
   "historical_unknowns": [
     "C270 broad-driver completion remains unknown",

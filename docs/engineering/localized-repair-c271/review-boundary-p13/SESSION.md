@@ -21,3 +21,7 @@ Root owns canonical records, Git/index, publication and delivery. Real independe
 This phase changes design and documentary evidence only. Original97 controls and all production/existing-test/product-tool bytes remain protected. Product tests, H0/H1, runtime preparation, Node/ldd, full routine, integration and parent closure are later gates. C271 stays blocked; R03-R05 remain not_done.
 
 Stop after independently accepted design/control clarification and verified partial delivery, or the first concrete unresolved design/authority blocker. Do not begin a second phase in this chat. The read-only difflib completion observation and earlier C270/global-process unknowns remain explicitly unresolved; none is a product pass.
+
+## Final delivery at core-record preparation
+
+The source checkpoint and exact saved ZIP/prompt bytes are confirmed in P13-DELIVERY.json. Its final package audit passed 69 static groups. The independent package report is preserved in evidence/FINAL-PACKAGE-REVIEW.md. The separate terminal receipt and matching GitHub confirmation remain pending; no second development phase is selected.

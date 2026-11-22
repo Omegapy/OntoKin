@@ -40,7 +40,7 @@
     "Root owns canonical state, Git/index, publication and saving; three real workers own disjoint design/review/package files; no nested fanout.",
     "Use conditional nonforce GitHub ref updates; do not repeat previously diagnosed unavailable native push."
   ],
-  "status": "design_accepted_delivery_pending",
+  "status": "delivery_confirmation_pending",
   "early_save_confirmed": true,
   "parent_status": "blocked",
   "parent_complete": false,
@@ -68,11 +68,11 @@
     "state": "open"
   },
   "stop": "After independently reviewed design/control clarification and verified partial delivery, or first concrete unresolved design/authority blocker. No second phase.",
-  "exact_next_action": "Finish documentary/preservation checks, conditionally publish the reviewed P13 checkpoint, verify and save final partial ZIP/prompts plus separate receipt, then stop.",
+  "exact_next_action": "Verify and conditionally publish the core delivery record; save/read back the separate terminal receipt, confirm exact final GitHub state, then stop.",
   "workers": {
     "/root": "Director: startup/canonical records/publication/delivery",
-    "/root/intake_review": "Accepted exact design; independently reviews Director records and final handoff.",
-    "/root/package_engineer": "Final package preparation complete; awaiting verified source and freeze authorization.",
+    "/root/intake_review": "Final package independently accepted; bounded core delivery-record review pending.",
+    "/root/package_engineer": "Terminal recovery recorder prepared; awaiting actual terminal Git checkpoint and freeze release.",
     "/root/design_author": "Completed frozen candidate001; no active author process or unknown write."
   },
   "current_unknown_operations": [
@@ -138,6 +138,12 @@
         "sha256": "1c40982b8e9fafc2dc3aad01450472349de65ecb52e9d7d6bde1f761e3e6ed96",
         "source": "Exact pre-correction working bytes and staged pre-workflow-correction bytes; retained as final handoff recovery evidence."
       }
+    },
+    {
+      "kind": "local_saved_file_record_schema_assumption",
+      "error": "KeyError: summary",
+      "disposition": "Inspected actual final audit status/count schema; corrected recorder and verified existing saved files. No Library write was retried.",
+      "evidence": "delivery/VERIFY-ATTEMPT001-ERROR.json"
     }
   ],
   "observed_main": {
@@ -160,7 +166,10 @@
     "library_read_observed": true,
     "library_save_tools_available": true,
     "library_save_observed": true,
-    "library_exact_readback_observed": true
+    "library_exact_readback_observed": true,
+    "git_data_write_observed": true,
+    "expected_head_conditional_ref_update_observed": true,
+    "pr_issue_checkpoint_write_and_readback_observed": true
   },
   "environment": {
     "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
@@ -182,11 +191,11 @@
     },
     {
       "gate": "P13-A04",
-      "state": "documentary_checks_and_publication_pending"
+      "state": "passed_documentary_preservation_conditional_publication_and_exact_readback"
     },
     {
       "gate": "P13-A05",
-      "state": "final_verified_delivery_pending"
+      "state": "final_archive_and_prompts_independently_verified_saved_and_readback_confirmed_terminal_receipt_pending"
     }
   ],
   "early_recovery": {
@@ -229,7 +238,7 @@
     "metadata_operation_note": "Returned transfer metadata was successfully applied to its exact readback workspace_path. Applying that same transfer object to the separate source path was rejected with workspace_path mismatch; no bytes changed and no retry or metadata rewrite was performed."
   },
   "early_receipt": "docs/engineering/localized-repair-c271/review-boundary-p13/EARLY-RECOVERY-RECEIPT.json",
-  "updated_at_utc": "2026-11-22T01:40:22.060609+00:00",
+  "updated_at_utc": "2026-11-22T02:01:59.887970+00:00",
   "technical_phase_complete": true,
   "session_stop_reached": true,
   "phase_complete": false,
@@ -258,5 +267,18 @@
     "zip_creation_verification": true,
     "library_read_observed": true,
     "library_save_tools_available_not_yet_exercised": true
+  },
+  "source_commit": "23476c3e6ee72962b40d868c48be5d7c34f06b47",
+  "source_tree": "fe1987dc094d2efea5497b3a410f55c9be942e21",
+  "published_source_checkpoint": "23476c3e6ee72962b40d868c48be5d7c34f06b47",
+  "published_source_readback": "publication/source-checkpoint/READBACK.json",
+  "repository_snapshot_pending_fields": "The exact Git-source PHASE/OUTCOME snapshot predates publication/readback and final save. This package checkpoint and later exact receipts supersede only matching source-time pending check/publication/delivery fields; frozen design bytes remain unchanged.",
+  "delivery": {
+    "status": "core_saved_terminal_confirmation_pending",
+    "core_saved_and_readback_verified": true,
+    "receipt": "docs/engineering/localized-repair-c271/review-boundary-p13/P13-DELIVERY.json",
+    "archive_sha256": "0b0cfce94ebd451667813a83a0264f94075efb3c58a6775fe3b2f9343aff2a23",
+    "terminal_receipt_filename": "OntoKin_C271_P13_Delivery_Receipt_2026-11-21.json",
+    "terminal_receipt_status": "not_yet_saved_at_this_source_snapshot"
   }
 }
