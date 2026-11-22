@@ -78,6 +78,15 @@ PREFIX = "ontokin.current-host-readback-"
 VERSION = "/0.1.0"
 CONTRACT = "ontokin.current-host-readback/0.1.0"
 PLAN_SCHEMA = PREFIX + "inspection-plan" + VERSION
+ORIGIN_PLAN_SCHEMA = PREFIX + "inspection-plan/0.1.1"
+CLOSURE_PROFILE = "linux-glibc-declared-closure-v1"
+ORIGIN_PROFILE = "linux-glibc-declared-python-origin-rpath-v1"
+ORIGIN_SCHEMA = PREFIX + "python-origin-rpath" + VERSION
+ORIGIN_VARIANT_SCHEMA = PREFIX + "origin-variants" + VERSION
+ORIGIN_RPATH = "$ORIGIN/../lib"
+PYTHON = {"sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+          "size_bytes": 30894944, "mode": "0o755"}
+ORIGIN_KEYS = "schema subject invocation raw_rpath origin expanded_rpath kernel_origin variant_review variants needed_names".split()
 ENVIRONMENT = {"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8", "LC_ALL": "C.UTF-8",
                "TZ": "UTC", "UV_THREADPOOL_SIZE": "2"}
 NODE = {"sha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
@@ -358,7 +367,7 @@ def _strings(value, category, *, nonempty=False):
 
 def _plan_shape(plan):
     _keys(plan, PLAN_KEYS)
-    _require(plan["schema"] == PLAN_SCHEMA and plan["contract"] == CONTRACT, "PLAN", "Unsupported executable inspection plan")
+    _require(plan["schema"] in (PLAN_SCHEMA, ORIGIN_PLAN_SCHEMA) and plan["contract"] == CONTRACT, "PLAN", "Unsupported executable inspection plan")
     _require(plan["environment"] == ENVIRONMENT and _canonical(plan["limits"]) == _canonical(LIMITS), "PLAN", "Fixed environment or limits differ")
     _keys(plan["source"], "root commit tree inventory".split())
     root = _absolute(plan["source"]["root"], "SOURCE")
@@ -392,8 +401,15 @@ def _plan_shape(plan):
     for key in ("inventory", "install_receipt"):
         _binding_shape(plan["dependencies"][key], "RUNTIME", descriptor=True)
     _keys(plan["host_static"], "platform files aliases roles resolution path_guards".split(), "LOADER")
-    _keys(plan["host_static"]["resolution"], "profile images needed_edges loader_inputs search_directories inspector_commands ignored_kernel_rows rationale".split(), "LOADER")
-    _require(plan["host_static"]["resolution"]["profile"] == "linux-glibc-declared-closure-v1", "UNSUPPORTED", "Unsupported closure profile")
+    resolution = plan["host_static"]["resolution"]
+    resolution_keys = "profile images needed_edges loader_inputs search_directories inspector_commands ignored_kernel_rows rationale".split()
+    if plan["schema"] == PLAN_SCHEMA and (type(resolution) is not dict or resolution.get("profile") != ORIGIN_PROFILE):
+        # Preserve the old route's exact closed-key/category/reason ordering.
+        _keys(resolution, resolution_keys, "LOADER")
+        _require(resolution["profile"] == CLOSURE_PROFILE, "UNSUPPORTED", "Unsupported closure profile")
+    else:
+        _select_origin_profile(plan["schema"], resolution)
+        _origin_keys(resolution, resolution_keys + ["origin_rpath"])
     _keys(plan["evidence"], "parent attempt_root ancestor_identities outputs outer_capture".split(), "PATH")
     evidence = plan["evidence"]
     parent, attempt = (_absolute(evidence[key], "PATH") for key in ("parent", "attempt_root"))
@@ -620,6 +636,413 @@ def _check_inspector_script(path, interpreter, *, check=lambda: None):
              "INSPECTOR", "ldd must have the exact direct bound shebang")
 
 
+def _origin_require(condition, category, stage, rule_id, reason, *, cause=None):
+    _require(condition, category, reason, cause=cause,
+             details={"stage": stage, "rule_id": rule_id})
+
+
+def _origin_keys(value, keys):
+    _origin_require(type(value) is dict and set(value) == set(keys), "PLAN",
+                    "profile_selection", "LP-CLOSED-SHAPE", "Missing or unknown origin-profile keys")
+
+
+def _check_plan_digest(actual_digest, expected_digest):
+    """Shared authentication predicate; the public wrapper keeps its old error."""
+    _origin_require(actual_digest == expected_digest, "PLAN", "plan_authentication",
+                    "LP-EXTERNAL-DIGEST", "Plan differs from independently supplied expected digest")
+
+
+def _select_origin_profile(schema, resolution):
+    """Select a closed input version, never an approval or completeness verdict."""
+    _origin_require(type(resolution) is dict, "PLAN", "profile_selection",
+                    "LP-CLOSED-SHAPE", "Missing resolution object")
+    profile = resolution.get("profile")
+    if schema == PLAN_SCHEMA and profile == CLOSURE_PROFILE:
+        _origin_require("origin_rpath" not in resolution, "PLAN", "profile_selection",
+                        "LP-CLOSED-SHAPE", "The old profile has no origin rule")
+        return None
+    _origin_require(schema == ORIGIN_PLAN_SCHEMA and profile == ORIGIN_PROFILE,
+                    "PLAN", "profile_selection", "LP-SCHEMA-PROFILE", "Unsupported inspection schema/profile pair")
+    origin = resolution.get("origin_rpath")
+    _origin_keys(origin, ORIGIN_KEYS)
+    _origin_require(origin["schema"] == ORIGIN_SCHEMA, "PLAN", "profile_selection",
+                    "LP-CLOSED-SHAPE", "Unsupported origin object schema")
+    for key in ("subject", "variant_review"):
+        _origin_keys(origin[key], ("path", "sha256", "size_bytes", "mode"))
+        value = origin[key]
+        _origin_require(type(value["path"]) is str and type(value["sha256"]) is str
+                        and re.fullmatch(r"[0-9a-f]{64}", value["sha256"]) is not None
+                        and type(value["size_bytes"]) is int and value["size_bytes"] >= 0
+                        and type(value["mode"]) is str and re.fullmatch(r"0o[0-7]{3,4}", value["mode"]) is not None,
+                        "PLAN", "profile_selection", "LP-CLOSED-SHAPE", "Invalid origin descriptor")
+    _origin_keys(origin["kernel_origin"], ("exe_path", "at_secure"))
+    _origin_require(type(origin["kernel_origin"]["exe_path"]) is str
+                    and type(origin["kernel_origin"]["at_secure"]) is int
+                    and origin["kernel_origin"]["at_secure"] == 0
+                    and type(origin["invocation"]) is str and type(origin["origin"]) is str
+                    and type(origin["raw_rpath"]) is list and type(origin["expanded_rpath"]) is list
+                    and len(origin["expanded_rpath"]) == 1 and type(origin["expanded_rpath"][0]) is str
+                    and type(origin["variants"]) is list and type(origin["needed_names"]) is list,
+                    "PLAN", "profile_selection", "LP-CLOSED-SHAPE", "Invalid origin field type or kernel expectation")
+    return origin
+
+
+def _check_origin_bounds(origin, suffixes=None, images=None, *, check=lambda: None):
+    """Check collection ceilings before traversing their contents."""
+    _origin_require(type(origin["needed_names"]) is list and len(origin["needed_names"]) <= 4096
+                    and type(origin["variants"]) is list and len(origin["variants"]) <= 128,
+                    "UNSUPPORTED", "bounds", "LP-BOUND", "Origin name or variant allowance exceeded")
+    if suffixes is not None:
+        _origin_require(type(suffixes) is list and len(suffixes) <= 128,
+                        "UNSUPPORTED", "bounds", "LP-BOUND", "Origin suffix allowance exceeded")
+    present = 0
+    for row in origin["variants"]:
+        check()
+        if type(row) is dict and row.get("state") == "directory":
+            present += 1
+    _origin_require(present * len(origin["needed_names"]) <= 32768,
+                    "UNSUPPORTED", "bounds", "LP-BOUND", "Origin candidate-check allowance exceeded")
+    if images is not None:
+        _origin_require(isinstance(images, Mapping) and len(images) <= 512,
+                        "UNSUPPORTED", "bounds", "LP-BOUND", "Origin image allowance exceeded")
+        names = set()
+        for metadata in images.values():
+            check()
+            needed = metadata.get("needed") if isinstance(metadata, Mapping) else None
+            _origin_require(type(needed) is list and len(needed) <= 256,
+                            "UNSUPPORTED", "bounds", "LP-BOUND", "Origin image needed-name allowance exceeded")
+            for name in needed:
+                check()
+                _origin_require(type(name) is str, "LOADER", "name_union", "LP-NAMES", "Invalid needed name")
+                names.add(name)
+                _origin_require(len(names) <= 4096, "UNSUPPORTED", "bounds", "LP-BOUND", "Origin union allowance exceeded")
+        _origin_require(present * len(names) <= 32768, "UNSUPPORTED", "bounds", "LP-BOUND",
+                        "Origin candidate-check allowance exceeded")
+
+
+def _check_origin_subject_binding(subject, author_descriptor, runtime_executable, resolved_python):
+    _origin_require(subject == author_descriptor == runtime_executable == resolved_python,
+                    "INSPECTOR", "subject_binding", "LP-SUBJECT-BINDING", "Origin subject descriptors differ")
+    _origin_require(_binding(subject) == PYTHON, "INSPECTOR", "subject_binding",
+                    "LP-SELECTED-PIN", "Origin subject is not the selected Python image")
+
+
+def _check_origin_role(subject_path, python_path, forbidden_paths, invocation):
+    _origin_require(subject_path == python_path and subject_path not in forbidden_paths,
+                    "UNSUPPORTED", "subject_context", "LP-ROLE", "Only the selected author Python may carry the token")
+    _origin_require(invocation == "linux-direct-main", "UNSUPPORTED", "subject_context",
+                    "LP-INVOCATION", "Origin support requires direct main-program invocation")
+
+
+def _prepare_origin_policy(plan, runtime, *, check=lambda: None):
+    origin = _select_origin_profile(plan["schema"], plan["host_static"]["resolution"])
+    if origin is None:
+        return None
+    _check_origin_bounds(origin, check=check)
+    host, subject = plan["host_static"], origin["subject"]
+    python_path = host["roles"]["python"]
+    alias = host["aliases"].get(python_path, {})
+    resolved = alias.get("resolved_path")
+    descriptor = {"path": resolved, **host["files"].get(resolved, {})}
+    _check_origin_subject_binding(subject, plan["author"]["python_descriptor"], runtime["executable"], descriptor)
+    forbidden = [host["roles"][key] for key in ("node", "ldd", "inspector_interpreter", "elf_interpreter")]
+    forbidden += [plan["author"]["git_descriptor"]["path"], *runtime["extension_files"], runtime["interpreter"]]
+    forbidden += [host["aliases"].get(name, {}).get("resolved_path") for name in forbidden]
+    _check_origin_role(subject["path"], python_path, forbidden, origin["invocation"])
+    _origin_require(alias == {"resolved_path": subject["path"], "symlink": False, "link_target": None},
+                    "PATH", "origin_binding", "LP-ALIAS", "Origin subject is not a canonical direct file")
+    _bound(subject["path"], _binding(subject), category="INSPECTOR", check=check)
+    return _freeze(origin)
+
+
+def _origin_path(text, *, normalized=True):
+    _origin_require(type(text) is str and text.isascii(), "UNSUPPORTED", "new_path_policy",
+                    "LP-PATH-ASCII", "Origin-rule paths must be ASCII")
+    path = PurePosixPath(text)
+    _origin_require(len(text) <= 4096 and len(path.parts) <= 128,
+                    "UNSUPPORTED", "bounds", "LP-BOUND", "Origin path byte/component allowance exceeded")
+    _origin_require(text and path.is_absolute() and not text.startswith("//") and "\0" not in text
+                    and "$" not in text and not any(char.isspace() for char in text)
+                    and str(path) == text and (not normalized or ".." not in path.parts),
+                    "PATH", "origin_binding", "LP-ORIGIN", "Origin path is not a normalized absolute name")
+    return path
+
+
+def _origin_checkpoint(check, stage):
+    """Named bounded-work checkpoints; the callback does not select policy."""
+    check()
+
+
+def _origin_subject_observation(path):
+    info = Path(path).lstat()
+    return {"path": str(path), "kind": "file" if stat.S_ISREG(info.st_mode) else "symlink" if stat.S_ISLNK(info.st_mode) else "special",
+            "device": info.st_dev, "inode": info.st_ino, "mode": oct(stat.S_IMODE(info.st_mode)),
+            "nlink": info.st_nlink, "identity": list(_identity(info))}
+
+
+def _origin_absent(path):
+    return not os.path.lexists(path)
+
+
+def _read_kernel_origin(*, check=lambda: None):
+    """Read only bounded procfs witnesses; never load native code or a child."""
+    fd = None
+    try:
+        check()
+        executable = os.readlink("/proc/self/exe")
+        _origin_require(len(os.fsencode(executable)) <= 4096, "INSPECTOR", "kernel_origin",
+                        "LP-KERNEL-EXE", "Kernel executable pathname is excessive")
+        identity = list(_identity(os.stat("/proc/self/exe")))
+        check()
+        fd = os.open("/proc/self/auxv", os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)
+        chunks, length = [], 0
+        while length <= 4096:
+            check()
+            block = os.read(fd, min(256, 4097 - length))
+            if not block:
+                break
+            chunks.append(block)
+            length += len(block)
+        check()
+        return {"exe_path": executable, "identity": identity, "auxv": b"".join(chunks)}
+    except OSError as exc:
+        raise HostInspectionError("INSPECTOR", "Kernel executable/auxiliary witness is unavailable", cause=exc,
+                                  details={"stage": "kernel_origin", "rule_id": "LP-KERNEL-EXE"}) from exc
+    finally:
+        if fd is not None:
+            os.close(fd)
+
+
+def _origin_auxv(raw, *, check=lambda: None):
+    _origin_require(type(raw) is bytes and len(raw) <= 256 * 16,
+                    "UNSUPPORTED", "bounds", "LP-BOUND", "Auxiliary-vector pair allowance exceeded")
+    _origin_require(raw and len(raw) % 16 == 0, "INSPECTOR", "kernel_origin", "LP-AUXV", "Malformed auxiliary vector")
+    secure, ended = [], False
+    for offset in range(0, len(raw), 16):
+        check()
+        kind, value = struct.unpack_from("<QQ", raw, offset)
+        if kind == 0:
+            _origin_require(value == 0 and offset + 16 == len(raw), "INSPECTOR", "kernel_origin",
+                            "LP-AUXV", "Auxiliary-vector terminator is incomplete or ambiguous")
+            ended = True
+            break
+        if kind == 23:
+            secure.append(value)
+    _origin_require(ended and len(secure) == 1, "INSPECTOR", "kernel_origin", "LP-AUXV",
+                    "Auxiliary vector must contain one AT_SECURE and a complete AT_NULL")
+    _origin_require(secure[0] == 0, "UNSUPPORTED", "kernel_origin", "LP-SECURE", "Secure execution is unsupported")
+    check()
+    return 0
+
+
+def _check_kernel_origin(origin, subject, *, check=lambda: None):
+    try:
+        witness = _read_kernel_origin(check=check)
+    except OSError as exc:
+        raise HostInspectionError("INSPECTOR", "Kernel executable/auxiliary witness is unavailable", cause=exc,
+                                  details={"stage": "kernel_origin", "rule_id": "LP-KERNEL-EXE"}) from exc
+    executable = witness["exe_path"]
+    _origin_require(type(executable) is str and executable.isascii() and executable.startswith("/")
+                    and not executable.endswith(" (deleted)") and not executable.startswith("[")
+                    and executable == origin["subject"]["path"] == origin["kernel_origin"]["exe_path"],
+                    "INSPECTOR", "kernel_origin", "LP-KERNEL-EXE", "Kernel executable path differs from the canonical subject")
+    _origin_path(executable)
+    _origin_require(tuple(witness["identity"]) == tuple(subject["identity"]), "INSPECTOR", "kernel_origin",
+                    "LP-KERNEL-IDENTITY", "Kernel executable file identity differs")
+    secure = _origin_auxv(witness["auxv"], check=check)
+    _origin_require(type(origin["kernel_origin"]["at_secure"]) is int
+                    and secure == origin["kernel_origin"]["at_secure"], "INSPECTOR", "kernel_origin",
+                    "LP-AUXV", "Kernel secure-state expectation differs")
+    return {"exe_path": executable, "at_secure": secure, "identity": list(witness["identity"])}
+
+
+def _origin_variant_document(origin, loader, rationale, *, check=lambda: None):
+    _origin_checkpoint(check, "before_variant_read")
+    callback_failure = None
+    def checked():
+        nonlocal callback_failure
+        try:
+            check()
+        except BaseException as exc:
+            callback_failure = exc
+            raise
+    try:
+        document = _document(origin["variant_review"], maximum=LIMITS["document_bytes"], category="LOADER", check=checked)
+        _keys(document, ("schema", "loader", "source_review", "suffixes"), "LOADER")
+        _origin_require(document["schema"] == ORIGIN_VARIANT_SCHEMA and document["loader"] == loader
+                        and document["source_review"] == rationale, "LOADER", "variant_binding",
+                        "LP-VARIANT-BINDING", "Variant loader/source-review binding differs")
+        _binding_shape(document["loader"], "LOADER", descriptor=True)
+        _binding_shape(document["source_review"], "LOADER", descriptor=True)
+        _bound(rationale["path"], _binding(rationale), category="LOADER", check=checked)
+    except HostInspectionError as exc:
+        if exc is not callback_failure:
+            exc.details.setdefault("stage", "variant_binding")
+            exc.details.setdefault("rule_id", "LP-VARIANT-BINDING")
+        raise
+    return document
+
+
+def _check_origin_rule(origin, subject_metadata, images, *, search_directories,
+                       path_guards, loader, rationale, check=lambda: None):
+    """Finite machine-observation primitive, not selected-image or host admission.
+
+    Operational callers separately authenticate source/plan/subject bindings.
+    Synthetic callers may exercise these observations but gain no policy object.
+    Actual loader suffix completeness belongs to independent review (P13).
+    """
+    origin = _thaw(origin)
+    _check_origin_bounds(origin, images=images, check=check)
+    document = _origin_variant_document(origin, loader, rationale, check=check)
+    suffixes = document["suffixes"]
+    _check_origin_bounds(origin, suffixes=suffixes, images=images, check=check)
+    _origin_require(subject_metadata["machine"] == 62, "UNSUPPORTED", "subject_context",
+                    "LP-SUBJECT-MACHINE", "The origin subject must be x86-64")
+    _origin_raw_paths({"rpath": subject_metadata["rpath"], "runpath": subject_metadata["runpath"]})
+    _origin_require(origin["raw_rpath"] == [ORIGIN_RPATH], "UNSUPPORTED", "raw_metadata_policy",
+                    "LP-RAW-RPATH", "The origin plan must retain the exact raw RPATH")
+    subject_path = _origin_path(origin["subject"]["path"])
+    claimed_origin = _origin_path(origin["origin"])
+    for name in (origin["kernel_origin"]["exe_path"], origin["expanded_rpath"][0],
+                 origin["variant_review"]["path"], loader["path"], rationale["path"]):
+        check()
+        _origin_path(name)
+    for suffix in suffixes:
+        check()
+        _origin_require(type(suffix) is str and suffix.isascii(), "UNSUPPORTED", "new_path_policy",
+                        "LP-PATH-ASCII", "Origin variant suffixes must be ASCII")
+    for row in origin["variants"]:
+        check()
+        _origin_require(type(row) is dict and row.get("state") in ("directory", "absent"),
+                        "LOADER", "variant_inventory", "LP-VARIANTS", "Invalid origin variant row")
+        expected_keys = {"suffix", "path", "state"} | ({"absent_at"} if row["state"] == "absent" else set())
+        _origin_require(set(row) == expected_keys and type(row["suffix"]) is str and type(row["path"]) is str
+                        and (row["state"] != "absent" or type(row["absent_at"]) is str),
+                        "LOADER", "variant_inventory", "LP-VARIANTS", "Invalid closed origin variant keys or field types")
+        _origin_path(row["path"])
+        if row["state"] == "absent":
+            _origin_path(row["absent_at"])
+    subject = _origin_subject_observation(str(subject_path))
+    kernel = _check_kernel_origin(origin, subject, check=check)
+    _origin_require(claimed_origin == subject_path.parent and str(claimed_origin) != "/",
+                    "PATH", "origin_binding", "LP-ORIGIN", "Origin is not the selected executable's immediate parent")
+    _origin_require(subject["kind"] == "file" and subject["mode"] == "0o755" and subject["nlink"] == 1,
+                    "PATH", "origin_binding", "LP-ALIAS", "Origin subject must be an unlinked regular executable")
+    unreduced = str(claimed_origin) + "/../lib"
+    _origin_path(unreduced, normalized=False)
+    expanded = str(claimed_origin.parent / "lib")
+    _origin_path(expanded)
+    _origin_require(origin["expanded_rpath"] == [expanded] and expanded in search_directories,
+                    "LOADER", "expanded_binding", "LP-EXPANDED", "Expanded RPATH is different or unbound")
+    _origin_require(type(path_guards) is list and len(path_guards) <= 32768, "PATH", "origin_binding",
+                    "LP-ALIAS", "Missing finite origin guard inventory")
+    guards, absences = {}, {}
+    for row in path_guards:
+        check()
+        _origin_require(type(row) is dict and type(row.get("path")) is str,
+                        "PATH", "origin_binding", "LP-ALIAS", "Invalid origin guard row")
+        target = guards if "kind" in row else absences
+        _origin_require(row["path"] not in guards and row["path"] not in absences,
+                        "PATH", "origin_binding", "LP-ALIAS", "Duplicate origin guard")
+        target[row["path"]] = row
+    observed_guards = {}
+    def guarded_directory(name):
+        for path in reversed((PurePosixPath(name), *PurePosixPath(name).parents)):
+            check()
+            text = str(path)
+            _origin_path(text)
+            _origin_require(text in guards and guards[text].get("kind") == "directory",
+                            "PATH", "origin_binding", "LP-ALIAS", "Origin directory or ancestor is unbound or linked")
+            observed = _path_row(Path(text))
+            _origin_require(observed == guards[text] and observed["kind"] == "directory",
+                            "PATH", "origin_binding", "LP-ALIAS", "Origin directory identity or ancestor changed")
+            observed_guards[text] = observed
+    guarded_directory(str(claimed_origin))
+    guarded_directory(expanded)
+    names = set()
+    _origin_require(subject_path.as_posix() in images and images[subject_path.as_posix()] == subject_metadata,
+                    "LOADER", "name_union", "LP-NAMES", "Subject metadata is absent from the complete closure")
+    for path, metadata in images.items():
+        check()
+        raw_paths = metadata.get("rpath", []) + metadata.get("runpath", [])
+        _origin_require(path == str(subject_path) or not any("$" in item for item in raw_paths),
+                        "UNSUPPORTED", "subject_context", "LP-ROLE", "Another ELF image carries an origin token")
+        for name in [*metadata["needed"], *([metadata["soname"]] if metadata.get("soname") is not None else [])]:
+            check()
+            _origin_require(type(name) is str and "$" not in name, "UNSUPPORTED", "name_union",
+                            "LP-NAME-TOKEN", "Tokens in needed names or SONAME are unsupported")
+        names.update(metadata["needed"])
+    _origin_require(origin["needed_names"] == sorted(names), "LOADER", "name_union", "LP-NAMES", "Complete needed-name union differs")
+    _origin_require(suffixes == sorted(set(suffixes)) and "" in suffixes,
+                    "LOADER", "variant_inventory", "LP-VARIANTS", "Variant suffix inventory must be sorted, unique and include the base")
+    for suffix in suffixes:
+        check()
+        _origin_require(suffix == "" or (str(PurePosixPath(suffix)) == suffix and not suffix.startswith("/")
+                        and all(part not in ("", ".", "..") for part in suffix.split("/"))
+                        and not any(char.isspace() for char in suffix) and "$" not in suffix and "\0" not in suffix),
+                        "LOADER", "variant_inventory", "LP-VARIANTS", "Unsafe origin variant suffix")
+    _origin_require(len(origin["variants"]) == len(suffixes)
+                    and [row.get("suffix") for row in origin["variants"]] == suffixes,
+                    "LOADER", "variant_inventory", "LP-VARIANTS", "Variant rows do not equal the bound suffix list")
+    directories, absence_paths = {}, []
+    for row in origin["variants"]:
+        check()
+        expected_keys = {"suffix", "path", "state"} | ({"absent_at"} if row["state"] == "absent" else set())
+        expected_path = expanded + ("/" + row["suffix"] if row["suffix"] else "")
+        _origin_require(set(row) == expected_keys and row["path"] == expected_path
+                        and (row["suffix"] != "" or row["state"] == "directory"),
+                        "LOADER", "variant_inventory", "LP-VARIANTS", "Variant path, state or closed shape differs")
+        if row["state"] == "directory":
+            _origin_require(row["path"] in search_directories, "LOADER", "variant_inventory",
+                            "LP-VARIANTS", "Present variant is not an exact search-directory row")
+            guarded_directory(row["path"])
+            actual = _directory_entries(row["path"], check=check, _candidate_names=names)
+            _origin_require(actual == search_directories[row["path"]], "LOADER", "variant_inventory",
+                            "LP-VARIANTS", "Variant directory identity or complete entries differ")
+            directories[row["path"]] = actual
+        else:
+            absent_at = row["absent_at"]
+            missing = PurePosixPath(absent_at)
+            _origin_require(absent_at in absences and PurePosixPath(row["path"]).is_relative_to(missing)
+                            and absences[absent_at].get("parent") == str(missing.parent),
+                            "LOADER", "variant_inventory", "LP-ABSENCE", "First absent variant component is unbound")
+            guarded_directory(str(missing.parent))
+            parent = observed_guards[str(missing.parent)]
+            guard = absences[absent_at]
+            _origin_require(set(guard) == {"path", "parent", "parent_device", "parent_inode"}
+                            and (guard["parent_device"], guard["parent_inode"]) == (parent["device"], parent["inode"])
+                            and _origin_absent(absent_at), "LOADER", "variant_inventory", "LP-ABSENCE", "Required variant absence changed")
+            absence_paths.append(absent_at)
+    for row in directories.values():
+        for name in sorted(names):
+            _origin_checkpoint(check, "during_candidate_scan")
+            _origin_require(name not in row["entries"], "LOADER", "nonselecting", "LP-CANDIDATE",
+                            "An origin search alternative contains a needed-name candidate")
+    _origin_checkpoint(check, "before_final_identity")
+    _origin_require(_origin_subject_observation(str(subject_path)) == subject, "PATH", "origin_binding",
+                    "LP-ALIAS", "Origin subject identity changed during proof")
+    for name, observed in observed_guards.items():
+        check()
+        _origin_require(_path_row(Path(name)) == observed, "PATH", "origin_binding", "LP-ALIAS", "Origin guard changed during proof")
+    for name, observed in directories.items():
+        check()
+        _origin_require(_directory_entries(name, check=check, _candidate_names=names) == observed, "LOADER", "variant_inventory",
+                        "LP-VARIANTS", "Origin directory changed during proof")
+    for name in absence_paths:
+        check()
+        _origin_require(_origin_absent(name), "LOADER", "variant_inventory", "LP-ABSENCE", "Origin absence changed during proof")
+    _origin_require(_check_kernel_origin(origin, subject, check=check) == kernel, "INSPECTOR", "kernel_origin",
+                    "LP-KERNEL-IDENTITY", "Kernel origin changed during proof")
+    check()
+    return {"origin": str(claimed_origin), "expanded_rpath": [expanded], "raw_rpath": subject_metadata["rpath"],
+            "runpath": subject_metadata["runpath"], "nonselecting": True, "kernel_origin": kernel}
+
+
+def _origin_raw_paths(paths):
+    _origin_require(paths["rpath"] == [ORIGIN_RPATH] and paths["runpath"] == [],
+                    "UNSUPPORTED", "raw_metadata_policy", "LP-RAW-RPATH", "Only one exact Python origin RPATH is supported")
+
+
 def read_elf_metadata(path, *, check=lambda: None, require_interpreter=False):
     """Bounded ELF64 little-endian metadata, without executing an image.
 
@@ -627,6 +1050,54 @@ def read_elf_metadata(path, *, check=lambda: None, require_interpreter=False):
     selected Node and ordinary command executables. Unknown loader-affecting
     dynamic tags and nonliteral search tokens are refused conservatively.
     """
+    return _read_elf_metadata(path, check=check, require_interpreter=require_interpreter)
+
+
+def _read_origin_elf_metadata(path, *, check=lambda: None, require_interpreter=False):
+    """Raw exact-token primitive; this result alone admits no executable."""
+    callback_failure = None
+    def checked():
+        nonlocal callback_failure
+        try:
+            check()
+        except BaseException as exc:
+            callback_failure = exc
+            raise
+    try:
+        return _read_elf_metadata(path, check=checked, require_interpreter=require_interpreter,
+                                  path_rule=_origin_raw_paths)
+    except HostInspectionError as exc:
+        if exc is not callback_failure:
+            exc.details.setdefault("stage", "elf_metadata")
+            exc.details.setdefault("rule_id", "LEGACY-ELF-GUARD")
+        raise
+
+
+def _read_plan_elf_metadata(path, policy, *, check=lambda: None, require_interpreter=False):
+    if policy is None:
+        return read_elf_metadata(path, check=check, require_interpreter=require_interpreter)
+    if str(path) == policy["subject"]["path"]:
+        return _read_origin_elf_metadata(path, check=check, require_interpreter=require_interpreter)
+    callback_failure = None
+    def checked():
+        nonlocal callback_failure
+        try:
+            check()
+        except BaseException as exc:
+            callback_failure = exc
+            raise
+    try:
+        return read_elf_metadata(path, check=checked, require_interpreter=require_interpreter)
+    except HostInspectionError as exc:
+        if callback_failure is not None:
+            raise callback_failure from None
+        if exc.reason == "Unreviewed loader token expansion":
+            exc.details.setdefault("stage", "subject_context")
+            exc.details.setdefault("rule_id", "LP-ROLE")
+        raise
+
+
+def _read_elf_metadata(path, *, check=lambda: None, require_interpreter=False, path_rule=None):
     path = _absolute(path, "LOADER")
     fd = None
     try:
@@ -728,14 +1199,21 @@ def read_elf_metadata(path, *, check=lambda: None, require_interpreter=False):
         _require(len(needed) <= 256 and len(needed) == len(set(needed)) and
                  all(re.fullmatch(r"[^/\s\x00]+", name) for name in needed), "UNSUPPORTED", "Duplicate or unsupported DT_NEEDED name")
         paths = {}
+        if path_rule is not None:
+            # The private subject rule runs only after inherited uniqueness.
+            single(14)
         for name, tag in (("rpath", 15), ("runpath", 29)):
             position = single(tag)
             paths[name] = [] if position is None else string(position).split(":")
-            _require(len(paths[name]) == len(set(paths[name])), "UNSUPPORTED", "Duplicate search path")
-            for item in paths[name]:
-                _require("$" not in item and not any(char.isspace() for char in item), "UNSUPPORTED", "Unreviewed loader token expansion")
-                _absolute(item, "UNSUPPORTED", links=True)
-        _require(not (paths["rpath"] and paths["runpath"]), "UNSUPPORTED", "Conflicting legacy and modern search paths")
+            if path_rule is None:
+                _require(len(paths[name]) == len(set(paths[name])), "UNSUPPORTED", "Duplicate search path")
+                for item in paths[name]:
+                    _require("$" not in item and not any(char.isspace() for char in item), "UNSUPPORTED", "Unreviewed loader token expansion")
+                    _absolute(item, "UNSUPPORTED", links=True)
+        if path_rule is None:
+            _require(not (paths["rpath"] and paths["runpath"]), "UNSUPPORTED", "Conflicting legacy and modern search paths")
+        else:
+            path_rule(paths)
         soname = single(14)
         result = {"class": 64, "endian": "little", "machine": machine, "type": elf_type,
                   "interpreter": interpreters[0] if interpreters else None, "needed": needed,
@@ -752,7 +1230,7 @@ def read_elf_metadata(path, *, check=lambda: None, require_interpreter=False):
             os.close(fd)
 
 
-def _directory_entries(path, *, check=lambda: None):
+def _directory_entries(path, *, check=lambda: None, _candidate_names=None):
     path = _absolute(path, "LOADER", links=True)
     info = path.lstat()
     _require(stat.S_ISDIR(info.st_mode), "LOADER", "Search directory is not a real directory")
@@ -761,6 +1239,11 @@ def _directory_entries(path, *, check=lambda: None):
         for entry in iterator:
             check()
             _require(len(entries) < 32768, "UNSUPPORTED", "Search directory is too large for finite inspection")
+            if _candidate_names is not None:
+                # Even an unreadable or special candidate refuses before stat.
+                _origin_checkpoint(check, "during_candidate_scan")
+                _origin_require(entry.name not in _candidate_names, "LOADER", "nonselecting", "LP-CANDIDATE",
+                                "An origin search alternative contains a needed-name candidate")
             row = _path_row(path / entry.name)
             entries[entry.name] = {key: row[key] for key in ("kind", "device", "inode", "mode", "target")}
     _require(_identity(info) == _identity(path.lstat()), "LOADER", "Search directory changed during enumeration")
@@ -849,6 +1332,47 @@ def _check_loader_inputs(inputs, searches, *, check=lambda: None):
 
 def _check_resolution(plan, author_runtime, *, check=lambda: None):
     host, resolution = plan["host_static"], plan["host_static"]["resolution"]
+    policy, origin_images = None, None
+    if plan.get("schema") == ORIGIN_PLAN_SCHEMA:
+        policy = _prepare_origin_policy(plan, author_runtime, check=check)
+        origin = _thaw(policy)
+        _origin_require(type(resolution["images"]) is list and 0 < len(resolution["images"]) <= 512,
+                        "LOADER", "name_union", "LP-NAMES", "Missing/excessive origin ELF closure")
+        declared = {}
+        for row in resolution["images"]:
+            check()
+            _keys(row, ("file", "metadata", "resolved_needed"), "LOADER")
+            _binding_shape(row["file"], "LOADER", descriptor=True)
+            name = row["file"]["path"]
+            _require(name not in declared, "LOADER", "Duplicate origin closure image")
+            declared[name] = row["metadata"]
+        _check_origin_bounds(origin, images=declared, check=check)
+        origin_images = {}
+        for row in resolution["images"]:
+            check()
+            descriptor, name = row["file"], row["file"]["path"]
+            _require(host["files"].get(name) == _binding(descriptor), "LOADER", "Origin image is absent from host files")
+            _bound(name, _binding(descriptor), category="LOADER", private=False, check=check)
+            actual = _read_plan_elf_metadata(name, policy, check=check)
+            _require(row["metadata"] == actual, "LOADER", "Declared ELF metadata differs")
+            origin_images[name] = actual
+        subject_name = origin["subject"]["path"]
+        _origin_require(subject_name in origin_images, "LOADER", "name_union", "LP-NAMES", "Origin subject closure is missing")
+        loader_name = host["aliases"].get(author_runtime["interpreter"], {}).get("resolved_path")
+        _require(loader_name in host["files"], "LOADER", "Python interpreter is absent from the bound host closure")
+        loader = {"path": loader_name, **host["files"][loader_name]}
+        _require(type(resolution["search_directories"]) is list, "LOADER", "Missing origin search directories")
+        origin_searches = {}
+        for row in resolution["search_directories"]:
+            check()
+            _keys(row, "path device inode mode entries".split(), "LOADER")
+            _require(row["path"] not in origin_searches, "LOADER", "Duplicate origin search directory")
+            origin_searches[row["path"]] = row
+        # This complete primitive proof precedes helper imports on the new
+        # profile. Local raw objects are never reused across complete rechecks.
+        _check_origin_rule(origin, origin_images[subject_name], origin_images,
+                           search_directories=origin_searches, path_guards=host["path_guards"],
+                           loader=loader, rationale=resolution["rationale"], check=check)
     _binding_shape(resolution["rationale"], "LOADER", descriptor=True)
     review, _ = _read_file(resolution["rationale"]["path"], LIMITS["document_bytes"], category="LOADER", check=check)
     _require(review and hashlib.sha256(review).hexdigest() == resolution["rationale"]["sha256"], "LOADER", "Static resolution review differs")
@@ -917,13 +1441,15 @@ def _check_resolution(plan, author_runtime, *, check=lambda: None):
         path = descriptor["path"]
         _require(path not in images and host["files"].get(path) == _binding(descriptor), "LOADER", "ELF image missing/duplicate in host files")
         _bound(path, _binding(descriptor), category="LOADER", private=False, check=check)
-        actual = read_elf_metadata(path, check=check)
+        actual = origin_images[path] if origin_images is not None else read_elf_metadata(path, check=check)
         _require(row["metadata"] == actual, "LOADER", "Declared ELF metadata differs")
         machine = 62 if host["platform"]["machine"] == "x86_64" else 183
         _require(actual["machine"] == machine, "UNSUPPORTED", "ELF architecture does not match host")
         _require(type(row["resolved_needed"]) is dict and set(row["resolved_needed"]) == set(actual["needed"]),
                  "LOADER", "DT_NEEDED resolution map is incomplete or extra")
-        _require(set(actual["rpath"] + actual["runpath"]) <= set(searches), "LOADER", "ELF search path is unbound")
+        search_paths = (list(policy["expanded_rpath"]) if policy is not None and path == policy["subject"]["path"]
+                        else actual["rpath"] + actual["runpath"])
+        _require(set(search_paths) <= set(searches), "LOADER", "ELF search path is unbound")
         for soname, target in row["resolved_needed"].items():
             _require(target in host["aliases"], "LOADER", "Needed edge selects an unbound alias")
             edges.append({"image": path, "soname": soname, "resolved_path": host["aliases"][target]["resolved_path"]})
@@ -1206,7 +1732,8 @@ def _check_author_runtime(plan, inventory, *, loaded=False, check=lambda: None):
         _strings(runtime[key], "INSPECTOR", nonempty=True)
     named = [author["python_descriptor"]["path"], runtime["interpreter"]] + runtime["startup_files"] + runtime["extension_files"] + runtime["loader_inputs"]
     _check_alias_files(runtime["files"], runtime["aliases"], set(named), category="INSPECTOR", check=check)
-    _require(read_elf_metadata(author["python_descriptor"]["path"], check=check)["interpreter"] == runtime["interpreter"],
+    policy = _prepare_origin_policy(plan, runtime, check=check) if plan.get("schema") == ORIGIN_PLAN_SCHEMA else None
+    _require(_read_plan_elf_metadata(author["python_descriptor"]["path"], policy, check=check)["interpreter"] == runtime["interpreter"],
              "INSPECTOR", "Python interpreter binding differs")
     if loaded:
         source_files = {str(ROOT / name) for name in inventory["files"]}
@@ -1393,7 +1920,28 @@ def _required_paths(plan, author_runtime, metadata, extra):
     paths.extend(metadata["paths"])
     paths.extend(row["path"] for row in plan["evidence"]["outer_capture"].values())
     paths.extend(extra)
+    if plan.get("schema") == ORIGIN_PLAN_SCHEMA:
+        origin = plan["host_static"]["resolution"]["origin_rpath"]
+        paths.extend([origin["origin"], str(PurePosixPath(origin["origin"]).parent),
+                      *origin["expanded_rpath"], origin["variant_review"]["path"],
+                      plan["host_static"]["resolution"]["rationale"]["path"]])
+        for row in origin["variants"]:
+            paths.append(row["path"])
+            if row["state"] == "absent":
+                paths.append(row["absent_at"])
     return paths
+
+
+def _check_plan_guards(plan, required, *, check=lambda: None):
+    """An absent variant is guarded at its first missing component, never later."""
+    if plan.get("schema") == ORIGIN_PLAN_SCHEMA:
+        origin = plan["host_static"]["resolution"]["origin_rpath"]
+        descendants = {row["path"] for row in origin["variants"]
+                       if row["state"] == "absent" and row["path"] != row["absent_at"]}
+        # The complete origin proof has already verified each prefix absence
+        # and its immediate guarded parent. Snapshot all names nevertheless.
+        required = [name for name in required if str(name) not in descendants]
+    return _check_guards(plan["host_static"]["path_guards"], required, check=check)
 
 
 def _validate(plan_path, expected_plan_sha256, *, fresh, git_reads=True):
@@ -1401,11 +1949,22 @@ def _validate(plan_path, expected_plan_sha256, *, fresh, git_reads=True):
     _digest(expected_plan_sha256)
     path = _absolute(plan_path, "PLAN")
     raw, binding = _read_file(path, LIMITS["document_bytes"], category="PLAN", check=check)
-    _require(binding["sha256"] == expected_plan_sha256, "PLAN", "Plan differs from independently supplied expected digest")
+    try:
+        _check_plan_digest(binding["sha256"], expected_plan_sha256)
+    except HostInspectionError:
+        # Authentication precedes decoding/profile selection. Preserve this
+        # historical outer diagnostic; the binding primitive retains its ID.
+        raise HostInspectionError("PLAN", "Plan differs from independently supplied expected digest") from None
     plan = _decode(raw)
     _plan_shape(plan)
     inventory = _check_source_files(plan, check=check)
     author_runtime = _check_author_runtime(plan, inventory, check=check)
+    if plan["schema"] == ORIGIN_PLAN_SCHEMA:
+        _check_host_static(plan, check=check)
+        _check_author_host_bindings(plan, author_runtime)
+        _, early_paths = _check_resolution(plan, author_runtime, check=check)
+        _check_plan_guards(plan, _required_paths(plan, author_runtime, {"paths": []},
+                           early_paths + [str(path), plan["host_static"]["resolution"]["rationale"]["path"]]), check=check)
     helpers = _load_helpers(plan, inventory)
     author_runtime = _check_author_runtime(plan, inventory, loaded=True, check=check)
     metadata = _check_metadata(plan, helpers, check=check)
@@ -1414,7 +1973,7 @@ def _validate(plan_path, expected_plan_sha256, *, fresh, git_reads=True):
     _check_author_host_bindings(plan, author_runtime)
     expected_resolution, closure_paths = _check_resolution(plan, author_runtime, check=check)
     extra += closure_paths + [str(path), plan["host_static"]["resolution"]["rationale"]["path"]]
-    _check_guards(plan["host_static"]["path_guards"], _required_paths(plan, author_runtime, metadata, extra), check=check)
+    _check_plan_guards(plan, _required_paths(plan, author_runtime, metadata, extra), check=check)
     _check_evidence(plan, fresh=fresh, check=check)
     _p06_definitions()
     # Git is itself executable code. Its entire declared loader/alias/file
@@ -1424,6 +1983,9 @@ def _validate(plan_path, expected_plan_sha256, *, fresh, git_reads=True):
     check()
     metadata["expected_resolution"] = expected_resolution
     metadata["extra_paths"] = extra
+    if plan["schema"] == ORIGIN_PLAN_SCHEMA:
+        origin = plan["host_static"]["resolution"]["origin_rpath"]
+        metadata["origin_kernel_witness"] = _check_kernel_origin(origin, _origin_subject_observation(origin["subject"]["path"]), check=check)
     metadata["input_snapshot"] = _input_snapshot(plan, inventory, author_runtime, metadata, extra, check=check)
     check()
     return ValidatedPlan(plan, {"path": str(path), **binding}, source_reads, git_state, helpers, author_runtime, metadata)
@@ -1445,15 +2007,23 @@ def _recheck(validated, *, check=lambda: None, fresh=False):
     try:
         _bound(validated.descriptor["path"], _binding(validated.descriptor), check=check)
         inventory = _check_source_files(plan, check=check)
-        _require(_git_state(ROOT) == _thaw(validated._git_state), "SOURCE", "Source ref/index witness changed")
+        if plan.get("schema") != ORIGIN_PLAN_SCHEMA:
+            _require(_git_state(ROOT) == _thaw(validated._git_state), "SOURCE", "Source ref/index witness changed")
         runtime = _check_author_runtime(plan, inventory, loaded=True, check=check)
+        if plan.get("schema") == ORIGIN_PLAN_SCHEMA:
+            _check_host_static(plan, check=check)
+            _check_author_host_bindings(plan, runtime)
+            _, early_paths = _check_resolution(plan, runtime, check=check)
+            _check_plan_guards(plan, _required_paths(plan, runtime, {"paths": []},
+                               early_paths + [validated.descriptor["path"], plan["host_static"]["resolution"]["rationale"]["path"]]), check=check)
+            _require(_git_state(ROOT) == _thaw(validated._git_state), "SOURCE", "Source ref/index witness changed")
         metadata = _check_metadata(plan, validated._helpers, check=check)
         extra = _check_runtime_dependencies(plan, validated._helpers, check=check)
         _check_host_static(plan, check=check)
         _check_author_host_bindings(plan, runtime)
         resolution, closure_paths = _check_resolution(plan, runtime, check=check)
         _require(resolution == _thaw(validated._metadata)["expected_resolution"], "LOADER", "Observed static resolution map changed")
-        _check_guards(plan["host_static"]["path_guards"], _required_paths(plan, runtime, metadata,
+        _check_plan_guards(plan, _required_paths(plan, runtime, metadata,
                       extra + closure_paths + [validated.descriptor["path"], plan["host_static"]["resolution"]["rationale"]["path"]]), check=check)
         _require(_ancestors(plan["evidence"]["parent"]) == plan["evidence"]["ancestor_identities"], "PATH", "Evidence ancestor changed")
         _check_evidence(plan, fresh=fresh, check=check)
@@ -1462,7 +2032,9 @@ def _recheck(validated, *, check=lambda: None, fresh=False):
         if isinstance(exc, HostInspectionError) and exc.code == "CHI-DRIFT":
             raise
         raise HostInspectionError("DRIFT", "An admitted input changed before/after the command", cause=exc,
-                                  state=getattr(exc, "state", "REJECTED")) from exc
+                                  state=getattr(exc, "state", "REJECTED"),
+                                  details={"stage": "recheck", "rule_id": "LP-RECHECK"}
+                                  if plan.get("schema") == ORIGIN_PLAN_SCHEMA else None) from exc
     return {"passed": True, "plan": _thaw(validated.descriptor), "source_commit": plan["source"]["commit"],
             "boot_id": plan["host_static"]["platform"]["boot_id"]}
 
@@ -1505,6 +2077,15 @@ def _launch_check(validated, clock, stage_end):
                 _require(actual == expected, "DRIFT", "Bound file/path changed immediately before launch")
         _require(_platform() == plan["host_static"]["platform"], "DRIFT", "Host reboot/platform drift before launch")
         _check_guards(plan["host_static"]["path_guards"], [], check=lambda: clock.check(stage_end))
+        if plan.get("schema") == ORIGIN_PLAN_SCHEMA:
+            origin = plan["host_static"]["resolution"]["origin_rpath"]
+            subject = _origin_subject_observation(origin["subject"]["path"])
+            try:
+                witness = _check_kernel_origin(origin, subject, check=lambda: clock.check(stage_end))
+            except HostInspectionError as exc:
+                raise HostInspectionError("DRIFT", "Kernel origin changed immediately before launch", cause=exc) from exc
+            _require(witness == _thaw(validated._metadata)["origin_kernel_witness"],
+                     "DRIFT", "Kernel origin changed immediately before launch")
         clock.check(stage_end)
     except HostInspectionError:
         raise

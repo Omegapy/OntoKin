@@ -1,0 +1,56 @@
+{
+  "all_passed": true,
+  "at_utc": "2026-11-22T04:00:40.469620+00:00",
+  "checked_staged_tree": "7aa454bb6fc89d12becfb6357d2091de580ac25a",
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "name": "workflow",
+      "passed": true
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "name": "documentation",
+      "passed": true
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "name": "working-whitespace",
+      "passed": true
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "name": "staged-whitespace",
+      "passed": true
+    }
+  ],
+  "environment": {
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]"
+  },
+  "full_routine": "not_run",
+  "host_qualification": "not_run",
+  "source_commit": "ad6e0c8e32673c16ed4d75d5876fe36fd5747b29"
+}

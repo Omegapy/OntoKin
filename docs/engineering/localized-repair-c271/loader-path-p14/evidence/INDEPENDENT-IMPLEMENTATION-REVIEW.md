@@ -1,0 +1,19 @@
+# Independent implementation and adapter review: accepted
+
+Reviewer: /root/independent_review. Exact production candidate003: 183,913 bytes, SHA-256 a8274d56076562a91d26b3cdd2f614fce6fd509733e4939b225dff2ddca09db4. Exact new adapter: 36,940 bytes, SHA-256 cf521b4c14d6488c457a942c1fc151b3483729ec26c6c24e721f6ce05d6b2066. The product baseline is unchanged between4023a878ccc9980726e3b56102b41faa51be0eb1 and documentation checkpointad6e0c8e32673c16ed4d75d5876fe36fd5747b29.
+
+## Disposition
+
+25 independent audit groups passed; 0 failed. No mandatory finding remains. P14-IMPL-001 (mutation of a callback-owned exception) and P14-IMPL-002 (variant-row indexing before closed-shape validation) are resolved by the exact narrow correction. Earlier candidate002, run001 and all reviewer failure evidence remain unchanged under implementation-attempt001. The same reviewer probe logic confirms callback object and payload preservation, both malformed-row refusals, and the original finite P01 private-rule positive.
+
+## Evidence and boundaries
+
+Run002 passed exactly271 methods:96 frozen runtime controls,135 original inspection methods and40 inherited mapping methods. There were zero failures, errors, skips, expected failures, unexpected successes, process-guard calls, blocked audit events or target starts. All172 frozen source/input identities remained unchanged. Independent audit checked the172 retained snapshots, all96 observed/original oracles, exact case inventory,131 restored inert fixture bytes/modes, three callback identities, three actual recheck causes and18 supplemental negative caller-order reports. N57 has no runtime method/pass/skip; its unchanged historical oracle remains unsatisfied and its external review remains unestablished. Counts are separate: static audit groups and supplementary probes do not enlarge the271-method runtime claim.
+
+The full changed surface, affected inherited callees, adapter and runner were inspected. External digest authentication precedes decode/profile selection. The selected real-image pin remains separate from synthetic rule observations. No synthetic case/completeness selector, approval field or failed-policy injection reaches production. The new closed profile performs exact raw grammar, kernel/path/AT_SECURE checks, guarded single expansion, full closure name union, bound variant inventory and nonselection before helper imports or later effects. It repeats the proof on full rechecks; new input paths and absences reach snapshots, and the final small kernel witness shares the existing clock. Static inspection additionally confirms source Git-witness reads occur after the new proof; their equal prior value is explicitly isolated in the negative test harness.
+
+Existing constants, pins, consumers, default/literal parser behavior and the16MiB document reader remain intact. The adapter truthfully supplies logical observation seams and declared private-rule preconditions. Its negative caller tests retain actual parser, full origin proof, resolution and error wrappers, with no whole-plan positive. Ten additional independent checks of actual reader/final-witness functions used mocked procfs/platform inputs: bounded reads, close-on-success/error/cancellation, drift, existing-clock cancellation and no kernel call on the old profile all passed. No real procfs witness or target execution occurred in those probes.
+
+## Remaining gates
+
+Acceptance is limited to these exact implementation/adapter bytes and the finite evidence. Actual-loader completeness, operational plan qualification, H0/H1, original-seven/full routine, main integration and parent closure remain unmet. Complete fresh documentary/staged checks, exact conditional branch publication/readback and verified final partial delivery; then stop this phase. No active reviewer process or unknown write remains.
