@@ -1,0 +1,531 @@
+{
+  "archive": {
+    "bytes": 88651427,
+    "path": "/workspace/scratch/bef4a6dd8f04/deliverables/final/OntoKin_C271_P14_Loader_Path_Implementation_Handoff_2026-11-21.zip",
+    "sha256": "96dd48ac7cfe01219f57a48a3adfaacb1faa21325f72c5ad06ca19fcd54760cd"
+  },
+  "completed_at_utc": "2026-11-22T04:44:00.949143+00:00",
+  "finding_resolutions": [
+    {
+      "classification": "Auditor assumption corrected; no artifact defect",
+      "initial_group": "recovery_exclusions_reconstructible",
+      "reason": "Initial script required each omitted read chunk to be a literal substring of pretty-printed Git source and omitted C270 paths. All 18 chunks form seven exact texts: four Markdown files identical to Git and three JSON files exactly minified from pinned Git revision 4023a878.",
+      "verification": {
+        "bytes": 4880,
+        "path": "/workspace/scratch/bef4a6dd8f04/recovery/final_package_review/DERIVED-READ-CHUNKS-RESOLUTION.json",
+        "sha256": "084f783524a8e492eead40869db912412e43950cee19b3d9c0e3c1c67e4dd3af"
+      }
+    },
+    {
+      "classification": "Auditor inventory classification corrected; no artifact defect",
+      "initial_group": "surviving_unique_session_inventory",
+      "reason": "The initial inventory included two FIFO fixture objects as files. They intentionally remain inert metadata in the exact run001/run002 fixture manifests. The exact retained test source declares os.mkfifo, preserving their type and construction, while recorded mode/bytes/path remain exact. No live FIFO should be transported or restored merely to inspect the package.",
+      "verification": {
+        "bytes": 1565,
+        "path": "/workspace/scratch/bef4a6dd8f04/recovery/final_package_review/SPECIAL-FIXTURE-RESOLUTION.json",
+        "sha256": "df17d774e19c81d9ad19a994a4db2cb6941c33599bb0976fe1add770be3f29da"
+      }
+    }
+  ],
+  "frozen_source_commit": "e26dc6369a8d6ba88ea779b26a8c655121ae5dbc",
+  "frozen_source_tree": "0271ee6a507f83015eea06b63b1bed51753ba419",
+  "groups": [
+    {
+      "errors": [],
+      "expected_bytes": 88651427,
+      "expected_sha256": "96dd48ac7cfe01219f57a48a3adfaacb1faa21325f72c5ad06ca19fcd54760cd",
+      "name": "archive_identity",
+      "passed": true
+    },
+    {
+      "all_stored_modes": "regular0644",
+      "entries": 21972,
+      "errors": [],
+      "name": "safe_structure_required_roots",
+      "passed": true,
+      "root_files": [
+        "CHECKPOINT.json",
+        "HANDOFF.md",
+        "HISTORICAL-DEPENDENCIES.json",
+        "MANIFEST-SHA256.json",
+        "NEXT-TASK.md",
+        "PROMPT-1-CONTINUE.md",
+        "PROMPT-2-RECOVER.md",
+        "README-START-HERE.md",
+        "RECOVERY-EXCLUSIONS.json",
+        "RECOVERY-FILE-MAP.json",
+        "RECOVERY-STATUS.md",
+        "RECOVERY-SYMLINKS.json",
+        "SOURCE-MANIFEST.json"
+      ],
+      "total_uncompressed_bytes": 788859205
+    },
+    {
+      "errors": [],
+      "manifest_payloads": 21971,
+      "name": "manifest_exact_inventory",
+      "passed": true
+    },
+    {
+      "crc_verified_members": 21972,
+      "detailed_record": {
+        "bytes": 6336502,
+        "path": "/workspace/scratch/bef4a6dd8f04/recovery/final_package_review/PAYLOAD-VERIFICATION.json",
+        "sha256": "a84778040ae7a65236e59ca7b831afca27dc033f4bf147e75213a42b953dc3ac"
+      },
+      "errors": [],
+      "extracted_members": 21972,
+      "fresh_extraction": "/workspace/scratch/bef4a6dd8f04/recovery/final_package_review/fresh-extract",
+      "name": "crc_payload_hashes_fresh_extraction",
+      "passed": true
+    },
+    {
+      "by_commit": {
+        "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d": 9,
+        "e26dc6369a8d6ba88ea779b26a8c655121ae5dbc": 351
+      },
+      "detailed_record": {
+        "bytes": 208715,
+        "path": "/workspace/scratch/bef4a6dd8f04/recovery/final_package_review/SOURCE-VERIFICATION.json",
+        "sha256": "d6fdf533c909aa4f6f39882c0c24a8bf6f3d4806cda212084cd911197921764b"
+      },
+      "errors": [],
+      "name": "frozen_git_sources",
+      "passed": true,
+      "source_count": 360
+    },
+    {
+      "count": 28,
+      "detailed_record": {
+        "bytes": 8011,
+        "path": "/workspace/scratch/bef4a6dd8f04/recovery/final_package_review/CHANGED-FILES.json",
+        "sha256": "dd26a51a923e306024f732b399d5385df1cb02c1a16bbbc81a6cd28b14ea8978"
+      },
+      "errors": [],
+      "name": "all_changed_files_available",
+      "parent": "ad6e0c8e32673c16ed4d75d5876fe36fd5747b29",
+      "passed": true
+    },
+    {
+      "errors": [],
+      "name": "matching_standalone_prompts",
+      "passed": true,
+      "prompts": [
+        {
+          "bytes": 2300,
+          "equal": true,
+          "member": "PROMPT-1-CONTINUE.md",
+          "sha256": "35f3d767e8036cb304371787a22b70362587a312c9568ffb9dd2ea9e661a5653",
+          "standalone_path": "/workspace/scratch/bef4a6dd8f04/deliverables/final/OntoKin_C271_P14_Loader_Path_Implementation_Handoff_2026-11-21_Continue.md"
+        },
+        {
+          "bytes": 2576,
+          "equal": true,
+          "member": "PROMPT-2-RECOVER.md",
+          "sha256": "fd4a31152cbace603cf789e78e07c7703f857dcc36713f0d7baff3f47658ea8c",
+          "standalone_path": "/workspace/scratch/bef4a6dd8f04/deliverables/final/OntoKin_C271_P14_Loader_Path_Implementation_Handoff_2026-11-21_Recover.md"
+        }
+      ]
+    },
+    {
+      "count": 21595,
+      "detailed_record": {
+        "bytes": 8254247,
+        "path": "/workspace/scratch/bef4a6dd8f04/recovery/final_package_review/RECOVERY-VERIFICATION.json",
+        "sha256": "d4510b2a7707634cf779c0f7e71d1f84152007279d1d2f3cd6c50fe574ffd902"
+      },
+      "errors": [],
+      "name": "recovery_file_map_original_bytes_modes",
+      "passed": true
+    },
+    {
+      "count": 30,
+      "detailed_record": {
+        "bytes": 12645,
+        "path": "/workspace/scratch/bef4a6dd8f04/recovery/final_package_review/SYMLINK-VERIFICATION.json",
+        "sha256": "2085bd63d3ddf96b8e7cdd6d510068ae1bcca5dcf7ee3e6bba92c958faa11037"
+      },
+      "errors": [],
+      "name": "inert_symlink_history",
+      "passed": true
+    },
+    {
+      "derived_count": 18,
+      "derived_reconstruction_record": "DERIVED-READ-CHUNKS-RESOLUTION.json",
+      "detailed_record": {
+        "bytes": 334646,
+        "path": "/workspace/scratch/bef4a6dd8f04/recovery/final_package_review/EXCLUSIONS-VERIFICATION.json",
+        "sha256": "04b4c94748fa2e32a18a290b65e2068bc12272234a806414b9e45612f30460f8"
+      },
+      "duplicate_count": 679,
+      "errors": [],
+      "name": "recovery_exclusions_reconstructible",
+      "original_errors_retained_in": "AUDIT.json",
+      "passed": true,
+      "resolved_errors": [
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_CURRENT.json.00.txt"
+        },
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_CURRENT.json.01.txt"
+        },
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_CURRENT.json.02.txt"
+        },
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_tasks_C270_PLAN.md.00.txt"
+        },
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_tasks_C270_REQUIREMENTS.md.00.txt"
+        },
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_tasks_C270_task.json.00.txt"
+        },
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_tasks_C271_task.json.00.txt"
+        },
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_tasks_C271_task.json.01.txt"
+        },
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_tasks_C271_task.json.02.txt"
+        },
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_tasks_C271_task.json.03.txt"
+        },
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_tasks_C271_task.json.04.txt"
+        },
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_tasks_C271_task.json.05.txt"
+        },
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_tasks_C271_task.json.06.txt"
+        },
+        {
+          "derived_chunk_unproven": true,
+          "path": "required-read-chunks/docs_workflow_tasks_C271_task.json.07.txt"
+        }
+      ],
+      "total": 697
+    },
+    {
+      "covered_count": 22324,
+      "errors": [],
+      "name": "surviving_unique_session_inventory",
+      "original_count": 22324,
+      "original_errors_retained_in": "AUDIT.json",
+      "passed": true,
+      "resolved_errors": [
+        {
+          "records_without_originals": [],
+          "uncovered_surviving_session_files": [
+            "control-adapter/fixtures001/inspection/test_HI03_B/fifo",
+            "control-adapter/fixtures002/inspection/test_HI03_B/fifo"
+          ]
+        }
+      ],
+      "special_fixture_records": 2
+    },
+    {
+      "errors": [],
+      "explanation": "Clean exact publication readback, empty patch, and complete independently mapped old session preserve unique work without applying any patch.",
+      "name": "unpublished_source_boundary",
+      "passed": true,
+      "patch_bytes": 0,
+      "unpublished_files_count": 0
+    },
+    {
+      "errors": [],
+      "members": [
+        "repository/.agents/skills/ontokin-delivery/SKILL.md",
+        "repository/.agents/skills/ontokin-learning/SKILL.md",
+        "repository/.agents/skills/ontokin-session/SKILL.md",
+        "repository/docs/workflow/tasks/C271/task.json",
+        "repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+        "repository/docs/workflow/tasks/C271/PLAN.md",
+        "repository/docs/workflow/CURRENT.json",
+        "repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+        "repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+        "repository/docs/engineering/localized-repair-c271/loader-path-p11/ADOPTION.json",
+        "repository/docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/DECISION.md",
+        "repository/docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/CONTROL-CONTRACT.md",
+        "repository/docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/FUTURE-SURFACE.json",
+        "repository/docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/MATERIALIZATION.md",
+        "repository/docs/engineering/localized-repair-c271/review-boundary-p13/ADOPTION.json",
+        "repository/docs/engineering/localized-repair-c271/review-boundary-p13/design/candidate001/CONTROL-CONTRACT.md",
+        "repository/docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.json",
+        "repository/docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md",
+        "repository/docs/engineering/localized-repair-c271/current-host-p05/CONTRACT.json",
+        "repository/prototypes/static_tray_v01/current_host_inspection_v01.py",
+        "repository/tests/test_current_host_loader_path_v01.py",
+        "observed-main/CHATGPT-START-HERE.md",
+        "observed-main/AGENTS.md",
+        "observed-main/GOAL.md",
+        "observed-main/STATUS.md",
+        "observed-main/ROLE.md",
+        "observed-main/docs/workflow/registry.json",
+        "observed-main/docs/workflow/CURRENT.json",
+        "observed-main/docs/workflow/PROTOCOL.md",
+        "observed-main/docs/workflow/HANDOFF.md"
+      ],
+      "name": "current_task_skills_specs_dependencies",
+      "passed": true,
+      "required_count": 30
+    },
+    {
+      "count": 22,
+      "errors": [],
+      "implementation_adjudication": "Separate evidence reviewer handles candidate/test outcome reuse; this audit verifies original bytes, completeness and boundaries only.",
+      "name": "original_failures_and_publication_history",
+      "passed": true,
+      "required_members": [
+        "recovery/session/STARTUP-FAILURES.json",
+        "recovery/session/retained-early-attempt001.zip",
+        "recovery/session/control-adapter/FREEZE-ATTEMPT001-FAILURE.json",
+        "recovery/session/control-adapter/run001/OUTCOME.json",
+        "recovery/session/control-adapter/run001/stdout.log",
+        "recovery/session/control-adapter/run001/stderr.log",
+        "recovery/session/control-adapter/run002/OUTCOME.json",
+        "recovery/session/control-adapter/run002/stdout.log",
+        "recovery/session/control-adapter/run002/stderr.log",
+        "recovery/session/implementation/candidate001.py",
+        "recovery/session/implementation/candidate002.py",
+        "recovery/session/implementation/candidate003.py",
+        "recovery/session/implementation/REPORT-candidate002.md",
+        "recovery/session/implementation/REPORT-candidate003.md",
+        "recovery/session/publication/startup/ATTEMPT-FAILURE.json",
+        "recovery/session/publication/implementation-final001/FAILURE-DISPOSITION.json",
+        "recovery/session/publication/implementation-final001/CREATE-RESULTS.json",
+        "recovery/session/publication/implementation-final001/IMPLEMENTATION-EVIDENCE.zip",
+        "recovery/session/publication/implementation-final002/CHECKS.json",
+        "recovery/session/publication/implementation-final002/CREATE-RESULTS.json",
+        "recovery/session/publication/implementation-final002/READBACK.json",
+        "recovery/session/publication/implementation-final002/REMOTE-READBACK.json"
+      ]
+    },
+    {
+      "errors": [],
+      "inherited_dependency_keys": [
+        "c262_preservation",
+        "c263_migration",
+        "current_failed_attempt_retention",
+        "external_source_policy",
+        "historical_dependencies_from_exact_CURRENT",
+        "historical_offline_restoration_not_claimed",
+        "immediate_dependencies",
+        "ordinary_continuation_requires_live_github",
+        "package_type",
+        "prior_phase_archives_embedded",
+        "required_external_candidate_files",
+        "schema",
+        "source_revision",
+        "source_tree"
+      ],
+      "name": "pinned_historical_online_dependencies",
+      "offline_restoration_claim": false,
+      "online_continuation": true,
+      "passed": true,
+      "predecessors": [
+        {
+          "bytes": 759600,
+          "member": "predecessor/OntoKin_C271_P13_Delivery_Receipt_2026-11-21.json",
+          "sha256": "6cdc3eb4d05f52e47a0e43cf85117c5981a34ec0b75dd9f4febdd8441aad8f2a"
+        },
+        {
+          "bytes": 2087468,
+          "member": "predecessor/OntoKin_C271_P13_Review_Policy_Design_Handoff_2026-11-21.zip",
+          "sha256": "0b0cfce94ebd451667813a83a0264f94075efb3c58a6775fe3b2f9343aff2a23"
+        }
+      ]
+    },
+    {
+      "changed_file_rows": 28,
+      "checks": [
+        {
+          "command": [
+            "python3",
+            "-B",
+            "tools/chat_workflow.py",
+            "check"
+          ],
+          "exit_code": 0,
+          "name": "workflow",
+          "passed": true
+        },
+        {
+          "command": [
+            "python3",
+            "-B",
+            "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+          ],
+          "exit_code": 0,
+          "name": "documentation",
+          "passed": true
+        },
+        {
+          "command": [
+            "git",
+            "diff",
+            "--check"
+          ],
+          "exit_code": 0,
+          "name": "working-whitespace",
+          "passed": true
+        },
+        {
+          "command": [
+            "git",
+            "diff",
+            "--cached",
+            "--check"
+          ],
+          "exit_code": 0,
+          "name": "staged-whitespace",
+          "passed": true
+        }
+      ],
+      "errors": [],
+      "name": "exact_publication_readback_and_four_check_binding",
+      "passed": true,
+      "readback_member": "recovery/session/publication/implementation-final002/READBACK.json",
+      "scope": "Identity/evidence validation only; these commands were not rerun.",
+      "tree": "0271ee6a507f83015eea06b63b1bed51753ba419"
+    },
+    {
+      "errors": [],
+      "finding": "Original Git source can only record publication pending; later root CHECKPOINT and final002 readback confirm exact publication. Final ZIP correctly freezes before saving. New-session review, early recovery and eventual save confirmation belong in the external receipt; no frozen member needs rewriting.",
+      "material_change_required": false,
+      "name": "frozen_source_later_readback_and_receipt_chronology",
+      "passed": true,
+      "receipt_path": "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json"
+    },
+    {
+      "errors": [],
+      "finding": "For an unconfirmed final delivery, audit/save/readback/separate receipt and stop. Once delivery is confirmed, only a new main chat may select one bounded H0 source-and-plan review, establish actual loader completeness, and stop before H1 or the first blocker. Necessary task/skills/design/spec source files are included; current live startup governs online continuation.",
+      "name": "runnable_honest_bounded_next_action",
+      "no_next_milestone_started": true,
+      "passed": true
+    },
+    {
+      "errors": [],
+      "findings": "N57 remains external review only with no historical oracle satisfaction. Frozen synthetic control evidence does not claim actual host, H0/H1, original-seven/full routine, native/model, merge, or parent completion.",
+      "full_routine": "not_run",
+      "historical_unknowns": [
+        "C270 broad-driver completion remains unknown",
+        "Global prior-process termination remains unestablished",
+        "P13 read-only character-level difflib completion remains unknown; no write was involved; do not repeat."
+      ],
+      "host_qualification": "not_run",
+      "hosted_ci_pass_claimed": false,
+      "name": "honest_completion_host_and_ci_limits",
+      "parent_complete": false,
+      "parent_plan": {
+        "P01": "done",
+        "P02": "in_progress"
+      },
+      "passed": true,
+      "requirements": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "not_done",
+        "R04": "not_done",
+        "R05": "not_done"
+      }
+    },
+    {
+      "errors": [],
+      "name": "failure_history_not_relabelled",
+      "passed": true,
+      "preserved_findings": [
+        "rejected early attempt001",
+        "failed initial documentary gate",
+        "freeze authoring failure",
+        "candidate001/candidate002/candidate003 source evolution",
+        "run001 and run002 distinct results",
+        "oversized pre-dispatch GitHub request failure",
+        "successful conditional final002 publication and exact readback"
+      ],
+      "scope": "Package preserves chronological evidence rather than treating a timeout or earlier branch-unchanged statement as the final remote result.",
+      "startup_event_count": 7
+    },
+    {
+      "c262_preservation": {
+        "bytes": 532260846,
+        "library_file_id": "libfile_fde3_f-99755ba096208191b599cd0087fa0a19_2ab2a24d43748191957f9bcc356b59de",
+        "scope": "Historical C262 archive retained; not required for ordinary startup from GitHub.",
+        "sha256": "b8af544f730a4d1f741d47b56eb3fcf76147ed392a9ebb020f3d966f2f305c90",
+        "url": "https://chatgpt.com/library/share/libfile_fde3_f-99755ba096208191b599cd0087fa0a19_2ab2a24d43748191957f9bcc356b59de?account_id=personal"
+      },
+      "errors": [],
+      "external_candidate_files": [
+        {
+          "archive_bytes": 2075115,
+          "archive_dependency": "p12_final_archive",
+          "archive_sha256": "337f8fd00f91987c6a70ba91a9439a5da29bc91a81507d4a92d2d9bc17cbb323",
+          "bytes": 38093,
+          "logical_repository_path": "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/REVISION-004.diff",
+          "member": "recovery/session_p12/implementation/materialized/loader-path-p11/design/candidate004/REVISION-004.diff",
+          "member_bytes_verified_in_this_workspace": true,
+          "purpose": "Declared candidate004 revision diff required to materialize the complete historical candidate; its exact bytes are an external dependency, not an included Git snapshot.",
+          "sha256": "2c08bfced30e1ddbf6f4584d8c5081db817aa3b8c5f68c4144265be1d1e5b417",
+          "source_kind": "exact_external_prior_package_member; absent from Git tree"
+        }
+      ],
+      "inherited_dependency_keys": 14,
+      "name": "historical_dependency_chain_unchanged",
+      "passed": true,
+      "prior_dependency_manifest_equal": true,
+      "scope": "Exact predecessor archive/terminal receipt included. Larger historical archives and REVISION-004.diff remain explicitly pinned external dependencies. Full offline restoration is not claimed."
+    },
+    {
+      "archive": {
+        "bytes": 88651427,
+        "sha256": "96dd48ac7cfe01219f57a48a3adfaacb1faa21325f72c5ad06ca19fcd54760cd"
+      },
+      "errors": [],
+      "git_mutations": false,
+      "library_mutations": false,
+      "name": "frozen_package_unchanged_after_review",
+      "passed": true,
+      "payload_execution": false,
+      "product_execution": false
+    }
+  ],
+  "groups_passed": 22,
+  "mandatory_findings": [],
+  "material_package_changes_required": false,
+  "not_executed": [
+    "No archive Python, shell or binary payload was executed",
+    "No product checks or host qualification executed",
+    "No Git or Library writes",
+    "No nested workers"
+  ],
+  "observations": [
+    "An initial read-only inspection printed too many manifest keys and truncated output. The independent structured audit uses bounded displays and full member processing; no file mutation resulted from the inspection."
+  ],
+  "observed_main_commit": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+  "original_mechanical_audit": {
+    "bytes": 17464,
+    "path": "/workspace/scratch/bef4a6dd8f04/recovery/final_package_review/AUDIT.json",
+    "sha256": "feed2b497f883140b19b9cd112d91335f996de4886e50fefec49c649fa8e7d4a"
+  },
+  "original_mechanical_verdict": "changes_or_analysis_required",
+  "receipt_only_followup": "Parent records the new-session audit and confirmed saves/readback in a separate external/repository receipt. No product/host gate advanced.",
+  "reviewer": "/root/remote_reconciliation",
+  "schema": "ontokin.c271.p14-independent-final-package-review/1",
+  "verdict": "accepted_existing_exact_final_package"
+}

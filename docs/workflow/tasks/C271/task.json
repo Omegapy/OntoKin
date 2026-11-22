@@ -4,7 +4,7 @@
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
   "status": "blocked",
-  "owner": "c271-p14-29fbc446c948",
+  "owner": "c271-p14-recovery-bef4a6dd8f04",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -67,7 +67,8 @@
         "docs/engineering/localized-repair-c271/loader-path-p12/PHASE-OUTCOME.json",
         "docs/engineering/localized-repair-c271/loader-path-p12/evidence/review/ADJUDICATION.json",
         "docs/engineering/localized-repair-c271/review-boundary-p13/ADOPTION.json",
-        "docs/engineering/localized-repair-c271/review-boundary-p13/PHASE-OUTCOME.json"
+        "docs/engineering/localized-repair-c271/review-boundary-p13/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/loader-path-p14/delivery-recovery-20261121/implementation-review/AUDIT.json"
       ]
     },
     {
@@ -103,7 +104,8 @@
         "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json",
         "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/review-boundary-p13/EARLY-RECOVERY-RECEIPT.json",
-        "docs/engineering/localized-repair-c271/review-boundary-p13/P13-DELIVERY.json"
+        "docs/engineering/localized-repair-c271/review-boundary-p13/P13-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json"
       ]
     }
   ],
@@ -500,7 +502,7 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
       ],
-      "scope": "P10 partial delivery only. R03\u2013R05 and integration remain open."
+      "scope": "P10 partial delivery only. R03–R05 and integration remain open."
     },
     {
       "name": "P11 independent intake and verified early recovery",
@@ -718,6 +720,18 @@
         "docs/engineering/localized-repair-c271/loader-path-p14/evidence/documentary-preflight001/CHECKS.json"
       ],
       "limit": "Prepublication snapshot passed all four commands. Exact final staged-tree results will be retained with publication and delivery; no full routine is implied."
+    },
+    {
+      "name": "P14 recovery exact publication and historical evidence reuse",
+      "command": "Independent read-only exact Git/source/manifest/input/command/environment reconciliation",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p14/delivery-recovery-20261121/state-review/AUDIT.json",
+        "docs/engineering/localized-repair-c271/loader-path-p14/delivery-recovery-20261121/implementation-review/AUDIT.json",
+        "docs/engineering/localized-repair-c271/loader-path-p14/delivery-recovery-20261121/final-package-review/FINAL-AUDIT.json"
+      ],
+      "limit": "Historical P14 runtime evidence reuse; no fresh product run, H0/H1, full routine or main integration."
     }
   ],
   "completion": {
@@ -735,7 +749,8 @@
       "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json",
       "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json",
       "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json",
-      "docs/engineering/localized-repair-c271/loader-path-p11/P11-DELIVERY.json"
+      "docs/engineering/localized-repair-c271/loader-path-p11/P11-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json"
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
@@ -747,10 +762,11 @@
       "candidate": "candidate003",
       "source_sha256": "a8274d56076562a91d26b3cdd2f614fce6fd509733e4939b225dff2ddca09db4",
       "review": "docs/engineering/localized-repair-c271/loader-path-p14/evidence/INDEPENDENT-IMPLEMENTATION-REVIEW.md",
-      "commit": "publication_pending"
+      "commit": "e26dc6369a8d6ba88ea779b26a8c655121ae5dbc",
+      "tree": "0271ee6a507f83015eea06b63b1bed51753ba419"
     }
   },
-  "next_action": "Finish P14 conditional branch publication and verified partial delivery, then stop. In a fresh chat, resume C271 with bounded H0 preparation and independent actual-loader source/plan review; establish the complete loader-variant set and an eligible externally digested plan before any H1 execution.",
+  "next_action": "Finish the separate P14 terminal receipt, confirm its exact saved bytes, publish terminal confirmation, then stop. Stop after terminal receipt confirmation. In a fresh main chat, resume C271 with one bounded H0 preparation and independent actual-loader source/plan review. Establish the complete actual-loader variant set and an eligible externally digested plan; stop before H1 or at the first concrete blocker.",
   "session_phase": {
     "schema": "ontokin.c271.p14-phase/1",
     "task": "C271",
@@ -793,7 +809,7 @@
       "Existing 16 MiB document reader, 100000-operation/30000-ms source ceilings and all P11 limits remain unchanged.",
       "Root owns Git/index, canonical files, conditional publication and saving. Workers have disjoint assignments, inherited model settings, no nested fanout."
     ],
-    "status": "implementation_accepted_delivery_pending",
+    "status": "core_delivery_confirmed_terminal_receipt_pending",
     "parent_status": "blocked",
     "parent_complete": false,
     "requirements": {
@@ -820,7 +836,7 @@
       "state": "open"
     },
     "stop": "First concrete scope/design blocker or independent implementation acceptance plus verified partial delivery; no second phase.",
-    "exact_next_action": "Finish P14 conditional branch publication and verified partial delivery, then stop. In a fresh chat, resume C271 with bounded H0 preparation and independent actual-loader source/plan review; establish the complete loader-variant set and an eligible externally digested plan before any H1 execution.",
+    "exact_next_action": "Finish the separate P14 terminal receipt, confirm its exact saved bytes, publish terminal confirmation, then stop. Stop after terminal receipt confirmation. In a fresh main chat, resume C271 with one bounded H0 preparation and independent actual-loader source/plan review. Establish the complete actual-loader variant set and an eligible externally digested plan; stop before H1 or at the first concrete blocker.",
     "historical_unknowns": [
       "C270 broad-driver completion remains unknown",
       "Global prior-process termination remains unestablished",
@@ -864,11 +880,11 @@
       "All 20241 baseline files outside declared existing edit paths retain exact bytes and Git modes.",
       "Four documentary/workflow/working-whitespace/staged-whitespace commands passed on the retained prepublication snapshot; final exact-tree checks precede conditional publication.",
       "Independent documentary review accepted21 check groups; exact audit/report copies verified by the Director.",
-      "First publication attempt rejected before dispatch at the16MiB connector limit. Exact accepted archive split into three parts; concatenation matches all original bytes. Branch remains unchanged."
+      "First publication attempt rejected before dispatch at the16MiB connector limit. Exact accepted archive split into three parts; concatenation matches all original bytes. Branch remains unchanged.",
+      "Recovery independently accepted the unchanged final ZIP and source-bound historical evidence; exact ZIP and matching prompts saved/read back. Separate terminal receipt remains pending."
     ],
     "incomplete_steps": [
-      "Conditional reviewed branch publication and exact readback.",
-      "Independent final handoff audit, Library save/readback, separate receipt and stop."
+      "Separate terminal receipt review/save/readback and factual terminal confirmation; stop"
     ],
     "phase_table": [
       {
@@ -885,11 +901,11 @@
       },
       {
         "gate": "P14-A04",
-        "state": "documentary_passed_publication_pending"
+        "state": "passed_exact_published_source_reconciled"
       },
       {
         "gate": "P14-A05",
-        "state": "pending"
+        "state": "core_saved_terminal_receipt_pending"
       }
     ],
     "evidence": {
@@ -909,15 +925,14 @@
       "publication_parts_review": "docs/engineering/localized-repair-c271/loader-path-p14/evidence/director-implementation-review/attempt002/AUDIT.json"
     },
     "worker_state": {
-      "/root": "Director: documentary checks, conditional publication and final delivery only.",
-      "/root/implementation": "Completed candidate003; no active job or unknown operation.",
-      "/root/control_adapter": "Completed fresh run002, 271 methods passed; no active job or unknown operation.",
-      "/root/independent_review": "Exact-source/adapter review accepted; final documentary disposition remains separate.",
-      "/root/state_reconciliation": "Full history reconciliation and final-builder preflight complete; final ZIP review remains separate."
+      "/root": "Director: remaining terminal receipt and confirmation only",
+      "/root/remote_reconciliation": "State and final package review completed; no active process or unknown write",
+      "/root/evidence_review": "Early and implementation evidence reuse review completed; no product execution or unknown write",
+      "/root/package_engineer": "Early recovery completed; terminal receipt packaging assigned; no source/publication authority"
     },
     "current_unknown_operations": [],
     "current_jobs": [
-      "Director documentary verification and delivery; no target-process execution."
+      "Director terminal receipt and factual confirmation only; no product/host work"
     ],
     "startup_failures": "docs/engineering/localized-repair-c271/loader-path-p14/evidence/STARTUP-FAILURES.json",
     "early_save_confirmed": true,
@@ -948,7 +963,7 @@
       "source_tree": "2881aa68f3dbb44eb57d373fb2bfbd373ac375b8",
       "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-b464e08f29cc81918e4502145fc1844f_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
     },
-    "updated_at_utc": "2026-11-22T04:01:45.666173+00:00",
+    "updated_at_utc": "2026-11-22T04:46:08.370505+00:00",
     "evidence_reference_base": "Repository-relative paths; in a ZIP, prefix repository/.",
     "next_fresh_chat_action": "Reconcile the confirmed P14 handoff and live GitHub state; declare one bounded H0 preparation/source-and-plan review phase. First establish source-complete loader variants for the actual bound loader, then determine whether the real selected Python, guarded origin, kernel identity and nonselection evidence can form an eligible versioned plan. Stop before H1 or at the first concrete blocker.",
     "implementation_outcome": {
@@ -1056,17 +1071,28 @@
       "parent_complete": false,
       "publication": "pending",
       "final_handoff": "pending"
-    }
+    },
+    "recovery_owner": "c271-p14-recovery-bef4a6dd8f04",
+    "phase_complete": false,
+    "published_source": {
+      "commit": "e26dc6369a8d6ba88ea779b26a8c655121ae5dbc",
+      "tree": "0271ee6a507f83015eea06b63b1bed51753ba419",
+      "changed_files_verified": 28,
+      "source_unchanged_in_recovery": true
+    },
+    "recovery_evidence": "docs/engineering/localized-repair-c271/loader-path-p14/delivery-recovery-20261121/SESSION.json",
+    "delivery_receipt": "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json"
   },
   "delivery": {
     "required": true,
     "kind": "development_handoff_zip",
-    "status": "pending",
+    "status": "core_saved_terminal_receipt_pending",
     "folder": "OntoKin",
     "partial": true,
     "phase_complete": false,
-    "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p14/EARLY-RECOVERY-RECEIPT.json",
-    "receipt": "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json"
+    "early_receipt": "docs/engineering/localized-repair-c271/loader-path-p14/delivery-recovery-20261121/EARLY-RECOVERY-RECEIPT.json",
+    "receipt": "docs/engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json",
+    "terminal_confirmation": "docs/engineering/localized-repair-c271/loader-path-p14/P14-TERMINAL-CONFIRMATION.json"
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",

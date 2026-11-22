@@ -247,3 +247,8 @@ Resume the retained branch from4023a878ccc9980726e3b56102b41faa51be0eb1. Early r
 ## P14 implementation verification outcome
 
 Candidate003 passed the adopted 96 mapped runtime controls and 175 inherited methods, and independent exact-source/adapter review. Two supplemental review defects were corrected with their failed evidence retained. The four documentary preflight checks passed; conditional publication and final verified delivery remain pending at this snapshot. This completes no parent requirement or integration gate. See [P14 outcome](../../../engineering/localized-repair-c271/loader-path-p14/IMPLEMENTATION-OUTCOME.json).
+
+<!-- C271-P14-RECOVERY-CORE -->
+## P14 delivery recovery checkpoint
+
+The interrupted implementation is published at `e26dc6369a8d6ba88ea779b26a8c655121ae5dbc`. Its unchanged final ZIP and matching prompts passed independent review, saving and exact readback. The [separate P14 receipt](../../../engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json) records the actual identities. Terminal receipt confirmation remains the only session step at this checkpoint; finish it and stop. R01/R02 remain done; R03/R04/R05 remain not_done, P02 remains in_progress and parent C271 remains blocked/open. No production, test, contract, main or integration-lease change occurred during this recovery. The next technical action belongs to a fresh chat: bounded H0 preparation and independent actual-loader source/plan review before H1.

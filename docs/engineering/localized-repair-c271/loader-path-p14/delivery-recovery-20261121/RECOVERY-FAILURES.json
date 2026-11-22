@@ -1,0 +1,39 @@
+{
+  "schema": "ontokin.c271.p14-recovery-failures/1",
+  "failures": [
+    {
+      "id": "RECOVERY-READ-001",
+      "kind": "Read attempted before clone checkout completed",
+      "exit_code": 1,
+      "effect": "No files changed; exact paths were read after successful checkout",
+      "resolved": true
+    },
+    {
+      "id": "P14-RECOVERY-EARLY-001",
+      "kind": "Early checkpoint omitted two worker dispositions",
+      "disposition": "Attempt002 adds all four dispositions and exact observed-main timestamp/path; independent review accepted. Original Attempt001 exactly reconstructible from saved Attempt002.",
+      "resolved": true
+    },
+    {
+      "id": "RECOVERY-AUDIT-PARSING-001",
+      "kind": "Independent reviewer method-name parsing error",
+      "effect": "Reviewer script split at first .test_ instead of last method separator; no product change or rerun",
+      "disposition": "Initial script/results/diagnosis preserved in implementation-review/audit-attempt001; corrected 35-group audit passed",
+      "resolved": true
+    },
+    {
+      "id": "FINAL-PACKAGE-AUDIT-ASSUMPTIONS-001",
+      "kind": "Auditor classified deterministic read chunks and FIFO fixtures incorrectly",
+      "disposition": "All18 derived chunks reconstructed exactly; two FIFO fixtures retained as inert manifest records plus exact construction source. Initialfindings and resolutions preserved; unchangedfinalZIP accepted in22 groups.",
+      "product_effect": "none",
+      "resolved": true
+    }
+  ],
+  "unresolved_current_writes": [],
+  "historical_unknowns": [
+    "C270 broad-driver completion",
+    "Global prior-process termination",
+    "P13 read-only difflib completion"
+  ],
+  "source_failure_history": "Original implementation candidate002 defects, run001, publication request-size rejection and other prior failures remain immutable in published source/evidence and original final ZIP."
+}

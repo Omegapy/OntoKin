@@ -247,3 +247,8 @@ The fresh continuation selects only the P11 candidate004 implementation surface 
 ## P14 finite implementation evidence
 
 The adopted versioned origin-RPATH implementation and its faithful adapter are independently accepted on candidate003 with 96 mapped runtime controls and 175 inherited methods. N57 remains external review only; its historical oracle is unsatisfied. R03, R04 and R05 remain not done because actual host qualification, required full-routine evidence and later completion/delivery gates are not established by this finite implementation proof.
+
+<!-- C271-P14-RECOVERY-CORE -->
+## P14 delivery recovery checkpoint
+
+The interrupted implementation is published at `e26dc6369a8d6ba88ea779b26a8c655121ae5dbc`. Its unchanged final ZIP and matching prompts passed independent review, saving and exact readback. The [separate P14 receipt](../../../engineering/localized-repair-c271/loader-path-p14/P14-DELIVERY.json) records the actual identities. Terminal receipt confirmation remains the only session step at this checkpoint; finish it and stop. R01/R02 remain done; R03/R04/R05 remain not_done, P02 remains in_progress and parent C271 remains blocked/open. No production, test, contract, main or integration-lease change occurred during this recovery. The next technical action belongs to a fresh chat: bounded H0 preparation and independent actual-loader source/plan review before H1.

@@ -1,0 +1,59 @@
+{
+  "phase": "C271-P14-delivery-only-recovery",
+  "owner": "c271-p14-recovery-bef4a6dd8f04",
+  "declared_at_utc": "2026-11-22T04:27:40.888033+00:00",
+  "main": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+  "source_revision": "e26dc6369a8d6ba88ea779b26a8c655121ae5dbc",
+  "source_tree": "0271ee6a507f83015eea06b63b1bed51753ba419",
+  "branch": "work/c271-missing-import-digest-control",
+  "scope": "Finish final package verification, saved delivery and separate receipt only; reconcile publication, do not repeat completed writes.",
+  "first_unmet_gate": "P14-A05 independent final-package review, saved delivery and receipt",
+  "stop": "P14 verified partial delivery and receipt. No new technical phase.",
+  "parent_status": "blocked",
+  "requirements": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "unknown_current_writes": [],
+  "historical_unknowns": [
+    "C270 broad-driver completion",
+    "Global prior-process termination",
+    "P13 read-only difflib completion"
+  ],
+  "capabilities": {
+    "authenticated_git_read": true,
+    "github_read": true,
+    "conditional_git_ref_tool": "available",
+    "git_data_write": "available_not_yet_exercised_this_session",
+    "library_read": true,
+    "library_save": "available_not_yet_exercised_this_session",
+    "terminal": true,
+    "subagents": true,
+    "zip_creation": true,
+    "merge": "available_not_selected",
+    "deletion": "unavailable_not_selected"
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "workers": [
+    "/root/remote_reconciliation",
+    "/root/package_engineer",
+    "/root/evidence_review"
+  ],
+  "observed_surviving_prior_workspace": "/workspace/scratch/29fbc446c948",
+  "publication_log_gap": "resolved: original final002 checks bind exact published tree and are present in existing final ZIP",
+  "early_save_confirmed": true,
+  "early_receipt": "EARLY-RECOVERY-RECEIPT.json",
+  "source_time": "Recovery declaration and early save, later exact outcomes recorded separately.",
+  "applicable_skills": [
+    "ontokin-session",
+    "ontokin-delivery",
+    "ontokin-learning"
+  ]
+}
