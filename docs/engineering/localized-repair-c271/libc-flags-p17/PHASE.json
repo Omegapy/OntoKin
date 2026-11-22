@@ -41,7 +41,7 @@
   "integration_allowed": false,
   "phase_complete": false,
   "early_save_confirmed": true,
-  "status": "design_adopted_delivery_pending",
+  "status": "core_saved_terminal_delivery_pending",
   "acceptance": [
     {
       "id": "P17-A01",
@@ -79,11 +79,11 @@
     },
     {
       "gate": "P17-A04",
-      "state": "pending"
+      "state": "passed"
     },
     {
       "gate": "P17-A05",
-      "state": "pending"
+      "state": "core_zip_and_prompts_confirmed; separate receipt checkpoint and terminal confirmation pending"
     }
   ],
   "constraints": [
@@ -107,7 +107,7 @@
     {
       "worker": "/root/handoff_audit",
       "scope": "independent predecessor/early/final package audit",
-      "state": "intake/early/startup review complete; final documentary/package review pending"
+      "state": "core and package reviews complete; receipt delta review pending at this snapshot"
     },
     {
       "worker": "/root/records_review",
@@ -117,7 +117,7 @@
     {
       "worker": "/root",
       "scope": "canonical coordination and delivery",
-      "state": "technical adoption complete; documentary publication and delivery only"
+      "state": "core ZIP/prompts saved and read back; receipt publication and terminal delivery only"
     },
     {
       "worker": "/root/flags_design",
@@ -131,7 +131,7 @@
     "Global prior-process termination",
     "P13 read-only difflib completion; do not retry"
   ],
-  "next_action": "Only documentary verification, conditional branch publication and verified P17 partial delivery remain in this chat.",
+  "next_action": "Independently review/check/publish this receipt delta; reopen the exact commit; refresh PR/issue; preserve and confirm the separate terminal carrier; stop.",
   "early_recovery": {
     "local_path": "/workspace/scratch/bbea56c9165d/deliverables/early-attempt002/OntoKin_C271_P17_Libc_Flags_Early_Recovery_2026-11-22.zip",
     "purpose": "create_library_file",
@@ -157,5 +157,16 @@
   },
   "technical_complete": true,
   "adoption": "docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json",
-  "technical_boundary_at_utc": "2026-11-22T18:44:36.450224+00:00"
+  "technical_boundary_at_utc": "2026-11-22T18:44:36.450224+00:00",
+  "source_revision": "4770a5ea7027ea25d64ef0c339ca360e367dc0cd",
+  "source_tree": "1edd32774c559f68f4a339503b38cdcc77a700ea",
+  "core_checkpoint": {
+    "commit": "4770a5ea7027ea25d64ef0c339ca360e367dc0cd",
+    "tree": "1edd32774c559f68f4a339503b38cdcc77a700ea",
+    "parent": "4d259aff76af30381c0796f1527740f76cca1d9a",
+    "conditional_nonforce": true,
+    "exact_remote_readback": true
+  },
+  "final_core_saved": true,
+  "delivery_receipt": "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json"
 }

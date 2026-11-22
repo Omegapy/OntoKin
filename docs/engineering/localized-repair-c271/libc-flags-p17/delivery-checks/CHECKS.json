@@ -1,0 +1,68 @@
+{
+  "schema": "ontokin.c271.p17-documentary-checks/1",
+  "source_head": "4d259aff76af30381c0796f1527740f76cca1d9a",
+  "checked_staged_tree": "1edd32774c559f68f4a339503b38cdcc77a700ea",
+  "worktree_equal_index": true,
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "results": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "started_at_utc": "2026-11-22T18:44:40.330762+00:00",
+      "exit_code": 0,
+      "stdout": "01-stdout.txt",
+      "stdout_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1",
+      "stderr": "01-stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "started_at_utc": "2026-11-22T18:44:40.450667+00:00",
+      "exit_code": 0,
+      "stdout": "02-stdout.txt",
+      "stdout_sha256": "fc23af5e3092fd8ee9618b4409e37222d72feaae9ffdeb5045668f34126dfe09",
+      "stderr": "02-stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_at_utc": "2026-11-22T18:44:43.055972+00:00",
+      "exit_code": 0,
+      "stdout": "03-stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "03-stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "started_at_utc": "2026-11-22T18:44:43.067541+00:00",
+      "exit_code": 0,
+      "stdout": "04-stdout.txt",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "04-stderr.txt",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "passed": true,
+  "limits": "Documentary checks only; no product or host qualification"
+}

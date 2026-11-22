@@ -117,7 +117,8 @@
         "docs/engineering/localized-repair-c271/host-loader-p15/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/host-loader-p15/P15-DELIVERY.json",
         "docs/engineering/localized-repair-c271/host-loader-p15/P15-TERMINAL-CONFIRMATION.json",
-        "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json"
+        "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json"
       ]
     }
   ],
@@ -862,6 +863,19 @@
         "docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json"
       ],
       "limit": "Design-only acceptance; zero production imports, product policy evaluations, product tests or current-host inspections. No R03 completion."
+    },
+    {
+      "name": "P17 documentary core, protected source and verified saved partial handoff",
+      "command": "Four exact staged-tree documentary checks; full protected entry comparison; independent core/ZIP reviews; ordered saves and exact returned-byte/prompt-member comparisons",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/libc-flags-p17/delivery-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/libc-flags-p17/delivery-checks/SOURCE-BOUNDARY.json",
+        "docs/engineering/localized-repair-c271/libc-flags-p17/delivery-checks/PACKAGE-REVIEW.json"
+      ],
+      "limit": "Core checks and saved partial delivery only. This later receipt delta still requires its own review, checks and publication. No runtime, integration or parent acceptance."
     }
   ],
   "completion": {
@@ -888,7 +902,8 @@
       "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
       "docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json",
       "docs/engineering/localized-repair-c271/libc-flags-p17/PHASE-OUTCOME.json",
-      "docs/engineering/localized-repair-c271/libc-flags-p17/review/REVIEW.json"
+      "docs/engineering/localized-repair-c271/libc-flags-p17/review/REVIEW.json",
+      "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json"
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
@@ -913,10 +928,12 @@
     "libc_flags_decision": {
       "adoption": "docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json",
       "candidate_manifest_sha256": "5561dcd3cf718362f0716bb0c3ebf7fcf273befa1f6348f9996331d151b7c89b",
-      "implementation_performed": false
+      "implementation_performed": false,
+      "commit": "4770a5ea7027ea25d64ef0c339ca360e367dc0cd",
+      "tree": "1edd32774c559f68f4a339503b38cdcc77a700ea"
     }
   },
-  "next_action": "Only documentary verification, conditional branch publication and verified P17 partial delivery remain in this chat.",
+  "next_action": "Independently review/check/publish this receipt delta; reopen the exact commit; refresh PR/issue; preserve and confirm the separate terminal carrier; stop.",
   "session_phase": {
     "schema": "ontokin.c271.p17-phase/1",
     "task": "C271",
@@ -960,7 +977,7 @@
     "integration_allowed": false,
     "phase_complete": false,
     "early_save_confirmed": true,
-    "status": "design_adopted_delivery_pending",
+    "status": "core_saved_terminal_delivery_pending",
     "acceptance": [
       {
         "id": "P17-A01",
@@ -998,11 +1015,11 @@
       },
       {
         "gate": "P17-A04",
-        "state": "pending"
+        "state": "passed"
       },
       {
         "gate": "P17-A05",
-        "state": "pending"
+        "state": "core_zip_and_prompts_confirmed; separate receipt checkpoint and terminal confirmation pending"
       }
     ],
     "constraints": [
@@ -1026,7 +1043,7 @@
       {
         "worker": "/root/handoff_audit",
         "scope": "independent predecessor/early/final package audit",
-        "state": "intake/early/startup review complete; final documentary/package review pending"
+        "state": "core and package reviews complete; receipt delta review pending at this snapshot"
       },
       {
         "worker": "/root/records_review",
@@ -1036,7 +1053,7 @@
       {
         "worker": "/root",
         "scope": "canonical coordination and delivery",
-        "state": "technical adoption complete; documentary publication and delivery only"
+        "state": "core ZIP/prompts saved and read back; receipt publication and terminal delivery only"
       },
       {
         "worker": "/root/flags_design",
@@ -1050,7 +1067,7 @@
       "Global prior-process termination",
       "P13 read-only difflib completion; do not retry"
     ],
-    "next_action": "Only documentary verification, conditional branch publication and verified P17 partial delivery remain in this chat.",
+    "next_action": "Independently review/check/publish this receipt delta; reopen the exact commit; refresh PR/issue; preserve and confirm the separate terminal carrier; stop.",
     "early_recovery": {
       "local_path": "/workspace/scratch/bbea56c9165d/deliverables/early-attempt002/OntoKin_C271_P17_Libc_Flags_Early_Recovery_2026-11-22.zip",
       "purpose": "create_library_file",
@@ -1076,16 +1093,94 @@
     },
     "technical_complete": true,
     "adoption": "docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json",
-    "technical_boundary_at_utc": "2026-11-22T18:44:36.450224+00:00"
+    "technical_boundary_at_utc": "2026-11-22T18:44:36.450224+00:00",
+    "source_revision": "4770a5ea7027ea25d64ef0c339ca360e367dc0cd",
+    "source_tree": "1edd32774c559f68f4a339503b38cdcc77a700ea",
+    "core_checkpoint": {
+      "commit": "4770a5ea7027ea25d64ef0c339ca360e367dc0cd",
+      "tree": "1edd32774c559f68f4a339503b38cdcc77a700ea",
+      "parent": "4d259aff76af30381c0796f1527740f76cca1d9a",
+      "conditional_nonforce": true,
+      "exact_remote_readback": true
+    },
+    "final_core_saved": true,
+    "delivery_receipt": "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json"
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
-    "status": "design_adopted_final_pending",
+    "status": "core_saved_terminal_delivery_pending",
     "folder": "OntoKin",
     "partial": true,
     "early_receipt": "docs/engineering/localized-repair-c271/libc-flags-p17/EARLY-RECOVERY-RECEIPT.json",
-    "receipt": "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json"
+    "receipt": "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json",
+    "terminal_receipt_filename": "OntoKin_C271_P17_Delivery_Receipt_2026-11-22.json",
+    "saved_files": [
+      {
+        "local_path": "/workspace/scratch/bbea56c9165d/deliverables/final-attempt001/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_000000002fa081f5ac62a78c16cdd666",
+        "library_file_id": "libfile_fde3_f-39c0a0c7938c8191a29279c2b6e87303_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
+        "current_version_number": 0,
+        "bytes": 20868218,
+        "sha256": "b13e30cc0c8f7aeb702d31221742e2ed022e4b4d811c5bdad1e5c1909ed5589e",
+        "version": 0,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-39c0a0c7938c8191a29279c2b6e87303_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "readback_path": "/workspace/scratch/bbea56c9165d/readback/final/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
+        "saved_bytes_readback_equal": true,
+        "readback_metadata_applied": true,
+        "folder_metadata_verified": true,
+        "role": "handoff_zip"
+      },
+      {
+        "local_path": "/workspace/scratch/bbea56c9165d/deliverables/final-attempt001/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Continue.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_000000002cb081f5ba77891b71b40369",
+        "library_file_id": "libfile_fde3_f-a51fa48d1a508191a11e4a86cd017651_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Continue.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Continue.md",
+        "current_version_number": 0,
+        "bytes": 2064,
+        "sha256": "d0f8eba2dab1aa17be6a9ebb1d5c3099b2424a827e220acda0af0b1cc2036255",
+        "version": 0,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-a51fa48d1a508191a11e4a86cd017651_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "readback_path": "/workspace/scratch/bbea56c9165d/readback/final/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Continue.md",
+        "saved_bytes_readback_equal": true,
+        "readback_metadata_applied": true,
+        "folder_metadata_verified": true,
+        "role": "continue_prompt",
+        "matching_zip_member": "PROMPT-1-CONTINUE.md",
+        "zip_member_bytes_equal": true
+      },
+      {
+        "local_path": "/workspace/scratch/bbea56c9165d/deliverables/final-attempt001/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Recover.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_0000000020e081f5947f4e443db44efe",
+        "library_file_id": "libfile_fde3_f-795ed787cec08191921124af40cc1c64_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Recover.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Recover.md",
+        "current_version_number": 0,
+        "bytes": 2062,
+        "sha256": "10d8367b848f6048440a9491cf0e04fc2f63cd279bc709bb2ce37cbcaa3914be",
+        "version": 0,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-795ed787cec08191921124af40cc1c64_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "readback_path": "/workspace/scratch/bbea56c9165d/readback/final/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Recover.md",
+        "saved_bytes_readback_equal": true,
+        "readback_metadata_applied": true,
+        "folder_metadata_verified": true,
+        "role": "recover_prompt",
+        "matching_zip_member": "PROMPT-2-RECOVER.md",
+        "zip_member_bytes_equal": true
+      }
+    ]
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
