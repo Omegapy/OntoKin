@@ -1,0 +1,550 @@
+{
+  "schema": "ontokin.c271.startup-p17-reconciliation/1",
+  "audited_at_utc": "2026-11-22T19:16:57.322766+00:00",
+  "auditor": "/root/handoff_audit",
+  "scope": "Bounded P17 startup evidence integrity and reconciliation with Director-supplied current-session saved-file materializations and live checkpoint snapshots, before new early-recovery confirmation. No implementation or runtime qualification.",
+  "verdict": "passed_reconciled_p17_startup_evidence",
+  "mandatory_local_integrity_findings": [],
+  "inputs": {
+    "zip": {
+      "path": "/workspace/scratch/cf3e30ae3c50/incoming/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
+      "size": 20868218,
+      "sha256": "b13e30cc0c8f7aeb702d31221742e2ed022e4b4d811c5bdad1e5c1909ed5589e",
+      "entry_count": 813,
+      "duplicate_names": [],
+      "normalized_duplicate_names": [],
+      "casefold_duplicate_names": []
+    },
+    "extracted_root": "/workspace/scratch/cf3e30ae3c50/incoming/p17",
+    "separate": {
+      "OntoKin_C271_P17_Delivery_Receipt_2026-11-22.json": {
+        "path": "/workspace/scratch/cf3e30ae3c50/incoming/OntoKin_C271_P17_Delivery_Receipt_2026-11-22.json",
+        "bytes": 9722465,
+        "sha256": "57dc3dbdf127c64cf49725962e2a62d9962430c1bb69395ef7550013e5d38fdf"
+      },
+      "OntoKin_C271_P17_Terminal_Audit_2026-11-22.json": {
+        "path": "/workspace/scratch/cf3e30ae3c50/incoming/OntoKin_C271_P17_Terminal_Audit_2026-11-22.json",
+        "bytes": 2246699,
+        "sha256": "a290eff77f6798b4af7d278ee10f8477cacc0940fc35bfd45e2de0ee212d5153"
+      }
+    }
+  },
+  "counts": {
+    "archive_files": 813,
+    "crc_validated_files": 813,
+    "manifest_rows": 812,
+    "manifest_self_excluded_files": 1,
+    "extracted_exact_files": 813,
+    "source_manifest_rows": 80,
+    "source_revision_files": 71,
+    "observed_main_files": 9,
+    "recovery_map_rows": 717,
+    "receipt_embedded_files": 71,
+    "receipt_embedded_raw_bytes": 7263411,
+    "receipt_source_manifest_rows": 22,
+    "terminal_audit_embedded_files": 82,
+    "terminal_audit_embedded_raw_bytes": 18513406,
+    "terminal_audit_exact_receipt_file_copies": 71,
+    "historical_derivative_exclusions": 2508,
+    "summarized_check_groups": 62,
+    "passed_check_groups": 62
+  },
+  "revisions": {
+    "main": {
+      "commit": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+      "tree": "7302cf8f36c45dd76112ad442e42e48379ac8367",
+      "basis": "Frozen main observation; fresh live reconciliation belongs to Director."
+    },
+    "source": {
+      "commit": "4770a5ea7027ea25d64ef0c339ca360e367dc0cd",
+      "tree": "1edd32774c559f68f4a339503b38cdcc77a700ea",
+      "parent": "4d259aff76af30381c0796f1527740f76cca1d9a",
+      "conditional_nonforce": true,
+      "exact_remote_readback": true
+    },
+    "receipt": {
+      "commit": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+      "tree": "058c14ef754761aaf4d0e04a7bdb690b2a901ea1",
+      "parent": "4770a5ea7027ea25d64ef0c339ca360e367dc0cd"
+    }
+  },
+  "base_handoff_saved_identity": {
+    "file_name": "OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
+    "file_id": "file_000000002fa081f5ac62a78c16cdd666",
+    "library_file_id": "libfile_fde3_f-39c0a0c7938c8191a29279c2b6e87303_2ab2a24d43748191957f9bcc356b59de",
+    "bytes": 20868218,
+    "sha256": "b13e30cc0c8f7aeb702d31221742e2ed022e4b4d811c5bdad1e5c1909ed5589e",
+    "version": 0,
+    "saved_bytes_readback_equal": true,
+    "folder_metadata_verified": true
+  },
+  "matching_prompt_identities": [
+    {
+      "file_name": "OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Continue.md",
+      "library_file_id": "libfile_fde3_f-a51fa48d1a508191a11e4a86cd017651_2ab2a24d43748191957f9bcc356b59de",
+      "bytes": 2064,
+      "sha256": "d0f8eba2dab1aa17be6a9ebb1d5c3099b2424a827e220acda0af0b1cc2036255",
+      "version": 0,
+      "matching_zip_member": "PROMPT-1-CONTINUE.md",
+      "saved_bytes_readback_equal": true,
+      "zip_member_bytes_equal": true
+    },
+    {
+      "file_name": "OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22_Recover.md",
+      "library_file_id": "libfile_fde3_f-795ed787cec08191921124af40cc1c64_2ab2a24d43748191957f9bcc356b59de",
+      "bytes": 2062,
+      "sha256": "10d8367b848f6048440a9491cf0e04fc2f63cd279bc709bb2ce37cbcaa3914be",
+      "version": 0,
+      "matching_zip_member": "PROMPT-2-RECOVER.md",
+      "saved_bytes_readback_equal": true,
+      "zip_member_bytes_equal": true
+    }
+  ],
+  "checks": {
+    "manifest_safe": {
+      "passed": true,
+      "detail": []
+    },
+    "manifest_unique": {
+      "passed": true
+    },
+    "manifest_casefold_unique": {
+      "passed": true
+    },
+    "manifest_exact_inventory": {
+      "passed": true,
+      "detail": {
+        "missing": [],
+        "extra": []
+      }
+    },
+    "manifest_sizes_hashes": {
+      "passed": true,
+      "detail": {
+        "checked": 812,
+        "mismatches": []
+      }
+    },
+    "extracted_exact_inventory": {
+      "passed": true
+    },
+    "extracted_sizes_hashes": {
+      "passed": true,
+      "detail": {
+        "checked": 813
+      }
+    },
+    "source_manifest_safe": {
+      "passed": true,
+      "detail": []
+    },
+    "source_manifest_unique": {
+      "passed": true
+    },
+    "source_manifest_casefold_unique": {
+      "passed": true
+    },
+    "source_sizes_hashes": {
+      "passed": true,
+      "detail": {
+        "checked": 80,
+        "mismatches": []
+      }
+    },
+    "source_exact_inventory": {
+      "passed": true
+    },
+    "source_revision_path_mapping": {
+      "passed": true
+    },
+    "recovery_map_safe": {
+      "passed": true,
+      "detail": []
+    },
+    "recovery_map_unique": {
+      "passed": true
+    },
+    "recovery_map_casefold_unique": {
+      "passed": true
+    },
+    "recovery_sizes_hashes": {
+      "passed": true,
+      "detail": {
+        "checked": 717,
+        "mismatches": []
+      }
+    },
+    "recovery_exact_inventory": {
+      "passed": true
+    },
+    "recovery_original_paths_unique": {
+      "passed": true
+    },
+    "OntoKin_C271_P17_Delivery_Receipt_2026-11-22.json_expected_sha256": {
+      "passed": true
+    },
+    "receipt_embedded_safe": {
+      "passed": true,
+      "detail": []
+    },
+    "receipt_embedded_unique": {
+      "passed": true
+    },
+    "receipt_embedded_casefold_unique": {
+      "passed": true
+    },
+    "receipt_payload_integrity": {
+      "passed": true,
+      "detail": {
+        "file_count": 71,
+        "raw_bytes": 7263411,
+        "failures": []
+      }
+    },
+    "receipt_declared_counts": {
+      "passed": true
+    },
+    "OntoKin_C271_P17_Terminal_Audit_2026-11-22.json_expected_sha256": {
+      "passed": true
+    },
+    "terminal_audit_embedded_safe": {
+      "passed": true,
+      "detail": []
+    },
+    "terminal_audit_embedded_unique": {
+      "passed": true
+    },
+    "terminal_audit_embedded_casefold_unique": {
+      "passed": true
+    },
+    "terminal_audit_payload_integrity": {
+      "passed": true,
+      "detail": {
+        "file_count": 82,
+        "raw_bytes": 18513406,
+        "failures": []
+      }
+    },
+    "terminal_audit_declared_counts": {
+      "passed": true
+    },
+    "receipt_base_zip_identity": {
+      "passed": true
+    },
+    "receipt_prompt_PROMPT-1-CONTINUE.md": {
+      "passed": true
+    },
+    "receipt_prompt_PROMPT-2-RECOVER.md": {
+      "passed": true
+    },
+    "audit_receipt_identity": {
+      "passed": true
+    },
+    "receipt_source_manifest_safe": {
+      "passed": true,
+      "detail": []
+    },
+    "receipt_source_manifest_unique": {
+      "passed": true
+    },
+    "receipt_source_manifest_casefold_unique": {
+      "passed": true
+    },
+    "receipt_source_sizes_hashes": {
+      "passed": true,
+      "detail": {
+        "checked": 22,
+        "mismatches": []
+      }
+    },
+    "receipt_source_exact_inventory": {
+      "passed": true
+    },
+    "receipt_source_git_blobs": {
+      "passed": true
+    },
+    "receipt_source_revisions": {
+      "passed": true
+    },
+    "receipt_checkpoint_parent": {
+      "passed": true
+    },
+    "audit_review_hash_binding": {
+      "passed": true
+    },
+    "source_git_blob_hashes": {
+      "passed": true,
+      "detail": {
+        "checked": 80,
+        "mismatches": []
+      }
+    },
+    "audit_receipt_embedded_copy_identity": {
+      "passed": true,
+      "detail": {
+        "checked": 71
+      }
+    },
+    "retained_receipt_publication_readback": {
+      "passed": true,
+      "detail": null
+    },
+    "retained_ci_zero_evidence": {
+      "passed": true,
+      "detail": {
+        "statuses": 0,
+        "runs": 0
+      }
+    },
+    "retained_save_readback_identity": {
+      "passed": true,
+      "detail": null
+    },
+    "retained_folder_save_identity": {
+      "passed": true,
+      "detail": null
+    },
+    "retained_independent_audit_summary": {
+      "passed": true,
+      "detail": null
+    },
+    "receipt_readback_reference": {
+      "passed": true,
+      "detail": null
+    },
+    "receipt_core_documentary_checks_reference": {
+      "passed": true,
+      "detail": null
+    },
+    "receipt_source_boundary_reference": {
+      "passed": true,
+      "detail": null
+    },
+    "receipt_core_independent_review_reference": {
+      "passed": true,
+      "detail": null
+    },
+    "receipt_package_verification_reference": {
+      "passed": true,
+      "detail": null
+    },
+    "receipt_package_independent_review_reference": {
+      "passed": true,
+      "detail": null
+    },
+    "exclusion_unique_safe_paths": {
+      "passed": true,
+      "detail": {
+        "count": 2508
+      }
+    },
+    "exclusion_source_identity_bindings": {
+      "passed": true,
+      "detail": null
+    },
+    "included_exclusion_archive_95bc1eacb755": {
+      "passed": true,
+      "detail": null
+    },
+    "live_prs.json_terminal_confirmation": {
+      "passed": true,
+      "detail": {
+        "source_path": "/workspace/scratch/cf3e30ae3c50/state/prs.json",
+        "source_sha256": "32fc0c90f240dd5bcdb0ad2525de2517dfc904937f478ab4e79f5dd730623a48"
+      }
+    },
+    "live_issue273.json_terminal_confirmation": {
+      "passed": true,
+      "detail": {
+        "source_path": "/workspace/scratch/cf3e30ae3c50/state/issue273.json",
+        "source_sha256": "1d422b0bc16c3fd3a23e77848b8bb7512e1de5fafb2620669d75a54cfab528b0"
+      }
+    }
+  },
+  "pending_field_reconciliation": [
+    {
+      "source": "CHECKPOINT.json",
+      "fields": {
+        "status": "published_design_final_delivery_pending",
+        "phase_complete": false,
+        "delivery_state_at_freeze": "save_pending",
+        "P17-A05": "pending"
+      },
+      "later_evidence": [
+        "receipt embedded p17-session/FINAL-SAVE-RECEIPT.json",
+        "receipt embedded receipt-repository/docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json",
+        "terminal receipt base_handoff and matching_prompts"
+      ],
+      "superseded_scope": "Matching core ZIP and matching prompt audit/save/readback pending fields only. These bytes match the saved identity. No prior evidence or requirement state is waived."
+    },
+    {
+      "source": "repository/docs/engineering/localized-repair-c271/libc-flags-p17/PHASE.json and PHASE-OUTCOME.json",
+      "fields": {
+        "status": "design_adopted_delivery_pending",
+        "P17-A04": "pending",
+        "P17-A05": "pending",
+        "delivery_state_at_source": "final archive audit/save and separate receipt pending"
+      },
+      "later_evidence": [
+        "CHECKPOINT.json core_checkpoint",
+        "receipt source_checkpoint",
+        "receipt receipt_checkpoint",
+        "receipt embedded publication/receipt001/READBACK.json",
+        "independent audit review"
+      ],
+      "superseded_scope": "Documentary core publication, core artifact saving, and separate receipt publication are represented as completed by later immutable evidence. Source-time fields remain historical records."
+    },
+    {
+      "source": "receipt embedded P17-DELIVERY.json, PHASE.json and PHASE-OUTCOME.json",
+      "fields": {
+        "receipt_publication": "pending at source freeze"
+      },
+      "later_evidence": [
+        "terminal receipt receipt_checkpoint",
+        "receipt embedded p17-session/publication/receipt001/READBACK.json",
+        "terminal audit independent review"
+      ],
+      "superseded_scope": "Receipt publication at 8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8, parent 4770a5ea7027ea25d64ef0c339ca360e367dc0cd, is confirmed by retained exact readbacks; do not republish solely because of the earlier pending text."
+    },
+    {
+      "source": "separate terminal receipt and terminal audit companion",
+      "fields": {
+        "terminal_receipt_save_readback": "external after freeze",
+        "terminal_audit_save_readback": "external after freeze",
+        "final_PR274_issue273_refresh": "external after freeze"
+      },
+      "later_evidence": [
+        "Current-session saved-file materializations with exact expected measured hashes, provenance confirmed by Director.",
+        "Live state/prs.json and state/issue273.json final P17 checkpoint markers both confirm terminal receipt/audit saved at version 0 with exact readbacks and the same hashes."
+      ],
+      "superseded_scope": "The terminal receipt/audit own-save, readback and final public-refresh pending fields are superseded by current-session saved-file readbacks plus matching live checkpoint confirmations. P17 partial delivery is complete. C271 parent state and new-phase gates remain unchanged."
+    }
+  ],
+  "retained_independent_review": {
+    "passed": true,
+    "mandatory_findings": [],
+    "assertions_passed": 13613,
+    "audit_review_sha256": "9961a5177459d564d6d7933cacc0d5e95e77bb60ef5177a75bde21b4f541ccf2",
+    "limits": "Prior review result is preserved evidence; 13,613 assertions were not rerun in this startup audit."
+  },
+  "technical_result": {
+    "status": "P17-FLAGS-001 accepted design only",
+    "controls": 41,
+    "images": 22,
+    "fixtures": 63,
+    "prior_author_integrity_groups": 7,
+    "prior_independent_static_assertions": 1655,
+    "implementation_performed": false,
+    "runtime_qualification": false
+  },
+  "parent_state": {
+    "task": "C271",
+    "status": "blocked",
+    "complete": false,
+    "requirements": {
+      "R01": "done",
+      "R02": "done",
+      "R03": "not_done",
+      "R04": "not_done",
+      "R05": "not_done"
+    },
+    "plan": {
+      "P01": "done",
+      "P02": "in_progress"
+    }
+  },
+  "retained_repository_state": {
+    "main": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+    "pull_request": 274,
+    "draft": true,
+    "pr_state": "open",
+    "merged": false,
+    "issue": 273,
+    "issue_state": "open",
+    "branch_retained": true,
+    "main_lease": false,
+    "integration": false
+  },
+  "retained_ci_evidence": {
+    "statuses": 0,
+    "workflow_runs": 0,
+    "claim": "No CI pass; these are retained observations at the receipt commit, not a fresh live check."
+  },
+  "recovery_exclusions": {
+    "count": 2508,
+    "source_identity_bindings_valid": true,
+    "sources": [
+      {
+        "sha256": "95bc1eacb755bb83d0908b5ec20fe68b4860d05a890babf7bb43aa4c94092ee8",
+        "included_in_final": true,
+        "matching_archive_members": [
+          "predecessor/OntoKin_C271_P16_Libc_Tag_Decision_Handoff_2026-11-22.zip"
+        ],
+        "library_file_id": "libfile_fde3_f-f9ec9ea47be081918e2f1ce73223e7c8_2ab2a24d43748191957f9bcc356b59de"
+      },
+      {
+        "sha256": "30bdf10be0baf2cc0da9e869184e26b0dae57878f3ad1d652f93430c007ee70e",
+        "included_in_final": false,
+        "matching_archive_members": [],
+        "library_file_id": "libfile_fde3_f-de9a3011d9c88191a54ede2a76e25293_2ab2a24d43748191957f9bcc356b59de"
+      }
+    ],
+    "unmatched_retained": [],
+    "limit": "Exact external original archive members for 2,508 derivative omissions were not fetched or recursively replayed in this bounded startup audit. One exclusion source is not included in the base package. This remains an online continuation handoff, not a complete offline restoration."
+  },
+  "external_reconciliation_needed": [
+    "Director declaration and independently verified new early recovery before any new implementation."
+  ],
+  "operations": {
+    "recovered_script_or_binary_executions": 0,
+    "git_commands": 0,
+    "external_service_calls": 0,
+    "repository_or_external_mutations": 0,
+    "implementation_changes": 0,
+    "writes_confined_to": "/workspace/scratch/cf3e30ae3c50/audit",
+    "active_operations": [],
+    "current_unknown_operations": []
+  },
+  "historical_unknowns": [
+    "C270 ancillary broad-driver completion",
+    "Global prior-process termination",
+    "P13 read-only difflib completion; do not retry"
+  ],
+  "read_method": {
+    "archive": "One archive byte read; every member read once through ZipFile with CRC verification.",
+    "extracted": "One complete byte inventory; one supplemental 80-source pass to derive Git blob SHA-1 without Git.",
+    "carriers": "Each separate carrier read once; all embedded payloads decoded and hashed inertly in memory; only the audit cache was written.",
+    "cache": "P17-READ-SNAPSHOT.json is a reproducible reading cache, not an independent original source.",
+    "live_checkpoint": "Each Director-supplied live PR/issue snapshot read once; matching P17 terminal confirmation excerpts retained in P17-LIVE-CHECKPOINT-EXCERPTS.json."
+  },
+  "current_session_confirmation": {
+    "provenance": "Director message confirms incoming terminal receipt/audit were materialized this session from the known saved IDs, version 0; my computed byte identities are therefore actual saved-file readbacks. This auditor made no external call.",
+    "terminal_receipt": {
+      "library_file_id": "libfile_fde3_f-8226f920fd1c81919cd47e09cc380764_2ab2a24d43748191957f9bcc356b59de",
+      "version": 0,
+      "bytes": 9722465,
+      "sha256": "57dc3dbdf127c64cf49725962e2a62d9962430c1bb69395ef7550013e5d38fdf"
+    },
+    "terminal_audit": {
+      "library_file_id": "libfile_fde3_f-4a638eb5ef98819198fab55bfd1a8b35_2ab2a24d43748191957f9bcc356b59de",
+      "version": 0,
+      "bytes": 2246699,
+      "sha256": "a290eff77f6798b4af7d278ee10f8477cacc0940fc35bfd45e2de0ee212d5153"
+    },
+    "public_checkpoint_evidence": [
+      {
+        "path": "/workspace/scratch/cf3e30ae3c50/state/prs.json",
+        "bytes": 67536,
+        "sha256": "32fc0c90f240dd5bcdb0ad2525de2517dfc904937f478ab4e79f5dd730623a48"
+      },
+      {
+        "path": "/workspace/scratch/cf3e30ae3c50/state/issue273.json",
+        "bytes": 67426,
+        "sha256": "1d422b0bc16c3fd3a23e77848b8bb7512e1de5fafb2620669d75a54cfab528b0"
+      }
+    ],
+    "public_checkpoint_result": "Both live PR and issue snapshots explicitly confirm P17 partial delivery complete, both saved carrier IDs, version 0 and these exact SHA-256 values.",
+    "current_refs": "Director independently reports live main 70ca7e68ff95df876f801137369d176fe5b2bab3 and retained branch 8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8 agree with the authentic checkout.",
+    "p17_partial_delivery_complete": true
+  }
+}

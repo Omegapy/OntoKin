@@ -1,0 +1,152 @@
+{
+  "schema": "ontokin.c271.p18-early-independent-review/1",
+  "attempt": "001",
+  "reviewer": "/root/handoff_audit",
+  "reviewed_at_utc": "2026-11-22T19:21:15.264464+00:00",
+  "verdict": "rejected_requires_distinct_corrected_archive",
+  "accepted_for_early_recovery_save": false,
+  "archive": {
+    "path": "/workspace/scratch/cf3e30ae3c50/deliverables/early/OntoKin_C271_P18_Libc_Implementation_Early_Recovery_2026-11-22.zip",
+    "bytes": 35040327,
+    "sha256": "d1c6723cb3c666be55a1ebd95fe54a7a61ef412c0097732f6c0ed493d6d1050b",
+    "entries": 82
+  },
+  "extraction": {
+    "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted",
+    "fresh": true,
+    "mode": "0700",
+    "file_mode": "0600",
+    "executed_recovered_content": false
+  },
+  "mandatory_findings": [
+    {
+      "id": "P18-EARLY-001",
+      "severity": "mandatory",
+      "category": "recovery inventory",
+      "paths": [
+        "RECOVERY-FILE-MAP.json",
+        "recovery/session/build_handoff.py"
+      ],
+      "observed": "The archive contains 28 recovery/session files; the recovery map has 27 rows and omits build_handoff.py. Existing map rows are correct.",
+      "requirement": "Required recoverable unpublished bytes must have base/application instructions; the package asserts RECOVERY-FILE-MAP.json describes current session bytes.",
+      "correction": "Include the builder in the recovery map with original path, exact byte length/SHA-256 and inert application instructions. Verify exact map inventory closure."
+    },
+    {
+      "id": "P18-EARLY-002",
+      "severity": "mandatory",
+      "category": "checkpoint completeness",
+      "paths": [
+        "CHECKPOINT.json"
+      ],
+      "observed": "observed_main gives commit/tree but no observation time. Acceptance is an unstatused list; no concise phase table binds completed/pending gates to evidence and remaining actions.",
+      "requirement": "HANDOFF required CHECKPOINT contents include observed main SHA/tree/time and completed/incomplete steps/evidence. PROTOCOL section 8 requires one concise phase table with completed gate evidence, remaining actions and unknown operations.",
+      "correction": "Record the actual main observation time and add explicit phase/gate statuses with references to preserved startup readsets, P17 reconciliation, outstanding independent early review/save and the technical/delivery gates. Retain early_save_confirmed=false and save_pending at freeze."
+    },
+    {
+      "id": "P18-EARLY-003",
+      "severity": "mandatory",
+      "category": "required handoff and recovery semantics",
+      "paths": [
+        "HANDOFF.md",
+        "RECOVERY-STATUS.md"
+      ],
+      "observed": "The root handoff describes intent and limits but does not give the required concise verification/review evidence or failure state. Recovery text points generally to CHECKPOINT without explicitly saying current unknown operations are none. Neither explains the precise inherited main/branch CURRENT fields that remain historical despite the current P18 declaration.",
+      "requirement": "HANDOFF required contents include verification/review, failures, unrun checks, limits and remaining work. RECOVERY-STATUS requires readbacks/blockers/outstanding delivery and explicit identification when none is known. Snapshots may be stale and must be reconciled.",
+      "correction": "Add concise evidence-linked startup/P17 audit results, actual current failures or explicit none, product checks not_run, and current unknown operations none. For the corrected build preserve this rejected attempt. Explain that main CURRENT C270/awaiting-direction and branch CURRENT P17 terminal-pending fields are historical, superseded by current P18 declaration and P17 actual readback/live confirmation evidence. P18 own early-save pending remains real until its later receipt."
+    }
+  ],
+  "passed_checks": {
+    "safe_unique_regular_inert_entries": 82,
+    "crc_size_valid_entries": 82,
+    "exact_payload_manifest_rows": 81,
+    "actual_extracted_files_equal": 82,
+    "exact_git_source_snapshots": 40,
+    "repository_snapshots_at_receipt_commit": 31,
+    "observed_main_snapshots": 9,
+    "source_size_sha256_git_blob_bindings": 40,
+    "correct_recovery_map_rows": 27,
+    "predecessor_whole_file_equalities_reusing_prior_audit": 3,
+    "external_prompts_equal": 2
+  },
+  "identity": {
+    "main": {
+      "commit": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+      "tree": "7302cf8f36c45dd76112ad442e42e48379ac8367"
+    },
+    "source_revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+    "source_tree": "058c14ef754761aaf4d0e04a7bdb690b2a901ea1",
+    "parent_status": "blocked",
+    "parent_complete": false,
+    "phase": "C271-P18-libc-metadata-implementation",
+    "phase_status": "early_recovery_preparation",
+    "early_save_confirmed": false,
+    "delivery_state_at_freeze": "save_pending",
+    "external_receipt": "docs/engineering/localized-repair-c271/libc-implementation-p18/EARLY-RECOVERY-RECEIPT.json"
+  },
+  "semantic_results": {
+    "early_self_receipt_absence_is_correct": true,
+    "implementation_not_started_is_correct": true,
+    "parent_requirements_plan_and_limits_consistent": true,
+    "read_only_workers_until_early_confirmation": true,
+    "p17_delivery_confirmation_preserved": true,
+    "c262_identity_purpose_preserved": true,
+    "c263_workflow_migration_boundary_preserved_in_exact_current_snapshots": true,
+    "complete_online_continuation_prompts_present": true,
+    "full_offline_recovery_not_claimed": true,
+    "stale_source_fields": [
+      {
+        "path": "repository/docs/workflow/CURRENT.json",
+        "field": "next_action.summary",
+        "value": "Independently review/check/publish this receipt delta; reopen the exact commit; refresh PR/issue; preserve and confirm the separate terminal carrier; stop.",
+        "interpretation": "P17 source-time next action; superseded by preserved P17 saved-file readbacks and live PR/issue terminal confirmation. Do not replay P17 delivery."
+      },
+      {
+        "path": "repository/docs/workflow/CURRENT.json",
+        "fields": [
+          "latest_recovery",
+          "boundaries P17 publication/delivery pending"
+        ],
+        "interpretation": "Historical P17 phase/saved recovery evidence. It is not P18 early recovery and cannot satisfy P18 early-save gate."
+      },
+      {
+        "path": "observed-main/docs/workflow/CURRENT.json",
+        "fields": {
+          "active_task": null,
+          "next_action.status": "awaiting_user_direction",
+          "observed_main": "ca57a50cd2910861832b0bfcca609980efd78139"
+        },
+        "interpretation": "C270-era workflow values preserved in actual main70ca7e68; source content does not identify current branch head or cancel the user-authorized C271/P18 continuation. README correctly distinguishes main-only licensing PR275 as a future integration obligation."
+      },
+      {
+        "path": "CHECKPOINT.json",
+        "fields": {
+          "early_save_confirmed": false,
+          "delivery_state_at_freeze": "save_pending"
+        },
+        "interpretation": "Current P18 pre-save truth, deliberately not superseded by any P17 confirmation. Only a later matching P18 saved-file receipt may supersede it."
+      }
+    ]
+  },
+  "evidence": {
+    "integrity_report": "/workspace/scratch/cf3e30ae3c50/audit/early-review/ATTEMPT001-INTEGRITY.json",
+    "prior_p17_report": "/workspace/scratch/cf3e30ae3c50/audit/P17-RECONCILIATION.json",
+    "governing_revision": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+    "governing_paths": [
+      "docs/workflow/HANDOFF.md",
+      "docs/workflow/PROTOCOL.md"
+    ],
+    "builder_inspected_as_data_only": "/workspace/scratch/cf3e30ae3c50/build_handoff.py"
+  },
+  "operations": {
+    "product_or_recovered_script_executions": 0,
+    "git_reads": "40 cat-file blob reads and one rev-parse tree read; no worktree/index/ref writes",
+    "repository_mutations": 0,
+    "external_calls": 0,
+    "archive_rebuilds": 0,
+    "writes_confined_to": "/workspace/scratch/cf3e30ae3c50/audit",
+    "active_operations": [],
+    "current_unknown_operations": []
+  },
+  "stop_and_next_action": "Preserve this archive and audit attempt. Director corrects the mandatory findings and builds a distinct attempt002 archive, then requests an affected independent review. Do not save attempt001 as the accepted early recovery or begin implementation.",
+  "derivative_preservation_note": "audit/early-extracted is an exact verified extraction of the rejected archive, with every member hash in ATTEMPT001-INTEGRITY.json. It may be represented by an explicit exact-byte derivative exclusion bound to the separately retained rejected archive instead of nesting the entire extraction in attempt002."
+}

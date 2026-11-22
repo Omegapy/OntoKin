@@ -1,0 +1,2843 @@
+{
+  "schema": "ontokin.c271.p18-early-independent-integrity-review/1",
+  "attempt": "002",
+  "auditor": "/root/handoff_audit",
+  "audited_at_utc": "2026-11-22T19:22:24.586092+00:00",
+  "archive": {
+    "path": "/workspace/scratch/cf3e30ae3c50/deliverables/early-attempt002/OntoKin_C271_P18_Libc_Implementation_Early_Recovery_Attempt002_2026-11-22.zip",
+    "bytes": 36100594,
+    "sha256": "cb562b2909e7e9bc48491833505c4d2418351786a822de47599b0960cd17dd28",
+    "entries": 91
+  },
+  "extraction": {
+    "path": "/workspace/scratch/cf3e30ae3c50/audit/early002-extracted",
+    "fresh": true,
+    "root_mode": "0700",
+    "file_mode": "0600",
+    "recovered_code_executed": false
+  },
+  "checks": [
+    {
+      "check": "expected_archive_identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "safe_unique_inert_paths",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "crc_declared_sizes",
+      "passed": true,
+      "detail": {
+        "files": 91
+      }
+    },
+    {
+      "check": "fresh_extraction_exact_bytes",
+      "passed": true,
+      "detail": {
+        "files": 91,
+        "mode": "0600",
+        "root_mode": "0700"
+      }
+    },
+    {
+      "check": "manifest_safe_unique",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "manifest_exact_inventory",
+      "passed": true,
+      "detail": {
+        "rows": 90,
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "check": "manifest_size_sha256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_safe_unique",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_exact_inventory",
+      "passed": true,
+      "detail": {
+        "rows": 40,
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "check": "source_size_sha256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "recovery_safe_unique",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "recovery_exact_inventory",
+      "passed": true,
+      "detail": {
+        "rows": 36,
+        "missing": [],
+        "extra": []
+      }
+    },
+    {
+      "check": "recovery_size_sha256",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_exact_prior_identity_reuse_or_changed_git_read",
+      "passed": true,
+      "detail": {
+        "reused": 40,
+        "fresh": []
+      }
+    },
+    {
+      "check": "source_git_blob_bindings",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "exact_previously_verified_source_tree",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "matching_PROMPT-1-CONTINUE.md",
+      "passed": true,
+      "detail": {
+        "path": "/workspace/scratch/cf3e30ae3c50/deliverables/early-attempt002/OntoKin_C271_P18_Libc_Implementation_Early_Recovery_Attempt002_2026-11-22_Continue.md",
+        "bytes": 1785,
+        "sha256": "5580def5fd49fb4ff72a7c5fec23c35ea6f5df5cf2e38d27fa8d6625c6067824"
+      }
+    },
+    {
+      "check": "matching_PROMPT-2-RECOVER.md",
+      "passed": true,
+      "detail": {
+        "path": "/workspace/scratch/cf3e30ae3c50/deliverables/early-attempt002/OntoKin_C271_P18_Libc_Implementation_Early_Recovery_Attempt002_2026-11-22_Recover.md",
+        "bytes": 2088,
+        "sha256": "07f8cf77c54427282f7d15ebf1848544bdfbfef8dec7dfa2a6a5bd536cbe89a6"
+      }
+    },
+    {
+      "check": "three_predecessor_exact_prior_audit_reuse",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "attempt001_review_exact_retention",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "attempt001_archive_still_unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "finding001_builder_mapping_resolved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "finding002_observation_and_phase_table_resolved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "phase_startup_evidence_paths_resolve",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "finding003_required_handoff_recovery_context_resolved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "exact_attempt001_derivative_exclusions",
+      "passed": true,
+      "detail": {
+        "count": 82,
+        "source_archive_sha256": "d1c6723cb3c666be55a1ebd95fe54a7a61ef412c0097732f6c0ed493d6d1050b",
+        "member_hashes_bound_by": "recovery/session/audit/early-review/ATTEMPT001-INTEGRITY.json"
+      }
+    },
+    {
+      "check": "P18_own_save_not_prematurely_claimed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "P17_reconciliation_remains_distinct",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "findings": [],
+  "members": {
+    "CHECKPOINT.json": {
+      "size": 6632,
+      "sha256": "fa3c4934c16d688a0fe1ab6ab71cb929db9fbb5826c7ff4a9772869eadf32b52",
+      "git_blob": "4bf03a927c3747b699f24e0c528b073b08daf2d3",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "HANDOFF.md": {
+      "size": 1714,
+      "sha256": "4d9aa629c2b7b233fb382cd2f7b063f71e0ed25c46b2697a30a78ccef23a3f56",
+      "git_blob": "0dbe39fd5a63eda1e680964d7dcbc171bc120158",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "HISTORICAL-DEPENDENCIES.json": {
+      "size": 974,
+      "sha256": "1f694a5e33b3618f0ce8747d48ab28428299ce3152d309dfb429d488ffbbb5e4",
+      "git_blob": "f0559ddac883c34cdcccdcaaf5aafd769ddb4be2",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "MANIFEST-SHA256.json": {
+      "size": 16405,
+      "sha256": "7fd9536474f8ee50254c1eed0fbf8851393316c31b036fe4821f4336e6d0ca6e",
+      "git_blob": "75ed90b5567e4013377dae874dabebbf7cc1228f",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "NEXT-TASK.md": {
+      "size": 354,
+      "sha256": "e749d62161b3d43146aee62fc68829cd11ef053b3cb4de960fd519b0625aa2df",
+      "git_blob": "cff1b33c366e28d38ea34e7fc0697c1b5372236e",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "PROMPT-1-CONTINUE.md": {
+      "size": 1785,
+      "sha256": "5580def5fd49fb4ff72a7c5fec23c35ea6f5df5cf2e38d27fa8d6625c6067824",
+      "git_blob": "197491729f74b54556b1a17373b482a1e8b8c6cd",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "PROMPT-2-RECOVER.md": {
+      "size": 2088,
+      "sha256": "07f8cf77c54427282f7d15ebf1848544bdfbfef8dec7dfa2a6a5bd536cbe89a6",
+      "git_blob": "e8fa0c09d9bded24b985db1dbe8349accd48a086",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "README-START-HERE.md": {
+      "size": 1209,
+      "sha256": "747f44a631ed14b08ffa54ce0f564de1b643aaa167000ac08747927ed244b406",
+      "git_blob": "5e3ef4af58fe8d355353cf707685b210be81d40e",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "RECOVERY-EXCLUSIONS.json": {
+      "size": 19223,
+      "sha256": "eef5be8b69d701d3a4fe1006d2872260d993563be9d53fb89d81dc05b2351fa1",
+      "git_blob": "9ebb5ec1791a1a1a439e9995218d30f4e4bd0ff0",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "RECOVERY-FILE-MAP.json": {
+      "size": 12726,
+      "sha256": "4a788120965c13676326ec7ef3e9663dbffa974d291c2739b60f45a7f0fa2c1a",
+      "git_blob": "151e717d01e3a65752e35ad9d58fc9bb0a8ac5da",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "RECOVERY-STATUS.md": {
+      "size": 1233,
+      "sha256": "68b26391abea0b6f03d269d8954e8f9cdab97031a08d02c79c6d0cba9cfbf6ce",
+      "git_blob": "3edd110fe33bd058a1a67b284fd29af709b2f872",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "SOURCE-MANIFEST.json": {
+      "size": 15184,
+      "sha256": "5bb84023da783fa45bb466b559b3b6e6edf0cbeeae248d9d5002d5ced1732e1c",
+      "git_blob": "f2763523c3971aabbb290b4e5a5b7ab4a3baceac",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "observed-main/AGENTS.md": {
+      "size": 7068,
+      "sha256": "ce0fef82308e1c329dcf0514c99e81e89c340bbb550cf0cdcdb589599ae42822",
+      "git_blob": "b9e478e082baffc597a0355fd6088969825ef1d6",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "observed-main/CHATGPT-START-HERE.md": {
+      "size": 2665,
+      "sha256": "99a69a4cfa633fb515ca08725b43b6193051249c279a4b31a9412d56e6593ce0",
+      "git_blob": "b7543b2d1e979d8fea82921e74123b5461104588",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "observed-main/GOAL.md": {
+      "size": 11740,
+      "sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc",
+      "git_blob": "069d6551a03fc2c974d2e844a9bb285bae312ada",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "observed-main/ROLE.md": {
+      "size": 1683,
+      "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf",
+      "git_blob": "94cba1161037beddb8b384a2c2cf1ee0d2120eaa",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "observed-main/STATUS.md": {
+      "size": 13772,
+      "sha256": "04a500a21e7a7b0148345e97bca72da93700f649032ec202ebb0e96b64448d7e",
+      "git_blob": "2cabb4caef0002173ccb897fbbc704559ec3815d",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "observed-main/docs/workflow/CURRENT.json": {
+      "size": 5527,
+      "sha256": "fec57459bd12896effe23010dcc6d9f8b709e350fd8cabe1c67309a7da941d40",
+      "git_blob": "9b9b7d4bb0eecde3691912b89d35a362c73b82c5",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "observed-main/docs/workflow/HANDOFF.md": {
+      "size": 6065,
+      "sha256": "d87e35055bbba590a4c6b738aba239030315fdade5a6ac2e618a83be48342bac",
+      "git_blob": "f68c0dbf8810099de551d3b50b55eb16ba552542",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "observed-main/docs/workflow/PROTOCOL.md": {
+      "size": 11711,
+      "sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad",
+      "git_blob": "2ade5aa5006239943dd9df71c91da79528bf5155",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "observed-main/docs/workflow/registry.json": {
+      "size": 1172,
+      "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536",
+      "git_blob": "545e0619847b2fd767b93dfd0c81dd5a1f055a99",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "predecessor/OntoKin_C271_P17_Delivery_Receipt_2026-11-22.json": {
+      "size": 9722465,
+      "sha256": "57dc3dbdf127c64cf49725962e2a62d9962430c1bb69395ef7550013e5d38fdf",
+      "git_blob": "565f3cca9f5d866387a6b5bbb3a55a5de2909bee",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "predecessor/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip": {
+      "size": 20868218,
+      "sha256": "b13e30cc0c8f7aeb702d31221742e2ed022e4b4d811c5bdad1e5c1909ed5589e",
+      "git_blob": "3b7e39b3629601d4203d05de574231f6f1e756db",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "predecessor/OntoKin_C271_P17_Terminal_Audit_2026-11-22.json": {
+      "size": 2246699,
+      "sha256": "a290eff77f6798b4af7d278ee10f8477cacc0940fc35bfd45e2de0ee212d5153",
+      "git_blob": "6eb9b9c1059b63f475ec823bef09cc071f8849e7",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/audit/P17-LIVE-CHECKPOINT-EXCERPTS.json": {
+      "size": 2801,
+      "sha256": "e196b729d6d6618b5f4578fd9e1a3b140539c0a5d551125e16e23082dfa57f74",
+      "git_blob": "6f70f26098d6c91b2e3bc74b50b4ab9480414944",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/audit/P17-READ-SNAPSHOT.json": {
+      "size": 63466123,
+      "sha256": "3df01a52ff926c00d0ad0838cf843105180cf0845cc25c968071ef5799f64848",
+      "git_blob": "699bf2c62f4f6bbb98bcb0eee198f6eba0c6fbba",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/audit/P17-RECONCILIATION.json": {
+      "size": 19010,
+      "sha256": "2318feffa9ec95a4cdcd81ec4e11428aab6a869081b11982e34a981f31b8f866",
+      "git_blob": "fb48e281c5830f58ec55e7e3ec46aa4b15d637b8",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/audit/P17-RECONCILIATION.md": {
+      "size": 3721,
+      "sha256": "68c3a0d8cb41bcc26171da3d41edf4bc7bfeb5462f56dd51a2ebb84c438cd935",
+      "git_blob": "a41dce9354b3d14668537ab1ab31cfefe89eea3b",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/audit/early-review/ATTEMPT001-INTEGRITY.json": {
+      "size": 238270,
+      "sha256": "d64110b906f23fad8a9b7bf4e31a18bc93fe0a55cae7db13de0b7e43d55960e2",
+      "git_blob": "a97d5b8e3ec176fae3ddfbe67064a5351588ed50",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/audit/early-review/ATTEMPT001-REVIEW.json": {
+      "size": 8735,
+      "sha256": "b4c684ebf78964cfbfe53f597977e2cceb1def6e5a7d13de9537d18d93939400",
+      "git_blob": "a751f4e089ad39544fd2911f0d0cd11e7bb5e633",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/audit/early-review/ATTEMPT001-REVIEW.md": {
+      "size": 2715,
+      "sha256": "59f18b767cbbd36b6f90c1f9cb671e3080aa847fcffd1b3a76afb6f5fa357414",
+      "git_blob": "38846255127e4858fa146c4725d22ede3598fb91",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/build_handoff.py": {
+      "size": 13710,
+      "sha256": "d3040852b5da08dbd6bdd6cb850d20993e240cbf9f5238e675c4874c11b2a7e1",
+      "git_blob": "c0d76a2766fa47bfdf7288f44cc991e711e4b624",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/implementation/PREPARATION.md": {
+      "size": 2866,
+      "sha256": "7140eae84060cf6099567a8d62540cdd82219e6452cbb5ba795d8d0ed69b0ef7",
+      "git_blob": "b45bb1051964850d3e8e62f70c70fb9a5150f06a",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/implementation/STARTUP-READSET.json": {
+      "size": 6185,
+      "sha256": "b5c42c3e6c73b352ddac3f1916c9d2c5f1622c29a98a65a56c915fd18c7b548d",
+      "git_blob": "a53116dce3d68b98edab5ca650ea84dc3cafb9fb",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/ledger-review/ADOPTED-REFERENCE-IDENTITIES.json": {
+      "size": 2185,
+      "sha256": "b46bbc9854cfdbe3a56464d5e15071ce9e201f12c0b276b07097d1debdd680cb",
+      "git_blob": "b0b6eec99b391ec16f8e33fc32c1e4dc4d190e3d",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/ledger-review/LEDGER-FACTS.json": {
+      "size": 27332,
+      "sha256": "149f3cb404581359210dce5f380d0f1f98986dfa25ad81312142bea6c02b8bc7",
+      "git_blob": "e5d6819b6482fe065d4c8da4e1adae788d5cb3b7",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/ledger-review/READSET.json": {
+      "size": 11809,
+      "sha256": "5b857dc712685fc8bb509ecc0d80bd60f17595634f5538fa189ae7f9b730a6bf",
+      "git_blob": "a0f7f8d3e4ae45d06ae19e7729d39d5530ec187f",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/ledger-review/REPORT.md": {
+      "size": 21392,
+      "sha256": "64cbc8e8595b1b6dfad401961c2597ed6385133670f2c2c62b5791029a20474c",
+      "git_blob": "4002a0d3a6f1f0ad900fc01d8c4c16c34a7eef29",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/ENVIRONMENT.json": {
+      "size": 388,
+      "sha256": "9b517276b58207936c9c6e5adc63f13fcbb70e4b83e466349f313e74d6f31d38",
+      "git_blob": "7f38dff3ab97dc632de22eeaf95349ca4d3143a5",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/LIVE-HEADS.json": {
+      "size": 320,
+      "sha256": "2bced8dfaf8167a2f6d04aa64df1ec5162a872d1c32dfca73e0e096c4005f471",
+      "git_blob": "00f1060279da76b426725ac56de0c444730f1893",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/P17-SAVED-READBACK-PROVENANCE.json": {
+      "size": 1383,
+      "sha256": "00fec01a2e5d0945c456ba8cbeda4a07e549f615d46b0b6937b1125edf78afb4",
+      "git_blob": "02d8bd20041b592a062b3c9520f02d625e8962ab",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/PHASE.json": {
+      "size": 6186,
+      "sha256": "2bffbf9062a460ed93a1af71390e484fe6b02570325d7f33a6967bb74ce906c6",
+      "git_blob": "870f275200a25d852af158a4e559c447ee012dc1",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/READSET-ROOT.json": {
+      "size": 5898,
+      "sha256": "6c839372c7ad1cb213e9ff4d2ee6b40c74b14c27e93620ccadcbfb185b1c7f65",
+      "git_blob": "6fd294ab48f25666550613f2db9e360077a8a2ec",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/STARTING-FILE-INVENTORY.json": {
+      "size": 4481662,
+      "sha256": "5ef679242d8e62a01d9f25d0420bc24fec2322d60cf296da689d181191b64e81",
+      "git_blob": "405ad099c768035749a98f1fd836ecfd6cd7c5fc",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/branches.json": {
+      "size": 303,
+      "sha256": "63170092a339445c77398891b86efdd40654dcfa9a5c4ac7b24a799e4db77176",
+      "git_blob": "9cc43ca9ca1220bd3c016ce51e073570ee8114bf",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/issue273.json": {
+      "size": 67426,
+      "sha256": "1d422b0bc16c3fd3a23e77848b8bb7512e1de5fafb2620669d75a54cfab528b0",
+      "git_blob": "6a1e93c771f9428cdb451ac4798f8446ce41901f",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/main-GOAL.md.read.json": {
+      "size": 229,
+      "sha256": "d64557d749c70ab054b66ec3a1710bcd1908a398b20326ac47038d9d29e3c6fc",
+      "git_blob": "e2b51cc6e16406f30039256a9f551c13d71dd1f6",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/main-STATUS.md.read.json": {
+      "size": 634,
+      "sha256": "a3f1a38c267417e8d4d75677ed7279eabb3f17f4872cc1c3365a830b0431a68d",
+      "git_blob": "c466c6e109d4b313ca1dfbaaee6fa13cfa6d8711",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/prs.json": {
+      "size": 67536,
+      "sha256": "32fc0c90f240dd5bcdb0ad2525de2517dfc904937f478ab4e79f5dd730623a48",
+      "git_blob": "c4fcf2ff967b3f152dbbb10985cd12fda69ca232",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/read-main/AGENTS.md": {
+      "size": 7068,
+      "sha256": "ce0fef82308e1c329dcf0514c99e81e89c340bbb550cf0cdcdb589599ae42822",
+      "git_blob": "b9e478e082baffc597a0355fd6088969825ef1d6",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/read-main/CHATGPT-START-HERE.md": {
+      "size": 2665,
+      "sha256": "99a69a4cfa633fb515ca08725b43b6193051249c279a4b31a9412d56e6593ce0",
+      "git_blob": "b7543b2d1e979d8fea82921e74123b5461104588",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/read-main/GOAL.md": {
+      "size": 11740,
+      "sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc",
+      "git_blob": "069d6551a03fc2c974d2e844a9bb285bae312ada",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/read-main/ROLE.md": {
+      "size": 1683,
+      "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf",
+      "git_blob": "94cba1161037beddb8b384a2c2cf1ee0d2120eaa",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/read-main/STATUS.md": {
+      "size": 13772,
+      "sha256": "04a500a21e7a7b0148345e97bca72da93700f649032ec202ebb0e96b64448d7e",
+      "git_blob": "2cabb4caef0002173ccb897fbbc704559ec3815d",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/read-main/docs/workflow/CURRENT.json": {
+      "size": 5527,
+      "sha256": "fec57459bd12896effe23010dcc6d9f8b709e350fd8cabe1c67309a7da941d40",
+      "git_blob": "9b9b7d4bb0eecde3691912b89d35a362c73b82c5",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/read-main/docs/workflow/HANDOFF.md": {
+      "size": 6065,
+      "sha256": "d87e35055bbba590a4c6b738aba239030315fdade5a6ac2e618a83be48342bac",
+      "git_blob": "f68c0dbf8810099de551d3b50b55eb16ba552542",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/read-main/docs/workflow/PROTOCOL.md": {
+      "size": 11711,
+      "sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad",
+      "git_blob": "2ade5aa5006239943dd9df71c91da79528bf5155",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/read-main/docs/workflow/registry.json": {
+      "size": 1172,
+      "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536",
+      "git_blob": "545e0619847b2fd767b93dfd0c81dd5a1f055a99",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/runs.json": {
+      "size": 165,
+      "sha256": "06ef1a0c537be8f0172645a3659c462436c70b425aa2df04ba1be7c2b2201e0a",
+      "git_blob": "c6cf404167f2575864dcb762871331153a4a2982",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "recovery/session/state/statuses.json": {
+      "size": 160,
+      "sha256": "a7083557fa1a9218e1635e2016202634d0923ea663b5743ed26a38bfe637201d",
+      "git_blob": "5a3c770588cae2b7949fbc89f8a1eea139137d8e",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/.agents/skills/ontokin-delivery/SKILL.md": {
+      "size": 1277,
+      "sha256": "7b7300a46e4f966314b74707a414f5fc72425c8eab4464cf12b20def9697529e",
+      "git_blob": "117462416e6eb47a86bbb08b4618b9c5cb572f84",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/.agents/skills/ontokin-learning/SKILL.md": {
+      "size": 2478,
+      "sha256": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de",
+      "git_blob": "02283141a8610d3aa00eafb907b0c36b9f82f68b",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/.agents/skills/ontokin-session/SKILL.md": {
+      "size": 1346,
+      "sha256": "4ce5917b05f94b1676e81102cc8518371e509dc8ac4a4f6bcfdf3881faacfc13",
+      "git_blob": "17714b7c4288efec7b60ab414840082a20264819",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/AGENTS.md": {
+      "size": 7068,
+      "sha256": "ce0fef82308e1c329dcf0514c99e81e89c340bbb550cf0cdcdb589599ae42822",
+      "git_blob": "b9e478e082baffc597a0355fd6088969825ef1d6",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/CHATGPT-START-HERE.md": {
+      "size": 2665,
+      "sha256": "99a69a4cfa633fb515ca08725b43b6193051249c279a4b31a9412d56e6593ce0",
+      "git_blob": "b7543b2d1e979d8fea82921e74123b5461104588",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/GOAL.md": {
+      "size": 11740,
+      "sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc",
+      "git_blob": "069d6551a03fc2c974d2e844a9bb285bae312ada",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/ROLE.md": {
+      "size": 1683,
+      "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf",
+      "git_blob": "94cba1161037beddb8b384a2c2cf1ee0d2120eaa",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/STATUS.md": {
+      "size": 14575,
+      "sha256": "ae5b6b38378ebf7f696609276a4dab458fd9893c3bb686897869f5596c2f1494",
+      "git_blob": "85aa7c88f952142cd5ab7d323b5468bbdfd3268f",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md": {
+      "size": 13604,
+      "sha256": "274f989927ca3de0fa1506f579e6872ac30ffca33df7b95ee7f23c4e1d2e62b2",
+      "git_blob": "8ff5b738e19f150d5c37948437bfe265d35505f7",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md": {
+      "size": 11426,
+      "sha256": "a037c8584f5bd94beea9bbb83079c437de90556a9d3ec8ec6295f6c93e459a45",
+      "git_blob": "5fd35d5e3b4dd061c6258f1cd4f039e9cd0727b9",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json": {
+      "size": 2915,
+      "sha256": "61b7043352a23dcd79d076c569606a7141b7c85ea0a9e3e11833e3350bfc1328",
+      "git_blob": "9f3e732804db01e1e862e445a639937ce0950e53",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/CANDIDATE001.zip": {
+      "size": 166919,
+      "sha256": "d59d4d71a9f73065a000ae3de8233beb82ad5a33a3b526de93debb845f0d86c4",
+      "git_blob": "87f2a721fc47febbdf4a343b999a6d6c9331a691",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/CONTROL-CONTRACT.md": {
+      "size": 8554,
+      "sha256": "0c8aac40189ca0d53ec0cf7d82649835d73094e0e0b73aead23c1c87cd9cf3d3",
+      "git_blob": "f14a43246b30f8d354eab667c32c338c5d3d5f9f",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/DECISION.md": {
+      "size": 9894,
+      "sha256": "c61094124afde41d78cbee789c4a92a93f40248493eff7f1641f738eef1f0e55",
+      "git_blob": "77ceea506e831434f6c8e5664a8d34a3ce00e73b",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/FUTURE-SURFACE.json": {
+      "size": 5333,
+      "sha256": "6562f6ef713537c7e23c8aaf9e2f6f520d7f9a889075fd96f12ea9585e243b6a",
+      "git_blob": "1610053624f8666ea0fd05ea22e9303b5278488e",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json": {
+      "size": 4386,
+      "sha256": "03b7ee42d36d0e6774ee33e8fdbbfe08509179875816cc45a258209036521945",
+      "git_blob": "0d61132ddbf3c4b819d6e791c5b07c19f7d28426",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/CANDIDATE001.zip": {
+      "size": 264916,
+      "sha256": "05d1cbe971678b8f505795e436f2bd096b81848f68b4f9da6adc64392f6fb5af",
+      "git_blob": "0fe282adf1a4bb95ccd8e863379b48347f0d3bf6",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/CONTROL-CONTRACT.md": {
+      "size": 8903,
+      "sha256": "9ad0581a7d3ad51009687503a7d1f276dfe699939f6a030b10344f074171e579",
+      "git_blob": "ac8e76e6c121a4bba098c4d85a3ee96d47f81d28",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/DECISION.md": {
+      "size": 14664,
+      "sha256": "ee99eb864e5f51284c324562872b55fba1baccfe3c9c75cb972e1bd4bb1e6529",
+      "git_blob": "282c828c56301f0cd02db719fc745a96aa7b7287",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/FUTURE-SURFACE.json": {
+      "size": 6191,
+      "sha256": "5abf4ec1d0ab4f06b56c7a758a0a31e154ca9660e43cc2af246ca55b17c36d29",
+      "git_blob": "f9bb43481c0447466b30a26a2dbceccca6857c58",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/workflow/BROWSER-PROMPTS.md": {
+      "size": 1739,
+      "sha256": "62e0eb4de4d1b90d390d8bb119c65b987d881b161a0b53b6646b46369ee3852b",
+      "git_blob": "5e4eee74b89861e9f53bf28eb5a97688143b44ad",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/workflow/CURRENT.json": {
+      "size": 93498,
+      "sha256": "3106bb6af00c79c00900a2952f11dae65db5a8676ed5796966c2199570e1c579",
+      "git_blob": "ec326387656364f9f930b3dd47ec4c62b8c3ab1b",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/workflow/HANDOFF.md": {
+      "size": 6065,
+      "sha256": "d87e35055bbba590a4c6b738aba239030315fdade5a6ac2e618a83be48342bac",
+      "git_blob": "f68c0dbf8810099de551d3b50b55eb16ba552542",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/workflow/PROTOCOL.md": {
+      "size": 11711,
+      "sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad",
+      "git_blob": "2ade5aa5006239943dd9df71c91da79528bf5155",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/workflow/prompts/CONTINUE.md": {
+      "size": 1646,
+      "sha256": "c33e9d1afcd587925a188308a3d02e14f8ce6dd8a8a5f26338291863886753ab",
+      "git_blob": "5cbc91b7690c1a2f102bd195e7d9451c9c48beac",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/workflow/prompts/RECOVER.md": {
+      "size": 1872,
+      "sha256": "3303d3d3a2d9956bc385f7e87f6262bbd18229bea856f2ec25b469cc2901d5a8",
+      "git_blob": "6406c6b870bfdce8b67fd22ce8f2a7d7c524ff63",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/workflow/registry.json": {
+      "size": 1172,
+      "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536",
+      "git_blob": "545e0619847b2fd767b93dfd0c81dd5a1f055a99",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/workflow/tasks/C271/PLAN.md": {
+      "size": 53629,
+      "sha256": "eb66f8faeb54fe49e8f0dc67e259928001374daebae39b1cef83e3ddde3a7a39",
+      "git_blob": "fb1ced176c0f3c156c073461b0c807b10194f69f",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/workflow/tasks/C271/REQUIREMENTS.md": {
+      "size": 52475,
+      "sha256": "d8cc470b1ab1908c32b80734e4cb934a376b7c7f3c8e4f4d20b75fd4b8ef3382",
+      "git_blob": "93bb01dfe2534a34472a64e640a145c63ed2e9fe",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/docs/workflow/tasks/C271/task.json": {
+      "size": 243805,
+      "sha256": "57faf340643566c0bca92914df9eed61ea1926cc0bbb75050e881d37fa876ffb",
+      "git_blob": "ebb1a667dfeeea1eec059afdec312afc62577448",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    },
+    "repository/prototypes/static_tray_v01/current_host_inspection_v01.py": {
+      "size": 183913,
+      "sha256": "a8274d56076562a91d26b3cdd2f614fce6fd509733e4939b225dff2ddca09db4",
+      "git_blob": "9313636af940ad2ac99b68c2cfa56f252c26f0ef",
+      "crc_ok": true,
+      "size_ok": true,
+      "mode": "0o644"
+    }
+  },
+  "root_documents": {
+    "CHECKPOINT.json": {
+      "schema": "ontokin.c271.p18-phase/1",
+      "task": "C271",
+      "phase": "C271-P18-libc-metadata-implementation",
+      "owner": "c271-p18-cf3e30ae3c50",
+      "declared_at_utc": "2026-11-22T19:16:25.666647+00:00",
+      "branch": "work/c271-missing-import-digest-control",
+      "starting_revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+      "observed_main": {
+        "commit": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+        "tree": "7302cf8f36c45dd76112ad442e42e48379ac8367",
+        "observed_at_utc": "2026-11-22T19:20:46.367470+00:00",
+        "evidence": "state/LIVE-HEADS.json"
+      },
+      "starting_tree": "058c14ef754761aaf4d0e04a7bdb690b2a901ea1",
+      "scope": "Implement adopted P16 exact libc PLT metadata and P17 exact flags extension together, unchanged frozen and inherited controls, independent exact source and adapter review",
+      "acceptance": [
+        "Reconcile P17 saved delivery/live GitHub/full assigned readsets and confirm independently reviewed early recovery before technical work",
+        "Implement only adopted P16/P17 production and new adapter paths; preserve every historical expectation, default, pin, budget and consumer",
+        "Run all73 P16 and41 P17 frozen controls,135 inherited inspection methods,40 mapping methods,96 origin runtime controls; independently review exact code/adapters and applicable provider/driver checks",
+        "Run documentary/workflow/whitespace and preservation checks; conditionally publish retained branch and verify exact commit/tree",
+        "Independently verify/freeze/save final ZIP and byte-identical prompts; publish separate actual receipt and stop"
+      ],
+      "stop": "Reviewed bounded implementation plus verified partial delivery, or first concrete design blocker; do not start another phase",
+      "requirements": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "not_done",
+        "R04": "not_done",
+        "R05": "not_done"
+      },
+      "parent_plan": {
+        "P01": "done",
+        "P02": "in_progress"
+      },
+      "parent_status": "blocked",
+      "parent_complete": false,
+      "pr": {
+        "number": 274,
+        "state": "open",
+        "draft": true,
+        "merged": false
+      },
+      "issue": {
+        "number": 273,
+        "state": "open"
+      },
+      "main_lease_held": false,
+      "integration_allowed": false,
+      "constraints": [
+        "No H0/H1, current-host inspection, input substitution, install/preparation, Node/ldd, original-seven/full routine, native/model/hosted execution",
+        "No main integration, branch deletion, parent closure, old test/oracle/contract/pin/limit/consumer edits",
+        "N57 remains externally accounted for, never a runtime pass or skip",
+        "Root alone owns Git/index/canonical records/publication/Library; no nested worker fanout"
+      ],
+      "phase_complete": false,
+      "early_save_confirmed": false,
+      "status": "early_recovery_preparation",
+      "current_unknown_operations": [],
+      "historical_unknowns": [
+        "C270 ancillary broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only difflib completion; do not retry"
+      ],
+      "workers": [
+        {
+          "id": "/root/handoff_audit",
+          "scope": "independent recovery/package audit",
+          "state": "P17 startup audit complete; independent early archive audit running"
+        },
+        {
+          "id": "/root/ledger_review",
+          "scope": "full active CURRENT/task ledger startup",
+          "state": "Full ledger startup complete; independent implementation review pending"
+        },
+        {
+          "id": "/root/implementation",
+          "scope": "full active PLAN and design read; later isolated production/adapters",
+          "state": "Full PLAN/design startup complete; held before technical work"
+        }
+      ],
+      "capabilities": {
+        "repository_read": "GitHub connector plus authentic Git checkout",
+        "git_data_write": "available connector create-tree/commit and expected-SHA nonforce ref tools; this phase not yet exercised",
+        "native_push": "previously diagnosed unavailable; not retried",
+        "branch_pr_read": "observed",
+        "terminal_tests": "available; product checks not started",
+        "subagents": "three real launched workers; inherited model, fresh context",
+        "zip": "available",
+        "library_read": "actual P17 ZIP/receipt/audit materializations",
+        "library_save": "available; this phase not yet confirmed",
+        "merge_deletion": "not selected"
+      },
+      "next_action": "Independently audit and confirm saved early recovery before any substantive implementation",
+      "startup_reconciliation": {
+        "P17_delivery": "confirmed complete_partial_delivery by actual saved-byte readbacks,62-group audit and live PR/issue markers",
+        "required_readsets": [
+          "state/READSET-ROOT.json",
+          "ledger-review/READSET.json",
+          "implementation/STARTUP-READSET.json"
+        ],
+        "parent_status_unchanged": true
+      },
+      "phase_table": [
+        {
+          "gate": "P18-A01",
+          "state": "startup_reconciled_early_recovery_pending",
+          "evidence": [
+            "audit/P17-RECONCILIATION.json",
+            "state/READSET-ROOT.json",
+            "ledger-review/READSET.json",
+            "implementation/STARTUP-READSET.json",
+            "state/LIVE-HEADS.json"
+          ]
+        },
+        {
+          "gate": "P18-A02",
+          "state": "not_started",
+          "criterion": "adopted implementation with preservation"
+        },
+        {
+          "gate": "P18-A03",
+          "state": "not_started",
+          "criterion": "frozen/inherited checks and independent review"
+        },
+        {
+          "gate": "P18-A04",
+          "state": "not_started",
+          "criterion": "documentary verification and conditional publication"
+        },
+        {
+          "gate": "P18-A05",
+          "state": "not_started",
+          "criterion": "verified saved final handoff and separate receipt"
+        }
+      ],
+      "early_attempts": [
+        {
+          "attempt": 1,
+          "status": "rejected_before_save",
+          "archive": "OntoKin_C271_P18_Libc_Implementation_Early_Recovery_2026-11-22.zip",
+          "bytes": 35040327,
+          "sha256": "d1c6723cb3c666be55a1ebd95fe54a7a61ef412c0097732f6c0ed493d6d1050b",
+          "findings": [
+            "builder omitted from recovery map",
+            "observation time and gate table missing",
+            "startup/limits/reconciliation narrative incomplete"
+          ],
+          "preservation": "exact original will be saved alongside corrected attempt002; separate early receipt records both"
+        }
+      ],
+      "package_kind": "early",
+      "source_revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+      "source_tree": "058c14ef754761aaf4d0e04a7bdb690b2a901ea1",
+      "package_type": "browser-session handoff for online GitHub continuation",
+      "frozen_at_utc": "2026-11-22T19:21:33.051643+00:00",
+      "delivery_state_at_freeze": "save_pending",
+      "external_receipt": "docs/engineering/localized-repair-c271/libc-implementation-p18/EARLY-RECOVERY-RECEIPT.json"
+    },
+    "HANDOFF.md": "# P18 bounded phase handoff\n\nP18 is declared but implementation has not started. Full required startup text was read across the Director and assigned readers; exact readsets are in recovery/session/state/READSET-ROOT.json, ledger-review/READSET.json and implementation/STARTUP-READSET.json. The independent P17 audit passed62 groups:813 entries,812 payload manifest rows,80 source bindings,717 recovery bindings, exact saved terminal carriers and matching live PR/issue confirmation. P17 partial delivery is complete. The fresh actual main/branch observation is in recovery/session/state/LIVE-HEADS.json. Two live branches remain; PR274 is draft/open/unmerged and issue273 open. No current unpublished product changes or unknown writes were found. This early package is audited separately before saving; its receipt cannot yet exist inside it. Attempt001 was rejected for recovery-map and checkpoint/narrative omissions; its unchanged bytes and rejection report are preserved and its later separate save will be in the early receipt. No product tests, parser/host execution, H0/H1 or full routine ran in P18. Historical P02 routine failure, prior prerequisite failures and P15 actual libc tag refusal remain retained; the later flags refusal was only inferred. Complete startup and reconcile this early save, then implement only adopted P16/P17 after confirmed recovery. Preserve all old expected results.\n\nParent C271 remains open; R01/R02 done, R03\u2013R05 not_done, P01 done, P02 in_progress. PR274 stays draft/open/unmerged, issue273 open; no main lease or integration. Frozen controls, pins, limits and failures retain their original meaning. N57 is an external review obligation, never a runtime pass or skip.\n",
+    "HISTORICAL-DEPENDENCIES.json": {
+      "schema": "ontokin.c271.p18-history/1",
+      "online_continuation": true,
+      "offline_complete": false,
+      "c262": {
+        "url": "https://chatgpt.com/library/share/libfile_fde3_f-99755ba096208191b599cd0087fa0a19_2ab2a24d43748191957f9bcc356b59de?account_id=personal",
+        "sha256": "b8af544f730a4d1f741d47b56eb3fcf76147ed392a9ebb020f3d966f2f305c90",
+        "bytes": 532260846,
+        "scope": "Historical C262 archive retained; not required for ordinary startup from GitHub."
+      },
+      "predecessor": {
+        "name": "OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
+        "bytes": 20868218,
+        "sha256": "b13e30cc0c8f7aeb702d31221742e2ed022e4b4d811c5bdad1e5c1909ed5589e",
+        "library_file_id": "libfile_fde3_f-39c0a0c7938c8191a29279c2b6e87303_2ab2a24d43748191957f9bcc356b59de"
+      },
+      "additional_history": "See exact predecessor HISTORICAL-DEPENDENCIES.json and live pinned Git history. All prior failed artifacts remain preserved; no complete offline restoration claim."
+    },
+    "MANIFEST-SHA256.json": {
+      "schema": "ontokin.c271.p18-manifest/1",
+      "files": [
+        {
+          "path": "CHECKPOINT.json",
+          "bytes": 6632,
+          "sha256": "fa3c4934c16d688a0fe1ab6ab71cb929db9fbb5826c7ff4a9772869eadf32b52"
+        },
+        {
+          "path": "HANDOFF.md",
+          "bytes": 1714,
+          "sha256": "4d9aa629c2b7b233fb382cd2f7b063f71e0ed25c46b2697a30a78ccef23a3f56"
+        },
+        {
+          "path": "HISTORICAL-DEPENDENCIES.json",
+          "bytes": 974,
+          "sha256": "1f694a5e33b3618f0ce8747d48ab28428299ce3152d309dfb429d488ffbbb5e4"
+        },
+        {
+          "path": "NEXT-TASK.md",
+          "bytes": 354,
+          "sha256": "e749d62161b3d43146aee62fc68829cd11ef053b3cb4de960fd519b0625aa2df"
+        },
+        {
+          "path": "PROMPT-1-CONTINUE.md",
+          "bytes": 1785,
+          "sha256": "5580def5fd49fb4ff72a7c5fec23c35ea6f5df5cf2e38d27fa8d6625c6067824"
+        },
+        {
+          "path": "PROMPT-2-RECOVER.md",
+          "bytes": 2088,
+          "sha256": "07f8cf77c54427282f7d15ebf1848544bdfbfef8dec7dfa2a6a5bd536cbe89a6"
+        },
+        {
+          "path": "README-START-HERE.md",
+          "bytes": 1209,
+          "sha256": "747f44a631ed14b08ffa54ce0f564de1b643aaa167000ac08747927ed244b406"
+        },
+        {
+          "path": "RECOVERY-EXCLUSIONS.json",
+          "bytes": 19223,
+          "sha256": "eef5be8b69d701d3a4fe1006d2872260d993563be9d53fb89d81dc05b2351fa1"
+        },
+        {
+          "path": "RECOVERY-FILE-MAP.json",
+          "bytes": 12726,
+          "sha256": "4a788120965c13676326ec7ef3e9663dbffa974d291c2739b60f45a7f0fa2c1a"
+        },
+        {
+          "path": "RECOVERY-STATUS.md",
+          "bytes": 1233,
+          "sha256": "68b26391abea0b6f03d269d8954e8f9cdab97031a08d02c79c6d0cba9cfbf6ce"
+        },
+        {
+          "path": "SOURCE-MANIFEST.json",
+          "bytes": 15184,
+          "sha256": "5bb84023da783fa45bb466b559b3b6e6edf0cbeeae248d9d5002d5ced1732e1c"
+        },
+        {
+          "path": "observed-main/AGENTS.md",
+          "bytes": 7068,
+          "sha256": "ce0fef82308e1c329dcf0514c99e81e89c340bbb550cf0cdcdb589599ae42822"
+        },
+        {
+          "path": "observed-main/CHATGPT-START-HERE.md",
+          "bytes": 2665,
+          "sha256": "99a69a4cfa633fb515ca08725b43b6193051249c279a4b31a9412d56e6593ce0"
+        },
+        {
+          "path": "observed-main/GOAL.md",
+          "bytes": 11740,
+          "sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc"
+        },
+        {
+          "path": "observed-main/ROLE.md",
+          "bytes": 1683,
+          "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf"
+        },
+        {
+          "path": "observed-main/STATUS.md",
+          "bytes": 13772,
+          "sha256": "04a500a21e7a7b0148345e97bca72da93700f649032ec202ebb0e96b64448d7e"
+        },
+        {
+          "path": "observed-main/docs/workflow/CURRENT.json",
+          "bytes": 5527,
+          "sha256": "fec57459bd12896effe23010dcc6d9f8b709e350fd8cabe1c67309a7da941d40"
+        },
+        {
+          "path": "observed-main/docs/workflow/HANDOFF.md",
+          "bytes": 6065,
+          "sha256": "d87e35055bbba590a4c6b738aba239030315fdade5a6ac2e618a83be48342bac"
+        },
+        {
+          "path": "observed-main/docs/workflow/PROTOCOL.md",
+          "bytes": 11711,
+          "sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad"
+        },
+        {
+          "path": "observed-main/docs/workflow/registry.json",
+          "bytes": 1172,
+          "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536"
+        },
+        {
+          "path": "predecessor/OntoKin_C271_P17_Delivery_Receipt_2026-11-22.json",
+          "bytes": 9722465,
+          "sha256": "57dc3dbdf127c64cf49725962e2a62d9962430c1bb69395ef7550013e5d38fdf"
+        },
+        {
+          "path": "predecessor/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
+          "bytes": 20868218,
+          "sha256": "b13e30cc0c8f7aeb702d31221742e2ed022e4b4d811c5bdad1e5c1909ed5589e"
+        },
+        {
+          "path": "predecessor/OntoKin_C271_P17_Terminal_Audit_2026-11-22.json",
+          "bytes": 2246699,
+          "sha256": "a290eff77f6798b4af7d278ee10f8477cacc0940fc35bfd45e2de0ee212d5153"
+        },
+        {
+          "path": "recovery/session/audit/P17-LIVE-CHECKPOINT-EXCERPTS.json",
+          "bytes": 2801,
+          "sha256": "e196b729d6d6618b5f4578fd9e1a3b140539c0a5d551125e16e23082dfa57f74"
+        },
+        {
+          "path": "recovery/session/audit/P17-READ-SNAPSHOT.json",
+          "bytes": 63466123,
+          "sha256": "3df01a52ff926c00d0ad0838cf843105180cf0845cc25c968071ef5799f64848"
+        },
+        {
+          "path": "recovery/session/audit/P17-RECONCILIATION.json",
+          "bytes": 19010,
+          "sha256": "2318feffa9ec95a4cdcd81ec4e11428aab6a869081b11982e34a981f31b8f866"
+        },
+        {
+          "path": "recovery/session/audit/P17-RECONCILIATION.md",
+          "bytes": 3721,
+          "sha256": "68c3a0d8cb41bcc26171da3d41edf4bc7bfeb5462f56dd51a2ebb84c438cd935"
+        },
+        {
+          "path": "recovery/session/audit/early-review/ATTEMPT001-INTEGRITY.json",
+          "bytes": 238270,
+          "sha256": "d64110b906f23fad8a9b7bf4e31a18bc93fe0a55cae7db13de0b7e43d55960e2"
+        },
+        {
+          "path": "recovery/session/audit/early-review/ATTEMPT001-REVIEW.json",
+          "bytes": 8735,
+          "sha256": "b4c684ebf78964cfbfe53f597977e2cceb1def6e5a7d13de9537d18d93939400"
+        },
+        {
+          "path": "recovery/session/audit/early-review/ATTEMPT001-REVIEW.md",
+          "bytes": 2715,
+          "sha256": "59f18b767cbbd36b6f90c1f9cb671e3080aa847fcffd1b3a76afb6f5fa357414"
+        },
+        {
+          "path": "recovery/session/build_handoff.py",
+          "bytes": 13710,
+          "sha256": "d3040852b5da08dbd6bdd6cb850d20993e240cbf9f5238e675c4874c11b2a7e1"
+        },
+        {
+          "path": "recovery/session/implementation/PREPARATION.md",
+          "bytes": 2866,
+          "sha256": "7140eae84060cf6099567a8d62540cdd82219e6452cbb5ba795d8d0ed69b0ef7"
+        },
+        {
+          "path": "recovery/session/implementation/STARTUP-READSET.json",
+          "bytes": 6185,
+          "sha256": "b5c42c3e6c73b352ddac3f1916c9d2c5f1622c29a98a65a56c915fd18c7b548d"
+        },
+        {
+          "path": "recovery/session/ledger-review/ADOPTED-REFERENCE-IDENTITIES.json",
+          "bytes": 2185,
+          "sha256": "b46bbc9854cfdbe3a56464d5e15071ce9e201f12c0b276b07097d1debdd680cb"
+        },
+        {
+          "path": "recovery/session/ledger-review/LEDGER-FACTS.json",
+          "bytes": 27332,
+          "sha256": "149f3cb404581359210dce5f380d0f1f98986dfa25ad81312142bea6c02b8bc7"
+        },
+        {
+          "path": "recovery/session/ledger-review/READSET.json",
+          "bytes": 11809,
+          "sha256": "5b857dc712685fc8bb509ecc0d80bd60f17595634f5538fa189ae7f9b730a6bf"
+        },
+        {
+          "path": "recovery/session/ledger-review/REPORT.md",
+          "bytes": 21392,
+          "sha256": "64cbc8e8595b1b6dfad401961c2597ed6385133670f2c2c62b5791029a20474c"
+        },
+        {
+          "path": "recovery/session/state/ENVIRONMENT.json",
+          "bytes": 388,
+          "sha256": "9b517276b58207936c9c6e5adc63f13fcbb70e4b83e466349f313e74d6f31d38"
+        },
+        {
+          "path": "recovery/session/state/LIVE-HEADS.json",
+          "bytes": 320,
+          "sha256": "2bced8dfaf8167a2f6d04aa64df1ec5162a872d1c32dfca73e0e096c4005f471"
+        },
+        {
+          "path": "recovery/session/state/P17-SAVED-READBACK-PROVENANCE.json",
+          "bytes": 1383,
+          "sha256": "00fec01a2e5d0945c456ba8cbeda4a07e549f615d46b0b6937b1125edf78afb4"
+        },
+        {
+          "path": "recovery/session/state/PHASE.json",
+          "bytes": 6186,
+          "sha256": "2bffbf9062a460ed93a1af71390e484fe6b02570325d7f33a6967bb74ce906c6"
+        },
+        {
+          "path": "recovery/session/state/READSET-ROOT.json",
+          "bytes": 5898,
+          "sha256": "6c839372c7ad1cb213e9ff4d2ee6b40c74b14c27e93620ccadcbfb185b1c7f65"
+        },
+        {
+          "path": "recovery/session/state/STARTING-FILE-INVENTORY.json",
+          "bytes": 4481662,
+          "sha256": "5ef679242d8e62a01d9f25d0420bc24fec2322d60cf296da689d181191b64e81"
+        },
+        {
+          "path": "recovery/session/state/branches.json",
+          "bytes": 303,
+          "sha256": "63170092a339445c77398891b86efdd40654dcfa9a5c4ac7b24a799e4db77176"
+        },
+        {
+          "path": "recovery/session/state/issue273.json",
+          "bytes": 67426,
+          "sha256": "1d422b0bc16c3fd3a23e77848b8bb7512e1de5fafb2620669d75a54cfab528b0"
+        },
+        {
+          "path": "recovery/session/state/main-GOAL.md.read.json",
+          "bytes": 229,
+          "sha256": "d64557d749c70ab054b66ec3a1710bcd1908a398b20326ac47038d9d29e3c6fc"
+        },
+        {
+          "path": "recovery/session/state/main-STATUS.md.read.json",
+          "bytes": 634,
+          "sha256": "a3f1a38c267417e8d4d75677ed7279eabb3f17f4872cc1c3365a830b0431a68d"
+        },
+        {
+          "path": "recovery/session/state/prs.json",
+          "bytes": 67536,
+          "sha256": "32fc0c90f240dd5bcdb0ad2525de2517dfc904937f478ab4e79f5dd730623a48"
+        },
+        {
+          "path": "recovery/session/state/read-main/AGENTS.md",
+          "bytes": 7068,
+          "sha256": "ce0fef82308e1c329dcf0514c99e81e89c340bbb550cf0cdcdb589599ae42822"
+        },
+        {
+          "path": "recovery/session/state/read-main/CHATGPT-START-HERE.md",
+          "bytes": 2665,
+          "sha256": "99a69a4cfa633fb515ca08725b43b6193051249c279a4b31a9412d56e6593ce0"
+        },
+        {
+          "path": "recovery/session/state/read-main/GOAL.md",
+          "bytes": 11740,
+          "sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc"
+        },
+        {
+          "path": "recovery/session/state/read-main/ROLE.md",
+          "bytes": 1683,
+          "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf"
+        },
+        {
+          "path": "recovery/session/state/read-main/STATUS.md",
+          "bytes": 13772,
+          "sha256": "04a500a21e7a7b0148345e97bca72da93700f649032ec202ebb0e96b64448d7e"
+        },
+        {
+          "path": "recovery/session/state/read-main/docs/workflow/CURRENT.json",
+          "bytes": 5527,
+          "sha256": "fec57459bd12896effe23010dcc6d9f8b709e350fd8cabe1c67309a7da941d40"
+        },
+        {
+          "path": "recovery/session/state/read-main/docs/workflow/HANDOFF.md",
+          "bytes": 6065,
+          "sha256": "d87e35055bbba590a4c6b738aba239030315fdade5a6ac2e618a83be48342bac"
+        },
+        {
+          "path": "recovery/session/state/read-main/docs/workflow/PROTOCOL.md",
+          "bytes": 11711,
+          "sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad"
+        },
+        {
+          "path": "recovery/session/state/read-main/docs/workflow/registry.json",
+          "bytes": 1172,
+          "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536"
+        },
+        {
+          "path": "recovery/session/state/runs.json",
+          "bytes": 165,
+          "sha256": "06ef1a0c537be8f0172645a3659c462436c70b425aa2df04ba1be7c2b2201e0a"
+        },
+        {
+          "path": "recovery/session/state/statuses.json",
+          "bytes": 160,
+          "sha256": "a7083557fa1a9218e1635e2016202634d0923ea663b5743ed26a38bfe637201d"
+        },
+        {
+          "path": "repository/.agents/skills/ontokin-delivery/SKILL.md",
+          "bytes": 1277,
+          "sha256": "7b7300a46e4f966314b74707a414f5fc72425c8eab4464cf12b20def9697529e"
+        },
+        {
+          "path": "repository/.agents/skills/ontokin-learning/SKILL.md",
+          "bytes": 2478,
+          "sha256": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de"
+        },
+        {
+          "path": "repository/.agents/skills/ontokin-session/SKILL.md",
+          "bytes": 1346,
+          "sha256": "4ce5917b05f94b1676e81102cc8518371e509dc8ac4a4f6bcfdf3881faacfc13"
+        },
+        {
+          "path": "repository/AGENTS.md",
+          "bytes": 7068,
+          "sha256": "ce0fef82308e1c329dcf0514c99e81e89c340bbb550cf0cdcdb589599ae42822"
+        },
+        {
+          "path": "repository/CHATGPT-START-HERE.md",
+          "bytes": 2665,
+          "sha256": "99a69a4cfa633fb515ca08725b43b6193051249c279a4b31a9412d56e6593ce0"
+        },
+        {
+          "path": "repository/GOAL.md",
+          "bytes": 11740,
+          "sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc"
+        },
+        {
+          "path": "repository/ROLE.md",
+          "bytes": 1683,
+          "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf"
+        },
+        {
+          "path": "repository/STATUS.md",
+          "bytes": 14575,
+          "sha256": "ae5b6b38378ebf7f696609276a4dab458fd9893c3bb686897869f5596c2f1494"
+        },
+        {
+          "path": "repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+          "bytes": 13604,
+          "sha256": "274f989927ca3de0fa1506f579e6872ac30ffca33df7b95ee7f23c4e1d2e62b2"
+        },
+        {
+          "path": "repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+          "bytes": 11426,
+          "sha256": "a037c8584f5bd94beea9bbb83079c437de90556a9d3ec8ec6295f6c93e459a45"
+        },
+        {
+          "path": "repository/docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json",
+          "bytes": 2915,
+          "sha256": "61b7043352a23dcd79d076c569606a7141b7c85ea0a9e3e11833e3350bfc1328"
+        },
+        {
+          "path": "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/CANDIDATE001.zip",
+          "bytes": 166919,
+          "sha256": "d59d4d71a9f73065a000ae3de8233beb82ad5a33a3b526de93debb845f0d86c4"
+        },
+        {
+          "path": "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/CONTROL-CONTRACT.md",
+          "bytes": 8554,
+          "sha256": "0c8aac40189ca0d53ec0cf7d82649835d73094e0e0b73aead23c1c87cd9cf3d3"
+        },
+        {
+          "path": "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/DECISION.md",
+          "bytes": 9894,
+          "sha256": "c61094124afde41d78cbee789c4a92a93f40248493eff7f1641f738eef1f0e55"
+        },
+        {
+          "path": "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/FUTURE-SURFACE.json",
+          "bytes": 5333,
+          "sha256": "6562f6ef713537c7e23c8aaf9e2f6f520d7f9a889075fd96f12ea9585e243b6a"
+        },
+        {
+          "path": "repository/docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json",
+          "bytes": 4386,
+          "sha256": "03b7ee42d36d0e6774ee33e8fdbbfe08509179875816cc45a258209036521945"
+        },
+        {
+          "path": "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/CANDIDATE001.zip",
+          "bytes": 264916,
+          "sha256": "05d1cbe971678b8f505795e436f2bd096b81848f68b4f9da6adc64392f6fb5af"
+        },
+        {
+          "path": "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/CONTROL-CONTRACT.md",
+          "bytes": 8903,
+          "sha256": "9ad0581a7d3ad51009687503a7d1f276dfe699939f6a030b10344f074171e579"
+        },
+        {
+          "path": "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/DECISION.md",
+          "bytes": 14664,
+          "sha256": "ee99eb864e5f51284c324562872b55fba1baccfe3c9c75cb972e1bd4bb1e6529"
+        },
+        {
+          "path": "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/FUTURE-SURFACE.json",
+          "bytes": 6191,
+          "sha256": "5abf4ec1d0ab4f06b56c7a758a0a31e154ca9660e43cc2af246ca55b17c36d29"
+        },
+        {
+          "path": "repository/docs/workflow/BROWSER-PROMPTS.md",
+          "bytes": 1739,
+          "sha256": "62e0eb4de4d1b90d390d8bb119c65b987d881b161a0b53b6646b46369ee3852b"
+        },
+        {
+          "path": "repository/docs/workflow/CURRENT.json",
+          "bytes": 93498,
+          "sha256": "3106bb6af00c79c00900a2952f11dae65db5a8676ed5796966c2199570e1c579"
+        },
+        {
+          "path": "repository/docs/workflow/HANDOFF.md",
+          "bytes": 6065,
+          "sha256": "d87e35055bbba590a4c6b738aba239030315fdade5a6ac2e618a83be48342bac"
+        },
+        {
+          "path": "repository/docs/workflow/PROTOCOL.md",
+          "bytes": 11711,
+          "sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad"
+        },
+        {
+          "path": "repository/docs/workflow/prompts/CONTINUE.md",
+          "bytes": 1646,
+          "sha256": "c33e9d1afcd587925a188308a3d02e14f8ce6dd8a8a5f26338291863886753ab"
+        },
+        {
+          "path": "repository/docs/workflow/prompts/RECOVER.md",
+          "bytes": 1872,
+          "sha256": "3303d3d3a2d9956bc385f7e87f6262bbd18229bea856f2ec25b469cc2901d5a8"
+        },
+        {
+          "path": "repository/docs/workflow/registry.json",
+          "bytes": 1172,
+          "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536"
+        },
+        {
+          "path": "repository/docs/workflow/tasks/C271/PLAN.md",
+          "bytes": 53629,
+          "sha256": "eb66f8faeb54fe49e8f0dc67e259928001374daebae39b1cef83e3ddde3a7a39"
+        },
+        {
+          "path": "repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+          "bytes": 52475,
+          "sha256": "d8cc470b1ab1908c32b80734e4cb934a376b7c7f3c8e4f4d20b75fd4b8ef3382"
+        },
+        {
+          "path": "repository/docs/workflow/tasks/C271/task.json",
+          "bytes": 243805,
+          "sha256": "57faf340643566c0bca92914df9eed61ea1926cc0bbb75050e881d37fa876ffb"
+        },
+        {
+          "path": "repository/prototypes/static_tray_v01/current_host_inspection_v01.py",
+          "bytes": 183913,
+          "sha256": "a8274d56076562a91d26b3cdd2f614fce6fd509733e4939b225dff2ddca09db4"
+        }
+      ]
+    },
+    "NEXT-TASK.md": "# First remaining action\n\nReconcile live GitHub and the actual early recovery receipt before retrying any save or publication. If early recovery is confirmed, resume P18 implementation under its acceptance list. Stop at independent implementation acceptance or first concrete design blocker, then perform documentary publication and final delivery only.\n",
+    "PROMPT-1-CONTINUE.md": "# Prompt 1: Continue OntoKin\n\nRepository: https://github.com/Omegapy/OntoKin\n\nLatest confirmed **development handoff ZIP**: Use this attached P18 early ZIP and its separately saved receipt; reconcile live GitHub before selecting any next action.\n\nOptional new direction: Resume existing C271 P18 at its first unmet gate; no second phase.\n\nIn a **fresh chat**, continue **one bounded phase** of OntoKin development. Save a verified handoff ZIP to my existing `OntoKin` ChatGPT Library folder, then stop.\n\n1. Open the ZIP's `README-START-HERE.md` and checkpoint. Read the live repository's `CHATGPT-START-HERE.md` and its required instructions at the observed `main` revision. Read unchanged files only once. Reconcile the active task and plan, branches, PRs, integration ownership, test evidence, saved receipts, and unpublished work. GitHub governs current repository state.\n2. Resume the active authorized task and branch. If none is active, choose one approved next step consistent with my direction. Declare its phase, acceptance criteria, and stopping point. Follow `docs/workflow/PROTOCOL.md` and `docs/workflow/HANDOFF.md` for detailed rules.\n3. **Confirm an early recovery ZIP before substantial work.** Delegate bounded, independent assignments to real subagents when available; give each only necessary applicable context. Keep detailed outputs in files and reports short. Verify changes and required reviews. Preserve failures, history, and unfinished work; reconcile uncertain operations before retrying.\n4. At the phase boundary, verify and save the next ZIP and record its Library receipt separately. Report actual checks, merge/branch state, limits, and first remaining action. Keep the parent task open until all gates pass. **Do not begin another phase in this chat.**\n",
+    "PROMPT-2-RECOVER.md": "# Prompt 2: Recover OntoKin After an Interruption\n\nRepository: https://github.com/Omegapy/OntoKin\n\nLast confirmed **development handoff ZIP**: Use this attached P18 early ZIP and its separately saved receipt; reconcile live GitHub before selecting any next action.\n\nNewer recovery file or partial handoff: Reconcile the latest separate P18 receipt and any newer recovery file supplied with this prompt.\n\nInterrupted task or last known event: Unknown; inspect CHECKPOINT and live GitHub before retrying.\n\nIn a **fresh chat**, recover the existing OntoKin task at its **first unmet gate**. Complete no more than one bounded phase, save a verified handoff ZIP if work remains, and stop. Do not start another milestone.\n\n1. Read the handoff's `README-START-HERE.md`, checkpoint, recovery status, and any newer recovery file. Read live `CHATGPT-START-HERE.md` and required repository instructions at the observed `main` revision, once per unchanged file.\n2. Reconcile the task and plan, branches, PRs, integration ownership, test evidence, Library receipts, workers, and unpublished work. A timeout does **not** prove a GitHub write, merge, or upload failed. Inspect actual destinations before retrying; retain operation and commit/ref identities. Never replay blindly.\n3. Separate completed, pending, and unknown gates. Resume the existing authorized task and branch without duplicating completed work. If code is merged, address only remaining checks, branch disposition, or delivery. If everything is already complete and saved, report the existing handoff and stop.\n4. Follow `docs/workflow/PROTOCOL.md` and `docs/workflow/HANDOFF.md`. Declare one phase and stopping point. Confirm an early recovery ZIP before substantial work. Use bounded independent subagents where available; keep detailed evidence in files. Perform applicable checks and review.\n5. Preserve remaining work; verify, save, and record the new handoff's receipt separately. Report verified outcomes, limits, and next action. Leave the parent task open if any gate remains. **Continue the next phase in a new main chat.**\n",
+    "README-START-HERE.md": "# OntoKin C271 P18 early handoff\n\nThis is a **browser-session handoff for online GitHub continuation**, usable without the previous chat. It is not a complete offline repository backup.\n\nRepository: https://github.com/Omegapy/OntoKin\nSource: `8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8`; tree: `058c14ef754761aaf4d0e04a7bdb690b2a901ea1`. Branch: `work/c271-missing-import-digest-control`. Observed main: `70ca7e68ff95df876f801137369d176fe5b2bab3`.\n\nRead CHECKPOINT.json, HANDOFF.md, RECOVERY-STATUS.md and NEXT-TASK.md, then reconcile live CHATGPT-START-HERE.md and its required sources. GitHub governs current state. Main and retained branch differ; main-only licensing PR275 is a future integration obligation.\n\nVerify safe relative paths, uniqueness, ZIP CRC, every size/hash and source binding before extraction. All archive files are inert 0644. Never automatically execute recovered scripts or binaries. The exact P17 handoff and saved terminal receipt/audit are retained under predecessor.\n\nThe immutable archive cannot contain its own future save receipt. Reconcile `docs/engineering/localized-repair-c271/libc-implementation-p18/EARLY-RECOVERY-RECEIPT.json` and saved terminal records before retrying.\n",
+    "RECOVERY-EXCLUSIONS.json": {
+      "schema": "ontokin.c271.p18-exclusions/1",
+      "derivative_files": [
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/CHECKPOINT.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/HANDOFF.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/HISTORICAL-DEPENDENCIES.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/MANIFEST-SHA256.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/NEXT-TASK.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/PROMPT-1-CONTINUE.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/PROMPT-2-RECOVER.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/README-START-HERE.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/RECOVERY-FILE-MAP.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/RECOVERY-STATUS.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/SOURCE-MANIFEST.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/observed-main/AGENTS.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/observed-main/CHATGPT-START-HERE.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/observed-main/GOAL.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/observed-main/ROLE.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/observed-main/STATUS.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/observed-main/docs/workflow/CURRENT.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/observed-main/docs/workflow/HANDOFF.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/observed-main/docs/workflow/PROTOCOL.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/observed-main/docs/workflow/registry.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/predecessor/OntoKin_C271_P17_Delivery_Receipt_2026-11-22.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/predecessor/OntoKin_C271_P17_Libc_Flags_Decision_Handoff_2026-11-22.zip",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/predecessor/OntoKin_C271_P17_Terminal_Audit_2026-11-22.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/audit/P17-LIVE-CHECKPOINT-EXCERPTS.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/audit/P17-READ-SNAPSHOT.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/audit/P17-RECONCILIATION.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/audit/P17-RECONCILIATION.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/build_handoff.py",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/implementation/PREPARATION.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/implementation/STARTUP-READSET.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/ledger-review/ADOPTED-REFERENCE-IDENTITIES.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/ledger-review/LEDGER-FACTS.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/ledger-review/READSET.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/PHASE.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/READSET-ROOT.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/branches.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/issue273.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/main-GOAL.md.read.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/main-STATUS.md.read.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/prs.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/read-main/AGENTS.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/read-main/CHATGPT-START-HERE.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/read-main/GOAL.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/read-main/ROLE.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/read-main/STATUS.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/read-main/docs/workflow/CURRENT.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/read-main/docs/workflow/HANDOFF.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/read-main/docs/workflow/PROTOCOL.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/read-main/docs/workflow/registry.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/runs.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/recovery/session/state/statuses.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/.agents/skills/ontokin-delivery/SKILL.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/.agents/skills/ontokin-learning/SKILL.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/.agents/skills/ontokin-session/SKILL.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/AGENTS.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/CHATGPT-START-HERE.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/GOAL.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/ROLE.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/STATUS.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/CANDIDATE001.zip",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/CONTROL-CONTRACT.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/DECISION.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/FUTURE-SURFACE.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/CANDIDATE001.zip",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/CONTROL-CONTRACT.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/DECISION.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/FUTURE-SURFACE.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/workflow/BROWSER-PROMPTS.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/workflow/CURRENT.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/workflow/HANDOFF.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/workflow/PROTOCOL.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/workflow/prompts/CONTINUE.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/workflow/prompts/RECOVER.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/workflow/registry.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/workflow/tasks/C271/PLAN.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/docs/workflow/tasks/C271/task.json",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        },
+        {
+          "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted/repository/prototypes/static_tray_v01/current_host_inspection_v01.py",
+          "reason": "Derivative audit extraction; exact input archive retained separately with manifest"
+        }
+      ],
+      "omission_scope": "Only duplicate extracted audit copies, never unique report/source/failed evidence. Input archives remain durable dependencies."
+    },
+    "RECOVERY-FILE-MAP.json": {
+      "schema": "ontokin.c271.p18-recovery/1",
+      "files": [
+        {
+          "archive_path": "recovery/session/state/ENVIRONMENT.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/ENVIRONMENT.json",
+          "bytes": 388,
+          "sha256": "9b517276b58207936c9c6e5adc63f13fcbb70e4b83e466349f313e74d6f31d38",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/LIVE-HEADS.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/LIVE-HEADS.json",
+          "bytes": 320,
+          "sha256": "2bced8dfaf8167a2f6d04aa64df1ec5162a872d1c32dfca73e0e096c4005f471",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/P17-SAVED-READBACK-PROVENANCE.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/P17-SAVED-READBACK-PROVENANCE.json",
+          "bytes": 1383,
+          "sha256": "00fec01a2e5d0945c456ba8cbeda4a07e549f615d46b0b6937b1125edf78afb4",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/PHASE.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/PHASE.json",
+          "bytes": 6186,
+          "sha256": "2bffbf9062a460ed93a1af71390e484fe6b02570325d7f33a6967bb74ce906c6",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/READSET-ROOT.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/READSET-ROOT.json",
+          "bytes": 5898,
+          "sha256": "6c839372c7ad1cb213e9ff4d2ee6b40c74b14c27e93620ccadcbfb185b1c7f65",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/STARTING-FILE-INVENTORY.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/STARTING-FILE-INVENTORY.json",
+          "bytes": 4481662,
+          "sha256": "5ef679242d8e62a01d9f25d0420bc24fec2322d60cf296da689d181191b64e81",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/branches.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/branches.json",
+          "bytes": 303,
+          "sha256": "63170092a339445c77398891b86efdd40654dcfa9a5c4ac7b24a799e4db77176",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/issue273.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/issue273.json",
+          "bytes": 67426,
+          "sha256": "1d422b0bc16c3fd3a23e77848b8bb7512e1de5fafb2620669d75a54cfab528b0",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/main-GOAL.md.read.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/main-GOAL.md.read.json",
+          "bytes": 229,
+          "sha256": "d64557d749c70ab054b66ec3a1710bcd1908a398b20326ac47038d9d29e3c6fc",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/main-STATUS.md.read.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/main-STATUS.md.read.json",
+          "bytes": 634,
+          "sha256": "a3f1a38c267417e8d4d75677ed7279eabb3f17f4872cc1c3365a830b0431a68d",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/prs.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/prs.json",
+          "bytes": 67536,
+          "sha256": "32fc0c90f240dd5bcdb0ad2525de2517dfc904937f478ab4e79f5dd730623a48",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/read-main/AGENTS.md",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/read-main/AGENTS.md",
+          "bytes": 7068,
+          "sha256": "ce0fef82308e1c329dcf0514c99e81e89c340bbb550cf0cdcdb589599ae42822",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/read-main/CHATGPT-START-HERE.md",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/read-main/CHATGPT-START-HERE.md",
+          "bytes": 2665,
+          "sha256": "99a69a4cfa633fb515ca08725b43b6193051249c279a4b31a9412d56e6593ce0",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/read-main/GOAL.md",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/read-main/GOAL.md",
+          "bytes": 11740,
+          "sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/read-main/ROLE.md",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/read-main/ROLE.md",
+          "bytes": 1683,
+          "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/read-main/STATUS.md",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/read-main/STATUS.md",
+          "bytes": 13772,
+          "sha256": "04a500a21e7a7b0148345e97bca72da93700f649032ec202ebb0e96b64448d7e",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/read-main/docs/workflow/CURRENT.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/read-main/docs/workflow/CURRENT.json",
+          "bytes": 5527,
+          "sha256": "fec57459bd12896effe23010dcc6d9f8b709e350fd8cabe1c67309a7da941d40",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/read-main/docs/workflow/HANDOFF.md",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/read-main/docs/workflow/HANDOFF.md",
+          "bytes": 6065,
+          "sha256": "d87e35055bbba590a4c6b738aba239030315fdade5a6ac2e618a83be48342bac",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/read-main/docs/workflow/PROTOCOL.md",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/read-main/docs/workflow/PROTOCOL.md",
+          "bytes": 11711,
+          "sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/read-main/docs/workflow/registry.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/read-main/docs/workflow/registry.json",
+          "bytes": 1172,
+          "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/runs.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/runs.json",
+          "bytes": 165,
+          "sha256": "06ef1a0c537be8f0172645a3659c462436c70b425aa2df04ba1be7c2b2201e0a",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/state/statuses.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/state/statuses.json",
+          "bytes": 160,
+          "sha256": "a7083557fa1a9218e1635e2016202634d0923ea663b5743ed26a38bfe637201d",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/audit/P17-LIVE-CHECKPOINT-EXCERPTS.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/audit/P17-LIVE-CHECKPOINT-EXCERPTS.json",
+          "bytes": 2801,
+          "sha256": "e196b729d6d6618b5f4578fd9e1a3b140539c0a5d551125e16e23082dfa57f74",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/audit/P17-READ-SNAPSHOT.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/audit/P17-READ-SNAPSHOT.json",
+          "bytes": 63466123,
+          "sha256": "3df01a52ff926c00d0ad0838cf843105180cf0845cc25c968071ef5799f64848",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/audit/P17-RECONCILIATION.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/audit/P17-RECONCILIATION.json",
+          "bytes": 19010,
+          "sha256": "2318feffa9ec95a4cdcd81ec4e11428aab6a869081b11982e34a981f31b8f866",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/audit/P17-RECONCILIATION.md",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/audit/P17-RECONCILIATION.md",
+          "bytes": 3721,
+          "sha256": "68c3a0d8cb41bcc26171da3d41edf4bc7bfeb5462f56dd51a2ebb84c438cd935",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/audit/early-review/ATTEMPT001-INTEGRITY.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/audit/early-review/ATTEMPT001-INTEGRITY.json",
+          "bytes": 238270,
+          "sha256": "d64110b906f23fad8a9b7bf4e31a18bc93fe0a55cae7db13de0b7e43d55960e2",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/audit/early-review/ATTEMPT001-REVIEW.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/audit/early-review/ATTEMPT001-REVIEW.json",
+          "bytes": 8735,
+          "sha256": "b4c684ebf78964cfbfe53f597977e2cceb1def6e5a7d13de9537d18d93939400",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/audit/early-review/ATTEMPT001-REVIEW.md",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/audit/early-review/ATTEMPT001-REVIEW.md",
+          "bytes": 2715,
+          "sha256": "59f18b767cbbd36b6f90c1f9cb671e3080aa847fcffd1b3a76afb6f5fa357414",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/ledger-review/ADOPTED-REFERENCE-IDENTITIES.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/ledger-review/ADOPTED-REFERENCE-IDENTITIES.json",
+          "bytes": 2185,
+          "sha256": "b46bbc9854cfdbe3a56464d5e15071ce9e201f12c0b276b07097d1debdd680cb",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/ledger-review/LEDGER-FACTS.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/ledger-review/LEDGER-FACTS.json",
+          "bytes": 27332,
+          "sha256": "149f3cb404581359210dce5f380d0f1f98986dfa25ad81312142bea6c02b8bc7",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/ledger-review/READSET.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/ledger-review/READSET.json",
+          "bytes": 11809,
+          "sha256": "5b857dc712685fc8bb509ecc0d80bd60f17595634f5538fa189ae7f9b730a6bf",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/ledger-review/REPORT.md",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/ledger-review/REPORT.md",
+          "bytes": 21392,
+          "sha256": "64cbc8e8595b1b6dfad401961c2597ed6385133670f2c2c62b5791029a20474c",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/implementation/PREPARATION.md",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/implementation/PREPARATION.md",
+          "bytes": 2866,
+          "sha256": "7140eae84060cf6099567a8d62540cdd82219e6452cbb5ba795d8d0ed69b0ef7",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/implementation/STARTUP-READSET.json",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/implementation/STARTUP-READSET.json",
+          "bytes": 6185,
+          "sha256": "b5c42c3e6c73b352ddac3f1916c9d2c5f1622c29a98a65a56c915fd18c7b548d",
+          "application": "Inert evidence; never overwrite newer GitHub work"
+        },
+        {
+          "archive_path": "recovery/session/build_handoff.py",
+          "original_path": "/workspace/scratch/cf3e30ae3c50/build_handoff.py",
+          "bytes": 13710,
+          "sha256": "d3040852b5da08dbd6bdd6cb850d20993e240cbf9f5238e675c4874c11b2a7e1",
+          "application": "Inert builder source; inspect before any reuse"
+        }
+      ]
+    },
+    "RECOVERY-STATUS.md": "# Recovery status\n\nUnique current session bytes are included under recovery/session with RECOVERY-FILE-MAP.json. SOURCE-MANIFEST.json binds exact Git snapshots. Their bytes are evidence, not permission to overwrite current GitHub work. Read CHECKPOINT for actual worker states. No current unknown operation or write is known; readers/auditors are bounded current assignments. No substantive P18 implementation or product tests had started at early freeze.\n\nThe retained branch CURRENT/task P17 receipt-pending fields are historical source-time records, reconciled by actual saved P17 terminal receipt/audit readbacks, the62-group audit and live PR/issue confirmation. Observed main CURRENT still names completed C270 and awaiting user direction because C271 is unmerged; the fresh user continuation and retained C271 task govern this phase. The new P18 early-save/final-save gates remain genuinely pending until their own actual receipts confirm them. Never replay P17 writes.\n\nHistorical C270 ancillary broad-driver completion, global prior-process termination and P13 read-only difflib completion remain unknown. Do not replay those operations. This source-time save_pending is superseded only by an actual later matching receipt.\n",
+    "SOURCE-MANIFEST.json": {
+      "schema": "ontokin.c271.p18-source/1",
+      "files": [
+        {
+          "archive_path": "repository/.agents/skills/ontokin-delivery/SKILL.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": ".agents/skills/ontokin-delivery/SKILL.md",
+          "git_blob": "117462416e6eb47a86bbb08b4618b9c5cb572f84",
+          "bytes": 1277,
+          "sha256": "7b7300a46e4f966314b74707a414f5fc72425c8eab4464cf12b20def9697529e"
+        },
+        {
+          "archive_path": "repository/.agents/skills/ontokin-learning/SKILL.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": ".agents/skills/ontokin-learning/SKILL.md",
+          "git_blob": "02283141a8610d3aa00eafb907b0c36b9f82f68b",
+          "bytes": 2478,
+          "sha256": "3e16354300c3002c8b5f895877a3b520bba0b1b2a6d44d20632127e0197b31de"
+        },
+        {
+          "archive_path": "repository/.agents/skills/ontokin-session/SKILL.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": ".agents/skills/ontokin-session/SKILL.md",
+          "git_blob": "17714b7c4288efec7b60ab414840082a20264819",
+          "bytes": 1346,
+          "sha256": "4ce5917b05f94b1676e81102cc8518371e509dc8ac4a4f6bcfdf3881faacfc13"
+        },
+        {
+          "archive_path": "repository/AGENTS.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "AGENTS.md",
+          "git_blob": "b9e478e082baffc597a0355fd6088969825ef1d6",
+          "bytes": 7068,
+          "sha256": "ce0fef82308e1c329dcf0514c99e81e89c340bbb550cf0cdcdb589599ae42822"
+        },
+        {
+          "archive_path": "repository/CHATGPT-START-HERE.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "CHATGPT-START-HERE.md",
+          "git_blob": "b7543b2d1e979d8fea82921e74123b5461104588",
+          "bytes": 2665,
+          "sha256": "99a69a4cfa633fb515ca08725b43b6193051249c279a4b31a9412d56e6593ce0"
+        },
+        {
+          "archive_path": "repository/GOAL.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "GOAL.md",
+          "git_blob": "069d6551a03fc2c974d2e844a9bb285bae312ada",
+          "bytes": 11740,
+          "sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc"
+        },
+        {
+          "archive_path": "repository/ROLE.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "ROLE.md",
+          "git_blob": "94cba1161037beddb8b384a2c2cf1ee0d2120eaa",
+          "bytes": 1683,
+          "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf"
+        },
+        {
+          "archive_path": "repository/STATUS.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "STATUS.md",
+          "git_blob": "85aa7c88f952142cd5ab7d323b5468bbdfd3268f",
+          "bytes": 14575,
+          "sha256": "ae5b6b38378ebf7f696609276a4dab458fd9893c3bb686897869f5596c2f1494"
+        },
+        {
+          "archive_path": "repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+          "git_blob": "8ff5b738e19f150d5c37948437bfe265d35505f7",
+          "bytes": 13604,
+          "sha256": "274f989927ca3de0fa1506f579e6872ac30ffca33df7b95ee7f23c4e1d2e62b2"
+        },
+        {
+          "archive_path": "repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+          "git_blob": "5fd35d5e3b4dd061c6258f1cd4f039e9cd0727b9",
+          "bytes": 11426,
+          "sha256": "a037c8584f5bd94beea9bbb83079c437de90556a9d3ec8ec6295f6c93e459a45"
+        },
+        {
+          "archive_path": "repository/docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json",
+          "git_blob": "9f3e732804db01e1e862e445a639937ce0950e53",
+          "bytes": 2915,
+          "sha256": "61b7043352a23dcd79d076c569606a7141b7c85ea0a9e3e11833e3350bfc1328"
+        },
+        {
+          "archive_path": "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/CANDIDATE001.zip",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/engineering/localized-repair-c271/libc-flags-p17/design/CANDIDATE001.zip",
+          "git_blob": "87f2a721fc47febbdf4a343b999a6d6c9331a691",
+          "bytes": 166919,
+          "sha256": "d59d4d71a9f73065a000ae3de8233beb82ad5a33a3b526de93debb845f0d86c4"
+        },
+        {
+          "archive_path": "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/CONTROL-CONTRACT.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/engineering/localized-repair-c271/libc-flags-p17/design/CONTROL-CONTRACT.md",
+          "git_blob": "f14a43246b30f8d354eab667c32c338c5d3d5f9f",
+          "bytes": 8554,
+          "sha256": "0c8aac40189ca0d53ec0cf7d82649835d73094e0e0b73aead23c1c87cd9cf3d3"
+        },
+        {
+          "archive_path": "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/DECISION.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/engineering/localized-repair-c271/libc-flags-p17/design/DECISION.md",
+          "git_blob": "77ceea506e831434f6c8e5664a8d34a3ce00e73b",
+          "bytes": 9894,
+          "sha256": "c61094124afde41d78cbee789c4a92a93f40248493eff7f1641f738eef1f0e55"
+        },
+        {
+          "archive_path": "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/FUTURE-SURFACE.json",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/engineering/localized-repair-c271/libc-flags-p17/design/FUTURE-SURFACE.json",
+          "git_blob": "1610053624f8666ea0fd05ea22e9303b5278488e",
+          "bytes": 5333,
+          "sha256": "6562f6ef713537c7e23c8aaf9e2f6f520d7f9a889075fd96f12ea9585e243b6a"
+        },
+        {
+          "archive_path": "repository/docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json",
+          "git_blob": "0d61132ddbf3c4b819d6e791c5b07c19f7d28426",
+          "bytes": 4386,
+          "sha256": "03b7ee42d36d0e6774ee33e8fdbbfe08509179875816cc45a258209036521945"
+        },
+        {
+          "archive_path": "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/CANDIDATE001.zip",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/engineering/localized-repair-c271/libc-tags-p16/design/CANDIDATE001.zip",
+          "git_blob": "0fe282adf1a4bb95ccd8e863379b48347f0d3bf6",
+          "bytes": 264916,
+          "sha256": "05d1cbe971678b8f505795e436f2bd096b81848f68b4f9da6adc64392f6fb5af"
+        },
+        {
+          "archive_path": "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/CONTROL-CONTRACT.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/CONTROL-CONTRACT.md",
+          "git_blob": "ac8e76e6c121a4bba098c4d85a3ee96d47f81d28",
+          "bytes": 8903,
+          "sha256": "9ad0581a7d3ad51009687503a7d1f276dfe699939f6a030b10344f074171e579"
+        },
+        {
+          "archive_path": "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/DECISION.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/DECISION.md",
+          "git_blob": "282c828c56301f0cd02db719fc745a96aa7b7287",
+          "bytes": 14664,
+          "sha256": "ee99eb864e5f51284c324562872b55fba1baccfe3c9c75cb972e1bd4bb1e6529"
+        },
+        {
+          "archive_path": "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/FUTURE-SURFACE.json",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/FUTURE-SURFACE.json",
+          "git_blob": "f9bb43481c0447466b30a26a2dbceccca6857c58",
+          "bytes": 6191,
+          "sha256": "5abf4ec1d0ab4f06b56c7a758a0a31e154ca9660e43cc2af246ca55b17c36d29"
+        },
+        {
+          "archive_path": "repository/docs/workflow/BROWSER-PROMPTS.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/workflow/BROWSER-PROMPTS.md",
+          "git_blob": "5e4eee74b89861e9f53bf28eb5a97688143b44ad",
+          "bytes": 1739,
+          "sha256": "62e0eb4de4d1b90d390d8bb119c65b987d881b161a0b53b6646b46369ee3852b"
+        },
+        {
+          "archive_path": "repository/docs/workflow/CURRENT.json",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/workflow/CURRENT.json",
+          "git_blob": "ec326387656364f9f930b3dd47ec4c62b8c3ab1b",
+          "bytes": 93498,
+          "sha256": "3106bb6af00c79c00900a2952f11dae65db5a8676ed5796966c2199570e1c579"
+        },
+        {
+          "archive_path": "repository/docs/workflow/HANDOFF.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/workflow/HANDOFF.md",
+          "git_blob": "f68c0dbf8810099de551d3b50b55eb16ba552542",
+          "bytes": 6065,
+          "sha256": "d87e35055bbba590a4c6b738aba239030315fdade5a6ac2e618a83be48342bac"
+        },
+        {
+          "archive_path": "repository/docs/workflow/PROTOCOL.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/workflow/PROTOCOL.md",
+          "git_blob": "2ade5aa5006239943dd9df71c91da79528bf5155",
+          "bytes": 11711,
+          "sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad"
+        },
+        {
+          "archive_path": "repository/docs/workflow/prompts/CONTINUE.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/workflow/prompts/CONTINUE.md",
+          "git_blob": "5cbc91b7690c1a2f102bd195e7d9451c9c48beac",
+          "bytes": 1646,
+          "sha256": "c33e9d1afcd587925a188308a3d02e14f8ce6dd8a8a5f26338291863886753ab"
+        },
+        {
+          "archive_path": "repository/docs/workflow/prompts/RECOVER.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/workflow/prompts/RECOVER.md",
+          "git_blob": "6406c6b870bfdce8b67fd22ce8f2a7d7c524ff63",
+          "bytes": 1872,
+          "sha256": "3303d3d3a2d9956bc385f7e87f6262bbd18229bea856f2ec25b469cc2901d5a8"
+        },
+        {
+          "archive_path": "repository/docs/workflow/registry.json",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/workflow/registry.json",
+          "git_blob": "545e0619847b2fd767b93dfd0c81dd5a1f055a99",
+          "bytes": 1172,
+          "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536"
+        },
+        {
+          "archive_path": "repository/docs/workflow/tasks/C271/PLAN.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/workflow/tasks/C271/PLAN.md",
+          "git_blob": "fb1ced176c0f3c156c073461b0c807b10194f69f",
+          "bytes": 53629,
+          "sha256": "eb66f8faeb54fe49e8f0dc67e259928001374daebae39b1cef83e3ddde3a7a39"
+        },
+        {
+          "archive_path": "repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+          "git_blob": "93bb01dfe2534a34472a64e640a145c63ed2e9fe",
+          "bytes": 52475,
+          "sha256": "d8cc470b1ab1908c32b80734e4cb934a376b7c7f3c8e4f4d20b75fd4b8ef3382"
+        },
+        {
+          "archive_path": "repository/docs/workflow/tasks/C271/task.json",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "docs/workflow/tasks/C271/task.json",
+          "git_blob": "ebb1a667dfeeea1eec059afdec312afc62577448",
+          "bytes": 243805,
+          "sha256": "57faf340643566c0bca92914df9eed61ea1926cc0bbb75050e881d37fa876ffb"
+        },
+        {
+          "archive_path": "repository/prototypes/static_tray_v01/current_host_inspection_v01.py",
+          "revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+          "git_blob": "9313636af940ad2ac99b68c2cfa56f252c26f0ef",
+          "bytes": 183913,
+          "sha256": "a8274d56076562a91d26b3cdd2f614fce6fd509733e4939b225dff2ddca09db4"
+        },
+        {
+          "archive_path": "observed-main/CHATGPT-START-HERE.md",
+          "revision": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+          "path": "CHATGPT-START-HERE.md",
+          "git_blob": "b7543b2d1e979d8fea82921e74123b5461104588",
+          "bytes": 2665,
+          "sha256": "99a69a4cfa633fb515ca08725b43b6193051249c279a4b31a9412d56e6593ce0"
+        },
+        {
+          "archive_path": "observed-main/AGENTS.md",
+          "revision": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+          "path": "AGENTS.md",
+          "git_blob": "b9e478e082baffc597a0355fd6088969825ef1d6",
+          "bytes": 7068,
+          "sha256": "ce0fef82308e1c329dcf0514c99e81e89c340bbb550cf0cdcdb589599ae42822"
+        },
+        {
+          "archive_path": "observed-main/GOAL.md",
+          "revision": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+          "path": "GOAL.md",
+          "git_blob": "069d6551a03fc2c974d2e844a9bb285bae312ada",
+          "bytes": 11740,
+          "sha256": "3711e800877d135d9a0753f66cc13ecd77cd401c6a79737164d8c75bca98cacc"
+        },
+        {
+          "archive_path": "observed-main/STATUS.md",
+          "revision": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+          "path": "STATUS.md",
+          "git_blob": "2cabb4caef0002173ccb897fbbc704559ec3815d",
+          "bytes": 13772,
+          "sha256": "04a500a21e7a7b0148345e97bca72da93700f649032ec202ebb0e96b64448d7e"
+        },
+        {
+          "archive_path": "observed-main/ROLE.md",
+          "revision": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+          "path": "ROLE.md",
+          "git_blob": "94cba1161037beddb8b384a2c2cf1ee0d2120eaa",
+          "bytes": 1683,
+          "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf"
+        },
+        {
+          "archive_path": "observed-main/docs/workflow/registry.json",
+          "revision": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+          "path": "docs/workflow/registry.json",
+          "git_blob": "545e0619847b2fd767b93dfd0c81dd5a1f055a99",
+          "bytes": 1172,
+          "sha256": "b32db9ac5a464479f9a44f1cabed20dc1f1fd34e3810248ef0a24061c2acb536"
+        },
+        {
+          "archive_path": "observed-main/docs/workflow/CURRENT.json",
+          "revision": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+          "path": "docs/workflow/CURRENT.json",
+          "git_blob": "9b9b7d4bb0eecde3691912b89d35a362c73b82c5",
+          "bytes": 5527,
+          "sha256": "fec57459bd12896effe23010dcc6d9f8b709e350fd8cabe1c67309a7da941d40"
+        },
+        {
+          "archive_path": "observed-main/docs/workflow/PROTOCOL.md",
+          "revision": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+          "path": "docs/workflow/PROTOCOL.md",
+          "git_blob": "2ade5aa5006239943dd9df71c91da79528bf5155",
+          "bytes": 11711,
+          "sha256": "8aef4c6abbeb59bcc1c24f994cd34bce3a3678ac72520283c5a1c9c2ff01a2ad"
+        },
+        {
+          "archive_path": "observed-main/docs/workflow/HANDOFF.md",
+          "revision": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+          "path": "docs/workflow/HANDOFF.md",
+          "git_blob": "f68c0dbf8810099de551d3b50b55eb16ba552542",
+          "bytes": 6065,
+          "sha256": "d87e35055bbba590a4c6b738aba239030315fdade5a6ac2e618a83be48342bac"
+        }
+      ]
+    },
+    "recovery/session/audit/early-review/ATTEMPT001-REVIEW.json": {
+      "schema": "ontokin.c271.p18-early-independent-review/1",
+      "attempt": "001",
+      "reviewer": "/root/handoff_audit",
+      "reviewed_at_utc": "2026-11-22T19:21:15.264464+00:00",
+      "verdict": "rejected_requires_distinct_corrected_archive",
+      "accepted_for_early_recovery_save": false,
+      "archive": {
+        "path": "/workspace/scratch/cf3e30ae3c50/deliverables/early/OntoKin_C271_P18_Libc_Implementation_Early_Recovery_2026-11-22.zip",
+        "bytes": 35040327,
+        "sha256": "d1c6723cb3c666be55a1ebd95fe54a7a61ef412c0097732f6c0ed493d6d1050b",
+        "entries": 82
+      },
+      "extraction": {
+        "path": "/workspace/scratch/cf3e30ae3c50/audit/early-extracted",
+        "fresh": true,
+        "mode": "0700",
+        "file_mode": "0600",
+        "executed_recovered_content": false
+      },
+      "mandatory_findings": [
+        {
+          "id": "P18-EARLY-001",
+          "severity": "mandatory",
+          "category": "recovery inventory",
+          "paths": [
+            "RECOVERY-FILE-MAP.json",
+            "recovery/session/build_handoff.py"
+          ],
+          "observed": "The archive contains 28 recovery/session files; the recovery map has 27 rows and omits build_handoff.py. Existing map rows are correct.",
+          "requirement": "Required recoverable unpublished bytes must have base/application instructions; the package asserts RECOVERY-FILE-MAP.json describes current session bytes.",
+          "correction": "Include the builder in the recovery map with original path, exact byte length/SHA-256 and inert application instructions. Verify exact map inventory closure."
+        },
+        {
+          "id": "P18-EARLY-002",
+          "severity": "mandatory",
+          "category": "checkpoint completeness",
+          "paths": [
+            "CHECKPOINT.json"
+          ],
+          "observed": "observed_main gives commit/tree but no observation time. Acceptance is an unstatused list; no concise phase table binds completed/pending gates to evidence and remaining actions.",
+          "requirement": "HANDOFF required CHECKPOINT contents include observed main SHA/tree/time and completed/incomplete steps/evidence. PROTOCOL section 8 requires one concise phase table with completed gate evidence, remaining actions and unknown operations.",
+          "correction": "Record the actual main observation time and add explicit phase/gate statuses with references to preserved startup readsets, P17 reconciliation, outstanding independent early review/save and the technical/delivery gates. Retain early_save_confirmed=false and save_pending at freeze."
+        },
+        {
+          "id": "P18-EARLY-003",
+          "severity": "mandatory",
+          "category": "required handoff and recovery semantics",
+          "paths": [
+            "HANDOFF.md",
+            "RECOVERY-STATUS.md"
+          ],
+          "observed": "The root handoff describes intent and limits but does not give the required concise verification/review evidence or failure state. Recovery text points generally to CHECKPOINT without explicitly saying current unknown operations are none. Neither explains the precise inherited main/branch CURRENT fields that remain historical despite the current P18 declaration.",
+          "requirement": "HANDOFF required contents include verification/review, failures, unrun checks, limits and remaining work. RECOVERY-STATUS requires readbacks/blockers/outstanding delivery and explicit identification when none is known. Snapshots may be stale and must be reconciled.",
+          "correction": "Add concise evidence-linked startup/P17 audit results, actual current failures or explicit none, product checks not_run, and current unknown operations none. For the corrected build preserve this rejected attempt. Explain that main CURRENT C270/awaiting-direction and branch CURRENT P17 terminal-pending fields are historical, superseded by current P18 declaration and P17 actual readback/live confirmation evidence. P18 own early-save pending remains real until its later receipt."
+        }
+      ],
+      "passed_checks": {
+        "safe_unique_regular_inert_entries": 82,
+        "crc_size_valid_entries": 82,
+        "exact_payload_manifest_rows": 81,
+        "actual_extracted_files_equal": 82,
+        "exact_git_source_snapshots": 40,
+        "repository_snapshots_at_receipt_commit": 31,
+        "observed_main_snapshots": 9,
+        "source_size_sha256_git_blob_bindings": 40,
+        "correct_recovery_map_rows": 27,
+        "predecessor_whole_file_equalities_reusing_prior_audit": 3,
+        "external_prompts_equal": 2
+      },
+      "identity": {
+        "main": {
+          "commit": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+          "tree": "7302cf8f36c45dd76112ad442e42e48379ac8367"
+        },
+        "source_revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+        "source_tree": "058c14ef754761aaf4d0e04a7bdb690b2a901ea1",
+        "parent_status": "blocked",
+        "parent_complete": false,
+        "phase": "C271-P18-libc-metadata-implementation",
+        "phase_status": "early_recovery_preparation",
+        "early_save_confirmed": false,
+        "delivery_state_at_freeze": "save_pending",
+        "external_receipt": "docs/engineering/localized-repair-c271/libc-implementation-p18/EARLY-RECOVERY-RECEIPT.json"
+      },
+      "semantic_results": {
+        "early_self_receipt_absence_is_correct": true,
+        "implementation_not_started_is_correct": true,
+        "parent_requirements_plan_and_limits_consistent": true,
+        "read_only_workers_until_early_confirmation": true,
+        "p17_delivery_confirmation_preserved": true,
+        "c262_identity_purpose_preserved": true,
+        "c263_workflow_migration_boundary_preserved_in_exact_current_snapshots": true,
+        "complete_online_continuation_prompts_present": true,
+        "full_offline_recovery_not_claimed": true,
+        "stale_source_fields": [
+          {
+            "path": "repository/docs/workflow/CURRENT.json",
+            "field": "next_action.summary",
+            "value": "Independently review/check/publish this receipt delta; reopen the exact commit; refresh PR/issue; preserve and confirm the separate terminal carrier; stop.",
+            "interpretation": "P17 source-time next action; superseded by preserved P17 saved-file readbacks and live PR/issue terminal confirmation. Do not replay P17 delivery."
+          },
+          {
+            "path": "repository/docs/workflow/CURRENT.json",
+            "fields": [
+              "latest_recovery",
+              "boundaries P17 publication/delivery pending"
+            ],
+            "interpretation": "Historical P17 phase/saved recovery evidence. It is not P18 early recovery and cannot satisfy P18 early-save gate."
+          },
+          {
+            "path": "observed-main/docs/workflow/CURRENT.json",
+            "fields": {
+              "active_task": null,
+              "next_action.status": "awaiting_user_direction",
+              "observed_main": "ca57a50cd2910861832b0bfcca609980efd78139"
+            },
+            "interpretation": "C270-era workflow values preserved in actual main70ca7e68; source content does not identify current branch head or cancel the user-authorized C271/P18 continuation. README correctly distinguishes main-only licensing PR275 as a future integration obligation."
+          },
+          {
+            "path": "CHECKPOINT.json",
+            "fields": {
+              "early_save_confirmed": false,
+              "delivery_state_at_freeze": "save_pending"
+            },
+            "interpretation": "Current P18 pre-save truth, deliberately not superseded by any P17 confirmation. Only a later matching P18 saved-file receipt may supersede it."
+          }
+        ]
+      },
+      "evidence": {
+        "integrity_report": "/workspace/scratch/cf3e30ae3c50/audit/early-review/ATTEMPT001-INTEGRITY.json",
+        "prior_p17_report": "/workspace/scratch/cf3e30ae3c50/audit/P17-RECONCILIATION.json",
+        "governing_revision": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+        "governing_paths": [
+          "docs/workflow/HANDOFF.md",
+          "docs/workflow/PROTOCOL.md"
+        ],
+        "builder_inspected_as_data_only": "/workspace/scratch/cf3e30ae3c50/build_handoff.py"
+      },
+      "operations": {
+        "product_or_recovered_script_executions": 0,
+        "git_reads": "40 cat-file blob reads and one rev-parse tree read; no worktree/index/ref writes",
+        "repository_mutations": 0,
+        "external_calls": 0,
+        "archive_rebuilds": 0,
+        "writes_confined_to": "/workspace/scratch/cf3e30ae3c50/audit",
+        "active_operations": [],
+        "current_unknown_operations": []
+      },
+      "stop_and_next_action": "Preserve this archive and audit attempt. Director corrects the mandatory findings and builds a distinct attempt002 archive, then requests an affected independent review. Do not save attempt001 as the accepted early recovery or begin implementation.",
+      "derivative_preservation_note": "audit/early-extracted is an exact verified extraction of the rejected archive, with every member hash in ATTEMPT001-INTEGRITY.json. It may be represented by an explicit exact-byte derivative exclusion bound to the separately retained rejected archive instead of nesting the entire extraction in attempt002."
+    },
+    "recovery/session/state/LIVE-HEADS.json": {
+      "observed_at_utc": "2026-11-22T19:20:46.367470+00:00",
+      "heads": [
+        [
+          "70ca7e68ff95df876f801137369d176fe5b2bab3",
+          "refs/heads/main"
+        ],
+        [
+          "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+          "refs/heads/work/c271-missing-import-digest-control"
+        ]
+      ],
+      "complete_heads_listing": true
+    },
+    "recovery/session/state/PHASE.json": {
+      "schema": "ontokin.c271.p18-phase/1",
+      "task": "C271",
+      "phase": "C271-P18-libc-metadata-implementation",
+      "owner": "c271-p18-cf3e30ae3c50",
+      "declared_at_utc": "2026-11-22T19:16:25.666647+00:00",
+      "branch": "work/c271-missing-import-digest-control",
+      "starting_revision": "8dc78c0a0ba6b69f502d35e0bbd1727c3c2ab7e8",
+      "observed_main": {
+        "commit": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+        "tree": "7302cf8f36c45dd76112ad442e42e48379ac8367",
+        "observed_at_utc": "2026-11-22T19:20:46.367470+00:00",
+        "evidence": "state/LIVE-HEADS.json"
+      },
+      "starting_tree": "058c14ef754761aaf4d0e04a7bdb690b2a901ea1",
+      "scope": "Implement adopted P16 exact libc PLT metadata and P17 exact flags extension together, unchanged frozen and inherited controls, independent exact source and adapter review",
+      "acceptance": [
+        "Reconcile P17 saved delivery/live GitHub/full assigned readsets and confirm independently reviewed early recovery before technical work",
+        "Implement only adopted P16/P17 production and new adapter paths; preserve every historical expectation, default, pin, budget and consumer",
+        "Run all73 P16 and41 P17 frozen controls,135 inherited inspection methods,40 mapping methods,96 origin runtime controls; independently review exact code/adapters and applicable provider/driver checks",
+        "Run documentary/workflow/whitespace and preservation checks; conditionally publish retained branch and verify exact commit/tree",
+        "Independently verify/freeze/save final ZIP and byte-identical prompts; publish separate actual receipt and stop"
+      ],
+      "stop": "Reviewed bounded implementation plus verified partial delivery, or first concrete design blocker; do not start another phase",
+      "requirements": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "not_done",
+        "R04": "not_done",
+        "R05": "not_done"
+      },
+      "parent_plan": {
+        "P01": "done",
+        "P02": "in_progress"
+      },
+      "parent_status": "blocked",
+      "parent_complete": false,
+      "pr": {
+        "number": 274,
+        "state": "open",
+        "draft": true,
+        "merged": false
+      },
+      "issue": {
+        "number": 273,
+        "state": "open"
+      },
+      "main_lease_held": false,
+      "integration_allowed": false,
+      "constraints": [
+        "No H0/H1, current-host inspection, input substitution, install/preparation, Node/ldd, original-seven/full routine, native/model/hosted execution",
+        "No main integration, branch deletion, parent closure, old test/oracle/contract/pin/limit/consumer edits",
+        "N57 remains externally accounted for, never a runtime pass or skip",
+        "Root alone owns Git/index/canonical records/publication/Library; no nested worker fanout"
+      ],
+      "phase_complete": false,
+      "early_save_confirmed": false,
+      "status": "early_recovery_preparation",
+      "current_unknown_operations": [],
+      "historical_unknowns": [
+        "C270 ancillary broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only difflib completion; do not retry"
+      ],
+      "workers": [
+        {
+          "id": "/root/handoff_audit",
+          "scope": "independent recovery/package audit",
+          "state": "P17 startup audit complete; independent early archive audit running"
+        },
+        {
+          "id": "/root/ledger_review",
+          "scope": "full active CURRENT/task ledger startup",
+          "state": "Full ledger startup complete; independent implementation review pending"
+        },
+        {
+          "id": "/root/implementation",
+          "scope": "full active PLAN and design read; later isolated production/adapters",
+          "state": "Full PLAN/design startup complete; held before technical work"
+        }
+      ],
+      "capabilities": {
+        "repository_read": "GitHub connector plus authentic Git checkout",
+        "git_data_write": "available connector create-tree/commit and expected-SHA nonforce ref tools; this phase not yet exercised",
+        "native_push": "previously diagnosed unavailable; not retried",
+        "branch_pr_read": "observed",
+        "terminal_tests": "available; product checks not started",
+        "subagents": "three real launched workers; inherited model, fresh context",
+        "zip": "available",
+        "library_read": "actual P17 ZIP/receipt/audit materializations",
+        "library_save": "available; this phase not yet confirmed",
+        "merge_deletion": "not selected"
+      },
+      "next_action": "Independently audit and confirm saved early recovery before any substantive implementation",
+      "startup_reconciliation": {
+        "P17_delivery": "confirmed complete_partial_delivery by actual saved-byte readbacks,62-group audit and live PR/issue markers",
+        "required_readsets": [
+          "state/READSET-ROOT.json",
+          "ledger-review/READSET.json",
+          "implementation/STARTUP-READSET.json"
+        ],
+        "parent_status_unchanged": true
+      },
+      "phase_table": [
+        {
+          "gate": "P18-A01",
+          "state": "startup_reconciled_early_recovery_pending",
+          "evidence": [
+            "audit/P17-RECONCILIATION.json",
+            "state/READSET-ROOT.json",
+            "ledger-review/READSET.json",
+            "implementation/STARTUP-READSET.json",
+            "state/LIVE-HEADS.json"
+          ]
+        },
+        {
+          "gate": "P18-A02",
+          "state": "not_started",
+          "criterion": "adopted implementation with preservation"
+        },
+        {
+          "gate": "P18-A03",
+          "state": "not_started",
+          "criterion": "frozen/inherited checks and independent review"
+        },
+        {
+          "gate": "P18-A04",
+          "state": "not_started",
+          "criterion": "documentary verification and conditional publication"
+        },
+        {
+          "gate": "P18-A05",
+          "state": "not_started",
+          "criterion": "verified saved final handoff and separate receipt"
+        }
+      ],
+      "early_attempts": [
+        {
+          "attempt": 1,
+          "status": "rejected_before_save",
+          "archive": "OntoKin_C271_P18_Libc_Implementation_Early_Recovery_2026-11-22.zip",
+          "bytes": 35040327,
+          "sha256": "d1c6723cb3c666be55a1ebd95fe54a7a61ef412c0097732f6c0ed493d6d1050b",
+          "findings": [
+            "builder omitted from recovery map",
+            "observation time and gate table missing",
+            "startup/limits/reconciliation narrative incomplete"
+          ],
+          "preservation": "exact original will be saved alongside corrected attempt002; separate early receipt records both"
+        }
+      ]
+    }
+  },
+  "source_reused": [
+    "repository/.agents/skills/ontokin-delivery/SKILL.md",
+    "repository/.agents/skills/ontokin-learning/SKILL.md",
+    "repository/.agents/skills/ontokin-session/SKILL.md",
+    "repository/AGENTS.md",
+    "repository/CHATGPT-START-HERE.md",
+    "repository/GOAL.md",
+    "repository/ROLE.md",
+    "repository/STATUS.md",
+    "repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+    "repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+    "repository/docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json",
+    "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/CANDIDATE001.zip",
+    "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/CONTROL-CONTRACT.md",
+    "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/DECISION.md",
+    "repository/docs/engineering/localized-repair-c271/libc-flags-p17/design/FUTURE-SURFACE.json",
+    "repository/docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json",
+    "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/CANDIDATE001.zip",
+    "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/CONTROL-CONTRACT.md",
+    "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/DECISION.md",
+    "repository/docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/FUTURE-SURFACE.json",
+    "repository/docs/workflow/BROWSER-PROMPTS.md",
+    "repository/docs/workflow/CURRENT.json",
+    "repository/docs/workflow/HANDOFF.md",
+    "repository/docs/workflow/PROTOCOL.md",
+    "repository/docs/workflow/prompts/CONTINUE.md",
+    "repository/docs/workflow/prompts/RECOVER.md",
+    "repository/docs/workflow/registry.json",
+    "repository/docs/workflow/tasks/C271/PLAN.md",
+    "repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+    "repository/docs/workflow/tasks/C271/task.json",
+    "repository/prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "observed-main/CHATGPT-START-HERE.md",
+    "observed-main/AGENTS.md",
+    "observed-main/GOAL.md",
+    "observed-main/STATUS.md",
+    "observed-main/ROLE.md",
+    "observed-main/docs/workflow/registry.json",
+    "observed-main/docs/workflow/CURRENT.json",
+    "observed-main/docs/workflow/PROTOCOL.md",
+    "observed-main/docs/workflow/HANDOFF.md"
+  ],
+  "source_fresh": [],
+  "semantic_review_pending": false
+}
