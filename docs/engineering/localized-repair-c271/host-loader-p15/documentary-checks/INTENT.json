@@ -1,0 +1,34 @@
+{
+  "schema": "ontokin.c271.p15-documentary-checks/1",
+  "started_at_utc": "2026-11-22T06:12:33.846435+00:00",
+  "cwd": "/workspace/scratch/5041e572c132/OntoKin",
+  "head": "875c81c506d4e5431b909e190ce294c61312029e",
+  "index_tree": "8f4c3dbf4ca98f6f500212e4374bfd3677dbd728",
+  "scope": "Documentation, workflow metadata and whitespace only; no product/runtime/R03 acceptance.",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "commands": [
+    [
+      "python3",
+      "-B",
+      "tools/chat_workflow.py",
+      "check"
+    ],
+    [
+      "python3",
+      "-B",
+      "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+    ],
+    [
+      "git",
+      "diff",
+      "--check"
+    ],
+    [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ]
+  ]
+}

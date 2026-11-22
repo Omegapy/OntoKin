@@ -1,0 +1,119 @@
+{
+  "schema": "ontokin.c271.p15-phase-outcome/1",
+  "recorded_at_utc": "2026-11-22T06:10:02.981029+00:00",
+  "phase": "C271-P15-H0-loader-source-and-plan-review",
+  "verdict": "source_union_accepted_actual_libc_admission_blocked",
+  "source_revision": "875c81c506d4e5431b909e190ce294c61312029e",
+  "reader_sha256": "a8274d56076562a91d26b3cdd2f614fce6fd509733e4939b225dff2ddca09db4",
+  "source_completeness": {
+    "accepted": true,
+    "kind": "P13 external source review only",
+    "loader_sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+    "suffix_union": [
+      "",
+      "glibc-hwcaps/x86-64-v2",
+      "glibc-hwcaps/x86-64-v3",
+      "glibc-hwcaps/x86-64-v4"
+    ],
+    "review": {
+      "path": "loader-review/attempt001/SOURCE-COMPLETENESS-DECISION.json",
+      "bytes": 2771,
+      "sha256": "2f32377faeea0df9c6a95e7be895a62482a7f776ed35747838c2b9a71354a2cb"
+    },
+    "limits": "Exact ordinary direct-Python loader context. No signature validation, recovered compiler/buildinfo or reproducible build. No runtime N57 pass or skip."
+  },
+  "blocker": {
+    "id": "P15-H0-LIBC-DYNAMIC-TAG-001",
+    "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+    "bytes": 1995216,
+    "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
+    "code": "CHI-UNSUPPORTED",
+    "reason": "Unreviewed ELF dynamic loader feature",
+    "state": "REJECTED",
+    "first_predicate": "all(tag in ordinary for tag, _ in entries)",
+    "first_excluded_tag": "0x70000000",
+    "file_offset": 1980896,
+    "other_excluded_tags": [
+      "0x70000001",
+      "0x70000003"
+    ],
+    "later_dynamic_flags_predicate_reached": false,
+    "review": {
+      "path": "loader-review/blocker-attempt001/BLOCKER-DECISION.json",
+      "bytes": 3879,
+      "sha256": "2d1cc08582e1a03a7ae1c5689ee55fe8548e5bac2a0b6438e5ed32eb4f82d1f9"
+    }
+  },
+  "execution": {
+    "python_tool_processes_ran": true,
+    "production_metadata_reader_calls": 2,
+    "loader_metadata_returned": true,
+    "libc_typed_refusal": true,
+    "Node_starts": 0,
+    "ldd_starts": 0,
+    "direct_loader_starts": 0,
+    "installations": 0
+  },
+  "H0_accepted": false,
+  "operational_plan_adopted": false,
+  "H1_approved": false,
+  "technical_work_stopped": true,
+  "remaining_input_checks": "not_run",
+  "fresh_unit_or_product_suites": "not_run; product and tests unchanged",
+  "historical_tests": "P14 evidence of96 mapped controls and175 inherited methods is retained/reconciled; not rerun or relabelled as P15 passes.",
+  "unrun": [
+    "complete H0 inventory/plan",
+    "H1",
+    "original seven outcomes",
+    "full required routine",
+    "native/model/hosted trials",
+    "main integration"
+  ],
+  "parent_complete": false,
+  "requirements": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "parent_plan": {
+    "P01": "done",
+    "P02": "in_progress"
+  },
+  "main_lease_held": false,
+  "branch_disposition": "retained",
+  "pr274": "open draft unmerged",
+  "issue273": "open",
+  "observed_main": {
+    "commit": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+    "tree": "7302cf8f36c45dd76112ad442e42e48379ac8367",
+    "observed_at_utc": "2026-11-22T06:05:05.520Z",
+    "observation": "recovery/reconciliation/prepublication-main.json"
+  },
+  "main_movement": {
+    "compare": "recovery/reconciliation/main-movement-compare.json",
+    "changed_paths": [
+      "LICENSE",
+      "LICENSING.md",
+      "NOTICE",
+      "README.md",
+      "pyproject.toml"
+    ],
+    "required_instructions_and_inspected_sources_unchanged": true,
+    "rebase_or_merge_performed": false,
+    "rule": "Retain active branch; future integration must reconcile then-current main, including licensing and packaging changes."
+  },
+  "documentary_checks": {
+    "candidate_index_tree": "8f4c3dbf4ca98f6f500212e4374bfd3677dbd728",
+    "four_commands_passed": true,
+    "independent_groups_passed": 53,
+    "protected_baseline_files": 20396,
+    "mandatory_findings": [],
+    "final_staged_checks": "pending after review records attached"
+  },
+  "publication": "pending conditional retained-branch update",
+  "delivery": "pending final verified save and separate receipt",
+  "exact_next_action": "Finish only P15 independent blocker/outcome review, documentary checks, conditional branch publication and verified partial handoff with separate receipt; then stop. In a fresh chat, select one bounded source-backed compatibility decision for the rejected actual libc processor-specific dynamic tags before any implementation or further H0/H1.",
+  "next_fresh_chat_action": "Reconcile saved P15 receipt and live GitHub. Review the actual libc dynamic tags rejected at the first predicate against the adopted host-inspection contract and exact source; define a bounded compatibility decision and frozen controls, or retain a precise blocker. Preserve historical results and all pins/limits; do not automatically widen the reader allowlist. Stop before implementation, H0/H1 or at the first design blocker."
+}

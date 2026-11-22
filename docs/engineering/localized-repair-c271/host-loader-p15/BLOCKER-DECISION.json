@@ -1,0 +1,98 @@
+{
+  "schema": "ontokin.c271.p15-independent-first-refusal-decision/1",
+  "reviewer": "/root/loader_review",
+  "recorded_at_utc": "2026-11-22T06:07:41.901576+00:00",
+  "verdict": "confirmed_first_actual_static_admission_refusal_phase_stop_required",
+  "review_report": {
+    "path": "/workspace/scratch/5041e572c132/p15-session/loader-review/blocker-attempt001/BLOCKER-REVIEW.md",
+    "bytes": 5292,
+    "sha256": "84181351c9ae8a97954bfdedc23ac1864a889963b93ebc21d83299c741aceb30"
+  },
+  "crosscheck": {
+    "path": "/workspace/scratch/5041e572c132/p15-session/loader-review/blocker-attempt001/CROSSCHECK.json",
+    "bytes": 4686,
+    "sha256": "1281a6acecdf661bb93b91b22facfb71a2472a271041a3d8b3cb08e11c5d60de"
+  },
+  "readset": {
+    "path": "/workspace/scratch/5041e572c132/p15-session/loader-review/blocker-attempt001/READSET.json",
+    "bytes": 2947,
+    "sha256": "65d4b044a81737ff7118fd8dfb9be9fa65d52fd9af018c7a12fc333c180672a9"
+  },
+  "reviewed_outcome": {
+    "path": "/workspace/scratch/5041e572c132/p15-session/h0-static-admission-attempt001/OUTCOME.json",
+    "bytes": 8473,
+    "sha256": "c81c39f10624597a6666ff8acd501a3c68fcd087f37e85899a1884e3612b654a"
+  },
+  "actual_input": {
+    "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+    "bytes": 1995216,
+    "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
+    "device": 27,
+    "inode": 9223372036855318289,
+    "current_bytes_equal_capture": true,
+    "mapped_role_evidence": "Recorded collector selects its sole libc.so.6 path from /proc/self/maps before recording INTENT; this review does not reconstruct its historical process maps."
+  },
+  "source_revision": "875c81c506d4e5431b909e190ce294c61312029e",
+  "source_sha256": "a8274d56076562a91d26b3cdd2f614fce6fd509733e4939b225dff2ddca09db4",
+  "first_failed_predicate": {
+    "line": 1162,
+    "source": "_require(all(tag in ordinary for tag, _ in entries), \"UNSUPPORTED\", \"Unreviewed ELF dynamic loader feature\")",
+    "first_falsifying_entry": {
+      "offset": 1980896,
+      "tag": 1879048192,
+      "value": 163840,
+      "value_hex": "0x28000",
+      "tag_hex": "0x70000000"
+    },
+    "all_excluded_entries": [
+      {
+        "offset": 1980896,
+        "tag": 1879048192,
+        "value": 163840,
+        "value_hex": "0x28000",
+        "tag_hex": "0x70000000"
+      },
+      {
+        "offset": 1980912,
+        "tag": 1879048193,
+        "value": 976,
+        "value_hex": "0x3d0",
+        "tag_hex": "0x70000001"
+      },
+      {
+        "offset": 1980928,
+        "tag": 1879048195,
+        "value": 16,
+        "value_hex": "0x10",
+        "tag_hex": "0x70000003"
+      }
+    ],
+    "typed_refusal": {
+      "code": "CHI-UNSUPPORTED",
+      "reason": "Unreviewed ELF dynamic loader feature",
+      "state": "REJECTED",
+      "cause": null,
+      "details": {}
+    }
+  },
+  "later_dynamic_flags_check_reached": false,
+  "phase_blocker": "The actual mapped libc file contains dynamic tags outside the unchanged admitted feature set.",
+  "mandatory_review_corrections": [],
+  "mandatory_disposition": [
+    "Stop technical work in this selected phase at the confirmed first refusal.",
+    "Preserve the exact refusal and incomplete gates for documentary delivery and verified partial handoff.",
+    "No helper retry, further gate investigation, repair or input substitution."
+  ],
+  "source_completeness_acceptance_preserved": true,
+  "source_completeness_decision": {
+    "path": "/workspace/scratch/5041e572c132/p15-session/loader-review/attempt001/SOURCE-COMPLETENESS-DECISION.json",
+    "bytes": 2771,
+    "sha256": "2f32377faeea0df9c6a95e7be895a62482a7f776ed35747838c2b9a71354a2cb"
+  },
+  "H0_accepted": false,
+  "operational_plan_adopted": false,
+  "H1_approved": false,
+  "historical_N57_runtime_oracle": "Unchanged; neither runtime pass nor skip manufactured.",
+  "active_jobs": [],
+  "unknown_operations": []
+}

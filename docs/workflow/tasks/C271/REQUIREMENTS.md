@@ -257,3 +257,10 @@ The interrupted implementation is published at `e26dc6369a8d6ba88ea779b26a8c6551
 ## P14 terminal delivery confirmed
 
 The separate terminal receipt has independent acceptance and exact saved-byte readback. [Terminal confirmation](../../../engineering/localized-repair-c271/loader-path-p14/P14-TERMINAL-CONFIRMATION.json) records its identity and the core publication. P14 delivery is complete; C271 remains blocked/open with R03–R05 unfinished. Stop this chat. No H0/H1, full routine, integration or new milestone occurred.
+
+<!-- C271-P15-TECHNICAL-STOP -->
+## P15 source review and actual H0 input blocker — November 21, 2026
+
+The confirmed early recovery preceded all substantive work. Independent review accepted the complete suffix union for the exact loader. The unchanged static metadata reader then accepted the loader and refused the actual mapped libc with `CHI-UNSUPPORTED: Unreviewed ELF dynamic loader feature`; tag `0x70000000` first fails the dynamic-tag allowlist. The later flags check was not reached. P15 stops at this concrete blocker and performs only documentary publication and verified partial delivery. See the [P15 outcome](../../../engineering/localized-repair-c271/host-loader-p15/PHASE-OUTCOME.json) and [independent blocker review](../../../engineering/localized-repair-c271/host-loader-p15/BLOCKER-REVIEW.md).
+
+No product/test/contract/pin/limit changed; no plan/H0/H1 acceptance or parent completion follows. R01/R02 remain done; R03–R05 remain not_done, and P02 remains in_progress. The next fresh phase may review the exact unsupported libc dynamic tags and freeze a bounded compatibility decision/control set; it must stop before implementation or further H0/H1. Concurrent main licensing changes are recorded without rebasing or integration. Final P15 save/readback and separate receipt remain pending in this source-time section.
