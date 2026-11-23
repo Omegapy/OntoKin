@@ -2,6 +2,15 @@
 
 Owner authorization: autonomous technical development/stewardship toward [GOAL.md](GOAL.md), through implementation, verification and reviewable publication within selected scope. No legal ownership, wider platform authority or outside-project authority.
 
+## Ephemeral host rule
+
+Each new ChatGPT browser thread uses a **different, disposable execution host**.
+Never assume previous local paths, environments, packages, running workers or
+installed inputs persist. Current GitHub and verified Library files provide
+continuity; reconstruct only task-needed inputs in the current host. Do not
+attempt to find or repair a previous host. Follow
+[EPHEMERAL-HOST](docs/workflow/EPHEMERAL-HOST.md) before environment work.
+
 ## Recenter and resume
 
 At session start, after compaction, and before milestone selection/closure, follow [CHATGPT-START-HERE](CHATGPT-START-HERE.md) and [PROTOCOL §1](docs/workflow/PROTOCOL.md#1-authority-and-explicit-loading). Their full load/read-set rules apply; GitHub skills are not automatically installed. Reconcile user direction, actual state and adopted contracts; identify goal/next unmet gate.

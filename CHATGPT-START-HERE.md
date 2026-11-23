@@ -2,6 +2,10 @@
 
 Entry: **Omegapy/OntoKin**. GitHub owns current instructions/work/evidence; [HANDOFF](docs/workflow/HANDOFF.md) governs saved browser-session ZIPs and live reconciliation.
 
+## Mandatory ephemeral-host rule
+
+**Mandatory ephemeral-host rule:** Every new ChatGPT browser discussion is a **different, disposable execution host**. Assume no access to any prior thread's filesystem, installed dependencies, virtual environments, running workers or temporary paths. Read GitHub and verified Library artifacts for continuity; inspect only relevant current-host capabilities and reconstruct required inputs in fresh session directories. Historical paths/receipts are evidence, not current resources. Do not search for or attempt to preserve a previous virtual host. See [EPHEMERAL-HOST](docs/workflow/EPHEMERAL-HOST.md).
+
 ## Prompt to use in a new chat
 
 Use the full [continuation or recovery prompt](docs/workflow/BROWSER-PROMPTS.md); recovery includes delivery after implementation merges.

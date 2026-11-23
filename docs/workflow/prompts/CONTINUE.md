@@ -8,6 +8,12 @@ Optional new direction: [LEAVE BLANK TO RESUME CURRENT TASK]
 
 In a **fresh chat**, continue **one bounded phase** of OntoKin development. Save a verified handoff ZIP to my existing `OntoKin` ChatGPT Library folder, then stop.
 
+**Mandatory ephemeral-host rule:** This is a new, independent temporary
+execution host. Do not search for or rely on the prior thread's files,
+installations, paths, workers or running environments. GitHub and verified
+Library files carry durable state. Inspect only what the next gate needs,
+rebuild required inputs here, and follow `docs/workflow/EPHEMERAL-HOST.md`.
+
 1. Open the ZIP's `README-START-HERE.md` and checkpoint. Read the live repository's `CHATGPT-START-HERE.md` and its required instructions at the observed `main` revision. Read unchanged files only once. Reconcile the active task and plan, branches, PRs, integration ownership, test evidence, saved receipts, and unpublished work. GitHub governs current repository state.
 2. Resume the active authorized task and branch. If none is active, choose one approved next step consistent with my direction. Declare its phase, acceptance criteria, and stopping point. Follow `docs/workflow/PROTOCOL.md` and `docs/workflow/HANDOFF.md` for detailed rules.
 3. **Confirm an early recovery ZIP before substantial work.** Delegate bounded, independent assignments to real subagents when available; give each only necessary applicable context. Keep detailed outputs in files and reports short. Verify changes and required reviews. Preserve failures, history, and unfinished work; reconcile uncertain operations before retrying.

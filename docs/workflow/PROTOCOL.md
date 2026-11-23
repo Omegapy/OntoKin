@@ -28,6 +28,21 @@ Tools: authorized only; no destructive probes/unnecessary installations. Missing
 capability: finish useful permitted preparation; record blocked action, outputs,
 recoverable next step.
 
+## Mandatory ephemeral host boundary (applies to every new thread)
+
+Treat each fresh browser chat as a **different, disposable host**; never
+assume continuity of installed dependencies, environments, filesystem paths,
+processes, subagents, mounts or configuration from a previous conversation.
+The previous host is not a recoverable dependency. Previous paths and
+installation receipts prove only historical execution. Use live GitHub and
+confirmed Library artifacts as durable state; on the **current host**, inspect
+only capabilities necessary for the first unmet authorized gate, then recreate
+required inputs from versioned sources in isolated paths with pinned identities.
+Do not turn host discovery/preparation into recurring milestones without a
+specific host-dependent acceptance requirement. When required inputs are
+unavailable, record one concrete blocker instead of repeatedly probing a
+previous temporary host. Follow [EPHEMERAL-HOST](EPHEMERAL-HOST.md).
+
 ## 3. Scope, requirements and plan
 
 Director: select bounded scope matching current direction/GOAL. Read-only questions:
