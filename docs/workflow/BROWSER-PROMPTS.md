@@ -2,6 +2,11 @@
 
 Use one complete prompt in a fresh ChatGPT browser thread; replace bracketed inputs.
 
+**Mandatory:** each fresh thread is a **different, ephemeral host**. Previous
+filesystem paths, Python/Node installs and running processes are unavailable;
+use saved GitHub/Library inputs and rebuild only what the current task needs.
+Do not investigate previous virtual hosts. See [EPHEMERAL-HOST](EPHEMERAL-HOST.md).
+
 | Situation | Prompt/inputs |
 | --- | --- |
 | Continue one declared phase; resume active scope before queued work | [Prompt 1: continue development](prompts/CONTINUE.md): latest successfully saved ZIP; optional task/phase override. Blank resumes active authorized scope; only with none active may it select the next bounded step from approved work. |
