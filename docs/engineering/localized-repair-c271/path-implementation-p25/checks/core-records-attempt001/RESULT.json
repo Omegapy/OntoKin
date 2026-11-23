@@ -1,0 +1,12 @@
+{
+  "command": "python3 state/finalize_core_records.py",
+  "exit_code": 1,
+  "error": "FileNotFoundError: implementation/MANIFEST.json",
+  "cause": "Director used the wrong evidence path; actual manifest is implementation/candidate001/MANIFEST.json.",
+  "observed_effects": [
+    "ACCEPTANCE.json was written",
+    "OUTCOME and canonical mutations were not reached"
+  ],
+  "resolution": "Preserved exact script and partial acceptance; correct the path and run once. No production or test bytes changed.",
+  "raw_traceback": "Not captured to a file; tool output retained in conversation."
+}

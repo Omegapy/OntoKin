@@ -1,0 +1,619 @@
+{
+  "schema": "ontokin.c271.p25-independent-adapter-review/1",
+  "reviewer": "/root/reconcile",
+  "at_utc": "2026-11-23T14:26:12.326758+00:00",
+  "status": "accepted_for_bounded_synthetic_P25_controls",
+  "adapter": "ADAPTER-005.py.source",
+  "adapter_sha256": "363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da",
+  "basis": "All51 frozen runtime obligations mapped; N34 remains external only. Ten separately declared supplements read in full. No production source authored/changed or product/target execution performed by reviewer.",
+  "findings": [
+    {
+      "id": "A01",
+      "status": "resolved",
+      "scope": "New path-generated error controls",
+      "finding": "assert_details returns silently when stage differs/missing. Most mapped controls also accept any legal rule_id instead of the required mapped rule.",
+      "required": "Require closed details and stage=rtld_paths for expected new path errors; bind exact mapped rule/category/reason where the adopted schema/crosswalk specifies it. Preserve legacy/callback wrapper distinctions.",
+      "resolved_in": "ADAPTER-004; retained in005"
+    },
+    {
+      "id": "A02",
+      "status": "resolved",
+      "scope": "P01/P03/P04",
+      "finding": "P03 asserts result witness but no frozen /lib symlink observation order; P01/P04 count opens of /usr without proving the admitted physical .. transition from held /usr/lib64.",
+      "required": "Retain input basename and held-parent identity/path in synthetic trace. Assert expected link sequence and explicit parent-pop at each relevant fresh-root pass.",
+      "resolved_in": "ADAPTER-004; retained in005"
+    },
+    {
+      "id": "A03",
+      "status": "resolved",
+      "scope": "F05/F06/F07/F12",
+      "finding": "Distinct tuples anywhere do not prove retained before/after identities for the declared replaced entry. F12 checks labels/binding presence without exact changed tuple.",
+      "required": "Assert fault-specific same-path expected and observed identities and completed binding details as specified by each immutable event.",
+      "resolved_in": "ADAPTER-004; retained in005"
+    }
+  ],
+  "supplemental_review": "S01\u2013S10 additions exercise concrete adopted contract risks without changing 51 frozen controls. No additional mandatory finding found in these additions.",
+  "read_set": [
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/ADOPTION.json",
+      "bytes": 3605,
+      "sha256": "6a5b3497e0374e014cef249b2233ab9022af13f90f9d462a4afe49f9b35c5a9a",
+      "coverage": "full"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/DECISION-CANDIDATE.md",
+      "bytes": 25162,
+      "sha256": "169d6a586f4eff294a89266e66dfe715ccdcbb82691dccbd004f76503155a34e",
+      "coverage": "full"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/SCHEMA.json",
+      "bytes": 26706,
+      "sha256": "4b0c73afe6c185e8b2e6a0f72739d3371b31caa6a4d106e16c3a2ed1588eebbe",
+      "coverage": "full"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-MATRIX.json",
+      "bytes": 67833,
+      "sha256": "d52f64ffc28f7baf04e360f167fb56192cc6fb0baf6b36fd9f085907732a3196",
+      "coverage": "full unique semantic content; noncase fields plus four exact common-field-deduplicated case packets"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-CROSSWALK.json",
+      "bytes": 57380,
+      "sha256": "1d472d6036119805882d6a4996cc6d00cacda8de421f77866483c682894daf16",
+      "coverage": "full unique semantic content; noncase fields plus four exact common-field-deduplicated case packets"
+    },
+    {
+      "path": "/workspace/scratch/bd99261bd84d/OntoKin/docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-001.py.source",
+      "bytes": 45000,
+      "sha256": "05951c2e63a8446f31a5eca8f812d44b0741726b80b5edf76adb15a7509eac26",
+      "coverage": "002 full; 001 and003 complete delta plus exact unchanged text reuse"
+    },
+    {
+      "path": "/workspace/scratch/bd99261bd84d/OntoKin/docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-002.py.source",
+      "bytes": 45877,
+      "sha256": "4642be4d6737b011920cf75b00f461b98edee372ee01f48caa7bc1bd5bc2deeb",
+      "coverage": "full lines1-end"
+    },
+    {
+      "path": "/workspace/scratch/bd99261bd84d/OntoKin/docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-003.py.source",
+      "bytes": 66363,
+      "sha256": "3ccda5a5297a23cb8324e9123e67e09c50c13d5fefa266aee251773f0ff85e0a",
+      "coverage": "002 full; 001 and003 complete delta plus exact unchanged text reuse"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-MATRIX.json",
+      "bytes": 67833,
+      "sha256": "d52f64ffc28f7baf04e360f167fb56192cc6fb0baf6b36fd9f085907732a3196",
+      "coverage": "full unique semantic content via exact de-duplicated read packets"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-CROSSWALK.json",
+      "bytes": 57380,
+      "sha256": "1d472d6036119805882d6a4996cc6d00cacda8de421f77866483c682894daf16",
+      "coverage": "full unique semantic content via exact de-duplicated read packets"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/SCHEMA.json",
+      "bytes": 26706,
+      "sha256": "4b0c73afe6c185e8b2e6a0f72739d3371b31caa6a4d106e16c3a2ed1588eebbe",
+      "coverage": "full semantic read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/RESULT.json",
+      "bytes": 3107,
+      "sha256": "1bc9592301dde9566d770af8367b2e86dd7d8852749ea7c5aa485c632f57527d",
+      "coverage": "complete input identities and result fields reviewed; duplicate metadata reused"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/INPUTS.json",
+      "bytes": 2862,
+      "sha256": "85d816fa07ed40366d8f77c7df1b5a6f2a80a318ea6a6df300b97dbaf43804ed",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/run_attempt.py",
+      "bytes": 4416,
+      "sha256": "355c32eeb2b77b8a145a3acd21a7280a4e78c724675ffe18a778a2d8d72b7261",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "bytes": 233502,
+      "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/implementation/candidate001/current_host_inspection_v01.py",
+      "bytes": 233502,
+      "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "tests/test_current_host_rtld_paths_v01.py",
+      "bytes": 71062,
+      "sha256": "363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/ADOPTION.json",
+      "bytes": 3605,
+      "sha256": "6a5b3497e0374e014cef249b2233ab9022af13f90f9d462a4afe49f9b35c5a9a",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/DECISION-CANDIDATE.md",
+      "bytes": 25162,
+      "sha256": "169d6a586f4eff294a89266e66dfe715ccdcbb82691dccbd004f76503155a34e",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/SCHEMA.json",
+      "bytes": 26706,
+      "sha256": "4b0c73afe6c185e8b2e6a0f72739d3371b31caa6a4d106e16c3a2ed1588eebbe",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-MATRIX.json",
+      "bytes": 67833,
+      "sha256": "d52f64ffc28f7baf04e360f167fb56192cc6fb0baf6b36fd9f085907732a3196",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-CROSSWALK.json",
+      "bytes": 57380,
+      "sha256": "1d472d6036119805882d6a4996cc6d00cacda8de421f77866483c682894daf16",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-005.py.source",
+      "bytes": 71062,
+      "sha256": "363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da",
+      "coverage": "full via ADAPTER002 plus complete 002\u2013003,003\u2013004,004\u2013005 deltas and exact unchanged text reuse"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-001.py.source",
+      "bytes": 45000,
+      "sha256": "05951c2e63a8446f31a5eca8f812d44b0741726b80b5edf76adb15a7509eac26",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-FREEZE-001.json",
+      "bytes": 603,
+      "sha256": "5157ad44ef0dde7e9b14d77d97f149f546b826a07642b603a94d46b21a1b65aa",
+      "coverage": "full semantic read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-002.py.source",
+      "bytes": 45877,
+      "sha256": "4642be4d6737b011920cf75b00f461b98edee372ee01f48caa7bc1bd5bc2deeb",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-FREEZE-002.json",
+      "bytes": 897,
+      "sha256": "66c835946494f477bde8fd030035cfd0d7c2cdfe5e7c8f0fc2c1664c5622ace3",
+      "coverage": "full semantic read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-003.py.source",
+      "bytes": 66363,
+      "sha256": "3ccda5a5297a23cb8324e9123e67e09c50c13d5fefa266aee251773f0ff85e0a",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-FREEZE-003.json",
+      "bytes": 778,
+      "sha256": "f541d58505aca956fc1fec045170ec524aded4c9c7c109c3306392ab1ee0edfc",
+      "coverage": "full semantic read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-004.py.source",
+      "bytes": 71052,
+      "sha256": "00ec2b484a0db14a83b6cb5f81a64054b3dfd4f7aaef103da83c2fb046cb4fc7",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-FREEZE-004.json",
+      "bytes": 799,
+      "sha256": "668b73e71d843ea249303dd18170f7e67c5b942d209219b1857f780c4b81b2c4",
+      "coverage": "full semantic read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-005.py.source",
+      "bytes": 71062,
+      "sha256": "363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-FREEZE-005.json",
+      "bytes": 752,
+      "sha256": "38a9e4d551d1e7810891b61112d6492d0ab7a31804c33220ac767423fce9c066",
+      "coverage": "full semantic read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/TEST.log",
+      "bytes": 8851,
+      "sha256": "93dc43d039b21d2f4843c9d51b6883c73d4c68c9f252b37d125ce0b8b02af8f7",
+      "coverage": "all method outcome lines checked mechanically; no large raw log copied into review"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F01.json",
+      "bytes": 12890,
+      "sha256": "ffd392238344ed63005c737523a5a91645c89aeb5dfbfd0e18441e391bf24213",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F02.json",
+      "bytes": 12854,
+      "sha256": "9dfa31eef5ee06bb3619613b67a30abcbdafcad9bed1275b5cc40ec6ebe62722",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F03.json",
+      "bytes": 12819,
+      "sha256": "6ec0457589580bed2ac28d958094c8fa3e4a993d0e07c0b9d3bc6b080ca36daa",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F04.json",
+      "bytes": 12908,
+      "sha256": "6d93eddb6a89b832a91974c2e90d6672cf2252e2f81c7363599a85439e460dc9",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F05.json",
+      "bytes": 14409,
+      "sha256": "1f615f5e01e92ca67c0b2c7034cbd124561cf05f33be2539645adee7fdfc0741",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F06.json",
+      "bytes": 17732,
+      "sha256": "f53002f12132d82b7c029d8795f8d0825002891fee8216e759caef1f93e7e6ed",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F07.json",
+      "bytes": 23952,
+      "sha256": "6c1fe4e927de483be09213e9d54cafda582b9818071f3a10330f2005887d97f7",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F08.json",
+      "bytes": 167646,
+      "sha256": "b8df2834f806254c754ace23e39a4896fac11fd08602a7de23693202b0048aee",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F09.json",
+      "bytes": 355721,
+      "sha256": "66039cfb310e46c25d69180c38c40358b6c78a3b935fa4d9508ec52f46ef6242",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F10.json",
+      "bytes": 13266,
+      "sha256": "88a1ff7fbce54d35d90d511cf0bc24c5dd3047bcf61d71af191dd1d6894cfcc5",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F11.json",
+      "bytes": 13014,
+      "sha256": "474f5fccc639f9368d3f423fc636b260728aa3c2b00e95cdb7d46bfcad45c75d",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F12.json",
+      "bytes": 23069,
+      "sha256": "3e0c32ce27856f25e856a301c651257fd11f357acc00579718cf900ac1177948",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F13.json",
+      "bytes": 287793,
+      "sha256": "524b53a372d41d17a457f9535aa6698d61679dd06657f826e39c75a90e5d61d0",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N01.json",
+      "bytes": 7522,
+      "sha256": "0e5d44194b9125db2c3f765e891d7dc505d671309210d81caa38ae886d151f74",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N02.json",
+      "bytes": 10577,
+      "sha256": "ad0c3f1572554a8534468803206efd29f3680a7f1ef9fad8cfd3e5881ce71a9b",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N03.json",
+      "bytes": 10593,
+      "sha256": "dbe840ed5074132b8c43b341fde0d6d9dc1eed306fa6d503e7936f974df77175",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N04.json",
+      "bytes": 7387,
+      "sha256": "c83160eb823da9dd4c5f162a32ced93efd289fc9b9ba6d497a45774e6449dce4",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N05.json",
+      "bytes": 10359,
+      "sha256": "97349c8c04f39a0a1844aee9d30522903ad80ac2355d2eaea0db380b13105c40",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N06.json",
+      "bytes": 10200,
+      "sha256": "49cb7c14aa000907ad19a243977a1be1ca8bb9801286bd7199ae1b4fe53ac933",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N07.json",
+      "bytes": 10481,
+      "sha256": "bd37389f93ed786f110fed818bc94b5b554fa2617db838b99ee45b94d13c61e6",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N08.json",
+      "bytes": 10492,
+      "sha256": "cd62a295b33ec5eb354b60024fbfa5c95212b98f086080d2bc8d197438a98fb4",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N09.json",
+      "bytes": 10614,
+      "sha256": "69f5c71dde116d8d974418f53d5a0a8a4feb6ddf0cd2546091311ec887ddd153",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N10.json",
+      "bytes": 10797,
+      "sha256": "4e7ce6958f54833f95efe35231c8ca948a481d050527f95b0606d92c4bc1b401",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N11.json",
+      "bytes": 10624,
+      "sha256": "f90a15f4b650db347b7af024bc00916b84d02ed919cd0bf87bf6f82ba96e3b0f",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N12.json",
+      "bytes": 12417,
+      "sha256": "5da575f9f7ae8f9f433a140b1cbd20fd73b43688f56411a95d1c97464031cfb1",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N13.json",
+      "bytes": 15059,
+      "sha256": "f090b2fc738e25e6f11b0f82b5c9c7bec48fa00c16f0935138f61d2f32d16941",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N14.json",
+      "bytes": 12367,
+      "sha256": "057cbc3aa2741c7da2f59332dd4cd693e203b22111a04746330f0e5f7f185f36",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N15.json",
+      "bytes": 12388,
+      "sha256": "b8ac8e8562072afd391d75f373010596ae92fe8a5cb669cb4356aaa3ccdf8b0d",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N16.json",
+      "bytes": 40370,
+      "sha256": "72b0b7dac047d789900eca01f0b795d1eff44f8f09220ff379b12fa07fe03fa9",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N17.json",
+      "bytes": 14379,
+      "sha256": "cd69992b258690c1ae8aa5602b8000286f06d1b4e70c3d976360f5b54917bfa2",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N18.json",
+      "bytes": 18970,
+      "sha256": "621f4d2e81b00cf85ff600a6014be395e43c0e3ca877de94d297816f81d163e7",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N19.json",
+      "bytes": 17524,
+      "sha256": "7e2ab122a5e9f307b07f1b71fdd28794294e363dc4044fbbefae66a92706f3ee",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N20.json",
+      "bytes": 17448,
+      "sha256": "277e022c47d89e84b456a52c9cf83c3aa7bf50aadf79aacca6bc4e64785a266b",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N21.json",
+      "bytes": 17310,
+      "sha256": "a3bcd2946b4213f318d6defb6a22c18e6bba014967c61083ba0b08de72e8eae6",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N22.json",
+      "bytes": 17332,
+      "sha256": "1bb402dfe62177be9ec70ca25941426a973923c73951198536943736e48b0a3e",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N23.json",
+      "bytes": 17386,
+      "sha256": "7c75c33b780bf90bfa148b3476b259938378f53abd8cd5a3afbdc85483d7aef2",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N24.json",
+      "bytes": 14174,
+      "sha256": "080dd94d636cacf57f9040d836a83d2c95c21e5af50e304805b7df7489a20fc8",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N25.json",
+      "bytes": 24265,
+      "sha256": "ce639cac4de1dca8e123fc2d70e35083b0949f9f7e6d40bdb6ee929aca7b67c4",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N26.json",
+      "bytes": 16558,
+      "sha256": "97a10b1e5e5620a93c51fa818e249cd305c9a0e0caf2b38e7c93cc34e60cc794",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N27.json",
+      "bytes": 10908,
+      "sha256": "beec910c14ccccf25b8f379bbd3b0319a955c9232496395070b4b6e00df78809",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N28.json",
+      "bytes": 10949,
+      "sha256": "c4a4512e8e7abb9bc474a8bb7725f66d56fb86a2818dbc2671de750d1c9499e8",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N29.json",
+      "bytes": 11000,
+      "sha256": "d03e2b3bfaa0bb8947e956d08a79533a3bab561771a414920ef7140c20cc909b",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N30.json",
+      "bytes": 10884,
+      "sha256": "85361f68798ca688140fe50be5c95db8f9bc4067f1d84ac1d8a8f2739cfcc24a",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N31.json",
+      "bytes": 10755,
+      "sha256": "09d7a4c1e9d210d3365ab77da16037fc29e71743b42e980f7272ec9e140dd768",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N32.json",
+      "bytes": 10407,
+      "sha256": "420941c674b8d909b9a94563979c0e227a24028c5be3bd2951301125b8a8626c",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N33.json",
+      "bytes": 10763,
+      "sha256": "8c59a7cb20c0552d0f711738df6cde4e46c9e02cc1ec0c824a392de973180888",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P01.json",
+      "bytes": 39887,
+      "sha256": "7e95d4b6ff1ecd01eedadd98c689a2dba10995f83fed6b12bb63048c931f2f0a",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P02.json",
+      "bytes": 14792,
+      "sha256": "38accfff568746ee9da070c6b115e1a0bfeff54cb357294fc247d2bb1d0f1fc0",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P03.json",
+      "bytes": 26775,
+      "sha256": "8b2cacdb47f2da9ee1f0df3cff1f3190313fe4a3def3b0cbe6373634fc8cfc70",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P04.json",
+      "bytes": 50989,
+      "sha256": "fd627c0fda0f24abafdce028b497e2f33235e4bb78c7afa1d903f18f62d41465",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P05.json",
+      "bytes": 74388,
+      "sha256": "78dd9985c342c5519700ee01fc3a4bc953c5aa9a6967bd52e22c9c36662836dd",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    }
+  ],
+  "inventory": {
+    "matrix_total": 52,
+    "runtime_frozen_methods": 51,
+    "external_review_only": [
+      "N34"
+    ],
+    "supplemental_methods": [
+      "test_S01_close_fault_blocks_success",
+      "test_S02_callback_plus_all_close_faults",
+      "test_S03_partial_read_does_not_claim_complete_binding",
+      "test_S04_snapshot_excludes_only_fixed_names_and_proves_fresh",
+      "test_S05_guard_chain_exclusions_follow_successful_proof",
+      "test_S06_libc_policy_preserves_actual_schema_and_dispatch",
+      "test_S07_author_proof_precedes_alias_on_both_calls",
+      "test_S08_host_proof_precedes_alias",
+      "test_S09_final_launch_clock_faults_keep_existing_handling",
+      "test_S10_model_shape_and_guard_relations_are_closed"
+    ],
+    "runtime_skips": 0
+  },
+  "limits": [
+    "This is an adapter source/oracle review, not implementation acceptance or a behavioral execution claim.",
+    "SOURCE-BINDINGS.json was identity-bound by adoption/early package verification; its entire semantic text was not reread for this adapter review.",
+    "P24 proposed-state text is immutable candidate history; ADOPTION.json supplies the later adoption authority."
+  ],
+  "adapter_bytes": 71062,
+  "production_candidate_sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a",
+  "final_attempt": "reviews/controls/attempt005",
+  "additional_evidence_corrections": [
+    "ADAPTER004 deep-copies baseline proof trace so later injected faults cannot change its earlier evidence.",
+    "ADAPTER005 deep-copies initial case input so F08 later missing-entry mutation cannot change pre-event evidence.",
+    "Final attempt binds and preserves the exact runner source."
+  ],
+  "independent_evidence_audit": {
+    "path": "ADAPTER-EVIDENCE-AUDIT.json",
+    "sha256": "5dab3348b2886047c408a823f427d55e55720ebc28461c7e48ed89d25b252e7e",
+    "checks": 37,
+    "passed": 37,
+    "case_records": 51,
+    "accepted_case_records": 51
+  },
+  "behavioral_evidence": {
+    "tests_run": 61,
+    "frozen_cases": 51,
+    "supplemental_cases": 10,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "actual_target_starts": 0,
+    "H0_invocations": 0,
+    "H1_invocations": 0,
+    "routine_invocations": 0,
+    "evidence_source": "Retained exact-source attempt005, independently checked; not a second product run by this reviewer."
+  },
+  "external_obligation": {
+    "id": "N34",
+    "status": "external_only_operational_adoption_withheld",
+    "runtime_method": null,
+    "skipped": false,
+    "meaning": "No actual loader source-completeness review or H0/H1 is supplied by these synthetic controls. Historical N57 remains external."
+  },
+  "final_coverage": "Complete ADAPTER002 text plus complete exact 001/002,002/003,003/004,004/005 changes; no unread source delta. All52 matrix/crosswalk rows read through exact reversible common-field reuse, reconstruction checked. Accepted design/schema/adoption and final runner read fully. All51 final records mechanically parsed and compared to immutable cases, mutations, faults, counts and diagnostics; relevant trace/evidence semantics reviewed. Full arbitrary raw trace text not all reread.",
+  "review_incidents": [
+    "Initial independent log parser expected unittest status on the method line; named frozen methods emit docstring/status on the following line. Original one-check failure and script preserved as ADAPTER-EVIDENCE-AUDIT-001.json and audit_adapter_evidence-001.py.source; corrected parser passes all37 checks. No adapter behavior or expected outcome changed.",
+    "An intermediate combined attempt004 diagnostic display omitted part of F06 due output limit; complete final F06 diagnostic was read separately. No remaining required source/read gap."
+  ],
+  "acceptance_limits": [
+    "This accepts only the independently reviewed adapter and retained synthetic/mocked observations. Production implementation acceptance belongs to its separate reviewer.",
+    "N34 is external-only; operational adoption remains withheld pending actual source completeness. No runtime skip or historical N57 pass is claimed.",
+    "No H0/H1, real target readiness, host reconstruction, full routine, integration or parent completion is accepted."
+  ]
+}

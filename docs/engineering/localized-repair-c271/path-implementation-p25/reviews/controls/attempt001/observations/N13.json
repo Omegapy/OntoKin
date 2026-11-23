@@ -1,0 +1,685 @@
+{
+  "case": {
+    "id": "N13",
+    "kind": "refusal",
+    "input_base": "BASE",
+    "exact_changes": [
+      {
+        "op": "replace_absence_with_entry",
+        "path": "/usr/lib/ld-linux.so.2",
+        "kind": "symlink",
+        "target": "missing",
+        "identity": [
+          71,
+          31,
+          41471,
+          1,
+          7,
+          1000000000,
+          1000000000
+        ]
+      }
+    ],
+    "fault_events": [],
+    "expected": {
+      "decision": "reject dangling leaf symlink as present link",
+      "boundary": "aliased_parent_absence_proof",
+      "code": "CHI-PATH",
+      "cause": null,
+      "process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+    },
+    "execution": "not_run_design_only"
+  },
+  "crosswalk": {
+    "id": "N13",
+    "kind": "refusal",
+    "matrix_case_sha256": "cd5942b9af76f0baf46b93119125704f33caa94728974f0b6b3559428d61e76d",
+    "applicability": "private_absence_primitive",
+    "expected_boundary": "aliased_parent_absence_proof",
+    "expected_code": "CHI-PATH",
+    "expected_process_counts": {
+      "Node_starts": 0,
+      "ldd_starts": 0,
+      "direct_loader_starts": 0,
+      "H0_invocations": 0,
+      "H1_invocations": 0,
+      "product_test_invocations": 0,
+      "source_Git_process_starts": 0,
+      "project_helper_imports": 0
+    },
+    "candidate_anchors": [
+      {
+        "artifact": "SCHEMA.json",
+        "json_pointer": "/rtld_paths/absence_semantics"
+      },
+      {
+        "artifact": "SCHEMA.json",
+        "json_pointer": "/failure_contract/rules"
+      }
+    ],
+    "mapping": "No-follow lookup observes dangling physical i386 leaf as a present symlink; CHI-PATH.",
+    "execution": "not_run_design_only"
+  },
+  "input": {
+    "schema": "synthetic-observation-model/1",
+    "plan_schema": "ontokin.current-host-readback-inspection-plan/0.1.4",
+    "resolution_profile": "linux-glibc-declared-python-origin-rpath-libc-plt-static-tls-rtld-paths-v1",
+    "literal_rtldlist": [
+      "/lib64/ld-linux-x86-64.so.2",
+      "/lib/ld-linux.so.2",
+      "/libx32/ld-linux-x32.so.2"
+    ],
+    "candidate_rows": [
+      {
+        "path": "/lib64/ld-linux-x86-64.so.2",
+        "state": "file",
+        "binding": {
+          "sha256": "2450cb4f0c238438e1cb9986227ccf0548c75919c008fae97513251af643b452",
+          "size_bytes": 33,
+          "mode": "0o600"
+        }
+      },
+      {
+        "path": "/lib/ld-linux.so.2",
+        "state": "absent",
+        "first_missing": "/usr/lib/ld-linux.so.2",
+        "physical_parent": "/usr/lib",
+        "remaining": [
+          "ld-linux.so.2"
+        ]
+      },
+      {
+        "path": "/libx32/ld-linux-x32.so.2",
+        "state": "absent",
+        "first_missing": "/libx32",
+        "physical_parent": "/",
+        "remaining": [
+          "libx32",
+          "ld-linux-x32.so.2"
+        ]
+      }
+    ],
+    "entries": [
+      {
+        "path": "/",
+        "kind": "directory",
+        "identity": [
+          71,
+          1,
+          16877,
+          1,
+          4096,
+          1000000000,
+          1000000000
+        ],
+        "target": null
+      },
+      {
+        "path": "/usr",
+        "kind": "directory",
+        "identity": [
+          71,
+          2,
+          16877,
+          1,
+          4096,
+          1000000000,
+          1000000000
+        ],
+        "target": null
+      },
+      {
+        "path": "/usr/lib64",
+        "kind": "directory",
+        "identity": [
+          71,
+          3,
+          16877,
+          1,
+          4096,
+          1000000000,
+          1000000000
+        ],
+        "target": null
+      },
+      {
+        "path": "/usr/lib",
+        "kind": "directory",
+        "identity": [
+          71,
+          4,
+          16877,
+          1,
+          4096,
+          1000000000,
+          1000000000
+        ],
+        "target": null
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu",
+        "kind": "directory",
+        "identity": [
+          71,
+          5,
+          16877,
+          1,
+          4096,
+          1000000000,
+          1000000000
+        ],
+        "target": null
+      },
+      {
+        "path": "/lib64",
+        "kind": "symlink",
+        "identity": [
+          71,
+          6,
+          41471,
+          1,
+          9,
+          1000000000,
+          1000000000
+        ],
+        "target": "usr/lib64"
+      },
+      {
+        "path": "/lib",
+        "kind": "symlink",
+        "identity": [
+          71,
+          7,
+          41471,
+          1,
+          7,
+          1000000000,
+          1000000000
+        ],
+        "target": "usr/lib"
+      },
+      {
+        "path": "/usr/lib64/ld-linux-x86-64.so.2",
+        "kind": "symlink",
+        "identity": [
+          71,
+          8,
+          41471,
+          1,
+          44,
+          1000000000,
+          1000000000
+        ],
+        "target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "kind": "file",
+        "identity": [
+          71,
+          9,
+          33152,
+          1,
+          33,
+          1000000000,
+          1000000000
+        ],
+        "target": null,
+        "content_ascii": "P24 synthetic inert loader bytes\n",
+        "binding": {
+          "sha256": "2450cb4f0c238438e1cb9986227ccf0548c75919c008fae97513251af643b452",
+          "size_bytes": 33,
+          "mode": "0o600"
+        }
+      },
+      {
+        "path": "/usr/lib/ld-linux.so.2",
+        "kind": "symlink",
+        "target": "missing",
+        "identity": [
+          71,
+          31,
+          41471,
+          1,
+          7,
+          1000000000,
+          1000000000
+        ]
+      }
+    ],
+    "absent_entries": [
+      "/libx32"
+    ],
+    "lookup_default": "ENOENT only for absent entries in this closed synthetic model",
+    "external_expected_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "observed_plan_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "guards": "exact all entries plus first-missing witnesses; no unknown entries",
+    "error_events": [],
+    "model": {
+      "schema": "ontokin.current-host-readback-rtld-paths/0.1.0",
+      "components": [
+        {
+          "path": "/",
+          "kind": "directory",
+          "target": null,
+          "identity": [
+            71,
+            1,
+            16877,
+            1,
+            4096,
+            1000000000,
+            1000000000
+          ]
+        },
+        {
+          "path": "/lib",
+          "kind": "symlink",
+          "target": "usr/lib",
+          "identity": [
+            71,
+            7,
+            41471,
+            1,
+            7,
+            1000000000,
+            1000000000
+          ]
+        },
+        {
+          "path": "/lib64",
+          "kind": "symlink",
+          "target": "usr/lib64",
+          "identity": [
+            71,
+            6,
+            41471,
+            1,
+            9,
+            1000000000,
+            1000000000
+          ]
+        },
+        {
+          "path": "/usr",
+          "kind": "directory",
+          "target": null,
+          "identity": [
+            71,
+            2,
+            16877,
+            1,
+            4096,
+            1000000000,
+            1000000000
+          ]
+        },
+        {
+          "path": "/usr/lib",
+          "kind": "directory",
+          "target": null,
+          "identity": [
+            71,
+            4,
+            16877,
+            1,
+            4096,
+            1000000000,
+            1000000000
+          ]
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu",
+          "kind": "directory",
+          "target": null,
+          "identity": [
+            71,
+            5,
+            16877,
+            1,
+            4096,
+            1000000000,
+            1000000000
+          ]
+        },
+        {
+          "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "kind": "file",
+          "target": null,
+          "identity": [
+            71,
+            9,
+            33152,
+            1,
+            33,
+            1000000000,
+            1000000000
+          ]
+        },
+        {
+          "path": "/usr/lib64",
+          "kind": "directory",
+          "target": null,
+          "identity": [
+            71,
+            3,
+            16877,
+            1,
+            4096,
+            1000000000,
+            1000000000
+          ]
+        },
+        {
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "kind": "symlink",
+          "target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "identity": [
+            71,
+            8,
+            41471,
+            1,
+            44,
+            1000000000,
+            1000000000
+          ]
+        }
+      ],
+      "absences": [
+        {
+          "path": "/lib/ld-linux.so.2",
+          "nearest_existing_ancestor": "/usr/lib",
+          "first_missing": "/usr/lib/ld-linux.so.2",
+          "remaining_suffix": []
+        },
+        {
+          "path": "/libx32/ld-linux-x32.so.2",
+          "nearest_existing_ancestor": "/",
+          "first_missing": "/libx32",
+          "remaining_suffix": [
+            "ld-linux-x32.so.2"
+          ]
+        }
+      ]
+    },
+    "omitted_guards": [],
+    "fault_events": []
+  },
+  "operational_plan_accepted": false,
+  "STATIC_READY": false,
+  "host_qualified": false,
+  "actual_process_counts": {
+    "Node_starts": 0,
+    "ldd_starts": 0,
+    "direct_loader_starts": 0,
+    "H0_invocations": 0,
+    "H1_invocations": 0,
+    "product_test_invocations": 0,
+    "source_Git_process_starts": 0,
+    "project_helper_imports": 0
+  },
+  "passed": true,
+  "observed_result": null,
+  "observed_error": {
+    "code": "CHI-PATH",
+    "reason": "Required RTLD absence differs",
+    "state": "REJECTED",
+    "cause": null,
+    "details": {
+      "stage": "rtld_paths",
+      "rule_id": "RP-ABSENCE",
+      "path": "/usr/lib/ld-linux.so.2",
+      "operation": "stat",
+      "errno": null,
+      "evidence": {
+        "observations": [
+          {
+            "label": "observed",
+            "path": "/usr/lib/ld-linux.so.2",
+            "identity": [
+              71,
+              31,
+              41471,
+              1,
+              7,
+              1000000000,
+              1000000000
+            ],
+            "binding": null,
+            "target": null
+          }
+        ],
+        "primary": null,
+        "cleanup": []
+      }
+    }
+  },
+  "same_callback_object": false,
+  "mock_process_counts": {
+    "Node_starts": 0,
+    "ldd_starts": 0,
+    "direct_loader_starts": 0,
+    "H0_invocations": 0,
+    "H1_invocations": 0,
+    "product_test_invocations": 0,
+    "source_Git_process_starts": 0,
+    "project_helper_imports": 0
+  },
+  "caller": null,
+  "forbidden_calls": [],
+  "trace": [
+    {
+      "operation": "callback",
+      "count": 1
+    },
+    {
+      "operation": "stat",
+      "path": "/",
+      "dir_fd": null,
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 2
+    },
+    {
+      "operation": "open",
+      "path": "/",
+      "flags": 2818048,
+      "dir_fd": null
+    },
+    {
+      "operation": "callback",
+      "count": 3
+    },
+    {
+      "operation": "fstat",
+      "path": "/",
+      "fd": 1000
+    },
+    {
+      "operation": "callback",
+      "count": 4
+    },
+    {
+      "operation": "stat",
+      "path": "/lib",
+      "dir_fd": 1000,
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 5
+    },
+    {
+      "operation": "open",
+      "path": "/lib",
+      "flags": 2752512,
+      "dir_fd": 1000
+    },
+    {
+      "operation": "callback",
+      "count": 6
+    },
+    {
+      "operation": "fstat",
+      "path": "/lib",
+      "fd": 1001
+    },
+    {
+      "operation": "callback",
+      "count": 7
+    },
+    {
+      "operation": "readlink",
+      "path": "/lib",
+      "fd": 1001,
+      "empty_path": true
+    },
+    {
+      "operation": "callback",
+      "count": 8
+    },
+    {
+      "operation": "fstat",
+      "path": "/lib",
+      "fd": 1001
+    },
+    {
+      "operation": "callback",
+      "count": 9
+    },
+    {
+      "operation": "stat",
+      "path": "/lib",
+      "dir_fd": 1000,
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 10
+    },
+    {
+      "operation": "stat",
+      "path": "/usr",
+      "dir_fd": 1000,
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 11
+    },
+    {
+      "operation": "open",
+      "path": "/usr",
+      "flags": 2818048,
+      "dir_fd": 1000
+    },
+    {
+      "operation": "callback",
+      "count": 12
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr",
+      "fd": 1002
+    },
+    {
+      "operation": "callback",
+      "count": 13
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib",
+      "dir_fd": 1002,
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 14
+    },
+    {
+      "operation": "open",
+      "path": "/usr/lib",
+      "flags": 2818048,
+      "dir_fd": 1002
+    },
+    {
+      "operation": "callback",
+      "count": 15
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib",
+      "fd": 1003
+    },
+    {
+      "operation": "callback",
+      "count": 16
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib",
+      "fd": 1003
+    },
+    {
+      "operation": "callback",
+      "count": 17
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib/ld-linux.so.2",
+      "dir_fd": 1003,
+      "follow_symlinks": false
+    },
+    {
+      "operation": "close",
+      "path": "/usr/lib",
+      "fd": 1003
+    },
+    {
+      "operation": "close",
+      "path": "/usr",
+      "fd": 1002
+    },
+    {
+      "operation": "close",
+      "path": "/lib",
+      "fd": 1001
+    },
+    {
+      "operation": "close",
+      "path": "/",
+      "fd": 1000
+    }
+  ],
+  "faults_triggered": [],
+  "opened": [
+    1000,
+    1001,
+    1002,
+    1003
+  ],
+  "closed": [
+    1003,
+    1002,
+    1001,
+    1000
+  ],
+  "live": [],
+  "maximum_live_descriptors": 4,
+  "root_opens": 1,
+  "callbacks": 17,
+  "terminal_bytes_read": 0,
+  "terminal_read_requests": []
+}

@@ -4,7 +4,7 @@
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
   "status": "in_progress",
-  "owner": "c271-p24-660f372e2414",
+  "owner": "c271-p25-bd99261bd84d",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -84,7 +84,9 @@
         "docs/engineering/localized-repair-c271/h0-plan-p21/reviews/H0-DECISION.json",
         "docs/engineering/localized-repair-c271/path-design-p24/ADOPTION.json",
         "docs/engineering/localized-repair-c271/path-design-p24/OUTCOME.json",
-        "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/REVIEW-FINAL.json"
+        "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/REVIEW-FINAL.json",
+        "docs/engineering/localized-repair-c271/path-implementation-p25/ACCEPTANCE.json",
+        "docs/engineering/localized-repair-c271/path-implementation-p25/OUTCOME.json"
       ]
     },
     {
@@ -133,7 +135,9 @@
         "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
         "docs/engineering/localized-repair-c271/h0-plan-p21/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/path-design-p24/EARLY-RECOVERY-RECEIPT.json",
-        "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json"
+        "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/path-implementation-p25/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/path-implementation-p25/EARLY-CLARIFICATION-RECEIPT.json"
       ]
     }
   ],
@@ -530,7 +534,7 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
       ],
-      "scope": "P10 partial delivery only. R03\u2013R05 and integration remain open."
+      "scope": "P10 partial delivery only. R03–R05 and integration remain open."
     },
     {
       "name": "P11 independent intake and verified early recovery",
@@ -855,7 +859,7 @@
         "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
         "docs/engineering/localized-repair-c271/libc-tags-p16/FINAL-READBACK-VERIFICATION.json"
       ],
-      "limit": "P16 partial delivery only. Parent R03\u2013R05 and P02 remain open. This receipt checkpoint requires its own conditional publication/readback; late evidence is preserved separately."
+      "limit": "P16 partial delivery only. Parent R03–R05 and P02 remain open. This receipt checkpoint requires its own conditional publication/readback; late evidence is preserved separately."
     },
     {
       "name": "P17 startup reconciliation and independently verified early recovery",
@@ -1090,6 +1094,38 @@
         "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/reviews/FINAL-SAVED-REVIEW.json"
       ],
       "scope": "Delivery-only evidence; no product/runtime or parent-completion gate."
+    },
+    {
+      "name": "P25 finite RTLD path controls and bounded supplements",
+      "result": "passed",
+      "required": true,
+      "command": "Retained exact-source guarded runner; see attempt005/RESULT.json",
+      "methods": 61,
+      "scope": "51 immutable controls plus 10 supplements; N34 is external and not a runtime pass.",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/RESULT.json"
+      ]
+    },
+    {
+      "name": "P25 affected inherited inspector regression",
+      "result": "passed",
+      "required": true,
+      "command": "Retained exact-source guarded runner; see attempt002/RESULT.json",
+      "methods": 385,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt002/RESULT.json"
+      ]
+    },
+    {
+      "name": "P25 independent implementation and adapter review",
+      "result": "passed",
+      "required": true,
+      "command": "Separate real production and test-adapter reviewers",
+      "scope": "Bounded implementation and synthetic adapter only; actual source gate and parent remain open.",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/REVIEW-FINAL.json",
+        "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/ADAPTER-REVIEW-002.json"
+      ]
     }
   ],
   "completion": {
@@ -1178,16 +1214,63 @@
       "commit": "5b4d6aa459203c5700c71444f6cd9d662e783a83",
       "actual_host_qualified": false,
       "tree": "6f32eb119773a0661590f0645eabeebbc6cce178"
+    },
+    "finite_rtld_path_implementation": {
+      "candidate": {
+        "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+        "bytes": 233502,
+        "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a"
+      },
+      "adapter": {
+        "path": "tests/test_current_host_rtld_paths_v01.py",
+        "bytes": 71062,
+        "sha256": "363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da"
+      },
+      "acceptance": "docs/engineering/localized-repair-c271/path-implementation-p25/ACCEPTANCE.json",
+      "source_publication": "pending_core_publication_and_separate_delivery_receipt"
     }
   },
-  "next_action": "Finish receipt-only review/checks/publication, save and read back the external receipt, publish and verify matching terminal markers, then stop. No technical work or second phase.",
+  "next_action": "After verified P25 delivery, in a fresh bounded phase, bind the newly published /0.1.4 inspector and complete source inventory, construct and independently review the current-host H0 inspection plan, and satisfy the external N34 actual loader/script source-completeness gate before operational plan adoption. Reconstruct only necessary pinned inputs in the fresh host. Stop at an accepted plan or a concrete blocker; H1, the original full routine and main integration remain later gates.",
   "session_phase": {
-    "phase": "C271-P24-H0-path-design-adoption",
-    "owner": "c271-p24-660f372e2414",
-    "scope": "One independently reviewed versioned design/adoption decision for absent RTLD candidate ancestors and the required parent-traversing loader alias, or justified continued refusal with one concrete alternative.",
-    "stop": "At accepted design/adoption decision or first concrete blocker; thereafter only documentary checks/review/publication and verified handoff, then stop.",
-    "phase_complete": false,
+    "schema": "ontokin.c271.p25-phase/1",
+    "phase": "C271-P25-finite-RTLD-path-implementation",
+    "owner": "c271-p25-bd99261bd84d",
+    "starting_head": "ce411b12e601036a33698aa7c3290722e602ea75",
+    "observed_main": "e43cc6c5777874101a40559e4058ad6826b07e51",
+    "observed_at_utc": "2026-11-23T14:05:32.143231+00:00",
+    "scope": "Implement only the adopted inspection-plan /0.1.4 finite RTLD path policy with unchanged frozen obligations",
+    "acceptance": [
+      "51 primitive/mocked controls executed against the exact candidate",
+      "One external-review-only obligation independently assessed, never a runtime flag",
+      "Independent implementation and test-adapter review",
+      "Inherited affected regression and record checks, with failures preserved",
+      "Conditional retained-branch publication and verified ZIP/prompts plus separate receipt"
+    ],
+    "stop": "At independently reviewed bounded implementation or first concrete blocker; then only checks, review, branch publication and saved delivery",
+    "excluded": [
+      "H0/H1 actual invocations",
+      "target host reconstruction or mutation",
+      "package installation",
+      "original-seven/full-routine execution",
+      "main integration",
+      "branch deletion",
+      "second phase"
+    ],
+    "status": "bounded_implementation_accepted_delivery_pending",
+    "parent_complete": false,
+    "requirements": {
+      "R01": "done",
+      "R02": "done",
+      "R03": "not_done",
+      "R04": "not_done",
+      "R05": "not_done"
+    },
+    "parent_plan": {
+      "P01": "done",
+      "P02": "in_progress"
+    },
     "early_save_confirmed": true,
+    "early_receipt": "docs/engineering/localized-repair-c271/path-implementation-p25/EARLY-RECOVERY-RECEIPT.json",
     "current_unknown_operations": [],
     "historical_unknown_operations": [
       "C270 ancillary broad-driver completion",
@@ -1195,106 +1278,26 @@
       "P13 read-only difflib completion; do not retry"
     ],
     "main_lease_held": false,
-    "parent_status": "in_progress",
-    "technical_phase_complete": true,
-    "h0_accepted": false,
-    "status": "technical_complete_delivery_pending_terminal_confirmation",
-    "phase_record": "docs/engineering/localized-repair-c271/path-design-p24/PHASE.json",
-    "early_receipt": "docs/engineering/localized-repair-c271/path-design-p24/EARLY-RECOVERY-RECEIPT.json",
+    "selected_design": "docs/engineering/localized-repair-c271/path-design-p24/ADOPTION.json",
+    "next_action": "After verified P25 delivery, in a fresh bounded phase, bind the newly published /0.1.4 inspector and complete source inventory, construct and independently review the current-host H0 inspection plan, and satisfy the external N34 actual loader/script source-completeness gate before operational plan adoption. Reconstruct only necessary pinned inputs in the fresh host. Stop at an accepted plan or a concrete blocker; H1, the original full routine and main integration remain later gates.",
     "technical_work_stopped": true,
-    "design_accepted": true,
-    "design_decision": "docs/engineering/localized-repair-c271/path-design-p24/ADOPTION.json",
-    "independent_review": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/REVIEW-FINAL.json",
-    "implementation_performed": false,
-    "next_phase_started": false,
-    "final_handoff_saved": true,
-    "delivery_confirmed": false,
-    "delivery_receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
-    "handoff_source_revision": "66866415e492e151eafd95da2237374fc127f79b",
-    "independent_package_review": "accepted"
+    "technical_boundary_utc": "2026-11-23T14:33:02.414292+00:00",
+    "acceptance_record": "docs/engineering/localized-repair-c271/path-implementation-p25/ACCEPTANCE.json",
+    "outcome_record": "docs/engineering/localized-repair-c271/path-implementation-p25/OUTCOME.json",
+    "operational_plan_adopted": false,
+    "phase_complete": false
   },
   "delivery": {
     "required": true,
     "kind": "browser-session",
     "folder": "OntoKin",
     "partial": true,
-    "phase": "C271-P24-H0-path-design-adoption",
-    "status": "zip_and_prompts_saved_verified_terminal_receipt_pending",
+    "phase": "C271-P25-finite-RTLD-path-implementation",
+    "status": "technical_accepted_final_delivery_pending",
     "phase_complete": false,
-    "early_receipt": "docs/engineering/localized-repair-c271/path-design-p24/EARLY-RECOVERY-RECEIPT.json",
-    "future_external_receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
-    "technical_phase_complete": true,
-    "source_snapshot_before_save": false,
-    "archive": {
-      "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
-      "purpose": "create_library_file",
-      "status": "succeeded",
-      "file_id": "file_000000003b1081fd9c82bc47582968bd",
-      "library_file_id": "libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de",
-      "file_name": "OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
-      "local_metadata_applied": true,
-      "path": "/OntoKin/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
-      "current_version_number": 0,
-      "bytes": 10847033,
-      "sha256": "5b1886184add5644e1272c31c22f4f9232a8e76433d8f2f867fd826d8bf18e4e",
-      "version": 0,
-      "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
-      "saved_bytes_readback_equal": true,
-      "stable_id_version_attributes_verified": true,
-      "backing_id_verified_against_materialize_response": true,
-      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
-    },
-    "matching_prompts": [
-      {
-        "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Continue_2026-11-23.md",
-        "purpose": "create_library_file",
-        "status": "succeeded",
-        "file_id": "file_00000000356081fdaaecfd86f65ecf9a",
-        "library_file_id": "libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de",
-        "file_name": "OntoKin_C271_P24_Continue_2026-11-23.md",
-        "local_metadata_applied": true,
-        "path": "/OntoKin/OntoKin_C271_P24_Continue_2026-11-23.md",
-        "current_version_number": 0,
-        "bytes": 1765,
-        "sha256": "d11aedb5063739332044032114b21822933007e3d807a6df3768b4cdb2049e75",
-        "version": 0,
-        "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Continue_2026-11-23.md",
-        "saved_bytes_readback_equal": true,
-        "stable_id_version_attributes_verified": true,
-        "backing_id_verified_against_materialize_response": true,
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "zip_member": "PROMPT-1-CONTINUE.md",
-        "matches_zip_member": true
-      },
-      {
-        "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Recover_2026-11-23.md",
-        "purpose": "create_library_file",
-        "status": "succeeded",
-        "file_id": "file_00000000a5b881fd95cff1746355c4f7",
-        "library_file_id": "libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de",
-        "file_name": "OntoKin_C271_P24_Recover_2026-11-23.md",
-        "local_metadata_applied": true,
-        "path": "/OntoKin/OntoKin_C271_P24_Recover_2026-11-23.md",
-        "current_version_number": 0,
-        "bytes": 2054,
-        "sha256": "37a50e73bc8083bc83a579a6d745e759f9fba8b49e3bdbf26b316cd90e1dd006",
-        "version": 0,
-        "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Recover_2026-11-23.md",
-        "saved_bytes_readback_equal": true,
-        "stable_id_version_attributes_verified": true,
-        "backing_id_verified_against_materialize_response": true,
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "zip_member": "PROMPT-2-RECOVER.md",
-        "matches_zip_member": true
-      }
-    ],
-    "receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
-    "terminal_resolution": "Only the separately saved exact P24 external receipt and matching live PR274/issue273 P24 terminal markers resolve these delivery-only pending fields. ZIP hash, core source commit, receipt commit and receipt identity must agree. They cannot establish implementation, H0/H1, R03-R05 or parent completion.",
-    "source_snapshot_before_terminal": true,
-    "core_snapshot_before_save": {
-      "source_commit": "66866415e492e151eafd95da2237374fc127f79b",
-      "value": true
-    }
+    "early_receipt": "docs/engineering/localized-repair-c271/path-implementation-p25/EARLY-RECOVERY-RECEIPT.json",
+    "future_external_receipt": "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json",
+    "technical_boundary": "docs/engineering/localized-repair-c271/path-implementation-p25/OUTCOME.json"
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
@@ -3713,6 +3716,38 @@
       "independent_review": "docs/engineering/localized-repair-c271/h0-plan-p23/reviews/h0/BLOCKER-REVIEW.json",
       "frozen_implementation_revision": "527368bd5195c439762b43e2cc836ff9822213f8",
       "delivery_receipt": "docs/engineering/localized-repair-c271/h0-plan-p23/P23-DELIVERY.json"
+    },
+    {
+      "phase": "C271-P24-H0-path-design-adoption",
+      "owner": "c271-p24-660f372e2414",
+      "scope": "One independently reviewed versioned design/adoption decision for absent RTLD candidate ancestors and the required parent-traversing loader alias, or justified continued refusal with one concrete alternative.",
+      "stop": "At accepted design/adoption decision or first concrete blocker; thereafter only documentary checks/review/publication and verified handoff, then stop.",
+      "phase_complete": false,
+      "early_save_confirmed": true,
+      "current_unknown_operations": [],
+      "historical_unknown_operations": [
+        "C270 ancillary broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only difflib completion; do not retry"
+      ],
+      "main_lease_held": false,
+      "parent_status": "in_progress",
+      "technical_phase_complete": true,
+      "h0_accepted": false,
+      "status": "technical_complete_delivery_pending_terminal_confirmation",
+      "phase_record": "docs/engineering/localized-repair-c271/path-design-p24/PHASE.json",
+      "early_receipt": "docs/engineering/localized-repair-c271/path-design-p24/EARLY-RECOVERY-RECEIPT.json",
+      "technical_work_stopped": true,
+      "design_accepted": true,
+      "design_decision": "docs/engineering/localized-repair-c271/path-design-p24/ADOPTION.json",
+      "independent_review": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/REVIEW-FINAL.json",
+      "implementation_performed": false,
+      "next_phase_started": false,
+      "final_handoff_saved": true,
+      "delivery_confirmed": false,
+      "delivery_receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+      "handoff_source_revision": "66866415e492e151eafd95da2237374fc127f79b",
+      "independent_package_review": "accepted"
     }
   ],
   "prior_phase_deliveries": [
@@ -4904,6 +4939,89 @@
       },
       "receipt_publication": "Pending conditional receipt commit/readback and separately saved external receipt at this source snapshot.",
       "terminal_resolution": "Only the separately saved exact P23 receipt and matching live PR274/issue273 P23 terminal markers can resolve remaining delivery-only pending fields. Their ZIP hash, core source commit, receipt commit and receipt identity must agree. They cannot accept H0 or complete C271."
+    },
+    {
+      "required": true,
+      "kind": "browser-session",
+      "folder": "OntoKin",
+      "partial": true,
+      "phase": "C271-P24-H0-path-design-adoption",
+      "status": "zip_and_prompts_saved_verified_terminal_receipt_pending",
+      "phase_complete": false,
+      "early_receipt": "docs/engineering/localized-repair-c271/path-design-p24/EARLY-RECOVERY-RECEIPT.json",
+      "future_external_receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+      "technical_phase_complete": true,
+      "source_snapshot_before_save": false,
+      "archive": {
+        "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_000000003b1081fd9c82bc47582968bd",
+        "library_file_id": "libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+        "current_version_number": 0,
+        "bytes": 10847033,
+        "sha256": "5b1886184add5644e1272c31c22f4f9232a8e76433d8f2f867fd826d8bf18e4e",
+        "version": 0,
+        "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+        "saved_bytes_readback_equal": true,
+        "stable_id_version_attributes_verified": true,
+        "backing_id_verified_against_materialize_response": true,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+      },
+      "matching_prompts": [
+        {
+          "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Continue_2026-11-23.md",
+          "purpose": "create_library_file",
+          "status": "succeeded",
+          "file_id": "file_00000000356081fdaaecfd86f65ecf9a",
+          "library_file_id": "libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de",
+          "file_name": "OntoKin_C271_P24_Continue_2026-11-23.md",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P24_Continue_2026-11-23.md",
+          "current_version_number": 0,
+          "bytes": 1765,
+          "sha256": "d11aedb5063739332044032114b21822933007e3d807a6df3768b4cdb2049e75",
+          "version": 0,
+          "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Continue_2026-11-23.md",
+          "saved_bytes_readback_equal": true,
+          "stable_id_version_attributes_verified": true,
+          "backing_id_verified_against_materialize_response": true,
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "zip_member": "PROMPT-1-CONTINUE.md",
+          "matches_zip_member": true
+        },
+        {
+          "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Recover_2026-11-23.md",
+          "purpose": "create_library_file",
+          "status": "succeeded",
+          "file_id": "file_00000000a5b881fd95cff1746355c4f7",
+          "library_file_id": "libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de",
+          "file_name": "OntoKin_C271_P24_Recover_2026-11-23.md",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P24_Recover_2026-11-23.md",
+          "current_version_number": 0,
+          "bytes": 2054,
+          "sha256": "37a50e73bc8083bc83a579a6d745e759f9fba8b49e3bdbf26b316cd90e1dd006",
+          "version": 0,
+          "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Recover_2026-11-23.md",
+          "saved_bytes_readback_equal": true,
+          "stable_id_version_attributes_verified": true,
+          "backing_id_verified_against_materialize_response": true,
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "zip_member": "PROMPT-2-RECOVER.md",
+          "matches_zip_member": true
+        }
+      ],
+      "receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+      "terminal_resolution": "Only the separately saved exact P24 external receipt and matching live PR274/issue273 P24 terminal markers resolve these delivery-only pending fields. ZIP hash, core source commit, receipt commit and receipt identity must agree. They cannot establish implementation, H0/H1, R03-R05 or parent completion.",
+      "source_snapshot_before_terminal": true,
+      "core_snapshot_before_save": {
+        "source_commit": "66866415e492e151eafd95da2237374fc127f79b",
+        "value": true
+      }
     }
   ],
   "prior_blocked_reason": "Required routine gate failed: unit timeout at 900 seconds and isolated documentation copy omitted five tracked instruction files, producing 21 missing local links.",
@@ -4962,21 +5080,26 @@
       "source_sha256": "5ff2c8f8afe105ec39bf634b07ec1e1cb1280cb687bde40018f13957f2660efb",
       "reason": "A complete H0 plan cannot be accepted from the supplied inputs: the required selected-node and retained-dependencies installation plan/report/index evidence is unavailable among the declared sources reviewed. P09 stopped before producing it, and its declared source/archive paths are now absent. This is a bounded provenance gap, not a runtime failure or proof that no inputs exist elsewhere.",
       "disposition": "Both missing installation-evidence pairs independently accepted in P22; original bounded finding preserved"
+    },
+    {
+      "phase": "through_P24",
+      "value": "The mandatory literal /usr/bin/ldd RTLDLIST contains /libx32/ld-linux-x32.so.2; both this candidate and immediate parent /libx32 were absent in two matching metadata observations. No admitted file or absent row can represent this required path under the unchanged implementation. Omitting the candidate would violate the literal-list binding.",
+      "meaning": "Historical source-specific refusal; preserved without rewriting."
     }
   ],
   "remaining_h0_constraint": {
-    "status": "H0-RTLD-ABSENT-PARENT-001",
-    "evidence": "docs/engineering/localized-repair-c271/h0-plan-p23/reviews/h0/BLOCKER-REVIEW.json",
-    "source_commit": "527368bd5195c439762b43e2cc836ff9822213f8",
+    "status": "current_host_plan_and_external_source_review_required",
+    "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/ACCEPTANCE.json",
     "h0_accepted": false,
-    "next_phase_action": "Review a bounded versioned representation for absent loader-candidate ancestors and parent-traversing loader aliases, or retain the existing refusal. No implementation is selected in P23.",
-    "related_observed_constraint": {
-      "observed_path": "/lib64/ld-linux-x86-64.so.2",
-      "observed_symlink_target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
-      "required": "The unchanged _existing_chain rejects any symlink target with a .. path component.",
-      "consequence": "The mandatory loader alias also needs an explicit future traversal-model decision; no diagnostic ordering or additional runtime test is inferred."
+    "operational_plan_adopted": false,
+    "selected_implementation": {
+      "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "bytes": 233502,
+      "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a"
     },
-    "prior_source_objects": "Preserved unchanged in prior_h0_constraints and P22 evidence; do not probe historical temporary paths."
+    "external_gate": "N34",
+    "next_phase_action": "After verified P25 delivery, in a fresh bounded phase, bind the newly published /0.1.4 inspector and complete source inventory, construct and independently review the current-host H0 inspection plan, and satisfy the external N34 actual loader/script source-completeness gate before operational plan adoption. Reconstruct only necessary pinned inputs in the fresh host. Stop at an accepted plan or a concrete blocker; H1, the original full routine and main integration remain later gates.",
+    "prior_source_objects": "All earlier source-specific refusals and constraints remain unchanged in prior_h0_constraints and their original records. Do not probe prior-host paths."
   },
   "prior_h0_constraints": [
     {
@@ -5040,6 +5163,20 @@
         "tree": "e8844be5189b65d1bc17af40861fac672b189b25"
       },
       "h0_accepted": false
+    },
+    {
+      "status": "H0-RTLD-ABSENT-PARENT-001",
+      "evidence": "docs/engineering/localized-repair-c271/h0-plan-p23/reviews/h0/BLOCKER-REVIEW.json",
+      "source_commit": "527368bd5195c439762b43e2cc836ff9822213f8",
+      "h0_accepted": false,
+      "next_phase_action": "Review a bounded versioned representation for absent loader-candidate ancestors and parent-traversing loader aliases, or retain the existing refusal. No implementation is selected in P23.",
+      "related_observed_constraint": {
+        "observed_path": "/lib64/ld-linux-x86-64.so.2",
+        "observed_symlink_target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "required": "The unchanged _existing_chain rejects any symlink target with a .. path component.",
+        "consequence": "The mandatory loader alias also needs an explicit future traversal-model decision; no diagnostic ordering or additional runtime test is inferred."
+      },
+      "prior_source_objects": "Preserved unchanged in prior_h0_constraints and P22 evidence; do not probe historical temporary paths."
     }
   ],
   "phase_reconciliations": [
@@ -5126,8 +5263,14 @@
       "preserved_prior_fields": true,
       "h0_accepted": false,
       "owner_recommendation": "docs/engineering/localized-repair-c271/path-design-p24/OWNER-DIRECTION.md"
+    },
+    {
+      "phase": "C271-P24",
+      "status": "complete_partial_delivery",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/P24-TERMINAL-RECONCILIATION.json",
+      "meaning": "Exact matching live terminal markers and saved external receipt resolve only P24 delivery-pending snapshots; no parent gate promoted"
     }
   ],
   "p20_outcome_recorded": true,
-  "blocked_reason": "The mandatory literal /usr/bin/ldd RTLDLIST contains /libx32/ld-linux-x32.so.2; both this candidate and immediate parent /libx32 were absent in two matching metadata observations. No admitted file or absent row can represent this required path under the unchanged implementation. Omitting the candidate would violate the literal-list binding."
+  "blocked_reason": "P25 finite RTLD path implementation is independently accepted only for its bounded synthetic/mocked contract. No current-host /0.1.4 H0 plan or actual loader/script source-completeness review has been accepted. H0/H1, full routine and integration gates remain unmet; no earlier failure is waived."
 }

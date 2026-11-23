@@ -1,0 +1,249 @@
+{
+  "expected": "Original callback cause plus every close fault retained, bounded messages",
+  "same_primary_object": true,
+  "error": {
+    "code": "CHI-PATH",
+    "reason": "RTLD path descriptor cleanup failed",
+    "state": "REJECTED",
+    "cause": {
+      "type": "DeadlineFault",
+      "reason": "synthetic callback dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    "details": {
+      "stage": "rtld_paths",
+      "rule_id": "RP-CLEANUP",
+      "path": "/usr",
+      "operation": "close",
+      "errno": null,
+      "evidence": {
+        "observations": [
+          {
+            "label": "expected",
+            "path": "/usr",
+            "identity": [
+              71,
+              2,
+              16877,
+              1,
+              4096,
+              1000000000,
+              1000000000
+            ],
+            "binding": null,
+            "target": null
+          },
+          {
+            "label": "named_before",
+            "path": "/usr",
+            "identity": [
+              71,
+              2,
+              16877,
+              1,
+              4096,
+              1000000000,
+              1000000000
+            ],
+            "binding": null,
+            "target": null
+          }
+        ],
+        "primary": {
+          "kind": "callback",
+          "errno": null,
+          "operation": "callback",
+          "path": "/usr",
+          "message": "synthetic callback ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "message_truncated": true
+        },
+        "cleanup": [
+          {
+            "kind": "os_error",
+            "errno": 5,
+            "operation": "close",
+            "path": "/usr",
+            "message": "[Errno 5] synthetic close failure cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "message_truncated": true
+          },
+          {
+            "kind": "os_error",
+            "errno": 5,
+            "operation": "close",
+            "path": "/lib64",
+            "message": "[Errno 5] synthetic close failure cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "message_truncated": true
+          },
+          {
+            "kind": "os_error",
+            "errno": 5,
+            "operation": "close",
+            "path": "/",
+            "message": "[Errno 5] synthetic close failure cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+            "message_truncated": true
+          }
+        ]
+      }
+    }
+  },
+  "trace": [
+    {
+      "operation": "callback",
+      "count": 1
+    },
+    {
+      "operation": "stat",
+      "path": "/",
+      "dir_fd": null,
+      "name": "/",
+      "parent_path": null,
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 2
+    },
+    {
+      "operation": "open",
+      "path": "/",
+      "flags": 2818048,
+      "dir_fd": null,
+      "name": "/",
+      "parent_path": null
+    },
+    {
+      "operation": "callback",
+      "count": 3
+    },
+    {
+      "operation": "fstat",
+      "path": "/",
+      "fd": 1000
+    },
+    {
+      "operation": "callback",
+      "count": 4
+    },
+    {
+      "operation": "stat",
+      "path": "/lib64",
+      "dir_fd": 1000,
+      "name": "lib64",
+      "parent_path": "/",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 5
+    },
+    {
+      "operation": "open",
+      "path": "/lib64",
+      "flags": 2752512,
+      "dir_fd": 1000,
+      "name": "lib64",
+      "parent_path": "/"
+    },
+    {
+      "operation": "callback",
+      "count": 6
+    },
+    {
+      "operation": "fstat",
+      "path": "/lib64",
+      "fd": 1001
+    },
+    {
+      "operation": "callback",
+      "count": 7
+    },
+    {
+      "operation": "readlink",
+      "path": "/lib64",
+      "fd": 1001,
+      "empty_path": true
+    },
+    {
+      "operation": "callback",
+      "count": 8
+    },
+    {
+      "operation": "fstat",
+      "path": "/lib64",
+      "fd": 1001
+    },
+    {
+      "operation": "callback",
+      "count": 9
+    },
+    {
+      "operation": "stat",
+      "path": "/lib64",
+      "dir_fd": 1000,
+      "name": "lib64",
+      "parent_path": "/",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 10
+    },
+    {
+      "operation": "stat",
+      "path": "/usr",
+      "dir_fd": 1000,
+      "name": "usr",
+      "parent_path": "/",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 11
+    },
+    {
+      "operation": "open",
+      "path": "/usr",
+      "flags": 2818048,
+      "dir_fd": 1000,
+      "name": "usr",
+      "parent_path": "/"
+    },
+    {
+      "operation": "callback",
+      "count": 12
+    },
+    {
+      "operation": "close",
+      "path": "/usr",
+      "fd": 1002
+    },
+    {
+      "operation": "close",
+      "path": "/lib64",
+      "fd": 1001
+    },
+    {
+      "operation": "close",
+      "path": "/",
+      "fd": 1000
+    }
+  ],
+  "faults_triggered": [
+    "after acquiring usr descriptor before next component"
+  ],
+  "opened": [
+    1000,
+    1001,
+    1002
+  ],
+  "closed": [
+    1002,
+    1001,
+    1000
+  ],
+  "live": [],
+  "maximum_live_descriptors": 3,
+  "root_opens": 1,
+  "callbacks": 12,
+  "terminal_bytes_read": 0,
+  "terminal_read_requests": []
+}

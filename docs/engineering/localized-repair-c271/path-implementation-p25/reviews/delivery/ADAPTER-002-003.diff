@@ -1,0 +1,312 @@
+--- ADAPTER-002
++++ ADAPTER-003
+@@ -809,5 +809,309 @@
+     setattr(RTLDPathControls, "test_" + _case_id, frozen_method(CASES[_case_id]))
+ 
+ 
++class SupplementalControls(unittest.TestCase):
++    """Contract risks beyond the frozen cases; none alters their expectations."""
++    setUp = RTLDPathControls.setUp
++    assert_details = RTLDPathControls.assert_details
++
++    @classmethod
++    def setUpClass(cls):
++        selected = os.environ.get("ONTOKIN_RTLD_RETAIN_ROOT")
++        if selected:
++            cls.evidence = Path(selected + "-supplemental")
++            cls.evidence.mkdir(parents=True, exist_ok=False)
++        else:
++            temporary = tempfile.TemporaryDirectory(prefix="ontokin-rtld-supplement-")
++            cls.addClassCleanup(temporary.cleanup)
++            cls.evidence = Path(temporary.name)
++
++    def retain(self, name, value):
++        (self.evidence / (name + ".json")).write_text(json.dumps(value, indent=2) + "\n")
++
++    def proof_error(self, fs, model=None):
++        with patch.object(inspection, "os", fs):
++            with self.assertRaises(inspection.HostInspectionError) as caught:
++                inspection._check_rtld_alias_trace(model or initial_model(), BASE_BINDING, check=fs.check)
++        self.assertFalse(fs.live)
++        self.assertEqual(sorted(fs.opened), sorted(fs.closed))
++        self.assertEqual(len(fs.closed), len(set(fs.closed)))
++        self.assert_details(caught.exception)
++        return caught.exception
++
++    def test_S01_close_fault_blocks_success(self):
++        class CloseFaultOS(SyntheticOS):
++            def close(self, fd):
++                path = self.live[fd]["path"]
++                super().close(fd)
++                if path == "/":
++                    self.close_fault = OSError(errno.EIO, "synthetic final root close failure")
++                    raise self.close_fault
++        fs = CloseFaultOS(materialize(CASES["P01"]), "P01")
++        error = self.proof_error(fs)
++        self.assertEqual((error.code, error.details["rule_id"]), ("CHI-PATH", "RP-CLEANUP"))
++        self.assertIs(error.cause, fs.close_fault)
++        self.assertIsNone(error.details["evidence"]["primary"])
++        self.assertEqual(len(error.details["evidence"]["cleanup"]), 1)
++        self.assertEqual(fs.root_opens, 1)
++        self.retain("S01", {"expected": "Close failure blocks success; primary=null; exact once-only cleanup",
++                            "error": error.as_dict(), **fs.summary()})
++
++    def test_S02_callback_plus_all_close_faults(self):
++        class CloseFaultOS(SyntheticOS):
++            def close(self, fd):
++                super().close(fd)
++                raise OSError(errno.EIO, "synthetic close failure " + "c" * 700)
++        fs = CloseFaultOS(materialize(CASES["F10"]), "F10")
++        fs.sentinel = DeadlineFault("synthetic callback " + "d" * 700)
++        error = self.proof_error(fs)
++        self.assertEqual(error.details["rule_id"], "RP-CLEANUP")
++        self.assertIs(error.cause, fs.sentinel)
++        evidence = error.details["evidence"]
++        self.assertEqual(evidence["primary"]["kind"], "callback")
++        self.assertEqual(len(evidence["primary"]["message"]), 512)
++        self.assertTrue(evidence["primary"]["message_truncated"])
++        self.assertEqual(len(evidence["cleanup"]), len(fs.opened))
++        self.assertTrue(all(row["message_truncated"] for row in evidence["cleanup"]))
++        self.assertTrue(all(row["errno"] == errno.EIO for row in evidence["cleanup"]))
++        self.retain("S02", {"expected": "Original callback cause plus every close fault retained, bounded messages",
++                            "same_primary_object": error.cause is fs.sentinel, "error": error.as_dict(), **fs.summary()})
++
++    def test_S03_partial_read_does_not_claim_complete_binding(self):
++        class PartialReadOS(SyntheticOS):
++            def read(self, fd, size):
++                row = self.live[fd]
++                self.event("read", row["path"], fd=fd, size=size)
++                if not self.bytes_read:
++                    data = row["entry"]["content_ascii"].encode("ascii")[:5]
++                    self.bytes_read += len(data)
++                    row["offset"] += len(data)
++                    return data
++                self.io_fault = OSError(errno.EIO, "synthetic partial-read fault")
++                raise self.io_fault
++        fs = PartialReadOS(materialize(CASES["P01"]), "P01")
++        error = self.proof_error(fs)
++        self.assertEqual(error.details["rule_id"], "RP-IO")
++        self.assertIs(error.cause, fs.io_fault)
++        self.assertFalse(fs.read_completed)
++        rows = error.details["evidence"]["observations"]
++        self.assertTrue(all(row["binding"] is None for row in rows if row["label"] != "expected"))
++        self.retain("S03", {"expected": "No partial-prefix digest reported as an observed binding",
++                            "error": error.as_dict(), **fs.summary()})
++
++    def test_S04_snapshot_excludes_only_fixed_names_and_proves_fresh(self):
++        c, fs = materialize(CASES["P05"]), None
++        fs = SyntheticOS(c, "P05")
++        ordinary = self.evidence / "ordinary-input"
++        ordinary.write_bytes(b"unchanged ordinary snapshot input\n")
++        metadata = {"paths": []}
++        plan = {"schema": PAIR["plan_schema"], "host_static": {"files": {CANONICAL: BASE_BINDING}},
++                "evidence": {"outer_capture": {"log": {"path": "/synthetic/unused-log"}}}}
++        calls = []
++        def operational(*args, check=lambda: None, **kwargs):
++            calls.append("fresh_proof")
++            with patch.object(inspection, "os", fs):
++                return inspection._check_rtld_paths(c["model"], BASE_BINDING, check=lambda: (check(), fs.check()))
++        original_lstat = Path.lstat
++        def observed_lstat(path):
++            if str(path) in ALLOWED_PATHS:
++                raise AssertionError("An exceptional RTLD name reached the generic snapshot")
++            return original_lstat(path)
++        with ExitStack() as stack:
++            stack.enter_context(patch.object(inspection, "_required_paths", return_value=[*sorted(ALLOWED_PATHS), str(ordinary)]))
++            stack.enter_context(patch.object(inspection, "_check_rtld_operational_paths", side_effect=operational))
++            stack.enter_context(patch.object(Path, "lstat", observed_lstat))
++            snapshot = inspection._input_snapshot(plan, {"files": {}}, {"files": {}}, metadata, [])
++            self.assertEqual(set(snapshot), {str(ordinary), str(inspection.ROOT / inspection.P06_SCHEMA_PATH)})
++            self.assertEqual(set(metadata["rtld_path_snapshot"]), {"components", "results"})
++            fs.entries["/lib"]["identity"][1] += 100
++            with self.assertRaises(inspection.HostInspectionError) as caught:
++                inspection._input_snapshot(plan, {"files": {}}, {"files": {}}, metadata, [])
++        self.assertEqual(caught.exception.code, "CHI-PATH")
++        self.assertEqual(calls, ["fresh_proof", "fresh_proof"])
++        self.assertFalse(fs.live)
++        self.retain("S04", {"expected": "Fourteen exact exclusions; generic inputs preserved; second call obtains fresh proof",
++                            "ordinary_snapshot": snapshot, "typed_snapshot": metadata["rtld_path_snapshot"],
++                            "second_error": caught.exception.as_dict(), **fs.summary()})
++
++    def test_S05_guard_chain_exclusions_follow_successful_proof(self):
++        c = materialize(CASES["P05"])
++        fs = SyntheticOS(c, "P05")
++        plan = {"schema": PAIR["plan_schema"], "host_static": {"path_guards": guards_for(c["model"]),
++                "resolution": {"origin_rpath": {"variants": []}, "rtld_paths": c["model"]}}}
++        required = sorted(ALLOWED_PATHS) + ["/ordinary/guarded"]
++        events = []
++        def proof(*args, check=lambda: None, **kwargs):
++            events.append("proof")
++            with patch.object(inspection, "os", fs):
++                return inspection._check_rtld_paths(c["model"], BASE_BINDING, check=lambda: (check(), fs.check()))
++        def guards(rows, selected, **kwargs):
++            events.append("legacy")
++            self.assertEqual(selected, [p for p in required if p not in SCHEMA["path_guard_relations"]["legacy_chain_exclusions"]])
++            self.assertEqual(kwargs["_rtld_model"], c["model"])
++            return {"present": {}, "absent": {}}
++        with patch.object(inspection, "_check_rtld_operational_paths", side_effect=proof), \
++             patch.object(inspection, "_check_guards", side_effect=guards) as legacy:
++            inspection._check_plan_guards(plan, required)
++            self.assertEqual(events, ["proof", "legacy"])
++            fs.entries["/usr"]["identity"][1] += 100
++            with self.assertRaises(inspection.HostInspectionError):
++                inspection._check_plan_guards(plan, required)
++            self.assertEqual(legacy.call_count, 1)
++        self.retain("S05", {"expected": "Only four chain exclusions, only after fresh finite proof", "events": events, **fs.summary()})
++
++    def test_S06_libc_policy_preserves_actual_schema_and_dispatch(self):
++        python_path, libc_path = "/synthetic/python", "/synthetic/libc.so.6"
++        python = {"path": python_path, **deepcopy(inspection.PYTHON)}
++        subject = {"path": libc_path, **deepcopy(inspection.LIBC)}
++        loader = {"path": CANONICAL, **deepcopy(inspection.LIBC_LOADER)}
++        aliases = {libc_path: {"resolved_path": libc_path, "symlink": False, "link_target": None},
++                   ALIAS: {"resolved_path": CANONICAL, "symlink": True, "link_target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"}}
++        files = {libc_path: deepcopy(inspection.LIBC), CANONICAL: deepcopy(inspection.LIBC_LOADER)}
++        runtime = {"aliases": deepcopy(aliases), "files": deepcopy(files), "interpreter": ALIAS, "extension_files": []}
++        roles = {"node": "/synthetic/node", "python": python_path, "ldd": "/usr/bin/ldd", "inspector_interpreter": "/bin/bash",
++                 "elf_interpreter": ALIAS, "inspector_runtime": [libc_path], "shared_libraries": [], "loader_configuration": []}
++        resolution = {"profile": PAIR["resolution_profile"], "rtld_paths": initial_model(),
++                      "libc_plt": {"schema": inspection.LIBC_PLT_SCHEMA, "subject": subject, "loader": loader},
++                      "images": [{"file": python, "resolved_needed": {"libc.so.6": libc_path}},
++                                 {"file": subject}, {"file": loader}]}
++        plan = {"schema": PAIR["plan_schema"], "host_static": {"resolution": resolution, "aliases": aliases, "files": files, "roles": roles},
++                "author": {"python_descriptor": python, "git_descriptor": {"path": "/synthetic/git"}, "entry_point": "/synthetic/inspector.py"}}
++        with patch.object(inspection, "_bound") as bound:
++            policy = inspection._prepare_libc_plt_policy(plan, runtime, {"needed": ["libc.so.6"], "interpreter": ALIAS})
++            self.assertEqual(policy["schema"], PAIR["plan_schema"])
++            self.assertGreaterEqual(bound.call_count, 2)
++        routes = []
++        def route(label):
++            return lambda *a, **k: (routes.append(label) or {"route": label})
++        with patch.object(inspection, "_read_libc_static_tls_elf_metadata", side_effect=route("static_tls")), \
++             patch.object(inspection, "read_elf_metadata", side_effect=route("legacy")):
++            inspection._read_plan_elf_metadata(libc_path, None, libc_policy=policy)
++            inspection._read_plan_elf_metadata("/synthetic/other", None, libc_policy=policy)
++        self.assertEqual(routes, ["static_tls", "legacy"])
++        with self.assertRaises(inspection.HostInspectionError) as old:
++            inspection._select_libc_static_tls_profile(PAIR["plan_schema"], resolution)
++        self.assertEqual(old.exception.details["rule_id"], "FLAGS-PROFILE")
++        self.retain("S06", {"expected": "Actual .4 retained; only selected libc gets unchanged static-TLS reader; old selector stays exact",
++                            "policy": inspection._thaw(policy), "routes": routes, "old_selector_error": old.exception.as_dict()})
++
++    def author_fixture(self):
++        path = str(Path(sys.executable).resolve())
++        descriptor = {"path": path, **deepcopy(inspection.PYTHON)}
++        runtime = {"schema": "ontokin.current-host-readback-author-runtime/0.1.0", "executable": descriptor,
++                   "interpreter": ALIAS, "files": {path: deepcopy(inspection.PYTHON)}, "aliases": {},
++                   "startup_files": ["/synthetic/startup"], "extension_files": ["/synthetic/extension"],
++                   "loader_inputs": ["/synthetic/config"], "environment": deepcopy(inspection.ENVIRONMENT)}
++        plan = {"schema": PAIR["plan_schema"], "author": {"runtime_inventory": {"path": "/synthetic/runtime"},
++                "python_descriptor": descriptor, "python_version": ".".join(map(str, sys.version_info[:3]))}}
++        return plan, runtime
++
++    def test_S07_author_proof_precedes_alias_on_both_calls(self):
++        plan, runtime = self.author_fixture()
++        sentinel = inspection.HostInspectionError("PATH", "synthetic finite proof refusal")
++        reports = []
++        with patch.object(inspection, "_document", return_value=runtime), \
++             patch.object(inspection, "_check_launcher"), patch.object(inspection, "_bound"), \
++             patch.object(inspection, "_check_alias_files", side_effect=AssertionError("Finite refusal reached alias use")) as aliases, \
++             patch.object(inspection, "_check_rtld_operational_paths", side_effect=sentinel) as proof:
++            for loaded in (False, True):
++                with self.assertRaises(inspection.HostInspectionError) as caught:
++                    inspection._check_author_runtime(plan, {"files": {}}, loaded=loaded)
++                self.assertIs(caught.exception, sentinel)
++                reports.append({"loaded": loaded, "proof_calls": proof.call_count, "alias_calls": aliases.call_count})
++            self.assertEqual(proof.call_count, 2)
++            self.assertEqual(aliases.call_count, 0)
++        self.retain("S07", {"expected": "A new proof precedes each author alias use; neither call reuses cached admission", "calls": reports})
++
++    def test_S08_host_proof_precedes_alias(self):
++        host, validated = projection_fixture()
++        plan = validated.plan
++        plan["host_static"]["resolution"] = {"rtld_paths": initial_model()}
++        plan["host_static"]["path_guards"] = []
++        sentinel = inspection.HostInspectionError("PATH", "synthetic finite proof refusal")
++        with patch.object(inspection, "_platform", return_value=host["platform"]), patch.object(inspection, "_bound"), \
++             patch.object(inspection, "_check_rtld_operational_paths", side_effect=sentinel) as proof, \
++             patch.object(inspection, "_check_alias_files", side_effect=AssertionError("Finite refusal reached host aliases")) as aliases:
++            with self.assertRaises(inspection.HostInspectionError) as caught:
++                inspection._check_host_static(plan)
++        self.assertIs(caught.exception, sentinel)
++        self.assertEqual((proof.call_count, aliases.call_count), (1, 0))
++        self.retain("S08", {"expected": "Host alias validation consumes only a newly successful proof", "proof_calls": 1, "alias_calls": 0})
++
++    def test_S09_final_launch_clock_faults_keep_existing_handling(self):
++        reports = []
++        for kind in ("supervisor_stop", "path_shaped_callback"):
++            with self.subTest(kind=kind):
++                c = materialize(CASES["P05"])
++                fs = SyntheticOS(c, "P05")
++                sentinel = (MockStop("synthetic command clock expired") if kind == "supervisor_stop" else
++                            inspection.HostInspectionError("PATH", "synthetic callback identity", state="TIMEOUT",
++                                                           details={"stage": "rtld_paths"}))
++                class Clock(MockClock):
++                    def check(self, stage_end=None):
++                        super().check(stage_end)
++                        if any(row["path"] == "/usr" for row in fs.live.values()):
++                            raise sentinel
++                plan = {"schema": PAIR["plan_schema"], "host_static": {"platform": {"boot_id": "synthetic"}, "path_guards": [],
++                        "resolution": {"rtld_paths": c["model"], "origin_rpath": {"subject": {"path": "/synthetic/python"}}}}}
++                validated = SimpleNamespace(plan=plan, _metadata={"input_snapshot": {}, "origin_kernel_witness": {},
++                                             "rtld_path_snapshot": {}}, _runtime={}, _helpers=(None, SimpleNamespace(Stop=MockStop)))
++                def operational(*a, check=lambda: None, **k):
++                    with patch.object(inspection, "os", fs):
++                        return inspection._check_rtld_paths(c["model"], BASE_BINDING, check=lambda: (check(), fs.check()))
++                with ExitStack() as stack:
++                    for name, value in (("_platform", plan["host_static"]["platform"]), ("_check_guards", None),
++                                        ("_origin_subject_observation", {}), ("_check_kernel_origin", {})):
++                        stack.enter_context(patch.object(inspection, name, return_value=value))
++                    stack.enter_context(patch.object(inspection, "_check_rtld_operational_paths", side_effect=operational))
++                    with self.assertRaises(inspection.HostInspectionError) as caught:
++                        inspection._launch_check(validated, Clock(total_ms=5000), 1003.0)
++                error = caught.exception
++                if kind == "supervisor_stop":
++                    self.assertEqual((error.code, error.state), ("CHI-PROCESS", "TIMEOUT"))
++                    self.assertIs(error.cause, sentinel)
++                else:
++                    self.assertIs(error, sentinel)
++                self.assertFalse(fs.live)
++                self.assertEqual(sorted(fs.opened), sorted(fs.closed))
++                reports.append({"kind": kind, "same_cause": error.cause is sentinel, "same_error": error is sentinel,
++                                "error": error.as_dict(), **fs.summary()})
++        self.retain("S09", {"expected": "Only path-generated refusals receive new drift wrapper; callback identity/clock behavior unchanged", "cases": reports})
++
++    def test_S10_model_shape_and_guard_relations_are_closed(self):
++        reports = []
++        mutations = (
++            ("boolean_identity", lambda model: model["components"][0]["identity"].__setitem__(0, True)),
++            ("reordered_components", lambda model: model["components"].reverse()),
++            ("extra_component", lambda model: model["components"].append(deepcopy(model["components"][-1]))),
++            ("missing_component", lambda model: model["components"].pop()),
++            ("alternate_target", lambda model: model["components"][1].__setitem__("target", "/usr/lib")),
++            ("extra_witness_key", lambda model: model["absences"][0].__setitem__("approved", True)),
++        )
++        for name, mutate in mutations:
++            model = initial_model()
++            mutate(model)
++            fs = SyntheticOS(materialize(CASES["P05"]), "P05")
++            error = self.proof_error(fs, model)
++            self.assertEqual((error.code, error.details["rule_id"]), ("CHI-PLAN", "RP-SHAPE"))
++            self.assertEqual(fs.trace, [])
++            reports.append({"case": name, "error": error.as_dict(), "syscalls": 0})
++        for name in ("literal_descendant_guard", "symlink_parent_guard", "boolean_parent_inode"):
++            model = initial_model()
++            guards = guards_for(model)
++            if name == "literal_descendant_guard":
++                guards.append({"path": X32, "parent": "/libx32", "parent_device": 71, "parent_inode": 1})
++            elif name == "symlink_parent_guard":
++                row = next(row for row in guards if row["path"] == "/usr/lib/ld-linux.so.2")
++                row["parent"] = "/lib"
++            else:
++                row = next(row for row in guards if row["path"] == "/libx32")
++                row["parent_inode"] = True
++            with self.assertRaises(inspection.HostInspectionError) as caught:
++                inspection._check_rtld_guard_relations(model, guards)
++            self.assertEqual((caught.exception.code, caught.exception.details["rule_id"]), ("CHI-PATH", "RP-IDENTITY"))
++            reports.append({"case": name, "error": caught.exception.as_dict()})
++        self.retain("S10", {"expected": "Closed model and exact physical guard projection; no Boolean integers or descendant/symlink-parent absence guard", "cases": reports})
++
++
+ if __name__ == "__main__":
+     unittest.main()

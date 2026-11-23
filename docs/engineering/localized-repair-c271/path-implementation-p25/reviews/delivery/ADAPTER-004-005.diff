@@ -1,0 +1,11 @@
+--- ADAPTER-004
++++ ADAPTER-005
+@@ -765,7 +765,7 @@
+         c = materialize(case)
+         fs = SyntheticOS(c, case["id"])
+         value, error, passed = None, None, False
+-        report = {"case": case, "crosswalk": CROSS[case["id"]], "input": c,
++        report = {"case": case, "crosswalk": CROSS[case["id"]], "input": deepcopy(c),
+                   "operational_plan_accepted": False, "STATIC_READY": False, "host_qualified": False,
+                   "actual_process_counts": deepcopy(ZERO_COUNTS)}
+         try:

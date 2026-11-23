@@ -1,0 +1,185 @@
+{
+  "schema": "ontokin.c271.p25-startup-reconciliation/1",
+  "worker": "/root/reconcile",
+  "created_at_utc": "2026-11-23T14:07:05.431593+00:00",
+  "scope": "Read-only reconciliation of starting ce411b12 state; no P25 implementation acceptance",
+  "source_revision": "ce411b12e601036a33698aa7c3290722e602ea75",
+  "source_tree": "45f24af78edf83e42436aa9446b0b9b82c332c68",
+  "core_revision": "66866415e492e151eafd95da2237374fc127f79b",
+  "observed_main_from_director_and_terminal": "e43cc6c5777874101a40559e4058ad6826b07e51",
+  "checks": [
+    {
+      "check": "Exactly one P24 terminal marker in each observed PR/issue body",
+      "passed": true
+    },
+    {
+      "check": "PR and issue marker JSON and raw JSON text match exactly",
+      "passed": true
+    },
+    {
+      "check": "Parent extracted terminal marker equals independently parsed marker",
+      "passed": true
+    },
+    {
+      "check": "Materialized external receipt size/hash match exact terminal identity",
+      "passed": true,
+      "details": {
+        "path": "/workspace/scratch/bd99261bd84d/incoming-receipt/OntoKin/OntoKin_C271_P24_Delivery_Receipt_2026-11-23.json",
+        "bytes": 36911,
+        "sha256": "7e0dc98c21df0b20022a787985ef2da1ccbf914b8e7697e1c103a9c9e952c3c7"
+      }
+    },
+    {
+      "check": "Materialized external receipt stable ID and version xattrs match terminal marker",
+      "passed": true,
+      "details": {
+        "user.library-file-version": "0",
+        "user.library-file-id": "libfile_fde3_f-d83d5632eb8481919bfe76b293f664eb_2ab2a24d43748191957f9bcc356b59de"
+      }
+    },
+    {
+      "check": "External receipt embedded repository delivery object equals exact ce411b12 source",
+      "passed": true
+    },
+    {
+      "check": "External receipt repository binding size/hash and revision match",
+      "passed": true
+    },
+    {
+      "check": "Core commit/tree agree in terminal, receipt and repository delivery",
+      "passed": true
+    },
+    {
+      "check": "Receipt commit/tree agree in terminal and external receipt and local object database",
+      "passed": true
+    },
+    {
+      "check": "Receipt is single-parent child of declared core commit",
+      "passed": true
+    },
+    {
+      "check": "ZIP identity fields agree across terminal, external receipt and repository receipt",
+      "passed": true
+    },
+    {
+      "check": "Both prompt identities/hashes/members agree across all three records",
+      "passed": true
+    },
+    {
+      "check": "Declared save/readback flags consistently true",
+      "passed": true
+    },
+    {
+      "check": "Observed PR head matches receipt and retained branch name",
+      "passed": true
+    },
+    {
+      "check": "Observed PR stays draft/open/unmerged and issue stays open",
+      "passed": true
+    },
+    {
+      "check": "Terminal and receipt repository state agree",
+      "passed": true
+    },
+    {
+      "check": "Parent requirements agree across active task, repository receipt, external receipt and terminal",
+      "passed": true
+    },
+    {
+      "check": "Parent plan agrees across active task, repository receipt, external receipt and terminal",
+      "passed": true
+    },
+    {
+      "check": "Active task parent stays in_progress and incomplete",
+      "passed": true
+    },
+    {
+      "check": "P24 design obligations agree and remain historically unexecuted",
+      "passed": true
+    },
+    {
+      "check": "P24 terminal closes delivery only with no runtime starts, implementation or parent completion",
+      "passed": true
+    },
+    {
+      "check": "No current unknown operation declared in relevant P24 records",
+      "passed": true
+    },
+    {
+      "check": "No main lease or integration claimed by P24",
+      "passed": true
+    },
+    {
+      "check": "CURRENT active/latest task remains C271 and latest handoff matches P24 receipt",
+      "passed": true
+    },
+    {
+      "check": "Complete deduplicated read packet reconstructs docs/workflow/tasks/C271/task.json",
+      "passed": true
+    },
+    {
+      "check": "Complete deduplicated read packet reconstructs docs/workflow/CURRENT.json",
+      "passed": true
+    },
+    {
+      "check": "Nine read chunks exactly concatenate to complete read packet",
+      "passed": true
+    },
+    {
+      "check": "Captured starting read identity agrees with exact source docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "passed": true
+    },
+    {
+      "check": "Captured starting read identity agrees with exact source docs/workflow/tasks/C271/PLAN.md",
+      "passed": true
+    },
+    {
+      "check": "Captured starting read identity agrees with exact source docs/workflow/tasks/C271/task.json",
+      "passed": true
+    },
+    {
+      "check": "Captured starting read identity agrees with exact source docs/workflow/CURRENT.json",
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "parent": {
+    "status": "in_progress",
+    "requirements": {
+      "R01": "done",
+      "R02": "done",
+      "R03": "not_done",
+      "R04": "not_done",
+      "R05": "not_done"
+    },
+    "plan": {
+      "P01": "done",
+      "P02": "in_progress"
+    },
+    "issue_open": true,
+    "pr_open_draft_unmerged": true
+  },
+  "marker_identity": {
+    "path": "/workspace/scratch/bd99261bd84d/state/startup/p24-terminal.json",
+    "bytes": 5193,
+    "sha256": "c5eec8da3e0fd843a35598aa4ef3d46d9feb1592777c3ff7cef322782129205f"
+  },
+  "external_receipt_identity": {
+    "path": "/workspace/scratch/bd99261bd84d/incoming-receipt/OntoKin/OntoKin_C271_P24_Delivery_Receipt_2026-11-23.json",
+    "bytes": 36911,
+    "sha256": "7e0dc98c21df0b20022a787985ef2da1ccbf914b8e7697e1c103a9c9e952c3c7"
+  },
+  "current_unknown_operations": [],
+  "historical_unknown_operations": [
+    "C270 ancillary broad-driver completion",
+    "Global prior-process termination",
+    "P13 read-only difflib completion; do not retry"
+  ],
+  "limitations": [
+    "PR/issue snapshots are Director-observed startup evidence; Investigator made no fresh network query.",
+    "No current-host runtime qualification, product routine, H0/H1, installation or code review performed.",
+    "No prior-host process continuity or total termination inferred.",
+    "P25 canonical edits occurred after captured startup read packets; they are Director-owned and not reinterpreted as ce411b12 contents.",
+    "External receipt byte/hash/xattrs checked; complete historical archives and all referenced prior artifacts not re-audited."
+  ]
+}

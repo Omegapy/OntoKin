@@ -1,0 +1,32 @@
+{
+  "expected": "Actual .4 retained; only selected libc gets unchanged static-TLS reader; old selector stays exact",
+  "policy": {
+    "schema": "ontokin.current-host-readback-inspection-plan/0.1.4",
+    "subject": {
+      "path": "/synthetic/libc.so.6",
+      "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
+      "size_bytes": 1995216,
+      "mode": "0o755"
+    },
+    "loader": {
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+      "size_bytes": 225672,
+      "mode": "0o755"
+    }
+  },
+  "routes": [
+    "static_tls",
+    "legacy"
+  ],
+  "old_selector_error": {
+    "code": "CHI-PLAN",
+    "reason": "Unsupported libc static-TLS schema/profile pair",
+    "state": "REJECTED",
+    "cause": null,
+    "details": {
+      "stage": "profile_selection",
+      "rule_id": "FLAGS-PROFILE"
+    }
+  }
+}

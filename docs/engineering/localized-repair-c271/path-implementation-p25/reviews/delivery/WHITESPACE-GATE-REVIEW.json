@@ -1,0 +1,298 @@
+{
+  "schema": "ontokin.c271.p25-independent-whitespace-gate-review/1",
+  "reviewer": "/root/reconcile",
+  "at_utc": "2026-11-23T14:43:17.823723+00:00",
+  "decision": "accept_exact_immutable_diff_context_exception",
+  "summary": {
+    "checks": 30,
+    "passed": 30,
+    "failed": 0
+  },
+  "broad_status": "failed_exit2_preserved; not represented as an unqualified broad pass",
+  "rationale": "Each flagged stored line is exactly byte0x20, the unified-diff prefix for an unchanged blank source line. Removing it changes the immutable evidence syntax. All three artifacts regenerate byte-for-byte from their frozen old/new sources; no production or prose trailing whitespace is exempted.",
+  "artifact_proofs": [
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/SOURCE-DIFF.patch",
+      "sha256": "cf20fcbedaf3ce030ad1684ba483c5e7fb839aeaea4e01711c71002cabfeb310",
+      "bytes": 53163,
+      "trailing_whitespace_lines": [
+        40,
+        41,
+        585,
+        608,
+        609,
+        635,
+        636,
+        675,
+        676,
+        680,
+        681,
+        694,
+        809,
+        810
+      ],
+      "exact_regeneration_equal": true,
+      "staged_equal": true
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/ADAPTER-002-003.diff",
+      "sha256": "481514d0739493c47b4866497d5ff040b31aca8fe32cacbd1e05acc4edf0ba0c",
+      "bytes": 20980,
+      "trailing_whitespace_lines": [
+        5,
+        6
+      ],
+      "exact_regeneration_equal": true,
+      "staged_equal": true
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/ADAPTER-003-004.diff",
+      "sha256": "8c38dc1ffaea21bf11e41e923fab77e99368f7bdc18e71d7514adb51769bb483",
+      "bytes": 11072,
+      "trailing_whitespace_lines": [
+        33,
+        44
+      ],
+      "exact_regeneration_equal": true,
+      "staged_equal": true
+    }
+  ],
+  "checks": [
+    {
+      "check": "broad_failure_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "exact_regeneration:SOURCE-DIFF.patch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "staged_exact_immutable_bytes:SOURCE-DIFF.patch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:40",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:41",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:585",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:608",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:609",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:635",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:636",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:675",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:676",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:680",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:681",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:694",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:809",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:SOURCE-DIFF.patch:810",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "exact_regeneration:ADAPTER-002-003.diff",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "staged_exact_immutable_bytes:ADAPTER-002-003.diff",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:ADAPTER-002-003.diff:5",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:ADAPTER-002-003.diff:6",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "exact_regeneration:ADAPTER-003-004.diff",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "staged_exact_immutable_bytes:ADAPTER-003-004.diff",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:ADAPTER-003-004.diff:33",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "blank_context_only:ADAPTER-003-004.diff:44",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "exact18_flags_and_only_three_paths",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "saved_broad_output_exact_flag_set",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "independent_broad_recheck_same_failure",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "scoped_command_exact_complement",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "independent_all_other_staged_paths_pass",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "independent_scoped_check": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      ".",
+      ":(exclude)docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/SOURCE-DIFF.patch",
+      ":(exclude)docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/ADAPTER-002-003.diff",
+      ":(exclude)docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/ADAPTER-003-004.diff"
+    ],
+    "exit_code": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "staged_path_count": 361,
+    "git_index_stage_listing_sha256": "02af72e8e1c3a4167b092ebca907f90586c1411ea4231cef6b499a521f98dc23"
+  },
+  "independence": "The Director authored the resolution; this reviewer assessed it independently. This reviewer originally generated the two adapter diff artifacts; their correctness is checked by exact regeneration from independently frozen control-worker sources. The production diff was authored by the separate controls reviewer.",
+  "read_set": [
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/checks/WHITESPACE-RESOLUTION.json",
+      "bytes": 6648,
+      "sha256": "99bdb7ee3252d548f6d6565839ffac06531a7352e9ed7e5e6a521507bc5a927b"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/checks/core-final-whitespace/RESULT.json",
+      "bytes": 1423,
+      "sha256": "fa6c17392a4a624b9e96eadb4f800ccd6a681741d9d00e6b171e56d4863a08d6"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/checks/core-final-whitespace-scoped/RESULT.json",
+      "bytes": 2013,
+      "sha256": "98db0bb2771e87dc41c3f37dc1bfc870a9175fe195a8cbdaa142b8a8d89c6fcf"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/checks/core-final-whitespace/stdout.log",
+      "bytes": 2290,
+      "sha256": "66cbe400da548d2eb96b848af14e4c206f3dc90b068dfca782b01542a0629c19"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/SOURCE-DIFF.patch",
+      "bytes": 53163,
+      "sha256": "cf20fcbedaf3ce030ad1684ba483c5e7fb839aeaea4e01711c71002cabfeb310"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/implementation/candidate001/current_host_inspection_v01.py",
+      "bytes": 233502,
+      "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/ADAPTER-002-003.diff",
+      "bytes": 20980,
+      "sha256": "481514d0739493c47b4866497d5ff040b31aca8fe32cacbd1e05acc4edf0ba0c"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-002.py.source",
+      "bytes": 45877,
+      "sha256": "4642be4d6737b011920cf75b00f461b98edee372ee01f48caa7bc1bd5bc2deeb"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-003.py.source",
+      "bytes": 66363,
+      "sha256": "3ccda5a5297a23cb8324e9123e67e09c50c13d5fefa266aee251773f0ff85e0a"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/ADAPTER-003-004.diff",
+      "bytes": 11072,
+      "sha256": "8c38dc1ffaea21bf11e41e923fab77e99368f7bdc18e71d7514adb51769bb483"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-003.py.source",
+      "bytes": 66363,
+      "sha256": "3ccda5a5297a23cb8324e9123e67e09c50c13d5fefa266aee251773f0ff85e0a"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-004.py.source",
+      "bytes": 71052,
+      "sha256": "00ec2b484a0db14a83b6cb5f81a64054b3dfd4f7aaef103da83c2fb046cb4fc7"
+    }
+  ],
+  "limits": [
+    "The exception applies only to these three exact paths, identities and18 single-space context lines. Any changed artifact or additional diagnostic requires reassessment.",
+    "No artifacts, production code, adapter expectations, Git index or behavioral tests were changed or executed.",
+    "Later newly staged files still belong to the scoped gate; this review does not waive their whitespace checks."
+  ]
+}

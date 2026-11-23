@@ -1,0 +1,41 @@
+{
+  "schema": "ontokin.c271.p25-early-audit-supplement/1",
+  "auditor": "/root/reconcile",
+  "at_utc": "2026-11-23T14:16:21.031011+00:00",
+  "scope": "Later retained ownership readbacks and external clarification; original audit and immutable ZIP retained.",
+  "checks": {
+    "pr_and_issue_body_exactly_equal": true,
+    "old_pr_body_preserved_exact_suffix": true,
+    "old_issue_body_preserved_exact_suffix": true,
+    "current_owner_and_early_saved_identity": true,
+    "pr_open_draft_unmerged_start_head": true,
+    "scope_issue_open": true,
+    "clarification_exact_saved_archive": true,
+    "clarification_nested_namespace_explicit": true,
+    "portable_source_revisions_explicit": true,
+    "portable_reconstruction_scoped_to_synthetic_p25": true,
+    "final_wrapper_requirement_explicit": true
+  },
+  "read_set": [
+    {
+      "path": "state/ownership-readback-pr.json",
+      "bytes": 66754,
+      "sha256": "e185b2b7c470b0bb3a27cfed04d55a4b904af2f7a41bd1a612eb3c34f8f1cef6",
+      "coverage": "Full mechanical bytes; complete new P25 body prefix and relevant metadata/clarification semantically read. Historical body suffix compared exact to startup snapshot, not reread."
+    },
+    {
+      "path": "state/ownership-readback-issue.json",
+      "bytes": 66640,
+      "sha256": "0d0ea537d808ee0568b76770f2f883fd37bb784b18766cc66e9ac53c8d19ec4d",
+      "coverage": "Full mechanical bytes; complete new P25 body prefix and relevant metadata/clarification semantically read. Historical body suffix compared exact to startup snapshot, not reread."
+    },
+    {
+      "path": "OntoKin/docs/engineering/localized-repair-c271/path-implementation-p25/EARLY-PACKAGE-CLARIFICATION.json",
+      "bytes": 2024,
+      "sha256": "b70fa654bbc89327615864b6884b2634762921889cd4d9daf676e38df74b3e23",
+      "coverage": "Full mechanical bytes; complete new P25 body prefix and relevant metadata/clarification semantically read. Historical body suffix compared exact to startup snapshot, not reread."
+    }
+  ],
+  "disposition": "Early bytes verified. Dependency navigation ambiguity is resolved by the exact external clarification for bounded online continuation; publish/preserve the clarification with final P25 evidence and include corrected P25 wrapper in final package. This does not erase the original package-only failed check.",
+  "display_incident": "Initial attempt to display entire ownership bodies truncated. Recovered complete new P25 prefix and relevant metadata in bounded read; historical suffix identity checked mechanically. No claim of rereading full historical body."
+}

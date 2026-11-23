@@ -1,0 +1,1182 @@
+"""Independent P25 adapters for the unchanged, adopted P24 control obligations.
+
+This file alone supplies synthetic filesystem observations and stipulated caller
+prerequisites. No production alternate root, host mutation, target process,
+operational plan acceptance or STATIC_READY observation is involved. All fifty-
+one executable controls preserve their original matrix expectation. N34 is the
+external source review obligation (including historical N57), never a runtime
+test, skip or synthetic approval. ONTOKIN_RTLD_RETAIN_ROOT retains case evidence.
+"""
+from __future__ import annotations
+
+from contextlib import ExitStack
+from copy import deepcopy
+import errno
+import hashlib
+import json
+import os
+from pathlib import Path, PurePosixPath
+import platform
+import stat
+import subprocess
+import sys
+import tempfile
+from types import SimpleNamespace
+import unittest
+from unittest.mock import patch
+
+from prototypes.static_tray_v01 import current_host_inspection_v01 as inspection
+
+REPO = Path(__file__).resolve().parents[1]
+DESIGN = REPO / "docs/engineering/localized-repair-c271/path-design-p24"
+MATRIX_SHA256 = "d52f64ffc28f7baf04e360f167fb56192cc6fb0baf6b36fd9f085907732a3196"
+CROSSWALK_SHA256 = "1d472d6036119805882d6a4996cc6d00cacda8de421f77866483c682894daf16"
+SCHEMA_SHA256 = "4b0c73afe6c185e8b2e6a0f72739d3371b31caa6a4d106e16c3a2ed1588eebbe"
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False).encode("ascii")
+
+
+def authenticated(relative, expected):
+    raw = (DESIGN / relative).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != expected:
+        raise AssertionError("Frozen independent input changed: " + relative)
+    return json.loads(raw)
+
+
+MATRIX = authenticated("reviews/path/CONTROL-MATRIX.json", MATRIX_SHA256)
+CROSSWALK = authenticated("reviews/path/CONTROL-CROSSWALK.json", CROSSWALK_SHA256)
+SCHEMA = authenticated("SCHEMA.json", SCHEMA_SHA256)
+BASE = MATRIX["base"]
+CASES = {row["id"]: row for row in MATRIX["cases"]}
+CROSS = {row["id"]: row for row in CROSSWALK["cases"]}
+PAIR = SCHEMA["new_pair"]
+ALIAS, I386, X32 = BASE["literal_rtldlist"]
+CANONICAL = SCHEMA["candidate_contract"]["canonical_loader"]["path"]
+PHYSICAL_ALIAS = "/usr/lib64/ld-linux-x86-64.so.2"
+BASE_BINDING = deepcopy(BASE["entries"][-1]["binding"])
+ALLOWED_PATHS = set(SCHEMA["snapshot"]["legacy_snapshot_exclusions"])
+ZERO_COUNTS = deepcopy(MATRIX["actual_target_counts"])
+RUNTIME_IDS = [row["id"] for row in MATRIX["cases"] if row["id"] != "N34"]
+# Exact diagnostic obligations from the adopted schema/crosswalk. Inherited
+# wrapper diagnostics remain separate, as do same-object callback faults.
+NEW_RULES = {
+    "N02": "RP-PROFILE", "N03": "RP-SHAPE", "N04": "RP-SHAPE",
+    **{name: "RP-ABSENCE" for name in ("N10", "N11", "N12", "N13", "N14", "N15")},
+    "N16": "RP-NAMESPACE", "N17": "RP-IDENTITY", "N18": "RP-IDENTITY",
+    **{name: "RP-TRAVERSAL" for name in ("N19", "N20", "N21", "N22", "N23", "N24", "N27")},
+    "N25": "RP-BOUND", "N26": "RP-BOUND", "N28": "RP-IDENTITY", "N29": "RP-IDENTITY", "N30": "RP-CANDIDATE",
+    **{name: "RP-IO" for name in ("F01", "F02", "F03", "F04")},
+    "F05": "RP-NAMESPACE", "F06": "RP-NAMESPACE", "F07": "RP-NAMESPACE",
+    "F11": "RP-CAPABILITY", "F12": "RP-READ",
+}
+WRAPPED_RULES = {"F08": "RP-ABSENCE", "F09": "RP-IDENTITY", "F13": "RP-IDENTITY"}
+if len(RUNTIME_IDS) != 51 or len(CASES) != 52:
+    raise AssertionError("Frozen case inventory changed")
+for _row in MATRIX["cases"]:
+    _cross = CROSS[_row["id"]]
+    if hashlib.sha256(canonical(_row)).hexdigest() != _cross["matrix_case_sha256"]:
+        raise AssertionError("Crosswalk case identity differs: " + _row["id"])
+    if (_cross["expected_code"], _cross["expected_boundary"], _cross["expected_process_counts"]) != (
+            _row["expected"]["code"], _row["expected"]["boundary"], _row["expected"]["process_counts"]):
+        raise AssertionError("Frozen crosswalk changes an expectation")
+
+
+def initial_model():
+    entries = {row["path"]: row for row in BASE["entries"]}
+    return {"schema": SCHEMA["rtld_paths"]["schema_value"],
+            "components": [{**deepcopy(fixed), "identity": deepcopy(entries[fixed["path"]]["identity"])}
+                           for fixed in SCHEMA["rtld_paths"]["components_fixed_fields"]],
+            "absences": deepcopy(SCHEMA["rtld_paths"]["absences_exact_ordered_rows"])}
+
+
+def candidate_projection(context):
+    rows = []
+    for row in context["candidate_rows"]:
+        if row["state"] == "file":
+            rows.append({key: deepcopy(row[key]) for key in ("path", "state", "binding")})
+        else:
+            rows.append({"path": row["path"], "state": row["state"],
+                         "parent": row.get("parent", str(PurePosixPath(row["path"]).parent))})
+    return rows
+
+
+def guards_for(model):
+    rows = []
+    for row in model["components"]:
+        dev, ino, mode, *_ = row["identity"]
+        rows.append({"path": row["path"], "kind": row["kind"], "device": dev,
+                     "inode": ino, "mode": oct(stat.S_IMODE(mode)), "target": row["target"]})
+    named = deepcopy(next(row for row in rows if row["path"] == PHYSICAL_ALIAS))
+    named["path"] = ALIAS
+    rows.append(named)
+    entries = {row["path"]: row for row in model["components"]}
+    for row in model["absences"]:
+        identity = entries[row["nearest_existing_ancestor"]]["identity"]
+        rows.append({"path": row["first_missing"], "parent": row["nearest_existing_ancestor"],
+                     "parent_device": identity[0], "parent_inode": identity[1]})
+    return sorted(rows, key=lambda row: row["path"])
+
+
+def materialize(case):
+    """Translate only the frozen logical mutation operations, in listed order."""
+    c = deepcopy(BASE)
+    c["resolution_profile"] = PAIR["resolution_profile"]
+    c["model"] = initial_model()
+    c["omitted_guards"] = []
+    for change in case["exact_changes"]:
+        op = change["op"]
+        if op == "set":
+            c[change["path"]] = deepcopy(change["value"])
+        elif op == "set_entry":
+            c["entries"] = [({"path": change["path"], **deepcopy(change["value"])})
+                            if row["path"] == change["path"] else row for row in c["entries"]]
+        elif op == "set_entry_target":
+            next(row for row in c["entries"] if row["path"] == change["path"])["target"] = change["value"]
+        elif op == "replace_absence_with_entry":
+            c["absent_entries"].remove(change["path"])
+            c["entries"].append({key: deepcopy(value) for key, value in change.items() if key != "op"})
+        elif op == "declare_out_of_scope":
+            c["primitive_out_of_scope"] = deepcopy(change["value"])
+        elif op == "omit_new_policy":
+            c["model"] = None
+        elif op == "add_policy_member":
+            c["model"][change["key"]] = deepcopy(change["value"])
+        elif op == "remove_candidate":
+            c["candidate_rows"] = [row for row in c["candidate_rows"] if row["path"] != change["path"]]
+        elif op == "set_candidate_order":
+            rows = {row["path"]: row for row in c["candidate_rows"]}
+            c["candidate_rows"] = [rows[name] for name in change["value"]]
+        elif op == "append_duplicate_candidate":
+            c["candidate_rows"].append(deepcopy(next(row for row in c["candidate_rows"] if row["path"] == change["path"])))
+        elif op == "append_candidate":
+            c["candidate_rows"].append(deepcopy(change["value"]))
+        elif op == "set_candidate_field":
+            row = next(row for row in c["candidate_rows"] if row["path"] == change["path"])
+            pieces = change["field"].split(".")
+            for part in pieces[:-1]:
+                row = row[part]
+            row[pieces[-1]] = deepcopy(change["value"])
+        elif op == "omit_guard":
+            c["omitted_guards"].append(change["path"])
+        elif op in ("add_exception", "add_projected_alias", "add_projected_host_member"):
+            c[op] = deepcopy(change)
+        elif op == "select_full_plan_route":
+            c["full_plan_route"] = change["value"]
+        else:
+            raise AssertionError("Untranslated frozen mutation: " + op)
+    c["fault_events"] = deepcopy(case["fault_events"])
+    return c
+
+
+class DeadlineFault(RuntimeError):
+    pass
+
+
+class SyntheticOS:
+    """Test-only closed descriptor observations; no host syscall is delegated.
+
+    Each O_PATH descriptor retains the opened entry even after a named-entry
+    replacement. Only the canonical terminal has readable inert content. This
+    models the distinction between descriptor stability and namespace stability.
+    """
+    def __init__(self, context, case_id):
+        self.entries = {row["path"]: deepcopy(row) for row in context["entries"]}
+        self.context, self.case_id = context, case_id
+        self.opened, self.closed, self.live = [], [], {}
+        self.trace, self.triggered = [], []
+        self.next_fd, self.max_live, self.root_opens = 1000, 0, 0
+        self.callback_count, self.callback_credit = 0, 0
+        self.sentinel = DeadlineFault("synthetic sentinel DeadlineFault#1")
+        self.io_fault = None
+        self.bytes_read = 0
+        self.read_requests = []
+        self.read_completed = False
+        self.after_usr_stat = False
+        self.enforce_callbacks = True
+
+    def __getattr__(self, name):
+        if name.startswith("O_"):
+            return getattr(os, name)
+        if name == "supports_dir_fd":
+            return {self.open, self.stat, self.readlink}
+        if name == "supports_follow_symlinks":
+            return {self.stat}
+        raise AssertionError("Undeclared synthetic OS facility: " + name)
+
+    def check(self):
+        self.callback_count += 1
+        self.callback_credit += 1
+        self.trace.append({"operation": "callback", "count": self.callback_count})
+        if self.case_id == "F10" and not self.triggered and any(row["path"] == "/usr" for row in self.live.values()):
+            self.triggered.append("after acquiring usr descriptor before next component")
+            raise self.sentinel
+
+    def event(self, operation, path=None, **fields):
+        if operation not in ("close",) and self.enforce_callbacks:
+            if self.callback_credit < 1:
+                raise AssertionError("No deadline callback before " + operation)
+            self.callback_credit = 0
+        self.trace.append({"operation": operation, "path": path, **fields})
+
+    @staticmethod
+    def info(identity):
+        return SimpleNamespace(**dict(zip(("st_dev", "st_ino", "st_mode", "st_nlink", "st_size", "st_mtime_ns", "st_ctime_ns"), identity)))
+
+    def name(self, value, dir_fd):
+        value = os.fsdecode(value)
+        if dir_fd is None:
+            if value != "/":
+                raise AssertionError("Absolute or alternate-root lookup attempted: " + value)
+            return "/"
+        if dir_fd not in self.live or self.live[dir_fd]["entry"]["kind"] != "directory":
+            raise AssertionError("Lookup does not use a held physical directory")
+        parent = self.live[dir_fd]["path"]
+        if value == "..":
+            if parent != "/usr/lib64":
+                raise AssertionError("Unapproved physical parent transition")
+            return "/usr"
+        if not value or "/" in value or value in (".", ".."):
+            raise AssertionError("Not a single descriptor-relative component: " + value)
+        path = (parent.rstrip("/") + "/" + value)
+        if path not in ALLOWED_PATHS:
+            raise AssertionError("Lookup beyond frozen physical transcript: " + path)
+        if path in (ALIAS, I386, X32):
+            raise AssertionError("Literal symlink candidate bypassed physical component proof")
+        return path
+
+    def stat(self, value, *, dir_fd=None, follow_symlinks=True):
+        if follow_symlinks is not False:
+            raise AssertionError("Synthetic path observation followed a link")
+        path = self.name(value, dir_fd)
+        self.event("stat", path, dir_fd=dir_fd, name=os.fsdecode(value), parent_path=self.live[dir_fd]["path"] if dir_fd is not None else None, follow_symlinks=False)
+        if self.case_id in ("F01", "F02", "F03", "F04") and path == "/libx32":
+            number = getattr(errno, self.context["fault_events"][0]["raise_errno"])
+            self.io_fault = OSError(number, "frozen synthetic absence lookup fault")
+            self.triggered.append(self.context["fault_events"][0]["at"])
+            raise self.io_fault
+        if path not in self.entries:
+            if path not in self.context["absent_entries"]:
+                raise AssertionError("Synthetic undeclared missing entry: " + path)
+            raise FileNotFoundError(errno.ENOENT, "frozen exact missing basename", os.fsdecode(value))
+        result = self.info(deepcopy(self.entries[path]["identity"]))
+        if self.case_id == "F05" and path == "/usr" and not self.triggered:
+            self.entries[path]["identity"] = deepcopy(self.context["fault_events"][0]["replace_identity"])
+            self.triggered.append(self.context["fault_events"][0]["at"])
+        return result
+
+    def open(self, value, flags, mode=0o777, *, dir_fd=None):
+        path = self.name(value, dir_fd)
+        self.event("open", path, flags=flags, dir_fd=dir_fd, name=os.fsdecode(value), parent_path=self.live[dir_fd]["path"] if dir_fd is not None else None)
+        if self.case_id == "F11" and dir_fd is not None and not self.triggered:
+            self.io_fault = NotImplementedError("frozen required dir_fd unavailable")
+            self.triggered.append(self.context["fault_events"][0]["at"])
+            raise self.io_fault
+        if flags & (os.O_CREAT | os.O_TRUNC | os.O_WRONLY | os.O_RDWR):
+            raise AssertionError("Mutating synthetic open")
+        for flag in (os.O_NOFOLLOW, os.O_CLOEXEC):
+            if not flags & flag:
+                raise AssertionError("Required no-follow/close-on-exec flag missing")
+        if path not in self.entries:
+            raise AssertionError("Unexpected open of an absent component")
+        entry = deepcopy(self.entries[path])
+        readable = not bool(flags & os.O_PATH)
+        if readable:
+            if path != CANONICAL or not flags & os.O_NONBLOCK:
+                raise AssertionError("Unexpected readable open")
+        elif entry["kind"] == "directory" and not flags & os.O_DIRECTORY:
+            raise AssertionError("Directory observation lacks O_DIRECTORY")
+        if dir_fd is None:
+            if readable or not flags & os.O_DIRECTORY:
+                raise AssertionError("Root anchor is not restricted O_PATH directory")
+            if self.live:
+                raise AssertionError("A new root was opened before prior-pass cleanup")
+            self.root_opens += 1
+        fd = self.next_fd
+        self.next_fd += 1
+        self.live[fd] = {"path": path, "entry": entry, "readable": readable, "offset": 0}
+        self.opened.append(fd)
+        self.max_live = max(self.max_live, len(self.live))
+        if self.max_live > 10:
+            raise AssertionError("Finite verifier exceeded ten live descriptors")
+        return fd
+
+    def fstat(self, fd):
+        if fd not in self.live:
+            raise AssertionError("fstat of unowned/closed descriptor")
+        self.event("fstat", self.live[fd]["path"], fd=fd)
+        return self.info(deepcopy(self.live[fd]["entry"]["identity"]))
+
+    def readlink(self, value, *, dir_fd=None):
+        if dir_fd is None:
+            # Only N01 exercises the unchanged legacy routine by a logical
+            # Path.is_symlink adapter; no operational filesystem resolution.
+            if self.case_id != "N01":
+                raise AssertionError("Named readlink bypassed held symlink descriptor")
+            path = str(value)
+            self.trace.append({"operation": "legacy_readlink", "path": path})
+            return self.entries[path]["target"]
+        if value != b"" or dir_fd not in self.live or self.live[dir_fd]["entry"]["kind"] != "symlink":
+            raise AssertionError("Required empty-byte-name readlink-at on held symlink not used")
+        row = self.live[dir_fd]
+        self.event("readlink", row["path"], fd=dir_fd, empty_path=True)
+        if self.case_id == "F06" and row["path"] == PHYSICAL_ALIAS and not self.triggered:
+            event = self.context["fault_events"][0]
+            self.entries[row["path"]]["identity"][1] = event["replace_inode"]
+            self.entries[row["path"]]["target"] = event["replace_target"]
+            self.triggered.append(event["at"])
+        return row["entry"]["target"].encode("ascii")
+
+    def read(self, fd, size):
+        if fd not in self.live or not self.live[fd]["readable"]:
+            raise AssertionError("Read did not use the separate readable terminal descriptor")
+        row = self.live[fd]
+        self.event("read", row["path"], fd=fd, size=size)
+        raw = row["entry"]["content_ascii"].encode("ascii")
+        if size < 0 or size > BASE_BINDING["size_bytes"] + 1 - row["offset"]:
+            raise AssertionError("Unbounded terminal stream read")
+        data = raw[row["offset"]:row["offset"] + size]
+        row["offset"] += len(data)
+        self.bytes_read += len(data)
+        self.read_requests.append(size)
+        if row["offset"] >= len(raw):
+            self.read_completed = True
+            if self.case_id == "F12" and not self.triggered:
+                identity = deepcopy(self.context["fault_events"][0]["replace_file_identity"])
+                row["entry"]["identity"] = identity
+                self.entries[CANONICAL]["identity"] = deepcopy(identity)
+                self.triggered.append(self.context["fault_events"][0]["at"])
+        return data
+
+    def close(self, fd):
+        if fd not in self.live or fd in self.closed:
+            raise AssertionError("A descriptor was closed twice or was never owned")
+        row = self.live[fd]
+        self.event("close", row["path"], fd=fd)
+        self.closed.append(fd)
+        del self.live[fd]
+        if self.case_id == "F07" and row["readable"] and not self.triggered:
+            event = self.context["fault_events"][0]
+            self.entries[event["replace_entry"]]["identity"][1] = event["new_inode"]
+            self.triggered.append(event["at"])
+
+    def summary(self):
+        return {"trace": self.trace, "faults_triggered": self.triggered, "opened": self.opened,
+                "closed": self.closed, "live": sorted(self.live), "maximum_live_descriptors": self.max_live,
+                "root_opens": self.root_opens, "callbacks": self.callback_count,
+                "terminal_bytes_read": self.bytes_read, "terminal_read_requests": self.read_requests}
+
+
+def pin_relation(binding):
+    """N31: exact inherited PLT-PIN predicate; all preceding relations stipulated."""
+    libc_path = "/synthetic/libc.so.6"
+    subject = {"path": libc_path, **deepcopy(inspection.LIBC)}
+    loader = {"path": CANONICAL, **deepcopy(binding)}
+    aliases = {libc_path: {"resolved_path": libc_path, "symlink": False, "link_target": None},
+               ALIAS: {"resolved_path": CANONICAL, "symlink": True,
+                       "link_target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"}}
+    files = {libc_path: deepcopy(inspection.LIBC), CANONICAL: deepcopy(binding)}
+    return inspection._check_libc_plt_bindings(subject=subject, loader=loader,
+        python_descriptor={"path": "/synthetic/python", **deepcopy(inspection.PYTHON)},
+        actual_python_needed=["libc.so.6"], actual_python_interpreter=ALIAS,
+        python_resolved_needed={"libc.so.6": libc_path}, dependency_role_names=[libc_path],
+        forbidden_resolved_paths=[], host_aliases=deepcopy(aliases), runtime_aliases=deepcopy(aliases),
+        host_files=deepcopy(files), runtime_files=deepcopy(files), libc_image_descriptor=deepcopy(subject),
+        loader_image_descriptor=deepcopy(loader), runtime_interpreter=ALIAS)
+
+
+def projection_fixture():
+    """Complete P06 shape for two negative projection controls, no receipts read."""
+    binding = {"sha256": "c" * 64, "size_bytes": 12, "mode": "0o644"}
+    roles = {"node": "/synthetic/node", "python": "/synthetic/python", "ldd": "/usr/bin/ldd",
+             "inspector_interpreter": "/bin/bash", "elf_interpreter": ALIAS,
+             "loader_configuration": ["/synthetic/ld.so.cache"], "shared_libraries": ["/synthetic/libc.so.6"],
+             "inspector_runtime": ["/synthetic/git"]}
+    named = {roles[k] for k in inspection.ROLE_SCALARS}
+    for k in inspection.ROLE_LISTS:
+        named.update(roles[k])
+    aliases = {name: {"resolved_path": name, "symlink": False, "link_target": None} for name in named}
+    aliases[ALIAS] = {"resolved_path": CANONICAL, "symlink": True,
+                      "link_target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"}
+    files = {row["resolved_path"]: deepcopy(binding) for row in aliases.values()}
+    platform_value = {"system": "Linux", "release": "synthetic", "machine": "x86_64", "libc": ["glibc", "2.39"], "boot_id": "synthetic"}
+    archive = {"path": "/synthetic/node.tar", "sha256": inspection.NODE_ARCHIVE_SHA256,
+               "size_bytes": inspection.NODE_ARCHIVE_BYTES, "mode": "0o600"}
+    plan = {"schema": PAIR["plan_schema"], "host_static": {"platform": platform_value, "files": files, "aliases": aliases, "roles": roles},
+            "author": {"python_descriptor": {"path": roles["python"], **binding}, "python_version": "3.12.8"},
+            "runtime": {"executable": roles["node"], "source_archive": archive}, "commands": []}
+    metadata = {"packages": {"synthetic-package": "1.0"}}
+    host = {"schema": "ontokin.current-host-readback-host/0.1.0", "observed_at_utc": "2026-01-01T00:00:00+00:00",
+            "platform": deepcopy(platform_value), "files": deepcopy(files), "aliases": deepcopy(aliases), "roles": deepcopy(roles),
+            "python": {"executable": roles["python"], "version": "3.12.8", "packages": metadata["packages"]},
+            "runtime": {"executable": roles["node"], "version": inspection.NODE_VERSION,
+                        "candidate_sha256": inspection.NODE["sha256"], "candidate_size_bytes": inspection.NODE["size_bytes"],
+                        "candidate_mode": inspection.NODE["mode"], "source_archive": deepcopy(archive)},
+            "environment": deepcopy(inspection.ENVIRONMENT),
+            "inspections": {name: {"path": "/synthetic/"+name+".json", **binding} for name in inspection.COMMAND_IDS}}
+    return host, SimpleNamespace(plan=plan, _metadata=metadata)
+
+
+class MemoryStore:
+    """Explicitly mocked publication; retains exact values for count assertions."""
+    def __init__(self, plan):
+        self.plan, self.values, self.publications = plan, {}, []
+
+    def write(self, path, value, **kwargs):
+        self.values[path] = deepcopy(value)
+        self.publications.append({"destination": path})
+        raw = canonical(value)
+        return {"path": path, "sha256": hashlib.sha256(raw).hexdigest(), "size_bytes": len(raw), "mode": "0o600"}
+
+
+class MockStop(Exception):
+    state = "TIMEOUT"
+
+
+class MockClock:
+    def __init__(self, *, total_ms):
+        if total_ms != 5000:
+            raise AssertionError("Command budget changed")
+        self.started = 1000.0
+    def check(self, stage_end=None):
+        if stage_end is not None and stage_end != 1003.0:
+            raise AssertionError("Active-work budget changed")
+    def elapsed_ms(self):
+        return 100.0
+
+
+class RTLDPathControls(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        root = os.environ.get("ONTOKIN_RTLD_RETAIN_ROOT")
+        if root:
+            cls.evidence = Path(root)
+            cls.evidence.mkdir(parents=True, exist_ok=False)
+        else:
+            temporary = tempfile.TemporaryDirectory(prefix="ontokin-rtld-controls-")
+            cls.addClassCleanup(temporary.cleanup)
+            cls.evidence = Path(temporary.name)
+        sources = {}
+        for p in (Path(__file__), REPO / inspection.ENTRY_POINT, DESIGN / "reviews/path/CONTROL-MATRIX.json",
+                  DESIGN / "reviews/path/CONTROL-CROSSWALK.json", DESIGN / "SCHEMA.json"):
+            raw = p.read_bytes()
+            sources[str(p.relative_to(REPO))] = {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
+        (cls.evidence / "INPUTS.json").write_text(json.dumps({"sources": sources, "python": sys.version,
+            "executable": sys.executable, "platform": platform.platform(), "argv": sys.orig_argv,
+            "runtime_case_count": 51, "external_review_only": "N34 (historical N57 remains external)",
+            "host_qualified": False, "operational_plan_accepted": False}, indent=2)+"\n")
+
+    def setUp(self):
+        self.stack = ExitStack()
+        self.addCleanup(self.stack.close)
+        self.forbidden_calls = []
+        def forbidden(*args, **kwargs):
+            self.forbidden_calls.append({"args": repr(args), "kwargs": repr(kwargs)})
+            raise AssertionError("Actual target/process/helper operation forbidden")
+        for name in ("Popen", "run", "check_output", "check_call", "call"):
+            self.stack.enter_context(patch.object(subprocess, name, side_effect=forbidden))
+        for name in ("system", "fork", "posix_spawn", "posix_spawnp", "killpg", "waitpid"):
+            if hasattr(os, name):
+                self.stack.enter_context(patch.object(os, name, side_effect=forbidden))
+        for name in ("_load_helpers", "_check_git"):
+            self.stack.enter_context(patch.object(inspection, name, side_effect=forbidden))
+        self.caller_record = None
+        self.mock_counts = deepcopy(ZERO_COUNTS)
+
+    def assert_details(self, error, expected_rule=None):
+        self.assertIsInstance(error, inspection.HostInspectionError)
+        self.assertEqual(error.details.get("stage"), "rtld_paths")
+        if expected_rule is not None:
+            self.assertEqual(error.details.get("rule_id"), expected_rule)
+        details = error.details
+        contract = SCHEMA["failure_contract"]
+        self.assertEqual(set(details), set(contract["new_error_details_required_keys"]))
+        self.assertIn(details["rule_id"], {row["rule_id"] for row in contract["rules"]})
+        self.assertIn(details["path"], ALLOWED_PATHS | {None})
+        self.assertIn(details["operation"], set(contract["operation_values"]) | {None})
+        self.assertTrue(details["errno"] is None or type(details["errno"]) is int)
+        evidence = details["evidence"]
+        self.assertEqual(set(evidence), {"observations", "primary", "cleanup"})
+        self.assertLessEqual(len(evidence["observations"]), 6)
+        self.assertLessEqual(len(evidence["cleanup"]), 10)
+        for row in evidence["observations"]:
+            self.assertEqual(set(row), {"label", "path", "identity", "binding", "target"})
+            self.assertIn(row["label"], contract["evidence"]["observations"]["label_values"])
+            self.assertIn(row["path"], ALLOWED_PATHS | {None})
+            if row["identity"] is not None:
+                self.assertEqual(len(row["identity"]), 7)
+                self.assertTrue(all(type(x) is int for x in row["identity"]))
+            if row["binding"] is not None:
+                self.assertEqual(set(row["binding"]), {"sha256", "size_bytes", "mode"})
+            if row["target"] is not None:
+                self.assertEqual(set(row["target"]), {"size_bytes", "sha256", "prefix_hex"})
+                self.assertLessEqual(len(row["target"]["prefix_hex"]), 256)
+                self.assertRegex(row["target"]["sha256"], r"^[0-9a-f]{64}$")
+        for fault in ([evidence["primary"]] if evidence["primary"] is not None else []) + evidence["cleanup"]:
+            self.assertEqual(set(fault), {"kind", "errno", "operation", "path", "message", "message_truncated"})
+            self.assertLessEqual(len(fault["message"]), 512)
+            self.assertIs(type(fault["message_truncated"]), bool)
+
+    def alias(self, c, fs, **kwargs):
+        return inspection._check_rtld_alias_trace(c["model"], BASE_BINDING, check=fs.check, **kwargs)
+
+    def absence(self, c, fs, path, **kwargs):
+        return inspection._check_rtld_absence_trace(c["model"], path, check=fs.check, **kwargs)
+
+    def aggregate(self, c, fs, *, check=None):
+        callback = fs.check if check is None else lambda: (check(), fs.check())
+        return inspection._check_rtld_paths(c["model"], BASE_BINDING, check=callback)
+
+    def command_boundary(self, case, c, fs):
+        """Actual command/recheck/launch wrappers; earlier host inputs stipulated.
+
+        Operational fixed-pin gating is replaced only in this labelled adapter
+        so inert bytes can expose namespace drift. The real finite proof and
+        production outer drift/count/evidence handling remain in execution.
+        """
+        plan, runtime = {"schema": PAIR["plan_schema"]}, {"files": {}, "aliases": {}}
+        platform_value = {"boot_id": "synthetic"}
+        plan.update(source={"commit": "a"*40}, author={}, environment=deepcopy(inspection.ENVIRONMENT),
+                    host_static={"platform": platform_value, "path_guards": [], "resolution": {
+                        "profile": PAIR["resolution_profile"], "rtld_paths": c["model"],
+                        "origin_rpath": {"subject": {"path": "/synthetic/python"}},
+                        "rationale": {"path": "/synthetic/review"}}},
+                    evidence={"parent": "/synthetic/evidence", "ancestor_identities": [],
+                              "outputs": inspection.output_paths("/synthetic/evidence/attempt")})
+        command = {"id": "node_version", "argv": ["/synthetic/node", "--version"],
+                   "cwd": "/synthetic/evidence/attempt/node_version", "label": "host-node-version"}
+        snapshot = self.aggregate(c, fs)
+        baseline_trace = deepcopy(fs.summary())
+        self.assertEqual(fs.root_opens, 2)
+        self.assertFalse(fs.live)
+        fs.root_opens = 0
+        metadata = {"input_snapshot": {}, "rtld_path_snapshot": snapshot, "expected_resolution": {},
+                    "origin_kernel_witness": {}, "paths": []}
+        descriptor = {"path": "/synthetic/plan", "sha256": "a"*64, "size_bytes": 1, "mode": "0o600"}
+        starts = []
+        event = case["fault_events"][0]
+        def mutate():
+            if fs.triggered:
+                return
+            if "create_directory" in event:
+                fs.entries[event["create_directory"]] = {"path": event["create_directory"], "kind": "directory",
+                    "identity": deepcopy(event["identity"]), "target": None}
+                fs.context["absent_entries"].remove(event["create_directory"])
+            else:
+                fs.entries[event["replace_entry"]]["identity"][1] = event["new_inode"]
+            fs.triggered.append(event["at"])
+        outer = self
+        class Supervisor:
+            Stop = MockStop
+            class Clock(MockClock):
+                def __init__(self, *, total_ms):
+                    super().__init__(total_ms=total_ms)
+                    if case["id"] == "F13":
+                        mutate()
+            def run_process(self, argv, *, stage, label, clock, stage_end, env, on_started, cancel_after_ms):
+                if case["id"] != "F09":
+                    raise AssertionError("Refusal crossed mocked supervisor launch boundary")
+                process = {"argv": list(argv), "cwd": str(stage), "label": label, "environment": deepcopy(env),
+                           "pid": 4201, "process_group": 4201, "start_monotonic": 1000.0,
+                           "returncode": 0, "observed_log_bytes": 9, "retained_log_bytes": 9,
+                           "cleanup": {"passed": True, "process_group_absent": True, "reaped": True, "elapsed_ms": 1.0},
+                           "handles_closed": True, "error": None, "end_monotonic": 1000.1}
+                start = deepcopy(process)
+                start.update(returncode=None, cleanup=None, handles_closed=False, observed_log_bytes=0, retained_log_bytes=0)
+                start.pop("end_monotonic")
+                starts.append(start)
+                on_started(start)
+                outer.mock_counts["Node_starts"] += 1
+                mutate()
+                return process
+        validated = SimpleNamespace(plan=plan, descriptor=descriptor, _git_state={}, _runtime=runtime,
+                                    _author_runtime=runtime, _metadata=metadata, _helpers=(None, Supervisor(), None, None, None))
+        store = MemoryStore(plan)
+        def operational(plan_arg, runtime_arg=None, *, check=lambda: None):
+            return self.aggregate(c, fs, check=check)
+        def author(*args, check=lambda: None, **kwargs):
+            # Isolated proof in the author-runtime caller location; source
+            # review separately verifies real pin/alias ordering at that site.
+            operational(plan, runtime, check=check)
+            return runtime
+        with ExitStack() as stack:
+            replacements = {"_bound": None, "_check_source_files": {}, "_check_host_static": None,
+                "_check_author_host_bindings": None, "_check_resolution": ({}, []), "_check_plan_guards": None,
+                "_required_paths": [], "_git_state": {}, "_check_metadata": {"paths": []},
+                "_check_runtime_dependencies": [], "_ancestors": [], "_check_evidence": None,
+                "_platform": platform_value, "_check_guards": None, "_origin_subject_observation": {},
+                "_check_kernel_origin": {}}
+            for name, value in replacements.items():
+                stack.enter_context(patch.object(inspection, name, return_value=value))
+            stack.enter_context(patch.object(inspection, "_check_author_runtime", side_effect=author))
+            stack.enter_context(patch.object(inspection, "_check_rtld_operational_paths", side_effect=operational))
+            def retain(store_arg, paths, command_arg, process, failure, start):
+                raw = canonical(process)
+                desc = {"path": paths["supervisor_outcome"]["committed"], "sha256": hashlib.sha256(raw).hexdigest(),
+                        "size_bytes": len(raw), "mode": "0o600"}
+                return desc, {"supervisor_outcome": desc}, {"stdout": b"v24.22.1\n", "stderr": b""}, []
+            stack.enter_context(patch.object(inspection, "_retain_outcome", side_effect=retain))
+            if case["id"] == "F08":
+                mutate()
+            try:
+                return inspection._run_command(validated, command, store, {"path": "/synthetic/preflight"})
+            except inspection.HostInspectionError as error:
+                self.caller_record = {"baseline_proof": baseline_trace, "attempt": deepcopy(error.refusal_record),
+                                      "process": deepcopy(error.process_record), "starts": deepcopy(starts),
+                                      "publications": deepcopy(store.values)}
+                attempt = error.refusal_record["attempt"]
+                expected_count = case["expected"]["process_counts"]["Node_starts"]
+                self.assertEqual(attempt["actual_direct_starts"], expected_count)
+                self.assertEqual(attempt["observed_direct_starts"], expected_count)
+                self.assertEqual(len(starts), expected_count)
+                self.assertEqual(attempt["state"], "REJECTED")
+                self.assertNotEqual(attempt["state"], "COMPLETED")
+                self.assertFalse(any(path.endswith("inspection.json") or path.endswith("HOST.json") for path in store.values))
+                if expected_count:
+                    self.assertEqual(error.process_record["pid"], starts[0]["pid"])
+                    self.assertIsNotNone(attempt["start"])
+                    self.assertIsNotNone(attempt["supervisor_process"])
+                raise
+
+    def invoke(self, case, c, fs):
+        cid = case["id"]
+        if cid in ("P01", "P04"):
+            value = self.alias(c, fs)
+            self.assertEqual(value["resolved_path"], CANONICAL)
+            self.assertEqual(value["identity"], BASE["entries"][-1]["identity"])
+            # Repeated reads for namespace revalidation are permitted. The
+            # first encounter in each root-anchored pass must preserve the
+            # actual expansion order, and every repeated target stays exact.
+            expected_links = [("/lib64", "usr/lib64"), (PHYSICAL_ALIAS, "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2")]
+            passes, current = [], None
+            for row in fs.trace:
+                if row["operation"] == "open" and row["path"] == "/" and row["dir_fd"] is None:
+                    current = []
+                    passes.append(current)
+                if row["operation"] == "readlink":
+                    item = (row["path"], fs.entries[row["path"]]["target"])
+                    self.assertIn(item, expected_links)
+                    if item not in current:
+                        current.append(item)
+            self.assertEqual(passes, [expected_links, expected_links])
+            parent_checks = [row for row in fs.trace if row["operation"] == "open" and row["name"] == ".."]
+            self.assertEqual(len(parent_checks), 2)
+            self.assertTrue(all(row["parent_path"] == "/usr/lib64" and row["path"] == "/usr" for row in parent_checks))
+            parent_stats = [row for row in fs.trace if row["operation"] == "stat" and row["name"] == ".."]
+            self.assertEqual(len(parent_stats), 2)
+            self.assertTrue(all(row["parent_path"] == "/usr/lib64" and row["path"] == "/usr" for row in parent_stats))
+            if cid == "P04":
+                self.assertFalse(any(row.get("path") == "/lib" for row in fs.trace))
+                with self.assertRaises(inspection.HostInspectionError):
+                    self.aggregate(c, fs)
+            return value
+        if cid in ("P02", "P03"):
+            path = X32 if cid == "P02" else I386
+            value = self.absence(c, fs, path)
+            witness = next(row for row in SCHEMA["rtld_paths"]["absences_exact_ordered_rows"] if row["path"] == path)
+            self.assertEqual(value, {**witness, "state": "absent"})
+            absences = [row for row in fs.trace if row["operation"] == "stat" and row["path"] == witness["first_missing"]]
+            self.assertEqual(len(absences), 4, "Each of the two passes must recheck the exact absence once")
+            self.assertTrue(all(row["parent_path"] == witness["nearest_existing_ancestor"]
+                                and row["name"] == PurePosixPath(witness["first_missing"]).name for row in absences))
+            if cid == "P03":
+                passes, current = [], None
+                for row in fs.trace:
+                    if row["operation"] == "open" and row["path"] == "/" and row["dir_fd"] is None:
+                        current = []
+                        passes.append(current)
+                    if row["operation"] == "readlink":
+                        item = (row["path"], fs.entries[row["path"]]["target"])
+                        self.assertEqual(item, ("/lib", "usr/lib"))
+                        if item not in current:
+                            current.append(item)
+                self.assertEqual(passes, [[("/lib", "usr/lib")], [("/lib", "usr/lib")]])
+            return value
+        if cid == "P05":
+            script = ('RTLDLIST="' + " ".join(BASE["literal_rtldlist"]) + '"\n').encode()
+            inspection._check_rtld_candidate_sequence(candidate_projection(c), script)
+            value = self.aggregate(c, fs)
+            self.assertEqual(set(value), {"components", "results"})
+            self.assertEqual(value["components"], c["model"]["components"])
+            self.assertEqual([row["path"] for row in value["results"]], BASE["literal_rtldlist"])
+            return value
+        if cid == "N01":
+            fs.enforce_callbacks = False
+            with patch.object(Path, "is_symlink", lambda path: fs.entries.get(str(path), {}).get("kind") == "symlink"):
+                return inspection._existing_chain(PHYSICAL_ALIAS)
+        if cid == "N02":
+            return inspection._select_rtld_paths_profile(c["plan_schema"], {"profile": c["resolution_profile"], "rtld_paths": c["model"]})
+        if cid in ("N03", "N04"):
+            resolution = {"profile": c["resolution_profile"]}
+            if c["model"] is not None:
+                resolution["rtld_paths"] = c["model"]
+            return inspection._select_rtld_paths_profile(c["plan_schema"], resolution)
+        if cid == "N05":
+            # Digest mismatch executes the actual outer gate before decode.
+            with patch.object(inspection, "_absolute", return_value=Path("/synthetic/plan")), \
+                 patch.object(inspection, "_read_file", return_value=(b"not decoded", {"sha256": c["observed_plan_digest"]})), \
+                 patch.object(inspection, "_decode", side_effect=AssertionError("Digest refusal reached decode")):
+                return inspection._validate("/synthetic/plan", c["external_expected_digest"], fresh=True)
+        if cid in ("N06", "N07", "N08", "N09"):
+            script = ('RTLDLIST="' + " ".join(BASE["literal_rtldlist"]) + '"\n').encode()
+            return inspection._check_rtld_candidate_sequence(candidate_projection(c), script)
+        if cid in ("N10", "N11"):
+            path = X32 if cid == "N10" else I386
+            claimed = deepcopy(next(row for row in c["model"]["absences"] if row["path"] == path))
+            claimed["first_missing"] = next(row for row in c["candidate_rows"] if row["path"] == path)["first_missing"]
+            return self.absence(c, fs, path, witness=claimed)
+        if cid in ("N12", "N14", "N15", "F01", "F02", "F03", "F04"):
+            return self.absence(c, fs, X32)
+        if cid == "N13":
+            return self.absence(c, fs, I386)
+        if cid == "N16":
+            return self.alias(c, fs, resolved_path=c["claimed_resolved_path"])
+        if cid in ("N17", "N18", "N19", "N20", "N21", "N22", "N23", "N24", "N25", "N26", "F05", "F06", "F07", "F10", "F11", "F12"):
+            return self.alias(c, fs)
+        if cid == "N27":
+            return self.alias(c, fs, path=c["add_exception"]["path"])
+        if cid in ("N28", "N29"):
+            guards = [row for row in guards_for(c["model"]) if row["path"] not in c["omitted_guards"]]
+            return inspection._check_rtld_guard_relations(c["model"], guards)
+        if cid == "N30":
+            return inspection._check_rtld_candidate_relation(candidate_projection(c), BASE_BINDING)
+        if cid == "N31":
+            return pin_relation(BASE_BINDING)
+        if cid in ("N32", "N33"):
+            host, validated = projection_fixture()
+            if cid == "N32":
+                mutation = c["add_projected_host_member"]
+                host[mutation["key"]] = mutation["value"]
+            else:
+                mutation = c["add_projected_alias"]
+                host["aliases"][mutation["path"]] = deepcopy(mutation["value"])
+                # Equality with the supplied static alias map is stipulated so
+                # the exact independent role/alias/file set predicate is hit.
+                validated.plan["host_static"]["aliases"] = deepcopy(host["aliases"])
+            # The unchanged P06 schema authenticator reads only the pinned
+            # repository schema file, outside the synthetic RTLD namespace.
+            with patch.object(inspection, "os", os):
+                return inspection._validate_host_projection(host, validated)
+        if cid in ("F08", "F09", "F13"):
+            return self.command_boundary(case, c, fs)
+        raise AssertionError("No executable adapter for " + cid)
+
+    def run_case(self, case):
+        c = materialize(case)
+        fs = SyntheticOS(c, case["id"])
+        value, error, passed = None, None, False
+        report = {"case": case, "crosswalk": CROSS[case["id"]], "input": c,
+                  "operational_plan_accepted": False, "STATIC_READY": False, "host_qualified": False,
+                  "actual_process_counts": deepcopy(ZERO_COUNTS)}
+        try:
+            with patch.object(inspection, "os", fs):
+                try:
+                    value = self.invoke(case, c, fs)
+                except BaseException as exc:
+                    error = exc
+            expected = case["expected"]
+            if expected["code"] is None:
+                self.assertIsNone(error, repr(error))
+            elif expected["code"] == "same_object_callback_exception":
+                self.assertIs(error, fs.sentinel)
+            else:
+                self.assertIsInstance(error, inspection.HostInspectionError, repr(error))
+                self.assertEqual(error.code, expected["code"])
+                self.assertEqual(error.state, "REJECTED")
+                if case["id"] in NEW_RULES:
+                    self.assert_details(error, NEW_RULES[case["id"]])
+                elif case["id"] in ("N01", "N05", "N06", "N07", "N08", "N09", "N32", "N33"):
+                    self.assertEqual(error.details, {})
+                if expected["cause"] is None:
+                    self.assertIsNone(error.cause)
+                if case["id"] == "N01":
+                    self.assertEqual(error.reason, expected["decision"]["reason"])
+                if case["id"] in ("N06", "N07", "N09"):
+                    self.assertEqual(error.reason, "Inspector RTLDLIST is not the exact reviewed literal list")
+                if case["id"] == "N08":
+                    self.assertEqual(error.reason, "Duplicate RTLD candidate")
+                if case["id"] == "N31":
+                    self.assertEqual(error.details, {"stage": "libc_plt_binding", "rule_id": "PLT-PIN"})
+                if case["id"] == "N33":
+                    self.assertEqual(error.reason, "Projected role/alias/file sets disagree")
+                if case["id"] in ("F01", "F02", "F03", "F04", "F11"):
+                    self.assertIs(error.cause, fs.io_fault)
+                    self.assertEqual(error.details["errno"], getattr(fs.io_fault, "errno", None))
+                if case["id"] in ("F08", "F09", "F13"):
+                    self.assertIsInstance(error.cause, inspection.HostInspectionError)
+                    self.assertEqual(error.cause.code, "CHI-PATH")
+                    self.assert_details(error.cause, WRAPPED_RULES[case["id"]])
+                    if case["id"] in ("F08", "F09"):
+                        self.assertEqual(error.details, {"stage": "recheck", "rule_id": "LP-RECHECK"})
+                    else:
+                        self.assertEqual(error.reason, "RTLD path changed immediately before launch")
+                        self.assertEqual(error.details, {})
+                if case["id"] in ("F05", "F06", "F07"):
+                    path = {"F05": "/usr", "F06": PHYSICAL_ALIAS, "F07": "/usr/lib64"}[case["id"]]
+                    before = deepcopy(next(row for row in BASE["entries"] if row["path"] == path)["identity"])
+                    after = deepcopy(before)
+                    event = case["fault_events"][0]
+                    if case["id"] == "F05":
+                        after = event["replace_identity"]
+                    elif case["id"] == "F06":
+                        after[1] = event["replace_inode"]
+                    else:
+                        after[1] = event["new_inode"]
+                    ids = [row["identity"] for row in error.details["evidence"]["observations"] if row["path"] == path]
+                    self.assertIn(before, ids)
+                    self.assertIn(after, ids)
+                if case["id"] == "F12":
+                    rows = error.details["evidence"]["observations"]
+                    self.assertTrue({"expected", "opened_before", "opened_after", "named_after"} <= {row["label"] for row in rows})
+                    self.assertEqual(error.details["rule_id"], "RP-READ")
+                    labelled = {row["label"]: row for row in rows}
+                    before = BASE["entries"][-1]["identity"]
+                    after = case["fault_events"][0]["replace_file_identity"]
+                    for label in ("expected", "opened_before", "opened_after", "named_after"):
+                        self.assertEqual(labelled[label]["path"], CANONICAL)
+                        self.assertEqual(labelled[label]["identity"], before if label in ("expected", "opened_before") else after)
+                    self.assertEqual(labelled["expected"]["binding"], BASE_BINDING)
+                    self.assertEqual(labelled["opened_after"]["binding"], BASE_BINDING)
+                    self.assertTrue(fs.read_completed)
+                if case["id"] in ("N19", "N20", "N21", "N22", "N23", "N24", "N25", "N26"):
+                    changed = case["exact_changes"][0]["value"].encode("ascii")
+                    fingerprints = [row["target"] for row in error.details["evidence"]["observations"] if row["target"] is not None]
+                    self.assertIn({"size_bytes": len(changed), "sha256": hashlib.sha256(changed).hexdigest(), "prefix_hex": changed[:128].hex()}, fingerprints)
+            self.assertEqual(self.mock_counts, expected["process_counts"])
+            self.assertEqual(self.forbidden_calls, [])
+            self.assertFalse(fs.live)
+            self.assertEqual(sorted(fs.opened), sorted(fs.closed))
+            self.assertEqual(len(fs.closed), len(set(fs.closed)))
+            self.assertLessEqual(fs.max_live, 10)
+            if case["id"] in ("P01", "P02", "P03", "P05"):
+                self.assertEqual(fs.root_opens, 2)
+                self.assertGreater(fs.callback_count, 0)
+            if case["fault_events"]:
+                self.assertEqual(len(fs.triggered), 1)
+            self.assertFalse(any(row.get("path") == X32 for row in fs.trace))
+            passed = True
+        finally:
+            report.update(passed=passed, observed_result=value, observed_error=inspection._failure(error),
+                          same_callback_object=error is fs.sentinel, mock_process_counts=self.mock_counts,
+                          caller=self.caller_record, forbidden_calls=self.forbidden_calls, **fs.summary())
+            (self.evidence / (case["id"] + ".json")).write_text(json.dumps(report, indent=2)+"\n")
+
+
+def frozen_method(case):
+    def test(self):
+        self.run_case(case)
+    test.__name__ = "test_" + case["id"]
+    test.__doc__ = case["expected"]["boundary"] + "; immutable expected code=" + str(case["expected"]["code"])
+    return test
+
+
+for _case_id in RUNTIME_IDS:
+    setattr(RTLDPathControls, "test_" + _case_id, frozen_method(CASES[_case_id]))
+
+
+class SupplementalControls(unittest.TestCase):
+    """Contract risks beyond the frozen cases; none alters their expectations."""
+    setUp = RTLDPathControls.setUp
+    assert_details = RTLDPathControls.assert_details
+
+    @classmethod
+    def setUpClass(cls):
+        selected = os.environ.get("ONTOKIN_RTLD_RETAIN_ROOT")
+        if selected:
+            cls.evidence = Path(selected + "-supplemental")
+            cls.evidence.mkdir(parents=True, exist_ok=False)
+        else:
+            temporary = tempfile.TemporaryDirectory(prefix="ontokin-rtld-supplement-")
+            cls.addClassCleanup(temporary.cleanup)
+            cls.evidence = Path(temporary.name)
+
+    def retain(self, name, value):
+        (self.evidence / (name + ".json")).write_text(json.dumps(value, indent=2) + "\n")
+
+    def proof_error(self, fs, model=None):
+        with patch.object(inspection, "os", fs):
+            with self.assertRaises(inspection.HostInspectionError) as caught:
+                inspection._check_rtld_alias_trace(model or initial_model(), BASE_BINDING, check=fs.check)
+        self.assertFalse(fs.live)
+        self.assertEqual(sorted(fs.opened), sorted(fs.closed))
+        self.assertEqual(len(fs.closed), len(set(fs.closed)))
+        self.assert_details(caught.exception)
+        return caught.exception
+
+    def test_S01_close_fault_blocks_success(self):
+        class CloseFaultOS(SyntheticOS):
+            def close(self, fd):
+                path = self.live[fd]["path"]
+                super().close(fd)
+                if path == "/":
+                    self.close_fault = OSError(errno.EIO, "synthetic final root close failure")
+                    raise self.close_fault
+        fs = CloseFaultOS(materialize(CASES["P01"]), "P01")
+        error = self.proof_error(fs)
+        self.assertEqual((error.code, error.details["rule_id"]), ("CHI-PATH", "RP-CLEANUP"))
+        self.assertIs(error.cause, fs.close_fault)
+        self.assertIsNone(error.details["evidence"]["primary"])
+        self.assertEqual(len(error.details["evidence"]["cleanup"]), 1)
+        self.assertEqual(fs.root_opens, 1)
+        self.retain("S01", {"expected": "Close failure blocks success; primary=null; exact once-only cleanup",
+                            "error": error.as_dict(), **fs.summary()})
+
+    def test_S02_callback_plus_all_close_faults(self):
+        class CloseFaultOS(SyntheticOS):
+            def close(self, fd):
+                super().close(fd)
+                raise OSError(errno.EIO, "synthetic close failure " + "c" * 700)
+        fs = CloseFaultOS(materialize(CASES["F10"]), "F10")
+        fs.sentinel = DeadlineFault("synthetic callback " + "d" * 700)
+        error = self.proof_error(fs)
+        self.assertEqual(error.details["rule_id"], "RP-CLEANUP")
+        self.assertIs(error.cause, fs.sentinel)
+        evidence = error.details["evidence"]
+        self.assertEqual(evidence["primary"]["kind"], "callback")
+        self.assertEqual(len(evidence["primary"]["message"]), 512)
+        self.assertTrue(evidence["primary"]["message_truncated"])
+        self.assertEqual(len(evidence["cleanup"]), len(fs.opened))
+        self.assertTrue(all(row["message_truncated"] for row in evidence["cleanup"]))
+        self.assertTrue(all(row["errno"] == errno.EIO for row in evidence["cleanup"]))
+        self.retain("S02", {"expected": "Original callback cause plus every close fault retained, bounded messages",
+                            "same_primary_object": error.cause is fs.sentinel, "error": error.as_dict(), **fs.summary()})
+
+    def test_S03_partial_read_does_not_claim_complete_binding(self):
+        class PartialReadOS(SyntheticOS):
+            def read(self, fd, size):
+                row = self.live[fd]
+                self.event("read", row["path"], fd=fd, size=size)
+                if not self.bytes_read:
+                    data = row["entry"]["content_ascii"].encode("ascii")[:5]
+                    self.bytes_read += len(data)
+                    row["offset"] += len(data)
+                    return data
+                self.io_fault = OSError(errno.EIO, "synthetic partial-read fault")
+                raise self.io_fault
+        fs = PartialReadOS(materialize(CASES["P01"]), "P01")
+        error = self.proof_error(fs)
+        self.assertEqual(error.details["rule_id"], "RP-IO")
+        self.assertIs(error.cause, fs.io_fault)
+        self.assertFalse(fs.read_completed)
+        rows = error.details["evidence"]["observations"]
+        self.assertTrue(all(row["binding"] is None for row in rows if row["label"] != "expected"))
+        self.retain("S03", {"expected": "No partial-prefix digest reported as an observed binding",
+                            "error": error.as_dict(), **fs.summary()})
+
+    def test_S04_snapshot_excludes_only_fixed_names_and_proves_fresh(self):
+        c, fs = materialize(CASES["P05"]), None
+        fs = SyntheticOS(c, "P05")
+        ordinary = self.evidence / "ordinary-input"
+        ordinary.write_bytes(b"unchanged ordinary snapshot input\n")
+        metadata = {"paths": []}
+        plan = {"schema": PAIR["plan_schema"], "host_static": {"files": {CANONICAL: BASE_BINDING}},
+                "evidence": {"outer_capture": {"log": {"path": "/synthetic/unused-log"}}}}
+        calls = []
+        def operational(*args, check=lambda: None, **kwargs):
+            calls.append("fresh_proof")
+            with patch.object(inspection, "os", fs):
+                return inspection._check_rtld_paths(c["model"], BASE_BINDING, check=lambda: (check(), fs.check()))
+        original_lstat = Path.lstat
+        def observed_lstat(path):
+            if str(path) in ALLOWED_PATHS:
+                raise AssertionError("An exceptional RTLD name reached the generic snapshot")
+            return original_lstat(path)
+        with ExitStack() as stack:
+            stack.enter_context(patch.object(inspection, "_required_paths", return_value=[*sorted(ALLOWED_PATHS), str(ordinary)]))
+            stack.enter_context(patch.object(inspection, "_check_rtld_operational_paths", side_effect=operational))
+            stack.enter_context(patch.object(Path, "lstat", observed_lstat))
+            snapshot = inspection._input_snapshot(plan, {"files": {}}, {"files": {}}, metadata, [])
+            self.assertEqual(set(snapshot), {str(ordinary), str(inspection.ROOT / inspection.P06_SCHEMA_PATH)})
+            self.assertEqual(set(metadata["rtld_path_snapshot"]), {"components", "results"})
+            fs.entries["/lib"]["identity"][1] += 100
+            with self.assertRaises(inspection.HostInspectionError) as caught:
+                inspection._input_snapshot(plan, {"files": {}}, {"files": {}}, metadata, [])
+        self.assertEqual(caught.exception.code, "CHI-PATH")
+        self.assertEqual(calls, ["fresh_proof", "fresh_proof"])
+        self.assertFalse(fs.live)
+        self.retain("S04", {"expected": "Fourteen exact exclusions; generic inputs preserved; second call obtains fresh proof",
+                            "ordinary_snapshot": snapshot, "typed_snapshot": metadata["rtld_path_snapshot"],
+                            "second_error": caught.exception.as_dict(), **fs.summary()})
+
+    def test_S05_guard_chain_exclusions_follow_successful_proof(self):
+        c = materialize(CASES["P05"])
+        fs = SyntheticOS(c, "P05")
+        plan = {"schema": PAIR["plan_schema"], "host_static": {"path_guards": guards_for(c["model"]),
+                "resolution": {"origin_rpath": {"variants": []}, "rtld_paths": c["model"]}}}
+        required = sorted(ALLOWED_PATHS) + ["/ordinary/guarded"]
+        events = []
+        def proof(*args, check=lambda: None, **kwargs):
+            events.append("proof")
+            with patch.object(inspection, "os", fs):
+                return inspection._check_rtld_paths(c["model"], BASE_BINDING, check=lambda: (check(), fs.check()))
+        def guards(rows, selected, **kwargs):
+            events.append("legacy")
+            self.assertEqual(selected, [p for p in required if p not in SCHEMA["path_guard_relations"]["legacy_chain_exclusions"]])
+            self.assertEqual(kwargs["_rtld_model"], c["model"])
+            return {"present": {}, "absent": {}}
+        with patch.object(inspection, "_check_rtld_operational_paths", side_effect=proof), \
+             patch.object(inspection, "_check_guards", side_effect=guards) as legacy:
+            inspection._check_plan_guards(plan, required)
+            self.assertEqual(events, ["proof", "legacy"])
+            fs.entries["/usr"]["identity"][1] += 100
+            with self.assertRaises(inspection.HostInspectionError):
+                inspection._check_plan_guards(plan, required)
+            self.assertEqual(legacy.call_count, 1)
+        self.retain("S05", {"expected": "Only four chain exclusions, only after fresh finite proof", "events": events, **fs.summary()})
+
+    def test_S06_libc_policy_preserves_actual_schema_and_dispatch(self):
+        python_path, libc_path = "/synthetic/python", "/synthetic/libc.so.6"
+        python = {"path": python_path, **deepcopy(inspection.PYTHON)}
+        subject = {"path": libc_path, **deepcopy(inspection.LIBC)}
+        loader = {"path": CANONICAL, **deepcopy(inspection.LIBC_LOADER)}
+        aliases = {libc_path: {"resolved_path": libc_path, "symlink": False, "link_target": None},
+                   ALIAS: {"resolved_path": CANONICAL, "symlink": True, "link_target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"}}
+        files = {libc_path: deepcopy(inspection.LIBC), CANONICAL: deepcopy(inspection.LIBC_LOADER)}
+        runtime = {"aliases": deepcopy(aliases), "files": deepcopy(files), "interpreter": ALIAS, "extension_files": []}
+        roles = {"node": "/synthetic/node", "python": python_path, "ldd": "/usr/bin/ldd", "inspector_interpreter": "/bin/bash",
+                 "elf_interpreter": ALIAS, "inspector_runtime": [libc_path], "shared_libraries": [], "loader_configuration": []}
+        resolution = {"profile": PAIR["resolution_profile"], "rtld_paths": initial_model(),
+                      "libc_plt": {"schema": inspection.LIBC_PLT_SCHEMA, "subject": subject, "loader": loader},
+                      "images": [{"file": python, "resolved_needed": {"libc.so.6": libc_path}},
+                                 {"file": subject}, {"file": loader}]}
+        plan = {"schema": PAIR["plan_schema"], "host_static": {"resolution": resolution, "aliases": aliases, "files": files, "roles": roles},
+                "author": {"python_descriptor": python, "git_descriptor": {"path": "/synthetic/git"}, "entry_point": "/synthetic/inspector.py"}}
+        with patch.object(inspection, "_bound") as bound:
+            policy = inspection._prepare_libc_plt_policy(plan, runtime, {"needed": ["libc.so.6"], "interpreter": ALIAS})
+            self.assertEqual(policy["schema"], PAIR["plan_schema"])
+            self.assertGreaterEqual(bound.call_count, 2)
+        routes = []
+        def route(label):
+            return lambda *a, **k: (routes.append(label) or {"route": label})
+        with patch.object(inspection, "_read_libc_static_tls_elf_metadata", side_effect=route("static_tls")), \
+             patch.object(inspection, "read_elf_metadata", side_effect=route("legacy")):
+            inspection._read_plan_elf_metadata(libc_path, None, libc_policy=policy)
+            inspection._read_plan_elf_metadata("/synthetic/other", None, libc_policy=policy)
+        self.assertEqual(routes, ["static_tls", "legacy"])
+        with self.assertRaises(inspection.HostInspectionError) as old:
+            inspection._select_libc_static_tls_profile(PAIR["plan_schema"], resolution)
+        self.assertEqual(old.exception.details["rule_id"], "FLAGS-PROFILE")
+        self.retain("S06", {"expected": "Actual .4 retained; only selected libc gets unchanged static-TLS reader; old selector stays exact",
+                            "policy": inspection._thaw(policy), "routes": routes, "old_selector_error": old.exception.as_dict()})
+
+    def author_fixture(self):
+        path = str(Path(sys.executable).resolve())
+        descriptor = {"path": path, **deepcopy(inspection.PYTHON)}
+        runtime = {"schema": "ontokin.current-host-readback-author-runtime/0.1.0", "executable": descriptor,
+                   "interpreter": ALIAS, "files": {path: deepcopy(inspection.PYTHON)}, "aliases": {},
+                   "startup_files": ["/synthetic/startup"], "extension_files": ["/synthetic/extension"],
+                   "loader_inputs": ["/synthetic/config"], "environment": deepcopy(inspection.ENVIRONMENT)}
+        plan = {"schema": PAIR["plan_schema"], "author": {"runtime_inventory": {"path": "/synthetic/runtime"},
+                "python_descriptor": descriptor, "python_version": ".".join(map(str, sys.version_info[:3]))}}
+        return plan, runtime
+
+    def test_S07_author_proof_precedes_alias_on_both_calls(self):
+        plan, runtime = self.author_fixture()
+        sentinel = inspection.HostInspectionError("PATH", "synthetic finite proof refusal")
+        reports = []
+        with patch.object(inspection, "_document", return_value=runtime), \
+             patch.object(inspection, "_check_launcher"), patch.object(inspection, "_bound"), \
+             patch.object(inspection, "_check_alias_files", side_effect=AssertionError("Finite refusal reached alias use")) as aliases, \
+             patch.object(inspection, "_check_rtld_operational_paths", side_effect=sentinel) as proof:
+            for loaded in (False, True):
+                with self.assertRaises(inspection.HostInspectionError) as caught:
+                    inspection._check_author_runtime(plan, {"files": {}}, loaded=loaded)
+                self.assertIs(caught.exception, sentinel)
+                reports.append({"loaded": loaded, "proof_calls": proof.call_count, "alias_calls": aliases.call_count})
+            self.assertEqual(proof.call_count, 2)
+            self.assertEqual(aliases.call_count, 0)
+        self.retain("S07", {"expected": "A new proof precedes each author alias use; neither call reuses cached admission", "calls": reports})
+
+    def test_S08_host_proof_precedes_alias(self):
+        host, validated = projection_fixture()
+        plan = validated.plan
+        plan["host_static"]["resolution"] = {"rtld_paths": initial_model()}
+        plan["host_static"]["path_guards"] = []
+        sentinel = inspection.HostInspectionError("PATH", "synthetic finite proof refusal")
+        with patch.object(inspection, "_platform", return_value=host["platform"]), patch.object(inspection, "_bound"), \
+             patch.object(inspection, "_check_rtld_operational_paths", side_effect=sentinel) as proof, \
+             patch.object(inspection, "_check_alias_files", side_effect=AssertionError("Finite refusal reached host aliases")) as aliases:
+            with self.assertRaises(inspection.HostInspectionError) as caught:
+                inspection._check_host_static(plan)
+        self.assertIs(caught.exception, sentinel)
+        self.assertEqual((proof.call_count, aliases.call_count), (1, 0))
+        self.retain("S08", {"expected": "Host alias validation consumes only a newly successful proof", "proof_calls": 1, "alias_calls": 0})
+
+    def test_S09_final_launch_clock_faults_keep_existing_handling(self):
+        reports = []
+        for kind in ("supervisor_stop", "path_shaped_callback"):
+            with self.subTest(kind=kind):
+                c = materialize(CASES["P05"])
+                fs = SyntheticOS(c, "P05")
+                sentinel = (MockStop("synthetic command clock expired") if kind == "supervisor_stop" else
+                            inspection.HostInspectionError("PATH", "synthetic callback identity", state="TIMEOUT",
+                                                           details={"stage": "rtld_paths"}))
+                class Clock(MockClock):
+                    def check(self, stage_end=None):
+                        super().check(stage_end)
+                        if any(row["path"] == "/usr" for row in fs.live.values()):
+                            raise sentinel
+                plan = {"schema": PAIR["plan_schema"], "host_static": {"platform": {"boot_id": "synthetic"}, "path_guards": [],
+                        "resolution": {"rtld_paths": c["model"], "origin_rpath": {"subject": {"path": "/synthetic/python"}}}}}
+                validated = SimpleNamespace(plan=plan, _metadata={"input_snapshot": {}, "origin_kernel_witness": {},
+                                             "rtld_path_snapshot": {}}, _runtime={}, _helpers=(None, SimpleNamespace(Stop=MockStop)))
+                def operational(*a, check=lambda: None, **k):
+                    with patch.object(inspection, "os", fs):
+                        return inspection._check_rtld_paths(c["model"], BASE_BINDING, check=lambda: (check(), fs.check()))
+                with ExitStack() as stack:
+                    for name, value in (("_platform", plan["host_static"]["platform"]), ("_check_guards", None),
+                                        ("_origin_subject_observation", {}), ("_check_kernel_origin", {})):
+                        stack.enter_context(patch.object(inspection, name, return_value=value))
+                    stack.enter_context(patch.object(inspection, "_check_rtld_operational_paths", side_effect=operational))
+                    with self.assertRaises(inspection.HostInspectionError) as caught:
+                        inspection._launch_check(validated, Clock(total_ms=5000), 1003.0)
+                error = caught.exception
+                if kind == "supervisor_stop":
+                    self.assertEqual((error.code, error.state), ("CHI-PROCESS", "TIMEOUT"))
+                    self.assertIs(error.cause, sentinel)
+                else:
+                    self.assertIs(error, sentinel)
+                self.assertFalse(fs.live)
+                self.assertEqual(sorted(fs.opened), sorted(fs.closed))
+                reports.append({"kind": kind, "same_cause": error.cause is sentinel, "same_error": error is sentinel,
+                                "error": error.as_dict(), **fs.summary()})
+        self.retain("S09", {"expected": "Only path-generated refusals receive new drift wrapper; callback identity/clock behavior unchanged", "cases": reports})
+
+    def test_S10_model_shape_and_guard_relations_are_closed(self):
+        reports = []
+        mutations = (
+            ("boolean_identity", lambda model: model["components"][0]["identity"].__setitem__(0, True)),
+            ("reordered_components", lambda model: model["components"].reverse()),
+            ("extra_component", lambda model: model["components"].append(deepcopy(model["components"][-1]))),
+            ("missing_component", lambda model: model["components"].pop()),
+            ("alternate_target", lambda model: model["components"][1].__setitem__("target", "/usr/lib")),
+            ("extra_witness_key", lambda model: model["absences"][0].__setitem__("approved", True)),
+        )
+        for name, mutate in mutations:
+            model = initial_model()
+            mutate(model)
+            fs = SyntheticOS(materialize(CASES["P05"]), "P05")
+            error = self.proof_error(fs, model)
+            self.assertEqual((error.code, error.details["rule_id"]), ("CHI-PLAN", "RP-SHAPE"))
+            self.assertEqual(fs.trace, [])
+            reports.append({"case": name, "error": error.as_dict(), "syscalls": 0})
+        for name in ("literal_descendant_guard", "symlink_parent_guard", "boolean_parent_inode"):
+            model = initial_model()
+            guards = guards_for(model)
+            if name == "literal_descendant_guard":
+                guards.append({"path": X32, "parent": "/libx32", "parent_device": 71, "parent_inode": 1})
+            elif name == "symlink_parent_guard":
+                row = next(row for row in guards if row["path"] == "/usr/lib/ld-linux.so.2")
+                row["parent"] = "/lib"
+            else:
+                row = next(row for row in guards if row["path"] == "/libx32")
+                row["parent_inode"] = True
+            with self.assertRaises(inspection.HostInspectionError) as caught:
+                inspection._check_rtld_guard_relations(model, guards)
+            self.assertEqual((caught.exception.code, caught.exception.details["rule_id"]), ("CHI-PATH", "RP-IDENTITY"))
+            reports.append({"case": name, "error": caught.exception.as_dict()})
+        self.retain("S10", {"expected": "Closed model and exact physical guard projection; no Boolean integers or descendant/symlink-parent absence guard", "cases": reports})
+
+
+if __name__ == "__main__":
+    unittest.main()

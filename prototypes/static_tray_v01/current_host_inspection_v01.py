@@ -81,10 +81,34 @@ PLAN_SCHEMA = PREFIX + "inspection-plan" + VERSION
 ORIGIN_PLAN_SCHEMA = PREFIX + "inspection-plan/0.1.1"
 LIBC_PLT_PLAN_SCHEMA = PREFIX + "inspection-plan/0.1.2"
 LIBC_STATIC_TLS_PLAN_SCHEMA = PREFIX + "inspection-plan/0.1.3"
+RTLD_PATHS_PLAN_SCHEMA = PREFIX + "inspection-plan/0.1.4"
 CLOSURE_PROFILE = "linux-glibc-declared-closure-v1"
 ORIGIN_PROFILE = "linux-glibc-declared-python-origin-rpath-v1"
 LIBC_PLT_PROFILE = "linux-glibc-declared-python-origin-rpath-libc-plt-v1"
 LIBC_STATIC_TLS_PROFILE = "linux-glibc-declared-python-origin-rpath-libc-plt-static-tls-v1"
+RTLD_PATHS_PROFILE = "linux-glibc-declared-python-origin-rpath-libc-plt-static-tls-rtld-paths-v1"
+RTLD_PATHS_SCHEMA = PREFIX + "rtld-paths" + VERSION
+RTLD_ALIAS = "/lib64/ld-linux-x86-64.so.2"
+RTLD_CANONICAL = "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+RTLD_COMPONENTS = (
+    ("/", "directory", None), ("/lib", "symlink", "usr/lib"),
+    ("/lib64", "symlink", "usr/lib64"), ("/usr", "directory", None),
+    ("/usr/lib", "directory", None), ("/usr/lib/x86_64-linux-gnu", "directory", None),
+    (RTLD_CANONICAL, "file", None), ("/usr/lib64", "directory", None),
+    ("/usr/lib64/ld-linux-x86-64.so.2", "symlink", "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"))
+RTLD_ABSENCES = (
+    {"path": "/lib/ld-linux.so.2", "nearest_existing_ancestor": "/usr/lib",
+     "first_missing": "/usr/lib/ld-linux.so.2", "remaining_suffix": []},
+    {"path": "/libx32/ld-linux-x32.so.2", "nearest_existing_ancestor": "/",
+     "first_missing": "/libx32", "remaining_suffix": ["ld-linux-x32.so.2"]})
+RTLD_CANDIDATES = (RTLD_ALIAS, *(row["path"] for row in RTLD_ABSENCES))
+RTLD_CHAIN_EXCLUSIONS = frozenset((RTLD_ALIAS, "/usr/lib64/ld-linux-x86-64.so.2",
+                                   *(row["path"] for row in RTLD_ABSENCES)))
+RTLD_SNAPSHOT_EXCLUSIONS = frozenset((*(row[0] for row in RTLD_COMPONENTS), RTLD_ALIAS,
+                                      *(row["path"] for row in RTLD_ABSENCES),
+                                      *(row["first_missing"] for row in RTLD_ABSENCES)))
+RTLD_SCRIPT = {"path": "/usr/bin/ldd", "sha256": "7bcd61a279946cb376d36fd91f4938ab4f4aba48e793c652a9797319d23f8dd3",
+               "size_bytes": 5356, "mode": "0o755"}
 LIBC_PLT_SCHEMA = PREFIX + "libc-plt" + VERSION
 LIBC_PLT_TAGS = frozenset((0x70000000, 0x70000001, 0x70000003))
 LIBC = {"sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
@@ -226,6 +250,545 @@ def _binding(value):
 def _identity(info):
     return (info.st_dev, info.st_ino, info.st_mode, info.st_nlink, info.st_size,
             info.st_mtime_ns, info.st_ctime_ns)
+
+
+_RTLD_FAILURES = {
+    "RP-PROFILE": ("PLAN", "Unsupported RTLD path schema/profile pair"),
+    "RP-SHAPE": ("PLAN", "Invalid RTLD path model shape"),
+    "RP-CANDIDATE": ("INSPECTOR", "RTLD candidate differs from fixed path model"),
+    "RP-IDENTITY": ("PATH", "RTLD path component identity or type differs"),
+    "RP-ABSENCE": ("PATH", "Required RTLD absence differs"),
+    "RP-IO": ("PATH", "Cannot authenticate RTLD path component"),
+    "RP-CAPABILITY": ("PATH", "Required RTLD no-follow capability is unavailable"),
+    "RP-TRAVERSAL": ("UNSUPPORTED", "Unreviewed RTLD path traversal"),
+    "RP-CYCLE": ("UNSUPPORTED", "Excessive or circular RTLD alias chain"),
+    "RP-BOUND": ("UNSUPPORTED", "RTLD path allowance exceeded"),
+    "RP-NAMESPACE": ("PATH", "RTLD named route changed during observation"),
+    "RP-CLEANUP": ("PATH", "RTLD path descriptor cleanup failed"),
+    "RP-READ": ("PATH", "RTLD terminal file changed or binding differs")}
+
+
+def _rtld_known_path(path):
+    return path if type(path) is str and path in RTLD_SNAPSHOT_EXCLUSIONS else None
+
+
+def _rtld_fault(exc, operation, path, *, callback=False):
+    message = str(exc)
+    number = getattr(exc, "errno", None)
+    return {"kind": "callback" if callback else "os_error" if isinstance(exc, OSError)
+            else "inspection_error" if isinstance(exc, HostInspectionError) else "other_error",
+            "errno": number if type(number) is int else None, "operation": operation,
+            "path": _rtld_known_path(path), "message": message[:512], "message_truncated": len(message) > 512}
+
+
+def _rtld_observation(label, path, *, identity=None, binding=None, target=None):
+    fingerprint = None
+    if target is not None:
+        fingerprint = {"size_bytes": len(target), "sha256": hashlib.sha256(target).hexdigest(),
+                       "prefix_hex": target[:128].hex()}
+    return {"label": label, "path": _rtld_known_path(path),
+            "identity": list(identity) if identity is not None else None,
+            "binding": dict(binding) if binding is not None else None, "target": fingerprint}
+
+
+def _rtld_error(rule_id, *, path=None, operation=None, cause=None, observations=(), primary=Ellipsis, cleanup=()):
+    category, reason = _RTLD_FAILURES[rule_id]
+    number = getattr(cause, "errno", None)
+    return HostInspectionError(category, reason, cause=cause, details={
+        "stage": "rtld_paths", "rule_id": rule_id, "path": _rtld_known_path(path),
+        "operation": operation, "errno": number if type(number) is int else None,
+        "evidence": {"observations": list(observations)[-6:],
+                     "primary": primary if primary is not Ellipsis else
+                     (_rtld_fault(cause, operation, path) if cause is not None else None),
+                     "cleanup": list(cleanup)}})
+
+
+def _rtld_require(condition, rule_id, **kwargs):
+    if not condition:
+        raise _rtld_error(rule_id, **kwargs)
+
+
+def _uses_rtld_paths(plan):
+    return plan.get("schema") == RTLD_PATHS_PLAN_SCHEMA
+
+
+def _rtld_paths_shape(value):
+    """Closed declarations, with no filesystem observations or lookup authority."""
+    def shape(condition, path=None):
+        _rtld_require(condition, "RP-SHAPE", path=path, operation="shape")
+    shape(type(value) is dict and set(value) == {"schema", "components", "absences"})
+    shape(value["schema"] == RTLD_PATHS_SCHEMA)
+    rows = value["components"]
+    shape(type(rows) is list and len(rows) == 9)
+    types = {"directory": stat.S_IFDIR, "symlink": stat.S_IFLNK, "file": stat.S_IFREG}
+    for row, (path, kind, target) in zip(rows, RTLD_COMPONENTS):
+        shape(type(row) is dict and set(row) == {"path", "kind", "identity", "target"}, path)
+        shape(row["path"] == path and row["kind"] == kind and row["target"] == target, path)
+        identity = row["identity"]
+        shape(type(identity) is list and len(identity) == 7 and all(type(item) is int for item in identity), path)
+        shape(identity[0] >= 0 and identity[1] >= 1 and identity[2] >= 0 and identity[3] >= 1
+              and identity[4] >= 0 and stat.S_IFMT(identity[2]) == types[kind], path)
+    shape(type(value["absences"]) is list and len(value["absences"]) == 2)
+    for actual, expected in zip(value["absences"], RTLD_ABSENCES):
+        shape(type(actual) is dict and set(actual) == set(expected) and actual == expected)
+        shape(type(actual["remaining_suffix"]) is list)
+    return value
+
+
+def _select_rtld_paths_profile(schema, resolution):
+    _rtld_require(schema == RTLD_PATHS_PLAN_SCHEMA and type(resolution) is dict
+                  and resolution.get("profile") == RTLD_PATHS_PROFILE,
+                  "RP-PROFILE", operation="profile_selection")
+    _rtld_paths_shape(resolution.get("rtld_paths"))
+    return _libc_plt_shape(resolution.get("libc_plt"))
+
+
+def _rtld_spelling(raw, *, path=None):
+    """Bound the complete spelling before splitting or interpreting components."""
+    _rtld_require(type(raw) is bytes, "RP-TRAVERSAL", path=path, operation="readlink")
+    evidence = [_rtld_observation("observed", path, target=raw)]
+    _rtld_require(len(raw) <= 4096 and raw.count(b"/") + 1 <= 128,
+                  "RP-BOUND", path=path, operation="bound_check", observations=evidence)
+    _rtld_require(raw and raw.isascii() and not any(chr(item).isspace() for item in raw)
+                  and b"\0" not in raw and b"\\" not in raw and b"$" not in raw,
+                  "RP-TRAVERSAL", path=path, operation="readlink", observations=evidence)
+    return raw.decode("ascii")
+
+
+def _check_rtld_absence_relation(path, witness):
+    """A private witness claim cannot authorize another missing component."""
+    expected = next((row for row in RTLD_ABSENCES if row["path"] == path), None)
+    _rtld_require(expected is not None, "RP-TRAVERSAL", path=path, operation="shape")
+    _rtld_require(type(witness) is dict and witness == expected and set(witness) == set(expected),
+                  "RP-ABSENCE", path=path, operation="stat")
+    return {**expected, "remaining_suffix": list(expected["remaining_suffix"]), "state": "absent"}
+
+
+def _check_rtld_guard_relations(model, guards):
+    """Bind the nine full identities to the unchanged P07 guard projection."""
+    _rtld_paths_shape(model)
+    _rtld_require(type(guards) is list and len(guards) <= 32768, "RP-IDENTITY", operation="shape")
+    by_path = {}
+    for row in guards:
+        _rtld_require(type(row) is dict and type(row.get("path")) is str,
+                      "RP-IDENTITY", operation="shape")
+        name = row["path"]
+        _rtld_require(name not in by_path, "RP-IDENTITY", path=name, operation="shape")
+        by_path[name] = row
+    for name in RTLD_CANDIDATES[1:]:
+        _rtld_require(name not in by_path, "RP-IDENTITY", path=name, operation="shape")
+    components = {row["path"]: row for row in model["components"]}
+    for name in (*components, RTLD_ALIAS):
+        row = components["/usr/lib64/ld-linux-x86-64.so.2"] if name == RTLD_ALIAS else components[name]
+        identity = row["identity"]
+        expected = {"path": name, "kind": row["kind"], "device": identity[0], "inode": identity[1],
+                    "mode": oct(stat.S_IMODE(identity[2])), "target": row["target"]}
+        _rtld_require(by_path.get(name) == expected and all(type(by_path[name][key]) is int for key in ("device", "inode")),
+                      "RP-IDENTITY", path=name, operation="shape",
+                      observations=[_rtld_observation("expected", name, identity=identity)])
+    for row in RTLD_ABSENCES:
+        identity = components[row["nearest_existing_ancestor"]]["identity"]
+        expected = {"path": row["first_missing"], "parent": row["nearest_existing_ancestor"],
+                    "parent_device": identity[0], "parent_inode": identity[1]}
+        actual = by_path.get(expected["path"])
+        _rtld_require(actual == expected and all(type(actual[key]) is int for key in ("parent_device", "parent_inode")),
+                      "RP-IDENTITY", path=expected["path"], operation="shape")
+
+
+class _RtldCleanupInterrupted(Exception):
+    """Internal only: finish all remaining closes before reporting close failure."""
+
+
+class _RtldPass:
+    """One finite data-only Linux traversal, always anchored at the process root."""
+
+    def __init__(self, model, check, first=None):
+        self.model = {row["path"]: row for row in model["components"]}
+        self.check, self.first = check, first
+        self.owned, self.fds, self.observed = [], {}, {}
+        self.cleanup_faults, self.cleanup_causes = [], []
+        self.operation, self.path, self.callback_exception = None, None, None
+        self.evidence = []
+
+    def call(self, operation, path, function, *args, **kwargs):
+        self.operation, self.path = "callback", path
+        try:
+            self.check()
+        except BaseException as exc:
+            self.callback_exception = exc
+            raise
+        self.operation = operation
+        try:
+            return function(*args, **kwargs)
+        except (NotImplementedError, AttributeError, TypeError) as exc:
+            raise _rtld_error("RP-CAPABILITY", path=path, operation=operation, cause=exc,
+                              observations=self.evidence) from exc
+        except OSError as exc:
+            rule = "RP-CAPABILITY" if operation == "readlink" and exc.errno in (errno.EINVAL, errno.ENOSYS, errno.ENOTSUP) else "RP-IO"
+            raise _rtld_error(rule, path=path, operation=operation, cause=exc,
+                              observations=self.evidence) from exc
+
+    def open(self, path, name, flags, *, parent=None):
+        _rtld_require(len(self.owned) < 10, "RP-BOUND", path=path, operation="bound_check")
+        kwargs = {} if parent is None else {"dir_fd": parent}
+        fd = self.call("open", path, os.open, name, flags, **kwargs)
+        self.owned.append((fd, path))
+        return fd
+
+    def close(self, fd, *, final=False):
+        index = next(index for index, item in enumerate(self.owned) if item[0] == fd)
+        _, path = self.owned.pop(index)  # A close is never retried, even if it fails.
+        try:
+            os.close(fd)
+        except BaseException as exc:
+            self.cleanup_faults.append(_rtld_fault(exc, "close", path))
+            self.cleanup_causes.append(exc)
+            if not final:
+                raise _RtldCleanupInterrupted() from None
+
+    def finish(self, primary):
+        interrupted = isinstance(primary, _RtldCleanupInterrupted)
+        if interrupted:
+            primary = None
+        operation, path = self.operation, self.path
+        for fd, _ in list(reversed(self.owned)):
+            self.close(fd, final=True)
+        if self.cleanup_faults:
+            observations = (primary.details["evidence"]["observations"]
+                            if isinstance(primary, HostInspectionError) and primary.details.get("stage") == "rtld_paths"
+                            else self.evidence)
+            cause = primary if primary is not None else self.cleanup_causes[0]
+            raise _rtld_error("RP-CLEANUP", path=path, operation="close", cause=cause,
+                              observations=observations,
+                              primary=_rtld_fault(primary, operation, path, callback=primary is self.callback_exception)
+                              if primary is not None else None,
+                              cleanup=self.cleanup_faults) from cause
+
+    def named(self, path):
+        if path == "/":
+            return self.call("stat", path, os.stat, "/", follow_symlinks=False)
+        parent, name = path.rsplit("/", 1)
+        return self.call("stat", path, os.stat, name, dir_fd=self.fds[parent or "/"], follow_symlinks=False)
+
+    def match(self, path, info, *, label="named_before", namespace=False):
+        expected, actual = self.model[path]["identity"], list(_identity(info))
+        observations = [_rtld_observation("expected", path, identity=expected),
+                        _rtld_observation(label, path, identity=actual)]
+        if self.first is not None and actual != self.first[path]["identity"]:
+            observations = [_rtld_observation("first_pass", path, identity=self.first[path]["identity"]),
+                            _rtld_observation("second_pass", path, identity=actual)]
+            namespace = True
+        self.evidence = observations
+        _rtld_require(actual == expected, "RP-NAMESPACE" if namespace else "RP-IDENTITY",
+                      path=path, operation=self.operation, observations=observations)
+        return actual
+
+    def component(self, path, *, recheck=False):
+        _rtld_require(path in self.model, "RP-TRAVERSAL", path=path, operation="stat")
+        row = self.model[path]
+        self.evidence = [_rtld_observation("expected", path, identity=row["identity"])]
+        named = self.named(path)
+        before = self.match(path, named, namespace=recheck)
+        if path not in self.fds:
+            flags = os.O_PATH | os.O_NOFOLLOW | os.O_CLOEXEC
+            if row["kind"] == "directory":
+                flags |= os.O_DIRECTORY
+            if path == "/":
+                fd = self.open(path, "/", flags)
+            else:
+                parent, name = path.rsplit("/", 1)
+                fd = self.open(path, name, flags, parent=self.fds[parent or "/"])
+            self.fds[path] = fd
+        fd = self.fds[path]
+        opened = list(_identity(self.call("fstat", path, os.fstat, fd)))
+        self.evidence = [_rtld_observation("named_before", path, identity=before),
+                         _rtld_observation("opened_before", path, identity=opened)]
+        _rtld_require(opened == before, "RP-NAMESPACE", path=path, operation="fstat", observations=self.evidence)
+        target = None
+        if row["kind"] == "symlink":
+            raw = self.call("readlink", path, os.readlink, b"", dir_fd=fd)
+            after = list(_identity(self.call("fstat", path, os.fstat, fd)))
+            named_after = list(_identity(self.named(path)))
+            self.evidence = [_rtld_observation("expected", path, identity=row["identity"], target=row["target"].encode("ascii")),
+                             _rtld_observation("opened_before", path, identity=opened),
+                             _rtld_observation("opened_after", path, identity=after),
+                             _rtld_observation("named_after", path, identity=named_after,
+                                               target=raw if type(raw) is bytes else None)]
+            _rtld_require(opened == after == named_after, "RP-NAMESPACE", path=path,
+                          operation="readlink", observations=self.evidence)
+            target = _rtld_spelling(raw, path=path)
+            _rtld_require(target == row["target"], "RP-TRAVERSAL", path=path,
+                          operation="readlink", observations=self.evidence)
+        self.observed[path] = {"path": path, "kind": row["kind"], "identity": before, "target": target}
+        return fd
+
+    def parent(self, stack):
+        path = stack[-1]
+        _rtld_require(len(stack) >= 2 and path == "/usr/lib64" and stack[-2] == "/usr",
+                      "RP-TRAVERSAL", path=path, operation="parent_check")
+        expected = self.model["/usr"]["identity"]
+        self.evidence = [_rtld_observation("expected", "/usr", identity=expected)]
+        named = list(_identity(self.call("parent_check", "/usr", os.stat, "..",
+                                       dir_fd=self.fds[path], follow_symlinks=False)))
+        fd = self.open("/usr", "..", os.O_PATH | os.O_NOFOLLOW | os.O_CLOEXEC | os.O_DIRECTORY,
+                       parent=self.fds[path])
+        opened = list(_identity(self.call("fstat", "/usr", os.fstat, fd)))
+        retained = list(_identity(self.call("fstat", "/usr", os.fstat, self.fds["/usr"])))
+        self.evidence = [_rtld_observation("expected", "/usr", identity=expected),
+                         _rtld_observation("named_before", "/usr", identity=named),
+                         _rtld_observation("opened_before", "/usr", identity=opened),
+                         _rtld_observation("after", "/usr", identity=retained)]
+        _rtld_require(named == opened == retained == expected, "RP-NAMESPACE", path="/usr",
+                      operation="parent_check", observations=self.evidence)
+        self.close(fd)
+        stack.pop()
+
+    def absence(self, witness):
+        path, parent = witness["first_missing"], witness["nearest_existing_ancestor"]
+        expected = self.model[parent]["identity"]
+        self.evidence = [_rtld_observation("expected", parent, identity=expected)]
+        self.match(parent, self.call("fstat", parent, os.fstat, self.fds[parent]), namespace=True)
+        name = path.rsplit("/", 1)[1]
+        try:
+            info = self.call("stat", path, os.stat, name, dir_fd=self.fds[parent], follow_symlinks=False)
+        except HostInspectionError as exc:
+            if (exc is not self.callback_exception and exc.details.get("stage") == "rtld_paths" and exc.details.get("rule_id") == "RP-IO"
+                    and isinstance(exc.cause, OSError) and exc.cause.errno == errno.ENOENT):
+                return
+            raise
+        raise _rtld_error("RP-ABSENCE", path=path, operation="stat",
+                          observations=[_rtld_observation("observed", path, identity=_identity(info))])
+
+    def terminal(self, binding):
+        path, parent = RTLD_CANONICAL, "/usr/lib/x86_64-linux-gnu"
+        expected = self.model[path]["identity"]
+        self.evidence = [_rtld_observation("expected", path, identity=expected, binding=binding)]
+        named_before = list(_identity(self.named(path)))
+        held = list(_identity(self.call("fstat", path, os.fstat, self.fds[path])))
+        fd = self.open(path, "ld-linux-x86-64.so.2", os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK | os.O_CLOEXEC,
+                       parent=self.fds[parent])
+        before = list(_identity(self.call("fstat", path, os.fstat, fd)))
+        self.evidence += [_rtld_observation("named_before", path, identity=named_before),
+                          _rtld_observation("opened_before", path, identity=before)]
+        _rtld_require(before == named_before == held == expected and stat.S_ISREG(before[2]),
+                      "RP-READ", path=path, operation="fstat", observations=self.evidence)
+        length, digest, complete = 0, hashlib.sha256(), False
+        while length <= binding["size_bytes"]:
+            allowance = min(1024 * 1024, binding["size_bytes"] + 1 - length)
+            block = self.call("read", path, os.read, fd, allowance)
+            if not block:
+                complete = True
+                break
+            length += len(block)
+            digest.update(block)
+        observed_binding = {"sha256": digest.hexdigest(), "size_bytes": length,
+                            "mode": oct(stat.S_IMODE(before[2]))} if complete else None
+        after = list(_identity(self.call("fstat", path, os.fstat, fd)))
+        named_after = list(_identity(self.named(path)))
+        self.evidence = [_rtld_observation("expected", path, identity=expected, binding=binding),
+                         _rtld_observation("opened_before", path, identity=before),
+                         _rtld_observation("opened_after", path, identity=after, binding=observed_binding),
+                         _rtld_observation("named_after", path, identity=named_after)]
+        _rtld_require(before == after == named_after == expected and observed_binding == binding
+                      and length == before[4], "RP-READ", path=path, operation="read", observations=self.evidence)
+        self.close(fd)
+
+    def trace(self, subject, binding):
+        _rtld_require(subject in RTLD_CANDIDATES, "RP-TRAVERSAL", path=subject, operation="shape")
+        self.component("/")
+        stack, pending, visited, transitions, expansions = ["/"], subject[1:].split("/"), set(), 0, 0
+        witness = next((row for row in RTLD_ABSENCES if row["path"] == subject), None)
+        while pending:
+            _rtld_spelling("/".join(pending).encode("ascii"), path=subject)
+            transitions += 1
+            _rtld_require(transitions <= 16, "RP-BOUND", path=subject, operation="bound_check")
+            name = pending.pop(0)
+            if name == "..":
+                self.parent(stack)
+                continue
+            _rtld_require(name and name not in (".", ".."), "RP-TRAVERSAL", path=subject, operation="stat")
+            path = ("" if stack[-1] == "/" else stack[-1]) + "/" + name
+            if witness is not None and path == witness["first_missing"]:
+                _rtld_require(stack[-1] == witness["nearest_existing_ancestor"]
+                              and pending == witness["remaining_suffix"], "RP-ABSENCE", path=subject, operation="stat")
+                self.absence(witness)
+                return _check_rtld_absence_relation(subject, witness)
+            _rtld_require(path in self.model, "RP-TRAVERSAL", path=path, operation="stat")
+            self.component(path)
+            row = self.observed[path]
+            if row["kind"] == "symlink":
+                key = tuple(row["identity"][:2])
+                expansions += 1
+                _rtld_require(key not in visited and expansions <= 2, "RP-CYCLE", path=path, operation="readlink")
+                visited.add(key)
+                pending = row["target"].split("/") + pending
+                _rtld_spelling("/".join(pending).encode("ascii"), path=subject)
+            elif row["kind"] == "directory":
+                stack.append(path)
+            else:
+                _rtld_require(subject == RTLD_ALIAS and path == RTLD_CANONICAL and not pending,
+                              "RP-NAMESPACE", path=path, operation="stat")
+                self.terminal(binding)
+                return {"path": subject, "state": "file", "resolved_path": path, "identity": list(row["identity"])}
+        raise _rtld_error("RP-ABSENCE" if witness is not None else "RP-NAMESPACE", path=subject, operation="stat")
+
+    def recheck_routes(self):
+        # Parent paths precede children; every observation is rooted in the
+        # retained process-root descriptor, with named and held identities equal.
+        for path in sorted(self.fds, key=lambda name: (name.count("/"), name)):
+            self.component(path, recheck=True)
+
+
+def _rtld_proof(model, binding, subjects, *, check):
+    _rtld_paths_shape(model)
+    if RTLD_ALIAS in subjects:
+        try:
+            _binding_shape(binding)
+        except HostInspectionError as exc:
+            raise _rtld_error("RP-SHAPE", operation="shape", cause=exc) from exc
+    for flag in ("O_PATH", "O_NOFOLLOW", "O_CLOEXEC", "O_DIRECTORY", "O_RDONLY", "O_NONBLOCK"):
+        _rtld_require(type(getattr(os, flag, None)) is int, "RP-CAPABILITY", operation="capability")
+    first = None
+    for _ in range(2):
+        trace = _RtldPass(model, check, {row["path"]: row for row in first["components"]} if first is not None else None)
+        primary = None
+        try:
+            results = [trace.trace(subject, binding) for subject in subjects]
+            trace.recheck_routes()
+            for subject in subjects:
+                witness = next((row for row in RTLD_ABSENCES if row["path"] == subject), None)
+                if witness is not None:
+                    trace.recheck_routes()
+                    trace.absence(witness)
+            observed = {"components": [trace.observed[name] for name in sorted(trace.observed)], "results": results}
+            if first is not None:
+                _rtld_require(observed == first, "RP-NAMESPACE", operation="root_recheck")
+        except BaseException as exc:
+            primary = exc
+            raise
+        finally:
+            trace.finish(primary)
+        if first is None:
+            first = observed
+    check()
+    return first
+
+
+def _check_rtld_alias_trace(model, binding, *, path=RTLD_ALIAS, resolved_path=RTLD_CANONICAL, check=lambda: None):
+    """Exact alias only; a private inert-byte proof is not operational admission."""
+    _rtld_require(path == RTLD_ALIAS, "RP-TRAVERSAL", path=path, operation="shape")
+    result = _rtld_proof(model, binding, (path,), check=check)["results"][0]
+    _rtld_require(result["resolved_path"] == resolved_path, "RP-NAMESPACE", path=path, operation="root_recheck",
+                  observations=[_rtld_observation("observed", result["resolved_path"], identity=result["identity"])])
+    check()
+    return result
+
+
+def _check_rtld_absence_trace(model, path, *, witness=None, check=lambda: None):
+    expected = next((row for row in RTLD_ABSENCES if row["path"] == path), None)
+    _check_rtld_absence_relation(path, expected if witness is None else witness)
+    return _rtld_proof(model, None, (path,), check=check)["results"][0]
+
+
+def _check_rtld_paths(model, binding, *, check=lambda: None):
+    """Synthetic-testable composition; operational callers must enforce pins."""
+    return _rtld_proof(model, binding, RTLD_CANDIDATES, check=check)
+
+
+def _check_rtld_candidate_sequence(rows, script):
+    """Preserve duplicate-before-literal ordering without probing candidate paths."""
+    _rtld_require(type(rows) is list and rows, "RP-CANDIDATE", operation="candidate_order")
+    paths = []
+    for row in rows:
+        _rtld_require(type(row) is dict and type(row.get("path")) is str,
+                      "RP-CANDIDATE", operation="candidate_order")
+        try:
+            path = str(_absolute(row["path"], "INSPECTOR", links=True))
+        except HostInspectionError as exc:
+            raise _rtld_error("RP-CANDIDATE", operation="candidate_order", cause=exc) from exc
+        _require(path not in paths, "INSPECTOR", "Duplicate RTLD candidate")
+        paths.append(path)
+    matches = re.findall(rb'^RTLDLIST=["\']([^"\'\n]+)["\']$', script, flags=re.MULTILINE)
+    try:
+        literal = matches[0].decode("ascii").split() if len(matches) == 1 else None
+    except UnicodeError:
+        literal = None
+    _require(literal == paths, "UNSUPPORTED", "Inspector RTLDLIST is not the exact reviewed literal list")
+    _rtld_require(paths == list(RTLD_CANDIDATES), "RP-CANDIDATE", operation="candidate_order")
+    return paths
+
+
+def _check_rtld_candidate_relation(rows, binding):
+    """Pure fixed-state and binding relation, after complete literal equality."""
+    _rtld_require(type(rows) is list and len(rows) == 3, "RP-CANDIDATE", operation="candidate_binding")
+    for index, (row, path) in enumerate(zip(rows, RTLD_CANDIDATES)):
+        expected = {"path": path, "state": "file", "binding": binding} if index == 0 else {
+            "path": path, "state": "absent", "parent": str(PurePosixPath(path).parent)}
+        _rtld_require(type(row) is dict and set(row) == set(expected) and row == expected,
+                      "RP-CANDIDATE", path=path, operation="candidate_binding")
+
+
+def _rtld_alias_projection(snapshot):
+    result = snapshot["results"][0]
+    return {"resolved_path": result["resolved_path"], "symlink": True,
+            "link_target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"}
+
+
+def _check_rtld_operational_paths(plan, runtime=None, *, check=lambda: None):
+    """The only operational entry: actual fixed pins and closure, then two passes."""
+    host = plan["host_static"]
+    resolution = host["resolution"]
+    libc = _select_rtld_paths_profile(plan["schema"], resolution)
+    inspector = resolution["inspector_commands"]
+    _keys(inspector, "script interpreter commands rtld_candidates".split(), "INSPECTOR")
+    _rtld_require(inspector["script"] == RTLD_SCRIPT and host["roles"]["inspector_interpreter"] == "/bin/bash",
+                  "RP-CANDIDATE", operation="candidate_binding")
+    script, actual_script = _read_file(RTLD_SCRIPT["path"], RTLD_SCRIPT["size_bytes"], category="INSPECTOR", check=check)
+    _rtld_require(actual_script == _binding(RTLD_SCRIPT) and script.split(b"\n", 1)[0] == b"#!/bin/bash",
+                  "RP-CANDIDATE", operation="candidate_binding")
+    _check_rtld_candidate_sequence(inspector["rtld_candidates"], script)
+    loader = libc["loader"]
+    _origin_require(_binding(libc["subject"]) == LIBC and _binding(loader) == LIBC_LOADER,
+                    "INSPECTOR", "libc_plt_binding", "PLT-PIN", "Libc PLT input is not the selected libc/loader pair")
+    _check_rtld_candidate_relation(inspector["rtld_candidates"], LIBC_LOADER)
+    _rtld_require(loader["path"] == RTLD_CANONICAL, "RP-CANDIDATE", path=RTLD_ALIAS, operation="candidate_binding")
+    if runtime is None:
+        runtime = _document(plan["author"]["runtime_inventory"], category="INSPECTOR", check=check)
+    images = resolution["images"]
+    _rtld_require(type(images) is list, "RP-CANDIDATE", operation="candidate_binding")
+    matching = [row["file"] for row in images if type(row) is dict and type(row.get("file")) is dict
+                and row["file"].get("path") == RTLD_CANONICAL]
+    _rtld_require(matching == [loader], "RP-CANDIDATE", path=RTLD_CANONICAL, operation="candidate_binding")
+    projection = {"resolved_path": RTLD_CANONICAL, "symlink": True,
+                  "link_target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"}
+    for owner in (host, runtime):
+        _rtld_require(type(owner.get("files")) is dict and type(owner.get("aliases")) is dict
+                      and owner["files"].get(RTLD_CANONICAL) == LIBC_LOADER
+                      and owner["aliases"].get(RTLD_ALIAS) == projection,
+                      "RP-CANDIDATE", path=RTLD_ALIAS, operation="candidate_binding")
+        for path in RTLD_CANDIDATES[1:]:
+            _rtld_require(path not in owner["files"] and path not in owner["aliases"],
+                          "RP-CANDIDATE", path=path, operation="candidate_binding")
+    roles = host["roles"]
+    named = [roles[key] for key in ROLE_SCALARS]
+    for key in ROLE_LISTS:
+        _rtld_require(type(roles[key]) is list, "RP-CANDIDATE", operation="candidate_binding")
+        named.extend(roles[key])
+    _rtld_require(RTLD_ALIAS in named and all(path not in named for path in RTLD_CANDIDATES[1:])
+                  and all(row.get("file", {}).get("path") not in RTLD_CANDIDATES[1:] for row in images if type(row) is dict),
+                  "RP-CANDIDATE", operation="candidate_binding")
+    _check_rtld_guard_relations(resolution["rtld_paths"], host["path_guards"])
+    return _check_rtld_paths(resolution["rtld_paths"], LIBC_LOADER, check=check)
+
+
+def _compare_rtld_snapshot(actual, expected):
+    if actual != expected:
+        before = {row["path"]: row for row in expected.get("components", [])} if type(expected) is dict else {}
+        after = {row["path"]: row for row in actual["components"]}
+        differing = next((path for path in sorted(after) if before.get(path) != after[path]), RTLD_ALIAS)
+        observations = [_rtld_observation("first_pass", differing, identity=before.get(differing, {}).get("identity")),
+                        _rtld_observation("second_pass", differing, identity=after.get(differing, {}).get("identity"))]
+        raise _rtld_error("RP-NAMESPACE", path=differing, operation="snapshot_compare", observations=observations)
 
 
 class _Deadline:
@@ -377,7 +940,7 @@ def _strings(value, category, *, nonempty=False):
 
 def _plan_shape(plan):
     _keys(plan, PLAN_KEYS)
-    _require(plan["schema"] in (PLAN_SCHEMA, ORIGIN_PLAN_SCHEMA, LIBC_PLT_PLAN_SCHEMA, LIBC_STATIC_TLS_PLAN_SCHEMA)
+    _require(plan["schema"] in (PLAN_SCHEMA, ORIGIN_PLAN_SCHEMA, LIBC_PLT_PLAN_SCHEMA, LIBC_STATIC_TLS_PLAN_SCHEMA, RTLD_PATHS_PLAN_SCHEMA)
              and plan["contract"] == CONTRACT, "PLAN", "Unsupported executable inspection plan")
     _require(plan["environment"] == ENVIRONMENT and _canonical(plan["limits"]) == _canonical(LIMITS), "PLAN", "Fixed environment or limits differ")
     _keys(plan["source"], "root commit tree inventory".split())
@@ -420,7 +983,11 @@ def _plan_shape(plan):
         _require(resolution["profile"] == CLOSURE_PROFILE, "UNSUPPORTED", "Unsupported closure profile")
     else:
         _select_origin_profile(plan["schema"], resolution)
-        _origin_keys(resolution, resolution_keys + ["origin_rpath"] + (["libc_plt"] if _uses_libc_profile(plan) else []))
+        if _uses_rtld_paths(plan):
+            _rtld_require(set(resolution) == set(resolution_keys + ["origin_rpath", "libc_plt", "rtld_paths"]),
+                          "RP-SHAPE", operation="shape")
+        else:
+            _origin_keys(resolution, resolution_keys + ["origin_rpath"] + (["libc_plt"] if _uses_libc_profile(plan) else []))
     _keys(plan["evidence"], "parent attempt_root ancestor_identities outputs outer_capture".split(), "PATH")
     evidence = plan["evidence"]
     parent, attempt = (_absolute(evidence[key], "PATH") for key in ("parent", "attempt_root"))
@@ -491,7 +1058,7 @@ def _existing_chain(path):
     return seen
 
 
-def _check_guards(rows, required, *, check=lambda: None):
+def _check_guards(rows, required, *, check=lambda: None, _rtld_model=None):
     _require(type(rows) is list and len(rows) <= 32768, "PATH", "Invalid finite path guard inventory")
     present, absent = {}, {}
     for row in rows:
@@ -503,10 +1070,16 @@ def _check_guards(rows, required, *, check=lambda: None):
             _keys(row, "path kind device inode mode target".split(), "PATH")
             _require(type(row["device"]) is int and row["device"] >= 0 and type(row["inode"]) is int
                      and row["inode"] > 0, "PATH", "Invalid path inode identity")
-            _require(_path_row(path) == row, "PATH", "Path guard changed: " + str(path))
+            if _rtld_model is None or str(path) not in RTLD_SNAPSHOT_EXCLUSIONS:
+                _require(_path_row(path) == row, "PATH", "Path guard changed: " + str(path))
             present[str(path)] = row
         else:
             _keys(row, "path parent parent_device parent_inode".split(), "PATH")
+            if _rtld_model is not None and str(path) in RTLD_SNAPSHOT_EXCLUSIONS:
+                # The finite descriptor proof, not exists(), owns these two
+                # first-missing witnesses. Its P07 projection was checked first.
+                absent[str(path)] = row
+                continue
             parent = _absolute(row["parent"])
             _require(path.parent == parent and not path.exists() and not path.is_symlink(), "PATH", "Required absence changed")
             info = parent.lstat()
@@ -581,7 +1154,7 @@ def _alias(path):
             "link_target": os.readlink(path) if path.is_symlink() else None}
 
 
-def _check_alias_files(files, aliases, named, *, check=lambda: None, category="LOADER"):
+def _check_alias_files(files, aliases, named, *, check=lambda: None, category="LOADER", _rtld_snapshot=None):
     _require(type(files) is dict and type(aliases) is dict and set(aliases) == set(named), category,
              "Named alias inventory differs")
     resolved = set()
@@ -590,7 +1163,8 @@ def _check_alias_files(files, aliases, named, *, check=lambda: None, category="L
         _keys(expected, "resolved_path symlink link_target".split(), category)
         _require(type(expected["symlink"]) is bool and (expected["link_target"] is None or type(expected["link_target"]) is str),
                  category, "Invalid alias shape")
-        _require(_alias(name) == expected, category, "Bound alias changed: " + name)
+        actual = _rtld_alias_projection(_rtld_snapshot) if _rtld_snapshot is not None and name == RTLD_ALIAS else _alias(name)
+        _require(actual == expected, category, "Bound alias changed: " + name)
         resolved.add(expected["resolved_path"])
     _require(set(files) == resolved, category, "Complete resolved file set differs")
     for path, binding in files.items():
@@ -635,7 +1209,11 @@ def _check_host_static(plan, *, check=lambda: None):
         _require(resolved in host["files"], "INSPECTOR", "Inspector file binding is missing")
         _bound(roles[key] if key == "ldd" else resolved, host["files"][resolved],
                category="INSPECTOR", private=key == "ldd", check=check)
-    _check_alias_files(host["files"], host["aliases"], set(named), check=check)
+    if _uses_rtld_paths(plan):
+        snapshot = _check_rtld_operational_paths(plan, check=check)
+        _check_alias_files(host["files"], host["aliases"], set(named), check=check, _rtld_snapshot=snapshot)
+    else:
+        _check_alias_files(host["files"], host["aliases"], set(named), check=check)
     _require(host["files"].get(roles["node"]) == NODE, "RUNTIME", "Exact Node is missing from host file roles")
     _bound(roles["node"], NODE, category="RUNTIME", check=check)
     _check_inspector_script(roles["ldd"], roles["inspector_interpreter"], check=check)
@@ -676,6 +1254,8 @@ def _select_origin_profile(schema, resolution):
         _select_libc_plt_profile(schema, resolution)
     elif schema == LIBC_STATIC_TLS_PLAN_SCHEMA:
         _select_libc_static_tls_profile(schema, resolution)
+    elif schema == RTLD_PATHS_PLAN_SCHEMA:
+        _select_rtld_paths_profile(schema, resolution)
     else:
         _origin_require(schema == ORIGIN_PLAN_SCHEMA and profile == ORIGIN_PROFILE,
                         "PLAN", "profile_selection", "LP-SCHEMA-PROFILE", "Unsupported inspection schema/profile pair")
@@ -704,7 +1284,7 @@ def _select_origin_profile(schema, resolution):
 
 
 def _uses_libc_profile(plan):
-    return plan.get("schema") in (LIBC_PLT_PLAN_SCHEMA, LIBC_STATIC_TLS_PLAN_SCHEMA)
+    return plan.get("schema") in (LIBC_PLT_PLAN_SCHEMA, LIBC_STATIC_TLS_PLAN_SCHEMA, RTLD_PATHS_PLAN_SCHEMA)
 
 
 def _uses_origin_profile(plan):
@@ -778,7 +1358,8 @@ def _prepare_libc_plt_policy(plan, runtime, python_metadata, *, check=lambda: No
     """Bind the selected edge and actual files anew inside each resolution proof."""
     host, schema = plan["host_static"], plan["schema"]
     resolution = host["resolution"]
-    selector = _select_libc_static_tls_profile if schema == LIBC_STATIC_TLS_PLAN_SCHEMA else _select_libc_plt_profile
+    selector = (_select_rtld_paths_profile if schema == RTLD_PATHS_PLAN_SCHEMA else
+                _select_libc_static_tls_profile if schema == LIBC_STATIC_TLS_PLAN_SCHEMA else _select_libc_plt_profile)
     value = selector(schema, resolution)
     def image(path):
         matches = []
@@ -1218,7 +1799,7 @@ def _read_libc_static_tls_elf_metadata(path, *, check=lambda: None, require_inte
 
 def _read_plan_elf_metadata(path, policy, *, check=lambda: None, require_interpreter=False, libc_policy=None):
     if libc_policy is not None and str(path) == libc_policy["subject"]["path"]:
-        if libc_policy["schema"] == LIBC_STATIC_TLS_PLAN_SCHEMA:
+        if libc_policy["schema"] in (LIBC_STATIC_TLS_PLAN_SCHEMA, RTLD_PATHS_PLAN_SCHEMA):
             return _read_libc_static_tls_elf_metadata(path, check=check, require_interpreter=require_interpreter)
         _require(libc_policy["schema"] == LIBC_PLT_PLAN_SCHEMA, "PLAN", "Unsupported private libc metadata policy")
         return _read_libc_plt_elf_metadata(path, check=check, require_interpreter=require_interpreter)
@@ -1604,29 +2185,40 @@ def _check_resolution(plan, author_runtime, *, check=lambda: None):
         _bound(descriptor["path"], _binding(descriptor), category="INSPECTOR", private=False, check=check)
         _require(descriptor["path"] not in command_paths, "INSPECTOR", "Duplicate inspector command")
         command_paths.append(descriptor["path"])
-    _require(type(inspector["rtld_candidates"]) is list and inspector["rtld_candidates"], "INSPECTOR", "Missing reviewed RTLD candidates")
-    loader_candidates, present_loaders = [], []
-    for row in inspector["rtld_candidates"]:
-        _require(type(row) is dict and row.get("state") in ("file", "absent"), "INSPECTOR", "Invalid inspector candidate")
-        path = _absolute(row.get("path"), "INSPECTOR", links=True)
-        _require(str(path) not in loader_candidates, "INSPECTOR", "Duplicate RTLD candidate")
-        loader_candidates.append(str(path))
-        required.append(str(path))
-        if row["state"] == "file":
-            _keys(row, ("path", "state", "binding"), "INSPECTOR")
-            _bound(path.resolve(strict=True), row["binding"], category="INSPECTOR", private=False, check=check)
-            _require(str(path) in host["aliases"] and
-                     host["files"].get(str(path.resolve(strict=True))) == row["binding"],
-                     "LOADER", "Present RTLD candidate is missing from host roles/files")
-            present_loaders.append(str(path))
-        else:
-            _keys(row, ("path", "state", "parent"), "INSPECTOR")
-            _require(row["parent"] == str(path.parent) and path.parent.is_dir() and not path.exists()
-                     and not path.is_symlink(), "INSPECTOR", "RTLD candidate absence differs")
-    script, _ = _read_file(inspector["script"]["path"], 1024 * 1024, category="INSPECTOR", check=check)
-    matches = re.findall(rb'^RTLDLIST=["\']([^"\'\n]+)["\']$', script, flags=re.MULTILINE)
-    _require(len(matches) == 1 and matches[0].decode("ascii").split() == loader_candidates,
-             "UNSUPPORTED", "Inspector RTLDLIST is not the exact reviewed literal list")
+    rtld_snapshot = None
+    if _uses_rtld_paths(plan):
+        rtld_snapshot = _check_rtld_operational_paths(plan, author_runtime, check=check)
+        loader_candidates, present_loaders = list(RTLD_CANDIDATES), [RTLD_ALIAS]
+        required.extend(loader_candidates)
+        _bound(rtld_snapshot["results"][0]["resolved_path"], inspector["rtld_candidates"][0]["binding"],
+               category="INSPECTOR", private=False, check=check)
+        _require(RTLD_ALIAS in host["aliases"] and
+                 host["files"].get(rtld_snapshot["results"][0]["resolved_path"]) == inspector["rtld_candidates"][0]["binding"],
+                 "LOADER", "Present RTLD candidate is missing from host roles/files")
+    else:
+        _require(type(inspector["rtld_candidates"]) is list and inspector["rtld_candidates"], "INSPECTOR", "Missing reviewed RTLD candidates")
+        loader_candidates, present_loaders = [], []
+        for row in inspector["rtld_candidates"]:
+            _require(type(row) is dict and row.get("state") in ("file", "absent"), "INSPECTOR", "Invalid inspector candidate")
+            path = _absolute(row.get("path"), "INSPECTOR", links=True)
+            _require(str(path) not in loader_candidates, "INSPECTOR", "Duplicate RTLD candidate")
+            loader_candidates.append(str(path))
+            required.append(str(path))
+            if row["state"] == "file":
+                _keys(row, ("path", "state", "binding"), "INSPECTOR")
+                _bound(path.resolve(strict=True), row["binding"], category="INSPECTOR", private=False, check=check)
+                _require(str(path) in host["aliases"] and
+                         host["files"].get(str(path.resolve(strict=True))) == row["binding"],
+                         "LOADER", "Present RTLD candidate is missing from host roles/files")
+                present_loaders.append(str(path))
+            else:
+                _keys(row, ("path", "state", "parent"), "INSPECTOR")
+                _require(row["parent"] == str(path.parent) and path.parent.is_dir() and not path.exists()
+                         and not path.is_symlink(), "INSPECTOR", "RTLD candidate absence differs")
+        script, _ = _read_file(inspector["script"]["path"], 1024 * 1024, category="INSPECTOR", check=check)
+        matches = re.findall(rb'^RTLDLIST=["\']([^"\'\n]+)["\']$', script, flags=re.MULTILINE)
+        _require(len(matches) == 1 and matches[0].decode("ascii").split() == loader_candidates,
+                 "UNSUPPORTED", "Inspector RTLDLIST is not the exact reviewed literal list")
     _require(resolution["ignored_kernel_rows"] in ([], ["linux-vdso.so.1"]), "UNSUPPORTED", "Unsupported kernel-only output rows")
     _require(type(resolution["images"]) is list and 0 < len(resolution["images"]) <= 512, "LOADER", "Missing/excessive ELF image inventory")
     images, edges = {}, []
@@ -1657,7 +2249,8 @@ def _check_resolution(plan, author_runtime, *, check=lambda: None):
     executable_roots = [host["roles"][key] for key in ("node", "python", "inspector_interpreter")] + command_paths + [plan["author"]["git_descriptor"]["path"]]
     all_roots = executable_roots + author_runtime["extension_files"] + present_loaders + [host["roles"]["elf_interpreter"]]
     for path in all_roots:
-        resolved = str(Path(path).resolve(strict=True))
+        resolved = (rtld_snapshot["results"][0]["resolved_path"] if rtld_snapshot is not None and path == RTLD_ALIAS
+                    else str(Path(path).resolve(strict=True)))
         _require(resolved in images, "LOADER", "Executable/extension ELF closure is missing")
         interpreter = images[resolved]["metadata"]["interpreter"]
         if path in executable_roots and path not in loader_candidates:
@@ -1927,7 +2520,12 @@ def _check_author_runtime(plan, inventory, *, loaded=False, check=lambda: None):
     for key in ("startup_files", "extension_files", "loader_inputs"):
         _strings(runtime[key], "INSPECTOR", nonempty=True)
     named = [author["python_descriptor"]["path"], runtime["interpreter"]] + runtime["startup_files"] + runtime["extension_files"] + runtime["loader_inputs"]
-    _check_alias_files(runtime["files"], runtime["aliases"], set(named), category="INSPECTOR", check=check)
+    if _uses_rtld_paths(plan):
+        snapshot = _check_rtld_operational_paths(plan, runtime, check=check)
+        _check_alias_files(runtime["files"], runtime["aliases"], set(named), category="INSPECTOR", check=check,
+                           _rtld_snapshot=snapshot)
+    else:
+        _check_alias_files(runtime["files"], runtime["aliases"], set(named), category="INSPECTOR", check=check)
     policy = _prepare_origin_policy(plan, runtime, check=check) if _uses_origin_profile(plan) else None
     _require(_read_plan_elf_metadata(author["python_descriptor"]["path"], policy, check=check)["interpreter"] == runtime["interpreter"],
              "INSPECTOR", "Python interpreter binding differs")
@@ -2116,6 +2714,8 @@ def _required_paths(plan, author_runtime, metadata, extra):
     paths.extend(metadata["paths"])
     paths.extend(row["path"] for row in plan["evidence"]["outer_capture"].values())
     paths.extend(extra)
+    if _uses_rtld_paths(plan):
+        paths.extend(sorted(RTLD_SNAPSHOT_EXCLUSIONS))
     if _uses_origin_profile(plan):
         origin = plan["host_static"]["resolution"]["origin_rpath"]
         paths.extend([origin["origin"], str(PurePosixPath(origin["origin"]).parent),
@@ -2137,6 +2737,11 @@ def _check_plan_guards(plan, required, *, check=lambda: None):
         # The complete origin proof has already verified each prefix absence
         # and its immediate guarded parent. Snapshot all names nevertheless.
         required = [name for name in required if str(name) not in descendants]
+    if _uses_rtld_paths(plan):
+        _check_rtld_operational_paths(plan, check=check)
+        required = [name for name in required if str(name) not in RTLD_CHAIN_EXCLUSIONS]
+        return _check_guards(plan["host_static"]["path_guards"], required, check=check,
+                             _rtld_model=plan["host_static"]["resolution"]["rtld_paths"])
     return _check_guards(plan["host_static"]["path_guards"], required, check=check)
 
 
@@ -2223,6 +2828,9 @@ def _recheck(validated, *, check=lambda: None, fresh=False):
                       extra + closure_paths + [validated.descriptor["path"], plan["host_static"]["resolution"]["rationale"]["path"]]), check=check)
         _require(_ancestors(plan["evidence"]["parent"]) == plan["evidence"]["ancestor_identities"], "PATH", "Evidence ancestor changed")
         _check_evidence(plan, fresh=fresh, check=check)
+        if _uses_rtld_paths(plan):
+            snapshot = _check_rtld_operational_paths(plan, runtime, check=check)
+            _compare_rtld_snapshot(snapshot, _thaw(validated._metadata)["rtld_path_snapshot"])
         check()
     except Exception as exc:
         if isinstance(exc, HostInspectionError) and exc.code == "CHI-DRIFT":
@@ -2241,6 +2849,9 @@ def _input_snapshot(plan, inventory, runtime, metadata, extra, *, check=lambda: 
     paths.update(runtime["files"])
     paths.update(_required_paths(plan, runtime, metadata, extra))
     paths.add(str(ROOT / P06_SCHEMA_PATH))
+    if _uses_rtld_paths(plan):
+        metadata["rtld_path_snapshot"] = _check_rtld_operational_paths(plan, runtime, check=check)
+        paths.difference_update(RTLD_SNAPSHOT_EXCLUSIONS)
     result = {}
     log = plan["evidence"]["outer_capture"]["log"]
     for name in sorted(paths):
@@ -2272,7 +2883,11 @@ def _launch_check(validated, clock, stage_end):
                 actual = {"identity": list(_identity(path.lstat())), "resolved": str(path.resolve(strict=True))}
                 _require(actual == expected, "DRIFT", "Bound file/path changed immediately before launch")
         _require(_platform() == plan["host_static"]["platform"], "DRIFT", "Host reboot/platform drift before launch")
-        _check_guards(plan["host_static"]["path_guards"], [], check=lambda: clock.check(stage_end))
+        if _uses_rtld_paths(plan):
+            _check_guards(plan["host_static"]["path_guards"], [], check=lambda: clock.check(stage_end),
+                          _rtld_model=plan["host_static"]["resolution"]["rtld_paths"])
+        else:
+            _check_guards(plan["host_static"]["path_guards"], [], check=lambda: clock.check(stage_end))
         if _uses_origin_profile(plan):
             origin = plan["host_static"]["resolution"]["origin_rpath"]
             subject = _origin_subject_observation(origin["subject"]["path"])
@@ -2282,6 +2897,23 @@ def _launch_check(validated, clock, stage_end):
                 raise HostInspectionError("DRIFT", "Kernel origin changed immediately before launch", cause=exc) from exc
             _require(witness == _thaw(validated._metadata)["origin_kernel_witness"],
                      "DRIFT", "Kernel origin changed immediately before launch")
+        if _uses_rtld_paths(plan):
+            callback_failure = None
+            def checked():
+                nonlocal callback_failure
+                try:
+                    clock.check(stage_end)
+                except BaseException as exc:
+                    callback_failure = exc
+                    raise
+            try:
+                snapshot = _check_rtld_operational_paths(plan, _thaw(validated._runtime), check=checked)
+                _compare_rtld_snapshot(snapshot, _thaw(validated._metadata)["rtld_path_snapshot"])
+            except HostInspectionError as exc:
+                if exc is not callback_failure and exc.details.get("stage") == "rtld_paths":
+                    raise HostInspectionError("DRIFT", "RTLD path changed immediately before launch", cause=exc,
+                                              state=exc.state) from exc
+                raise
         clock.check(stage_end)
     except HostInspectionError:
         raise

@@ -1,0 +1,200 @@
+{
+  "expected": "Closed model and exact physical guard projection; no Boolean integers or descendant/symlink-parent absence guard",
+  "cases": [
+    {
+      "case": "boolean_identity",
+      "error": {
+        "code": "CHI-PLAN",
+        "reason": "Invalid RTLD path model shape",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-SHAPE",
+          "path": "/",
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "syscalls": 0
+    },
+    {
+      "case": "reordered_components",
+      "error": {
+        "code": "CHI-PLAN",
+        "reason": "Invalid RTLD path model shape",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-SHAPE",
+          "path": "/",
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "syscalls": 0
+    },
+    {
+      "case": "extra_component",
+      "error": {
+        "code": "CHI-PLAN",
+        "reason": "Invalid RTLD path model shape",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-SHAPE",
+          "path": null,
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "syscalls": 0
+    },
+    {
+      "case": "missing_component",
+      "error": {
+        "code": "CHI-PLAN",
+        "reason": "Invalid RTLD path model shape",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-SHAPE",
+          "path": null,
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "syscalls": 0
+    },
+    {
+      "case": "alternate_target",
+      "error": {
+        "code": "CHI-PLAN",
+        "reason": "Invalid RTLD path model shape",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-SHAPE",
+          "path": "/lib",
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "syscalls": 0
+    },
+    {
+      "case": "extra_witness_key",
+      "error": {
+        "code": "CHI-PLAN",
+        "reason": "Invalid RTLD path model shape",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-SHAPE",
+          "path": null,
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "syscalls": 0
+    },
+    {
+      "case": "literal_descendant_guard",
+      "error": {
+        "code": "CHI-PATH",
+        "reason": "RTLD path component identity or type differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-IDENTITY",
+          "path": "/libx32/ld-linux-x32.so.2",
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      }
+    },
+    {
+      "case": "symlink_parent_guard",
+      "error": {
+        "code": "CHI-PATH",
+        "reason": "RTLD path component identity or type differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-IDENTITY",
+          "path": "/usr/lib/ld-linux.so.2",
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      }
+    },
+    {
+      "case": "boolean_parent_inode",
+      "error": {
+        "code": "CHI-PATH",
+        "reason": "RTLD path component identity or type differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-IDENTITY",
+          "path": "/libx32",
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      }
+    }
+  ]
+}

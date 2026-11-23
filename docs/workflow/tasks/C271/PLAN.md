@@ -412,3 +412,19 @@ Stop at the accepted design/adoption decision or first concrete blocker. Then co
 ## P24 design decision
 
 The independently reviewed design is adopted only for a later bounded implementation phase. See [adoption](../../../engineering/localized-repair-c271/path-design-p24/ADOPTION.json) and [outcome](../../../engineering/localized-repair-c271/path-design-p24/OUTCOME.json). The 52 frozen controls remain unexecuted. Runtime code, old profiles, P06 output and pins are unchanged. P24 technical work is stopped; complete its verified delivery only. R03-R05 and P02 retain their prior states.
+
+## P25 finite RTLD path implementation — November 23, 2026
+
+The fresh owner continuation follows the confirmed P24 terminal delivery and selects the adopted `/0.1.4` design for one bounded implementation phase on the retained branch. See [phase](../../../engineering/localized-repair-c271/path-implementation-p25/PHASE.json) and [early recovery](../../../engineering/localized-repair-c271/path-implementation-p25/EARLY-RECOVERY-RECEIPT.json).
+
+Implement only the adopted finite path policy and independently verify all 52 frozen obligations: 51 primitive/mocked controls and one external-review-only condition. Preserve earlier profiles, P06 output, pins, source/clock limits, old tests, failed evidence and unknown historical operations. Required full-routine and H0/H1 gates remain pending; this phase may execute only relevant synthetic controls, affected non-target regression and documentary/workflow checks.
+
+Stop at independently reviewed implementation or the first concrete blocker. Then finish only checks/review, conditional branch publication and verified ZIP/prompts plus separate receipt. No H0/H1, target reconstruction/mutation, package installation, full routine, main integration, branch deletion or another phase. R01/R02 stay done; R03-R05 not_done; P01 done/P02 in_progress. Issue273 stays open and PR274 draft/unmerged.
+
+### P25 accepted technical boundary
+
+The exact candidate and ADAPTER-005 are independently accepted for the bounded implementation. The final new run passed 61 methods (51 frozen executable controls and ten supplements); 385 inherited methods passed at both baseline and candidate. N34 was assessed as an external withholding obligation: actual loader/script source-completeness evidence is absent, so operational plan adoption remains withheld. It is not a runtime pass or skip. See [acceptance](../../../engineering/localized-repair-c271/path-implementation-p25/ACCEPTANCE.json) and [outcome](../../../engineering/localized-repair-c271/path-implementation-p25/OUTCOME.json).
+
+Technical work has stopped. This phase now permits only documentary checks, review, expected-head branch publication and verified delivery. All parent statuses and excluded gates above remain unchanged. Prior P23/P24 constraints are historical source-specific evidence; the next current-host plan must bind the newly published implementation and a complete fresh source inventory.
+
+After verified P25 delivery, in a fresh bounded phase, bind the newly published /0.1.4 inspector and complete source inventory, construct and independently review the current-host H0 inspection plan, and satisfy the external N34 actual loader/script source-completeness gate before operational plan adoption. Reconstruct only necessary pinned inputs in the fresh host. Stop at an accepted plan or a concrete blocker; H1, the original full routine and main integration remain later gates.

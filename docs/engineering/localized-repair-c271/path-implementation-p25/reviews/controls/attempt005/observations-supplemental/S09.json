@@ -1,0 +1,344 @@
+{
+  "expected": "Only path-generated refusals receive new drift wrapper; callback identity/clock behavior unchanged",
+  "cases": [
+    {
+      "kind": "supervisor_stop",
+      "same_cause": true,
+      "same_error": false,
+      "error": {
+        "code": "CHI-PROCESS",
+        "reason": "Command allowance expired before launch",
+        "state": "TIMEOUT",
+        "cause": {
+          "type": "MockStop",
+          "reason": "synthetic command clock expired"
+        },
+        "details": {}
+      },
+      "trace": [
+        {
+          "operation": "callback",
+          "count": 1
+        },
+        {
+          "operation": "stat",
+          "path": "/",
+          "dir_fd": null,
+          "name": "/",
+          "parent_path": null,
+          "follow_symlinks": false
+        },
+        {
+          "operation": "callback",
+          "count": 2
+        },
+        {
+          "operation": "open",
+          "path": "/",
+          "flags": 2818048,
+          "dir_fd": null,
+          "name": "/",
+          "parent_path": null
+        },
+        {
+          "operation": "callback",
+          "count": 3
+        },
+        {
+          "operation": "fstat",
+          "path": "/",
+          "fd": 1000
+        },
+        {
+          "operation": "callback",
+          "count": 4
+        },
+        {
+          "operation": "stat",
+          "path": "/lib64",
+          "dir_fd": 1000,
+          "name": "lib64",
+          "parent_path": "/",
+          "follow_symlinks": false
+        },
+        {
+          "operation": "callback",
+          "count": 5
+        },
+        {
+          "operation": "open",
+          "path": "/lib64",
+          "flags": 2752512,
+          "dir_fd": 1000,
+          "name": "lib64",
+          "parent_path": "/"
+        },
+        {
+          "operation": "callback",
+          "count": 6
+        },
+        {
+          "operation": "fstat",
+          "path": "/lib64",
+          "fd": 1001
+        },
+        {
+          "operation": "callback",
+          "count": 7
+        },
+        {
+          "operation": "readlink",
+          "path": "/lib64",
+          "fd": 1001,
+          "empty_path": true
+        },
+        {
+          "operation": "callback",
+          "count": 8
+        },
+        {
+          "operation": "fstat",
+          "path": "/lib64",
+          "fd": 1001
+        },
+        {
+          "operation": "callback",
+          "count": 9
+        },
+        {
+          "operation": "stat",
+          "path": "/lib64",
+          "dir_fd": 1000,
+          "name": "lib64",
+          "parent_path": "/",
+          "follow_symlinks": false
+        },
+        {
+          "operation": "callback",
+          "count": 10
+        },
+        {
+          "operation": "stat",
+          "path": "/usr",
+          "dir_fd": 1000,
+          "name": "usr",
+          "parent_path": "/",
+          "follow_symlinks": false
+        },
+        {
+          "operation": "callback",
+          "count": 11
+        },
+        {
+          "operation": "open",
+          "path": "/usr",
+          "flags": 2818048,
+          "dir_fd": 1000,
+          "name": "usr",
+          "parent_path": "/"
+        },
+        {
+          "operation": "close",
+          "path": "/usr",
+          "fd": 1002
+        },
+        {
+          "operation": "close",
+          "path": "/lib64",
+          "fd": 1001
+        },
+        {
+          "operation": "close",
+          "path": "/",
+          "fd": 1000
+        }
+      ],
+      "faults_triggered": [],
+      "opened": [
+        1000,
+        1001,
+        1002
+      ],
+      "closed": [
+        1002,
+        1001,
+        1000
+      ],
+      "live": [],
+      "maximum_live_descriptors": 3,
+      "root_opens": 1,
+      "callbacks": 11,
+      "terminal_bytes_read": 0,
+      "terminal_read_requests": []
+    },
+    {
+      "kind": "path_shaped_callback",
+      "same_cause": false,
+      "same_error": true,
+      "error": {
+        "code": "CHI-PATH",
+        "reason": "synthetic callback identity",
+        "state": "TIMEOUT",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths"
+        }
+      },
+      "trace": [
+        {
+          "operation": "callback",
+          "count": 1
+        },
+        {
+          "operation": "stat",
+          "path": "/",
+          "dir_fd": null,
+          "name": "/",
+          "parent_path": null,
+          "follow_symlinks": false
+        },
+        {
+          "operation": "callback",
+          "count": 2
+        },
+        {
+          "operation": "open",
+          "path": "/",
+          "flags": 2818048,
+          "dir_fd": null,
+          "name": "/",
+          "parent_path": null
+        },
+        {
+          "operation": "callback",
+          "count": 3
+        },
+        {
+          "operation": "fstat",
+          "path": "/",
+          "fd": 1000
+        },
+        {
+          "operation": "callback",
+          "count": 4
+        },
+        {
+          "operation": "stat",
+          "path": "/lib64",
+          "dir_fd": 1000,
+          "name": "lib64",
+          "parent_path": "/",
+          "follow_symlinks": false
+        },
+        {
+          "operation": "callback",
+          "count": 5
+        },
+        {
+          "operation": "open",
+          "path": "/lib64",
+          "flags": 2752512,
+          "dir_fd": 1000,
+          "name": "lib64",
+          "parent_path": "/"
+        },
+        {
+          "operation": "callback",
+          "count": 6
+        },
+        {
+          "operation": "fstat",
+          "path": "/lib64",
+          "fd": 1001
+        },
+        {
+          "operation": "callback",
+          "count": 7
+        },
+        {
+          "operation": "readlink",
+          "path": "/lib64",
+          "fd": 1001,
+          "empty_path": true
+        },
+        {
+          "operation": "callback",
+          "count": 8
+        },
+        {
+          "operation": "fstat",
+          "path": "/lib64",
+          "fd": 1001
+        },
+        {
+          "operation": "callback",
+          "count": 9
+        },
+        {
+          "operation": "stat",
+          "path": "/lib64",
+          "dir_fd": 1000,
+          "name": "lib64",
+          "parent_path": "/",
+          "follow_symlinks": false
+        },
+        {
+          "operation": "callback",
+          "count": 10
+        },
+        {
+          "operation": "stat",
+          "path": "/usr",
+          "dir_fd": 1000,
+          "name": "usr",
+          "parent_path": "/",
+          "follow_symlinks": false
+        },
+        {
+          "operation": "callback",
+          "count": 11
+        },
+        {
+          "operation": "open",
+          "path": "/usr",
+          "flags": 2818048,
+          "dir_fd": 1000,
+          "name": "usr",
+          "parent_path": "/"
+        },
+        {
+          "operation": "close",
+          "path": "/usr",
+          "fd": 1002
+        },
+        {
+          "operation": "close",
+          "path": "/lib64",
+          "fd": 1001
+        },
+        {
+          "operation": "close",
+          "path": "/",
+          "fd": 1000
+        }
+      ],
+      "faults_triggered": [],
+      "opened": [
+        1000,
+        1001,
+        1002
+      ],
+      "closed": [
+        1002,
+        1001,
+        1000
+      ],
+      "live": [],
+      "maximum_live_descriptors": 3,
+      "root_opens": 1,
+      "callbacks": 11,
+      "terminal_bytes_read": 0,
+      "terminal_read_requests": []
+    }
+  ]
+}

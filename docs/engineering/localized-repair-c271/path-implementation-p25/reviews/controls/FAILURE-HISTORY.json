@@ -1,0 +1,156 @@
+{
+  "schema": "ontokin.c271.p25-independent-review-history/1",
+  "production_candidates": 1,
+  "production_mandatory_findings": 0,
+  "behavioral_test_failures": 0,
+  "adapter_review_findings": [
+    {
+      "id": "AR01",
+      "finding": "New diagnostic stage/rule assertions were too permissive.",
+      "reported_by": "/root/reconcile",
+      "fixed_in": "ADAPTER-FREEZE-004.json",
+      "disposition": "resolved; exact mapped new diagnostics and legacy wrapper distinctions asserted."
+    },
+    {
+      "id": "AR02",
+      "finding": "P03 alias order and explicit held-parent .. transition needed stronger assertions.",
+      "reported_by": "/root/reconcile",
+      "fixed_in": "ADAPTER-FREEZE-004.json",
+      "disposition": "resolved; per-pass link sequence and literal relative parent transitions asserted."
+    },
+    {
+      "id": "AR03",
+      "finding": "F05-F07 required path-specific exact changed identities and F12 required exact complete binding.",
+      "reported_by": "/root/reconcile",
+      "fixed_in": "ADAPTER-FREEZE-004.json",
+      "disposition": "resolved; exact before/after identities tied to declared path and F12 labels/bindings."
+    },
+    {
+      "id": "AE01",
+      "finding": "Baseline trace and pre-event input were mutable report references.",
+      "reported_by": "/root/controls",
+      "fixed_in": [
+        "ADAPTER-FREEZE-004.json",
+        "ADAPTER-FREEZE-005.json"
+      ],
+      "disposition": "resolved by independent deep copies; final attempt005 retained."
+    }
+  ],
+  "preservation": "All earlier adapter freezes and all passing/superseded runs retained. No control expectation, historical failed evidence or production candidate was changed to satisfy tests.",
+  "attempts": [
+    {
+      "attempt": "baseline",
+      "cohort": "inherited_baseline",
+      "tests_run": 385,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/baseline/RESULT.json",
+        "bytes": 45925,
+        "sha256": "f879f28f38c73a64b64085adb4e07bfddc75f42f589990e7b931589da580cde1"
+      },
+      "log": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/baseline/TEST.log",
+        "bytes": 63284,
+        "sha256": "595e648d6ea9ad45eca52e6f9159854467e74abe704e256de7e7bf3c4053a6be"
+      },
+      "status": "current_scope_evidence"
+    },
+    {
+      "attempt": "attempt001",
+      "cohort": "new",
+      "tests_run": 51,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt001/RESULT.json",
+        "bytes": 2878,
+        "sha256": "b7593a3c74f26e311d6c646f489502aabb93cde899ed80287004cd53049bce97"
+      },
+      "log": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt001/TEST.log",
+        "bytes": 7219,
+        "sha256": "92860da5cd33c9fbb9cf4322bea4378aaf6071bedbfea724b43d1f5e5241db67"
+      },
+      "status": "retained_superseded_adapter_evidence"
+    },
+    {
+      "attempt": "attempt002",
+      "cohort": "inherited",
+      "tests_run": 385,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt002/RESULT.json",
+        "bytes": 3795,
+        "sha256": "1adf016d324333fc84c4fdafa0300258193d1fae697217fd065ca89f7c192da2"
+      },
+      "log": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt002/TEST.log",
+        "bytes": 63284,
+        "sha256": "f505349382517308c30e0e4846808788572589479153419978bbd89b76d55451"
+      },
+      "status": "current_scope_evidence"
+    },
+    {
+      "attempt": "attempt003",
+      "cohort": "new",
+      "tests_run": 61,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt003/RESULT.json",
+        "bytes": 2878,
+        "sha256": "c2244e69fc7865bf9d06f48175d1340e38704ce2fdc9b86ffb039e4c8af4f2f0"
+      },
+      "log": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt003/TEST.log",
+        "bytes": 8851,
+        "sha256": "1ca9665f1b8aebbfbbe0ed00e896d56fa1d5c4ec4dc3223a1a1043fcf7a399f1"
+      },
+      "status": "retained_superseded_adapter_evidence"
+    },
+    {
+      "attempt": "attempt004",
+      "cohort": "new",
+      "tests_run": 61,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt004/RESULT.json",
+        "bytes": 2878,
+        "sha256": "724ea6986a9f55e35436354d35a98fa5cf2b2ed4815ddd9c9454b8cdb5040050"
+      },
+      "log": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt004/TEST.log",
+        "bytes": 8851,
+        "sha256": "f6b4a22e55c9fcc83efaae98e45b737368d852feaa5a0537a6df87d28b8dde9e"
+      },
+      "status": "retained_superseded_adapter_evidence"
+    },
+    {
+      "attempt": "attempt005",
+      "cohort": "new",
+      "tests_run": 61,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/RESULT.json",
+        "bytes": 3107,
+        "sha256": "1bc9592301dde9566d770af8367b2e86dd7d8852749ea7c5aa485c632f57527d"
+      },
+      "log": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/TEST.log",
+        "bytes": 8851,
+        "sha256": "93dc43d039b21d2f4843c9d51b6883c73d4c68c9f252b37d125ce0b8b02af8f7"
+      },
+      "status": "current_scope_evidence"
+    }
+  ]
+}

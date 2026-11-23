@@ -1,0 +1,56 @@
+"""Bound exact source/adapter bytes and retain a scoped unittest attempt."""
+from contextlib import ExitStack
+import argparse, hashlib, importlib, json, os, platform, subprocess, sys, time, types, unittest
+from pathlib import Path
+from unittest.mock import patch
+
+HERE=Path(__file__).resolve().parent
+REPO=HERE.parents[5]
+parser=argparse.ArgumentParser()
+parser.add_argument('--attempt',required=True)
+parser.add_argument('--candidate',required=True)
+parser.add_argument('--cohort',choices=['new','inherited','all'],default='new')
+args=parser.parse_args()
+OUT=HERE/args.attempt
+OUT.mkdir(exist_ok=False)
+SOURCE=REPO/'prototypes/static_tray_v01/current_host_inspection_v01.py'
+FROZEN=HERE.parent.parent/'implementation'/args.candidate/'current_host_inspection_v01.py'
+raw=FROZEN.read_bytes()
+if SOURCE.read_bytes()!=raw:raise AssertionError('Live source differs from selected frozen candidate')
+ADAPTER=REPO/'tests/test_current_host_rtld_paths_v01.py'
+adapter_raw=ADAPTER.read_bytes()
+(OUT/'adapter.py.source').write_bytes(adapter_raw)
+(OUT/'driver.py.source').write_bytes(Path(__file__).read_bytes())
+NAMES=[]
+if args.cohort in ('inherited','all'):
+ NAMES+=['test_current_host_inspection_v01','test_current_host_elf_mapping_v01','test_current_host_loader_path_v01','test_current_host_libc_plt_metadata_v01','test_current_host_libc_static_tls_flags_v01']
+if args.cohort in ('new','all'):NAMES+=['test_current_host_rtld_paths_v01']
+def identity(p):
+ b=p.read_bytes();return {'path':str(p.relative_to(REPO)),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+inputs=[Path(__file__).resolve(),SOURCE,FROZEN,ADAPTER,*[REPO/'tests'/(n+'.py') for n in NAMES]]
+inputs+=[REPO/'docs/engineering/localized-repair-c271/path-design-p24'/p for p in ['ADOPTION.json','DECISION-CANDIDATE.md','SCHEMA.json','reviews/path/CONTROL-MATRIX.json','reviews/path/CONTROL-CROSSWALK.json']]
+record={'schema':'ontokin.c271.p25-independent-test-attempt/1','worker':'/root/controls','source_base_commit':'ce411b12e601036a33698aa7c3290722e602ea75','candidate':args.candidate,'cohort':args.cohort,'command':sys.orig_argv,'cwd':os.getcwd(),'python':sys.version,'executable':sys.executable,'platform':platform.platform(),'time_started':time.time(),'inputs':[identity(p) for p in dict.fromkeys(inputs)],'actual_target_starts':0,'H0_invocations':0,'H1_invocations':0,'routine_invocations':0,'host_qualified':False,'operational_plan_accepted':False}
+(OUT/'INPUTS.json').write_text(json.dumps(record,indent=2)+'\n')
+sys.path[:0]=[str(REPO),str(REPO/'tests')]
+package=importlib.import_module('prototypes.static_tray_v01')
+module='prototypes.static_tray_v01.current_host_inspection_v01'
+inspection=types.ModuleType(module);inspection.__file__=str(SOURCE);inspection.__package__='prototypes.static_tray_v01'
+sys.modules[module]=inspection;setattr(package,'current_host_inspection_v01',inspection)
+exec(compile(raw,str(SOURCE),'exec'),inspection.__dict__)
+os.environ['ONTOKIN_RTLD_RETAIN_ROOT']=str(OUT/'observations')
+process_attempts=[]
+def forbidden(*a,**k):
+ process_attempts.append({'args':repr(a),'kwargs':repr(k)});raise AssertionError('Actual target process operation forbidden in bounded P25 controls')
+with ExitStack() as stack:
+ for name in ('Popen','run','check_output','check_call','call'):
+  stack.enter_context(patch.object(subprocess,name,side_effect=forbidden))
+ for name in ('system','fork','posix_spawn','posix_spawnp','killpg','waitpid'):
+  if hasattr(os,name):stack.enter_context(patch.object(os,name,side_effect=forbidden))
+ suite=unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromName(name) for name in NAMES)
+ with (OUT/'TEST.log').open('w') as log:
+  result=unittest.TextTestRunner(stream=log,verbosity=2).run(suite)
+record.update(time_finished=time.time(),tests_run=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),process_attempts=process_attempts,successful=result.wasSuccessful(),input_source_unchanged=SOURCE.read_bytes()==raw,input_adapter_unchanged=ADAPTER.read_bytes()==adapter_raw)
+record['failed_tests']=[{'test':test.id(),'traceback':tb} for test,tb in result.failures+result.errors]
+(OUT/'RESULT.json').write_text(json.dumps(record,indent=2)+'\n')
+print(json.dumps({k:record[k] for k in ['candidate','cohort','tests_run','failures','errors','skipped','successful','input_source_unchanged','input_adapter_unchanged']}))
+sys.exit(not result.wasSuccessful())

@@ -1,0 +1,108 @@
+{
+  "schema": "ontokin.c271.p25-independent-adapter-review/1",
+  "reviewer": "/root/reconcile",
+  "at_utc": "2026-11-23T14:20:43.329473+00:00",
+  "status": "changes_required",
+  "adapter": "ADAPTER-003.py.source",
+  "adapter_sha256": "3ccda5a5297a23cb8324e9123e67e09c50c13d5fefa266aee251773f0ff85e0a",
+  "basis": "All51 frozen runtime obligations mapped; N34 remains external only. Ten separately declared supplements read in full. No production source authored/changed or product/target execution performed by reviewer.",
+  "findings": [
+    {
+      "id": "A01",
+      "status": "mandatory_open",
+      "scope": "New path-generated error controls",
+      "finding": "assert_details returns silently when stage differs/missing. Most mapped controls also accept any legal rule_id instead of the required mapped rule.",
+      "required": "Require closed details and stage=rtld_paths for expected new path errors; bind exact mapped rule/category/reason where the adopted schema/crosswalk specifies it. Preserve legacy/callback wrapper distinctions."
+    },
+    {
+      "id": "A02",
+      "status": "mandatory_open",
+      "scope": "P01/P03/P04",
+      "finding": "P03 asserts result witness but no frozen /lib symlink observation order; P01/P04 count opens of /usr without proving the admitted physical .. transition from held /usr/lib64.",
+      "required": "Retain input basename and held-parent identity/path in synthetic trace. Assert expected link sequence and explicit parent-pop at each relevant fresh-root pass."
+    },
+    {
+      "id": "A03",
+      "status": "mandatory_open",
+      "scope": "F05/F06/F07/F12",
+      "finding": "Distinct tuples anywhere do not prove retained before/after identities for the declared replaced entry. F12 checks labels/binding presence without exact changed tuple.",
+      "required": "Assert fault-specific same-path expected and observed identities and completed binding details as specified by each immutable event."
+    }
+  ],
+  "supplemental_review": "S01\u2013S10 additions exercise concrete adopted contract risks without changing 51 frozen controls. No additional mandatory finding found in these additions.",
+  "read_set": [
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/ADOPTION.json",
+      "bytes": 3605,
+      "sha256": "6a5b3497e0374e014cef249b2233ab9022af13f90f9d462a4afe49f9b35c5a9a",
+      "coverage": "full"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/DECISION-CANDIDATE.md",
+      "bytes": 25162,
+      "sha256": "169d6a586f4eff294a89266e66dfe715ccdcbb82691dccbd004f76503155a34e",
+      "coverage": "full"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/SCHEMA.json",
+      "bytes": 26706,
+      "sha256": "4b0c73afe6c185e8b2e6a0f72739d3371b31caa6a4d106e16c3a2ed1588eebbe",
+      "coverage": "full"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-MATRIX.json",
+      "bytes": 67833,
+      "sha256": "d52f64ffc28f7baf04e360f167fb56192cc6fb0baf6b36fd9f085907732a3196",
+      "coverage": "full unique semantic content; noncase fields plus four exact common-field-deduplicated case packets"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-CROSSWALK.json",
+      "bytes": 57380,
+      "sha256": "1d472d6036119805882d6a4996cc6d00cacda8de421f77866483c682894daf16",
+      "coverage": "full unique semantic content; noncase fields plus four exact common-field-deduplicated case packets"
+    },
+    {
+      "path": "/workspace/scratch/bd99261bd84d/OntoKin/docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-001.py.source",
+      "bytes": 45000,
+      "sha256": "05951c2e63a8446f31a5eca8f812d44b0741726b80b5edf76adb15a7509eac26",
+      "coverage": "002 full; 001 and003 complete delta plus exact unchanged text reuse"
+    },
+    {
+      "path": "/workspace/scratch/bd99261bd84d/OntoKin/docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-002.py.source",
+      "bytes": 45877,
+      "sha256": "4642be4d6737b011920cf75b00f461b98edee372ee01f48caa7bc1bd5bc2deeb",
+      "coverage": "full lines1-end"
+    },
+    {
+      "path": "/workspace/scratch/bd99261bd84d/OntoKin/docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-003.py.source",
+      "bytes": 66363,
+      "sha256": "3ccda5a5297a23cb8324e9123e67e09c50c13d5fefa266aee251773f0ff85e0a",
+      "coverage": "002 full; 001 and003 complete delta plus exact unchanged text reuse"
+    }
+  ],
+  "inventory": {
+    "matrix_total": 52,
+    "runtime_frozen_methods": 51,
+    "external_review_only": [
+      "N34"
+    ],
+    "supplemental_methods": [
+      "test_S01_close_fault_blocks_success",
+      "test_S02_callback_plus_all_close_faults",
+      "test_S03_partial_read_does_not_claim_complete_binding",
+      "test_S04_snapshot_excludes_only_fixed_names_and_proves_fresh",
+      "test_S05_guard_chain_exclusions_follow_successful_proof",
+      "test_S06_libc_policy_preserves_actual_schema_and_dispatch",
+      "test_S07_author_proof_precedes_alias_on_both_calls",
+      "test_S08_host_proof_precedes_alias",
+      "test_S09_final_launch_clock_faults_keep_existing_handling",
+      "test_S10_model_shape_and_guard_relations_are_closed"
+    ],
+    "runtime_skips": 0
+  },
+  "limits": [
+    "This is an adapter source/oracle review, not implementation acceptance or a behavioral execution claim.",
+    "SOURCE-BINDINGS.json was identity-bound by adoption/early package verification; its entire semantic text was not reread for this adapter review.",
+    "P24 proposed-state text is immutable candidate history; ADOPTION.json supplies the later adoption authority."
+  ]
+}

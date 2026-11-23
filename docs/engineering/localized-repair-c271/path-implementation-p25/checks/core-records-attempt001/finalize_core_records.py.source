@@ -1,0 +1,238 @@
+#!/usr/bin/env python3
+"""Record the accepted P25 technical boundary without closing parent gates."""
+import copy
+import hashlib
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path('/workspace/scratch/bd99261bd84d')
+REPO = ROOT / 'OntoKin'
+REL = 'docs/engineering/localized-repair-c271/path-implementation-p25'
+B = REPO / REL
+NOW = datetime.now(timezone.utc).isoformat()
+NEXT = ('After verified P25 delivery, in a fresh bounded phase, bind the newly published '
+        '/0.1.4 inspector and complete source inventory, construct and independently review '
+        'the current-host H0 inspection plan, and satisfy the external N34 actual loader/script '
+        'source-completeness gate before operational plan adoption. Reconstruct only necessary '
+        'pinned inputs in the fresh host. Stop at an accepted plan or a concrete blocker; '
+        'H1, the original full routine and main integration remain later gates.')
+
+def read(path):
+    return json.loads(path.read_text())
+
+def write(path, obj):
+    path.write_text(json.dumps(obj, indent=2, ensure_ascii=False) + '\n')
+
+def identity(rel):
+    data = (REPO / rel).read_bytes()
+    return {'path': rel, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
+
+phase = read(B / 'PHASE.json')
+assert phase['status'] == 'in_progress'
+prod = identity('prototypes/static_tray_v01/current_host_inspection_v01.py')
+test = identity('tests/test_current_host_rtld_paths_v01.py')
+assert prod['sha256'] == 'eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a'
+assert test['sha256'] == '363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da'
+production_review = read(B / 'reviews/controls/REVIEW-FINAL.json')
+adapter_review = read(B / 'reviews/delivery/ADAPTER-REVIEW-002.json')
+assert production_review['mandatory_production_findings'] == []
+assert production_review['verdict'] == 'accept_bounded_implementation_candidate_only'
+assert adapter_review['status'] == 'accepted_for_bounded_synthetic_P25_controls'
+assert all(f['status'] == 'resolved' for f in adapter_review['findings'])
+
+acceptance = {
+    'schema': 'ontokin.c271.p25-acceptance/1',
+    'at_utc': NOW,
+    'decision': 'accepted_bounded_implementation_only',
+    'director': 'c271-p25-bd99261bd84d',
+    'production': prod,
+    'adapter': test,
+    'independent_implementation_review': identity(REL + '/reviews/controls/REVIEW-FINAL.json'),
+    'independent_adapter_review': identity(REL + '/reviews/delivery/ADAPTER-REVIEW-002.json'),
+    'new_executable_controls': 51,
+    'supplemental_methods': 10,
+    'final_new_run': {'methods': 61, 'failures': 0, 'errors': 0, 'skipped': 0,
+                      'evidence': identity(REL + '/reviews/controls/attempt005/RESULT.json')},
+    'inherited_candidate_run': {'methods': 385, 'failures': 0, 'errors': 0, 'skipped': 0,
+                                'evidence': identity(REL + '/reviews/controls/attempt002/RESULT.json')},
+    'inherited_baseline_run': {'methods': 385, 'failures': 0, 'errors': 0, 'skipped': 0,
+                               'evidence': identity(REL + '/reviews/controls/baseline/RESULT.json')},
+    'N34': {
+        'kind': 'external_source_review_gate',
+        'decision': 'withhold_operational_plan_adoption',
+        'actual_source_completeness_evidence': 'not_supplied_in_P25',
+        'assessment': 'Both independent reviews preserve and assess the withholding obligation. '
+                      'This does not satisfy the actual source-completeness gate for a future plan.',
+        'runtime_method': None, 'runtime_pass': False, 'runtime_skip': False,
+        'historical_N57': 'unchanged_external_obligation'
+    },
+    'preservation': [identity(REL + '/PRESERVATION-FINAL.json'),
+                     identity(REL + '/PROTECTED-BASELINE.json')],
+    'actual_target_starts': 0,
+    'actual_H0_H1_invocations': 0,
+    'scope_limits': ['Synthetic/private and mocked evidence only; no current-host STATIC_READY claim.',
+                     'Only Python 3.12.14/Linux exercised in this phase.',
+                     'Validation is not atomic with kernel execution; inherited kernel, privileged-mount '
+                     'and change-and-restore trust limits remain.',
+                     'Frozen N31 prose says 32 bytes but exact content/binding defines 33; '
+                     'the immutable 33-byte input and fixed-pin refusal were preserved.'],
+    'parent_complete': False,
+    'documentary_publication_delivery_gates': 'pending_after_technical_boundary'
+}
+write(B / 'ACCEPTANCE.json', acceptance)
+
+outcome = {
+    'schema': 'ontokin.c271.p25-outcome/1',
+    'phase': phase['phase'], 'at_utc': NOW,
+    'technical_result': 'accepted_bounded_implementation',
+    'technical_work_stopped': True,
+    'technical_acceptance': identity(REL + '/ACCEPTANCE.json'),
+    'summary': 'Implemented the adopted inspection-plan /0.1.4 finite RTLD path policy. '
+               'Only this bounded implementation is accepted; operational plan adoption remains withheld.',
+    'remaining_in_this_phase': ['Independent canonical-record review',
+                               'Documentation/workflow/whitespace checks',
+                               'Expected-head branch publication and exact readback',
+                               'Independent package audit, saved ZIP/prompts readback, separate receipt '
+                               'and matching live terminal confirmations'],
+    'required_parent_gates': {'R01': 'done', 'R02': 'done', 'R03': 'not_done',
+                              'R04': 'not_done', 'R05': 'not_done', 'P01': 'done', 'P02': 'in_progress'},
+    'operational_plan_adopted': False,
+    'H0': 'not_run', 'H1': 'not_run', 'original_seven': 'not_run', 'full_routine': 'not_run',
+    'host_reconstruction': 'not_performed', 'package_installs': 'not_performed',
+    'main_integration': 'not_performed', 'main_lease_held': False,
+    'observed_main': phase['observed_main'], 'branch': 'work/c271-missing-import-digest-control',
+    'PR274': 'draft_open_unmerged', 'issue273': 'open',
+    'preserved_history': [identity(REL + '/reviews/controls/FAILURE-HISTORY.json'),
+                         identity(REL + '/implementation/MANIFEST.json'),
+                         identity(REL + '/reviews/delivery/ADAPTER-REVIEW-001.json'),
+                         identity(REL + '/reviews/delivery/ADAPTER-EVIDENCE-AUDIT-001.json'),
+                         identity(REL + '/EARLY-PACKAGE-CLARIFICATION.json'),
+                         identity(REL + '/PUBLICATION-CAPABILITY.json')],
+    'current_unknown_operations': [],
+    'historical_unknown_operations': phase['historical_unknown_operations'],
+    'next_action': NEXT,
+    'phase_complete': False,
+    'source_time_status': 'Technical boundary reached; final documentary/publication/delivery gates pending. '
+                          'Separate later delivery records and live terminal confirmations govern completion.'
+}
+write(B / 'OUTCOME.json', outcome)
+
+phase.update(status='bounded_implementation_accepted_delivery_pending',
+             technical_work_stopped=True, technical_boundary_utc=NOW,
+             acceptance_record=REL + '/ACCEPTANCE.json', outcome_record=REL + '/OUTCOME.json',
+             operational_plan_adopted=False, next_action=NEXT, phase_complete=False)
+write(B / 'PHASE.json', phase)
+workers = read(B / 'WORKERS.json')
+for w in workers['workers']:
+    if w['identity'] == '/root/reconcile':
+        w['status'] = 'active_delivery_review_only'
+        w['completed_assignments'].extend([
+            {'role': 'early recovery auditor', 'status': 'completed_with_preserved_clarification',
+             'evidence': 'reviews/delivery/EARLY-AUDIT-SUPPLEMENT.json'},
+            {'role': 'independent test-adapter reviewer', 'status': 'accepted',
+             'evidence': 'reviews/delivery/ADAPTER-REVIEW-002.json'}])
+    else:
+        w['status'] = 'completed_stopped'
+        w['current_unknown_operations'] = []
+write(B / 'WORKERS.json', workers)
+
+tp = REPO / 'docs/workflow/tasks/C271/task.json'
+t = read(tp)
+t['blocked_reason_history'].append({'phase': 'through_P24', 'value': t['blocked_reason'],
+                                    'meaning': 'Historical source-specific refusal; preserved without rewriting.'})
+t['prior_h0_constraints'].append(copy.deepcopy(t['remaining_h0_constraint']))
+t['blocked_reason'] = ('P25 finite RTLD path implementation is independently accepted only for its '
+                       'bounded synthetic/mocked contract. No current-host /0.1.4 H0 plan or actual '
+                       'loader/script source-completeness review has been accepted. H0/H1, full routine '
+                       'and integration gates remain unmet; no earlier failure is waived.')
+t['remaining_h0_constraint'] = {
+    'status': 'current_host_plan_and_external_source_review_required',
+    'evidence': REL + '/ACCEPTANCE.json',
+    'h0_accepted': False, 'operational_plan_adopted': False,
+    'selected_implementation': prod, 'external_gate': 'N34',
+    'next_phase_action': NEXT,
+    'prior_source_objects': 'All earlier source-specific refusals and constraints remain unchanged in '
+                            'prior_h0_constraints and their original records. Do not probe prior-host paths.'
+}
+t['session_phase'] = copy.deepcopy(phase)
+t['next_action'] = NEXT
+t['delivery']['status'] = 'technical_accepted_final_delivery_pending'
+t['delivery']['technical_boundary'] = REL + '/OUTCOME.json'
+t['completion']['finite_rtld_path_implementation'] = {
+    'candidate': prod, 'adapter': test, 'acceptance': REL + '/ACCEPTANCE.json',
+    'source_publication': 'pending_core_publication_and_separate_delivery_receipt'
+}
+for req in t['requirements']:
+    if req['id'] == 'R03':
+        req['evidence'].extend([REL + '/ACCEPTANCE.json', REL + '/OUTCOME.json'])
+    if req['id'] == 'R05':
+        req['evidence'].extend([REL + '/EARLY-RECOVERY-RECEIPT.json', REL + '/EARLY-CLARIFICATION-RECEIPT.json'])
+t['checks'].extend([
+    {'name': 'P25 finite RTLD path controls and bounded supplements', 'result': 'passed',
+     'required': True, 'command': 'Retained exact-source guarded runner; see attempt005/RESULT.json',
+     'methods': 61, 'scope': '51 immutable controls plus 10 supplements; N34 is external and not a runtime pass.',
+     'evidence': [REL + '/reviews/controls/attempt005/RESULT.json']},
+    {'name': 'P25 affected inherited inspector regression', 'result': 'passed',
+     'required': True, 'command': 'Retained exact-source guarded runner; see attempt002/RESULT.json',
+     'methods': 385, 'evidence': [REL + '/reviews/controls/attempt002/RESULT.json']},
+    {'name': 'P25 independent implementation and adapter review', 'result': 'passed',
+     'required': True, 'command': 'Separate real production and test-adapter reviewers',
+     'scope': 'Bounded implementation and synthetic adapter only; actual source gate and parent remain open.',
+     'evidence': [REL + '/reviews/controls/REVIEW-FINAL.json', REL + '/reviews/delivery/ADAPTER-REVIEW-002.json']}
+])
+write(tp, t)
+cp = REPO / 'docs/workflow/CURRENT.json'
+c = read(cp)
+c['next_action'] = {'status': 'ready', 'summary': NEXT,
+                    'suggested_task': 'C271-current-host-H0-plan-review',
+                    'sources': ['docs/workflow/tasks/C271/task.json', REL + '/OUTCOME.json']}
+c['pending_phase_delivery'] = copy.deepcopy(t['delivery'])
+write(cp, c)
+
+append = ('\n### P25 accepted technical boundary\n\n'
+          'The exact candidate and ADAPTER-005 are independently accepted for the bounded implementation. '
+          'The final new run passed 61 methods (51 frozen executable controls and ten supplements); '
+          '385 inherited methods passed at both baseline and candidate. N34 was assessed as an external '
+          'withholding obligation: actual loader/script source-completeness evidence is absent, so '
+          'operational plan adoption remains withheld. It is not a runtime pass or skip. See '
+          '[acceptance](../../../engineering/localized-repair-c271/path-implementation-p25/ACCEPTANCE.json) '
+          'and [outcome](../../../engineering/localized-repair-c271/path-implementation-p25/OUTCOME.json).\n\n'
+          'Technical work has stopped. This phase now permits only documentary checks, review, expected-head '
+          'branch publication and verified delivery. All parent statuses and excluded gates above remain '
+          'unchanged. Prior P23/P24 constraints are historical source-specific evidence; the next current-host '
+          'plan must bind the newly published implementation and a complete fresh source inventory.\n\n'
+          + NEXT + '\n')
+for name in ['PLAN.md', 'REQUIREMENTS.md']:
+    p = tp.parent / name
+    assert '### P25 accepted technical boundary' not in p.read_text()
+    with p.open('a') as f:
+        f.write(append)
+
+(B / 'README.md').write_text(
+    '# C271 P25: finite RTLD path implementation\n\n'
+    'The adopted inspection-plan `/0.1.4` implementation is accepted at a bounded technical boundary. '
+    'RTLD is the dynamic loader path used by the inspected runtime. The new policy proves a fixed set '
+    'of loader paths through two bounded descriptor-based traversals, including the declared parent '
+    'transition and missing candidates. Earlier profiles, public P06 output, pins and limits retain '
+    'their prior meanings.\n\n'
+    'Start with `PHASE.json`, `OUTCOME.json` and `ACCEPTANCE.json`. Production review is in '
+    '`reviews/controls/REVIEW-FINAL.json`; independent adapter review is in '
+    '`reviews/delivery/ADAPTER-REVIEW-002.json`. The applicable runs are baseline (385), attempt002 '
+    '(385 inherited candidate methods) and attempt005 (51 frozen controls plus ten supplements). '
+    'All applicable runs have zero failures, errors and skips. Earlier attempts and findings remain '
+    'as superseded evidence, not silently replaced successes.\n\n'
+    'N34 remains an unmet external source-completeness gate for an actual operational plan. No H0/H1, '
+    'actual Node/ldd/direct-loader execution, host reconstruction, installation, original full routine '
+    'or main integration occurred in P25. C271 stays open, R03-R05 stay not_done, and P02 stays '
+    'in_progress. Source-time pending delivery fields are resolved only by the later separate '
+    '`P25-DELIVERY.json`, saved external receipt and matching live PR274/issue273 terminal records.\n\n'
+    'The initial recovery archive was saved and byte-verified before substantial work. Its historical '
+    'path namespace needed an explicit clarification; the original archive remains unchanged, and '
+    '`EARLY-PACKAGE-CLARIFICATION.json` plus its separately saved receipt preserve the correction.\n\n'
+    '## First remaining action\n\n' + NEXT + '\n')
+write(ROOT / 'state/technical-boundary.json', {
+    'at_utc': NOW, 'phase': phase['phase'], 'next_action': NEXT,
+    'production': prod, 'adapter': test, 'outcome': identity(REL + '/OUTCOME.json')})
+print(json.dumps({'technical_boundary': NOW, 'production_sha256': prod['sha256'],
+                  'adapter_sha256': test['sha256'], 'parent_complete': False}))

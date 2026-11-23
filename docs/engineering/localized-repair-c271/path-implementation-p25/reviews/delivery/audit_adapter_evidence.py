@@ -1,0 +1,204 @@
+"""Read-only independent audit of final P25 adapter evidence; imports no product."""
+from copy import deepcopy
+import datetime
+import hashlib
+import json
+from pathlib import Path
+import re
+
+OUT = Path(__file__).resolve().parent
+P25 = OUT.parent.parent
+REPO = P25.parents[3]
+DESIGN = P25.parent / 'path-design-p24'
+CONTROLS = OUT.parent / 'controls'
+ATTEMPT = CONTROLS / 'attempt005'
+checks = []
+reads = []
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def read(path, coverage='full mechanical bytes; selected semantic evidence reviewed'):
+    raw = path.read_bytes()
+    reads.append({'path': str(path.relative_to(REPO)), 'bytes': len(raw), 'sha256': sha(raw), 'coverage': coverage})
+    return raw
+
+
+def check(name, success, detail=None):
+    checks.append({'check': name, 'passed': bool(success), 'detail': detail})
+
+
+matrix = json.loads(read(DESIGN / 'reviews/path/CONTROL-MATRIX.json', 'full unique semantic content via exact de-duplicated read packets'))
+crosswalk = json.loads(read(DESIGN / 'reviews/path/CONTROL-CROSSWALK.json', 'full unique semantic content via exact de-duplicated read packets'))
+schema = json.loads(read(DESIGN / 'SCHEMA.json', 'full semantic read'))
+base = matrix['base']
+cases = {case['id']: case for case in matrix['cases']}
+cross = {case['id']: case for case in crosswalk['cases']}
+runtime = set(cases) - {'N34'}
+header = json.loads((OUT / 'CONTROL-READ-HEADER.json').read_bytes())
+packets = [json.loads(line) for number in range(1, 5) for line in (OUT / f'CONTROL-READ-{number:02d}.jsonl').read_text().splitlines()]
+packet_results = []
+for packet in packets:
+    row = {**header['common_matrix_fields'], **packet['matrix']}
+    row['expected'] = {**header['common_expected_fields'], **packet['matrix']['expected']}
+    case_hash = sha(json.dumps(row, sort_keys=True, separators=(',', ':'), ensure_ascii=True, allow_nan=False).encode())
+    c = {'id': row['id'], 'kind': row['kind'], 'matrix_case_sha256': case_hash,
+         'expected_boundary': row['expected']['boundary'], 'expected_code': row['expected']['code'],
+         'expected_process_counts': row['expected']['process_counts'], 'execution': row['execution'],
+         **packet['crosswalk_nonduplicated']}
+    packet_results.append(row == cases[row['id']] and c == cross[row['id']])
+check('read_packets_reconstruct_all52_exact_rows', len(packets) == 52 and all(packet_results))
+
+result = json.loads(read(ATTEMPT / 'RESULT.json', 'complete input identities and result fields reviewed; duplicate metadata reused'))
+run_inputs = json.loads(read(ATTEMPT / 'INPUTS.json'))
+check('final_result_binds_input_record', all(result[key] == value for key, value in run_inputs.items()))
+check('final61_run_passed_without_skips', result['tests_run'] == 61 and result['successful'] and result['failures'] == result['errors'] == result['skipped'] == 0 and result['failed_tests'] == [])
+check('source_and_adapter_unchanged_during_run', result['input_source_unchanged'] and result['input_adapter_unchanged'])
+check('no_target_or_routine_claim', result['actual_target_starts'] == result['H0_invocations'] == result['H1_invocations'] == result['routine_invocations'] == 0 and result['process_attempts'] == [] and result['host_qualified'] is False and result['operational_plan_accepted'] is False)
+for entry in result['inputs']:
+    raw = read(REPO / entry['path'], 'identity-only check for candidate production; other required adapter/contract sources separately read')
+    check('input_identity:' + entry['path'], len(raw) == entry['bytes'] and sha(raw) == entry['sha256'])
+adapter = read(CONTROLS / 'ADAPTER-005.py.source', 'full via ADAPTER002 plus complete 002–003,003–004,004–005 deltas and exact unchanged text reuse')
+check('final_adapter_identity', len(adapter) == 71062 and sha(adapter) == '363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da')
+check('final_adapter_saved_and_live_equal', adapter == (ATTEMPT / 'adapter.py.source').read_bytes() == (REPO / 'tests/test_current_host_rtld_paths_v01.py').read_bytes())
+check('final_driver_frozen', (ATTEMPT / 'driver.py.source').read_bytes() == (CONTROLS / 'run_attempt.py').read_bytes())
+for number in range(1, 6):
+    raw = read(CONTROLS / f'ADAPTER-{number:03d}.py.source')
+    frozen = json.loads(read(CONTROLS / f'ADAPTER-FREEZE-{number:03d}.json', 'full semantic read'))
+    check(f'preserved_freeze_{number:03d}', len(raw) == frozen['adapter']['bytes'] and sha(raw) == frozen['adapter']['sha256'])
+log = read(ATTEMPT / 'TEST.log', 'all method outcome lines checked mechanically; no large raw log copied into review')
+log_lines = log.decode().splitlines()
+method_indexes = [index for index, line in enumerate(log_lines) if line.startswith('test_')]
+method_lines = [log_lines[index] for index in method_indexes]
+methods = [line.split(' ', 1)[0] for line in method_lines]
+method_results = []
+for number, index in enumerate(method_indexes):
+    end = method_indexes[number + 1] if number + 1 < len(method_indexes) else len(log_lines)
+    # unittest puts an explicit test docstring and its status on the next line.
+    method_results.append(sum(line.endswith(' ... ok') for line in log_lines[index:end]) == 1)
+check('all_named_methods_ok', len(methods) == len(set(methods)) == 61 and all(method_results))
+check('runtime_inventory_exact_and_N34_external', {method for method in methods if not method.startswith('test_S')} == {'test_' + cid for cid in runtime} and not any('N34' in method for method in methods))
+check('supplements_separate10', len([method for method in methods if method.startswith('test_S')]) == 10)
+
+
+def expected_input(case):
+    context = deepcopy(base)
+    context['resolution_profile'] = schema['new_pair']['resolution_profile']
+    entries = {row['path']: row for row in base['entries']}
+    context['model'] = {'schema': schema['rtld_paths']['schema_value'],
+                        'components': [{**deepcopy(row), 'identity': deepcopy(entries[row['path']]['identity'])} for row in schema['rtld_paths']['components_fixed_fields']],
+                        'absences': deepcopy(schema['rtld_paths']['absences_exact_ordered_rows'])}
+    context['omitted_guards'] = []
+    for change in case['exact_changes']:
+        op = change['op']
+        if op == 'set':
+            context[change['path']] = deepcopy(change['value'])
+        elif op in ['set_entry', 'set_entry_target']:
+            index = next(i for i, row in enumerate(context['entries']) if row['path'] == change['path'])
+            if op == 'set_entry':
+                context['entries'][index] = {'path': change['path'], **deepcopy(change['value'])}
+            else:
+                context['entries'][index]['target'] = change['value']
+        elif op == 'replace_absence_with_entry':
+            context['absent_entries'].remove(change['path'])
+            context['entries'].append({key: deepcopy(value) for key, value in change.items() if key != 'op'})
+        elif op == 'declare_out_of_scope':
+            context['primitive_out_of_scope'] = deepcopy(change['value'])
+        elif op == 'omit_new_policy':
+            context['model'] = None
+        elif op == 'add_policy_member':
+            context['model'][change['key']] = deepcopy(change['value'])
+        elif op == 'remove_candidate':
+            context['candidate_rows'] = [row for row in context['candidate_rows'] if row['path'] != change['path']]
+        elif op == 'set_candidate_order':
+            previous = {row['path']: row for row in context['candidate_rows']}
+            context['candidate_rows'] = [previous[path] for path in change['value']]
+        elif op == 'append_duplicate_candidate':
+            context['candidate_rows'].append(deepcopy(next(row for row in context['candidate_rows'] if row['path'] == change['path'])))
+        elif op == 'append_candidate':
+            context['candidate_rows'].append(deepcopy(change['value']))
+        elif op == 'set_candidate_field':
+            row = next(row for row in context['candidate_rows'] if row['path'] == change['path'])
+            components = change['field'].split('.')
+            for component in components[:-1]:
+                row = row[component]
+            row[components[-1]] = deepcopy(change['value'])
+        elif op == 'omit_guard':
+            context['omitted_guards'].append(change['path'])
+        elif op in ['add_exception', 'add_projected_alias', 'add_projected_host_member']:
+            context[op] = deepcopy(change)
+        elif op == 'select_full_plan_route':
+            context['full_plan_route'] = change['value']
+        else:
+            raise ValueError('Unexpected frozen mutation: ' + op)
+    context['fault_events'] = deepcopy(case['fault_events'])
+    return context
+
+
+rules = {row['rule_id']: row for row in schema['failure_contract']['rules']}
+case_reviews = []
+records = {}
+for cid in sorted(runtime):
+    path = ATTEMPT / 'observations' / (cid + '.json')
+    raw = read(path)
+    observed = json.loads(raw)
+    records[cid] = observed
+    case = cases[cid]
+    error = observed['observed_error']
+    expected = case['expected']['code']
+    outcome = error is None if expected is None else (observed['same_callback_object'] if expected == 'same_object_callback_exception' else error['code'] == expected)
+    diagnostics = []
+    current = error
+    while isinstance(current, dict) and current.get('code'):
+        details = current.get('details', {})
+        if details.get('stage') == 'rtld_paths':
+            rule = rules[details['rule_id']]
+            diagnostics.append(current['code'] == rule['category'] and current['reason'] == rule['reason'] and set(details) == set(schema['failure_contract']['new_error_details_required_keys']))
+        current = current.get('cause')
+    checks_for_case = {
+        'immutable_case': observed['case'] == case,
+        'immutable_crosswalk': observed['crosswalk'] == cross[cid],
+        'exact_pre_event_input': observed['input'] == expected_input(case),
+        'expected_outcome': outcome,
+        'normative_diagnostic_reason_and_category': all(diagnostics),
+        'recorded_pass': observed['passed'] is True,
+        'actual_counts_zero': observed['actual_process_counts'] == matrix['actual_target_counts'],
+        'mock_counts_exact': observed['mock_process_counts'] == case['expected']['process_counts'],
+        'no_host_or_plan_admission': all(observed[name] is False for name in ['operational_plan_accepted', 'STATIC_READY', 'host_qualified']),
+        'no_forbidden_call': observed['forbidden_calls'] == [],
+        'all_descriptors_closed_once': observed['live'] == [] and sorted(observed['opened']) == sorted(observed['closed']) and len(observed['closed']) == len(set(observed['closed'])),
+        'finite_descriptors': observed['maximum_live_descriptors'] <= 10,
+        'fault_injected_once': len(observed['faults_triggered']) == len(case['fault_events']),
+    }
+    case_reviews.append({'id': cid, 'method': 'RTLDPathControls.test_' + cid, 'kind': case['kind'], 'boundary': case['expected']['boundary'], 'applicability': cross[cid]['applicability'], 'matrix_case_sha256': cross[cid]['matrix_case_sha256'], 'evidence': str(path.relative_to(REPO)), 'evidence_sha256': sha(raw), 'checks': checks_for_case, 'accepted': all(checks_for_case.values())})
+check('all51_case_records_match_frozen_contract', len(case_reviews) == 51 and all(row['accepted'] for row in case_reviews))
+
+for cid in ['P01', 'P02', 'P03']:
+    observed = records[cid]
+    passes = []
+    for row in observed['trace']:
+        if row['operation'] == 'open' and row['path'] == '/' and row['dir_fd'] is None:
+            passes.append([])
+        if passes:
+            passes[-1].append(row)
+    check(cid + '_two_fresh_root_passes', len(passes) == 2)
+    if cid == 'P01':
+        check('P01_each_pass_physical_parent_pop', all(len([row for row in rows if row['operation'] == 'open' and row['name'] == '..' and row['parent_path'] == '/usr/lib64' and row['path'] == '/usr']) == 1 for rows in passes))
+    else:
+        witness = schema['rtld_paths']['absences_exact_ordered_rows'][1 if cid == 'P02' else 0]
+        check(cid + '_two_exact_absence_lookups_per_pass', all(len([row for row in rows if row['operation'] == 'stat' and row['path'] == witness['first_missing'] and row['parent_path'] == witness['nearest_existing_ancestor']]) == 2 for rows in passes))
+
+f09 = records['F09']
+attempt = f09['caller']['attempt']['attempt']
+check('F09_retains_mocked_prior_start_and_refuses_success', attempt['actual_direct_starts'] == attempt['observed_direct_starts'] == 1 and attempt['state'] == 'REJECTED' and attempt['start'] is not None and attempt['supervisor_process'] is not None and attempt['postflight']['passed'] is False and f09['caller']['process']['returncode'] == 0)
+check('F08_pre_event_absence_retained', records['F08']['input']['absent_entries'] == base['absent_entries'])
+for cid in ['F08', 'F09', 'F13']:
+    baseline = records[cid]['caller']['baseline_proof']
+    check(cid + '_baseline_proof_not_mutated_by_later_fault', baseline['root_opens'] == 2 and baseline['faults_triggered'] == [] and baseline['live'] == [] and len([row for row in baseline['trace'] if row['operation'] == 'open' and row['path'] == '/' and row['dir_fd'] is None]) == 2)
+
+summary = {'checks': len(checks), 'passed': sum(row['passed'] for row in checks), 'failed': sum(not row['passed'] for row in checks), 'case_records': len(case_reviews), 'accepted_case_records': sum(row['accepted'] for row in case_reviews)}
+report = {'schema': 'ontokin.c271.p25-independent-adapter-evidence-audit/1', 'reviewer': '/root/reconcile', 'at_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'summary': summary, 'checks': checks, 'case_reviews': case_reviews, 'read_set': reads, 'external_obligation': {'id': 'N34', 'status': 'external_only_operational_adoption_withheld', 'runtime_method': None, 'skipped': False, 'meaning': 'No actual loader source-completeness review or H0/H1 is supplied by these synthetic controls. Historical N57 remains external.'}, 'limits': ['No production import or behavioral run performed by this audit; it checks retained final-run evidence and the independently reviewed adapter.', 'Production source bytes were hashed solely to bind evidence; production implementation review belongs to /root/controls.', 'All51 records parsed and mechanically checked; full raw syscall traces were not all semantically reread. Relevant faults, outcomes and bounded trace summaries were reviewed.']}
+(OUT / 'ADAPTER-EVIDENCE-AUDIT.json').write_text(json.dumps(report, indent=2) + '\n')
+print(json.dumps({'summary': summary, 'failed_checks': [row for row in checks if not row['passed']], 'failed_cases': [row for row in case_reviews if not row['accepted']]}, indent=2))

@@ -1,0 +1,2003 @@
+{
+  "schema": "ontokin.c271.p25-independent-adapter-evidence-audit/1",
+  "reviewer": "/root/reconcile",
+  "at_utc": "2026-11-23T14:25:03.215838+00:00",
+  "summary": {
+    "checks": 37,
+    "passed": 37,
+    "failed": 0,
+    "case_records": 51,
+    "accepted_case_records": 51
+  },
+  "checks": [
+    {
+      "check": "read_packets_reconstruct_all52_exact_rows",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "final_result_binds_input_record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "final61_run_passed_without_skips",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source_and_adapter_unchanged_during_run",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no_target_or_routine_claim",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "input_identity:docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/run_attempt.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "input_identity:prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "input_identity:docs/engineering/localized-repair-c271/path-implementation-p25/implementation/candidate001/current_host_inspection_v01.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "input_identity:tests/test_current_host_rtld_paths_v01.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "input_identity:docs/engineering/localized-repair-c271/path-design-p24/ADOPTION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "input_identity:docs/engineering/localized-repair-c271/path-design-p24/DECISION-CANDIDATE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "input_identity:docs/engineering/localized-repair-c271/path-design-p24/SCHEMA.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "input_identity:docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-MATRIX.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "input_identity:docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-CROSSWALK.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "final_adapter_identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "final_adapter_saved_and_live_equal",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "final_driver_frozen",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "preserved_freeze_001",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "preserved_freeze_002",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "preserved_freeze_003",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "preserved_freeze_004",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "preserved_freeze_005",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all_named_methods_ok",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "runtime_inventory_exact_and_N34_external",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "supplements_separate10",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "all51_case_records_match_frozen_contract",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "P01_two_fresh_root_passes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "P01_each_pass_physical_parent_pop",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "P02_two_fresh_root_passes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "P02_two_exact_absence_lookups_per_pass",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "P03_two_fresh_root_passes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "P03_two_exact_absence_lookups_per_pass",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "F09_retains_mocked_prior_start_and_refuses_success",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "F08_pre_event_absence_retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "F08_baseline_proof_not_mutated_by_later_fault",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "F09_baseline_proof_not_mutated_by_later_fault",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "F13_baseline_proof_not_mutated_by_later_fault",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "case_reviews": [
+    {
+      "id": "F01",
+      "method": "RTLDPathControls.test_F01",
+      "kind": "fault",
+      "boundary": "descriptor_relative_absence_lookup",
+      "applicability": "mocked_syscall_fault",
+      "matrix_case_sha256": "726e4438dcdc523a02380c088fd60ec8d202181a5e545ed191585d25308a0fdd",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F01.json",
+      "evidence_sha256": "ffd392238344ed63005c737523a5a91645c89aeb5dfbfd0e18441e391bf24213",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "F02",
+      "method": "RTLDPathControls.test_F02",
+      "kind": "fault",
+      "boundary": "descriptor_relative_absence_lookup",
+      "applicability": "mocked_syscall_fault",
+      "matrix_case_sha256": "48da0ccb9a4d5fa6ac3899fe8e2c9ee472b497862a7889a9e615c0f5a7a59c6e",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F02.json",
+      "evidence_sha256": "9dfa31eef5ee06bb3619613b67a30abcbdafcad9bed1275b5cc40ec6ebe62722",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "F03",
+      "method": "RTLDPathControls.test_F03",
+      "kind": "fault",
+      "boundary": "descriptor_relative_absence_lookup",
+      "applicability": "mocked_syscall_fault",
+      "matrix_case_sha256": "f14ca69cbe0214f692bb7735b3e6a5bdad5941f5d8c5d6bbee98591dcc9ae861",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F03.json",
+      "evidence_sha256": "6ec0457589580bed2ac28d958094c8fa3e4a993d0e07c0b9d3bc6b080ca36daa",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "F04",
+      "method": "RTLDPathControls.test_F04",
+      "kind": "fault",
+      "boundary": "descriptor_relative_absence_lookup",
+      "applicability": "mocked_syscall_fault",
+      "matrix_case_sha256": "416bfd5016a55a4205b38f443bbc68c94a572569635e96a326da4ad48677f02f",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F04.json",
+      "evidence_sha256": "6d93eddb6a89b832a91974c2e90d6672cf2252e2f81c7363599a85439e460dc9",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "F05",
+      "method": "RTLDPathControls.test_F05",
+      "kind": "fault",
+      "boundary": "descriptor_relative_component_open",
+      "applicability": "mocked_identity_race",
+      "matrix_case_sha256": "f7625e24b6689cca8d346cd29abceb5acf3669c1b6241a4ee28cb3ddeebc9a0a",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F05.json",
+      "evidence_sha256": "1f615f5e01e92ca67c0b2c7034cbd124561cf05f33be2539645adee7fdfc0741",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "F06",
+      "method": "RTLDPathControls.test_F06",
+      "kind": "fault",
+      "boundary": "descriptor_relative_symlink_read",
+      "applicability": "mocked_identity_race",
+      "matrix_case_sha256": "ef33740a114a97d76909d4b0a98942d5c892333fed744371de2d111f399dfd15",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F06.json",
+      "evidence_sha256": "f53002f12132d82b7c029d8795f8d0825002891fee8216e759caef1f93e7e6ed",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "F07",
+      "method": "RTLDPathControls.test_F07",
+      "kind": "fault",
+      "boundary": "final_namespace_revalidation",
+      "applicability": "mocked_namespace_race",
+      "matrix_case_sha256": "ba7d90fffb0ef2ddc8abdc76150af4899b4d4a172202cd9557156ab0174f62bf",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F07.json",
+      "evidence_sha256": "6c1fe4e927de483be09213e9d54cafda582b9818071f3a10330f2005887d97f7",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "F08",
+      "method": "RTLDPathControls.test_F08",
+      "kind": "fault",
+      "boundary": "full_precommand_recheck",
+      "applicability": "mocked_full_recheck",
+      "matrix_case_sha256": "60961825301cf4dacd4609a512c249ce9f87a73a798a71fa219919701ed36392",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F08.json",
+      "evidence_sha256": "b8df2834f806254c754ace23e39a4896fac11fd08602a7de23693202b0048aee",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "F09",
+      "method": "RTLDPathControls.test_F09",
+      "kind": "fault",
+      "boundary": "full_postcommand_recheck",
+      "applicability": "mocked_postflight_recheck",
+      "matrix_case_sha256": "7a1dd3af28e8a2e01e44bea6ebb3babd8c57d08af35df1034d49b571d0d8ac50",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F09.json",
+      "evidence_sha256": "66039cfb310e46c25d69180c38c40358b6c78a3b935fa4d9508ec52f46ef6242",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "F10",
+      "method": "RTLDPathControls.test_F10",
+      "kind": "fault",
+      "boundary": "deadline_callback",
+      "applicability": "mocked_callback_fault",
+      "matrix_case_sha256": "54fea8f538ac15506756d4794c4cdc460f48eb726c774287a151a54c729551d4",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F10.json",
+      "evidence_sha256": "88a1ff7fbce54d35d90d511cf0bc24c5dd3047bcf61d71af191dd1d6894cfcc5",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "F11",
+      "method": "RTLDPathControls.test_F11",
+      "kind": "fault",
+      "boundary": "descriptor_relative_component_open",
+      "applicability": "mocked_capability_fault",
+      "matrix_case_sha256": "05187f57af9bd5e36907f6f57eb55fdd72ea1497b59348f1644bbae512a0c23c",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F11.json",
+      "evidence_sha256": "474f5fccc639f9368d3f423fc636b260728aa3c2b00e95cdb7d46bfcad45c75d",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "F12",
+      "method": "RTLDPathControls.test_F12",
+      "kind": "fault",
+      "boundary": "terminal_file_read",
+      "applicability": "mocked_terminal_read_race",
+      "matrix_case_sha256": "431f3abd406517d21d5ed8d86f5e9c75b717a110daffbce364c4059e7fb202d3",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F12.json",
+      "evidence_sha256": "3e0c32ce27856f25e856a301c651257fd11f357acc00579718cf900ac1177948",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "F13",
+      "method": "RTLDPathControls.test_F13",
+      "kind": "fault",
+      "boundary": "final_launch_path_reproof",
+      "applicability": "mocked_final_launch_drift",
+      "matrix_case_sha256": "439a36b350b790c94021c3bd18bc8bf1b220e88b395b439da9fba06210ddb9b6",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F13.json",
+      "evidence_sha256": "524b53a372d41d17a457f9535aa6698d61679dd06657f826e39c75a90e5d61d0",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N01",
+      "method": "RTLDPathControls.test_N01",
+      "kind": "refusal",
+      "boundary": "legacy_existing_chain",
+      "applicability": "legacy_primitive",
+      "matrix_case_sha256": "6c40248186f548ffc6341c5fa21612696c0ed714370be75fbe29f350a87fd2bf",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N01.json",
+      "evidence_sha256": "0e5d44194b9125db2c3f765e891d7dc505d671309210d81caa38ae886d151f74",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N02",
+      "method": "RTLDPathControls.test_N02",
+      "kind": "refusal",
+      "boundary": "new_profile_dispatch",
+      "applicability": "private_profile_selector",
+      "matrix_case_sha256": "96b23c52d8641b27212811b9406697a56742007f2ba11e38573f69cdb6d18369",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N02.json",
+      "evidence_sha256": "ad0c3f1572554a8534468803206efd29f3680a7f1ef9fad8cfd3e5881ce71a9b",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N03",
+      "method": "RTLDPathControls.test_N03",
+      "kind": "refusal",
+      "boundary": "new_policy_closed_shape",
+      "applicability": "private_shape_selector",
+      "matrix_case_sha256": "b28a54a12872f0b850bac1132508f9c6edca9b25bab41e687eb0aabe93783a86",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N03.json",
+      "evidence_sha256": "dbe840ed5074132b8c43b341fde0d6d9dc1eed306fa6d503e7936f974df77175",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N04",
+      "method": "RTLDPathControls.test_N04",
+      "kind": "refusal",
+      "boundary": "new_policy_closed_shape",
+      "applicability": "private_shape_selector",
+      "matrix_case_sha256": "da5ef216db2fe050cafe0a6cf3d4e64e589abc7b2e24cb4c39f4100e96ec9ad1",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N04.json",
+      "evidence_sha256": "c83160eb823da9dd4c5f162a32ced93efd289fc9b9ba6d497a45774e6449dce4",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N05",
+      "method": "RTLDPathControls.test_N05",
+      "kind": "refusal",
+      "boundary": "external_digest_before_decode",
+      "applicability": "external_digest_primitive",
+      "matrix_case_sha256": "f5e297f5ae8527f83c86fdc4a3dd6b6f01fc3608501c77c2fc60196f5ef6589c",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N05.json",
+      "evidence_sha256": "97349c8c04f39a0a1844aee9d30522903ad80ac2355d2eaea0db380b13105c40",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N06",
+      "method": "RTLDPathControls.test_N06",
+      "kind": "refusal",
+      "boundary": "literal_rtldlist_equality",
+      "applicability": "private_candidate_sequence",
+      "matrix_case_sha256": "bae3857421c0376e852953a2a36b14af486885b2b42a971aab7a0c431341c805",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N06.json",
+      "evidence_sha256": "49cb7c14aa000907ad19a243977a1be1ca8bb9801286bd7199ae1b4fe53ac933",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N07",
+      "method": "RTLDPathControls.test_N07",
+      "kind": "refusal",
+      "boundary": "literal_rtldlist_equality",
+      "applicability": "private_candidate_sequence",
+      "matrix_case_sha256": "5ae8d355c8cebfa7ef4ef1a4b95e52e35d017b7a07b5b803a66d0546a3963ab2",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N07.json",
+      "evidence_sha256": "bd37389f93ed786f110fed818bc94b5b554fa2617db838b99ee45b94d13c61e6",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N08",
+      "method": "RTLDPathControls.test_N08",
+      "kind": "refusal",
+      "boundary": "candidate_duplicate_check",
+      "applicability": "private_candidate_sequence",
+      "matrix_case_sha256": "07a88e03c942ba20371e7929a71b38a5c2683a39088fb8d06a18ca2e0a7dc635",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N08.json",
+      "evidence_sha256": "cd62a295b33ec5eb354b60024fbfa5c95212b98f086080d2bc8d197438a98fb4",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N09",
+      "method": "RTLDPathControls.test_N09",
+      "kind": "refusal",
+      "boundary": "literal_rtldlist_equality",
+      "applicability": "private_candidate_sequence",
+      "matrix_case_sha256": "8a312f946e67a8459ec162a40cd96a5fcd2e989b2bbc31b653914971c34046f0",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N09.json",
+      "evidence_sha256": "69f5c71dde116d8d974418f53d5a0a8a4feb6ddf0cd2546091311ec887ddd153",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N10",
+      "method": "RTLDPathControls.test_N10",
+      "kind": "refusal",
+      "boundary": "missing_ancestor_proof",
+      "applicability": "private_absence_relation",
+      "matrix_case_sha256": "918c824c4660359e285c36cde34d7720c46c80e6fd00334e970a4b3c25f5bd77",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N10.json",
+      "evidence_sha256": "4e7ce6958f54833f95efe35231c8ca948a481d050527f95b0606d92c4bc1b401",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N11",
+      "method": "RTLDPathControls.test_N11",
+      "kind": "refusal",
+      "boundary": "aliased_parent_absence_proof",
+      "applicability": "private_absence_relation",
+      "matrix_case_sha256": "f3649f532a20026ee4e3e1bbb9ad5d69e54ae3c2d483c3af1101c37cd05d438f",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N11.json",
+      "evidence_sha256": "f90a15f4b650db347b7af024bc00916b84d02ed919cd0bf87bf6f82ba96e3b0f",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N12",
+      "method": "RTLDPathControls.test_N12",
+      "kind": "refusal",
+      "boundary": "missing_ancestor_proof",
+      "applicability": "private_absence_primitive",
+      "matrix_case_sha256": "ca913f0086e387a769616bee7fe0ec89c9c129dbf8ec8d666b43d0227a918fba",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N12.json",
+      "evidence_sha256": "5da575f9f7ae8f9f433a140b1cbd20fd73b43688f56411a95d1c97464031cfb1",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N13",
+      "method": "RTLDPathControls.test_N13",
+      "kind": "refusal",
+      "boundary": "aliased_parent_absence_proof",
+      "applicability": "private_absence_primitive",
+      "matrix_case_sha256": "cd5942b9af76f0baf46b93119125704f33caa94728974f0b6b3559428d61e76d",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N13.json",
+      "evidence_sha256": "f090b2fc738e25e6f11b0f82b5c9c7bec48fa00c16f0935138f61d2f32d16941",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N14",
+      "method": "RTLDPathControls.test_N14",
+      "kind": "refusal",
+      "boundary": "missing_ancestor_proof",
+      "applicability": "private_absence_primitive",
+      "matrix_case_sha256": "7f34ff4fdad0d3005301c60941f77dac65e7e2bce5f409cf892ccc90bdd3c9fe",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N14.json",
+      "evidence_sha256": "057cbc3aa2741c7da2f59332dd4cd693e203b22111a04746330f0e5f7f185f36",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N15",
+      "method": "RTLDPathControls.test_N15",
+      "kind": "refusal",
+      "boundary": "missing_ancestor_proof",
+      "applicability": "private_absence_primitive",
+      "matrix_case_sha256": "dda1fdca06599d2eec3cfd384e483ccdf905caf09d3c8a18c96a64c420c0374a",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N15.json",
+      "evidence_sha256": "b8ac8e8562072afd391d75f373010596ae92fe8a5cb669cb4356aaa3ccdf8b0d",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N16",
+      "method": "RTLDPathControls.test_N16",
+      "kind": "refusal",
+      "boundary": "alias_terminal_equality",
+      "applicability": "private_alias_terminal_relation",
+      "matrix_case_sha256": "9318c5d25d9b3eb20f146b4835bed50b592dd7b2297c77294848bbdee29dabf1",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N16.json",
+      "evidence_sha256": "72b0b7dac047d789900eca01f0b795d1eff44f8f09220ff379b12fa07fe03fa9",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N17",
+      "method": "RTLDPathControls.test_N17",
+      "kind": "refusal",
+      "boundary": "guarded_component_identity",
+      "applicability": "private_component_primitive",
+      "matrix_case_sha256": "b310b4bd3b6c265780827c13a05621ae6487529cf66f394502f319531348fe5a",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N17.json",
+      "evidence_sha256": "cd69992b258690c1ae8aa5602b8000286f06d1b4e70c3d976360f5b54917bfa2",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N18",
+      "method": "RTLDPathControls.test_N18",
+      "kind": "refusal",
+      "boundary": "terminal_nofollow_file_proof",
+      "applicability": "private_terminal_primitive",
+      "matrix_case_sha256": "2a40ae80258c77895e6825c8652572f1235c8b4be1af33bf4ebedc75a8975042",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N18.json",
+      "evidence_sha256": "621f4d2e81b00cf85ff600a6014be395e43c0e3ca877de94d297816f81d163e7",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N19",
+      "method": "RTLDPathControls.test_N19",
+      "kind": "refusal",
+      "boundary": "explicit_edge_admission",
+      "applicability": "private_raw_edge_primitive",
+      "matrix_case_sha256": "1a32cba01b922ce507cf509827208113cf575e396ff5dcbb78bd114ec3495fba",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N19.json",
+      "evidence_sha256": "7e2ab122a5e9f307b07f1b71fdd28794294e363dc4044fbbefae66a92706f3ee",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N20",
+      "method": "RTLDPathControls.test_N20",
+      "kind": "refusal",
+      "boundary": "explicit_edge_admission",
+      "applicability": "private_raw_edge_primitive",
+      "matrix_case_sha256": "db637a1393a5a74dee0ed73bdb876beb8f909c5f891cda554c1a65c6ad8c6d7e",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N20.json",
+      "evidence_sha256": "277e022c47d89e84b456a52c9cf83c3aa7bf50aadf79aacca6bc4e64785a266b",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N21",
+      "method": "RTLDPathControls.test_N21",
+      "kind": "refusal",
+      "boundary": "explicit_edge_admission",
+      "applicability": "private_raw_edge_primitive",
+      "matrix_case_sha256": "28983bf7507c8ebd951a2c0f230dc34134862c727e675ee13ed9e1c0a1b022c0",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N21.json",
+      "evidence_sha256": "a3bcd2946b4213f318d6defb6a22c18e6bba014967c61083ba0b08de72e8eae6",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N22",
+      "method": "RTLDPathControls.test_N22",
+      "kind": "refusal",
+      "boundary": "explicit_edge_admission",
+      "applicability": "private_raw_edge_primitive",
+      "matrix_case_sha256": "5009036d219388809da88f95c801d0c7e7c9c5135868a7645587ac93499d1bab",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N22.json",
+      "evidence_sha256": "1bb402dfe62177be9ec70ca25941426a973923c73951198536943736e48b0a3e",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N23",
+      "method": "RTLDPathControls.test_N23",
+      "kind": "refusal",
+      "boundary": "explicit_edge_admission",
+      "applicability": "private_raw_edge_primitive",
+      "matrix_case_sha256": "a757949452043076f5bdf4bc6d9c795e966b17548fd40655855e27cb14a300bd",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N23.json",
+      "evidence_sha256": "7c75c33b780bf90bfa148b3476b259938378f53abd8cd5a3afbdc85483d7aef2",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N24",
+      "method": "RTLDPathControls.test_N24",
+      "kind": "refusal",
+      "boundary": "explicit_edge_admission",
+      "applicability": "private_raw_edge_primitive",
+      "matrix_case_sha256": "fe587f2c857844cae20e2e2e37ec28e189838b2f70d88dea73e238ad21b2b1b3",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N24.json",
+      "evidence_sha256": "080dd94d636cacf57f9040d836a83d2c95c21e5af50e304805b7df7489a20fc8",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N25",
+      "method": "RTLDPathControls.test_N25",
+      "kind": "refusal",
+      "boundary": "finite_path_input_admission",
+      "applicability": "private_input_bound_primitive",
+      "matrix_case_sha256": "ea63a9a65be9d172f8439a68d52b43292ecb7a4822b6993a60ad6f700061d980",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N25.json",
+      "evidence_sha256": "ce639cac4de1dca8e123fc2d70e35083b0949f9f7e6d40bdb6ee929aca7b67c4",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N26",
+      "method": "RTLDPathControls.test_N26",
+      "kind": "refusal",
+      "boundary": "finite_path_input_admission",
+      "applicability": "private_input_bound_primitive",
+      "matrix_case_sha256": "222c7b15facd563e969133c33774c0a44545cd5790c9c3d9063be5f592e93775",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N26.json",
+      "evidence_sha256": "97a10b1e5e5620a93c51fa818e249cd305c9a0e0caf2b38e7c93cc34e60cc794",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N27",
+      "method": "RTLDPathControls.test_N27",
+      "kind": "refusal",
+      "boundary": "new_policy_scope",
+      "applicability": "private_scope_primitive",
+      "matrix_case_sha256": "d53a0503e32efaec3ab5dc7368d9eddf7b56fd056a0fde63ff16173d80bf054c",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N27.json",
+      "evidence_sha256": "beec910c14ccccf25b8f379bbd3b0319a955c9232496395070b4b6e00df78809",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N28",
+      "method": "RTLDPathControls.test_N28",
+      "kind": "refusal",
+      "boundary": "complete_guard_coverage",
+      "applicability": "private_guard_relation",
+      "matrix_case_sha256": "c3d268f6fab1bca99e5e84921928c1191193da9b3c4bc04c2ad70142103e4cdc",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N28.json",
+      "evidence_sha256": "c4a4512e8e7abb9bc474a8bb7725f66d56fb86a2818dbc2671de750d1c9499e8",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N29",
+      "method": "RTLDPathControls.test_N29",
+      "kind": "refusal",
+      "boundary": "complete_guard_coverage",
+      "applicability": "private_guard_relation",
+      "matrix_case_sha256": "026d3b85b56d080bab344521344a708cc6cf5efc125d01c4238fc9e939e511c1",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N29.json",
+      "evidence_sha256": "d03e2b3bfaa0bb8947e956d08a79533a3bab561771a414920ef7140c20cc909b",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N30",
+      "method": "RTLDPathControls.test_N30",
+      "kind": "refusal",
+      "boundary": "candidate_binding_equality",
+      "applicability": "private_candidate_binding_relation",
+      "matrix_case_sha256": "16d5b8f111bebf28a1addef86065f9b412002adc2475c2a46462d9801bad51e8",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N30.json",
+      "evidence_sha256": "85361f68798ca688140fe50be5c95db8f9bc4067f1d84ac1d8a8f2739cfcc24a",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N31",
+      "method": "RTLDPathControls.test_N31",
+      "kind": "refusal",
+      "boundary": "inherited_operational_pin_gate",
+      "applicability": "inherited_pin_relation_primitive",
+      "matrix_case_sha256": "e5d2b31a6709326b32cc8bcefe5f276140c411371ec2db8b85b9886d56c9eac5",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N31.json",
+      "evidence_sha256": "09d7a4c1e9d210d3365ab77da16037fc29e71743b42e980f7272ec9e140dd768",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N32",
+      "method": "RTLDPathControls.test_N32",
+      "kind": "refusal",
+      "boundary": "P06_projection_closed_shape",
+      "applicability": "mocked_P06_projection",
+      "matrix_case_sha256": "e3008456d5dfad1188cda3e371bcce679e4c35baa2ecdb8d61202c15612bfd42",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N32.json",
+      "evidence_sha256": "420941c674b8d909b9a94563979c0e227a24028c5be3bd2951301125b8a8626c",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "N33",
+      "method": "RTLDPathControls.test_N33",
+      "kind": "refusal",
+      "boundary": "P06_projection_set_equality",
+      "applicability": "mocked_P06_projection",
+      "matrix_case_sha256": "149afcce644ffae375441d89def45453d6e40391998d340529079def5ee7a9cf",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N33.json",
+      "evidence_sha256": "8c59a7cb20c0552d0f711738df6cde4e46c9e02cc1ec0c824a392de973180888",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "P01",
+      "method": "RTLDPathControls.test_P01",
+      "kind": "positive",
+      "boundary": "alias_component_proof",
+      "applicability": "private_alias_primitive",
+      "matrix_case_sha256": "04d97c4f00104a0ffc4197180e3d1e6aca817e5bda71f8ad3d72c9f6fc4436a4",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P01.json",
+      "evidence_sha256": "7e95d4b6ff1ecd01eedadd98c689a2dba10995f83fed6b12bb63048c931f2f0a",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "P02",
+      "method": "RTLDPathControls.test_P02",
+      "kind": "positive",
+      "boundary": "missing_ancestor_proof",
+      "applicability": "private_absence_primitive",
+      "matrix_case_sha256": "765888d9a56fef05174e9086be22b7493e2b490822fd3b9da26845507896a87f",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P02.json",
+      "evidence_sha256": "38accfff568746ee9da070c6b115e1a0bfeff54cb357294fc247d2bb1d0f1fc0",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "P03",
+      "method": "RTLDPathControls.test_P03",
+      "kind": "positive",
+      "boundary": "aliased_parent_absence_proof",
+      "applicability": "private_absence_primitive",
+      "matrix_case_sha256": "94d68fafea0614b10ef62288f369c18b32c12c490e4a05842cd96d6ffc8dd4aa",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P03.json",
+      "evidence_sha256": "8b2cacdb47f2da9ee1f0df3cff1f3190313fe4a3def3b0cbe6373634fc8cfc70",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "P04",
+      "method": "RTLDPathControls.test_P04",
+      "kind": "positive",
+      "boundary": "alias_component_proof",
+      "applicability": "private_alias_primitive",
+      "matrix_case_sha256": "64081db111428f4fb598bd2cc36dd362084456094d8ed8d9e690a49d7234efc3",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P04.json",
+      "evidence_sha256": "fd627c0fda0f24abafdce028b497e2f33235e4bb78c7afa1d903f18f62d41465",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    },
+    {
+      "id": "P05",
+      "method": "RTLDPathControls.test_P05",
+      "kind": "positive",
+      "boundary": "rtld_order_and_path_aggregate",
+      "applicability": "private_path_order_aggregate",
+      "matrix_case_sha256": "dce6e22434efb7fa2f1b1e24941035f8a84858bcc87342346d0ac1b106aa50b1",
+      "evidence": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P05.json",
+      "evidence_sha256": "78dd9985c342c5519700ee01fc3a4bc953c5aa9a6967bd52e22c9c36662836dd",
+      "checks": {
+        "immutable_case": true,
+        "immutable_crosswalk": true,
+        "exact_pre_event_input": true,
+        "expected_outcome": true,
+        "normative_diagnostic_reason_and_category": true,
+        "recorded_pass": true,
+        "actual_counts_zero": true,
+        "mock_counts_exact": true,
+        "no_host_or_plan_admission": true,
+        "no_forbidden_call": true,
+        "all_descriptors_closed_once": true,
+        "finite_descriptors": true,
+        "fault_injected_once": true
+      },
+      "accepted": true
+    }
+  ],
+  "read_set": [
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-MATRIX.json",
+      "bytes": 67833,
+      "sha256": "d52f64ffc28f7baf04e360f167fb56192cc6fb0baf6b36fd9f085907732a3196",
+      "coverage": "full unique semantic content via exact de-duplicated read packets"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-CROSSWALK.json",
+      "bytes": 57380,
+      "sha256": "1d472d6036119805882d6a4996cc6d00cacda8de421f77866483c682894daf16",
+      "coverage": "full unique semantic content via exact de-duplicated read packets"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/SCHEMA.json",
+      "bytes": 26706,
+      "sha256": "4b0c73afe6c185e8b2e6a0f72739d3371b31caa6a4d106e16c3a2ed1588eebbe",
+      "coverage": "full semantic read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/RESULT.json",
+      "bytes": 3107,
+      "sha256": "1bc9592301dde9566d770af8367b2e86dd7d8852749ea7c5aa485c632f57527d",
+      "coverage": "complete input identities and result fields reviewed; duplicate metadata reused"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/INPUTS.json",
+      "bytes": 2862,
+      "sha256": "85d816fa07ed40366d8f77c7df1b5a6f2a80a318ea6a6df300b97dbaf43804ed",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/run_attempt.py",
+      "bytes": 4416,
+      "sha256": "355c32eeb2b77b8a145a3acd21a7280a4e78c724675ffe18a778a2d8d72b7261",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "bytes": 233502,
+      "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/implementation/candidate001/current_host_inspection_v01.py",
+      "bytes": 233502,
+      "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "tests/test_current_host_rtld_paths_v01.py",
+      "bytes": 71062,
+      "sha256": "363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/ADOPTION.json",
+      "bytes": 3605,
+      "sha256": "6a5b3497e0374e014cef249b2233ab9022af13f90f9d462a4afe49f9b35c5a9a",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/DECISION-CANDIDATE.md",
+      "bytes": 25162,
+      "sha256": "169d6a586f4eff294a89266e66dfe715ccdcbb82691dccbd004f76503155a34e",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/SCHEMA.json",
+      "bytes": 26706,
+      "sha256": "4b0c73afe6c185e8b2e6a0f72739d3371b31caa6a4d106e16c3a2ed1588eebbe",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-MATRIX.json",
+      "bytes": 67833,
+      "sha256": "d52f64ffc28f7baf04e360f167fb56192cc6fb0baf6b36fd9f085907732a3196",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-CROSSWALK.json",
+      "bytes": 57380,
+      "sha256": "1d472d6036119805882d6a4996cc6d00cacda8de421f77866483c682894daf16",
+      "coverage": "identity-only check for candidate production; other required adapter/contract sources separately read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-005.py.source",
+      "bytes": 71062,
+      "sha256": "363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da",
+      "coverage": "full via ADAPTER002 plus complete 002\u2013003,003\u2013004,004\u2013005 deltas and exact unchanged text reuse"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-001.py.source",
+      "bytes": 45000,
+      "sha256": "05951c2e63a8446f31a5eca8f812d44b0741726b80b5edf76adb15a7509eac26",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-FREEZE-001.json",
+      "bytes": 603,
+      "sha256": "5157ad44ef0dde7e9b14d77d97f149f546b826a07642b603a94d46b21a1b65aa",
+      "coverage": "full semantic read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-002.py.source",
+      "bytes": 45877,
+      "sha256": "4642be4d6737b011920cf75b00f461b98edee372ee01f48caa7bc1bd5bc2deeb",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-FREEZE-002.json",
+      "bytes": 897,
+      "sha256": "66c835946494f477bde8fd030035cfd0d7c2cdfe5e7c8f0fc2c1664c5622ace3",
+      "coverage": "full semantic read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-003.py.source",
+      "bytes": 66363,
+      "sha256": "3ccda5a5297a23cb8324e9123e67e09c50c13d5fefa266aee251773f0ff85e0a",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-FREEZE-003.json",
+      "bytes": 778,
+      "sha256": "f541d58505aca956fc1fec045170ec524aded4c9c7c109c3306392ab1ee0edfc",
+      "coverage": "full semantic read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-004.py.source",
+      "bytes": 71052,
+      "sha256": "00ec2b484a0db14a83b6cb5f81a64054b3dfd4f7aaef103da83c2fb046cb4fc7",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-FREEZE-004.json",
+      "bytes": 799,
+      "sha256": "668b73e71d843ea249303dd18170f7e67c5b942d209219b1857f780c4b81b2c4",
+      "coverage": "full semantic read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-005.py.source",
+      "bytes": 71062,
+      "sha256": "363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/ADAPTER-FREEZE-005.json",
+      "bytes": 752,
+      "sha256": "38a9e4d551d1e7810891b61112d6492d0ab7a31804c33220ac767423fce9c066",
+      "coverage": "full semantic read"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/TEST.log",
+      "bytes": 8851,
+      "sha256": "93dc43d039b21d2f4843c9d51b6883c73d4c68c9f252b37d125ce0b8b02af8f7",
+      "coverage": "all method outcome lines checked mechanically; no large raw log copied into review"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F01.json",
+      "bytes": 12890,
+      "sha256": "ffd392238344ed63005c737523a5a91645c89aeb5dfbfd0e18441e391bf24213",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F02.json",
+      "bytes": 12854,
+      "sha256": "9dfa31eef5ee06bb3619613b67a30abcbdafcad9bed1275b5cc40ec6ebe62722",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F03.json",
+      "bytes": 12819,
+      "sha256": "6ec0457589580bed2ac28d958094c8fa3e4a993d0e07c0b9d3bc6b080ca36daa",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F04.json",
+      "bytes": 12908,
+      "sha256": "6d93eddb6a89b832a91974c2e90d6672cf2252e2f81c7363599a85439e460dc9",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F05.json",
+      "bytes": 14409,
+      "sha256": "1f615f5e01e92ca67c0b2c7034cbd124561cf05f33be2539645adee7fdfc0741",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F06.json",
+      "bytes": 17732,
+      "sha256": "f53002f12132d82b7c029d8795f8d0825002891fee8216e759caef1f93e7e6ed",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F07.json",
+      "bytes": 23952,
+      "sha256": "6c1fe4e927de483be09213e9d54cafda582b9818071f3a10330f2005887d97f7",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F08.json",
+      "bytes": 167646,
+      "sha256": "b8df2834f806254c754ace23e39a4896fac11fd08602a7de23693202b0048aee",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F09.json",
+      "bytes": 355721,
+      "sha256": "66039cfb310e46c25d69180c38c40358b6c78a3b935fa4d9508ec52f46ef6242",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F10.json",
+      "bytes": 13266,
+      "sha256": "88a1ff7fbce54d35d90d511cf0bc24c5dd3047bcf61d71af191dd1d6894cfcc5",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F11.json",
+      "bytes": 13014,
+      "sha256": "474f5fccc639f9368d3f423fc636b260728aa3c2b00e95cdb7d46bfcad45c75d",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F12.json",
+      "bytes": 23069,
+      "sha256": "3e0c32ce27856f25e856a301c651257fd11f357acc00579718cf900ac1177948",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F13.json",
+      "bytes": 287793,
+      "sha256": "524b53a372d41d17a457f9535aa6698d61679dd06657f826e39c75a90e5d61d0",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N01.json",
+      "bytes": 7522,
+      "sha256": "0e5d44194b9125db2c3f765e891d7dc505d671309210d81caa38ae886d151f74",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N02.json",
+      "bytes": 10577,
+      "sha256": "ad0c3f1572554a8534468803206efd29f3680a7f1ef9fad8cfd3e5881ce71a9b",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N03.json",
+      "bytes": 10593,
+      "sha256": "dbe840ed5074132b8c43b341fde0d6d9dc1eed306fa6d503e7936f974df77175",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N04.json",
+      "bytes": 7387,
+      "sha256": "c83160eb823da9dd4c5f162a32ced93efd289fc9b9ba6d497a45774e6449dce4",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N05.json",
+      "bytes": 10359,
+      "sha256": "97349c8c04f39a0a1844aee9d30522903ad80ac2355d2eaea0db380b13105c40",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N06.json",
+      "bytes": 10200,
+      "sha256": "49cb7c14aa000907ad19a243977a1be1ca8bb9801286bd7199ae1b4fe53ac933",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N07.json",
+      "bytes": 10481,
+      "sha256": "bd37389f93ed786f110fed818bc94b5b554fa2617db838b99ee45b94d13c61e6",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N08.json",
+      "bytes": 10492,
+      "sha256": "cd62a295b33ec5eb354b60024fbfa5c95212b98f086080d2bc8d197438a98fb4",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N09.json",
+      "bytes": 10614,
+      "sha256": "69f5c71dde116d8d974418f53d5a0a8a4feb6ddf0cd2546091311ec887ddd153",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N10.json",
+      "bytes": 10797,
+      "sha256": "4e7ce6958f54833f95efe35231c8ca948a481d050527f95b0606d92c4bc1b401",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N11.json",
+      "bytes": 10624,
+      "sha256": "f90a15f4b650db347b7af024bc00916b84d02ed919cd0bf87bf6f82ba96e3b0f",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N12.json",
+      "bytes": 12417,
+      "sha256": "5da575f9f7ae8f9f433a140b1cbd20fd73b43688f56411a95d1c97464031cfb1",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N13.json",
+      "bytes": 15059,
+      "sha256": "f090b2fc738e25e6f11b0f82b5c9c7bec48fa00c16f0935138f61d2f32d16941",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N14.json",
+      "bytes": 12367,
+      "sha256": "057cbc3aa2741c7da2f59332dd4cd693e203b22111a04746330f0e5f7f185f36",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N15.json",
+      "bytes": 12388,
+      "sha256": "b8ac8e8562072afd391d75f373010596ae92fe8a5cb669cb4356aaa3ccdf8b0d",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N16.json",
+      "bytes": 40370,
+      "sha256": "72b0b7dac047d789900eca01f0b795d1eff44f8f09220ff379b12fa07fe03fa9",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N17.json",
+      "bytes": 14379,
+      "sha256": "cd69992b258690c1ae8aa5602b8000286f06d1b4e70c3d976360f5b54917bfa2",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N18.json",
+      "bytes": 18970,
+      "sha256": "621f4d2e81b00cf85ff600a6014be395e43c0e3ca877de94d297816f81d163e7",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N19.json",
+      "bytes": 17524,
+      "sha256": "7e2ab122a5e9f307b07f1b71fdd28794294e363dc4044fbbefae66a92706f3ee",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N20.json",
+      "bytes": 17448,
+      "sha256": "277e022c47d89e84b456a52c9cf83c3aa7bf50aadf79aacca6bc4e64785a266b",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N21.json",
+      "bytes": 17310,
+      "sha256": "a3bcd2946b4213f318d6defb6a22c18e6bba014967c61083ba0b08de72e8eae6",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N22.json",
+      "bytes": 17332,
+      "sha256": "1bb402dfe62177be9ec70ca25941426a973923c73951198536943736e48b0a3e",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N23.json",
+      "bytes": 17386,
+      "sha256": "7c75c33b780bf90bfa148b3476b259938378f53abd8cd5a3afbdc85483d7aef2",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N24.json",
+      "bytes": 14174,
+      "sha256": "080dd94d636cacf57f9040d836a83d2c95c21e5af50e304805b7df7489a20fc8",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N25.json",
+      "bytes": 24265,
+      "sha256": "ce639cac4de1dca8e123fc2d70e35083b0949f9f7e6d40bdb6ee929aca7b67c4",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N26.json",
+      "bytes": 16558,
+      "sha256": "97a10b1e5e5620a93c51fa818e249cd305c9a0e0caf2b38e7c93cc34e60cc794",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N27.json",
+      "bytes": 10908,
+      "sha256": "beec910c14ccccf25b8f379bbd3b0319a955c9232496395070b4b6e00df78809",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N28.json",
+      "bytes": 10949,
+      "sha256": "c4a4512e8e7abb9bc474a8bb7725f66d56fb86a2818dbc2671de750d1c9499e8",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N29.json",
+      "bytes": 11000,
+      "sha256": "d03e2b3bfaa0bb8947e956d08a79533a3bab561771a414920ef7140c20cc909b",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N30.json",
+      "bytes": 10884,
+      "sha256": "85361f68798ca688140fe50be5c95db8f9bc4067f1d84ac1d8a8f2739cfcc24a",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N31.json",
+      "bytes": 10755,
+      "sha256": "09d7a4c1e9d210d3365ab77da16037fc29e71743b42e980f7272ec9e140dd768",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N32.json",
+      "bytes": 10407,
+      "sha256": "420941c674b8d909b9a94563979c0e227a24028c5be3bd2951301125b8a8626c",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N33.json",
+      "bytes": 10763,
+      "sha256": "8c59a7cb20c0552d0f711738df6cde4e46c9e02cc1ec0c824a392de973180888",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P01.json",
+      "bytes": 39887,
+      "sha256": "7e95d4b6ff1ecd01eedadd98c689a2dba10995f83fed6b12bb63048c931f2f0a",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P02.json",
+      "bytes": 14792,
+      "sha256": "38accfff568746ee9da070c6b115e1a0bfeff54cb357294fc247d2bb1d0f1fc0",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P03.json",
+      "bytes": 26775,
+      "sha256": "8b2cacdb47f2da9ee1f0df3cff1f3190313fe4a3def3b0cbe6373634fc8cfc70",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P04.json",
+      "bytes": 50989,
+      "sha256": "fd627c0fda0f24abafdce028b497e2f33235e4bb78c7afa1d903f18f62d41465",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P05.json",
+      "bytes": 74388,
+      "sha256": "78dd9985c342c5519700ee01fc3a4bc953c5aa9a6967bd52e22c9c36662836dd",
+      "coverage": "full mechanical bytes; selected semantic evidence reviewed"
+    }
+  ],
+  "external_obligation": {
+    "id": "N34",
+    "status": "external_only_operational_adoption_withheld",
+    "runtime_method": null,
+    "skipped": false,
+    "meaning": "No actual loader source-completeness review or H0/H1 is supplied by these synthetic controls. Historical N57 remains external."
+  },
+  "limits": [
+    "No production import or behavioral run performed by this audit; it checks retained final-run evidence and the independently reviewed adapter.",
+    "Production source bytes were hashed solely to bind evidence; production implementation review belongs to /root/controls.",
+    "All51 records parsed and mechanically checked; full raw syscall traces were not all semantically reread. Relevant faults, outcomes and bounded trace summaries were reviewed."
+  ]
+}

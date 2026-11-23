@@ -1,0 +1,4998 @@
+{
+  "schema": "ontokin.c271.p25-independent-control-coverage/1",
+  "reviewer": "/root/controls",
+  "candidate": {
+    "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "bytes": 233502,
+    "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a"
+  },
+  "adapter": {
+    "path": "tests/test_current_host_rtld_paths_v01.py",
+    "bytes": 71062,
+    "sha256": "363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da"
+  },
+  "matrix": {
+    "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-MATRIX.json",
+    "bytes": 67833,
+    "sha256": "d52f64ffc28f7baf04e360f167fb56192cc6fb0baf6b36fd9f085907732a3196"
+  },
+  "crosswalk": {
+    "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-CROSSWALK.json",
+    "bytes": 57380,
+    "sha256": "1d472d6036119805882d6a4996cc6d00cacda8de421f77866483c682894daf16"
+  },
+  "counts": {
+    "frozen_total": 52,
+    "positive": 5,
+    "refusal": 34,
+    "fault": 13,
+    "primitive_or_mocked_passed": 51,
+    "external_review_only": 1,
+    "new_control_failures": 0,
+    "actual_target_starts": 0
+  },
+  "cases": [
+    {
+      "id": "P01",
+      "kind": "positive",
+      "immutable_case_sha256": "04d97c4f00104a0ffc4197180e3d1e6aca817e5bda71f8ad3d72c9f6fc4436a4",
+      "expected": {
+        "decision": {
+          "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "ordered_symlinks": [
+            [
+              "/lib64",
+              "usr/lib64"
+            ],
+            [
+              "/usr/lib64/ld-linux-x86-64.so.2",
+              "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+            ]
+          ],
+          "parent_pop": "/usr/lib64 -> held /usr",
+          "accepted": "path primitive only"
+        },
+        "boundary": "alias_component_proof",
+        "code": null,
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_alias_primitive",
+      "mapping": "Prove physical parent order and exact canonical terminal; no operational pin or plan acceptance follows.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P01.json",
+        "bytes": 39887,
+        "sha256": "7e95d4b6ff1ecd01eedadd98c689a2dba10995f83fed6b12bb63048c931f2f0a"
+      },
+      "observed_error": null,
+      "observed_result": {
+        "path": "/lib64/ld-linux-x86-64.so.2",
+        "state": "file",
+        "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "identity": [
+          71,
+          9,
+          33152,
+          1,
+          33,
+          1000000000,
+          1000000000
+        ]
+      },
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 9,
+      "acquired_descriptors": 20,
+      "closed_descriptors": 20
+    },
+    {
+      "id": "P02",
+      "kind": "positive",
+      "immutable_case_sha256": "765888d9a56fef05174e9086be22b7493e2b490822fd3b9da26845507896a87f",
+      "expected": {
+        "decision": {
+          "candidate": "/libx32/ld-linux-x32.so.2",
+          "first_missing": "/libx32",
+          "checked_parent": "/",
+          "remaining_suffix": [
+            "ld-linux-x32.so.2"
+          ],
+          "accepted": "absence primitive only"
+        },
+        "boundary": "missing_ancestor_proof",
+        "code": null,
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_absence_primitive",
+      "mapping": "Authenticate /libx32 missing under root; never probe remaining candidate suffix.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P02.json",
+        "bytes": 14792,
+        "sha256": "38accfff568746ee9da070c6b115e1a0bfeff54cb357294fc247d2bb1d0f1fc0"
+      },
+      "observed_error": null,
+      "observed_result": {
+        "path": "/libx32/ld-linux-x32.so.2",
+        "nearest_existing_ancestor": "/",
+        "first_missing": "/libx32",
+        "remaining_suffix": [
+          "ld-linux-x32.so.2"
+        ],
+        "state": "absent"
+      },
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 1,
+      "acquired_descriptors": 2,
+      "closed_descriptors": 2
+    },
+    {
+      "id": "P03",
+      "kind": "positive",
+      "immutable_case_sha256": "94d68fafea0614b10ef62288f369c18b32c12c490e4a05842cd96d6ffc8dd4aa",
+      "expected": {
+        "decision": {
+          "candidate": "/lib/ld-linux.so.2",
+          "ordered_symlinks": [
+            [
+              "/lib",
+              "usr/lib"
+            ]
+          ],
+          "first_missing": "/usr/lib/ld-linux.so.2",
+          "checked_parent": "/usr/lib",
+          "accepted": "absence primitive only"
+        },
+        "boundary": "aliased_parent_absence_proof",
+        "code": null,
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_absence_primitive",
+      "mapping": "Authenticate /lib -> usr/lib, then the canonical missing leaf under held /usr/lib.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P03.json",
+        "bytes": 26775,
+        "sha256": "8b2cacdb47f2da9ee1f0df3cff1f3190313fe4a3def3b0cbe6373634fc8cfc70"
+      },
+      "observed_error": null,
+      "observed_result": {
+        "path": "/lib/ld-linux.so.2",
+        "nearest_existing_ancestor": "/usr/lib",
+        "first_missing": "/usr/lib/ld-linux.so.2",
+        "remaining_suffix": [],
+        "state": "absent"
+      },
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 4,
+      "acquired_descriptors": 8,
+      "closed_descriptors": 8
+    },
+    {
+      "id": "P04",
+      "kind": "positive",
+      "immutable_case_sha256": "64081db111428f4fb598bd2cc36dd362084456094d8ed8d9e690a49d7234efc3",
+      "expected": {
+        "decision": {
+          "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "accepted": "isolated x86 alias primitive only; aggregate policy must reject changed /lib",
+          "must_not_resolve": "/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        },
+        "boundary": "alias_component_proof",
+        "code": null,
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_alias_primitive",
+      "mapping": "Isolate x86 alias seam; unrelated trap /lib must not affect /usr/lib result. Complete aggregate still rejects changed /lib.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P04.json",
+        "bytes": 50989,
+        "sha256": "fd627c0fda0f24abafdce028b497e2f33235e4bb78c7afa1d903f18f62d41465"
+      },
+      "observed_error": null,
+      "observed_result": {
+        "path": "/lib64/ld-linux-x86-64.so.2",
+        "state": "file",
+        "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "identity": [
+          71,
+          9,
+          33152,
+          1,
+          33,
+          1000000000,
+          1000000000
+        ]
+      },
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 9,
+      "acquired_descriptors": 30,
+      "closed_descriptors": 30
+    },
+    {
+      "id": "P05",
+      "kind": "positive",
+      "immutable_case_sha256": "dce6e22434efb7fa2f1b1e24941035f8a84858bcc87342346d0ac1b106aa50b1",
+      "expected": {
+        "decision": {
+          "ordered_candidates": [
+            "/lib64/ld-linux-x86-64.so.2",
+            "/lib/ld-linux.so.2",
+            "/libx32/ld-linux-x32.so.2"
+          ],
+          "accepted": "synthetic path/order aggregate only",
+          "full_plan_eligible": false,
+          "reason": "synthetic file bytes cannot satisfy pinned loader and no operational source/closure evidence"
+        },
+        "boundary": "rtld_order_and_path_aggregate",
+        "code": null,
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_path_order_aggregate",
+      "mapping": "Synthetic aggregate validates topology and exact order only; synthetic bytes cannot pass the fixed operational loader gate.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/P05.json",
+        "bytes": 74388,
+        "sha256": "78dd9985c342c5519700ee01fc3a4bc953c5aa9a6967bd52e22c9c36662836dd"
+      },
+      "observed_error": null,
+      "observed_result": {
+        "components": [
+          {
+            "path": "/",
+            "kind": "directory",
+            "identity": [
+              71,
+              1,
+              16877,
+              1,
+              4096,
+              1000000000,
+              1000000000
+            ],
+            "target": null
+          },
+          {
+            "path": "/lib",
+            "kind": "symlink",
+            "identity": [
+              71,
+              7,
+              41471,
+              1,
+              7,
+              1000000000,
+              1000000000
+            ],
+            "target": "usr/lib"
+          },
+          {
+            "path": "/lib64",
+            "kind": "symlink",
+            "identity": [
+              71,
+              6,
+              41471,
+              1,
+              9,
+              1000000000,
+              1000000000
+            ],
+            "target": "usr/lib64"
+          },
+          {
+            "path": "/usr",
+            "kind": "directory",
+            "identity": [
+              71,
+              2,
+              16877,
+              1,
+              4096,
+              1000000000,
+              1000000000
+            ],
+            "target": null
+          },
+          {
+            "path": "/usr/lib",
+            "kind": "directory",
+            "identity": [
+              71,
+              4,
+              16877,
+              1,
+              4096,
+              1000000000,
+              1000000000
+            ],
+            "target": null
+          },
+          {
+            "path": "/usr/lib/x86_64-linux-gnu",
+            "kind": "directory",
+            "identity": [
+              71,
+              5,
+              16877,
+              1,
+              4096,
+              1000000000,
+              1000000000
+            ],
+            "target": null
+          },
+          {
+            "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+            "kind": "file",
+            "identity": [
+              71,
+              9,
+              33152,
+              1,
+              33,
+              1000000000,
+              1000000000
+            ],
+            "target": null
+          },
+          {
+            "path": "/usr/lib64",
+            "kind": "directory",
+            "identity": [
+              71,
+              3,
+              16877,
+              1,
+              4096,
+              1000000000,
+              1000000000
+            ],
+            "target": null
+          },
+          {
+            "path": "/usr/lib64/ld-linux-x86-64.so.2",
+            "kind": "symlink",
+            "identity": [
+              71,
+              8,
+              41471,
+              1,
+              44,
+              1000000000,
+              1000000000
+            ],
+            "target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+          }
+        ],
+        "results": [
+          {
+            "path": "/lib64/ld-linux-x86-64.so.2",
+            "state": "file",
+            "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+            "identity": [
+              71,
+              9,
+              33152,
+              1,
+              33,
+              1000000000,
+              1000000000
+            ]
+          },
+          {
+            "path": "/lib/ld-linux.so.2",
+            "nearest_existing_ancestor": "/usr/lib",
+            "first_missing": "/usr/lib/ld-linux.so.2",
+            "remaining_suffix": [],
+            "state": "absent"
+          },
+          {
+            "path": "/libx32/ld-linux-x32.so.2",
+            "nearest_existing_ancestor": "/",
+            "first_missing": "/libx32",
+            "remaining_suffix": [
+              "ld-linux-x32.so.2"
+            ],
+            "state": "absent"
+          }
+        ]
+      },
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 9,
+      "acquired_descriptors": 22,
+      "closed_descriptors": 22
+    },
+    {
+      "id": "N01",
+      "kind": "refusal",
+      "immutable_case_sha256": "6c40248186f548ffc6341c5fa21612696c0ed714370be75fbe29f350a87fd2bf",
+      "expected": {
+        "decision": {
+          "reason": "Parent-traversal symlink targets require a separately reviewed traversal model",
+          "old_behavior_unchanged": true
+        },
+        "boundary": "legacy_existing_chain",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "legacy_primitive",
+      "mapping": "Call unchanged legacy _existing_chain on the parent-containing alias; preserve CHI-UNSUPPORTED and original reason.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N01.json",
+        "bytes": 7522,
+        "sha256": "0e5d44194b9125db2c3f765e891d7dc505d671309210d81caa38ae886d151f74"
+      },
+      "observed_error": {
+        "code": "CHI-UNSUPPORTED",
+        "reason": "Parent-traversal symlink targets require a separately reviewed traversal model",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {}
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N02",
+      "kind": "refusal",
+      "immutable_case_sha256": "96b23c52d8641b27212811b9406697a56742007f2ba11e38573f69cdb6d18369",
+      "expected": {
+        "decision": "reject mismatched 0.1.4 schema/profile",
+        "boundary": "new_profile_dispatch",
+        "code": "CHI-PLAN",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_profile_selector",
+      "mapping": "Select mismatched 0.1.4/.3 pair; RP-PROFILE, CHI-PLAN.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N02.json",
+        "bytes": 10577,
+        "sha256": "ad0c3f1572554a8534468803206efd29f3680a7f1ef9fad8cfd3e5881ce71a9b"
+      },
+      "observed_error": {
+        "code": "CHI-PLAN",
+        "reason": "Unsupported RTLD path schema/profile pair",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-PROFILE",
+          "path": null,
+          "operation": "profile_selection",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N03",
+      "kind": "refusal",
+      "immutable_case_sha256": "b28a54a12872f0b850bac1132508f9c6edca9b25bab41e687eb0aabe93783a86",
+      "expected": {
+        "decision": "reject unknown authority-like member",
+        "boundary": "new_policy_closed_shape",
+        "code": "CHI-PLAN",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_shape_selector",
+      "mapping": "Unknown authority-like operational member fails RP-SHAPE/CHI-PLAN.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N03.json",
+        "bytes": 10593,
+        "sha256": "dbe840ed5074132b8c43b341fde0d6d9dc1eed306fa6d503e7936f974df77175"
+      },
+      "observed_error": {
+        "code": "CHI-PLAN",
+        "reason": "Invalid RTLD path model shape",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-SHAPE",
+          "path": null,
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N04",
+      "kind": "refusal",
+      "immutable_case_sha256": "da5ef216db2fe050cafe0a6cf3d4e64e589abc7b2e24cb4c39f4100e96ec9ad1",
+      "expected": {
+        "decision": "reject missing required new policy",
+        "boundary": "new_policy_closed_shape",
+        "code": "CHI-PLAN",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_shape_selector",
+      "mapping": "Omitted rtld_paths fails RP-SHAPE/CHI-PLAN.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N04.json",
+        "bytes": 7387,
+        "sha256": "c83160eb823da9dd4c5f162a32ced93efd289fc9b9ba6d497a45774e6449dce4"
+      },
+      "observed_error": {
+        "code": "CHI-PLAN",
+        "reason": "Invalid RTLD path model shape",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-SHAPE",
+          "path": null,
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N05",
+      "kind": "refusal",
+      "immutable_case_sha256": "f5e297f5ae8527f83c86fdc4a3dd6b6f01fc3608501c77c2fc60196f5ef6589c",
+      "expected": {
+        "decision": "reject before decode/profile/descriptor traversal",
+        "boundary": "external_digest_before_decode",
+        "code": "CHI-PLAN",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "external_digest_primitive",
+      "mapping": "Preserve existing _validate digest gate before decode/profile; CHI-PLAN and no trace/helper activity.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N05.json",
+        "bytes": 10359,
+        "sha256": "97349c8c04f39a0a1844aee9d30522903ad80ac2355d2eaea0db380b13105c40"
+      },
+      "observed_error": {
+        "code": "CHI-PLAN",
+        "reason": "Plan differs from independently supplied expected digest",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {}
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N06",
+      "kind": "refusal",
+      "immutable_case_sha256": "bae3857421c0376e852953a2a36b14af486885b2b42a971aab7a0c431341c805",
+      "expected": {
+        "decision": "reject omitted required literal candidate",
+        "boundary": "literal_rtldlist_equality",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_candidate_sequence",
+      "mapping": "Omission fails inherited literal-list equality CHI-UNSUPPORTED before fixed-state acceptance or lookup of a supplied candidate.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N06.json",
+        "bytes": 10200,
+        "sha256": "49cb7c14aa000907ad19a243977a1be1ca8bb9801286bd7199ae1b4fe53ac933"
+      },
+      "observed_error": {
+        "code": "CHI-UNSUPPORTED",
+        "reason": "Inspector RTLDLIST is not the exact reviewed literal list",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {}
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N07",
+      "kind": "refusal",
+      "immutable_case_sha256": "5ae8d355c8cebfa7ef4ef1a4b95e52e35d017b7a07b5b803a66d0546a3963ab2",
+      "expected": {
+        "decision": "reject reordered required candidates",
+        "boundary": "literal_rtldlist_equality",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_candidate_sequence",
+      "mapping": "Reordering fails the same exact ordered literal-list gate; no sort repair.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N07.json",
+        "bytes": 10481,
+        "sha256": "bd37389f93ed786f110fed818bc94b5b554fa2617db838b99ee45b94d13c61e6"
+      },
+      "observed_error": {
+        "code": "CHI-UNSUPPORTED",
+        "reason": "Inspector RTLDLIST is not the exact reviewed literal list",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {}
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N08",
+      "kind": "refusal",
+      "immutable_case_sha256": "07a88e03c942ba20371e7929a71b38a5c2683a39088fb8d06a18ca2e0a7dc635",
+      "expected": {
+        "decision": "reject duplicate row before literal equality",
+        "boundary": "candidate_duplicate_check",
+        "code": "CHI-INSPECTOR",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_candidate_sequence",
+      "mapping": "Duplicate is checked first and retains CHI-INSPECTOR / Duplicate RTLD candidate.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N08.json",
+        "bytes": 10492,
+        "sha256": "cd62a295b33ec5eb354b60024fbfa5c95212b98f086080d2bc8d197438a98fb4"
+      },
+      "observed_error": {
+        "code": "CHI-INSPECTOR",
+        "reason": "Duplicate RTLD candidate",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {}
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N09",
+      "kind": "refusal",
+      "immutable_case_sha256": "8a312f946e67a8459ec162a40cd96a5fcd2e989b2bbc31b653914971c34046f0",
+      "expected": {
+        "decision": "reject additional candidate even with a bound synthetic absence",
+        "boundary": "literal_rtldlist_equality",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_candidate_sequence",
+      "mapping": "Extra path fails CHI-UNSUPPORTED before it can grant lookup authority; its synthetic absence is irrelevant.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N09.json",
+        "bytes": 10614,
+        "sha256": "69f5c71dde116d8d974418f53d5a0a8a4feb6ddf0cd2546091311ec887ddd153"
+      },
+      "observed_error": {
+        "code": "CHI-UNSUPPORTED",
+        "reason": "Inspector RTLDLIST is not the exact reviewed literal list",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {}
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N10",
+      "kind": "refusal",
+      "immutable_case_sha256": "918c824c4660359e285c36cde34d7720c46c80e6fd00334e970a4b3c25f5bd77",
+      "expected": {
+        "decision": "reject witness below missing /libx32; no nonexistent-parent descriptor",
+        "boundary": "missing_ancestor_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_absence_relation",
+      "mapping": "The frozen model mutation is a private witness claim, not an operational JSON shape mutation. Claiming a first-missing leaf below missing /libx32 fails RP-ABSENCE/CHI-PATH.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N10.json",
+        "bytes": 10797,
+        "sha256": "4e7ce6958f54833f95efe35231c8ca948a481d050527f95b0606d92c4bc1b401"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "Required RTLD absence differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-ABSENCE",
+          "path": "/libx32/ld-linux-x32.so.2",
+          "operation": "stat",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N11",
+      "kind": "refusal",
+      "immutable_case_sha256": "f3649f532a20026ee4e3e1bbb9ad5d69e54ae3c2d483c3af1101c37cd05d438f",
+      "expected": {
+        "decision": "reject claimed absence of existing directory",
+        "boundary": "aliased_parent_absence_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_absence_relation",
+      "mapping": "Private witness claiming existing /usr/lib absent fails RP-ABSENCE/CHI-PATH.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N11.json",
+        "bytes": 10624,
+        "sha256": "f90a15f4b650db347b7af024bc00916b84d02ed919cd0bf87bf6f82ba96e3b0f"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "Required RTLD absence differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-ABSENCE",
+          "path": "/lib/ld-linux.so.2",
+          "operation": "stat",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N12",
+      "kind": "refusal",
+      "immutable_case_sha256": "ca913f0086e387a769616bee7fe0ec89c9c129dbf8ec8d666b43d0227a918fba",
+      "expected": {
+        "decision": "reject dangling symlink; ENOENT after following is not first-component absence",
+        "boundary": "missing_ancestor_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_absence_primitive",
+      "mapping": "No-follow lookup observes /libx32 symlink as present; RP-ABSENCE/CHI-PATH even if its target is missing.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N12.json",
+        "bytes": 12417,
+        "sha256": "5da575f9f7ae8f9f433a140b1cbd20fd73b43688f56411a95d1c97464031cfb1"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "Required RTLD absence differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-ABSENCE",
+          "path": "/libx32",
+          "operation": "stat",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "observed",
+                "path": "/libx32",
+                "identity": [
+                  71,
+                  30,
+                  41471,
+                  1,
+                  7,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 1,
+      "acquired_descriptors": 1,
+      "closed_descriptors": 1
+    },
+    {
+      "id": "N13",
+      "kind": "refusal",
+      "immutable_case_sha256": "cd5942b9af76f0baf46b93119125704f33caa94728974f0b6b3559428d61e76d",
+      "expected": {
+        "decision": "reject dangling leaf symlink as present link",
+        "boundary": "aliased_parent_absence_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_absence_primitive",
+      "mapping": "No-follow lookup observes dangling physical i386 leaf as a present symlink; CHI-PATH.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N13.json",
+        "bytes": 15059,
+        "sha256": "f090b2fc738e25e6f11b0f82b5c9c7bec48fa00c16f0935138f61d2f32d16941"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "Required RTLD absence differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-ABSENCE",
+          "path": "/usr/lib/ld-linux.so.2",
+          "operation": "stat",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "observed",
+                "path": "/usr/lib/ld-linux.so.2",
+                "identity": [
+                  71,
+                  31,
+                  41471,
+                  1,
+                  7,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 4,
+      "acquired_descriptors": 4,
+      "closed_descriptors": 4
+    },
+    {
+      "id": "N14",
+      "kind": "refusal",
+      "immutable_case_sha256": "7f34ff4fdad0d3005301c60941f77dac65e7e2bce5f409cf892ccc90bdd3c9fe",
+      "expected": {
+        "decision": "reject non-directory ancestor; ENOTDIR is not absence",
+        "boundary": "missing_ancestor_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_absence_primitive",
+      "mapping": "A regular /libx32 is present and cannot supply the missing-ancestor witness. Refuse CHI-PATH without following a suffix to manufacture ENOTDIR.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N14.json",
+        "bytes": 12367,
+        "sha256": "057cbc3aa2741c7da2f59332dd4cd693e203b22111a04746330f0e5f7f185f36"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "Required RTLD absence differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-ABSENCE",
+          "path": "/libx32",
+          "operation": "stat",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "observed",
+                "path": "/libx32",
+                "identity": [
+                  71,
+                  32,
+                  33152,
+                  1,
+                  0,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 1,
+      "acquired_descriptors": 1,
+      "closed_descriptors": 1
+    },
+    {
+      "id": "N15",
+      "kind": "refusal",
+      "immutable_case_sha256": "dda1fdca06599d2eec3cfd384e483ccdf905caf09d3c8a18c96a64c420c0374a",
+      "expected": {
+        "decision": "reject the bound first missing component becoming present, even if leaf is still absent",
+        "boundary": "missing_ancestor_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_absence_primitive",
+      "mapping": "Present /libx32 directory invalidates the exact frozen first-missing witness even if its child remains missing.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N15.json",
+        "bytes": 12388,
+        "sha256": "b8ac8e8562072afd391d75f373010596ae92fe8a5cb669cb4356aaa3ccdf8b0d"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "Required RTLD absence differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-ABSENCE",
+          "path": "/libx32",
+          "operation": "stat",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "observed",
+                "path": "/libx32",
+                "identity": [
+                  71,
+                  33,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 1,
+      "acquired_descriptors": 1,
+      "closed_descriptors": 1
+    },
+    {
+      "id": "N16",
+      "kind": "refusal",
+      "immutable_case_sha256": "9318c5d25d9b3eb20f146b4835bed50b592dd7b2297c77294848bbdee29dabf1",
+      "expected": {
+        "decision": "reject noncanonical or lexical target claim even if a separate /lib alias reaches same inode",
+        "boundary": "alias_terminal_equality",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_alias_terminal_relation",
+      "mapping": "Compare claimed terminal path to proved canonical physical path. CHI-PATH/RP-NAMESPACE; this is neither an additional operational input field nor permission to accept an unlisted edge.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N16.json",
+        "bytes": 40370,
+        "sha256": "72b0b7dac047d789900eca01f0b795d1eff44f8f09220ff379b12fa07fe03fa9"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "RTLD named route changed during observation",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-NAMESPACE",
+          "path": "/lib64/ld-linux-x86-64.so.2",
+          "operation": "root_recheck",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "observed",
+                "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  9,
+                  33152,
+                  1,
+                  33,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 9,
+      "acquired_descriptors": 20,
+      "closed_descriptors": 20
+    },
+    {
+      "id": "N17",
+      "kind": "refusal",
+      "immutable_case_sha256": "b310b4bd3b6c265780827c13a05621ae6487529cf66f394502f319531348fe5a",
+      "expected": {
+        "decision": "reject a symlink where exact physical directory is required",
+        "boundary": "guarded_component_identity",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_component_primitive",
+      "mapping": "Symlink where physical /usr/lib64 must be a directory fails identity/type CHI-PATH before following.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N17.json",
+        "bytes": 14379,
+        "sha256": "cd69992b258690c1ae8aa5602b8000286f06d1b4e70c3d976360f5b54917bfa2"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "RTLD path component identity or type differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-IDENTITY",
+          "path": "/usr/lib64",
+          "operation": "stat",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/usr/lib64",
+                "identity": [
+                  71,
+                  3,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_before",
+                "path": "/usr/lib64",
+                "identity": [
+                  71,
+                  34,
+                  41471,
+                  1,
+                  5,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 3,
+      "acquired_descriptors": 3,
+      "closed_descriptors": 3
+    },
+    {
+      "id": "N18",
+      "kind": "refusal",
+      "immutable_case_sha256": "2a40ae80258c77895e6825c8652572f1235c8b4be1af33bf4ebedc75a8975042",
+      "expected": {
+        "decision": "reject terminal symlink; same bytes at a different target cannot replace canonical regular file",
+        "boundary": "terminal_nofollow_file_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_terminal_primitive",
+      "mapping": "Terminal symlink fails CHI-PATH no-follow file/type proof; same bytes elsewhere do not rescue it.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N18.json",
+        "bytes": 18970,
+        "sha256": "621f4d2e81b00cf85ff600a6014be395e43c0e3ca877de94d297816f81d163e7"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "RTLD path component identity or type differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-IDENTITY",
+          "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "operation": "stat",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  9,
+                  33152,
+                  1,
+                  33,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_before",
+                "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  35,
+                  41471,
+                  1,
+                  15,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 7,
+      "acquired_descriptors": 8,
+      "closed_descriptors": 8
+    },
+    {
+      "id": "N19",
+      "kind": "refusal",
+      "immutable_case_sha256": "1a32cba01b922ce507cf509827208113cf575e396ff5dcbb78bd114ec3495fba",
+      "expected": {
+        "decision": "reject unapproved absolute alias spelling even if final file is unchanged",
+        "boundary": "explicit_edge_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_raw_edge_primitive",
+      "mapping": "Synthetic observed target mutation with held identities otherwise stipulated equal reaches RP-TRAVERSAL/CHI-UNSUPPORTED; absolute target equality is insufficient.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N19.json",
+        "bytes": 17524,
+        "sha256": "7e2ab122a5e9f307b07f1b71fdd28794294e363dc4044fbbefae66a92706f3ee"
+      },
+      "observed_error": {
+        "code": "CHI-UNSUPPORTED",
+        "reason": "Unreviewed RTLD path traversal",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-TRAVERSAL",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "operation": "readlink",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 44,
+                  "sha256": "bb9802014f1e2bee7c7edb539ab3cbe7f3ebcfaa7921cc321b81169602cc5768",
+                  "prefix_hex": "2e2e2f6c69622f7838365f36342d6c696e75782d676e752f6c642d6c696e75782d7838362d36342e736f2e32"
+                }
+              },
+              {
+                "label": "opened_before",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "opened_after",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_after",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 46,
+                  "sha256": "5ce3e5906695d1b6c298b69de4593cc44b8300182f8f596d1f654c0bb8dbc7d8",
+                  "prefix_hex": "2f7573722f6c69622f7838365f36342d6c696e75782d676e752f6c642d6c696e75782d7838362d36342e736f2e32"
+                }
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 5,
+      "acquired_descriptors": 5,
+      "closed_descriptors": 5
+    },
+    {
+      "id": "N20",
+      "kind": "refusal",
+      "immutable_case_sha256": "db637a1393a5a74dee0ed73bdb876beb8f909c5f891cda554c1a65c6ad8c6d7e",
+      "expected": {
+        "decision": "reject alternate spelling; no normalization into approval",
+        "boundary": "explicit_edge_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_raw_edge_primitive",
+      "mapping": "Extra dot spelling is an unapproved observed edge; RP-TRAVERSAL/CHI-UNSUPPORTED without normalization.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N20.json",
+        "bytes": 17448,
+        "sha256": "277e022c47d89e84b456a52c9cf83c3aa7bf50aadf79aacca6bc4e64785a266b"
+      },
+      "observed_error": {
+        "code": "CHI-UNSUPPORTED",
+        "reason": "Unreviewed RTLD path traversal",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-TRAVERSAL",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "operation": "readlink",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 44,
+                  "sha256": "bb9802014f1e2bee7c7edb539ab3cbe7f3ebcfaa7921cc321b81169602cc5768",
+                  "prefix_hex": "2e2e2f6c69622f7838365f36342d6c696e75782d676e752f6c642d6c696e75782d7838362d36342e736f2e32"
+                }
+              },
+              {
+                "label": "opened_before",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "opened_after",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_after",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 46,
+                  "sha256": "9cdb939f50a00c423853b483387285fadd5d4cf4e4f5aba786216837945e9df1",
+                  "prefix_hex": "2e2e2f6c69622f2e2f7838365f36342d6c696e75782d676e752f6c642d6c696e75782d7838362d36342e736f2e32"
+                }
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 5,
+      "acquired_descriptors": 5,
+      "closed_descriptors": 5
+    },
+    {
+      "id": "N21",
+      "kind": "refusal",
+      "immutable_case_sha256": "28983bf7507c8ebd951a2c0f230dc34134862c727e675ee13ed9e1c0a1b022c0",
+      "expected": {
+        "decision": "reject rootward escape before lookup outside enumerated transcript",
+        "boundary": "explicit_edge_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_raw_edge_primitive",
+      "mapping": "Escape target refuses CHI-UNSUPPORTED before outside lookup.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N21.json",
+        "bytes": 17310,
+        "sha256": "a3bcd2946b4213f318d6defb6a22c18e6bba014967c61083ba0b08de72e8eae6"
+      },
+      "observed_error": {
+        "code": "CHI-UNSUPPORTED",
+        "reason": "Unreviewed RTLD path traversal",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-TRAVERSAL",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "operation": "readlink",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 44,
+                  "sha256": "bb9802014f1e2bee7c7edb539ab3cbe7f3ebcfaa7921cc321b81169602cc5768",
+                  "prefix_hex": "2e2e2f6c69622f7838365f36342d6c696e75782d676e752f6c642d6c696e75782d7838362d36342e736f2e32"
+                }
+              },
+              {
+                "label": "opened_before",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "opened_after",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_after",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 16,
+                  "sha256": "3754d6cb3a38e1185e5b382d5f3ef3f118af75bf4bf0254d1fdb8437f51423e0",
+                  "prefix_hex": "2e2e2f2e2e2f6574632f706173737764"
+                }
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 5,
+      "acquired_descriptors": 5,
+      "closed_descriptors": 5
+    },
+    {
+      "id": "N22",
+      "kind": "refusal",
+      "immutable_case_sha256": "5009036d219388809da88f95c801d0c7e7c9c5135868a7645587ac93499d1bab",
+      "expected": {
+        "decision": "reject unapproved sibling traversal",
+        "boundary": "explicit_edge_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_raw_edge_primitive",
+      "mapping": "Other sibling target is outside exact edges; CHI-UNSUPPORTED.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N22.json",
+        "bytes": 17332,
+        "sha256": "1bb402dfe62177be9ec70ca25941426a973923c73951198536943736e48b0a3e"
+      },
+      "observed_error": {
+        "code": "CHI-UNSUPPORTED",
+        "reason": "Unreviewed RTLD path traversal",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-TRAVERSAL",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "operation": "readlink",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 44,
+                  "sha256": "bb9802014f1e2bee7c7edb539ab3cbe7f3ebcfaa7921cc321b81169602cc5768",
+                  "prefix_hex": "2e2e2f6c69622f7838365f36342d6c696e75782d676e752f6c642d6c696e75782d7838362d36342e736f2e32"
+                }
+              },
+              {
+                "label": "opened_before",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "opened_after",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_after",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 29,
+                  "sha256": "bfa78164e9a12811964fbd018edbd68a3fde643601c642a239f8be13337adcfd",
+                  "prefix_hex": "2e2e2f6f746865722f6c642d6c696e75782d7838362d36342e736f2e32"
+                }
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 5,
+      "acquired_descriptors": 5,
+      "closed_descriptors": 5
+    },
+    {
+      "id": "N23",
+      "kind": "refusal",
+      "immutable_case_sha256": "a757949452043076f5bdf4bc6d9c795e966b17548fd40655855e27cb14a300bd",
+      "expected": {
+        "decision": "reject self-cycle at unapproved edge; no retry/unbounded resolution",
+        "boundary": "explicit_edge_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_raw_edge_primitive",
+      "mapping": "Self-cycle spelling is already unapproved; reject CHI-UNSUPPORTED before any recursive resolution.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N23.json",
+        "bytes": 17386,
+        "sha256": "7c75c33b780bf90bfa148b3476b259938378f53abd8cd5a3afbdc85483d7aef2"
+      },
+      "observed_error": {
+        "code": "CHI-UNSUPPORTED",
+        "reason": "Unreviewed RTLD path traversal",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-TRAVERSAL",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "operation": "readlink",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 44,
+                  "sha256": "bb9802014f1e2bee7c7edb539ab3cbe7f3ebcfaa7921cc321b81169602cc5768",
+                  "prefix_hex": "2e2e2f6c69622f7838365f36342d6c696e75782d676e752f6c642d6c696e75782d7838362d36342e736f2e32"
+                }
+              },
+              {
+                "label": "opened_before",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "opened_after",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_after",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 29,
+                  "sha256": "d8a906f7b1aa95be38d7d722cbef5de9dbc04e28a97d15aff92a96319886919c",
+                  "prefix_hex": "2e2e2f6c696236342f6c642d6c696e75782d7838362d36342e736f2e32"
+                }
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 5,
+      "acquired_descriptors": 5,
+      "closed_descriptors": 5
+    },
+    {
+      "id": "N24",
+      "kind": "refusal",
+      "immutable_case_sha256": "fe587f2c857844cae20e2e2e37ec28e189838b2f70d88dea73e238ad21b2b1b3",
+      "expected": {
+        "decision": "reject parent-alias cycle before following it",
+        "boundary": "explicit_edge_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_raw_edge_primitive",
+      "mapping": "Parent-alias self-cycle is an unapproved edge; CHI-UNSUPPORTED before following.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N24.json",
+        "bytes": 14174,
+        "sha256": "080dd94d636cacf57f9040d836a83d2c95c21e5af50e304805b7df7489a20fc8"
+      },
+      "observed_error": {
+        "code": "CHI-UNSUPPORTED",
+        "reason": "Unreviewed RTLD path traversal",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-TRAVERSAL",
+          "path": "/lib64",
+          "operation": "readlink",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/lib64",
+                "identity": [
+                  71,
+                  6,
+                  41471,
+                  1,
+                  9,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 9,
+                  "sha256": "1a8dcebf89cf73748aa1a3c88dd1ecc2a040ffabb45a10d9231a642e1a89913b",
+                  "prefix_hex": "7573722f6c69623634"
+                }
+              },
+              {
+                "label": "opened_before",
+                "path": "/lib64",
+                "identity": [
+                  71,
+                  6,
+                  41471,
+                  1,
+                  9,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "opened_after",
+                "path": "/lib64",
+                "identity": [
+                  71,
+                  6,
+                  41471,
+                  1,
+                  9,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_after",
+                "path": "/lib64",
+                "identity": [
+                  71,
+                  6,
+                  41471,
+                  1,
+                  9,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 5,
+                  "sha256": "f6840d080f83f1444d88a587022321eaaadf383be11e6acbc05c62fa4824604d",
+                  "prefix_hex": "6c69623634"
+                }
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 2,
+      "acquired_descriptors": 2,
+      "closed_descriptors": 2
+    },
+    {
+      "id": "N25",
+      "kind": "refusal",
+      "immutable_case_sha256": "ea63a9a65be9d172f8439a68d52b43292ecb7a4822b6993a60ad6f700061d980",
+      "expected": {
+        "decision": "reject overlong target before allocation/lookup/normalization",
+        "boundary": "finite_path_input_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_input_bound_primitive",
+      "mapping": "4097-byte observed target fails RP-BOUND/CHI-UNSUPPORTED before normalization or target lookup.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N25.json",
+        "bytes": 24265,
+        "sha256": "ce639cac4de1dca8e123fc2d70e35083b0949f9f7e6d40bdb6ee929aca7b67c4"
+      },
+      "observed_error": {
+        "code": "CHI-UNSUPPORTED",
+        "reason": "RTLD path allowance exceeded",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-BOUND",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "operation": "bound_check",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "observed",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": null,
+                "binding": null,
+                "target": {
+                  "size_bytes": 4097,
+                  "sha256": "4e369b5618643c3abddd027b650bfa54810be3b418028a7c9d82299a59d008e8",
+                  "prefix_hex": "6161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161"
+                }
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 5,
+      "acquired_descriptors": 5,
+      "closed_descriptors": 5
+    },
+    {
+      "id": "N26",
+      "kind": "refusal",
+      "immutable_case_sha256": "222c7b15facd563e969133c33774c0a44545cd5790c9c3d9063be5f592e93775",
+      "expected": {
+        "decision": "reject excessive target components without traversal",
+        "boundary": "finite_path_input_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_input_bound_primitive",
+      "mapping": "129-component observed target fails RP-BOUND/CHI-UNSUPPORTED without traversal.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N26.json",
+        "bytes": 16558,
+        "sha256": "97a10b1e5e5620a93c51fa818e249cd305c9a0e0caf2b38e7c93cc34e60cc794"
+      },
+      "observed_error": {
+        "code": "CHI-UNSUPPORTED",
+        "reason": "RTLD path allowance exceeded",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-BOUND",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "operation": "bound_check",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "observed",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": null,
+                "binding": null,
+                "target": {
+                  "size_bytes": 257,
+                  "sha256": "4bc4ea7eddf27eeb8f70ad6c2a678e4f5d9358c9d2a690963111eed5353c39e8",
+                  "prefix_hex": "782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f782f"
+                }
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 5,
+      "acquired_descriptors": 5,
+      "closed_descriptors": 5
+    },
+    {
+      "id": "N27",
+      "kind": "refusal",
+      "immutable_case_sha256": "d53a0503e32efaec3ab5dc7368d9eddf7b56fd056a0fde63ff16173d80bf054c",
+      "expected": {
+        "decision": "reject arbitrary widening of the finite exception",
+        "boundary": "new_policy_scope",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_scope_primitive",
+      "mapping": "add_exception denotes an attempted additional private trace subject/edge, not a new operational JSON key. Subject /etc/another-loader is outside allowed scope and refuses CHI-UNSUPPORTED; malformed operational fields remain N03 CHI-PLAN.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N27.json",
+        "bytes": 10908,
+        "sha256": "beec910c14ccccf25b8f379bbd3b0319a955c9232496395070b4b6e00df78809"
+      },
+      "observed_error": {
+        "code": "CHI-UNSUPPORTED",
+        "reason": "Unreviewed RTLD path traversal",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-TRAVERSAL",
+          "path": null,
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N28",
+      "kind": "refusal",
+      "immutable_case_sha256": "c3d268f6fab1bca99e5e84921928c1191193da9b3c4bc04c2ad70142103e4cdc",
+      "expected": {
+        "decision": "reject missing retained parent needed for physical parent-pop",
+        "boundary": "complete_guard_coverage",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_guard_relation",
+      "mapping": "Missing /usr guard fails CHI-PATH; no parent-pop without retained authenticated parent.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N28.json",
+        "bytes": 10949,
+        "sha256": "c4a4512e8e7abb9bc474a8bb7725f66d56fb86a2818dbc2671de750d1c9499e8"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "RTLD path component identity or type differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-IDENTITY",
+          "path": "/usr",
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/usr",
+                "identity": [
+                  71,
+                  2,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N29",
+      "kind": "refusal",
+      "immutable_case_sha256": "026d3b85b56d080bab344521344a708cc6cf5efc125d01c4238fc9e939e511c1",
+      "expected": {
+        "decision": "reject missing physical alias-hop binding",
+        "boundary": "complete_guard_coverage",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_guard_relation",
+      "mapping": "Missing physical child symlink guard fails CHI-PATH.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N29.json",
+        "bytes": 11000,
+        "sha256": "d03e2b3bfaa0bb8947e956d08a79533a3bab561771a414920ef7140c20cc909b"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "RTLD path component identity or type differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-IDENTITY",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "operation": "shape",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N30",
+      "kind": "refusal",
+      "immutable_case_sha256": "16d5b8f111bebf28a1addef86065f9b412002adc2475c2a46462d9801bad51e8",
+      "expected": {
+        "decision": "reject candidate binding differing from actual canonical file and host closure",
+        "boundary": "candidate_binding_equality",
+        "code": "CHI-INSPECTOR",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "private_candidate_binding_relation",
+      "mapping": "Keep primitive expected actual fixture binding unchanged; mutate candidate relation only. RP-CANDIDATE/CHI-INSPECTOR, not a terminal-read drift substitute.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N30.json",
+        "bytes": 10884,
+        "sha256": "85361f68798ca688140fe50be5c95db8f9bc4067f1d84ac1d8a8f2739cfcc24a"
+      },
+      "observed_error": {
+        "code": "CHI-INSPECTOR",
+        "reason": "RTLD candidate differs from fixed path model",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-CANDIDATE",
+          "path": "/lib64/ld-linux-x86-64.so.2",
+          "operation": "candidate_binding",
+          "errno": null,
+          "evidence": {
+            "observations": [],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N31",
+      "kind": "refusal",
+      "immutable_case_sha256": "e5d2b31a6709326b32cc8bcefe5f276140c411371ec2db8b85b9886d56c9eac5",
+      "expected": {
+        "decision": "synthetic 32-byte inert loader is not the pinned operational loader; primitive acceptance cannot yield plan acceptance",
+        "boundary": "inherited_operational_pin_gate",
+        "code": "CHI-INSPECTOR",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "inherited_pin_relation_primitive",
+      "mapping": "At unchanged _check_libc_plt_bindings fixed-pin predicate with the other role/descriptor relations stipulated equal, synthetic loader binding fails CHI-INSPECTOR/PLT-PIN. The full-plan-route marker requests that inherited gate, not a runnable whole operational plan.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N31.json",
+        "bytes": 10755,
+        "sha256": "09d7a4c1e9d210d3365ab77da16037fc29e71743b42e980f7272ec9e140dd768"
+      },
+      "observed_error": {
+        "code": "CHI-INSPECTOR",
+        "reason": "Libc PLT input is not the selected libc/loader pair",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "libc_plt_binding",
+          "rule_id": "PLT-PIN"
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N32",
+      "kind": "refusal",
+      "immutable_case_sha256": "e3008456d5dfad1188cda3e371bcce679e4c35baa2ecdb8d61202c15612bfd42",
+      "expected": {
+        "decision": "reject leakage of inspection-only path policy into HOST schema",
+        "boundary": "P06_projection_closed_shape",
+        "code": "CHI-COMPAT",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_P06_projection",
+      "mapping": "Existing _validate_host_projection closed schema rejects rtld_paths leaked into HOST, CHI-COMPAT.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N32.json",
+        "bytes": 10407,
+        "sha256": "420941c674b8d909b9a94563979c0e227a24028c5be3bd2951301125b8a8626c"
+      },
+      "observed_error": {
+        "code": "CHI-COMPAT",
+        "reason": "P06 object has an unknown field",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {}
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N33",
+      "kind": "refusal",
+      "immutable_case_sha256": "149afcce644ffae375441d89def45453d6e40391998d340529079def5ee7a9cf",
+      "expected": {
+        "decision": "reject fabricated absent candidate alias/file role",
+        "boundary": "P06_projection_set_equality",
+        "code": "CHI-COMPAT",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_P06_projection",
+      "mapping": "Existing role/alias/file set equality rejects invented absent-candidate alias, CHI-COMPAT.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/N33.json",
+        "bytes": 10763,
+        "sha256": "8c59a7cb20c0552d0f711738df6cde4e46c9e02cc1ec0c824a392de973180888"
+      },
+      "observed_error": {
+        "code": "CHI-COMPAT",
+        "reason": "Projected role/alias/file sets disagree",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {}
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 0,
+      "acquired_descriptors": 0,
+      "closed_descriptors": 0
+    },
+    {
+      "id": "N34",
+      "kind": "refusal",
+      "immutable_case_sha256": "81101d712544262b2fff13812d07781407db4b76cda31fd5ed173ee5faf8fbd5",
+      "expected": {
+        "decision": {
+          "decision": "withhold operational plan adoption",
+          "product_refusal_claim": false,
+          "N57": "historical oracle remains unchanged and is not a runtime control"
+        },
+        "boundary": "external_source_review_gate",
+        "code": null,
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "independent_external_review_only",
+      "mapping": "Withhold operational adoption for missing actual source completeness. No product error/code or runtime oracle pass is invented; historical N57 preserved.",
+      "status": "external_obligation_preserved_operational_adoption_withheld",
+      "executable": false,
+      "observation": null,
+      "note": "Actual loader/source completeness has not been established. No product runtime error, pass, skip, approval flag or historical N57 success is invented."
+    },
+    {
+      "id": "F01",
+      "kind": "fault",
+      "immutable_case_sha256": "726e4438dcdc523a02380c088fd60ec8d202181a5e545ed191585d25308a0fdd",
+      "expected": {
+        "decision": "reject EACCES; do not reinterpret as ENOENT or recurse",
+        "boundary": "descriptor_relative_absence_lookup",
+        "code": "CHI-PATH",
+        "cause": {
+          "errno": "EACCES",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_syscall_fault",
+      "mapping": "Actual injected EACCES at the single absence lookup is RP-IO/CHI-PATH with exact errno/cause.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F01.json",
+        "bytes": 12890,
+        "sha256": "ffd392238344ed63005c737523a5a91645c89aeb5dfbfd0e18441e391bf24213"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "Cannot authenticate RTLD path component",
+        "state": "REJECTED",
+        "cause": {
+          "type": "PermissionError",
+          "reason": "[Errno 13] frozen synthetic absence lookup fault"
+        },
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-IO",
+          "path": "/libx32",
+          "operation": "stat",
+          "errno": 13,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/",
+                "identity": [
+                  71,
+                  1,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_before",
+                "path": "/",
+                "identity": [
+                  71,
+                  1,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": {
+              "kind": "os_error",
+              "errno": 13,
+              "operation": "stat",
+              "path": "/libx32",
+              "message": "[Errno 13] frozen synthetic absence lookup fault",
+              "message_truncated": false
+            },
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 1,
+      "acquired_descriptors": 1,
+      "closed_descriptors": 1
+    },
+    {
+      "id": "F02",
+      "kind": "fault",
+      "immutable_case_sha256": "48da0ccb9a4d5fa6ac3899fe8e2c9ee472b497862a7889a9e615c0f5a7a59c6e",
+      "expected": {
+        "decision": "reject ENOTDIR; do not reinterpret as ENOENT or recurse",
+        "boundary": "descriptor_relative_absence_lookup",
+        "code": "CHI-PATH",
+        "cause": {
+          "errno": "ENOTDIR",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_syscall_fault",
+      "mapping": "Injected ENOTDIR is RP-IO/CHI-PATH, never absence.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F02.json",
+        "bytes": 12854,
+        "sha256": "9dfa31eef5ee06bb3619613b67a30abcbdafcad9bed1275b5cc40ec6ebe62722"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "Cannot authenticate RTLD path component",
+        "state": "REJECTED",
+        "cause": {
+          "type": "NotADirectoryError",
+          "reason": "[Errno 20] frozen synthetic absence lookup fault"
+        },
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-IO",
+          "path": "/libx32",
+          "operation": "stat",
+          "errno": 20,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/",
+                "identity": [
+                  71,
+                  1,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_before",
+                "path": "/",
+                "identity": [
+                  71,
+                  1,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": {
+              "kind": "os_error",
+              "errno": 20,
+              "operation": "stat",
+              "path": "/libx32",
+              "message": "[Errno 20] frozen synthetic absence lookup fault",
+              "message_truncated": false
+            },
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 1,
+      "acquired_descriptors": 1,
+      "closed_descriptors": 1
+    },
+    {
+      "id": "F03",
+      "kind": "fault",
+      "immutable_case_sha256": "f14ca69cbe0214f692bb7735b3e6a5bdad5941f5d8c5d6bbee98591dcc9ae861",
+      "expected": {
+        "decision": "reject EIO; do not reinterpret as ENOENT or recurse",
+        "boundary": "descriptor_relative_absence_lookup",
+        "code": "CHI-PATH",
+        "cause": {
+          "errno": "EIO",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_syscall_fault",
+      "mapping": "Injected EIO is RP-IO/CHI-PATH, never absence.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F03.json",
+        "bytes": 12819,
+        "sha256": "6ec0457589580bed2ac28d958094c8fa3e4a993d0e07c0b9d3bc6b080ca36daa"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "Cannot authenticate RTLD path component",
+        "state": "REJECTED",
+        "cause": {
+          "type": "OSError",
+          "reason": "[Errno 5] frozen synthetic absence lookup fault"
+        },
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-IO",
+          "path": "/libx32",
+          "operation": "stat",
+          "errno": 5,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/",
+                "identity": [
+                  71,
+                  1,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_before",
+                "path": "/",
+                "identity": [
+                  71,
+                  1,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": {
+              "kind": "os_error",
+              "errno": 5,
+              "operation": "stat",
+              "path": "/libx32",
+              "message": "[Errno 5] frozen synthetic absence lookup fault",
+              "message_truncated": false
+            },
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 1,
+      "acquired_descriptors": 1,
+      "closed_descriptors": 1
+    },
+    {
+      "id": "F04",
+      "kind": "fault",
+      "immutable_case_sha256": "416bfd5016a55a4205b38f443bbc68c94a572569635e96a326da4ad48677f02f",
+      "expected": {
+        "decision": "reject ELOOP; do not reinterpret as ENOENT or recurse",
+        "boundary": "descriptor_relative_absence_lookup",
+        "code": "CHI-PATH",
+        "cause": {
+          "errno": "ELOOP",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_syscall_fault",
+      "mapping": "Injected OS ELOOP is RP-IO/CHI-PATH with errno, distinct from semantic unapproved/repeated edge CHI-UNSUPPORTED.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F04.json",
+        "bytes": 12908,
+        "sha256": "6d93eddb6a89b832a91974c2e90d6672cf2252e2f81c7363599a85439e460dc9"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "Cannot authenticate RTLD path component",
+        "state": "REJECTED",
+        "cause": {
+          "type": "OSError",
+          "reason": "[Errno 40] frozen synthetic absence lookup fault"
+        },
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-IO",
+          "path": "/libx32",
+          "operation": "stat",
+          "errno": 40,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/",
+                "identity": [
+                  71,
+                  1,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_before",
+                "path": "/",
+                "identity": [
+                  71,
+                  1,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": {
+              "kind": "os_error",
+              "errno": 40,
+              "operation": "stat",
+              "path": "/libx32",
+              "message": "[Errno 40] frozen synthetic absence lookup fault",
+              "message_truncated": false
+            },
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 1,
+      "acquired_descriptors": 1,
+      "closed_descriptors": 1
+    },
+    {
+      "id": "F05",
+      "kind": "fault",
+      "immutable_case_sha256": "f7625e24b6689cca8d346cd29abceb5acf3669c1b6241a4ee28cb3ddeebc9a0a",
+      "expected": {
+        "decision": "reject replaced ancestor even if held old descriptor still points to prior directory",
+        "boundary": "descriptor_relative_component_open",
+        "code": "CHI-PATH",
+        "cause": "retain mismatched observed identities",
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_identity_race",
+      "mapping": "Replacement between no-follow stat and open/fstat fails CHI-PATH; retain both observations and reject held-old-directory authority.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F05.json",
+        "bytes": 14409,
+        "sha256": "1f615f5e01e92ca67c0b2c7034cbd124561cf05f33be2539645adee7fdfc0741"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "RTLD named route changed during observation",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-NAMESPACE",
+          "path": "/usr",
+          "operation": "fstat",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "named_before",
+                "path": "/usr",
+                "identity": [
+                  71,
+                  2,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "opened_before",
+                "path": "/usr",
+                "identity": [
+                  71,
+                  102,
+                  16877,
+                  1,
+                  4096,
+                  1000000001,
+                  1000000001
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 3,
+      "acquired_descriptors": 3,
+      "closed_descriptors": 3
+    },
+    {
+      "id": "F06",
+      "kind": "fault",
+      "immutable_case_sha256": "ef33740a114a97d76909d4b0a98942d5c892333fed744371de2d111f399dfd15",
+      "expected": {
+        "decision": "reject link replacement between nofollow observations around readlinkat",
+        "boundary": "descriptor_relative_symlink_read",
+        "code": "CHI-PATH",
+        "cause": "retain link and parent identity mismatch",
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_identity_race",
+      "mapping": "Link descriptor/named identity mismatch around readlinkat fails CHI-PATH before mutated target can be accepted.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F06.json",
+        "bytes": 17732,
+        "sha256": "f53002f12132d82b7c029d8795f8d0825002891fee8216e759caef1f93e7e6ed"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "RTLD named route changed during observation",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-NAMESPACE",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "operation": "readlink",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 44,
+                  "sha256": "bb9802014f1e2bee7c7edb539ab3cbe7f3ebcfaa7921cc321b81169602cc5768",
+                  "prefix_hex": "2e2e2f6c69622f7838365f36342d6c696e75782d676e752f6c642d6c696e75782d7838362d36342e736f2e32"
+                }
+              },
+              {
+                "label": "opened_before",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "opened_after",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  8,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_after",
+                "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  108,
+                  41471,
+                  1,
+                  44,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": {
+                  "size_bytes": 44,
+                  "sha256": "bb9802014f1e2bee7c7edb539ab3cbe7f3ebcfaa7921cc321b81169602cc5768",
+                  "prefix_hex": "2e2e2f6c69622f7838365f36342d6c696e75782d676e752f6c642d6c696e75782d7838362d36342e736f2e32"
+                }
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 5,
+      "acquired_descriptors": 5,
+      "closed_descriptors": 5
+    },
+    {
+      "id": "F07",
+      "kind": "fault",
+      "immutable_case_sha256": "ba7d90fffb0ef2ddc8abdc76150af4899b4d4a172202cd9557156ab0174f62bf",
+      "expected": {
+        "decision": "reject ancestor rename/replacement after traversal; fd-local stability alone cannot establish current named route",
+        "boundary": "final_namespace_revalidation",
+        "code": "CHI-PATH",
+        "cause": "retain named edge versus held descriptor mismatch",
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_namespace_race",
+      "mapping": "Fresh root-reanchored named-route comparison detects replacement; CHI-PATH even while old fd remains valid.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F07.json",
+        "bytes": 23952,
+        "sha256": "6c1fe4e927de483be09213e9d54cafda582b9818071f3a10330f2005887d97f7"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "RTLD named route changed during observation",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-NAMESPACE",
+          "path": "/usr/lib64",
+          "operation": "stat",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/usr/lib64",
+                "identity": [
+                  71,
+                  3,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_before",
+                "path": "/usr/lib64",
+                "identity": [
+                  71,
+                  103,
+                  16877,
+                  1,
+                  4096,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 9,
+      "acquired_descriptors": 10,
+      "closed_descriptors": 10
+    },
+    {
+      "id": "F08",
+      "kind": "fault",
+      "immutable_case_sha256": "60961825301cf4dacd4609a512c249ce9f87a73a798a71fa219919701ed36392",
+      "expected": {
+        "decision": "block first command with zero starts; preserve underlying CHI-PATH",
+        "boundary": "full_precommand_recheck",
+        "code": "CHI-DRIFT",
+        "cause": {
+          "code": "CHI-PATH",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_full_recheck",
+      "mapping": "Exact witness creation causes underlying CHI-PATH, wrapped by existing full _recheck as CHI-DRIFT; zero starts.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F08.json",
+        "bytes": 167646,
+        "sha256": "b8df2834f806254c754ace23e39a4896fac11fd08602a7de23693202b0048aee"
+      },
+      "observed_error": {
+        "code": "CHI-DRIFT",
+        "reason": "An admitted input changed before/after the command",
+        "state": "REJECTED",
+        "cause": {
+          "code": "CHI-PATH",
+          "reason": "Required RTLD absence differs",
+          "state": "REJECTED",
+          "cause": null,
+          "details": {
+            "stage": "rtld_paths",
+            "rule_id": "RP-ABSENCE",
+            "path": "/libx32",
+            "operation": "stat",
+            "errno": null,
+            "evidence": {
+              "observations": [
+                {
+                  "label": "observed",
+                  "path": "/libx32",
+                  "identity": [
+                    71,
+                    110,
+                    16877,
+                    1,
+                    4096,
+                    1000000001,
+                    1000000001
+                  ],
+                  "binding": null,
+                  "target": null
+                }
+              ],
+              "primary": null,
+              "cleanup": []
+            }
+          }
+        },
+        "details": {
+          "stage": "recheck",
+          "rule_id": "LP-RECHECK"
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 9,
+      "acquired_descriptors": 33,
+      "closed_descriptors": 33
+    },
+    {
+      "id": "F09",
+      "kind": "fault",
+      "immutable_case_sha256": "7a1dd3af28e8a2e01e44bea6ebb3babd8c57d08af35df1034d49b571d0d8ac50",
+      "expected": {
+        "decision": "retain original first command receipt and block later command/HOST success",
+        "boundary": "full_postcommand_recheck",
+        "code": "CHI-DRIFT",
+        "cause": {
+          "code": "CHI-PATH",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 1,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_postflight_recheck",
+      "mapping": "Preserve one explicitly mocked prior Node receipt/start, outer CHI-DRIFT and inner CHI-PATH; block later command and HOST success. Actual P24 starts remain zero.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F09.json",
+        "bytes": 355721,
+        "sha256": "66039cfb310e46c25d69180c38c40358b6c78a3b935fa4d9508ec52f46ef6242"
+      },
+      "observed_error": {
+        "code": "CHI-DRIFT",
+        "reason": "An admitted input changed before/after the command",
+        "state": "REJECTED",
+        "cause": {
+          "code": "CHI-PATH",
+          "reason": "RTLD path component identity or type differs",
+          "state": "REJECTED",
+          "cause": null,
+          "details": {
+            "stage": "rtld_paths",
+            "rule_id": "RP-IDENTITY",
+            "path": "/usr/lib64/ld-linux-x86-64.so.2",
+            "operation": "stat",
+            "errno": null,
+            "evidence": {
+              "observations": [
+                {
+                  "label": "expected",
+                  "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                  "identity": [
+                    71,
+                    8,
+                    41471,
+                    1,
+                    44,
+                    1000000000,
+                    1000000000
+                  ],
+                  "binding": null,
+                  "target": null
+                },
+                {
+                  "label": "named_before",
+                  "path": "/usr/lib64/ld-linux-x86-64.so.2",
+                  "identity": [
+                    71,
+                    108,
+                    41471,
+                    1,
+                    44,
+                    1000000000,
+                    1000000000
+                  ],
+                  "binding": null,
+                  "target": null
+                }
+              ],
+              "primary": null,
+              "cleanup": []
+            }
+          }
+        },
+        "details": {
+          "stage": "recheck",
+          "rule_id": "LP-RECHECK"
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 1,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 9,
+      "acquired_descriptors": 96,
+      "closed_descriptors": 96
+    },
+    {
+      "id": "F10",
+      "kind": "fault",
+      "immutable_case_sha256": "54fea8f538ac15506756d4794c4cdc460f48eb726c774287a151a54c729551d4",
+      "expected": {
+        "decision": "propagate callback object without success; finally-close every acquired descriptor exactly once",
+        "boundary": "deadline_callback",
+        "code": "same_object_callback_exception",
+        "cause": {
+          "same_object": "synthetic sentinel DeadlineFault#1",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_callback_fault",
+      "mapping": "Private DeadlineFault#1 propagates as same object after successful exactly-once descriptor cleanup; no code/cause fabrication.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F10.json",
+        "bytes": 13266,
+        "sha256": "88a1ff7fbce54d35d90d511cf0bc24c5dd3047bcf61d71af191dd1d6894cfcc5"
+      },
+      "observed_error": {
+        "type": "DeadlineFault",
+        "reason": "synthetic sentinel DeadlineFault#1"
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 3,
+      "acquired_descriptors": 3,
+      "closed_descriptors": 3
+    },
+    {
+      "id": "F11",
+      "kind": "fault",
+      "immutable_case_sha256": "05187f57af9bd5e36907f6f57eb55fdd72ea1497b59348f1644bbae512a0c23c",
+      "expected": {
+        "decision": "fail closed on unavailable nofollow/dir_fd primitives; no pathname or realpath fallback",
+        "boundary": "descriptor_relative_component_open",
+        "code": "CHI-PATH",
+        "cause": {
+          "type": "NotImplementedError",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_capability_fault",
+      "mapping": "Unavailable required dir_fd facility raises RP-CAPABILITY/CHI-PATH retaining actual NotImplementedError; no realpath/proc/native fallback.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F11.json",
+        "bytes": 13014,
+        "sha256": "474f5fccc639f9368d3f423fc636b260728aa3c2b00e95cdb7d46bfcad45c75d"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "Required RTLD no-follow capability is unavailable",
+        "state": "REJECTED",
+        "cause": {
+          "type": "NotImplementedError",
+          "reason": "frozen required dir_fd unavailable"
+        },
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-CAPABILITY",
+          "path": "/lib64",
+          "operation": "open",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/lib64",
+                "identity": [
+                  71,
+                  6,
+                  41471,
+                  1,
+                  9,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "named_before",
+                "path": "/lib64",
+                "identity": [
+                  71,
+                  6,
+                  41471,
+                  1,
+                  9,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": {
+              "kind": "other_error",
+              "errno": null,
+              "operation": "open",
+              "path": "/lib64",
+              "message": "frozen required dir_fd unavailable",
+              "message_truncated": false
+            },
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 1,
+      "acquired_descriptors": 1,
+      "closed_descriptors": 1
+    },
+    {
+      "id": "F12",
+      "kind": "fault",
+      "immutable_case_sha256": "431f3abd406517d21d5ed8d86f5e9c75b717a110daffbce364c4059e7fb202d3",
+      "expected": {
+        "decision": "reject final file identity/content change between before/after read",
+        "boundary": "terminal_file_read",
+        "code": "CHI-PATH",
+        "cause": "retain original binding and differing observed identity",
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_terminal_read_race",
+      "mapping": "Readable/named full identity changes after bytes read fail RP-READ/CHI-PATH and preserve expected/before/after evidence.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F12.json",
+        "bytes": 23069,
+        "sha256": "3e0c32ce27856f25e856a301c651257fd11f357acc00579718cf900ac1177948"
+      },
+      "observed_error": {
+        "code": "CHI-PATH",
+        "reason": "RTLD terminal file changed or binding differs",
+        "state": "REJECTED",
+        "cause": null,
+        "details": {
+          "stage": "rtld_paths",
+          "rule_id": "RP-READ",
+          "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "operation": "read",
+          "errno": null,
+          "evidence": {
+            "observations": [
+              {
+                "label": "expected",
+                "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  9,
+                  33152,
+                  1,
+                  33,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": {
+                  "sha256": "2450cb4f0c238438e1cb9986227ccf0548c75919c008fae97513251af643b452",
+                  "size_bytes": 33,
+                  "mode": "0o600"
+                },
+                "target": null
+              },
+              {
+                "label": "opened_before",
+                "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  9,
+                  33152,
+                  1,
+                  33,
+                  1000000000,
+                  1000000000
+                ],
+                "binding": null,
+                "target": null
+              },
+              {
+                "label": "opened_after",
+                "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  9,
+                  33152,
+                  1,
+                  33,
+                  1000000001,
+                  1000000001
+                ],
+                "binding": {
+                  "sha256": "2450cb4f0c238438e1cb9986227ccf0548c75919c008fae97513251af643b452",
+                  "size_bytes": 33,
+                  "mode": "0o600"
+                },
+                "target": null
+              },
+              {
+                "label": "named_after",
+                "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+                "identity": [
+                  71,
+                  9,
+                  33152,
+                  1,
+                  33,
+                  1000000001,
+                  1000000001
+                ],
+                "binding": null,
+                "target": null
+              }
+            ],
+            "primary": null,
+            "cleanup": []
+          }
+        }
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 9,
+      "acquired_descriptors": 10,
+      "closed_descriptors": 10
+    },
+    {
+      "id": "F13",
+      "kind": "fault",
+      "immutable_case_sha256": "439a36b350b790c94021c3bd18bc8bf1b220e88b395b439da9fba06210ddb9b6",
+      "expected": {
+        "decision": "reject path drift after full recheck and before launch; do not rely on cached success",
+        "boundary": "final_launch_path_reproof",
+        "code": "CHI-DRIFT",
+        "cause": {
+          "code": "CHI-PATH",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "applicability": "mocked_final_launch_drift",
+      "mapping": "New .4 final launch proof/snapshot drift must be wrapped CHI-DRIFT with original CHI-PATH cause; existing clock behavior and old routes remain unchanged.",
+      "status": "passed_at_declared_primitive_or_mock_boundary",
+      "executable": true,
+      "observation": {
+        "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/observations/F13.json",
+        "bytes": 287793,
+        "sha256": "524b53a372d41d17a457f9535aa6698d61679dd06657f826e39c75a90e5d61d0"
+      },
+      "observed_error": {
+        "code": "CHI-DRIFT",
+        "reason": "RTLD path changed immediately before launch",
+        "state": "REJECTED",
+        "cause": {
+          "code": "CHI-PATH",
+          "reason": "RTLD path component identity or type differs",
+          "state": "REJECTED",
+          "cause": null,
+          "details": {
+            "stage": "rtld_paths",
+            "rule_id": "RP-IDENTITY",
+            "path": "/lib",
+            "operation": "stat",
+            "errno": null,
+            "evidence": {
+              "observations": [
+                {
+                  "label": "expected",
+                  "path": "/lib",
+                  "identity": [
+                    71,
+                    7,
+                    41471,
+                    1,
+                    7,
+                    1000000000,
+                    1000000000
+                  ],
+                  "binding": null,
+                  "target": null
+                },
+                {
+                  "label": "named_before",
+                  "path": "/lib",
+                  "identity": [
+                    71,
+                    107,
+                    41471,
+                    1,
+                    7,
+                    1000000000,
+                    1000000000
+                  ],
+                  "binding": null,
+                  "target": null
+                }
+              ],
+              "primary": null,
+              "cleanup": []
+            }
+          }
+        },
+        "details": {}
+      },
+      "observed_result": null,
+      "mock_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "actual_process_counts": {
+        "Node_starts": 0,
+        "ldd_starts": 0,
+        "direct_loader_starts": 0,
+        "H0_invocations": 0,
+        "H1_invocations": 0,
+        "product_test_invocations": 0,
+        "source_Git_process_starts": 0,
+        "project_helper_imports": 0
+      },
+      "maximum_live_descriptors": 9,
+      "acquired_descriptors": 76,
+      "closed_descriptors": 76
+    }
+  ],
+  "limits": [
+    "No actual host topology was inspected or changed by these controls.",
+    "F09 has exactly one mocked prior Node start; every actual target process count is zero.",
+    "N34 is independent actual source-completeness review only; historical N57 remains outside runtime testing.",
+    "The N31 prose says32 bytes, while exact BASE content/binding/st_size and SHA-256 specify33. Exact33-byte frozen input and all diagnostic expectations were preserved."
+  ]
+}

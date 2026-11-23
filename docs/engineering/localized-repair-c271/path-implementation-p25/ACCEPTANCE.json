@@ -1,0 +1,93 @@
+{
+  "schema": "ontokin.c271.p25-acceptance/1",
+  "at_utc": "2026-11-23T14:33:02.414292+00:00",
+  "decision": "accepted_bounded_implementation_only",
+  "director": "c271-p25-bd99261bd84d",
+  "production": {
+    "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "bytes": 233502,
+    "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a"
+  },
+  "adapter": {
+    "path": "tests/test_current_host_rtld_paths_v01.py",
+    "bytes": 71062,
+    "sha256": "363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da"
+  },
+  "independent_implementation_review": {
+    "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/REVIEW-FINAL.json",
+    "bytes": 11630,
+    "sha256": "5b892d252a575a6460018df99f059b14ab8ec1315b6929e5a246e2f613f5e833"
+  },
+  "independent_adapter_review": {
+    "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/ADAPTER-REVIEW-002.json",
+    "bytes": 33940,
+    "sha256": "3068358111598e010f058d3117bc99be876255175b37a5d090073f4049e821e4"
+  },
+  "new_executable_controls": 51,
+  "supplemental_methods": 10,
+  "final_new_run": {
+    "methods": 61,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "evidence": {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt005/RESULT.json",
+      "bytes": 3107,
+      "sha256": "1bc9592301dde9566d770af8367b2e86dd7d8852749ea7c5aa485c632f57527d"
+    }
+  },
+  "inherited_candidate_run": {
+    "methods": 385,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "evidence": {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/attempt002/RESULT.json",
+      "bytes": 3795,
+      "sha256": "1adf016d324333fc84c4fdafa0300258193d1fae697217fd065ca89f7c192da2"
+    }
+  },
+  "inherited_baseline_run": {
+    "methods": 385,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "evidence": {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/baseline/RESULT.json",
+      "bytes": 45925,
+      "sha256": "f879f28f38c73a64b64085adb4e07bfddc75f42f589990e7b931589da580cde1"
+    }
+  },
+  "N34": {
+    "kind": "external_source_review_gate",
+    "decision": "withhold_operational_plan_adoption",
+    "actual_source_completeness_evidence": "not_supplied_in_P25",
+    "assessment": "Both independent reviews preserve and assess the withholding obligation. This does not satisfy the actual source-completeness gate for a future plan.",
+    "runtime_method": null,
+    "runtime_pass": false,
+    "runtime_skip": false,
+    "historical_N57": "unchanged_external_obligation"
+  },
+  "preservation": [
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/PRESERVATION-FINAL.json",
+      "bytes": 3430,
+      "sha256": "01f52f7c6740c1ce081bfd27e8d0acdc97ff94fa119628b4062370441f169fb7"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/PROTECTED-BASELINE.json",
+      "bytes": 3673,
+      "sha256": "498db2693ed57b2d9e9392183be64bc923f463551da398d071e56a472814adf1"
+    }
+  ],
+  "actual_target_starts": 0,
+  "actual_H0_H1_invocations": 0,
+  "scope_limits": [
+    "Synthetic/private and mocked evidence only; no current-host STATIC_READY claim.",
+    "Only Python 3.12.14/Linux exercised in this phase.",
+    "Validation is not atomic with kernel execution; inherited kernel, privileged-mount and change-and-restore trust limits remain.",
+    "Frozen N31 prose says 32 bytes but exact content/binding defines 33; the immutable 33-byte input and fixed-pin refusal were preserved."
+  ],
+  "parent_complete": false,
+  "documentary_publication_delivery_gates": "pending_after_technical_boundary"
+}

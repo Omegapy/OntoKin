@@ -1,0 +1,170 @@
+--- ADAPTER-003
++++ ADAPTER-004
+@@ -58,6 +58,19 @@
+ ALLOWED_PATHS = set(SCHEMA["snapshot"]["legacy_snapshot_exclusions"])
+ ZERO_COUNTS = deepcopy(MATRIX["actual_target_counts"])
+ RUNTIME_IDS = [row["id"] for row in MATRIX["cases"] if row["id"] != "N34"]
++# Exact diagnostic obligations from the adopted schema/crosswalk. Inherited
++# wrapper diagnostics remain separate, as do same-object callback faults.
++NEW_RULES = {
++    "N02": "RP-PROFILE", "N03": "RP-SHAPE", "N04": "RP-SHAPE",
++    **{name: "RP-ABSENCE" for name in ("N10", "N11", "N12", "N13", "N14", "N15")},
++    "N16": "RP-NAMESPACE", "N17": "RP-IDENTITY", "N18": "RP-IDENTITY",
++    **{name: "RP-TRAVERSAL" for name in ("N19", "N20", "N21", "N22", "N23", "N24", "N27")},
++    "N25": "RP-BOUND", "N26": "RP-BOUND", "N28": "RP-IDENTITY", "N29": "RP-IDENTITY", "N30": "RP-CANDIDATE",
++    **{name: "RP-IO" for name in ("F01", "F02", "F03", "F04")},
++    "F05": "RP-NAMESPACE", "F06": "RP-NAMESPACE", "F07": "RP-NAMESPACE",
++    "F11": "RP-CAPABILITY", "F12": "RP-READ",
++}
++WRAPPED_RULES = {"F08": "RP-ABSENCE", "F09": "RP-IDENTITY", "F13": "RP-IDENTITY"}
+ if len(RUNTIME_IDS) != 51 or len(CASES) != 52:
+     raise AssertionError("Frozen case inventory changed")
+ for _row in MATRIX["cases"]:
+@@ -236,7 +249,7 @@
+         if follow_symlinks is not False:
+             raise AssertionError("Synthetic path observation followed a link")
+         path = self.name(value, dir_fd)
+-        self.event("stat", path, dir_fd=dir_fd, follow_symlinks=False)
++        self.event("stat", path, dir_fd=dir_fd, name=os.fsdecode(value), parent_path=self.live[dir_fd]["path"] if dir_fd is not None else None, follow_symlinks=False)
+         if self.case_id in ("F01", "F02", "F03", "F04") and path == "/libx32":
+             number = getattr(errno, self.context["fault_events"][0]["raise_errno"])
+             self.io_fault = OSError(number, "frozen synthetic absence lookup fault")
+@@ -254,7 +267,7 @@
+ 
+     def open(self, value, flags, mode=0o777, *, dir_fd=None):
+         path = self.name(value, dir_fd)
+-        self.event("open", path, flags=flags, dir_fd=dir_fd)
++        self.event("open", path, flags=flags, dir_fd=dir_fd, name=os.fsdecode(value), parent_path=self.live[dir_fd]["path"] if dir_fd is not None else None)
+         if self.case_id == "F11" and dir_fd is not None and not self.triggered:
+             self.io_fault = NotImplementedError("frozen required dir_fd unavailable")
+             self.triggered.append(self.context["fault_events"][0]["at"])
+@@ -470,9 +483,11 @@
+         self.caller_record = None
+         self.mock_counts = deepcopy(ZERO_COUNTS)
+ 
+-    def assert_details(self, error):
+-        if not isinstance(error, inspection.HostInspectionError) or error.details.get("stage") != "rtld_paths":
+-            return
++    def assert_details(self, error, expected_rule=None):
++        self.assertIsInstance(error, inspection.HostInspectionError)
++        self.assertEqual(error.details.get("stage"), "rtld_paths")
++        if expected_rule is not None:
++            self.assertEqual(error.details.get("rule_id"), expected_rule)
+         details = error.details
+         contract = SCHEMA["failure_contract"]
+         self.assertEqual(set(details), set(contract["new_error_details_required_keys"]))
+@@ -531,7 +546,7 @@
+         command = {"id": "node_version", "argv": ["/synthetic/node", "--version"],
+                    "cwd": "/synthetic/evidence/attempt/node_version", "label": "host-node-version"}
+         snapshot = self.aggregate(c, fs)
+-        baseline_trace = fs.summary()
++        baseline_trace = deepcopy(fs.summary())
+         self.assertEqual(fs.root_opens, 2)
+         self.assertFalse(fs.live)
+         fs.root_opens = 0
+@@ -644,8 +659,12 @@
+                     if item not in current:
+                         current.append(item)
+             self.assertEqual(passes, [expected_links, expected_links])
+-            parent_checks = [row for row in fs.trace if row["operation"] == "open" and row["path"] == "/usr" and row["dir_fd"] is not None]
+-            self.assertGreaterEqual(len(parent_checks), 4)
++            parent_checks = [row for row in fs.trace if row["operation"] == "open" and row["name"] == ".."]
++            self.assertEqual(len(parent_checks), 2)
++            self.assertTrue(all(row["parent_path"] == "/usr/lib64" and row["path"] == "/usr" for row in parent_checks))
++            parent_stats = [row for row in fs.trace if row["operation"] == "stat" and row["name"] == ".."]
++            self.assertEqual(len(parent_stats), 2)
++            self.assertTrue(all(row["parent_path"] == "/usr/lib64" and row["path"] == "/usr" for row in parent_stats))
+             if cid == "P04":
+                 self.assertFalse(any(row.get("path") == "/lib" for row in fs.trace))
+                 with self.assertRaises(inspection.HostInspectionError):
+@@ -656,6 +675,22 @@
+             value = self.absence(c, fs, path)
+             witness = next(row for row in SCHEMA["rtld_paths"]["absences_exact_ordered_rows"] if row["path"] == path)
+             self.assertEqual(value, {**witness, "state": "absent"})
++            absences = [row for row in fs.trace if row["operation"] == "stat" and row["path"] == witness["first_missing"]]
++            self.assertEqual(len(absences), 4, "Each of the two passes must recheck the exact absence once")
++            self.assertTrue(all(row["parent_path"] == witness["nearest_existing_ancestor"]
++                                and row["name"] == PurePosixPath(witness["first_missing"]).name for row in absences))
++            if cid == "P03":
++                passes, current = [], None
++                for row in fs.trace:
++                    if row["operation"] == "open" and row["path"] == "/" and row["dir_fd"] is None:
++                        current = []
++                        passes.append(current)
++                    if row["operation"] == "readlink":
++                        item = (row["path"], fs.entries[row["path"]]["target"])
++                        self.assertEqual(item, ("/lib", "usr/lib"))
++                        if item not in current:
++                            current.append(item)
++                self.assertEqual(passes, [[("/lib", "usr/lib")], [("/lib", "usr/lib")]])
+             return value
+         if cid == "P05":
+             script = ('RTLDLIST="' + " ".join(BASE["literal_rtldlist"]) + '"\n').encode()
+@@ -747,7 +782,13 @@
+             else:
+                 self.assertIsInstance(error, inspection.HostInspectionError, repr(error))
+                 self.assertEqual(error.code, expected["code"])
+-                self.assert_details(error)
++                self.assertEqual(error.state, "REJECTED")
++                if case["id"] in NEW_RULES:
++                    self.assert_details(error, NEW_RULES[case["id"]])
++                elif case["id"] in ("N01", "N05", "N06", "N07", "N08", "N09", "N32", "N33"):
++                    self.assertEqual(error.details, {})
++                if expected["cause"] is None:
++                    self.assertIsNone(error.cause)
+                 if case["id"] == "N01":
+                     self.assertEqual(error.reason, expected["decision"]["reason"])
+                 if case["id"] in ("N06", "N07", "N09"):
+@@ -755,7 +796,7 @@
+                 if case["id"] == "N08":
+                     self.assertEqual(error.reason, "Duplicate RTLD candidate")
+                 if case["id"] == "N31":
+-                    self.assertEqual(error.details["rule_id"], "PLT-PIN")
++                    self.assertEqual(error.details, {"stage": "libc_plt_binding", "rule_id": "PLT-PIN"})
+                 if case["id"] == "N33":
+                     self.assertEqual(error.reason, "Projected role/alias/file sets disagree")
+                 if case["id"] in ("F01", "F02", "F03", "F04", "F11"):
+@@ -764,15 +805,39 @@
+                 if case["id"] in ("F08", "F09", "F13"):
+                     self.assertIsInstance(error.cause, inspection.HostInspectionError)
+                     self.assertEqual(error.cause.code, "CHI-PATH")
+-                    self.assert_details(error.cause)
++                    self.assert_details(error.cause, WRAPPED_RULES[case["id"]])
++                    if case["id"] in ("F08", "F09"):
++                        self.assertEqual(error.details, {"stage": "recheck", "rule_id": "LP-RECHECK"})
++                    else:
++                        self.assertEqual(error.reason, "RTLD path changed immediately before launch")
++                        self.assertEqual(error.details, {})
+                 if case["id"] in ("F05", "F06", "F07"):
+-                    ids = [row["identity"] for row in error.details["evidence"]["observations"] if row["identity"] is not None]
+-                    self.assertGreaterEqual(len({tuple(row) for row in ids}), 2)
++                    path = {"F05": "/usr", "F06": PHYSICAL_ALIAS, "F07": "/usr/lib64"}[case["id"]]
++                    before = deepcopy(next(row for row in BASE["entries"] if row["path"] == path)["identity"])
++                    after = deepcopy(before)
++                    event = case["fault_events"][0]
++                    if case["id"] == "F05":
++                        after = event["replace_identity"]
++                    elif case["id"] == "F06":
++                        after[1] = event["replace_inode"]
++                    else:
++                        after[1] = event["new_inode"]
++                    ids = [row["identity"] for row in error.details["evidence"]["observations"] if row["path"] == path]
++                    self.assertIn(before, ids)
++                    self.assertIn(after, ids)
+                 if case["id"] == "F12":
+                     rows = error.details["evidence"]["observations"]
+                     self.assertTrue({"expected", "opened_before", "opened_after", "named_after"} <= {row["label"] for row in rows})
+                     self.assertEqual(error.details["rule_id"], "RP-READ")
+-                    self.assertTrue(any(row["binding"] == BASE_BINDING for row in rows))
++                    labelled = {row["label"]: row for row in rows}
++                    before = BASE["entries"][-1]["identity"]
++                    after = case["fault_events"][0]["replace_file_identity"]
++                    for label in ("expected", "opened_before", "opened_after", "named_after"):
++                        self.assertEqual(labelled[label]["path"], CANONICAL)
++                        self.assertEqual(labelled[label]["identity"], before if label in ("expected", "opened_before") else after)
++                    self.assertEqual(labelled["expected"]["binding"], BASE_BINDING)
++                    self.assertEqual(labelled["opened_after"]["binding"], BASE_BINDING)
++                    self.assertTrue(fs.read_completed)
+                 if case["id"] in ("N19", "N20", "N21", "N22", "N23", "N24", "N25", "N26"):
+                     changed = case["exact_changes"][0]["value"].encode("ascii")
+                     fingerprints = [row["target"] for row in error.details["evidence"]["observations"] if row["target"] is not None]

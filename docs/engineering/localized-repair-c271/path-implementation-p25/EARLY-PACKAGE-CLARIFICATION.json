@@ -1,0 +1,19 @@
+{
+  "schema": "ontokin.c271.p25-early-clarification/1",
+  "recorded_at_utc": "2026-11-23T14:13:33.476394+00:00",
+  "archive_sha256": "d61fbea806e0d9c8218f3e57291a13e25d23df50b9bd33bec2d67801a47ac188",
+  "archive_unchanged": true,
+  "finding": "Root HISTORICAL-DEPENDENCIES.json preserved P24 metadata verbatim, so inherited predecessor-relative paths retain their P24 namespace rather than the outer P25 ZIP namespace.",
+  "correction": "Interpret all paths in that inherited historical-dependency object relative to history/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip. The referenced P23 archive remains at its declared path inside that P24 archive. The immediate predecessor of P25 is P24, whose original ZIP is present at that outer history path.",
+  "data_loss": false,
+  "recovery_effect": "No product/source/control/receipt bytes changed or missing. Live GitHub and the P25 checkpoint remain the continuation authority; historical restoration uses the explicit nested path above.",
+  "final_package_requirement": "Use a P25-specific historical-dependency wrapper naming P24 as immediate predecessor and explicitly declaring the inherited namespace.",
+  "portable_inputs": {
+    "git_repository": "https://github.com/Omegapy/OntoKin",
+    "starting_branch_commit": "ce411b12e601036a33698aa7c3290722e602ea75",
+    "main_instruction_commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+    "snapshots": "SOURCE-MANIFEST.json maps all packaged repository snapshots to exact revisions and hashes",
+    "implementation_contract": "repository/docs/engineering/localized-repair-c271/path-design-p24/ADOPTION.json and its bound design/schema/controls",
+    "current_phase_reconstruction": "Clone the live repository and reconcile current refs; retrieve the selected source revision. P25 uses Python synthetic/mocked checks only and requires no Node, library, prior virtual environment or previous-host reconstruction. Any later actual-input plan requires fresh source/inventory and current-host observations."
+  }
+}

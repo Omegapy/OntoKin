@@ -1,0 +1,831 @@
+{
+  "expected": "Close failure blocks success; primary=null; exact once-only cleanup",
+  "error": {
+    "code": "CHI-PATH",
+    "reason": "RTLD path descriptor cleanup failed",
+    "state": "REJECTED",
+    "cause": {
+      "type": "OSError",
+      "reason": "[Errno 5] synthetic final root close failure"
+    },
+    "details": {
+      "stage": "rtld_paths",
+      "rule_id": "RP-CLEANUP",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "operation": "close",
+      "errno": 5,
+      "evidence": {
+        "observations": [
+          {
+            "label": "named_before",
+            "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+            "identity": [
+              71,
+              9,
+              33152,
+              1,
+              33,
+              1000000000,
+              1000000000
+            ],
+            "binding": null,
+            "target": null
+          },
+          {
+            "label": "opened_before",
+            "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+            "identity": [
+              71,
+              9,
+              33152,
+              1,
+              33,
+              1000000000,
+              1000000000
+            ],
+            "binding": null,
+            "target": null
+          }
+        ],
+        "primary": null,
+        "cleanup": [
+          {
+            "kind": "os_error",
+            "errno": 5,
+            "operation": "close",
+            "path": "/",
+            "message": "[Errno 5] synthetic final root close failure",
+            "message_truncated": false
+          }
+        ]
+      }
+    }
+  },
+  "trace": [
+    {
+      "operation": "callback",
+      "count": 1
+    },
+    {
+      "operation": "stat",
+      "path": "/",
+      "dir_fd": null,
+      "name": "/",
+      "parent_path": null,
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 2
+    },
+    {
+      "operation": "open",
+      "path": "/",
+      "flags": 2818048,
+      "dir_fd": null,
+      "name": "/",
+      "parent_path": null
+    },
+    {
+      "operation": "callback",
+      "count": 3
+    },
+    {
+      "operation": "fstat",
+      "path": "/",
+      "fd": 1000
+    },
+    {
+      "operation": "callback",
+      "count": 4
+    },
+    {
+      "operation": "stat",
+      "path": "/lib64",
+      "dir_fd": 1000,
+      "name": "lib64",
+      "parent_path": "/",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 5
+    },
+    {
+      "operation": "open",
+      "path": "/lib64",
+      "flags": 2752512,
+      "dir_fd": 1000,
+      "name": "lib64",
+      "parent_path": "/"
+    },
+    {
+      "operation": "callback",
+      "count": 6
+    },
+    {
+      "operation": "fstat",
+      "path": "/lib64",
+      "fd": 1001
+    },
+    {
+      "operation": "callback",
+      "count": 7
+    },
+    {
+      "operation": "readlink",
+      "path": "/lib64",
+      "fd": 1001,
+      "empty_path": true
+    },
+    {
+      "operation": "callback",
+      "count": 8
+    },
+    {
+      "operation": "fstat",
+      "path": "/lib64",
+      "fd": 1001
+    },
+    {
+      "operation": "callback",
+      "count": 9
+    },
+    {
+      "operation": "stat",
+      "path": "/lib64",
+      "dir_fd": 1000,
+      "name": "lib64",
+      "parent_path": "/",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 10
+    },
+    {
+      "operation": "stat",
+      "path": "/usr",
+      "dir_fd": 1000,
+      "name": "usr",
+      "parent_path": "/",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 11
+    },
+    {
+      "operation": "open",
+      "path": "/usr",
+      "flags": 2818048,
+      "dir_fd": 1000,
+      "name": "usr",
+      "parent_path": "/"
+    },
+    {
+      "operation": "callback",
+      "count": 12
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr",
+      "fd": 1002
+    },
+    {
+      "operation": "callback",
+      "count": 13
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib64",
+      "dir_fd": 1002,
+      "name": "lib64",
+      "parent_path": "/usr",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 14
+    },
+    {
+      "operation": "open",
+      "path": "/usr/lib64",
+      "flags": 2818048,
+      "dir_fd": 1002,
+      "name": "lib64",
+      "parent_path": "/usr"
+    },
+    {
+      "operation": "callback",
+      "count": 15
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib64",
+      "fd": 1003
+    },
+    {
+      "operation": "callback",
+      "count": 16
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "dir_fd": 1003,
+      "name": "ld-linux-x86-64.so.2",
+      "parent_path": "/usr/lib64",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 17
+    },
+    {
+      "operation": "open",
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "flags": 2752512,
+      "dir_fd": 1003,
+      "name": "ld-linux-x86-64.so.2",
+      "parent_path": "/usr/lib64"
+    },
+    {
+      "operation": "callback",
+      "count": 18
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "fd": 1004
+    },
+    {
+      "operation": "callback",
+      "count": 19
+    },
+    {
+      "operation": "readlink",
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "fd": 1004,
+      "empty_path": true
+    },
+    {
+      "operation": "callback",
+      "count": 20
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "fd": 1004
+    },
+    {
+      "operation": "callback",
+      "count": 21
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "dir_fd": 1003,
+      "name": "ld-linux-x86-64.so.2",
+      "parent_path": "/usr/lib64",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 22
+    },
+    {
+      "operation": "stat",
+      "path": "/usr",
+      "dir_fd": 1003,
+      "name": "..",
+      "parent_path": "/usr/lib64",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 23
+    },
+    {
+      "operation": "open",
+      "path": "/usr",
+      "flags": 2818048,
+      "dir_fd": 1003,
+      "name": "..",
+      "parent_path": "/usr/lib64"
+    },
+    {
+      "operation": "callback",
+      "count": 24
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr",
+      "fd": 1005
+    },
+    {
+      "operation": "callback",
+      "count": 25
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr",
+      "fd": 1002
+    },
+    {
+      "operation": "close",
+      "path": "/usr",
+      "fd": 1005
+    },
+    {
+      "operation": "callback",
+      "count": 26
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib",
+      "dir_fd": 1002,
+      "name": "lib",
+      "parent_path": "/usr",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 27
+    },
+    {
+      "operation": "open",
+      "path": "/usr/lib",
+      "flags": 2818048,
+      "dir_fd": 1002,
+      "name": "lib",
+      "parent_path": "/usr"
+    },
+    {
+      "operation": "callback",
+      "count": 28
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib",
+      "fd": 1006
+    },
+    {
+      "operation": "callback",
+      "count": 29
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib/x86_64-linux-gnu",
+      "dir_fd": 1006,
+      "name": "x86_64-linux-gnu",
+      "parent_path": "/usr/lib",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 30
+    },
+    {
+      "operation": "open",
+      "path": "/usr/lib/x86_64-linux-gnu",
+      "flags": 2818048,
+      "dir_fd": 1006,
+      "name": "x86_64-linux-gnu",
+      "parent_path": "/usr/lib"
+    },
+    {
+      "operation": "callback",
+      "count": 31
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib/x86_64-linux-gnu",
+      "fd": 1007
+    },
+    {
+      "operation": "callback",
+      "count": 32
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "dir_fd": 1007,
+      "name": "ld-linux-x86-64.so.2",
+      "parent_path": "/usr/lib/x86_64-linux-gnu",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 33
+    },
+    {
+      "operation": "open",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "flags": 2752512,
+      "dir_fd": 1007,
+      "name": "ld-linux-x86-64.so.2",
+      "parent_path": "/usr/lib/x86_64-linux-gnu"
+    },
+    {
+      "operation": "callback",
+      "count": 34
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "fd": 1008
+    },
+    {
+      "operation": "callback",
+      "count": 35
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "dir_fd": 1007,
+      "name": "ld-linux-x86-64.so.2",
+      "parent_path": "/usr/lib/x86_64-linux-gnu",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 36
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "fd": 1008
+    },
+    {
+      "operation": "callback",
+      "count": 37
+    },
+    {
+      "operation": "open",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "flags": 657408,
+      "dir_fd": 1007,
+      "name": "ld-linux-x86-64.so.2",
+      "parent_path": "/usr/lib/x86_64-linux-gnu"
+    },
+    {
+      "operation": "callback",
+      "count": 38
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "fd": 1009
+    },
+    {
+      "operation": "callback",
+      "count": 39
+    },
+    {
+      "operation": "read",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "fd": 1009,
+      "size": 34
+    },
+    {
+      "operation": "callback",
+      "count": 40
+    },
+    {
+      "operation": "read",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "fd": 1009,
+      "size": 1
+    },
+    {
+      "operation": "callback",
+      "count": 41
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "fd": 1009
+    },
+    {
+      "operation": "callback",
+      "count": 42
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "dir_fd": 1007,
+      "name": "ld-linux-x86-64.so.2",
+      "parent_path": "/usr/lib/x86_64-linux-gnu",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "close",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "fd": 1009
+    },
+    {
+      "operation": "callback",
+      "count": 43
+    },
+    {
+      "operation": "stat",
+      "path": "/",
+      "dir_fd": null,
+      "name": "/",
+      "parent_path": null,
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 44
+    },
+    {
+      "operation": "fstat",
+      "path": "/",
+      "fd": 1000
+    },
+    {
+      "operation": "callback",
+      "count": 45
+    },
+    {
+      "operation": "stat",
+      "path": "/lib64",
+      "dir_fd": 1000,
+      "name": "lib64",
+      "parent_path": "/",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 46
+    },
+    {
+      "operation": "fstat",
+      "path": "/lib64",
+      "fd": 1001
+    },
+    {
+      "operation": "callback",
+      "count": 47
+    },
+    {
+      "operation": "readlink",
+      "path": "/lib64",
+      "fd": 1001,
+      "empty_path": true
+    },
+    {
+      "operation": "callback",
+      "count": 48
+    },
+    {
+      "operation": "fstat",
+      "path": "/lib64",
+      "fd": 1001
+    },
+    {
+      "operation": "callback",
+      "count": 49
+    },
+    {
+      "operation": "stat",
+      "path": "/lib64",
+      "dir_fd": 1000,
+      "name": "lib64",
+      "parent_path": "/",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 50
+    },
+    {
+      "operation": "stat",
+      "path": "/usr",
+      "dir_fd": 1000,
+      "name": "usr",
+      "parent_path": "/",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 51
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr",
+      "fd": 1002
+    },
+    {
+      "operation": "callback",
+      "count": 52
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib",
+      "dir_fd": 1002,
+      "name": "lib",
+      "parent_path": "/usr",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 53
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib",
+      "fd": 1006
+    },
+    {
+      "operation": "callback",
+      "count": 54
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib64",
+      "dir_fd": 1002,
+      "name": "lib64",
+      "parent_path": "/usr",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 55
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib64",
+      "fd": 1003
+    },
+    {
+      "operation": "callback",
+      "count": 56
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib/x86_64-linux-gnu",
+      "dir_fd": 1006,
+      "name": "x86_64-linux-gnu",
+      "parent_path": "/usr/lib",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 57
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib/x86_64-linux-gnu",
+      "fd": 1007
+    },
+    {
+      "operation": "callback",
+      "count": 58
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "dir_fd": 1003,
+      "name": "ld-linux-x86-64.so.2",
+      "parent_path": "/usr/lib64",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 59
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "fd": 1004
+    },
+    {
+      "operation": "callback",
+      "count": 60
+    },
+    {
+      "operation": "readlink",
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "fd": 1004,
+      "empty_path": true
+    },
+    {
+      "operation": "callback",
+      "count": 61
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "fd": 1004
+    },
+    {
+      "operation": "callback",
+      "count": 62
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "dir_fd": 1003,
+      "name": "ld-linux-x86-64.so.2",
+      "parent_path": "/usr/lib64",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 63
+    },
+    {
+      "operation": "stat",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "dir_fd": 1007,
+      "name": "ld-linux-x86-64.so.2",
+      "parent_path": "/usr/lib/x86_64-linux-gnu",
+      "follow_symlinks": false
+    },
+    {
+      "operation": "callback",
+      "count": 64
+    },
+    {
+      "operation": "fstat",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "fd": 1008
+    },
+    {
+      "operation": "close",
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "fd": 1008
+    },
+    {
+      "operation": "close",
+      "path": "/usr/lib/x86_64-linux-gnu",
+      "fd": 1007
+    },
+    {
+      "operation": "close",
+      "path": "/usr/lib",
+      "fd": 1006
+    },
+    {
+      "operation": "close",
+      "path": "/usr/lib64/ld-linux-x86-64.so.2",
+      "fd": 1004
+    },
+    {
+      "operation": "close",
+      "path": "/usr/lib64",
+      "fd": 1003
+    },
+    {
+      "operation": "close",
+      "path": "/usr",
+      "fd": 1002
+    },
+    {
+      "operation": "close",
+      "path": "/lib64",
+      "fd": 1001
+    },
+    {
+      "operation": "close",
+      "path": "/",
+      "fd": 1000
+    }
+  ],
+  "faults_triggered": [],
+  "opened": [
+    1000,
+    1001,
+    1002,
+    1003,
+    1004,
+    1005,
+    1006,
+    1007,
+    1008,
+    1009
+  ],
+  "closed": [
+    1005,
+    1009,
+    1008,
+    1007,
+    1006,
+    1004,
+    1003,
+    1002,
+    1001,
+    1000
+  ],
+  "live": [],
+  "maximum_live_descriptors": 9,
+  "root_opens": 1,
+  "callbacks": 64,
+  "terminal_bytes_read": 33,
+  "terminal_read_requests": [
+    34,
+    1
+  ]
+}

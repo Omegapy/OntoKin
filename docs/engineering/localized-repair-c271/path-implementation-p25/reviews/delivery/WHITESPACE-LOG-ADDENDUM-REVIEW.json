@@ -1,0 +1,60 @@
+{
+  "schema": "ontokin.c271.p25-independent-whitespace-log-addendum-review/1",
+  "reviewer": "/root/reconcile",
+  "at_utc": "2026-11-23T14:46:08.791198+00:00",
+  "decision": "approve_only_exact_raw_log_additional_exclusion",
+  "summary": {
+    "checks": 9,
+    "passed": 9,
+    "failed": 0
+  },
+  "checks": {
+    "exact_original_result_binding": true,
+    "actual_bytes_and_hash_match": true,
+    "index_bytes_equal_original_log": true,
+    "exact36_lines18_pairs": true,
+    "all_quoted_markers_exact": true,
+    "locations_exactly_prior18_flags": true,
+    "only_quoted_markers_have_trailing_whitespace": true,
+    "one_exact_additional_exclusion": true,
+    "original_failure_stays_failed": true
+  },
+  "raw_log": {
+    "path": "docs/engineering/localized-repair-c271/path-implementation-p25/checks/core-final-whitespace/stdout.log",
+    "bytes": 2290,
+    "sha256": "66cbe400da548d2eb96b848af14e4c206f3dc90b068dfca782b01542a0629c19"
+  },
+  "allowed_exclusions": [
+    "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/SOURCE-DIFF.patch",
+    "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/ADAPTER-002-003.diff",
+    "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/ADAPTER-003-004.diff",
+    "docs/engineering/localized-repair-c271/path-implementation-p25/checks/core-final-whitespace/stdout.log"
+  ],
+  "rationale": "The original immutable exit-2 output has exactly 18 location/quoted-context pairs. Every quoted line is literal bytes 2b20 (+ followed by one space), representing the original single-space context marker. Its hash equals the pre-existing result binding; no source or prose whitespace is newly waived.",
+  "prior_review": {
+    "path": "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/WHITESPACE-GATE-REVIEW.json",
+    "bytes": 9914,
+    "sha256": "7b75eb205899f9e09378dcf3ae4783047d1e045849cdfaddd9761a708fbf1620",
+    "preserved_unchanged": true,
+    "meaning": "Accepted prior three-path source-time scope; this addendum extends only the exact raw-log path."
+  },
+  "read_set": [
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/checks/WHITESPACE-OUTPUT-ADDENDUM.json",
+      "bytes": 1266,
+      "sha256": "6a043d7eca86ae5fedb94c49e32d173d72ebf4b8c6d3420e58ebaa323743c1e9"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/checks/core-final-whitespace/RESULT.json",
+      "bytes": 1423,
+      "sha256": "fa6c17392a4a624b9e96eadb4f800ccd6a681741d9d00e6b171e56d4863a08d6"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/checks/core-final-whitespace/stdout.log",
+      "bytes": 2290,
+      "sha256": "66cbe400da548d2eb96b848af14e4c206f3dc90b068dfca782b01542a0629c19"
+    }
+  ],
+  "remaining_gate": "Root must require all other files in core002 to pass the final frozen-tree four-path scoped check. This review makes no claim that that later gate has run.",
+  "actions": "Read-only byte/format/index comparisons; no prior artifact, production, adapter or Git index mutation, and no behavioral execution."
+}

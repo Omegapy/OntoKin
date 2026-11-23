@@ -1,0 +1,63 @@
+{
+  "schema": "ontokin.c271.p25-workers/1",
+  "workers": [
+    {
+      "identity": "/root/reconcile",
+      "role": "independent delivery auditor",
+      "writes": [
+        "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/"
+      ],
+      "scope": "Early and final package validation and root-owned P25 records review",
+      "model": "inherited actual default; no override",
+      "context": "fresh fork_turns=none",
+      "completed_assignments": [
+        {
+          "role": "startup investigator",
+          "writes": [
+            "state/reconcile/"
+          ],
+          "status": "completed",
+          "evidence": "startup/RECONCILIATION.json"
+        },
+        {
+          "role": "early recovery auditor",
+          "status": "completed_with_preserved_clarification",
+          "evidence": "reviews/delivery/EARLY-AUDIT-SUPPLEMENT.json"
+        },
+        {
+          "role": "independent test-adapter reviewer",
+          "status": "accepted",
+          "evidence": "reviews/delivery/ADAPTER-REVIEW-002.json"
+        }
+      ],
+      "status": "active_delivery_review_only"
+    },
+    {
+      "identity": "/root/implement",
+      "role": "implementer",
+      "writes": [
+        "prototypes/static_tray_v01/current_host_inspection_v01.py",
+        "docs/engineering/localized-repair-c271/path-implementation-p25/implementation/"
+      ],
+      "scope": "Adopted finite RTLD path implementation",
+      "model": "inherited actual default; no override",
+      "context": "fresh fork_turns=none",
+      "status": "completed_stopped",
+      "current_unknown_operations": []
+    },
+    {
+      "identity": "/root/controls",
+      "role": "independent test author/reviewer",
+      "writes": [
+        "tests/test_current_host_rtld_paths_v01.py",
+        "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/"
+      ],
+      "scope": "Frozen controls and independent implementation review",
+      "model": "inherited actual default; no override",
+      "context": "fresh fork_turns=none",
+      "status": "completed_stopped",
+      "current_unknown_operations": []
+    }
+  ],
+  "shared_checkout": "Disjoint files; only Director owns index/commits/publication; no nested fanout"
+}
