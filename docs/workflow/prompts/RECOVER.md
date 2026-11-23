@@ -10,6 +10,12 @@ Interrupted task or last known event: [DESCRIBE BRIEFLY OR UNKNOWN]
 
 In a **fresh chat**, recover the existing OntoKin task at its **first unmet gate**. Complete no more than one bounded phase, save a verified handoff ZIP if work remains, and stop. Do not start another milestone.
 
+**Mandatory ephemeral-host rule:** This is a different disposable host;
+prior chat temporary paths, packages, virtual environments, workers and
+processes are gone or inaccessible. Recover durable GitHub/Library state,
+not the previous machine. Reconstruct only required current-host inputs;
+follow `docs/workflow/EPHEMERAL-HOST.md`.
+
 1. Read the handoff's `README-START-HERE.md`, checkpoint, recovery status, and any newer recovery file. Read live `CHATGPT-START-HERE.md` and required repository instructions at the observed `main` revision, once per unchanged file.
 2. Reconcile the task and plan, branches, PRs, integration ownership, test evidence, Library receipts, workers, and unpublished work. A timeout does **not** prove a GitHub write, merge, or upload failed. Inspect actual destinations before retrying; retain operation and commit/ref identities. Never replay blindly.
 3. Separate completed, pending, and unknown gates. Resume the existing authorized task and branch without duplicating completed work. If code is merged, address only remaining checks, branch disposition, or delivery. If everything is already complete and saved, report the existing handoff and stop.
