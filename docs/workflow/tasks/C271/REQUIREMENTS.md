@@ -432,3 +432,14 @@ After verified P25 delivery, in a fresh bounded phase, bind the newly published 
 ### P25 saved development handoff
 
 The bounded implementation is published at `0df3d39084e11b68a434035fa0cc67e1d7d8955e`. The verified ZIP and both matching prompts are saved and exact-byte read back. See [P25 delivery](../../../engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json) for identities, independent audits, actual checks, preserved failures and limits. This source snapshot precedes its own receipt-only publication, external receipt save and final live terminal confirmations. Those confirmations resolve phase delivery only. C271 stays open; R03-R05 remain not_done and P02 in_progress. No operational plan adoption, H0/H1, full routine, integration or next phase is authorized by this delivery.
+
+
+## P26 current-host H0 plan — 2026-11-23
+
+P26 reconciled P25 delivery and ownership, then confirmed the early recovery save before substantive work. The execution source remains `ed2fc453042a9f0bc4808c2aea7f015baf1ff73e` with the complete 627-file inventory. See [phase](../../../engineering/localized-repair-c271/h0-plan-p26/PHASE.json), [outcome](../../../engineering/localized-repair-c271/h0-plan-p26/OUTCOME.json) and [early recovery](../../../engineering/localized-repair-c271/h0-plan-p26/EARLY-RECOVERY-RECEIPT.json).
+
+Technical work stopped at 2026-11-23 16:32:32 UTC. The necessary first Node dependency `libdl.so.2` contains `0x70000000`, `0x70000001` and `0x70000003`, which the ordinary parser excludes. The private exception is bound to the distinct pinned libc. The [independent blocker review](../../../engineering/localized-repair-c271/h0-plan-p26/BLOCKER-REVIEW.md) accepts this narrow source deduction under its stated trust assumptions; no product refusal or H0 invocation occurred. The separate observed libm/librt flags, failed collector attempt and all conditional-selection limitations remain preserved.
+
+Only documentary checks, review, conditional retained-branch publication and verified final delivery remain in P26. Their results and future commit/save identities are pending in this source snapshot. Whole N34, historical N57, complete H0 plan/closure, H1 and later qualification remain open. R01/R02 stay done, R03-R05 not_done, P01 done and P02 in_progress; keep PR274 draft/unmerged and issue273 open.
+
+In a later bounded phase, review the portable exact libdl counterexample against durable project verification requirements and approved portable-input routes under EPHEMERAL-HOST.md. Determine the necessary source/contract compatibility decision for non-libc x86-64 PLT tags and preserve the separately observed libm/librt flags before authorizing implementation. Do not automatically begin another temporary-host profiling/exception phase or generalize the libc exception.

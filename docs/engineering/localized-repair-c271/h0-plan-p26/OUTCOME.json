@@ -1,0 +1,326 @@
+{
+  "schema": "ontokin.c271.p26.outcome/1",
+  "phase": "C271-P26-current-host-H0-plan",
+  "classification": "blocked_source_deduced_required_image_policy_incompatibility",
+  "execution_source": {
+    "commit": "ed2fc453042a9f0bc4808c2aea7f015baf1ff73e",
+    "inventory": {
+      "mode": "0o644",
+      "path": "/workspace/scratch/cf652064a9a1/session/source_preparation/SOURCE-INVENTORY.json",
+      "sha256": "87aa2c337ff76e5b3e718d6d7b322d9ae6a3affe5e1bff57a543b61963e5382f",
+      "size_bytes": 93409
+    },
+    "root": "/workspace/scratch/cf652064a9a1/frozen-source",
+    "tree": "de3bd4fa567c4aeb11364e79d99e646dfde81659"
+  },
+  "governing_main": "e43cc6c5777874101a40559e4058ad6826b07e51",
+  "technical_boundary_utc": "2026-11-23 16:32:32 UTC",
+  "conclusion": "Necessary first Node dependency libdl.so.2 has three x86-64 dynamic tags excluded by the ordinary parser. The private exception is bound to the distinct pinned libc subject. This unchanged-input incompatibility is deduced from retained source and raw observations; no product invocation was run.",
+  "counterexample": {
+    "path": "libdl.so.2.inert",
+    "bytes": 14408,
+    "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+    "actual_mode": "0o644",
+    "tags": [
+      "0x70000000",
+      "0x70000001",
+      "0x70000003"
+    ],
+    "selection_scope": "First Node DT_NEEDED with fixed direct invocation and adopted kernel/source trust assumptions; not whole loader closure."
+  },
+  "independent_review": "docs/engineering/localized-repair-c271/h0-plan-p26/BLOCKER-REVIEW.json",
+  "early_recovery_confirmed_before_substantial_work": true,
+  "source_inventory": {
+    "files": 627,
+    "sha256": "87aa2c337ff76e5b3e718d6d7b322d9ae6a3affe5e1bff57a543b61963e5382f"
+  },
+  "preparations": [
+    {
+      "scope": "Empty isolated Python environment and exact seven offline locked wheels",
+      "commands": 2,
+      "all_exit_zero": true,
+      "installed_files": 293,
+      "native_artifacts_hashed_as_data": 27,
+      "report": "session/python_preparation/RESULT.json"
+    },
+    {
+      "scope": "Exact retained Node archive and C195 dependencies",
+      "preparer_calls": 2,
+      "all_exit_zero": true,
+      "installed_files": 26,
+      "installed_directories": 14,
+      "target_starts": 0,
+      "report": "session/preparation/attempt001/LAUNCH-RESULT.json"
+    }
+  ],
+  "raw_observations": [
+    {
+      "receipt": {
+        "path": "session/readiness/run001.capture.json",
+        "bytes": 1561,
+        "sha256": "1bb0c8e4f1effe61ce5025c0f48f0a9186a465734a67feae29070391b5d3c151"
+      },
+      "returncode": 0,
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-I",
+        "-S",
+        "-B",
+        "/workspace/scratch/cf652064a9a1/session/readiness/check_required_images.py"
+      ],
+      "target_starts": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "/workspace/scratch/cf652064a9a1/session/readiness/run001.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 3004,
+          "path": "/workspace/scratch/cf652064a9a1/session/readiness/run001.stdout.json",
+          "sha256": "35cdf7e724a7edef4b7f70c05b72959e534af1fe67ff311e566919d8dca7ac95"
+        }
+      }
+    },
+    {
+      "receipt": {
+        "path": "session/rtld/run001.capture.json",
+        "bytes": 1532,
+        "sha256": "3dab22a283f5f8de181f1917f4813e66fb7b7999f15d3ff91f9156ee5459bf99"
+      },
+      "returncode": 0,
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-I",
+        "-S",
+        "-B",
+        "/workspace/scratch/cf652064a9a1/session/rtld/collect_rtld.py"
+      ],
+      "target_starts": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "/workspace/scratch/cf652064a9a1/session/rtld/run001.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 14396,
+          "path": "/workspace/scratch/cf652064a9a1/session/rtld/run001.stdout.json",
+          "sha256": "a69df0de6bd8c256a6d6d189e8e4534c930a2d61762f9a474445e52c58645920"
+        }
+      }
+    },
+    {
+      "receipt": {
+        "path": "session/native_roots/run001.capture.json",
+        "bytes": 1731,
+        "sha256": "712829227b29ca64bde3b0754d8b335553319aa06cc5ee096f1c85f4e03b0e86"
+      },
+      "returncode": 0,
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-I",
+        "-S",
+        "-B",
+        "/workspace/scratch/cf652064a9a1/session/native_roots/read_native_roots.py"
+      ],
+      "target_starts": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "/workspace/scratch/cf652064a9a1/session/native_roots/run001.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 18954,
+          "path": "/workspace/scratch/cf652064a9a1/session/native_roots/run001.stdout.json",
+          "sha256": "79c63102812f02ce4bc222a2f776aac2e3d898403609fca8994bdf7c8edf65e5"
+        }
+      }
+    },
+    {
+      "receipt": {
+        "path": "session/native_closure/roots-run001.capture.json",
+        "bytes": 1721,
+        "sha256": "2d8f186233b0bf60d18d3053463e31aaa5ed6c18297b98b826c2a74ae5eee6b0"
+      },
+      "returncode": 1,
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-I",
+        "-S",
+        "-B",
+        "/workspace/scratch/cf652064a9a1/session/native_closure/read_selected_root_elf.py"
+      ],
+      "target_starts": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "/workspace/scratch/cf652064a9a1/session/native_closure/roots-run001.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 7086,
+          "path": "/workspace/scratch/cf652064a9a1/session/native_closure/roots-run001.stdout.json",
+          "sha256": "2ef016900b8b87065c2d4fa5b825057ec9c30ceb1f854d4ce34840eb8983f9dd"
+        }
+      }
+    },
+    {
+      "receipt": {
+        "path": "session/native_closure/roots-run002.capture.json",
+        "bytes": 1783,
+        "sha256": "9a459a3628a2710fc17d26a2dadf6d9011ad322b808d011936b81a71ef0901bb"
+      },
+      "returncode": 0,
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-I",
+        "-S",
+        "-B",
+        "/workspace/scratch/cf652064a9a1/session/native_closure/candidate002/read_selected_root_elf.py"
+      ],
+      "target_starts": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "/workspace/scratch/cf652064a9a1/session/native_closure/roots-run002.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 23350,
+          "path": "/workspace/scratch/cf652064a9a1/session/native_closure/roots-run002.stdout.json",
+          "sha256": "cc999e5b0b4dc9cc49db413d8d37abaa78f2670d2f33217a826ae88897008fd9"
+        }
+      }
+    },
+    {
+      "receipt": {
+        "path": "session/author_runtime/attempt001/run001.capture.json",
+        "bytes": 3615,
+        "sha256": "99e893d445aca1a531b0e6be0a91bc96729627d23f5e9e0cf29db7562cda5241"
+      },
+      "returncode": 0,
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-I",
+        "-S",
+        "-B",
+        "/workspace/scratch/cf652064a9a1/session/author_runtime/candidate001/collect_author_runtime.py",
+        "--plan",
+        "/workspace/scratch/cf652064a9a1/session/author_runtime/candidate001/LAUNCH-PLAN.json",
+        "--plan-sha256",
+        "81f5082562fe86a84a7dd4963ff892986e1bc8c587f3796c611a8f0667a84f7d"
+      ],
+      "target_starts": 0,
+      "outputs": {
+        "intent": {
+          "mode": "0o644",
+          "path": "/workspace/scratch/cf652064a9a1/session/author_runtime/attempt001/run001.attempt.json",
+          "sha256": "d78be33a8679661b8f6c910e0440950b104292a67848871128f2a82b418a24ca",
+          "size_bytes": 2380
+        },
+        "started": {
+          "mode": "0o644",
+          "path": "/workspace/scratch/cf652064a9a1/session/author_runtime/attempt001/run001.started.json",
+          "sha256": "f5ca26f4af0cc067c21bef31d92d25cd7560b0019e2dc9b9a4b9f61eefd55941",
+          "size_bytes": 187
+        },
+        "stderr": {
+          "mode": "0o644",
+          "path": "/workspace/scratch/cf652064a9a1/session/author_runtime/attempt001/run001.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        "stdout": {
+          "mode": "0o644",
+          "path": "/workspace/scratch/cf652064a9a1/session/author_runtime/attempt001/run001.stdout.json",
+          "sha256": "bac025f5bee583076d0452b7b91937a8630d5f52535b70eee49f6cd59c79838b",
+          "size_bytes": 352521
+        }
+      }
+    },
+    {
+      "receipt": {
+        "path": "session/native_closure/cache-run001.capture.json",
+        "bytes": 1980,
+        "sha256": "d182d906d98d96eb7682c78f712c920b52ff8db09d6f9baa9cd904f23d36cc27"
+      },
+      "returncode": 0,
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-I",
+        "-S",
+        "-B",
+        "/workspace/scratch/cf652064a9a1/session/native_closure/cache-candidate001/read_cache_shared_images.py"
+      ],
+      "target_starts": 0,
+      "outputs": {
+        "stderr": {
+          "bytes": 0,
+          "path": "/workspace/scratch/cf652064a9a1/session/native_closure/cache-run001.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stdout": {
+          "bytes": 409562,
+          "path": "/workspace/scratch/cf652064a9a1/session/native_closure/cache-run001.stdout.json",
+          "sha256": "de8f8090274d1d60acaec0693f7bfff58c15404086ce555dafefb1b3ecc52045"
+        }
+      }
+    }
+  ],
+  "observation_totals": {
+    "attempts": 7,
+    "completed_exit_zero": 6,
+    "completed_exit_one": 1,
+    "unknown_current_operations": 0,
+    "target_starts": 0
+  },
+  "preserved_failures": [
+    "Selected-root reader run001 completed exit 1 because its own string-table rule was too narrow. Candidate002 was independently reviewed and succeeded. Both attempts remain intact; no H0 failure is inferred.",
+    "Initial source-inventory audit AST extraction could not resolve a nested source-list tuple. Corrected audit002 succeeded; the source itself did not fail.",
+    "Native capture memory-budget and wrapper-key candidates were corrected before execution; rejected candidates and review remain intact.",
+    "Python preparer diff alignment comparison failed as a review-comparison operation; it did not represent an installation failure.",
+    "Startup shortened Library ID caused a known read-only schema rejection; no uncertain write resulted."
+  ],
+  "rejected_hypotheses": [
+    "Nonempty commands-list representation was resolved by the existing canonical Bash binding; no extra Bash invocation was invented.",
+    "Empty file-backed extension observation did not justify relabeling Python/libc. A possible actual libm role was considered, but no complete plan was adopted and its observed metadata is incompatible."
+  ],
+  "historical_correction": "P25 external receipt PKG01 corrects frozen-package wording: both retained syntax compilation checks passed. P25 synthetic tests were not rerun in P26.",
+  "h0_executed": false,
+  "h0_accepted": false,
+  "h1_executed": false,
+  "operational_plan_adopted": false,
+  "whole_N34_accepted": false,
+  "full_routine_executed": false,
+  "main_integration": false,
+  "production_tests_contracts_or_pins_changed": false,
+  "requirements": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "parent_plan": {
+    "P01": "done",
+    "P02": "in_progress"
+  },
+  "parent_complete": false,
+  "historical_unknown_operations": [
+    "C270 ancillary broad-driver completion",
+    "Global prior-process termination",
+    "P13 read-only difflib completion; do not retry"
+  ],
+  "current_unknown_operations": [],
+  "next_action": "In a later bounded phase, review the portable exact libdl counterexample against durable project verification requirements and approved portable-input routes under EPHEMERAL-HOST.md. Determine the necessary source/contract compatibility decision for non-libc x86-64 PLT tags and preserve the separately observed libm/librt flags before authorizing implementation. Do not automatically begin another temporary-host profiling/exception phase or generalize the libc exception.",
+  "remaining": [
+    "Complete author/runtime/metadata/alias/guard and loader closure",
+    "N34 actual loader/script source completeness",
+    "Historical N57 obligation",
+    "Independent complete H0 plan acceptance and execution",
+    "H1 and parent runtime/merge gates"
+  ],
+  "source_time_delivery": "Pending required documentary checks/review, branch publication, frozen final ZIP/prompts, exact saved readback, receipt-only commit and matching terminal markers."
+}

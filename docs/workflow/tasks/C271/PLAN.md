@@ -432,3 +432,14 @@ After verified P25 delivery, in a fresh bounded phase, bind the newly published 
 ### P25 saved development handoff
 
 The bounded implementation is published at `0df3d39084e11b68a434035fa0cc67e1d7d8955e`. The verified ZIP and both matching prompts are saved and exact-byte read back. See [P25 delivery](../../../engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json) for identities, independent audits, actual checks, preserved failures and limits. This source snapshot precedes its own receipt-only publication, external receipt save and final live terminal confirmations. Those confirmations resolve phase delivery only. C271 stays open; R03-R05 remain not_done and P02 in_progress. No operational plan adoption, H0/H1, full routine, integration or next phase is authorized by this delivery.
+
+
+## P26 current-host H0 plan — 2026-11-23
+
+The bounded H0-plan phase ended at the independently reviewed blocker alternative, not an adopted operational plan. The source-bound preparations and seven data-observation attempts are recorded in [OUTCOME.json](../../../engineering/localized-repair-c271/h0-plan-p26/OUTCOME.json): six completed with exit zero and one selected-root collector failed under its own restriction. The corrected observation is separate; no H0 failure is inferred and all original evidence remains preserved.
+
+The exact portable 14,408-byte libdl counterexample has SHA-256 `295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872`. Its required non-libc tag mismatch is supported by [FINAL-DIAGNOSIS.md](../../../engineering/localized-repair-c271/h0-plan-p26/FINAL-DIAGNOSIS.md) and [BLOCKER-REVIEW.md](../../../engineering/localized-repair-c271/h0-plan-p26/BLOCKER-REVIEW.md). The argument covers the first Node dependency only; whole loader/source completeness remains unresolved.
+
+Finish only actual documentary/workflow checks and independent source-A review, conditional branch publication, a frozen verified ZIP with matching prompts, exact saved readbacks, separate receipts and matching terminal comments; then stop. The execution source stays `ed2fc453...`; source A and future receipt B remain distinct. No production/test/contract/pin changes, H0/H1, full routine, main integration or parent closure occurred. R03-R05 remain not_done and P02 in_progress.
+
+In a later bounded phase, review the portable exact libdl counterexample against durable project verification requirements and approved portable-input routes under EPHEMERAL-HOST.md. Determine the necessary source/contract compatibility decision for non-libc x86-64 PLT tags and preserve the separately observed libm/librt flags before authorizing implementation. Do not automatically begin another temporary-host profiling/exception phase or generalize the libc exception.

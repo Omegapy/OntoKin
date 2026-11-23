@@ -1,0 +1,125 @@
+{
+  "schema": "ontokin.c271.p26-independent-blocker-review/1",
+  "reviewer": "/root/h0_review",
+  "verdict": "concrete_current_host_blocker_confirmed",
+  "classification": "source_deduced_required_image_policy_incompatibility",
+  "technical_stop_utc": "2026-11-23 16:32:32 UTC",
+  "source": {
+    "commit": "ed2fc453042a9f0bc4808c2aea7f015baf1ff73e",
+    "tree": "de3bd4fa567c4aeb11364e79d99e646dfde81659",
+    "governing_main_commit": "e43cc6c5777874101a40559e4058ad6826b07e51",
+    "path": "frozen-source/prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "bytes": 233502,
+    "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a",
+    "plan_schema": "ontokin.current-host-readback-inspection-plan/0.1.4",
+    "profile": "linux-glibc-declared-python-origin-rpath-libc-plt-static-tls-rtld-paths-v1"
+  },
+  "necessary_case": {
+    "root_path": "/workspace/scratch/cf652064a9a1/prepared-inputs/node/bin/node",
+    "root_bytes": 126951512,
+    "root_mode": "0o755",
+    "root_sha256": "acbe4b8d9153b841ed0697cbfc4f93e767386620edb745ab9358306c0a6f31aa",
+    "required_future_argv": [
+      "/workspace/scratch/cf652064a9a1/prepared-inputs/node/bin/node",
+      "--version"
+    ],
+    "required_future_environment": {
+      "PATH": "/usr/bin:/bin",
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "TZ": "UTC",
+      "UV_THREADPOOL_SIZE": "2"
+    },
+    "first_needed_name": "libdl.so.2",
+    "first_needed_dynamic_entry_index": 0,
+    "cache_row_index": 1481,
+    "cache_alias": "/lib/x86_64-linux-gnu/libdl.so.2",
+    "canonical_image": "/usr/lib/x86_64-linux-gnu/libdl.so.2",
+    "bytes": 14408,
+    "mode": "0o644",
+    "nlink": 1,
+    "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+    "elf_class": 64,
+    "byte_order": "little",
+    "elf_type": 3,
+    "machine": 62,
+    "osabi": 0,
+    "soname": "libdl.so.2",
+    "dt_flags": [8],
+    "dt_flags_1": [1],
+    "ordinary_policy_excluded_entries": [
+      {"index": 14, "tag": 1879048192, "tag_hex": "0x70000000", "value": 4128},
+      {"index": 15, "tag": 1879048193, "tag_hex": "0x70000001", "value": 16},
+      {"index": 16, "tag": 1879048195, "tag_hex": "0x70000003", "value": 16}
+    ]
+  },
+  "smallest_incompatible_predicates": [
+    "The adopted source pins the selected Node and requires its ordinary direct --version command with the exact clean environment.",
+    "The complete actual image/needed-edge closure must include Node and every selected required image. Node's first DT_NEEDED libdl selects the observed canonical libdl under the retained-source argument and existing trust boundary.",
+    "Every declared non-subject image must pass ordinary _read_elf_metadata. Its all(tag in ordinary ...) predicate excludes all three recorded libdl tags.",
+    "Only the path, role, dependency and exact digest/size/mode-bound selected libc receives the private trio rule. The distinct libdl descriptor cannot satisfy that subject relation or fixed libc binding."
+  ],
+  "predicted_source_diagnostic": {
+    "category": "CHI-UNSUPPORTED",
+    "reason": "Unreviewed ELF dynamic loader feature",
+    "location": "_read_elf_metadata ordinary dynamic-tag predicate, approximately lines 1892-1898",
+    "actual_product_refusal_observed": false,
+    "earliest_whole_plan_failure_location_claimed": false
+  },
+  "necessary_selection_argument": [
+    "The selected-root observation places libdl.so.2 at Node dynamic entry 0 and first in DT_NEEDED. Node has no RPATH, RUNPATH, SONAME, audit, auxiliary or filter entries; FLAGS_1=1 contains no NODEFLIB bit.",
+    "For ordinary fresh direct execution, retained rtld.c handles initial preload/audit inputs before dl-deps.c processes the main object's dynamic entries in order. The fixed environment supplies no loader overrides; the global preload file is recorded absent; direct kernel-mediated invocation supplies no loader CLI override.",
+    "The observed initial main and loader identities cannot reuse libdl: Node has no SONAME and the loader has its own ld-linux-x86-64.so.2 SONAME with no DT_NEEDED entries. The normal kernel vDSO identity remains an existing kernel-trust assumption, not a new observation.",
+    "For this first Node request, dl-load.c's inherited/main RPATH, environment-path and RUNPATH branches have no inputs. The valid cache branch is reached without relying on Python's separate origin-path or later transitive search arguments.",
+    "Retained cache bytes contain exactly one numeric-comparator-equivalent libdl row, index 1481, flags 0x303 and hwcap 0. The exact x86-64 source accepts that ordinary architecture flag. No competing named- or legacy-hwcap libdl row is present.",
+    "The captured alias trace reaches the observed regular canonical libdl with compatible ELF class/machine/OSABI. The cache hit therefore supplies this necessary first dependency within the stated boundary. Later loaded-name reuse and default-directory arguments are unnecessary for this narrow case."
+  ],
+  "source_references": [
+    {"path": "frozen-source/prototypes/static_tray_v01/current_host_inspection_v01.py", "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a", "scope": "Fixed pins/environment/commands; private libc subject dispatch; ordinary tag and flags predicates; complete image/needed closure; explicit kernel/native-execution trust boundary."},
+    {"path": "session/native_closure/source/upstream/elf/dl-deps.c", "sha256": "2f23f25c68bdde0ca3c30a3186861be716d7790b17c4b99681bc8c5d9e554f8b", "scope": "Full file read; main-first processing and dynamic-entry order. No active retained patch touches this file."},
+    {"path": "session/native_closure/source/upstream/elf/dl-load.c", "sha256": "85f6eb3f2ca4bb18f50853782f41b1fd71ed0530f785312ce2707d1472a0f8d8", "scope": "Relevant complete selection block around lines 1893-2122, plus applicable patch hunks; no claim of complete wider-loader proof."},
+    {"path": "session/native_closure/source/upstream/elf/rtld.c", "sha256": "dcc52dea8284139c8a55ac21bddd678d08ae9dc3b1de2d5dfc6342664174192e", "scope": "Relevant direct-exec, initial-map, audit/preload and dependency-call blocks plus applicable patch hunks."},
+    {"path": "session/native_closure/source/upstream/elf/dl-cache.c", "sha256": "239825bf2fefeb124f398a2974d8be82dd5172c2e7b1ab855ae21e5cf282df26", "scope": "Full exact cache implementation read."},
+    {"path": "session/native_closure/source/upstream/sysdeps/x86_64/dl-cache.h", "sha256": "f0773677a8871a334e89076feef5b2da37d6413600b0f7772043a96d0bb939f8", "scope": "Full exact architecture cache header read."},
+    {"path": "session/native_closure/source/upstream/sysdeps/generic/dl-cache.h", "sha256": "d82003ce9e95ffb9fe685426e7591784d9296b2e7fbfa2a519168c5884b5d881", "scope": "Full exact generic cache structures and flags read."},
+    {"path": "session/native_closure/PATCH-INDEX-CROSSCHECK.json", "sha256": "32a13ea98d0f68828aee42907d80b2a52c4c8d1b6185cd6e8b1fe5a97c5a3d01", "scope": "Retained 80-patch source association/index crosscheck; relevant actual patch hunks separately reviewed. No reproduced build claim."}
+  ],
+  "evidence_references": [
+    {"path": "session/native_closure/roots-run002.stdout.json", "sha256": "cc999e5b0b4dc9cc49db413d8d37abaa78f2670d2f33217a826ae88897008fd9"},
+    {"path": "session/native_closure/cache-run001.stdout.json", "sha256": "de8f8090274d1d60acaec0693f7bfff58c15404086ce555dafefb1b3ecc52045"},
+    {"path": "session/native_closure/cache-run001.capture.json", "sha256": "d182d906d98d96eb7682c78f712c920b52ff8db09d6f9baa9cd904f23d36cc27"},
+    {"path": "session/handoff_audit/source_review/LIBDL-INERT-RECOVERY.json", "sha256": "5e631a2b1805d747793362534f76fdd07bad6d1a833ccf144ba24f6b99af5bce", "scope": "Separate source author's retained-package extraction, matching actual libdl digest, 23 structural-prefix data checks and independent cache decode. This reviewer read the complete report; it is not a product parser run."},
+    {"path": "session/TECHNICAL-STOP.json", "sha256": "544f48b0bc3141fc012d7312e904815407a63988ccb29e34d50d2575b0159742"}
+  ],
+  "additional_observed_limits_to_preserve": [
+    {"image": "libpthread.so.0", "sha256": "85e21f7dba0394411d00959176fd18b470e575b0b05f1f4f41e5636802ce0500", "ordinary_tag_trio_excluded": true},
+    {"image": "libutil.so.1", "sha256": "e3981d10efd152a53f083e38f5f9ddde7a049c85d0ab388a5eec91b52fc98a11", "ordinary_tag_trio_excluded": true},
+    {"image": "libm.so.6", "sha256": "6d567d53e895273ca14a1f9dc164fc6c8d39aed2f60aa46a733c2784228915f3", "ordinary_tag_trio_excluded": true, "dt_flags": 24, "ordinary_flags_rule": "value & ~8 == 0", "flags_rule_satisfied": false},
+    {"image": "librt.so.1", "sha256": "7b7b84d1aedda0e0b2bdfc68844362782132180b8f02be1300e21e77572e514b", "ordinary_tag_trio_excluded": true, "dt_flags_1": 9, "ordinary_flags_1_rule": "value & ~(1 | 0x08000000) == 0", "flags_1_rule_satisfied": false}
+  ],
+  "remaining_boundaries": [
+    "All raw cache-choice full_loader_selection_proved:false fields stay unchanged. This review proves only the narrow necessary Node-first-libdl case under the adopted assumptions.",
+    "Kernel integrity and normal kernel-provided vDSO identity remain explicit existing trust boundaries. No maps/SONAME observation of the vDSO was made.",
+    "The exact P15 package/source association is reused within its stated limits; no build reproduction, package signature verification or whole-source N34 acceptance is asserted.",
+    "Complete Python origin/search-directory/variant proof, remaining loader selections, final author/runtime/metadata/alias/path-guard assembly and an independently accepted complete operational plan remain unfinished.",
+    "N34 remains unresolved and historical N57 remains unchanged. No H0/H1/full-routine execution or acceptance follows from preparatory data captures.",
+    "A whole plan could fail at an earlier gate. This review identifies an unavoidable required-image incompatibility for unchanged inputs, not the first diagnostic from a product invocation that never occurred.",
+    "The prior commands-list and empty-file-backed-extension concerns remain bounded representation questions resolved by their earlier advisories; neither is recast as this concrete blocker."
+  ],
+  "next_scoped_action": {
+    "current_phase": "Preserve the exact raw outputs, portable libdl/package/source evidence, failures and reviews; reconcile documentary state and deliver the final verified recovery archive. C271 and unfinished requirements remain open.",
+    "later_separately_authorized_scope": "Following the governing EPHEMERAL-HOST rule, first review the portable exact libdl counterexample against durable project verification requirements and approved portable-input routes. Determine the exact source/contract compatibility decision needed for the necessary non-libc x86-64 PLT trio and the separately observed libm/librt flags. Any decision must identify exact eligible subjects, source semantics, role restrictions and positive/negative controls before implementation and adoption. This does not automatically authorize another temporary-host profiling/exception phase or generalization of the libc rule.",
+    "preserve_constraints": [
+      "Existing 7 methods and 2 helpers, retained 24 dependency files, exact Node/Python/libc/loader/source pins and original P05/P06 behavior",
+      "Fixed command/environment/budget/topology and fail-closed ordinary metadata behavior outside an explicitly reviewed decision",
+      "N34 and historical N57 external obligations, independent author/reviewer separation and all failed/corrected-attempt evidence",
+      "Fresh disposable-host recovery and read-back before any later current-host plan phase"
+    ],
+    "no_current_implementation_or_adoption_authority": true
+  },
+  "h0_executed": false,
+  "h0_accepted": false,
+  "operational_plan_accepted": false,
+  "whole_N34_accepted": false,
+  "new_target_or_collector_execution_by_reviewer": false
+}
