@@ -1,0 +1,81 @@
+{
+  "schema": "ontokin.c271.p24-path-candidate-revisions/1",
+  "status": "proposed_not_adopted",
+  "author": "/root/path_design",
+  "recorded_at_utc": "2026-11-23T13:01:51.888385+00:00",
+  "history_preservation": "Earlier candidate bytes reconstructed from exact known textual deltas and verified against the SHA-256 values already recorded at authoring. Attempt003 was copied byte-for-byte before any further edits. No production/test source changed.",
+  "attempts": [
+    {
+      "attempt": "attempt001",
+      "directory": "history/attempt001",
+      "files": [
+        {
+          "path": "DECISION-CANDIDATE.md",
+          "size_bytes": 20286,
+          "sha256": "7c0cf44fd04fd1985ba4114182004b42477eb8f16e5d3f22e4d7ce959c1aaa7d"
+        },
+        {
+          "path": "SCHEMA.json",
+          "size_bytes": 19258,
+          "sha256": "f2b35854549957e48371b41c1613579a12dc71b5370d8b6c966fa56804df44ad"
+        },
+        {
+          "path": "SOURCE-BINDINGS.json",
+          "size_bytes": 14256,
+          "sha256": "cd69302b57caed89f30051b141375197263cf9de70ca54a5eb57d8e36a760183"
+        }
+      ],
+      "disposition": "Superseded after root/reviewer identified missing explicit O_PATH-to-readable terminal mechanism. This was a draft, not accepted."
+    },
+    {
+      "attempt": "attempt002",
+      "directory": "history/attempt002",
+      "files": [
+        {
+          "path": "DECISION-CANDIDATE.md",
+          "size_bytes": 21649,
+          "sha256": "a0425d878aad777b3b25181dcff54600fcfbb457a17c84b205013267c41dd536"
+        },
+        {
+          "path": "SCHEMA.json",
+          "size_bytes": 20786,
+          "sha256": "258809621a302b94b829a5639a5731574553a80e78c7b79adb9be9d48a35cf5a"
+        },
+        {
+          "path": "SOURCE-BINDINGS.json",
+          "size_bytes": 14256,
+          "sha256": "cd69302b57caed89f30051b141375197263cf9de70ca54a5eb57d8e36a760183"
+        }
+      ],
+      "disposition": "Added descriptor-relative terminal read and RP-READ. Superseded after root/reviewer identified OS ELOOP diagnostic conflict with frozen F04 and requested explicit chain/snapshot exclusion distinction."
+    },
+    {
+      "attempt": "attempt003",
+      "directory": "history/attempt003",
+      "files": [
+        {
+          "path": "DECISION-CANDIDATE.md",
+          "size_bytes": 22127,
+          "sha256": "f5da4fb99e63c6e89794ca73bf5f9e94a94e85c1cd02602241dd0209b3dbf51e"
+        },
+        {
+          "path": "SCHEMA.json",
+          "size_bytes": 20938,
+          "sha256": "5112aba8d5608c81e967d8b9eed36fc1d0d73017e50267505279f1f791a76731"
+        },
+        {
+          "path": "SOURCE-BINDINGS.json",
+          "size_bytes": 14256,
+          "sha256": "cd69302b57caed89f30051b141375197263cf9de70ca54a5eb57d8e36a760183"
+        }
+      ],
+      "disposition": "OS ELOOP is CHI-PATH with actual cause; semantic repeated/unapproved edges remain CHI-UNSUPPORTED. Four chain exclusions and fourteen snapshot exclusions are distinct. Released for independent exact-candidate review; not adopted."
+    }
+  ],
+  "independent_matrix_unchanged": "d52f64ffc28f7baf04e360f167fb56192cc6fb0baf6b36fd9f085907732a3196",
+  "review_findings_source": [
+    "Director /root messages on terminal read, F04 ELOOP and immutable attempt retention.",
+    "Independent /root/path_review messages on terminal read, F04 ELOOP, private P04 seam, descriptor/named-route and cleanup requirements."
+  ],
+  "product_tests_or_host_actions": false
+}

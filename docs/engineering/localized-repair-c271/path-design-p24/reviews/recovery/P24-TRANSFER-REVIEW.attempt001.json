@@ -1,0 +1,78 @@
+{
+  "schema": "ontokin.c271.p24.initial-transfer-review/1",
+  "reviewer": "/root/recovery_audit",
+  "reviewed_at_utc": "2026-11-23T12:50:24.942817+00:00",
+  "base": "3bc46e80f3d59616110b218740a5f5f3dd688a57",
+  "verdict": "CHANGES_REQUIRED_BEFORE_PUBLICATION",
+  "checks": [
+    {
+      "name": "original_P23_session_exact_preserved",
+      "passed": true
+    },
+    {
+      "name": "original_P23_delivery_exact_preserved",
+      "passed": true
+    },
+    {
+      "name": "all_prior_phase_history_preserved",
+      "passed": true
+    },
+    {
+      "name": "requirements_plan_checks_completion_unchanged",
+      "passed": true
+    },
+    {
+      "name": "original_CURRENT_pending_exact_preserved",
+      "passed": true
+    },
+    {
+      "name": "P23_reconciliation_append_only",
+      "passed": true
+    },
+    {
+      "name": "P24_owner_and_scope_selected",
+      "passed": true
+    },
+    {
+      "name": "CURRENT_next_action_schema",
+      "passed": false
+    },
+    {
+      "name": "docs/workflow/tasks/C271/REQUIREMENTS.md_append_only",
+      "passed": true
+    },
+    {
+      "name": "docs/workflow/tasks/C271/PLAN.md_append_only",
+      "passed": true
+    },
+    {
+      "name": "protected_source_diff_empty",
+      "passed": true
+    }
+  ],
+  "protected_source_diffs": [],
+  "findings": [
+    {
+      "id": "TRANSFER-01",
+      "severity": "mandatory",
+      "path": "docs/workflow/CURRENT.json#/next_action/status",
+      "observed": "in_progress",
+      "finding": "Existing validator permits only awaiting_user_direction, ready or blocked. in_progress is a valid task state but not a next_action status.",
+      "source": "tools/chat_workflow.py line 207",
+      "required_change": "Use ready for this authorized active design task; retain task/session phase in_progress. Preserve this original reviewed diff before correction."
+    },
+    {
+      "id": "TRANSFER-02",
+      "severity": "advisory",
+      "path": "docs/workflow/CURRENT.json#/latest_recovery",
+      "finding": "latest_recovery still identifies P23, while P24 early save is confirmed. Active task phase correctly points to P24 early receipt.",
+      "suggested_change": "Rotate the old latest recovery into retained history and point latest_recovery to P24 before final publication."
+    }
+  ],
+  "save_review": "EARLY-SAVE-READBACK-REVIEW.json",
+  "source_transfer": "All compared P23 historical objects and existing constraints are exact. Requirements/plan changes are append-only. No protected source path changed.",
+  "limitations": [
+    "Read-only static documentary review; mandatory root workflow/documentation checks still required.",
+    "This is the initial mutable P24 record candidate, not final technical adoption or publication."
+  ]
+}

@@ -1,0 +1,649 @@
+{
+  "schema": "ontokin.c271.p24-closed-path-schema-record/1",
+  "status": "proposed_for_independent_review_not_adopted",
+  "decision": "P24-PATH-001",
+  "record_kind": "Closed normative field/value record; not an executable operational plan or a JSON-Schema validator.",
+  "new_pair": {
+    "plan_schema": "ontokin.current-host-readback-inspection-plan/0.1.4",
+    "resolution_profile": "linux-glibc-declared-python-origin-rpath-libc-plt-static-tls-rtld-paths-v1"
+  },
+  "inheritance": {
+    "base_plan": "ontokin.current-host-readback-inspection-plan/0.1.3",
+    "unchanged_versions": [
+      "ontokin.current-host-readback-inspection-plan/0.1.0",
+      "ontokin.current-host-readback-inspection-plan/0.1.1",
+      "ontokin.current-host-readback-inspection-plan/0.1.2",
+      "ontokin.current-host-readback-inspection-plan/0.1.3"
+    ],
+    "top_level_required_closed_keys": [
+      "schema",
+      "contract",
+      "source",
+      "author",
+      "runtime",
+      "dependencies",
+      "host_static",
+      "environment",
+      "commands",
+      "evidence",
+      "limits"
+    ],
+    "host_static_required_closed_keys": [
+      "platform",
+      "files",
+      "aliases",
+      "roles",
+      "resolution",
+      "path_guards"
+    ],
+    "resolution_required_closed_keys": [
+      "profile",
+      "images",
+      "needed_edges",
+      "loader_inputs",
+      "search_directories",
+      "inspector_commands",
+      "ignored_kernel_rows",
+      "rationale",
+      "origin_rpath",
+      "libc_plt",
+      "rtld_paths"
+    ],
+    "all_other_shapes": "Exactly the frozen /0.1.3 shapes and P05/P07/P11/P13/P16/P17 predicates; no added approval, flags, commands, caller limits or resources.",
+    "preserved_plan_identity": "Never relabel or mutate the actual /0.1.4 schema or externally authenticated plan descriptor."
+  },
+  "rtld_paths": {
+    "required_closed_keys": [
+      "schema",
+      "components",
+      "absences"
+    ],
+    "schema_value": "ontokin.current-host-readback-rtld-paths/0.1.0",
+    "component_row_required_closed_keys": [
+      "path",
+      "kind",
+      "identity",
+      "target"
+    ],
+    "components_order": "Strict ascending ASCII path order; exact nine paths, kinds and targets below; no duplicates or extra rows.",
+    "components_fixed_fields": [
+      {
+        "path": "/",
+        "kind": "directory",
+        "target": null
+      },
+      {
+        "path": "/lib",
+        "kind": "symlink",
+        "target": "usr/lib"
+      },
+      {
+        "path": "/lib64",
+        "kind": "symlink",
+        "target": "usr/lib64"
+      },
+      {
+        "path": "/usr",
+        "kind": "directory",
+        "target": null
+      },
+      {
+        "path": "/usr/lib",
+        "kind": "directory",
+        "target": null
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu",
+        "kind": "directory",
+        "target": null
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "kind": "file",
+        "target": null
+      },
+      {
+        "path": "/usr/lib64",
+        "kind": "directory",
+        "target": null
+      },
+      {
+        "path": "/usr/lib64/ld-linux-x86-64.so.2",
+        "kind": "symlink",
+        "target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+      }
+    ],
+    "identity": {
+      "type": "array",
+      "length": 7,
+      "item_type": "integer excluding Boolean",
+      "fields": [
+        "st_dev",
+        "st_ino",
+        "st_mode",
+        "st_nlink",
+        "st_size",
+        "st_mtime_ns",
+        "st_ctime_ns"
+      ],
+      "minimums": {
+        "st_dev": 0,
+        "st_ino": 1,
+        "st_mode": 0,
+        "st_nlink": 1,
+        "st_size": 0
+      },
+      "timestamps": "Signed integer nanoseconds; no equality/positivity inferred from historical timestamps.",
+      "file_type_bits": {
+        "mask": "0o170000",
+        "directory": "0o040000",
+        "symlink": "0o120000",
+        "file": "0o100000"
+      },
+      "source": "Actual later operational-plan observation only; this design supplies no current identities.",
+      "comparison": "Exact full tuple versus named nofollow stat and opened fstat before/after, across two reanchored passes and every subsequent recheck."
+    },
+    "absence_row_required_closed_keys": [
+      "path",
+      "nearest_existing_ancestor",
+      "first_missing",
+      "remaining_suffix"
+    ],
+    "absences_exact_ordered_rows": [
+      {
+        "path": "/lib/ld-linux.so.2",
+        "nearest_existing_ancestor": "/usr/lib",
+        "first_missing": "/usr/lib/ld-linux.so.2",
+        "remaining_suffix": []
+      },
+      {
+        "path": "/libx32/ld-linux-x32.so.2",
+        "nearest_existing_ancestor": "/",
+        "first_missing": "/libx32",
+        "remaining_suffix": [
+          "ld-linux-x32.so.2"
+        ]
+      }
+    ],
+    "absence_semantics": "Only ENOENT for first_missing basename under authenticated physical parent. Recompose original candidate through the fixed alias trace and exact remaining suffix; never inspect suffix after first missing. No dangling-link/ENOTDIR/EACCES equivalence."
+  },
+  "candidate_contract": {
+    "inspector_commands_required_closed_keys": [
+      "script",
+      "interpreter",
+      "commands",
+      "rtld_candidates"
+    ],
+    "ordered_literal_paths": [
+      "/lib64/ld-linux-x86-64.so.2",
+      "/lib/ld-linux.so.2",
+      "/libx32/ld-linux-x32.so.2"
+    ],
+    "file_row_required_closed_keys": [
+      "path",
+      "state",
+      "binding"
+    ],
+    "absent_row_required_closed_keys": [
+      "path",
+      "state",
+      "parent"
+    ],
+    "required_states": [
+      "file",
+      "absent",
+      "absent"
+    ],
+    "absent_parent_strings": {
+      "/lib/ld-linux.so.2": "/lib",
+      "/libx32/ld-linux-x32.so.2": "/libx32"
+    },
+    "only_new_interpretation": "For /0.1.4 absent rows, retain exact lexical parent equality and replace parent-is-directory predicate with the corresponding authenticated physical first-missing proof.",
+    "literal_equality": "One exact existing literal RTLDLIST extraction, with unchanged ASCII split; compare complete ordered row paths. Do not sort, omit, insert or rewrite candidates.",
+    "error_precedence": [
+      "Validate candidate container/path types; existing duplicate path check: CHI-INSPECTOR / Duplicate RTLD candidate.",
+      "Full ordered literal-list mismatch: CHI-UNSUPPORTED / Inspector RTLDLIST is not the exact reviewed literal list.",
+      "Fixed new-profile states/row shapes/parent/binding/witness relations, then finite proof and admitted result use."
+    ],
+    "script": {
+      "path": "/usr/bin/ldd",
+      "sha256": "7bcd61a279946cb376d36fd91f4938ab4f4aba48e793c652a9797319d23f8dd3",
+      "size_bytes": 5356,
+      "mode": "0o755"
+    },
+    "script_direct_shebang": "#!/bin/bash",
+    "canonical_loader": {
+      "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+      "size_bytes": 225672,
+      "mode": "0o755"
+    },
+    "closure_equality": "File candidate binding equals libc_plt.loader binding, host/runtime canonical file binding and unique loader image descriptor; actual interpreter/role relationships remain inherited. Absent candidates have no HOST file/image/role entries."
+  },
+  "finite_walk": {
+    "operational_root": "/",
+    "root_argument": "No alternate operational root, mount namespace or cwd binding is accepted.",
+    "allowed_named_subjects": [
+      "/lib64/ld-linux-x86-64.so.2",
+      "/lib/ld-linux.so.2",
+      "/libx32/ld-linux-x32.so.2"
+    ],
+    "allowed_parent_transition": {
+      "physical_from": "/usr/lib64",
+      "component": "..",
+      "physical_to": "/usr"
+    },
+    "x86_sequence": [
+      "lookup /lib64 link",
+      "expand usr/lib64 from /",
+      "lookup /usr",
+      "lookup /usr/lib64 directory",
+      "lookup /usr/lib64/ld-linux-x86-64.so.2 link",
+      "expand ../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 from /usr/lib64",
+      "verify actual .. parent is retained /usr",
+      "lookup /usr/lib",
+      "lookup /usr/lib/x86_64-linux-gnu",
+      "lookup canonical regular loader"
+    ],
+    "forbidden": [
+      "lexical normalization before resolving symlinks",
+      "unlisted physical transition or component",
+      "another parent-containing target",
+      "absolute symlink target in this new model",
+      "root escape or root-clamping as permission",
+      "procfs or magic-link substitution",
+      "special files or symlinks at fixed physical directory/file entries",
+      "cycles and fallback resolution",
+      "using final canonical equality alone as ancestry proof"
+    ],
+    "observations": [
+      "Open root O_PATH|O_DIRECTORY|O_NOFOLLOW|O_CLOEXEC.",
+      "For one basename relative to held physical parent: nofollow stat, open nofollow O_PATH (O_DIRECTORY where required), fstat equality.",
+      "For a symlink: os.readlink(b\"\", dir_fd=link_fd), exact complete bytes; fstat and named-entry nofollow stat afterward.",
+      "Verify each physical directory parent transition and recheck every retained named route.",
+      "Authenticate each expected single-component absence with ENOENT; repeat after parent/root route verification.",
+      "Close all first-pass descriptors; perform second complete fresh-root pass; exact equality with plan and first pass."
+    ],
+    "capability_policy": "Fail closed without same-semantics Linux/Python facilities. No ctypes/native helper, unchecked realpath fallback or new process.",
+    "private_seams": {
+      "alias": "_check_rtld_alias_trace: exact x86-64 path/edges only; unrelated /lib cannot affect result.",
+      "absence": "_check_rtld_absence_trace: exact i386 and x32 witnesses only.",
+      "aggregate": "_check_rtld_paths path/order composition is separately testable with frozen inert bindings; every operational caller must apply the fixed real-loader pin before using its alias result. A synthetic aggregate cannot be an eligible plan.",
+      "tests": "Logical fixture mappings/injected observations stay in labelled private test adapters, never operational plan fields."
+    },
+    "terminal_file_read": {
+      "read_flags": [
+        "O_RDONLY",
+        "O_NOFOLLOW",
+        "O_NONBLOCK",
+        "O_CLOEXEC"
+      ],
+      "path_argument": "One basename relative to held canonical physical parent descriptor.",
+      "before": "Regular file; full fstat equals held O_PATH terminal and named nofollow identity.",
+      "during": "Callback-bounded SHA-256 stream; expected size plus one detection byte maximum; no execution or mapping.",
+      "after": "Exact length/digest/mode and full before/after fstat/named identity equality; retain observed drift; close once.",
+      "primitive_binding": "Independently frozen synthetic binding allowed only at private test seam.",
+      "operational_binding": "Exact fixed loader pin and all agreed actual plan descriptors mandatory before operational alias use; no override.",
+      "existing_bound_checks": "Every inherited canonical _bound check remains required."
+    }
+  },
+  "bounds": {
+    "present_components": 9,
+    "absence_witnesses": 2,
+    "ordered_candidates": 3,
+    "passes_per_proof": 2,
+    "symlink_expansions_per_candidate_per_pass": 2,
+    "component_transitions_per_candidate_per_pass": 16,
+    "live_owned_descriptors": 10,
+    "path_ascii_bytes_before_reduction": 4096,
+    "path_components_before_reduction": 128,
+    "plan_document_bytes": "Existing 16 MiB _document reader unchanged.",
+    "callbacks": "Before each new observation and at final acceptance, within the existing clock; no new callback on old routes.",
+    "cycle_key": [
+      "st_dev",
+      "st_ino"
+    ],
+    "legacy_limits": "No change, including legacy 40-link rule, static_ms 60000, command_ms 5000, active_work_ms 3000, cleanup_ms 2000, publication_ms 30000 and source budgets.",
+    "transient_descriptor_slot": "One temporary parent/reanchor or readable terminal descriptor; never overlap these uses beyond ten total."
+  },
+  "path_guard_relations": {
+    "present_required": [
+      "/",
+      "/lib",
+      "/lib64",
+      "/lib64/ld-linux-x86-64.so.2",
+      "/usr",
+      "/usr/lib",
+      "/usr/lib/x86_64-linux-gnu",
+      "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "/usr/lib64",
+      "/usr/lib64/ld-linux-x86-64.so.2"
+    ],
+    "named_alias_guard_physical_equivalent": "/usr/lib64/ld-linux-x86-64.so.2",
+    "present_agreement": "Map identity[0,1,2] to device,inode,permission mode; exact kind and raw target. Additional full identity fields remain in rtld_paths.",
+    "absence_required": [
+      {
+        "path": "/usr/lib/ld-linux.so.2",
+        "parent": "/usr/lib",
+        "parent_device": "equal matching component identity[0]",
+        "parent_inode": "equal matching component identity[1]"
+      },
+      {
+        "path": "/libx32",
+        "parent": "/",
+        "parent_device": "equal matching component identity[0]",
+        "parent_inode": "equal matching component identity[1]"
+      }
+    ],
+    "legacy_chain_exclusions": [
+      "/lib64/ld-linux-x86-64.so.2",
+      "/usr/lib64/ld-linux-x86-64.so.2",
+      "/lib/ld-linux.so.2",
+      "/libx32/ld-linux-x32.so.2"
+    ],
+    "exclusion_authority": "Only after successful complete /0.1.4 finite proof; every excluded name remains represented by typed results. _existing_chain is unchanged."
+  },
+  "snapshot": {
+    "private_metadata_key": "rtld_path_snapshot",
+    "required_closed_keys": [
+      "components",
+      "results"
+    ],
+    "components": "Exact verified rtld_paths.components rows.",
+    "results_order": [
+      "/lib64/ld-linux-x86-64.so.2",
+      "/lib/ld-linux.so.2",
+      "/libx32/ld-linux-x32.so.2"
+    ],
+    "file_result_required_closed_keys": [
+      "path",
+      "state",
+      "resolved_path",
+      "identity"
+    ],
+    "file_result_fixed_fields": {
+      "path": "/lib64/ld-linux-x86-64.so.2",
+      "state": "file",
+      "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+    },
+    "absent_result_required_closed_keys": [
+      "path",
+      "state",
+      "nearest_existing_ancestor",
+      "first_missing",
+      "remaining_suffix"
+    ],
+    "absent_result_fixed_fields": [
+      {
+        "path": "/lib/ld-linux.so.2",
+        "nearest_existing_ancestor": "/usr/lib",
+        "first_missing": "/usr/lib/ld-linux.so.2",
+        "remaining_suffix": [],
+        "state": "absent"
+      },
+      {
+        "path": "/libx32/ld-linux-x32.so.2",
+        "nearest_existing_ancestor": "/",
+        "first_missing": "/libx32",
+        "remaining_suffix": [
+          "ld-linux-x32.so.2"
+        ],
+        "state": "absent"
+      }
+    ],
+    "legacy_snapshot_exclusions": [
+      "/",
+      "/lib",
+      "/lib/ld-linux.so.2",
+      "/lib64",
+      "/lib64/ld-linux-x86-64.so.2",
+      "/libx32",
+      "/libx32/ld-linux-x32.so.2",
+      "/usr",
+      "/usr/lib",
+      "/usr/lib/ld-linux.so.2",
+      "/usr/lib/x86_64-linux-gnu",
+      "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+      "/usr/lib64",
+      "/usr/lib64/ld-linux-x86-64.so.2"
+    ],
+    "construction": "Fresh full finite proof at snapshot creation; no generic FileNotFoundError/exists inference for excluded names.",
+    "rechecks": "Fresh complete proof at every complete recheck; exact snapshot comparison; final launch proof after ordinary checks under original command clock.",
+    "public_projection": "No new public HOST/inspection/result/attempt/config fields.",
+    "launch_failure": "Explicit .4-only CHI-DRIFT wrapper with underlying path refusal; snapshot inequality first creates CHI-PATH/RP-NAMESPACE. Leave callback/clock PROCESS/timeout and old routes unchanged."
+  },
+  "failure_contract": {
+    "new_error_details_required_keys": [
+      "stage",
+      "rule_id",
+      "path",
+      "operation",
+      "errno",
+      "evidence"
+    ],
+    "stage_value": "rtld_paths",
+    "nullable_fields": [
+      "path",
+      "operation",
+      "errno"
+    ],
+    "errno_type": "actual integer OS errno or null, never inferred from a high-level exists result",
+    "rules": [
+      {
+        "rule_id": "RP-PROFILE",
+        "category": "CHI-PLAN",
+        "reason": "Unsupported RTLD path schema/profile pair",
+        "meaning": "Wrong new pair; old routes retain old diagnostics."
+      },
+      {
+        "rule_id": "RP-SHAPE",
+        "category": "CHI-PLAN",
+        "reason": "Invalid RTLD path model shape",
+        "meaning": "Unknown/missing keys, fields, ordering, types or fixed model values."
+      },
+      {
+        "rule_id": "RP-CANDIDATE",
+        "category": "CHI-INSPECTOR",
+        "reason": "RTLD candidate differs from fixed path model",
+        "meaning": "State/parent/binding-map disagreement after exact list equality."
+      },
+      {
+        "rule_id": "RP-IDENTITY",
+        "category": "CHI-PATH",
+        "reason": "RTLD path component identity or type differs",
+        "meaning": "Wrong component kind or full seven-field identity; inconsistent P07 guard."
+      },
+      {
+        "rule_id": "RP-ABSENCE",
+        "category": "CHI-PATH",
+        "reason": "Required RTLD absence differs",
+        "meaning": "The precise expected missing basename exists, or nearest parent/witness differs."
+      },
+      {
+        "rule_id": "RP-IO",
+        "category": "CHI-PATH",
+        "reason": "Cannot authenticate RTLD path component",
+        "meaning": "OS error other than accepted single-component ENOENT; include actual errno/cause."
+      },
+      {
+        "rule_id": "RP-CAPABILITY",
+        "category": "CHI-PATH",
+        "reason": "Required RTLD no-follow capability is unavailable",
+        "meaning": "No O_PATH/O_NOFOLLOW/O_CLOEXEC/O_DIRECTORY, dir_fd, nofollow stat or empty-path symlink read; no fallback."
+      },
+      {
+        "rule_id": "RP-TRAVERSAL",
+        "category": "CHI-UNSUPPORTED",
+        "reason": "Unreviewed RTLD path traversal",
+        "meaning": "An observed raw target or transition is outside the finite allowlist."
+      },
+      {
+        "rule_id": "RP-CYCLE",
+        "category": "CHI-UNSUPPORTED",
+        "reason": "Excessive or circular RTLD alias chain",
+        "meaning": "Repeated symlink entry identity or excess semantic symlink expansion count. OS-reported ELOOP remains RP-IO / CHI-PATH."
+      },
+      {
+        "rule_id": "RP-BOUND",
+        "category": "CHI-UNSUPPORTED",
+        "reason": "RTLD path allowance exceeded",
+        "meaning": "Input/intermediate bound or finite transition/resource bound exceeded."
+      },
+      {
+        "rule_id": "RP-NAMESPACE",
+        "category": "CHI-PATH",
+        "reason": "RTLD named route changed during observation",
+        "meaning": "Root-reanchored disagreement, named-entry/descriptor disagreement, private claimed-terminal-path inequality (N16), or typed snapshot mismatch. Claimed canonical equality uses CHI-PATH even when another spelling reaches the same inode."
+      },
+      {
+        "rule_id": "RP-CLEANUP",
+        "category": "CHI-PATH",
+        "reason": "RTLD path descriptor cleanup failed",
+        "meaning": "No success after close failure; retain primary and cleanup evidence."
+      },
+      {
+        "rule_id": "RP-READ",
+        "category": "CHI-PATH",
+        "reason": "RTLD terminal file changed or binding differs",
+        "meaning": "Bounded terminal read length/digest/mode or before/after full readable/named identity mismatch; retain expected and actual identities/bindings."
+      }
+    ],
+    "ordered_observation_faults": [
+      "Shape and bounded input checks before any new trace observation.",
+      "Validate candidate container/path types and reject duplicates; then exact full literal-list equality; only then fixed states/row shapes/parent/file/witness relations and trace use. Never derive lookup authority from an unlisted candidate.",
+      "Per entry: nofollow identity/type then opened identity; only then raw symlink target allowlist.",
+      "Expected absence accepts only precise ENOENT; any existing entry refuses.",
+      "Pass/namespace comparisons before final callback and success."
+    ],
+    "callback": "Same-object private callback propagation when all owned descriptors close successfully; enclosing existing timeout/cause behavior remains.",
+    "cleanup": "Close every owned descriptor exactly once; any close error blocks success and retains primary and cleanup evidence.",
+    "recheck_wrapper": "Existing CHI-DRIFT outer failure/cause and state; no suppression of an actual prior-start receipt or unknown starts.",
+    "unsupported_loop_errno": "OS ELOOP is RP-IO / CHI-PATH with actual errno/cause, never absence; only detected unapproved/repeated semantic edges use CHI-UNSUPPORTED.",
+    "new_error_details_closed": true,
+    "operation_values": [
+      "profile_selection",
+      "shape",
+      "candidate_order",
+      "candidate_binding",
+      "stat",
+      "open",
+      "fstat",
+      "readlink",
+      "read",
+      "parent_check",
+      "root_recheck",
+      "snapshot_compare",
+      "callback",
+      "close",
+      "capability",
+      "bound_check"
+    ],
+    "path_values": "One of snapshot.legacy_snapshot_exclusions (the fourteen fixed names), or null for unavailable/malformed/unapproved input; no arbitrary path echo.",
+    "evidence": {
+      "required_closed_keys": [
+        "observations",
+        "primary",
+        "cleanup"
+      ],
+      "observations": {
+        "type": "array",
+        "max_items": 6,
+        "row_required_closed_keys": [
+          "label",
+          "path",
+          "identity",
+          "binding",
+          "target"
+        ],
+        "label_values": [
+          "expected",
+          "before",
+          "after",
+          "named_before",
+          "opened_before",
+          "opened_after",
+          "named_after",
+          "first_pass",
+          "second_pass",
+          "observed"
+        ],
+        "path": "Fixed fourteen-name set or null.",
+        "identity": "The seven integer identity fields, or null when unavailable; evidence may contain a differing actual file type.",
+        "binding": "Closed ordinary {sha256,size_bytes,mode}, or null; observed bindings only after a complete stream read, never a partial-prefix digest.",
+        "target": "target_fingerprint below or null; fingerprints describe bytes actually read or exact expected bytes, not normalized targets.",
+        "terminal_drift": "Retain expected/opened_before/opened_after/named_after identities; expected and observed complete bindings populate those same rows when available.",
+        "namespace_drift": "Retain first_pass and second_pass or the disagreeing named/opened observations."
+      },
+      "target_fingerprint": {
+        "required_closed_keys": [
+          "size_bytes",
+          "sha256",
+          "prefix_hex"
+        ],
+        "size_bytes": "Actual nonnegative integer byte count, excluding Boolean.",
+        "sha256": "Exactly 64 lowercase hex characters: SHA-256 of the complete actual or expected raw target bytes.",
+        "prefix_hex": "Exactly the lowercase hex of the first min(size_bytes,128) bytes, even length at most 256 characters; explicitly a prefix, not the full target."
+      },
+      "fault_summary": {
+        "required_closed_keys": [
+          "kind",
+          "errno",
+          "operation",
+          "path",
+          "message",
+          "message_truncated"
+        ],
+        "kind_values": [
+          "os_error",
+          "inspection_error",
+          "callback",
+          "other_error"
+        ],
+        "errno": "Actual integer errno excluding Boolean, or null when absent; never inferred.",
+        "operation": "Listed failure_contract operation value or null.",
+        "path": "Fixed fourteen-name set or null.",
+        "message": "First at most 512 Unicode characters of actual exception message.",
+        "message_truncated": "Boolean: true precisely when message was shortened; this is a diagnostic summary, while original primary cause remains attached unchanged."
+      },
+      "primary": "fault_summary or null when no prior exception object exists (for example, an identity-comparison refusal).",
+      "cleanup": {
+        "type": "array",
+        "max_items": 10,
+        "item": "fault_summary for each actually failed close, in close-attempt order; [] when all closes succeeded.",
+        "once_only": "One close attempt per acquired descriptor; never retry close on a potentially reused descriptor."
+      },
+      "simultaneous_faults": "Generate RP-CLEANUP with original primary as cause and summaries of primary plus every failed close; if no primary, retain first cleanup exception as cause. Other close faults remain in cleanup.",
+      "callback_boundary": "When descriptor cleanup succeeds, propagate the same callback object without a fabricated path error. Existing enclosing callback/timeout behavior remains. The evidence shape applies to new path-generated HostInspectionError instances, not to relabelling a propagated callback.",
+      "serialization_failure": "Existing evidence finalization failed/unknown rules apply; no success if required failure evidence cannot be retained. No public top-level fields change."
+    },
+    "launch_wrapper": {
+      "only_plan_schema": "ontokin.current-host-readback-inspection-plan/0.1.4",
+      "code": "CHI-DRIFT",
+      "reason": "RTLD path changed immediately before launch",
+      "cause": "The original new path-generated proof refusal, or a generated CHI-PATH/RP-NAMESPACE for snapshot inequality, including its details and original state.",
+      "exception_scope": "Wrap only new path-generated proof/snapshot refusals. Callback/clock faults retain existing PROCESS/timeout handling; older launch routes are unchanged.",
+      "source_need": "Frozen _launch_check currently re-raises HostInspectionError, so this new-profile wrapper must be explicit."
+    }
+  },
+  "independent_controls": {
+    "path": "reviews/path/CONTROL-MATRIX.json",
+    "schema": "as frozen by independent reviewer",
+    "size_bytes": 67833,
+    "sha256": "d52f64ffc28f7baf04e360f167fb56192cc6fb0baf6b36fd9f085907732a3196",
+    "case_count": 52,
+    "author_claim": "All later implementation obligations; none executed in P24. Exact independent crosswalk binds candidate hashes.",
+    "N34": "Independent source-completeness gate remains non-runtime.",
+    "F09": "Mocked prior-start accounting; no actual target execution implied."
+  },
+  "excluded_actions": [
+    "production/test implementation",
+    "host probing or reconstruction",
+    "global directory/symlink/script mutation",
+    "product/module imports or executions",
+    "H0/H1",
+    "Node/ldd/loader/checker starts",
+    "original-seven/full routine",
+    "main integration",
+    "parent closure"
+  ]
+}

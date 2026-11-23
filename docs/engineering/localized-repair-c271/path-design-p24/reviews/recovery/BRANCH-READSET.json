@@ -1,0 +1,170 @@
+{
+  "schema": "ontokin.c271.p24.full-branch-record-readset/1",
+  "reviewer": "/root/recovery_audit",
+  "completed_at_utc": "2026-11-23T12:49:22.026544+00:00",
+  "source_commit": "3bc46e80f3d59616110b218740a5f5f3dd688a57",
+  "files": [
+    {
+      "path": "docs/workflow/tasks/C271/task.json",
+      "commit": "3bc46e80f3d59616110b218740a5f5f3dd688a57",
+      "bytes": 299247,
+      "lines": 4971,
+      "sha256": "35d43631449b436170c5571082b6fd1809ad2177e3e21dcec79c89f3b7612726",
+      "git_blob": "28eda16d4942e47aeae623c5574a4c1b9d7eacdd",
+      "matches_early_frozen_snapshot": true,
+      "scalar_leaves": 3660,
+      "top_level_keys": [
+        "schema_version",
+        "id",
+        "title",
+        "intent",
+        "status",
+        "owner",
+        "branch",
+        "base_sha",
+        "scope_issue",
+        "requirements",
+        "plan",
+        "checks",
+        "completion",
+        "next_action",
+        "session_phase",
+        "delivery",
+        "authorization",
+        "historical_checks",
+        "prior_session_phases",
+        "prior_phase_deliveries",
+        "prior_blocked_reason",
+        "blocked_reason_history",
+        "remaining_h0_constraint",
+        "prior_h0_constraints",
+        "phase_reconciliations",
+        "p20_outcome_recorded",
+        "blocked_reason"
+      ]
+    },
+    {
+      "path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "commit": "3bc46e80f3d59616110b218740a5f5f3dd688a57",
+      "bytes": 68646,
+      "lines": 401,
+      "sha256": "ea8527a73b3c18195b7811ffe6b1392692f681c8e83f6c7efbffa11099f1a3a4",
+      "git_blob": "d1c8543d4cc721bf767d881e7d40ae81b50a5eb1",
+      "matches_early_frozen_snapshot": true
+    },
+    {
+      "path": "docs/workflow/tasks/C271/PLAN.md",
+      "commit": "3bc46e80f3d59616110b218740a5f5f3dd688a57",
+      "bytes": 69800,
+      "lines": 401,
+      "sha256": "457e104f4de01aa191df87bf708a3239422abfe961ae542716fc31946430671f",
+      "git_blob": "16b1e9bc84ed51363496d9136844144f2315188f",
+      "matches_early_frozen_snapshot": true
+    },
+    {
+      "path": "docs/workflow/CURRENT.json",
+      "commit": "3bc46e80f3d59616110b218740a5f5f3dd688a57",
+      "bytes": 127742,
+      "lines": 1987,
+      "sha256": "fffa027c6ff1c3d10496b2328196f8b288294aa96d51d1faa99aeab9ad14fcf0",
+      "git_blob": "e9b383294c627f345f1bf6642d5efa7da8eb56d7",
+      "matches_early_frozen_snapshot": true,
+      "scalar_leaves": 1733,
+      "top_level_keys": [
+        "schema_version",
+        "project",
+        "latest_task",
+        "active_task",
+        "observed_main",
+        "snapshot_date",
+        "next_action",
+        "historical_handoff",
+        "boundaries",
+        "delivery_policy",
+        "latest_handoff",
+        "previous_handoff",
+        "latest_recovery",
+        "older_handoffs",
+        "previous_recovery",
+        "older_recoveries",
+        "concurrent_main_observation",
+        "pending_phase_delivery"
+      ]
+    }
+  ],
+  "method": {
+    "requirements": "All 401 lines read in nontruncated windows.",
+    "plan": "Lines 1-135 read; lines 136-401 fully compared to already read REQUIREMENTS lines: 260 exact previously read lines, six novel lines printed and reviewed.",
+    "task": "All top-level fields read, including all 80 checks, 22 prior phases, 22 prior deliveries, 12 blocked-history entries, seven prior H0 constraints and eight phase reconciliations. One oversized checks display truncated; its missing range was reread as checks 0-54.",
+    "current": "All top-level fields, 30 boundaries, 25 older handoffs and 19 older recoveries reviewed. Fifteen exactly equal compound values reused from fully read task.json via explicit source pointers; all remaining content read in nontruncated bounded windows.",
+    "reuse_maps": [
+      "TASK-PRIOR-DELIVERIES-REUSED.json",
+      "CURRENT-REUSED.json"
+    ],
+    "not_claimed": "No inspection of every external referenced evidence file or historic saved artifact; those are dependencies, not contents of the four selected records."
+  },
+  "checks": [
+    {
+      "name": "parent_requirements",
+      "passed": true,
+      "scope": "Only R01/R02 done, R03-R05 not_done"
+    },
+    {
+      "name": "parent_plan",
+      "passed": true,
+      "scope": "P01 done; P02 in_progress"
+    },
+    {
+      "name": "source_and_receipt_revisions",
+      "passed": true,
+      "scope": "Original P23 core and later receipt boundary"
+    },
+    {
+      "name": "archive_identity",
+      "passed": true,
+      "scope": "Original P23 ZIP only; distinct from recommendation amendment"
+    },
+    {
+      "name": "terminal_scope",
+      "passed": true,
+      "scope": "Completes P23 delivery only"
+    },
+    {
+      "name": "phase_markers_equal",
+      "passed": true,
+      "scope": "Root recorded equal live PR/issue markers; reviewer did not query remote independently"
+    },
+    {
+      "name": "main_binding",
+      "passed": true,
+      "scope": "Main current instruction source"
+    },
+    {
+      "name": "branch_retained",
+      "passed": true,
+      "scope": "Retained draft PR274/open issue273; no main integration"
+    },
+    {
+      "name": "snapshot_identity",
+      "passed": true,
+      "scope": "All four reviewed full branch records match frozen early source"
+    }
+  ],
+  "counts": {
+    "task_checks": 80,
+    "task_check_results": {
+      "passed": 65,
+      "failed": 13,
+      "not_run": 2
+    },
+    "historical_phases": 22,
+    "historical_deliveries": 22,
+    "blocked_history": 12,
+    "prior_h0_constraints": 7,
+    "phase_reconciliations": 8,
+    "current_boundaries": 30,
+    "older_handoffs": 25,
+    "older_recoveries": 19
+  },
+  "verdict": "NO_ADDITIONAL_START_BLOCKER"
+}

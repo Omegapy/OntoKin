@@ -1,0 +1,1990 @@
+{
+  "schema": "ontokin.c271.p24-independent-path-control-matrix/1",
+  "reviewer": "/root/path_review",
+  "frozen_at_utc": "2026-11-23T12:52:07.907026+00:00",
+  "candidate_read_before_freeze": false,
+  "status": "frozen_independent_design_controls_not_executed",
+  "authority": "Expectations frozen independently from adopted constraints and inspected source. Candidate must map every case to its exact norm; future adapters require separate independent review. This file implements no resolver or harness.",
+  "scope": "Finite synthetic text/data topology, never created at these absolute host paths. No full operational positive, H0, product behavior or current-host claim.",
+  "base": {
+    "schema": "synthetic-observation-model/1",
+    "plan_schema": "ontokin.current-host-readback-inspection-plan/0.1.4",
+    "resolution_profile": "new_exact_pair_to_be_bound_by_candidate_review",
+    "literal_rtldlist": [
+      "/lib64/ld-linux-x86-64.so.2",
+      "/lib/ld-linux.so.2",
+      "/libx32/ld-linux-x32.so.2"
+    ],
+    "candidate_rows": [
+      {
+        "path": "/lib64/ld-linux-x86-64.so.2",
+        "state": "file",
+        "binding": {
+          "sha256": "2450cb4f0c238438e1cb9986227ccf0548c75919c008fae97513251af643b452",
+          "size_bytes": 33,
+          "mode": "0o600"
+        }
+      },
+      {
+        "path": "/lib/ld-linux.so.2",
+        "state": "absent",
+        "first_missing": "/usr/lib/ld-linux.so.2",
+        "physical_parent": "/usr/lib",
+        "remaining": [
+          "ld-linux.so.2"
+        ]
+      },
+      {
+        "path": "/libx32/ld-linux-x32.so.2",
+        "state": "absent",
+        "first_missing": "/libx32",
+        "physical_parent": "/",
+        "remaining": [
+          "libx32",
+          "ld-linux-x32.so.2"
+        ]
+      }
+    ],
+    "entries": [
+      {
+        "path": "/",
+        "kind": "directory",
+        "identity": [
+          71,
+          1,
+          16877,
+          1,
+          4096,
+          1000000000,
+          1000000000
+        ],
+        "target": null
+      },
+      {
+        "path": "/usr",
+        "kind": "directory",
+        "identity": [
+          71,
+          2,
+          16877,
+          1,
+          4096,
+          1000000000,
+          1000000000
+        ],
+        "target": null
+      },
+      {
+        "path": "/usr/lib64",
+        "kind": "directory",
+        "identity": [
+          71,
+          3,
+          16877,
+          1,
+          4096,
+          1000000000,
+          1000000000
+        ],
+        "target": null
+      },
+      {
+        "path": "/usr/lib",
+        "kind": "directory",
+        "identity": [
+          71,
+          4,
+          16877,
+          1,
+          4096,
+          1000000000,
+          1000000000
+        ],
+        "target": null
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu",
+        "kind": "directory",
+        "identity": [
+          71,
+          5,
+          16877,
+          1,
+          4096,
+          1000000000,
+          1000000000
+        ],
+        "target": null
+      },
+      {
+        "path": "/lib64",
+        "kind": "symlink",
+        "identity": [
+          71,
+          6,
+          41471,
+          1,
+          9,
+          1000000000,
+          1000000000
+        ],
+        "target": "usr/lib64"
+      },
+      {
+        "path": "/lib",
+        "kind": "symlink",
+        "identity": [
+          71,
+          7,
+          41471,
+          1,
+          7,
+          1000000000,
+          1000000000
+        ],
+        "target": "usr/lib"
+      },
+      {
+        "path": "/usr/lib64/ld-linux-x86-64.so.2",
+        "kind": "symlink",
+        "identity": [
+          71,
+          8,
+          41471,
+          1,
+          44,
+          1000000000,
+          1000000000
+        ],
+        "target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+      },
+      {
+        "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "kind": "file",
+        "identity": [
+          71,
+          9,
+          33152,
+          1,
+          33,
+          1000000000,
+          1000000000
+        ],
+        "target": null,
+        "content_ascii": "P24 synthetic inert loader bytes\n",
+        "binding": {
+          "sha256": "2450cb4f0c238438e1cb9986227ccf0548c75919c008fae97513251af643b452",
+          "size_bytes": 33,
+          "mode": "0o600"
+        }
+      }
+    ],
+    "absent_entries": [
+      "/libx32",
+      "/usr/lib/ld-linux.so.2"
+    ],
+    "lookup_default": "ENOENT only for absent entries in this closed synthetic model",
+    "external_expected_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "observed_plan_digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "guards": "exact all entries plus first-missing witnesses; no unknown entries",
+    "error_events": []
+  },
+  "mutation_contract": "Each control starts from an independent deep copy of BASE and applies only its listed exact_changes/fault_events in order. set_entry replaces exactly the named synthetic record. declare_out_of_scope narrows only the explicitly named primitive test, never a full plan. Cases are design expectations, not observations.",
+  "identity_contract": "Seven tuple fields are st_dev, st_ino, st_mode, st_nlink, st_size, st_mtime_ns, st_ctime_ns. Exact values are synthetic and unrelated to current host. Parent nofollow observations bracket every read/open; fstat identity agrees; named namespace is rewalked before acceptance. All acquired descriptors close exactly once on every outcome.",
+  "bound_contract": "Retain inherited 4096 path length/128 components/40 alias hops/32768 guard rows and timing/byte bounds. New finite exception may tighten ceilings, never widen them. Unknown edges refuse before lookup; cycles need not reach a generic depth error.",
+  "diagnostic_contract": "CHI-* is the exact required category unless same_object_callback_exception or null external-review decision. Human boundary labels here identify the primitive and do not invent a production rule_id. Later exact candidate review binds rule_id/stage details without altering these expectations.",
+  "process_count_contract": "Counts are planned outcomes at the named future synthetic/mock boundary. All actual executions in this P24 matrix are zero. F09 includes one explicitly mocked prior Node start for future postflight accounting, never an actual start in this phase. Shell/documentary interpreter invocations are not target execution.",
+  "cases": [
+    {
+      "id": "P01",
+      "kind": "positive",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [],
+      "expected": {
+        "decision": {
+          "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "ordered_symlinks": [
+            [
+              "/lib64",
+              "usr/lib64"
+            ],
+            [
+              "/usr/lib64/ld-linux-x86-64.so.2",
+              "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+            ]
+          ],
+          "parent_pop": "/usr/lib64 -> held /usr",
+          "accepted": "path primitive only"
+        },
+        "boundary": "alias_component_proof",
+        "code": null,
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "P02",
+      "kind": "positive",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [],
+      "expected": {
+        "decision": {
+          "candidate": "/libx32/ld-linux-x32.so.2",
+          "first_missing": "/libx32",
+          "checked_parent": "/",
+          "remaining_suffix": [
+            "ld-linux-x32.so.2"
+          ],
+          "accepted": "absence primitive only"
+        },
+        "boundary": "missing_ancestor_proof",
+        "code": null,
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "P03",
+      "kind": "positive",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [],
+      "expected": {
+        "decision": {
+          "candidate": "/lib/ld-linux.so.2",
+          "ordered_symlinks": [
+            [
+              "/lib",
+              "usr/lib"
+            ]
+          ],
+          "first_missing": "/usr/lib/ld-linux.so.2",
+          "checked_parent": "/usr/lib",
+          "accepted": "absence primitive only"
+        },
+        "boundary": "aliased_parent_absence_proof",
+        "code": null,
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "P04",
+      "kind": "positive",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_entry",
+          "path": "/lib",
+          "value": {
+            "kind": "symlink",
+            "target": "opt/trap/lib",
+            "identity": [
+              71,
+              70,
+              41471,
+              1,
+              12,
+              1000000000,
+              1000000000
+            ]
+          }
+        },
+        {
+          "op": "declare_out_of_scope",
+          "value": [
+            "/lib/ld-linux.so.2"
+          ]
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": {
+          "resolved_path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "accepted": "isolated x86 alias primitive only; aggregate policy must reject changed /lib",
+          "must_not_resolve": "/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        },
+        "boundary": "alias_component_proof",
+        "code": null,
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "P05",
+      "kind": "positive",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [],
+      "expected": {
+        "decision": {
+          "ordered_candidates": [
+            "/lib64/ld-linux-x86-64.so.2",
+            "/lib/ld-linux.so.2",
+            "/libx32/ld-linux-x32.so.2"
+          ],
+          "accepted": "synthetic path/order aggregate only",
+          "full_plan_eligible": false,
+          "reason": "synthetic file bytes cannot satisfy pinned loader and no operational source/closure evidence"
+        },
+        "boundary": "rtld_order_and_path_aggregate",
+        "code": null,
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N01",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set",
+          "path": "plan_schema",
+          "value": "ontokin.current-host-readback-inspection-plan/0.1.3"
+        },
+        {
+          "op": "omit_new_policy",
+          "value": true
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": {
+          "reason": "Parent-traversal symlink targets require a separately reviewed traversal model",
+          "old_behavior_unchanged": true
+        },
+        "boundary": "legacy_existing_chain",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N02",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set",
+          "path": "resolution_profile",
+          "value": "linux-glibc-declared-python-origin-rpath-libc-plt-static-tls-v1"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject mismatched 0.1.4 schema/profile",
+        "boundary": "new_profile_dispatch",
+        "code": "CHI-PLAN",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N03",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "add_policy_member",
+          "key": "allow_parent_traversal",
+          "value": true
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject unknown authority-like member",
+        "boundary": "new_policy_closed_shape",
+        "code": "CHI-PLAN",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N04",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "omit_new_policy",
+          "value": true
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject missing required new policy",
+        "boundary": "new_policy_closed_shape",
+        "code": "CHI-PLAN",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N05",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set",
+          "path": "observed_plan_digest",
+          "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject before decode/profile/descriptor traversal",
+        "boundary": "external_digest_before_decode",
+        "code": "CHI-PLAN",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N06",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "remove_candidate",
+          "path": "/libx32/ld-linux-x32.so.2"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject omitted required literal candidate",
+        "boundary": "literal_rtldlist_equality",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N07",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_candidate_order",
+          "value": [
+            "/lib/ld-linux.so.2",
+            "/lib64/ld-linux-x86-64.so.2",
+            "/libx32/ld-linux-x32.so.2"
+          ]
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject reordered required candidates",
+        "boundary": "literal_rtldlist_equality",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N08",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "append_duplicate_candidate",
+          "path": "/libx32/ld-linux-x32.so.2"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject duplicate row before literal equality",
+        "boundary": "candidate_duplicate_check",
+        "code": "CHI-INSPECTOR",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N09",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "append_candidate",
+          "value": {
+            "path": "/extra-loader",
+            "state": "absent",
+            "parent": "/"
+          }
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject additional candidate even with a bound synthetic absence",
+        "boundary": "literal_rtldlist_equality",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N10",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_candidate_field",
+          "path": "/libx32/ld-linux-x32.so.2",
+          "field": "first_missing",
+          "value": "/libx32/ld-linux-x32.so.2"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject witness below missing /libx32; no nonexistent-parent descriptor",
+        "boundary": "missing_ancestor_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N11",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_candidate_field",
+          "path": "/lib/ld-linux.so.2",
+          "field": "first_missing",
+          "value": "/usr/lib"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject claimed absence of existing directory",
+        "boundary": "aliased_parent_absence_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N12",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "replace_absence_with_entry",
+          "path": "/libx32",
+          "kind": "symlink",
+          "target": "missing",
+          "identity": [
+            71,
+            30,
+            41471,
+            1,
+            7,
+            1000000000,
+            1000000000
+          ]
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject dangling symlink; ENOENT after following is not first-component absence",
+        "boundary": "missing_ancestor_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N13",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "replace_absence_with_entry",
+          "path": "/usr/lib/ld-linux.so.2",
+          "kind": "symlink",
+          "target": "missing",
+          "identity": [
+            71,
+            31,
+            41471,
+            1,
+            7,
+            1000000000,
+            1000000000
+          ]
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject dangling leaf symlink as present link",
+        "boundary": "aliased_parent_absence_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N14",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "replace_absence_with_entry",
+          "path": "/libx32",
+          "kind": "file",
+          "identity": [
+            71,
+            32,
+            33152,
+            1,
+            0,
+            1000000000,
+            1000000000
+          ]
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject non-directory ancestor; ENOTDIR is not absence",
+        "boundary": "missing_ancestor_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N15",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "replace_absence_with_entry",
+          "path": "/libx32",
+          "kind": "directory",
+          "identity": [
+            71,
+            33,
+            16877,
+            1,
+            4096,
+            1000000000,
+            1000000000
+          ]
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject the bound first missing component becoming present, even if leaf is still absent",
+        "boundary": "missing_ancestor_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N16",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set",
+          "path": "claimed_resolved_path",
+          "value": "/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject noncanonical or lexical target claim even if a separate /lib alias reaches same inode",
+        "boundary": "alias_terminal_equality",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N17",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_entry",
+          "path": "/usr/lib64",
+          "value": {
+            "kind": "symlink",
+            "target": "other",
+            "identity": [
+              71,
+              34,
+              41471,
+              1,
+              5,
+              1000000000,
+              1000000000
+            ]
+          }
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject a symlink where exact physical directory is required",
+        "boundary": "guarded_component_identity",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N18",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_entry",
+          "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+          "value": {
+            "kind": "symlink",
+            "target": "/outside/loader",
+            "identity": [
+              71,
+              35,
+              41471,
+              1,
+              15,
+              1000000000,
+              1000000000
+            ]
+          }
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject terminal symlink; same bytes at a different target cannot replace canonical regular file",
+        "boundary": "terminal_nofollow_file_proof",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N19",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_entry_target",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "value": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject unapproved absolute alias spelling even if final file is unchanged",
+        "boundary": "explicit_edge_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N20",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_entry_target",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "value": "../lib/./x86_64-linux-gnu/ld-linux-x86-64.so.2"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject alternate spelling; no normalization into approval",
+        "boundary": "explicit_edge_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N21",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_entry_target",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "value": "../../etc/passwd"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject rootward escape before lookup outside enumerated transcript",
+        "boundary": "explicit_edge_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N22",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_entry_target",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "value": "../other/ld-linux-x86-64.so.2"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject unapproved sibling traversal",
+        "boundary": "explicit_edge_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N23",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_entry_target",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "value": "../lib64/ld-linux-x86-64.so.2"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject self-cycle at unapproved edge; no retry/unbounded resolution",
+        "boundary": "explicit_edge_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N24",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_entry_target",
+          "path": "/lib64",
+          "value": "lib64"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject parent-alias cycle before following it",
+        "boundary": "explicit_edge_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N25",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_entry_target",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject overlong target before allocation/lookup/normalization",
+        "boundary": "finite_path_input_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N26",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_entry_target",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2",
+          "value": "x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x/x"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject excessive target components without traversal",
+        "boundary": "finite_path_input_admission",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N27",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "add_exception",
+          "path": "/etc/another-loader",
+          "target": "../lib/another-loader"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject arbitrary widening of the finite exception",
+        "boundary": "new_policy_scope",
+        "code": "CHI-UNSUPPORTED",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N28",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "omit_guard",
+          "path": "/usr"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject missing retained parent needed for physical parent-pop",
+        "boundary": "complete_guard_coverage",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N29",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "omit_guard",
+          "path": "/usr/lib64/ld-linux-x86-64.so.2"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject missing physical alias-hop binding",
+        "boundary": "complete_guard_coverage",
+        "code": "CHI-PATH",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N30",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set_candidate_field",
+          "path": "/lib64/ld-linux-x86-64.so.2",
+          "field": "binding.sha256",
+          "value": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject candidate binding differing from actual canonical file and host closure",
+        "boundary": "candidate_binding_equality",
+        "code": "CHI-INSPECTOR",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N31",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "select_full_plan_route",
+          "value": true
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "synthetic 32-byte inert loader is not the pinned operational loader; primitive acceptance cannot yield plan acceptance",
+        "boundary": "inherited_operational_pin_gate",
+        "code": "CHI-INSPECTOR",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N32",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "add_projected_host_member",
+          "key": "rtld_paths",
+          "value": {}
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject leakage of inspection-only path policy into HOST schema",
+        "boundary": "P06_projection_closed_shape",
+        "code": "CHI-COMPAT",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N33",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "add_projected_alias",
+          "path": "/libx32/ld-linux-x32.so.2",
+          "value": {
+            "resolved_path": "/libx32/ld-linux-x32.so.2",
+            "symlink": false,
+            "link_target": null
+          }
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": "reject fabricated absent candidate alias/file role",
+        "boundary": "P06_projection_set_equality",
+        "code": "CHI-COMPAT",
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "N34",
+      "kind": "refusal",
+      "input_base": "BASE",
+      "exact_changes": [
+        {
+          "op": "set",
+          "path": "independent_actual_loader_source_review",
+          "value": "missing"
+        }
+      ],
+      "fault_events": [],
+      "expected": {
+        "decision": {
+          "decision": "withhold operational plan adoption",
+          "product_refusal_claim": false,
+          "N57": "historical oracle remains unchanged and is not a runtime control"
+        },
+        "boundary": "external_source_review_gate",
+        "code": null,
+        "cause": null,
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "F01",
+      "kind": "fault",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [
+        {
+          "at": "lstat-at(held root descriptor, libx32, nofollow)",
+          "raise_errno": "EACCES"
+        }
+      ],
+      "expected": {
+        "decision": "reject EACCES; do not reinterpret as ENOENT or recurse",
+        "boundary": "descriptor_relative_absence_lookup",
+        "code": "CHI-PATH",
+        "cause": {
+          "errno": "EACCES",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "F02",
+      "kind": "fault",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [
+        {
+          "at": "lstat-at(held root descriptor, libx32, nofollow)",
+          "raise_errno": "ENOTDIR"
+        }
+      ],
+      "expected": {
+        "decision": "reject ENOTDIR; do not reinterpret as ENOENT or recurse",
+        "boundary": "descriptor_relative_absence_lookup",
+        "code": "CHI-PATH",
+        "cause": {
+          "errno": "ENOTDIR",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "F03",
+      "kind": "fault",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [
+        {
+          "at": "lstat-at(held root descriptor, libx32, nofollow)",
+          "raise_errno": "EIO"
+        }
+      ],
+      "expected": {
+        "decision": "reject EIO; do not reinterpret as ENOENT or recurse",
+        "boundary": "descriptor_relative_absence_lookup",
+        "code": "CHI-PATH",
+        "cause": {
+          "errno": "EIO",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "F04",
+      "kind": "fault",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [
+        {
+          "at": "lstat-at(held root descriptor, libx32, nofollow)",
+          "raise_errno": "ELOOP"
+        }
+      ],
+      "expected": {
+        "decision": "reject ELOOP; do not reinterpret as ENOENT or recurse",
+        "boundary": "descriptor_relative_absence_lookup",
+        "code": "CHI-PATH",
+        "cause": {
+          "errno": "ELOOP",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "F05",
+      "kind": "fault",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [
+        {
+          "at": "after nofollow lstat /usr before openat /usr",
+          "replace_identity": [
+            71,
+            102,
+            16877,
+            1,
+            4096,
+            1000000001,
+            1000000001
+          ]
+        }
+      ],
+      "expected": {
+        "decision": "reject replaced ancestor even if held old descriptor still points to prior directory",
+        "boundary": "descriptor_relative_component_open",
+        "code": "CHI-PATH",
+        "cause": "retain mismatched observed identities",
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "F06",
+      "kind": "fault",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [
+        {
+          "at": "after lstat before readlinkat physical child",
+          "replace_target": "../other/ld-linux-x86-64.so.2",
+          "replace_inode": 108
+        }
+      ],
+      "expected": {
+        "decision": "reject link replacement between nofollow observations around readlinkat",
+        "boundary": "descriptor_relative_symlink_read",
+        "code": "CHI-PATH",
+        "cause": "retain link and parent identity mismatch",
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "F07",
+      "kind": "fault",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [
+        {
+          "at": "before proof final acceptance",
+          "replace_entry": "/usr/lib64",
+          "new_inode": 103
+        }
+      ],
+      "expected": {
+        "decision": "reject ancestor rename/replacement after traversal; fd-local stability alone cannot establish current named route",
+        "boundary": "final_namespace_revalidation",
+        "code": "CHI-PATH",
+        "cause": "retain named edge versus held descriptor mismatch",
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "F08",
+      "kind": "fault",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [
+        {
+          "at": "recheck before first command",
+          "create_directory": "/libx32",
+          "identity": [
+            71,
+            110,
+            16877,
+            1,
+            4096,
+            1000000001,
+            1000000001
+          ]
+        }
+      ],
+      "expected": {
+        "decision": "block first command with zero starts; preserve underlying CHI-PATH",
+        "boundary": "full_precommand_recheck",
+        "code": "CHI-DRIFT",
+        "cause": {
+          "code": "CHI-PATH",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "F09",
+      "kind": "fault",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [
+        {
+          "at": "postflight after separately authorized mocked first Node outcome",
+          "replace_entry": "/usr/lib64/ld-linux-x86-64.so.2",
+          "new_inode": 108
+        }
+      ],
+      "expected": {
+        "decision": "retain original first command receipt and block later command/HOST success",
+        "boundary": "full_postcommand_recheck",
+        "code": "CHI-DRIFT",
+        "cause": {
+          "code": "CHI-PATH",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 1,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "F10",
+      "kind": "fault",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [
+        {
+          "at": "after acquiring usr descriptor before next component",
+          "raise_same_object": "synthetic sentinel DeadlineFault#1"
+        }
+      ],
+      "expected": {
+        "decision": "propagate callback object without success; finally-close every acquired descriptor exactly once",
+        "boundary": "deadline_callback",
+        "code": "same_object_callback_exception",
+        "cause": {
+          "same_object": "synthetic sentinel DeadlineFault#1",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "F11",
+      "kind": "fault",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [
+        {
+          "at": "required dir_fd capability",
+          "raise": "NotImplementedError"
+        }
+      ],
+      "expected": {
+        "decision": "fail closed on unavailable nofollow/dir_fd primitives; no pathname or realpath fallback",
+        "boundary": "descriptor_relative_component_open",
+        "code": "CHI-PATH",
+        "cause": {
+          "type": "NotImplementedError",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "F12",
+      "kind": "fault",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [
+        {
+          "at": "after terminal read before fstat comparison",
+          "replace_file_identity": [
+            71,
+            9,
+            33152,
+            1,
+            33,
+            1000000001,
+            1000000001
+          ]
+        }
+      ],
+      "expected": {
+        "decision": "reject final file identity/content change between before/after read",
+        "boundary": "terminal_file_read",
+        "code": "CHI-PATH",
+        "cause": "retain original binding and differing observed identity",
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    },
+    {
+      "id": "F13",
+      "kind": "fault",
+      "input_base": "BASE",
+      "exact_changes": [],
+      "fault_events": [
+        {
+          "at": "after full recheck before final launch check",
+          "replace_entry": "/lib",
+          "new_inode": 107
+        }
+      ],
+      "expected": {
+        "decision": "reject path drift after full recheck and before launch; do not rely on cached success",
+        "boundary": "final_launch_path_reproof",
+        "code": "CHI-DRIFT",
+        "cause": {
+          "code": "CHI-PATH",
+          "must_retain": true
+        },
+        "process_counts": {
+          "Node_starts": 0,
+          "ldd_starts": 0,
+          "direct_loader_starts": 0,
+          "H0_invocations": 0,
+          "H1_invocations": 0,
+          "product_test_invocations": 0,
+          "source_Git_process_starts": 0,
+          "project_helper_imports": 0
+        },
+        "evidence": "retain exact input, observed identities, decision and original cause; no HOST/STATIC_READY/operational success from this primitive"
+      },
+      "execution": "not_run_design_only"
+    }
+  ],
+  "counts": {
+    "positive": 5,
+    "refusal": 34,
+    "fault": 13
+  },
+  "actual_target_counts": {
+    "Node_starts": 0,
+    "ldd_starts": 0,
+    "direct_loader_starts": 0,
+    "H0_invocations": 0,
+    "H1_invocations": 0,
+    "product_test_invocations": 0,
+    "source_Git_process_starts": 0,
+    "project_helper_imports": 0
+  },
+  "outstanding_runtime_checks": "all 52 cases unexecuted; inherited cohorts unrun in P24; N57 remains external obligation"
+}

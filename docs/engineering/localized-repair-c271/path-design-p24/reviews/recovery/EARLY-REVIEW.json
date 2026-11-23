@@ -1,0 +1,74 @@
+{
+  "schema": "ontokin.c271.p24.early-independent-review/1",
+  "reviewer": "/root/recovery_audit",
+  "reviewed_at_utc": "2026-11-23T12:46:09.211329+00:00",
+  "verdict": "ACCEPTED_FOR_SAVE",
+  "archive": {
+    "archive": "/workspace/scratch/660f372e2414/packages/early/OntoKin_C271_P24_H0_Path_Design_Early_Recovery_2026-11-23.zip",
+    "bytes": 3272794,
+    "sha256": "789875d7a5907186638df68e315579da532ca97f39c621b83edf316f94ca6597"
+  },
+  "mechanical_report": "/workspace/scratch/660f372e2414/reviews/recovery/early-attempt002-archive-audit.json",
+  "counts": {
+    "zip_entries": 37,
+    "manifest_payloads": 36,
+    "source_bindings": 22,
+    "source_bindings_verified_against_git": 22,
+    "fresh_extracted_byte_comparisons": 37,
+    "nested_amendment_entries": 210,
+    "nested_amendment_manifest_payloads": 209
+  },
+  "mechanical_result": "PASS",
+  "findings": [
+    {
+      "id": "ER-01",
+      "severity": "mandatory",
+      "path": "PROMPT-2-RECOVER.md",
+      "finding": "Unconditional delivery-only wording also applies before the early recovery has been saved or substantive P24 design has begun. It can instruct the next session to stop without resuming the authorized design phase.",
+      "required_change": "Distinguish incomplete early-save startup from post-technical-checkpoint delivery-only recovery. Before design, reconcile/confirm the early save then resume the single authorized design phase; after its technical stop, finish delivery only and stop.",
+      "status": "resolved",
+      "resolution": "Revised prompt limits delivery-only stop to the reached technical stopping point and explicitly permits resuming an unfinished phase after confirmed early recovery."
+    },
+    {
+      "id": "ER-02",
+      "severity": "mandatory",
+      "path": "CHECKPOINT.json#read_set_note",
+      "finding": "At package freeze the full independent branch-record review was still underway; wording claims it had already been completed.",
+      "required_change": "Label the branch-record review pending at this early freeze and identify the later separate report, or verify actual completion before asserting it.",
+      "status": "resolved",
+      "resolution": "CHECKPOINT labels independent complete branch-record review pending at the early freeze."
+    },
+    {
+      "id": "ER-03",
+      "severity": "clarity",
+      "path": "HISTORICAL-DEPENDENCIES.json",
+      "finding": "The inherited P23 dependency document is copied at the root without an enclosing inherited label; its immediate_predecessor/member points to a P22 archive that is nested inside the supplied P23 amendment, not at that early ZIP path. README correctly identifies the immediate P23 amendment.",
+      "suggested_change": "Wrap the unchanged old dependency record as inherited P23 evidence and add the exact current immediate predecessor identity/member path from the included amendment and reconciliation receipt.",
+      "status": "nonblocking_clarity_note",
+      "resolution": "README and exact nested archive path already identify current predecessor. No source bytes are missing. An inherited wrapper would improve future package clarity but is not an acceptance blocker."
+    }
+  ],
+  "accepted_boundaries": [
+    "P24 is one design/adoption phase only, no implementation or H0/H1/product validation.",
+    "R01/R02 done; R03-R05 not_done; P02 in_progress; parent open.",
+    "Exact branch and main trees match local Git source objects and root live reconciliation.",
+    "No current unknown operation claimed; historical unknowns retained.",
+    "Disposable-host rule appears in README, both prompts and HOST-ENVIRONMENT.",
+    "P23 pending delivery fields are resolved only by matching root terminal reconciliation; no H0 acceptance inferred."
+  ],
+  "limitations": [
+    "This is a pre-save audit; no successful save/readback is claimed.",
+    "Original P23 predecessor ZIP bytes were not supplied; direct predecessor byte comparison not performed.",
+    "Root owns live GitHub and save operations.",
+    "No product checks, runtime execution, installation, Git/index mutation or canonical-record edits performed."
+  ],
+  "previous_review": "/workspace/scratch/660f372e2414/reviews/recovery/EARLY-REVIEW.attempt001.json",
+  "remaining_mandatory_findings": 0,
+  "changed_members_from_attempt001": [
+    "CHECKPOINT.json",
+    "MANIFEST-SHA256.json",
+    "PROMPT-2-RECOVER.md",
+    "recovery/build_phase_package.py"
+  ],
+  "required_next_action": "Root confirms save and exact readback of this precise frozen ZIP before substantial design. Branch-record review completion remains a separate startup/documentary obligation."
+}

@@ -1,0 +1,101 @@
+{
+  "schema": "ontokin.c271.p24.final-builder-preflight/1",
+  "reviewer": "/root/recovery_audit",
+  "reviewed_at_utc": "2026-11-23T13:06:01.892103+00:00",
+  "verdict": "CHANGES_AND_EVIDENCE_REQUIRED_BEFORE_FINAL_FREEZE",
+  "reviewed_builder": {
+    "path": "/workspace/scratch/660f372e2414/build_phase_package.py",
+    "bytes": 14880,
+    "sha256": "d5681f763881718d0a11833c54c795a3666627f93c6671826b88605bb9451750",
+    "snapshot": "reviews/recovery/build_phase_package.preflight001.py",
+    "inspection": "Text inspection only; builder not imported or run."
+  },
+  "candidate_manifest": {
+    "path": "design/path/CANDIDATE-MANIFEST.json",
+    "bytes": 1151,
+    "sha256": "7407ff5680c748ad0d13dabd5f5748febc2dbe9954a20d377981a6eb34c3d745",
+    "candidate": "attempt003",
+    "status": "frozen_for_independent_review_not_adopted",
+    "payload_identity_checks": [
+      {
+        "path": "design/path/DECISION-CANDIDATE.md",
+        "bytes": 22127,
+        "sha256": "f5da4fb99e63c6e89794ca73bf5f9e94a94e85c1cd02602241dd0209b3dbf51e",
+        "matches_declared": true
+      },
+      {
+        "path": "design/path/SCHEMA.json",
+        "bytes": 20938,
+        "sha256": "5112aba8d5608c81e967d8b9eed36fc1d0d73017e50267505279f1f791a76731",
+        "matches_declared": true
+      },
+      {
+        "path": "design/path/SOURCE-BINDINGS.json",
+        "bytes": 14256,
+        "sha256": "cd69302b57caed89f30051b141375197263cf9de70ca54a5eb57d8e36a760183",
+        "matches_declared": true
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "FB-01",
+      "severity": "mandatory_before_final_freeze",
+      "area": "Actual outcome and source binding",
+      "finding": "final mode hardcodes technical_phase_complete_final_save_pending and a next implementation phase for any source argument, including the default pre-P24 START. It does not require or bind the independent review, Director adoption or concrete retained-refusal outcome. At review time the supplied candidate is frozen_for_independent_review_not_adopted.",
+      "required_action": "Freeze final only against the actual reviewed/published P24 core revision. Bind ADOPTION/OUTCOME/exact reviewer and candidate identities, and derive next action from that accepted outcome. A retained-refusal outcome needs its concrete alternative; it cannot unconditionally direct implementation. Record technical stop, completed/incomplete steps, documentary result references and remaining delivery in CHECKPOINT/HANDOFF. This may be enforced by builder validation plus explicit source argument; do not run final with default START."
+    },
+    {
+      "id": "FB-02",
+      "severity": "mandatory_before_final_freeze",
+      "area": "Recovery completeness",
+      "finding": "Current final recovery payload copies only initializer, documentary runner, attempt001 transfer patch, rejected early ZIP, and the generic reconciliation/builder files. Git ls-tree includes only files already committed under the P24 prefix. It therefore has no mechanism or complete inventory to demonstrate preservation of unique still-unpublished author revisions, observed draft, review failures/scripts/results, final documentary/publication evidence and unresolved operations.",
+      "required_action": "Before freeze, explicitly reconcile all unique recovery files against the final Git payload or archive payload. Include exact design/path/history/attempt001-003, records/design-observed-draft, author REVISION-RECORD, independent reviewer evidence and original failures, recovery auditor scripts/failure records, and relevant publication/check records unless byte-equal retained at pinned Git sources. Preserve original modes as metadata where material; exclude reproducible extractions and installed environments. A recovery/source manifest should identify which bytes are included, externally pinned, or reproducible."
+    },
+    {
+      "id": "FB-03",
+      "severity": "mandatory_before_final_freeze",
+      "area": "Incorrect decision reference",
+      "finding": "Generated final HANDOFF points to repository/.../path-design-p24/DECISION.md. The frozen candidate manifest binds DECISION-CANDIDATE.md; no DECISION.md was supplied. Independent review/adoption also need exact artifact links or source paths, rather than an unspecified independent review.",
+      "required_action": "Point the handoff to the actually published DECISION-CANDIDATE.md and exact ADOPTION/OUTCOME/review/control artifacts. Keep candidate-byte identity distinct from separate adoption; do not silently rename/rewrite the frozen candidate."
+    },
+    {
+      "id": "FB-04",
+      "severity": "mandatory_before_final_freeze",
+      "area": "Conditional continuation",
+      "finding": "Recover prompt correctly blocks a second phase when the technical stop is reached and delivery is incomplete. Continue prompt only says reconcile P24 delivery then implement; the no-implementation condition is not explicit for missing/mismatched final delivery. It also unconditionally assumes adoption.",
+      "required_action": "Both final prompts must require matching final save/receipt/live terminal evidence before selecting the next technical phase; otherwise finish delivery only and stop. After confirmed delivery, follow the actual accepted next action or wait. Preserve the single-phase/fresh-host/no-H0-H1 boundaries."
+    },
+    {
+      "id": "FB-05",
+      "severity": "mandatory_verification_condition",
+      "area": "Fresh extraction and freeze",
+      "finding": "Builder writes the same output ZIP with mode w and extracts into packages/<kind>/verification without ensuring a fresh empty directory. A repeat can overwrite a reviewed artifact and leave stale extracted files, while hash checks cover only listed payloads.",
+      "required_action": "Use a fresh distinct attempt directory and exclusive/no-overwrite freeze, or explicitly assert both output and extraction target are absent before writing. Verify extracted inventory exactly equals the manifest plus manifest. Never rebuild the already saved early archive."
+    },
+    {
+      "id": "FB-06",
+      "severity": "nonblocking_source_evidence_check",
+      "area": "Historical dependency receipt",
+      "finding": "New HISTORICAL-DEPENDENCIES correctly wraps inherited P23 paths and identifies the exact nested amendment. Its receipt_library_file_id is a hardcoded identifier not independently established by the archived amendment receipt contents inspected in this review.",
+      "required_action": "Bind that receipt identifier to the observed Library response/reconciliation artifact before claiming it independently verified; retain it as root-supplied provenance if the independent source is not packaged."
+    }
+  ],
+  "positive_findings": [
+    "Required ten root filenames are generated.",
+    "Repository snapshots are read from explicit Git objects and each binding is compared to its declared source bytes.",
+    "Payload manifest excludes itself and records per-member bytes/SHA256.",
+    "CRC and duplicate-name checks exist.",
+    "Future P24 save receipt remains external to frozen package; final package does not pretend to contain its future receipt.",
+    "Disposable-host boundary occurs in README, both prompts and HOST-ENVIRONMENT; no runtime reconstruction is instructed for P24.",
+    "Original R01/R02 done and R03-R05 unfinished/P02 in_progress/PR274 draft-open are retained.",
+    "Recovery prompt separates early unfinished phase from post-stop delivery-only recovery.",
+    "Inherited historical dependency path-base ambiguity from early preflight is corrected."
+  ],
+  "limitations": [
+    "No final archive exists in this review; no final package acceptance or save is claimed.",
+    "Design safety/adoption review belongs to /root/path_review and Director. This preflight checks packaging/documentary scope and bindings only.",
+    "No product execution, builder execution, implementation, installation, Git/index mutation or canonical/builder edit performed.",
+    "Read-only inventory lookup named nonexistent publication/verification directories and returned rg missing-directory errors; no operation or bytes lost."
+  ]
+}

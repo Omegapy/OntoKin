@@ -1,0 +1,51 @@
+{
+  "schema": "ontokin.c271.p24-path-review-supplement/1",
+  "reviewer": "/root/path_review",
+  "recorded_at_utc": "2026-11-23T13:08:27.545652+00:00",
+  "candidate": "attempt003",
+  "candidate_manifest_sha256": "7407ff5680c748ad0d13dabd5f5748febc2dbe9954a20d377981a6eb34c3d745",
+  "prior_review": {
+    "path": "REVIEW-ATTEMPT003.json",
+    "size_bytes": 12918,
+    "sha256": "8edcb65c1f382d762f4dddd0e7b28b3c31afa2fab1bc00b6a859a58b4d187d8a"
+  },
+  "additional_mandatory_findings": [
+    {
+      "id": "P24-PR-003",
+      "severity": "mandatory_integration_clarification",
+      "artifact": "DECISION-CANDIDATE.md and SCHEMA.json",
+      "anchor": "_launch_check integration and final snapshot recheck",
+      "finding": "The frozen F13 expects CHI-DRIFT for a changed RTLD path in the final launch check. Current _launch_check re-raises HostInspectionError unchanged; adding the new path verifier without an explicit local wrapper would emit CHI-PATH. Only full _recheck already supplies the required drift wrapper.",
+      "required_correction": "In the .4-only final launch route, wrap new RTLD proof/snapshot failures as CHI-DRIFT with original CHI-PATH cause; preserve old routes, the existing command-clock PROCESS/timeout behavior, and zero starts before the launch boundary.",
+      "affected_controls": [
+        "F13"
+      ],
+      "source": {
+        "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+        "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206",
+        "symbols": [
+          "_launch_check",
+          "_recheck"
+        ]
+      }
+    }
+  ],
+  "crosswalk_clarification": [
+    {
+      "id": "P24-N16-MAPPING",
+      "status": "required_for_exact_crosswalk",
+      "finding": "The independent private model supplies a claimed terminal path; disagreement with the proved canonical terminal is a CHI-PATH relation fault, distinct from an unapproved observed traversal edge or malformed operational plan.",
+      "requested_mapping": "Private alias claimed terminal mismatch -> CHI-PATH/RP-NAMESPACE, while caller operational binding gates remain mandatory.",
+      "affected_controls": [
+        "N16"
+      ]
+    }
+  ],
+  "all_open_mandatory_finding_ids": [
+    "P24-PR-001",
+    "P24-PR-002",
+    "P24-PR-003"
+  ],
+  "verdict": "revisions_required_before_design_adoption",
+  "execution": "none; documentary review only"
+}

@@ -399,3 +399,16 @@ Finish only documentary review/checks, conditional publication on the retained b
 The immutable P23 ZIP and both matching prompts are saved and byte-read-back. The independent archive review passed 931 checks. [P23 delivery](../../../engineering/localized-repair-c271/h0-plan-p23/P23-DELIVERY.json) records exact saved identities and preserves the source-time checkpoint. The final readback guard initially assumed a backing-file-ID attribute that the materializer does not provide; the corrected check verifies the actual stable-ID/version attributes and the exact returned backing ID, with no repeated upload or materialization. Both records remain preserved.
 
 Only receipt publication, the separately saved actual receipt and matching live terminal confirmation remain at this source snapshot. Resolve those delivery-only pending fields using exact later evidence; never reinterpret them as H0 acceptance. C271 remains open, R03-R05 not_done, PR274 draft/unmerged and issue273 open. No further technical work or second phase follows in this chat.
+
+
+## P24 H0 path design/adoption — November 23, 2026
+
+The current owner continuation and verified recommendation amendment select one narrow design-only phase on the retained branch. Original P23 delivery is resolved by the exact matching terminal markers and saved amendment receipt; historical pending fields remain unchanged evidence. See [phase](../../../engineering/localized-repair-c271/path-design-p24/PHASE.json), [reconciliation](../../../engineering/localized-repair-c271/path-design-p24/RECONCILIATION.json) and [owner direction](../../../engineering/localized-repair-c271/path-design-p24/OWNER-DIRECTION.md).
+
+Independently review a closed versioned representation of mandatory loader-candidate absence below missing ancestors and the recorded parent-traversing loader alias, including finite traversal, canonical identity, literal-list equality, error handling, rechecks and frozen positive/refusal/fault controls. Alternatively retain refusal with one independently justified concrete qualification route. Preserve all old versions, pins, tests, historical failures, N57 external review and source/runtime contracts.
+
+Stop at the accepted design/adoption decision or first concrete blocker. Then complete documentary checks/review, conditional retained-branch publication, verified ZIP/prompts and separate receipt; stop this chat. No implementation, H0/H1, product tests/full routine, host mutation/reconstruction, main integration or second phase. R01/R02 remain done; R03-R05 not_done; P02 in_progress; issue273 open and PR274 draft/unmerged. The early recovery was confirmed saved and byte-read-back before substantive design.
+
+## P24 design decision
+
+The independently reviewed design is adopted only for a later bounded implementation phase. See [adoption](../../../engineering/localized-repair-c271/path-design-p24/ADOPTION.json) and [outcome](../../../engineering/localized-repair-c271/path-design-p24/OUTCOME.json). The 52 frozen controls remain unexecuted. Runtime code, old profiles, P06 output and pins are unchanged. P24 technical work is stopped; complete its verified delivery only. R03-R05 and P02 retain their prior states.
