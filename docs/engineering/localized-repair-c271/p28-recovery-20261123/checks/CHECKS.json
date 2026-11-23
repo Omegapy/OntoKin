@@ -1,0 +1,49 @@
+{
+  "source_base": "360c80062e769230199602326fa8de25660df714",
+  "scope": "documentary recovery candidate",
+  "interpreter": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/acb73444303d/repository",
+      "exit_code": 0,
+      "seconds": 0.11400699615478516,
+      "stdout_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+        "--json-output",
+        "/workspace/scratch/acb73444303d/checks/candidate/documentation.json"
+      ],
+      "cwd": "/workspace/scratch/acb73444303d/repository",
+      "exit_code": 0,
+      "seconds": 2.44570255279541,
+      "stdout_sha256": "1a9ec1e8102caeb4e5090b911b5aa7d1e9e15c11063b45c8aadf7e9589a33259",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/workspace/scratch/acb73444303d/repository",
+      "exit_code": 0,
+      "seconds": 0.01925373077392578,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "product_tests_run": 0
+}
