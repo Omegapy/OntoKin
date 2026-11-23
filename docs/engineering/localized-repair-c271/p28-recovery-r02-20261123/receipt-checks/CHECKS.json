@@ -1,0 +1,31 @@
+{
+  "source_parent": "942096d22248fd84b7ac3a638e02aa1e66340519",
+  "scope": "receipt-only final candidate",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "sources": 29,
+      "links": {
+        "documents": 1648,
+        "local_links": 6334,
+        "anchors": 113,
+        "external_skipped": 1056
+      }
+    }
+  ],
+  "product_tests": 0
+}

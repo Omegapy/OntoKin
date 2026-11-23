@@ -1,0 +1,2198 @@
+{
+  "schema": "ontokin.c271.p28-r02-final-archive-review/1",
+  "reviewer": "/root/artifact_audit",
+  "observed_at_utc": "2026-11-23T22:02:54.779631+00:00",
+  "verdict": "ACCEPTED_FROZEN_RECOVERY_HANDOFF_FOR_SAVE",
+  "archive": {
+    "path": "/workspace/scratch/002c49ccf480/packages/OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
+    "bytes": 9962453,
+    "sha256": "113cf92489c6579168c57f816b8347ab99f8874f187de74b8434bb10ef701f3b",
+    "members": 149,
+    "manifest_payloads": 148,
+    "source_bindings": 58
+  },
+  "source_commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+  "source_tree": "3f8eba2e0de338a76fdb39aac373ed618c633c3c",
+  "source_parent": "46b0fce68afb65cfbfcaba64f1276408d93ee85d",
+  "governing_main": "e43cc6c5777874101a40559e4058ad6826b07e51",
+  "command": "python3 session/reviews/final_archive/audit_final.py",
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "checks_passed": 430,
+  "checks_failed": 0,
+  "count_definition": "Individual archive integrity, inventory, byte/hash/Git-object, snapshot-completeness, preserved-evidence and handoff-semantics assertions. These are not product tests.",
+  "checks": [
+    {
+      "name": "frozen ZIP exact byte identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "ZIP CRC integrity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "149 exact distinct member names",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "safe relative paths",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no symlinks or special files",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no directory or encrypted entries",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "148 manifest entries, unique and safe",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest exact payload inventory",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: CHECKPOINT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: CURRENT-DEPENDENCIES.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: HANDOFF.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: HISTORICAL-DEPENDENCIES.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: HOST-ENVIRONMENT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: NEXT-TASK.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: PROMPT-1-CONTINUE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: PROMPT-2-RECOVER.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: README-START-HERE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: RECOVERY-STATUS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: SESSION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: SOURCE-MANIFEST.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: branch-state/docs/workflow/CURRENT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: observations/branches.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: observations/issue.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: observations/main.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: observations/pr.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: observations/prs.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: predecessor/OntoKin_C271_P28_Recovery_Delivery_Receipt_2026-11-23.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: predecessor/OntoKin_C271_P28_Recovery_Handoff_2026-11-23.zip",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/CORE-COMMIT-CREATE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/CORE-COMMIT-READBACK.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/CORE-REF-READBACK.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/CORE-REF-UPDATE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/CORE-TREE-CREATE.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/EARLY-IDENTITY.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/EARLY-SAVE-RESULT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/PUBLICATION-INTENT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/PUBLICATION-RECOVERY-IDENTITY.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/PUBLICATION-SAVE-RESULT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/build_early.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/build_final.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/candidate.patch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/evidence/branches.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/evidence/issue.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/evidence/main.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/evidence/ownership-comment.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/evidence/pr.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/evidence/prs.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/evidence/whitespace-final.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/evidence/workflow-attempt001.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/freeze_publication.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/prepare_checkpoint.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/published-checks/CHECKS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/published-checks/documentation.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/published-checks/documentation.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/published-checks/workflow.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/published-checks/workflow.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/artifact_audit/AUDIT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/artifact_audit/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/artifact_audit/WORKER.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/artifact_audit/archive-inventories.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/artifact_audit/audit.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/artifact_audit/candidate-identity-inventory.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/artifact_audit/original-p28-early-source-bindings.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/artifact_audit/p27-design-source-bindings.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/artifact_audit/receipt-recovery-evidence.zip",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/artifact_audit/receipt-summary.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/artifact_audit/supplied-recovery-source-bindings.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/checkpoint_review/CANDIDATE-MANIFEST.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/checkpoint_review/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/checkpoint_review/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/checkpoint_review/candidate.diff",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/checkpoint_review/review.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/AUDIT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/POSTFREEZE-EVIDENCE.zip",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/POSTFREEZE-INVENTORY.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/audit.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/branch-commit.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/ci-runs.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/ci-status.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/commits-p28.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/compare-p28-recovery.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/issue-comments-p28.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/postfreeze-response.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/pr-comments-p28.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/recovery-BRANCH-INVENTORY.json.response.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/recovery-OUTCOME.json.response.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/recovery-RECONCILIATION.json.response.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/recovery-SESSION.md.response.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/tree-c271-evidence.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/tree-c271-task.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/tree-docs.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/tree-engineering.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/tree-p27-design.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/tree-p28-recovery.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/tree-root.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/tree-tasks.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: recovery/reviews/state_audit/tree-workflow.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/.agents/skills/ontokin-delivery/SKILL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/.agents/skills/ontokin-learning/SKILL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/.agents/skills/ontokin-session/SKILL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/AGENTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/CHATGPT-START-HERE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/GOAL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/ROLE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/STATUS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/CONTEXT-LOOKUP.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OWNERSHIP-READBACK.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/RECONSTRUCTION-OPTION.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REVIEW-DISPOSITION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/SESSION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/CHECKS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-authored.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-full-staged.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-attempt001.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/AUDIT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/WORKER.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/audit.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/CANDIDATE-MANIFEST.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/review.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/AUDIT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/audit.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/workflow/BROWSER-PROMPTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/workflow/CURRENT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/workflow/EPHEMERAL-HOST.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/workflow/HANDOFF.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/workflow/PROTOCOL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/workflow/registry.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/workflow/tasks/C270/PLAN.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/workflow/tasks/C270/task.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/workflow/tasks/C271/PLAN.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "manifest size/hash: repository/docs/workflow/tasks/C271/task.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fresh extraction exact inventory and all bytes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "authentic checkout inspected exact HEAD",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "checkout clean",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "commit exact tree and sole parent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "58 distinct source bindings",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commits are exact main/core",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all repository and branch-state snapshots source-bound",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: branch-state/docs/workflow/CURRENT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: branch-state/docs/workflow/CURRENT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: branch-state/docs/workflow/CURRENT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/.agents/skills/ontokin-delivery/SKILL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/.agents/skills/ontokin-delivery/SKILL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/.agents/skills/ontokin-delivery/SKILL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/.agents/skills/ontokin-learning/SKILL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/.agents/skills/ontokin-learning/SKILL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/.agents/skills/ontokin-learning/SKILL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/.agents/skills/ontokin-session/SKILL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/.agents/skills/ontokin-session/SKILL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/.agents/skills/ontokin-session/SKILL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/AGENTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/AGENTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/AGENTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/CHATGPT-START-HERE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/CHATGPT-START-HERE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/CHATGPT-START-HERE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/GOAL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/GOAL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/GOAL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/ROLE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/ROLE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/ROLE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/STATUS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/STATUS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/STATUS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/CONTEXT-LOOKUP.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/CONTEXT-LOOKUP.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/CONTEXT-LOOKUP.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OWNERSHIP-READBACK.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OWNERSHIP-READBACK.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OWNERSHIP-READBACK.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/RECONSTRUCTION-OPTION.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/RECONSTRUCTION-OPTION.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/RECONSTRUCTION-OPTION.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REVIEW-DISPOSITION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REVIEW-DISPOSITION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REVIEW-DISPOSITION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/SESSION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/SESSION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/SESSION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/CHECKS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/CHECKS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/CHECKS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-authored.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-authored.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-authored.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-full-staged.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-full-staged.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-full-staged.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-attempt001.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-attempt001.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-attempt001.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/AUDIT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/AUDIT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/AUDIT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/WORKER.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/WORKER.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/WORKER.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/audit.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/audit.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/audit.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/CANDIDATE-MANIFEST.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/CANDIDATE-MANIFEST.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/CANDIDATE-MANIFEST.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/review.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/review.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/review.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/AUDIT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/AUDIT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/AUDIT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/audit.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/audit.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/audit.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/workflow/BROWSER-PROMPTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/workflow/BROWSER-PROMPTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/workflow/BROWSER-PROMPTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/workflow/CURRENT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/workflow/CURRENT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/workflow/CURRENT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/workflow/EPHEMERAL-HOST.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/workflow/EPHEMERAL-HOST.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/workflow/EPHEMERAL-HOST.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/workflow/HANDOFF.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/workflow/HANDOFF.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/workflow/HANDOFF.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/workflow/PROTOCOL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/workflow/PROTOCOL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/workflow/PROTOCOL.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/workflow/registry.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/workflow/registry.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/workflow/registry.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/workflow/tasks/C270/PLAN.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/workflow/tasks/C270/PLAN.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/workflow/tasks/C270/PLAN.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/workflow/tasks/C270/REQUIREMENTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/workflow/tasks/C270/task.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/workflow/tasks/C270/task.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/workflow/tasks/C270/task.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/workflow/tasks/C271/PLAN.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/workflow/tasks/C271/PLAN.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/workflow/tasks/C271/PLAN.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source exact one tree entry: repository/docs/workflow/tasks/C271/task.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source commit/path/mode/blob: repository/docs/workflow/tasks/C271/task.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "source blob/size/SHA-256/exact Git bytes: repository/docs/workflow/tasks/C271/task.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all mandatory root handoff files present",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all required governing snapshots present",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete task snapshot C270",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete task snapshot C271",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "selected skill files included",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "checkpoint source/tree/main/head agree",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "checkpoint parent/start agree",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "honest incomplete blocked original phase",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "R03-R05 remain unmet and original parent plan retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "no runtime/product/main acceptance asserted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "597 tests explicitly unverified",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original upload unknown identities and no replay retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical unknowns preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "unfinished branch and issue retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "delivery honestly pending at freeze",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final review and receipts explicitly postfreeze",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fresh host rule: README-START-HERE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fresh host rule: PROMPT-1-CONTINUE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fresh host rule: PROMPT-2-RECOVER.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "fresh host rule: HOST-ENVIRONMENT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "separate prompt exact: OntoKin_C271_P28_R02_Continue_2026-11-23.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "prompt bounded no-repeat stop: PROMPT-1-CONTINUE.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "separate prompt exact: OntoKin_C271_P28_R02_Recover_2026-11-23.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "prompt bounded no-repeat stop: PROMPT-2-RECOVER.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recovery prompt includes delivery-only reconciliation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "next-action requires new exact input or reconstruction decision",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "reconstruction explicit proposal and pinned P27 design",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "online continuation limits explicit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "separate main and branch current with active blocked C271",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "same next-action across checkpoint/branch/task/outcome",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "canonical outcome retains blocked original and zero tests",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "predecessor unchanged: OntoKin_C271_P28_Recovery_Handoff_2026-11-23.zip",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "predecessor unchanged: OntoKin_C271_P28_Recovery_Delivery_Receipt_2026-11-23.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "historical dependencies byte-for-byte preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current portable dependency identity early_recovery",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current portable dependency identity publication_archive_identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "early save and publication dependencies have durable identities",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "published intent agrees exact parent/tree and no replay",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "39 actual changed paths exactly equal publication intent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "actual change contains documentary paths only",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/CONTEXT-LOOKUP.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OWNERSHIP-READBACK.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/RECONSTRUCTION-OPTION.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/REVIEW-DISPOSITION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/SESSION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/CHECKS.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation-final.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/documentation.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-authored.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace-full-staged.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/whitespace.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-attempt001.txt",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow-final.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/checks/workflow.stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/AUDIT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/WORKER.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/artifact_audit/audit.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/CANDIDATE-MANIFEST.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/REVIEW.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/review.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/AUDIT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/REPORT.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/state_audit/audit.py",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/workflow/CURRENT.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/workflow/tasks/C271/PLAN.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "complete published intent bytes: docs/workflow/tasks/C271/task.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "retained GitHub commit/ref readbacks match exact local object",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "full staged whitespace remains recorded failed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "full staged failure exact log retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "authored whitespace separately passed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "preserved raw diff exact independent binding",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "both flagged raw lines are exact unified-diff context markers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "initial workflow failure retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "both stopped publication-preparation failures retained",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "published checks pinned to exact source with zero product execution",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "published workflow and documentation exited zero",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "published documentation counts agree",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "published check record equals checkpoint embedded record",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "frozen ZIP unchanged after audit",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "checkout still clean and pinned after audit",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "mandatory_findings": [],
+  "scope": "Final delivery review within the same bounded R02 phase; no new technical phase.",
+  "limits": [
+    "No original P28 implementation recovered, accepted, reconstructed or executed.",
+    "597 tests remain a historical unverified report.",
+    "Raw full staged whitespace failure remains failed with exact independently dispositioned evidence; its passing preservation check does not convert that command to passed.",
+    "Exact local Git objects and archived GitHub readbacks were verified; this worker performed no live remote mutation or lookup.",
+    "Acceptance permits saving these frozen bytes only; confirmed Library save, external receipt and terminal reconciliation remain subsequent Director responsibilities.",
+    "Source-time omission of later save/receipt/review outcomes is intentional and explicitly documented.",
+    "Full extracted copy is reproducible and may be excluded from later receipt evidence."
+  ],
+  "next_action": "Save and verify the exact frozen ZIP and its exact separate prompts, preserve this independent review in external receipt evidence, reconcile delivery/ownership, and stop. Original P28 remains blocked pending new exact recovery input or explicit bounded reconstruction authority.",
+  "mutations": {
+    "canonical_files": false,
+    "GitHub": false,
+    "Library": false,
+    "archive": false,
+    "only_owned_audit_directory": true
+  },
+  "worker_state": "stopped; no pending writes or jobs"
+}
