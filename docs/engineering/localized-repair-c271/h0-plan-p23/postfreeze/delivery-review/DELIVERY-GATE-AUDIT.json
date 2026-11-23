@@ -1,0 +1,201 @@
+{
+  "schema": "ontokin.c271.p23-delivery-gate-audit/1",
+  "reviewer": "/root/ledger",
+  "reviewed_at_utc": "2026-11-23T05:37:21.032060+00:00",
+  "base": "182d36d957d93161e351f41839bf2a6157fed3df",
+  "tree": "3fd7c489deac54bcd67c79f862e387a93354cfe9",
+  "tested_tree": "30a4756251af58bc0f16924529694643d7893c23",
+  "checks": [
+    {
+      "name": "delivery-candidate-checks:workflow",
+      "passed": true,
+      "detail": {
+        "argv": [
+          "python3",
+          "tools/chat_workflow.py",
+          "check"
+        ],
+        "returncode": 0,
+        "stream_hashes_exact": {
+          "stdout": true,
+          "stderr": true
+        }
+      }
+    },
+    {
+      "name": "delivery-candidate-checks:documentation",
+      "passed": true,
+      "detail": {
+        "argv": [
+          "python3",
+          "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+        ],
+        "returncode": 0,
+        "stream_hashes_exact": {
+          "stdout": true,
+          "stderr": true
+        }
+      }
+    },
+    {
+      "name": "delivery-candidate-checks:whitespace",
+      "passed": true,
+      "detail": {
+        "argv": [
+          "git",
+          "diff",
+          "--cached",
+          "--check"
+        ],
+        "returncode": 0,
+        "stream_hashes_exact": {
+          "stdout": true,
+          "stderr": true
+        }
+      }
+    },
+    {
+      "name": "delivery-candidate-checks:full_documentary_coverage",
+      "passed": true,
+      "detail": {
+        "links": {
+          "documents": 1604,
+          "local_links": 6242,
+          "anchors": 113,
+          "external_skipped": 1007
+        },
+        "sources_verified": 29,
+        "baseline_tree": {
+          "expected": "72aa56f6b74ff9e637fc0def3ba25acb7bd2bb43",
+          "reconstructed": "72aa56f6b74ff9e637fc0def3ba25acb7bd2bb43",
+          "source_files": 27
+        }
+      }
+    },
+    {
+      "name": "delivery-candidate-checks:all_twelve_workflow_tasks",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "published-core-checks:workflow",
+      "passed": true,
+      "detail": {
+        "argv": [
+          "python3",
+          "tools/chat_workflow.py",
+          "check"
+        ],
+        "returncode": 0,
+        "stream_hashes_exact": {
+          "stdout": true,
+          "stderr": true
+        }
+      }
+    },
+    {
+      "name": "published-core-checks:documentation",
+      "passed": true,
+      "detail": {
+        "argv": [
+          "python3",
+          "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+        ],
+        "returncode": 0,
+        "stream_hashes_exact": {
+          "stdout": true,
+          "stderr": true
+        }
+      }
+    },
+    {
+      "name": "published-core-checks:whitespace",
+      "passed": true,
+      "detail": {
+        "argv": [
+          "git",
+          "diff",
+          "51a00f21013386df6ee4ce3c3560c902b32c6af5",
+          "182d36d957d93161e351f41839bf2a6157fed3df",
+          "--check"
+        ],
+        "returncode": 0,
+        "stream_hashes_exact": {
+          "stdout": true,
+          "stderr": true
+        }
+      }
+    },
+    {
+      "name": "published-core-checks:full_documentary_coverage",
+      "passed": true,
+      "detail": {
+        "links": {
+          "documents": 1603,
+          "local_links": 6239,
+          "anchors": 113,
+          "external_skipped": 1007
+        },
+        "sources_verified": 29,
+        "baseline_tree": {
+          "expected": "72aa56f6b74ff9e637fc0def3ba25acb7bd2bb43",
+          "reconstructed": "72aa56f6b74ff9e637fc0def3ba25acb7bd2bb43",
+          "source_files": 27
+        }
+      }
+    },
+    {
+      "name": "published-core-checks:all_twelve_workflow_tasks",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recorded_tested_tree_exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "postcheck_delta_exact",
+      "passed": true,
+      "detail": [
+        "docs/engineering/localized-repair-c271/h0-plan-p23/postfreeze/delivery-candidate-checks/RESULT.json",
+        "docs/engineering/localized-repair-c271/h0-plan-p23/postfreeze/delivery-candidate-checks/documentation.stderr.log",
+        "docs/engineering/localized-repair-c271/h0-plan-p23/postfreeze/delivery-candidate-checks/documentation.stdout.log",
+        "docs/engineering/localized-repair-c271/h0-plan-p23/postfreeze/delivery-candidate-checks/whitespace.stderr.log",
+        "docs/engineering/localized-repair-c271/h0-plan-p23/postfreeze/delivery-candidate-checks/whitespace.stdout.log",
+        "docs/engineering/localized-repair-c271/h0-plan-p23/postfreeze/delivery-candidate-checks/workflow.stderr.log",
+        "docs/engineering/localized-repair-c271/h0-plan-p23/postfreeze/delivery-candidate-checks/workflow.stdout.log",
+        "docs/engineering/localized-repair-c271/h0-plan-p23/postfreeze/session-tools/record_p23_saved_delivery.py"
+      ]
+    },
+    {
+      "name": "full_docs_and_workflow_input_reuse_valid",
+      "passed": true,
+      "detail": {
+        "rationale": "All eight differences are added documentary result/log files or an inert evidence script. No scanned document, preserved source-map input, anchor target content, checker source, registry/current/task/memory/knowledge input, or existing local target changes. The checkers do not execute or inspect the added evidence script. Existing target existence remains true."
+      }
+    },
+    {
+      "name": "final_exact_tree_whitespace",
+      "passed": true,
+      "detail": {
+        "argv": [
+          "git",
+          "diff",
+          "--check",
+          "182d36d957d93161e351f41839bf2a6157fed3df",
+          "3fd7c489deac54bcd67c79f862e387a93354cfe9"
+        ],
+        "returncode": 0,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "counts": {
+    "groups": 14,
+    "passed": 14,
+    "failed": 0
+  },
+  "scope": "Recorded full documentation and workflow gates verified against exact logs and unchanged checker inputs. Only read-only exact Git tree whitespace was executed by ledger. No product/H0 checks."
+}

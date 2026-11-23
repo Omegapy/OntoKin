@@ -1,0 +1,7 @@
+{
+  "schema": "ontokin.c271.p23-readback-guard-incident/1",
+  "initial_guard": "Expected both stable Library ID and backing file ID as separate xattr values",
+  "result": "Assertion failed after ZIP byte equality and digest passed; no upload failure, no mutation and no uncertain remote write",
+  "actual_attribute_contract": "user.library-file-id and user.library-file-version are present. Backing file ID is in the exact prepare_materialize response, not an xattr.",
+  "correction": "Compare actual stable-ID/version xattrs plus exact returned backing-ID metadata. No upload or materialization was repeated."
+}

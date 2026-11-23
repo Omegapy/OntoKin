@@ -1,0 +1,323 @@
+{
+  "schema": "ontokin.c271.p23-delivery-semantic-audit/1",
+  "reviewer": "/root/ledger",
+  "reviewed_at_utc": "2026-11-23T05:37:21.032060+00:00",
+  "base": "182d36d957d93161e351f41839bf2a6157fed3df",
+  "tree": "3fd7c489deac54bcd67c79f862e387a93354cfe9",
+  "manifest_sha256": "3b5059b4558b501e73fbfc83fce076e2f02b7fd80545342e33c3f84825376427",
+  "checks": [
+    {
+      "name": "exact_receipt_candidate_identity",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "prior_exact_file_audit_reuse",
+      "passed": true,
+      "detail": {
+        "sha256": "391fc7d4acb8438078d779e94c8ffcfaf6a9b348ad312d2d3072a5c35154bae6"
+      }
+    },
+    {
+      "name": "core_commit_tree",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "task_only_receipt_fields_changed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "all_prior_task_history_and_checks_unchanged",
+      "passed": true,
+      "detail": {
+        "current_check_count": 80,
+        "preserved_history_fields": [
+          "historical_checks",
+          "prior_session_phases",
+          "prior_phase_deliveries",
+          "prior_blocked_reason",
+          "blocked_reason_history",
+          "prior_h0_constraints",
+          "phase_reconciliations"
+        ]
+      }
+    },
+    {
+      "name": "completion_only_appends_receipt_evidence",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "pre_save_delivery_snapshot_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "phase_history_and_unknowns_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "parent_requirement_plan_owner_boundary",
+      "passed": true,
+      "detail": {
+        "requirements": {
+          "R01": "done",
+          "R02": "done",
+          "R03": "not_done",
+          "R04": "not_done",
+          "R05": "not_done"
+        },
+        "plan": {
+          "P01": "done",
+          "P02": "in_progress"
+        },
+        "owner": "c271-p23-f8d879d19e34"
+      }
+    },
+    {
+      "name": "current_only_receipt_fields_changed",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current_handoff_history_exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recovery_and_main_history_exact",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "three_text_histories_preserved_exactly",
+      "passed": true,
+      "detail": [
+        {
+          "path": "docs/workflow/tasks/C271/P23-SESSION.md",
+          "old_bytes": 3345,
+          "new_bytes": 4346,
+          "prefix_exact": true,
+          "appended_text": "\n### P23 saved package boundary\n\nThe immutable P23 ZIP and both matching prompts are saved and byte-read-back. The independent archive review passed 931 checks. [P23 delivery](../../../engineering/localized-repair-c271/h0-plan-p23/P23-DELIVERY.json) records exact saved identities and preserves the source-time checkpoint. The final readback guard initially assumed a backing-file-ID attribute that the materializer does not provide; the corrected check verifies the actual stable-ID/version attributes and the exact returned backing ID, with no repeated upload or materialization. Both records remain preserved.\n\nOnly receipt publication, the separately saved actual receipt and matching live terminal confirmation remain at this source snapshot. Resolve those delivery-only pending fields using exact later evidence; never reinterpret them as H0 acceptance. C271 remains open, R03-R05 not_done, PR274 draft/unmerged and issue273 open. No further technical work or second phase follows in this chat.\n"
+        },
+        {
+          "path": "docs/workflow/tasks/C271/PLAN.md",
+          "old_bytes": 68799,
+          "new_bytes": 69800,
+          "prefix_exact": true,
+          "appended_text": "\n### P23 saved package boundary\n\nThe immutable P23 ZIP and both matching prompts are saved and byte-read-back. The independent archive review passed 931 checks. [P23 delivery](../../../engineering/localized-repair-c271/h0-plan-p23/P23-DELIVERY.json) records exact saved identities and preserves the source-time checkpoint. The final readback guard initially assumed a backing-file-ID attribute that the materializer does not provide; the corrected check verifies the actual stable-ID/version attributes and the exact returned backing ID, with no repeated upload or materialization. Both records remain preserved.\n\nOnly receipt publication, the separately saved actual receipt and matching live terminal confirmation remain at this source snapshot. Resolve those delivery-only pending fields using exact later evidence; never reinterpret them as H0 acceptance. C271 remains open, R03-R05 not_done, PR274 draft/unmerged and issue273 open. No further technical work or second phase follows in this chat.\n"
+        },
+        {
+          "path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+          "old_bytes": 67645,
+          "new_bytes": 68646,
+          "prefix_exact": true,
+          "appended_text": "\n### P23 saved package boundary\n\nThe immutable P23 ZIP and both matching prompts are saved and byte-read-back. The independent archive review passed 931 checks. [P23 delivery](../../../engineering/localized-repair-c271/h0-plan-p23/P23-DELIVERY.json) records exact saved identities and preserves the source-time checkpoint. The final readback guard initially assumed a backing-file-ID attribute that the materializer does not provide; the corrected check verifies the actual stable-ID/version attributes and the exact returned backing ID, with no repeated upload or materialization. Both records remain preserved.\n\nOnly receipt publication, the separately saved actual receipt and matching live terminal confirmation remain at this source snapshot. Resolve those delivery-only pending fields using exact later evidence; never reinterpret them as H0 acceptance. C271 remains open, R03-R05 not_done, PR274 draft/unmerged and issue273 open. No further technical work or second phase follows in this chat.\n"
+        }
+      ]
+    },
+    {
+      "name": "all_save_records_identical_across_sources",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "core_source_identity_consistent",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "saved_file_review_exact_and_accepted",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "saved_review_readset_binds_candidate",
+      "passed": true,
+      "detail": [
+        {
+          "review_path": "/workspace/scratch/f8d879d19e34/phase-p23/state/FINAL-SAVE-RECEIPTS.json",
+          "candidate_path": "docs/engineering/localized-repair-c271/h0-plan-p23/postfreeze/FINAL-SAVE-RECEIPTS.json",
+          "sha256": "ea02829f592c72217304df79ee8e117e53fde7485cf101be14277620cae75a6f",
+          "exact_match": true
+        },
+        {
+          "review_path": "/workspace/scratch/f8d879d19e34/phase-p23/state/FINAL-UPLOAD-RESULT.json",
+          "candidate_path": "docs/engineering/localized-repair-c271/h0-plan-p23/postfreeze/FINAL-UPLOAD-RESULT.json",
+          "sha256": "19a69b2db2c98215972a91e7d6614c261d6aa57b032b083f1a26ec097ac47e93",
+          "exact_match": true
+        },
+        {
+          "review_path": "/workspace/scratch/f8d879d19e34/phase-p23/state/FINAL-MATERIALIZE-METADATA.json",
+          "candidate_path": "docs/engineering/localized-repair-c271/h0-plan-p23/postfreeze/FINAL-MATERIALIZE-METADATA.json",
+          "sha256": "5d897287728fdbca3d70195cbfe1a9a572ffec4a45da519e1b442cbd16e11f96",
+          "exact_match": true
+        },
+        {
+          "review_path": "/workspace/scratch/f8d879d19e34/phase-p23/state/FINAL-READBACK-INCIDENT.json",
+          "candidate_path": "docs/engineering/localized-repair-c271/h0-plan-p23/postfreeze/FINAL-READBACK-INCIDENT.json",
+          "sha256": "09f443144fe80991932d2d9e95c25911c9a6d72911ed5905b5b7a36799e774f3",
+          "exact_match": true
+        },
+        {
+          "review_path": "/workspace/scratch/f8d879d19e34/phase-p23/reviews/archive/final-package/FINAL-ARCHIVE-REVIEW.json",
+          "candidate_path": "docs/engineering/localized-repair-c271/h0-plan-p23/postfreeze/final-package-review/FINAL-ARCHIVE-REVIEW.json",
+          "sha256": "1e6d503663c6d69a561199fd33a9965b662784a436d2c0c681618e4881d9ffda",
+          "exact_match": true
+        }
+      ]
+    },
+    {
+      "name": "saved_review_matches_all_receipt_identities",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive_931_check_exact_reuse",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "selected_core_checkpoint_sources_exact",
+      "passed": true,
+      "detail": [
+        {
+          "path": "docs/workflow/tasks/C271/task.json",
+          "member": "repository/branch/docs/workflow/tasks/C271/task.json",
+          "sha256": "d493cca4f642c3c54f1ac594c2eecae0ceb56cfcfcf844c5fe3c2c3b71932d36",
+          "exact_core_match": true
+        },
+        {
+          "path": "docs/workflow/CURRENT.json",
+          "member": "repository/branch/docs/workflow/CURRENT.json",
+          "sha256": "e9cbbf631cc33155e5e208aa8f304b0e2b3ae1a522a2c6201e93aa65b73c7c3e",
+          "exact_core_match": true
+        },
+        {
+          "path": "docs/engineering/localized-repair-c271/h0-plan-p23/PHASE.json",
+          "member": "repository/branch/docs/engineering/localized-repair-c271/h0-plan-p23/PHASE.json",
+          "sha256": "5b2323e39fca5feacf053212d25fd4f128fad7a1a4a33cf71c2a3d296ab2edb0",
+          "exact_core_match": true
+        },
+        {
+          "path": "docs/engineering/localized-repair-c271/h0-plan-p23/OUTCOME.json",
+          "member": "repository/branch/docs/engineering/localized-repair-c271/h0-plan-p23/OUTCOME.json",
+          "sha256": "3423fead9c3fc5d46f1334bb8e342a850440c545f27d850cd41a70677cce77b5",
+          "exact_core_match": true
+        },
+        {
+          "path": "docs/workflow/tasks/C271/P23-SESSION.md",
+          "member": "repository/branch/docs/workflow/tasks/C271/P23-SESSION.md",
+          "sha256": "68284d69ae7f40ec727624c411571e6a71157c70ad7aa977ccbb82b922f043f8",
+          "exact_core_match": true
+        },
+        {
+          "path": "docs/workflow/tasks/C271/PLAN.md",
+          "member": "repository/branch/docs/workflow/tasks/C271/PLAN.md",
+          "sha256": "82f4a22e74f26b3e9f2a17f45a7aa74bd73cf5b01633cd1a08c1879d1d6e3b81",
+          "exact_core_match": true
+        },
+        {
+          "path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+          "member": "repository/branch/docs/workflow/tasks/C271/REQUIREMENTS.md",
+          "sha256": "f1c8a6625698ec83e23973ac2cad85e3fbe10b2404074a9ca3832ecf5d3aaa4e",
+          "exact_core_match": true
+        }
+      ]
+    },
+    {
+      "name": "frozen_checkpoint_never_claims_delivery_or_h0",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "zero_forbidden_execution_in_checkpoint",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "next_scope_has_delivery_first_and_no_implementation",
+      "passed": true,
+      "detail": {
+        "manually_reviewed_members": [
+          "README-START-HERE.md",
+          "CHECKPOINT.json",
+          "HANDOFF.md",
+          "NEXT-TASK.md",
+          "RECOVERY-STATUS.md",
+          "HOST-ENVIRONMENT.md",
+          "PROMPT-1-CONTINUE.md",
+          "PROMPT-2-RECOVER.md"
+        ]
+      }
+    },
+    {
+      "name": "all_current_phase_completion_fields_false",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "h0_integration_branch_parent_boundary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "external_receipt_and_live_markers_still_pending",
+      "passed": true,
+      "detail": {
+        "pending": "Conditional receipt commit/readback, separately saved actual receipt, exact matching live PR274/issue273 P23 terminal markers; then stop."
+      }
+    },
+    {
+      "name": "incident_preserved_without_requalification",
+      "passed": true,
+      "detail": {
+        "disposition": "Initial unsupported backing-ID xattr expectation failed before receipt creation. Exact stable-ID/version attrs plus materializer backing-ID metadata passed in independent saved-file review. The failure remains documented."
+      }
+    },
+    {
+      "name": "core_publication_evidence_no_main_or_uncertain_operation",
+      "passed": true,
+      "detail": {
+        "limit": "Exact recorded Director evidence; no fresh remote API call by ledger."
+      }
+    },
+    {
+      "name": "candidate_index_unchanged_at_finish",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "candidate_worktree_and_manifest_unchanged_at_finish",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "counts": {
+    "groups": 30,
+    "passed": 30,
+    "failed": 0
+  },
+  "independent_save_review": {
+    "path": "/workspace/scratch/f8d879d19e34/phase-p23/reviews/archive/final-package/SAVE-READBACK-REVIEW.json",
+    "sha256": "47b1598d85d407473bdef02979108fe782a0b40199bb295b1b674e2d3b4d4235",
+    "checks": 43,
+    "reused_without_repeating": true
+  },
+  "archive_review": {
+    "sha256": "1e6d503663c6d69a561199fd33a9965b662784a436d2c0c681618e4881d9ffda",
+    "checks": 931,
+    "reused_without_repeating": true
+  },
+  "execution_boundary": {
+    "git_mutations": false,
+    "canonical_edits": false,
+    "product_tests": false,
+    "h0_or_technical_observations": false,
+    "uploads_or_materializations": 0,
+    "active_jobs": []
+  }
+}
