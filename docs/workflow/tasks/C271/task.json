@@ -132,7 +132,8 @@
         "docs/engineering/localized-repair-c271/environment-p20/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
         "docs/engineering/localized-repair-c271/h0-plan-p21/EARLY-RECOVERY-RECEIPT.json",
-        "docs/engineering/localized-repair-c271/path-design-p24/EARLY-RECOVERY-RECEIPT.json"
+        "docs/engineering/localized-repair-c271/path-design-p24/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json"
       ]
     }
   ],
@@ -1077,6 +1078,18 @@
         "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/REVIEW-FINAL.json"
       ],
       "scope": "12-task structural check; 1614 documents/6270 local links, 233 sections and 29 sources; 13 preservation assertions. Independent design review: 12 manual groups and 101 integrity checks. No product execution."
+    },
+    {
+      "name": "P24 frozen archive, Library save and exact readback review",
+      "result": "passed",
+      "required": true,
+      "command": "Independent archive audit, saved ZIP/prompt byte and metadata equality, and separate independent saved-readback review",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/reviews/FINAL-ARCHIVE-REVIEW.json",
+        "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/reviews/FINAL-SAVED-REVIEW.json"
+      ],
+      "scope": "Delivery-only evidence; no product/runtime or parent-completion gate."
     }
   ],
   "completion": {
@@ -1167,7 +1180,7 @@
       "tree": "6f32eb119773a0661590f0645eabeebbc6cce178"
     }
   },
-  "next_action": "Finish only documentary review/checks, conditional retained-branch publication and verified saved handoff with separate receipt, then stop.",
+  "next_action": "Finish receipt-only review/checks/publication, save and read back the external receipt, publish and verify matching terminal markers, then stop. No technical work or second phase.",
   "session_phase": {
     "phase": "C271-P24-H0-path-design-adoption",
     "owner": "c271-p24-660f372e2414",
@@ -1185,7 +1198,7 @@
     "parent_status": "in_progress",
     "technical_phase_complete": true,
     "h0_accepted": false,
-    "status": "technical_complete_delivery_pending",
+    "status": "technical_complete_delivery_pending_terminal_confirmation",
     "phase_record": "docs/engineering/localized-repair-c271/path-design-p24/PHASE.json",
     "early_receipt": "docs/engineering/localized-repair-c271/path-design-p24/EARLY-RECOVERY-RECEIPT.json",
     "technical_work_stopped": true,
@@ -1193,7 +1206,12 @@
     "design_decision": "docs/engineering/localized-repair-c271/path-design-p24/ADOPTION.json",
     "independent_review": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/REVIEW-FINAL.json",
     "implementation_performed": false,
-    "next_phase_started": false
+    "next_phase_started": false,
+    "final_handoff_saved": true,
+    "delivery_confirmed": false,
+    "delivery_receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+    "handoff_source_revision": "66866415e492e151eafd95da2237374fc127f79b",
+    "independent_package_review": "accepted"
   },
   "delivery": {
     "required": true,
@@ -1201,12 +1219,82 @@
     "folder": "OntoKin",
     "partial": true,
     "phase": "C271-P24-H0-path-design-adoption",
-    "status": "final_save_pending",
+    "status": "zip_and_prompts_saved_verified_terminal_receipt_pending",
     "phase_complete": false,
     "early_receipt": "docs/engineering/localized-repair-c271/path-design-p24/EARLY-RECOVERY-RECEIPT.json",
     "future_external_receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
     "technical_phase_complete": true,
-    "source_snapshot_before_save": true
+    "source_snapshot_before_save": false,
+    "archive": {
+      "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+      "purpose": "create_library_file",
+      "status": "succeeded",
+      "file_id": "file_000000003b1081fd9c82bc47582968bd",
+      "library_file_id": "libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de",
+      "file_name": "OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+      "local_metadata_applied": true,
+      "path": "/OntoKin/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+      "current_version_number": 0,
+      "bytes": 10847033,
+      "sha256": "5b1886184add5644e1272c31c22f4f9232a8e76433d8f2f867fd826d8bf18e4e",
+      "version": 0,
+      "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+      "saved_bytes_readback_equal": true,
+      "stable_id_version_attributes_verified": true,
+      "backing_id_verified_against_materialize_response": true,
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+    },
+    "matching_prompts": [
+      {
+        "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Continue_2026-11-23.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_00000000356081fdaaecfd86f65ecf9a",
+        "library_file_id": "libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P24_Continue_2026-11-23.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P24_Continue_2026-11-23.md",
+        "current_version_number": 0,
+        "bytes": 1765,
+        "sha256": "d11aedb5063739332044032114b21822933007e3d807a6df3768b4cdb2049e75",
+        "version": 0,
+        "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Continue_2026-11-23.md",
+        "saved_bytes_readback_equal": true,
+        "stable_id_version_attributes_verified": true,
+        "backing_id_verified_against_materialize_response": true,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "zip_member": "PROMPT-1-CONTINUE.md",
+        "matches_zip_member": true
+      },
+      {
+        "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Recover_2026-11-23.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_00000000a5b881fd95cff1746355c4f7",
+        "library_file_id": "libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P24_Recover_2026-11-23.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P24_Recover_2026-11-23.md",
+        "current_version_number": 0,
+        "bytes": 2054,
+        "sha256": "37a50e73bc8083bc83a579a6d745e759f9fba8b49e3bdbf26b316cd90e1dd006",
+        "version": 0,
+        "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Recover_2026-11-23.md",
+        "saved_bytes_readback_equal": true,
+        "stable_id_version_attributes_verified": true,
+        "backing_id_verified_against_materialize_response": true,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "zip_member": "PROMPT-2-RECOVER.md",
+        "matches_zip_member": true
+      }
+    ],
+    "receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+    "terminal_resolution": "Only the separately saved exact P24 external receipt and matching live PR274/issue273 P24 terminal markers resolve these delivery-only pending fields. ZIP hash, core source commit, receipt commit and receipt identity must agree. They cannot establish implementation, H0/H1, R03-R05 or parent completion.",
+    "source_snapshot_before_terminal": true,
+    "core_snapshot_before_save": {
+      "source_commit": "66866415e492e151eafd95da2237374fc127f79b",
+      "value": true
+    }
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",

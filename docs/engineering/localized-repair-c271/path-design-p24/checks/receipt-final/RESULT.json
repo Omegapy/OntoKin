@@ -1,0 +1,125 @@
+{
+  "schema": "ontokin.c271.p24-documentary-checks/1",
+  "label": "receipt-final",
+  "head": "66866415e492e151eafd95da2237374fc127f79b",
+  "index_tree_before": "0c2412a904aec2eaa0a0f44990a7d83e6f38d369",
+  "changed_paths_at_start": [
+    "docs/engineering/localized-repair-c271/path-design-p24/OUTCOME.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/PHASE.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/SOURCE-MANIFEST.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/evidence/CORE-STAGED-WHITESPACE.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/evidence/FINAL-MATERIALIZATION-METADATA.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/evidence/FINAL-SAVE-READBACK.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/evidence/FINAL-UPLOAD-RESULT.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/evidence/REMOTE-CORE-STATE.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/reviews/FINAL-ARCHIVE-REVIEW.attempt001.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/reviews/FINAL-ARCHIVE-REVIEW.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/reviews/FINAL-SAVED-REVIEW.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/reviews/audit_archive_v4.py",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/reviews/final-attempt001-archive-audit.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/reviews/final_archive_review.attempt001.py",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/reviews/final_archive_review.py",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/session-records/REMOTE-CORE-STATE.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/session-records/delivery-helper-history/PROVENANCE.json",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/session-records/delivery-helper-history/record_final_delivery.attempt001.py",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/session-records/delivery-helper-history/record_final_delivery.attempt002.py",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/session-records/verify_final_save.py",
+    "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/session-tools/record_final_delivery.py",
+    "docs/workflow/CURRENT.json",
+    "docs/workflow/tasks/C271/task.json"
+  ],
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41"
+  },
+  "tool_bindings": [
+    {
+      "path": "tools/chat_workflow.py",
+      "bytes": 27862,
+      "sha256": "43029d35c10e206e0fb2192aa32e9819984edec985561a76371594d52efa3f24"
+    },
+    {
+      "path": "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "bytes": 26640,
+      "sha256": "f25feaee2f1263b3508b4118eb41a7c306c92b04eaa97829def92c89c3b6a2e9"
+    }
+  ],
+  "checks": [
+    {
+      "name": "workflow",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/660f372e2414/OntoKin",
+      "started_at_utc": "2026-11-23T13:37:57.321709+00:00",
+      "finished_at_utc": "2026-11-23T13:37:57.436053+00:00",
+      "exit_code": 0,
+      "result": "passed",
+      "stdout": {
+        "path": "docs/engineering/localized-repair-c271/path-design-p24/checks/receipt-final/workflow.stdout.log",
+        "bytes": 148,
+        "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+      },
+      "stderr": {
+        "path": "docs/engineering/localized-repair-c271/path-design-p24/checks/receipt-final/workflow.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "documentation",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/660f372e2414/OntoKin",
+      "started_at_utc": "2026-11-23T13:37:57.436550+00:00",
+      "finished_at_utc": "2026-11-23T13:38:00.859660+00:00",
+      "exit_code": 0,
+      "result": "passed",
+      "stdout": {
+        "path": "docs/engineering/localized-repair-c271/path-design-p24/checks/receipt-final/documentation.stdout.log",
+        "bytes": 6609,
+        "sha256": "a0e907d512ec32a8f67220bae0a36c11a038d134f33b55a2a5da628a230ebd48"
+      },
+      "stderr": {
+        "path": "docs/engineering/localized-repair-c271/path-design-p24/checks/receipt-final/documentation.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "whitespace",
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "cwd": "/workspace/scratch/660f372e2414/OntoKin",
+      "started_at_utc": "2026-11-23T13:38:00.860075+00:00",
+      "finished_at_utc": "2026-11-23T13:38:00.892338+00:00",
+      "exit_code": 0,
+      "result": "passed",
+      "stdout": {
+        "path": "docs/engineering/localized-repair-c271/path-design-p24/checks/receipt-final/whitespace.stdout.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "docs/engineering/localized-repair-c271/path-design-p24/checks/receipt-final/whitespace.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "product_tests_run": false,
+  "h0_h1_run": false,
+  "passed": true
+}

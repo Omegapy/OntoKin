@@ -1,0 +1,27 @@
+{
+  "schema": "ontokin.c271.p24-receipt-label-correction/1",
+  "recorded_at_utc": "2026-11-23T13:43:04.578627+00:00",
+  "reason": "The core source-time before-save boolean was carried forward into the later saved receipt snapshot. Mark the current snapshot as after save, and retain the historical core meaning separately. Saved bytes, identities, adoption and parent states do not change.",
+  "files": [
+    {
+      "path": "docs/workflow/tasks/C271/task.json",
+      "field": "delivery",
+      "before_bytes": 308902,
+      "before_sha256": "15b3ec742b0adb83961fb00eb713f7f83f4fa4e3114e2d1d5c1e59137c8cd28c",
+      "after_bytes": 309032,
+      "after_sha256": "d9e70293427327ed4c681c4e90b660507518f203b036149e23999b2728782c70",
+      "original_exactly_reconstructable": true
+    },
+    {
+      "path": "docs/workflow/CURRENT.json",
+      "field": "pending_phase_delivery",
+      "before_bytes": 138532,
+      "before_sha256": "0d5785a93792420f018c8c88da448857a8b688c81cc6cac82367573b22af6717",
+      "after_bytes": 138662,
+      "after_sha256": "13a075c24746915f3d17b0f7994a6e9fbd46551032ad12c35527c4a5f08a5c19",
+      "original_exactly_reconstructable": true
+    }
+  ],
+  "reconstruction": "For each indicated object, set source_snapshot_before_save to true, remove core_snapshot_before_save, then serialize json.dumps(value,indent=2) plus newline using default ensure_ascii. Exact original bytes were independently compared during this correction.",
+  "executed_delivery_helper_unchanged": true
+}

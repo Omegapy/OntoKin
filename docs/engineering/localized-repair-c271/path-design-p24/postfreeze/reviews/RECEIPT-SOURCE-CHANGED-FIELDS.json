@@ -1,0 +1,412 @@
+{
+  "docs/workflow/tasks/C271/task.json": {
+    "checks": {
+      "prefix_unchanged": true,
+      "base_count": 82,
+      "current_count": 83,
+      "appended": [
+        {
+          "name": "P24 frozen archive, Library save and exact readback review",
+          "result": "passed",
+          "required": true,
+          "command": "Independent archive audit, saved ZIP/prompt byte and metadata equality, and separate independent saved-readback review",
+          "evidence": [
+            "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+            "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/reviews/FINAL-ARCHIVE-REVIEW.json",
+            "docs/engineering/localized-repair-c271/path-design-p24/postfreeze/reviews/FINAL-SAVED-REVIEW.json"
+          ],
+          "scope": "Delivery-only evidence; no product/runtime or parent-completion gate."
+        }
+      ]
+    },
+    "delivery": {
+      "changed_subfields": {
+        "status": "zip_and_prompts_saved_verified_terminal_receipt_pending",
+        "archive": {
+          "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+          "purpose": "create_library_file",
+          "status": "succeeded",
+          "file_id": "file_000000003b1081fd9c82bc47582968bd",
+          "library_file_id": "libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de",
+          "file_name": "OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+          "current_version_number": 0,
+          "bytes": 10847033,
+          "sha256": "5b1886184add5644e1272c31c22f4f9232a8e76433d8f2f867fd826d8bf18e4e",
+          "version": 0,
+          "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+          "saved_bytes_readback_equal": true,
+          "stable_id_version_attributes_verified": true,
+          "backing_id_verified_against_materialize_response": true,
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+        },
+        "matching_prompts": [
+          {
+            "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Continue_2026-11-23.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_00000000356081fdaaecfd86f65ecf9a",
+            "library_file_id": "libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P24_Continue_2026-11-23.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P24_Continue_2026-11-23.md",
+            "current_version_number": 0,
+            "bytes": 1765,
+            "sha256": "d11aedb5063739332044032114b21822933007e3d807a6df3768b4cdb2049e75",
+            "version": 0,
+            "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Continue_2026-11-23.md",
+            "saved_bytes_readback_equal": true,
+            "stable_id_version_attributes_verified": true,
+            "backing_id_verified_against_materialize_response": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+            "zip_member": "PROMPT-1-CONTINUE.md",
+            "matches_zip_member": true
+          },
+          {
+            "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Recover_2026-11-23.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_00000000a5b881fd95cff1746355c4f7",
+            "library_file_id": "libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P24_Recover_2026-11-23.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P24_Recover_2026-11-23.md",
+            "current_version_number": 0,
+            "bytes": 2054,
+            "sha256": "37a50e73bc8083bc83a579a6d745e759f9fba8b49e3bdbf26b316cd90e1dd006",
+            "version": 0,
+            "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Recover_2026-11-23.md",
+            "saved_bytes_readback_equal": true,
+            "stable_id_version_attributes_verified": true,
+            "backing_id_verified_against_materialize_response": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+            "zip_member": "PROMPT-2-RECOVER.md",
+            "matches_zip_member": true
+          }
+        ],
+        "receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+        "terminal_resolution": "Only the separately saved exact P24 external receipt and matching live PR274/issue273 P24 terminal markers resolve these delivery-only pending fields. ZIP hash, core source commit, receipt commit and receipt identity must agree. They cannot establish implementation, H0/H1, R03-R05 or parent completion.",
+        "source_snapshot_before_terminal": true
+      },
+      "removed_keys": []
+    },
+    "next_action": "Finish receipt-only review/checks/publication, save and read back the external receipt, publish and verify matching terminal markers, then stop. No technical work or second phase.",
+    "requirements": [
+      {
+        "id": "R05",
+        "status": "not_done",
+        "new_evidence": [
+          "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json"
+        ],
+        "old_evidence_prefix_unchanged": true,
+        "other_fields_unchanged": true
+      }
+    ],
+    "session_phase": {
+      "changed_subfields": {
+        "status": "technical_complete_delivery_pending_terminal_confirmation",
+        "final_handoff_saved": true,
+        "delivery_confirmed": false,
+        "delivery_receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+        "handoff_source_revision": "66866415e492e151eafd95da2237374fc127f79b",
+        "independent_package_review": "accepted"
+      },
+      "removed_keys": []
+    }
+  },
+  "docs/workflow/CURRENT.json": {
+    "boundaries": {
+      "prefix_unchanged": true,
+      "base_count": 31,
+      "current_count": 32,
+      "appended": [
+        "P24 frozen ZIP and matching prompts have confirmed saves and exact readbacks. Separate receipt publication/save and matching terminal confirmation remain pending at this source snapshot. Only delivery may continue here; adopted design is unimplemented and R03-R05 remain open."
+      ]
+    },
+    "latest_handoff": {
+      "changed_subfields": {
+        "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+        "file_id": "file_000000003b1081fd9c82bc47582968bd",
+        "library_file_id": "libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+        "path": "/OntoKin/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+        "bytes": 10847033,
+        "sha256": "5b1886184add5644e1272c31c22f4f9232a8e76433d8f2f867fd826d8bf18e4e",
+        "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "phase": "C271-P24-H0-path-design-adoption",
+        "source_revision": "66866415e492e151eafd95da2237374fc127f79b",
+        "source_tree": "546798a1d3cadc9cf4211c219827287d1ad1bc03",
+        "receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+        "matching_prompts": [
+          {
+            "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Continue_2026-11-23.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_00000000356081fdaaecfd86f65ecf9a",
+            "library_file_id": "libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P24_Continue_2026-11-23.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P24_Continue_2026-11-23.md",
+            "current_version_number": 0,
+            "bytes": 1765,
+            "sha256": "d11aedb5063739332044032114b21822933007e3d807a6df3768b4cdb2049e75",
+            "version": 0,
+            "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Continue_2026-11-23.md",
+            "saved_bytes_readback_equal": true,
+            "stable_id_version_attributes_verified": true,
+            "backing_id_verified_against_materialize_response": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+            "zip_member": "PROMPT-1-CONTINUE.md",
+            "matches_zip_member": true
+          },
+          {
+            "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Recover_2026-11-23.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_00000000a5b881fd95cff1746355c4f7",
+            "library_file_id": "libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P24_Recover_2026-11-23.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P24_Recover_2026-11-23.md",
+            "current_version_number": 0,
+            "bytes": 2054,
+            "sha256": "37a50e73bc8083bc83a579a6d745e759f9fba8b49e3bdbf26b316cd90e1dd006",
+            "version": 0,
+            "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Recover_2026-11-23.md",
+            "saved_bytes_readback_equal": true,
+            "stable_id_version_attributes_verified": true,
+            "backing_id_verified_against_materialize_response": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+            "zip_member": "PROMPT-2-RECOVER.md",
+            "matches_zip_member": true
+          }
+        ],
+        "terminal_resolution": "Only the separately saved exact P24 external receipt and matching live PR274/issue273 P24 terminal markers resolve these delivery-only pending fields. ZIP hash, core source commit, receipt commit and receipt identity must agree. They cannot establish implementation, H0/H1, R03-R05 or parent completion."
+      },
+      "removed_keys": [
+        "confirmed_at_utc",
+        "receipt_publication"
+      ]
+    },
+    "next_action": {
+      "changed_subfields": {
+        "summary": "Finish receipt-only review/checks/publication, save and read back the external receipt, publish and verify matching terminal markers, then stop. No technical work or second phase.",
+        "suggested_task": "C271 P24 terminal delivery only"
+      },
+      "removed_keys": []
+    },
+    "older_handoffs": {
+      "prefix_unchanged": true,
+      "base_count": 25,
+      "current_count": 26,
+      "appended": [
+        {
+          "filename": "OntoKin_C271_P22_Ephemeral_Host_Amended_Handoff_2026-11-22.zip",
+          "library_path": "/OntoKin/OntoKin_C271_P22_Ephemeral_Host_Amended_Handoff_2026-11-22.zip",
+          "library_file_id": "libfile_fde3_f-81eb9d008bf4819189699c63d7e1c5fd_2ab2a24d43748191957f9bcc356b59de",
+          "backing_file_id": "file_00000000ec4c81fdb993681513eeea59",
+          "version": "1",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-81eb9d008bf4819189699c63d7e1c5fd_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "bytes": 1957765,
+          "sha256": "54b79e4b6e2e31546bb0bfe7392b333c8fe340fa510b0e8d1773a97a88c72d49",
+          "readback": "byte_identical_to_authoring_file",
+          "phase": "P22 ephemeral-host documentary amendment",
+          "source_snapshot_before_P23_save": true,
+          "receipt": "docs/engineering/localized-repair-c271/h0-plan-p23/state/P22-AMENDMENT-DELIVERY.json",
+          "matching_prompts": [
+            {
+              "filename": "OntoKin_C271_P22_Ephemeral_Host_Continue_2026-11-22.md",
+              "library_path": "/OntoKin/OntoKin_C271_P22_Ephemeral_Host_Continue_2026-11-22.md",
+              "library_file_id": "libfile_fde3_f-d5151448c95c8191aa42beab0875b06c_2ab2a24d43748191957f9bcc356b59de",
+              "backing_file_id": "file_000000009d9c81fdb7bf8e853bb15a1d",
+              "version": "0",
+              "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-d5151448c95c8191aa42beab0875b06c_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+              "bytes": 2629,
+              "sha256": "24153c7107307f94eebdd478d56f772fe4e8174021a11af8c67ef361e9b2c8fd",
+              "readback": "byte_identical_to_authoring_file"
+            },
+            {
+              "filename": "OntoKin_C271_P22_Ephemeral_Host_Recover_2026-11-22.md",
+              "library_path": "/OntoKin/OntoKin_C271_P22_Ephemeral_Host_Recover_2026-11-22.md",
+              "library_file_id": "libfile_fde3_f-81164ceeeb5481918e4baeaf141036a5_2ab2a24d43748191957f9bcc356b59de",
+              "backing_file_id": "file_00000000a62081fdb7b1dedd1dde46b1",
+              "version": "0",
+              "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-81164ceeeb5481918e4baeaf141036a5_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+              "bytes": 2863,
+              "sha256": "9b5a0ecbe6db14eaecf3d9de3d0a351b3c6269a5782cc944967850f44c0027d2",
+              "readback": "byte_identical_to_authoring_file"
+            }
+          ]
+        }
+      ]
+    },
+    "pending_phase_delivery": {
+      "changed_subfields": {
+        "status": "zip_and_prompts_saved_verified_terminal_receipt_pending",
+        "archive": {
+          "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+          "purpose": "create_library_file",
+          "status": "succeeded",
+          "file_id": "file_000000003b1081fd9c82bc47582968bd",
+          "library_file_id": "libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de",
+          "file_name": "OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+          "local_metadata_applied": true,
+          "path": "/OntoKin/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+          "current_version_number": 0,
+          "bytes": 10847033,
+          "sha256": "5b1886184add5644e1272c31c22f4f9232a8e76433d8f2f867fd826d8bf18e4e",
+          "version": 0,
+          "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+          "saved_bytes_readback_equal": true,
+          "stable_id_version_attributes_verified": true,
+          "backing_id_verified_against_materialize_response": true,
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+        },
+        "matching_prompts": [
+          {
+            "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Continue_2026-11-23.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_00000000356081fdaaecfd86f65ecf9a",
+            "library_file_id": "libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P24_Continue_2026-11-23.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P24_Continue_2026-11-23.md",
+            "current_version_number": 0,
+            "bytes": 1765,
+            "sha256": "d11aedb5063739332044032114b21822933007e3d807a6df3768b4cdb2049e75",
+            "version": 0,
+            "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Continue_2026-11-23.md",
+            "saved_bytes_readback_equal": true,
+            "stable_id_version_attributes_verified": true,
+            "backing_id_verified_against_materialize_response": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+            "zip_member": "PROMPT-1-CONTINUE.md",
+            "matches_zip_member": true
+          },
+          {
+            "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Recover_2026-11-23.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_00000000a5b881fd95cff1746355c4f7",
+            "library_file_id": "libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P24_Recover_2026-11-23.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P24_Recover_2026-11-23.md",
+            "current_version_number": 0,
+            "bytes": 2054,
+            "sha256": "37a50e73bc8083bc83a579a6d745e759f9fba8b49e3bdbf26b316cd90e1dd006",
+            "version": 0,
+            "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Recover_2026-11-23.md",
+            "saved_bytes_readback_equal": true,
+            "stable_id_version_attributes_verified": true,
+            "backing_id_verified_against_materialize_response": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+            "zip_member": "PROMPT-2-RECOVER.md",
+            "matches_zip_member": true
+          }
+        ],
+        "receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+        "terminal_resolution": "Only the separately saved exact P24 external receipt and matching live PR274/issue273 P24 terminal markers resolve these delivery-only pending fields. ZIP hash, core source commit, receipt commit and receipt identity must agree. They cannot establish implementation, H0/H1, R03-R05 or parent completion.",
+        "source_snapshot_before_terminal": true
+      },
+      "removed_keys": []
+    },
+    "previous_handoff": {
+      "changed_subfields": {
+        "local_path": "/workspace/scratch/f8d879d19e34/packages/OntoKin_C271_P23_H0_Path_Blocker_Handoff_2026-11-22.zip",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_00000000110081f5b7a549eb731ba243",
+        "library_file_id": "libfile_fde3_f-78daacd977788191bba3f74cea7b05e0_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P23_H0_Path_Blocker_Handoff_2026-11-22.zip",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P23_H0_Path_Blocker_Handoff_2026-11-22.zip",
+        "current_version_number": 0,
+        "bytes": 3107286,
+        "sha256": "241e31741879b81eaa85c9705941f282347ab3cebf9db60bc08dd7cd52aa8761",
+        "version": 0,
+        "readback_path": "/workspace/scratch/f8d879d19e34/readback/final/OntoKin_C271_P23_H0_Path_Blocker_Handoff_2026-11-22.zip",
+        "saved_bytes_readback_equal": true,
+        "stable_id_version_attributes_verified": true,
+        "backing_id_verified_against_materialize_response": true,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-78daacd977788191bba3f74cea7b05e0_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "phase": "C271-P23-current-host-H0-plan",
+        "partial": true,
+        "source_revision": "182d36d957d93161e351f41839bf2a6157fed3df",
+        "source_tree": "cc31ed24df11b7fb5a15720cd735ca4f68f2f7a4",
+        "receipt": "docs/engineering/localized-repair-c271/h0-plan-p23/P23-DELIVERY.json",
+        "matching_prompts": [
+          {
+            "local_path": "/workspace/scratch/f8d879d19e34/packages/OntoKin_C271_P23_Continue_Prompt_2026-11-22.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_00000000ae6c81f59290aa8164ca1a9e",
+            "library_file_id": "libfile_fde3_f-70d151ca1bcc819194b82299379afb42_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P23_Continue_Prompt_2026-11-22.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P23_Continue_Prompt_2026-11-22.md",
+            "current_version_number": 0,
+            "bytes": 1759,
+            "sha256": "602c06e5308a264f69c11c22e0e82fc44fef03b6370605eee2a3029672b60ab7",
+            "version": 0,
+            "readback_path": "/workspace/scratch/f8d879d19e34/readback/final/OntoKin_C271_P23_Continue_Prompt_2026-11-22.md",
+            "saved_bytes_readback_equal": true,
+            "stable_id_version_attributes_verified": true,
+            "backing_id_verified_against_materialize_response": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-70d151ca1bcc819194b82299379afb42_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+            "zip_member": "PROMPT-1-CONTINUE.md",
+            "matches_zip_member": true
+          },
+          {
+            "local_path": "/workspace/scratch/f8d879d19e34/packages/OntoKin_C271_P23_Recover_Prompt_2026-11-22.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_000000001d5881f5bee816e56ba4cccc",
+            "library_file_id": "libfile_fde3_f-898191da1e70819184d30c9608f42840_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P23_Recover_Prompt_2026-11-22.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P23_Recover_Prompt_2026-11-22.md",
+            "current_version_number": 0,
+            "bytes": 2002,
+            "sha256": "c7c9a12e07e646c56804dc7a7b2f624222d9f85b3dd481d2b53d613157ea9268",
+            "version": 0,
+            "readback_path": "/workspace/scratch/f8d879d19e34/readback/final/OntoKin_C271_P23_Recover_Prompt_2026-11-22.md",
+            "saved_bytes_readback_equal": true,
+            "stable_id_version_attributes_verified": true,
+            "backing_id_verified_against_materialize_response": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-898191da1e70819184d30c9608f42840_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+            "zip_member": "PROMPT-2-RECOVER.md",
+            "matches_zip_member": true
+          }
+        ],
+        "confirmed_at_utc": "2026-11-23T05:29:56.173072+00:00",
+        "phase_complete": false,
+        "receipt_publication": "Pending conditional receipt commit/readback and separately saved external receipt at this source snapshot.",
+        "terminal_resolution": "Only the separately saved exact P23 receipt and matching live PR274/issue273 P23 terminal markers can resolve remaining delivery-only pending fields. Their ZIP hash, core source commit, receipt commit and receipt identity must agree. They cannot accept H0 or complete C271."
+      },
+      "removed_keys": [
+        "backing_file_id",
+        "filename",
+        "library_path",
+        "readback",
+        "source_snapshot_before_P23_save"
+      ]
+    },
+    "snapshot_date": "2026-11-23T13:37:56.713840+00:00"
+  },
+  "docs/engineering/localized-repair-c271/path-design-p24/PHASE.json": {
+    "delivery_receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+    "delivery_status": "zip_and_prompts_saved_verified_terminal_receipt_pending",
+    "final_handoff_saved": true,
+    "terminal_resolution": "Only the separately saved exact P24 external receipt and matching live PR274/issue273 P24 terminal markers resolve these delivery-only pending fields. ZIP hash, core source commit, receipt commit and receipt identity must agree. They cannot establish implementation, H0/H1, R03-R05 or parent completion."
+  },
+  "docs/engineering/localized-repair-c271/path-design-p24/OUTCOME.json": {
+    "delivery_receipt": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+    "delivery_status": "zip_and_prompts_saved_verified_terminal_receipt_pending",
+    "final_handoff_saved": true,
+    "terminal_resolution": "Only the separately saved exact P24 external receipt and matching live PR274/issue273 P24 terminal markers resolve these delivery-only pending fields. ZIP hash, core source commit, receipt commit and receipt identity must agree. They cannot establish implementation, H0/H1, R03-R05 or parent completion."
+  }
+}
