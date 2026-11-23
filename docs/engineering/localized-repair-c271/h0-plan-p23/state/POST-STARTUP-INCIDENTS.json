@@ -1,0 +1,32 @@
+{
+  "schema": "ontokin.c271.p23-post-startup-incidents/1",
+  "incidents": [
+    {
+      "id": "DOC-HYDRATION-001",
+      "operation": "git sparse-checkout add --no-cone --stdin",
+      "result": "Argument parser refused unknown --no-cone for add, rc129, no hydration",
+      "resolution": "Observed stderr and zero missing-count change; supported add --stdin then completed rc0. Both attempts retained.",
+      "evidence": [
+        "HYDRATION-STAGE1.stderr.log",
+        "HYDRATION-STAGE1-RESULT.json"
+      ],
+      "unknown": false
+    },
+    {
+      "id": "READ-PATH-001",
+      "operation": "Read guessed h0-plan-p21/H0-DECISION.md",
+      "result": "File not found; no mutation",
+      "resolution": "rg --files returned actual reviews/H0-DECISION.md; full file read once at the correct path",
+      "unknown": false
+    },
+    {
+      "id": "RUNTIME-PATH-QUERY-001",
+      "operation": "rg --files on current primary Python lib-dynload for ctypes/ssl/hashlib/struct",
+      "result": "No matching files, rc1; no conclusion about builtins or complete native closure",
+      "resolution": "No path repair, retry or module import; full future import closure delegated as source-only requirements",
+      "unknown": false
+    }
+  ],
+  "current_unknown_operations": [],
+  "reviewer_incidents": "Preserved separately by each reviewer; inventory denominator and future-module-list corrections are not product failures."
+}

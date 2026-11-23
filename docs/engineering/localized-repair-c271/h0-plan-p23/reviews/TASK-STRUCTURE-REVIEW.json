@@ -1,0 +1,977 @@
+{
+  "schema": "ontokin.c271.p23.task-structure-review/1",
+  "source": {
+    "path": "current-branch/docs/workflow/tasks/C271/task.json",
+    "bytes": 286942,
+    "sha256": "1d513a808fab3abadc784880552a5ef8d9b08c37c19eeb524971f9b179772fa2",
+    "read_kind": "full_parse_and_current_field_historical_structure_review"
+  },
+  "recursive_values": 4149,
+  "top_level": [
+    {
+      "key": "schema_version",
+      "kind": "int",
+      "length": null
+    },
+    {
+      "key": "id",
+      "kind": "str",
+      "length": null
+    },
+    {
+      "key": "title",
+      "kind": "str",
+      "length": null
+    },
+    {
+      "key": "intent",
+      "kind": "str",
+      "length": null
+    },
+    {
+      "key": "status",
+      "kind": "str",
+      "length": null
+    },
+    {
+      "key": "owner",
+      "kind": "str",
+      "length": null
+    },
+    {
+      "key": "branch",
+      "kind": "str",
+      "length": null
+    },
+    {
+      "key": "base_sha",
+      "kind": "str",
+      "length": null
+    },
+    {
+      "key": "scope_issue",
+      "kind": "str",
+      "length": null
+    },
+    {
+      "key": "requirements",
+      "kind": "list",
+      "length": 5
+    },
+    {
+      "key": "plan",
+      "kind": "list",
+      "length": 2
+    },
+    {
+      "key": "checks",
+      "kind": "list",
+      "length": 75
+    },
+    {
+      "key": "completion",
+      "kind": "dict",
+      "length": 15
+    },
+    {
+      "key": "next_action",
+      "kind": "str",
+      "length": null
+    },
+    {
+      "key": "session_phase",
+      "kind": "dict",
+      "length": 26
+    },
+    {
+      "key": "delivery",
+      "kind": "dict",
+      "length": 18
+    },
+    {
+      "key": "authorization",
+      "kind": "dict",
+      "length": 3
+    },
+    {
+      "key": "historical_checks",
+      "kind": "list",
+      "length": 1
+    },
+    {
+      "key": "prior_session_phases",
+      "kind": "list",
+      "length": 21
+    },
+    {
+      "key": "prior_phase_deliveries",
+      "kind": "list",
+      "length": 21
+    },
+    {
+      "key": "prior_blocked_reason",
+      "kind": "str",
+      "length": null
+    },
+    {
+      "key": "blocked_reason_history",
+      "kind": "list",
+      "length": 12
+    },
+    {
+      "key": "remaining_h0_constraint",
+      "kind": "dict",
+      "length": 5
+    },
+    {
+      "key": "prior_h0_constraints",
+      "kind": "list",
+      "length": 6
+    },
+    {
+      "key": "phase_reconciliations",
+      "kind": "list",
+      "length": 7
+    },
+    {
+      "key": "p20_outcome_recorded",
+      "kind": "bool",
+      "length": null
+    }
+  ],
+  "check_outcomes": {
+    "passed": 61,
+    "failed": 12,
+    "not_run": 2
+  },
+  "checks": [
+    {
+      "name": "isolated H22 control",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/control-candidate/RESULTS.json"
+      ],
+      "limit": null
+    },
+    {
+      "name": "required routine local driver before integration",
+      "result": "failed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/finalization-20261120/verification/RESULTS.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/verification/RAW-EVIDENCE.zip"
+      ],
+      "limit": "The original process completed exit 1; unit timeout and documents failure remain mandatory unmet gates."
+    },
+    {
+      "name": "complete affected observer regression before integration",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-CHECKS.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/verification/AFFECTED-RECEIPT.json"
+      ],
+      "limit": null
+    },
+    {
+      "name": "clean published-candidate documentation and workflow records",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/delivery/record-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/operation-history/affected-checkpoint-record-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/final-source-record-checks/CHECKS.json"
+      ],
+      "limit": null
+    },
+    {
+      "name": "independent candidate review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/evidence/independent-review/CANDIDATE-AUDIT.json",
+        "docs/engineering/localized-repair-c271/evidence/independent-review/PUBLICATION-REVIEW.json"
+      ],
+      "limit": "Historical P01 control-candidate approval only; does not approve P02 integration."
+    },
+    {
+      "name": "P01 partial handoff archive and independent package review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/delivery/PACKAGE-VERIFICATION.json",
+        "docs/engineering/localized-repair-c271/delivery/package-review/AUDIT.json",
+        "docs/engineering/localized-repair-c271/delivery/P01-DELIVERY.json"
+      ],
+      "limit": null
+    },
+    {
+      "name": "independent P02 integration acceptance review",
+      "result": "failed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/finalization-20261120/independent-review/INTEGRATION-REVIEW.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/independent-review/REPORT.md"
+      ],
+      "limit": "Evidence inspection passed; integration acceptance failed because two mandatory routine-driver findings remain unresolved. No requirement waiver."
+    },
+    {
+      "name": "P02 blocked partial handoff archive and independent package review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/finalization-20261120/PACKAGE-VERIFICATION.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/package-review/AUDIT.json",
+        "docs/engineering/localized-repair-c271/finalization-20261120/P02-DELIVERY.json"
+      ],
+      "limit": "Current partial phase delivery only; R03-R05 parent gates remain unmet."
+    },
+    {
+      "name": "P03 minimal workspace repair and clean focused validation",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json"
+      ],
+      "limit": "Focused tool correction only; does not satisfy the complete routine requirement"
+    },
+    {
+      "name": "P03 unchanged historical readback prerequisite",
+      "result": "failed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/EXECUTION-CHECKS.json"
+      ],
+      "limit": "Exact Node binary binding refusal; no mutation or test execution"
+    },
+    {
+      "name": "P03 complete routine driver after qualified preparation",
+      "result": "not_run",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/PHASE-OUTCOME.json"
+      ],
+      "limit": "Not launched because preparation failed; prior P02 driver failure remains unchanged"
+    },
+    {
+      "name": "Independent P03 R03 acceptance decision",
+      "result": "failed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/validation-recovery-20261120/FINAL-ACCEPTANCE.json"
+      ],
+      "limit": "Narrow repair approved for retained partial delivery; R03 not eligible because exact runtime prerequisite and complete routine remain unmet. Evidence inspection passed; it is not a product test run."
+    },
+    {
+      "name": "P04 exact historical runtime qualification",
+      "result": "failed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/PHASE-OUTCOME.json"
+      ],
+      "limit": "The evidence inspection supports a scoped no-match finding. Runtime qualification and R03 acceptance are not established."
+    },
+    {
+      "name": "P04 published documentary checkpoint checks",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/PUBLISHED-SOURCE-CHECKS.json"
+      ],
+      "limit": "Record validity and protected-source boundary only; no product/runtime test acceptance."
+    },
+    {
+      "name": "P04 partial handoff delivery",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/runtime-recovery-p04/P04-DELIVERY.json"
+      ],
+      "limit": "This phase delivery only; parent R03-R05 remain not_done."
+    },
+    {
+      "name": "P05 independent current-host design review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p05/review/DESIGN-REVIEW.json"
+      ],
+      "limit": "46 static design checks; no behavioral execution, runtime qualification or R03 acceptance"
+    },
+    {
+      "name": "P05 clean published-source documentary checks",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p05/published-source-checks/CHECKS.json"
+      ],
+      "limit": "Clean source 405c0c9ec35e50b4dd13b8779a31f822dc45f61f only; not product or R03 acceptance"
+    },
+    {
+      "name": "P05 immutable core package and save",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p05/package-review/PACKAGE-REVIEW.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
+      ],
+      "limit": "Core ZIP and prompts only; required corrected companion and final phase completion remain pending"
+    },
+    {
+      "name": "P05 required corrected companion and saved partial delivery",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p05/companion-review/COMPANION-REVIEW.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/COMPANION-VERIFICATION.json",
+        "docs/engineering/localized-repair-c271/current-host-p05/P05-DELIVERY.json"
+      ],
+      "limit": "P05 partial delivery only. Parent R03-R05 and complete routine/integration remain open."
+    },
+    {
+      "name": "P06 focused implementation verification and independent review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/current-host-p06/EXECUTION-CHECKS.json",
+        "docs/engineering/localized-repair-c271/current-host-p06/INDEPENDENT-REVIEW.json"
+      ],
+      "limit": "P06 only: 66 focused methods, 64 selected controls, 145 effective variants, 2 final source checks; original seven outcomes/full routine/R03 remain unrun or unaccepted."
+    },
+    {
+      "name": "P07 source-backed host-inspection design and independent review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/DESIGN-STATIC-CHECKS.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/review/REVIEW-002.json"
+      ],
+      "limit": "26 author and 13 independent static groups; accepted design only. Actual runtime, original seven, complete routine and R03-R05 remain unmet."
+    },
+    {
+      "name": "P07 documentary records and protected source",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p07/design-record-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/design-record-checks/SOURCE-BOUNDARY.json"
+      ],
+      "limit": "Declared documentary working snapshot only; final published-source checks follow. No product execution or R03 acceptance."
+    },
+    {
+      "name": "P07 clean published design documentary checks",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p07/published-source-checks/CHECKS.json"
+      ],
+      "limit": "Exact clean source a5622f7fdd5ffb40a387d860e41c2ebbe5291d6f only; documentation/workflow/protected source, no product/R03 acceptance."
+    },
+    {
+      "name": "P07 partial handoff and confirmed save/readback",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p07/PACKAGE-VERIFICATION.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/package-review/RESULTS.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/P07-DELIVERY.json"
+      ],
+      "limit": "P07 design delivery only. C271 R03-R05 and P02 remain open; later receipt-publication checks follow separately."
+    },
+    {
+      "name": "P08 focused host-inspection implementation and independent review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p08/EXECUTION-CHECKS.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p08/independent-review/IMPLEMENTATION-ACCEPTANCE.json",
+        "docs/engineering/localized-repair-c271/host-inspection-p08/candidate004-repository-checks/CHECKS.json"
+      ],
+      "limit": "P08 static/filesystem/mocked implementation only; 135 methods, 0 failures/errors/skips, 0 actual project operations under guards. Actual host, original seven, full routine/R03 and integration remain open."
+    },
+    {
+      "name": "P08 corrected package verification, independent review and saved-byte readback",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-inspection-p08/P08-DELIVERY.json"
+      ],
+      "limit": "P08 partial phase delivery only; parent R03/R04/R05 and integration remain open."
+    },
+    {
+      "name": "P09 independent archive inventories",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/NODE-RAW-ARCHIVE-INVENTORY.json",
+        "docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/C195-RAW-ARCHIVE-INVENTORY.json"
+      ],
+      "limit": "2 Node and730 C195 members only; no install or host qualification"
+    },
+    {
+      "name": "P09 H0 static selected-host eligibility",
+      "result": "failed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-preparation-p09/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/host-preparation-p09/independent-review/PYTHON-BLOCKER-VERIFICATION.json"
+      ],
+      "limit": "Independent evidence audit passed43 checks; required H0 prerequisite is blocked, not waived"
+    },
+    {
+      "name": "P10 guarded focused ELF mapping regression",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/EXECUTION-CHECKS.json"
+      ],
+      "limit": "175 methods only; no H0/H1, original-seven, complete routine or integration acceptance."
+    },
+    {
+      "name": "P10 independent frozen candidate oracle",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/evidence/INDEPENDENT-CANDIDATE-REPORT.json"
+      ],
+      "limit": "40 frozen cases plus one inert-image observation; overlaps permanent new controls."
+    },
+    {
+      "name": "P10 candidate workflow metadata check",
+      "result": "failed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/evidence/candidate-record-checks/CHECKS.json"
+      ],
+      "limit": "Preserved invalid next_action status at fdacc1134; corrected in later documentary checkpoint."
+    },
+    {
+      "name": "P10 independent implementation/evidence/boundary review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/INDEPENDENT-FINAL-REVIEW.json"
+      ],
+      "limit": "Bounded mapping phase only; no parent R03 or integration approval."
+    },
+    {
+      "name": "P10 independently verified partial handoff save",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
+      ],
+      "limit": "P10 partial delivery only. R03\u2013R05 and integration remain open."
+    },
+    {
+      "name": "P11 independent intake and verified early recovery",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/EARLY-RECOVERY-RECEIPT.json"
+      ],
+      "limit": "Incoming P10 intake 22 checks; early package 15 groups. No product execution or parent acceptance."
+    },
+    {
+      "name": "P11 initial workflow record validation",
+      "result": "failed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial/CHECKS.json"
+      ],
+      "limit": "Explicit UTC timestamp schema finding; retained exact initial candidate patch. No product execution."
+    },
+    {
+      "name": "P11 initial record correction validation",
+      "result": "failed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected/CHECKS.json"
+      ],
+      "limit": "Preserved next-action status and evidence-path schema findings; no product execution."
+    },
+    {
+      "name": "P11 corrected workflow records and source boundary",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/evidence/initial-corrected002/CHECKS.json"
+      ],
+      "limit": "Targeted correction after preserved record-format failures. No product execution."
+    },
+    {
+      "name": "P11 exact inert artifact construction verification",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/design/static004.stdout.json",
+        "docs/engineering/localized-repair-c271/loader-path-p11/design/candidate004/AUTHORING-ERRORS.json"
+      ],
+      "limit": "1149 static integrity/layout checks only; zero product imports, calls, targets or host qualification."
+    },
+    {
+      "name": "P11 independent exact design/control review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/review/REVIEW.json",
+        "docs/engineering/localized-repair-c271/loader-path-p11/review/ATTEMPTS.json"
+      ],
+      "limit": "1675 static checks; 97 frozen controls and all93 original expected records retained. Not product or R03 acceptance."
+    },
+    {
+      "name": "P11 candidate documentary and source-boundary checks",
+      "result": "failed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/evidence/technical-candidate/CHECKS.json"
+      ],
+      "limit": "Workflow/docs/protected source passed. Whitespace flagged raw unified-diff data only; immutable bytes retained via explicit lossless transport."
+    },
+    {
+      "name": "P11 corrected documentary and lossless-transport checks",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/evidence/technical-corrected/CHECKS.json",
+        "docs/engineering/localized-repair-c271/loader-path-p11/evidence/transport_review/REVIEW.json"
+      ],
+      "limit": "Design/control and record acceptance only. Exact publication and final saved delivery remain pending."
+    },
+    {
+      "name": "P11 independent package recovery review and exact core saved-byte readback",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p11/P11-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/loader-path-p11/evidence/final-package-review/REVIEW.json"
+      ],
+      "limit": "P11 core partial handoff only. Separate terminal confirmation follows; no product test, H0 or R03 acceptance."
+    },
+    {
+      "name": "P12 early recovery and prior delivery reconciliation",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p12/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/intake/AUDIT.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/early-review/AUDIT.json"
+      ],
+      "limit": null
+    },
+    {
+      "name": "P12 frozen loader-path controls and existing inspection regression",
+      "result": "not_run",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p12/PHASE-OUTCOME.json"
+      ],
+      "limit": "Not run: technical phase stopped before implementation at P12-N57-POLICY-BINDING-001. Existing sources and expectations remain unchanged."
+    },
+    {
+      "name": "P12 independent N57 mapping-blocker review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/review/ADJUDICATION.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/SOURCE-BOUNDARY.json"
+      ],
+      "limit": "Pass accepts the blocker diagnosis only. No implementation/97-control/175-method/H0/R03 acceptance."
+    },
+    {
+      "name": "P12 exact-source documentary and saved package verification",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p12/P12-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/final-package/AUDIT.json",
+        "docs/engineering/localized-repair-c271/loader-path-p12/evidence/published-blocked-record-checks/CHECKS.json"
+      ],
+      "limit": "Documentary and delivery checks only. No product, H0/H1, full-routine, integration or parent acceptance."
+    },
+    {
+      "name": "P13 startup reconciliation and confirmed early recovery",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/review-boundary-p13/STARTUP-RECONCILIATION.md",
+        "docs/engineering/localized-repair-c271/review-boundary-p13/EARLY-RECOVERY-REVIEW.md",
+        "docs/engineering/localized-repair-c271/review-boundary-p13/EARLY-RECOVERY-RECEIPT.json"
+      ],
+      "limit": "Intake and recovery only; no design or runtime acceptance."
+    },
+    {
+      "name": "P13 independently accepted review/runtime boundary",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/review-boundary-p13/design/author-validation-attempt001.json",
+        "docs/engineering/localized-repair-c271/review-boundary-p13/review/AUDIT.json",
+        "docs/engineering/localized-repair-c271/review-boundary-p13/review/REPORT.md",
+        "docs/engineering/localized-repair-c271/review-boundary-p13/ADOPTION.json"
+      ],
+      "limit": "26 author and 34 independent static groups; no product or actual-host execution;96 future runtime obligations plus one external review obligation, not97 runtime passes."
+    },
+    {
+      "name": "P13 exact-tree documentary checks and verified saved partial handoff",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/review-boundary-p13/P13-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/review-boundary-p13/evidence/FINAL-PACKAGE-REVIEW.md"
+      ],
+      "limit": "Final package accepted with 69 static groups. Product/H0/H1/full routine/integration/parent gates remain unmet. Separate terminal confirmation is pending."
+    },
+    {
+      "name": "P14 frozen96 runtime controls",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p14/IMPLEMENTATION-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/loader-path-p14/evidence/IMPLEMENTATION-EVIDENCE.json"
+      ],
+      "limit": "Candidate003 exact bytes only. N57 actual-loader source completeness and operational/full-routine gates remain unmet."
+    },
+    {
+      "name": "P14 inherited175 inspection methods",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p14/IMPLEMENTATION-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/loader-path-p14/evidence/IMPLEMENTATION-EVIDENCE.json"
+      ],
+      "limit": "Candidate003 exact bytes only. N57 actual-loader source completeness and operational/full-routine gates remain unmet."
+    },
+    {
+      "name": "P14 independent implementation and adapter review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p14/IMPLEMENTATION-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/loader-path-p14/evidence/IMPLEMENTATION-EVIDENCE.json"
+      ],
+      "limit": "Candidate003 exact bytes only. N57 actual-loader source completeness and operational/full-routine gates remain unmet."
+    },
+    {
+      "name": "P14 required documentary checks",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p14/evidence/documentary-preflight001/CHECKS.json"
+      ],
+      "limit": "Prepublication snapshot passed all four commands. Exact final staged-tree results will be retained with publication and delivery; no full routine is implied."
+    },
+    {
+      "name": "P14 recovery exact publication and historical evidence reuse",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/loader-path-p14/delivery-recovery-20261121/state-review/AUDIT.json",
+        "docs/engineering/localized-repair-c271/loader-path-p14/delivery-recovery-20261121/implementation-review/AUDIT.json",
+        "docs/engineering/localized-repair-c271/loader-path-p14/delivery-recovery-20261121/final-package-review/FINAL-AUDIT.json"
+      ],
+      "limit": "Historical P14 runtime evidence reuse; no fresh product run, H0/H1, full routine or main integration."
+    },
+    {
+      "name": "P15 exact-loader source-completeness independent review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-loader-p15/SOURCE-COMPLETENESS-DECISION.json"
+      ],
+      "limit": "External source-union evidence only; no H0/plan/N57 runtime acceptance."
+    },
+    {
+      "name": "P15 actual static core input admission",
+      "result": "failed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-loader-p15/STATIC-ADMISSION-OUTCOME.json"
+      ],
+      "limit": "Loader returned metadata; libc refused CHI-UNSUPPORTED / Unreviewed ELF dynamic loader feature. No later input check ran."
+    },
+    {
+      "name": "P15 independent first-refusal diagnosis",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-loader-p15/BLOCKER-DECISION.json"
+      ],
+      "limit": "Confirms the blocker and stop only; no repair or H0 acceptance."
+    },
+    {
+      "name": "P15 documentary candidate and independent state review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-loader-p15/documentary-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/host-loader-p15/documentary-review/AUDIT.json"
+      ],
+      "limit": "Reviewed index8f4c3dbf4ca98f6f500212e4374bfd3677dbd728; final staged checks and conditional publication remain separate. No product/R03 acceptance."
+    },
+    {
+      "name": "P15 verified partial handoff and saved-byte readback",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/host-loader-p15/P15-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/host-loader-p15/FINAL-READBACK-VERIFICATION.json"
+      ],
+      "limit": "Partial phase delivery only. R03-R05 and the parent remain open; receipt checkpoint publication/readback follows."
+    },
+    {
+      "name": "P16 author source and inert-control integrity",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/SOURCE-AUDIT-002.json",
+        "docs/engineering/localized-repair-c271/libc-tags-p16/design/candidate001/STATIC-INTEGRITY-AUDIT.json"
+      ],
+      "limit": "46 source/package and 810 integrity assertions; no product parser/test or host execution."
+    },
+    {
+      "name": "P16 independent exact source/design/control review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-tags-p16/review/candidate001/REVIEW.json",
+        "docs/engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json"
+      ],
+      "limit": "No mandatory findings; bounded tag-only design adoption. No implementation, flags exception, H0/H1 or R03 acceptance."
+    },
+    {
+      "name": "P16 documentary preflight",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-tags-p16/documentary-checks/preflight002/CHECKS.json",
+        "docs/engineering/localized-repair-c271/libc-tags-p16/DOCUMENTARY-FAILURES.json"
+      ],
+      "limit": "Exact preflight tree 65815331ffd1de9052b1b1d0203b23822a28ee07 passed all four commands. First failure and raw bytes preserved. Final staged-tree review/checks and publication remain separate; no product tests."
+    },
+    {
+      "name": "P16 verified partial handoff and exact saved readback",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/libc-tags-p16/FINAL-READBACK-VERIFICATION.json"
+      ],
+      "limit": "P16 partial delivery only. Parent R03\u2013R05 and P02 remain open. This receipt checkpoint requires its own conditional publication/readback; late evidence is preserved separately."
+    },
+    {
+      "name": "P17 startup reconciliation and independently verified early recovery",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-flags-p17/EARLY-RECOVERY-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/libc-flags-p17/STARTUP-EVIDENCE-MANIFEST.json"
+      ],
+      "limit": null
+    },
+    {
+      "name": "P17 independent exact source/design/control review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-flags-p17/review/REVIEW.json",
+        "docs/engineering/localized-repair-c271/libc-flags-p17/review/AUDIT-ATTEMPT002.json",
+        "docs/engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json"
+      ],
+      "limit": "Design-only acceptance; zero production imports, product policy evaluations, product tests or current-host inspections. No R03 completion."
+    },
+    {
+      "name": "P17 documentary core, protected source and verified saved partial handoff",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-flags-p17/P17-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/libc-flags-p17/delivery-checks/CHECKS.json",
+        "docs/engineering/localized-repair-c271/libc-flags-p17/delivery-checks/SOURCE-BOUNDARY.json",
+        "docs/engineering/localized-repair-c271/libc-flags-p17/delivery-checks/PACKAGE-REVIEW.json"
+      ],
+      "limit": "Core checks and saved partial delivery only. This later receipt delta still requires its own review, checks and publication. No runtime, integration or parent acceptance."
+    },
+    {
+      "name": "Bounded libc metadata implementation and independent exact-source/adapter review",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-implementation-p18/implementation/frozen-control-run/RESULTS.json",
+        "docs/engineering/localized-repair-c271/libc-implementation-p18/implementation/inherited-run/RESULTS.json",
+        "docs/engineering/localized-repair-c271/libc-implementation-p18/review/REVIEW.json",
+        "docs/engineering/localized-repair-c271/libc-implementation-p18/review/attempt001/RESULT.json"
+      ],
+      "limit": "Implementation only. Zero failures/errors/skips. No actual-host qualification, H0/H1, complete routine, integration or parent closure. N57 external."
+    },
+    {
+      "name": "Independently verified frozen final package and actual ZIP/prompt readbacks",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/libc-implementation-p18/package-review/REVIEW.json",
+        "docs/engineering/localized-repair-c271/libc-implementation-p18/delivery/SAVED-FILES.json"
+      ],
+      "limit": "Core partial handoff saved. Separate receipt publication, fresh checks and terminal confirmation follow. No parent completion."
+    },
+    {
+      "name": "P19 actual-input metadata readiness observation",
+      "result": "failed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/actual-input-p19/PHASE-OUTCOME.json",
+        "docs/engineering/localized-repair-c271/actual-input-p19/observation/attempt001/RESULT.json"
+      ],
+      "limit": "Input readiness blocked at fifth package. Three raw readers and first four metadata names/versions succeeded; final two package checks not run. This is not full H0 or product qualification."
+    },
+    {
+      "name": "P19 independent retained-artifact outcome audit",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/actual-input-p19/operational-review/OUTCOME-REVIEW.json",
+        "docs/engineering/localized-repair-c271/actual-input-p19/operational-review/OUTCOME-AUDIT.json"
+      ],
+      "limit": "Accepted first-blocker evidence only; no host reread or product execution; no H0 admission."
+    },
+    {
+      "name": "P19 independently verified saved partial handoff and exact prompt readbacks",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/actual-input-p19/P19-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/actual-input-p19/delivery/PACKAGE-ACCEPTANCE.json",
+        "docs/engineering/localized-repair-c271/actual-input-p19/delivery/SAVED-ARTIFACTS.json"
+      ],
+      "limit": "P19 partial delivery only. Required actual-input readiness failed; H0 and R03-R05 remain unmet."
+    },
+    {
+      "name": "P20 isolated environment preparation and independent static outcome audit",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/environment-p20/preparation/RESULT.json",
+        "docs/engineering/localized-repair-c271/environment-p20/reviews/OUTCOME-REVIEW.json"
+      ],
+      "limit": "Three preparation commands exit0; seven unchanged wheel/package pins; 293 installed files; 463 unchanged original input descriptors; no H0/H1/product/full-routine acceptance"
+    },
+    {
+      "name": "P20 independently verified saved partial ZIP and matching prompt readbacks",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json"
+      ],
+      "limit": "Saved partial core only. Separate receipt publication/terminal confirmation remain pending; no H0/H1, R03, integration or parent completion."
+    },
+    {
+      "name": "P21 exact prepared-environment preservation",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/h0-plan-p21/rebind/RESULT.json"
+      ],
+      "limit": null
+    },
+    {
+      "name": "P22 exact Node and retained-dependency preparation and independent receipt audit",
+      "result": "passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/retained-input-p22/preparation/LAUNCH-RESULT.json",
+        "docs/engineering/localized-repair-c271/retained-input-p22/reviews/OUTCOME-REVIEW.json"
+      ],
+      "limit": "2+24 installed files, exact source-bound reports/indexes and modes; all 626 source files unchanged; no H0/H1/full-routine acceptance"
+    }
+  ],
+  "historical_phase_entries": [
+    {
+      "id": "C271-P01-control-candidate",
+      "status": "complete_partial_delivery",
+      "source_revision": "e0b73f7d6ce49631e598d1378a0ddba717726524"
+    },
+    {
+      "phase": "C271-P02-integration-finalization",
+      "status": "complete_partial_delivery",
+      "source_revision": "70a658c31085bf8dd78d79663c57f8e3cdb28ceb"
+    },
+    {
+      "phase": "C271-P03-validation-recovery",
+      "status": "complete_partial_delivery",
+      "source_revision": "633c5097b2c5b870a13baa33a095a91eaa241eea"
+    },
+    {
+      "phase": "C271-P04-historical-runtime-recovery",
+      "status": "complete_partial_delivery"
+    },
+    {
+      "phase": "C271-P05-current-host-contract-design",
+      "status": "complete_partial_delivery",
+      "phase_complete": true
+    },
+    {
+      "phase": "C271-P06-current-host-provider-implementation",
+      "status": "complete_partial_delivery"
+    },
+    {
+      "phase": "C271-P07-host-inspection-design",
+      "status": "complete_partial_delivery",
+      "phase_complete": true
+    },
+    {
+      "phase": "C271-P08-host-inspection-implementation",
+      "status": "complete_partial_delivery",
+      "phase_complete": true
+    },
+    {
+      "phase": "C271-P09-H0-static-preparation",
+      "status": "blocked_partial_delivery_complete"
+    },
+    {
+      "phase": "C271-P10-ELF-string-table-correction",
+      "status": "complete_partial_delivery",
+      "current_unknown_operations": [],
+      "historical_unknowns": [
+        "C270 broad-driver completion remains unknown",
+        "Global prior-process termination remains unestablished"
+      ]
+    },
+    {
+      "phase": "C271-P11-loader-path-decision",
+      "status": "delivery_confirmation_pending",
+      "current_unknown_operations": [],
+      "historical_unknowns": [
+        "C270 broad-driver completion remains unknown",
+        "Global prior-process termination remains unestablished"
+      ]
+    },
+    {
+      "phase": "C271-P12-loader-path-implementation",
+      "status": "blocked_delivery_confirmation_pending",
+      "current_unknown_operations": [],
+      "historical_unknowns": [
+        "C270 broad-driver completion remains unknown",
+        "Global prior-process termination remains unestablished"
+      ]
+    },
+    {
+      "phase": "C271-P13-review-policy-boundary",
+      "source_revision": "4023a878ccc9980726e3b56102b41faa51be0eb1",
+      "disposition": "complete_partial_delivery"
+    },
+    {
+      "phase": "C271-P14-loader-path-implementation",
+      "status": "complete_partial_delivery",
+      "historical_unknowns": [
+        "C270 broad-driver completion remains unknown",
+        "Global prior-process termination remains unestablished",
+        "P13 read-only character-level difflib completion remains unknown; no write was involved; do not repeat."
+      ],
+      "current_unknown_operations": [],
+      "phase_complete": true
+    },
+    {
+      "phase": "C271-P15-H0-loader-source-and-plan-review",
+      "source_revision": "0474280a2087299004324419ea345ab7c716bc9a",
+      "status": "complete_partial_delivery",
+      "historical_unknowns": [
+        "C270 broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only character-level difflib completion; do not repeat"
+      ],
+      "current_unknown_operations": [],
+      "phase_complete": true
+    },
+    {
+      "phase": "C271-P16-libc-dynamic-tag-compatibility-decision",
+      "source_revision": "6936405f0b9d35bb3748c4a8f57a3e2fb59e32c8",
+      "phase_complete": true,
+      "current_unknown_operations": [],
+      "historical_unknowns": [
+        "C270 ancillary broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only character-level difflib completion; do not retry"
+      ],
+      "status": "complete_partial_delivery"
+    },
+    {
+      "phase": "C271-P17-libc-flags-compatibility-decision",
+      "phase_complete": false,
+      "status": "core_saved_terminal_delivery_pending",
+      "current_unknown_operations": [],
+      "historical_unknowns": [
+        "C270 ancillary broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only difflib completion; do not retry"
+      ],
+      "source_revision": "4770a5ea7027ea25d64ef0c339ca360e367dc0cd"
+    },
+    {
+      "phase": "C271-P18-libc-metadata-implementation",
+      "source_revision": "2f791017c6559bfd47937b32b1862cfe98a81551",
+      "source_path": "docs/workflow/tasks/C271/task.json",
+      "pointer": "session_phase",
+      "reconciliation": "docs/engineering/localized-repair-c271/actual-input-p19/startup/P18-RECONCILIATION.json",
+      "disposition": "P18 complete_partial_delivery; exact original object preserved at referenced Git revision"
+    },
+    {
+      "phase": "P19",
+      "source_revision": "4bf7cb0023d1747be16c8752795819dd9a0cca37",
+      "source_path": "docs/workflow/tasks/C271/task.json",
+      "pointer": "/session_phase",
+      "disposition": "P19 partial delivery complete; exact source preserved in Git"
+    },
+    {
+      "phase": "C271-P20-isolated-verification-environment",
+      "status": "core_saved_receipt_publication_pending",
+      "phase_complete": false,
+      "source_revision": "4bf7cb0023d1747be16c8752795819dd9a0cca37",
+      "current_unknown_operations": [],
+      "historical_unknowns": [
+        "C270 ancillary broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only difflib completion; do not retry"
+      ]
+    },
+    {
+      "phase": "C271-P21-h0-operational-plan-review",
+      "status": "blocked_H0_input_provenance_saved_handoff_terminal_pending",
+      "phase_complete": false,
+      "current_unknown_operations": [],
+      "historical_unknown_operations": [
+        "C270 ancillary broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only difflib completion; do not retry"
+      ],
+      "source_revision": "b99f7e3bd33e6d2796d2732f97f21cdc3d04aaf9"
+    }
+  ],
+  "history_preservation": "All source bytes retained; no historical records edited. Current claims read in full; all historical objects parsed and structural/state/evidence pointers inspected without dumping complete historical records."
+}

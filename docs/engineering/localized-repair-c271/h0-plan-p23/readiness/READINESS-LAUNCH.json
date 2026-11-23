@@ -1,0 +1,51 @@
+{
+  "schema": "ontokin.c271.p23-readiness-launch/1",
+  "scope": "One data-only pin-eligibility observation, not H0 invocation",
+  "script": {
+    "path": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/check_required_images.py",
+    "sha256": "e9930eb20b89ccd2087af045cfbeb7a9f65aa5d546cc57985fa0e12bc7aeb163",
+    "size_bytes": 5664
+  },
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-I",
+    "-S",
+    "-B",
+    "/workspace/scratch/f8d879d19e34/phase-p23/readiness/check_required_images.py"
+  ],
+  "cwd": "/workspace/scratch/f8d879d19e34",
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "UV_THREADPOOL_SIZE": "2"
+  },
+  "outer_timeout_seconds": 30,
+  "inner_timeout_seconds": 20,
+  "output_prefix": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/run001",
+  "exclusive_stdout": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/run001.stdout.json",
+  "exclusive_stderr": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/run001.stderr.log",
+  "expected_checker_launches": 1,
+  "target_starts": 0,
+  "ordered_predicates": [
+    "resolved current Python agrees with /proc/self/exe and exact adopted image pin",
+    "only after Python match, current mapped libc agrees with exact adopted pin",
+    "only after libc match, current mapped loader agrees with exact adopted pin"
+  ],
+  "stop": "First mismatch/ambiguity/error is concrete blocker and ends technical work; all matches only permit further scoped H0 preparation",
+  "project_imports": [],
+  "package_imports": [],
+  "subprocesses_in_checker": [],
+  "writes_in_checker": [],
+  "read_scope": [
+    "current selected Python image",
+    "/proc/self/exe readlink/stat",
+    "/proc/self/maps bounded read after Python match",
+    "two deduplicated mapped libc/loader image files, one at a time"
+  ],
+  "early_receipt": "phase-p23/state/EARLY-RECOVERY-RECEIPT.json",
+  "governing_source_commit": "527368bd5195c439762b43e2cc836ff9822213f8",
+  "governing_inspector_sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206",
+  "h0_plan_accepted": false
+}

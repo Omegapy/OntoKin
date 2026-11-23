@@ -1,0 +1,109 @@
+{
+  "schema": "ontokin.c271.p23-outcome/1",
+  "phase": "C271-P23-current-host-H0-plan",
+  "recorded_at_utc": "2026-11-23T05:11:46.124523+00:00",
+  "status": "blocked_H0_plan_technical_boundary_reached",
+  "technical_phase_complete": true,
+  "phase_complete": false,
+  "parent_complete": false,
+  "owner": "c271-p23-f8d879d19e34",
+  "starting_branch_revision": "51a00f21013386df6ee4ce3c3560c902b32c6af5",
+  "frozen_implementation": {
+    "commit": "527368bd5195c439762b43e2cc836ff9822213f8",
+    "tree": "e8844be5189b65d1bc17af40861fac672b189b25",
+    "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206",
+    "bytes": 196305
+  },
+  "primary_blocker": {
+    "id": "H0-RTLD-ABSENT-PARENT-001",
+    "observed": "The mandatory literal /usr/bin/ldd RTLDLIST contains /libx32/ld-linux-x32.so.2; both this candidate and immediate parent /libx32 were absent in two matching metadata observations.",
+    "required": "The closed absent-candidate row requires parent == str(path.parent), path.parent.is_dir(), not path.exists(), and not path.is_symlink(). The full ordered literal candidate list must be declared.",
+    "consequence": "No admitted file or absent row can represent this required path under the unchanged implementation. Omitting the candidate would violate the literal-list binding.",
+    "classification": "Independently confirmed source-backed plan-representation blocker; no public H0 inspector was invoked and no runtime refusal is claimed."
+  },
+  "related_constraint_from_same_observation": {
+    "observed_path": "/lib64/ld-linux-x86-64.so.2",
+    "observed_symlink_target": "../lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+    "required": "The unchanged _existing_chain rejects any symlink target with a .. path component.",
+    "consequence": "The mandatory loader alias also needs an explicit future traversal-model decision; no diagnostic ordering or additional runtime test is inferred."
+  },
+  "actual_observations": [
+    {
+      "name": "necessary Python/libc/loader pins",
+      "result": "all three exact SHA-256/size/mode tuples matched",
+      "returncode": 0,
+      "evidence": "docs/engineering/localized-repair-c271/h0-plan-p23/readiness/run001.stdout.json",
+      "review": "docs/engineering/localized-repair-c271/h0-plan-p23/reviews/h0/READINESS-OUTCOME-REVIEW.json"
+    },
+    {
+      "name": "current ldd literal candidates and immediate parents",
+      "result": "bounded raw observation completed; first concrete plan blocker identified",
+      "returncode": 0,
+      "evidence": "docs/engineering/localized-repair-c271/h0-plan-p23/readiness/ldd001.stdout.json",
+      "review": "docs/engineering/localized-repair-c271/h0-plan-p23/reviews/h0/BLOCKER-REVIEW.json"
+    }
+  ],
+  "recovered_input_evidence": {
+    "source": "Fresh ordinary Git checkout at the frozen commit/tree; all 626 execution source files exactly match the preserved inventory; clean status.",
+    "portable_inputs": "Exact Node archive and P21 archive/seven wheel payloads available and hash verified. C195 source archive is materialized at its frozen Git path. No current installation or H0 receipt was created.",
+    "history": "Original P22 source object and installation receipts remain unchanged historical evidence. Current paths are disposable and never serve as old-host recovery instructions."
+  },
+  "independent_review": {
+    "repository_path": "docs/engineering/localized-repair-c271/h0-plan-p23/reviews/h0/BLOCKER-REVIEW.json",
+    "path": "/workspace/scratch/f8d879d19e34/phase-p23/reviews/h0/BLOCKER-REVIEW.json",
+    "bytes": 10666,
+    "sha256": "25038258b370c3a844b3c46dd304214a213eadc215f2a96ee87edc8e38a15b38"
+  },
+  "execution_counts": {
+    "raw_observation_python_processes": 2,
+    "public_H0_inspector": 0,
+    "H1": 0,
+    "Node": 0,
+    "ldd": 0,
+    "direct_loader": 0,
+    "original_CPU_checkers": 0,
+    "product_tests": 0,
+    "preparer": 0,
+    "package_installations": 0
+  },
+  "h0_plan_accepted": false,
+  "h0_accepted": false,
+  "requirements": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "parent_plan": {
+    "P01": "done",
+    "P02": "in_progress"
+  },
+  "branch": "work/c271-missing-import-digest-control",
+  "pr": {
+    "number": 274,
+    "state": "open",
+    "draft": true,
+    "merged": false
+  },
+  "issue": {
+    "number": 273,
+    "state": "open"
+  },
+  "main_lease_held": false,
+  "main_integration": false,
+  "current_unknown_operations": [],
+  "historical_unknown_operations": [
+    "C270 ancillary broad-driver completion",
+    "Global prior-process termination",
+    "P13 read-only difflib completion; do not retry"
+  ],
+  "preserved_failures": "All 75 prior check records remain unchanged. Reviewer denominator/anchor/import-list corrections and initial documentary candidate defects remain in evidence; none is relabeled a product-test failure or pass.",
+  "delivery": {
+    "state": "pending",
+    "future_external_receipt": "docs/engineering/localized-repair-c271/h0-plan-p23/P23-DELIVERY.json"
+  },
+  "next_action_this_chat": "Complete documentary review/checks, conditional retained-branch publication and verified handoff with separate receipt; no further technical work in this chat.",
+  "first_remaining_action_fresh_chat": "Review a bounded versioned representation for absent loader-candidate ancestors and parent-traversing loader aliases, or retain the existing refusal. No implementation is selected in P23."
+}

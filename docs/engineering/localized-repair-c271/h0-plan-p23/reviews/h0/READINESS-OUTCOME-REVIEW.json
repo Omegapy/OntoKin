@@ -1,0 +1,205 @@
+{
+  "schema": "ontokin.c271.p23-readiness-outcome-review/1",
+  "reviewer": "/root/h0_review",
+  "verdict": "accepted_necessary_current_image_pins_match_only",
+  "candidate": {
+    "stdout": {
+      "path": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/run001.stdout.json",
+      "size_bytes": 3004,
+      "sha256": "20c75289f7bea264bc57f64df8b6da5be13d51835c72bcc5f6ac5e02b4ff1790",
+      "mode": "0o644"
+    },
+    "stderr": {
+      "path": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/run001.stderr.log",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o644"
+    },
+    "capture": {
+      "path": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/run001.capture.json",
+      "size_bytes": 1464,
+      "sha256": "091f72bd81d36269c419ce45c68ec30f1a5ab07111d89566ad7200216b9b532c",
+      "mode": "0o644"
+    },
+    "script": {
+      "path": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/check_required_images.py",
+      "size_bytes": 5664,
+      "sha256": "e9930eb20b89ccd2087af045cfbeb7a9f65aa5d546cc57985fa0e12bc7aeb163",
+      "mode": "0o644"
+    },
+    "launch": {
+      "path": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/READINESS-LAUNCH.json",
+      "size_bytes": 2159,
+      "sha256": "224d5f3eba66ce36336f483e133f243abc50a06868828491c1f8d4e5ea307301",
+      "mode": "0o644"
+    }
+  },
+  "reviewed_preexecution_record": {
+    "path": "/workspace/scratch/f8d879d19e34/phase-p23/reviews/h0/READINESS-REVIEW.json",
+    "size_bytes": 5933,
+    "sha256": "da402333dacda2b6c3d3449bc9405566b0bf5275d315e94683320a794297526a",
+    "mode": "0o644"
+  },
+  "checks": [
+    {
+      "id": "O01",
+      "finding": "Capture binds the independently accepted script and launch descriptors.",
+      "passed": true
+    },
+    {
+      "id": "O02",
+      "finding": "Capture binds the exact readiness-review record.",
+      "passed": true
+    },
+    {
+      "id": "O03",
+      "finding": "Captured argv/cwd/environment/outer timeout equal the reviewed launch.",
+      "passed": true
+    },
+    {
+      "id": "O04",
+      "finding": "Capture reports one completed invocation, return code zero, and duration below both deadlines.",
+      "passed": true
+    },
+    {
+      "id": "O05",
+      "finding": "Actual stdout and stderr hashes/sizes equal the capture; stderr is empty.",
+      "passed": true
+    },
+    {
+      "id": "O06",
+      "finding": "Result contains exactly the ordered three positive stable-read observations.",
+      "passed": true
+    },
+    {
+      "id": "O07",
+      "finding": "Every measured SHA-256/size/mode equals the adopted pin and reported expectation.",
+      "passed": true
+    },
+    {
+      "id": "O08",
+      "finding": "Current mapped-image input is within the reviewed one-MiB bound.",
+      "passed": true
+    },
+    {
+      "id": "O09",
+      "finding": "Result states only necessary pin matching and preserves false H0 acceptance.",
+      "passed": true
+    },
+    {
+      "id": "O10",
+      "finding": "All reported target counts remain zero.",
+      "passed": true
+    },
+    {
+      "id": "O11",
+      "finding": "Result observation time is within the ordered capture interval.",
+      "passed": true
+    }
+  ],
+  "checks_passed": 11,
+  "mandatory_findings": [],
+  "observations": [
+    {
+      "role": "python",
+      "expected": {
+        "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+        "size_bytes": 30894944,
+        "mode": "0o755"
+      },
+      "measured": {
+        "path": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7",
+        "size_bytes": 30894944,
+        "mode": "0o755",
+        "device": 27,
+        "inode": 9223372036854863271
+      },
+      "matched": true,
+      "stable_read": true
+    },
+    {
+      "role": "libc",
+      "expected": {
+        "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
+        "size_bytes": 1995216,
+        "mode": "0o755"
+      },
+      "measured": {
+        "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+        "sha256": "9792e3cbb541c8f44c7acf5f14f4022ea62998ecc787d326bed4d8b6547dfd92",
+        "size_bytes": 1995216,
+        "mode": "0o755",
+        "device": 27,
+        "inode": 9223372036855318289
+      },
+      "matched": true,
+      "stable_read": true
+    },
+    {
+      "role": "loader",
+      "expected": {
+        "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+        "size_bytes": 225672,
+        "mode": "0o755"
+      },
+      "measured": {
+        "path": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+        "size_bytes": 225672,
+        "mode": "0o755",
+        "device": 27,
+        "inode": 9223372036855316373
+      },
+      "matched": true,
+      "stable_read": true
+    }
+  ],
+  "capture_summary": {
+    "returncode": 0,
+    "readiness_launches": 1,
+    "elapsed_seconds": 0.06420955800058437,
+    "stderr_bytes": 0,
+    "target_starts": 0
+  },
+  "h0_plan_accepted": false,
+  "h0_accepted": false,
+  "h1_approved": false,
+  "first_concrete_blocker": null,
+  "next_finite_prerequisites": [
+    {
+      "id": "NEXT-01",
+      "requirement": "Freeze one actual clean ordinary checkout at source 527368bd5195c439762b43e2cc836ff9822213f8 and a current inventory descriptor preserving the exact P22 inventory bytes.",
+      "limit": "Do not reuse or probe former-host paths."
+    },
+    {
+      "id": "NEXT-02",
+      "requirement": "Verify portable availability of exact Node/C195 archives and, if needed, the separately retained seven P20 wheels/metadata.",
+      "limit": "An unavailable exact input can be the next concrete blocker; do not silently substitute."
+    },
+    {
+      "id": "NEXT-03",
+      "requirement": "Independently review fresh exact unchanged-preparer plans/launches; obtain current-source-equal successful installation pairs and complete exact current trees only as needed.",
+      "limit": "Historical receipts stay immutable; absence of newly constructed evidence alone is a preparation task, not a demonstrated unavailable prerequisite."
+    },
+    {
+      "id": "NEXT-04",
+      "requirement": "Construct exact current author/import/cache/metadata and finite ELF/ldd/script/configuration/search/absence records under a separately reviewed bounded observation if needed.",
+      "limit": "No target/Node/ldd/public H0 invocation or repeated historical profiling. Stop on the first actual unsupported binding or missing required input."
+    },
+    {
+      "id": "NEXT-05",
+      "requirement": "Review reuse of P15 source-complete suffix union against the matching exact loader and original evidence; bind it to actual current variants, rationale, origin and plan.",
+      "limit": "Prior narrow review does not prove current nonselection, current source inputs or whole-plan acceptance."
+    },
+    {
+      "id": "NEXT-06",
+      "requirement": "Complete exact canonical /0.1.3 plan with fixed future commands, fresh evidence/outer capture and independent external expected digest, then obtain full independent review.",
+      "limit": "Stop at accepted H0 plan or first concrete blocker, followed by phase delivery."
+    }
+  ],
+  "blocker_assessment": "No concrete blocker is demonstrated by this successful three-image observation. Current-source installation records and complete closure are still missing evidence to construct. The next blocker must be an actual unavailable pinned artifact, unsupported current closure/path/metadata predicate or unresolved exact-source review, not a forecast.",
+  "reuse_limit": "These hashes concern current-run on-disk files identified by the reviewed process; they are not a whole-memory, OS or operational-closure attestation.",
+  "reviewer_actions": "Read exact captured files once and independently compare descriptors, pins, ordering, timing and stated scope. Did not rerun readiness or invoke product/targets.",
+  "next_action_owner": "/root"
+}

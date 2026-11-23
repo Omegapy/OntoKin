@@ -1,0 +1,134 @@
+{
+  "schema": "ontokin.c271.p23-ldd-candidate-review/1",
+  "reviewer": "/root/h0_review",
+  "verdict": "accepted_for_one_bounded_raw_ldd_candidate_observation",
+  "candidate": {
+    "script": {
+      "path": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/observe_ldd_candidates.py",
+      "size_bytes": 4882,
+      "sha256": "c99af2c7ca26db8fce518419ca980af60fbc0d9cb61257a35a89b2f612b9f93a",
+      "mode": "0o644"
+    },
+    "launch": {
+      "path": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/LDD-CANDIDATE-LAUNCH.json",
+      "size_bytes": 2064,
+      "sha256": "16e75599cdbfdfd10d4fa20057753487d029297661333124f26a38c8f672b77b",
+      "mode": "0o644"
+    }
+  },
+  "checks": [
+    {
+      "id": "L01",
+      "passed": true,
+      "finding": "Exact submitted script and launch hashes/sizes verified."
+    },
+    {
+      "id": "L02",
+      "passed": true,
+      "finding": "Only the six declared standard-library imports are present; no project import, subprocess or loader/Node/ldd execution path exists."
+    },
+    {
+      "id": "L03",
+      "passed": true,
+      "finding": "Current /usr/bin/ldd is read as a no-follow, bounded, private regular file; complete bytes and before/after opened/named identity are retained."
+    },
+    {
+      "id": "L04",
+      "passed": true,
+      "finding": "The literal RTLDLIST regex agrees with the frozen source selector, requires one assignment, and preserves ordered candidates."
+    },
+    {
+      "id": "L05",
+      "passed": true,
+      "finding": "At most sixteen normalized absolute candidate names are observed; duplicate, malformed or excessive lists refuse."
+    },
+    {
+      "id": "L06",
+      "passed": true,
+      "finding": "Only candidate and immediate-parent lstat/stat/readlink observations follow; the collector does not open candidate executables."
+    },
+    {
+      "id": "L07",
+      "passed": true,
+      "finding": "Two exact metadata observations per candidate/parent detect observed drift and retain symlink/dangling-link/directory distinctions."
+    },
+    {
+      "id": "L08",
+      "passed": true,
+      "finding": "The ten-second internal allowance and twenty-second outer timeout are finite; current clean environment and -I -S -B are exact."
+    },
+    {
+      "id": "L09",
+      "passed": true,
+      "finding": "Fresh exclusive stdout/stderr paths are absent at review and the Director commits to prelaunch script/plan/review rehash and no retry."
+    },
+    {
+      "id": "L10",
+      "passed": true,
+      "finding": "Raw observation status and H0/target-start fields preserve the limit; no runtime policy result is claimed."
+    },
+    {
+      "id": "L11",
+      "passed": true,
+      "finding": "The observed path relationships directly address a mandatory predicate common to all current _check_resolution profiles."
+    }
+  ],
+  "checks_passed": 11,
+  "mandatory_findings": [],
+  "source_applicability": {
+    "commit": "527368bd5195c439762b43e2cc836ff9822213f8",
+    "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206",
+    "size_bytes": 196305,
+    "anchors": [
+      {
+        "function": "_check_host_static",
+        "lines": "620-624",
+        "fact": "ldd named role is fixed to /usr/bin/ldd."
+      },
+      {
+        "function": "_plan_shape",
+        "lines": "440-449",
+        "fact": "The future shared_libraries command is exactly /usr/bin/ldd plus selected Node."
+      },
+      {
+        "function": "_check_resolution",
+        "lines": "1607-1629",
+        "fact": "Every literal RTLDLIST candidate appears in order; absent rows have exactly path/state/parent and require immediate parent to exist as directory."
+      },
+      {
+        "function": "_absolute",
+        "lines": "186-196",
+        "fact": "links=True allows alias spelling but supplies no absent-ancestor semantics."
+      },
+      {
+        "function": "_check_origin_nonselection",
+        "lines": "1130-1141",
+        "fact": "Origin variants separately support absent_at; that schema does not apply to RTLD candidates."
+      }
+    ],
+    "mandatory_absence_predicate": "row.parent == str(path.parent) and path.parent.is_dir() and not path.exists() and not path.is_symlink()",
+    "ordered_literal_binding": "The single literal RTLDLIST split list equals the complete declared loader_candidates list.",
+    "conditional_finding": "If the raw observation establishes a mandatory absent candidate with a nonexistent immediate parent, neither a file row nor an admitted absent row can represent that path under the frozen implementation. This is a source-backed plan blocker; no public runtime diagnostic has been observed."
+  },
+  "outer_capture_obligations": [
+    "Rehash script, launch and this review immediately before the single launch.",
+    "Use exact reviewed argv/cwd/environment/timeout and exclusive output files.",
+    "Preserve structured capture plus raw stdout/stderr on success, failure or timeout.",
+    "No retry and no subsequent technical preparation once independent review establishes the first concrete blocker."
+  ],
+  "execution_counts_expected": {
+    "readiness_python_processes": 1,
+    "project_imports": 0,
+    "Node": 0,
+    "ldd": 0,
+    "direct_loader": 0,
+    "public_inspector": 0,
+    "original_CPU_checkers": 0,
+    "installations": 0
+  },
+  "h0_plan_accepted": false,
+  "h0_accepted": false,
+  "candidate_executed_by_reviewer": false,
+  "next_action": "Director runs once and returns exact raw observations and outer capture for independent source-applicability review."
+}

@@ -1,0 +1,51 @@
+{
+  "schema": "ontokin.c271.p23-ldd-candidate-launch/1",
+  "scope": "One raw data observation of current ldd script literal RTLDLIST and mandatory immediate-parent path facts",
+  "script": {
+    "path": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/observe_ldd_candidates.py",
+    "sha256": "c99af2c7ca26db8fce518419ca980af60fbc0d9cb61257a35a89b2f612b9f93a",
+    "size_bytes": 4882
+  },
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-I",
+    "-S",
+    "-B",
+    "/workspace/scratch/f8d879d19e34/phase-p23/readiness/observe_ldd_candidates.py"
+  ],
+  "cwd": "/workspace/scratch/f8d879d19e34",
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "UV_THREADPOOL_SIZE": "2"
+  },
+  "outer_timeout_seconds": 20,
+  "inner_timeout_seconds": 10,
+  "exclusive_stdout": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/ldd001.stdout.json",
+  "exclusive_stderr": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/ldd001.stderr.log",
+  "expected_observation_processes": 1,
+  "target_starts": 0,
+  "imports": [
+    "hashlib",
+    "json",
+    "os",
+    "re",
+    "stat",
+    "time"
+  ],
+  "project_imports": [],
+  "subprocesses_in_collector": 0,
+  "writes_in_collector": 0,
+  "read_scope": [
+    "/usr/bin/ldd bounded stable bytes",
+    "literal RTLDLIST candidates and immediate parents lstat/stat/readlink twice"
+  ],
+  "source_predicate": "current_host_inspection_v01.py _check_resolution absent RTLD candidate requires path.parent.is_dir() and path.parent equals declared parent",
+  "governing_source_commit": "527368bd5195c439762b43e2cc836ff9822213f8",
+  "governing_inspector_sha256": "e14542e45deb200bb97f2a591c94bdd19916a1d33dcb3ce9f631816b98e0c206",
+  "capture": "Exclusive outer capture; rehash script/launch/review immediately before single subprocess.run; timeout/unknown retained and not retried",
+  "stop": "Independent review of observations; first demonstrated prerequisite blocker ends technical work",
+  "h0_plan_accepted": false
+}

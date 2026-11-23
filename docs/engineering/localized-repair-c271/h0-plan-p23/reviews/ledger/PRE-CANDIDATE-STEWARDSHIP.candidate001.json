@@ -1,0 +1,208 @@
+{
+  "schema": "ontokin.c271.p23.pre-candidate-stewardship/1",
+  "reviewer": "/root/ledger",
+  "recorded_at_utc": "2026-11-23T05:07:48.640096+00:00",
+  "verdict": "history_and_parent_boundaries_preserved_final_candidate_not_approved",
+  "source_head": "51a00f21013386df6ee4ce3c3560c902b32c6af5",
+  "scope": "Bounded read-only worktree stewardship check. Endpoint and final documentary candidate are pending.",
+  "checks": [
+    {
+      "name": "retained_branch",
+      "passed": true,
+      "detail": {
+        "actual_local_branch": "work/c271-missing-import-digest-control",
+        "task_branch": "work/c271-missing-import-digest-control"
+      }
+    },
+    {
+      "name": "root_assignment_matches_phase_owner",
+      "passed": true,
+      "detail": "Root assignment/canonical local record match; global remote ownership remains Director-reconciled."
+    },
+    {
+      "name": "parent_requirement_states",
+      "passed": true,
+      "detail": "No parent requirement promoted."
+    },
+    {
+      "name": "parent_plan_states",
+      "passed": true,
+      "detail": "No parent plan completion claimed."
+    },
+    {
+      "name": "prior_requirements_preserved",
+      "passed": true,
+      "detail": "Exact JSON equality to 51a00f21013386df6ee4ce3c3560c902b32c6af5."
+    },
+    {
+      "name": "prior_plan_preserved",
+      "passed": true,
+      "detail": "Exact JSON equality to 51a00f21013386df6ee4ce3c3560c902b32c6af5."
+    },
+    {
+      "name": "prior_checks_preserved",
+      "passed": true,
+      "detail": "Exact JSON equality to 51a00f21013386df6ee4ce3c3560c902b32c6af5."
+    },
+    {
+      "name": "prior_completion_preserved",
+      "passed": true,
+      "detail": "Exact JSON equality to 51a00f21013386df6ee4ce3c3560c902b32c6af5."
+    },
+    {
+      "name": "prior_blocked_reason_history_preserved",
+      "passed": true,
+      "detail": "Exact JSON equality to 51a00f21013386df6ee4ce3c3560c902b32c6af5."
+    },
+    {
+      "name": "prior_prior_h0_constraints_preserved",
+      "passed": true,
+      "detail": "Exact JSON equality to 51a00f21013386df6ee4ce3c3560c902b32c6af5."
+    },
+    {
+      "name": "prior_session_phases_prefix_preserved",
+      "passed": true,
+      "detail": {
+        "base_items": 21,
+        "current_items": 22
+      }
+    },
+    {
+      "name": "prior_phase_deliveries_prefix_preserved",
+      "passed": true,
+      "detail": {
+        "base_items": 21,
+        "current_items": 21
+      }
+    },
+    {
+      "name": "phase_reconciliations_prefix_preserved",
+      "passed": true,
+      "detail": {
+        "base_items": 7,
+        "current_items": 8
+      }
+    },
+    {
+      "name": "p22_session_exactly_preserved",
+      "passed": true,
+      "detail": "One exact former session object, including pending source-time fields, preserved in history."
+    },
+    {
+      "name": "p22_delivery_preserved",
+      "passed": true,
+      "detail": "Old source-time pending delivery preserved either as current pre-candidate object or exact historical copy."
+    },
+    {
+      "name": "REQUIREMENTS.md_history_prefix",
+      "passed": true,
+      "detail": {
+        "historical_bytes": 64714,
+        "current_bytes": 66183,
+        "historical_sha256": "2c5cde96358bfe0709a6fae81702d32e1b9aea5c3ccffd38050ba3709b5dd94d"
+      }
+    },
+    {
+      "name": "PLAN.md_history_prefix",
+      "passed": true,
+      "detail": {
+        "historical_bytes": 65868,
+        "current_bytes": 67337,
+        "historical_sha256": "9f0dc827a1cb590ed4413a09de45d4bcc6ba905aee7df4a6a38e26f93f6ba6ee"
+      }
+    },
+    {
+      "name": "historical_unknowns_preserved",
+      "passed": true,
+      "detail": "No unknown operation relabeled terminated or passed."
+    },
+    {
+      "name": "no_h0_acceptance",
+      "passed": true,
+      "detail": "Endpoint is still pending; H0 review remains independent."
+    },
+    {
+      "name": "no_main_lease",
+      "passed": true,
+      "detail": "No main integration lease or integration selected."
+    },
+    {
+      "name": "tracked_edit_scope",
+      "passed": true,
+      "detail": [
+        "docs/workflow/CURRENT.json",
+        "docs/workflow/tasks/C271/PLAN.md",
+        "docs/workflow/tasks/C271/REQUIREMENTS.md",
+        "docs/workflow/tasks/C271/task.json"
+      ]
+    }
+  ],
+  "checks_passed": 21,
+  "checks_total": 21,
+  "findings": [
+    {
+      "id": "STEWARD-01",
+      "severity": "must_fix_before_candidate",
+      "observed": "CURRENT.next_action.status was in_progress; unchanged checker accepts only awaiting_user_direction/ready/blocked.",
+      "latest_value": "in_progress",
+      "status": "open",
+      "remedy": "Select ready while proceeding or blocked if the independently reviewed endpoint is a blocker."
+    },
+    {
+      "id": "STEWARD-02",
+      "severity": "must_resolve_before_candidate",
+      "observed": "New P23 headings said November 22, 2026 while PHASE.declared_at_utc is 2026-11-23.",
+      "status": "open",
+      "remedy": "Correct only new P23 headings to actual phase date, or explicitly document a distinct filename-date convention."
+    },
+    {
+      "id": "STEWARD-03",
+      "severity": "final_reconciliation_obligation",
+      "observed": "Top-level delivery and remaining_h0_constraint still identify P22 pending delivery and old-path next action. Source history is preserved but current P23 pointers are not finalized.",
+      "status": "pending_endpoint",
+      "remedy": "Retain exact old objects in history; set current P23 delivery, outcome/blocker, next action and H0 constraint consistently after endpoint."
+    }
+  ],
+  "current_status": " M docs/workflow/CURRENT.json\n M docs/workflow/tasks/C271/PLAN.md\n M docs/workflow/tasks/C271/REQUIREMENTS.md\n M docs/workflow/tasks/C271/task.json\n?? docs/engineering/localized-repair-c271/h0-plan-p23/\n?? docs/workflow/tasks/C271/P23-SESSION.md\n",
+  "files": [
+    {
+      "path": "docs/workflow/CURRENT.json",
+      "bytes": 119524,
+      "sha256": "47cc27ef0688f5c46c64ca525228e1395fe4b6cf9566581990fd60a009459c31"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/task.json",
+      "bytes": 288592,
+      "sha256": "35adafe920df793df0b325aaa2ce8db607b893780bfbba636907bafffed32d2a"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "bytes": 66183,
+      "sha256": "35de516b873d619d5ed62c92322e3461edb48d29a8d22e48a9f9b47a51a6ce21"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/PLAN.md",
+      "bytes": 67337,
+      "sha256": "9f161327cdf1f708a96e0be703446d646501115556ecc183db2dc1a3057a41fa"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/P23-SESSION.md",
+      "bytes": 1883,
+      "sha256": "adbb4cd9abfacb1cbc129e10820139b5c7ce268646d62e3d1b9bcb5e8f62a4c1"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/h0-plan-p23/PHASE.json",
+      "bytes": 4223,
+      "sha256": "1872bc6e03ccc133be7d07ae17417c1f53e158097c05a749fe7cf925c94c64a0"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/h0-plan-p23/EARLY-RECOVERY-RECEIPT.json",
+      "bytes": 1496,
+      "sha256": "0d72075650aded2299753a6fd9c332a51a0514fd70e2e5eb625fcb38172e3d5d"
+    }
+  ],
+  "no_checker_execution": true,
+  "no_git_mutation": true,
+  "no_product_or_h0_test_execution": true,
+  "next_action": "Director resolves current-state schema/date pointers and completes the independent H0 endpoint. Reviewer then inspects an exact final documentary candidate; this report does not accept that future candidate."
+}

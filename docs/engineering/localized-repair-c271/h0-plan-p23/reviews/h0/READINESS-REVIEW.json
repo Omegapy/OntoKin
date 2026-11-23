@@ -1,0 +1,150 @@
+{
+  "schema": "ontokin.c271.p23-readiness-review/1",
+  "reviewer": "/root/h0_review",
+  "verdict": "accepted_for_one_bounded_current_host_pin_observation",
+  "candidate": {
+    "script": {
+      "path": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/check_required_images.py",
+      "size_bytes": 5664,
+      "sha256": "e9930eb20b89ccd2087af045cfbeb7a9f65aa5d546cc57985fa0e12bc7aeb163",
+      "mode": "0o644"
+    },
+    "launch": {
+      "path": "/workspace/scratch/f8d879d19e34/phase-p23/readiness/READINESS-LAUNCH.json",
+      "size_bytes": 2159,
+      "sha256": "224d5f3eba66ce36336f483e133f243abc50a06868828491c1f8d4e5ea307301",
+      "mode": "0o644"
+    }
+  },
+  "checks": [
+    {
+      "id": "R01",
+      "passed": true,
+      "finding": "Exact script and launch descriptors match submitted candidate."
+    },
+    {
+      "id": "R02",
+      "passed": true,
+      "finding": "Early recovery receipt confirms saved byte readback before readiness work."
+    },
+    {
+      "id": "R03",
+      "passed": true,
+      "finding": "All three SHA-256/size/mode tuples equal the frozen inspector constants."
+    },
+    {
+      "id": "R04",
+      "passed": true,
+      "finding": "Static AST and full source inspection show only six declared standard-library imports, no project/package import and no subprocess/target invocation."
+    },
+    {
+      "id": "R05",
+      "passed": true,
+      "finding": "The selected current interpreter uses -I -S -B and exactly the adopted five-variable clean environment."
+    },
+    {
+      "id": "R06",
+      "passed": true,
+      "finding": "Canonical current sys.executable is compared with /proc/self/exe, rejecting deleted/name ambiguity and binding opened device/inode to the running image."
+    },
+    {
+      "id": "R07",
+      "passed": true,
+      "finding": "Each image uses a no-follow read descriptor, regular-file and 64-MiB limits, stable fstat/read/fstat/named-path identity and exact byte count."
+    },
+    {
+      "id": "R08",
+      "passed": true,
+      "finding": "SHA-256, byte count and exact mode are compared; a failed Python pin stops before maps or other image reads."
+    },
+    {
+      "id": "R09",
+      "passed": true,
+      "finding": "Only after Python match, /proc/self/maps is read with a one-MiB ceiling plus one-byte overflow detection."
+    },
+    {
+      "id": "R10",
+      "passed": true,
+      "finding": "Libc and loader candidates are deduplicated by device/inode/path; missing, multiple, deleted or nonabsolute selected-role rows refuse."
+    },
+    {
+      "id": "R11",
+      "passed": true,
+      "finding": "Mapped device/inode is compared with the opened actual file; libc mismatch stops before loader file inspection."
+    },
+    {
+      "id": "R12",
+      "passed": true,
+      "finding": "Inner twenty-second checks and outer thirty-second timeout bound the observation; no automatic retry is selected."
+    },
+    {
+      "id": "R13",
+      "passed": true,
+      "finding": "All target-start and H0-acceptance claims remain false; a three-pin match is explicitly only necessary eligibility."
+    },
+    {
+      "id": "R14",
+      "passed": true,
+      "finding": "Output paths are current-session paths and absent at review; the Director commits to exclusive stdout/stderr capture and prelaunch candidate rehash."
+    },
+    {
+      "id": "R15",
+      "passed": true,
+      "finding": "Ordinary mismatch/error records observations and exits two; a complete three-pin match exits zero without invoking H0."
+    },
+    {
+      "id": "R16",
+      "passed": true,
+      "finding": "Expected checker launches means one readiness Python process; the original CPU checker denominator remains zero."
+    }
+  ],
+  "check_count": 16,
+  "mandatory_findings": [],
+  "allowance": "Exactly one execution of this candidate through the described exclusive outer capture; the readiness harness performs data reads only.",
+  "outer_capture_obligations": [
+    "Rehash exact script and launch immediately before execution.",
+    "Use the exact argv/cwd/environment and outer timeout.",
+    "Create stdout and stderr exclusively; preserve them and a structured launch result even on failure/timeout.",
+    "No retry after first failure, unknown result or timeout; preserve exact outcome and stop technical work for review."
+  ],
+  "process_accounting": {
+    "readiness_python_processes": 1,
+    "original_cpu_checker_processes": 0,
+    "node_processes": 0,
+    "ldd_processes": 0,
+    "direct_loader_processes": 0,
+    "public_h0_inspector_invocations": 0,
+    "H1_invocations": 0
+  },
+  "observation_scope": [
+    "Current process executable pathname and kernel device/inode relationship.",
+    "Stable on-disk bytes/mode of selected Python, then selected mapped libc and loader if prior pins pass.",
+    "A single bounded proc maps snapshot; not proof that every mapped byte or the entire operating system is authenticated."
+  ],
+  "not_accepted": [
+    "H0 operational plan",
+    "Full current-host closure",
+    "Actual current installation receipts or package metadata",
+    "P13/P15 review reuse",
+    "Host qualification",
+    "Original seven methods",
+    "Full routine/R03",
+    "Main integration/R04",
+    "Parent closure/R05"
+  ],
+  "reviewer_execution": {
+    "readiness_candidate_run": false,
+    "product_imports": 0,
+    "target_starts": 0,
+    "installations": 0,
+    "Git_ref_or_index_writes": 0,
+    "method": "Full source/launch read plus data-only AST, descriptors and output absence checks."
+  },
+  "related_contract_review": {
+    "path": "/workspace/scratch/f8d879d19e34/phase-p23/reviews/h0/CONTRACT-REVIEW.json",
+    "size_bytes": 27093,
+    "sha256": "dc0131f1665a3dab9082b3af66f730612e640f5986ba1ab6fe800e3927a85fcc",
+    "mode": "0o644"
+  },
+  "next_action": "Director runs the accepted readiness candidate once and returns exact outer outcome/stdout/stderr for independent review. Stop on its first concrete mismatch or ambiguity."
+}
