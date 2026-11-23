@@ -1,0 +1,104 @@
+{
+  "schema": "ontokin.c271.p27-future-surface/1",
+  "decision_id": "P27-REQUIRED-IMAGES-001",
+  "executable": false,
+  "production_edits": [
+    "prototypes/static_tray_v01/current_host_inspection_v01.py"
+  ],
+  "new_test_adapter": [
+    "tests/test_current_host_required_images_v01.py"
+  ],
+  "new_inert_fixture_evidence": "Independently frozen P27 control fixture/adapter records in the next implementation phase documentary area; no executable third-party code or host inputs.",
+  "existing_test_fixture_oracle_edits_allowed": false,
+  "other_product_edits_allowed": false,
+  "new_dependencies": [],
+  "integration_sites": [
+    {
+      "symbols": [
+        "new schema/profile/catalog constants",
+        "_plan_shape",
+        "_select_origin_profile",
+        "new exact required-images selector"
+      ],
+      "change": "One closed /0.1.5 pair and required_images member; preserve all exact old branches and input schema value.",
+      "controls": "RI-S*; RI-L*"
+    },
+    {
+      "symbols": [
+        "_uses_origin_profile",
+        "_uses_libc_profile",
+        "_uses_rtld_paths",
+        "_check_rtld_operational_paths",
+        "_prepare_libc_plt_policy",
+        "_read_plan_elf_metadata"
+      ],
+      "change": "Recognize new route as inheriting all origin/libc/RTLD rules. Old _select_rtld_paths_profile remains exact /0.1.4; /0.1.5 uses its own selector and unchanged inherited shape primitives. Store actual /0.1.5 policy; selected libc dispatches unchanged P17 primitive.",
+      "controls": "RI-P08; RI-L*; RI-C*; independent source review"
+    },
+    {
+      "symbols": [
+        "_check_resolution",
+        "new private required-image relation/policy helpers"
+      ],
+      "change": "After fresh actual Python and unchanged libc policy, prove all five direct edges, exact catalog/loader, role/alias/file/image relations and all _bound inputs before dispatch. No new graph walker; no policy caching. Check actual SONAME after raw metadata.",
+      "controls": "RI-P07; RI-D*; RI-C*"
+    },
+    {
+      "symbols": [
+        "new private required-image metadata helper",
+        "_read_elf_metadata",
+        "private new-route checkpoints"
+      ],
+      "change": "Mutually exclusive private metadata mode; add exactly trio and fixed per-key flag sets only after binding route. Keep inherited structural/tag/flag/string/identity order. Opaque uint64 tag values. Track callback origin for same-object propagation on new route only.",
+      "controls": "RI-P01 through RI-P05; RI-B*; RI-N*; RI-F*"
+    },
+    {
+      "symbols": [
+        "_validate",
+        "_recheck",
+        "_required_paths",
+        "_input_snapshot",
+        "_launch_check"
+      ],
+      "change": "No new public schema or standalone resources. Ensure new route invokes complete inherited early/final proofs and RTLD guards/snapshot routing. Five subjects remain in existing file maps and snapshots; full rechecks reconstruct new policy. Preserve existing final-launch budget and fault wrappers.",
+      "controls": "RI-C*; inherited path/recheck controls"
+    },
+    {
+      "symbols": [
+        "new independent test adapter"
+      ],
+      "change": "Authenticate frozen control-plan/fixtures before executing. Label actual inert bytes versus synthetic/private and mocked relations/caller proof. Observe actual callback/order/descriptor behavior; do not synthesize errors by control ID or set mutable production pins.",
+      "controls": "all CONTROL-PLAN.json cases"
+    }
+  ],
+  "required_inherited_test_modules": [
+    "tests/test_current_host_inspection_v01.py",
+    "tests/test_current_host_elf_mapping_v01.py",
+    "tests/test_current_host_loader_path_v01.py",
+    "tests/test_current_host_libc_plt_metadata_v01.py",
+    "tests/test_current_host_libc_static_tls_flags_v01.py",
+    "tests/test_current_host_rtld_paths_v01.py"
+  ],
+  "inherited_policy": "Run every applicable existing method/control in those modules with unchanged expected behavior, and applicable provider/driver compatibility checks. Bind exact per-method inventory and outcomes; counts alone do not establish completeness. N34 and historical N57 stay external, not runtime tests or skips.",
+  "frozen_prior_controls": [
+    "P16 all73 controls including N16 flags24 refusal on /0.1.2",
+    "P17 all41 controls including ordinary flags1 mask",
+    "P24 all52 obligations: 51 runtime controls plus N34 external; historical N57 retained"
+  ],
+  "future_review_gates": [
+    "Independent construction/freeze of exact inert bytes and literal oracle crosswalk before any control execution",
+    "Focused exact-source new and inherited controls with failures preserved",
+    "Independent implementation/adapter/source-order review",
+    "Applicable documentary/workflow checks and verified published/saved phase handoff"
+  ],
+  "prohibited_in_implementation_phase": [
+    "current-host profiling, preparation, package installation",
+    "H0/H1 operational inspector admission/observation",
+    "Node,ldd,direct-loader,CPU-checker execution",
+    "original-seven/full routine",
+    "change expectations/pins/commands/environment/budgets",
+    "add generic loader framework or another package/host exception",
+    "main integration,parent closure"
+  ],
+  "new_design_defect_action": "Stop with the exact concrete blocker; do not expand the accepted design or start another phase."
+}

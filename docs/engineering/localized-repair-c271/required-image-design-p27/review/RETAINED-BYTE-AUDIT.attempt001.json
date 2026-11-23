@@ -1,0 +1,9 @@
+{
+  "passed": false,
+  "kind": "reviewer-audit-authoring-defect",
+  "error": "AssertionError at observe_elf exact EI_IDENT assertion",
+  "cause": "Audit wrongly required OSABI 0 for all package images; retained libm OSABI is 3, admitted by unchanged product header rule.",
+  "product_execution": false,
+  "partial_rows_discarded": true,
+  "correction": "Permit only existing OSABI 0 or 3, retain all other header bytes and image equality checks."
+}

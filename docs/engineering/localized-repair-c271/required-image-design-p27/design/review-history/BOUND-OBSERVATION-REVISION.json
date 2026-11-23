@@ -1,0 +1,14 @@
+{
+  "schema": "ontokin.c271.p27-design-review-revisions/1",
+  "executable": false,
+  "preserved_previous_candidate": {
+    "artifact_path": "review-history/CONTROL-PLAN-before-bound-observation-clarification.json",
+    "bytes": 108015,
+    "sha256": "4060b621709e6e22042abd90b27fbeda44f5be075eb866d2d68a6afd3870883e"
+  },
+  "finding": "RI-C04/C06 initially omitted a runtime binding. The inherited _check_author_host_bindings would encounter that omission before the intended new constructor, so the claimed route needed clarification.",
+  "resolution": "Use a labelled temporal _read_file observation at real new-constructor _bound. Keep all prior logical bindings coherent. Name related mocks and preserve exact inherited bound/refusal/wrapper/process-retention semantics.",
+  "other_review_findings_preserved_by": "Independent reviewer candidate snapshots and review findings under records/design-review; earlier author draft bytes are not reconstructed.",
+  "product_execution": false,
+  "control_execution": false
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ontokin.c271.p27-design-review-revision/1",
+  "executable": false,
+  "finding": "Top-level adapter_rule retained an unrelated-only mock restriction while revised C02/C04/C06 explicitly named related prerequisite mocks. The two parts were inconsistent.",
+  "changed_field": "adapter_rule",
+  "before": "Never replace the new binding/policy helper with a stub that raises the expected selector. Caller controls mutate its actual logical inputs and execute that helper; only independently identified unrelated prerequisite observations/processes may be mocked.",
+  "after": "Never replace the new binding/policy helper or its refusal path with a stub that raises the expected selector. Caller controls execute the real helper using the frozen logical-input mutations or labelled file-observation seam. Existing source/runtime/host/origin/libc/RTLD/guard prerequisite observations and fake processes may be stipulated only when explicitly named and labelled in the frozen control; directly related prerequisite mocks prove none of their own checks. Preserve original caller boundaries and the real new constructor/refusal path. No mocked context can establish operational STATIC_READY.",
+  "control_expectations_changed": false,
+  "preserved": [
+    "review-history/CONTROL-PLAN-at-author-freeze002.json",
+    "review-history/CANDIDATE-FREEZE-attempt002.json"
+  ],
+  "control_execution": false,
+  "product_execution": false
+}

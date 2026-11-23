@@ -1,0 +1,43 @@
+{
+  "schema": "ontokin.c271.p27-workers/1",
+  "director": "/root",
+  "director_owner": "c271-p27-906410cf525c",
+  "shared_checkout": "repo",
+  "arrangement": "Disjoint scratch assignments; root alone owns repository mutations, Git/index and publication. No main lease.",
+  "workers": [
+    {
+      "identity": "/root/reconcile",
+      "role": "Independent predecessor, archive and documentary reviewer",
+      "owned_paths": [
+        "records/reconcile/"
+      ],
+      "context": "fork_turns=none",
+      "model": "No override; inherited configuration",
+      "nested_fanout": false,
+      "assignment_state": "final_documentary_and_delivery_review_active"
+    },
+    {
+      "identity": "/root/design",
+      "role": "Compatibility design and source-evidence author",
+      "owned_paths": [
+        "records/design/"
+      ],
+      "context": "fork_turns=none",
+      "model": "No override; inherited configuration",
+      "nested_fanout": false,
+      "assignment_state": "technical_outputs_frozen"
+    },
+    {
+      "identity": "/root/design_review",
+      "role": "Independent source, byte and exact-design reviewer",
+      "owned_paths": [
+        "records/design-review/"
+      ],
+      "context": "fork_turns=none",
+      "model": "No override; inherited configuration",
+      "nested_fanout": false,
+      "assignment_state": "technical_outputs_frozen"
+    }
+  ],
+  "constraints": "One bounded design phase; no implementation or product execution; preserve exact history, reviews and failures; workers return concise reports."
+}

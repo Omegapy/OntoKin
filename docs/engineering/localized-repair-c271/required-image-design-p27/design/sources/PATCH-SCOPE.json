@@ -1,0 +1,27 @@
+{
+  "schema": "ontokin.c271.p27-patch-scope/1",
+  "active_patches": 80,
+  "source_archive_sha256": "f24aa441021121a79266f0d75242706cab8843a47901fefe74527491807f1998",
+  "patch_archive_sha256": "dda4153511bfd543502d18e5bc9323110996fe9c531f14ae3fad6eb17f027c7d",
+  "additional_exact_target_checks": {
+    "rt/Makefile": [],
+    "elf/dl-lookup.c": [
+      "git-updates.diff"
+    ]
+  },
+  "selected_git_updates": {
+    "path": "git-updates-selected-context.diff",
+    "sha256": "e16e4b3fff4c68cccd3412363c30acfd980ed1e7eb9f8c1cff43c2b94d8f7f47",
+    "bytes": 28995,
+    "extraction": "Complete diff --git sections for exact selected paths, copied from immutable retained git-updates.diff."
+  },
+  "reviewed_conclusions": [
+    "get-dynamic-info.h, elf.h, dl-machine.h, dl-static-tls.h and dl-reloc.c have no active patch target in 80-patch header inventory.",
+    "dl-close.c affected sections only replace debugger state notification calls; NODELETE checks unchanged.",
+    "dl-open.c affected sections add an explanatory already-open constructor comment and debugger state calls; NODELETE transition and dependency walk unchanged.",
+    "include/link.h change adds r_debug hidden prototype, outside NODELETE fields.",
+    "rt/Makefile and dl-lookup.c are untouched by all indexed active patches.",
+    "x86 Makefile mark-plt flags and CPU rewrite callback/initializer remain unchanged; CPU tuning changes elsewhere do not establish a live rewrite-state observation."
+  ],
+  "limits": "Header-index and inspected selected hunks support these finite claims, not full patched-source completeness, build provenance, or H0/N34 acceptance."
+}

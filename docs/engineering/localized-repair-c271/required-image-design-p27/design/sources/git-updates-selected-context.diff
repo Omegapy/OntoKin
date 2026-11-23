@@ -1,0 +1,852 @@
+diff --git a/elf/dl-close.c b/elf/dl-close.c
+index 47bd3dab81..83e4f012b2 100644
+--- a/elf/dl-close.c
++++ b/elf/dl-close.c
+@@ -433,8 +433,7 @@ _dl_close_worker (struct link_map *map, bool force)
+   /* Notify the debugger we are about to remove some loaded objects.
+      LA_ACT_DELETE has already been signalled above for !unload_any.  */
+   struct r_debug *r = _dl_debug_update (nsid);
+-  r->r_state = RT_DELETE;
+-  _dl_debug_state ();
++  _dl_debug_change_state (r, RT_DELETE);
+   LIBC_PROBE (unmap_start, 2, nsid, r);
+ 
+   if (unload_global)
+@@ -726,8 +725,7 @@ _dl_close_worker (struct link_map *map, bool force)
+   __rtld_lock_unlock_recursive (GL(dl_load_tls_lock));
+ 
+   /* Notify the debugger those objects are finalized and gone.  */
+-  r->r_state = RT_CONSISTENT;
+-  _dl_debug_state ();
++  _dl_debug_change_state (r, RT_CONSISTENT);
+   LIBC_PROBE (unmap_complete, 2, nsid, r);
+ 
+ #ifdef SHARED
+diff --git a/elf/dl-load.c b/elf/dl-load.c
+index f905578a65..7b21f1dffa 100644
+--- a/elf/dl-load.c
++++ b/elf/dl-load.c
+@@ -921,8 +921,7 @@ _dl_notify_new_object (int mode, Lmid_t nsid, struct link_map *l)
+       /* Notify the debugger we have added some objects.  We need to
+ 	 call _dl_debug_initialize in a static program in case dynamic
+ 	 linking has not been used before.  */
+-      r->r_state = RT_ADD;
+-      _dl_debug_state ();
++      _dl_debug_change_state (r, RT_ADD);
+       LIBC_PROBE (map_start, 2, nsid, r);
+     }
+   else
+@@ -945,7 +944,7 @@ struct link_map *
+ _dl_map_object_from_fd (const char *name, const char *origname, int fd,
+ 			struct filebuf *fbp, char *realname,
+ 			struct link_map *loader, int l_type, int mode,
+-			void **stack_endp, Lmid_t nsid)
++			const void *stack_endp, Lmid_t nsid)
+ {
+   struct link_map *l = NULL;
+   const ElfW(Ehdr) *header;
+@@ -2180,7 +2179,7 @@ _dl_map_object (struct link_map *loader, const char *name,
+ 
+   void *stack_end = __libc_stack_end;
+   return _dl_map_object_from_fd (name, origname, fd, &fb, realname, loader,
+-				 type, mode, &stack_end, nsid);
++				 type, mode, stack_end, nsid);
+ }
+ 
+ struct add_path_state
+diff --git a/elf/dl-open.c b/elf/dl-open.c
+index 4c12ddec59..894a9a7bb6 100644
+--- a/elf/dl-open.c
++++ b/elf/dl-open.c
+@@ -594,6 +594,16 @@ dl_open_worker_begin (void *a)
+       if ((mode & RTLD_GLOBAL) && new->l_global == 0)
+ 	add_to_global_update (new);
+ 
++      /* It is not possible to run the ELF constructor for the new
++	 link map if it has not executed yet: If this dlopen call came
++	 from an ELF constructor that has not put that object into a
++	 consistent state, completing initialization for the entire
++	 scope will expose objects that have this partially
++	 constructed object among its dependencies to this
++	 inconsistent state.  This could happen even with a benign
++	 dlopen (NULL, RTLD_LAZY) call from a constructor of an
++	 initially loaded shared object.  */
++
+       return;
+     }
+ 
+@@ -771,8 +781,7 @@ dl_open_worker (void *a)
+ #ifdef SHARED
+ 	bool was_not_consistent  = r->r_state != RT_CONSISTENT;
+ #endif
+-	r->r_state = RT_CONSISTENT;
+-	_dl_debug_state ();
++	_dl_debug_change_state (r, RT_CONSISTENT);
+ 	LIBC_PROBE (map_complete, 3, nsid, r, args->map);
+ 
+ #ifdef SHARED
+@@ -841,7 +850,7 @@ no more namespaces available for dlmopen()"));
+ 	}
+ 
+       GL(dl_ns)[nsid].libc_map = NULL;
+-      _dl_debug_update (nsid)->r_state = RT_CONSISTENT;
++      _dl_debug_change_state (_dl_debug_update (nsid), RT_CONSISTENT);
+     }
+   /* Never allow loading a DSO in a namespace which is empty.  Such
+      direct placements is only causing problems.  Also don't allow
+diff --git a/elf/rtld.c b/elf/rtld.c
+index 00bec15316..18c96bd5c1 100644
+--- a/elf/rtld.c
++++ b/elf/rtld.c
+@@ -1242,6 +1242,60 @@ rtld_setup_main_map (struct link_map *main_map)
+   return has_interp;
+ }
+ 
++/* Set up the program header information for the dynamic linker
++   itself.  It can be accessed via _r_debug and dl_iterate_phdr
++   callbacks, and it is used by _dl_find_object.  */
++static void
++rtld_setup_phdr (void)
++{
++  /* Starting from binutils-2.23, the linker will define the magic
++     symbol __ehdr_start to point to our own ELF header if it is
++     visible in a segment that also includes the phdrs.  */
++
++  const ElfW(Ehdr) *rtld_ehdr = &__ehdr_start;
++  assert (rtld_ehdr->e_ehsize == sizeof *rtld_ehdr);
++  assert (rtld_ehdr->e_phentsize == sizeof (ElfW(Phdr)));
++
++  const ElfW(Phdr) *rtld_phdr = (const void *) rtld_ehdr + rtld_ehdr->e_phoff;
++
++  _dl_rtld_map.l_phdr = rtld_phdr;
++  _dl_rtld_map.l_phnum = rtld_ehdr->e_phnum;
++
++
++  _dl_rtld_map.l_contiguous = 1;
++  /* The linker may not have produced a contiguous object.  The kernel
++     will load the object with actual gaps (unlike the glibc loader
++     for shared objects, which always produces a contiguous mapping).
++     See similar logic in rtld_setup_main_map above.  */
++  {
++    ElfW(Addr) expected_load_address = 0;
++    for (const ElfW(Phdr) *ph = rtld_phdr; ph < &rtld_phdr[rtld_ehdr->e_phnum];
++	 ++ph)
++      if (ph->p_type == PT_LOAD)
++	{
++	  ElfW(Addr) mapstart = ph->p_vaddr & ~(GLRO(dl_pagesize) - 1);
++	  if (_dl_rtld_map.l_contiguous && expected_load_address != 0
++	      && expected_load_address != mapstart)
++	    _dl_rtld_map.l_contiguous = 0;
++	  ElfW(Addr) allocend = ph->p_vaddr + ph->p_memsz;
++	  /* The next expected address is the page following this load
++	     segment.  */
++	  expected_load_address = ((allocend + GLRO(dl_pagesize) - 1)
++				   & ~(GLRO(dl_pagesize) - 1));
++	}
++  }
++
++  /* PT_GNU_RELRO is usually the last phdr.  */
++  size_t cnt = rtld_ehdr->e_phnum;
++  while (cnt-- > 0)
++    if (rtld_phdr[cnt].p_type == PT_GNU_RELRO)
++      {
++	_dl_rtld_map.l_relro_addr = rtld_phdr[cnt].p_vaddr;
++	_dl_rtld_map.l_relro_size = rtld_phdr[cnt].p_memsz;
++	break;
++      }
++}
++
+ /* Adjusts the contents of the stack and related globals for the user
+    entry point.  The ld.so processed skip_args arguments and bumped
+    _dl_argv and _dl_argc accordingly.  Those arguments are removed from
+@@ -1626,9 +1680,9 @@ dl_main (const ElfW(Phdr) *phdr,
+ 
+   bool has_interp = rtld_setup_main_map (main_map);
+ 
+-  if ((__glibc_unlikely (GL(dl_stack_flags)) & PF_X)
+-      && TUNABLE_GET (glibc, rtld, execstack, int32_t, NULL) == 0)
+-    _dl_fatal_printf ("Fatal glibc error: executable stack is not allowed\n");
++  /* Handle this after PT_GNU_STACK parse, because it updates dl_stack_flags
++     if required.  */
++  _dl_handle_execstack_tunable ();
+ 
+   /* If the current libname is different from the SONAME, add the
+      latter as well.  */
+@@ -1710,33 +1764,7 @@ dl_main (const ElfW(Phdr) *phdr,
+   ++GL(dl_ns)[LM_ID_BASE]._ns_nloaded;
+   ++GL(dl_load_adds);
+ 
+-  /* Starting from binutils-2.23, the linker will define the magic symbol
+-     __ehdr_start to point to our own ELF header if it is visible in a
+-     segment that also includes the phdrs.  If that's not available, we use
+-     the old method that assumes the beginning of the file is part of the
+-     lowest-addressed PT_LOAD segment.  */
+-
+-  /* Set up the program header information for the dynamic linker
+-     itself.  It is needed in the dl_iterate_phdr callbacks.  */
+-  const ElfW(Ehdr) *rtld_ehdr = &__ehdr_start;
+-  assert (rtld_ehdr->e_ehsize == sizeof *rtld_ehdr);
+-  assert (rtld_ehdr->e_phentsize == sizeof (ElfW(Phdr)));
+-
+-  const ElfW(Phdr) *rtld_phdr = (const void *) rtld_ehdr + rtld_ehdr->e_phoff;
+-
+-  _dl_rtld_map.l_phdr = rtld_phdr;
+-  _dl_rtld_map.l_phnum = rtld_ehdr->e_phnum;
+-
+-
+-  /* PT_GNU_RELRO is usually the last phdr.  */
+-  size_t cnt = rtld_ehdr->e_phnum;
+-  while (cnt-- > 0)
+-    if (rtld_phdr[cnt].p_type == PT_GNU_RELRO)
+-      {
+-	_dl_rtld_map.l_relro_addr = rtld_phdr[cnt].p_vaddr;
+-	_dl_rtld_map.l_relro_size = rtld_phdr[cnt].p_memsz;
+-	break;
+-      }
++  rtld_setup_phdr ();
+ 
+   /* Add the dynamic linker to the TLS list if it also uses TLS.  */
+   if (_dl_rtld_map.l_tls_blocksize != 0)
+@@ -1783,8 +1811,7 @@ dl_main (const ElfW(Phdr) *phdr,
+   elf_setup_debug_entry (main_map, r);
+ 
+   /* We start adding objects.  */
+-  r->r_state = RT_ADD;
+-  _dl_debug_state ();
++  _dl_debug_change_state (r, RT_ADD);
+   LIBC_PROBE (init_start, 2, LM_ID_BASE, r);
+ 
+   /* Auditing checkpoint: we are ready to signal that the initial map
+@@ -2319,6 +2346,9 @@ dl_main (const ElfW(Phdr) *phdr,
+ 
+       __rtld_mutex_init ();
+       __rtld_malloc_init_real (main_map);
++
++      /* Update copy-relocated _r_debug if necessary.  */
++      _dl_debug_post_relocate (main_map);
+     }
+ 
+   /* All ld.so initialization is complete.  Apply RELRO.  */
+@@ -2339,8 +2369,7 @@ dl_main (const ElfW(Phdr) *phdr,
+   /* Notify the debugger all new objects are now ready to go.  We must re-get
+      the address since by now the variable might be in another object.  */
+   r = _dl_debug_update (LM_ID_BASE);
+-  r->r_state = RT_CONSISTENT;
+-  _dl_debug_state ();
++  _dl_debug_change_state (r, RT_CONSISTENT);
+   LIBC_PROBE (init_complete, 2, LM_ID_BASE, r);
+ 
+   /* Auditing checkpoint: we have added all objects.  */
+diff --git a/include/link.h b/include/link.h
+index 518bfd1670..41e5e54a7b 100644
+--- a/include/link.h
++++ b/include/link.h
+@@ -365,6 +365,8 @@ struct auditstate
+    dynamic linker.  */
+ extern struct r_debug_extended _r_debug_extended attribute_hidden;
+ 
++rtld_hidden_proto (_r_debug)
++
+ #if __ELF_NATIVE_CLASS == 32
+ # define symbind symbind32
+ # define LA_SYMBIND "la_symbind32"
+diff --git a/sysdeps/x86/cpu-features.c b/sysdeps/x86/cpu-features.c
+index 27abaca8b7..6b1651a6f0 100644
+--- a/sysdeps/x86/cpu-features.c
++++ b/sysdeps/x86/cpu-features.c
+@@ -24,6 +24,7 @@
+ #include <dl-cacheinfo.h>
+ #include <dl-minsigstacksize.h>
+ #include <dl-hwcap2.h>
++#include <gcc-macros.h>
+ 
+ extern void TUNABLE_CALLBACK (set_hwcaps) (tunable_val_t *)
+   attribute_hidden;
+@@ -83,6 +84,8 @@ extern void TUNABLE_CALLBACK (set_x86_shstk) (tunable_val_t *)
+ # include <dl-cet.h>
+ #endif
+ 
++unsigned long int _dl_x86_features_tlsdesc_state_size;
++
+ static void
+ update_active (struct cpu_features *cpu_features)
+ {
+@@ -317,17 +320,13 @@ update_active (struct cpu_features *cpu_features)
+ 		= xsave_state_full_size;
+ 	      cpu_features->xsave_state_full_size
+ 		= xsave_state_full_size;
++	      _dl_x86_features_tlsdesc_state_size = xsave_state_full_size;
+ 
+ 	      /* Check if XSAVEC is available.  */
+ 	      if (CPU_FEATURES_CPU_P (cpu_features, XSAVEC))
+ 		{
+-		  unsigned int xstate_comp_offsets[32];
+-		  unsigned int xstate_comp_sizes[32];
+-#ifdef __x86_64__
+-		  unsigned int xstate_amx_comp_offsets[32];
+-		  unsigned int xstate_amx_comp_sizes[32];
+-		  unsigned int amx_ecx;
+-#endif
++		  unsigned int xstate_comp_offsets[X86_XSTATE_MAX_ID + 1];
++		  unsigned int xstate_comp_sizes[X86_XSTATE_MAX_ID + 1];
+ 		  unsigned int i;
+ 
+ 		  xstate_comp_offsets[0] = 0;
+@@ -335,39 +334,16 @@ update_active (struct cpu_features *cpu_features)
+ 		  xstate_comp_offsets[2] = 576;
+ 		  xstate_comp_sizes[0] = 160;
+ 		  xstate_comp_sizes[1] = 256;
+-#ifdef __x86_64__
+-		  xstate_amx_comp_offsets[0] = 0;
+-		  xstate_amx_comp_offsets[1] = 160;
+-		  xstate_amx_comp_offsets[2] = 576;
+-		  xstate_amx_comp_sizes[0] = 160;
+-		  xstate_amx_comp_sizes[1] = 256;
+-#endif
+ 
+-		  for (i = 2; i < 32; i++)
++		  for (i = 2; i <= X86_XSTATE_MAX_ID; i++)
+ 		    {
+ 		      if ((FULL_STATE_SAVE_MASK & (1 << i)) != 0)
+ 			{
+ 			  __cpuid_count (0xd, i, eax, ebx, ecx, edx);
+-#ifdef __x86_64__
+-			  /* Include this in xsave_state_full_size.  */
+-			  amx_ecx = ecx;
+-			  xstate_amx_comp_sizes[i] = eax;
+-			  if ((AMX_STATE_SAVE_MASK & (1 << i)) != 0)
+-			    {
+-			      /* Exclude this from xsave_state_size.  */
+-			      ecx = 0;
+-			      xstate_comp_sizes[i] = 0;
+-			    }
+-			  else
+-#endif
+-			    xstate_comp_sizes[i] = eax;
++			  xstate_comp_sizes[i] = eax;
+ 			}
+ 		      else
+ 			{
+-#ifdef __x86_64__
+-			  amx_ecx = 0;
+-			  xstate_amx_comp_sizes[i] = 0;
+-#endif
+ 			  ecx = 0;
+ 			  xstate_comp_sizes[i] = 0;
+ 			}
+@@ -376,44 +352,32 @@ update_active (struct cpu_features *cpu_features)
+ 			{
+ 			  xstate_comp_offsets[i]
+ 			    = (xstate_comp_offsets[i - 1]
+-			       + xstate_comp_sizes[i -1]);
++			       + xstate_comp_sizes[i - 1]);
+ 			  if ((ecx & (1 << 1)) != 0)
+ 			    xstate_comp_offsets[i]
+ 			      = ALIGN_UP (xstate_comp_offsets[i], 64);
+-#ifdef __x86_64__
+-			  xstate_amx_comp_offsets[i]
+-			    = (xstate_amx_comp_offsets[i - 1]
+-			       + xstate_amx_comp_sizes[i - 1]);
+-			  if ((amx_ecx & (1 << 1)) != 0)
+-			    xstate_amx_comp_offsets[i]
+-			      = ALIGN_UP (xstate_amx_comp_offsets[i],
+-					  64);
+-#endif
+ 			}
+ 		    }
+ 
+ 		  /* Use XSAVEC.  */
+ 		  unsigned int size
+-		    = xstate_comp_offsets[31] + xstate_comp_sizes[31];
++		    = (xstate_comp_offsets[X86_XSTATE_MAX_ID]
++		       + xstate_comp_sizes[X86_XSTATE_MAX_ID]);
+ 		  if (size)
+ 		    {
++		      size = ALIGN_UP (size + TLSDESC_CALL_REGISTER_SAVE_AREA,
++				       64);
+ #ifdef __x86_64__
+-		      unsigned int amx_size
+-			= (xstate_amx_comp_offsets[31]
+-			   + xstate_amx_comp_sizes[31]);
+-		      amx_size
+-			= ALIGN_UP ((amx_size
+-				     + TLSDESC_CALL_REGISTER_SAVE_AREA),
+-				    64);
+-		      /* Set xsave_state_full_size to the compact AMX
+-			 state size for XSAVEC.  NB: xsave_state_full_size
+-			 is only used in _dl_tlsdesc_dynamic_xsave and
+-			 _dl_tlsdesc_dynamic_xsavec.  */
+-		      cpu_features->xsave_state_full_size = amx_size;
++		      _dl_x86_features_tlsdesc_state_size = size;
++		      /* Exclude the AMX space from the start of TILECFG
++			 space to the end of TILEDATA space.  If CPU
++			 doesn't support AMX, TILECFG offset is the same
++			 as TILEDATA + 1 offset.  Otherwise, they are
++			 multiples of 64.  */
++		      size -= (xstate_comp_offsets[X86_XSTATE_TILEDATA_ID + 1]
++			       - xstate_comp_offsets[X86_XSTATE_TILECFG_ID]);
+ #endif
+-		      cpu_features->xsave_state_size
+-			= ALIGN_UP (size + TLSDESC_CALL_REGISTER_SAVE_AREA,
+-				    64);
++		      cpu_features->xsave_state_size = size;
+ 		      CPU_FEATURE_SET (cpu_features, XSAVEC);
+ 		    }
+ 		}
+@@ -538,8 +502,8 @@ _Static_assert (((index_arch_Fast_Unaligned_Load
+ 		"Incorrect index_arch_Fast_Unaligned_Load");
+ 
+ 
+-/* Intel Family-6 microarch list.  */
+-enum
++/* Intel microarch list.  */
++enum intel_microarch
+ {
+   /* Atom processors.  */
+   INTEL_ATOM_BONNELL,
+@@ -548,6 +512,7 @@ enum
+   INTEL_ATOM_GOLDMONT,
+   INTEL_ATOM_GOLDMONT_PLUS,
+   INTEL_ATOM_SIERRAFOREST,
++  INTEL_ATOM_CLEARWATERFOREST,
+   INTEL_ATOM_GRANDRIDGE,
+   INTEL_ATOM_TREMONT,
+ 
+@@ -575,7 +540,11 @@ enum
+   INTEL_BIGCORE_METEORLAKE,
+   INTEL_BIGCORE_LUNARLAKE,
+   INTEL_BIGCORE_ARROWLAKE,
++  INTEL_BIGCORE_PANTHERLAKE,
+   INTEL_BIGCORE_GRANITERAPIDS,
++  INTEL_BIGCORE_DIAMONDRAPIDS,
++  INTEL_BIGCORE_WILDCATLAKE,
++  INTEL_BIGCORE_NOVALAKE,
+ 
+   /* Mixed (bigcore + atom SOC).  */
+   INTEL_MIXED_LAKEFIELD,
+@@ -589,7 +558,7 @@ enum
+   INTEL_UNKNOWN,
+ };
+ 
+-static unsigned int
++static enum intel_microarch
+ intel_get_fam6_microarch (unsigned int model,
+ 			  __attribute__ ((unused)) unsigned int stepping)
+ {
+@@ -620,6 +589,8 @@ intel_get_fam6_microarch (unsigned int model,
+       return INTEL_ATOM_GOLDMONT_PLUS;
+     case 0xAF:
+       return INTEL_ATOM_SIERRAFOREST;
++    case 0xDD:
++      return INTEL_ATOM_CLEARWATERFOREST;
+     case 0xB6:
+       return INTEL_ATOM_GRANDRIDGE;
+     case 0x86:
+@@ -727,8 +698,14 @@ intel_get_fam6_microarch (unsigned int model,
+       return INTEL_BIGCORE_METEORLAKE;
+     case 0xbd:
+       return INTEL_BIGCORE_LUNARLAKE;
++    case 0xb5:
++    case 0xc5:
+     case 0xc6:
+       return INTEL_BIGCORE_ARROWLAKE;
++    case 0xCC:
++      return INTEL_BIGCORE_PANTHERLAKE;
++    case 0xD5:
++      return INTEL_BIGCORE_WILDCATLAKE;
+     case 0xAD:
+     case 0xAE:
+       return INTEL_BIGCORE_GRANITERAPIDS;
+@@ -792,133 +769,20 @@ init_cpu_features (struct cpu_features *cpu_features)
+       cpu_features->preferred[index_arch_Avoid_Non_Temporal_Memset]
+ 	  &= ~bit_arch_Avoid_Non_Temporal_Memset;
+ 
++      enum intel_microarch microarch = INTEL_UNKNOWN;
+       if (family == 0x06)
+ 	{
+ 	  model += extended_model;
+-	  unsigned int microarch
+-	      = intel_get_fam6_microarch (model, stepping);
++	  microarch = intel_get_fam6_microarch (model, stepping);
+ 
++	  /* Disable TSX on some processors to avoid TSX on kernels that
++	     weren't updated with the latest microcode package (which
++	     disables broken feature by default).  */
+ 	  switch (microarch)
+ 	    {
+-	      /* Atom / KNL tuning.  */
+-	    case INTEL_ATOM_BONNELL:
+-	      /* BSF is slow on Bonnell.  */
+-	      cpu_features->preferred[index_arch_Slow_BSF]
+-		  |= bit_arch_Slow_BSF;
+-	      break;
+-
+-	      /* Unaligned load versions are faster than SSSE3
+-		     on Airmont, Silvermont, Goldmont, and Goldmont Plus.  */
+-	    case INTEL_ATOM_AIRMONT:
+-	    case INTEL_ATOM_SILVERMONT:
+-	    case INTEL_ATOM_GOLDMONT:
+-	    case INTEL_ATOM_GOLDMONT_PLUS:
+-
+-          /* Knights Landing.  Enable Silvermont optimizations.  */
+-	    case INTEL_KNIGHTS_LANDING:
+-
+-	      cpu_features->preferred[index_arch_Fast_Unaligned_Load]
+-		  |= (bit_arch_Fast_Unaligned_Load
+-		      | bit_arch_Fast_Unaligned_Copy
+-		      | bit_arch_Prefer_PMINUB_for_stringop
+-		      | bit_arch_Slow_SSE4_2);
+-	      break;
+-
+-	    case INTEL_ATOM_TREMONT:
+-	      /* Enable rep string instructions, unaligned load, unaligned
+-		 copy, pminub and avoid SSE 4.2 on Tremont.  */
+-	      cpu_features->preferred[index_arch_Fast_Rep_String]
+-		  |= (bit_arch_Fast_Rep_String
+-		      | bit_arch_Fast_Unaligned_Load
+-		      | bit_arch_Fast_Unaligned_Copy
+-		      | bit_arch_Prefer_PMINUB_for_stringop
+-		      | bit_arch_Slow_SSE4_2);
+-	      break;
+-
+-	   /*
+-	    Default tuned Knights microarch.
+-	    case INTEL_KNIGHTS_MILL:
+-        */
+-
+-	   /*
+-	    Default tuned atom microarch.
+-	    case INTEL_ATOM_SIERRAFOREST:
+-	    case INTEL_ATOM_GRANDRIDGE:
+-	   */
+-
+-	      /* Bigcore/Default Tuning.  */
+ 	    default:
+-	    default_tuning:
+-	      /* Unknown family 0x06 processors.  Assuming this is one
+-		 of Core i3/i5/i7 processors if AVX is available.  */
+-	      if (!CPU_FEATURES_CPU_P (cpu_features, AVX))
+-		break;
+-
+-	    enable_modern_features:
+-	      /* Rep string instructions, unaligned load, unaligned copy,
+-		 and pminub are fast on Intel Core i3, i5 and i7.  */
+-	      cpu_features->preferred[index_arch_Fast_Rep_String]
+-		  |= (bit_arch_Fast_Rep_String
+-		      | bit_arch_Fast_Unaligned_Load
+-		      | bit_arch_Fast_Unaligned_Copy
+-		      | bit_arch_Prefer_PMINUB_for_stringop);
+ 	      break;
+ 
+-	    case INTEL_BIGCORE_NEHALEM:
+-	    case INTEL_BIGCORE_WESTMERE:
+-	      /* Older CPUs prefer non-temporal stores at lower threshold.  */
+-	      cpu_features->cachesize_non_temporal_divisor = 8;
+-	      goto enable_modern_features;
+-
+-	      /* Older Bigcore microarch (smaller non-temporal store
+-		 threshold).  */
+-	    case INTEL_BIGCORE_SANDYBRIDGE:
+-	    case INTEL_BIGCORE_IVYBRIDGE:
+-	    case INTEL_BIGCORE_HASWELL:
+-	    case INTEL_BIGCORE_BROADWELL:
+-	      cpu_features->cachesize_non_temporal_divisor = 8;
+-	      goto default_tuning;
+-
+-	      /* Newer Bigcore microarch (larger non-temporal store
+-		 threshold).  */
+-	    case INTEL_BIGCORE_SKYLAKE_AVX512:
+-	    case INTEL_BIGCORE_CANNONLAKE:
+-	      /* Benchmarks indicate non-temporal memset is not
+-		     necessarily profitable on SKX (and in some cases much
+-		     worse). This is likely unique to SKX due its it unique
+-		     mesh interconnect (not present on ICX or BWD). Disable
+-		     non-temporal on all Skylake servers. */
+-	      cpu_features->preferred[index_arch_Avoid_Non_Temporal_Memset]
+-		  |= bit_arch_Avoid_Non_Temporal_Memset;
+-	      /* fallthrough */
+-	    case INTEL_BIGCORE_COMETLAKE:
+-	    case INTEL_BIGCORE_SKYLAKE:
+-	    case INTEL_BIGCORE_KABYLAKE:
+-	    case INTEL_BIGCORE_ICELAKE:
+-	    case INTEL_BIGCORE_TIGERLAKE:
+-	    case INTEL_BIGCORE_ROCKETLAKE:
+-	    case INTEL_BIGCORE_RAPTORLAKE:
+-	    case INTEL_BIGCORE_METEORLAKE:
+-	    case INTEL_BIGCORE_LUNARLAKE:
+-	    case INTEL_BIGCORE_ARROWLAKE:
+-	    case INTEL_BIGCORE_SAPPHIRERAPIDS:
+-	    case INTEL_BIGCORE_EMERALDRAPIDS:
+-	    case INTEL_BIGCORE_GRANITERAPIDS:
+-	      cpu_features->cachesize_non_temporal_divisor = 2;
+-	      goto default_tuning;
+-
+-	      /* Default tuned Mixed (bigcore + atom SOC). */
+-	    case INTEL_MIXED_LAKEFIELD:
+-	    case INTEL_MIXED_ALDERLAKE:
+-	      cpu_features->cachesize_non_temporal_divisor = 2;
+-	      goto default_tuning;
+-	    }
+-
+-	      /* Disable TSX on some processors to avoid TSX on kernels that
+-		 weren't updated with the latest microcode package (which
+-		 disables broken feature by default).  */
+-	  switch (microarch)
+-	    {
+ 	    case INTEL_BIGCORE_SKYLAKE_AVX512:
+ 	      /* 0x55 (Skylake-avx512) && stepping <= 5 disable TSX. */
+ 	      if (stepping <= 5)
+@@ -927,38 +791,176 @@ init_cpu_features (struct cpu_features *cpu_features)
+ 
+ 	    case INTEL_BIGCORE_KABYLAKE:
+ 	      /* NB: Although the errata documents that for model == 0x8e
+-		     (kabylake skylake client), only 0xb stepping or lower are
+-		     impacted, the intention of the errata was to disable TSX on
+-		     all client processors on all steppings.  Include 0xc
+-		     stepping which is an Intel Core i7-8665U, a client mobile
+-		     processor.  */
++		 (kabylake skylake client), only 0xb stepping or lower are
++		 impacted, the intention of the errata was to disable TSX on
++		 all client processors on all steppings.  Include 0xc
++		 stepping which is an Intel Core i7-8665U, a client mobile
++		 processor.  */
+ 	      if (stepping > 0xc)
+ 		break;
+ 	      /* Fall through.  */
+ 	    case INTEL_BIGCORE_SKYLAKE:
+-		/* Disable Intel TSX and enable RTM_ALWAYS_ABORT for
+-		   processors listed in:
+-
+-https://www.intel.com/content/www/us/en/support/articles/000059422/processors.html
+-		 */
+-	    disable_tsx:
+-		CPU_FEATURE_UNSET (cpu_features, HLE);
+-		CPU_FEATURE_UNSET (cpu_features, RTM);
+-		CPU_FEATURE_SET (cpu_features, RTM_ALWAYS_ABORT);
+-		break;
++	      /* Disable Intel TSX and enable RTM_ALWAYS_ABORT for
++		 processors listed in:
++
++		 https://www.intel.com/content/www/us/en/support/articles/000059422/processors.html
++	       */
++disable_tsx:
++	      CPU_FEATURE_UNSET (cpu_features, HLE);
++	      CPU_FEATURE_UNSET (cpu_features, RTM);
++	      CPU_FEATURE_SET (cpu_features, RTM_ALWAYS_ABORT);
++	      break;
+ 
+ 	    case INTEL_BIGCORE_HASWELL:
+-		/* Xeon E7 v3 (model == 0x3f) with stepping >= 4 has working
+-		   TSX.  Haswell also include other model numbers that have
+-		   working TSX.  */
+-		if (model == 0x3f && stepping >= 4)
++	      /* Xeon E7 v3 (model == 0x3f) with stepping >= 4 has working
++		 TSX.  Haswell also includes other model numbers that have
++		 working TSX.  */
++	      if (model == 0x3f && stepping >= 4)
+ 		break;
+ 
+-		CPU_FEATURE_UNSET (cpu_features, RTM);
+-		break;
++	      CPU_FEATURE_UNSET (cpu_features, RTM);
++	      break;
+ 	    }
+ 	}
++      else if (family == 18)
++	switch (model)
++	  {
++	  case 0x01:
++	  case 0x03:
++	    microarch = INTEL_BIGCORE_NOVALAKE;
++	    break;
++
++	  default:
++	    break;
++	  }
++      else if (family == 19)
++	switch (model)
++	  {
++	  case 0x01:
++	    microarch = INTEL_BIGCORE_DIAMONDRAPIDS;
++	    break;
++
++	  default:
++	    break;
++	  }
+ 
++      switch (microarch)
++	{
++	  /* Atom / KNL tuning.  */
++	case INTEL_ATOM_BONNELL:
++	  /* BSF is slow on Bonnell.  */
++	  cpu_features->preferred[index_arch_Slow_BSF]
++	    |= bit_arch_Slow_BSF;
++	  break;
++
++	  /* Unaligned load versions are faster than SSSE3
++	     on Airmont, Silvermont, Goldmont, and Goldmont Plus.  */
++	case INTEL_ATOM_AIRMONT:
++	case INTEL_ATOM_SILVERMONT:
++	case INTEL_ATOM_GOLDMONT:
++	case INTEL_ATOM_GOLDMONT_PLUS:
++
++	  /* Knights Landing.  Enable Silvermont optimizations.  */
++	case INTEL_KNIGHTS_LANDING:
++
++	  cpu_features->preferred[index_arch_Fast_Unaligned_Load]
++	    |= (bit_arch_Fast_Unaligned_Load
++		| bit_arch_Fast_Unaligned_Copy
++		| bit_arch_Prefer_PMINUB_for_stringop
++		| bit_arch_Slow_SSE4_2);
++	  break;
++
++	case INTEL_ATOM_TREMONT:
++	  /* Enable rep string instructions, unaligned load, unaligned
++	     copy, pminub and avoid SSE 4.2 on Tremont.  */
++	  cpu_features->preferred[index_arch_Fast_Rep_String]
++	    |= (bit_arch_Fast_Rep_String
++		| bit_arch_Fast_Unaligned_Load
++		| bit_arch_Fast_Unaligned_Copy
++		| bit_arch_Prefer_PMINUB_for_stringop
++		| bit_arch_Slow_SSE4_2);
++	  break;
++
++	  /*
++	     Default tuned Knights microarch.
++	     case INTEL_KNIGHTS_MILL:
++	     */
++
++	  /*
++	     Default tuned atom microarch.
++	     case INTEL_ATOM_SIERRAFOREST:
++	     case INTEL_ATOM_GRANDRIDGE:
++	     case INTEL_ATOM_CLEARWATERFOREST:
++	     */
++
++	  /* Bigcore/Default Tuning.  */
++	default:
++	default_tuning:
++	  /* Unknown Intel processors.  Assuming this is one of Core
++	     i3/i5/i7 processors if AVX is available.  */
++	  if (!CPU_FEATURES_CPU_P (cpu_features, AVX))
++	    break;
++
++	enable_modern_features:
++	  /* Rep string instructions, unaligned load, unaligned copy,
++	     and pminub are fast on Intel Core i3, i5 and i7.  */
++	  cpu_features->preferred[index_arch_Fast_Rep_String]
++	    |= (bit_arch_Fast_Rep_String
++		| bit_arch_Fast_Unaligned_Load
++		| bit_arch_Fast_Unaligned_Copy
++		| bit_arch_Prefer_PMINUB_for_stringop);
++	  break;
++
++	case INTEL_BIGCORE_NEHALEM:
++	case INTEL_BIGCORE_WESTMERE:
++	  /* Older CPUs prefer non-temporal stores at lower threshold.  */
++	  cpu_features->cachesize_non_temporal_divisor = 8;
++	  goto enable_modern_features;
++
++	  /* Older Bigcore microarch (smaller non-temporal store
++	     threshold).  */
++	case INTEL_BIGCORE_SANDYBRIDGE:
++	case INTEL_BIGCORE_IVYBRIDGE:
++	case INTEL_BIGCORE_HASWELL:
++	case INTEL_BIGCORE_BROADWELL:
++	  cpu_features->cachesize_non_temporal_divisor = 8;
++	  goto default_tuning;
++
++	  /* Newer Bigcore microarch (larger non-temporal store
++	     threshold).  */
++	case INTEL_BIGCORE_SKYLAKE_AVX512:
++	case INTEL_BIGCORE_CANNONLAKE:
++	  /* Benchmarks indicate non-temporal memset is not
++	     necessarily profitable on SKX (and in some cases much
++	     worse). This is likely unique to SKX due to its unique
++	     mesh interconnect (not present on ICX or BWD). Disable
++	     non-temporal on all Skylake servers. */
++	  cpu_features->preferred[index_arch_Avoid_Non_Temporal_Memset]
++	    |= bit_arch_Avoid_Non_Temporal_Memset;
++	  /* fallthrough */
++	case INTEL_BIGCORE_COMETLAKE:
++	case INTEL_BIGCORE_SKYLAKE:
++	case INTEL_BIGCORE_KABYLAKE:
++	case INTEL_BIGCORE_ICELAKE:
++	case INTEL_BIGCORE_TIGERLAKE:
++	case INTEL_BIGCORE_ROCKETLAKE:
++	case INTEL_BIGCORE_RAPTORLAKE:
++	case INTEL_BIGCORE_METEORLAKE:
++	case INTEL_BIGCORE_LUNARLAKE:
++	case INTEL_BIGCORE_ARROWLAKE:
++	case INTEL_BIGCORE_PANTHERLAKE:
++	case INTEL_BIGCORE_WILDCATLAKE:
++	case INTEL_BIGCORE_NOVALAKE:
++	case INTEL_BIGCORE_SAPPHIRERAPIDS:
++	case INTEL_BIGCORE_EMERALDRAPIDS:
++	case INTEL_BIGCORE_GRANITERAPIDS:
++	case INTEL_BIGCORE_DIAMONDRAPIDS:
++	  /* Default tuned Mixed (bigcore + atom SOC). */
++	case INTEL_MIXED_LAKEFIELD:
++	case INTEL_MIXED_ALDERLAKE:
++	  cpu_features->cachesize_non_temporal_divisor = 2;
++	  goto default_tuning;
++	}
+ 
+       /* Since AVX512ER is unique to Xeon Phi, set Prefer_No_VZEROUPPER
+          if AVX512ER is available.  Don't use AVX512 to avoid lower CPU
+@@ -1159,6 +1161,9 @@ no_cpuid:
+ 	       TUNABLE_CALLBACK (set_prefer_map_32bit_exec));
+ #endif
+ 
++  /* Do not add the logic to disable XSAVE/XSAVEC if this glibc build
++     requires AVX and therefore XSAVE or XSAVEC support.  */
++#ifndef GCCMACRO__AVX__
+   bool disable_xsave_features = false;
+ 
+   if (!CPU_FEATURE_USABLE_P (cpu_features, OSXSAVE))
+@@ -1212,6 +1217,7 @@ no_cpuid:
+ 
+       CPU_FEATURE_UNSET (cpu_features, FMA4);
+     }
++#endif
+ 
+ #ifdef __x86_64__
+   GLRO(dl_hwcap) = HWCAP_X86_64;
+diff --git a/sysdeps/x86_64/Makefile b/sysdeps/x86_64/Makefile
+index 9d31685e02..a1dc28a700 100644
+--- a/sysdeps/x86_64/Makefile
++++ b/sysdeps/x86_64/Makefile
+@@ -41,9 +41,6 @@ ifeq ($(subdir),elf)
+ CFLAGS-.os += $(if $(filter $(@F),$(patsubst %,%.os,$(all-rtld-routines))),\
+ 		   -mno-mmx)
+ 
+-sysdep-dl-routines += tlsdesc dl-tlsdesc tls_get_addr
+-
+-tests += ifuncmain8
+ modules-names += ifuncmod8
+ 
+ $(objpfx)ifuncmain8: $(objpfx)ifuncmod8.so
+@@ -142,7 +139,6 @@ CFLAGS-tst-avxmod.c += $(AVX-CFLAGS)
+ AVX512-CFLAGS = -mavx512f
+ CFLAGS-tst-audit10-aux.c += $(AVX512-CFLAGS)
+ CFLAGS-tst-auditmod10a.c += $(AVX512-CFLAGS)
+-CFLAGS-tst-auditmod10b.c += $(AVX512-CFLAGS)
+ CFLAGS-tst-avx512-aux.c += $(AVX512-CFLAGS)
+ CFLAGS-tst-avx512mod.c += $(AVX512-CFLAGS)
+ 
+@@ -212,6 +208,15 @@ LDFLAGS-tst-plt-rewrite2 = -Wl,-z,now
+ LDFLAGS-tst-plt-rewritemod2.so = -Wl,-z,now,-z,undefs
+ tst-plt-rewrite2-ENV = GLIBC_TUNABLES=glibc.cpu.plt_rewrite=2
+ $(objpfx)tst-plt-rewrite2: $(objpfx)tst-plt-rewritemod2.so
++
++tests-special += $(objpfx)check-dt-x86-64-plt.out
++
++$(objpfx)check-dt-x86-64-plt.out: $(common-objpfx)libc.so
++	LC_ALL=C $(READELF) -V -W $< \
++		| sed -ne '/.gnu.version_d/, /.gnu.version_r/ p' \
++		| grep GLIBC_ABI_DT_X86_64_PLT > $@; \
++	$(evaluate-test)
++generated += check-dt-x86-64-plt.out
+ endif
+ 
+ test-internal-extras += tst-gnu2-tls2mod1

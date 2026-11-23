@@ -1,0 +1,276 @@
+{
+  "schema": "ontokin.c271.p27.documentary-preflight-review/1",
+  "reviewer": "/root/reconcile",
+  "observed_at_utc": "2026-11-23T17:47:36.569772+00:00",
+  "baseline": "daf05a17eb44e467114df8258b2c56d8466dc4b8",
+  "passed": true,
+  "review_scope": "Current canonical P27 declarations and preservation only; exact final design/source/package acceptance pending.",
+  "findings": [
+    {
+      "id": "P27-DOC-REVIEW-001",
+      "finding": "CURRENT.next_action.status in_progress was outside the unchanged allowed set awaiting_user_direction/ready/blocked.",
+      "original_snapshot": "snapshots/CURRENT.json.candidate",
+      "resolution": "Changed to ready.",
+      "status": "resolved_targeted_readback"
+    },
+    {
+      "id": "P27-DOC-REVIEW-002",
+      "finding": "task.delivery still described P26 while CURRENT.pending_phase_delivery described P27.",
+      "original_snapshot": "snapshots/task.json.candidate",
+      "resolution": "Exact P26 delivery appended to prior_phase_deliveries; active P27 delivery objects made identical.",
+      "status": "resolved_targeted_readback"
+    }
+  ],
+  "checks_passed": 47,
+  "checks_failed": 0,
+  "checks": [
+    {
+      "name": "Original task field preserved: requirements",
+      "passed": true
+    },
+    {
+      "name": "Original task field preserved: plan",
+      "passed": true
+    },
+    {
+      "name": "Original task field preserved: checks",
+      "passed": true
+    },
+    {
+      "name": "Original task field preserved: completion",
+      "passed": true
+    },
+    {
+      "name": "Original task field preserved: historical_checks",
+      "passed": true
+    },
+    {
+      "name": "Original task field preserved: prior_blocked_reason",
+      "passed": true
+    },
+    {
+      "name": "Original task field preserved: blocked_reason_history",
+      "passed": true
+    },
+    {
+      "name": "Original task field preserved: remaining_h0_constraint",
+      "passed": true
+    },
+    {
+      "name": "Original task field preserved: prior_h0_constraints",
+      "passed": true
+    },
+    {
+      "name": "Original task field preserved: phase_reconciliations",
+      "passed": true
+    },
+    {
+      "name": "Original task field preserved: p26_source_time_snapshots",
+      "passed": true
+    },
+    {
+      "name": "Original task field preserved: blocked_reason",
+      "passed": true
+    },
+    {
+      "name": "Original task field preserved: status",
+      "passed": true
+    },
+    {
+      "name": "All 25 prior phases exact prefix",
+      "passed": true
+    },
+    {
+      "name": "P26 phase appended unchanged",
+      "passed": true
+    },
+    {
+      "name": "All 25 prior deliveries exact prefix",
+      "passed": true
+    },
+    {
+      "name": "P26 delivery appended unchanged",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: schema_version",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: project",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: latest_task",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: active_task",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: observed_main",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: historical_handoff",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: boundaries",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: delivery_policy",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: latest_handoff",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: previous_handoff",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: latest_recovery",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: older_handoffs",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: previous_recovery",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: older_recoveries",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: concurrent_main_observation",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: prior_p24_start_pending_delivery",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: p25_snapshot_history",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: prior_p26_start_pending_delivery",
+      "passed": true
+    },
+    {
+      "name": "Original CURRENT field preserved: p26_source_time_snapshots",
+      "passed": true
+    },
+    {
+      "name": "Prior CURRENT P26 delivery retained exactly",
+      "passed": true
+    },
+    {
+      "name": "Active delivery objects equal P27 pending",
+      "passed": true
+    },
+    {
+      "name": "CURRENT action uses permitted ready value",
+      "passed": true
+    },
+    {
+      "name": "Current phase owner and parent gates agree",
+      "passed": true
+    },
+    {
+      "name": "Unknown operations unchanged",
+      "passed": true
+    },
+    {
+      "name": "PLAN.md exact original byte prefix",
+      "passed": true
+    },
+    {
+      "name": "PLAN.md only bounded P27 appendix",
+      "passed": true
+    },
+    {
+      "name": "REQUIREMENTS.md exact original byte prefix",
+      "passed": true
+    },
+    {
+      "name": "REQUIREMENTS.md only bounded P27 appendix",
+      "passed": true
+    },
+    {
+      "name": "Affected source stable during check task",
+      "passed": true
+    },
+    {
+      "name": "Affected source stable during check CURRENT",
+      "passed": true
+    }
+  ],
+  "failures": [],
+  "remaining_gates": [
+    "Independently accepted design or concrete blocker, with exact OUTCOME/ADOPTION as appropriate",
+    "Final canonical documentary candidate and applicable checks",
+    "Exact source publication/readback",
+    "Frozen ZIP and standalone prompt audit",
+    "Confirmed final saves, separate external receipt and terminal reconciliation"
+  ],
+  "inputs": {
+    "records/package_phase.py": {
+      "bytes": 5671,
+      "sha256": "a18645b6cda56354df42895c6bfbd40aaa8a9142e06e1e5a18e4be1fea0f3a21"
+    },
+    "repo/tools/chat_workflow.py": {
+      "bytes": 27862,
+      "sha256": "43029d35c10e206e0fb2192aa32e9819984edec985561a76371594d52efa3f24"
+    },
+    "records/reconcile/p27-documentary/snapshots/CURRENT.json.baseline": {
+      "bytes": 164285,
+      "sha256": "b8433126e876d6d698e88ce1b54c86987cbdb66c029ad19a28bf6881128a60a4"
+    },
+    "records/reconcile/p27-documentary/snapshots/CURRENT.json.candidate": {
+      "bytes": 164252,
+      "sha256": "ce5f82d890bd72e3364e6f2931a914ab8db42180ac25c6bc517adc1a7fb5d7db"
+    },
+    "records/reconcile/p27-documentary/snapshots/CURRENT.json.candidate002": {
+      "bytes": 164753,
+      "sha256": "3813c3a3e331285aca848bdef1547acc5665e9e171340af709abf5a49c2d9ba8"
+    },
+    "records/reconcile/p27-documentary/snapshots/PLAN.md.baseline": {
+      "bytes": 78902,
+      "sha256": "1c074a56fcc4d4c4c2c7faed427db3b782632a60e340d6741c32e53487c33710"
+    },
+    "records/reconcile/p27-documentary/snapshots/PLAN.md.candidate": {
+      "bytes": 80548,
+      "sha256": "c3095f162269fd2a20d6173e34a42ff4e5e59bdd05837348a0aefbd49fc3766d"
+    },
+    "records/reconcile/p27-documentary/snapshots/REQUIREMENTS.md.baseline": {
+      "bytes": 77784,
+      "sha256": "093f716d6ff74d34891a274ae3d0f68cdefa2fecfde4e6e4085e2b4ccb4ec412"
+    },
+    "records/reconcile/p27-documentary/snapshots/REQUIREMENTS.md.candidate": {
+      "bytes": 79430,
+      "sha256": "0504d3361c0728b444cb31c0ef5de0ba4e7a1a45d7368f455c159058da5edd4f"
+    },
+    "records/reconcile/p27-documentary/snapshots/task.json.baseline": {
+      "bytes": 366391,
+      "sha256": "35a7dd687e58084e430382f4496c5612b77972531ddd972304ae4e3c63f128ca"
+    },
+    "records/reconcile/p27-documentary/snapshots/task.json.candidate": {
+      "bytes": 369598,
+      "sha256": "11738edba95ac8ac96d8601271696654e35e5a30faeab013fe06e5970d064984"
+    },
+    "records/reconcile/p27-documentary/snapshots/task.json.candidate002": {
+      "bytes": 370817,
+      "sha256": "df7ca2d2535a64f45914038dc899a236970373f32aa4ef96ec9db1116d23c29a"
+    }
+  },
+  "product_tests_run": false,
+  "repository_or_remote_mutations": false
+}

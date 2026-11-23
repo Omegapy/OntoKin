@@ -1,0 +1,21 @@
+{
+  "schema": "ontokin.c271.p27-design-review-revision/1",
+  "executable": false,
+  "finding": "Author freeze001 used integer420 in the four C04/C06 seam binding mode values. Existing _binding_shape requires an octal string and would refuse the expected binding before the intended read observation.",
+  "correction": {
+    "changed_fields": [
+      "RI-C04.return_actual_binding.mode",
+      "RI-C04.declared_expected_binding.mode",
+      "RI-C06.return_actual_binding.mode",
+      "RI-C06.declared_expected_binding.mode"
+    ],
+    "old_value": 420,
+    "new_value": "0o644"
+  },
+  "preserved": [
+    "review-history/CONTROL-PLAN-at-author-freeze001.json",
+    "review-history/CANDIDATE-FREEZE-attempt001.json"
+  ],
+  "control_execution": false,
+  "product_execution": false
+}

@@ -1,0 +1,609 @@
+{
+  "schema": "ontokin.c271.required-image-metadata-decision/1",
+  "decision_id": "P27-REQUIRED-IMAGES-001",
+  "status": "frozen_candidate_for_independent_review",
+  "author": "/root/design",
+  "implementation_performed": false,
+  "product_execution_performed": false,
+  "source_revision": "daf05a17eb44e467114df8258b2c56d8466dc4b8",
+  "source_file": {
+    "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a",
+    "size_bytes": 233502
+  },
+  "new_pair": {
+    "plan_schema": "ontokin.current-host-readback-inspection-plan/0.1.5",
+    "resolution_profile": "linux-glibc-declared-python-origin-rpath-libc-plt-static-tls-rtld-paths-required-images-v1"
+  },
+  "inherited_pair": "ontokin.current-host-readback-inspection-plan/0.1.4",
+  "closed_shapes": {
+    "top_level_keys_unchanged": [
+      "schema",
+      "contract",
+      "source",
+      "author",
+      "runtime",
+      "dependencies",
+      "host_static",
+      "environment",
+      "commands",
+      "evidence",
+      "limits"
+    ],
+    "resolution_keys": [
+      "profile",
+      "images",
+      "needed_edges",
+      "loader_inputs",
+      "search_directories",
+      "inspector_commands",
+      "ignored_kernel_rows",
+      "rationale",
+      "origin_rpath",
+      "libc_plt",
+      "rtld_paths",
+      "required_images"
+    ],
+    "required_images_keys": [
+      "schema",
+      "catalog",
+      "loader",
+      "subjects"
+    ],
+    "required_images_schema": "ontokin.current-host-readback-required-images/0.1.0",
+    "required_images_catalog": "debian-glibc-2.41-12+deb13u4-amd64-required-images-v1",
+    "subjects_exact_keys": [
+      "libdl.so.2",
+      "libm.so.6",
+      "libpthread.so.0",
+      "librt.so.1",
+      "libutil.so.1"
+    ],
+    "descriptor_exact_keys": [
+      "path",
+      "sha256",
+      "size_bytes",
+      "mode"
+    ],
+    "descriptor_rules": "Inherited canonical absolute path, lowercase 64-hex sha256, integer size (not Boolean), octal mode string; closed objects and duplicate JSON keys refused; all five canonical subject paths distinct.",
+    "optional_new_fields": [],
+    "runtime_approval_fields": []
+  },
+  "catalog": {
+    "libdl.so.2": {
+      "package_member": "./usr/lib/x86_64-linux-gnu/libdl.so.2",
+      "binding": {
+        "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+        "size_bytes": 14408,
+        "mode": "0o644"
+      },
+      "required_soname": "libdl.so.2",
+      "plt_tags": [
+        1879048192,
+        1879048193,
+        1879048195
+      ],
+      "each_tag_occurrences": 1,
+      "dt_flags": {
+        "maximum_occurrences": 1,
+        "absence_allowed": true,
+        "allowed_values": [
+          0,
+          8
+        ]
+      },
+      "dt_flags_1": {
+        "maximum_occurrences": 1,
+        "absence_allowed": true,
+        "allowed_values": [
+          0,
+          1,
+          134217728,
+          134217729
+        ]
+      },
+      "observed_osabi": 0,
+      "actual_fixture_metadata": {
+        "class": 64,
+        "endian": "little",
+        "machine": 62,
+        "type": 3,
+        "interpreter": null,
+        "needed": [
+          "libc.so.6"
+        ],
+        "soname": "libdl.so.2",
+        "rpath": [],
+        "runpath": []
+      }
+    },
+    "libm.so.6": {
+      "package_member": "./usr/lib/x86_64-linux-gnu/libm.so.6",
+      "binding": {
+        "sha256": "6d567d53e895273ca14a1f9dc164fc6c8d39aed2f60aa46a733c2784228915f3",
+        "size_bytes": 977112,
+        "mode": "0o644"
+      },
+      "required_soname": "libm.so.6",
+      "plt_tags": [
+        1879048192,
+        1879048193,
+        1879048195
+      ],
+      "each_tag_occurrences": 1,
+      "dt_flags": {
+        "maximum_occurrences": 1,
+        "absence_allowed": true,
+        "allowed_values": [
+          0,
+          8,
+          24
+        ]
+      },
+      "dt_flags_1": {
+        "maximum_occurrences": 1,
+        "absence_allowed": true,
+        "allowed_values": [
+          0,
+          1,
+          134217728,
+          134217729
+        ]
+      },
+      "observed_osabi": 3,
+      "actual_fixture_metadata": {
+        "class": 64,
+        "endian": "little",
+        "machine": 62,
+        "type": 3,
+        "interpreter": null,
+        "needed": [
+          "libc.so.6",
+          "ld-linux-x86-64.so.2"
+        ],
+        "soname": "libm.so.6",
+        "rpath": [],
+        "runpath": []
+      }
+    },
+    "libpthread.so.0": {
+      "package_member": "./usr/lib/x86_64-linux-gnu/libpthread.so.0",
+      "binding": {
+        "sha256": "85e21f7dba0394411d00959176fd18b470e575b0b05f1f4f41e5636802ce0500",
+        "size_bytes": 14408,
+        "mode": "0o644"
+      },
+      "required_soname": "libpthread.so.0",
+      "plt_tags": [
+        1879048192,
+        1879048193,
+        1879048195
+      ],
+      "each_tag_occurrences": 1,
+      "dt_flags": {
+        "maximum_occurrences": 1,
+        "absence_allowed": true,
+        "allowed_values": [
+          0,
+          8
+        ]
+      },
+      "dt_flags_1": {
+        "maximum_occurrences": 1,
+        "absence_allowed": true,
+        "allowed_values": [
+          0,
+          1,
+          134217728,
+          134217729
+        ]
+      },
+      "observed_osabi": 0,
+      "actual_fixture_metadata": {
+        "class": 64,
+        "endian": "little",
+        "machine": 62,
+        "type": 3,
+        "interpreter": null,
+        "needed": [
+          "libc.so.6"
+        ],
+        "soname": "libpthread.so.0",
+        "rpath": [],
+        "runpath": []
+      }
+    },
+    "librt.so.1": {
+      "package_member": "./usr/lib/x86_64-linux-gnu/librt.so.1",
+      "binding": {
+        "sha256": "7b7b84d1aedda0e0b2bdfc68844362782132180b8f02be1300e21e77572e514b",
+        "size_bytes": 14552,
+        "mode": "0o644"
+      },
+      "required_soname": "librt.so.1",
+      "plt_tags": [
+        1879048192,
+        1879048193,
+        1879048195
+      ],
+      "each_tag_occurrences": 1,
+      "dt_flags": {
+        "maximum_occurrences": 1,
+        "absence_allowed": true,
+        "allowed_values": [
+          0,
+          8
+        ]
+      },
+      "dt_flags_1": {
+        "maximum_occurrences": 1,
+        "absence_allowed": true,
+        "allowed_values": [
+          0,
+          1,
+          9,
+          134217728,
+          134217729
+        ]
+      },
+      "observed_osabi": 0,
+      "actual_fixture_metadata": {
+        "class": 64,
+        "endian": "little",
+        "machine": 62,
+        "type": 3,
+        "interpreter": null,
+        "needed": [
+          "libc.so.6"
+        ],
+        "soname": "librt.so.1",
+        "rpath": [],
+        "runpath": []
+      }
+    },
+    "libutil.so.1": {
+      "package_member": "./usr/lib/x86_64-linux-gnu/libutil.so.1",
+      "binding": {
+        "sha256": "e3981d10efd152a53f083e38f5f9ddde7a049c85d0ab388a5eec91b52fc98a11",
+        "size_bytes": 14408,
+        "mode": "0o644"
+      },
+      "required_soname": "libutil.so.1",
+      "plt_tags": [
+        1879048192,
+        1879048193,
+        1879048195
+      ],
+      "each_tag_occurrences": 1,
+      "dt_flags": {
+        "maximum_occurrences": 1,
+        "absence_allowed": true,
+        "allowed_values": [
+          0,
+          8
+        ]
+      },
+      "dt_flags_1": {
+        "maximum_occurrences": 1,
+        "absence_allowed": true,
+        "allowed_values": [
+          0,
+          1,
+          134217728,
+          134217729
+        ]
+      },
+      "observed_osabi": 0,
+      "actual_fixture_metadata": {
+        "class": 64,
+        "endian": "little",
+        "machine": 62,
+        "type": 3,
+        "interpreter": null,
+        "needed": [
+          "libc.so.6"
+        ],
+        "soname": "libutil.so.1",
+        "rpath": [],
+        "runpath": []
+      }
+    }
+  },
+  "catalog_provenance": {
+    "package": "libc6_2.41-12+deb13u4_amd64.deb",
+    "bytes": 2846580,
+    "sha256": "967aa62605721081c3eb2a17650611a792aa802d76a6511d1840242623d204c9",
+    "source_package": "glibc",
+    "source_version": "2.41-12+deb13u4",
+    "architecture": "amd64",
+    "source_evidence": "SOURCE-EVIDENCE.json"
+  },
+  "associated_loader": {
+    "sha256": "c8438e4fde1934e61c88311633f00949ff645d5c04cdb8671fa3d78164d2f307",
+    "size_bytes": 225672,
+    "mode": "0o755"
+  },
+  "binding_required_before_dispatch": [
+    "external plan digest and new exact closed schema/profile",
+    "all inherited author/runtime/host, Python origin and libc/loader proof",
+    "fresh actual selected-Python metadata equals its unique declared image metadata",
+    "each of five actual DT_NEEDED names selects its declared named alias",
+    "named alias in inspector_runtime or shared_libraries; exact host/runtime alias and resolved-file agreement",
+    "subject equals its unique image descriptor and its fixed catalog binding",
+    "pairwise distinct subjects, excluding libc/loader/all selected executable and extension roles",
+    "required_images.loader equals libc_plt.loader and all actual-Python-interpreter/host/runtime/image relations and fixed pin",
+    "fresh existing _bound on all five files and loader, then immutable private policy",
+    "enclosing _bound immediately before each parse; new raw route only for exact policy subjects",
+    "actual SONAME equals corresponding catalog key; declared metadata equals actual result",
+    "complete inherited metadata/edge/interpreter/search/origin/guard proof before helpers/Git/STATIC_READY"
+  ],
+  "raw_order": [
+    "inherited structural prefix",
+    "x86-64 ET_DYN architecture",
+    "ordinary tags plus exact trio; unknown tags refuse first",
+    "complete once-only trio",
+    "separate fixed flags and flags1 value sets with at-most-one entry each",
+    "all inherited strings/names/paths/SONAME/identity/final callback guards"
+  ],
+  "raw_osabi_policy": "Inherited ELF64 little-endian System V/Linux OSABI 0 or 3, unchanged; do not add OSABI0-only guard.",
+  "plt_value_policy": "Unsigned uint64 opaque metadata only: zero, maximum and inconsistent synthetic values accepted by this primitive if every other rule passes; never dereference/use as allocation, scan or read bound.",
+  "metadata_keys_unchanged": [
+    "class",
+    "endian",
+    "machine",
+    "type",
+    "interpreter",
+    "needed",
+    "soname",
+    "rpath",
+    "runpath"
+  ],
+  "new_diagnostics": {
+    "RI-PROFILE": {
+      "code": "CHI-PLAN",
+      "reason": "Unsupported required-image schema/profile pair",
+      "state": "REJECTED",
+      "details": {
+        "stage": "required_images",
+        "rule_id": "RI-PROFILE"
+      },
+      "cause": null
+    },
+    "RI-SHAPE": {
+      "code": "CHI-PLAN",
+      "reason": "Invalid required-image policy shape",
+      "state": "REJECTED",
+      "details": {
+        "stage": "required_images",
+        "rule_id": "RI-SHAPE"
+      },
+      "cause": null
+    },
+    "RI-CATALOG": {
+      "code": "CHI-PLAN",
+      "reason": "Unsupported required-image catalog",
+      "state": "REJECTED",
+      "details": {
+        "stage": "required_images",
+        "rule_id": "RI-CATALOG"
+      },
+      "cause": null
+    },
+    "RI-PRIVATE": {
+      "code": "CHI-PLAN",
+      "reason": "Unsupported private required-image metadata policy",
+      "state": "REJECTED",
+      "details": {
+        "stage": "required_images",
+        "rule_id": "RI-PRIVATE"
+      },
+      "cause": null
+    },
+    "RI-SUBJECTS": {
+      "code": "CHI-INSPECTOR",
+      "reason": "Required-image subjects are not distinct dependency files",
+      "state": "REJECTED",
+      "details": {
+        "stage": "required_images",
+        "rule_id": "RI-SUBJECTS"
+      },
+      "cause": null
+    },
+    "RI-ROLE": {
+      "code": "CHI-INSPECTOR",
+      "reason": "Required image is not the bound author-Python dependency",
+      "state": "REJECTED",
+      "details": {
+        "stage": "required_images",
+        "rule_id": "RI-ROLE"
+      },
+      "cause": null
+    },
+    "RI-DESCRIPTORS": {
+      "code": "CHI-INSPECTOR",
+      "reason": "Required-image descriptors or aliases disagree",
+      "state": "REJECTED",
+      "details": {
+        "stage": "required_images",
+        "rule_id": "RI-DESCRIPTORS"
+      },
+      "cause": null
+    },
+    "RI-PIN": {
+      "code": "CHI-INSPECTOR",
+      "reason": "Required image is not the selected catalog member",
+      "state": "REJECTED",
+      "details": {
+        "stage": "required_images",
+        "rule_id": "RI-PIN"
+      },
+      "cause": null
+    },
+    "RI-LOADER": {
+      "code": "CHI-INSPECTOR",
+      "reason": "Required-image loader differs from the selected libc/loader pair",
+      "state": "REJECTED",
+      "details": {
+        "stage": "required_images",
+        "rule_id": "RI-LOADER"
+      },
+      "cause": null
+    },
+    "RI-SONAME": {
+      "code": "CHI-INSPECTOR",
+      "reason": "Required-image SONAME differs from catalog key",
+      "state": "REJECTED",
+      "details": {
+        "stage": "required_images",
+        "rule_id": "RI-SONAME"
+      },
+      "cause": null
+    },
+    "RI-ARCH": {
+      "code": "CHI-UNSUPPORTED",
+      "reason": "Required-image metadata requires x86-64 ET_DYN",
+      "state": "REJECTED",
+      "details": {
+        "stage": "required_images",
+        "rule_id": "RI-ARCH"
+      },
+      "cause": null
+    },
+    "RI-TRIO": {
+      "code": "CHI-UNSUPPORTED",
+      "reason": "Required-image metadata requires one complete tag trio",
+      "state": "REJECTED",
+      "details": {
+        "stage": "required_images",
+        "rule_id": "RI-TRIO"
+      },
+      "cause": null
+    }
+  },
+  "unchanged_diagnostics": {
+    "unknown_tag": {
+      "code": "CHI-UNSUPPORTED",
+      "reason": "Unreviewed ELF dynamic loader feature",
+      "state": "REJECTED",
+      "details": {},
+      "cause": null
+    },
+    "flags": {
+      "code": "CHI-UNSUPPORTED",
+      "reason": "Unsupported dynamic flags",
+      "state": "REJECTED",
+      "details": {},
+      "cause": null
+    }
+  },
+  "callback_rules": {
+    "arity": 0,
+    "new_checkpoints": [
+      "required_policy_entry",
+      "required_policy_each_subject",
+      "before_required_image_tag_policy",
+      "during_required_image_tag_scan",
+      "before_required_image_flags",
+      "during_required_image_flags",
+      "before_required_image_final_identity"
+    ],
+    "exception_semantics": "New primitive tracks callback-origin exceptions and propagates the same object after successful existing cleanup, including callbacks whose type would otherwise match a parse exception. No callbacks added on old routes.",
+    "cleanup_semantics": "Use existing finally/close ownership; exactly one close attempt per opened descriptor, no retry. A close fault preserves existing propagation and exception context, and forbids success."
+  },
+  "recheck_rules": {
+    "fresh_policy_each_resolution": true,
+    "early_before_helpers_and_git": true,
+    "final_resolution_repeats": true,
+    "fresh_policy_each_complete_recheck": true,
+    "cached_policy_across_rechecks": false,
+    "snapshot_and_launch": "All subjects and loader remain in existing file maps/full snapshots; inherited final identity/alias/path checks within current command clock; no new full hashing work at final launch.",
+    "postflight": "Full fresh metadata/binding/hash proof; outer CHI-DRIFT with underlying cause and actual prior process receipt/count retained."
+  },
+  "finite_bounds_unchanged": {
+    "elf_bytes": 536870912,
+    "individual_read_bytes": 16777216,
+    "program_headers": 256,
+    "dynamic_table_bytes": 65536,
+    "string_table_bytes": 4194304,
+    "dynamic_string_bytes": 4096,
+    "needed_names": 256,
+    "plan_images": 512,
+    "document_bytes": 16777216,
+    "static_ms": 60000,
+    "command_ms": 5000,
+    "active_work_ms": 3000,
+    "cleanup_ms": 2000,
+    "publication_ms": 30000
+  },
+  "new_fixed_cardinality": {
+    "subjects": 5,
+    "catalogs": 1,
+    "associated_loaders": 1,
+    "additional_dynamic_tag_numbers": 3
+  },
+  "preserved": [
+    "public parser/default and versions /0.1.0 through /0.1.4 exact behavior",
+    "existing libc subject and P16/P17 semantics",
+    "P24 finite path topology, selectors, guards, snapshots and callbacks on old route",
+    "P06 closed output and consumer contracts",
+    "P05 Node,24-reader-file,seven-package,source/scientific/method/budget and lifecycle obligations",
+    "all historical failures and source-time records",
+    "N34/historical N57 remain external source-completeness review"
+  ],
+  "limits": [
+    "Fixed source/package cohort; not arbitrary glibc DSOs",
+    "No signature/reproduced-build claim",
+    "NODELETE can preserve objects/dependencies for subsequent reuse; no complete loader-selection inference from metadata recognition",
+    "No TLS allocation, PLT execution, initialization or binary safety validation",
+    "P26 only proves narrow libdl selection; whole Python/Node/inspector closure remains unaccepted",
+    "No operational plan/H0/H1/original-seven/routine/R03-R05 acceptance"
+  ],
+  "control_plan": "CONTROL-PLAN.json",
+  "future_surface": "FUTURE-SURFACE.json",
+  "stop": "Independent acceptance/adoption or first concrete design blocker, then documentary publication and saved delivery only.",
+  "next_fresh_phase": "After separate adoption, bounded implementation and focused inert controls; stop before host preparation/H0.",
+  "selector_order": [
+    "exact /0.1.5 schema/profile",
+    "complete closed resolution keys",
+    "closed required_images and descriptor shapes with syntax-only normalized path checks",
+    "exact catalog identifier",
+    "unchanged inherited origin/libc/RTLD subobject checks"
+  ],
+  "binding_refusal_precedence": [
+    {
+      "order": 1,
+      "check": "Pairwise distinct canonical subject paths and disjointness from libc, loader, selected Python/Node/Git, inspector entry/script/interpreter fixed canonical roots. Derive fixed paths only from validated descriptors/alias maps.",
+      "selector": "RI-SUBJECTS"
+    },
+    {
+      "order": 2,
+      "check": "Subject disjointness from author-extension and external inspector-command executable canonical paths.",
+      "selector": "RI-ROLE"
+    },
+    {
+      "order": 3,
+      "check": "Common loader equality with inherited libc policy, actual Python interpreter/host/runtime/image bindings and fixed pin.",
+      "selector": "RI-LOADER"
+    },
+    {
+      "order": 4,
+      "check": "For each catalog key in sorted order: actual Python needed name, selected named edge, allowed role and both aliases resolving to subject.",
+      "selector": "RI-ROLE"
+    },
+    {
+      "order": 5,
+      "check": "For that key: complete host/runtime alias equality, unique image descriptor, and both file bindings.",
+      "selector": "RI-DESCRIPTORS"
+    },
+    {
+      "order": 6,
+      "check": "For that key: exact catalog byte/size/mode pin.",
+      "selector": "RI-PIN"
+    },
+    {
+      "order": 7,
+      "check": "Only after all relation checks: existing _bound on five subjects in sorted catalog-key order, then loader; derive immutable policy after all six pass.",
+      "selector": "inherited _bound behavior"
+    }
+  ]
+}

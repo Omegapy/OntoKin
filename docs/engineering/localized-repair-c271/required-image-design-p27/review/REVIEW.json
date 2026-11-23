@@ -1,0 +1,212 @@
+{
+  "schema": "ontokin.c271.p27-independent-design-review/1",
+  "reviewer": "/root/design_review",
+  "recorded_at_utc": "2026-11-23T18:02:54.564796+00:00",
+  "accepted": true,
+  "verdict": "accepted_design_only",
+  "decision_id": "P27-REQUIRED-IMAGES-001",
+  "candidate_files": [
+    {
+      "path": "records/design/DESIGN.md",
+      "bytes": 24195,
+      "sha256": "d337c26e8068a5888f24dc33ade097862d6296f4409160064d8cdc61a84bd3d1"
+    },
+    {
+      "path": "records/design/DECISION.json",
+      "bytes": 19073,
+      "sha256": "07825a49e2d9f6c49ee7b18413278ffd150b09032e3a2d891e293ff310029da1"
+    },
+    {
+      "path": "records/design/FUTURE-SURFACE.json",
+      "bytes": 5354,
+      "sha256": "4040b3657ef17a0df9cdabdc6431acd9d2afc59725aa7afde1f09b0efb76e35c"
+    },
+    {
+      "path": "records/design/CONTROL-PLAN.json",
+      "bytes": 118522,
+      "sha256": "55dc8e776253232e7eb23e51593754f9b69cf72e23732246424adb6ed58ba89f"
+    },
+    {
+      "path": "records/design/SOURCE-EVIDENCE.json",
+      "bytes": 42447,
+      "sha256": "12b3f8d4a53e0d94f23c3947b4642bbdbba9ac9435552fd539ad72fa0f43de2f"
+    },
+    {
+      "path": "records/design/READ-SET.json",
+      "bytes": 19518,
+      "sha256": "f3bce5a58f0235c8e7068d8eec4502151da0c55c874f029cf67c4507450d6947"
+    }
+  ],
+  "author_freeze": {
+    "path": "records/design/CANDIDATE-FREEZE.json",
+    "bytes": 1744,
+    "sha256": "969641bbfe70727f14e105d67012bb7605ed53bb45caabb4589a40a94bf7f35b"
+  },
+  "source_revision": "daf05a17eb44e467114df8258b2c56d8466dc4b8",
+  "governing_revision": "e43cc6c5777874101a40559e4058ad6826b07e51",
+  "source_file": {
+    "path": "repo/prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "bytes": 233502,
+    "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a"
+  },
+  "unresolved_findings": [],
+  "mandatory_findings": [
+    {
+      "id": "M01",
+      "kind": "mandatory",
+      "status": "closed",
+      "issue": "A libdl flags16 negative did not exclude a mistaken libm mask 0x18 implementation.",
+      "resolution": "RI-N24 uses the libm route with DT_FLAGS=16 and freezes CHI-UNSUPPORTED / Unsupported dynamic flags / REJECTED / empty details / null cause. Separate actual libm 24 positive and cross-subject refusals remain.",
+      "evidence": [
+        "CONTROL-PLAN.json:RI-N24",
+        "DECISION.json:catalog.libm.so.6.dt_flags"
+      ]
+    },
+    {
+      "id": "M02",
+      "kind": "mandatory",
+      "status": "closed",
+      "issue": "The old-version added-member case deferred exact diagnostics to a later fixture phase.",
+      "resolution": "RI-L09A through RI-L09E now freeze all five old-schema literal code/reason/state/details/cause records, checked against current source. No future diagnostic selection is delegated.",
+      "evidence": [
+        "CONTROL-PLAN.json:RI-L09A..RI-L09E",
+        "current_host_inspection_v01.py:_keys/_origin_keys/_RTLD_FAILURES"
+      ]
+    },
+    {
+      "id": "M03",
+      "kind": "mandatory",
+      "status": "closed",
+      "issue": "Distinctness and fixed/extension/command role collisions lacked a stable refusal order and could rely on stipulated earlier proof.",
+      "resolution": "DECISION and CONTROL-PLAN carry identical seven-stage precedence. RI-D14 and RI-D17A..H supply contradictory raw inputs and require RI-SUBJECTS first; RI-D15/D16 require RI-ROLE for extension/external-command collisions. Real relation logic is required.",
+      "evidence": [
+        "DECISION.json:binding_refusal_precedence",
+        "CONTROL-PLAN.json:RI-D14..RI-D17H"
+      ]
+    },
+    {
+      "id": "M04",
+      "kind": "mandatory",
+      "status": "closed",
+      "issue": "Caller/recheck faults initially named expected selectors without concrete reachable mutations and omitted some outer diagnostic fields. Later drafts used an earlier-rejected missing-runtime binding, integer modes, and an inconsistent unrelated-only mock clause.",
+      "resolution": "RI-C02 coherently changes the libutil declared SHA and uses real catalog comparison. RI-C04/C06 now keep all maps coherent and alter only the labelled _read_file observation within real constructor/_bound. Literal mode is string 0o644, and real _bound yields the inherited bound-file diagnostic. Named related prerequisite mocks, complete outer wrappers, second postflight guard, mock receipt/count preservation, and zero actual OS starts are explicit. Top-level adapter_rule agrees with those named seams.",
+      "evidence": [
+        "CONTROL-PLAN.json:RI-C02/RI-C04/RI-C05/RI-C06/adapter_rule",
+        "current_host_inspection_v01.py:236-247,838-842,2748-2942,3170-3340",
+        "attempt001/FINDINGS.json",
+        "attempt002/FINDINGS.json",
+        "attempt003/FINDINGS.json",
+        "../design/review-history/BOUND-OBSERVATION-REVISION.json",
+        "../design/review-history/MODE-FORMAT-REVISION.json",
+        "../design/review-history/ADAPTER-BOUNDARY-REVISION.json"
+      ]
+    }
+  ],
+  "suggestions": [],
+  "history": [
+    {
+      "stage": "independent source/necessity review",
+      "record": "PRELIMINARY-SOURCE-REVIEW.md",
+      "result": "Finite package-associated route supported; source/build/native limits fixed before accepting candidate."
+    },
+    {
+      "stage": "initial 100-case semantic draft review",
+      "record": "attempt001/FINDINGS.json",
+      "result": "Four focused mandatory revisions requested. The exact initial 100-case bytes were not snapshotted; the first durable snapshot was after some revisions. No claim otherwise."
+    },
+    {
+      "stage": "review-attempt001",
+      "record": "attempt001/SNAPSHOT.json",
+      "result": "Four-file partial-revision candidate preserved; 116 cases. Source evidence was pending at snapshot."
+    },
+    {
+      "stage": "review-attempt002 / author freeze001",
+      "record": "attempt002/SNAPSHOT.json",
+      "result": "Not accepted: integer 420 expected/observed modes conflict with inherited octal-string binding shape."
+    },
+    {
+      "stage": "review-attempt003 / author freeze002",
+      "record": "attempt003/SNAPSHOT.json",
+      "result": "Not accepted despite 166 documentary checks passing: adapter_rule contradicted explicitly named related prerequisite mocks."
+    },
+    {
+      "stage": "review-attempt004 / author freeze003",
+      "record": "attempt004/SNAPSHOT.json",
+      "result": "Accepted design only after source review and 170 documentary checks. All116 obligations remain NOT_RUN."
+    },
+    {
+      "stage": "independent raw-byte audit attempts",
+      "record": "INSPECTION-ATTEMPTS.json",
+      "result": "Initial audit-only OSABI 0 assumption failed on libm OSABI 3; preserved, corrected to inherited 0-or-3, and exact all-five comparison passed. No product result was changed."
+    }
+  ],
+  "evidence": {
+    "independent_retained_byte_audit": {
+      "path": "records/design-review/RETAINED-BYTE-AUDIT.json",
+      "bytes": 24258,
+      "sha256": "f9fddd4eeac627d8f55139169f1d0a5b85269cbbaf65a9acce9f2d729b557719"
+    },
+    "primary_source_archive_bindings": {
+      "path": "records/design-review/PRIMARY-SOURCE-BINDINGS.json",
+      "bytes": 10419,
+      "sha256": "ac91ec1faa199bb8a17798f27ec88ff04146a4043ec5f68ff236702b60136d39"
+    },
+    "patch_source_association_audit": {
+      "path": "records/design-review/PATCH-AND-SOURCE-ASSOCIATION-AUDIT.json",
+      "bytes": 17115,
+      "sha256": "613a99ac384b3f9db0727d5031a1ca3a5e6fe5202adfa45d61753ad4129c5b07"
+    },
+    "candidate_document_audit": {
+      "path": "records/design-review/CANDIDATE-DOCUMENT-AUDIT.json",
+      "bytes": 21777,
+      "sha256": "48c2fdef15e2f5bc74f1358f9bbaddd248c718c02a0573e6dd12d86751201606"
+    },
+    "documentary_checks": 170,
+    "documentary_checks_passed": true,
+    "control_semantic_obligations": 116,
+    "control_cases_executed": 0,
+    "product_imports_or_executions": 0,
+    "actual_target_starts": {
+      "node": 0,
+      "ldd": 0,
+      "direct_loader": 0,
+      "cpu_checker": 0
+    },
+    "source_necessity_report": "PRELIMINARY-SOURCE-REVIEW.md",
+    "read_set": "READ-SET.json"
+  },
+  "acceptance_rationale": [
+    "P26 establishes a necessary narrow libdl metadata blocker under unchanged requirements; rebuilding prior portable inputs alone does not remove it, and no supported conforming replacement host/build is established.",
+    "All five exact package members match retained observations, and source recipes/definitions/consumers support an x86-64 shared-object cohort with separate libm 24 and librt 9 predicates.",
+    "New closed /0.1.5 selection grants private metadata capability only after fresh actual Python metadata, complete exact dependency/alias/file/role/loader binding and fixed catalog checks; no orphan/same-name/same-hash/forbidden-role substitute qualifies.",
+    "All old public/operational routes, private libc rules, closed schemas, finite limits, fresh rechecks and original verification obligations remain unchanged.",
+    "Frozen controls distinguish actual inert-byte reads, synthetic raw primitives, pure relation/selector checks and explicitly mocked caller seams. Fault and legacy expectations are literal; none count as execution evidence."
+  ],
+  "source_and_publication_limits": [
+    "Acceptance covers only the six exact author deliverables listed here and their hash-bound supporting records. Any semantic edit requires renewed exact review.",
+    "This is independent design acceptance, not Director adoption, implementation acceptance, executable fixture approval, H0/H1 qualification, original-seven/full-routine evidence, R03-R05 closure, or parent completion.",
+    "Primary-source review covered the exact selected files/ranges and relevant active patch sections. All80 active patch headers were indexed; no whole-program proof, full patched-source certification, signature verification, reproduced build, compiler invocation proof, or binary safety claim.",
+    "The five retained package identities/raw dynamic fields match P26. Only the narrow P26 Node-to-libdl selection is supported by that prior deduction; dependency names and this package catalog do not prove complete native selection.",
+    "PLT tags can drive active rewriting; NODELETE affects lifetime, relocation-dependency accounting and later reuse; static TLS allocation can fail. Opaque metadata recognition does not qualify these runtime behaviors.",
+    "N34 and historical N57 remain external independent source-completeness obligations. No runtime pass or skip discharges them.",
+    "No repository edits, remote mutations, product imports/parser calls, implementation/test execution, new host input observations, installs, H0/H1, Node, ldd, direct loader, CPU checker, original-seven or routine execution were performed by this reviewer.",
+    "Parent owns live state/Git verification, separate adoption, required documentary checks, publication, saved/readback handoff and closure. This review makes no publication or saved-delivery claim."
+  ],
+  "future_fixture_generation_gate": {
+    "status": "required_before_future_implementation_or_control_execution",
+    "independent_owner_required": true,
+    "requirements": [
+      "Construct and freeze runnable fixtures/adapter inputs for every one of the 116 stable semantic obligations. Bind exact bytes, hashes, sizes, modes, paths, unchanged companions, commands, adapters and literal expected outputs before implementation/control execution.",
+      "Demonstrate structural-prefix reachability for each synthetic ELF mutation without changing the frozen expected selector or metadata. The present control plan is declarative, not runnable.",
+      "Freeze every named mocked prerequisite, temporal observation, fake receipt/timestamp/store descriptor and caller boundary. Keep new helper, _bound comparisons and required wrappers real as specified; record actual OS starts separately from stipulated mock counts.",
+      "Bind the exact inherited per-method/control inventory and unchanged expectations; preserve P16/P17/P24/P25 behavior and external N34/N57 obligations. Counts alone are insufficient.",
+      "If fixture materialization or implementation exposes a contradictory/unreachable frozen requirement, stop with a concrete blocker. Do not select a new oracle after observing output or expand the accepted surface."
+    ],
+    "next_phase_limit": "After separate adoption, bounded implementation/focused inert controls on the exact FUTURE-SURFACE only; stop before host preparation/H0 and no further phase in this thread."
+  },
+  "director_adoption_performed": false,
+  "implementation_authorized_by_this_review": false,
+  "publication_performed": false,
+  "parent_closure_authorized": false,
+  "stop": "Review complete; no further technical phase. Parent may perform separate adoption and documentary verified handoff only."
+}

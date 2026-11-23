@@ -1,0 +1,40 @@
+{
+  "schema": "ontokin.c271.p27-independent-review-attempts/1",
+  "attempts": [
+    {
+      "id": "byte-audit-001",
+      "outcome": "failed_audit_assertion",
+      "script": "audit_retained_bytes.attempt001.py",
+      "record": "RETAINED-BYTE-AUDIT.attempt001.json",
+      "product_execution": false
+    },
+    {
+      "id": "byte-audit-002",
+      "outcome": "passed",
+      "script": "audit_retained_bytes.attempt002.py",
+      "record": "RETAINED-BYTE-AUDIT.attempt002.json",
+      "preservation_note": "Exact successful script/report body retained from known text immediately after adding execution-provenance fields for attempt003. No outcome changed.",
+      "product_execution": false
+    },
+    {
+      "id": "byte-audit-003",
+      "outcome": "passed",
+      "script": "audit_retained_bytes.py",
+      "record": "RETAINED-BYTE-AUDIT.json",
+      "reason": "Record exact auditor interpreter/command/script hash with same data calculations.",
+      "product_execution": false
+    }
+  ],
+  "navigation_errors": [
+    {
+      "path": "repo/docs/engineering/localized-repair-c271/host-inspection-p07/DESIGN.md",
+      "outcome": "absent",
+      "recovery": "Read actual adopted HOST-INSPECTION-DESIGN.md named by ADOPTION.json."
+    },
+    {
+      "path": "repo/docs/engineering/localized-repair-c271/review-boundary-p13/DECISION.md",
+      "outcome": "absent",
+      "recovery": "Read full ADOPTION.json; no candidate content assumed."
+    }
+  ]
+}
