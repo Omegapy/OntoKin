@@ -1,0 +1,173 @@
+{
+  "schema": "ontokin.c271.p22-canonical-update-proposal/1",
+  "author": "/root/ledger",
+  "created_at_utc": "2026-11-23T02:47:53.597482+00:00",
+  "status": "proposal_only_no_canonical_changes",
+  "scope": "Exact preservation/update paths and prose templates while technical review is pending; no execution/outcome claim.",
+  "basis": {
+    "startup_readset": {
+      "path": "/workspace/scratch/aa6113404163/phase-p22/ledger/READSET.json",
+      "bytes": 25202,
+      "sha256": "e7f5f267de0de4cb29f8dee4489ac2bff902167fdc38a10355e917940b217c76"
+    },
+    "all_five_canonical_files_unchanged_from_startup": true,
+    "predecessor_preservation": {
+      "path": "/workspace/scratch/aa6113404163/phase-p22/ledger/P21-CANONICAL-PRESERVATION.json",
+      "bytes": 17813,
+      "sha256": "cb423bd4e423ed951dd17d95803122d660dc3c4e8d1f7ac71bc68a9172773a5c"
+    },
+    "early_receipt": {
+      "path": "/workspace/scratch/aa6113404163/phase-p22/state/EARLY-RECOVERY-RECEIPT.json",
+      "bytes": 1968,
+      "sha256": "e7261a2f2479c26d17bc34c4d377419325b9877dfb13d2e6e8b4e7d8fb52086c"
+    },
+    "early_archive_review": {
+      "path": "/workspace/scratch/aa6113404163/phase-p22/archive_audit/EARLY-REVIEW.json",
+      "bytes": 7193,
+      "sha256": "8bb81367aa8b4c34c380eda044fab5f32f026f446fbe085bc3745b34b90a253a"
+    },
+    "early_save_readback_review": {
+      "path": "/workspace/scratch/aa6113404163/phase-p22/archive_audit/EARLY-SAVE-READBACK-REVIEW.json",
+      "bytes": 1857,
+      "sha256": "cf07a801b958780eda5c14ed67b6f5f72064b4ca2b7eab43d0ea36ef0c94f04b"
+    },
+    "predecessor_review": {
+      "path": "/workspace/scratch/aa6113404163/phase-p22/archive_audit/PREDECESSOR-REVIEW.json",
+      "bytes": 42609,
+      "sha256": "8af122d118945da1511a931f7f24b713588ffc946786d772e133b1c56dec3c69"
+    }
+  },
+  "placeholder_rule": "All {{TOKENS}} are unresolved authoring placeholders. Director must substitute actual staged evidence paths/observations before publication; do not apply an outcome template until its stated evidence gate is accepted.",
+  "correction_to_startup_proposal": "Leave task.authorization.selection unchanged: it describes the parent H22.02 control selection. Record P22 authorization only in the active session_phase or an appended phase-specific record.",
+  "ordered_updates": [
+    {
+      "file": "docs/workflow/tasks/C271/task.json",
+      "action": "append_exact_then_replace",
+      "from_pointer": "/session_phase",
+      "archive_pointer": "/prior_session_phases/-",
+      "expected_object_sha256": "9949363656228ae340f5a6ec16f0d5b40ad5c4f42f0539994ac821fe2b4477aa",
+      "current_archive_count": 20,
+      "new_value_source": "Fresh declared P22 session object with actual state; phase_complete=false, technical_phase_complete=false while receipt gate pending; early_save_confirmed=true with actual early receipt."
+    },
+    {
+      "file": "docs/workflow/tasks/C271/task.json",
+      "action": "append_exact_then_replace",
+      "from_pointer": "/delivery",
+      "archive_pointer": "/prior_phase_deliveries/-",
+      "expected_object_sha256": "9a1c3ebe9de07dbb8d0acd4ab570a4a40db3d99254eacd5b9505f374bf7c9a98",
+      "current_archive_count": 20,
+      "new_value_source": "P22 partial delivery: early confirmed, final save pending, phase_complete=false. Do not carry P21 final archive fields into P22."
+    },
+    {
+      "file": "docs/workflow/tasks/C271/task.json",
+      "action": "append",
+      "pointer": "/phase_reconciliations/-",
+      "current_count": 6,
+      "value_template": {
+        "phase": "C271-P21-h0-operational-plan-review",
+        "status": "confirmed_complete_partial_delivery",
+        "source_pending_fields": "Retained unchanged in prior phase/delivery records; resolved only by matching later live terminal markers and exact saved terminal receipt.",
+        "evidence": "{{P22_EVIDENCE_ROOT}}/startup/PREDECESSOR-REVIEW.json",
+        "evidence_sha256": "8af122d118945da1511a931f7f24b713588ffc946786d772e133b1c56dec3c69",
+        "terminal_library_file_id": "libfile_fde3_f-4b7a58b2cbd08191b59f811de2c94061_2ab2a24d43748191957f9bcc356b59de",
+        "terminal_sha256": "02d7987249a106b7f205e09f490fe2f35006ffdbf0f37da3dca91e21503082fe",
+        "terminal_bytes": 222162,
+        "receipt_commit": "527368bd5195c439762b43e2cc836ff9822213f8",
+        "archive_sha256": "ba03995347ed65a5a37b4283211841daf4da74fe4a04dbe0617f9e833e9bb64f",
+        "parent_complete": false,
+        "h0_accepted": false
+      }
+    },
+    {
+      "file": "docs/workflow/tasks/C271/task.json",
+      "action": "replace",
+      "pointer": "/owner",
+      "value": "c271-p22-aa6113404163"
+    },
+    {
+      "file": "docs/workflow/tasks/C271/task.json",
+      "action": "replace",
+      "pointer": "/next_action",
+      "value": "Obtain independent approval of the exact P22 preparation plans and launcher; prepare or verify only the selected Node and 24-file dependency inputs, independently review actual source-bound receipts, then stop at that checkpoint or first concrete blocker."
+    },
+    {
+      "file": "docs/workflow/CURRENT.json",
+      "action": "replace_fields",
+      "pointers": [
+        "/next_action/summary",
+        "/next_action/suggested_task",
+        "/next_action/sources",
+        "/snapshot_date"
+      ],
+      "values": "Use active preparation action, conditional next fresh H0 review or actual blocker resolution, staged P22 evidence references and actual snapshot date. Keep /next_action/status=blocked while receipt gate is pending."
+    },
+    {
+      "file": "docs/workflow/CURRENT.json",
+      "action": "preserve_history_then_replace",
+      "pointer": "/latest_recovery",
+      "expected_old_object_sha256": "39c7aaefa998014938d235bae769f871fae73d209379197db3367fc6aa28cc1c",
+      "new_value_source": "Actual confirmed P22 EARLY-RECOVERY-RECEIPT.json, with canonical receipt/review paths mapped by Director. Preserve old /previous_recovery in /older_recoveries without duplicate insertion; copy old /latest_recovery to /previous_recovery first."
+    },
+    {
+      "file": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "action": "append_only",
+      "value_template": "### P22 \u2014 retained input preparation (declared 2026-11-23)\n\nThe current request authorizes one bounded prerequisite phase. Reconcile P21 delivery, recover the exact P09-identified Node and C195 dependency archives, freeze one clean source for preparation and later H0, and independently review complete plans for the unchanged preparer, isolated destinations and fresh report/index paths. Prepare or verify only the selected Node set and 24-file readback dependency set; independently review actual successful source-bound receipts. Stop at that prerequisite checkpoint or first concrete blocker, then complete documentary publication and saved handoff. R01/R02 remain done, R03-R05 not_done and P02 in_progress. P22 does not accept H0 or close C271. The early recovery archive is confirmed saved/read back; technical plan and receipt acceptance remain pending at declaration."
+    },
+    {
+      "file": "docs/workflow/tasks/C271/PLAN.md",
+      "action": "append_only",
+      "value_template": "### P22 \u2014 bounded prerequisite checkpoint\n\nStartup and P21 delivery reconciliation are accepted, and the early recovery save/readback is confirmed. Next, obtain independent approval of the exact source-bound preparation plans and launcher. Execute only the approved Node and 24-file dependency preparation or verification, preserve every result/failure, and review actual receipts. Stop technical work at accepted prerequisite receipts or the first blocker. Complete records, independent documentary review, required record checks, conditional retained-branch publication/readback, independently reviewed final ZIP and matching prompts, separate saved receipt and terminal reconciliation. Do not start H0/H1 or another phase in this chat."
+    },
+    {
+      "file": "STATUS.md",
+      "action": "replace_exact_span",
+      "span": {
+        "start_line": 7,
+        "end_line": 7,
+        "start_utf8_byte": 292,
+        "end_utf8_byte_exclusive": 1631,
+        "old_sha256": "a3adf868c7773f9da26bd699606315c420138b2f41904ce2e4958b2796458424",
+        "old_text": "C271 P21 independently verified the surviving P20 environment: 656 before/after descriptor comparisons passed, covering seven pinned packages, 293 installed files and 27 native files read as data. [Outcome](docs/engineering/localized-repair-c271/h0-plan-p21/OUTCOME.json), [review](docs/engineering/localized-repair-c271/h0-plan-p21/reviews/OUTCOME-REVIEW.md). A complete H0 plan remains blocked because required Node/retained-dependency installation evidence is unavailable among the declared sources; [decision](docs/engineering/localized-repair-c271/h0-plan-p21/reviews/H0-DECISION.md) records the bounded finding. No runtime failure or global absence is inferred. C271 remains blocked/open, R03-R05 unmet, P02 in progress; PR274 draft/open/unmerged, issue273 open, branch retained. P20 delivery is reconciled. The independently verified P21 ZIP and matching prompts are saved and exactly read back; [separate receipt](docs/engineering/localized-repair-c271/h0-plan-p21/P21-DELIVERY.json). Receipt publication and terminal confirmation remain pending at this source snapshot. Finish only those delivery checks, then stop. The next fresh phase prepares or verifies source-bound Node/dependency receipts. No H0/H1, original-seven/full routine, main lease, merge or deletion. Observed main remains 70ca7e68ff95df876f801137369d176fe5b2bab3."
+      },
+      "new_text_template": "C271 P22 is preparing the exact retained Node and C195 readback-dependency inputs needed for H0 planning. P21 saved delivery is reconciled by its later terminal receipt and matching PR274/issue273 markers; the source-time records remain preserved. The independently reviewed early P22 recovery ZIP is saved and byte readback verified. One clean source and two preparation plans are selected; independent technical approval and actual successful preparation receipts remain pending. [P22 phase]({{P22_EVIDENCE_ROOT}}/PHASE.json), [early receipt]({{P22_EVIDENCE_ROOT}}/EARLY-RECOVERY-RECEIPT.json). C271 remains blocked/open, R03-R05 not_done and P02 in_progress; PR274 remains draft/open/unmerged, issue273 open and the branch retained. Stop at independently accepted input-preparation receipts or the first concrete blocker, followed only by documentary publication and saved handoff. No H0/H1, original-seven/full routine, main lease, merge, deletion or second phase. Observed main remains 70ca7e68ff95df876f801137369d176fe5b2bab3.",
+      "preserve": "Header, surrounding blank lines, every C270-and-earlier paragraph, released lease, historical unknowns and anchors."
+    }
+  ],
+  "invariants": [
+    "task.status=blocked and CURRENT.next_action.status=blocked until both actual prerequisite receipts are accepted and no concrete new prerequisite blocker remains.",
+    "R01/R02 remain done; R03/R04/R05 remain not_done; parent P01 remains done and P02 in_progress.",
+    "Preserve task.authorization entirely, all existing prior arrays/entries, existing historical checks, original failures and scope issue/PR disposition.",
+    "Keep CURRENT.latest_handoff exactly P21 until actual P22 final save/readback. An early ZIP is not the final handoff.",
+    "No parent completion, H0 acceptance, main lease/integration, branch deletion or additional phase.",
+    "Technical phase completion and final delivery completion are separate fields. P22 phase_complete remains false while its required final saved handoff/terminal checks are pending."
+  ],
+  "conditional_outcome_decision": {
+    "pending_or_unreviewed_receipts": {
+      "parent_status": "blocked",
+      "reason": "The current concrete installation-evidence blocker has not yet been discharged by accepted actual receipts."
+    },
+    "accepted_both_receipts_no_other_prerequisite_blocker": {
+      "parent_status": "in_progress",
+      "reason": "The specific missing-installation-evidence blocker is resolved. The next complete H0 plan review is a planned uncompleted gate; an uncompleted gate alone does not require blocked status. This remains a partial parent task with R03-R05 unmet.",
+      "required_record_changes": [
+        "Append a P21 blocked_reason_history descriptor bound to original task file revision/hash and /blocked_reason; retain exact reason in P21-CANONICAL-PRESERVATION or equivalent historical source.",
+        "Append exact old remaining_h0_constraint to prior_h0_constraints before setting current constraint to complete_H0_plan_review_pending with accepted P22 receipt/outcome evidence.",
+        "Clear or remove current blocked_reason after its exact historical preservation; do not leave an active false missing-evidence assertion beside in_progress. Preserve existing prior_blocked_reason (older failure) unchanged.",
+        "Set task.status and CURRENT.next_action.status consistently to in_progress; set active session_phase.parent_status accordingly.",
+        "Replace active next_action with documentary publication/final delivery then stop; put complete H0 plan review only in first_next_phase_action/suggested_task."
+      ]
+    },
+    "any_refusal_failed_unknown_unreviewed_required_result_or_actual_new_blocker": {
+      "parent_status": "blocked",
+      "reason": "Partial preparation or unexplained execution outcome cannot discharge the prerequisite gate. Preserve the original reason historically if a new blocker replaces it, and describe the actual current blocker precisely."
+    },
+    "current_decision": "blocked; no actual preparation outcome has been assigned for ledger review yet"
+  },
+  "prose_templates": {
+    "requirements_declaration": "### P22 \u2014 retained input preparation (declared 2026-11-23)\n\nThe current request authorizes one bounded prerequisite phase. Reconcile P21 delivery, recover the exact P09-identified Node and C195 dependency archives, freeze one clean source for preparation and later H0, and independently review complete plans for the unchanged preparer, isolated destinations and fresh report/index paths. Prepare or verify only the selected Node set and 24-file readback dependency set; independently review actual successful source-bound receipts. Stop at that prerequisite checkpoint or first concrete blocker, then complete documentary publication and saved handoff. R01/R02 remain done, R03-R05 not_done and P02 in_progress. P22 does not accept H0 or close C271. The early recovery archive is confirmed saved/read back; technical plan and receipt acceptance remain pending at declaration.",
+    "plan_declaration": "### P22 \u2014 bounded prerequisite checkpoint\n\nStartup and P21 delivery reconciliation are accepted, and the early recovery save/readback is confirmed. Next, obtain independent approval of the exact source-bound preparation plans and launcher. Execute only the approved Node and 24-file dependency preparation or verification, preserve every result/failure, and review actual receipts. Stop technical work at accepted prerequisite receipts or the first blocker. Complete records, independent documentary review, required record checks, conditional retained-branch publication/readback, independently reviewed final ZIP and matching prompts, separate saved receipt and terminal reconciliation. Do not start H0/H1 or another phase in this chat.",
+    "successful_outcome_apply_only_after_accepted_receipts": "### P22 outcome \u2014 prerequisite receipts accepted\n\n{{OUTCOME_REVIEW}} accepted the actual Node and 24-file readback-dependency installation receipts bound to {{FROZEN_SOURCE_IDENTITY}}. Node finished as {{NODE_STATE}} and dependencies as {{DEPENDENCIES_STATE}}, with exact archive, selected-file, hash, mode and destination bindings. This resolves the P21 installation-evidence blocker within the reviewed scope. C271 is in_progress/open; R03-R05 remain not_done and P02 in_progress. A complete H0 operational plan remains unaccepted. Technical work stops here; only P22 documentary publication and verified saved handoff remain. A fresh phase may reconcile that handoff, bind the actual environment and independently review the complete H0 plan against the same source and accepted installation receipts.",
+    "blocked_outcome_apply_only_after_actual_blocker": "### P22 outcome \u2014 blocked at {{BLOCKER_ID}}\n\nP22 stopped at {{EXACT_BLOCKER}}. {{ACTUAL_OPERATIONS_AND_RECEIPT_STATES}}. {{INDEPENDENT_REVIEW_AND_EVIDENCE}}. C271 remains blocked/open; R03-R05 remain not_done and P02 in_progress. The original P21 evidence and all new failures remain preserved. No later action is implied by partial preparation. Technical work stops here; only documentary publication and verified saved handoff remain. The next fresh action is {{EVIDENCE_SUPPORTED_NEXT_ACTION}}."
+  },
+  "candidate_review_request": "Director should provide exact staged candidate manifest/payload and actual preparation outcome/review. Ledger will verify preservation, active-state consistency, evidence bindings and exact publication scope without re-reading unchanged full ledgers."
+}

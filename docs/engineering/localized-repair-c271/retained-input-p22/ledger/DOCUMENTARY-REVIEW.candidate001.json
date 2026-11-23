@@ -1,0 +1,53 @@
+{
+  "schema": "ontokin.c271.p22-documentary-review/1",
+  "reviewer": "/root/ledger",
+  "recorded_at_utc": "2026-11-23T03:02:27.833105+00:00",
+  "candidate": "documentary001",
+  "candidate_tree": "017a112814f231bcac2642301a78c264fabbdddb",
+  "verdict": "changes_required",
+  "accepted": false,
+  "scope": "Exact 95-file candidate001 and required record-check evidence. Technical audit reused after byte/source/receipt binding checks. No repository mutation or technical execution.",
+  "structural_audit": {
+    "path": "phase-p22/ledger/candidate001/STRUCTURAL-AUDIT.json",
+    "sha256": "f54c844306af291cff289179ee7290cb5f3a2a32f8fbcba41c54b531a930e84f",
+    "passed": 33,
+    "total": 36
+  },
+  "mandatory_findings": [
+    {
+      "id": "DOC-P22-001",
+      "path": "docs/workflow/CURRENT.json#/next_action/status",
+      "finding": "in_progress is outside the allowed current-action status enum. Use ready for authorized documentary work; keep task.status=in_progress.",
+      "origin": "The earlier ledger proposal incorrectly suggested mirroring parent status into CURRENT; this review corrects it."
+    },
+    {
+      "id": "DOC-P22-002",
+      "path": "docs/engineering/localized-repair-c271/retained-input-p22/ledger/CANONICAL-UPDATE-PROPOSAL.md",
+      "finding": "Preserved raw proposal contains unresolved placeholder Markdown links. Preserve exact bytes under an inert .md.txt canonical filename and update the map, or another preservation-safe treatment; do not publish it as an actionable document with broken links."
+    },
+    {
+      "id": "DOC-P22-003",
+      "path": "docs/engineering/localized-repair-c271/retained-input-p22/reviews/READSET-OUTCOME-REVIEW.json",
+      "finding": "Session readset changed after staging: candidate001 15152 bytes SHA042b6699038658f34f51a87efa9bb6be46d0229515e028e38f3327554f84e656 versus current16088 bytes SHAf0bf9b5e64a6bdae8d02f535b96c79d80dfa53bd003acb040dad4f8a00c7cf28. Reconcile the late supplement or refresh exact mapped copy/hash before final review."
+    }
+  ],
+  "whitespace_disposition": {
+    "full_candidate001_check": "failed, exit2, exactly eleven extra EOF newline findings",
+    "decision": "Narrow exception acceptable for exact byte-bound original review sources only; verify exact eleven-path set and strict authored-files check in corrected candidate. Preserve full failed log and do not label the full check passed.",
+    "basis": "PROTOCOL section5 mandates workflow/docs checks and evidence preservation/distinction of failed/passed/not-run; no unconditional full-whitespace pass is specified. No product/test expectation or source is altered.",
+    "pending": "Exact source match for the late readset and corrected-candidate authored check."
+  },
+  "substantive_findings": [],
+  "substantive_accepted": [
+    "Exact P21 session/delivery/constraint and historical blocked reason preservation",
+    "Existing task authorization, requirement/plan states and history unchanged",
+    "Parent in_progress justified after accepted exact receipts; H0 remains unaccepted",
+    "Technical checkpoint complete but final phase delivery incomplete",
+    "Only intended STATUS paragraph and appended requirements/plan content changed",
+    "All receipt-listed session descriptors and all six preparation logs staged",
+    "Original operational reports remain0600; canonical Git copies preserve bytes as documentary evidence",
+    "No product/tool/test/lock/contract change outside documentary evidence root"
+  ],
+  "date_disposition": "Director confirmed November22 user-facing date corresponds to the November23 UTC session under the selected America/Denver date convention; no date finding.",
+  "next_action": "Director supplies corrected candidate002/checks; reviewer inspects only affected delta and exact bindings."
+}

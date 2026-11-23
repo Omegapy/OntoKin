@@ -1,0 +1,134 @@
+{
+  "schema": "ontokin.c271.p22-record-checks/1",
+  "label": "candidate003",
+  "head": "527368bd5195c439762b43e2cc836ff9822213f8",
+  "index_tree": "a0e4eaa321e9fe314019f1d406ddf5efc3fa1af2",
+  "published": false,
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/aa6113404163/OntoKin",
+      "started_at_utc": "2026-11-23T03:03:33.124065+00:00",
+      "exit_code": 0,
+      "finished_at_utc": "2026-11-23T03:03:33.341510+00:00",
+      "stdout": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate003/workflow.stdout.log",
+        "bytes": 148,
+        "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate003/workflow.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/aa6113404163/OntoKin",
+      "started_at_utc": "2026-11-23T03:03:33.124348+00:00",
+      "exit_code": 0,
+      "finished_at_utc": "2026-11-23T03:03:35.951862+00:00",
+      "stdout": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate003/documentation.stdout.log",
+        "bytes": 6609,
+        "sha256": "fd5d004e18f3b2ab9c6d955f0cc364ac6f0320aa58d0a4c947b1ad5a4054114f"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate003/documentation.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "cwd": "/workspace/scratch/aa6113404163/OntoKin",
+      "started_at_utc": "2026-11-23T03:03:33.124804+00:00",
+      "exit_code": 2,
+      "finished_at_utc": "2026-11-23T03:03:33.191769+00:00",
+      "stdout": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate003/whitespace.stdout.log",
+        "bytes": 1283,
+        "sha256": "909cbd06ec1308749ab6096a6d883dea39e6f5bf6d91b6587aebdd80f27ff85e"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate003/whitespace.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "authored_whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)docs/engineering/localized-repair-c271/retained-input-p22/reviews/OUTCOME-REVIEW.json",
+        ":(exclude)docs/engineering/localized-repair-c271/retained-input-p22/reviews/OUTCOME-REVIEW.md",
+        ":(exclude)docs/engineering/localized-repair-c271/retained-input-p22/reviews/PLAN-REVIEW-candidate001.json",
+        ":(exclude)docs/engineering/localized-repair-c271/retained-input-p22/reviews/PLAN-REVIEW-candidate002.json",
+        ":(exclude)docs/engineering/localized-repair-c271/retained-input-p22/reviews/PLAN-REVIEW.json",
+        ":(exclude)docs/engineering/localized-repair-c271/retained-input-p22/reviews/PLAN-REVIEW.md",
+        ":(exclude)docs/engineering/localized-repair-c271/retained-input-p22/reviews/PREPARATION-REQUIREMENTS.json",
+        ":(exclude)docs/engineering/localized-repair-c271/retained-input-p22/reviews/PREPARATION-REQUIREMENTS.md",
+        ":(exclude)docs/engineering/localized-repair-c271/retained-input-p22/reviews/READSET-OUTCOME-REVIEW.json",
+        ":(exclude)docs/engineering/localized-repair-c271/retained-input-p22/reviews/READSET-PLAN-REVIEW.json",
+        ":(exclude)docs/engineering/localized-repair-c271/retained-input-p22/reviews/READSET.json"
+      ],
+      "cwd": "/workspace/scratch/aa6113404163/OntoKin",
+      "started_at_utc": "2026-11-23T03:03:33.192150+00:00",
+      "exit_code": 0,
+      "finished_at_utc": "2026-11-23T03:03:33.208203+00:00",
+      "stdout": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate003/authored_whitespace.stdout.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate003/authored_whitespace.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "all_passed": false,
+  "scope": "Workflow/documentation and strict authored-payload whitespace; full whitespace remains explicitly failed only for 11 exact byte-preserved review EOFs. No product or full routine.",
+  "preserved_eof_disposition": {
+    "path": "phase-p22/state/PRESERVED-EOF-DISPOSITION.json",
+    "sha256": "5fbce257263230aa96a142da2efcc41fbaa65ee488abbf71846105cda0a13a71",
+    "full_failed_output_matches_exact_evidence_only_exceptions": true,
+    "excluded_files": [
+      "docs/engineering/localized-repair-c271/retained-input-p22/reviews/OUTCOME-REVIEW.json",
+      "docs/engineering/localized-repair-c271/retained-input-p22/reviews/OUTCOME-REVIEW.md",
+      "docs/engineering/localized-repair-c271/retained-input-p22/reviews/PLAN-REVIEW-candidate001.json",
+      "docs/engineering/localized-repair-c271/retained-input-p22/reviews/PLAN-REVIEW-candidate002.json",
+      "docs/engineering/localized-repair-c271/retained-input-p22/reviews/PLAN-REVIEW.json",
+      "docs/engineering/localized-repair-c271/retained-input-p22/reviews/PLAN-REVIEW.md",
+      "docs/engineering/localized-repair-c271/retained-input-p22/reviews/PREPARATION-REQUIREMENTS.json",
+      "docs/engineering/localized-repair-c271/retained-input-p22/reviews/PREPARATION-REQUIREMENTS.md",
+      "docs/engineering/localized-repair-c271/retained-input-p22/reviews/READSET-OUTCOME-REVIEW.json",
+      "docs/engineering/localized-repair-c271/retained-input-p22/reviews/READSET-PLAN-REVIEW.json",
+      "docs/engineering/localized-repair-c271/retained-input-p22/reviews/READSET.json"
+    ]
+  },
+  "required_gates_passed": true
+}

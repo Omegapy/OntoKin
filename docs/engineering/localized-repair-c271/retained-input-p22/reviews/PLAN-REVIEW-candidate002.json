@@ -1,0 +1,38 @@
+{
+  "schema": "ontokin.c271.p22-preparation-plan-review/1",
+  "reviewer": "/root/prep_review",
+  "recorded_at_utc": "2026-11-23 02:49:52 UTC",
+  "candidate": "candidate002",
+  "verdict": "rejected_pending_same_finding_correction",
+  "approved": false,
+  "launcher": {
+    "path": "/workspace/scratch/aa6113404163/phase-p22/run_preparation.candidate002.py",
+    "sha256": "687198a01db3e3bf4e75605738ee3af5e6abc81b87a425a5f77d38ec10f338cf",
+    "size_bytes": 10070,
+    "mode": "0o644"
+  },
+  "execution_request": {
+    "path": "/workspace/scratch/aa6113404163/phase-p22/preparation/EXECUTION-REQUEST.candidate002.json",
+    "sha256": "b33db5e1e152cfa340b3a4afbd19e76ce044ce387dc3dc44f19241f8b1708b02",
+    "size_bytes": 1655,
+    "mode": "0o644"
+  },
+  "launch_plan": {
+    "path": "/workspace/scratch/aa6113404163/phase-p22/preparation/LAUNCH-PLAN.json",
+    "sha256": "b9c2c92d176b216f554cc599f10317738fca619124d9e25188e49d248ab0f4c8",
+    "size_bytes": 8342,
+    "mode": "0o644"
+  },
+  "mandatory_findings": [
+    {
+      "id": "P22-PREP-LAUNCH-001",
+      "severity": "mandatory",
+      "finding": "Active-child cleanup and durable intent/start records repaired the first issue, but launch_pending was removed after wait before the completion journal/log close and before filesystem outcome_pending was appended.",
+      "consequence": "A failure in that gap could again leave unreconciled filesystem publication with empty unknown_operations.",
+      "required_change": "Keep one pending record continuously through completed wait, journal/log closure, report/index and archive validation. Remove it only after successful reconciliation."
+    }
+  ],
+  "preparer_invocations": 0,
+  "disposition": "Rejected candidate preserved and never executed; candidate003 reuses unchanged exact launch plan with corrected launcher."
+}
+

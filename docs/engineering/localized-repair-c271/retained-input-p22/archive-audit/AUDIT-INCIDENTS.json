@@ -1,0 +1,36 @@
+{
+  "scope": "Independent audit harness only; no project or archived code execution",
+  "incidents": [
+    {
+      "attempt": 1,
+      "command": "python3 phase-p22/archive_audit/audit_predecessor.py",
+      "exit_code": 1,
+      "error": "KeyError: number at live issue check; connector issue schema uses another identifier field",
+      "effect": "No final verdict written. Partial derived audit files retained. Correct audit harness schema access and rerun.",
+      "resolution": "Connector issue identifier is issue_number; corrected only harness access and reran successfully. No project/archive mutation."
+    },
+    {
+      "operation": "Initial predecessor recovery-map scope comparison",
+      "result": "One false-positive unmapped member: recovery/predecessor/P20-TERMINAL-RECEIPT.json",
+      "preserved_evidence": "PREDECESSOR-REVIEW.initial-scope-assumption.json",
+      "resolution": "Verified exact separate HISTORICAL-DEPENDENCIES.p20_terminal_receipt identity (166388 bytes; SHA256 d7bd6652f6acc0b09ed5a38af8117d649e18ec0cee6fe0e6b72b889adfb7a8ec), preserving exact complete recovery partition. Final 46/46 passes."
+    },
+    {
+      "operation": "Early exploratory metadata print",
+      "result": "AttributeError: list object has no attribute keys",
+      "resolution": "Early manifest uses list schema; inspected correctly and independent generic audit accepted both list/dict forms. No archive or task failure."
+    },
+    {
+      "operation": "Initial early live-main comparison",
+      "result": "False-positive comparison of raw PR base_sha e1a48f7\u2026 with current observed main 70ca7e6\u2026",
+      "preserved_evidence": "EARLY-REVIEW.initial-pr-base-assumption.json",
+      "resolution": "Current main uses assigned Director live observation, LIVE-START, exact fetched main tree and matching prior terminal marker; raw PR base field is retained but not current-head authority. Final 16/16 semantic passes."
+    },
+    {
+      "operation": "Locate Director early upload/readback outputs",
+      "result": "FileNotFoundError under workspace state/",
+      "resolution": "Director state paths are relative to phase-p22; exact files read successfully there, saved readback independently accepted."
+    }
+  ],
+  "updated_at_utc": "2026-11-23T02:43:28.257766+00:00"
+}

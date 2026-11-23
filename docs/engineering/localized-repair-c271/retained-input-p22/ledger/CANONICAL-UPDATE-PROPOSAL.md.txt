@@ -1,0 +1,48 @@
+# P22 canonical update proposal
+
+**Proposal only.** Canonical files are unchanged. Their hashes still match the full startup readset. Early recovery is confirmed saved and exactly read back; technical approval and actual preparation receipt review remain pending.
+
+## Preserve first, then update active fields
+
+In `docs/workflow/tasks/C271/task.json`, append the exact P21 `session_phase` and `delivery` objects to `prior_session_phases[]` and `prior_phase_deliveries[]`, then replace the active objects with P22. The historical arrays currently have 20 entries each. Append one delivery-only P21 resolution to the six existing `phase_reconciliations[]` entries, bound to the 46/46 predecessor audit and exact terminal receipt. `P21-CANONICAL-PRESERVATION.json` contains the original objects and semantic hashes.
+
+Update `owner` and `next_action`. **Preserve `authorization.selection`**: it records why the parent H22.02 control was selected, not the current phase. This corrects the broader startup suggestion. Put P22 authorization in the phase record. Keep `status=blocked` while preparation receipt acceptance is pending. There is no root `current_status` field.
+
+In CURRENT, update `next_action.summary`, `next_action.suggested_task`, `next_action.sources` and actual `snapshot_date`. Preserve `latest_handoff` as P21 until an actual P22 final save. Advance `latest_recovery` using the confirmed P22 early receipt after preserving both previous recovery slots. Append brief P22 declaration sections to REQUIREMENTS and PLAN. The JSON proposal identifies the exact STATUS paragraph span and its hash; preserve all C270-and-earlier text and the released lease.
+
+## Status judgment after evidence
+
+- **Pending, refused, failed, unknown or not independently reviewed:** keep parent `blocked` and record the actual remaining blocker.
+- **Both exact source-bound receipts independently accepted, with no new concrete prerequisite blocker:** recommend parent `in_progress`. The P21 missing-evidence blocker is then resolved; complete H0 plan review is a planned next gate. Preserve the original blocked reason and H0 constraint historically before replacing their active fields.
+
+R03–R05 remain `not_done`, P02 remains `in_progress`, C271 remains open and H0 remains unaccepted in either case. P22 final delivery remains pending after technical success. A successful preparation receipt alone cannot mark the phase or parent complete.
+
+## P22 declaration template
+
+### P22 — retained input preparation (declared 2026-11-23)
+
+The current request authorizes one bounded prerequisite phase. Reconcile P21 delivery, recover the exact P09-identified Node and C195 dependency archives, freeze one clean source for preparation and later H0, and independently review complete plans for the unchanged preparer, isolated destinations and fresh report/index paths. Prepare or verify only the selected Node set and 24-file readback dependency set; independently review actual successful source-bound receipts. Stop at that prerequisite checkpoint or first concrete blocker, then complete documentary publication and saved handoff. R01/R02 remain done, R03-R05 not_done and P02 in_progress. P22 does not accept H0 or close C271. The early recovery archive is confirmed saved/read back; technical plan and receipt acceptance remain pending at declaration.
+
+## Plan template
+
+### P22 — bounded prerequisite checkpoint
+
+Startup and P21 delivery reconciliation are accepted, and the early recovery save/readback is confirmed. Next, obtain independent approval of the exact source-bound preparation plans and launcher. Execute only the approved Node and 24-file dependency preparation or verification, preserve every result/failure, and review actual receipts. Stop technical work at accepted prerequisite receipts or the first blocker. Complete records, independent documentary review, required record checks, conditional retained-branch publication/readback, independently reviewed final ZIP and matching prompts, separate saved receipt and terminal reconciliation. Do not start H0/H1 or another phase in this chat.
+
+## Outcome templates — conditional
+
+The following text is a template, not an observed result. Expand all `{{TOKENS}}` using the actual staged evidence before publication.
+
+### P22 outcome — prerequisite receipts accepted
+
+{{OUTCOME_REVIEW}} accepted the actual Node and 24-file readback-dependency installation receipts bound to {{FROZEN_SOURCE_IDENTITY}}. Node finished as {{NODE_STATE}} and dependencies as {{DEPENDENCIES_STATE}}, with exact archive, selected-file, hash, mode and destination bindings. This resolves the P21 installation-evidence blocker within the reviewed scope. C271 is in_progress/open; R03-R05 remain not_done and P02 in_progress. A complete H0 operational plan remains unaccepted. Technical work stops here; only P22 documentary publication and verified saved handoff remain. A fresh phase may reconcile that handoff, bind the actual environment and independently review the complete H0 plan against the same source and accepted installation receipts.
+
+### P22 outcome — blocked at {{BLOCKER_ID}}
+
+P22 stopped at {{EXACT_BLOCKER}}. {{ACTUAL_OPERATIONS_AND_RECEIPT_STATES}}. {{INDEPENDENT_REVIEW_AND_EVIDENCE}}. C271 remains blocked/open; R03-R05 remain not_done and P02 in_progress. The original P21 evidence and all new failures remain preserved. No later action is implied by partial preparation. Technical work stops here; only documentary publication and verified saved handoff remain. The next fresh action is {{EVIDENCE_SUPPORTED_NEXT_ACTION}}.
+
+## Minimal STATUS replacement template
+
+Replace only the current C271 P21 paragraph under “Current workflow and next action.” Resolve the canonical evidence root before use.
+
+C271 P22 is preparing the exact retained Node and C195 readback-dependency inputs needed for H0 planning. P21 saved delivery is reconciled by its later terminal receipt and matching PR274/issue273 markers; the source-time records remain preserved. The independently reviewed early P22 recovery ZIP is saved and byte readback verified. One clean source and two preparation plans are selected; independent technical approval and actual successful preparation receipts remain pending. [P22 phase]({{P22_EVIDENCE_ROOT}}/PHASE.json), [early receipt]({{P22_EVIDENCE_ROOT}}/EARLY-RECOVERY-RECEIPT.json). C271 remains blocked/open, R03-R05 not_done and P02 in_progress; PR274 remains draft/open/unmerged, issue273 open and the branch retained. Stop at independently accepted input-preparation receipts or the first concrete blocker, followed only by documentary publication and saved handoff. No H0/H1, original-seven/full routine, main lease, merge, deletion or second phase. Observed main remains 70ca7e68ff95df876f801137369d176fe5b2bab3.

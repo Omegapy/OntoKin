@@ -1,0 +1,173 @@
+{
+  "schema": "ontokin.c271.p22-phase/1",
+  "task": "C271",
+  "phase": "C271-P22-retained-input-preparation",
+  "owner": "c271-p22-aa6113404163",
+  "declared_at_utc": "2026-11-23T02:36:28.085493+00:00",
+  "starting_revision": "527368bd5195c439762b43e2cc836ff9822213f8",
+  "starting_tree": "e8844be5189b65d1bc17af40861fac672b189b25",
+  "observed_main": {
+    "sha": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+    "tree": "7302cf8f36c45dd76112ad442e42e48379ac8367",
+    "observed_at_utc": "2026-11-23T02:36:28.085493+00:00"
+  },
+  "branch": "work/c271-missing-import-digest-control",
+  "pr": {
+    "number": 274,
+    "state": "open",
+    "draft": true,
+    "merged": false
+  },
+  "issue": {
+    "number": 273,
+    "state": "open"
+  },
+  "scope": "Recover exact retained Node and C195 readback-dependency inputs identified by P09; independently review source-bound preparation with unchanged preparer and fresh isolated destinations; prepare or verify only those inputs and independently review successful source-bound receipts.",
+  "acceptance": [
+    "A01 Reconcile predecessor delivery/live state/full required readsets and confirm independently verified early recovery ZIP",
+    "A02 Identify exact retained archives and freeze clean source; independent complete preparation-plan review",
+    "A03 Prepare/verify only selected Node and 24-file readback dependencies and independently review actual source-bound receipts, or preserve first concrete blocker",
+    "A04 Independently review records; required workflow/documentation/whitespace checks; conditional retained-branch publication with exact readback",
+    "A05 Independently verified final ZIP and matching prompts saved/readback; separate receipt; stop"
+  ],
+  "stop": "Accepted input-preparation receipt checkpoint or first concrete blocker, then only documentary publication and saved handoff",
+  "constraints": [
+    "No H0/H1, original-seven or full routine",
+    "No production/test/lock/contract changes",
+    "No Node/ldd/direct-loader/native/model/hosted execution beyond separately reviewed prerequisite plan (target execution is excluded)",
+    "No main lease/merge/deletion/parent closure/second phase",
+    "Root owns shared Git,index,canonical records,publication,Library; workers own disjoint review paths; no nested fanout",
+    "Prerequisite launch permits only reviewed CPython stdlib/ctypes and unchanged helper imports, five read-only Git subprocesses per plan, and libc renameat2(RENAME_NOREPLACE); all target execution remains excluded."
+  ],
+  "parent_status": "in_progress",
+  "parent_complete": false,
+  "phase_complete": false,
+  "early_save_confirmed": true,
+  "main_lease_held": false,
+  "requirements": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "parent_plan": {
+    "P01": "done",
+    "P02": "in_progress"
+  },
+  "current_unknown_operations": [],
+  "historical_unknown_operations": [
+    "C270 ancillary broad-driver completion",
+    "Global prior-process termination",
+    "P13 read-only difflib completion; do not retry"
+  ],
+  "workers": [
+    {
+      "id": "/root/ledger",
+      "scope": "active ledger reconciliation and later documentary review",
+      "owned": "phase-p22/ledger/",
+      "status": "awaiting_documentary_candidate"
+    },
+    {
+      "id": "/root/archive_audit",
+      "scope": "predecessor and early/final archive independent audit",
+      "owned": "phase-p22/archive_audit/",
+      "status": "completed_no_active_command"
+    },
+    {
+      "id": "/root/prep_review",
+      "scope": "input requirements and preparation/outcome independent review",
+      "owned": "phase-p22/prep_review/",
+      "status": "completed_no_active_command"
+    }
+  ],
+  "next_action": "Finish only P22 documentary review, required record checks, conditional branch publication/readback, final verified ZIP and matching prompt saves, separate receipt and terminal confirmation; then stop.",
+  "capabilities": {
+    "repository": "authentic clean checkout and GitHub connector; read observed",
+    "conditional_publication": "GitHub update_ref with expected_sha available; not yet exercised in this phase",
+    "native_push": "Previously diagnosed unavailable; will not retry",
+    "terminal": "Linux Python tools available",
+    "subagents": "Three real fresh-context inherited-model workers launched",
+    "zip": "Python stdlib available",
+    "library": "Exact predecessor materialized; existing OntoKin folder resolved",
+    "merge_deletion": "Not selected"
+  },
+  "startup_predecessor_delivery": "confirmed_saved_and_reconciled",
+  "predecessor_review": {
+    "path": "archive_audit/PREDECESSOR-REVIEW.json",
+    "sha256": "8af122d118945da1511a931f7f24b713588ffc946786d772e133b1c56dec3c69"
+  },
+  "phase_table": [
+    {
+      "gate": "A01",
+      "state": "passed",
+      "evidence": [
+        "state/EARLY-RECOVERY-RECEIPT.json",
+        "archive_audit/PREDECESSOR-REVIEW.json",
+        "archive_audit/EARLY-REVIEW.json",
+        "ledger/STARTUP-REVIEW.json"
+      ]
+    },
+    {
+      "gate": "A02",
+      "state": "passed",
+      "evidence": [
+        "preparation/LAUNCH-PLAN.json",
+        "preparation/EXECUTION-REQUEST.json",
+        "prep_review/PLAN-REVIEW.json"
+      ],
+      "review_sha256": "fe8e273900ae72781d73dd4243fbc2afc87989be7e030b6e54adb3a42a414539"
+    },
+    {
+      "gate": "A03",
+      "state": "passed",
+      "evidence": [
+        "preparation/LAUNCH-RESULT.json",
+        "prep_review/OUTCOME-REVIEW.json"
+      ],
+      "result": "Both source-bound inputs INSTALLED_EXACT; independent exact receipt/tree review accepted"
+    },
+    {
+      "gate": "A04",
+      "state": "in_progress"
+    },
+    {
+      "gate": "A05",
+      "state": "pending"
+    }
+  ],
+  "frozen_preparation_source": {
+    "commit": "527368bd5195c439762b43e2cc836ff9822213f8",
+    "inventory": {
+      "mode": "0o644",
+      "path": "/workspace/scratch/aa6113404163/phase-p22/preparation/SOURCE-INVENTORY.json",
+      "sha256": "19ae4101657ed8542f06dac14603578108dc8986cb639c17106300ef29d8abd2",
+      "size_bytes": 93253
+    },
+    "root": "/workspace/scratch/aa6113404163/prepared-source",
+    "tree": "e8844be5189b65d1bc17af40861fac672b189b25"
+  },
+  "active_child_commands": [],
+  "technical_phase_complete": true,
+  "status": "technical_prerequisite_checkpoint_accepted_publication_pending",
+  "first_next_phase_action": "In a fresh chat, reconcile P22 delivery and rebind the actual prepared Node/dependency trees and their original source-bound plans/reports/indexes. Preserve the complete frozen source object at commit 527368bd5195c439762b43e2cc836ff9822213f8, including inventory path/hash/size/mode. Bind the current Python/package/native-loader inputs, recreating the separate P20 verification environment from its seven retained wheels only if its temporary path is unavailable and after reviewed preparation. Independently review a complete H0 operational plan under the adopted current-host profile. Stop at accepted H0 plan or the first concrete blocker, before H1, original-seven/full routine, main integration or another phase. Missing or changed temporary inputs require explicit reconciliation; never rewrite historical receipts to change their source.",
+  "h0_accepted": false,
+  "updated_at_utc": "2026-11-23T02:55:57.670033+00:00",
+  "artifact_resolution": {
+    "session_relative": "Original session-relative paths resolve beneath recovery/session/ in the handoff. Canonical copies preserve exact bytes and original execution paths/modes as evidence, not future execution authority.",
+    "canonical_root": "docs/engineering/localized-repair-c271/retained-input-p22",
+    "canonical_map": "CANONICAL-MAP.json",
+    "frozen_execution_source": {
+      "commit": "527368bd5195c439762b43e2cc836ff9822213f8",
+      "inventory": {
+        "mode": "0o644",
+        "path": "/workspace/scratch/aa6113404163/phase-p22/preparation/SOURCE-INVENTORY.json",
+        "sha256": "19ae4101657ed8542f06dac14603578108dc8986cb639c17106300ef29d8abd2",
+        "size_bytes": 93253
+      },
+      "root": "/workspace/scratch/aa6113404163/prepared-source",
+      "tree": "e8844be5189b65d1bc17af40861fac672b189b25"
+    },
+    "source_boundary": "Execution source remains unchanged in prepared-source; documentary branch publication is separate. Later external receipt resolves immutable source-time save-pending fields."
+  }
+}

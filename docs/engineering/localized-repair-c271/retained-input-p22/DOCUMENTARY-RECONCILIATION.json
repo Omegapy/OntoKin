@@ -1,0 +1,29 @@
+{
+  "schema": "ontokin.c271.p22-documentary-reconciliation/1",
+  "recorded_at_utc": "2026-11-23T03:03:32.708356+00:00",
+  "candidate001": "Preserved original staged diff and checks; workflow schema and documentation-link failures are retained. CURRENT.next_action.status corrected to ready. Raw proposal Markdown renamed .md.txt without byte changes.",
+  "late_readset": {
+    "prior_snapshot": "candidates/documentary001/READSET-OUTCOME-REVIEW.json",
+    "prior": {
+      "bytes": 15152,
+      "sha256": "042b6699038658f34f51a87efa9bb6be46d0229515e028e38f3327554f84e656"
+    },
+    "current_session_path": "prep_review/READSET-OUTCOME-REVIEW.json",
+    "current": {
+      "bytes": 16088,
+      "sha256": "f0bf9b5e64a6bdae8d02f535b96c79d80dfa53bd003acb040dad4f8a00c7cf28"
+    },
+    "outcome_review_sha256_unchanged": "c91614ffbe82669ceff5b4e7678a3b3d43fb0df327fd1ead7bbcc0671e4f1239"
+  },
+  "candidate002": {
+    "status": "not_run",
+    "errors": [
+      "Prior EOF disposition creation raised AssertionError before creating the file; exact cause was not established. Bounded reinspection found 11 exact EOF diagnostics in candidate001.",
+      "A dependent git add failed with missing pathspec for PRESERVED-EOF-DISPOSITION.json.",
+      "run_record_checks.py created the candidate002 output directory, then failed with FileNotFoundError before running any checks."
+    ],
+    "reconciliation": "The output directory was observed empty. No checks or repository publication occurred. This failure record is retained and a distinct candidate003 label will be used."
+  },
+  "inspection_error": "A metadata-only inspection incorrectly treated the CANONICAL-MAP array as an object and raised AttributeError. No mutation occurred; a bounded type-aware read followed.",
+  "scope": "Documentation and recovery evidence only; no technical preparation or runtime command was retried."
+}

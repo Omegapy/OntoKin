@@ -1,0 +1,189 @@
+{
+  "schema": "ontokin.c271.p22-ledger-startup-review/1",
+  "reviewer": "/root/ledger",
+  "created_at_utc": "2026-11-23T02:41:37.681307+00:00",
+  "verdict": "accepted_startup_reconciliation",
+  "scope": "Required startup/ledger review only. Technical operation-plan acceptance, early-save confirmation and preparation outcome are separate Director-owned gates.",
+  "readset": {
+    "path": "phase-p22/ledger/READSET.json",
+    "sha256": "e7f5f267de0de4cb29f8dee4489ac2bff902167fdc38a10355e917940b217c76"
+  },
+  "observed_state": {
+    "main": "70ca7e68ff95df876f801137369d176fe5b2bab3",
+    "branch": "work/c271-missing-import-digest-control",
+    "branch_head": "527368bd5195c439762b43e2cc836ff9822213f8",
+    "main_latest_task": "C270",
+    "main_active_task": null,
+    "main_c270_status": "done",
+    "main_c270_scope": "Narrow SiteRef refusal classification correction integrated and saved; historical ancillary broad-driver completion unknown.",
+    "c271_status": "blocked",
+    "c271_complete": false,
+    "issue273": "open",
+    "pr274": "open_draft_unmerged",
+    "main_lease_held": false,
+    "requirements": {
+      "R01": "done",
+      "R02": "done",
+      "R03": "not_done",
+      "R04": "not_done",
+      "R05": "not_done"
+    },
+    "parent_plan": {
+      "P01": "done",
+      "P02": "in_progress"
+    },
+    "main_branch_record_difference": "Expected: C271 retained branch is unmerged. Main still names completed C270; it does not authorize starting another task."
+  },
+  "prior_p21_reconciliation": {
+    "status": "delivery_only_resolved",
+    "accepted_independent_review": {
+      "path": "/workspace/scratch/aa6113404163/phase-p22/archive_audit/PREDECESSOR-REVIEW.json",
+      "bytes": 42609,
+      "sha256": "8af122d118945da1511a931f7f24b713588ffc946786d772e133b1c56dec3c69",
+      "line_count": 1071,
+      "coverage": "reused_independent_audit",
+      "scope_note": "46/46; ledger does not duplicate detailed audit."
+    },
+    "independent_verdict": "accepted_predecessor_delivery_reconciled",
+    "checks_passed": 46,
+    "checks_total": 46,
+    "live_pr_and_issue_marker_objects_match": true,
+    "zip": {
+      "bytes": 9327161,
+      "sha256": "ba03995347ed65a5a37b4283211841daf4da74fe4a04dbe0617f9e833e9bb64f",
+      "library_file_id": "libfile_fde3_f-f7764c5437c0819187cf0a63308bdd64_2ab2a24d43748191957f9bcc356b59de"
+    },
+    "terminal_receipt": {
+      "bytes": 222162,
+      "sha256": "02d7987249a106b7f205e09f490fe2f35006ffdbf0f37da3dca91e21503082fe",
+      "library_file_id": "libfile_fde3_f-4b7a58b2cbd08191b59f811de2c94061_2ab2a24d43748191957f9bcc356b59de"
+    },
+    "p21_phase_complete": true,
+    "h0_accepted": false,
+    "effect": "Later verified receipt/markers resolve matching source-time delivery-pending fields only. Preserve frozen P21 artifacts unchanged; retain runtime failures, source-bound receipts and historical unknowns.",
+    "remaining_reconciliation_needs": []
+  },
+  "active_p22": {
+    "phase": "C271-P22-retained-input-preparation",
+    "owner": "c271-p22-aa6113404163",
+    "declaration_path": "phase-p22/state/PHASE.json",
+    "scope": "Recover exact retained Node and C195 readback-dependency inputs identified by P09; independently review source-bound preparation with unchanged preparer and fresh isolated destinations; prepare or verify only those inputs and independently review successful source-bound receipts.",
+    "checkpoint": "Accepted input-preparation receipt checkpoint or first concrete blocker, then only documentary publication and saved handoff",
+    "stop_before": [
+      "H0/H1",
+      "original-seven",
+      "full routine",
+      "main integration",
+      "parent closure",
+      "second phase"
+    ],
+    "phase_complete": false,
+    "exact_next_action": "Confirm independently reviewed early recovery save/readback; recover the exact P09-identified Node and C195 archive inputs; freeze one clean source object shared by preparer and later H0. Obtain independent approval of complete unchanged-preparer plans, isolated destinations and report/index paths before preparing or verifying only Node and the 24-file readback dependency set. Review actual successful source-bound receipts, then stop at that prerequisite checkpoint or first concrete blocker.",
+    "receipt_acceptance": "Successful selected-node and retained-dependencies plan/report/index pairs must bind exact source object, archives, selection, target files/hashes/modes and destinations. Successful state is INSTALLED_EXACT or ALREADY_PRESENT_EXACT; DRY_RUN_READY or relabeled old receipts do not satisfy the gate. Preparation success does not accept H0."
+  },
+  "ownership": {
+    "director": [
+      "global main/live startup",
+      "shared Git/index",
+      "canonical STATUS/CURRENT/task/requirements/plan",
+      "technical execution authorization",
+      "publication",
+      "Library saves/readbacks"
+    ],
+    "ledger": [
+      "phase-p22/ledger/ startup evidence",
+      "later candidate documentary review only when assigned"
+    ],
+    "ledger_forbidden": [
+      "canonical mutation",
+      "Git mutation",
+      "technical or recovered-code execution",
+      "nested fanout",
+      "publication or Library actions"
+    ]
+  },
+  "minimal_safe_canonical_updates": [
+    {
+      "paths": [
+        "docs/workflow/CURRENT.json",
+        "docs/workflow/tasks/C271/task.json"
+      ],
+      "change": "Preserve the prior P21 session_phase/delivery object as an immutable referenced snapshot or unchanged historical record. Append a small P21 terminal reconciliation record bound to accepted predecessor review, terminal receipt hash/id and matching live marker evidence. Do not rewrite frozen P21 PHASE/P21-DELIVERY/ZIP/terminal receipt."
+    },
+    {
+      "paths": [
+        "docs/workflow/CURRENT.json",
+        "docs/workflow/tasks/C271/task.json"
+      ],
+      "change": "Update current session_phase to P22 exact declaration/scope/acceptance/stop; set owner c271-p22-aa6113404163 and replace the obsolete P21 terminal-publication next_action with the P22 prerequisite action. Keep active/latest C271, parent blocked/open, R01/R02 done, R03-R05 not_done, P01 done and P02 in_progress."
+    },
+    {
+      "paths": [
+        "docs/workflow/CURRENT.json",
+        "docs/workflow/tasks/C271/task.json"
+      ],
+      "change": "Keep latest confirmed final handoff pointing at P21 until a real P22 final save/readback exists. Add an early-recovery receipt only after confirmed save/readback; no planned save described as complete."
+    },
+    {
+      "paths": [
+        "docs/workflow/tasks/C271/REQUIREMENTS.md",
+        "docs/workflow/tasks/C271/PLAN.md"
+      ],
+      "change": "Append one P22 bounded-phase declaration and later actual outcome; preserve prior ledger sections, failure history and pending parent gates."
+    },
+    {
+      "paths": [
+        "STATUS.md"
+      ],
+      "change": "Update only active C271 current-phase summary/next action and source-bound evidence links. Preserve C270 completion/history, released main lease and historical unknowns; do not acquire a lease."
+    }
+  ],
+  "unknowns_and_pending_gates": [
+    "Early recovery ZIP save/readback is not yet confirmed in the PHASE snapshot read here; Director must use later actual receipt.",
+    "Exact archive recovery, frozen source, full preparation-plan acceptance, destination states and actual preparation receipts are not decided by this startup review.",
+    "Historical C270 ancillary broad-driver completion, global prior-process termination and P13 read-only difflib completion remain unknown; do not retry the old difflib operation.",
+    "Global absence of unpublished work/processes outside declared inputs is not established."
+  ],
+  "findings": [],
+  "next_for_ledger": "Wait for Director assignment before candidate review.",
+  "exact_field_paths": {
+    "docs/workflow/tasks/C271/task.json": {
+      "preserve_then_replace": {
+        "session_phase": "Append exact existing P21 object to prior_session_phases (currently 20 entries), then replace session_phase with the declared P22 object.",
+        "delivery": "Append exact existing P21 delivery object to prior_phase_deliveries (currently 20 entries), then record actual P22 delivery state without claiming a final save."
+      },
+      "append": "phase_reconciliations[]: one P21 delivery-only reconciliation bound to predecessor review, terminal receipt hash/id, receipt commit and exact live markers. Existing list contains six entries.",
+      "change": [
+        "owner",
+        "next_action",
+        "authorization.selection (current authorized P22 selection, preserving source/rule context)"
+      ],
+      "keep": [
+        "status=blocked",
+        "requirements R01/R02=done; R03/R04/R05=not_done",
+        "plan P01=done; P02=in_progress",
+        "completion",
+        "remaining_h0_constraint",
+        "historical_checks",
+        "all prior phase/delivery/reconciliation entries"
+      ]
+    },
+    "docs/workflow/CURRENT.json": {
+      "change": [
+        "next_action.summary",
+        "next_action.suggested_task",
+        "next_action.sources",
+        "snapshot_date when the new snapshot is recorded"
+      ],
+      "keep": [
+        "next_action.status=blocked",
+        "latest_task=C271",
+        "active_task=C271",
+        "observed_main=70ca7e68ff95df876f801137369d176fe5b2bab3",
+        "latest_handoff until confirmed P22 final save"
+      ],
+      "delivery_only_reconciliation": "Preserve latest_handoff source-time pending fields; any new terminal-resolution pointer must cite actual P21 later evidence. Update latest_recovery only after confirmed P22 early save and preserve its predecessor."
+    },
+    "naming_caution": "Neither CURRENT nor task has a root current_status field. task.status is the parent status; task.session_phase.status is the phase status. CURRENT has no root owner or session_phase."
+  }
+}

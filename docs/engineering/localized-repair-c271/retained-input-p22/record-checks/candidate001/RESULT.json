@@ -1,0 +1,79 @@
+{
+  "schema": "ontokin.c271.p22-record-checks/1",
+  "label": "candidate001",
+  "head": "527368bd5195c439762b43e2cc836ff9822213f8",
+  "index_tree": "017a112814f231bcac2642301a78c264fabbdddb",
+  "published": false,
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "cwd": "/workspace/scratch/aa6113404163/OntoKin",
+      "started_at_utc": "2026-11-23T02:56:32.606363+00:00",
+      "exit_code": 1,
+      "finished_at_utc": "2026-11-23T02:56:32.771695+00:00",
+      "stdout": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate001/workflow.stdout.log",
+        "bytes": 219,
+        "sha256": "acb499901aecc2ddc2f012ca04d25653e2e383723ad1c554b27f90b1fb466558"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate001/workflow.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "cwd": "/workspace/scratch/aa6113404163/OntoKin",
+      "started_at_utc": "2026-11-23T02:56:32.606713+00:00",
+      "exit_code": 1,
+      "finished_at_utc": "2026-11-23T02:56:35.679478+00:00",
+      "stdout": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate001/documentation.stdout.log",
+        "bytes": 7212,
+        "sha256": "8bb85fbb1b962ff9a850ffaf81816277b0a8bf7ceea74cd734cc18f3ced00721"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate001/documentation.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "cwd": "/workspace/scratch/aa6113404163/OntoKin",
+      "started_at_utc": "2026-11-23T02:56:32.607124+00:00",
+      "exit_code": 2,
+      "finished_at_utc": "2026-11-23T02:56:32.639537+00:00",
+      "stdout": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate001/whitespace.stdout.log",
+        "bytes": 1283,
+        "sha256": "103719c76c085f83fc1168506944d6744fbd881d30e8d6b31cf39d3d4d69a57c"
+      },
+      "stderr": {
+        "path": "/workspace/scratch/aa6113404163/phase-p22/checks/candidate001/whitespace.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "all_passed": false,
+  "scope": "Workflow/documentation/full selected delta whitespace only. No H0/H1, product tests or full routine."
+}

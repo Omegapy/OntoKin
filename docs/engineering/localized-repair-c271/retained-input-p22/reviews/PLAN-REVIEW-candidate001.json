@@ -1,0 +1,38 @@
+{
+  "schema": "ontokin.c271.p22-preparation-plan-review/1",
+  "reviewer": "/root/prep_review",
+  "recorded_at_utc": "2026-11-23 02:49:52 UTC",
+  "candidate": "candidate001",
+  "verdict": "rejected_before_any_preparation",
+  "approved": false,
+  "launcher": {
+    "path": "/workspace/scratch/aa6113404163/phase-p22/run_preparation.candidate001.py",
+    "sha256": "2e269c5c8751078356b596d0b3672836540b7a641048fc0e409e2db25fd1fe6f",
+    "size_bytes": 7012,
+    "mode": "0o644"
+  },
+  "launch_plan": {
+    "path": "/workspace/scratch/aa6113404163/phase-p22/preparation/LAUNCH-PLAN.candidate001.json",
+    "sha256": "802f25ba3cf6332d34ca599a7c5801abbc7e951754b09564cb9e76017d92d582",
+    "size_bytes": 6828,
+    "mode": "0o644"
+  },
+  "execution_request": {
+    "path": "/workspace/scratch/aa6113404163/phase-p22/preparation/EXECUTION-REQUEST.candidate001.json",
+    "sha256": "98f6f1511163f3eb30f91b6fa9e100dcf95df3e3002a10f0d591d2c489517e58",
+    "size_bytes": 1654,
+    "mode": "0o644"
+  },
+  "mandatory_findings": [
+    {
+      "id": "P22-PREP-LAUNCH-001",
+      "severity": "mandatory",
+      "finding": "BaseException after Popen could escape the active-child path without bounded cleanup or explicit unresolved process evidence; unknown_operations was populated only for TimeoutExpired.",
+      "consequence": "A started separate-session preparer could continue while a stopped launcher recorded an empty unknown_operations list.",
+      "required_change": "Retain launch uncertainty before Popen, durable intent/start records, and bounded exceptional cleanup or explicit unresolved child evidence; keep filesystem publication pending until report/index reconciliation."
+    }
+  ],
+  "preparer_invocations": 0,
+  "disposition": "Rejected launcher and request preserved; never executed. Installation plans/source/archive bindings were not rejected."
+}
+
