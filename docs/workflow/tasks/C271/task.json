@@ -525,7 +525,7 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
       ],
-      "scope": "P10 partial delivery only. R03\u2013R05 and integration remain open."
+      "scope": "P10 partial delivery only. R03–R05 and integration remain open."
     },
     {
       "name": "P11 independent intake and verified early recovery",
@@ -850,7 +850,7 @@
         "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
         "docs/engineering/localized-repair-c271/libc-tags-p16/FINAL-READBACK-VERIFICATION.json"
       ],
-      "limit": "P16 partial delivery only. Parent R03\u2013R05 and P02 remain open. This receipt checkpoint requires its own conditional publication/readback; late evidence is preserved separately."
+      "limit": "P16 partial delivery only. Parent R03–R05 and P02 remain open. This receipt checkpoint requires its own conditional publication/readback; late evidence is preserved separately."
     },
     {
       "name": "P17 startup reconciliation and independently verified early recovery",
@@ -1028,7 +1028,8 @@
       "docs/engineering/localized-repair-c271/actual-input-p19/P19-DELIVERY.json",
       "docs/engineering/localized-repair-c271/environment-p20/OUTCOME.json",
       "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
-      "docs/engineering/localized-repair-c271/retained-input-p22/OUTCOME.json"
+      "docs/engineering/localized-repair-c271/retained-input-p22/OUTCOME.json",
+      "docs/engineering/localized-repair-c271/retained-input-p22/P22-DELIVERY.json"
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
@@ -1082,11 +1083,11 @@
       "tree": "6f32eb119773a0661590f0645eabeebbc6cce178"
     }
   },
-  "next_action": "Finish only P22 documentary review, required record checks, conditional branch publication/readback, final verified ZIP and matching prompt saves, separate receipt and terminal confirmation; then stop.",
+  "next_action": "Verify the separate P22 receipt publication and its required record checks; save and read back the external terminal receipt; publish and verify matching terminal markers; then stop this chat.",
   "session_phase": {
     "phase": "C271-P22-retained-input-preparation",
     "owner": "c271-p22-aa6113404163",
-    "status": "technical_prerequisite_checkpoint_accepted_publication_pending",
+    "status": "confirmed_saved_handoff_receipt_publication_terminal_pending",
     "phase_complete": false,
     "technical_phase_complete": true,
     "scope": "Recover exact retained Node and C195 readback-dependency inputs identified by P09; independently review source-bound preparation with unchanged preparer and fresh isolated destinations; prepare or verify only those inputs and independently review successful source-bound receipts.",
@@ -1098,7 +1099,7 @@
       "P13 read-only difflib completion; do not retry"
     ],
     "main_lease_held": false,
-    "next_action": "Finish only P22 documentary review, required record checks, conditional branch publication/readback, final verified ZIP and matching prompt saves, separate receipt and terminal confirmation; then stop.",
+    "next_action": "Verify the separate P22 receipt publication and its required record checks; save and read back the external terminal receipt; publish and verify matching terminal markers; then stop this chat.",
     "parent_status": "in_progress",
     "first_next_phase_action": "In a fresh chat, reconcile P22 delivery and rebind the actual prepared Node/dependency trees and their original source-bound plans/reports/indexes. Preserve the complete frozen source object at commit 527368bd5195c439762b43e2cc836ff9822213f8, including inventory path/hash/size/mode. Bind the current Python/package/native-loader inputs, recreating the separate P20 verification environment from its seven retained wheels only if its temporary path is unavailable and after reviewed preparation. Independently review a complete H0 operational plan under the adopted current-host profile. Stop at accepted H0 plan or the first concrete blocker, before H1, original-seven/full routine, main integration or another phase. Missing or changed temporary inputs require explicit reconciliation; never rewrite historical receipts to change their source.",
     "active_child_commands": [],
@@ -1118,7 +1119,48 @@
       },
       "root": "/workspace/scratch/aa6113404163/prepared-source",
       "tree": "e8844be5189b65d1bc17af40861fac672b189b25"
-    }
+    },
+    "source_snapshot_before_save": {
+      "phase": "C271-P22-retained-input-preparation",
+      "owner": "c271-p22-aa6113404163",
+      "status": "technical_prerequisite_checkpoint_accepted_publication_pending",
+      "phase_complete": false,
+      "technical_phase_complete": true,
+      "scope": "Recover exact retained Node and C195 readback-dependency inputs identified by P09; independently review source-bound preparation with unchanged preparer and fresh isolated destinations; prepare or verify only those inputs and independently review successful source-bound receipts.",
+      "stop": "Accepted input-preparation receipt checkpoint or first concrete blocker, then only documentary publication and saved handoff",
+      "current_unknown_operations": [],
+      "historical_unknown_operations": [
+        "C270 ancillary broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only difflib completion; do not retry"
+      ],
+      "main_lease_held": false,
+      "next_action": "Finish only P22 documentary review, required record checks, conditional branch publication/readback, final verified ZIP and matching prompt saves, separate receipt and terminal confirmation; then stop.",
+      "parent_status": "in_progress",
+      "first_next_phase_action": "In a fresh chat, reconcile P22 delivery and rebind the actual prepared Node/dependency trees and their original source-bound plans/reports/indexes. Preserve the complete frozen source object at commit 527368bd5195c439762b43e2cc836ff9822213f8, including inventory path/hash/size/mode. Bind the current Python/package/native-loader inputs, recreating the separate P20 verification environment from its seven retained wheels only if its temporary path is unavailable and after reviewed preparation. Independently review a complete H0 operational plan under the adopted current-host profile. Stop at accepted H0 plan or the first concrete blocker, before H1, original-seven/full routine, main integration or another phase. Missing or changed temporary inputs require explicit reconciliation; never rewrite historical receipts to change their source.",
+      "active_child_commands": [],
+      "early_save_confirmed": true,
+      "source_revision": "527368bd5195c439762b43e2cc836ff9822213f8",
+      "phase_record": "docs/engineering/localized-repair-c271/retained-input-p22/PHASE.json",
+      "early_receipt": "docs/engineering/localized-repair-c271/retained-input-p22/EARLY-RECOVERY-RECEIPT.json",
+      "outcome": "docs/engineering/localized-repair-c271/retained-input-p22/OUTCOME.json",
+      "independent_review": "docs/engineering/localized-repair-c271/retained-input-p22/reviews/OUTCOME-REVIEW.json",
+      "frozen_preparation_source": {
+        "commit": "527368bd5195c439762b43e2cc836ff9822213f8",
+        "inventory": {
+          "mode": "0o644",
+          "path": "/workspace/scratch/aa6113404163/phase-p22/preparation/SOURCE-INVENTORY.json",
+          "sha256": "19ae4101657ed8542f06dac14603578108dc8986cb639c17106300ef29d8abd2",
+          "size_bytes": 93253
+        },
+        "root": "/workspace/scratch/aa6113404163/prepared-source",
+        "tree": "e8844be5189b65d1bc17af40861fac672b189b25"
+      }
+    },
+    "saved_handoff_receipt": "docs/engineering/localized-repair-c271/retained-input-p22/P22-DELIVERY.json",
+    "handoff_source_revision": "8497295a3b358099dc9c3c66962d89f09d9a7ca5",
+    "handoff_source_tree": "63e36df4220a8c3922807f0d8607b7401b63b9ad",
+    "terminal_resolution": "Only the later saved terminal receipt plus exact matching live PR274/issue273 markers can resolve these remaining delivery-only pending fields. Preserve this frozen source snapshot. A fresh chat may then resume the recorded H0 plan-review action as one bounded phase."
   },
   "delivery": {
     "required": true,
@@ -1126,12 +1168,86 @@
     "folder": "OntoKin",
     "partial": true,
     "phase": "C271-P22-retained-input-preparation",
-    "status": "final_save_pending",
+    "status": "confirmed_saved_and_byte_read_back_receipt_publication_terminal_pending",
     "phase_complete": false,
     "technical_phase_complete": true,
     "early_receipt": "docs/engineering/localized-repair-c271/retained-input-p22/EARLY-RECOVERY-RECEIPT.json",
-    "future_external_receipt": "docs/engineering/localized-repair-c271/retained-input-p22/P22-DELIVERY.json",
-    "source_snapshot_before_save": true
+    "source_snapshot_before_save": {
+      "required": true,
+      "kind": "browser-session",
+      "folder": "OntoKin",
+      "partial": true,
+      "phase": "C271-P22-retained-input-preparation",
+      "status": "final_save_pending",
+      "phase_complete": false,
+      "technical_phase_complete": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/retained-input-p22/EARLY-RECOVERY-RECEIPT.json",
+      "future_external_receipt": "docs/engineering/localized-repair-c271/retained-input-p22/P22-DELIVERY.json",
+      "source_snapshot_before_save": true
+    },
+    "receipt": "docs/engineering/localized-repair-c271/retained-input-p22/P22-DELIVERY.json",
+    "archive": {
+      "local_path": "/workspace/scratch/aa6113404163/packages/OntoKin_C271_P22_Retained_Inputs_Handoff_2026-11-22.zip",
+      "purpose": "create_library_file",
+      "status": "succeeded",
+      "file_id": "file_00000000baf081f585b01803500e5101",
+      "library_file_id": "libfile_fde3_f-b53b54e4cd0c8191baf79bd1e0eee492_2ab2a24d43748191957f9bcc356b59de",
+      "file_name": "OntoKin_C271_P22_Retained_Inputs_Handoff_2026-11-22.zip",
+      "local_metadata_applied": true,
+      "path": "/OntoKin/OntoKin_C271_P22_Retained_Inputs_Handoff_2026-11-22.zip",
+      "current_version_number": 0,
+      "bytes": 1967895,
+      "sha256": "825ad2d51c4e8c9ccf4c7543550a3b85df879edfb159e3e1f791e35dd32ad50e",
+      "version": 0,
+      "readback_path": "/workspace/scratch/aa6113404163/readback/final/OntoKin_C271_P22_Retained_Inputs_Handoff_2026-11-22.zip",
+      "saved_bytes_readback_equal": true,
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-b53b54e4cd0c8191baf79bd1e0eee492_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+    },
+    "matching_prompts": [
+      {
+        "local_path": "/workspace/scratch/aa6113404163/packages/OntoKin_C271_P22_Continue_Prompt_2026-11-22.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_00000000b43c81f5b7dbac0258847c78",
+        "library_file_id": "libfile_fde3_f-a01750e0c6d48191ad97b8e0bad575e1_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P22_Continue_Prompt_2026-11-22.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P22_Continue_Prompt_2026-11-22.md",
+        "current_version_number": 0,
+        "bytes": 2731,
+        "sha256": "fb6ab2595a27337b68b5d42d14d6e0fb9716a932adb8293b794de6a8720dfbee",
+        "version": 0,
+        "readback_path": "/workspace/scratch/aa6113404163/readback/final/OntoKin_C271_P22_Continue_Prompt_2026-11-22.md",
+        "saved_bytes_readback_equal": true,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-a01750e0c6d48191ad97b8e0bad575e1_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "zip_member": "PROMPT-1-CONTINUE.md",
+        "matches_zip_member": true
+      },
+      {
+        "local_path": "/workspace/scratch/aa6113404163/packages/OntoKin_C271_P22_Recover_Prompt_2026-11-22.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_00000000f13881f5bd45219d68aacbc6",
+        "library_file_id": "libfile_fde3_f-fac9f96d03f08191aad7f9eb1e2a28ca_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P22_Recover_Prompt_2026-11-22.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P22_Recover_Prompt_2026-11-22.md",
+        "current_version_number": 0,
+        "bytes": 2969,
+        "sha256": "471bb7e454d311ea9cc289804a639cc742b6ca9015cc8a88987bae607e2560a9",
+        "version": 0,
+        "readback_path": "/workspace/scratch/aa6113404163/readback/final/OntoKin_C271_P22_Recover_Prompt_2026-11-22.md",
+        "saved_bytes_readback_equal": true,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fac9f96d03f08191aad7f9eb1e2a28ca_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "zip_member": "PROMPT-2-RECOVER.md",
+        "matches_zip_member": true
+      }
+    ],
+    "source_revision": "8497295a3b358099dc9c3c66962d89f09d9a7ca5",
+    "source_tree": "63e36df4220a8c3922807f0d8607b7401b63b9ad",
+    "confirmed_at_utc": "2026-11-23T03:22:08.568904+00:00",
+    "receipt_publication": "pending_after_this_source_snapshot",
+    "terminal_resolution": "Only the later saved terminal receipt plus exact matching live PR274/issue273 markers can resolve these remaining delivery-only pending fields. Preserve this frozen source snapshot. A fresh chat may then resume the recorded H0 plan-review action as one bounded phase."
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
