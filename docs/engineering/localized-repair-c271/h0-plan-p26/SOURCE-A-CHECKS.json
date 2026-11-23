@@ -1,0 +1,103 @@
+{
+  "schema": "ontokin.c271.p26.documentary-checks/1",
+  "passed": true,
+  "candidate_manifest": {
+    "path": "session/publication/SOURCE-A-CANDIDATE.json",
+    "sha256": "2078e70c41b6c45c97fb540efa4cf81e0b8a57b9b7d4138cc4672f84c5f8913c"
+  },
+  "bound_file_count": 20,
+  "source_bytes_unchanged_after_checks": true,
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-11-23T16:51:42.213476+00:00",
+      "completed_at_utc": "2026-11-23T16:51:42.351783+00:00",
+      "outputs": {
+        "stdout": {
+          "path": "session/documentary_checks/source-a-001/01.stdout.log",
+          "bytes": 148,
+          "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+        },
+        "stderr": {
+          "path": "session/documentary_checks/source-a-001/01.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-11-23T16:51:42.351978+00:00",
+      "completed_at_utc": "2026-11-23T16:51:45.403567+00:00",
+      "outputs": {
+        "stdout": {
+          "path": "session/documentary_checks/source-a-001/02.stdout.log",
+          "bytes": 6609,
+          "sha256": "56050e7c8d0c1f5cdfe0005b8205552d5ca6a9ef9a951078ad229e1f81348d50"
+        },
+        "stderr": {
+          "path": "session/documentary_checks/source-a-001/02.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-11-23T16:51:45.403787+00:00",
+      "completed_at_utc": "2026-11-23T16:51:45.441693+00:00",
+      "outputs": {
+        "stdout": {
+          "path": "session/documentary_checks/source-a-001/03.stdout.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "path": "session/documentary_checks/source-a-001/03.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "returncode": 0,
+      "started_at_utc": "2026-11-23T16:51:45.441837+00:00",
+      "completed_at_utc": "2026-11-23T16:51:45.447853+00:00",
+      "outputs": {
+        "stdout": {
+          "path": "session/documentary_checks/source-a-001/04.stdout.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "path": "session/documentary_checks/source-a-001/04.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  ],
+  "target_execution": false,
+  "h0_execution": false,
+  "full_routine_execution": false
+}

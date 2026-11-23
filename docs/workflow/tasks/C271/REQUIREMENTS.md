@@ -443,3 +443,12 @@ Technical work stopped at 2026-11-23 16:32:32 UTC. The necessary first Node depe
 Only documentary checks, review, conditional retained-branch publication and verified final delivery remain in P26. Their results and future commit/save identities are pending in this source snapshot. Whole N34, historical N57, complete H0 plan/closure, H1 and later qualification remain open. R01/R02 stay done, R03-R05 not_done, P01 done and P02 in_progress; keep PR274 draft/unmerged and issue273 open.
 
 In a later bounded phase, review the portable exact libdl counterexample against durable project verification requirements and approved portable-input routes under EPHEMERAL-HOST.md. Determine the necessary source/contract compatibility decision for non-libc x86-64 PLT tags and preserve the separately observed libm/librt flags before authorizing implementation. Do not automatically begin another temporary-host profiling/exception phase or generalize the libc exception.
+
+
+### P26 saved development handoff
+
+The P26 source-A documentary checks and independent review passed against the exact frozen 20-file candidate. Published source A is `7c80def7e6dddb8ee22e9aeb632d0af846317adb`, tree `4e42e70eace7f9ac9c5e1707d444b1bfd5372b67`. The verified development ZIP and both matching prompts were saved and read back byte-for-byte. See [saved delivery](../../../engineering/localized-repair-c271/h0-plan-p26/SAVED-DELIVERY.json) and [repository receipt](../../../engineering/localized-repair-c271/h0-plan-p26/P26-DELIVERY.json) for actual identities and evidence.
+
+This receipt-only B snapshot precedes its own checks, review, publication identity, external receipt and terminal readbacks. Preserve A and its archive unchanged; resolve delivery/ownership only after exact external evidence and both matching P26 terminal comments. The source-time pending records and earlier not_run rows remain historical, with actual later results appended.
+
+C271 remains blocked/open. R03–R05 remain not_done and P02 remains in_progress. No H0, whole N34, H1, full routine or main integration is claimed. The first remaining technical action stays the durable portable-counterexample requirements/source decision before any implementation authority. Stop this chat after receipt/terminal delivery; do not start that next phase.
