@@ -1,0 +1,869 @@
+{
+  "schema": "ontokin.c271.p28-current-state-audit/1",
+  "reviewer": "/root/state_audit",
+  "recorded_at_utc": "2026-11-23T21:47:49.721292+00:00",
+  "scope": "Bounded live state, original exact candidate recovery and prior documentary-delivery reconciliation; no mutations outside owned review files.",
+  "verdict": "BLOCKED_EXACT_ORIGINAL_P28_CANDIDATE_NOT_FOUND_IN_INSPECTED_DURABLE_RECORDS",
+  "observed": {
+    "main": "e43cc6c5777874101a40559e4058ad6826b07e51",
+    "head": "46b0fce68afb65cfbfcaba64f1276408d93ee85d",
+    "head_tree": "e5d8dc89b9e6fba4315a3386f43e13e758b33c0e",
+    "original_intended_parent": "360c80062e769230199602326fa8de25660df714",
+    "documentary_source_commit": "5f340b4f49d13638f3522e201a1e99b93a19358b",
+    "documentary_source_tree": "6a85465aa64ba44dbd13e54087191ec2efbf9e05",
+    "pr": 274,
+    "issue": 273
+  },
+  "checks": [
+    {
+      "name": "branch_inventory",
+      "passed": true,
+      "detail": "Only main and the retained C271 branch in the Director supplied inventory."
+    },
+    {
+      "name": "pr_state",
+      "passed": true,
+      "detail": "PR274 remains draft/open/unmerged at the exact observed head."
+    },
+    {
+      "name": "issue_state",
+      "passed": true,
+      "detail": "Scope issue273 remains open."
+    },
+    {
+      "name": "main_pointer_lag",
+      "passed": true,
+      "detail": "Main CURRENT is the prior completed C270 pointer; current authorized recovery and live C271 records govern active work."
+    },
+    {
+      "name": "c270_completed",
+      "passed": true,
+      "detail": "No C270 technical or delivery gate was reopened by this audit."
+    },
+    {
+      "name": "c271_open_requirements",
+      "passed": true,
+      "detail": "Parent acceptance gates preserved."
+    },
+    {
+      "name": "c271_active_pointer",
+      "passed": true,
+      "detail": "Existing scope is active; no new milestone selected."
+    },
+    {
+      "name": "parent_plan_preserved",
+      "passed": true,
+      "detail": "Recovery delivery does not complete parent P02."
+    },
+    {
+      "name": "exact_branch_tree",
+      "passed": true,
+      "detail": "Git commit object verifies the exact observed branch tree."
+    },
+    {
+      "name": "recovery_commit_chain",
+      "passed": true,
+      "detail": "Time bounded history since 18:00 UTC contains two P27 and two documentary P28 recovery commits; page1 returned4 of100."
+    },
+    {
+      "name": "only_documentary_delta",
+      "passed": true,
+      "detail": "The branch delta from the original intended parent has29 documentary paths and no production/test changes."
+    },
+    {
+      "name": "terminal_copies_match",
+      "passed": true,
+      "detail": "Live PR comment7113998703 and issue comment7113999171 are identical."
+    },
+    {
+      "name": "terminal_narrow_resolution",
+      "passed": true,
+      "detail": "Matching terminal markers resolve recovery delivery/ownership only."
+    },
+    {
+      "name": "candidate_unknown_preserved",
+      "passed": true,
+      "detail": "Original immutable upload operation has no recoverable tree or commit identifier in these records."
+    },
+    {
+      "name": "no_original_upload_replay",
+      "passed": true,
+      "detail": "No original upload has been replayed by the prior documentary recovery; none replayed by this audit."
+    },
+    {
+      "name": "reconstruction_not_selected",
+      "passed": true,
+      "detail": "No current reconstruction decision was supplied or found in the inspected operative records. The original implementation declaration is historical authority for that phase, not a new reconstruction decision."
+    },
+    {
+      "name": "bounded_comments_complete",
+      "passed": true,
+      "detail": "REST issue comment collections filtered since 2026-11-23T18:00:00Z; both page1 results below page size100. Older comments not comprehensively reread."
+    },
+    {
+      "name": "no_p28_candidate_in_historical_bodies",
+      "passed": true,
+      "detail": "The large current PR/issue bodies contain historical P25 and earlier records, with no P28 string; no full semantic body review claimed."
+    },
+    {
+      "name": "ci_no_status_checks",
+      "passed": true,
+      "detail": "Combined state pending with zero statuses, not a CI pass."
+    },
+    {
+      "name": "ci_no_runs",
+      "passed": true,
+      "detail": "No workflow runs for the exact current head; no repository-wide disablement claim."
+    },
+    {
+      "name": "bounded_trees_complete",
+      "passed": true,
+      "detail": "All9 nonrecursive directory responses are complete for their own direct entries; no whole-repository recursive inventory claimed."
+    },
+    {
+      "name": "nested_agents_absent_on_selected_chains",
+      "passed": true,
+      "detail": "No nested AGENTS.md at the inspected ancestor/task/recovery/design directories. Root AGENTS exists; current main governs the newer ephemeral-host rule."
+    },
+    {
+      "name": "source_blob_REQUIREMENTS.md",
+      "passed": true,
+      "detail": {
+        "local": "/workspace/scratch/002c49ccf480/session/branch/docs/workflow/tasks/C271/REQUIREMENTS.md",
+        "expected_git_blob": "f47cf7e22eb42ca8939e67fd4fa07698b3c34185",
+        "actual_git_blob": "f47cf7e22eb42ca8939e67fd4fa07698b3c34185"
+      }
+    },
+    {
+      "name": "source_blob_PLAN.md",
+      "passed": true,
+      "detail": {
+        "local": "/workspace/scratch/002c49ccf480/session/branch/docs/workflow/tasks/C271/PLAN.md",
+        "expected_git_blob": "a8818ab76812ccf87e4ac7dea5f0a56081f5329e",
+        "actual_git_blob": "a8818ab76812ccf87e4ac7dea5f0a56081f5329e"
+      }
+    },
+    {
+      "name": "source_blob_task.json",
+      "passed": true,
+      "detail": {
+        "local": "/workspace/scratch/002c49ccf480/session/branch/docs/workflow/tasks/C271/task.json",
+        "expected_git_blob": "07801dc2c499bb1b17c19f901bcc952a5ca3be3c",
+        "actual_git_blob": "07801dc2c499bb1b17c19f901bcc952a5ca3be3c"
+      }
+    },
+    {
+      "name": "source_blob_CURRENT.json",
+      "passed": true,
+      "detail": {
+        "expected_git_blob": "01a7306792982f948e3d1c9e0b94519151aec050",
+        "actual_git_blob": "01a7306792982f948e3d1c9e0b94519151aec050"
+      }
+    },
+    {
+      "name": "postfreeze_exact_archive",
+      "passed": true,
+      "detail": "Additional durable archive independently fetched as base64 at the exact branch commit."
+    },
+    {
+      "name": "postfreeze_archive_integrity",
+      "passed": true,
+      "detail": "All25 ZIP members were enumerated and hashed; no archive member code executed."
+    },
+    {
+      "name": "postfreeze_documentary_manifest",
+      "passed": true,
+      "detail": "Manifest is the known27-file documentary recovery publication."
+    },
+    {
+      "name": "postfreeze_known_publication",
+      "passed": true,
+      "detail": "Tree/commit creation receipts identify documentary sourceA, not the missing original P28 upload."
+    },
+    {
+      "name": "postfreeze_original_still_unknown",
+      "passed": true,
+      "detail": "The archive explicitly preserves unknown original objects and supplies no recovered original candidate."
+    }
+  ],
+  "checks_passed": 31,
+  "checks_failed": 0,
+  "delivery_resolution": {
+    "terminal_comments": [
+      7113998703,
+      7113999171
+    ],
+    "matching_live_bodies": true,
+    "prior_recovery_owner": "c271-p28-recovery-acb73444303d",
+    "release_scope": "prior documentary recovery only",
+    "external_receipt_library_file_id": "libfile_fde3_f-46d1b2e049348191b5ab4eb4645330e3_2ab2a24d43748191957f9bcc356b59de",
+    "external_receipt_bytes": 96179,
+    "external_receipt_sha256": "a345691387fa0f32133b4202fc94abbca12b17c94a73eadda0fe26838b4bc408",
+    "external_receipt_bytes_verified_by_this_worker": false,
+    "artifact_verification": "Director/independent artifact reviewer handles actual Library-byte verification; this audit verifies the live exact terminal claims and Git identities."
+  },
+  "unknown_operations": [
+    {
+      "operation": "Prior P28 Git blob/tree uploads",
+      "target_repository": "Omegapy/OntoKin",
+      "target_branch": "work/c271-missing-import-digest-control",
+      "intended_parent": "360c80062e769230199602326fa8de25660df714",
+      "resulting_tree_sha": null,
+      "resulting_commit_sha": null,
+      "disposition": "Unresolved immutable uploads; branch remained at intended parent when observed. No write replay."
+    }
+  ],
+  "postfreeze_additional_input": {
+    "path": "docs/engineering/localized-repair-c271/p28-recovery-20261123/POSTFREEZE-EVIDENCE.zip",
+    "commit": "46b0fce68afb65cfbfcaba64f1276408d93ee85d",
+    "git_blob": "5f8d81f94531661ed62e20b427c513d973675592",
+    "bytes": 30001,
+    "sha256": "84b6f6b57831bb5af7a7f29fda3399c02a3e1f679ce8149e1d7897deb6fcbfa0",
+    "members": 25,
+    "conclusion": "Known documentary recoveryA publication receipts and package audits only. Original upload objects remain expressly unknown.",
+    "fully_read_members": [
+      "records/PUBLICATION-INTENT.json",
+      "records/PUBLICATION.json",
+      "records/PUBLICATION-READBACK.json",
+      "records/tree-create.json",
+      "records/commit-create.json",
+      "records/STAGED-PAYLOAD.json",
+      "final-audit/REPORT.md",
+      "final-audit/attempt001/INCIDENT.json",
+      "final-audit/attempt002/INCIDENT.json",
+      "final-package/VERIFICATION.json"
+    ],
+    "other_member_coverage": "Inventory/hashes and selected JSON fields inspected; historical audit scripts/logs and every audit assertion were not reread or executed."
+  },
+  "historical_unknown_operations": [
+    "C270 ancillary broad-driver completion",
+    "Global prior-process termination",
+    "P13 read-only difflib completion; do not retry"
+  ],
+  "prior_worker_liveness": "unknown",
+  "no_reconstruction_authority": {
+    "conclusion": "No separately recorded reconstruction decision supplied in current assignment or found in inspected operative records. Continue requires exact source recovery or a separately recorded bounded decision.",
+    "evidence": [
+      "task.json#/next_action",
+      "task.json#/session_phase/exclusions",
+      "OUTCOME.json#/next_action",
+      "live terminal comments7113998703/7113999171",
+      "Director assignment scope"
+    ]
+  },
+  "read_coverage": {
+    "full_human_reads": [
+      "AGENTS.md",
+      "ROLE.md",
+      "PROTOCOL.md",
+      "HANDOFF.md",
+      "EPHEMERAL-HOST.md",
+      "C270 REQUIREMENTS.md",
+      "C270 PLAN.md",
+      "C271 REQUIREMENTS.md (all lines)",
+      "C271 PLAN.md (all unique text plus proven duplicate line sequences)",
+      "current P28 OUTCOME.json",
+      "current P28 RECONCILIATION.json",
+      "current P28 SESSION.md",
+      "current P28 BRANCH-INVENTORY.json",
+      "all returned P27/P28 comment bodies since18:00 UTC"
+    ],
+    "selected_json_fields": {
+      "C271 task.json": [
+        "schema/id/title/intent/status/owner/branch/base_sha/scope_issue",
+        "requirements descriptions/acceptance/status",
+        "plan",
+        "completion",
+        "next_action",
+        "session_phase",
+        "delivery",
+        "authorization",
+        "blocked_reason",
+        "remaining_h0_constraint",
+        "phase_reconciliations",
+        "p27_predecessor_reconciliation",
+        "p27_design_decision",
+        "checks filtered for p28 (none)"
+      ],
+      "branch CURRENT.json": [
+        "latest_task",
+        "active_task",
+        "observed_main",
+        "snapshot_date",
+        "next_action",
+        "latest_handoff",
+        "latest_recovery",
+        "pending_phase_delivery"
+      ],
+      "C270 task.json": [
+        "status",
+        "owner",
+        "completion",
+        "next_action",
+        "session_phase",
+        "delivery"
+      ],
+      "main CURRENT.json": [
+        "latest_task",
+        "active_task",
+        "next_action"
+      ]
+    },
+    "machine_parsed": [
+      "All selected JSON input bytes parsed successfully; complete API results retained. Parsing does not imply full semantic review."
+    ],
+    "gaps": [
+      "C271 historical JSON arrays and most historical checks/evidence-reference lists were not fully reread; portions appeared in truncated displays and are not counted as complete reads.",
+      "C270 historical checks and phase-history objects were not fully reread.",
+      "Large historical PR/issue bodies were searched for P28 but not completely reread.",
+      "No whole-repository tree search, Git object database enumeration, unrelated branch/archive search, original prior-host search, or prior chat tool-result inspection performed.",
+      "Actual Library artifact byte verification delegated to the independent artifact audit.",
+      "Full global startup/selected project skills handled by Director; child was not assigned a second global startup."
+    ],
+    "plan_read_coverage": [
+      {
+        "plan_lines": [
+          1,
+          1
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          2,
+          2
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          2,
+          2
+        ]
+      },
+      {
+        "plan_lines": [
+          3,
+          3
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          4,
+          4
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          4,
+          4
+        ]
+      },
+      {
+        "plan_lines": [
+          5,
+          5
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          6,
+          6
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          6,
+          6
+        ]
+      },
+      {
+        "plan_lines": [
+          7,
+          7
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          8,
+          8
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          8,
+          8
+        ]
+      },
+      {
+        "plan_lines": [
+          9,
+          9
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          10,
+          10
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          10,
+          10
+        ]
+      },
+      {
+        "plan_lines": [
+          11,
+          11
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          12,
+          12
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          12,
+          12
+        ]
+      },
+      {
+        "plan_lines": [
+          13,
+          13
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          14,
+          14
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          14,
+          14
+        ]
+      },
+      {
+        "plan_lines": [
+          15,
+          15
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          16,
+          16
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          16,
+          16
+        ]
+      },
+      {
+        "plan_lines": [
+          17,
+          17
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          18,
+          18
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          18,
+          18
+        ]
+      },
+      {
+        "plan_lines": [
+          19,
+          19
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          20,
+          20
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          20,
+          20
+        ]
+      },
+      {
+        "plan_lines": [
+          21,
+          21
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          22,
+          22
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          22,
+          22
+        ]
+      },
+      {
+        "plan_lines": [
+          23,
+          23
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          24,
+          24
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          24,
+          24
+        ]
+      },
+      {
+        "plan_lines": [
+          25,
+          25
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          26,
+          101
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          34,
+          109
+        ]
+      },
+      {
+        "plan_lines": [
+          102,
+          109
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          110,
+          242
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          110,
+          242
+        ]
+      },
+      {
+        "plan_lines": [
+          243,
+          243
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          244,
+          244
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          244,
+          244
+        ]
+      },
+      {
+        "plan_lines": [
+          245,
+          245
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          246,
+          246
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          246,
+          246
+        ]
+      },
+      {
+        "plan_lines": [
+          247,
+          247
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          248,
+          248
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          248,
+          248
+        ]
+      },
+      {
+        "plan_lines": [
+          249,
+          249
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          250,
+          315
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          250,
+          315
+        ]
+      },
+      {
+        "plan_lines": [
+          316,
+          316
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          317,
+          372
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          317,
+          372
+        ]
+      },
+      {
+        "plan_lines": [
+          373,
+          373
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          374,
+          438
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          374,
+          438
+        ]
+      },
+      {
+        "plan_lines": [
+          439,
+          439
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          440,
+          440
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          440,
+          440
+        ]
+      },
+      {
+        "plan_lines": [
+          441,
+          441
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          442,
+          442
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          442,
+          442
+        ]
+      },
+      {
+        "plan_lines": [
+          443,
+          443
+        ],
+        "coverage": "unique plan text separately read",
+        "requirements_lines": null
+      },
+      {
+        "plan_lines": [
+          444,
+          473
+        ],
+        "coverage": "byte-identical line sequence already read in requirements",
+        "requirements_lines": [
+          444,
+          473
+        ]
+      }
+    ],
+    "input_identities": [
+      {
+        "input": "session/governing/AGENTS.md",
+        "snapshot": "session/reviews/state_audit/read-snapshots/governing/AGENTS.md",
+        "bytes": 7529,
+        "sha256": "8b59a0269e2138336c76b30ecc083c6be2a9545a0e6e00b02f26545266bf6de0",
+        "git_blob": "262f9e592b5d94ba53785026578d70cd0bffa5ba"
+      },
+      {
+        "input": "session/governing/ROLE.md",
+        "snapshot": "session/reviews/state_audit/read-snapshots/governing/ROLE.md",
+        "bytes": 1683,
+        "sha256": "818fff3bf7fac9cde2235c7ef6aaf550dde60ad86a11c3059c7ec168d0eaedaf",
+        "git_blob": "94cba1161037beddb8b384a2c2cf1ee0d2120eaa"
+      },
+      {
+        "input": "session/governing/docs/workflow/PROTOCOL.md",
+        "snapshot": "session/reviews/state_audit/read-snapshots/governing/docs/workflow/PROTOCOL.md",
+        "bytes": 12680,
+        "sha256": "b1617baeb9f5d726e4b8c2d56e69513974849e1904f32756b800beaa83dc4404",
+        "git_blob": "27cbe8eccd350584f4744e469354ac04837aa53d"
+      },
+      {
+        "input": "session/governing/docs/workflow/HANDOFF.md",
+        "snapshot": "session/reviews/state_audit/read-snapshots/governing/docs/workflow/HANDOFF.md",
+        "bytes": 6809,
+        "sha256": "4475a06b1c4fec52375797bd3a0bdd4fdffaef0c559d8d194da8b7e6bd28f6f4",
+        "git_blob": "363eaab0e4a86a192f255d8189a29df489d44c27"
+      },
+      {
+        "input": "session/governing/docs/workflow/EPHEMERAL-HOST.md",
+        "snapshot": "session/reviews/state_audit/read-snapshots/governing/docs/workflow/EPHEMERAL-HOST.md",
+        "bytes": 4424,
+        "sha256": "f861078b0f198f63f831667107cc647f22ab493422c8b8dd9d0028e6f2d8660a",
+        "git_blob": "f7c7dd594dccba294c0beb22df249b826694b15c"
+      },
+      {
+        "input": "session/governing/docs/workflow/tasks/C270/REQUIREMENTS.md",
+        "snapshot": "session/reviews/state_audit/read-snapshots/governing/docs/workflow/tasks/C270/REQUIREMENTS.md",
+        "bytes": 3382,
+        "sha256": "4c5161ed82ba2547ed555e8a2b7f08087ce4a5040a062eb57c09d4a30df50b31",
+        "git_blob": "c2e9cdf098fdbe0f65e6bb620d6001d524b80d90"
+      },
+      {
+        "input": "session/governing/docs/workflow/tasks/C270/PLAN.md",
+        "snapshot": "session/reviews/state_audit/read-snapshots/governing/docs/workflow/tasks/C270/PLAN.md",
+        "bytes": 6971,
+        "sha256": "89c146faf671a1e09329dbaca3a5d69483750b75e8463a8d5b23da97ff6d6d78",
+        "git_blob": "e23235ba303d9260075afb60dbae62ec7eac9fe6"
+      },
+      {
+        "input": "session/governing/docs/workflow/tasks/C270/task.json",
+        "snapshot": "session/reviews/state_audit/read-snapshots/governing/docs/workflow/tasks/C270/task.json",
+        "bytes": 25381,
+        "sha256": "e4431384891bc12dfa224ae1baaabb64cfbff76f3a32afbb21f336c45a6cff1b",
+        "git_blob": "2f7dc7207699a47680379120148108bcc9d12c19"
+      },
+      {
+        "input": "session/governing/docs/workflow/CURRENT.json",
+        "snapshot": "session/reviews/state_audit/read-snapshots/governing/docs/workflow/CURRENT.json",
+        "bytes": 5527,
+        "sha256": "fec57459bd12896effe23010dcc6d9f8b709e350fd8cabe1c67309a7da941d40",
+        "git_blob": "9b9b7d4bb0eecde3691912b89d35a362c73b82c5"
+      },
+      {
+        "input": "session/governing/STATUS.md",
+        "snapshot": "session/reviews/state_audit/read-snapshots/governing/STATUS.md",
+        "bytes": 13772,
+        "sha256": "04a500a21e7a7b0148345e97bca72da93700f649032ec202ebb0e96b64448d7e",
+        "git_blob": "2cabb4caef0002173ccb897fbbc704559ec3815d"
+      },
+      {
+        "input": "session/branch/docs/workflow/tasks/C271/REQUIREMENTS.md",
+        "snapshot": "session/reviews/state_audit/read-snapshots/branch/docs/workflow/tasks/C271/REQUIREMENTS.md",
+        "bytes": 82030,
+        "sha256": "6a088c1287d5fdcb792c98a59c1e9281fadb1ad7b8d1a171255e1f7ed75c4229",
+        "git_blob": "f47cf7e22eb42ca8939e67fd4fa07698b3c34185"
+      },
+      {
+        "input": "session/branch/docs/workflow/tasks/C271/PLAN.md",
+        "snapshot": "session/reviews/state_audit/read-snapshots/branch/docs/workflow/tasks/C271/PLAN.md",
+        "bytes": 83148,
+        "sha256": "1dbce8fdf8acf05f4604fa8dcc081e243c1543b5a36f31077887b98a198bf5bf",
+        "git_blob": "a8818ab76812ccf87e4ac7dea5f0a56081f5329e"
+      },
+      {
+        "input": "session/branch/docs/workflow/tasks/C271/task.json",
+        "snapshot": "session/reviews/state_audit/read-snapshots/branch/docs/workflow/tasks/C271/task.json",
+        "bytes": 403443,
+        "sha256": "5edf7d9bb36230cb02804c45015c7bae99135b78cf2d9f309ae198b02b5fdc01",
+        "git_blob": "07801dc2c499bb1b17c19f901bcc952a5ca3be3c"
+      },
+      {
+        "input": "session/branch/docs/workflow/CURRENT.json",
+        "snapshot": "session/reviews/state_audit/read-snapshots/branch/docs/workflow/CURRENT.json",
+        "bytes": 187281,
+        "sha256": "306d3904da26ea59be9c251c4e09308927689b139fa01dd5e44d4b71daf049b3",
+        "git_blob": "01a7306792982f948e3d1c9e0b94519151aec050"
+      }
+    ]
+  },
+  "limits": [
+    "Negative result is bounded to inspected live records; it does not prove that unreferenced immutable Git objects do not exist.",
+    "Original reported597/597 methods and945 protected files remain unverified; no target or product tests were run.",
+    "No GitHub or Library mutations; no index/main/branch changes; no original upload replay; no nested agents."
+  ],
+  "next_action": "Stop at P28-RECOVERY-BYTES-001. Director preserves this evidence and finishes the authorized verified recovery handoff. Original implementation may resume only after exact candidate/evidence recovery or a separate recorded reconstruction decision."
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "ontokin.c271.p28-r02-whitespace-disposition/1",
+  "reviewer": "/root/checkpoint_review",
+  "recorded_at_utc": "2026-11-23T21:56:24.981295+00:00",
+  "scope": "Exact two staged-whitespace findings in preserved raw candidate.diff only",
+  "original_candidate_diff": {
+    "path": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff",
+    "bytes": 24211,
+    "sha256": "19a62b7de82f467f144751c79a2e46cafa1f8ad9a8fbe34cfa8fc5b76799be47"
+  },
+  "observed_lines": [
+    {
+      "diff_line": 75,
+      "raw_hex": "200a",
+      "classification": "unified-diff context prefix for an unchanged empty line",
+      "source_path": "docs/workflow/tasks/C271/PLAN.md",
+      "source_old_line": 472,
+      "source_new_line": 472,
+      "base_line_hex": "0a",
+      "staged_line_hex": "0a",
+      "working_line_hex": "0a",
+      "all_underlying_source_lines_empty": true
+    },
+    {
+      "diff_line": 89,
+      "raw_hex": "200a",
+      "classification": "unified-diff context prefix for an unchanged empty line",
+      "source_path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "source_old_line": 472,
+      "source_new_line": 472,
+      "base_line_hex": "0a",
+      "staged_line_hex": "0a",
+      "working_line_hex": "0a",
+      "all_underlying_source_lines_empty": true
+    }
+  ],
+  "checks": {
+    "raw_diff_original_hash_preserved": true,
+    "staged_raw_diff_matches_original": true,
+    "flagged_lines_are_exact_context_bytes": true,
+    "full_check_only_expected_two_lines": true,
+    "scoped_authored_whitespace_passed": true
+  },
+  "full_staged_whitespace": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit_code": 2,
+    "stdout": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff:75: trailing whitespace.\n+ \ndocs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff:89: trailing whitespace.\n+ \n",
+    "stderr": ""
+  },
+  "scoped_authored_whitespace": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      ".",
+      ":(exclude)docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/reviews/checkpoint_review/candidate.diff"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "verdict": "PRESERVE_RAW_DIFF_CONTEXT_AND_FULL_CHECK_FAILURE",
+  "disposition": "Both flagged lines contain one unified-diff context marker followed immediately by newline. The plus shown by the outer staged check marks addition of that evidence line. The underlying PLAN/REQUIREMENTS source lines contain newline only. Preserve exact raw diff bytes and report the full staged whitespace check as failed (exit 2), with this independent disposition and the separately passing scoped authored-file check. Do not relabel the full check passed. No authored-source whitespace correction is required for these findings.",
+  "publication_attempt_note": {
+    "source": "Director follow-up assignment; not independently re-executed or remotely observed by this reviewer",
+    "statement": "Publication ZIP generation stopped before any upload because the intent file was not produced after the assertion. Director retains both failures and reports no remote outcome uncertainty."
+  },
+  "boundaries": {
+    "product_tests": 0,
+    "canonical_changes": false,
+    "remote_mutations": false,
+    "new_phase_started": false,
+    "pending_writes_or_jobs": false,
+    "output": "session/reviews/checkpoint_review/WHITESPACE-DISPOSITION.json"
+  }
+}

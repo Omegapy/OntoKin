@@ -1,0 +1,77 @@
+{
+  "schema": "ontokin.c271.p28-r02-checkpoint/1",
+  "task": "C271",
+  "phase": "C271-P28-R02-exact-candidate-recovery",
+  "owner": "c271-p28-r02-002c49ccf480",
+  "observed_at_utc": "2026-11-23T21:49:49.553156+00:00",
+  "observed_main": "e43cc6c5777874101a40559e4058ad6826b07e51",
+  "observed_main_tree": "2a4712e9d1c6ddd2fb4571292e239d1b16bb5fda",
+  "starting_branch_head": "46b0fce68afb65cfbfcaba64f1276408d93ee85d",
+  "starting_branch_tree": "e5d8dc89b9e6fba4315a3386f43e13e758b33c0e",
+  "branch": "work/c271-missing-import-digest-control",
+  "pull_request": 274,
+  "scope_issue": 273,
+  "scope": "Exact-candidate recovery and documentary delivery only",
+  "status": "blocked_final_delivery_pending",
+  "technical_boundary_reached": true,
+  "technical_boundary_kind": "P28-RECOVERY-BYTES-001",
+  "phase_complete": false,
+  "parent_complete": false,
+  "parent_status": "blocked",
+  "main_lease_held": false,
+  "requirements": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "parent_plan": {
+    "P01": "done",
+    "P02": "in_progress"
+  },
+  "early_save_confirmed": true,
+  "early_receipt": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+  "acceptance": [
+    "Reconcile exact live and saved state",
+    "Check bounded durable recovery sources",
+    "Independently verify source classification and preserve unknown uploads",
+    "Publish verified documentary checkpoint",
+    "Save verified final ZIP with separate receipt"
+  ],
+  "stop": "Missing-source blocker reached; only documentary checks, review, publication and delivery remain",
+  "next_action": "Supply the exact original P28 final uploaded tree SHA plus complete publication manifest/group inventory, or a saved implementation/fixtures/tests/review artifact. If those bytes are unavailable, obtain an explicit bounded reconstruction decision under the adopted P27 design. Do not repeat this same recovery phase without a new durable input or that decision; do not call new implementation recovered work.",
+  "original_p28_implementation_verified": false,
+  "reported_but_not_reverified": [
+    "597/597 original P28 tests",
+    "945 protected files",
+    "Original P28 implementation acceptance"
+  ],
+  "current_unknown_operations": [
+    {
+      "operation": "Original P28 immutable blob/tree uploads",
+      "intended_parent": "360c80062e769230199602326fa8de25660df714",
+      "tree_sha": null,
+      "commit_sha": null,
+      "replayed": false
+    }
+  ],
+  "historical_unknown_operations": [
+    "C270 ancillary broad-driver completion",
+    "Global prior-process termination",
+    "P13 read-only difflib completion; do not retry"
+  ],
+  "runtime_changes": 0,
+  "product_tests_executed": 0,
+  "main_integration": false,
+  "branch_disposition": "retained_for_unfinished_C271",
+  "issue_state": "open",
+  "pr_state": "draft_open_unmerged",
+  "source_time_delivery_state": "This documentary source precedes its own final ZIP save; DELIVERY.json and later live terminal readbacks resolve delivery only",
+  "previous_state": "https://github.com/Omegapy/OntoKin/blob/46b0fce68afb65cfbfcaba64f1276408d93ee85d/docs/workflow/tasks/C271/task.json",
+  "ownership_comment": 7114912816,
+  "prior_owner_release_comments": [
+    7113998703,
+    7113999171
+  ]
+}
