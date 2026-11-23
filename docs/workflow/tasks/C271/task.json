@@ -137,7 +137,8 @@
         "docs/engineering/localized-repair-c271/path-design-p24/EARLY-RECOVERY-RECEIPT.json",
         "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
         "docs/engineering/localized-repair-c271/path-implementation-p25/EARLY-RECOVERY-RECEIPT.json",
-        "docs/engineering/localized-repair-c271/path-implementation-p25/EARLY-CLARIFICATION-RECEIPT.json"
+        "docs/engineering/localized-repair-c271/path-implementation-p25/EARLY-CLARIFICATION-RECEIPT.json",
+        "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json"
       ]
     }
   ],
@@ -1126,6 +1127,21 @@
         "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/controls/REVIEW-FINAL.json",
         "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/ADAPTER-REVIEW-002.json"
       ]
+    },
+    {
+      "name": "P25 verified development handoff and saved prompts",
+      "command": "Independent package audit and exact saved byte readbacks",
+      "result": "passed",
+      "required": true,
+      "scope": "ZIP/prompts only; separate external receipt and terminal confirmation still pending in this source snapshot.",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json",
+        "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/FINAL-PACKAGE-AUDIT.json",
+        "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/FINAL-PACKAGE-REVIEW.json",
+        "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/FINAL-PACKAGE-REVIEW.md",
+        "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/SAVED-READBACK-AUDIT.json",
+        "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/SAVED-READBACK-REVIEW.md"
+      ]
     }
   ],
   "completion": {
@@ -1162,7 +1178,8 @@
       "docs/engineering/localized-repair-c271/environment-p20/P20-DELIVERY.json",
       "docs/engineering/localized-repair-c271/retained-input-p22/OUTCOME.json",
       "docs/engineering/localized-repair-c271/retained-input-p22/P22-DELIVERY.json",
-      "docs/engineering/localized-repair-c271/h0-plan-p23/P23-DELIVERY.json"
+      "docs/engineering/localized-repair-c271/h0-plan-p23/P23-DELIVERY.json",
+      "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json"
     ],
     "provider_implementation_commit": "113e1b855d97773307c8c2fced00e886a809bce1",
     "host_inspection_implementation_commit": "cf16a0facebdce2fadf69e5c7fae6f2ca31cbd2e",
@@ -1227,7 +1244,11 @@
         "sha256": "363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da"
       },
       "acceptance": "docs/engineering/localized-repair-c271/path-implementation-p25/ACCEPTANCE.json",
-      "source_publication": "pending_core_publication_and_separate_delivery_receipt"
+      "source_publication": {
+        "commit": "0df3d39084e11b68a434035fa0cc67e1d7d8955e",
+        "tree": "6bf8d88e034bbb318d7015caa665a88a14175970",
+        "verified": true
+      }
     }
   },
   "next_action": "After verified P25 delivery, in a fresh bounded phase, bind the newly published /0.1.4 inspector and complete source inventory, construct and independently review the current-host H0 inspection plan, and satisfy the external N34 actual loader/script source-completeness gate before operational plan adoption. Reconstruct only necessary pinned inputs in the fresh host. Stop at an accepted plan or a concrete blocker; H1, the original full routine and main integration remain later gates.",
@@ -1256,7 +1277,7 @@
       "branch deletion",
       "second phase"
     ],
-    "status": "bounded_implementation_accepted_delivery_pending",
+    "status": "zip_and_prompts_saved_receipt_terminal_pending",
     "parent_complete": false,
     "requirements": {
       "R01": "done",
@@ -1285,7 +1306,9 @@
     "acceptance_record": "docs/engineering/localized-repair-c271/path-implementation-p25/ACCEPTANCE.json",
     "outcome_record": "docs/engineering/localized-repair-c271/path-implementation-p25/OUTCOME.json",
     "operational_plan_adopted": false,
-    "phase_complete": false
+    "phase_complete": false,
+    "saved_delivery_record": "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json",
+    "ownership_release": "After both matching P25 live terminal markers are verified; no main lease is held."
   },
   "delivery": {
     "required": true,
@@ -1293,11 +1316,93 @@
     "folder": "OntoKin",
     "partial": true,
     "phase": "C271-P25-finite-RTLD-path-implementation",
-    "status": "technical_accepted_final_delivery_pending",
+    "status": "zip_and_prompts_saved_exact_readback_receipt_terminal_pending",
     "phase_complete": false,
-    "early_receipt": "docs/engineering/localized-repair-c271/path-implementation-p25/EARLY-RECOVERY-RECEIPT.json",
-    "future_external_receipt": "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json",
-    "technical_boundary": "docs/engineering/localized-repair-c271/path-implementation-p25/OUTCOME.json"
+    "archive": {
+      "local_path": "/workspace/scratch/bd99261bd84d/packages/final/OntoKin_C271_P25_RTLD_Path_Implementation_Handoff_2026-11-23.zip",
+      "purpose": "create_library_file",
+      "status": "succeeded",
+      "file_id": "file_000000004ed081f5967b4bd13a43c860",
+      "library_file_id": "libfile_fde3_f-e35b36451cd4819186174674fed0a18e_2ab2a24d43748191957f9bcc356b59de",
+      "file_name": "OntoKin_C271_P25_RTLD_Path_Implementation_Handoff_2026-11-23.zip",
+      "local_metadata_applied": true,
+      "path": "/OntoKin/OntoKin_C271_P25_RTLD_Path_Implementation_Handoff_2026-11-23.zip",
+      "current_version_number": 0,
+      "bytes": 2264988,
+      "sha256": "23fb56fbcb3e1d1d8011e1bd97242be3b7d9c114f91e18c5e12fb8050d7d5a08",
+      "version": 0,
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-e35b36451cd4819186174674fed0a18e_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "local_xattr_names": [
+        "user.library-file-version",
+        "user.library-file-id"
+      ],
+      "readback_path": "/workspace/scratch/bd99261bd84d/readback/final/OntoKin_C271_P25_RTLD_Path_Implementation_Handoff_2026-11-23.zip",
+      "saved_bytes_readback_equal": true,
+      "local_bytes_unchanged_after_save": true,
+      "library_xattrs_verified": true,
+      "folder_metadata_verified": true
+    },
+    "prompts": [
+      {
+        "local_path": "/workspace/scratch/bd99261bd84d/packages/final/OntoKin_C271_P25_Continue_2026-11-23.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_000000004ca881fb983e456e0a736456",
+        "library_file_id": "libfile_fde3_f-1921f4a8701881919c6445eb71b6b42e_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P25_Continue_2026-11-23.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P25_Continue_2026-11-23.md",
+        "current_version_number": 0,
+        "bytes": 2222,
+        "sha256": "19753b07d1a512a6b8cdcbeb5e761a6de2990861ceb6c1af068725d0bf32b8b3",
+        "version": 0,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-1921f4a8701881919c6445eb71b6b42e_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_xattr_names": [
+          "user.library-file-version",
+          "user.library-file-id"
+        ],
+        "readback_path": "/workspace/scratch/bd99261bd84d/readback/final/OntoKin_C271_P25_Continue_2026-11-23.md",
+        "saved_bytes_readback_equal": true,
+        "local_bytes_unchanged_after_save": true,
+        "library_xattrs_verified": true,
+        "folder_metadata_verified": true,
+        "matching_zip_member": "PROMPT-1-CONTINUE.md"
+      },
+      {
+        "local_path": "/workspace/scratch/bd99261bd84d/packages/final/OntoKin_C271_P25_Recover_2026-11-23.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_00000000eeb081f5a3fd90c6dcc6f838",
+        "library_file_id": "libfile_fde3_f-341e38e6acc88191b8e3bc4cdd4c17a3_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P25_Recover_2026-11-23.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P25_Recover_2026-11-23.md",
+        "current_version_number": 0,
+        "bytes": 2247,
+        "sha256": "8932b6b86626eb1fbe61dec482e86f484b3ff51b2cf33950737bc6e688a8c9c9",
+        "version": 0,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-341e38e6acc88191b8e3bc4cdd4c17a3_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "local_xattr_names": [
+          "user.library-file-version",
+          "user.library-file-id"
+        ],
+        "readback_path": "/workspace/scratch/bd99261bd84d/readback/final/OntoKin_C271_P25_Recover_2026-11-23.md",
+        "saved_bytes_readback_equal": true,
+        "local_bytes_unchanged_after_save": true,
+        "library_xattrs_verified": true,
+        "folder_metadata_verified": true,
+        "matching_zip_member": "PROMPT-2-RECOVER.md"
+      }
+    ],
+    "core_source_commit": "0df3d39084e11b68a434035fa0cc67e1d7d8955e",
+    "core_source_tree": "6bf8d88e034bbb318d7015caa665a88a14175970",
+    "receipt": "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json",
+    "remaining": [
+      "Publish and verify this receipt-only repository revision with exact frozen documentary checks.",
+      "Save and byte-read back the separate external receipt, including unique postfreeze recovery text.",
+      "Publish and separately read back identical live PR274/issue273 P25 terminal markers; release phase ownership and stop."
+    ],
+    "source_time_resolution": "The later external receipt binds this record and its containing commit/tree. Matching live terminal markers bind the external receipt own saved identity and resolve only these source-time pending fields. Do not rebuild the ZIP to insert its future receipt."
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",

@@ -1,0 +1,42 @@
+{
+  "schema": "ontokin.c271.p25-package-clarification/1",
+  "recorded_at_utc": "2026-11-23T14:56:02.103600+00:00",
+  "archive_sha256": "23fb56fbcb3e1d1d8011e1bd97242be3b7d9c114f91e18c5e12fb8050d7d5a08",
+  "affected_zip_members": [
+    "CHECKPOINT.json",
+    "RECOVERY-STATUS.md",
+    "recovery/state/final-config-template.json",
+    "recovery/state/final-config.json"
+  ],
+  "incorrect_label": "Failed syntax attempt",
+  "corrected_fact": "Both implementation/attempt001 and implementation/candidate001 syntax compilations passed. These are the complete syntax-check history. No distinct actual syntax failure occurred.",
+  "source_evidence": [
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/implementation/attempt001/CHECK.json",
+      "bytes": 700,
+      "sha256": "51de74b9b0b3bef6ac439ecb3926f1aad6f70b8eef5fc797dca53c5c07e008e3"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/implementation/attempt001/syntax.log",
+      "bytes": 58,
+      "sha256": "667ec653dce22af12f2d055002af11bf8a4dcb3b7a2682bbb5e64f78e1a4664d"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/implementation/candidate001/CANDIDATE.json",
+      "bytes": 866,
+      "sha256": "75c5fb540ff0ab4705669d35db558b854c5d2b83c9f9ccf1b6194a1a5af81fac"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-implementation-p25/implementation/candidate001/syntax.log",
+      "bytes": 58,
+      "sha256": "667ec653dce22af12f2d055002af11bf8a4dcb3b7a2682bbb5e64f78e1a4664d"
+    }
+  ],
+  "implementer_confirmation": {
+    "worker": "/root/implement",
+    "response": "Both retained syntax compilations passed. No distinct actual syntax failure occurred. No edits or additional tests performed."
+  },
+  "cause": "Director continuity-summary wording was copied into recovery prose without matching it against the retained passing syntax records.",
+  "recovery_effect": "None. Both exact source versions and all syntax records are present; no evidence is missing. Other recorded failures retain their actual outcomes.",
+  "disposition": "Preserve frozen ZIP bytes and record this nonmaterial documentary correction in the separate delivery receipt and live terminal. This does not change implementation, tests, acceptance, next action or any parent gate."
+}

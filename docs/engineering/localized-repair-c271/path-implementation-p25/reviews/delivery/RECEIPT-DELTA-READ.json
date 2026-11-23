@@ -1,0 +1,625 @@
+[
+  {
+    "path": "docs/engineering/localized-repair-c271/path-implementation-p25/PHASE.json",
+    "source_commit": "0df3d39084e11b68a434035fa0cc67e1d7d8955e",
+    "current_bytes": 3111,
+    "current_sha256": "67507d8f085d74767dc68e846f50a19e76a6800d4f769af514daa6885e0b62f2",
+    "delta": [
+      {
+        "path": "/ownership_release",
+        "added": "After both matching P25 live terminal markers are verified; no main lease is held."
+      },
+      {
+        "path": "/saved_delivery_record",
+        "added": "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json"
+      },
+      {
+        "path": "/status",
+        "before": "bounded_implementation_accepted_delivery_pending",
+        "after": "zip_and_prompts_saved_receipt_terminal_pending"
+      }
+    ]
+  },
+  {
+    "path": "docs/engineering/localized-repair-c271/path-implementation-p25/OWNERSHIP.json",
+    "source_commit": "0df3d39084e11b68a434035fa0cc67e1d7d8955e",
+    "current_bytes": 643,
+    "current_sha256": "5d06351a4a4eff60fa15abb6a2b0c8a354ce16285898b97f506bcc2f28c01ceb",
+    "delta": [
+      {
+        "path": "/finalization",
+        "added": {
+          "source_time_status": "ZIP/prompts confirmed; receipt publication and terminal confirmation pending.",
+          "core_commit": "0df3d39084e11b68a434035fa0cc67e1d7d8955e",
+          "main_lease_held": false,
+          "release_on": "Separate verified matching PR274/issue273 P25 terminal markers",
+          "no_next_phase_in_this_chat": true
+        }
+      }
+    ]
+  },
+  {
+    "path": "docs/engineering/localized-repair-c271/path-implementation-p25/WORKERS.json",
+    "source_commit": "0df3d39084e11b68a434035fa0cc67e1d7d8955e",
+    "current_bytes": 3009,
+    "current_sha256": "16059761c482889af3c543351e3f126c83e41e5c85d9946a9a961dfe48bb6b3a",
+    "delta": [
+      {
+        "path": "/workers/0/completed_assignments",
+        "preserved_prefix_items": 3,
+        "appended": [
+          {
+            "role": "independent final package and saved-readback auditor",
+            "status": "accepted",
+            "evidence": [
+              "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/FINAL-PACKAGE-AUDIT.json",
+              "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/FINAL-PACKAGE-REVIEW.json",
+              "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/FINAL-PACKAGE-REVIEW.md",
+              "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/SAVED-READBACK-AUDIT.json",
+              "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/SAVED-READBACK-REVIEW.md"
+            ]
+          }
+        ]
+      },
+      {
+        "path": "/workers/0/status",
+        "before": "active_delivery_review_only",
+        "after": "final_receipt_review_only"
+      }
+    ]
+  },
+  {
+    "path": "docs/workflow/tasks/C271/task.json",
+    "source_commit": "0df3d39084e11b68a434035fa0cc67e1d7d8955e",
+    "current_bytes": 323755,
+    "current_sha256": "50e1529e62b23c59113227856178a869aec59884cd8463cf1f1e27488265624f",
+    "delta": [
+      {
+        "path": "/checks",
+        "preserved_prefix_items": 86,
+        "appended": [
+          {
+            "name": "P25 verified development handoff and saved prompts",
+            "command": "Independent package audit and exact saved byte readbacks",
+            "result": "passed",
+            "required": true,
+            "scope": "ZIP/prompts only; separate external receipt and terminal confirmation still pending in this source snapshot.",
+            "evidence": [
+              "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json",
+              "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/FINAL-PACKAGE-AUDIT.json",
+              "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/FINAL-PACKAGE-REVIEW.json",
+              "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/FINAL-PACKAGE-REVIEW.md",
+              "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/SAVED-READBACK-AUDIT.json",
+              "docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/SAVED-READBACK-REVIEW.md"
+            ]
+          }
+        ]
+      },
+      {
+        "path": "/completion/evidence",
+        "preserved_prefix_items": 29,
+        "appended": [
+          "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json"
+        ]
+      },
+      {
+        "path": "/completion/finite_rtld_path_implementation/source_publication",
+        "before": "pending_core_publication_and_separate_delivery_receipt",
+        "after": {
+          "commit": "0df3d39084e11b68a434035fa0cc67e1d7d8955e",
+          "tree": "6bf8d88e034bbb318d7015caa665a88a14175970",
+          "verified": true
+        }
+      },
+      {
+        "path": "/delivery/archive",
+        "added": {
+          "exact_reuse": "P25-DELIVERY.json.archive",
+          "canonical_value_sha256": "8f57ad282c2ffff5f2d8ccd42544cc4736cace018990fcd0dbdfc44a2c73c459"
+        }
+      },
+      {
+        "path": "/delivery/core_source_commit",
+        "added": "0df3d39084e11b68a434035fa0cc67e1d7d8955e"
+      },
+      {
+        "path": "/delivery/core_source_tree",
+        "added": "6bf8d88e034bbb318d7015caa665a88a14175970"
+      },
+      {
+        "path": "/delivery/early_receipt",
+        "removed": "docs/engineering/localized-repair-c271/path-implementation-p25/EARLY-RECOVERY-RECEIPT.json"
+      },
+      {
+        "path": "/delivery/future_external_receipt",
+        "removed": "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json"
+      },
+      {
+        "path": "/delivery/prompts",
+        "added": {
+          "exact_reuse": "P25-DELIVERY.json.prompts",
+          "canonical_value_sha256": "4d6fd38274e611c76c6e1e749ceb73b34f0760c67d6d83d62f2d8227495d6716"
+        }
+      },
+      {
+        "path": "/delivery/receipt",
+        "added": "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json"
+      },
+      {
+        "path": "/delivery/remaining",
+        "added": {
+          "exact_reuse": "P25-DELIVERY.json.remaining_phase_gates",
+          "canonical_value_sha256": "7c6f45ec80dc3af0bd6211a72fd189984e55f902d8ec16c3257f7fb33d4f9587"
+        }
+      },
+      {
+        "path": "/delivery/source_time_resolution",
+        "added": {
+          "exact_reuse": "P25-DELIVERY.json.self_references",
+          "canonical_value_sha256": "00aedef018058c70d934a3907ba49500c6a9ca78b7e0d53201d4d1020c26ea1b"
+        }
+      },
+      {
+        "path": "/delivery/status",
+        "before": "technical_accepted_final_delivery_pending",
+        "after": "zip_and_prompts_saved_exact_readback_receipt_terminal_pending"
+      },
+      {
+        "path": "/delivery/technical_boundary",
+        "removed": "docs/engineering/localized-repair-c271/path-implementation-p25/OUTCOME.json"
+      },
+      {
+        "path": "/requirements/4/evidence",
+        "preserved_prefix_items": 36,
+        "appended": [
+          "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json"
+        ]
+      },
+      {
+        "path": "/session_phase/ownership_release",
+        "added": "After both matching P25 live terminal markers are verified; no main lease is held."
+      },
+      {
+        "path": "/session_phase/saved_delivery_record",
+        "added": "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json"
+      },
+      {
+        "path": "/session_phase/status",
+        "before": "bounded_implementation_accepted_delivery_pending",
+        "after": "zip_and_prompts_saved_receipt_terminal_pending"
+      }
+    ]
+  },
+  {
+    "path": "docs/workflow/CURRENT.json",
+    "source_commit": "0df3d39084e11b68a434035fa0cc67e1d7d8955e",
+    "current_bytes": 147088,
+    "current_sha256": "c46fa866842fbad565ac90bfd6ffd88430aaf3d94111cbc1614e4edeaab6d7f6",
+    "delta": [
+      {
+        "path": "/latest_handoff/backing_id_verified_against_materialize_response",
+        "removed": true
+      },
+      {
+        "path": "/latest_handoff/bytes",
+        "before": 10847033,
+        "after": 2264988
+      },
+      {
+        "path": "/latest_handoff/external_receipt_terminal",
+        "added": "pending_in_this_source_time_snapshot"
+      },
+      {
+        "path": "/latest_handoff/file_id",
+        "before": "file_000000003b1081fd9c82bc47582968bd",
+        "after": "file_000000004ed081f5967b4bd13a43c860"
+      },
+      {
+        "path": "/latest_handoff/file_name",
+        "before": "OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+        "after": "OntoKin_C271_P25_RTLD_Path_Implementation_Handoff_2026-11-23.zip"
+      },
+      {
+        "path": "/latest_handoff/folder_metadata_verified",
+        "added": true
+      },
+      {
+        "path": "/latest_handoff/library_file_id",
+        "before": "libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de",
+        "after": "libfile_fde3_f-e35b36451cd4819186174674fed0a18e_2ab2a24d43748191957f9bcc356b59de"
+      },
+      {
+        "path": "/latest_handoff/library_xattrs_verified",
+        "added": true
+      },
+      {
+        "path": "/latest_handoff/local_bytes_unchanged_after_save",
+        "added": true
+      },
+      {
+        "path": "/latest_handoff/local_path",
+        "before": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+        "after": "/workspace/scratch/bd99261bd84d/packages/final/OntoKin_C271_P25_RTLD_Path_Implementation_Handoff_2026-11-23.zip"
+      },
+      {
+        "path": "/latest_handoff/local_xattr_names",
+        "added": [
+          "user.library-file-version",
+          "user.library-file-id"
+        ]
+      },
+      {
+        "path": "/latest_handoff/matching_prompts",
+        "removed": [
+          {
+            "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Continue_2026-11-23.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_00000000356081fdaaecfd86f65ecf9a",
+            "library_file_id": "libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P24_Continue_2026-11-23.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P24_Continue_2026-11-23.md",
+            "current_version_number": 0,
+            "bytes": 1765,
+            "sha256": "d11aedb5063739332044032114b21822933007e3d807a6df3768b4cdb2049e75",
+            "version": 0,
+            "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Continue_2026-11-23.md",
+            "saved_bytes_readback_equal": true,
+            "stable_id_version_attributes_verified": true,
+            "backing_id_verified_against_materialize_response": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+            "zip_member": "PROMPT-1-CONTINUE.md",
+            "matches_zip_member": true
+          },
+          {
+            "local_path": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Recover_2026-11-23.md",
+            "purpose": "create_library_file",
+            "status": "succeeded",
+            "file_id": "file_00000000a5b881fd95cff1746355c4f7",
+            "library_file_id": "libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de",
+            "file_name": "OntoKin_C271_P24_Recover_2026-11-23.md",
+            "local_metadata_applied": true,
+            "path": "/OntoKin/OntoKin_C271_P24_Recover_2026-11-23.md",
+            "current_version_number": 0,
+            "bytes": 2054,
+            "sha256": "37a50e73bc8083bc83a579a6d745e759f9fba8b49e3bdbf26b316cd90e1dd006",
+            "version": 0,
+            "readback_path": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Recover_2026-11-23.md",
+            "saved_bytes_readback_equal": true,
+            "stable_id_version_attributes_verified": true,
+            "backing_id_verified_against_materialize_response": true,
+            "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+            "zip_member": "PROMPT-2-RECOVER.md",
+            "matches_zip_member": true
+          }
+        ]
+      },
+      {
+        "path": "/latest_handoff/partial",
+        "removed": true
+      },
+      {
+        "path": "/latest_handoff/path",
+        "before": "/OntoKin/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+        "after": "/OntoKin/OntoKin_C271_P25_RTLD_Path_Implementation_Handoff_2026-11-23.zip"
+      },
+      {
+        "path": "/latest_handoff/phase",
+        "before": "C271-P24-H0-path-design-adoption",
+        "after": "C271-P25-finite-RTLD-path-implementation"
+      },
+      {
+        "path": "/latest_handoff/phase_complete",
+        "removed": false
+      },
+      {
+        "path": "/latest_handoff/readback_path",
+        "before": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip",
+        "after": "/workspace/scratch/bd99261bd84d/readback/final/OntoKin_C271_P25_RTLD_Path_Implementation_Handoff_2026-11-23.zip"
+      },
+      {
+        "path": "/latest_handoff/receipt",
+        "before": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json",
+        "after": "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json"
+      },
+      {
+        "path": "/latest_handoff/sha256",
+        "before": "5b1886184add5644e1272c31c22f4f9232a8e76433d8f2f867fd826d8bf18e4e",
+        "after": "23fb56fbcb3e1d1d8011e1bd97242be3b7d9c114f91e18c5e12fb8050d7d5a08"
+      },
+      {
+        "path": "/latest_handoff/source_revision",
+        "before": "66866415e492e151eafd95da2237374fc127f79b",
+        "after": "0df3d39084e11b68a434035fa0cc67e1d7d8955e"
+      },
+      {
+        "path": "/latest_handoff/source_tree",
+        "removed": "546798a1d3cadc9cf4211c219827287d1ad1bc03"
+      },
+      {
+        "path": "/latest_handoff/stable_id_version_attributes_verified",
+        "removed": true
+      },
+      {
+        "path": "/latest_handoff/terminal_resolution",
+        "removed": "Only the separately saved exact P24 external receipt and matching live PR274/issue273 P24 terminal markers resolve these delivery-only pending fields. ZIP hash, core source commit, receipt commit and receipt identity must agree. They cannot establish implementation, H0/H1, R03-R05 or parent completion."
+      },
+      {
+        "path": "/latest_handoff/url",
+        "before": "https://chatgpt.com/library?file_id=libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "after": "https://chatgpt.com/library?file_id=libfile_fde3_f-e35b36451cd4819186174674fed0a18e_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+      },
+      {
+        "path": "/older_handoffs",
+        "preserved_prefix_items": 26,
+        "appended": [
+          {
+            "exact_reuse": "published_core.CURRENT.previous_handoff",
+            "canonical_value_sha256": "f65f9220a179dd1cfd9d930a691de7ae7e8e434465b7105349fcf3ddfa634676"
+          },
+          {
+            "exact_reuse": "published_core.CURRENT.latest_handoff",
+            "canonical_value_sha256": "29188d82ca96294851a36ea12232368b2c7f2a766a4d83a5657faf7539b6a267"
+          }
+        ]
+      },
+      {
+        "path": "/p25_snapshot_history",
+        "preserved_prefix_items": 1,
+        "appended": [
+          {
+            "value": "2026-11-23T14:36:17.270965+00:00",
+            "meaning": "Accepted technical-boundary snapshot, before saved final artifact identities."
+          }
+        ]
+      },
+      {
+        "path": "/pending_phase_delivery/archive",
+        "added": {
+          "exact_reuse": "P25-DELIVERY.json.archive",
+          "canonical_value_sha256": "8f57ad282c2ffff5f2d8ccd42544cc4736cace018990fcd0dbdfc44a2c73c459"
+        }
+      },
+      {
+        "path": "/pending_phase_delivery/core_source_commit",
+        "added": "0df3d39084e11b68a434035fa0cc67e1d7d8955e"
+      },
+      {
+        "path": "/pending_phase_delivery/core_source_tree",
+        "added": "6bf8d88e034bbb318d7015caa665a88a14175970"
+      },
+      {
+        "path": "/pending_phase_delivery/early_receipt",
+        "removed": "docs/engineering/localized-repair-c271/path-implementation-p25/EARLY-RECOVERY-RECEIPT.json"
+      },
+      {
+        "path": "/pending_phase_delivery/future_external_receipt",
+        "removed": "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json"
+      },
+      {
+        "path": "/pending_phase_delivery/prompts",
+        "added": {
+          "exact_reuse": "P25-DELIVERY.json.prompts",
+          "canonical_value_sha256": "4d6fd38274e611c76c6e1e749ceb73b34f0760c67d6d83d62f2d8227495d6716"
+        }
+      },
+      {
+        "path": "/pending_phase_delivery/receipt",
+        "added": "docs/engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json"
+      },
+      {
+        "path": "/pending_phase_delivery/remaining",
+        "added": {
+          "exact_reuse": "P25-DELIVERY.json.remaining_phase_gates",
+          "canonical_value_sha256": "7c6f45ec80dc3af0bd6211a72fd189984e55f902d8ec16c3257f7fb33d4f9587"
+        }
+      },
+      {
+        "path": "/pending_phase_delivery/source_time_resolution",
+        "added": {
+          "exact_reuse": "P25-DELIVERY.json.self_references",
+          "canonical_value_sha256": "00aedef018058c70d934a3907ba49500c6a9ca78b7e0d53201d4d1020c26ea1b"
+        }
+      },
+      {
+        "path": "/pending_phase_delivery/status",
+        "before": "technical_accepted_final_delivery_pending",
+        "after": "zip_and_prompts_saved_exact_readback_receipt_terminal_pending"
+      },
+      {
+        "path": "/pending_phase_delivery/technical_boundary",
+        "removed": "docs/engineering/localized-repair-c271/path-implementation-p25/OUTCOME.json"
+      },
+      {
+        "path": "/previous_handoff/bytes",
+        "before": 3107286,
+        "after": 10847033
+      },
+      {
+        "path": "/previous_handoff/confirmed_at_utc",
+        "removed": "2026-11-23T05:29:56.173072+00:00"
+      },
+      {
+        "path": "/previous_handoff/file_id",
+        "before": "file_00000000110081f5b7a549eb731ba243",
+        "after": "file_000000003b1081fd9c82bc47582968bd"
+      },
+      {
+        "path": "/previous_handoff/file_name",
+        "before": "OntoKin_C271_P23_H0_Path_Blocker_Handoff_2026-11-22.zip",
+        "after": "OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip"
+      },
+      {
+        "path": "/previous_handoff/library_file_id",
+        "before": "libfile_fde3_f-78daacd977788191bba3f74cea7b05e0_2ab2a24d43748191957f9bcc356b59de",
+        "after": "libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de"
+      },
+      {
+        "path": "/previous_handoff/local_path",
+        "before": "/workspace/scratch/f8d879d19e34/packages/OntoKin_C271_P23_H0_Path_Blocker_Handoff_2026-11-22.zip",
+        "after": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/0/bytes",
+        "before": 1759,
+        "after": 1765
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/0/file_id",
+        "before": "file_00000000ae6c81f59290aa8164ca1a9e",
+        "after": "file_00000000356081fdaaecfd86f65ecf9a"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/0/file_name",
+        "before": "OntoKin_C271_P23_Continue_Prompt_2026-11-22.md",
+        "after": "OntoKin_C271_P24_Continue_2026-11-23.md"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/0/library_file_id",
+        "before": "libfile_fde3_f-70d151ca1bcc819194b82299379afb42_2ab2a24d43748191957f9bcc356b59de",
+        "after": "libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/0/local_path",
+        "before": "/workspace/scratch/f8d879d19e34/packages/OntoKin_C271_P23_Continue_Prompt_2026-11-22.md",
+        "after": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Continue_2026-11-23.md"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/0/path",
+        "before": "/OntoKin/OntoKin_C271_P23_Continue_Prompt_2026-11-22.md",
+        "after": "/OntoKin/OntoKin_C271_P24_Continue_2026-11-23.md"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/0/readback_path",
+        "before": "/workspace/scratch/f8d879d19e34/readback/final/OntoKin_C271_P23_Continue_Prompt_2026-11-22.md",
+        "after": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Continue_2026-11-23.md"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/0/sha256",
+        "before": "602c06e5308a264f69c11c22e0e82fc44fef03b6370605eee2a3029672b60ab7",
+        "after": "d11aedb5063739332044032114b21822933007e3d807a6df3768b4cdb2049e75"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/0/url",
+        "before": "https://chatgpt.com/library?file_id=libfile_fde3_f-70d151ca1bcc819194b82299379afb42_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "after": "https://chatgpt.com/library?file_id=libfile_fde3_f-fbaf0eee4824819183d297c23a80aa4b_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/1/bytes",
+        "before": 2002,
+        "after": 2054
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/1/file_id",
+        "before": "file_000000001d5881f5bee816e56ba4cccc",
+        "after": "file_00000000a5b881fd95cff1746355c4f7"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/1/file_name",
+        "before": "OntoKin_C271_P23_Recover_Prompt_2026-11-22.md",
+        "after": "OntoKin_C271_P24_Recover_2026-11-23.md"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/1/library_file_id",
+        "before": "libfile_fde3_f-898191da1e70819184d30c9608f42840_2ab2a24d43748191957f9bcc356b59de",
+        "after": "libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/1/local_path",
+        "before": "/workspace/scratch/f8d879d19e34/packages/OntoKin_C271_P23_Recover_Prompt_2026-11-22.md",
+        "after": "/workspace/scratch/660f372e2414/packages/final/OntoKin_C271_P24_Recover_2026-11-23.md"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/1/path",
+        "before": "/OntoKin/OntoKin_C271_P23_Recover_Prompt_2026-11-22.md",
+        "after": "/OntoKin/OntoKin_C271_P24_Recover_2026-11-23.md"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/1/readback_path",
+        "before": "/workspace/scratch/f8d879d19e34/readback/final/OntoKin_C271_P23_Recover_Prompt_2026-11-22.md",
+        "after": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_Recover_2026-11-23.md"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/1/sha256",
+        "before": "c7c9a12e07e646c56804dc7a7b2f624222d9f85b3dd481d2b53d613157ea9268",
+        "after": "37a50e73bc8083bc83a579a6d745e759f9fba8b49e3bdbf26b316cd90e1dd006"
+      },
+      {
+        "path": "/previous_handoff/matching_prompts/1/url",
+        "before": "https://chatgpt.com/library?file_id=libfile_fde3_f-898191da1e70819184d30c9608f42840_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "after": "https://chatgpt.com/library?file_id=libfile_fde3_f-eab447c02220819198724993921d1da3_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+      },
+      {
+        "path": "/previous_handoff/path",
+        "before": "/OntoKin/OntoKin_C271_P23_H0_Path_Blocker_Handoff_2026-11-22.zip",
+        "after": "/OntoKin/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip"
+      },
+      {
+        "path": "/previous_handoff/phase",
+        "before": "C271-P23-current-host-H0-plan",
+        "after": "C271-P24-H0-path-design-adoption"
+      },
+      {
+        "path": "/previous_handoff/readback_path",
+        "before": "/workspace/scratch/f8d879d19e34/readback/final/OntoKin_C271_P23_H0_Path_Blocker_Handoff_2026-11-22.zip",
+        "after": "/workspace/scratch/660f372e2414/readback/final/OntoKin_C271_P24_H0_Path_Design_Handoff_2026-11-23.zip"
+      },
+      {
+        "path": "/previous_handoff/receipt",
+        "before": "docs/engineering/localized-repair-c271/h0-plan-p23/P23-DELIVERY.json",
+        "after": "docs/engineering/localized-repair-c271/path-design-p24/P24-DELIVERY.json"
+      },
+      {
+        "path": "/previous_handoff/receipt_publication",
+        "removed": "Pending conditional receipt commit/readback and separately saved external receipt at this source snapshot."
+      },
+      {
+        "path": "/previous_handoff/sha256",
+        "before": "241e31741879b81eaa85c9705941f282347ab3cebf9db60bc08dd7cd52aa8761",
+        "after": "5b1886184add5644e1272c31c22f4f9232a8e76433d8f2f867fd826d8bf18e4e"
+      },
+      {
+        "path": "/previous_handoff/source_revision",
+        "before": "182d36d957d93161e351f41839bf2a6157fed3df",
+        "after": "66866415e492e151eafd95da2237374fc127f79b"
+      },
+      {
+        "path": "/previous_handoff/source_tree",
+        "before": "cc31ed24df11b7fb5a15720cd735ca4f68f2f7a4",
+        "after": "546798a1d3cadc9cf4211c219827287d1ad1bc03"
+      },
+      {
+        "path": "/previous_handoff/terminal_resolution",
+        "before": "Only the separately saved exact P23 receipt and matching live PR274/issue273 P23 terminal markers can resolve remaining delivery-only pending fields. Their ZIP hash, core source commit, receipt commit and receipt identity must agree. They cannot accept H0 or complete C271.",
+        "after": "Only the separately saved exact P24 external receipt and matching live PR274/issue273 P24 terminal markers resolve these delivery-only pending fields. ZIP hash, core source commit, receipt commit and receipt identity must agree. They cannot establish implementation, H0/H1, R03-R05 or parent completion."
+      },
+      {
+        "path": "/previous_handoff/url",
+        "before": "https://chatgpt.com/library?file_id=libfile_fde3_f-78daacd977788191bba3f74cea7b05e0_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "after": "https://chatgpt.com/library?file_id=libfile_fde3_f-4532fb4735348191ad2c16c84500e463_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+      },
+      {
+        "path": "/snapshot_date",
+        "before": "2026-11-23T14:36:17.270965+00:00",
+        "after": "2026-11-23T15:02:38.734030+00:00"
+      }
+    ]
+  },
+  {
+    "path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+    "source_commit": "0df3d39084e11b68a434035fa0cc67e1d7d8955e",
+    "old_prefix_preserved": true,
+    "current_bytes": 74431,
+    "current_sha256": "1d4b11105ad763dbd7ffaf1b7ba7de6bdcdde75847fcd5b78f3e431123cbfd23",
+    "appended_text": "\n### P25 saved development handoff\n\nThe bounded implementation is published at `0df3d39084e11b68a434035fa0cc67e1d7d8955e`. The verified ZIP and both matching prompts are saved and exact-byte read back. See [P25 delivery](../../../engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json) for identities, independent audits, actual checks, preserved failures and limits. This source snapshot precedes its own receipt-only publication, external receipt save and final live terminal confirmations. Those confirmations resolve phase delivery only. C271 stays open; R03-R05 remain not_done and P02 in_progress. No operational plan adoption, H0/H1, full routine, integration or next phase is authorized by this delivery.\n"
+  },
+  {
+    "path": "docs/workflow/tasks/C271/PLAN.md",
+    "source_commit": "0df3d39084e11b68a434035fa0cc67e1d7d8955e",
+    "old_prefix_preserved": true,
+    "current_bytes": 75585,
+    "current_sha256": "f8f1414786c29e603ff87231acc7ac9953ae9ed5ee4f8b6cf0f5c3cd7597f776",
+    "appended_text": "\n### P25 saved development handoff\n\nThe bounded implementation is published at `0df3d39084e11b68a434035fa0cc67e1d7d8955e`. The verified ZIP and both matching prompts are saved and exact-byte read back. See [P25 delivery](../../../engineering/localized-repair-c271/path-implementation-p25/P25-DELIVERY.json) for identities, independent audits, actual checks, preserved failures and limits. This source snapshot precedes its own receipt-only publication, external receipt save and final live terminal confirmations. Those confirmations resolve phase delivery only. C271 stays open; R03-R05 remain not_done and P02 in_progress. No operational plan adoption, H0/H1, full routine, integration or next phase is authorized by this delivery.\n"
+  }
+]

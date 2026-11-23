@@ -1,0 +1,20 @@
+{
+  "schema": "ontokin.c271.p25-reviewer-receipt-audit-incident/1",
+  "reviewer": "/root/reconcile",
+  "recorded_at_utc": "2026-11-23T15:06:10.982164+00:00",
+  "attempt": 2,
+  "command": [
+    "python",
+    "/workspace/scratch/bd99261bd84d/OntoKin/docs/engineering/localized-repair-c271/path-implementation-p25/reviews/delivery/audit_receipt_records.py"
+  ],
+  "exit_code": 1,
+  "error": "TypeError: 'PosixPath' object is not subscriptable",
+  "line": 61,
+  "attempted_script": "RECEIPT-AUDIT-ATTEMPT002.py.source",
+  "attempted_script_bytes": 12391,
+  "attempted_script_sha256": "f8756bf3950284959b89706fe0a0cdb3f8533794788f6ef98a39965bf54d1708",
+  "execution_effect": "Earlier read-only checks ran; the final input-identity comprehension failed before any report write. No product execution, source changes or Git mutation occurred.",
+  "cause": "The prior bracket correction exposed an incorrect Path subscript in the same reviewer-authored expression.",
+  "correction": "Use the path-join operator in that expression. All audit expectations and target inputs remain unchanged.",
+  "evidence_limit": "Full traceback is retained in the original tool return in conversation; this record transcribes its type, message and line."
+}

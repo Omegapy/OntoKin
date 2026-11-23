@@ -1,0 +1,65 @@
+from pathlib import Path
+import copy,hashlib,json,subprocess
+from datetime import datetime,timezone
+root=Path('/workspace/scratch/bd99261bd84d'); repo=root/'OntoKin'; rel='docs/engineering/localized-repair-c271/path-implementation-p25'; out=repo/rel/'reviews/delivery'; base='0df3d39084e11b68a434035fa0cc67e1d7d8955e'
+def read(p):return json.loads(p.read_text())
+def old(p):return json.loads(subprocess.check_output(['git','show',base+':'+p],cwd=repo))
+def ident(p):
+ b=p.read_bytes(); return {'path':str(p),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+checks=[]
+def ck(n,v,d=None):checks.append({'check':n,'passed':bool(v),'detail':d})
+p=repo/rel/'P25-DELIVERY.json'; d=read(p); save=read(root/'state/final-saved-identities.json'); phase=read(repo/rel/'PHASE.json'); op=old(rel+'/PHASE.json'); ownership=read(repo/rel/'OWNERSHIP.json'); oo=old(rel+'/OWNERSHIP.json'); workers=read(repo/rel/'WORKERS.json'); ow=old(rel+'/WORKERS.json'); taskpath='docs/workflow/tasks/C271/task.json'; task=read(repo/taskpath); ot=old(taskpath); currentpath='docs/workflow/CURRENT.json'; current=read(repo/currentpath); oc=old(currentpath)
+ck('receipt_exact_frozen_identity',p.stat().st_size==19279 and ident(p)['sha256']=='706acf218db6b9bd4896832e37295f52104a3dd5d3a1ea7527fe744c5ebf4060')
+ck('published_core_source_commit_tree',d['source_commit']==base and d['source_tree']=='6bf8d88e034bbb318d7015caa665a88a14175970')
+ck('published_core_evidence_exact_reuse',d['core_publication']==read(root/'state/core-publication.json'))
+ck('saved_artifact_identities_exact_reuse',d['archive']==save['archive'] and d['prompts']==save['prompts'] and d['all_exact_saved_readbacks'] is True)
+ck('root_package_result_exact_reuse',d['local_package_verification']==read(root/'state/final-package-verification.json'))
+reviews=d['independent_package_and_saved_reviews']; refs=reviews['reports']
+ck('all_independent_review_bytes_and_hashes',all((repo/x['path']).stat().st_size==x['bytes'] and ident(repo/x['path'])['sha256']==x['sha256'] for x in refs))
+ck('review_counts_verdicts_truthful',reviews['package_checks']==read(out/'FINAL-PACKAGE-AUDIT.json')['summary']['passed']==48 and reviews['saved_identity_checks']==read(out/'SAVED-READBACK-AUDIT.json')['summary']['passed']==39 and read(out/'FINAL-PACKAGE-REVIEW.json')['verdict']=='accepted_local_package_with_bound_documentary_clarification' and read(out/'SAVED-READBACK-AUDIT.json')['verdict']=='accepted')
+ck('package_correction_exact_object_embedded',d['package_clarifications']==[read(repo/rel/'PACKAGE-CLARIFICATION.json')])
+ck('early_receipts_exact_bytes_bound',all((repo/d[k]['path']).stat().st_size==d[k]['bytes'] and ident(repo/d[k]['path'])['sha256']==d[k]['sha256'] for k in ['early_recovery','early_clarification']))
+limits=d['checks_and_limits']
+ck('published_frozen_gate_record_exact_reuse',limits['published_core_frozen_checks']==read(root/'state/core002-frozen-gates/RESULT.json'))
+ck('counts_match_accepted_scope',limits['new_methods']==61 and limits['frozen_executable_controls']==51 and limits['supplemental_methods']==10 and limits['inherited_candidate_methods']==limits['inherited_baseline_methods']==385 and limits['applicable_run_failures']==limits['applicable_run_errors']==limits['applicable_run_skips']==0)
+ck('runtime_and_adoption_not_claimed',limits['external_N34']=='unmet_actual_source_completeness; operational_plan_adoption_withheld' and limits['historical_N57']=='unchanged_external_obligation_not_a_runtime_pass' and all(limits[x]=='not_run' for x in ['H0','H1','original_seven','full_routine']) and limits['actual_Node_ldd_direct_loader_starts']==0 and all(limits[x]=='not_performed' for x in ['host_reconstruction_or_mutation','package_installation','main_integration']) and not limits['parent_complete'])
+ck('requirements_plan_parent_states_unchanged',d['requirements']=={'R01':'done','R02':'done','R03':'not_done','R04':'not_done','R05':'not_done'} and d['plan']=={'P01':'done','P02':'in_progress'} and d['parent_complete'] is False)
+ck('unknown_operation_history_preserved',d['current_unknown_operations']==[] and d['historical_unknown_operations']==phase['historical_unknown_operations']==op['historical_unknown_operations'])
+ck('receipt_source_time_pending_explicit',d['phase_complete_in_this_source_time_snapshot'] is False and d['status']=='zip_and_prompts_saved_exact_readback_receipt_terminal_pending' and len(d['remaining_phase_gates'])==3 and d['external_receipt_filename']=='OntoKin_C271_P25_Delivery_Receipt_2026-11-23.json')
+ck('next_action_retains_fresh_bounded_gate',d['next_action']==phase['next_action']==op['next_action']==task['next_action']==ot['next_action'])
+cp=copy.deepcopy(phase)
+for k in ['ownership_release','saved_delivery_record']:cp.pop(k)
+cp['status']=op['status']; ck('phase_only_reviewed_three_delta_fields',cp==op)
+co=copy.deepcopy(ownership);co.pop('finalization');ck('ownership_original_claim_unchanged',co==oo)
+ck('ownership_release_condition_and_no_lease',ownership['finalization']['main_lease_held'] is False and ownership['finalization']['no_next_phase_in_this_chat'] is True and ownership['finalization']['core_commit']==base and ownership['finalization']['release_on']=='Separate verified matching PR274/issue273 P25 terminal markers' and phase['ownership_release']=='After both matching P25 live terminal markers are verified; no main lease is held.')
+cw=copy.deepcopy(workers)
+for index,w in enumerate(cw['workers']):
+ if w['identity']=='/root/reconcile':
+  prior=ow['workers'][index]; last=w['completed_assignments'].pop(); ck('completed_audits_recorded_and_status_bounded',w['status']=='final_receipt_review_only' and last['status']=='accepted' and last['evidence']==reviews['report_paths']); w['status']=prior['status']
+ck('workers_other_content_and_history_unchanged',cw==ow)
+ck('task_phase_record_exact',task['session_phase']==phase)
+ck('task_delivery_canonical_matches_receipt',task['delivery']['archive']==d['archive'] and task['delivery']['prompts']==d['prompts'] and task['delivery']['receipt']==rel+'/P25-DELIVERY.json' and task['delivery']['core_source_commit']==base and task['delivery']['core_source_tree']==d['source_tree'] and task['delivery']['remaining']==d['remaining_phase_gates'] and task['delivery']['source_time_resolution']==d['self_references'] and task['delivery']['phase_complete'] is False and task['delivery']['partial'] is True)
+ck('prior_checks_append_only',task['checks'][:-1]==ot['checks'] and task['checks'][-1]['scope']=='ZIP/prompts only; separate external receipt and terminal confirmation still pending in this source snapshot.' and task['checks'][-1]['evidence']==[rel+'/P25-DELIVERY.json',*reviews['report_paths']])
+ct=copy.deepcopy(task)
+ct['checks']=ct['checks'][:-1];ct['session_phase']=ot['session_phase'];ct['delivery']=ot['delivery']
+ck('completion_evidence_append_only',ct['completion']['evidence'][:-1]==ot['completion']['evidence'] and ct['completion']['evidence'][-1]==rel+'/P25-DELIVERY.json'); ct['completion']['evidence'].pop()
+ck('source_publication_record_truthful',ct['completion']['finite_rtld_path_implementation']['source_publication']=={'commit':base,'tree':d['source_tree'],'verified':True}); ct['completion']['finite_rtld_path_implementation']['source_publication']=ot['completion']['finite_rtld_path_implementation']['source_publication']
+for r in ct['requirements']:
+ if r['id']=='R05':
+  oldr=next(r for r in ot['requirements'] if r['id']=='R05'); ck('R05_evidence_append_only_status_preserved',r['evidence'][:-1]==oldr['evidence'] and r['evidence'][-1]==rel+'/P25-DELIVERY.json' and r['status']==oldr['status']=='not_done');r['evidence'].pop()
+ck('entire_remaining_task_history_and_states_identical',ct==ot)
+ck('CURRENT_pending_delivery_exact',current['pending_phase_delivery']==task['delivery'])
+ck('CURRENT_prior_handoffs_preserved',current['previous_handoff']==oc['latest_handoff'] and current['older_handoffs'][:len(oc['older_handoffs'])]==oc['older_handoffs'] and oc['latest_handoff'] in current['older_handoffs'] and oc['previous_handoff'] in current['older_handoffs'])
+expected_latest={**d['archive'],'phase':phase['phase'],'source_revision':base,'receipt':rel+'/P25-DELIVERY.json','external_receipt_terminal':'pending_in_this_source_time_snapshot'}
+ck('CURRENT_latest_handoff_correct_pending_source',current['latest_handoff']==expected_latest)
+ck('snapshot_timestamp_and_prior_history_preserved',current['snapshot_date']==d['recorded_at_utc'] and current['p25_snapshot_history'][:-1]==oc['p25_snapshot_history'] and current['p25_snapshot_history'][-1]['value']==oc['snapshot_date'])
+cc=copy.deepcopy(current)
+for k in ['previous_handoff','latest_handoff','older_handoffs','pending_phase_delivery','p25_snapshot_history','snapshot_date']:cc[k]=oc[k]
+ck('entire_remaining_CURRENT_history_and_states_identical',cc==oc)
+for n in ['REQUIREMENTS.md','PLAN.md']:
+ path='docs/workflow/tasks/C271/'+n; b=subprocess.check_output(['git','show',base+':'+path],cwd=repo); now=(repo/path).read_bytes(); ck(n+'_exact_prefix_preserved',now.startswith(b)); tail=now[len(b):].decode(); ck(n+'_only_expected_saved_handoff_append',tail.startswith('\n### P25 saved development handoff\n\n') and tail.count('### ')==1 and 'C271 stays open; R03-R05 remain not_done and P02 in_progress.' in tail and 'No operational plan adoption, H0/H1, full routine, integration or next phase is authorized by this delivery.' in tail)
+packet=read(out/'RECEIPT-DELTA-READ.json');ck('frozen_review_inputs_still_exact',all(ident(repo[x['path'])]['sha256']==x['current_sha256'] and (repo/x['path']).stat().st_size==x['current_bytes'] for x in packet))
+ck('core_HEAD_unchanged_while_reviewing',subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip()==base)
+read_set=[{**ident(p),'coverage':'complete new receipt read; display truncation repaired by complete remaining-field read'},{**ident(root/'state/write_delivery_records.py'),'coverage':'complete script read; not executed'},{**ident(out/'RECEIPT-DELTA-READ.json'),'coverage':'complete semantic delta read; old exact-equal content reused from accepted source review'}]+[{**ident(repo/x['path']),'coverage':'all delta fields read; complete object/prefix preservation mechanically checked against source commit'} for x in packet]
+report={'schema':'ontokin.c271.p25-independent-receipt-record-review/1','reviewer':'/root/reconcile','at_utc':datetime.now(timezone.utc).isoformat(),'verdict':'accepted' if all(x['passed'] for x in checks) else 'changes_required','summary':{'checks':len(checks),'passed':sum(x['passed'] for x in checks),'failed':sum(not x['passed'] for x in checks)},'source_commit_A':base,'source_tree_A':d['source_tree'],'receipt_record':ident(p),'blocking_findings':[] if all(x['passed'] for x in checks) else [x for x in checks if not x['passed']],'checks':checks,'read_set':read_set,'assessment':{'artifact_identities':'Exact reuse of independently accepted saved ZIP/prompts and bound reviews. Package documentary clarification is embedded unchanged.','history':'Requirements/Plan prefixes and prior JSON histories preserved. P24 latest handoff is retained as previous and in older_handoffs; P23 previous handoff is retained in older_handoffs. Replaced active delivery fields remain in source commit A and their evidence remains linked by receipt/phase/task.','scope':'Only delivery progress advanced. Parent status, requirements, plan, N34, operational adoption and runtime/integration limits are unchanged.','ownership':'No main lease. Release remains conditional on separate readbacks of matching P25 PR274/issue273 terminal markers, which must bind the verified external receipt. No next phase authorized.','pending':'Receipt-only revision publication, separate external receipt save/readback and final terminal confirmations are explicitly pending in this source-time snapshot.'},'limits':['No receipt-only commit or external receipt is claimed verified yet.','No broad package audit, behavioral test, production/test edit or Git mutation performed.','Earlier unchanged source content reused through exact structural/byte equality; no claim of rereading every prior historical record.']}
+target=out/'RECEIPT-RECORD-REVIEW.json'; assert not target.exists();target.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({'verdict':report['verdict'],'summary':report['summary'],'failures':report['blocking_findings'],'report':str(target)},indent=2))
