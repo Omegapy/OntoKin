@@ -25,6 +25,15 @@ README/checkpoint must identify **browser-session handoff for online GitHub cont
 usable without preceding conversation; declare external inputs/limits. No full offline
 restoration claim.
 
+**New-host continuity:** Every fresh browser thread has a different,
+disposable execution host. Do not present previous `/workspace` or `/tmp`
+paths, installed environments, running processes or old host profiles as
+resources available to the next thread. Save durable byte-verified artifacts
+and portable reconstruction instructions, not promises of host persistence.
+See [EPHEMERAL-HOST](EPHEMERAL-HOST.md). For packages created after this
+clarification, include `HOST-ENVIRONMENT.md` and repeat the essential rule
+in README and both prompts. Older immutable archives remain valid history.
+
 C262: preserve unchanged; record stable Library identity/link, bytes, SHA-256 from
 [CURRENT](CURRENT.json) in `HISTORICAL-DEPENDENCIES.json`. Historical restoration may
 require C262; ordinary continuation need not reconstruct/embed it. Preserve
@@ -48,6 +57,7 @@ Exact root filenames and required contents:
 | `PROMPT-2-RECOVER.md` | Complete reusable interruption-recovery prompt, including delivery-only recovery. |
 | `HISTORICAL-DEPENDENCIES.json` | Exact known archive/dependency identities/purposes; online continuation versus historical offline restoration. |
 | `MANIFEST-SHA256.json` | Every payload path, byte count, SHA-256; exclude manifest itself. |
+| `HOST-ENVIRONMENT.md` (new handoffs) | Current-host-only execution rule; portable input identities, reconstruction plan, historical-path boundary. |
 
 `repository/`: preserve relative paths for frozen START, AGENTS, GOAL, STATUS, ROLE,
 registry, CURRENT, PROTOCOL, HANDOFF, reusable prompts, active/latest task with
