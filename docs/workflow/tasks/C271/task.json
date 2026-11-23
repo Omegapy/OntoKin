@@ -1361,7 +1361,7 @@
     ],
     "stop": "Recovery source identified and reconciled or first concrete missing-evidence blocker; no new technical milestone",
     "blocker": "P28-RECOVERY-BYTES-001",
-    "status": "blocked_missing_exact_p28_payload_documentary_delivery_pending",
+    "status": "recovery_zip_saved_external_receipt_pending",
     "phase_complete": false,
     "parent_complete": false,
     "requirements": {
@@ -1420,7 +1420,7 @@
     },
     "next_action": "Recover the exact P28 uploaded tree SHA or source-publication manifest from the interrupted chat tool result, or obtain a saved artifact containing the P28 implementation, frozen fixtures, tests and reviews. Inspect each identified GitHub object before any retry. Then reconcile the retained branch and resume publication of the exact reviewed candidate, with current candidate/evidence verification. Do not rerun or recreate reported completed work without a separately recorded decision after the evidence gap is resolved. If the original bytes cannot be recovered, retain the blocker and request a bounded reconstruction decision; do not silently call new work recovered work.",
     "early_save_confirmed": true,
-    "delivery_state": "Final recovery ZIP and external receipt pending at source freeze",
+    "delivery_state": "ZIP and matching prompts saved/readback; receipt-only publication, external receipt and terminal release remain",
     "exclusions": [
       "Reimplementation",
       "Product or operational tests",
@@ -1454,7 +1454,8 @@
       "bytes": 8975544,
       "sha256": "897432ef2fc4f4db8aa91819c2ebbffcd810fcc8f451e755c7253d0691e9a3cd",
       "readback_byte_equal": true
-    }
+    },
+    "packaged_source_commit": "5f340b4f49d13638f3522e201a1e99b93a19358b"
   },
   "delivery": {
     "required": true,
@@ -1462,16 +1463,69 @@
     "folder": "OntoKin",
     "partial": true,
     "phase": "C271-P28-interruption-recovery",
-    "status": "recovery_handoff_pending",
+    "status": "zip_and_prompts_saved_and_byte_verified",
     "phase_complete": false,
     "parent_complete": false,
-    "early_recovery": "docs/engineering/localized-repair-c271/p28-recovery-20261123/EARLY-RECOVERY-RECEIPT.json",
+    "archive": {
+      "local_path": "/workspace/scratch/acb73444303d/packages/final/OntoKin_C271_P28_Recovery_Handoff_2026-11-23.zip",
+      "purpose": "create_library_file",
+      "status": "succeeded",
+      "file_id": "file_00000000676881fd94375d169080c9d5",
+      "library_file_id": "libfile_fde3_f-f88439d017048191a79e49cec74eccfc_2ab2a24d43748191957f9bcc356b59de",
+      "file_name": "OntoKin_C271_P28_Recovery_Handoff_2026-11-23.zip",
+      "local_metadata_applied": true,
+      "path": "/OntoKin/OntoKin_C271_P28_Recovery_Handoff_2026-11-23.zip",
+      "current_version_number": 0,
+      "bytes": 9054965,
+      "sha256": "00432c32fc71530cf060ba901330ef38018301363bb2ef378591af540b04ee85",
+      "version": 0,
+      "saved_bytes_readback_equal": true,
+      "identity_attributes_verified": true,
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-f88439d017048191a79e49cec74eccfc_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
+    },
+    "prompts": [
+      {
+        "local_path": "/workspace/scratch/acb73444303d/packages/final/OntoKin_C271_P28_Prompt_1_Continue_2026-11-23.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_00000000257c81fdb175136d9943c72f",
+        "library_file_id": "libfile_fde3_f-33241bb080a081918b6b6c5721e39dfb_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P28_Prompt_1_Continue_2026-11-23.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P28_Prompt_1_Continue_2026-11-23.md",
+        "current_version_number": 0,
+        "bytes": 2573,
+        "sha256": "6a61cfaf09d693b9df07395db066abb6f7e73ce21225f0ada55ff35da9445d98",
+        "version": 0,
+        "saved_bytes_readback_equal": true,
+        "identity_attributes_verified": true,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-33241bb080a081918b6b6c5721e39dfb_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "matches_zip_member": "PROMPT-1-CONTINUE.md"
+      },
+      {
+        "local_path": "/workspace/scratch/acb73444303d/packages/final/OntoKin_C271_P28_Prompt_2_Recover_2026-11-23.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_00000000674c81fd960db45e2b8ebc83",
+        "library_file_id": "libfile_fde3_f-d0e7ffd481188191ae5502c1a911e551_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P28_Prompt_2_Recover_2026-11-23.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P28_Prompt_2_Recover_2026-11-23.md",
+        "current_version_number": 0,
+        "bytes": 2573,
+        "sha256": "eea1f1b27e03b81ba3ca264f29264d149eac07c2d6569b7fe94903e83db7afdc",
+        "version": 0,
+        "saved_bytes_readback_equal": true,
+        "identity_attributes_verified": true,
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-d0e7ffd481188191ae5502c1a911e551_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "matches_zip_member": "PROMPT-2-RECOVER.md"
+      }
+    ],
     "receipt": "docs/engineering/localized-repair-c271/p28-recovery-20261123/DELIVERY.json",
     "remaining": [
-      "Independent documentary candidate review",
-      "Conditional publication/readback",
-      "Verified recovery ZIP and matching prompts save",
-      "Separate receipt and terminal readback"
+      "Review and publish this receipt-only checkpoint with exact readback",
+      "Save the separate external delivery receipt",
+      "Read back matching terminal declarations and stop"
     ]
   },
   "authorization": {
@@ -6584,5 +6638,146 @@
     },
     "next_action": "Finish receipt-B checks/review/conditional publication, separately saved actual delivery receipt and matching terminal readbacks, then stop. After exact P27 completion is reconciled in a fresh chat, begin only the adopted bounded implementation/inert-controls phase with independently frozen fixtures before product edits or execution.",
     "blocked_reason": "The selected Node's first required libdl.so.2 selects the observed 14,408-byte non-libc image (SHA-256 295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872) under the reviewed direct-invocation and existing kernel/source trust assumptions. Its 0x70000000, 0x70000001 and 0x70000003 dynamic tags are excluded by the ordinary ELF parser; the private exception is bound to the distinct pinned libc subject. The unchanged actual closure and source predicate are incompatible. This is an independently reviewed source deduction, not an executed H0/product refusal. Operational plan adoption, whole N34, H0/H1 and parent qualification remain unmet."
+  },
+  "p28_recovery_source_time_delivery_fields": {
+    "session_phase": {
+      "schema": "ontokin.c271.p28-recovery/1",
+      "package_type": "browser-session handoff for online GitHub continuation",
+      "task": "C271",
+      "phase": "C271-P28-interruption-recovery",
+      "resumed_phase": "C271-P28-required-images-implementation-inert-controls",
+      "owner": "c271-p28-recovery-acb73444303d",
+      "previous_owner": "c271-p28-4b91a1fab6b4",
+      "observed_at_utc": "2026-11-23T20:51:07.300784+00:00",
+      "observed_main": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "observed_main_tree": "2a4712e9d1c6ddd2fb4571292e239d1b16bb5fda",
+      "source_commit": "360c80062e769230199602326fa8de25660df714",
+      "starting_branch_head": "360c80062e769230199602326fa8de25660df714",
+      "branch": "work/c271-missing-import-digest-control",
+      "pull_request": 274,
+      "scope_issue": 273,
+      "scope": "Reconcile interrupted P28 publication and preserve exact recovery state; stop at missing-source-evidence blocker, then documentation and delivery only.",
+      "acceptance": [
+        "Verify supplied archives and exact live destinations",
+        "Identify first unmet gate without replay",
+        "Preserve exact known and unknown identities",
+        "Independent recovery review",
+        "Verify and save handoff with separate receipt"
+      ],
+      "stop": "Recovery source identified and reconciled or first concrete missing-evidence blocker; no new technical milestone",
+      "blocker": "P28-RECOVERY-BYTES-001",
+      "status": "blocked_missing_exact_p28_payload_documentary_delivery_pending",
+      "phase_complete": false,
+      "parent_complete": false,
+      "requirements": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "not_done",
+        "R04": "not_done",
+        "R05": "not_done"
+      },
+      "parent_plan": {
+        "P01": "done",
+        "P02": "in_progress"
+      },
+      "main_lease_held": false,
+      "product_tests_executed_this_recovery": 0,
+      "runtime_changes_this_recovery": 0,
+      "known_completed": [
+        "P27 design and delivery verified",
+        "P28 original early ZIP saved and hash verified"
+      ],
+      "reported_but_not_reverified": [
+        "P28 implementation acceptance",
+        "597/597 tests",
+        "945 protected files",
+        "Documentation 29 original sources, 1652 documents, 6361 links"
+      ],
+      "pending": [
+        "Recover exact P28 production, fixture, test and review bytes",
+        "Reconcile unknown immutable Git object uploads",
+        "Publish verified original candidate",
+        "Complete P28 final delivery"
+      ],
+      "unknown_operations": [
+        {
+          "operation": "Prior P28 Git blob/tree uploads",
+          "target_repository": "Omegapy/OntoKin",
+          "target_branch": "work/c271-missing-import-digest-control",
+          "intended_parent": "360c80062e769230199602326fa8de25660df714",
+          "resulting_tree_sha": null,
+          "resulting_commit_sha": null,
+          "disposition": "Unresolved immutable uploads; branch remained at intended parent when observed. No write replay."
+        }
+      ],
+      "historical_unknown_operations": [
+        "C270 ancillary broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only difflib completion; do not retry"
+      ],
+      "prior_early_archive": {
+        "file_name": "OntoKin_C271_P28_Required_Images_Early_Recovery_2026-11-23.zip",
+        "library_file_id": "libfile_fde3_f-921dd7a4adc081919dbecbc1ab5ba13f_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_00000000660081fd8fa16259001f05ce",
+        "version": 0,
+        "bytes": 8480098,
+        "sha256": "520b24277f2f4a28b5ed96122a477b2438a60905c1a1ae80de39d448426cb15e"
+      },
+      "next_action": "Recover the exact P28 uploaded tree SHA or source-publication manifest from the interrupted chat tool result, or obtain a saved artifact containing the P28 implementation, frozen fixtures, tests and reviews. Inspect each identified GitHub object before any retry. Then reconcile the retained branch and resume publication of the exact reviewed candidate, with current candidate/evidence verification. Do not rerun or recreate reported completed work without a separately recorded decision after the evidence gap is resolved. If the original bytes cannot be recovered, retain the blocker and request a bounded reconstruction decision; do not silently call new work recovered work.",
+      "early_save_confirmed": true,
+      "delivery_state": "Final recovery ZIP and external receipt pending at source freeze",
+      "exclusions": [
+        "Reimplementation",
+        "Product or operational tests",
+        "Host preparation",
+        "H0/H1",
+        "Original full routine",
+        "Main integration",
+        "Branch deletion",
+        "Parent closure"
+      ],
+      "early_receipt": "docs/engineering/localized-repair-c271/p28-recovery-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "ownership": {
+        "current_recovery_owner": "c271-p28-recovery-acb73444303d",
+        "prior_p28_owner": "c271-p28-4b91a1fab6b4",
+        "authority": "current user recovery request",
+        "pr_comment": 7113671306,
+        "issue_comment": 7113671773,
+        "matching_readbacks": true,
+        "prior_worker_liveness": "unknown",
+        "main_lease_held": false,
+        "original_upload_replay": false
+      },
+      "first_unmet_gate": "recover_exact_p28_candidate_and_evidence",
+      "technical_boundary_reached": true,
+      "technical_boundary_kind": "concrete_recovery_blocker",
+      "early_archive": {
+        "file_name": "OntoKin_C271_P28_Recovery_Early_2026-11-23.zip",
+        "library_file_id": "libfile_fde3_f-7bbd27e3b8548191b6e043952a103444_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_000000003bb081fdbe411a8a8be19ef3",
+        "current_version_number": 0,
+        "bytes": 8975544,
+        "sha256": "897432ef2fc4f4db8aa91819c2ebbffcd810fcc8f451e755c7253d0691e9a3cd",
+        "readback_byte_equal": true
+      }
+    },
+    "delivery": {
+      "required": true,
+      "kind": "online_browser_session",
+      "folder": "OntoKin",
+      "partial": true,
+      "phase": "C271-P28-interruption-recovery",
+      "status": "recovery_handoff_pending",
+      "phase_complete": false,
+      "parent_complete": false,
+      "early_recovery": "docs/engineering/localized-repair-c271/p28-recovery-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "receipt": "docs/engineering/localized-repair-c271/p28-recovery-20261123/DELIVERY.json",
+      "remaining": [
+        "Independent documentary candidate review",
+        "Conditional publication/readback",
+        "Verified recovery ZIP and matching prompts save",
+        "Separate receipt and terminal readback"
+      ]
+    }
   }
 }
