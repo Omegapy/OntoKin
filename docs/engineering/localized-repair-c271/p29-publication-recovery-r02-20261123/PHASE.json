@@ -1,0 +1,108 @@
+{
+  "schema": "ontokin.c271.p29-r02-publication-recovery/1",
+  "task": "C271",
+  "phase": "C271-P29-R02-publication-delivery-recovery",
+  "owner": "c271-p29-r02-18d6675d4cbb",
+  "observed_at_utc": "2026-11-24T02:02:24.545399+00:00",
+  "observed_main": "e43cc6c5777874101a40559e4058ad6826b07e51",
+  "observed_main_tree": "2a4712e9d1c6ddd2fb4571292e239d1b16bb5fda",
+  "starting_branch_head": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
+  "starting_branch_tree": "6620a0ed0c2a580ea018fa5d8c9eb1010828f78f",
+  "branch": "work/c271-missing-import-digest-control",
+  "pull_request": 274,
+  "scope_issue": 273,
+  "scope": "Reconcile the preserved accepted P29 candidate, attempt exact publication, and deliver an honest checkpoint at the first capability blocker",
+  "status": "publication_blocked_documentary_delivery_pending",
+  "phase_complete": false,
+  "parent_complete": false,
+  "parent_status": "blocked",
+  "main_lease_held": false,
+  "requirements": {
+    "R01": "done",
+    "R02": "done",
+    "R03": "not_done",
+    "R04": "not_done",
+    "R05": "not_done"
+  },
+  "parent_plan": {
+    "P01": "done",
+    "P02": "in_progress"
+  },
+  "candidate_expected_tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
+  "candidate_accepted_historical": true,
+  "candidate_published": false,
+  "first_unmet_gate": "exact_accepted_candidate_publication",
+  "technical_boundary_reached": true,
+  "technical_boundary_kind": "P29-PUBLICATION-SIZE-001",
+  "early_save_confirmed": true,
+  "early_receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+  "ownership_comment": 7119496855,
+  "previous_recovery_ownership_comment": 7119244517,
+  "current_workers": [
+    "/root/package_audit"
+  ],
+  "worker_dispositions": [
+    {
+      "worker": "/root/github_reconcile",
+      "status": "completed",
+      "scope": "Live state, immutable instructions and snapshot identity correction"
+    },
+    {
+      "worker": "/root/candidate_audit",
+      "status": "completed",
+      "scope": "Exact candidate and historical execution-evidence audit; 71 final data checks passed"
+    },
+    {
+      "worker": "/root/records_audit",
+      "status": "completed",
+      "scope": "Task, scope and preservation audit; 49 final data checks passed"
+    },
+    {
+      "worker": "/root/package_audit",
+      "status": "active_draft_review_then_frozen_package_audit",
+      "scope": "Read-only independent handoff review; final completion follows package freeze and is bound by the separate delivery receipt."
+    }
+  ],
+  "completed": [
+    "Confirmed early saved recovery and exact readback",
+    "Reconciled supplied handoffs, live refs, PR, issue and ownership",
+    "Verified all 245 accepted files and exact intended tree independently",
+    "Verified all 33,403 preserved evidence files and historical 116/481 results",
+    "Attempted reads of all 213 unique candidate blobs: 166 NOT_FOUND, 43 UTF-8-only rejections with existence unknown, and four readable blobs",
+    "Observed and preserved connector-size rejection and postattempt404",
+    "Observed authenticated GitHub browser route and blocked source-download navigation; no upload or browser commit occurred"
+  ],
+  "pending": [
+    "Exact accepted P29 source publication",
+    "Resulting source checks and final implementation handoff after publication",
+    "Parent R03-R05, main integration and branch disposition"
+  ],
+  "current_session_unknown_operations": [],
+  "historical_unknown_operations": [
+    "Original P28 immutable uploads, intended parent360c80062e769230199602326fa8de25660df714, unknown tree/commit; not replayed",
+    "C270 ancillary broad-driver completion",
+    "Global prior-process/worker liveness",
+    "P13 read-only difflib completion; do not retry"
+  ],
+  "original_p28_implementation_verified": false,
+  "original_p28_597_test_report": "reported_unverified",
+  "runtime_changes_this_recovery": 0,
+  "behavioral_tests_this_recovery": 0,
+  "main_integration": false,
+  "branch_disposition": "retained_for_unfinished_C271",
+  "pr_state": "draft_open_unmerged",
+  "issue_state": "open",
+  "next_action": "Resolve P29-PUBLICATION-SIZE-001 by making exact Git blob 9facb186ec11523163520323d83dc58fd68e829c available through an authorized transfer that supports the 25,817,783-byte archive. Reconcile live blob/tree/ref and saved receipts before any retry. Then publish the exact accepted P29 candidate while preserving this later recovery history, complete publication/delivery checks and a verified saved handoff, and stop. Do not repeat the 16 MiB connector route or the browser-blocked download, alter accepted evidence, rerun historical behavior, begin H0/H1 or integrate main.",
+  "acceptance": "Preserve accepted bytes and all observed failures; publish a reviewed documentary checkpoint if its checks pass; save an independently verified complete recovery ZIP and matching prompts; publish a separate receipt and release this session ownership",
+  "stop": "After verified blocked recovery delivery; no new technical phase, host qualification, H0/H1, original-seven/full routine, main integration, branch deletion or parent closure",
+  "delivery_receipt_path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
+  "source_time_delivery_state": "Final saved ZIP and separate receipt pending at this documentary source",
+  "remote_object_availability": {
+    "known_absent": 166,
+    "existence_unknown": 43,
+    "readable_exists": 4
+  },
+  "remote_object_availability_disposition": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/REMOTE-BLOB-DISPOSITION.json",
+  "unknown_remote_objects": 43,
+  "ownership_correction_comment": 7119912059
+}

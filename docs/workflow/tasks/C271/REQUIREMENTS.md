@@ -477,3 +477,10 @@ This is one documentary recovery phase ending at concrete blocker P28-RECOVERY-B
 The current continuation resumes the retained branch from `46b0fce68afb65cfbfcaba64f1276408d93ee85d`. The supplied recovery delivery and released ownership are reconciled. This bounded phase checks durable artifacts, live publication records and prior context for the missing original candidate. It stops at P28-RECOVERY-BYTES-001, then performs only documentary verification, conditional publication and verified delivery. The early recovery is confirmed before repository edits; no original upload or implementation is replayed.
 
 The [R02 outcome](../../../engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json) retains all requirement/plan states and unknown uploads. Exact original source evidence or the [separate reconstruction decision](../../../engineering/localized-repair-c271/p28-recovery-r02-20261123/RECONSTRUCTION-OPTION.md) is required before technical continuation. Do not repeat an equivalent recovery phase without new input. C271 remains blocked/open, PR274 draft/unmerged and the branch retained; no main lease or integration.
+
+
+## P29 publication and delivery recovery R02
+
+The owner requests recovery at the first unfinished gate. The preserved new P29 candidate passes independent identity/evidence and scope audits. Exact publication encountered P29-PUBLICATION-SIZE-001; no accepted runtime or evidence bytes were changed. [Recovery scope](../../../../docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PHASE.json) records the current owner, checks, blocker and bounded stop.
+
+R01/R02 remain done; R03-R05 remain not_done. P01 remains done and P02 in_progress. Preserve every existing criterion and historical result. Complete only documentary checks, independent recovery-package review, confirmed saved handoff and separate receipt in this phase. The next phase must resolve the exact publication capability and reconcile destination state before retrying; no host-preparation milestone, H0/H1, main integration or parent closure is selected.

@@ -1,0 +1,131 @@
+{
+  "schema": "ontokin.c271.p29-r02-documentary-verification/1",
+  "state": "applicable_checks_and_independent_documentary_review_passed",
+  "source_base": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
+  "scope": "Documentary checkpoint only; the preserved accepted P29 implementation is not published.",
+  "execution_environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "git_version": "git version 2.56.1"
+  },
+  "workflow": {
+    "command": [
+      "python3",
+      "tools/chat_workflow.py",
+      "check"
+    ],
+    "exit_code": 0,
+    "seconds": 0.15,
+    "stdout_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "DOCUMENTARY-CHECKS.zip/DOCUMENTARY-WORKFLOW-2.stdout",
+    "stderr": "DOCUMENTARY-CHECKS.zip/DOCUMENTARY-WORKFLOW-2.stderr",
+    "tasks": 12
+  },
+  "documentation": {
+    "name": "DOCUMENTARY-DOCUMENTATION",
+    "command": [
+      "python3",
+      "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+    ],
+    "exit_code": 0,
+    "seconds": 2.98,
+    "stdout_sha256": "85ef32c13ce946cf13bbf25b7b167638b6ed26c9f975cb76175caef15ca4ba57",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "documentation_summary": {
+    "sources_verified": 29,
+    "sections_verified": 233,
+    "registries": {
+      "SEM_rules": {
+        "count": 28,
+        "exact_rows_preserved": true
+      },
+      "SEM_behavior_checks": {
+        "count": 24,
+        "exact_rows_preserved": true
+      },
+      "CAP_requirements": {
+        "count": 18,
+        "exact_rows_preserved": true
+      },
+      "PRD_requirements": {
+        "count": 226,
+        "exact_rows_preserved": true,
+        "priorities": {
+          "MUST": 213,
+          "SHOULD": 13
+        }
+      },
+      "PRD_acceptance": {
+        "count": 22,
+        "exact_rows_preserved": true
+      },
+      "PRD_owner_intentions": {
+        "count": 16,
+        "exact_rows_preserved": true
+      }
+    },
+    "links": {
+      "documents": 1651,
+      "local_links": 6341,
+      "anchors": 113,
+      "external_skipped": 1056
+    },
+    "failures": []
+  },
+  "current_candidate_data_audit": {
+    "passed": 71,
+    "failed": 0,
+    "behavior_executed": false,
+    "report": "REVIEWS.zip/candidate_audit/REPORT.md"
+  },
+  "current_task_scope_audit": {
+    "passed": 49,
+    "failed": 0,
+    "report": "REVIEWS.zip/records_audit/REPORT.md"
+  },
+  "historical_behavioral_evidence": {
+    "focused": 116,
+    "inherited": 481,
+    "final_failures": 0,
+    "final_errors": 0,
+    "final_skips": 0,
+    "new_execution": false,
+    "original_P28_report_verified": false
+  },
+  "checks_evidence_archive": {
+    "path": "DOCUMENTARY-CHECKS.zip",
+    "bytes": 26598,
+    "sha256": "85730e7c4019730badebf42ef2af1675eaa06d352b42c8b4aab2399e131bcd71"
+  },
+  "prior_failures_preserved": [
+    "Initial workflow/documentation checks were incomplete because a filtered source materialization lacked required existing large files.",
+    "An attempted object-specific fetch did not provide the requested objects; actual object destinations were checked before another read route.",
+    "Immutable raw GitHub reads materialized 46 referenced files only after their Git blob identities matched. Transient HTTP503 attempts and successful bounded retries remain in the evidence archive.",
+    "Initial whitespace check found two original Markdown hard breaks in a display text copy and an extra JSON EOF blank. Display whitespace was normalized; original audit reports remain byte-exact in REVIEWS.zip.",
+    "The 503 retry JSON retains the previous attempt error field as historical context; its status, byte count, SHA256 and Git identity indicate the successful retry."
+  ],
+  "early_snapshot_correction": "Eight separately saved branch read copies had an extra LF and were corrected against Git identities. The already-saved early ZIP used other, exact copies: all four early branch snapshots passed EARLY-SNAPSHOT-RECHECK.json. The early ZIP is unchanged and valid.",
+  "read_boundary": "Unchanged files outside this documentary change were selectively materialized for required checks. This is not a full offline source checkout or new host qualification.",
+  "behavioral_tests_this_recovery": 0,
+  "new_p29_source_publication": false,
+  "parent_complete": false,
+  "mandatory_review_finding": {
+    "id": "DOC-01",
+    "status": "resolved_independently",
+    "correction": "Remote errors classified as166 absent/43 unknown/4 readable; raw responses preserved; large-blob404 independently retained.",
+    "disposition": "REMOTE-BLOB-DISPOSITION.json"
+  },
+  "independent_documentary_review": {
+    "initial_other_assertions_passed": 130,
+    "resolved_finding": "DOC-01",
+    "focused_resolution_assertions_passed": 33,
+    "focused_resolution_assertions_failed": 0,
+    "reviewed_tree": "391aff396e8f1c6f193a848791d6e63773511979",
+    "report": "DOCUMENTARY-REVIEW.json",
+    "full_history": "DOCUMENTARY-REVIEW.zip",
+    "final_review_sha256": "63f8bd9e6a1ea1f2731e454be450b56478065d72b562b1712a1c4e15aede64d9",
+    "scope": "Initial 26 documentary paths, with additive review attestation and final checker logs following review; no implementation changes."
+  }
+}

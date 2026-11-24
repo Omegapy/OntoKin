@@ -4,7 +4,7 @@
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
   "status": "blocked",
-  "owner": "c271-p28-r02-002c49ccf480",
+  "owner": "c271-p29-r02-18d6675d4cbb",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -546,7 +546,7 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
       ],
-      "scope": "P10 partial delivery only. R03–R05 and integration remain open."
+      "scope": "P10 partial delivery only. R03\u2013R05 and integration remain open."
     },
     {
       "name": "P11 independent intake and verified early recovery",
@@ -871,7 +871,7 @@
         "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
         "docs/engineering/localized-repair-c271/libc-tags-p16/FINAL-READBACK-VERIFICATION.json"
       ],
-      "limit": "P16 partial delivery only. Parent R03–R05 and P02 remain open. This receipt checkpoint requires its own conditional publication/readback; late evidence is preserved separately."
+      "limit": "P16 partial delivery only. Parent R03\u2013R05 and P02 remain open. This receipt checkpoint requires its own conditional publication/readback; late evidence is preserved separately."
     },
     {
       "name": "P17 startup reconciliation and independently verified early recovery",
@@ -1334,25 +1334,23 @@
       }
     }
   },
-  "next_action": "Supply the exact original P28 final uploaded tree SHA plus complete publication manifest/group inventory, or a saved implementation/fixtures/tests/review artifact. If those bytes are unavailable, obtain an explicit bounded reconstruction decision under the adopted P27 design. Do not repeat this same recovery phase without a new durable input or that decision; do not call new implementation recovered work.",
+  "next_action": "Resolve P29-PUBLICATION-SIZE-001 by making exact Git blob 9facb186ec11523163520323d83dc58fd68e829c available through an authorized transfer that supports the 25,817,783-byte archive. Reconcile live blob/tree/ref and saved receipts before any retry. Then publish the exact accepted P29 candidate while preserving this later recovery history, complete publication/delivery checks and a verified saved handoff, and stop. Do not repeat the 16 MiB connector route or the browser-blocked download, alter accepted evidence, rerun historical behavior, begin H0/H1 or integrate main.",
   "session_phase": {
-    "schema": "ontokin.c271.p28-r02-checkpoint/1",
+    "schema": "ontokin.c271.p29-r02-publication-recovery/1",
     "task": "C271",
-    "phase": "C271-P28-R02-exact-candidate-recovery",
-    "owner": "c271-p28-r02-002c49ccf480",
-    "observed_at_utc": "2026-11-23T21:49:49.553156+00:00",
+    "phase": "C271-P29-R02-publication-delivery-recovery",
+    "owner": "c271-p29-r02-18d6675d4cbb",
+    "observed_at_utc": "2026-11-24T02:02:24.545399+00:00",
     "observed_main": "e43cc6c5777874101a40559e4058ad6826b07e51",
     "observed_main_tree": "2a4712e9d1c6ddd2fb4571292e239d1b16bb5fda",
-    "starting_branch_head": "46b0fce68afb65cfbfcaba64f1276408d93ee85d",
-    "starting_branch_tree": "e5d8dc89b9e6fba4315a3386f43e13e758b33c0e",
+    "starting_branch_head": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
+    "starting_branch_tree": "6620a0ed0c2a580ea018fa5d8c9eb1010828f78f",
     "branch": "work/c271-missing-import-digest-control",
     "pull_request": 274,
     "scope_issue": 273,
-    "scope": "Exact-candidate recovery and documentary delivery only",
-    "status": "delivered_parent_blocked",
-    "technical_boundary_reached": true,
-    "technical_boundary_kind": "P28-RECOVERY-BYTES-001",
-    "phase_complete": true,
+    "scope": "Reconcile the preserved accepted P29 candidate, attempt exact publication, and deliver an honest checkpoint at the first capability blocker",
+    "status": "publication_blocked_documentary_delivery_pending",
+    "phase_complete": false,
     "parent_complete": false,
     "parent_status": "blocked",
     "main_lease_held": false,
@@ -1367,54 +1365,83 @@
       "P01": "done",
       "P02": "in_progress"
     },
+    "candidate_expected_tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
+    "candidate_accepted_historical": true,
+    "candidate_published": false,
+    "first_unmet_gate": "exact_accepted_candidate_publication",
+    "technical_boundary_reached": true,
+    "technical_boundary_kind": "P29-PUBLICATION-SIZE-001",
     "early_save_confirmed": true,
-    "early_receipt": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
-    "acceptance": [
-      "Reconcile exact live and saved state",
-      "Check bounded durable recovery sources",
-      "Independently verify source classification and preserve unknown uploads",
-      "Publish verified documentary checkpoint",
-      "Save verified final ZIP with separate receipt"
+    "early_receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+    "ownership_comment": 7119496855,
+    "previous_recovery_ownership_comment": 7119244517,
+    "current_workers": [
+      "/root/package_audit"
     ],
-    "stop": "Missing-source blocker reached; only documentary checks, review, publication and delivery remain",
-    "next_action": "Supply the exact original P28 final uploaded tree SHA plus complete publication manifest/group inventory, or a saved implementation/fixtures/tests/review artifact. If those bytes are unavailable, obtain an explicit bounded reconstruction decision under the adopted P27 design. Do not repeat this same recovery phase without a new durable input or that decision; do not call new implementation recovered work.",
-    "original_p28_implementation_verified": false,
-    "reported_but_not_reverified": [
-      "597/597 original P28 tests",
-      "945 protected files",
-      "Original P28 implementation acceptance"
-    ],
-    "current_unknown_operations": [
+    "worker_dispositions": [
       {
-        "operation": "Original P28 immutable blob/tree uploads",
-        "intended_parent": "360c80062e769230199602326fa8de25660df714",
-        "tree_sha": null,
-        "commit_sha": null,
-        "replayed": false
+        "worker": "/root/github_reconcile",
+        "status": "completed",
+        "scope": "Live state, immutable instructions and snapshot identity correction"
+      },
+      {
+        "worker": "/root/candidate_audit",
+        "status": "completed",
+        "scope": "Exact candidate and historical execution-evidence audit; 71 final data checks passed"
+      },
+      {
+        "worker": "/root/records_audit",
+        "status": "completed",
+        "scope": "Task, scope and preservation audit; 49 final data checks passed"
+      },
+      {
+        "worker": "/root/package_audit",
+        "status": "active_draft_review_then_frozen_package_audit",
+        "scope": "Read-only independent handoff review; final completion follows package freeze and is bound by the separate delivery receipt."
       }
     ],
+    "completed": [
+      "Confirmed early saved recovery and exact readback",
+      "Reconciled supplied handoffs, live refs, PR, issue and ownership",
+      "Verified all 245 accepted files and exact intended tree independently",
+      "Verified all 33,403 preserved evidence files and historical 116/481 results",
+      "Attempted reads of all 213 unique candidate blobs: 166 NOT_FOUND, 43 UTF-8-only rejections with existence unknown, and four readable blobs",
+      "Observed and preserved connector-size rejection and postattempt404",
+      "Observed authenticated GitHub browser route and blocked source-download navigation; no upload or browser commit occurred"
+    ],
+    "pending": [
+      "Exact accepted P29 source publication",
+      "Resulting source checks and final implementation handoff after publication",
+      "Parent R03-R05, main integration and branch disposition"
+    ],
+    "current_session_unknown_operations": [],
     "historical_unknown_operations": [
+      "Original P28 immutable uploads, intended parent360c80062e769230199602326fa8de25660df714, unknown tree/commit; not replayed",
       "C270 ancillary broad-driver completion",
-      "Global prior-process termination",
+      "Global prior-process/worker liveness",
       "P13 read-only difflib completion; do not retry"
     ],
-    "runtime_changes": 0,
-    "product_tests_executed": 0,
+    "original_p28_implementation_verified": false,
+    "original_p28_597_test_report": "reported_unverified",
+    "runtime_changes_this_recovery": 0,
+    "behavioral_tests_this_recovery": 0,
     "main_integration": false,
     "branch_disposition": "retained_for_unfinished_C271",
-    "issue_state": "open",
     "pr_state": "draft_open_unmerged",
-    "source_time_delivery_state": "This documentary source precedes its own final ZIP save; DELIVERY.json and later live terminal readbacks resolve delivery only",
-    "previous_state": "https://github.com/Omegapy/OntoKin/blob/46b0fce68afb65cfbfcaba64f1276408d93ee85d/docs/workflow/tasks/C271/task.json",
-    "ownership_comment": 7114912816,
-    "prior_owner_release_comments": [
-      7113998703,
-      7113999171
-    ],
-    "packaged_source_commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
-    "delivery_receipt": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/DELIVERY.json",
-    "delivery_state": "confirmed_saved_and_byte_read_back; receipt publication and ownership release pending, to be resolved through later external readbacks",
-    "current_workers": []
+    "issue_state": "open",
+    "next_action": "Resolve P29-PUBLICATION-SIZE-001 by making exact Git blob 9facb186ec11523163520323d83dc58fd68e829c available through an authorized transfer that supports the 25,817,783-byte archive. Reconcile live blob/tree/ref and saved receipts before any retry. Then publish the exact accepted P29 candidate while preserving this later recovery history, complete publication/delivery checks and a verified saved handoff, and stop. Do not repeat the 16 MiB connector route or the browser-blocked download, alter accepted evidence, rerun historical behavior, begin H0/H1 or integrate main.",
+    "acceptance": "Preserve accepted bytes and all observed failures; publish a reviewed documentary checkpoint if its checks pass; save an independently verified complete recovery ZIP and matching prompts; publish a separate receipt and release this session ownership",
+    "stop": "After verified blocked recovery delivery; no new technical phase, host qualification, H0/H1, original-seven/full routine, main integration, branch deletion or parent closure",
+    "delivery_receipt_path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
+    "source_time_delivery_state": "Final saved ZIP and separate receipt pending at this documentary source",
+    "remote_object_availability": {
+      "known_absent": 166,
+      "existence_unknown": 43,
+      "readable_exists": 4
+    },
+    "remote_object_availability_disposition": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/REMOTE-BLOB-DISPOSITION.json",
+    "unknown_remote_objects": 43,
+    "ownership_correction_comment": 7119912059
   },
   "delivery": {
     "required": true,
@@ -5966,7 +5993,7 @@
     }
   ],
   "p20_outcome_recorded": true,
-  "blocked_reason": "P28-RECOVERY-BYTES-001: exact later P28 implementation, frozen controls, raw verification, reviews and publication object identities unavailable in verified inputs",
+  "blocked_reason": "P29-PUBLICATION-SIZE-001: accepted implementation preserved; exact evidence archive cannot be transferred by currently permitted routes",
   "p26_source_time_snapshots": [
     {
       "stage": "source_a_pre_delivery",
@@ -6720,5 +6747,110 @@
     "path": "docs/workflow/tasks/C271/task.json",
     "purpose": "Exact previous current fields and complete retained history"
   },
-  "p28_r02_outcome": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json"
+  "p28_r02_outcome": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json",
+  "p29_r02_prior_current_fields": {
+    "status": "blocked",
+    "owner": "c271-p28-r02-002c49ccf480",
+    "next_action": "Supply the exact original P28 final uploaded tree SHA plus complete publication manifest/group inventory, or a saved implementation/fixtures/tests/review artifact. If those bytes are unavailable, obtain an explicit bounded reconstruction decision under the adopted P27 design. Do not repeat this same recovery phase without a new durable input or that decision; do not call new implementation recovered work.",
+    "session_phase": {
+      "schema": "ontokin.c271.p28-r02-checkpoint/1",
+      "task": "C271",
+      "phase": "C271-P28-R02-exact-candidate-recovery",
+      "owner": "c271-p28-r02-002c49ccf480",
+      "observed_at_utc": "2026-11-23T21:49:49.553156+00:00",
+      "observed_main": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "observed_main_tree": "2a4712e9d1c6ddd2fb4571292e239d1b16bb5fda",
+      "starting_branch_head": "46b0fce68afb65cfbfcaba64f1276408d93ee85d",
+      "starting_branch_tree": "e5d8dc89b9e6fba4315a3386f43e13e758b33c0e",
+      "branch": "work/c271-missing-import-digest-control",
+      "pull_request": 274,
+      "scope_issue": 273,
+      "scope": "Exact-candidate recovery and documentary delivery only",
+      "status": "delivered_parent_blocked",
+      "technical_boundary_reached": true,
+      "technical_boundary_kind": "P28-RECOVERY-BYTES-001",
+      "phase_complete": true,
+      "parent_complete": false,
+      "parent_status": "blocked",
+      "main_lease_held": false,
+      "requirements": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "not_done",
+        "R04": "not_done",
+        "R05": "not_done"
+      },
+      "parent_plan": {
+        "P01": "done",
+        "P02": "in_progress"
+      },
+      "early_save_confirmed": true,
+      "early_receipt": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "acceptance": [
+        "Reconcile exact live and saved state",
+        "Check bounded durable recovery sources",
+        "Independently verify source classification and preserve unknown uploads",
+        "Publish verified documentary checkpoint",
+        "Save verified final ZIP with separate receipt"
+      ],
+      "stop": "Missing-source blocker reached; only documentary checks, review, publication and delivery remain",
+      "next_action": "Supply the exact original P28 final uploaded tree SHA plus complete publication manifest/group inventory, or a saved implementation/fixtures/tests/review artifact. If those bytes are unavailable, obtain an explicit bounded reconstruction decision under the adopted P27 design. Do not repeat this same recovery phase without a new durable input or that decision; do not call new implementation recovered work.",
+      "original_p28_implementation_verified": false,
+      "reported_but_not_reverified": [
+        "597/597 original P28 tests",
+        "945 protected files",
+        "Original P28 implementation acceptance"
+      ],
+      "current_unknown_operations": [
+        {
+          "operation": "Original P28 immutable blob/tree uploads",
+          "intended_parent": "360c80062e769230199602326fa8de25660df714",
+          "tree_sha": null,
+          "commit_sha": null,
+          "replayed": false
+        }
+      ],
+      "historical_unknown_operations": [
+        "C270 ancillary broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only difflib completion; do not retry"
+      ],
+      "runtime_changes": 0,
+      "product_tests_executed": 0,
+      "main_integration": false,
+      "branch_disposition": "retained_for_unfinished_C271",
+      "issue_state": "open",
+      "pr_state": "draft_open_unmerged",
+      "source_time_delivery_state": "This documentary source precedes its own final ZIP save; DELIVERY.json and later live terminal readbacks resolve delivery only",
+      "previous_state": "https://github.com/Omegapy/OntoKin/blob/46b0fce68afb65cfbfcaba64f1276408d93ee85d/docs/workflow/tasks/C271/task.json",
+      "ownership_comment": 7114912816,
+      "prior_owner_release_comments": [
+        7113998703,
+        7113999171
+      ],
+      "packaged_source_commit": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "delivery_receipt": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/DELIVERY.json",
+      "delivery_state": "confirmed_saved_and_byte_read_back; receipt publication and ownership release pending, to be resolved through later external readbacks",
+      "current_workers": []
+    },
+    "blocked_reason": "P28-RECOVERY-BYTES-001: exact later P28 implementation, frozen controls, raw verification, reviews and publication object identities unavailable in verified inputs",
+    "pending_phase_delivery": null
+  },
+  "p29_publication_recovery_r02": {
+    "phase": "C271-P29-R02-publication-delivery-recovery",
+    "source_parent": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
+    "expected_candidate_tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
+    "candidate_published": false,
+    "record": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PHASE.json",
+    "blocker": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json",
+    "parent_complete": false
+  },
+  "pending_phase_delivery": {
+    "phase": "C271-P29-R02-publication-delivery-recovery",
+    "status": "pending",
+    "partial": true,
+    "receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
+    "phase_complete": false,
+    "parent_complete": false
+  }
 }

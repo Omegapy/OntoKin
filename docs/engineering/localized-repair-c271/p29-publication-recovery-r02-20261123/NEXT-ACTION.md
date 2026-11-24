@@ -1,0 +1,11 @@
+# First unmet gate
+
+Resolve P29-PUBLICATION-SIZE-001 by making exact Git blob 9facb186ec11523163520323d83dc58fd68e829c available through an authorized transfer that supports the 25,817,783-byte archive. Reconcile live blob/tree/ref and saved receipts before any retry. Then publish the exact accepted P29 candidate while preserving this later recovery history, complete publication/delivery checks and a verified saved handoff, and stop. Do not repeat the 16 MiB connector route or the browser-blocked download, alter accepted evidence, rerun historical behavior, begin H0/H1 or integrate main.
+
+The accepted archive remains byte-identical. A user-controlled GitHub upload of the exact archive, or an independently available authenticated Git transfer, can supply the missing blob. The separately saved VERIFICATION-EVIDENCE.zip is the exact input; its Library identity is recorded in PUBLICATION-BLOCKER.json. No credential creation, broader access, visibility change, hosted job or paid execution is requested.
+
+Before resuming, inspect the actual destination. A successful upload may already have created the blob even if a later step was interrupted. Require Git blob 9facb186ec11523163520323d83dc58fd68e829c, 25,817,783 bytes and SHA-256 bae1b62fd3cc78e8cb886e08c4c2f7d76eaaf765e7f6374a394d5f0aa980d038. Do not substitute an empty file, LFS pointer, split archive or changed compression for the accepted bytes.
+
+The original candidate binds parent 6c7f52a2ee627a382eea91ce26bf58bac4e6cccb and tree db30c29f24c154f378a5acac713385fc8bb44f52. Later documentary checkpoint commits must remain in history and in the resulting tree. A safe route is to preserve an immutable candidate commit with that original parent/tree, then create a reviewed descendant of the observed active branch that combines the accepted payload with later recovery records and resolves CURRENT/task state explicitly. A merge commit can retain both parents. Verify the exact production, adapter, controls and evidence against the accepted manifest; never force the branch back to the old tree.
+
+Before any remaining blob write, reconcile the 43 objects whose earlier reads failed only because the reader accepts UTF-8 text. Their existence is unknown; those errors do not authorize replay. See `REMOTE-BLOB-DISPOSITION.json`.

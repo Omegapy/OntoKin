@@ -1,0 +1,377 @@
+{
+  "schema": "ontokin.c271.p29-r02-doc01-resolution-review/1",
+  "reviewer": "/root/records_audit",
+  "recorded_at_utc": "2026-11-24T02:19:09.875058+00:00",
+  "scope": "Focused DOC-01 documentary correction only; prior initial review retained, with no behavioral or required-check rerun.",
+  "verdict": "ACCEPTED_DOC01_RESOLVED",
+  "finding_id": "DOC-01",
+  "finding_status": "resolved",
+  "counts": {
+    "known_absent": 166,
+    "existence_unknown": 43,
+    "readable_exists": 4
+  },
+  "checks": [
+    {
+      "name": "All 213 original observations have unique Git blob identities",
+      "passed": true
+    },
+    {
+      "name": "Every disposition row equals the independently derived raw observation",
+      "passed": true
+    },
+    {
+      "name": "Availability totals distinguish known absence, unknown existence and readable presence",
+      "passed": true,
+      "details": {
+        "known_absent": 166,
+        "existence_unknown": 43,
+        "readable_exists": 4
+      }
+    },
+    {
+      "name": "Original transport counts are retained without treating their unknown field as availability",
+      "passed": true
+    },
+    {
+      "name": "Original raw reconciliation bytes are preserved and correctly bound",
+      "passed": true
+    },
+    {
+      "name": "Large evidence blob is included once in the 166 known absent observations",
+      "passed": true
+    },
+    {
+      "name": "Separate postattempt 404 remains independently supported",
+      "passed": true
+    },
+    {
+      "name": "Phase availability and unknown count match raw responses",
+      "passed": true
+    },
+    {
+      "name": "Task session phase exactly mirrors corrected phase",
+      "passed": true
+    },
+    {
+      "name": "Current phase completion statement reports all three categories",
+      "passed": true
+    },
+    {
+      "name": "Blocker counters distinguish 166 absent including the large blob, 165 other absent, 43 unknown and 4 readable",
+      "passed": true
+    },
+    {
+      "name": "Phase and blocker reference the corrective disposition",
+      "passed": true
+    },
+    {
+      "name": "Publication remains blocked without source or parent completion",
+      "passed": true
+    },
+    {
+      "name": "Accepted candidate tree and original parent remain exact",
+      "passed": true
+    },
+    {
+      "name": "Recorded remote candidate writes and ref mutations remain zero",
+      "passed": true
+    },
+    {
+      "name": "Next action requires reconciliation of unknown objects before writes",
+      "passed": true
+    },
+    {
+      "name": "Next action preserves original accepted identity and later documentary history and tree",
+      "passed": true
+    },
+    {
+      "name": "Summary explains the corrected classification and supersedes earlier overstatement",
+      "passed": true
+    },
+    {
+      "name": "Correction comment readback is byte-identical to the intended body",
+      "passed": true
+    },
+    {
+      "name": "Create and readback evidence identify the same additive correction",
+      "passed": true,
+      "details": "Create acknowledgement returns the comment ID only; the saved readback supplies the matching ID, target PR URL and exact intended body."
+    },
+    {
+      "name": "Correction comment explains the historical error, unknown existence and independent blocker",
+      "passed": true
+    },
+    {
+      "name": "Phase records the correction while retaining original ownership reference",
+      "passed": true
+    },
+    {
+      "name": "Focused correction changes only six existing records and adds two evidence records",
+      "passed": true,
+      "details": {
+        "changed": [
+          "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/NEXT-ACTION.md",
+          "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PHASE.json",
+          "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json",
+          "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/SUMMARY.md",
+          "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/VERIFICATION.json",
+          "docs/workflow/tasks/C271/task.json"
+        ],
+        "added": [
+          "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/REMOTE-BLOB-DISPOSITION.json",
+          "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/OWNERSHIP-CORRECTION-READBACK.json"
+        ]
+      }
+    },
+    {
+      "name": "Task changes are confined to session_phase",
+      "passed": true
+    },
+    {
+      "name": "Phase changes are confined to DOC-01 correction and declared package-review assignment",
+      "passed": true,
+      "details": [
+        "completed",
+        "current_workers",
+        "ownership_correction_comment",
+        "remote_object_availability",
+        "remote_object_availability_disposition",
+        "unknown_remote_objects",
+        "worker_dispositions"
+      ]
+    },
+    {
+      "name": "Verification preserves recorded checks and adds a pending focused-review disposition",
+      "passed": true
+    },
+    {
+      "name": "Existing exact-identity and ancestry instructions remain verbatim",
+      "passed": true
+    },
+    {
+      "name": "Raw failures, historical statement, archived reviews and exact early-snapshot evidence remain unchanged",
+      "passed": true
+    },
+    {
+      "name": "Requirements, plan and CURRENT retain the previously reviewed bytes",
+      "passed": true
+    },
+    {
+      "name": "Initial mandatory-finding report remains exact",
+      "passed": true
+    },
+    {
+      "name": "Focused input files remain unchanged at review completion",
+      "passed": true
+    },
+    {
+      "name": "All 26 corrected paths match the dedicated index at review completion",
+      "passed": true
+    },
+    {
+      "name": "Package reviewer is explicitly active pending the separate delivery receipt",
+      "passed": true
+    }
+  ],
+  "passed": 33,
+  "failed": 0,
+  "initial_review": {
+    "path": "REVIEW.json",
+    "sha256": "cd1e9d8a74ef5242c51cd346b4082f49fa2a6dd62112e6e31c94139bf9357fa6",
+    "candidate_tree": "12da442af5f282ff510ecec815f7613f1438ff55",
+    "passed": 130,
+    "failed": 1,
+    "verdict": "CORRECTION_REQUIRED"
+  },
+  "initial_report": {
+    "path": "REPORT.md",
+    "sha256": "3c18a162281344a27b7fca947c983c3c89729541f41d2a0f5ccdee68aa3c4a1b"
+  },
+  "corrected_inputs": [
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/CANDIDATE_AUDIT-REPORT.md.txt",
+      "bytes": 5374,
+      "sha256": "2a6b4a33072f23e68ca740f6d0865eea58c5e6f429c91b7349a2580b3417eb2e",
+      "git_blob": "a4cfcb929fa56541ce4109d0f86b004d051e9ffe"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
+      "bytes": 1139,
+      "sha256": "35078bd268260c105051a324e72a41363945579022fa3dd652e790f8ab238662",
+      "git_blob": "a84573235164ad9a9f5b5ded72568e4d2c8b7dd4"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/EARLY-SNAPSHOT-RECHECK.json",
+      "bytes": 539,
+      "sha256": "02d77c8bc0fc938d1d190f02d94d5db6b09025ea5e36cbbf353b9e1e19711592",
+      "git_blob": "8e146aa0e3f47724996b82b20a252fe3d536bed9"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/GITHUB-READ-SET.json",
+      "bytes": 12968,
+      "sha256": "f8a062bf8eaf8fa2aadbc4fe9b4366b3b3face257fb900ff1fc0ab9d44eb942f",
+      "git_blob": "81add68c08e7f9a82abe938ab1392c247906e5d2"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/GITHUB-RECONCILIATION.json",
+      "bytes": 3268,
+      "sha256": "8375bdf9a8837dccda317ba9a572f4f7768627c0df5eee2ca5aecd0e84abe680",
+      "git_blob": "ed7994768d2d943c4834dfcae95872aab178929b"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/LARGE-BLOB-AFTER-LIMIT.json",
+      "bytes": 617,
+      "sha256": "d62f54fee07e365fca37f4a79662e88646d97a91452d72b5f37746e03fac29c0",
+      "git_blob": "e29c207758d4c774a30e93068d840967f2b7cd6b"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/LARGE-BLOB-CREATE.json",
+      "bytes": 644,
+      "sha256": "c4309b2981836ec7926ffef5b7e2937208be27755e586c54bc2d644fd2e04086",
+      "git_blob": "3eaf9d749d9859ffca5f5113b40e67c59063d476"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/LARGE-BLOB-INTENT.json",
+      "bytes": 757,
+      "sha256": "5ee1f638617d302059261639b8106457184206f65287d359350daefe0f390786",
+      "git_blob": "bf5fc610daac070390d1a8b9f0d93cf5245d374e"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/LEARNING-DECISION.md",
+      "bytes": 388,
+      "sha256": "748e4e9bb03287c29bd2b9964424ac43f25338be142a5785398b12c4bc1ec016",
+      "git_blob": "87f5b22a5deac7cc7399ea3ca85fa4957c11695d"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/NEXT-ACTION.md",
+      "bytes": 2301,
+      "sha256": "e6f30a020a62cd7318cdc98153601b4650b6fb3373be393fe90578b29b5cec75",
+      "git_blob": "4d8f59c206b3f7abf9e41983586adfecf6c40c9e"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/OWNERSHIP-READBACK.json",
+      "bytes": 12077,
+      "sha256": "7a84976d4ba8434681909cbab572cbcf97b84a6770b2672555984b8d264123b3",
+      "git_blob": "978f95e6a76bfd23ea758f71f898d070bc92b0fd"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PHASE.json",
+      "bytes": 5729,
+      "sha256": "876636a659a5ea4727a395d40ec254ea3d950e6c3165b33c506a30193203e472",
+      "git_blob": "9b3a6a253eb9c2d3c32d9a4334ff9c0371f9d507"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json",
+      "bytes": 2578,
+      "sha256": "1dced0836e2c17462ef114251d08aa7c9ada509c9a4daf74228bc3db538056e0",
+      "git_blob": "14823cb9154132c0d217a6d920100c9c4df769f0"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/RECORDS_AUDIT-REPORT.md.txt",
+      "bytes": 12075,
+      "sha256": "7cd2fcec653d8782aa700fa9c3b57d7932cefc132f58432ef6ceff87b1b8c82b",
+      "git_blob": "704b3268bac8f5f9e32b60164dff376b7fa46d96"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/REMOTE-BLOB-RECONCILIATION.json",
+      "bytes": 137680,
+      "sha256": "7fbb780269627afd3f686b5d2065fded49e07a85bf318573b135e06b707d4585",
+      "git_blob": "9b9527e5dfe87d5a52e17f5684497968d0384187"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/REVIEWS.zip",
+      "bytes": 557547,
+      "sha256": "23a44c3b7c325339e08f0c28527120218c96eb349656079acba1d74be8e391e6",
+      "git_blob": "87cb36178c2097d7df129342751225697d6d5d9a"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/SNAPSHOT-CORRECTION.json",
+      "bytes": 26648,
+      "sha256": "603673c8a82f9c57f35d564eb7374df90d2a8833422913d9a75338a9ec95dafd",
+      "git_blob": "025d24071675bf4b1ff94dbaba1ced95383159aa"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/SUMMARY.md",
+      "bytes": 2451,
+      "sha256": "35a3691b50c6d8d89407c7c7a2d4e3c8ccf13fb194bff8050249db6d4814d9ed",
+      "git_blob": "75557bb4e1f5aa5dbaee666ffe8493e251754f6f"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/VERIFICATION.json",
+      "bytes": 4800,
+      "sha256": "145ae2ca2213e6766fa8e25f680cac3d00ef6ab17b2b9e11d16d5f7dd69bcb37",
+      "git_blob": "8fb5e16277aec9735fb3121681585c4fd626dc7d"
+    },
+    {
+      "path": "docs/workflow/CURRENT.json",
+      "bytes": 189726,
+      "sha256": "720fafadd5fcec4a6623624f82a2e0b475a85effbec528fa635e7a8820634b6d",
+      "git_blob": "3ddcabd3547f8027f01f6a9c8ad4313a7ea7595b"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/PLAN.md",
+      "bytes": 85220,
+      "sha256": "7b5bfc90eb71376ca327d9fedcef74291c654529f061065e00f716bf1f31b29d",
+      "git_blob": "199f1921fcba71c3b6695b655985b083dd581544"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "bytes": 84102,
+      "sha256": "eec4c9023658f84f02b108d0584100861eb9addb1d667033f3040b8c1ddcf1b5",
+      "git_blob": "99ac3b6b710d8e2e8379e192b8e0dfe68a1e5d2c"
+    },
+    {
+      "path": "docs/workflow/tasks/C271/task.json",
+      "bytes": 408176,
+      "sha256": "806b79aeaeec0e8b04f3ecd02e7c188c3ec29e0fba75aedaaa18f52c991523ef",
+      "git_blob": "6d734ff7a25e06f2f3e7a43179408f51597b5972"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DOCUMENTARY-CHECKS.zip",
+      "bytes": 26598,
+      "sha256": "85730e7c4019730badebf42ef2af1675eaa06d352b42c8b4aab2399e131bcd71",
+      "git_blob": "20f96cd37d9a921b8c6a871d4a2718a3b6647b13"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/REMOTE-BLOB-DISPOSITION.json",
+      "bytes": 67784,
+      "sha256": "d45b995554eb61f7634b673384f4b9b12a68b557745dbdaf4f02ce8669cf2dcf",
+      "git_blob": "de2914e2a9911dd0f649c29f58977c66ced0b836"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/OWNERSHIP-CORRECTION-READBACK.json",
+      "bytes": 9965,
+      "sha256": "275e13e76e6e48a6a337db504484c145377ad029737fc013b7daf9d4da682dad",
+      "git_blob": "0f71a5fc4232dc914e2d29dc09c845c0ea90d90f"
+    }
+  ],
+  "correction_comment": {
+    "id": 7119912059,
+    "url": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7119912059",
+    "body_sha256": "06231ab86dca45dcf4f61c9aa7b768e78c8dcdc915b9a0082fccba9d822e9008",
+    "readback_matches_intent": true
+  },
+  "boundaries": {
+    "behavioral_tests_executed": 0,
+    "required_checks_rerun": false,
+    "repo_files_mutated": false,
+    "git_index_or_object_mutations": false,
+    "remote_reads_or_writes": false,
+    "browser_used": false,
+    "candidate_source_published": false,
+    "parent_complete": false,
+    "partial_checkout": "Existing local objects read with GIT_NO_LAZY_FETCH=1 and dedicated recovery.index; default interrupted checkout/index untouched.",
+    "final_staged_tree_reviewed": false,
+    "final_package_reviewed": false,
+    "remaining_parent_actions": "Stage final documentary attestation, rerun required documentary checks, then independently review the frozen delivery package. Publication of the accepted implementation remains blocked."
+  },
+  "corrected_staging": {
+    "dedicated_index": "/workspace/scratch/18d6675d4cbb/recovery/recovery.index",
+    "scoped_paths_match": true,
+    "parent_reported_tree": "391aff396e8f1c6f193a848791d6e63773511979",
+    "full_tree_reconstruction_rerun": false,
+    "later_attestation_will_change_tree": true
+  },
+  "review_input_refresh": "Parent reported one concurrent bookkeeping change: PHASE/task now identify package_audit as active until frozen-package review and the separate receipt. Both files were re-read, compared with the original reviewed objects, rehashed, and matched against the dedicated index."
+}
