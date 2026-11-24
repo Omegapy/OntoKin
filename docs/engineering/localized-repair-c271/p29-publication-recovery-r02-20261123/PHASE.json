@@ -12,7 +12,7 @@
   "pull_request": 274,
   "scope_issue": 273,
   "scope": "Reconcile the preserved accepted P29 candidate, attempt exact publication, and deliver an honest checkpoint at the first capability blocker",
-  "status": "publication_blocked_documentary_delivery_pending",
+  "status": "publication_blocked_handoff_saved_verified_terminal_pending",
   "phase_complete": false,
   "parent_complete": false,
   "parent_status": "blocked",
@@ -38,9 +38,7 @@
   "early_receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
   "ownership_comment": 7119496855,
   "previous_recovery_ownership_comment": 7119244517,
-  "current_workers": [
-    "/root/package_audit"
-  ],
+  "current_workers": [],
   "worker_dispositions": [
     {
       "worker": "/root/github_reconcile",
@@ -59,8 +57,8 @@
     },
     {
       "worker": "/root/package_audit",
-      "status": "active_draft_review_then_frozen_package_audit",
-      "scope": "Read-only independent handoff review; final completion follows package freeze and is bound by the separate delivery receipt."
+      "status": "completed",
+      "scope": "Independent frozen-package audit: 323 passing assertions; exact accepted archive, all 89 payloads, 50 source bindings and both prompts verified."
     }
   ],
   "completed": [
@@ -70,7 +68,10 @@
     "Verified all 33,403 preserved evidence files and historical 116/481 results",
     "Attempted reads of all 213 unique candidate blobs: 166 NOT_FOUND, 43 UTF-8-only rejections with existence unknown, and four readable blobs",
     "Observed and preserved connector-size rejection and postattempt404",
-    "Observed authenticated GitHub browser route and blocked source-download navigation; no upload or browser commit occurred"
+    "Observed authenticated GitHub browser route and blocked source-download navigation; no upload or browser commit occurred",
+    "Published and read back 29 documentary checkpoint files on the existing branch.",
+    "Independently verified the frozen recovery ZIP with 323 passing assertions.",
+    "Saved and byte-read back the final ZIP and both matching prompts."
   ],
   "pending": [
     "Exact accepted P29 source publication",
@@ -96,7 +97,7 @@
   "acceptance": "Preserve accepted bytes and all observed failures; publish a reviewed documentary checkpoint if its checks pass; save an independently verified complete recovery ZIP and matching prompts; publish a separate receipt and release this session ownership",
   "stop": "After verified blocked recovery delivery; no new technical phase, host qualification, H0/H1, original-seven/full routine, main integration, branch deletion or parent closure",
   "delivery_receipt_path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
-  "source_time_delivery_state": "Final saved ZIP and separate receipt pending at this documentary source",
+  "source_time_delivery_state": "This record precedes its own Git commit, the external receipt save and terminal comments. Those actual identities follow independently; the immutable ZIP is not rebuilt to insert them.",
   "remote_object_availability": {
     "known_absent": 166,
     "existence_unknown": 43,
@@ -104,5 +105,11 @@
   },
   "remote_object_availability_disposition": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/REMOTE-BLOB-DISPOSITION.json",
   "unknown_remote_objects": 43,
-  "ownership_correction_comment": 7119912059
+  "ownership_correction_comment": 7119912059,
+  "delivery_confirmed": true,
+  "source_commit": "b706942fa1152cec8ad6b69c91d4cf687ebe60d6",
+  "source_tree": "0f79e93f91d7292671ba44e8bb72059a0181bd4a",
+  "delivery_receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
+  "terminal_resolution_rule": "The later external receipt binds the actual receipt commit/tree and this exact ZIP/prompts. Matching live PR274 and issue273 terminal comments bind that external receipt saved identity and confirm phase delivery/ownership release. They resolve only these source-time pending fields, never candidate publication or parent completion.",
+  "ownership_release": "terminal_confirmation_pending"
 }

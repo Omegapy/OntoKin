@@ -1349,7 +1349,7 @@
     "pull_request": 274,
     "scope_issue": 273,
     "scope": "Reconcile the preserved accepted P29 candidate, attempt exact publication, and deliver an honest checkpoint at the first capability blocker",
-    "status": "publication_blocked_documentary_delivery_pending",
+    "status": "publication_blocked_handoff_saved_verified_terminal_pending",
     "phase_complete": false,
     "parent_complete": false,
     "parent_status": "blocked",
@@ -1375,9 +1375,7 @@
     "early_receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/EARLY-RECOVERY-RECEIPT.json",
     "ownership_comment": 7119496855,
     "previous_recovery_ownership_comment": 7119244517,
-    "current_workers": [
-      "/root/package_audit"
-    ],
+    "current_workers": [],
     "worker_dispositions": [
       {
         "worker": "/root/github_reconcile",
@@ -1396,8 +1394,8 @@
       },
       {
         "worker": "/root/package_audit",
-        "status": "active_draft_review_then_frozen_package_audit",
-        "scope": "Read-only independent handoff review; final completion follows package freeze and is bound by the separate delivery receipt."
+        "status": "completed",
+        "scope": "Independent frozen-package audit: 323 passing assertions; exact accepted archive, all 89 payloads, 50 source bindings and both prompts verified."
       }
     ],
     "completed": [
@@ -1407,7 +1405,10 @@
       "Verified all 33,403 preserved evidence files and historical 116/481 results",
       "Attempted reads of all 213 unique candidate blobs: 166 NOT_FOUND, 43 UTF-8-only rejections with existence unknown, and four readable blobs",
       "Observed and preserved connector-size rejection and postattempt404",
-      "Observed authenticated GitHub browser route and blocked source-download navigation; no upload or browser commit occurred"
+      "Observed authenticated GitHub browser route and blocked source-download navigation; no upload or browser commit occurred",
+      "Published and read back 29 documentary checkpoint files on the existing branch.",
+      "Independently verified the frozen recovery ZIP with 323 passing assertions.",
+      "Saved and byte-read back the final ZIP and both matching prompts."
     ],
     "pending": [
       "Exact accepted P29 source publication",
@@ -1433,7 +1434,7 @@
     "acceptance": "Preserve accepted bytes and all observed failures; publish a reviewed documentary checkpoint if its checks pass; save an independently verified complete recovery ZIP and matching prompts; publish a separate receipt and release this session ownership",
     "stop": "After verified blocked recovery delivery; no new technical phase, host qualification, H0/H1, original-seven/full routine, main integration, branch deletion or parent closure",
     "delivery_receipt_path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
-    "source_time_delivery_state": "Final saved ZIP and separate receipt pending at this documentary source",
+    "source_time_delivery_state": "This record precedes its own Git commit, the external receipt save and terminal comments. Those actual identities follow independently; the immutable ZIP is not rebuilt to insert them.",
     "remote_object_availability": {
       "known_absent": 166,
       "existence_unknown": 43,
@@ -1441,54 +1442,165 @@
     },
     "remote_object_availability_disposition": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/REMOTE-BLOB-DISPOSITION.json",
     "unknown_remote_objects": 43,
-    "ownership_correction_comment": 7119912059
+    "ownership_correction_comment": 7119912059,
+    "delivery_confirmed": true,
+    "source_commit": "b706942fa1152cec8ad6b69c91d4cf687ebe60d6",
+    "source_tree": "0f79e93f91d7292671ba44e8bb72059a0181bd4a",
+    "delivery_receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
+    "terminal_resolution_rule": "The later external receipt binds the actual receipt commit/tree and this exact ZIP/prompts. Matching live PR274 and issue273 terminal comments bind that external receipt saved identity and confirm phase delivery/ownership release. They resolve only these source-time pending fields, never candidate publication or parent completion.",
+    "ownership_release": "terminal_confirmation_pending"
   },
   "delivery": {
-    "required": true,
-    "kind": "online_browser_session",
-    "folder": "OntoKin",
-    "partial": true,
-    "phase": "C271-P28-R02-exact-candidate-recovery",
-    "status": "saved",
-    "phase_complete": true,
+    "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
+    "phase": "C271-P29-R02-publication-delivery-recovery",
+    "owner": "c271-p29-r02-18d6675d4cbb",
+    "recorded_at_utc": "2026-11-24T02:26:44.772792+00:00",
+    "status": "zip_and_prompts_saved_verified_receipt_and_terminal_pending",
+    "phase_complete": false,
     "parent_complete": false,
+    "parent_status": "blocked",
+    "partial": true,
+    "source_commit": "b706942fa1152cec8ad6b69c91d4cf687ebe60d6",
+    "source_tree": "0f79e93f91d7292671ba44e8bb72059a0181bd4a",
+    "observed_main": "e43cc6c5777874101a40559e4058ad6826b07e51",
+    "branch": "work/c271-missing-import-digest-control",
+    "pull_request": 274,
+    "scope_issue": 273,
     "archive": {
-      "library_file_id": "libfile_fde3_f-4d13ff0786908191b3cbe53ec99c7081_2ab2a24d43748191957f9bcc356b59de",
-      "file_id": "file_00000000a09081fdbafb4a9fcd2acc58",
-      "file_name": "OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
-      "path": "/OntoKin/OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
+      "purpose": "create_library_file",
+      "status": "succeeded",
+      "file_id": "file_0000000021dc82128ea4bcb37d308720",
+      "library_file_id": "libfile_fde3_f-28b22a6a0d688191afbd96f5eb3a4aaa_2ab2a24d43748191957f9bcc356b59de",
+      "file_name": "OntoKin_C271_P29_R02_Publication_Blocker_Handoff_2026-11-23.zip",
+      "local_metadata_applied": true,
+      "path": "/OntoKin/OntoKin_C271_P29_R02_Publication_Blocker_Handoff_2026-11-23.zip",
+      "current_version_number": 0,
+      "bytes": 38958046,
+      "sha256": "822398e19273377ed1cb7e18ddcde9823247ceed11a2b2c51253638bb9f58fdf",
       "version": 0,
-      "bytes": 9962453,
-      "sha256": "113cf92489c6579168c57f816b8347ab99f8874f187de74b8434bb10ef701f3b",
-      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4d13ff0786908191b3cbe53ec99c7081_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-      "saved_bytes_readback_equal": true
+      "readback_path": "/workspace/scratch/18d6675d4cbb/recovery/final-readback/OntoKin_C271_P29_R02_Publication_Blocker_Handoff_2026-11-23.zip",
+      "saved_bytes_readback_equal": true,
+      "local_bytes_unchanged_after_save": true,
+      "observed_xattrs": {
+        "user.library-file-version": "0",
+        "user.library-file-id": "libfile_fde3_f-28b22a6a0d688191afbd96f5eb3a4aaa_2ab2a24d43748191957f9bcc356b59de"
+      },
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-28b22a6a0d688191afbd96f5eb3a4aaa_2ab2a24d43748191957f9bcc356b59de&account_id=personal"
     },
     "prompts": [
       {
-        "library_file_id": "libfile_fde3_f-a4f523ad70c88191bd668b433b8f8c48_2ab2a24d43748191957f9bcc356b59de",
-        "file_id": "file_00000000ed1881fdbd9d7a8c32bbdc5c",
-        "file_name": "OntoKin_C271_P28_R02_Continue_2026-11-23.md",
-        "path": "/OntoKin/OntoKin_C271_P28_R02_Continue_2026-11-23.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_00000000bc0481fd909caa392b816a8f",
+        "library_file_id": "libfile_fde3_f-b0eeb29772f8819186a133e69362df32_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P29_R02_Continue_2026-11-23.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P29_R02_Continue_2026-11-23.md",
+        "current_version_number": 0,
+        "bytes": 3167,
+        "sha256": "680444138a9b0ea1822341f719fef4583c5b71723f109e25f42f8fb65a67e476",
         "version": 0,
-        "bytes": 1970,
-        "sha256": "e9d4b251db78cb7ace2a55b8ba6d9822c37c6862da450a3933b2140fc61e9f7a",
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-a4f523ad70c88191bd668b433b8f8c48_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "saved_bytes_readback_equal": true
+        "readback_path": "/workspace/scratch/18d6675d4cbb/recovery/final-readback/OntoKin_C271_P29_R02_Continue_2026-11-23.md",
+        "saved_bytes_readback_equal": true,
+        "local_bytes_unchanged_after_save": true,
+        "observed_xattrs": {
+          "user.library-file-version": "0",
+          "user.library-file-id": "libfile_fde3_f-b0eeb29772f8819186a133e69362df32_2ab2a24d43748191957f9bcc356b59de"
+        },
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-b0eeb29772f8819186a133e69362df32_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "matching_zip_member": "PROMPT-1-CONTINUE.md"
       },
       {
-        "library_file_id": "libfile_fde3_f-41f02a7106e08191ab0c3ee981cf1a03_2ab2a24d43748191957f9bcc356b59de",
-        "file_id": "file_00000000993881fd965ab9e11d282eca",
-        "file_name": "OntoKin_C271_P28_R02_Recover_2026-11-23.md",
-        "path": "/OntoKin/OntoKin_C271_P28_R02_Recover_2026-11-23.md",
+        "purpose": "create_library_file",
+        "status": "succeeded",
+        "file_id": "file_0000000002d081fd8b399976296d2381",
+        "library_file_id": "libfile_fde3_f-ed94989aa37c81919de44c5dfbd3288b_2ab2a24d43748191957f9bcc356b59de",
+        "file_name": "OntoKin_C271_P29_R02_Recover_2026-11-23.md",
+        "local_metadata_applied": true,
+        "path": "/OntoKin/OntoKin_C271_P29_R02_Recover_2026-11-23.md",
+        "current_version_number": 0,
+        "bytes": 3356,
+        "sha256": "cf7fe2f09d80b91361fa2c3c636cf550d7f460058724f3bc5020af4558a8ba1c",
         "version": 0,
-        "bytes": 2179,
-        "sha256": "f9b774c0067a93763e3c19dc15c000234d1a30df92155661d5cca0c79d764d13",
-        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-41f02a7106e08191ab0c3ee981cf1a03_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
-        "saved_bytes_readback_equal": true
+        "readback_path": "/workspace/scratch/18d6675d4cbb/recovery/final-readback/OntoKin_C271_P29_R02_Recover_2026-11-23.md",
+        "saved_bytes_readback_equal": true,
+        "local_bytes_unchanged_after_save": true,
+        "observed_xattrs": {
+          "user.library-file-version": "0",
+          "user.library-file-id": "libfile_fde3_f-ed94989aa37c81919de44c5dfbd3288b_2ab2a24d43748191957f9bcc356b59de"
+        },
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-ed94989aa37c81919de44c5dfbd3288b_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "matching_zip_member": "PROMPT-2-RECOVER.md"
       }
     ],
-    "receipt": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/DELIVERY.json",
-    "remaining": "Receipt publication/readback, final ownership release and stop; parent missing-source gate remains"
+    "package_review": {
+      "status": "passed",
+      "assertions_passed": 323,
+      "assertions_failed": 0,
+      "report": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PACKAGE-REVIEW.json",
+      "report_sha256": "af5235b1b177b40c6cc4b2ee29788e0c269d210856104bb997d27c40c30bd440",
+      "evidence": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PACKAGE-REVIEW.zip",
+      "evidence_sha256": "1a26a65c0056ed0b62d5c5bbb6072b40742862fda9ccf8940ae71afe483904e0"
+    },
+    "delivery_verification": {
+      "path": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY-VERIFICATION.zip",
+      "sha256": "0da7f4acf97f66c56b5fbc989a61751a225a58b310528b0dfeefc6d3db900b1b",
+      "saved_bytes_readback_equal": true,
+      "matching_prompt_bytes": true,
+      "local_original_bytes_unchanged": true,
+      "version_and_library_attributes_verified": true
+    },
+    "applicable_source_checks": "Workflow, documentation and whitespace passed at the exact frozen documentary candidate; raw outputs included in the handoff.",
+    "candidate_published": false,
+    "candidate_tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
+    "remaining_source_gate": "Exact accepted P29 publication; P29-PUBLICATION-SIZE-001 remains blocked.",
+    "remote_blob_availability": {
+      "known_absent": 166,
+      "existence_unknown": 43,
+      "readable_exists": 4
+    },
+    "historical_candidate_execution": {
+      "focused": 116,
+      "inherited": 481,
+      "new_execution_this_recovery": false,
+      "original_P28_597_claim_verified": false
+    },
+    "requirements": {
+      "R01": "done",
+      "R02": "done",
+      "R03": "not_done",
+      "R04": "not_done",
+      "R05": "not_done"
+    },
+    "parent_plan": {
+      "P01": "done",
+      "P02": "in_progress"
+    },
+    "main_integration": false,
+    "main_lease_held": false,
+    "branch_disposition": "retained_for_unfinished_C271",
+    "pr_state": "draft_open_unmerged",
+    "issue_state": "open",
+    "current_workers": [],
+    "completed_worker_assignments": [
+      "/root/github_reconcile",
+      "/root/candidate_audit",
+      "/root/records_audit",
+      "/root/package_audit"
+    ],
+    "prior_host_worker_liveness": "unknown; not inferred from current assignments",
+    "receipt_source_boundary": "This record precedes its own Git commit, the external receipt save and terminal comments. Those actual identities follow independently; the immutable ZIP is not rebuilt to insert them.",
+    "terminal_resolution_rule": "The later external receipt binds the actual receipt commit/tree and this exact ZIP/prompts. Matching live PR274 and issue273 terminal comments bind that external receipt saved identity and confirm phase delivery/ownership release. They resolve only these source-time pending fields, never candidate publication or parent completion.",
+    "remaining_delivery_only": [
+      "Validate and conditionally publish the receipt revision on the frozen documentary source.",
+      "Save and read back the separate external receipt with actual receipt revision identity.",
+      "Publish and read back matching PR274/issue273 terminal comments, release recovery ownership and stop."
+    ],
+    "next_action": "Continue only the exact accepted P29 publication gate in a new main chat after a materially capable authorized transfer becomes available. Reconcile all destinations, especially the 43 unknown objects, and preserve later documentary history. Do not repeat failed routes, alter evidence, rerun behavior, start H0/H1, integrate main, delete the branch or close C271.",
+    "required": true,
+    "kind": "online_browser_session",
+    "folder": "OntoKin",
+    "receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json"
   },
   "authorization": {
     "source": "Current fresh Prompt 1 continuation request",
@@ -6843,14 +6955,76 @@
     "candidate_published": false,
     "record": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PHASE.json",
     "blocker": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json",
-    "parent_complete": false
+    "parent_complete": false,
+    "delivery_confirmed": true,
+    "source_commit": "b706942fa1152cec8ad6b69c91d4cf687ebe60d6",
+    "receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
+    "terminal_pending": true
   },
   "pending_phase_delivery": {
     "phase": "C271-P29-R02-publication-delivery-recovery",
-    "status": "pending",
+    "status": "zip_and_prompts_saved_verified_receipt_terminal_pending",
     "partial": true,
     "receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
     "phase_complete": false,
-    "parent_complete": false
+    "parent_complete": false,
+    "terminal_resolution_rule": "The later external receipt binds the actual receipt commit/tree and this exact ZIP/prompts. Matching live PR274 and issue273 terminal comments bind that external receipt saved identity and confirm phase delivery/ownership release. They resolve only these source-time pending fields, never candidate publication or parent completion."
+  },
+  "p29_r02_previous_delivery_fields": {
+    "delivery": {
+      "required": true,
+      "kind": "online_browser_session",
+      "folder": "OntoKin",
+      "partial": true,
+      "phase": "C271-P28-R02-exact-candidate-recovery",
+      "status": "saved",
+      "phase_complete": true,
+      "parent_complete": false,
+      "archive": {
+        "library_file_id": "libfile_fde3_f-4d13ff0786908191b3cbe53ec99c7081_2ab2a24d43748191957f9bcc356b59de",
+        "file_id": "file_00000000a09081fdbafb4a9fcd2acc58",
+        "file_name": "OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
+        "path": "/OntoKin/OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
+        "version": 0,
+        "bytes": 9962453,
+        "sha256": "113cf92489c6579168c57f816b8347ab99f8874f187de74b8434bb10ef701f3b",
+        "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4d13ff0786908191b3cbe53ec99c7081_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+        "saved_bytes_readback_equal": true
+      },
+      "prompts": [
+        {
+          "library_file_id": "libfile_fde3_f-a4f523ad70c88191bd668b433b8f8c48_2ab2a24d43748191957f9bcc356b59de",
+          "file_id": "file_00000000ed1881fdbd9d7a8c32bbdc5c",
+          "file_name": "OntoKin_C271_P28_R02_Continue_2026-11-23.md",
+          "path": "/OntoKin/OntoKin_C271_P28_R02_Continue_2026-11-23.md",
+          "version": 0,
+          "bytes": 1970,
+          "sha256": "e9d4b251db78cb7ace2a55b8ba6d9822c37c6862da450a3933b2140fc61e9f7a",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-a4f523ad70c88191bd668b433b8f8c48_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "saved_bytes_readback_equal": true
+        },
+        {
+          "library_file_id": "libfile_fde3_f-41f02a7106e08191ab0c3ee981cf1a03_2ab2a24d43748191957f9bcc356b59de",
+          "file_id": "file_00000000993881fd965ab9e11d282eca",
+          "file_name": "OntoKin_C271_P28_R02_Recover_2026-11-23.md",
+          "path": "/OntoKin/OntoKin_C271_P28_R02_Recover_2026-11-23.md",
+          "version": 0,
+          "bytes": 2179,
+          "sha256": "f9b774c0067a93763e3c19dc15c000234d1a30df92155661d5cca0c79d764d13",
+          "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-41f02a7106e08191ab0c3ee981cf1a03_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+          "saved_bytes_readback_equal": true
+        }
+      ],
+      "receipt": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/DELIVERY.json",
+      "remaining": "Receipt publication/readback, final ownership release and stop; parent missing-source gate remains"
+    },
+    "pending_phase_delivery": {
+      "phase": "C271-P29-R02-publication-delivery-recovery",
+      "status": "pending",
+      "partial": true,
+      "receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
+      "phase_complete": false,
+      "parent_complete": false
+    }
   }
 }

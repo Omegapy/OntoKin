@@ -8,11 +8,12 @@
   "next_action": {
     "status": "blocked",
     "summary": "Resolve P29-PUBLICATION-SIZE-001 by making exact Git blob 9facb186ec11523163520323d83dc58fd68e829c available through an authorized transfer that supports the 25,817,783-byte archive. Reconcile live blob/tree/ref and saved receipts before any retry. Then publish the exact accepted P29 candidate while preserving this later recovery history, complete publication/delivery checks and a verified saved handoff, and stop. Do not repeat the 16 MiB connector route or the browser-blocked download, alter accepted evidence, rerun historical behavior, begin H0/H1 or integrate main.",
-    "suggested_task": "C271-P29-R02-publication-delivery-recovery",
+    "suggested_task": "C271",
     "sources": [
       "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/SUMMARY.md",
       "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json",
-      "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/NEXT-ACTION.md"
+      "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/NEXT-ACTION.md",
+      "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json"
     ]
   },
   "historical_handoff": {
@@ -66,22 +67,31 @@
     "completion_gate": "confirmed saved ZIP plus external delivery receipt"
   },
   "latest_handoff": {
-    "library_file_id": "libfile_fde3_f-4d13ff0786908191b3cbe53ec99c7081_2ab2a24d43748191957f9bcc356b59de",
-    "file_id": "file_00000000a09081fdbafb4a9fcd2acc58",
-    "file_name": "OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
-    "path": "/OntoKin/OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
+    "purpose": "create_library_file",
+    "status": "succeeded",
+    "file_id": "file_0000000021dc82128ea4bcb37d308720",
+    "library_file_id": "libfile_fde3_f-28b22a6a0d688191afbd96f5eb3a4aaa_2ab2a24d43748191957f9bcc356b59de",
+    "file_name": "OntoKin_C271_P29_R02_Publication_Blocker_Handoff_2026-11-23.zip",
+    "local_metadata_applied": true,
+    "path": "/OntoKin/OntoKin_C271_P29_R02_Publication_Blocker_Handoff_2026-11-23.zip",
+    "current_version_number": 0,
+    "bytes": 38958046,
+    "sha256": "822398e19273377ed1cb7e18ddcde9823247ceed11a2b2c51253638bb9f58fdf",
     "version": 0,
-    "bytes": 9962453,
-    "sha256": "113cf92489c6579168c57f816b8347ab99f8874f187de74b8434bb10ef701f3b",
-    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4d13ff0786908191b3cbe53ec99c7081_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "readback_path": "/workspace/scratch/18d6675d4cbb/recovery/final-readback/OntoKin_C271_P29_R02_Publication_Blocker_Handoff_2026-11-23.zip",
     "saved_bytes_readback_equal": true,
-    "task": "C271",
-    "kind": "online_browser_session",
-    "phase": "C271-P28-R02-exact-candidate-recovery",
+    "local_bytes_unchanged_after_save": true,
+    "observed_xattrs": {
+      "user.library-file-version": "0",
+      "user.library-file-id": "libfile_fde3_f-28b22a6a0d688191afbd96f5eb3a4aaa_2ab2a24d43748191957f9bcc356b59de"
+    },
+    "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-28b22a6a0d688191afbd96f5eb3a4aaa_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+    "phase": "C271-P29-R02-publication-delivery-recovery",
+    "source_revision": "b706942fa1152cec8ad6b69c91d4cf687ebe60d6",
+    "source_tree": "0f79e93f91d7292671ba44e8bb72059a0181bd4a",
+    "receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
     "partial": true,
-    "source_revision": "942096d22248fd84b7ac3a638e02aa1e66340519",
-    "delivery_receipt": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/DELIVERY.json",
-    "technical_implementation_verified": false
+    "parent_complete": false
   },
   "previous_handoff": {
     "local_path": "/workspace/scratch/cf652064a9a1/packages/OntoKin_C271_P26_H0_Plan_Blocker_Handoff_2026-11-23.zip",
@@ -2301,11 +2311,12 @@
   },
   "pending_phase_delivery": {
     "phase": "C271-P29-R02-publication-delivery-recovery",
-    "status": "pending",
+    "status": "zip_and_prompts_saved_verified_receipt_terminal_pending",
     "partial": true,
     "receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
     "phase_complete": false,
-    "parent_complete": false
+    "parent_complete": false,
+    "terminal_resolution_rule": "The later external receipt binds the actual receipt commit/tree and this exact ZIP/prompts. Matching live PR274 and issue273 terminal comments bind that external receipt saved identity and confirm phase delivery/ownership release. They resolve only these source-time pending fields, never candidate publication or parent completion."
   },
   "prior_p24_start_pending_delivery": {
     "phase": "C271-P23-current-host-H0-plan",
@@ -3004,6 +3015,38 @@
     "candidate_published": false,
     "record": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PHASE.json",
     "blocker": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json",
-    "parent_complete": false
+    "parent_complete": false,
+    "delivery_confirmed": true,
+    "source_commit": "b706942fa1152cec8ad6b69c91d4cf687ebe60d6",
+    "receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
+    "terminal_pending": true
+  },
+  "p29_r02_previous_delivery_fields": {
+    "latest_handoff": {
+      "library_file_id": "libfile_fde3_f-4d13ff0786908191b3cbe53ec99c7081_2ab2a24d43748191957f9bcc356b59de",
+      "file_id": "file_00000000a09081fdbafb4a9fcd2acc58",
+      "file_name": "OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
+      "path": "/OntoKin/OntoKin_C271_P28_R02_Recovery_Checkpoint_2026-11-23.zip",
+      "version": 0,
+      "bytes": 9962453,
+      "sha256": "113cf92489c6579168c57f816b8347ab99f8874f187de74b8434bb10ef701f3b",
+      "url": "https://chatgpt.com/library?file_id=libfile_fde3_f-4d13ff0786908191b3cbe53ec99c7081_2ab2a24d43748191957f9bcc356b59de&account_id=personal",
+      "saved_bytes_readback_equal": true,
+      "task": "C271",
+      "kind": "online_browser_session",
+      "phase": "C271-P28-R02-exact-candidate-recovery",
+      "partial": true,
+      "source_revision": "942096d22248fd84b7ac3a638e02aa1e66340519",
+      "delivery_receipt": "docs/engineering/localized-repair-c271/p28-recovery-r02-20261123/DELIVERY.json",
+      "technical_implementation_verified": false
+    },
+    "pending_phase_delivery": {
+      "phase": "C271-P29-R02-publication-delivery-recovery",
+      "status": "pending",
+      "partial": true,
+      "receipt": "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json",
+      "phase_complete": false,
+      "parent_complete": false
+    }
   }
 }
