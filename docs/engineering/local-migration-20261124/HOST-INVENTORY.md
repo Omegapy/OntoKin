@@ -8,8 +8,10 @@ one machine at that time. Setup decisions in this migration cite this record.
 
 The repository is public. Credentials, the GitHub account name, the configured
 author identity, the SSH host alias and absolute machine paths are left out on
-purpose; they stay on the machine. "Not observed" means the item was looked for
-or considered and no value was established.
+purpose; they stay on the machine. On 2026-11-25 the owner directed the same for
+details of disk protection, backup software and account permissions; those
+observations were made and are left out here. "Not observed" means the item was
+looked for or considered and no value was established.
 
 ## Clone and Git state
 
@@ -55,7 +57,7 @@ The TRD digest equals the approved revision 3 that the plan cites as SRC-002.
 | --- | --- | --- |
 | SSH read access | Works non-interactively; the read returned both remote heads with exit status 0 | `git ls-remote --heads origin` |
 | SSH write access | Not observed; a read does not prove a push. It is observed when the migration branch is first published | None yet |
-| GitHub CLI | Signed in to github.com through the system keyring; repository permissions reported as pull, push, maintain and admin | `gh auth status`; `gh api repos/Omegapy/OntoKin` |
+| GitHub CLI | Signed in to github.com through the system keyring; the permissions that the migration needs were reported | `gh auth status`; `gh api repos/Omegapy/OntoKin` |
 | Repository settings | Public; default branch `main`; merged branches are deleted automatically | `gh api repos/Omegapy/OntoKin` |
 
 ## Operating system and hardware
@@ -105,11 +107,10 @@ The TRD digest equals the approved revision 3 that the plan cites as SRC-002.
 
 | Item | Observed value | Observation |
 | --- | --- | --- |
-| Clone volume | External fixed solid-state APFS volume, 3.6 TiB, 2.9 TiB free (22% used); not encrypted | `df`; `diskutil info` |
+| Clone volume | External fixed solid-state APFS volume, 3.6 TiB, 2.9 TiB free (22% used) | `df`; `diskutil info` |
 | System volume | 926 GiB, 611 GiB free | `df` |
 | Clone size | 1.5 GiB, of which `.git` is 568 MiB | `du -sh` |
-| Time Machine | No destination is configured, and the clone path is excluded | `tmutil destinationinfo`; `tmutil isexcluded` |
-| Other sync or backup software | A OneDrive process is running; no OneDrive folder was found in the locations checked, so coverage of the clone is not observed. Backblaze, Arq, CrashPlan, Dropbox, Google Drive and Syncthing processes were not found | process list; directory listing |
+| Local backup coverage | Observed and known to the owner; result and details are kept off this public record | Local configuration; process list |
 | GitHub | Holds all committed and pushed content of both remote heads | `git ls-remote --heads origin` |
 | ChatGPT Library | Not observed from this machine; repository records name it as the location of the legacy handoffs | [CURRENT](../../workflow/CURRENT.json) |
 

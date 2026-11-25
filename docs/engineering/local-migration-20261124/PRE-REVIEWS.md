@@ -157,7 +157,7 @@ partly fixed; its findings below complete them.
 | F-11 | Minor | Rehearsal fixes attributed to one commit | Fixed above |
 | N-1, N-2, N-4, N-7, N-8 | Note | Read window, outer timeout for browser hosts, pointer to local command forms, fresh persistent clones, the lock file | Fixed |
 | N-3 | Note | The browser startup read-set grew from 64,217 to 78,191 bytes | Left; it states both modes, and no limit is set for it |
-| N-5 | Note | HOST-INVENTORY publishes backup, encryption and permission facts | Left as observed; reported to the owner |
+| N-5 | Note | HOST-INVENTORY publishes backup, encryption and permission facts | Taken out of the record on the owner's direction of 2026-11-25 |
 | N-6 | Note | OK-ENG-009 gate 2 and the untracked TRDs copy at integration | Belongs to TASK-031 and TASK-033 |
 | N-9 | Note | The candidate run used another worktree's interpreter | Later runs use the candidate worktree's own environment |
 
