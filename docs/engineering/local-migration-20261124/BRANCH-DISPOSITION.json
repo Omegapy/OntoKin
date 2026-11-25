@@ -1,0 +1,67 @@
+{
+ "schema": "ontokin.local-migration.branch-disposition/1",
+ "task": "LOCAL-MIGRATION-20261124",
+ "step": "TASK-034",
+ "observed_at": "2026-11-25T21:33:52Z",
+ "preservation": {
+  "commit": "8e847c15e41c7e5970581993c465690526cd43d2",
+  "identities_compared": 13,
+  "different": 0,
+  "note": "Every file and link of PRESERVATION.json equals its value on the resulting main."
+ },
+ "migration_branch": {
+  "name": "work/local-migration-20261124",
+  "last_head": "60760d6f0216c790466a97fb26d92bcaf7bdb6e3",
+  "remote": "absent in git ls-remote --heads origin after the merge; GitHub deletes merged branches",
+  "local": "deleted with git branch -d",
+  "history": "retained: the last head is an ancestor of main"
+ },
+ "worktrees": [
+  {
+   "name": "baseline-6b346b1e",
+   "head": "6b346b1e4126332fe3c98a4a98f3e0b0e2f63774",
+   "status_before_removal": "clean",
+   "unpublished_commits": 0,
+   "ignored_only": [
+    "tools/__pycache__/"
+   ],
+   "removal": "git worktree remove, without force"
+  },
+  {
+   "name": "candidate-checks",
+   "head": "8e847c15e41c7e5970581993c465690526cd43d2",
+   "status_before_removal": "clean",
+   "unpublished_commits": 0,
+   "ignored_only": [
+    ".venv/",
+    "build/"
+   ],
+   "removal": "git worktree remove, without force"
+  },
+  {
+   "name": "local-migration-20261124",
+   "head": "60760d6f0216c790466a97fb26d92bcaf7bdb6e3",
+   "status_before_removal": "clean",
+   "unpublished_commits": 0,
+   "ignored_only": [
+    ".venv/",
+    "build/",
+    "tools/__pycache__/"
+   ],
+   "removal": "git worktree remove, without force"
+  }
+ ],
+ "worktree_note": "Raw logs and workspaces stay in the local evidence directory beside the clone. Idle desktop sessions of the owner had the migration worktree as their folder; their turns had ended.",
+ "c271": {
+  "branch": "work/c271-missing-import-digest-control",
+  "head": "bef6790291d0cddc8c6d7de9dc0a92fb5a98c448",
+  "pull_request_274": "open draft",
+  "issue_273": "open",
+  "note": "Not merged, closed, rewritten or deleted."
+ },
+ "remaining_heads": [
+  "main",
+  "work/c271-missing-import-digest-control"
+ ],
+ "stashes": 0
+}

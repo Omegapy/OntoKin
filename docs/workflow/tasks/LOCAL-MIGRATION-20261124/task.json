@@ -3,7 +3,7 @@
   "id": "LOCAL-MIGRATION-20261124",
   "title": "OntoKin local development migration",
   "intent": "Move OntoKin's ordinary development to the owner's existing local clone by delivering the 42 approved requirements of TRD-20261124-E65C6113 as one migration scope, with C271 and all historical evidence kept intact.",
-  "status": "in_progress",
+  "status": "done",
   "execution_mode": "local",
   "owner": "local-migration-f58a0f3c1d5a",
   "branch": "work/local-migration-20261124",
@@ -28,295 +28,479 @@
       "id": "REQ-001",
       "description": "Adopt the existing clone from an observed inventory",
       "acceptance": "All 3 acceptance criteria of REQ-001 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/HOST-INVENTORY.md",
+        "tools/local-environment.json",
+        "docs/engineering/local-migration-20261124/DECISION.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/BRANCH-DISPOSITION.json"
+      ]
     },
     {
       "id": "REQ-002",
       "description": "One distinct migration scope in the existing task system",
       "acceptance": "All 2 acceptance criteria of REQ-002 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/tasks/LOCAL-MIGRATION-20261124/task.json",
+        "docs/workflow/tasks/LOCAL-MIGRATION-20261124/REQUIREMENTS.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-003",
       "description": "Native CPython 3.12 virtual environment as the default",
       "acceptance": "All 4 acceptance criteria of REQ-003 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "tools/local-environment.json",
+        "docs/engineering/local-migration-20261124/ENVIRONMENT.json",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/MAIN-ENVIRONMENT.json"
+      ]
     },
     {
       "id": "REQ-004",
       "description": "Environments are reused, never silently rebuilt or copied",
       "acceptance": "All 2 acceptance criteria of REQ-004 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/PRE-REVIEWS.md",
+        "docs/engineering/local-migration-20261124/SECOND-WORKTREE.json",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-005",
       "description": "Dependency profiles with separately reported readiness",
       "acceptance": "All 2 acceptance criteria of REQ-005 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/development/LOCAL-SETUP.md",
+        "docs/engineering/local-migration-20261124/ENVIRONMENT.json",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-006",
       "description": "Platform-specific verification locks",
       "acceptance": "All 3 acceptance criteria of REQ-006 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/PRESERVATION.json",
+        "docs/engineering/local-migration-20261124/LOCK-REVIEW.md",
+        "tools/native-reader-verification-macos-arm64-cp312.provenance.json",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/BRANCH-DISPOSITION.json"
+      ]
     },
     {
       "id": "REQ-007",
       "description": "python-verification readiness from the adopted exact versions",
       "acceptance": "All 2 acceptance criteria of REQ-007 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/ENVIRONMENT.json",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-008",
       "description": "Visual verification prepared only when selected, on the documented toolchain",
       "acceptance": "All 4 acceptance criteria of REQ-008 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/development/LOCAL-SETUP.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/BRANCH-DISPOSITION.json"
+      ]
     },
     {
       "id": "REQ-009",
       "description": "Nothing is added beyond the adopted specifications",
       "acceptance": "All 4 acceptance criteria of REQ-009 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/ENVIRONMENT.json",
+        "docs/development/LOCAL-SETUP.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-010",
       "description": "Definite container decision: native by default",
       "acceptance": "All 2 acceptance criteria of REQ-010 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/development/LOCAL-SETUP.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/RESULTS.md"
+      ]
     },
     {
       "id": "REQ-011",
       "description": "Idempotent, profile-specific bootstrap",
       "acceptance": "All 6 acceptance criteria of REQ-011 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/ENVIRONMENT.json",
+        "docs/engineering/local-migration-20261124/CANDIDATE-CHECKS.json",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-012",
       "description": "Non-mutating doctor",
       "acceptance": "All 4 acceptance criteria of REQ-012 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-013",
       "description": "Reproducibility records for every environment",
       "acceptance": "All 3 acceptance criteria of REQ-013 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/ENVIRONMENT.json",
+        "docs/engineering/local-migration-20261124/PACKAGE-SMOKE.json",
+        "docs/engineering/local-migration-20261124/STORAGE.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/RESULTS.md"
+      ]
     },
     {
       "id": "REQ-014",
       "description": "Setup is repeatable and documented",
       "acceptance": "All 2 acceptance criteria of REQ-014 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/SECOND-WORKTREE.json",
+        "docs/development/LOCAL-SETUP.md",
+        "docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/MAIN-ENVIRONMENT.json"
+      ]
     },
     {
       "id": "REQ-015",
       "description": "Installed-package behaviour proven outside the checkout",
       "acceptance": "All 2 acceptance criteria of REQ-015 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/PACKAGE-SMOKE.json",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-016",
       "description": "Explicit local and browser execution modes, adopted prospectively",
       "acceptance": "All 3 acceptance criteria of REQ-016 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/DECISION.md",
+        "AGENTS.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-017",
       "description": "Local-mode rules replace the browser-only rules for local sessions",
       "acceptance": "All 2 acceptance criteria of REQ-017 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/HANDOFF.md",
+        "docs/workflow/PROTOCOL.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-018",
       "description": "The amendment is coherent across every instruction surface",
       "acceptance": "All 3 acceptance criteria of REQ-018 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-019",
       "description": "One shared instruction authority, a local entry point and a thin Claude adapter",
       "acceptance": "All 2 acceptance criteria of REQ-019 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "CLAUDE.md",
+        "docs/engineering/local-migration-20261124/FRESH-SESSION.md",
+        "docs/engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-020",
       "description": "Skills stay shared, linked and explicitly invoked",
       "acceptance": "All 2 acceptance criteria of REQ-020 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/PRESERVATION.json",
+        "docs/engineering/local-migration-20261124/FRESH-SESSION.md",
+        "docs/engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/BRANCH-DISPOSITION.json"
+      ]
     },
     {
       "id": "REQ-021",
       "description": "The owner's graphical workflow works end to end",
       "acceptance": "All 2 acceptance criteria of REQ-021 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/FRESH-SESSION.md",
+        "docs/engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-022",
       "description": "One canonical task and acceptance system",
       "acceptance": "All 2 acceptance criteria of REQ-022 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/RESULTS.md"
+      ]
     },
     {
       "id": "REQ-023",
       "description": "\"Go\" or \"Continue\" resumes the selected scope",
       "acceptance": "All 3 acceptance criteria of REQ-023 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/FRESH-SESSION.md",
+        "docs/engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md",
+        "LOCAL-START-HERE.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-024",
       "description": "Local session startup procedure",
       "acceptance": "All 3 acceptance criteria of REQ-024 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "LOCAL-START-HERE.md",
+        "docs/engineering/local-migration-20261124/FRESH-SESSION.md",
+        "docs/engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md",
+        "docs/engineering/local-migration-20261124/RECONCILIATION.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-025",
       "description": "Work conduct, blockers and interruption recovery",
       "acceptance": "All 3 acceptance criteria of REQ-025 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/tasks/LOCAL-MIGRATION-20261124/SESSION.md",
+        "docs/engineering/local-migration-20261124/FRESH-SESSION.md",
+        "docs/engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md",
+        "docs/workflow/PROTOCOL.md",
+        "docs/engineering/local-migration-20261124/BASELINE-CHECKS.json",
+        "docs/engineering/local-migration-20261124/CANDIDATE-CHECKS.json",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-026",
       "description": "Session checkpoints carry what a successor needs",
       "acceptance": "All 2 acceptance criteria of REQ-026 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/templates/SESSION.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-027",
       "description": "Compact current pointers, complete history",
       "acceptance": "All 3 acceptance criteria of REQ-027 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/workflow/CURRENT.json",
+        "docs/engineering/local-migration-20261124/CURRENT-before-migration.json",
+        "docs/engineering/local-migration-20261124/SCHEMA-MAPPING.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/RESULTS.md"
+      ]
     },
     {
       "id": "REQ-028",
       "description": "Workflow and validation tools follow the adopted structure",
       "acceptance": "All 2 acceptance criteria of REQ-028 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/CANDIDATE-CHECKS.json",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-029",
       "description": "A fresh agent session resumes from the repository alone",
       "acceptance": "All 2 acceptance criteria of REQ-029 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/FRESH-SESSION.md",
+        "docs/engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md",
+        "docs/workflow/LOCAL-PROMPTS.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-030",
       "description": "Main, C271, the R06 handoff and the local clone are reconciled",
       "acceptance": "All 4 acceptance criteria of REQ-030 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/RECONCILIATION.md",
+        "STATUS.md",
+        "docs/workflow/CURRENT.json",
+        "docs/engineering/local-migration-20261124/R06-VERIFICATION.json",
+        "docs/workflow/tasks/LOCAL-MIGRATION-20261124/PLAN.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-031",
       "description": "Legacy archives are verified before use and never overlaid",
       "acceptance": "All 2 acceptance criteria of REQ-031 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/R06-VERIFICATION.json",
+        "docs/engineering/local-migration-20261124/RECONCILIATION.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-032",
       "description": "Unique accepted evidence and historical records are preserved exactly",
       "acceptance": "All 2 acceptance criteria of REQ-032 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/R06-VERIFICATION.json",
+        "docs/engineering/local-migration-20261124/RECONCILIATION.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/BRANCH-DISPOSITION.json"
+      ]
     },
     {
       "id": "REQ-033",
       "description": "C271 stays a separate, visibly unfinished scope",
       "acceptance": "All 2 acceptance criteria of REQ-033 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/DECISION.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/BRANCH-DISPOSITION.json"
+      ]
     },
     {
       "id": "REQ-034",
       "description": "Ordinary local Git is the publication route",
       "acceptance": "All 2 acceptance criteria of REQ-034 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/HOST-INVENTORY.md",
+        "docs/workflow/PROTOCOL.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/INTEGRATION.json"
+      ]
     },
     {
       "id": "REQ-035",
       "description": "Safe parallel work",
       "acceptance": "All 4 acceptance criteria of REQ-035 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/SECOND-WORKTREE.json",
+        "docs/workflow/PROTOCOL.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-036",
       "description": "Evidence is attributable to the actual source and environment",
       "acceptance": "All 4 acceptance criteria of REQ-036 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/CANDIDATE-CHECKS.json",
+        "docs/development/LOCAL-SETUP.md",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-037",
       "description": "The no-payment hosted-CI policy is preserved",
       "acceptance": "All 1 acceptance criteria of REQ-037 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-038",
       "description": "Durable storage and backup of unique material",
       "acceptance": "All 3 acceptance criteria of REQ-038 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/STORAGE.md",
+        "docs/engineering/local-migration-20261124/R06-VERIFICATION.json",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md"
+      ]
     },
     {
       "id": "REQ-039",
       "description": "Git LFS is left as it is",
       "acceptance": "All 1 acceptance criteria of REQ-039 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/PRESERVATION.json",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/BRANCH-DISPOSITION.json"
+      ]
     },
     {
       "id": "REQ-040",
       "description": "Independent review of the exact candidate",
       "acceptance": "All 2 acceptance criteria of REQ-040 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/REVIEW.md",
+        "docs/engineering/local-migration-20261124/PRE-REVIEWS.md"
+      ]
     },
     {
       "id": "REQ-041",
       "description": "Integration and cleanup through the established lifecycle",
       "acceptance": "All 2 acceptance criteria of REQ-041 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/BRANCH-DISPOSITION.json",
+        "docs/engineering/local-migration-20261124/INTEGRATION.json"
+      ]
     },
     {
       "id": "REQ-042",
       "description": "Readiness, completion and qualification are reported separately",
       "acceptance": "All 3 acceptance criteria of REQ-042 in TRDs/trd_ontokin-local-development-migration_2026-11-24.md (revision 3), which states the requirement in full.",
-      "status": "not_done",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "docs/engineering/local-migration-20261124/SECOND-WORKTREE.json",
+        "docs/engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md",
+        "docs/engineering/local-migration-20261124/RESULTS.md"
+      ]
     }
   ],
   "plan": [
@@ -1048,7 +1232,7 @@
       "depends_on": [
         "TASK-031"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/local-migration-20261124/REVIEW.md"
       ],
@@ -1068,7 +1252,7 @@
       "depends_on": [
         "TASK-032"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/local-migration-20261124/INTEGRATION.json"
       ],
@@ -1094,7 +1278,7 @@
       "depends_on": [
         "TASK-033"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/local-migration-20261124/BRANCH-DISPOSITION.json"
       ],
@@ -1115,7 +1299,7 @@
       "depends_on": [
         "TASK-033"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/local-migration-20261124/MAIN-ENVIRONMENT.json"
       ],
@@ -1138,7 +1322,7 @@
         "TASK-034",
         "TASK-035"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/local-migration-20261124/RESULTS.md",
         "docs/workflow/tasks/LOCAL-MIGRATION-20261124/task.json",
@@ -1242,25 +1426,51 @@
     {
       "name": "independent review of the exact candidate",
       "command": "separate reviewer subagent or session under the worker template",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/local-migration-20261124/REVIEW.md"
+      ],
+      "note": "Accepted in the second round, with three minor findings."
     },
     {
       "name": "resulting-main checks",
       "command": "documentation verifier, workflow check and routine driver on the merge commit",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/local-migration-20261124/INTEGRATION.json"
+      ],
+      "note": "Verifier, workflow check and focused tests passed; the routine driver fails exactly as on the base, with no new or worsened failure."
     }
   ],
   "completion": {
-    "implementation_commit": null,
-    "merge_commit": null,
-    "pull_request": null,
-    "branch_disposition": "active",
-    "evidence": []
+    "implementation_commit": "60760d6f0216c790466a97fb26d92bcaf7bdb6e3",
+    "merge_commit": "8e847c15e41c7e5970581993c465690526cd43d2",
+    "pull_request": "https://github.com/Omegapy/OntoKin/pull/278",
+    "branch_disposition": "deleted",
+    "evidence": [
+      "docs/engineering/local-migration-20261124/INTEGRATION.json",
+      "docs/engineering/local-migration-20261124/BRANCH-DISPOSITION.json",
+      "docs/engineering/local-migration-20261124/MAIN-ENVIRONMENT.json",
+      "docs/engineering/local-migration-20261124/REVIEW.md",
+      "docs/engineering/local-migration-20261124/RESULTS.md"
+    ]
   },
-  "next_action": "TASK-032, independent review of the frozen candidate; then TASK-033, integration.",
-  "blockers": []
+  "next_action": "None in this scope. The next scope is the owner's choice; C271 is the queued unfinished one, on its own branch.",
+  "blockers": [],
+  "owner_waivers": [
+    {
+      "requirement": "REQ-021",
+      "part": "the application's Worktree mode was not observed",
+      "date": "2026-11-25",
+      "record": "docs/engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md"
+    },
+    {
+      "requirement": "REQ-024",
+      "part": "a startup report before the first change was not observed in an unguided session",
+      "date": "2026-11-25",
+      "record": "docs/engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md"
+    }
+  ]
 }

@@ -1,0 +1,326 @@
+{
+ "schema": "ontokin.local-migration.integration/1",
+ "task": "LOCAL-MIGRATION-20261124",
+ "step": "TASK-033",
+ "authentication": "SSH pushes of the migration branch and of main succeeded before the merge; GitHub CLI reads and the pull request were used.",
+ "lease": {
+  "owner": "local-migration-f58a0f3c1d5a",
+  "procedure": "git ls-remote observed main at the expected head; a commit whose only parent is that head was pushed without force; the remote was read back.",
+  "expected_head": "6b346b1e4126332fe3c98a4a98f3e0b0e2f63774",
+  "acquisition_commit": "6991745bd15e06e2dd7a6ab54518fcf2f9158b23",
+  "acquired_at": "2026-11-25T21:09:13Z",
+  "expires_at": "2026-11-25T21:54:13Z",
+  "released": "with the closing commit that carries this record, see STATUS.md"
+ },
+ "merge": {
+  "pull_request": "https://github.com/Omegapy/OntoKin/pull/278",
+  "method": "gh pr merge --merge --match-head-commit",
+  "matched_head": "60760d6f0216c790466a97fb26d92bcaf7bdb6e3",
+  "merged_at": "2026-11-25T21:09:42Z",
+  "merge_commit": "8e847c15e41c7e5970581993c465690526cd43d2",
+  "parents": [
+   "6991745bd15e06e2dd7a6ab54518fcf2f9158b23",
+   "60760d6f0216c790466a97fb26d92bcaf7bdb6e3"
+  ],
+  "tree": "77694a3bcaf531619d6807aa0ee4a46986f4e27c",
+  "expected_tree_before_merge": "77694a3bcaf531619d6807aa0ee4a46986f4e27c",
+  "equals_expected": true,
+  "difference_from_candidate": "STATUS.md only, the lease lines",
+  "force_update": false
+ },
+ "main_checkout": {
+  "before": "clean main with untracked TRDs/ and Implementation_Plans/",
+  "trds": "Both untracked TRDs files were byte-identical to the merged ones and were removed before the fast-forward; copies were kept until then.",
+  "after": "fast-forward to 8e847c15e41c7e5970581993c465690526cd43d2; Implementation_Plans/ untouched"
+ },
+ "resulting_main_checks": {
+  "commit": "8e847c15e41c7e5970581993c465690526cd43d2",
+  "where": "a clean detached worktree with its own environment, removed afterwards",
+  "documentation_verifier": {
+   "result": "passed",
+   "documents": 1344,
+   "local_links": 6160,
+   "anchors": 161,
+   "external_skipped": 979,
+   "output": {
+    "name": "main-8e847c15-documents-inplace.json",
+    "bytes": 6608,
+    "sha256": "b640ff53069589a2378093acfcbecab02513f7448be39665eaab7eefe507590a"
+   }
+  },
+  "workflow_check": {
+   "result": "passed",
+   "tasks": 12
+  },
+  "focused_tool_tests_resolved_tmpdir": {
+   "result": "passed",
+   "ran": 307,
+   "output": {
+    "name": "main-8e847c15-focused-resolved.log",
+    "bytes": 48244,
+    "sha256": "a7f489407afd40359fea222a8746ec85e8f013287947ea9b3f1b67ef8458a9a0"
+   }
+  },
+  "routine_driver": {
+   "result": "failed",
+   "classification": "unchanged from the baseline and equal to the candidate",
+   "runs": [
+    {
+     "label": "resolved-tmpdir",
+     "driver_status": "failed",
+     "started_at": "2026-11-25T21:10:07.026972+00:00",
+     "finished_at": "2026-11-25T21:30:55.439415+00:00",
+     "duration_seconds": 1248.203,
+     "source": {
+      "head": "8e847c15e41c7e5970581993c465690526cd43d2",
+      "tree": "77694a3bcaf531619d6807aa0ee4a46986f4e27c",
+      "tracked_status": "",
+      "source_unchanged": true,
+      "git_revision_unchanged": true,
+      "inventory_sha256": "sha256:4dbf7ac25a7e004d5ff8f7fc5cfb542a6036bb450595a82c9967c41783f7da3f",
+      "inventory_files": 18676
+     },
+     "summary_file": {
+      "name": "<output>/summary.json",
+      "sha256": "sha256:f5f2c3f650a5c4e8422f1e2ab3aae79fc1051bf0ccebc90e578a4b28bbb96be4",
+      "bytes": 22979
+     },
+     "steps": [
+      {
+       "id": "unit-tests",
+       "status": "failed",
+       "log": {
+        "name": "<output>/logs/unit-tests.log",
+        "sha256": "sha256:85e372a1074d968fe6a4034067247bf09287445ba0d6e8107797170051cae5f8",
+        "bytes": 929217
+       }
+      },
+      {
+       "id": "source",
+       "status": "passed",
+       "log": {
+        "name": "<output>/logs/source.log",
+        "sha256": "sha256:2fd27ba2c4ebaaee04a8acb40f3d5d82fa1440232c1799e27a0dd000298b2d1a",
+        "bytes": 312
+       }
+      },
+      {
+       "id": "agent",
+       "status": "passed",
+       "log": {
+        "name": "<output>/logs/agent.log",
+        "sha256": "sha256:002ec3891cd37b3da581486c413e294939236f37a993a22718b0d0977a487179",
+        "bytes": 188
+       }
+      },
+      {
+       "id": "construction",
+       "status": "passed",
+       "log": {
+        "name": "<output>/logs/construction.log",
+        "sha256": "sha256:9f0f145812871996cff9b3ed25eb8b2366eea96265cef9186306b21e89a7cc77",
+        "bytes": 531
+       }
+      },
+      {
+       "id": "surface",
+       "status": "passed",
+       "log": {
+        "name": "<output>/logs/surface.log",
+        "sha256": "sha256:32ad51e302defb758b3bc650909f3378a98905356acc0e07b3ddfd5b13ad2135",
+        "bytes": 281
+       }
+      },
+      {
+       "id": "impulse",
+       "status": "passed",
+       "log": {
+        "name": "<output>/logs/impulse.log",
+        "sha256": "sha256:82160c6e197af610b7f5228784d297908afc81d25f253f9bc2a114cdcbbf4dca",
+        "bytes": 157
+       }
+      },
+      {
+       "id": "documents",
+       "status": "passed",
+       "log": {
+        "name": "<output>/logs/documents.log",
+        "sha256": "sha256:b640ff53069589a2378093acfcbecab02513f7448be39665eaab7eefe507590a",
+        "bytes": 6608
+       }
+      }
+     ],
+     "unit_tests": {
+      "ran": 4989,
+      "detail": "failures=1, skipped=3",
+      "distinct_not_passing": 1
+     },
+     "pending_external_cases": 16,
+     "skipped": 3
+    },
+    {
+     "label": "default",
+     "driver_status": "failed",
+     "started_at": "2026-11-25T21:10:07.398370+00:00",
+     "finished_at": "2026-11-25T21:29:58.644129+00:00",
+     "duration_seconds": 1190.931,
+     "source": {
+      "head": "8e847c15e41c7e5970581993c465690526cd43d2",
+      "tree": "77694a3bcaf531619d6807aa0ee4a46986f4e27c",
+      "tracked_status": "",
+      "source_unchanged": true,
+      "git_revision_unchanged": true,
+      "inventory_sha256": "sha256:4dbf7ac25a7e004d5ff8f7fc5cfb542a6036bb450595a82c9967c41783f7da3f",
+      "inventory_files": 18676
+     },
+     "summary_file": {
+      "name": "<output>/summary.json",
+      "sha256": "sha256:0a1e5b7e4a105798557ce7ef3a4c9831c7248cb2c5579e89c281514159e4adea",
+      "bytes": 22996
+     },
+     "steps": [
+      {
+       "id": "unit-tests",
+       "status": "failed",
+       "log": {
+        "name": "<output>/logs/unit-tests.log",
+        "sha256": "sha256:1ec8a64dbb5e2a4cb00437e543573e8cbed3d9766e337b6878cace9a05d5f959",
+        "bytes": 1983241
+       }
+      },
+      {
+       "id": "source",
+       "status": "passed",
+       "log": {
+        "name": "<output>/logs/source.log",
+        "sha256": "sha256:001021f6cd5ccf60da5b1155133685ba03a65822a749f8266c84d84067d3451d",
+        "bytes": 313
+       }
+      },
+      {
+       "id": "agent",
+       "status": "passed",
+       "log": {
+        "name": "<output>/logs/agent.log",
+        "sha256": "sha256:9632fbdab108fd01418259e1b5f5ed2ab90e08290d434fc79a3e39e701639e08",
+        "bytes": 189
+       }
+      },
+      {
+       "id": "construction",
+       "status": "passed",
+       "log": {
+        "name": "<output>/logs/construction.log",
+        "sha256": "sha256:21b723adb0ff3060ace6d46ff9bd194720734129f51685bb76efa3ef204aa0a9",
+        "bytes": 532
+       }
+      },
+      {
+       "id": "surface",
+       "status": "passed",
+       "log": {
+        "name": "<output>/logs/surface.log",
+        "sha256": "sha256:f949a240ff58ddfc5194c254523e12041b74544a5f3acf8ceb0e61c2aecf98ee",
+        "bytes": 282
+       }
+      },
+      {
+       "id": "impulse",
+       "status": "passed",
+       "log": {
+        "name": "<output>/logs/impulse.log",
+        "sha256": "sha256:82160c6e197af610b7f5228784d297908afc81d25f253f9bc2a114cdcbbf4dca",
+        "bytes": 157
+       }
+      },
+      {
+       "id": "documents",
+       "status": "passed",
+       "log": {
+        "name": "<output>/logs/documents.log",
+        "sha256": "sha256:b640ff53069589a2378093acfcbecab02513f7448be39665eaab7eefe507590a",
+        "bytes": 6608
+       }
+      }
+     ],
+     "unit_tests": {
+      "ran": 4989,
+      "detail": "failures=103, errors=311, skipped=3",
+      "distinct_not_passing": 307
+     },
+     "pending_external_cases": 16,
+     "skipped": 3
+    }
+   ],
+   "comparison_with_baseline": {
+    "resolved_tmpdir": {
+     "baseline_run": "BASELINE-CHECKS.json, run resolved-temporary-directory",
+     "unchanged": 1,
+     "new_not_passing": [],
+     "no_longer_failing": [],
+     "different_outcome": [],
+     "different_reason": [],
+     "different_subtests": [],
+     "tests_baseline": 4740,
+     "tests_candidate": 4989,
+     "steps_equal_to_baseline": [
+      "agent",
+      "construction",
+      "impulse",
+      "source",
+      "surface",
+      "unit-tests"
+     ],
+     "steps_different_from_baseline": [
+      [
+       "documents",
+       "failed",
+       "passed"
+      ]
+     ],
+     "pending_equal_to_baseline": true,
+     "skips_equal_to_baseline": true
+    },
+    "default": {
+     "baseline_run": "BASELINE-CHECKS.json, run default",
+     "unchanged": 307,
+     "new_not_passing": [],
+     "no_longer_failing": [],
+     "different_outcome": [],
+     "different_reason": [],
+     "different_subtests": [],
+     "tests_baseline": 4740,
+     "tests_candidate": 4989,
+     "steps_equal_to_baseline": [
+      "agent",
+      "construction",
+      "impulse",
+      "source",
+      "surface",
+      "unit-tests"
+     ],
+     "steps_different_from_baseline": [
+      [
+       "documents",
+       "failed",
+       "passed"
+      ]
+     ],
+     "pending_equal_to_baseline": true,
+     "skips_equal_to_baseline": true
+    }
+   },
+   "list_digest_default_run": [
+    307,
+    "2681454e00c20e1b561f933d08421de97882a0dd34ea7fa4099e88eb076173d4"
+   ],
+   "new_or_worsened_failures": []
+  },
+  "not_run": [
+   "--full",
+   "--force-agent",
+   "hosted CI",
+   "Linux x86-64"
+  ]
+ }
+}
