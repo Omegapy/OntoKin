@@ -5,7 +5,7 @@ The entry document a session starts from decides which one applies.
 
 | Mode | Entry | Use it for |
 | --- | --- | --- |
-| Local | `LOCAL-START-HERE.md` | Ordinary development in the owner's clone, normally from the Code tab of the Claude desktop application. |
+| Local | [LOCAL-START-HERE.md](../../LOCAL-START-HERE.md) | Ordinary development in the owner's clone, normally from the Code tab of the Claude desktop application. |
 | Browser | [CHATGPT-START-HERE.md](../../CHATGPT-START-HERE.md) | ChatGPT browser threads, each on a different, disposable host. |
 
 ## What happens in a session
@@ -42,6 +42,7 @@ checks the actual state before repeating it.
 | [PROTOCOL.md](PROTOCOL.md) | Startup, execution, recovery, verification and integration rules. |
 | [HANDOFF.md](HANDOFF.md) | Browser: required saved session ZIP, early checkpoints and confirmed delivery. Local: what closes a session or scope. |
 | [Browser prompts](BROWSER-PROMPTS.md) | Copyable normal continuation and interrupted-thread recovery prompts. |
+| [Local prompts](LOCAL-PROMPTS.md) | Copyable start, continue, recover and checkpoint instructions for local sessions. |
 | [Memory](memory.json) | Source-backed decisions, constraints and lessons; current instructions retain authority. |
 | [Knowledge guide](KNOWLEDGE.md) | Project vocabulary, relationships and documented capability boundaries. |
 

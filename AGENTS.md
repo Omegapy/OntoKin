@@ -8,7 +8,7 @@ Every session works in exactly one explicit mode, under the owner's [November 24
 
 | Mode | Entry document | Execution host |
 | --- | --- | --- |
-| **Local**: ordinary development | `LOCAL-START-HERE.md` | Owner's persistent clone and its worktrees. Inspect actual state; reuse validated resources; reconstruct only missing/incompatible inputs. |
+| **Local**: ordinary development | [LOCAL-START-HERE](LOCAL-START-HERE.md) | Owner's persistent clone and its worktrees. Inspect actual state; reuse validated resources; reconstruct only missing/incompatible inputs. |
 | **Browser**: ChatGPT browser threads | [CHATGPT-START-HERE](CHATGPT-START-HERE.md) | A different, disposable host for each thread, under the ephemeral host rule below. |
 
 The entry document a session starts from declares its mode; session checkpoint and task record state it. Never infer it from a path, machine, product or agent name. "Go"/"Continue" without a named entry document uses the mode recorded for the selected task; only explicit owner direction changes it. When neither names one, ask. A session on a disposable or remote host is not a local session. A rule marked for one mode binds only that mode; unmarked rules bind both.

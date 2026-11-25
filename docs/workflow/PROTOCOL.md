@@ -8,7 +8,7 @@ Scope: procedure; no language-semantics changes.
 ## Execution modes
 
 [AGENTS](../../AGENTS.md#execution-modes) requires one explicit mode for each session,
-declared by its entry document: `LOCAL-START-HERE.md` (local) or
+declared by its entry document: [LOCAL-START-HERE](../../LOCAL-START-HERE.md) (local) or
 [CHATGPT-START-HERE](../../CHATGPT-START-HERE.md) (browser). Session checkpoint and task
 record state it. A **Browser** or **Local** marker binds only that mode, up to the next
 marker or the end of its paragraph; all other text binds both. For local sessions only,
