@@ -40,7 +40,9 @@ C264 starting inventory: only main/no open PRs; after PR255, `work/c264-required
 
 ## Main integration lease
 
-State: released. Previous owner: `c270-finalization-a2bb67238030`.
+State: **held** by `local-migration-f58a0f3c1d5a`. Acquired at UTC `2026-11-25T21:09:13Z` from observed main `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774` for the integration of LOCAL-MIGRATION-20261124, [PR278](https://github.com/Omegapy/OntoKin/pull/278), reviewed candidate `60760d6f0216c790466a97fb26d92bcaf7bdb6e3`; expires `2026-11-25T21:54:13Z`.
+
+Previous lease: released. Previous owner: `c270-finalization-a2bb67238030`.
 Release recorded at UTC: `2026-11-20T21:33:27.878111+00:00` after confirmed final delivery, independent review, published receipt, fresh receipt-checkpoint record checks, branch disposition and scope-issue closure.
 Lease acquisition `f2d503423c5a790df79d28d61679d146a4c28c32`; final expiry was `2026-11-20T21:48:57Z`. No shared integration ownership remains held by this phase. The exact reviewed correction is retained by merge `4d27756f1c503b430dd85219235778a1f78ef101`; the scope branch is deleted. All current remote writes have observed outcomes. Historical broad-driver completion and global prior-process termination remain unknown. [Delivery](docs/engineering/localized-repair-c270/correction/finalization-20261120/DELIVERY.json), [closeout](docs/engineering/localized-repair-c270/correction/finalization-20261120/CLOSEOUT.json). No new milestone.
 
