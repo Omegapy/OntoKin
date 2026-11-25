@@ -1,0 +1,198 @@
+{
+  "schema": "ontokin.local-environment/1",
+  "purpose": "The one tracked specification of OntoKin's local development environment. tools/bootstrap_local.py and tools/doctor_local.py read it. It adds no package, package manager or runtime dependency beyond the adopted files it names, and it states no machine-specific path.",
+  "interpreter": {
+    "implementation": "CPython",
+    "version": "3.12.13",
+    "selected_from": "docs/engineering/local-migration-20261124/HOST-INVENTORY.md",
+    "distributions": {
+      "macos-arm64": {
+        "name": "Homebrew",
+        "formula": "python@3.12",
+        "command": "python3.12",
+        "search": [
+          "/opt/homebrew/bin"
+        ],
+        "install": [
+          "brew",
+          "install",
+          "python@3.12"
+        ]
+      },
+      "linux-x86_64": {
+        "command": "python3.12",
+        "search": []
+      }
+    },
+    "statement": "Development uses this exact patch. Other Python versions are not claimed as tested unless they were executed; pyproject.toml keeps requires-python >=3.11."
+  },
+  "environment": {
+    "directory": ".venv",
+    "created_with": "venv",
+    "record": "ontokin-environment.json",
+    "statement": "Each checkout or worktree has its own ignored environment, created in place and never copied between locations. Project commands run through its own interpreter."
+  },
+  "platforms": {
+    "macos-arm64": {
+      "system": "Darwin",
+      "machine": "arm64"
+    },
+    "linux-x86_64": {
+      "system": "Linux",
+      "machine": "x86_64"
+    }
+  },
+  "profiles": {
+    "core": {
+      "kind": "environment",
+      "purpose": "Edit source and run standard-library reference work. Not sufficient for the complete test suite.",
+      "contents": [
+        "The selected CPython",
+        "The Python standard library",
+        "Git",
+        "Optional editable install of the checkout, which proves nothing about the installed package"
+      ],
+      "readiness_checks": {
+        "interpreter": "The environment exists in this checkout and runs the exact implementation, version and distribution named above on a supported platform.",
+        "isolation": "The environment is a real directory of this checkout, is isolated from system site-packages and was created at this location.",
+        "git": "Git is available and the root is a Git checkout.",
+        "source-import": "The environment interpreter imports the ontokin source package from the checkout."
+      }
+    },
+    "python-verification": {
+      "kind": "environment",
+      "extends": "core",
+      "purpose": "The normal readiness target: the complete Python test suite and the Agent/0.5 and native-reader verification roles.",
+      "contents": [
+        "core",
+        "The six Agent verification pins",
+        "Pillow",
+        "A hash lock valid for the platform"
+      ],
+      "packages": [
+        {
+          "name": "attrs",
+          "version": "26.1.0",
+          "import": "attrs",
+          "pin": "tools/force-agent-verification-requirements.txt"
+        },
+        {
+          "name": "jsonschema",
+          "version": "4.26.0",
+          "import": "jsonschema",
+          "pin": "tools/force-agent-verification-requirements.txt"
+        },
+        {
+          "name": "jsonschema-specifications",
+          "version": "2025.9.1",
+          "import": "jsonschema_specifications",
+          "pin": "tools/force-agent-verification-requirements.txt"
+        },
+        {
+          "name": "referencing",
+          "version": "0.37.0",
+          "import": "referencing",
+          "pin": "tools/force-agent-verification-requirements.txt"
+        },
+        {
+          "name": "rpds-py",
+          "version": "2026.5.1",
+          "import": "rpds",
+          "pin": "tools/force-agent-verification-requirements.txt"
+        },
+        {
+          "name": "typing_extensions",
+          "version": "4.16.0",
+          "import": "typing_extensions",
+          "pin": "tools/force-agent-verification-requirements.txt"
+        },
+        {
+          "name": "Pillow",
+          "version": "13.0.0",
+          "import": "PIL.Image",
+          "pin": "tools/native-reader-verification-linux-cp312.lock"
+        }
+      ],
+      "locks": {
+        "macos-arm64": {
+          "path": "tools/native-reader-verification-macos-arm64-cp312.lock",
+          "provenance": "tools/native-reader-verification-macos-arm64-cp312.provenance.json",
+          "python": "3.12"
+        },
+        "linux-x86_64": {
+          "path": "tools/native-reader-verification-linux-cp312.lock",
+          "python": "3.12"
+        }
+      },
+      "preflight": "tools/check_native_reader_setup.py",
+      "readiness_checks": {
+        "lock": "A committed lock matches this platform and Python series and agrees with the pins.",
+        "packages": "Each pinned package is installed at exactly its adopted version.",
+        "imports": "Each pinned package imports in the environment.",
+        "pip-check": "pip check reports no conflict.",
+        "native-reader": "tools/check_native_reader_setup.py passes in the environment."
+      }
+    },
+    "visual-verification": {
+      "kind": "environment",
+      "extends": "python-verification",
+      "purpose": "Exporter or viewer work and the --full checks. Prepared only when it is selected.",
+      "contents": [
+        "python-verification",
+        "Node.js 22 and npm",
+        "The npm dependencies of tools/package.json, installed from tools/package-lock.json",
+        "Playwright's matching Chromium headless shell, prepared as a separate step"
+      ],
+      "node_major": 22,
+      "npm_manifest": "tools/package.json",
+      "npm_lock": "tools/package-lock.json",
+      "npm_directory": "tools/node_modules",
+      "npm_dependencies": {
+        "esbuild": "0.25.10",
+        "gltf-validator": "2.0.0-dev.3.10",
+        "playwright": "1.56.1",
+        "three": "0.180.0"
+      },
+      "readiness_checks": {
+        "node": "Node.js of the target major version is available.",
+        "npm": "npm is available.",
+        "npm-dependencies": "Each pinned npm dependency is installed at exactly its committed version.",
+        "chromium": "The Chromium headless shell that the installed Playwright expects is present."
+      }
+    },
+    "package-smoke": {
+      "kind": "on-demand",
+      "purpose": "Prove installed-package behaviour outside the checkout. Established only by running it.",
+      "contents": [
+        "A clean build environment in a new directory",
+        "A separate clean installation environment",
+        "The wheel built from an identified source revision"
+      ],
+      "readiness_checks": {
+        "clean-build": "The wheel is built in the clean build environment and its tool versions are recorded.",
+        "clean-install": "The wheel is installed into the separate clean environment.",
+        "outside-run": "The installed entry point runs from outside the checkout with source-path injection removed."
+      }
+    },
+    "historical-native": {
+      "kind": "external",
+      "purpose": "Historical and native experiments. Each is prepared only by its own selected task under its own contract.",
+      "contents": [
+        "The exact interpreter, application, binary, importer and input bindings that the owning contract names"
+      ],
+      "readiness_checks": {
+        "owning-contract": "Established only by the contract of the selected experiment. General setup neither prepares nor accepts it, and a newer interpreter never inherits an old qualification."
+      }
+    },
+    "linux-container": {
+      "kind": "unconfigured",
+      "purpose": "An optional later Linux reproduction profile. No container configuration is committed; native is the default and Docker is not required.",
+      "contents": [
+        "None"
+      ],
+      "readiness_checks": {
+        "adoption": "A later profile must state its purpose and carry its own acceptance. An emulated amd64 container is never native Linux qualification."
+      }
+    }
+  }
+}
