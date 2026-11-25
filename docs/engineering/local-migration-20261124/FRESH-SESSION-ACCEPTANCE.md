@@ -16,7 +16,6 @@ All were started by the owner in the Code tab of the Claude desktop application,
 | Check, 18:40Z, the same worktree | "Check where a session works" | **Does not count.** Worktree mode was off |
 | **Clean run**, 19:09Z to 19:11Z, migration worktree, Worktree mode off, [account](FRESH-SESSION.md) | `Continue.` | Counts |
 | Check, 19:52Z, the migration worktree | The same text, pasted from a link | **Does not count.** Worktree mode was off |
-| Worktree check | | **Not made yet** |
 
 ## Acceptance criteria of TASK-030
 
@@ -26,7 +25,7 @@ All were started by the owner in the Code tab of the Claude desktop application,
 | The account matches the repository records | Met | Task, environment, completed work, last completed gate, next action and blockers compared with [CURRENT](../../workflow/CURRENT.json), the ledger and the checkpoint at `d70d3ad90a6f03656cd383105c346ca1275774b9`: equal. Its four differences concern wording, the later commit, a path and statements it did not check |
 | Shared instructions, Claude adapter and six skills loaded or discovered | Met | Its log shows exactly two instruction files before the first action, `CLAUDE.md` and the imported `AGENTS.md`; its skill list names the six project skills |
 | On `Continue` the next unmet gate, nothing restarted, no milestone selected | Met | It carried out TASK-030 only and stopped; the commit changes one file |
-| Worktree mode enabled deliberately, then checkout path and branch verified | **Open** | A session with Worktree mode on has not been made yet |
+| Worktree mode enabled deliberately, then checkout path and branch verified | **Not observed; waived by the owner** | Every session ran with Worktree mode off. On 2026-11-25 the owner directed: "This wasting a lot of time and tokens let's move one, gits works perfectly". The Director took this as the decision to go on without this observation. The rule itself stays in [LOCAL-PROMPTS](../../workflow/LOCAL-PROMPTS.md) and [LOCAL-SETUP](../../development/LOCAL-SETUP.md#work-in-a-second-worktree); no parallel editing took place in the application |
 
 Verification step "used no content from the prior conversation": confirmed for the clean run. Its
 log holds no memory index, no summary and no other session's text, the memory directory was empty,
@@ -48,4 +47,4 @@ and it did not open the first account.
 ## Limits
 
 One application version, one model and one machine. The Worktree switch itself was not seen by
-the sessions; its state is read from what the application did.
+the sessions; its state is read from what the application did. Nothing is claimed about the application's Worktree mode.

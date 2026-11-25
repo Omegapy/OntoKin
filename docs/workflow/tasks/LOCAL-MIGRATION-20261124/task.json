@@ -1000,7 +1000,7 @@
         "TASK-022",
         "TASK-029"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/local-migration-20261124/FRESH-SESSION.md"
       ],
@@ -1231,10 +1231,13 @@
     {
       "name": "fresh-session demonstration",
       "command": "owner-run session in the Claude Desktop Code tab with the instruction Continue",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": [],
-      "note": "The clean run is recorded and judged in docs/engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md; its Worktree criterion is open. A first run, in FRESH-SESSION-1.md, does not count: a private agent note of the session that had taken over was in its context."
+      "evidence": [
+        "docs/engineering/local-migration-20261124/FRESH-SESSION.md",
+        "docs/engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md"
+      ],
+      "note": "Four of five criteria. The Worktree criterion was not observed and the owner waived it on 2026-11-25. A first run, in FRESH-SESSION-1.md, does not count."
     },
     {
       "name": "independent review of the exact candidate",
@@ -1258,6 +1261,6 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "TASK-030, the Worktree observation, as the session checkpoint SESSION.md states it; it waits for a read-only session that the owner starts with Worktree mode on. Then TASK-031, the audit and the freeze of the candidate.",
+  "next_action": "TASK-032, independent review of the frozen candidate; then TASK-033, integration.",
   "blockers": []
 }
