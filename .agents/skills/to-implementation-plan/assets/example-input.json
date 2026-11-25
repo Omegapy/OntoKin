@@ -1,0 +1,227 @@
+{
+  "title": "Add a project health-check command",
+  "project": {
+    "root_hint": ".",
+    "inspected_at": "2026-08-28T12:00:00-06:00",
+    "guidance": [
+      {
+        "path": "AGENTS.md",
+        "observed_at": "2026-08-28T12:00:00-06:00",
+        "digest": null,
+        "summary": "Project guidance requires scoped edits and current verification evidence."
+      }
+    ],
+    "baseline_facts": [
+      {
+        "fact": "The project already exposes command-line subcommands from src/cli.py.",
+        "evidence_locator": "src/cli.py",
+        "observed_at": "2026-08-28T12:00:00-06:00"
+      },
+      {
+        "fact": "Command tests use the standard-library unittest runner.",
+        "evidence_locator": "tests/test_cli.py",
+        "observed_at": "2026-08-28T12:00:00-06:00"
+      }
+    ],
+    "constraints": [
+      "Use the existing command dispatcher.",
+      "Do not add a runtime dependency."
+    ],
+    "preserved_paths": [
+      "config/production.json"
+    ],
+    "evidence_gaps": []
+  },
+  "objective": {
+    "summary": "Add a read-only health-check command that reports whether local configuration can be loaded.",
+    "user_value": "Maintainers can diagnose configuration problems before starting the service.",
+    "success_outcomes": [
+      "The command returns a successful status for valid local configuration.",
+      "The command returns a nonzero status and a concise diagnostic for invalid configuration."
+    ]
+  },
+  "scope": {
+    "in_scope": [
+      "Add the health-check command to the existing dispatcher.",
+      "Add focused success and failure tests.",
+      "Document the new command in the existing command reference."
+    ],
+    "out_of_scope": [
+      "Change production configuration.",
+      "Start the service or contact an external endpoint."
+    ],
+    "execution_authority": "This plan records and tracks proposed work. Creating or approving it does not authorize implementation, installation, publication, deployment, or another separately governed action."
+  },
+  "sources": [
+    {
+      "source_id": "SRC-001",
+      "kind": "prompt",
+      "locator": "Current explicit user request",
+      "title": "Health-check planning request",
+      "accessed_at": "2026-08-28T12:00:00-06:00",
+      "digest": null,
+      "facts_used": [
+        "Add a health-check command.",
+        "The command must not change project state.",
+        "The user approved using the existing command dispatcher and standard-library test runner."
+      ],
+      "access_limitations": [],
+      "provenance_mode": "user_supplied",
+      "inspection_method": null,
+      "external_id": null
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "REQ-001",
+      "title": "Provide a read-only health check",
+      "outcome": "The command reports whether local configuration can be loaded without changing project or external state.",
+      "intent": "Maintainers need a safe diagnostic before service startup.",
+      "source_ids": [
+        "SRC-001"
+      ],
+      "acceptance_criteria": [
+        "Valid configuration produces exit status 0 and a concise success result.",
+        "Invalid configuration produces a nonzero exit status and a diagnostic that does not expose secrets.",
+        "The command does not write project files or contact an external service."
+      ],
+      "dependencies": [],
+      "negative_requirements": [
+        "The command must not modify configuration."
+      ],
+      "status": "active",
+      "disposition": null,
+      "evidence": []
+    }
+  ],
+  "decisions": [
+    {
+      "decision_id": "DEC-001",
+      "statement": "Use the existing command dispatcher and standard-library test runner.",
+      "status": "approved",
+      "source_ids": [
+        "SRC-001"
+      ],
+      "authority_basis": "The current user explicitly approved these project-fitting implementation constraints in the source request.",
+      "decided_at": "2026-08-28T12:00:00-06:00"
+    }
+  ],
+  "open_questions": [],
+  "assumptions": [],
+  "phases": [
+    {
+      "phase_id": "PHASE-001",
+      "title": "Implement and verify the health check",
+      "objective": "Deliver the bounded command, focused tests, and command documentation.",
+      "scope": [
+        "Command implementation",
+        "Focused tests",
+        "Existing command-reference update"
+      ],
+      "depends_on_phase_ids": [],
+      "entry_conditions": [
+        "The exact implementation plan is approved and implementation is separately authorized."
+      ],
+      "exit_criteria": [
+        "All phase tasks meet their acceptance criteria with current evidence."
+      ],
+      "task_ids": [
+        "TASK-001",
+        "TASK-002"
+      ],
+      "risks": [
+        "Diagnostics could expose configuration values; tests and review must verify redaction."
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "task_id": "TASK-001",
+      "phase_id": "PHASE-001",
+      "title": "Implement the read-only command",
+      "action": "Add the health-check route through the existing dispatcher and reuse the current configuration loader without writing state.",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "design_basis": [],
+      "target_artifacts": [
+        "src/cli.py"
+      ],
+      "dependencies": [],
+      "parallel_group": null,
+      "risks": [
+        "An exception path could include a configuration value."
+      ],
+      "acceptance_criteria": [
+        "The route reports valid and invalid configuration with the required exit statuses.",
+        "No command path writes configuration or contacts an external service."
+      ],
+      "verification_steps": [
+        "Inspect the implementation path for writes and network calls.",
+        "Run the focused command tests."
+      ],
+      "status": "planned",
+      "blocker_reason": null,
+      "pause_reason": null,
+      "skip_reason": null,
+      "skip_authority": null,
+      "evidence": [],
+      "completed_at": null
+    },
+    {
+      "task_id": "TASK-002",
+      "phase_id": "PHASE-001",
+      "title": "Test and document the command",
+      "action": "Add focused success, failure, redaction, and no-write checks, then update the existing command reference.",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "design_basis": [],
+      "target_artifacts": [
+        "tests/test_cli.py",
+        "docs/commands.md"
+      ],
+      "dependencies": [
+        "TASK-001"
+      ],
+      "parallel_group": null,
+      "risks": [],
+      "acceptance_criteria": [
+        "Focused tests cover both exit paths, redaction, and the no-write boundary.",
+        "The existing command reference explains the new route and its exit behavior."
+      ],
+      "verification_steps": [
+        "Run the focused unittest module.",
+        "Resolve documentation links and compare command syntax with helper output."
+      ],
+      "status": "planned",
+      "blocker_reason": null,
+      "pause_reason": null,
+      "skip_reason": null,
+      "skip_authority": null,
+      "evidence": [],
+      "completed_at": null
+    }
+  ],
+  "coverage": {
+    "source_to_requirement": [
+      {
+        "source_id": "SRC-001",
+        "requirement_ids": [
+          "REQ-001"
+        ],
+        "disposition": null
+      }
+    ],
+    "requirement_to_task": [
+      {
+        "requirement_id": "REQ-001",
+        "task_ids": [
+          "TASK-001",
+          "TASK-002"
+        ],
+        "disposition": null
+      }
+    ]
+  }
+}
