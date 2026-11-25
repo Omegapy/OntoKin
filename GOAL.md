@@ -26,7 +26,7 @@ Older ambitions: [pre-C210 goal](https://github.com/Omegapy/OntoKin/blob/94dee70
 
 ## Staged roadmap and one current action
 
-[STATUS](STATUS.md#current-workflow-and-next-action)/[CURRENT](docs/workflow/CURRENT.json) own current scope/exact component states/next action; stop after its verified saved handoff. C253 [protocol/corpus](docs/engineering/localized-repair-c253/README.md): binds three cases from one public keyed-rack family for evaluator qualification, not unseen comparison/general advantage. [C260](docs/engineering/localized-repair-c260/README.md) unchanged; historical input admission: separate queued interface. Unmet: complete semantics, site/world behavior, authentic revisions, invalid-edit atomicity, clean rebuilds, native routes, comparative trials.
+[STATUS](STATUS.md#current-workflow-and-next-action)/[CURRENT](docs/workflow/CURRENT.json) own current scope/exact component states/next action; stop as its [execution mode](AGENTS.md#execution-modes) requires: browser, after its verified saved handoff; local, at its closing state. C253 [protocol/corpus](docs/engineering/localized-repair-c253/README.md): binds three cases from one public keyed-rack family for evaluator qualification, not unseen comparison/general advantage. [C260](docs/engineering/localized-repair-c260/README.md) unchanged; historical input admission: separate queued interface. Unmet: complete semantics, site/world behavior, authentic revisions, invalid-edit atomicity, clean rebuilds, native routes, comparative trials.
 
 Follow [C252 roadmap](docs/engineering/review-integration-c252/ROADMAP.md):
 

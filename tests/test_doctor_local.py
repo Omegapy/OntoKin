@@ -1,0 +1,1124 @@
+"""Controls for the non-mutating local doctor. No package is installed and no network is used."""
+
+from contextlib import redirect_stderr, redirect_stdout
+import io
+import json
+import os
+from pathlib import Path
+import platform
+import re
+import shlex
+import shutil
+import subprocess
+import sys
+import tempfile
+import unittest
+from unittest.mock import patch
+
+from tools import doctor_local as doctor
+
+REPOSITORY = Path(__file__).resolve().parents[1]
+BASE = "/opt/homebrew/Cellar/python@3.12/3.12.13/Frameworks/Python.framework/Versions/3.12"
+AREAS = ("checkout", "python", "packages", "specification", "visual", "storage", "workflow", "remote", "readiness", "native_experiments")
+
+
+class LocalProject:
+    """A temporary checkout with the committed specification and a controlled machine around it."""
+
+    FILES = ("tools/force-agent-verification-requirements.txt", "tools/native-reader-verification-linux-cp312.lock",
+             "tools/native-reader-verification-macos-arm64-cp312.lock", "tools/native-reader-verification-macos-arm64-cp312.provenance.json",
+             "tools/check_native_reader_setup.py", "tools/package.json", "tools/package-lock.json", "pyproject.toml")
+
+    def __init__(self, directory: Path, name="checkout"):
+        self.directory = directory.resolve()
+        self.root = self.directory / name
+        for file in self.FILES:
+            target = self.root / file
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes((REPOSITORY / file).read_bytes())
+        (self.root / "ontokin").mkdir()
+        (self.root / "ontokin/__init__.py").write_text("", encoding="utf-8")
+        (self.root / ".gitignore").write_text(".venv/\nbuild/\nnode_modules/\n", encoding="utf-8")
+        self.interpreter = self.directory / "interpreters/python3.12"
+        self.interpreter.parent.mkdir()
+        self.interpreter.write_text("", encoding="utf-8")
+        self.spec = json.loads((REPOSITORY / doctor.SPECIFICATION).read_text(encoding="utf-8"))
+        for distribution in self.spec["interpreter"]["distributions"].values():
+            distribution["search"] = [str(self.interpreter.parent)]
+        self.save()
+        self.pins = {package["name"]: package["version"] for package in self.spec["profiles"]["python-verification"]["packages"]}
+        self.system, self.machine, self.commands = "Darwin", "arm64", {"lsof": "/usr/sbin/lsof", "brew": "/opt/homebrew/bin/brew"}
+        self.base = self.facts()                      # What the specified interpreter command reports.
+        self.installed = None                         # What the environment reports; None means no environment.
+        self.environment = {}                         # Overrides of the environment interpreter's facts.
+        self.broken_imports, self.pip_conflict, self.pip_error, self.smoke_code, self.source = {}, None, None, 0, None
+        self.node_version, self.users, self.lsof_code, self.lsof_error, self.ps_code = "v22.11.0\n", "", None, "", 0
+        self.processes, self.ended = [], set()
+        self.process(1, "/sbin/launchd", owner=0)
+        self.calls, self.environments, self.kept, self.directories, self.handlers = [], [], [], [], []
+        self.git("init", "--quiet", "--template=")
+        self.git("add", "-A")
+        self.git("commit", "--quiet", "--no-verify", "-m", "Checkout")
+
+    def save(self):
+        (self.root / doctor.SPECIFICATION).write_text(json.dumps(self.spec, indent=2), encoding="utf-8")
+
+    def git(self, *arguments, root=None):
+        """Git in a test repository only; a repository named by the caller is never used."""
+        environment = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
+        environment.update(GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_NOSYSTEM="1")
+        return subprocess.run(["git", "-c", "user.name=Test", "-c", "user.email=test@example.invalid", "-C", str(root or self.root), *arguments],
+                              env=environment, check=True, capture_output=True, text=True).stdout.strip()
+
+    def facts(self, **overrides):
+        return {"implementation": "CPython", "version": "3.12.13", "build": ["main", "Mar  3 2026 12:39:30"], "compiler": "Clang 17.0.0",
+                "executable": "python3.12", "base_executable": "python3.12", "prefix": BASE, "base_prefix": BASE, "base_prefix_real": BASE,
+                "system": "Darwin", "machine": "arm64", "os_version": "26.6.2", "platform_tag": "macosx-26.0-arm64",
+                "sys_path": [BASE + "/lib/python312.zip", BASE + "/lib/python3.12"], "site_packages": BASE + "/lib/python3.12/site-packages",
+                "packages": {"pip": "26.0"}, "places": {}, "duplicates": {}, "editable": {}, "source_package": None, "imports": {}, **overrides}
+
+    def process(self, number, command, *, program="", place=None, environment=None, owner=None):
+        """One running process: what ps, lsof and the process environment would show of it."""
+        self.processes.append({"number": number, "owner": os.getuid() if owner is None else owner, "command": command, "program": program,
+                               "place": place, "environment": environment})
+
+    @property
+    def venv(self):
+        return self.root / ".venv"
+
+    @property
+    def site(self):
+        return str(self.venv / "lib/python3.12/site-packages")
+
+    def create_environment(self, packages=None, *, command=None, system_site="false", pip="26.0", **overrides):
+        """Lay out an environment directory and what its interpreter would report."""
+        (self.venv / "bin").mkdir(parents=True, exist_ok=True)
+        (self.venv / "bin/python").write_text("", encoding="utf-8")
+        (self.venv / "pyvenv.cfg").write_text(f"home = /opt/homebrew/opt/python@3.12/bin\ninclude-system-site-packages = {system_site}\n"
+                                              f"version = 3.12.13\ncommand = {command or f'python3.12 -m venv {self.venv}'}\n", encoding="utf-8")
+        self.installed = {**({"pip": pip} if pip else {}), **(self.pins if packages is None else packages)}
+        self.environment = overrides
+
+    def environment_facts(self, names):
+        present = {doctor.normalize(name) for name in self.installed}
+        imports = {}
+        for package in self.spec["profiles"]["python-verification"]["packages"]:
+            if package["import"] in names:
+                error = self.broken_imports.get(package["import"])
+                if error is None and doctor.normalize(package["name"]) not in present:
+                    error = "ModuleNotFoundError: absent"
+                imports[package["import"]] = {"ok": error is None, "file": None if error else f"{self.site}/{package['import']}.py", "error": error}
+        return self.facts(**{"prefix": str(self.venv), "packages": self.installed, "imports": imports, "site_packages": self.site,
+                             "sys_path": [BASE + "/lib/python3.12", self.site],
+                             "places": {name: f"{self.site}/{name}.dist-info" for name in self.installed}, **self.environment})
+
+    def result(self, argv, code=0, out="", err=""):
+        return {"argv": [str(part) for part in argv], "code": code, "out": out, "err": err, "error": None}
+
+    def run(self, argv, cwd=None, timeout=60, env=None, keep=()):
+        argv = [str(part) for part in argv]
+        self.calls.append(argv)
+        self.environments.append(env)
+        self.kept.append(keep)
+        self.directories.append(cwd)
+        for handler in self.handlers:
+            answer = handler(argv)
+            if answer is not None:
+                return answer
+        if argv[:3] == ["git", "lfs", "version"]:
+            return self.result(argv, out="git-lfs/3.7.1 (GitHub; darwin arm64)\n")
+        if argv[0] == "git" or any(part.endswith("tools/chat_workflow.py") for part in argv):
+            return doctor.execute(argv, cwd, timeout, env)
+        if argv[0] in {"lsof", "ps", "cat"}:
+            return self.observe_processes(argv)
+        if argv[1:] == ["--version"]:
+            return self.result(argv, out=self.node_version)
+        inside = argv[0] == str(self.venv / "bin/python")
+        if doctor.PROBE in argv:
+            facts = self.environment_facts(json.loads(argv[-1])) if inside else self.base
+            return self.result(argv, code=3, err="cannot execute") if facts is None or self.environment.get("version") == "broken" and inside else \
+                self.result(argv, out=json.dumps(facts))
+        if "pip" in argv and argv[-1] == "check" and self.pip_error:
+            return self.result(argv, code=1, err=self.pip_error)
+        if "pip" in argv and argv[-1] == "check":
+            return self.result(argv, code=1 if self.pip_conflict else 0, out=self.pip_conflict or "No broken requirements found.\n")
+        if argv[-1].endswith("check_native_reader_setup.py"):
+            ready = self.installed.get("Pillow") == "13.0.0"
+            return self.result(argv, code=0 if ready else 1, out="Native-reader image decoder ready\n" if ready else "", err="" if ready else "setup failed\n")
+        if argv[-1].startswith("import ontokin"):
+            return self.result(argv, out=str(self.root / "ontokin/__init__.py") + "\n" if self.source is None else self.source)
+        if "ontokin" in argv:
+            return self.result(argv, code=self.smoke_code)
+        raise AssertionError(f"Unexpected command: {argv}")
+
+    def observe_processes(self, argv):
+        if argv[0] == "lsof" and "-Fpcn" in argv:
+            own = [item for item in self.processes if item["owner"] == os.getuid()]
+            return self.result(argv, code=self.lsof_code or 0, err=self.lsof_error, out="".join(
+                f"p{item['number']}\nc{item['program']}\nfcwd\n" + (f"n{item['place']}\n" if item["place"] else "") for item in own))
+        if argv[0] == "lsof":
+            return self.result(argv, code=self.lsof_code if self.lsof_code is not None else 0 if self.users else 1, out=self.users, err=self.lsof_error)
+        if argv[:3] == ["ps", "-o", "pid="]:
+            alive = [number for number in argv[-1].split(",") if int(number) not in self.ended]
+            return self.result(argv, code=0 if alive else 1, out="".join(f"{number:>6}\n" for number in alive))
+        if argv[0] == "ps" and "-Eww" in argv or argv[0] == "cat":
+            number = argv[-1].split("/")[2] if argv[0] == "cat" else argv[-1]
+            item = next(item for item in self.processes if str(item["number"]) == number)
+            if argv[0] == "cat":
+                return self.result(argv, code=0 if item["environment"] else 1, out=(item["environment"] or "").replace(" ", "\0") + "\0")
+            return self.result(argv, out=f"{item['command']} {item['environment'] or ''}\n")
+        return self.result(argv, code=self.ps_code, out="".join(f"{item['number']:>6} {item['owner']:>5} {item['command']}\n" for item in self.processes) if not self.ps_code else "")
+
+    def which(self, name):
+        return str(self.interpreter) if name == "python3.12" else self.commands.get(name)
+
+    def collect(self, profile="python-verification", online=False, **overrides):
+        options = {"run": self.run, "which": self.which, "system": self.system, "machine": self.machine,
+                   "cache": self.directory / "browsers", **overrides}
+        return doctor.collect(self.root, profile, online, **options)
+
+    def snapshot(self):
+        """Every path with its kind, size, time and content; Git's own directory included."""
+        state = {}
+        for path in sorted(self.directory.rglob("*")):
+            status = path.lstat()
+            content = os.readlink(path) if path.is_symlink() else path.read_bytes() if path.is_file() else None
+            state[path.relative_to(self.directory).as_posix()] = (status.st_mode, status.st_mtime_ns, content)
+        return state
+
+    def node_modules(self, **versions):
+        """Every package of the committed lock that belongs on the controlled platform."""
+        for row in doctor.npm_dependencies(self.root, self.spec["profiles"]["visual-verification"], self.system, self.machine):
+            target = self.root / "tools/node_modules" / row["name"] / "package.json"
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(json.dumps({"name": row["name"], "version": versions.get(row["name"], row["expected"])}), encoding="utf-8")
+        locked = doctor.locked_packages(self.root, self.spec["profiles"]["visual-verification"], self.system, self.machine)
+        (self.root / "tools/node_modules/.package-lock.json").write_text(json.dumps({"packages": locked}), encoding="utf-8")
+        target = self.root / "tools/node_modules/playwright-core/browsers.json"
+        target.write_text(json.dumps({"browsers": [{"name": "chromium-headless-shell", "revision": "1194"}]}), encoding="utf-8")
+
+    def node(self):
+        directory = self.directory / "node/bin"
+        directory.mkdir(parents=True, exist_ok=True)
+        manifest = self.directory / "node/lib/node_modules/npm"
+        (manifest / "bin").mkdir(parents=True, exist_ok=True)
+        (manifest / "package.json").write_text(json.dumps({"name": "npm", "version": "10.9.0"}), encoding="utf-8")
+        (manifest / "bin/npm-cli.js").write_text("", encoding="utf-8")
+        (directory / "node").write_text("", encoding="utf-8")
+        if not (directory / "npm").exists():
+            (directory / "npm").symlink_to(manifest / "bin/npm-cli.js")
+        self.commands["node"] = str(directory / "node")
+
+    def browser(self):
+        marker = self.directory / "browsers/chromium_headless_shell-1194/INSTALLATION_COMPLETE"
+        marker.parent.mkdir(parents=True, exist_ok=True)
+        marker.write_text("", encoding="utf-8")
+
+
+class DoctorCase(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.project = LocalProject(Path(temporary.name))
+
+    def state(self, report, profile="python-verification"):
+        return report["readiness"][profile]["state"]
+
+    def check(self, report, identifier, profile="python-verification"):
+        return next(item for item in report["readiness"][profile]["checks"] if item["id"] == identifier)
+
+
+class SpecificationTests(DoctorCase):
+    def test_committed_specification_pins_and_locks_agree(self):
+        spec = doctor.load_specification(REPOSITORY)
+        self.assertEqual(doctor.specification_problems(REPOSITORY, spec), [])
+        pins = {doctor.normalize(package["name"]): package["version"] for package in doctor.packages_of(spec, "python-verification")}
+        self.assertEqual(pins, {"attrs": "26.1.0", "jsonschema": "4.26.0", "jsonschema-specifications": "2025.9.1", "referencing": "0.37.0",
+                                "rpds-py": "2026.5.1", "typing-extensions": "4.16.0", "pillow": "13.0.0"})
+        self.assertRegex(spec["interpreter"]["version"], r"^3\.12\.\d+$")
+        self.assertEqual(list(spec["profiles"]), ["core", "python-verification", "visual-verification", "package-smoke", "historical-native", "linux-container"])
+        text = (REPOSITORY / doctor.SPECIFICATION).read_text(encoding="utf-8")
+        self.assertIsNone(re.search(r"\b(uv|conda|poetry|pipenv)\b", text, re.I))
+
+    def test_platform_independent_wheels_have_the_same_hash_in_both_locks(self):
+        linux = doctor.parse_lock((REPOSITORY / "tools/native-reader-verification-linux-cp312.lock").read_text(encoding="utf-8"))
+        macos = doctor.parse_lock((REPOSITORY / "tools/native-reader-verification-macos-arm64-cp312.lock").read_text(encoding="utf-8"))
+        provenance = json.loads((REPOSITORY / "tools/native-reader-verification-macos-arm64-cp312.provenance.json").read_text(encoding="utf-8"))
+        portable = {doctor.normalize(wheel["name"]) for wheel in provenance["wheels"] if wheel["platform_independent"]}
+        self.assertEqual(len(portable), 5)
+        self.assertEqual({name for name in linux if linux[name]["sha256"] == macos[name]["sha256"]}, portable)
+
+    def test_lock_is_selected_only_for_its_platform_and_python_series(self):
+        spec = self.project.spec
+        self.assertEqual(doctor.select_lock(spec, "python-verification", "macos-arm64", "3.12")["path"], "tools/native-reader-verification-macos-arm64-cp312.lock")
+        self.assertEqual(doctor.select_lock(spec, "python-verification", "linux-x86_64", "3.12")["path"], "tools/native-reader-verification-linux-cp312.lock")
+        for key, series in ((None, "3.12"), ("linux-aarch64", "3.12"), ("linux-x86_64", "3.11"), ("macos-arm64", "3.13")):
+            with self.subTest(platform=key, series=series):
+                self.assertEqual(doctor.select_lock(spec, "python-verification", key, series)["state"], "unsupported")
+        self.assertFalse(doctor.select_lock(spec, "core", None, "3.12")["required"])
+        self.assertEqual(doctor.platform_key(spec, "Darwin", "arm64"), "macos-arm64")
+        self.assertIsNone(doctor.platform_key(spec, "Darwin", "x86_64"))
+        self.assertIsNone(doctor.platform_key(spec, "Windows", "AMD64"))
+
+    def test_lock_text_must_be_exact_hashed_pins(self):
+        hashed = "attrs==26.1.0 --hash=sha256:" + "a" * 64
+        self.assertEqual(doctor.parse_lock("# note\n" + hashed)["attrs"]["version"], "26.1.0")
+        for text in ("attrs==26.1.0", "attrs>=26.1.0 --hash=sha256:" + "a" * 64, "--index-url https://example.invalid\n" + hashed,
+                     hashed + "\nAttrs==26.1.0 --hash=sha256:" + "b" * 64, "https://example.invalid/attrs.whl", "", hashed + " --hash=sha256:" + "b" * 64):
+            with self.subTest(text=text[:40]), self.assertRaises(doctor.SpecificationError):
+                doctor.parse_lock(text)
+
+    def test_changed_lock_pin_or_provenance_is_reported_and_not_ready(self):
+        self.project.create_environment()
+        lock = self.project.root / "tools/native-reader-verification-macos-arm64-cp312.lock"
+        original = lock.read_bytes()
+        for label, data in (("hash", original.replace(b"c647aa", b"c647ab")), ("version", original.replace(b"attrs==26.1.0", b"attrs==26.1.1")),
+                            ("missing entry", original.split(b"\n", 1)[0] + b"\n" + b"\n".join(original.split(b"\n")[2:])),
+                            ("bytes only", original + b"# Same pins, other bytes.\n")):
+            with self.subTest(change=label):
+                lock.write_bytes(data)
+                report = self.project.collect()
+                self.assertEqual(self.check(report, "lock")["state"], "mismatch")
+                self.assertEqual(self.state(report), "mismatch")
+                self.assertTrue(report["specification"]["problems"])
+        lock.write_bytes(original)
+        provenance = self.project.root / "tools/native-reader-verification-macos-arm64-cp312.provenance.json"
+        recorded = provenance.read_bytes()
+        provenance.write_bytes(recorded.replace(b'"sha256": "c647aa', b'"sha256": "c647ab'))
+        self.assertIn("its wheels differ", self.check(self.project.collect(), "lock")["detail"])
+        provenance.unlink()
+        self.assertIn("unreadable provenance", self.check(self.project.collect(), "lock")["detail"])
+        provenance.write_bytes(recorded)
+        self.assertEqual(self.check(self.project.collect(), "lock")["state"], "ready")
+        lock.unlink()
+        self.assertEqual(self.check(self.project.collect(), "lock")["state"], "missing")
+
+    def test_disagreeing_pin_file_and_npm_manifest_are_reported(self):
+        pins = self.project.root / "tools/force-agent-verification-requirements.txt"
+        pins.write_text(pins.read_text(encoding="utf-8").replace("attrs==26.1.0", "attrs==26.0.0"), encoding="utf-8")
+        self.assertIn("python-verification: attrs 26.1.0 differs from tools/force-agent-verification-requirements.txt",
+                      doctor.specification_problems(self.project.root, self.project.spec))
+        self.project.create_environment()
+        self.assertEqual(self.check(self.project.collect(), "lock")["state"], "mismatch")
+        manifest = self.project.root / "tools/package.json"
+        manifest.write_text(manifest.read_text(encoding="utf-8").replace("0.180.0", "0.181.0"), encoding="utf-8")
+        self.assertIn("visual-verification: npm dependencies differ from tools/package.json", doctor.specification_problems(self.project.root, self.project.spec))
+
+    def test_unusable_specifications_are_refused(self):
+        path = self.project.root / doctor.SPECIFICATION
+        for label, change in (("schema", lambda spec: spec.update(schema="other/1")), ("patch", lambda spec: spec["interpreter"].update(version="3.12")),
+                              ("cycle", lambda spec: spec["profiles"]["core"].update(extends="visual-verification")),
+                              ("kind", lambda spec: spec["profiles"]["core"].update(kind="other")),
+                              ("directory", lambda spec: spec["environment"].update(directory="../outside"))):
+            with self.subTest(case=label):
+                spec = json.loads(json.dumps(self.project.spec))
+                change(spec)
+                path.write_text(json.dumps(spec), encoding="utf-8")
+                with self.assertRaises(doctor.SpecificationError):
+                    doctor.load_specification(self.project.root)
+        path.write_text("{", encoding="utf-8")
+        with self.assertRaises(doctor.SpecificationError):
+            doctor.load_specification(self.project.root)
+
+
+class ReadinessTests(DoctorCase):
+    def test_absent_environment_is_missing_and_unexecuted_checks_are_not_passes(self):
+        report = self.project.collect()
+        self.assertEqual(self.state(report, "core"), "missing")
+        self.assertEqual(self.state(report), "missing")
+        self.assertEqual({row["state"] for row in report["packages"]["expected"]}, {"missing"})
+        for name in ("imports", "pip-check", "native-reader"):
+            self.assertEqual(self.check(report, name)["state"], "not_checked")
+        self.assertIn("tools/bootstrap_local.py --profile python-verification", report["selected"]["next_action"])
+
+    def test_complete_environment_is_ready(self):
+        self.project.create_environment()
+        report = self.project.collect()
+        self.assertEqual(self.state(report, "core"), "ready", report["readiness"]["core"])
+        self.assertEqual(self.state(report), "ready", report["readiness"]["python-verification"])
+        self.assertIsNone(report["selected"]["next_action"])
+        self.assertEqual(report["packages"]["additional"], {})
+        self.assertEqual(report["packages"]["install_tools"], {"pip": "26.0"})
+
+    def test_wrong_version_is_a_mismatch_and_absent_package_is_missing(self):
+        self.project.create_environment({**self.project.pins, "jsonschema": "4.25.0"})
+        report = self.project.collect()
+        self.assertEqual((self.check(report, "packages")["state"], self.state(report)), ("mismatch", "mismatch"))
+        self.assertIn("jsonschema 4.25.0, expected 4.26.0", self.check(report, "packages")["detail"])
+        self.assertNotIn("--rebuild", report["selected"]["next_action"])
+        packages = dict(self.project.pins)
+        del packages["Pillow"]
+        self.project.create_environment(packages)
+        report = self.project.collect()
+        self.assertEqual((self.check(report, "packages")["state"], self.check(report, "imports")["state"], self.state(report)), ("missing",) * 3)
+        self.assertEqual(self.check(report, "native-reader")["state"], "missing")
+
+    def test_package_installed_twice_is_a_mismatch(self):
+        self.project.create_environment(duplicates={"attrs": ["26.1.0", "25.3.0"]})
+        report = self.project.collect()
+        self.assertEqual((self.check(report, "packages")["state"], self.state(report)), ("mismatch", "mismatch"))
+        self.assertIn("attrs 26.1.0 and 25.3.0, expected 26.1.0", self.check(report, "packages")["detail"])
+
+    def test_dependents_of_an_absent_package_do_not_look_like_a_conflict(self):
+        packages = dict(self.project.pins)
+        del packages["rpds-py"]
+        self.project.create_environment(packages)
+        self.project.broken_imports = {name: "ModuleNotFoundError: No module named 'rpds'" for name in ("jsonschema", "referencing")}
+        self.project.pip_conflict = "referencing 0.37.0 requires rpds-py, which is not installed.\n"
+        report = self.project.collect()
+        self.assertEqual((self.check(report, "imports")["state"], self.check(report, "pip-check")["state"], self.state(report)), ("missing",) * 3)
+        self.project.installed["attrs"] = "1.0"
+        report = self.project.collect()
+        self.assertEqual({self.state(report), self.check(report, "imports")["state"], self.check(report, "pip-check")["state"]}, {"mismatch"})
+
+    def test_one_unexecuted_check_prevents_readiness_and_names_the_rebuild(self):
+        self.project.create_environment(pip=None)
+        report = self.project.collect()
+        self.assertEqual((self.check(report, "pip-check")["state"], self.state(report)), ("not_checked", "not_checked"))
+        self.assertIn("--rebuild", report["selected"]["next_action"])
+
+    def test_pip_that_does_not_run_is_no_result_and_needs_a_rebuild(self):
+        packages = dict(self.project.pins)
+        del packages["attrs"]
+        self.project.create_environment(packages)
+        self.project.pip_error = "ModuleNotFoundError: No module named 'pip._internal'\n"
+        report = self.project.collect()
+        self.assertEqual((self.check(report, "pip-check")["state"], self.state(report)), ("not_checked", "missing"))
+        self.assertIn("pip does not run: ModuleNotFoundError", self.check(report, "pip-check")["detail"])
+        self.assertIn("--rebuild", report["selected"]["next_action"], "Nothing can be installed without pip.")
+
+    def test_each_unmet_check_names_an_action_that_can_resolve_it(self):
+        project = self.project
+        report = project.collect()
+        self.assertEqual(report["selected"]["next_action"], f"In {project.root}: Run: python3.12 tools/bootstrap_local.py --profile python-verification")
+        self.assertNotIn("--rebuild", report["readiness"]["visual-verification"]["next_action"])
+        self.assertIn("--profile python-verification", report["readiness"]["visual-verification"]["next_action"], "The environment does not wait for Node.js.")
+        with patch.object(doctor.os, "getcwd", return_value=str(project.root)):
+            self.assertTrue(project.collect()["selected"]["next_action"].startswith("Run: "))
+        project.venv.write_text("a file", encoding="utf-8")
+        self.assertIn("Move .venv away by hand", project.collect()["selected"]["next_action"])
+        project.venv.unlink()
+        lock = project.root / "tools/native-reader-verification-macos-arm64-cp312.lock"
+        kept = lock.read_bytes()
+        lock.write_bytes(kept + b"# changed\n")
+        self.assertIn("Restore the committed files", project.collect()["selected"]["next_action"], "Setup refuses for the lock first.")
+        lock.write_bytes(kept)
+        project.handlers.append(lambda argv: project.result(argv, code=128, err="fatal: not a git repository\n") if argv[0] == "git" else None)
+        self.assertIn("Git reports: fatal: not a git repository", project.collect()["selected"]["next_action"], "Setup refuses without a checkout first.")
+        project.handlers.pop()
+        project.create_environment(duplicates={"attrs": ["26.1.0", "25.3.0"]})
+        self.assertIn("--rebuild", project.collect()["selected"]["next_action"])
+        (project.venv / "pyvenv.cfg").unlink()
+        self.assertIn("Move .venv away by hand", project.collect()["selected"]["next_action"])
+        shutil.rmtree(project.venv)
+        project.venv.mkdir()
+        self.assertIn("Move .venv away by hand", project.collect()["selected"]["next_action"])
+        shutil.rmtree(project.venv)
+        project.create_environment()
+        project.venv.rename(project.directory / "shared")
+        project.venv.symlink_to(project.directory / "shared", target_is_directory=True)
+        self.assertIn("Move .venv away by hand", project.collect()["selected"]["next_action"], "A link is moved away also when it leads to an environment.")
+        project.venv.unlink()
+        project.create_environment()
+        project.node()
+        project.node_modules(three="0.179.0")
+        self.assertIn("--profile visual-verification --repair-node", project.collect("visual-verification")["selected"]["next_action"])
+        for node in (project.commands["node"], os.path.relpath(project.commands["node"])):
+            self.assertIn(f"--node {shlex.quote(project.commands['node'])} --repair-node", project.collect("visual-verification", node=node)["selected"]["next_action"])
+        shutil.move(project.root / "tools/node_modules", project.directory / "modules")
+        self.assertTrue(project.collect("visual-verification")["selected"]["next_action"].endswith("--profile visual-verification"))
+        (project.root / "tools/node_modules").symlink_to(project.directory / "modules", target_is_directory=True)
+        self.assertIn("Remove the link tools/node_modules by hand", project.collect("visual-verification")["selected"]["next_action"])
+        (project.root / ".git/index").write_bytes(b"not an index")
+        self.assertIn("Repair the checkout", project.collect()["selected"]["next_action"])
+
+    def test_missing_preflight_is_named_and_no_reason_to_rebuild(self):
+        self.project.create_environment()
+        (self.project.root / "tools/check_native_reader_setup.py").unlink()
+        report = self.project.collect()
+        self.assertEqual((self.check(report, "native-reader")["state"], self.state(report)), ("not_checked", "mismatch"))
+        self.assertIn("Restore the committed files", report["selected"]["next_action"])
+        self.assertIn("tools/check_native_reader_setup.py: missing", report["selected"]["next_action"])
+
+    def test_relative_node_is_the_one_that_setup_would_start(self):
+        self.project.node()
+        node = self.project.commands["node"]
+        for given in (os.path.relpath(node), node, "node"):
+            with self.subTest(given=given):
+                self.assertEqual(self.project.collect(node=given)["visual"]["node"]["path"], node)
+        # A path is read as the system reads it: the link first, then its parent.
+        (self.project.directory / "far/away").mkdir(parents=True)
+        (self.project.directory / "link").symlink_to(self.project.directory / "far/away", target_is_directory=True)
+        self.assertEqual(doctor.located(f"{self.project.directory}/link/../tool"), f"{self.project.directory}/far/tool")
+        self.assertEqual(doctor.canonical_new(f"{self.project.directory}/link/../new/place"), self.project.directory / "far/new/place")
+        self.assertEqual(doctor.canonical_new(f"{self.project.directory}/absent/../new"), self.project.directory / "new")
+
+    def test_changed_npm_manifest_is_named_before_anything_is_installed(self):
+        self.project.create_environment()
+        manifest = self.project.root / "tools/package.json"
+        manifest.write_text(manifest.read_text(encoding="utf-8").replace("0.180.0", "0.181.0"), encoding="utf-8")
+        report = self.project.collect("visual-verification")
+        self.assertEqual(self.check(report, "npm-dependencies", "visual-verification")["state"], "mismatch")
+        self.assertIn("Restore the committed files", report["selected"]["next_action"], "Also without Node.js.")
+        self.assertIn("npm dependencies differ from tools/package.json", report["selected"]["next_action"])
+
+    def test_unrecorded_place_and_absent_interpreter_come_before_later_actions(self):
+        self.project.create_environment(command="unrecorded")
+        self.assertIn("--rebuild", self.project.collect("visual-verification")["selected"]["next_action"])
+        self.project.create_environment(version="3.12.14")
+        self.project.interpreter.unlink()
+        self.project.which = lambda name: self.project.commands.get(name)
+        self.assertIn("brew install python@3.12", self.project.collect()["selected"]["next_action"])
+        self.project.create_environment(system_site="true")
+        self.assertIn("brew install python@3.12", self.project.collect()["selected"]["next_action"], "A rebuild needs the interpreter first.")
+
+    def test_editable_install_may_name_this_checkout_only(self):
+        top = str(self.project.root)
+        for source in (f"{top}/ontokin/__init__.py", f"{top}/packaging/installed/ontokin/__init__.py"):
+            self.project.create_environment(editable={"ontokin-reference": top}, source_package=source)
+            self.assertEqual(self.check(self.project.collect(), "isolation", "core")["state"], "ready", source)
+        for label, overrides, text in (("recorded", {"editable": {"ontokin-reference": "/another/checkout"}}, "ontokin-reference from /another/checkout"),
+                                       ("unreadable", {"editable": {"ontokin-reference": "KeyError"}}, "ontokin-reference from KeyError"),
+                                       ("import hook", {"source_package": "/another/checkout/ontokin/__init__.py"}, "ontokin is imported from /another/checkout"),
+                                       ("worktree hook", {"source_package": f"{top}/.claude/worktrees/other/ontokin/__init__.py"}, "ontokin is imported from"),
+                                       ("unreadable hook", {"source_package": "ImportError: broken"}, "ontokin is imported from ImportError"),
+                                       ("worktree inside", {"sys_path": [BASE + "/lib/python3.12", self.project.site, f"{top}/.claude/worktrees/other"]}, "leaves the environment"),
+                                       ("packages inside", {"places": {"attrs": f"{top}/.claude/worktrees/other/attrs.egg-info"}}, "installed elsewhere")):
+            with self.subTest(case=label):
+                self.project.create_environment(**overrides)
+                report = self.project.collect()
+                self.assertEqual(self.check(report, "isolation", "core")["state"], "mismatch")
+                self.assertIn(text, self.check(report, "isolation", "core")["detail"])
+        if (self.project.directory / "CHECKOUT").exists():  # The file system ignores letter case.
+            self.project.create_environment(editable={"ontokin-reference": str(self.project.directory / "CHECKOUT")})
+            self.assertEqual(self.check(self.project.collect(), "isolation", "core")["state"], "ready")
+        self.project.create_environment(places={"ontokin-reference": f"{top}/ontokin_reference.egg-info"}, source_package=f"{self.project.site}/ontokin/__init__.py")
+        self.assertEqual(self.check(self.project.collect(), "isolation", "core")["state"], "ready", "The checkout's own metadata and an installed copy stay inside.")
+
+    def test_translated_interpreter_does_not_change_the_machine(self):
+        for system, machine, translated, expected in (("Darwin", "x86_64", "1\n", "arm64"), ("Darwin", "x86_64", "0\n", "x86_64"), ("Linux", "x86_64", "1\n", "x86_64"),
+                                                      ("Darwin", "arm64", "0\n", "arm64")):
+            with self.subTest(system=system, machine=machine, translated=translated), patch.object(doctor.platform, "system", return_value=system), \
+                    patch.object(doctor.platform, "machine", return_value=machine):
+                self.assertEqual(doctor.host_machine(lambda argv, **options: {"out": translated}), expected)
+
+    def test_additional_packages_stay_visible(self):
+        self.project.create_environment({**self.project.pins, "example": "1.0"})
+        self.assertEqual(self.project.collect()["packages"]["additional"], {"example": "1.0"})
+
+    def test_interpreter_patch_drift_and_other_distributions_are_mismatches(self):
+        cases = ({"version": "3.12.14"}, {"version": "3.11.14"}, {"implementation": "PyPy"}, {"machine": "x86_64"},
+                 {"base_prefix_real": "/home/someone/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none"})
+        for overrides in cases:
+            with self.subTest(**overrides):
+                self.project.create_environment(**overrides)
+                report = self.project.collect()
+                self.assertEqual(self.check(report, "interpreter", "core")["state"], "mismatch")
+                self.assertEqual(self.state(report), "mismatch")
+                self.assertIn("--rebuild", report["selected"]["next_action"])
+        self.project.create_environment(version="3.12.14")
+        detail = self.check(self.project.collect(), "interpreter", "core")["detail"]
+        self.assertIn("version 3.12.14, expected 3.12.13", detail)
+        self.assertIn("created with 3.12.13", detail)
+
+    def test_anything_from_another_location_breaks_isolation(self):
+        site = self.project.site
+        for label, arguments in (("copied", {"command": "python3.12 -m venv /elsewhere/.venv"}), ("system packages", {"system_site": "true"}),
+                                 ("other prefix", {"prefix": "/elsewhere/.venv"}), ("not virtual", {"prefix": BASE}),
+                                 ("path entry", {"sys_path": [BASE + "/lib/python3.12", site, "/another/worktree"]}),
+                                 ("shared packages", {"sys_path": [BASE + "/lib/python3.12/site-packages", site]}),
+                                 ("linked site-packages", {"site_packages": "/another/site-packages"}),
+                                 ("package elsewhere", {"places": {"attrs": "/another/worktree/.venv/attrs.dist-info"}})):
+            with self.subTest(case=label):
+                self.project.create_environment(**arguments)
+                report = self.project.collect()
+                self.assertEqual(self.check(report, "isolation", "core")["state"], "mismatch")
+                self.assertEqual(self.state(report), "mismatch")
+                self.assertIn("--rebuild", report["selected"]["next_action"])
+        self.project.create_environment(sys_path=[BASE + "/lib/python3.12", site, str(self.project.root)])
+        self.assertEqual(self.check(self.project.collect(), "isolation", "core")["state"], "ready", "An editable install adds this checkout only.")
+
+    def test_shared_environment_is_a_mismatch(self):
+        self.project.create_environment()
+        shutil.move(str(self.project.venv), str(self.project.directory / "shared"))
+        self.project.venv.symlink_to(self.project.directory / "shared", target_is_directory=True)
+        report = self.project.collect()
+        self.assertEqual(self.check(report, "isolation", "core")["state"], "mismatch")
+        self.assertIn("symbolic link", self.check(report, "isolation", "core")["detail"])
+
+    def test_unrecorded_creation_place_is_not_a_pass(self):
+        self.project.create_environment()
+        configuration = self.project.venv / "pyvenv.cfg"
+        configuration.write_text("\n".join(line for line in configuration.read_text().splitlines() if not line.startswith("command")), encoding="utf-8")
+        report = self.project.collect()
+        self.assertEqual((self.check(report, "isolation", "core")["state"], self.state(report, "core")), ("not_checked", "not_checked"))
+        self.assertIn("--rebuild", report["selected"]["next_action"])
+
+    def test_broken_environment_is_a_mismatch_and_later_checks_are_not_run(self):
+        self.project.create_environment(version="broken")
+        report = self.project.collect()
+        self.assertEqual(self.check(report, "interpreter", "core")["state"], "mismatch")
+        self.assertEqual({item["state"] for item in report["readiness"]["python-verification"]["checks"] if item["id"] != "lock"}, {"not_checked"})
+        (self.project.venv / "bin/python").unlink()
+        self.assertEqual(self.check(self.project.collect(), "interpreter", "core")["state"], "mismatch")
+
+    def test_failing_import_conflict_or_preflight_is_a_mismatch(self):
+        self.project.create_environment()
+        self.project.broken_imports = {"rpds": "ImportError: incompatible architecture"}
+        self.assertEqual(self.check(self.project.collect(), "imports")["state"], "mismatch")
+        self.project.broken_imports = {}
+        self.project.pip_conflict = "referencing 0.37.0 requires attrs, which is not installed.\n"
+        report = self.project.collect()
+        self.assertEqual((self.check(report, "pip-check")["state"], self.state(report)), ("mismatch", "mismatch"))
+        self.assertIn("--rebuild", report["selected"]["next_action"])
+        self.project.pip_conflict = None
+        self.project.handlers.append(lambda argv: self.project.result(argv, code=1, err="cannot import PIL.Image\n")
+                                     if argv[-1].endswith("check_native_reader_setup.py") else None)
+        self.assertEqual(self.check(self.project.collect(), "native-reader")["state"], "mismatch")
+
+    def test_import_from_outside_the_environment_is_a_mismatch(self):
+        self.project.create_environment(imports={package["import"]: {"ok": True, "file": f"/another/{package['import']}.py", "error": None}
+                                                 for package in self.project.spec["profiles"]["python-verification"]["packages"]})
+        report = self.project.collect()
+        self.assertEqual(self.check(report, "imports")["state"], "mismatch")
+        self.assertIn("outside the environment", self.check(report, "imports")["detail"])
+
+    def test_source_package_must_come_from_the_checkout(self):
+        self.project.create_environment()
+        for source in ("\n", "/another/checkout/ontokin/__init__.py\n", f"{self.project.site}/ontokin/__init__.py\n"):
+            with self.subTest(source=source):
+                self.project.source = source
+                report = self.project.collect()
+                self.assertEqual((self.check(report, "source-import", "core")["state"], self.state(report, "core")), ("mismatch", "mismatch"))
+        self.project.handlers.append(lambda argv: self.project.result(argv, code=1, err="SyntaxError: broken\n") if argv[-1].startswith("import ontokin") else None)
+        self.assertIn("SyntaxError", self.check(self.project.collect(), "source-import", "core")["detail"])
+
+    def test_missing_git_is_missing(self):
+        self.project.create_environment()
+        self.project.handlers.append(lambda argv: {**self.project.result(argv), "code": None, "error": "FileNotFoundError: git"} if argv[0] == "git" else None)
+        report = self.project.collect()
+        self.assertEqual((self.check(report, "git", "core")["state"], report["storage"]["state"]), ("missing", "not_checked"))
+        self.assertIn("Install Git or repair its installation: FileNotFoundError: git", report["selected"]["next_action"])
+        self.project.handlers[-1] = lambda argv: self.project.result(argv, code=128, err="fatal: detected dubious ownership in repository\n") if argv[0] == "git" else None
+        report = self.project.collect()
+        self.assertEqual(self.check(report, "git", "core")["state"], "mismatch")
+        self.assertIn("dubious ownership", report["selected"]["next_action"])
+        self.assertIn("dubious ownership", doctor.render(report))
+
+    def test_unsupported_platform_is_unsupported(self):
+        self.project.create_environment()
+        for system, machine in (("Darwin", "x86_64"), ("Linux", "aarch64"), ("Windows", "AMD64")):
+            with self.subTest(system=system, machine=machine):
+                report = self.project.collect(system=system, machine=machine)
+                self.assertEqual((self.state(report, "core"), self.state(report)), ("unsupported", "unsupported"))
+                self.assertIn("No setup action applies", report["selected"]["next_action"])
+
+    def test_profiles_outside_the_environment_are_never_ready(self):
+        self.project.create_environment()
+        report = self.project.collect()
+        self.assertEqual(self.state(report, "package-smoke"), "not_checked")
+        self.assertEqual(self.state(report, "historical-native"), "not_checked")
+        self.assertEqual(self.state(report, "linux-container"), "unsupported")
+        self.assertEqual(report["native_experiments"]["acceptance"], "not_checked")
+
+    def test_every_state_is_one_of_the_five(self):
+        for prepare in (lambda: None, self.project.create_environment):
+            prepare()
+            report = self.project.collect()
+            states = [entry["state"] for entry in report["readiness"].values()]
+            states += [item["state"] for entry in report["readiness"].values() for item in entry["checks"]]
+            self.assertLessEqual(set(states), set(doctor.STATES))
+        with self.assertRaises(ValueError):
+            doctor.check("example", "passed", "not a state")
+
+    def test_missing_interpreter_is_told_apart_from_missing_packages(self):
+        self.project.interpreter.unlink()
+        self.project.which = lambda name: self.project.commands.get(name)
+        report = self.project.collect()
+        self.assertEqual(report["python"]["available_interpreters"], [])
+        self.assertIn("brew install python@3.12", report["selected"]["next_action"])
+        self.project.interpreter.write_text("", encoding="utf-8")
+        self.project.base = self.project.facts(version="3.12.14")
+        self.assertIn("found 3.12.14 (Homebrew)", self.project.collect()["selected"]["next_action"])
+
+
+class RealEnvironmentTests(unittest.TestCase):
+    """The real probe against a real environment, in a checkout whose path has a space."""
+
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.project = LocalProject(Path(temporary.name), "check out")
+        spec, self.system, self.machine = self.project.spec, platform.system(), platform.machine()
+        spec["interpreter"].update(implementation=platform.python_implementation(), version=platform.python_version(), distributions={})
+        spec["platforms"] = {"this": {"system": self.system, "machine": self.machine}}
+        self.project.save()
+        subprocess.run([sys.executable, "-I", "-m", "venv", "--without-pip", str(self.project.venv)], check=True, capture_output=True, timeout=120)
+        self.site = next((self.project.venv / "lib").glob("python3.*")) / "site-packages"
+
+    def report(self):
+        return doctor.collect(self.project.root, "core", run=doctor.execute, which=lambda name: None, system=self.system, machine=self.machine)
+
+    def core(self):
+        report = self.report()
+        return report["readiness"]["core"]["state"], {item["id"]: item for item in report["readiness"]["core"]["checks"]}
+
+    def metadata(self, folder, name, version):
+        (self.site / folder).mkdir()
+        (self.site / folder / "METADATA").write_text(f"Metadata-Version: 2.1\nName: {name}\nVersion: {version}\n", encoding="utf-8")
+
+    def test_real_environment_is_ready_and_diagnosis_leaves_it_alone(self):
+        (self.site / "attrs").mkdir()
+        (self.site / "attrs/__init__.py").write_text("", encoding="utf-8")
+        before = self.project.snapshot()
+        state, checks = self.core()
+        self.assertEqual(state, "ready", checks)
+        self.assertTrue(self.project.snapshot() == before, "Diagnosis changed a file.")
+
+    def test_real_copy_path_entry_and_linked_packages_break_isolation(self):
+        (self.site / "other.pth").write_text(str(self.project.directory) + "\n", encoding="utf-8")
+        state, checks = self.core()
+        self.assertEqual((state, checks["isolation"]["state"]), ("mismatch", "mismatch"), checks)
+        (self.site / "other.pth").unlink()
+        self.site.rename(self.project.directory / "moved-packages")
+        self.site.symlink_to(self.project.directory / "moved-packages", target_is_directory=True)
+        self.assertEqual(self.core()[1]["isolation"]["state"], "mismatch")
+        other = self.project.directory / "second"
+        shutil.copytree(self.project.root, other, symlinks=True)
+        report = doctor.collect(other, "core", run=doctor.execute, which=lambda name: None, system=self.system, machine=self.machine)
+        self.assertIn("copied or moved", next(item["detail"] for item in report["readiness"]["core"]["checks"] if item["id"] == "isolation"))
+
+    def test_real_relative_path_entry_counts_where_it_exists(self):
+        elsewhere = self.project.directory / "elsewhere"
+        elsewhere.mkdir()
+        (self.site / "relative.pth").write_text(f"import sys; sys.path.append({os.path.relpath(elsewhere)!r})\n", encoding="utf-8")
+        self.assertIn(str(elsewhere), self.core()[1]["isolation"]["detail"])
+        elsewhere.rmdir()
+        self.assertEqual(self.core()[1]["isolation"]["state"], "ready")
+
+    def test_real_long_import_error_is_cut_at_a_marked_place(self):
+        (self.site / "attrs").mkdir()
+        (self.site / "attrs/__init__.py").write_text("raise ImportError('x' * 400)\n", encoding="utf-8")
+        row = next(row for row in self.report()["packages"]["expected"] if row["name"] == "attrs")
+        self.assertTrue(row["import_error"].endswith("x" + doctor.CUT), row["import_error"])
+
+    def test_real_metadata_is_read_as_the_interpreter_reads_it(self):
+        self.metadata("attrs-26.1.0.dist-info", "attrs", "26.1.0")
+        self.metadata("~ttrs-25.3.0.dist-info", "attrs", "25.3.0")
+        report = self.report()
+        row = next(row for row in report["packages"]["expected"] if row["name"] == "attrs")
+        self.assertEqual((row["installed"], row["state"], report["packages"]["duplicates"]), ("26.1.0", "ready", {}), "A pip remnant is not a package.")
+        self.metadata("attrs-25.3.0.dist-info", "attrs", "25.3.0")
+        row = next(row for row in self.report()["packages"]["expected"] if row["name"] == "attrs")
+        self.assertEqual(row["state"], "mismatch")
+        self.assertEqual(set(row["installed"].split(" and ")), {"26.1.0", "25.3.0"})
+
+    def test_real_editable_install_of_another_checkout_breaks_isolation(self):
+        other = self.project.directory / "other checkout"
+        (other / "ontokin").mkdir(parents=True)
+        (other / "ontokin/__init__.py").write_text("", encoding="utf-8")
+        self.metadata("ontokin_reference-0.4.0.dist-info", "ontokin-reference", "0.4.0")
+        link = self.site / "ontokin_reference-0.4.0.dist-info/direct_url.json"
+        link.write_text(json.dumps({"url": self.project.root.as_uri(), "dir_info": {"editable": True}}), encoding="utf-8")
+        installed = self.project.root / "packaging/installed/ontokin"
+        installed.mkdir(parents=True)
+        (installed / "__init__.py").write_text("", encoding="utf-8")
+        self.editable_hook(installed)
+        self.assertEqual(self.core()[0], "ready", "This checkout itself may be installed.")
+        (self.site / "_editable.pth").unlink()
+        link.write_text(json.dumps({"url": other.as_uri(), "dir_info": {"editable": True}}), encoding="utf-8")
+        self.assertIn(f"ontokin-reference from {other}", self.core()[1]["isolation"]["detail"])
+        link.unlink()
+        self.editable_hook(other / "ontokin")
+        self.assertIn(f"ontokin is imported from {other}", self.core()[1]["isolation"]["detail"])
+
+    def editable_hook(self, package):
+        """An import hook with its placeholder on the path, as setuptools installs this project's layout."""
+        (self.site / "_editable_hook.py").write_text(
+            "import importlib.util, sys\n"
+            "class Finder:\n"
+            "    @staticmethod\n"
+            "    def find_spec(name, path=None, target=None):\n"
+            f"        return importlib.util.spec_from_file_location(name, {str(package / '__init__.py')!r}) if name == 'ontokin' else None\n"
+            "sys.meta_path.append(Finder)\n"
+            "sys.path.append('__editable__.ontokin_reference-0.4.0.finder.__path_hook__')\n", encoding="utf-8")
+        (self.site / "_editable.pth").write_text("import _editable_hook\n", encoding="utf-8")
+
+    @staticmethod
+    def ignores_case(directory):
+        return (directory / "CHECK OUT").exists()
+
+    def test_real_root_in_another_letter_case_is_the_same_place(self):
+        root = self.project.directory / ("CHECK OUT" if self.ignores_case(self.project.directory) else "check out")
+        report = doctor.collect(root, "core", run=doctor.execute, which=lambda name: None, system=self.system, machine=self.machine)
+        self.assertEqual(report["readiness"]["core"]["state"], "ready", report["readiness"]["core"])
+
+    def test_real_source_import_needs_the_checkout_source(self):
+        (self.project.root / "ontokin/__init__.py").unlink()
+        self.assertEqual(self.core()[1]["source-import"]["state"], "mismatch", "An empty directory is no source package.")
+        shutil.rmtree(self.project.root / "ontokin")
+        (self.site / "ontokin").mkdir()
+        (self.site / "ontokin/__init__.py").write_text("", encoding="utf-8")
+        self.assertIn("not from the checkout", self.core()[1]["source-import"]["detail"])
+
+
+class VisualTests(DoctorCase):
+    def visual(self, **overrides):
+        return {item["id"]: item["state"] for item in self.project.collect(**overrides)["readiness"]["visual-verification"]["checks"]}
+
+    def test_absent_and_wrong_node_are_different(self):
+        self.assertEqual((self.visual()["node"], self.visual()["npm"]), ("missing", "missing"))
+        self.project.node()
+        self.assertEqual((self.visual()["node"], self.visual()["npm"]), ("ready", "ready"))
+        for version in ("v25.9.0\n", "v2.2.0\n", "unreadable\n", ""):
+            with self.subTest(version=version):
+                self.project.node_version = version
+                self.assertEqual(self.visual()["node"], "mismatch")
+        self.assertFalse([call for call in self.project.calls if Path(call[0]).name == "npm"], "npm is never run")
+        (self.project.directory / "node/lib/node_modules/npm/package.json").write_text('{"name": "other"}', encoding="utf-8")
+        self.assertEqual(self.visual()["npm"], "not_checked")
+
+    def test_every_locked_package_of_the_platform_counts(self):
+        self.project.node()
+        states = self.visual()
+        self.assertEqual((states["npm"], states["npm-dependencies"], states["chromium"]), ("ready", "missing", "not_checked"))
+        self.project.node_modules()
+        self.assertEqual(self.visual()["npm-dependencies"], "ready")
+        rows = {row["name"] for row in self.project.collect()["visual"]["npm_dependencies"]}
+        self.assertLessEqual({"@esbuild/darwin-arm64", "playwright-core", "esbuild", "three"}, rows)
+        self.assertNotIn("@esbuild/linux-x64", rows)
+        for name, version in (("playwright-core", "1.40.0"), ("three", "0.179.0"), ("@esbuild/darwin-arm64", "0.25.9")):
+            with self.subTest(package=name):
+                self.project.node_modules(**{name: version})
+                self.assertEqual(self.visual()["npm-dependencies"], "mismatch")
+                self.project.node_modules()
+        shutil.rmtree(self.project.root / "tools/node_modules/@esbuild")
+        self.assertEqual(self.visual()["npm-dependencies"], "missing")
+        (self.project.root / "tools/package-lock.json").write_text("{", encoding="utf-8")
+        self.assertNotEqual(self.visual()["npm-dependencies"], "ready")
+
+    def test_manifests_and_links_alone_prove_no_installation(self):
+        self.project.node()
+        self.project.node_modules()
+        record = self.project.root / "tools/node_modules/.package-lock.json"
+        kept = json.loads(record.read_text(encoding="utf-8"))
+        for label, change, text in (("missing", lambda: record.unlink(), "record of the installation is missing"),
+                                    ("unreadable", lambda: record.write_text("{", encoding="utf-8"), "record of the installation is missing"),
+                                    ("integrity", lambda: record.write_text(json.dumps({"packages": {**kept["packages"], "node_modules/three": {
+                                        **kept["packages"]["node_modules/three"], "integrity": "sha512-other"}}}), encoding="utf-8"), "differs for three"),
+                                    ("absent", lambda: record.write_text(json.dumps({"packages": {}}), encoding="utf-8"), "differs for ")):
+            with self.subTest(case=label):
+                self.project.node_modules()
+                change()
+                checks = {item["id"]: item for item in self.project.collect()["readiness"]["visual-verification"]["checks"]}
+                self.assertEqual(checks["npm-dependencies"]["state"], "mismatch")
+                self.assertIn(text, checks["npm-dependencies"]["detail"])
+        self.project.node_modules()
+        for name in ("three", "@esbuild"):
+            with self.subTest(link=name):
+                package = self.project.root / "tools/node_modules" / name
+                package.rename(self.project.directory / "moved-package")
+                package.symlink_to(self.project.directory / "moved-package", target_is_directory=True)
+                self.assertEqual(self.visual()["npm-dependencies"], "mismatch")
+                package.unlink()
+                (self.project.directory / "moved-package").rename(package)
+        self.assertEqual(self.visual()["npm-dependencies"], "ready")
+
+    def test_browser_cache_follows_playwright_settings(self):
+        directory = self.project.root / "tools/node_modules"
+        with patch.dict(os.environ, {"PLAYWRIGHT_BROWSERS_PATH": "0"}):
+            self.assertEqual(doctor.browser_cache(directory), directory / "playwright-core/.local-browsers")
+        with patch.dict(os.environ, {"PLAYWRIGHT_BROWSERS_PATH": "/cache"}):
+            self.assertEqual(doctor.browser_cache(directory), Path("/cache"))
+
+    def test_shared_dependency_directory_is_a_mismatch(self):
+        self.project.node()
+        self.project.node_modules()
+        directory = self.project.root / "tools/node_modules"
+        directory.rename(self.project.directory / "shared-modules")
+        directory.symlink_to(self.project.directory / "shared-modules", target_is_directory=True)
+        self.assertEqual(self.visual()["npm-dependencies"], "mismatch")
+
+    def test_browser_state_follows_the_installed_playwright(self):
+        self.project.node()
+        self.project.node_modules()
+        self.assertEqual(self.visual()["chromium"], "missing")
+        self.project.browser()
+        self.assertEqual(self.visual()["chromium"], "ready")
+        (self.project.root / "tools/node_modules/playwright-core/browsers.json").write_text('{"browsers": []}', encoding="utf-8")
+        self.assertEqual(self.visual()["chromium"], "not_checked")
+
+    def test_profile_is_ready_only_with_its_base_profiles(self):
+        self.project.node()
+        self.project.node_modules()
+        self.project.browser()
+        self.assertEqual(self.state(self.project.collect(), "visual-verification"), "missing")
+        self.project.create_environment()
+        self.assertEqual(self.state(self.project.collect(), "visual-verification"), "ready")
+
+
+class SectionTests(DoctorCase):
+    def test_checkout_distinguishes_local_head_tracking_ref_and_live_remote(self):
+        head = self.project.git("rev-parse", "HEAD")
+        (self.project.root / "untracked.txt").write_text("new", encoding="utf-8")
+        (self.project.root / "pyproject.toml").write_text("changed", encoding="utf-8")
+        self.project.git("remote", "add", "origin", "git@example.invalid:Omegapy/OntoKin.git")
+        report = self.project.collect()
+        checkout = report["checkout"]
+        self.assertEqual((checkout["head"], checkout["is_checkout"], checkout["linked_worktree"]), (head, True, False))
+        self.assertEqual(checkout["tree"], self.project.git("rev-parse", "HEAD^{tree}"))
+        self.assertEqual(checkout["tracked_modifications"], [" M pyproject.toml"])
+        self.assertEqual((checkout["untracked"], checkout["untracked_count"], checkout["stashes"]), (["untracked.txt"], 1, 0))
+        self.assertEqual(checkout["origin_repository"], "Omegapy/OntoKin")
+        self.assertNotIn("git@", json.dumps(report))
+        self.assertEqual(report["remote"]["state"], "not_checked")
+        self.assertFalse([call for call in self.project.calls if "ls-remote" in call])
+        self.project.handlers.append(lambda argv: self.project.result(argv, out=f"{'1' * 40}\trefs/heads/main\n") if "ls-remote" in argv else None)
+        remote = self.project.collect(online=True)["remote"]
+        self.assertEqual((remote["state"], remote["heads"], remote["stale_tracking_refs"]), ("ready", {"main": "1" * 40}, ["main"]))
+        self.project.handlers[-1] = lambda argv: self.project.result(argv, code=128, err="Could not read from remote repository.\n") if "ls-remote" in argv else None
+        self.assertEqual(self.project.collect(online=True)["remote"]["state"], "not_checked")
+        forbidden = {"fetch", "pull", "push", "commit", "checkout", "install", "ci", "update", "add"}
+        self.assertFalse([call for call in self.project.calls if forbidden & set(call)])
+
+    def test_unpublished_commits_of_every_head_and_stashes_are_counted(self):
+        self.assertEqual(self.project.collect()["checkout"]["unpublished_commits"], 1)
+        self.project.git("update-ref", "refs/remotes/origin/main", "HEAD")
+        self.assertEqual(self.project.collect()["checkout"]["unpublished_commits"], 0)
+        self.project.git("checkout", "--quiet", "--detach")
+        self.project.git("commit", "--quiet", "--allow-empty", "--no-verify", "-m", "On no branch")
+        self.assertEqual(self.project.collect()["checkout"]["unpublished_commits"], 1)
+        self.project.git("checkout", "--quiet", "-")
+        other = self.project.directory / "linked"
+        self.project.git("worktree", "add", "--quiet", "--detach", str(other))
+        self.project.git("commit", "--quiet", "--allow-empty", "--no-verify", "-m", "Elsewhere", root=other)
+        self.assertEqual(self.project.collect()["checkout"]["unpublished_commits"], 1)
+        self.project.git("branch", "aside", self.project.git("commit-tree", "HEAD^{tree}", "-p", "HEAD", "-m", "On a branch that is not checked out"))
+        self.assertEqual(self.project.collect()["checkout"]["unpublished_commits"], 2)
+        (self.project.root / "pyproject.toml").write_text("changed", encoding="utf-8")
+        self.project.git("stash", "push", "--quiet")
+        self.assertEqual(self.project.collect()["checkout"]["stashes"], 1)
+        for number in range(doctor.UNTRACKED_LIMIT + 1):
+            (self.project.root / f"file-{number}.txt").write_text("", encoding="utf-8")
+        checkout = self.project.collect()["checkout"]
+        self.assertEqual((checkout["untracked_count"], len(checkout["untracked"])), (doctor.UNTRACKED_LIMIT + 1, doctor.UNTRACKED_LIMIT))
+
+    def test_unreadable_state_is_never_reported_as_clean(self):
+        self.project.create_environment()
+        (self.project.root / ".git/index").write_bytes(b"not an index")
+        report = self.project.collect()
+        self.assertEqual(self.check(report, "git", "core")["state"], "mismatch")
+        self.assertIsNone(report["checkout"]["tracked_modifications"])
+        self.assertIsNone(report["checkout"]["untracked_count"])
+        self.assertIn("not read: status", doctor.render(report))
+        self.assertIn("unread tracked modifications", doctor.render(report))
+        for command, name in (("rev-list", "unpublished_commits"), ("stash", "stashes")):
+            with self.subTest(command=command):
+                self.project.handlers.append(lambda argv, command=command: self.project.result(argv, code=128, err="fatal: bad object\n") if command in argv and argv[0] == "git" else None)
+                self.assertIsNone(self.project.collect()["checkout"][name])
+                self.project.handlers.pop()
+
+    def test_only_a_hosted_remote_names_a_repository(self):
+        for url, name in (("git@github.com-alias:Omegapy/OntoKin.git", "Omegapy/OntoKin"), ("https://github.com/Omegapy/OntoKin", "Omegapy/OntoKin"),
+                          ("ssh://git@example.invalid:22/Omegapy/OntoKin.git/", "Omegapy/OntoKin"), ("/Users/someone/OntoKin", None), ("file:///Users/someone/OntoKin", None),
+                          ("../someone/OntoKin", None), ("host:/home/someone/OntoKin", None), ("", None)):
+            with self.subTest(url=url):
+                self.assertEqual(doctor.repository_name(url), name)
+
+    def test_linked_worktree_is_reported(self):
+        other = self.project.directory / "linked"
+        self.project.git("worktree", "add", "--quiet", "-b", "second", str(other))
+        checkout = doctor.checkout_section(other)
+        self.assertEqual((checkout["branch"], checkout["linked_worktree"], len(checkout["worktrees"])), ("second", True, 2))
+
+    def test_root_outside_a_checkout_is_a_mismatch(self):
+        shutil.rmtree(self.project.root / ".git")
+        self.project.create_environment()
+        report = self.project.collect()
+        self.assertEqual(self.check(report, "git", "core")["state"], "mismatch")
+        self.assertEqual(report["storage"]["state"], "not_checked")
+
+    def test_commands_run_without_redirection_or_lazy_fetching(self):
+        injected = {"GIT_DIR": "/elsewhere", "PYTHONPATH": "/elsewhere", "PIP_INDEX_URL": "https://example.invalid", "VIRTUAL_ENV": "/elsewhere", "KEPT": "yes", "FORCE_COLOR": "1"}
+        with patch.dict(os.environ, injected):
+            environment = doctor.clean_environment()
+            self.project.collect()
+        self.assertEqual((environment["GIT_NO_LAZY_FETCH"], environment["PYTHONDONTWRITEBYTECODE"], environment["KEPT"], environment["NO_COLOR"]), ("1", "1", "yes", "1"))
+        self.assertNotIn("FORCE_COLOR", environment)
+        for used in self.project.environments:
+            self.assertFalse({"GIT_DIR", "PYTHONPATH", "PIP_INDEX_URL", "VIRTUAL_ENV"} & set(used or environment))
+        self.assertEqual(environment["GIT_OPTIONAL_LOCKS"], "0")
+        for call in self.project.calls:
+            if call[0] == "git" and call[1] != "lfs":
+                self.assertEqual(call[1:4], ["--no-optional-locks", "-c", "core.fsmonitor=false"])
+
+    def test_storage_needs_a_client_only_when_files_are_selected(self):
+        report = self.project.collect()
+        self.assertEqual((report["storage"]["state"], report["storage"]["applicable"], report["storage"]["client_version"]), ("ready", False, "3.7.1"))
+        (self.project.root / ".gitattributes").write_text("*.zip filter=lfs\n", encoding="utf-8")
+        (self.project.root / "a.zip").write_text("version https://git-lfs.github.com/spec/v1\noid sha256:" + "0" * 64 + "\nsize 1\n", encoding="utf-8")
+        self.project.git("-c", "filter.lfs.required=false", "-c", "filter.lfs.clean=cat", "add", ".gitattributes", "a.zip")
+        storage = self.project.collect()["storage"]
+        self.assertEqual((storage["state"], storage["lfs_files"], storage["unhydrated"]), ("mismatch", ["a.zip"], ["a.zip"]))
+        self.project.handlers.append(lambda argv: self.project.result(argv, out="git-lfs/3.8.1 (GitHub)\n") if argv[:2] == ["git", "lfs"] else None)
+        self.assertEqual(self.project.collect()["storage"]["state"], "missing")
+        (self.project.root / "a.zip").write_bytes(b"PK hydrated")
+        self.assertEqual(self.project.collect()["storage"]["state"], "ready")
+        self.project.handlers[-1] = lambda argv: self.project.result(argv, code=1, err="git: 'lfs' is not a git command") if argv[:2] == ["git", "lfs"] else None
+        self.assertEqual(self.project.collect()["storage"]["state"], "missing")
+
+    def test_workflow_reads_single_and_mode_specific_entry_points(self):
+        folder = self.project.root / "docs/workflow/tasks/T1"
+        folder.mkdir(parents=True)
+        (folder / "task.json").write_text(json.dumps({"status": "in_progress"}), encoding="utf-8")
+        (folder / "SESSION.md").write_text("# Session\n", encoding="utf-8")
+        registry, current = self.project.root / "docs/workflow/registry.json", self.project.root / "docs/workflow/CURRENT.json"
+        current.write_text(json.dumps({"active_task": "T1", "latest_task": "T1", "next_action": {"status": "ready"}}), encoding="utf-8")
+        registry.write_text(json.dumps({"entrypoint": "CHATGPT-START-HERE.md", "task_root": "docs/workflow/tasks", "current": "docs/workflow/CURRENT.json"}), encoding="utf-8")
+        workflow = self.project.collect()["workflow"]
+        self.assertEqual(workflow["entry_points"], {"registered": "CHATGPT-START-HERE.md"})
+        self.assertEqual((workflow["selected_task"], workflow["selected_task_status"], workflow["latest_checkpoint"]),
+                         ("T1", "in_progress", "docs/workflow/tasks/T1/SESSION.md"))
+        self.assertEqual(workflow["structure_check"]["state"], "not_checked")
+        current.write_text(json.dumps({"active_task": "T1", "latest_task": "T0"}), encoding="utf-8")
+        self.assertEqual(self.project.collect()["workflow"]["selected_task"], "T1")
+        registry.write_text(json.dumps({"modes": {"local": {"entrypoint": "LOCAL-START-HERE.md"}, "browser": {"entrypoint": "CHATGPT-START-HERE.md"}, "odd": "text"}}), encoding="utf-8")
+        current.write_text(json.dumps({"active_task": None, "latest_task": "T1", "checkpoint": {"session": "elsewhere.md"}}), encoding="utf-8")
+        workflow = self.project.collect()["workflow"]
+        self.assertEqual(workflow["entry_points"], {"local": "LOCAL-START-HERE.md", "browser": "CHATGPT-START-HERE.md", "odd": None})
+        self.assertEqual(workflow["latest_checkpoint"], "elsewhere.md")
+
+    def test_structure_check_result_is_reported_as_it_is(self):
+        tool = self.project.root / "tools/chat_workflow.py"
+        for output, state in (({"passed": True, "tasks_checked": 3, "errors": []}, "ready"), ({"passed": False, "tasks_checked": 1, "errors": ["broken pointer"]}, "mismatch"), (None, "not_checked")):
+            with self.subTest(state=state):
+                tool.write_text(f"print({json.dumps(output)!r})\n" if output else "raise SystemExit('no report')\n", encoding="utf-8")
+                self.assertEqual(self.project.collect()["workflow"]["structure_check"]["state"], state)
+        tool.write_text(f"print({json.dumps({'passed': False, 'tasks_checked': 1, 'errors': ['x' * 1500]})!r})\n", encoding="utf-8")
+        self.assertEqual(self.project.collect()["workflow"]["structure_check"]["detail"], "x" * 1000 + doctor.CUT)
+
+
+class ReportTests(DoctorCase):
+    def test_diagnosis_changes_nothing(self):
+        for prepare in (lambda: None, self.project.create_environment):
+            prepare()
+            before = self.project.snapshot()
+            self.project.collect()
+            self.assertTrue(self.project.snapshot() == before, "Diagnosis changed a file.")
+
+    def test_human_and_json_output_cover_every_area(self):
+        self.project.create_environment()
+        report = self.project.collect()
+        self.assertLessEqual(set(AREAS), set(report))
+        text = doctor.render(report)
+        for heading in ("Readiness by profile", "Checkout", "Python", "Packages", "Specification", "Visual tools", "Storage", "Workflow", "Remote", "Native experiments"):
+            self.assertIn("\n" + heading + "\n", text)
+        for name in report["readiness"]:
+            self.assertIn(name, text)
+        json.dumps(report, allow_nan=False)
+
+    def test_portable_report_names_no_machine_path(self):
+        self.project.create_environment()
+        other = self.project.directory / "linked"
+        self.project.git("worktree", "add", "--quiet", "-b", "second", str(other))
+        report = self.project.collect()
+        report["note"] = os.path.join(tempfile.gettempdir(), "unrelated")
+        text = json.dumps(doctor.portable(report, doctor.path_labels(self.project.root, report["checkout"]["worktrees"])))
+        self.assertNotIn(str(self.project.directory), text)
+        self.assertNotIn(tempfile.gettempdir(), text)
+        self.assertNotIn(str(Path.home()) + "/", text)
+        self.assertIn("<root>/.venv", text)
+        self.assertIn("<worktree-1>", text)
+        self.assertEqual(report["specification"]["digests"]["tools/package-lock.json"], doctor.digest(self.project.root / "tools/package-lock.json"))
+
+    def test_portable_text_is_labelled_also_behind_links_and_where_it_was_cut(self):
+        elsewhere, link = self.project.directory / "elsewhere", self.project.directory / "link"
+        elsewhere.mkdir()
+        link.symlink_to(elsewhere, target_is_directory=True)
+        labels = doctor.path_labels(link / "root", [], [("/opt/tools/node", "<node>"), ("relative", "<no>")])
+        self.assertEqual(doctor.portable(f"{link}/root/a {elsewhere}/root/b /opt/tools/node relative", labels), "<root>/a <root>/b <node> relative")
+        self.assertEqual(doctor.portable(f"{str(link).upper()}/ROOT/a /opt/tools/npm", labels), "<root>/a /opt/tools/npm", "Another letter case is labelled too, a directory that was not passed is not.")
+        tool = doctor.portable([str(doctor.ROOT / "tools"), sys.prefix], labels)
+        self.assertEqual(tool[0], "<tool-root>/tools")
+        self.assertTrue(sys.prefix == sys.base_prefix or tool[1].startswith("<tool-"), tool[1])
+        for text in (f"zz{link}/root/a", f"{link}/rooted", f"{link}/root-2", f"{link}/root.old"):
+            with self.subTest(text=text):
+                self.assertNotIn("<root>", doctor.portable(text, labels), "Only a whole path is a label's path.")
+        self.assertEqual(doctor.portable(f"file://{link}/root, ({link}/root). {link}/root.", labels), "file://<root>, (<root>). <root>.")
+        for size in (6, len(str(link)) // 2, len(str(link)) - 1):
+            with self.subTest(size=size):
+                text = doctor.portable(f"first: {str(link)[:size]}{doctor.CUT}; second", labels)
+                self.assertNotIn(str(link)[:size], text)
+                self.assertTrue(text.startswith("first: <") and text.endswith("; second"), text)
+        self.assertEqual(doctor.portable("/private", labels), "/private", "Only a text that was cut short is treated as cut.")
+        self.assertEqual((doctor.shorten("a" * 300), doctor.shorten("a" * 301)), ("a" * 300, "a" * 300 + doctor.CUT))
+
+    def test_failure_text_is_the_line_that_says_what_failed(self):
+        for output, expected in (("note\nlast\n", "last"), ("ERROR: THESE PACKAGES DO NOT MATCH\n  attrs:\n     Got  123\n", "ERROR: THESE PACKAGES DO NOT MATCH"),
+                                 ("fatal: bad object\nhint: try again\n", "fatal: bad object"), ("", "exit status 4"),
+                                 ("\x1b[31mERROR: no\x1b[0m\nmore\n", "ERROR: no"), ("x" * 400, "x" * 300 + doctor.CUT)):
+            with self.subTest(output=output):
+                self.assertEqual(doctor.failure_text({"error": None, "err": output, "out": "", "code": 4}), expected)
+
+    def test_real_child_keeps_a_passed_descriptor_open(self):
+        with tempfile.TemporaryFile() as stream:
+            code = "import os, sys; os.fstat(int(sys.argv[1]))"
+            argv = [sys.executable, "-I", "-c", code, str(stream.fileno())]
+            self.assertEqual(doctor.execute(argv, keep=(stream.fileno(),))["code"], 0)
+            self.assertNotEqual(doctor.execute(argv)["code"], 0)
+
+    def test_places_are_compared_by_what_they_are(self):
+        first, second = self.project.directory / "first", self.project.directory / "second"
+        first.write_text("", encoding="utf-8")
+        os.link(first, second)
+        self.assertTrue(doctor.same_place(str(first), str(second)))
+        self.assertFalse(doctor.same_place(str(first), str(self.project.directory / "absent")))
+
+    def test_command_line_runs_without_site_packages_and_writes_only_a_new_report(self):
+        report = self.project.directory / "reports/doctor.json"
+        command = [sys.executable, "-I", "-S", "-B", str(REPOSITORY / "tools/doctor_local.py"), "--root", str(self.project.root)]
+        before = self.project.snapshot()
+        done = subprocess.run([*command, "--json"], capture_output=True, text=True, timeout=120)
+        self.assertEqual(done.returncode, 1, done.stderr)
+        self.assertIn(json.loads(done.stdout)["selected"]["state"], {"missing", "unsupported"})
+        self.assertTrue(self.project.snapshot() == before, "Diagnosis changed a file.")
+        done = subprocess.run([*command, "--output", str(report)], capture_output=True, text=True, timeout=120)
+        self.assertEqual(done.returncode, 1, done.stderr)
+        self.assertTrue(report.is_file())
+        kept = report.read_bytes()
+        done = subprocess.run([*command, "--output", str(report)], capture_output=True, text=True, timeout=120)
+        self.assertEqual((done.returncode, report.read_bytes()), (2, kept))
+
+    def test_exit_status_follows_the_selected_profile(self):
+        self.project.create_environment()
+        ready, output = self.project.collect(), io.StringIO()
+        with patch.object(doctor, "collect", return_value=ready), redirect_stdout(output):
+            self.assertEqual(doctor.main(["--root", str(self.project.root), "--portable-paths", "--json"]), 0)
+        self.assertNotIn(str(self.project.root), output.getvalue())
+        with patch.object(doctor, "collect", return_value=self.project.collect("visual-verification")), redirect_stdout(io.StringIO()):
+            self.assertEqual(doctor.main(["--profile", "visual-verification"]), 1)
+
+    def test_portable_report_labels_the_passed_node_and_the_root_behind_a_link(self):
+        self.project.node()
+        link, output = self.project.directory / "link", io.StringIO()
+        link.symlink_to(self.project.root, target_is_directory=True)
+        real = doctor.collect
+        with patch.object(doctor, "collect", lambda root, profile, online, node: real(root, profile, online, run=self.project.run, which=self.project.which, system="Darwin", machine="arm64", node=node)), \
+                patch.object(doctor.tempfile, "gettempdir", return_value="/nowhere"), redirect_stdout(output):
+            doctor.main(["--root", str(link), "--portable-paths", "--json", "--node", self.project.commands["node"]])
+        text = output.getvalue()
+        self.assertNotIn(str(self.project.directory), text)
+        self.assertIn('"<node>"', text)
+        self.assertIn('"<root>"', text)
+
+    def test_command_line_reports_an_unusable_specification_or_profile(self):
+        errors = io.StringIO()
+        with redirect_stdout(io.StringIO()), redirect_stderr(errors):
+            self.assertEqual(doctor.main(["--root", str(self.project.root), "--profile", "everything"]), 2)
+            (self.project.root / doctor.SPECIFICATION).unlink()
+            self.assertEqual(doctor.main(["--root", str(self.project.root)]), 2)
+        self.assertEqual(errors.getvalue().count("The doctor could not run"), 2)
+
+
+if __name__ == "__main__":
+    unittest.main()

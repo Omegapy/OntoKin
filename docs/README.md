@@ -1,5 +1,12 @@
 # OntoKin documentation guide
 
+For ordinary development in the local clone, start with
+[LOCAL-START-HERE](../LOCAL-START-HERE.md). The [local setup guide](development/LOCAL-SETUP.md)
+prepares and checks the environment, the [local prompts](workflow/LOCAL-PROMPTS.md) are
+copyable instructions, and the [owner direction](engineering/local-migration-20261124/DECISION.md)
+and [reconciliation record](engineering/local-migration-20261124/RECONCILIATION.md) explain the
+move from browser threads.
+
 For development through successive ChatGPT browser threads, start with
 [CHATGPT-START-HERE](../CHATGPT-START-HERE.md) and the [workflow guide](workflow/README.md).
 The [C263 requirements](workflow/tasks/C263/REQUIREMENTS.md) and

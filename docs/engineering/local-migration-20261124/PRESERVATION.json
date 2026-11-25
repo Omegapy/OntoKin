@@ -1,0 +1,139 @@
+{
+  "schema": "ontokin.local-migration.preservation/1",
+  "task": "LOCAL-MIGRATION-20261124",
+  "step": "TASK-004",
+  "observed_at": "2026-11-25T06:49:27Z",
+  "base_revision": "6b346b1e4126332fe3c98a4a98f3e0b0e2f63774",
+  "base_tree": "812a17de3880f7c152beacccf7b2e690381f9716",
+  "note": "Files and links were read from the base revision with git ls-tree and git show. The approved TRD does not exist at the base revision; its identity was read from the approved copy and from the commit that added it unchanged.",
+  "files": [
+    {
+      "path": "tools/native-reader-verification-linux-cp312.lock",
+      "mode": "100644",
+      "git_blob": "e82d499012bab9349c7bb2ee310bb2b7bc63de0d",
+      "sha256": "a7f17491000c2e139ccc5d213ca0e8a6f917e5befb4b878fef29f5ff72ae780f",
+      "bytes": 779
+    },
+    {
+      "path": "tools/force-agent-verification-requirements.txt",
+      "mode": "100644",
+      "git_blob": "26345fd6d042cb8617b35cb1856afe8e10eb88fe",
+      "sha256": "6d5fefcbd7ccced7d39bf8d20e87ec1c4401fc6b252aea41677d41d9124555d1",
+      "bytes": 270
+    },
+    {
+      "path": "tools/package.json",
+      "mode": "100644",
+      "git_blob": "619a07230a14a3f27f35960fb872330ee96b9b31",
+      "sha256": "ce695b672904c8c01d699c06b0ed16f97e34e6e34115b65fb192e25d70dee4cb",
+      "bytes": 448
+    },
+    {
+      "path": "tools/package-lock.json",
+      "mode": "100644",
+      "git_blob": "cd192a362b88e5a0c9b40d6a422bd0cc5af632d9",
+      "sha256": "f1351b945f847f937dcacc9736fea07a710f1c066dbc9d7a5e19e89a858d635a",
+      "bytes": 16805
+    },
+    {
+      "path": ".gitattributes",
+      "mode": "100644",
+      "git_blob": "4e51ada2a5f12599556c4058362d4ef6ace222ee",
+      "sha256": "9ecd9d3c59b6d971792b509e5e33daf597077e3f1102e2ada0b221bc158addae",
+      "bytes": 486
+    },
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "git_blob": "cb86035ee767ff68a3f7e0f8a9c9fcff247a8898",
+      "sha256": "a240eee582b8da51dc16841e5ebc00fdecb5505dca2a4bf6f29c43f962356f4e",
+      "bytes": 9801,
+      "reason": "Added to the list during execution: verify_reorganization.py binds this file byte for byte (SRC-01, disposition unchanged)."
+    }
+  ],
+  "approved_trd": {
+    "path": "TRDs/trd_ontokin-local-development-migration_2026-11-24.md",
+    "mode": "100644",
+    "git_blob": "b7da5fd47c9b98e2b7a9832464c2f63620881220",
+    "sha256": "12e905a76da826f52e61c1237977a836750ce89260e208ba8553ebc8aeb28d76",
+    "bytes": 77908,
+    "trd_id": "TRD-20261124-E65C6113",
+    "revision": 3,
+    "added_by_commit": "d611c44954e14e6b0bfa67ba709af787a72e4c65"
+  },
+  "skill_links": [
+    {
+      "path": ".claude/skills/communication",
+      "mode": "120000",
+      "git_blob": "0b4cbbe08be1a66c49b1227dcdd83260b0a09d1a",
+      "target": "../../.agents/skills/communication"
+    },
+    {
+      "path": ".claude/skills/ontokin-delivery",
+      "mode": "120000",
+      "git_blob": "7b1aafbd8ea7f1b1f63b2adc432e16a5e56db057",
+      "target": "../../.agents/skills/ontokin-delivery"
+    },
+    {
+      "path": ".claude/skills/ontokin-learning",
+      "mode": "120000",
+      "git_blob": "56a0e436cc9757385aec1791c8bec24250f9f7a6",
+      "target": "../../.agents/skills/ontokin-learning"
+    },
+    {
+      "path": ".claude/skills/ontokin-session",
+      "mode": "120000",
+      "git_blob": "177d167b01ae8369e9e50e4f722b6c4878cd4a83",
+      "target": "../../.agents/skills/ontokin-session"
+    },
+    {
+      "path": ".claude/skills/to-implementation-plan",
+      "mode": "120000",
+      "git_blob": "153f486624c861c5563593a0ca8a2a296f7a8e1f",
+      "target": "../../.agents/skills/to-implementation-plan"
+    },
+    {
+      "path": ".claude/skills/to-trd",
+      "mode": "120000",
+      "git_blob": "0e08a1ac83261f5f2d04cb3000ec34f77c27e6fe",
+      "target": "../../.agents/skills/to-trd"
+    }
+  ],
+  "git_lfs": {
+    "lfs_tracked_files": 0,
+    "rule_source": ".gitattributes"
+  },
+  "base_listings": {
+    "description": "git ls-tree -r output at the base revision, used to show at the end that existing payloads kept their Git identities",
+    "all_files": {
+      "count": 18646,
+      "sha256": "97637202c79a996ec4a1c7c5171e431f0882c8eb615db6070265c962fea47c34"
+    },
+    "archive_payloads": {
+      "pattern": ".zip, .zip.partNNN, .tar.xz, .tar.gz",
+      "count": 459,
+      "sha256": "4ffb7513f7f115bc1c926208ffd2a7b9a49af301dbe24f930c2705f91f51a7cd"
+    }
+  },
+  "c271": {
+    "branch": "work/c271-missing-import-digest-control",
+    "head": "bef6790291d0cddc8c6d7de9dc0a92fb5a98c448",
+    "observed_with": "git ls-remote --heads origin",
+    "pull_request": {
+      "number": 274,
+      "url": "https://github.com/Omegapy/OntoKin/pull/274",
+      "state": "OPEN",
+      "is_draft": true,
+      "head": "bef6790291d0cddc8c6d7de9dc0a92fb5a98c448",
+      "merged_at": null,
+      "closed_at": null
+    },
+    "issue": {
+      "number": 273,
+      "url": "https://github.com/Omegapy/OntoKin/issues/273",
+      "state": "OPEN",
+      "title": "C271: qualify isolated missing source import-digest refusal",
+      "closed_at": null
+    }
+  }
+}

@@ -209,10 +209,11 @@ class LocalChecksTests(unittest.TestCase):
 
     def test_declared_validation_input_roots_survive_inventory_and_copy(self):
         directories = ("ontokin", "tests", "tools", "docs", "examples", "schemas", "prototypes",
-                       "packaging", ".github", "fixtures")
+                       "packaging", ".github", "fixtures", ".agents", "TRDs")
         paths = [name + "/input.bin" for name in directories]
-        paths += ["pyproject.toml", "README.md", "AGENTS.md", "GOAL.md", "STATUS.md", "LICENSE",
-                  "LICENSE-CODE", "LICENSE-DOCS", ".gitignore", ".gitattributes", ".lfsconfig"]
+        paths += ["pyproject.toml", "README.md", "AGENTS.md", "GOAL.md", "STATUS.md", "CHATGPT-START-HERE.md", "ROLE.md",
+                  "LOCAL-START-HERE.md", "CLAUDE.md", "LICENSE", "LICENSE-CODE", "LICENSE-DOCS", "LICENSING.md", "NOTICE",
+                  ".gitignore", ".gitattributes", ".lfsconfig"]
         for name in paths:
             source = self.root / name
             source.parent.mkdir(parents=True, exist_ok=True)
@@ -227,6 +228,37 @@ class LocalChecksTests(unittest.TestCase):
         self.assertEqual(summary["workspace_git"]["tracked_worktree_status"], "")
         for name in paths:
             self.assertEqual((self.output / "workspace" / name).read_bytes(), (self.root / name).read_bytes())
+
+    def test_instruction_files_and_adopted_requirements_reach_the_isolated_workspace(self):
+        paths = ("CHATGPT-START-HERE.md", "LOCAL-START-HERE.md", "CLAUDE.md", "ROLE.md", "LICENSING.md", "NOTICE", "TRDs/INDEX.md",
+                 "TRDs/trd_example.md", ".agents/skills/ontokin-session/SKILL.md", ".agents/skills/to-trd/scripts/trd.py",
+                 "tools/local-environment.json", "tools/example.lock")
+        excluded = (".agents/.env", ".agents/.venv/installed.py", ".agents/skills/to-trd/__pycache__/trd.pyc", ".claude/settings.local.json",
+                    "Implementation_Plans/INDEX.md", "notes.txt")
+        for name in (*paths, *excluded):
+            source = self.root / name
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_bytes(b"Content of " + name.encode("utf-8") + b"\n")
+        self.initialize_git(self.root, paths)
+        code, summary = self.execute([])
+        self.assertEqual(code, 0, summary)
+        workspace = self.output / "workspace"
+        before = json.loads((self.output / "source-before.json").read_text())
+        recorded = {item["path"] for item in before["files"]}
+        self.assertTrue(set(paths) <= recorded, set(paths) - recorded)
+        self.assertEqual(checks.inventory(workspace), before)
+        for name in paths:
+            self.assertEqual((workspace / name).read_bytes(), (self.root / name).read_bytes())
+        for name in excluded:
+            self.assertNotIn(name, recorded)
+            self.assertFalse((workspace / name).exists(), name)
+
+    def test_declared_instruction_inputs_exist_in_this_repository(self):
+        optional = {".lfsconfig"}
+        self.assertEqual([name for name in checks.ROOT_FILES if name not in optional and not (checks.ROOT / name).is_file()], [])
+        for name in (".agents", "TRDs"):
+            self.assertIn(name, checks.SOURCE_DIRS)
+            self.assertTrue((checks.ROOT / name).is_dir())
 
     def test_top_level_fixture_can_be_read_by_isolated_child(self):
         fixture = self.root / "fixtures/static_tray_v01/native/Q01/ontokin/source.json"

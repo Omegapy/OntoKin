@@ -1,17 +1,24 @@
 #!/usr/bin/env python3
-"""Read and validate OntoKin's repository-owned browser-chat workflow.
+"""Read and validate OntoKin's repository-owned workflow records for local and browser sessions.
 
 This offline helper checks recorded structure and local references. It does not
 authenticate evidence, contact GitHub, establish merge state, or grant authority.
 Only ``new-task`` writes files; it creates an unselected local draft.
+
+The registry and CURRENT have two schemas. Schema 1 has one browser entry point and embedded
+handoff receipts; it stays valid for earlier records. Schema 2 names an entry point and read
+set for each execution mode and links retained history instead of embedding it. The mapping is
+in docs/engineering/local-migration-20261124/SCHEMA-MAPPING.md.
 """
 
 from __future__ import annotations
 
 import argparse
 from datetime import datetime
+import hashlib
 import ipaddress
 import json
+import os
 from pathlib import Path, PurePosixPath
 import re
 import subprocess
@@ -24,7 +31,18 @@ REGISTRY = "docs/workflow/registry.json"
 LIMIT = 2_000_000
 IDENTIFIER = re.compile(r"[A-Za-z][A-Za-z0-9_-]{0,63}\Z")
 SHA = re.compile(r"[0-9a-f]{40}\Z")
+SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 TASK_STATES = {"draft", "ready", "in_progress", "blocked", "review", "done", "retired", "cancelled"}
+CLOSED_STATES = {"done", "retired", "cancelled"}
+MODES = {"local", "browser"}
+CURRENT_FIELDS = {"schema_version", "project", "latest_task", "active_task", "execution_mode", "observed_main", "snapshot_date",
+                  "next_action", "checkpoint", "unfinished", "boundaries", "delivery_policy", "history"}
+POINTER_FIELDS = {"next_action": {"status", "summary", "suggested_task", "sources"}, "checkpoint": {"record", "session"},
+                  "unfinished": {"task", "status", "mode", "branch", "observed_head", "observed_at", "pull_request", "scope_issue",
+                                 "open_gates", "record", "note"},
+                  "delivery_policy.local": {"contract", "zip_required", "completion_gate"},
+                  "delivery_policy.browser": {"kind", "required", "contract", "folder", "completion_gate"},
+                  "history": {"path", "sha256", "bytes", "source_commit", "holds", "purpose"}}
 NOTICE = "Local structural check only; live GitHub state and the truth of cited evidence require separate verification."
 
 
@@ -111,6 +129,7 @@ class Project:
         self.current: dict = {}
         self.memory: dict = {}
         self.knowledge: dict = {}
+        self.modes: dict[str, dict] = {}
         self.tasks: dict[str, dict] = {}
 
     def path(self, value: Any, label: str, exists: bool = True, directory: bool = False) -> Path:
@@ -140,7 +159,7 @@ class Project:
             self.source(item, f"{label}[{i}]")
         return items
 
-    def load(self, relative: str) -> dict:
+    def load(self, relative: str, versions: tuple[int, ...] = (1,)) -> dict:
         file = self.path(relative, relative)
         require(file.stat().st_size <= LIMIT, f"{relative}: exceeds {LIMIT}-byte input limit")
         def unique_object(pairs: list[tuple[str, Any]]) -> dict:
@@ -153,8 +172,8 @@ class Project:
             data = mapping(json.loads(file.read_text(encoding="utf-8"), object_pairs_hook=unique_object), relative)
         except (UnicodeError, json.JSONDecodeError) as exc:
             raise Invalid(f"{relative}: invalid UTF-8 JSON: {exc}") from exc
-        require(type(data.get("schema_version")) is int and data["schema_version"] == 1,
-                f"{relative}: unsupported schema_version; expected 1")
+        require(type(data.get("schema_version")) is int and data["schema_version"] in versions,
+                f"{relative}: unsupported schema_version; expected {' or '.join(map(str, versions))}")
         return data
 
     def group(self, value: Any, label: str, nonempty: bool = False) -> dict[str, dict]:
@@ -167,12 +186,21 @@ class Project:
         return result
 
     def validate_registry(self) -> None:
-        r = self.registry = self.load(REGISTRY)
+        r = self.registry = self.load(REGISTRY, (1, 2))
         require(r.get("repository") == "Omegapy/OntoKin", "registry.repository: expected Omegapy/OntoKin")
-        self.path(r.get("entrypoint"), "registry.entrypoint")
-        for path in sequence(r.get("required_reads"), "registry.required_reads", True):
-            self.path(path, "registry.required_reads")
-        require(r["entrypoint"] in r["required_reads"], "registry.required_reads: must include entrypoint")
+        if r["schema_version"] == 1:
+            # Schema 1 predates local mode; its single entry point is the browser entry point.
+            self.modes = {"browser": self.read_set(r, "registry")}
+        else:
+            for key in ("entrypoint", "required_reads"):
+                require(key not in r, f"registry.{key}: schema 2 names it only inside modes")
+            modes = mapping(r.get("modes"), "registry.modes")
+            require(set(modes) == MODES, f"registry.modes: expected exactly {', '.join(sorted(MODES))}")
+            for name in sorted(modes):
+                self.modes[name] = self.read_set(mapping(modes[name], f"registry.modes.{name}"), f"registry.modes.{name}")
+                text(modes[name].get("declared_by"), f"registry.modes.{name}.declared_by")
+            require(len({entry["entrypoint"] for entry in self.modes.values()}) == len(self.modes),
+                    "registry.modes: each mode needs its own entrypoint")
         self.path(r.get("task_root"), "registry.task_root", directory=True)
         for key in ("memory", "knowledge", "current"):
             self.path(r.get(key), f"registry.{key}")
@@ -195,8 +223,16 @@ class Project:
             require(fields.get("name") == key, f"skill {key}: frontmatter name mismatch")
             text(fields.get("description"), f"skill {key}.description")
 
+    def read_set(self, entry: dict, label: str) -> dict:
+        self.path(entry.get("entrypoint"), f"{label}.entrypoint")
+        for path in sequence(entry.get("required_reads"), f"{label}.required_reads", True):
+            self.path(path, f"{label}.required_reads")
+        require(entry["entrypoint"] in entry["required_reads"], f"{label}.required_reads: must include entrypoint")
+        return {"entrypoint": entry["entrypoint"], "required_reads": entry["required_reads"]}
+
     def validate_current(self) -> None:
-        c = self.current = self.load(self.registry["current"])
+        c = self.current = self.load(self.registry["current"], (1, 2))
+        require(c["schema_version"] == self.registry["schema_version"], "current.schema_version: must equal the registry's")
         require(c.get("project") == self.registry["repository"], "current.project: repository mismatch")
         identifier(c.get("latest_task"), "current.latest_task")
         if c.get("active_task") is not None:
@@ -208,14 +244,94 @@ class Project:
         text(n.get("summary"), "current.next_action.summary")
         text(n.get("suggested_task"), "current.next_action.suggested_task")
         self.sources(n.get("sources"), "current.next_action.sources")
+        for item in sequence(c.get("boundaries"), "current.boundaries", True):
+            text(item, "current.boundaries")
+        if c["schema_version"] == 2:
+            self.validate_pointers(c)
+            return
         h = mapping(c.get("historical_handoff"), "current.historical_handoff")
         https(h.get("url"), "current.historical_handoff.url")
-        require(isinstance(h.get("sha256"), str) and bool(re.fullmatch(r"[0-9a-f]{64}", h["sha256"])),
+        require(isinstance(h.get("sha256"), str) and bool(SHA256.fullmatch(h["sha256"])),
                 "current.historical_handoff.sha256: expected 64 lowercase hexadecimal characters")
         require(type(h.get("bytes")) is int and h["bytes"] > 0, "current.historical_handoff.bytes: expected positive integer")
         text(h.get("scope"), "current.historical_handoff.scope")
-        for item in sequence(c.get("boundaries"), "current.boundaries", True):
-            text(item, "current.boundaries")
+
+    @staticmethod
+    def closed(value: Any, fields: set, label: str) -> dict:
+        """An object of schema 2 with no other field, so that no receipt is embedded at any level."""
+        for key in sorted(set(mapping(value, label)) - fields):
+            raise Invalid(f"{label}.{key}: schema 2 keeps receipts and phase records in linked history or in the task record")
+        return value
+
+    def validate_pointers(self, c: dict) -> None:
+        """Schema 2: the selected mode and checkpoint, unfinished scopes and links to retained history."""
+        self.closed(c, CURRENT_FIELDS, "current")
+        self.closed(c["next_action"], POINTER_FIELDS["next_action"], "current.next_action")
+        active, mode = c.get("active_task"), c.get("execution_mode")
+        if mode is not None:
+            choice(mode, set(self.modes), "current.execution_mode")
+        require((active is None) == (mode is None), "current.execution_mode: an active task needs its recorded mode, and only an active task has one")
+        checkpoint = self.closed(c.get("checkpoint"), POINTER_FIELDS["checkpoint"], "current.checkpoint")
+        for key in ("record", "session"):
+            require(key in checkpoint, f"current.checkpoint.{key}: expected a path or null")
+            if checkpoint[key] is not None:
+                self.path(checkpoint[key], f"current.checkpoint.{key}")
+        require(active is None or checkpoint["record"] == f"{self.registry['task_root']}/{active}/task.json",
+                "current.checkpoint.record: must be the active task's record")
+        owner = f"{self.registry['task_root']}/{active or c['latest_task']}/"
+        require(checkpoint["session"] is None or checkpoint["session"].startswith(owner) and checkpoint["session"].endswith(".md"),
+                f"current.checkpoint.session: must be a Markdown record in {owner}")
+        require(active is not None or checkpoint["record"] in {None, owner + "task.json"}, "current.checkpoint.record: without an active task, null or the latest task's record")
+        names = set()
+        for item in sequence(c.get("unfinished"), "current.unfinished"):
+            item = self.closed(item, POINTER_FIELDS["unfinished"], "current.unfinished")
+            name = identifier(item.get("task"), "current.unfinished.task")
+            require(name not in names and name != active, f"current.unfinished: {name} is repeated or is the active task")
+            names.add(name)
+            choice(item.get("status"), TASK_STATES - CLOSED_STATES, f"current.unfinished {name}.status")
+            choice(item.get("mode"), MODES, f"current.unfinished {name}.mode")
+            text(item.get("branch"), f"current.unfinished {name}.branch")
+            sha(item.get("observed_head"), f"current.unfinished {name}.observed_head")
+            timestamp(item.get("observed_at"), f"current.unfinished {name}.observed_at")
+            for key in ("pull_request", "scope_issue"):
+                if item.get(key) is not None:
+                    https(item[key], f"current.unfinished {name}.{key}")
+            for gate in sequence(item.get("open_gates"), f"current.unfinished {name}.open_gates", True):
+                text(gate, f"current.unfinished {name}.open_gates")
+            self.source(item.get("record"), f"current.unfinished {name}.record")
+            if item.get("note") is not None:
+                text(item["note"], f"current.unfinished {name}.note")
+        policy = mapping(c.get("delivery_policy"), "current.delivery_policy")
+        require(set(policy) == set(self.modes), f"current.delivery_policy: expected exactly {', '.join(sorted(self.modes))}")
+        for name, entry in policy.items():
+            entry = self.closed(entry, POINTER_FIELDS.get(f"delivery_policy.{name}", set()), f"current.delivery_policy.{name}")
+            self.source(entry.get("contract"), f"current.delivery_policy.{name}.contract")
+            text(entry.get("completion_gate"), f"current.delivery_policy.{name}.completion_gate")
+            for key in ("kind", "folder"):
+                if key in entry:
+                    text(entry[key], f"current.delivery_policy.{name}.{key}")
+            for key in ("required", "zip_required"):
+                require(type(entry.get(key, False)) is bool, f"current.delivery_policy.{name}.{key}: expected true or false")
+        for item in sequence(c.get("history"), "current.history", True):
+            item = self.closed(item, POINTER_FIELDS["history"], "current.history")
+            file = self.path(item.get("path"), "current.history.path")
+            digest = hashlib.sha256()
+            with file.open("rb") as stream:
+                for block in iter(lambda: stream.read(1024 * 1024), b""):
+                    digest.update(block)
+            require(isinstance(item.get("sha256"), str) and item["sha256"] == digest.hexdigest(),
+                    f"current.history {item['path']}: SHA-256 differs from the retained file")
+            require(type(item.get("bytes")) is int and item["bytes"] == file.stat().st_size,
+                    f"current.history {item['path']}: size differs from the retained file")
+            sha(item.get("source_commit"), f"current.history {item['path']}.source_commit")
+            text(item.get("purpose"), f"current.history {item['path']}.purpose")
+            holds = [text(key, f"current.history {item['path']}.holds") for key in sequence(item.get("holds"), f"current.history {item['path']}.holds", True)]
+            try:
+                retained = json.loads(file.read_text(encoding="utf-8"))
+            except (UnicodeError, json.JSONDecodeError) as exc:
+                raise Invalid(f"current.history {item['path']}: expected a JSON record") from exc
+            for key in holds:
+                require(isinstance(retained, dict) and key in retained, f"current.history {item['path']}.holds: {key} is not in the retained file")
 
     def validate_task(self, task: dict, folder: str) -> None:
         name = identifier(task.get("id"), f"task {folder}.id")
@@ -223,6 +339,8 @@ class Project:
         state = choice(task.get("status"), TASK_STATES, f"task {name}.status")
         for key in ("title", "intent", "owner", "branch", "next_action"):
             text(task.get(key), f"task {name}.{key}")
+        if "execution_mode" in task:
+            choice(task["execution_mode"], MODES, f"task {name}.execution_mode")
         sha(task.get("base_sha"), f"task {name}.base_sha")
         # A draft can be cancelled or retired before planning ever starts.
         planned = state not in {"draft", "cancelled", "retired"}
@@ -292,8 +410,15 @@ class Project:
                     f"current.{key}: task {value!r} is missing")
         active = self.current.get("active_task")
         if active:
-            require(self.tasks[active]["status"] not in {"done", "retired", "cancelled"},
+            require(self.tasks[active]["status"] not in CLOSED_STATES,
                     "current.active_task: completed or retired tasks cannot be active")
+            if self.current.get("schema_version") == 2:
+                require(self.tasks[active].get("execution_mode") == self.current.get("execution_mode"),
+                        "current.execution_mode: differs from the active task's recorded mode")
+        # A malformed CURRENT has its own diagnostics; this only compares well-formed entries with known records.
+        for item in self.current.get("unfinished") if isinstance(self.current.get("unfinished"), list) else []:
+            known = self.tasks.get(item.get("task")) if isinstance(item, dict) and isinstance(item.get("task"), str) else None
+            require(known is None or known["status"] not in CLOSED_STATES, f"current.unfinished: {item.get('task') if isinstance(item, dict) else item} is closed in its own record")
 
     def validate_memory(self) -> None:
         self.memory = self.load(self.registry["memory"])
@@ -357,18 +482,25 @@ class Project:
     def report(self) -> dict:
         return {"passed": not self.errors, "errors": self.errors, "tasks_checked": len(self.tasks), "notice": NOTICE}
 
-    def local_git(self) -> dict:
+    def local_git(self, top_only: bool = False) -> dict:
+        # Another repository named in the caller's environment is not this checkout, and nothing is fetched.
+        environment = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
+        environment["GIT_NO_LAZY_FETCH"] = "1"
+
         def run(*args: str) -> str | None:
             try:
                 output = subprocess.run(["git", "--no-optional-locks", "-c", "core.fsmonitor=false",
                                          "-C", str(self.root), *args], capture_output=True,
-                                        text=True, timeout=5, check=True)
+                                        text=True, timeout=5, check=True, env=environment)
                 return output.stdout.strip()
             except (OSError, subprocess.SubprocessError):
                 return None
         head = run("rev-parse", "HEAD")
+        if top_only and head and Path(run("rev-parse", "--show-toplevel") or "/").resolve() != self.root:
+            head = None  # A surrounding repository is not this checkout.
         dirty = run("status", "--porcelain", "--untracked-files=normal") if head else None
-        return {"head": head, "dirty": bool(dirty) if dirty is not None else None,
+        return {"head": head, "branch": run("symbolic-ref", "--quiet", "--short", "HEAD") if head else None,
+                "dirty": bool(dirty) if dirty is not None else None,
                 "scope": "local checkout only; no remote fetch or live-state verification"}
 
     def brief(self) -> dict:
@@ -381,8 +513,10 @@ class Project:
                     "owner": task["owner"], "branch": task["branch"], "next_action": task["next_action"],
                     "requirements_done": sum(r["status"] == "done" for r in task["requirements"]),
                     "requirements_total": len(task["requirements"]), "completion": task["completion"]}
-        return {"project": self.registry["repository"], "current": self.current,
-                "required_reads": self.registry["required_reads"], "skills": self.registry["skills"],
+        # Schema 1 has one entry point; schema 2 reads the selected task's mode and guesses none.
+        mode = self.current.get("execution_mode") if self.current["schema_version"] == 2 else next(iter(self.modes))
+        return {"project": self.registry["repository"], "current": self.current, "modes": self.modes,
+                "required_reads": self.modes[mode]["required_reads"] if mode else None, "skills": self.registry["skills"],
                 "active_task": task_summary(self.current.get("active_task")),
                 "latest_task": task_summary(self.current["latest_task"]), "local_git": self.local_git(), "notice": NOTICE}
 
@@ -399,16 +533,36 @@ class Project:
                     matches.append({"kind": kind, "record": record})
         return {"query": query, "matches": matches, "method": "literal case-insensitive AND search; no inference", "notice": NOTICE}
 
-    def new_task(self, task_id: str, title: str, intent: str) -> dict:
+    def starting_revision(self, base: str | None) -> tuple[str, str]:
+        """A supplied commit or the observed local head; never the recorded CURRENT.observed_main.
+
+        CURRENT records an earlier observation and can be older than the actual head. Nothing is
+        fetched: a head observed on the remote is supplied with --base.
+        """
+        if base is not None:
+            sha(base, "new-task.base")
+            require(set(base) != {"0"}, "new-task.base: a commit is needed, not the all-zero placeholder")
+            return base, "supplied with --base"
+        local = self.local_git(top_only=True)
+        require(local["head"] is not None and bool(SHA.fullmatch(local["head"])),
+                "new-task.base: the local Git head of this root was not observed; supply --base with the observed starting commit")
+        return local["head"], f"observed local head of this checkout, {'branch ' + local['branch'] if local['branch'] else 'detached'}"
+
+    def new_task(self, task_id: str, title: str, intent: str, base: str | None = None, mode: str | None = None) -> dict:
         identifier(task_id, "new-task.id")
         text(title, "new-task.title")
         text(intent, "new-task.intent")
+        if mode is not None:
+            choice(mode, MODES, "new-task.mode")
         relative = f"{self.registry['task_root']}/{task_id}"
         directory = self.path(relative, "new-task.directory", exists=False)
         require(not directory.exists() and not directory.is_symlink(), f"new-task: {task_id} already exists; refusing overwrite")
-        # The base is the recorded observation, never an invented live head.
+        revision, origin = self.starting_revision(base)
+        recorded = self.current["observed_main"]
+        observation = origin + ("" if revision == recorded else f"; CURRENT.observed_main records {recorded}")
         task = {"schema_version": 1, "id": task_id, "title": title, "intent": intent, "status": "draft",
-                "owner": "unassigned", "branch": "unassigned", "base_sha": self.current["observed_main"],
+                **({"execution_mode": mode} if mode else {}),
+                "owner": "unassigned", "branch": "unassigned", "base_sha": revision, "base_observation": observation,
                 "requirements": [], "plan": [], "checks": [],
                 "completion": {"implementation_commit": None, "merge_commit": None, "pull_request": None,
                                "branch_disposition": "active", "evidence": []},
@@ -448,7 +602,7 @@ class Project:
             with (directory / name).open("x", encoding="utf-8") as output:
                 output.write(content)
         return {"created": f"{relative}/task.json", "created_files": [f"{relative}/{name}" for name in documents],
-                "status": "draft", "selected": False,
+                "status": "draft", "selected": False, "base_sha": revision, "base_observation": observation,
                 "notice": "Created a local draft only. CURRENT, GitHub, authorization and integration ownership are unchanged."}
 
 
@@ -465,6 +619,8 @@ def main(argv: list[str] | None = None) -> int:
             command.add_argument("id")
             command.add_argument("--title", required=True)
             command.add_argument("--intent", required=True)
+            command.add_argument("--base", help="observed starting commit; default: the local head of this checkout")
+            command.add_argument("--mode", help="execution mode to record, local or browser; required before the task is selected")
     args = parser.parse_args(argv)
     project = Project(args.root)
     result = project.validate()
@@ -475,7 +631,7 @@ def main(argv: list[str] | None = None) -> int:
             elif args.command == "lookup":
                 result = project.lookup(args.query)
             elif args.command == "new-task":
-                result = project.new_task(args.id, args.title, args.intent)
+                result = project.new_task(args.id, args.title, args.intent, args.base, args.mode)
         except (Invalid, OSError, RuntimeError) as exc:
             result = {"passed": False, "errors": [str(exc)], "notice": NOTICE}
     failed = result.get("passed") is False
@@ -490,6 +646,7 @@ def main(argv: list[str] | None = None) -> int:
         print("Created local draft files:")
         for path in result["created_files"]:
             print(f"- {path}")
+        print(f"Base: {result['base_sha']} ({result['base_observation']})")
         print(result["notice"])
     else:
         print(f"Workflow structure passed ({result['tasks_checked']} tasks).\n{NOTICE}")

@@ -1,0 +1,676 @@
+{
+ "schema": "ontokin.local-migration.candidate-checks/1",
+ "task": "LOCAL-MIGRATION-20261124",
+ "step": "TASK-027",
+ "purpose": "Checks of the candidate for the changed scope and their comparison with the recorded baseline on the unmodified base revision (OK-ENG-009 section 3, gate 4).",
+ "candidate": {
+  "revision": "16c83df531dbbef8019751dc44af8ee4df8d5c8b",
+  "tree": "bd0923cb85b9a0d1b7d102237651cdc8f5291aa3",
+  "base": "6b346b1e4126332fe3c98a4a98f3e0b0e2f63774",
+  "branch": "work/local-migration-20261124",
+  "checkout": "a detached worktree of this revision outside the main checkout, clean before and after all runs, with its own environment made by the setup tool from the committed lock",
+  "later_commits": "Commits after this revision change documents and records only. Git identifies them; the audit names them and repeats the documentation verifier and the workflow check on the frozen candidate."
+ },
+ "platform": {
+  "system": "macOS 26.6.2 arm64",
+  "interpreter": "CPython 3.12.13 (Homebrew python@3.12), in the .venv of that worktree",
+  "packages": {
+   "attrs": "26.1.0",
+   "jsonschema": "4.26.0",
+   "jsonschema-specifications": "2025.9.1",
+   "pillow": "13.0.0",
+   "pip": "26.0",
+   "referencing": "0.37.0",
+   "rpds-py": "2026.5.1",
+   "typing_extensions": "4.16.0"
+  },
+  "environment_variables": "No PYTHON* or PIP_* variable was set for the driver runs, apart from PYTHONDONTWRITEBYTECODE for the in-place verifier. GIT_EDITOR was set by the agent application; no other GIT_* variable was."
+ },
+ "output_location": "New directories under the local checks directory beside the clone, outside every checkout. Raw logs stay local and reproducible; their identities are below.",
+ "nothing_changed_to_obtain_this": "No expectation, fixture, stored corpus, timeout default or workflow definition was changed. The per-command timeout was stated as 14,400 seconds; no command timed out.",
+ "superseded_runs": "Complete runs with the same comparison result preceded this one at c6835c4d (resolved TMPDIR only, 4,897 tests), ebcfee8c and 7d937e26 (4,941 tests), 1d9e5684 (4,972 tests), f81a95a5, 2a220d2f and 402a7d8e (4,989 tests at the last two), all others with both TMPDIR settings; the tools and documents were corrected after independent reviews, the last time after the review of the first frozen candidate. Two runs at 02797bb0 were stopped before completion because a later commit replaced that revision; nothing is claimed from them.",
+ "items": [
+  {
+   "item": "documentation verifier, in place",
+   "result": "passed",
+   "command": "python3.12 -I -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+   "observed": "1,344 documents, 6,146 local links, 154 anchors, no failure",
+   "output": {
+    "name": "candidate-16c83df5-documents-inplace.json",
+    "bytes": 6608,
+    "sha256": "981ee5db0fcad902ed8872b123abe55b0ce1737210e7263db7f082b13cb08057"
+   }
+  },
+  {
+   "item": "workflow structure check, in place",
+   "result": "passed",
+   "command": ".venv/bin/python -B tools/chat_workflow.py check",
+   "observed": "12 tasks",
+   "output": {
+    "name": "candidate-16c83df5-workflow-inplace.txt",
+    "bytes": 148,
+    "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+   }
+  },
+  {
+   "item": "focused tool tests, resolved TMPDIR",
+   "result": "passed",
+   "command": ".venv/bin/python -B -m unittest tests.test_bootstrap_local tests.test_doctor_local tests.test_chat_workflow tests.test_local_checks -v",
+   "observed": "307 tests, OK (85, 71, 119, 32)",
+   "output": {
+    "name": "candidate-16c83df5-focused-resolved.log",
+    "bytes": 48244,
+    "sha256": "f48835a3a0cabf5985decb32ddafba70555ce7d0c2f44634847e925dc4dedb5f"
+   }
+  },
+  {
+   "item": "focused tool tests, default macOS TMPDIR",
+   "result": "failed",
+   "classification": "unchanged from the baseline",
+   "command": "the same command without a resolved TMPDIR",
+   "observed": "307 tests, 2 not passing: test_local_checks.LocalChecksTests.test_external_workspace_retains_real_git_revision_and_copied_changes_with_own_index and test_force_agent_plan_is_explicit_and_combines_with_existing_full_role. Both do not pass on the unmodified base either; the cause is the symlinked default directory.",
+   "output": {
+    "name": "candidate-16c83df5-focused-default.log",
+    "bytes": 50304,
+    "sha256": "fafe9be679edf8774b7fe51608901cf7ad347e917bc0cf179e22e2f58252293f"
+   }
+  },
+  {
+   "item": "routine driver, resolved TMPDIR",
+   "result": "failed",
+   "classification": "unchanged from the baseline",
+   "observed": "Unit step: 4,989 tests, one not passing, the same test and reason as on the base; every other step passed, the documents step included."
+  },
+  {
+   "item": "routine driver, default macOS TMPDIR",
+   "result": "failed",
+   "classification": "unchanged from the baseline",
+   "observed": "Unit step: 4,989 tests, 307 not passing, the same tests, outcomes, subtest counts and reasons as on the base; every other step passed, the documents step included."
+  },
+  {
+   "item": "workflow definitions",
+   "result": "passed",
+   "command": "git diff 6b346b1e4126332fe3c98a4a98f3e0b0e2f63774..16c83df531dbbef8019751dc44af8ee4df8d5c8b -- .github",
+   "observed": "No difference, so no push, pull-request or scheduled trigger was added."
+  },
+  {
+   "item": "expectations",
+   "result": "passed",
+   "command": "git diff --name-status 6b346b1e4126332fe3c98a4a98f3e0b0e2f63774..16c83df531dbbef8019751dc44af8ee4df8d5c8b",
+   "observed": "37 files added, 21 modified, none deleted or renamed. No file under an existing evidence, expected, fixture or corpus path changed. Modified tests are tests/test_chat_workflow.py and tests/test_local_checks.py, which change with the tools they test."
+  },
+  {
+   "item": "three static-tray readback tests",
+   "result": "skipped",
+   "observed": "Retained exact Node/readback dependencies are unavailable, as on the base; the driver counts a skip as an incomplete regression."
+  },
+  {
+   "item": "external release attestations",
+   "result": "pending",
+   "observed": "The same 16 cases as on the base stay pending and are not passes."
+  },
+  {
+   "item": "--full and --force-agent driver roles",
+   "result": "not run",
+   "observed": "The visual profile is not prepared on this machine (only Node.js 25.9.0 is installed; the target is 22), and the changed paths touch no exporter, viewer or Agent contract."
+  },
+  {
+   "item": "hosted CI",
+   "result": "not run",
+   "observed": "Not used, as OK-ENG-006 directs."
+  },
+  {
+   "item": "Linux x86-64",
+   "result": "not run",
+   "observed": "No Linux host was used; the Linux lock is byte-identical to the base."
+  }
+ ],
+ "comparison": {
+  "method": "The raw unit logs of these runs and of the baseline runs were parsed by one program and compared by test, outcome, number of subtests and reason, with machine paths replaced by labels.",
+  "resolved_tmpdir": {
+   "baseline_run": "BASELINE-CHECKS.json, run resolved-temporary-directory",
+   "unchanged": 1,
+   "new_not_passing": [],
+   "no_longer_failing": [],
+   "different_outcome": [],
+   "different_reason": [],
+   "different_subtests": [],
+   "tests_baseline": 4740,
+   "tests_candidate": 4989,
+   "steps_equal_to_baseline": [
+    "agent",
+    "construction",
+    "impulse",
+    "source",
+    "surface",
+    "unit-tests"
+   ],
+   "steps_different_from_baseline": [
+    [
+     "documents",
+     "failed",
+     "passed"
+    ]
+   ],
+   "pending_equal_to_baseline": true,
+   "skips_equal_to_baseline": true
+  },
+  "default": {
+   "baseline_run": "BASELINE-CHECKS.json, run default",
+   "unchanged": 307,
+   "new_not_passing": [],
+   "no_longer_failing": [],
+   "different_outcome": [],
+   "different_reason": [],
+   "different_subtests": [],
+   "tests_baseline": 4740,
+   "tests_candidate": 4989,
+   "steps_equal_to_baseline": [
+    "agent",
+    "construction",
+    "impulse",
+    "source",
+    "surface",
+    "unit-tests"
+   ],
+   "steps_different_from_baseline": [
+    [
+     "documents",
+     "failed",
+     "passed"
+    ]
+   ],
+   "pending_equal_to_baseline": true,
+   "skips_equal_to_baseline": true
+  },
+  "other_steps": "source, agent, construction, surface and impulse passed with report summaries equal to the baseline; documents changed from failed to passed.",
+  "new_or_worsened_failures": []
+ },
+ "classification": [
+  {
+   "failure": "307 distinct tests with the default macOS TMPDIR",
+   "class": "unchanged from the baseline",
+   "cause": "macOS presents the default temporary directory through the symbolic link /var, which is /private/var. Tests and readers that refuse symlinked or aliased ancestors, or compare a path with its resolved form, then do not pass.",
+   "next_action": "Run the driver with a resolved TMPDIR on macOS, as docs/development/LOCAL-SETUP.md says. No test or expectation changes."
+  },
+  {
+   "failure": "test_force_contract.ForceContractReviewTests.test_original_corpus_and_author_remain_byte_identical in both runs",
+   "class": "unchanged from the baseline",
+   "cause": "Two of the 92 regenerated files differ from their stored bytes on macOS arm64: acceptance.json at two places, each in the last digit of the same floating-point value (0.5984721441039565 stored, 0.5984721441039564 regenerated), and member-manifest.json in the digest of that file. The test stops at the first. That the platform's floating-point results cause it is inferred; it was not shown on a second platform.",
+   "next_action": "A separately selected scope examines the difference, on a second platform as well; the stored corpus and the expectation stay unchanged."
+  }
+ ],
+ "limits": [
+  "One machine and one interpreter. The limits of BASELINE-CHECKS.json apply.",
+  "The driver reports its overall status as failed because of the unchanged unit failure; this record does not relabel that status.",
+  "These checks say nothing about native tools, release acceptance or C271."
+ ],
+ "runs": [
+  {
+   "label": "resolved-tmpdir",
+   "command": "TMPDIR=\"$(cd \"$TMPDIR\" && pwd -P)/\" .venv/bin/python -B tools/check_local.py --timeout 14400 --output-dir <new directory beside the clone>",
+   "driver_status": "failed",
+   "exit_status": 1,
+   "started_at": "2026-11-25T20:37:37.444617+00:00",
+   "finished_at": "2026-11-25T20:59:20.728758+00:00",
+   "duration_seconds": 1303.076,
+   "source": {
+    "head": "16c83df531dbbef8019751dc44af8ee4df8d5c8b",
+    "tree": "bd0923cb85b9a0d1b7d102237651cdc8f5291aa3",
+    "tracked_status": "",
+    "source_unchanged": true,
+    "git_revision_unchanged": true,
+    "inventory_sha256": "sha256:9e4d5264821b6a687c874f1655457cb8ebe820c6d55ec8a75832ff1d7aa73b4a",
+    "inventory_files": 18676
+   },
+   "environment": {
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 17.0.0 (clang-1700.6.3.2)]",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "architecture": "arm64"
+   },
+   "summary_file": {
+    "name": "<output>/summary.json",
+    "sha256": "sha256:1e93c3e1e7cabb2f5c97a7efeea86fbb0676b0e0db3dd4d46c6c4146fc035ad8",
+    "bytes": 23041
+   },
+   "steps": [
+    {
+     "id": "unit-tests",
+     "status": "failed",
+     "seconds": 1201.021,
+     "exit_status": 1,
+     "log": {
+      "name": "<output>/logs/unit-tests.log",
+      "sha256": "sha256:8ca8827f9904f8131ca318e74a0dc8b898e88a19275deb34ec3dbb6a43fff14f",
+      "bytes": 929227
+     },
+     "test_execution": {
+      "tests_run": 4989,
+      "skipped": 3,
+      "expected_failures": 0,
+      "executed_without_skips": 4986,
+      "complete_regression_passed": false
+     }
+    },
+    {
+     "id": "source",
+     "status": "passed",
+     "seconds": 0.551,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/source.log",
+      "sha256": "sha256:42fd79235e1a1948c82d46e4b89bac6b1782c63a1f325d1704eec1927061724b",
+      "bytes": 317
+     },
+     "report": {
+      "name": "<output>/reports/source.json",
+      "sha256": "sha256:adb09d14c52c90efad7e3cd2194839af4a8597120a3fee509cf5d86ccf7ecce7",
+      "bytes": 230306,
+      "summary": {
+       "passed": 43,
+       "failed": 0,
+       "total": 43,
+       "assertions": 694,
+       "expected_valid": 12,
+       "expected_invalid_or_conflicting": 29,
+       "expected_unsupported": 2
+      }
+     }
+    },
+    {
+     "id": "agent",
+     "status": "passed",
+     "seconds": 0.781,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/agent.log",
+      "sha256": "sha256:fb5d24cb9c7f21d3632ebffa591f6459b1341d650cd4206c503898c148dd32be",
+      "bytes": 193
+     },
+     "report": {
+      "name": "<output>/reports/agent.json",
+      "sha256": "sha256:69215c19ce53e7385055c490363439a3122e1ef82556a85d3c223ef01da7ad4b",
+      "bytes": 257717,
+      "summary": {
+       "total": 10,
+       "passed": 10,
+       "failed": 0
+      }
+     }
+    },
+    {
+     "id": "construction",
+     "status": "passed",
+     "seconds": 25.861,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/construction.log",
+      "sha256": "sha256:f25cc127ea3a945a7ee43ae19ff2c185f1baf30fbdb9d12bd2570bad97fa055a",
+      "bytes": 536
+     },
+     "report": {
+      "name": "<output>/reports/construction.json",
+      "sha256": "sha256:e38a0ab1a87f9b7337a32f70d2668968b33f28cb0d6546131667230b6410a860",
+      "bytes": 185981,
+      "summary": {
+       "total": 20,
+       "passed": 19,
+       "failed": 0,
+       "pending": 1,
+       "all_adopted_cases_selected": true,
+       "case_gate_complete": false
+      }
+     }
+    },
+    {
+     "id": "surface",
+     "status": "passed",
+     "seconds": 15.09,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/surface.log",
+      "sha256": "sha256:33167ce31a27cf7cc664458c74645fd223729981b2290cc9c710be7b519e5a11",
+      "bytes": 286
+     },
+     "report": {
+      "name": "<output>/reports/surface.json",
+      "sha256": "sha256:2971eda9cbc21e73a1ae240033fd1c61d7947f4fc9f0c806061ff26ddc01687f",
+      "bytes": 582927,
+      "summary": {
+       "total": 12,
+       "passed": 1,
+       "failed": 0,
+       "pending": 11,
+       "all_adopted_cases_selected": true,
+       "full_gate_complete": false
+      }
+     }
+    },
+    {
+     "id": "impulse",
+     "status": "passed",
+     "seconds": 37.783,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/impulse.log",
+      "sha256": "sha256:82160c6e197af610b7f5228784d297908afc81d25f253f9bc2a114cdcbbf4dca",
+      "bytes": 157
+     },
+     "report": {
+      "name": "<output>/reports/impulse.json",
+      "sha256": "sha256:3fc5e560ef781e3ca0798c9b719ac34692c56023dacf1fe56458b056c1959e55",
+      "bytes": 885996,
+      "summary": {
+       "total": 12,
+       "passed": 8,
+       "failed": 0,
+       "pending": 4,
+       "all_adopted_cases_selected": true,
+       "full_gate_complete": false
+      }
+     }
+    },
+    {
+     "id": "documents",
+     "status": "passed",
+     "seconds": 1.76,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/documents.log",
+      "sha256": "sha256:981ee5db0fcad902ed8872b123abe55b0ce1737210e7263db7f082b13cb08057",
+      "bytes": 6608
+     }
+    }
+   ],
+   "not_executed_steps": [],
+   "pending_external_cases": [
+    "construction C20",
+    "surface M01",
+    "surface M02",
+    "surface M03",
+    "surface M04",
+    "surface M05",
+    "surface M06",
+    "surface M07",
+    "surface M08",
+    "surface M09",
+    "surface M11",
+    "surface M12",
+    "impulse I07",
+    "impulse I09",
+    "impulse I11",
+    "impulse I12"
+   ],
+   "unit_tests": {
+    "ran": 4989,
+    "seconds": 1198.386,
+    "result": "FAILED",
+    "detail": "failures=1, skipped=3",
+    "distinct_not_passing": 1,
+    "skipped": [
+     [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries",
+      "'Retained exact Node/readback dependencies are unavailable'"
+     ],
+     [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries",
+      "'Retained exact Node/readback dependencies are unavailable'"
+     ],
+     [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference",
+      "'Retained exact Node/readback dependencies are unavailable'"
+     ]
+    ],
+    "not_passing_by_module": {
+     "test_force_contract": 1
+    },
+    "not_passing": {
+     "test_force_contract": {
+      "AssertionError: b'...' != b'...' : acceptance.json": [
+       "ForceContractReviewTests.test_original_corpus_and_author_remain_byte_identical"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "label": "default",
+   "command": ".venv/bin/python -B tools/check_local.py --timeout 14400 --output-dir <new directory beside the clone>",
+   "driver_status": "failed",
+   "exit_status": 1,
+   "started_at": "2026-11-25T20:37:37.064943+00:00",
+   "finished_at": "2026-11-25T20:58:26.749290+00:00",
+   "duration_seconds": 1249.419,
+   "source": {
+    "head": "16c83df531dbbef8019751dc44af8ee4df8d5c8b",
+    "tree": "bd0923cb85b9a0d1b7d102237651cdc8f5291aa3",
+    "tracked_status": "",
+    "source_unchanged": true,
+    "git_revision_unchanged": true,
+    "inventory_sha256": "sha256:9e4d5264821b6a687c874f1655457cb8ebe820c6d55ec8a75832ff1d7aa73b4a",
+    "inventory_files": 18676
+   },
+   "environment": {
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 17.0.0 (clang-1700.6.3.2)]",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "architecture": "arm64"
+   },
+   "summary_file": {
+    "name": "<output>/summary.json",
+    "sha256": "sha256:9dbe4a6996f2910aa47dd2845ec8c7e2fc12bc52260e557ab2b9852a6242451d",
+    "bytes": 23055
+   },
+   "steps": [
+    {
+     "id": "unit-tests",
+     "status": "failed",
+     "seconds": 1143.36,
+     "exit_status": 1,
+     "log": {
+      "name": "<output>/logs/unit-tests.log",
+      "sha256": "sha256:15cc3428ea2825525fe3bb9aab43bd000b15d28a0c686d967783566472ac9b52",
+      "bytes": 1996431
+     },
+     "test_execution": {
+      "tests_run": 4989,
+      "skipped": 3,
+      "expected_failures": 0,
+      "executed_without_skips": 4986,
+      "complete_regression_passed": false
+     }
+    },
+    {
+     "id": "source",
+     "status": "passed",
+     "seconds": 0.569,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/source.log",
+      "sha256": "sha256:d8486e6ee141ebdfd9fd9ea9a14ebcb8e0295cb9fc90c9d9e648b286fad344cf",
+      "bytes": 318
+     },
+     "report": {
+      "name": "<output>/reports/source.json",
+      "sha256": "sha256:a618cc5b76e83913c829cc0425141ba6e373d802d96a92d15a8e267b139500d4",
+      "bytes": 230306,
+      "summary": {
+       "passed": 43,
+       "failed": 0,
+       "total": 43,
+       "assertions": 694,
+       "expected_valid": 12,
+       "expected_invalid_or_conflicting": 29,
+       "expected_unsupported": 2
+      }
+     }
+    },
+    {
+     "id": "agent",
+     "status": "passed",
+     "seconds": 0.752,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/agent.log",
+      "sha256": "sha256:5de5f375b9a5c047ab62b3833d19cd807dd2e9d4dea519215427f5195ed37205",
+      "bytes": 194
+     },
+     "report": {
+      "name": "<output>/reports/agent.json",
+      "sha256": "sha256:642cb79a852103f57f4b931102688cdabc86187b30cf00bcec9041c46ad5f3b8",
+      "bytes": 257716,
+      "summary": {
+       "total": 10,
+       "passed": 10,
+       "failed": 0
+      }
+     }
+    },
+    {
+     "id": "construction",
+     "status": "passed",
+     "seconds": 25.741,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/construction.log",
+      "sha256": "sha256:0c07cb3e9081f82cd3c1e05b2bf3fcfb8bc7e00e976d43c25c99d343c30eea69",
+      "bytes": 537
+     },
+     "report": {
+      "name": "<output>/reports/construction.json",
+      "sha256": "sha256:8ca5c711a726bfa00207ce97e693ebc1316a4cf6d32fa406cd774ed6e51d3252",
+      "bytes": 185979,
+      "summary": {
+       "total": 20,
+       "passed": 19,
+       "failed": 0,
+       "pending": 1,
+       "all_adopted_cases_selected": true,
+       "case_gate_complete": false
+      }
+     }
+    },
+    {
+     "id": "surface",
+     "status": "passed",
+     "seconds": 15.174,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/surface.log",
+      "sha256": "sha256:8838b4bde12c0b3e2d5e4f0052fd712263f07b8118e70e212cf11506b006228b",
+      "bytes": 287
+     },
+     "report": {
+      "name": "<output>/reports/surface.json",
+      "sha256": "sha256:89929f347f366698224ab256a7b49b803a1407fe724d29e6ab7d97240fc6fcaa",
+      "bytes": 582932,
+      "summary": {
+       "total": 12,
+       "passed": 1,
+       "failed": 0,
+       "pending": 11,
+       "all_adopted_cases_selected": true,
+       "full_gate_complete": false
+      }
+     }
+    },
+    {
+     "id": "impulse",
+     "status": "passed",
+     "seconds": 39.594,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/impulse.log",
+      "sha256": "sha256:82160c6e197af610b7f5228784d297908afc81d25f253f9bc2a114cdcbbf4dca",
+      "bytes": 157
+     },
+     "report": {
+      "name": "<output>/reports/impulse.json",
+      "sha256": "sha256:1ebf04636ccbaf17a539e9f52adb4463b897a1a29b5943a6594e4c2aba8352bb",
+      "bytes": 885991,
+      "summary": {
+       "total": 12,
+       "passed": 8,
+       "failed": 0,
+       "pending": 4,
+       "all_adopted_cases_selected": true,
+       "full_gate_complete": false
+      }
+     }
+    },
+    {
+     "id": "documents",
+     "status": "passed",
+     "seconds": 1.812,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/documents.log",
+      "sha256": "sha256:981ee5db0fcad902ed8872b123abe55b0ce1737210e7263db7f082b13cb08057",
+      "bytes": 6608
+     }
+    }
+   ],
+   "not_executed_steps": [],
+   "pending_external_cases": [
+    "construction C20",
+    "surface M01",
+    "surface M02",
+    "surface M03",
+    "surface M04",
+    "surface M05",
+    "surface M06",
+    "surface M07",
+    "surface M08",
+    "surface M09",
+    "surface M11",
+    "surface M12",
+    "impulse I07",
+    "impulse I09",
+    "impulse I11",
+    "impulse I12"
+   ],
+   "unit_tests": {
+    "ran": 4989,
+    "seconds": 1140.742,
+    "result": "FAILED",
+    "detail": "failures=103, errors=311, skipped=3",
+    "distinct_not_passing": 307,
+    "skipped": [
+     [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries",
+      "'Retained exact Node/readback dependencies are unavailable'"
+     ],
+     [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries",
+      "'Retained exact Node/readback dependencies are unavailable'"
+     ],
+     [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference",
+      "'Retained exact Node/readback dependencies are unavailable'"
+     ]
+    ],
+    "not_passing_by_module": {
+     "test_force_evidence_collection": 2,
+     "test_static_tray_admission_c201_input_lock": 61,
+     "test_static_tray_admission_c201_ledger": 31,
+     "test_static_tray_admission_c201_readback_binding": 52,
+     "test_static_tray_admission_c201_readback_entries": 61,
+     "test_static_tray_admission_c201_transaction": 47,
+     "test_static_tray_admission_c201_working_directories": 16,
+     "test_static_tray_admission_c231_ledger_identity": 23,
+     "test_static_tray_reader_v01": 3,
+     "test_texture_bundle": 4,
+     "test_force_conformance": 1,
+     "test_force_contract": 1,
+     "test_local_checks": 2,
+     "test_reach_destination_inventory": 2,
+     "test_surface_conformance": 1
+    },
+    "not_passing": {
+     "note": "The list of test, outcomes, number of subtests and reason, with machine paths replaced by labels, equals the same list of the default baseline run, whose tests BASELINE-CHECKS.json names. Both lists give the digest below.",
+     "entries": 307,
+     "sha256_of_this_list": "2681454e00c20e1b561f933d08421de97882a0dd34ea7fa4099e88eb076173d4"
+    }
+   }
+  }
+ ]
+}
