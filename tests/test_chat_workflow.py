@@ -487,12 +487,20 @@ class ExecutionModeSchemaTests(ChatWorkflowTests):
         for value, fragment in (({"record": "AGENTS.md", "session": None}, "must be the active task's record"),
                                 ({"record": None, "session": None}, "must be the active task's record"),
                                 ({"record": "docs/workflow/tasks/C263/task.json"}, "expected a path or null"),
-                                ({"record": "docs/workflow/tasks/C263/task.json", "session": "missing.md"}, "missing file")):
+                                ({"record": "docs/workflow/tasks/C263/task.json", "session": "missing.md"}, "missing file"),
+                                ({"record": "docs/workflow/tasks/C263/task.json", "session": "AGENTS.md"}, "must be a Markdown record in docs/workflow/tasks/C263/"),
+                                ({"record": "docs/workflow/tasks/C263/task.json", "session": "docs/workflow/tasks/C263/task.json"}, "must be a Markdown record"),
+                                ({"record": "docs/workflow/tasks/C263/task.json", "session": "docs/workflow/tasks/C271.md"}, "must be a Markdown record")):
             with self.subTest(value=value):
+                self.write("docs/workflow/tasks/C271.md", "# Another record\n")
                 self.current["checkpoint"] = value
                 self.rejected(fragment)
-        self.current["checkpoint"] = {"record": "docs/workflow/tasks/C263/task.json", "session": "evidence/result.txt"}
+        (self.root / "docs/workflow/tasks/C271.md").unlink()
+        self.write("docs/workflow/tasks/C263/SESSION.md", "# Session\n")
+        self.current["checkpoint"] = {"record": "docs/workflow/tasks/C263/task.json", "session": "docs/workflow/tasks/C263/SESSION.md"}
         self.assertTrue(self.check()["passed"])
+        self.completed()
+        self.assertTrue(self.check()["passed"], "Without an active task the latest task's checkpoint stays.")
 
     def test_receipts_are_linked_and_not_embedded(self):
         for key in ("historical_handoff", "latest_handoff", "previous_handoff", "older_handoffs", "latest_recovery", "previous_recovery", "older_recoveries",
@@ -501,6 +509,14 @@ class ExecutionModeSchemaTests(ChatWorkflowTests):
                 self.current[key] = {"url": "https://example.com/receipt"}
                 self.rejected(f"current.{key}: schema 2 keeps receipts and phase records in linked history")
                 del self.current[key]
+        for label, place in (("next_action", self.current["next_action"]), ("checkpoint", self.current["checkpoint"]), ("unfinished", self.current["unfinished"][0]),
+                             ("delivery_policy.local", self.current["delivery_policy"]["local"]), ("delivery_policy.browser", self.current["delivery_policy"]["browser"]),
+                             ("history", self.current["history"][0])):
+            with self.subTest(place=label):
+                place["receipt"] = {"sha256": "0" * 64}
+                self.rejected(f"current.{label}.receipt: schema 2 keeps receipts and phase records in linked history")
+                del place["receipt"]
+        self.assertTrue(self.check()["passed"])
 
     def test_both_records_use_the_same_schema(self):
         for version in (1, 2):
@@ -551,7 +567,8 @@ class ExecutionModeSchemaTests(ChatWorkflowTests):
         entry = self.current["unfinished"][0]
         for key, value, fragment in (("status", "done", "expected one of"), ("open_gates", [], "must not be empty"), ("observed_head", "main", "40 lowercase"),
                                      ("observed_at", "yesterday", "timestamp"), ("mode", "cloud", "expected one of"), ("task", "C263", "is the active task"),
-                                     ("record", "missing.md", "missing file"), ("pull_request", "http://example.com", "HTTPS")):
+                                     ("record", "missing.md", "missing file"), ("pull_request", "http://example.com", "HTTPS"),
+                                     ("scope_issue", "http://example.com", "HTTPS")):
             with self.subTest(key=key):
                 kept = entry[key]
                 entry[key] = value
@@ -578,10 +595,11 @@ class ExecutionModeSchemaTests(ChatWorkflowTests):
 class StartingRevisionTests(ExecutionModeSchemaTests):
     """A new task starts from an observed or supplied revision in a real Git checkout."""
 
-    def git(self, *arguments):
+    def git(self, *arguments, root=None):
+        """Git in a test repository only; a repository named by the caller is never used."""
         environment = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
         environment.update(GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_NOSYSTEM="1")
-        return subprocess.run(["git", "-c", "user.name=Test", "-c", "user.email=test@example.invalid", "-C", str(self.root), *arguments],
+        return subprocess.run(["git", "-c", "user.name=Test", "-c", "user.email=test@example.invalid", "-C", str(root or self.root), *arguments],
                               env=environment, check=True, capture_output=True, text=True).stdout.strip()
 
     def commit(self, message):
@@ -614,7 +632,7 @@ class StartingRevisionTests(ExecutionModeSchemaTests):
         self.commit("First")
         code, _, task = self.create("C300", "--base", BASE)
         self.assertEqual((code, task["base_sha"], task["base_observation"].split(";")[0]), (0, BASE, "supplied with --base"))
-        for value in ("main", "HEAD", "5" * 39, "5" * 41, "G" * 40, ""):
+        for value in ("main", "HEAD", "5" * 39, "5" * 41, "G" * 40, "0" * 40, ""):
             with self.subTest(value=value):
                 code, result, task = self.create("C301", "--base", value)
                 self.assertEqual((code, task), (1, None))
@@ -626,9 +644,8 @@ class StartingRevisionTests(ExecutionModeSchemaTests):
         self.assertEqual((code, task), (1, None))
         self.assertIn("supply --base", result["errors"][0])
         self.assertEqual(self.snapshot(), before)
-        outer, environment = self.root.parent, {**os.environ, "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1"}
-        for arguments in (["init", "--quiet", "--template="], ["-c", "user.name=T", "-c", "user.email=t@example.invalid", "commit", "--quiet", "--allow-empty", "-m", "Outer"]):
-            subprocess.run(["git", "-C", str(outer), *arguments], check=True, capture_output=True, env=environment)
+        for arguments in (["init", "--quiet", "--template="], ["commit", "--quiet", "--allow-empty", "--no-verify", "-m", "Outer"]):
+            self.git(*arguments, root=self.root.parent)
         code, result, task = self.create("C300")
         self.assertEqual((code, task), (1, None), "A surrounding repository is not this checkout.")
 
@@ -637,8 +654,8 @@ class StartingRevisionTests(ExecutionModeSchemaTests):
         first = self.commit("First")
         other = self.root.parent / "other"
         other.mkdir()
-        for arguments in (["init", "--quiet", "--template="], ["-c", "user.name=T", "-c", "user.email=t@example.invalid", "commit", "--quiet", "--allow-empty", "-m", "Other"]):
-            subprocess.run(["git", "-C", str(other), *arguments], check=True, capture_output=True)
+        for arguments in (["init", "--quiet", "--template="], ["commit", "--quiet", "--allow-empty", "--no-verify", "-m", "Other"]):
+            self.git(*arguments, root=other)
         with patch.dict(os.environ, {"GIT_DIR": str(other / ".git"), "GIT_WORK_TREE": str(other)}):
             code, _, task = self.create("C300")
         self.assertEqual((code, task["base_sha"]), (0, first))
@@ -662,11 +679,12 @@ class StartingRevisionTests(ExecutionModeSchemaTests):
     def test_base_observation_contacts_no_remote(self):
         self.git("init", "--quiet", "--template=")
         self.commit("First")
-        started = []
+        started, environments = [], []
         real = subprocess.run
 
         def record(argv, *arguments, **options):
             started.append(list(argv))
+            environments.append(options["env"])
             return real(argv, *arguments, **options)
 
         with patch.object(chat_workflow.subprocess, "run", record):
@@ -674,6 +692,7 @@ class StartingRevisionTests(ExecutionModeSchemaTests):
         commands = {argv[argv.index("-C") + 2] for argv in started}
         self.assertIn("rev-parse", commands)
         self.assertLessEqual(commands, {"rev-parse", "status", "symbolic-ref"})
+        self.assertEqual({environment.get("GIT_NO_LAZY_FETCH") for environment in environments}, {"1"}, "A partial clone is not completed either.")
 
 
 if __name__ == "__main__":

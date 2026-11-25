@@ -28,6 +28,7 @@ from pathlib import Path
 import platform
 import re
 import shutil
+import signal
 import tempfile
 import time
 
@@ -46,6 +47,7 @@ RECORD_SCHEMA = "ontokin.local-environment-record/1"
 LOCK_NAME = "ontokin-bootstrap.lock"  # In the checkout's own Git directory.
 STATE_DIRECTORY = "build/local-environment"  # Ignored by Git; holds the reports of changing runs.
 READY, UNMET, REFUSED, BUSY, INTERRUPTED = 0, 1, 2, 3, 130
+NODE_PROGRAMS = ("node", "npm", "npx", "pnpm", "yarn", "corepack")
 SMOKE = (("capabilities", ["-B", "-m", "ontokin", "capabilities"]),
          ("check", ["-B", "-m", "ontokin", "check", "docs/language-design/core-v0.1/01-independent-parts.ok"]))
 
@@ -70,6 +72,25 @@ def stamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
 
 
+def tail(text: str, limit=2000) -> str:
+    """The end of an output, cut at a line so that no path in it is cut."""
+    return text if len(text) <= limit else text[-limit:].partition("\n")[2]
+
+
+@contextmanager
+def uninterrupted():
+    """Let an interruption wait while the report of a run is written."""
+    try:
+        previous = signal.signal(signal.SIGINT, signal.SIG_IGN)
+    except ValueError:  # Signals can be set in the main thread only.
+        yield
+        return
+    try:
+        yield
+    finally:
+        signal.signal(signal.SIGINT, previous)
+
+
 class Session:
     """One setup run: where it works, how it starts commands and what it did."""
 
@@ -88,7 +109,7 @@ class Session:
         clock = time.monotonic()
         result = self.run(argv, cwd=cwd, timeout=timeout, env=doctor.clean_environment() if env is None else env, keep=self.keep)
         entry.update(seconds=round(time.monotonic() - clock, 2), code=result["code"],
-                     output_tail=(result["out"] + result["err"])[-2000:], error=result["error"])
+                     output_tail=tail(result["out"] + result["err"]), error=result["error"])
         if result["code"] != 0:
             raise ActionFailed(f"{name} failed: {doctor.failure_text(result)}")
         return result
@@ -101,7 +122,11 @@ class Session:
         located = doctor.git(self.root, "rev-parse", "--absolute-git-dir", run=self.run)
         if located["code"] != 0:
             raise Refusal("The checkout's Git directory was not found: " + doctor.failure_text(located))
-        with (Path(located["out"].rstrip("\n")) / LOCK_NAME).open("a") as stream:
+        try:
+            stream = (Path(located["out"].rstrip("\n")) / LOCK_NAME).open("a")
+        except OSError as error:
+            raise Refusal(f"The setup lock cannot be opened: {error}. Nothing was changed.") from error
+        with stream:
             try:
                 fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
             except OSError as error:
@@ -120,43 +145,52 @@ def variable(environment: str, name: str):
     return match[1].rstrip() if match else None
 
 
-def process_environment(number: str, system: str, run):
+def listing_environment(system: str) -> dict:
+    """A locale in which ps and lsof show every path as it is, whatever the caller's locale."""
+    return dict(doctor.clean_environment(), LC_ALL="C.UTF-8" if system == "Linux" else "en_US.UTF-8")
+
+
+def process_environment(session: Session, number: str):
     """The start environment of one process as text, or None when it cannot be read."""
-    if system == "Linux":
-        read = run(["cat", f"/proc/{number}/environ"], timeout=10)
+    if session.system == "Linux":
+        read = session.run(["cat", f"/proc/{number}/environ"], timeout=10)
         return read["out"] if read["code"] == 0 and read["out"] else None
-    read = run(["ps", "-Eww", "-o", "command=", "-p", number], timeout=30)
-    return read["out"] if read["code"] == 0 and " PATH=" in read["out"] else None
+    read = session.run(["ps", "-Eww", "-o", "command=", "-p", number], timeout=30, env=listing_environment(session.system))
+    return read["out"] if read["code"] == 0 and re.search(r" (PATH|__PYVENV_LAUNCHER__)=", read["out"]) else None
 
 
-def working_directory(number: str, run):
-    place = run(["lsof", "-a", "-d", "cwd", "-p", number, "-Fn"], timeout=30)
-    places = [entry[1:] for entry in place["out"].splitlines() if entry.startswith("n/")]
-    return places[0] if places else None
+def parse_places(text: str) -> dict:
+    """Program name and working directory of each process in lsof's field output."""
+    processes, number = {}, None
+    for line in text.splitlines():
+        field, value = line[:1], line[1:]
+        if field == "p":
+            number = value
+            processes[number] = ["", None]
+        elif number and field == "c":
+            processes[number][0] = value
+        elif number and field == "n" and value.startswith(os.sep):
+            processes[number][1] = value
+    return processes
 
 
-def started_from(session: Session, directory: Path, number: str, command: str) -> bool:
+def started_from(session: Session, directory: Path, number: str, command: str, program: str, place) -> bool:
     """Whether a process of this user runs from a directory. One that cannot be excluded counts."""
     prefix, words = str(directory) + os.sep, command.split(None, 2)
-    program, place = os.path.basename(words[0]).lower(), None
-    interpreter, node = program.startswith(("python", "pypy")), program.startswith("node")
+    names = {os.path.basename(words[0]).lower(), program.lower()}  # A process can rename itself; lsof still knows the program.
+    interpreter, node = (any(name.startswith(known) for name in names) for known in (("python", "pypy"), NODE_PROGRAMS))
     if command.startswith(prefix) or (interpreter or node) and prefix in command:
         return True
     # The program and, for an interpreter, its script; a system program may have a space in its own path.
-    named = words[:1] + (words[1:2] if interpreter or node else [])
-    relative = [word for word in named if os.sep in word and not word.startswith((os.sep, "-"))]
-    if relative or interpreter or node:
-        place = working_directory(number, session.run)
-    for word in relative:
-        if place is None or os.path.normpath(os.path.join(place, word)).startswith(prefix):
+    for word in words[:1] + (words[1:2] if interpreter or node else []):
+        if os.sep in word and not word.startswith((os.sep, "-")) and (place is None or os.path.normpath(os.path.join(place, word)).startswith(prefix)):
             return True
-    if node:
-        shared = directory.relative_to(session.root)
-        return (place is None or doctor.inside(place, str(session.root)) or str(session.root) in command
-                or os.path.realpath(os.path.join(place, shared)) == str(directory))
+    if directory != session.environment:  # Node dependencies; other programs use them only through open files.
+        return node and (place is None or doctor.inside(place, str(session.root)) or str(session.root) in command
+                         or os.path.realpath(os.path.join(place, directory.relative_to(session.root))) == str(directory))
     if not interpreter:
         return False
-    environment = process_environment(number, session.system, session.run)
+    environment = process_environment(session, number)
     if environment is None:
         return place is None or doctor.inside(place, str(session.root))
     launcher = variable(environment, "__PYVENV_LAUNCHER__")  # A macOS framework interpreter shows its own path instead.
@@ -172,30 +206,40 @@ def started_from(session: Session, directory: Path, number: str, command: str) -
 
 
 def users_of(session: Session, directory: Path):
-    """Process identifiers that use a directory, or None when that cannot be established.
+    """Process identifiers that use a directory, or None and the reason why that cannot be established.
 
-    Open files and a start from the directory count for every process that shows them. Only this
-    user's processes are examined further; no other user works in this user's checkout.
+    Open files and a visible start from the directory count for every process. Only this user's
+    processes are examined further; no other user works in this user's checkout.
     """
     if not session.which("lsof"):
-        return None
-    listed = session.run(["lsof", "-w", "-t", "+D", str(directory)], timeout=300)
-    shown = session.run(["ps", "-axo", "pid=,uid=,command="], timeout=30)
-    if listed["error"] or listed["code"] not in (0, 1) or listed["err"].strip() or shown["code"] != 0 or not shown["out"].strip():
-        return None
-    users = {int(line) for line in listed["out"].split() if line.isdigit()}
+        return None, "lsof was not found"
+    environment, owner = listing_environment(session.system), str(os.getuid())
+    opened = session.run(["lsof", "-w", "-t", "+D", str(directory)], timeout=300, env=environment)
+    shown = session.run(["ps", "-axo", "pid=,uid=,command="], timeout=30, env=environment)
+    placed = session.run(["lsof", "-w", "-n", "-P", "+c", "0", "-a", "-u", owner, "-d", "cwd", "-Fpcn"], timeout=120, env=environment)
+    for name, result, codes in (("lsof", opened, (0, 1)), ("ps", shown, (0,)), ("lsof", placed, (0, 1))):
+        if result["error"] or result["code"] not in codes or name == "lsof" and result["err"].strip() or name == "ps" and not result["out"].strip():
+            return None, f"{name}: {doctor.failure_text(result)}"
+    places, users = parse_places(placed["out"]), {int(line) for line in opened["out"].split() if line.isdigit()}
     for line in shown["out"].splitlines():
-        number, owner, command = (line.split(None, 2) + ["", "", ""])[:3]
-        if number.isdigit() and int(number) not in users and command and (
-                command.startswith(str(directory) + os.sep) or owner == str(os.getuid()) and started_from(session, directory, number, command)):
+        number, user, command = (line.split(None, 2) + ["", "", ""])[:3]
+        if not number.isdigit() or int(number) in users or not command:
+            continue
+        if command.startswith(str(directory) + os.sep) or user == owner and started_from(session, directory, number, command, *places.get(number, ("", None))):
             users.add(int(number))
-    return sorted(users)
+    if users:  # A process that has ended meanwhile uses nothing.
+        alive = session.run(["ps", "-o", "pid=", "-p", ",".join(map(str, sorted(users)))], timeout=30, env=environment)
+        if alive["error"] is None and alive["code"] in (0, 1):
+            users &= {int(line) for line in alive["out"].split() if line.isdigit()}
+    return sorted(users), None
 
 
 def require_unused(session: Session, directory: Path) -> None:
-    users = users_of(session, directory)
+    users, reason = users_of(session, directory)
     if users is None:
-        raise Refusal(f"Whether a process uses {directory.name} cannot be established here, so it is not changed.")
+        raise Refusal(f"Whether a process uses {directory.name} cannot be established here ({reason}), so it is not changed.")
+    if os.getpid() in users:
+        raise Refusal(f"This setup tool itself runs from {directory.name}. Start it with an interpreter outside it, for example after deactivating the environment.")
     if users:
         raise Refusal(f"{directory.name} is in use by process {', '.join(map(str, users))}, or that process could not be excluded, so it is not changed.")
 
@@ -222,21 +266,6 @@ def resolve_interpreter(spec: dict, key, requested, run=doctor.execute, which=sh
             "detail": "; ".join(f"{entry['path']}: {', '.join(entry['differences'])}" for entry in found)}
 
 
-def incompatibilities(observed: dict, rows: list) -> list:
-    """Why installing packages cannot make the existing environment ready."""
-    environment = observed["python"]["environment"]
-    core = {item["id"]: item for item in observed["readiness"]["core"]["checks"]}
-    found = [f"{name}: {core[name]['detail']}" for name in ("interpreter", "isolation") if core[name]["state"] in {"mismatch", "not_checked"}]
-    if found or not doctor.usable(environment) or not rows:
-        return found
-    if "pip" not in {doctor.normalize(name) for name in environment["facts"]["packages"]}:
-        return ["pip: pip is missing, so nothing can be installed"]
-    if all(row["state"] == "ready" for row in rows):
-        checks = {item["id"]: item for item in observed["readiness"]["python-verification"]["checks"]}
-        return [f"{name}: {checks[name]['detail']}" for name in ("imports", "pip-check", "native-reader") if checks[name]["state"] != "ready"]
-    return []
-
-
 def plan_actions(session: Session, profile: str, observed: dict, rebuild: bool, repair: bool) -> dict:
     """Decide what this run would change. Planning reads only, and it refuses before any change."""
     root, spec, environment = session.root, session.spec, observed["python"]["environment"]
@@ -249,8 +278,14 @@ def plan_actions(session: Session, profile: str, observed: dict, rebuild: bool, 
     if problems:
         raise Refusal("The specification, pins and locks disagree: " + "; ".join(problems))
     directory, actions, notes, recreate = session.environment, [], [], not environment["exists"]
+    if recreate and os.path.lexists(directory):
+        raise Refusal(f"{directory.name} exists and is not a directory. Move it away by hand.")
     rows = doctor.package_rows(spec, profile, environment)
-    reasons = [] if recreate else incompatibilities(observed, rows)
+    core, verification = (observed["readiness"][name]["checks"] for name in ("core", "python-verification"))
+    reasons = doctor.rebuild_reasons(environment, core, verification, rows)
+    if rebuild and not reasons and not recreate:  # An explicit rebuild replaces any environment that is not ready.
+        reasons = [f"{item['id']}: {item['detail']}" for item in core + (verification if rows else [])
+                   if item["id"] in doctor.ENVIRONMENT_CHECKS and item["state"] != "ready"]
     if recreate:
         actions.append({"action": "create-environment", "detail": f"Create {directory.name} with the specified interpreter."})
     elif reasons:
@@ -275,8 +310,10 @@ def plan_actions(session: Session, profile: str, observed: dict, rebuild: bool, 
         notes.append("Every pinned package is already at its adopted version.")
     if "visual-verification" in chain:
         actions += plan_visual(session, observed["visual"], repair, notes)
-    if not actions and not (environment["record"] or {}).get("readable"):
-        actions.append({"action": "record-environment", "detail": "Write the missing record of the existing environment."})
+    if not actions:
+        stale = record_differences(session, profile, observed, selected)
+        if stale:
+            actions.append({"action": "record-environment", "detail": f"Write the record of the existing environment: {', '.join(stale)}."})
     return {"lock": selected, "actions": actions, "notes": notes}
 
 
@@ -328,7 +365,7 @@ def set_aside(session: Session) -> Path:
     directory = session.environment
     if directory.is_symlink() or not (directory / "pyvenv.cfg").is_file() or directory.resolve().parent != session.root:
         raise Refusal(f"{directory.name} is not an environment directory of this checkout, so it is not replaced.")
-    place = session.root / STATE_DIRECTORY / f"replaced-{stamp()}"
+    place = session.root / STATE_DIRECTORY / f".replaced-{stamp()}"  # The documentation verifier skips names with a dot.
     place.parent.mkdir(parents=True, exist_ok=True)
     entry = {"action": "set-aside-environment", "argv": None, "started_at": utc_now(), "seconds": 0, "code": None, "output_tail": "", "error": None}
     session.log.append(entry)
@@ -393,9 +430,11 @@ def smoke_checks(session: Session) -> list:
 def environment_record(session: Session, profile: str, report: dict, lock) -> dict:
     """What was installed, from which inputs and with which tools."""
     environment = report["python"]["environment"]
-    facts, visual = environment["facts"] or {}, profile == "visual-verification"
+    facts, visual = environment["facts"] or {}, report["visual"]
+    kept = doctor.read_json(Path(environment["record"]["path"])).get("profile") if environment["record"] else None
+    prepared = max((name for name in (kept, profile) if name in session.spec["profiles"]), key=lambda name: len(doctor.profile_chain(session.spec, name)))
     return {
-        "schema": RECORD_SCHEMA, "updated_at": utc_now(), "profile": profile, "root": str(session.root), "environment": environment["path"],
+        "schema": RECORD_SCHEMA, "updated_at": utc_now(), "profile": prepared, "root": str(session.root), "environment": environment["path"],
         "interpreter": {name: facts.get(name) for name in ("implementation", "version", "build", "compiler", "executable", "base_executable",
                                                              "base_prefix", "base_prefix_real", "distribution")},
         "platform": {"key": report["platform"]["key"], "system": facts.get("system"), "machine": facts.get("machine"),
@@ -404,10 +443,25 @@ def environment_record(session: Session, profile: str, report: dict, lock) -> di
         "installation_tools": report["packages"]["install_tools"], "build_tools": "None: binary wheels only.",
         "packages": dict(sorted((facts.get("packages") or {}).items())),
         "lock": lock, "digests": report["specification"]["digests"],
-        "node": report["visual"]["node"] if visual else None, "npm": report["visual"]["npm"] if visual else None,
-        "npm_dependencies": report["visual"]["npm_dependencies"] if visual else None, "browser": report["visual"]["browser"] if visual else None,
+        "node": visual["node"], "npm": visual["npm"],
+        "npm_dependencies": visual["npm_dependencies"] if visual["npm_directory_exists"] else None,
+        "browser": visual["browser"] if visual["npm_directory_exists"] else None,
         "source": {"head": report["checkout"].get("head"), "tracked_modifications": report["checkout"].get("tracked_modifications")},
         "actions": session.log}
+
+
+def record_differences(session: Session, profile: str, observed: dict, lock) -> list:
+    """Why the existing record does not describe the environment as it is."""
+    kept = observed["python"]["environment"]["record"]
+    if not kept:
+        return ["it is missing"]
+    recorded, current = doctor.read_json(Path(kept["path"])), environment_record(session, profile, observed, lock)
+    names = ["interpreter", "platform", "installation_tools", "packages"]
+    names += ["node", "npm", "npm_dependencies", "browser"] if profile == "visual-verification" else []
+    differing = [f"{name} differs" for name in names if recorded.get(name) != current[name]]
+    if lock["path"] and (recorded.get("digests") or {}).get(lock["path"]) != current["digests"][lock["path"]]:
+        differing.append("the lock differs")
+    return differing if kept["readable"] else ["it is unreadable"]
 
 
 def write_record(session: Session, record: dict) -> Path:
@@ -423,7 +477,7 @@ def write_record(session: Session, record: dict) -> Path:
 def require_writable(path: Path, what: str) -> None:
     """The nearest existing directory above a new path must accept it."""
     place = path.parent
-    while not place.exists() and place != place.parent:
+    while not os.path.lexists(place) and place != place.parent:
         place = place.parent
     if not place.is_dir() or not os.access(place, os.W_OK | os.X_OK):
         raise Refusal(f"{what} cannot be created in {place}. Nothing was changed.")
@@ -432,19 +486,22 @@ def require_writable(path: Path, what: str) -> None:
 def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=False, repair_node=False, wheels=(), work=None,
               install=False, node=None, run=doctor.execute, which=shutil.which, system=None, machine=None, cache=None) -> dict:
     """Prepare one profile and report what happened. Parameters from run on exist for controlled tests."""
-    root = Path(root).resolve()
+    root = doctor.canonical(root)
     spec = doctor.load_specification(root)
     if profile not in spec["profiles"]:
         raise Refusal(f"Unknown profile {profile}; known: {', '.join(spec['profiles'])}")
     kind = spec["profiles"][profile]["kind"]
-    system, machine = system or platform.system(), machine or platform.machine()
+    system, machine = system or platform.system(), machine or doctor.host_machine(run)
     key = doctor.platform_key(spec, system, machine)
     if kind in {"external", "unconfigured"}:
         raise Refusal(f"General setup does not prepare {profile}. {spec['profiles'][profile]['purpose']}")
     if key is None:
         raise Refusal(f"This platform ({system} {machine}) has no entry in {doctor.SPECIFICATION}. Nothing was changed.")
-    if not doctor.checkout_section(root, run)["is_checkout"]:
-        raise Refusal("The root is not the top of a Git checkout or worktree. Nothing was changed.")
+    checkout = doctor.checkout_section(root, run)
+    if not checkout["git_available"]:
+        raise Refusal(f"Git could not be started: {checkout['problem']}. Nothing was changed.")
+    if not checkout["is_checkout"]:
+        raise Refusal("The root is not the top of a Git checkout or worktree" + (f": {checkout['problem']}" if checkout["problem"] else "") + ". Nothing was changed.")
     if kind == "on-demand":
         if work is None:
             raise Refusal(f"{profile} needs --work-dir with a new directory outside the checkout.")
@@ -475,22 +532,8 @@ def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=F
         report.update(planned=plan["actions"], notes=plan["notes"], lock=plan["lock"], interpreter=interpreter)
         return creates
 
-    if preview:
-        if prepare() and report["interpreter"]["status"] != "found":
-            report["notes"].append(f"interpreter {report['interpreter']['status']}: {report['interpreter']['detail']}")
-        return dict(report, outcome="previewed")
-    prepare()  # Refuse as early as possible, and again under the lock.
-    interruption = None
-    with session.exclusive():
-        creates = prepare()
-        try:
-            carry_out(session, report, creates, python, install, wheels, work)
-        except (Refusal, ActionFailed, OSError) as error:
-            if isinstance(error, Refusal) and not session.log:
-                raise
-            report["failure"] = str(error) if not isinstance(error, OSError) else f"{type(error).__name__}: {error}"
-        except KeyboardInterrupt as error:
-            interruption, report["failure"] = error, "Interrupted. Run the doctor before the next setup run."
+    def settle() -> None:
+        """Observe what was reached, keep the environment's record and run the smoke checks."""
         report["changed"] = bool(session.log)
         if report["changed"] or any(action["action"] == "record-environment" for action in report["planned"]):
             observe()
@@ -499,12 +542,46 @@ def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=F
                 report["changed"] = True
         if report["outcome"] is None:
             finish(session, report, "failed" if "failure" in report else "changed" if report["changed"] else "unchanged")
-        if session.log:
-            report["run_report"] = str(root / STATE_DIRECTORY / f"run-{stamp()}.json")
-            doctor.write_new(Path(report["run_report"]), json.dumps(report, indent=2, ensure_ascii=False) + "\n")
+
+    if preview:
+        if prepare() and report["interpreter"]["status"] != "found":
+            report["notes"].append(f"interpreter {report['interpreter']['status']}: {report['interpreter']['detail']}")
+        return dict(report, outcome="previewed")
+    interruption = None
+    with session.exclusive():  # First, so that a run beside another one is told so and nothing else.
+        creates = prepare()
+        if report["planned"]:
+            require_writable(root / STATE_DIRECTORY / "report", "The report of this run")
+        try:
+            try:
+                carry_out(session, report, creates, python, install, wheels, work)
+            except (Refusal, ActionFailed, OSError) as error:
+                if isinstance(error, Refusal) and not session.log:
+                    raise
+                report["failure"] = str(error) if not isinstance(error, OSError) else f"{type(error).__name__}: {error}"
+            settle()
+        except KeyboardInterrupt as error:
+            interruption = error
+            report.update(failure="Interrupted. Run the doctor before the next setup run.", outcome="failed", changed=bool(session.log))
+        except OSError as error:
+            report.update(failure=f"{type(error).__name__}: {error}", outcome="failed", changed=bool(session.log))
+        if report["changed"]:
+            with uninterrupted():
+                keep_report(root, report)
     if interruption is not None:
+        interruption.setup_report = report
         raise interruption
     return report
+
+
+def keep_report(root: Path, report: dict) -> None:
+    """Keep the report of a run that changed something; a report that cannot be kept is a failure of the run."""
+    path = root / STATE_DIRECTORY / f"run-{stamp()}.json"
+    report["run_report"] = str(path)
+    try:
+        doctor.write_new(path, json.dumps(report, indent=2, ensure_ascii=False) + "\n")
+    except OSError as error:
+        report.update(run_report=None, outcome="failed", failure="; ".join(filter(None, (report.get("failure"), f"The report of this run could not be kept: {error}"))))
 
 
 def carry_out(session: Session, report: dict, creates: bool, python, install: bool, wheels, work) -> None:
@@ -560,7 +637,8 @@ def render(report: dict) -> str:
     lines += [f"  smoke: {item['check']} {'passed' if item['passed'] else 'did not pass: ' + str(item['detail'])}" for item in report["smoke"]]
     if report.get("failure"):
         lines.append(f"  failure: {report['failure']}")
-        lines += [f"  the replaced environment was kept in {report['set_aside']}"] * ("set_aside" in report and os.path.isdir(report["set_aside"]))
+        if os.path.isdir(report.get("set_aside", "")):
+            lines.append(f"  the replaced environment was kept in {report['set_aside']}")
     if report["outcome"].startswith("interpreter-"):
         lines.append(f"  {report['outcome']}: {report['interpreter']['detail']}")
     lines.append("Readiness by profile")
@@ -597,15 +675,22 @@ def main(argv=None) -> int:
     except (Refusal, doctor.SpecificationError) as error:
         print(f"Setup refused: {error}", file=sys.stderr)
         return REFUSED
+    except OSError as error:
+        print(f"Setup refused: {type(error).__name__}: {error}", file=sys.stderr)
+        return REFUSED
     except Busy as error:
         print(str(error), file=sys.stderr)
         return BUSY
-    except KeyboardInterrupt:
-        print(f"Setup was interrupted. The report of this run is in {STATE_DIRECTORY}.", file=sys.stderr)
+    except KeyboardInterrupt as error:
+        kept = getattr(error, "setup_report", {})
+        print("Setup was interrupted. " + (f"The report of this run is {kept['run_report']}." if kept.get("run_report") else
+                                           str(kept.get("failure")) if kept.get("changed") else "Nothing was changed."), file=sys.stderr)
         return INTERRUPTED
     status = exit_status(report)
     if args.portable_paths:
-        report = doctor.portable(report, doctor.path_labels(Path(args.root).resolve(), report["observed"]["checkout"].get("worktrees", ())))
+        named = [(path.resolve(), "<find-links>") for path in args.find_links] + [(Path(path).resolve(), label) for path, label in
+                 ((args.work_dir, "<work-dir>"), (args.report, "<report>")) if path] + [(path, label) for path, label in ((args.node, "<node>"), (args.python, "<python>")) if path]
+        report = doctor.portable(report, doctor.path_labels(doctor.canonical(args.root), report["observed"]["checkout"].get("worktrees", ()), named))
     text = json.dumps(report, indent=2, ensure_ascii=False) + "\n"
     if args.report:
         doctor.write_new(args.report, text)

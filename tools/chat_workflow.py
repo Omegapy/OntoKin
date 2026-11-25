@@ -37,6 +37,12 @@ CLOSED_STATES = {"done", "retired", "cancelled"}
 MODES = {"local", "browser"}
 CURRENT_FIELDS = {"schema_version", "project", "latest_task", "active_task", "execution_mode", "observed_main", "snapshot_date",
                   "next_action", "checkpoint", "unfinished", "boundaries", "delivery_policy", "history"}
+POINTER_FIELDS = {"next_action": {"status", "summary", "suggested_task", "sources"}, "checkpoint": {"record", "session"},
+                  "unfinished": {"task", "status", "mode", "branch", "observed_head", "observed_at", "pull_request", "scope_issue",
+                                 "open_gates", "record", "note"},
+                  "delivery_policy.local": {"contract", "zip_required", "completion_gate"},
+                  "delivery_policy.browser": {"kind", "required", "contract", "folder", "completion_gate"},
+                  "history": {"path", "sha256", "bytes", "source_commit", "holds", "purpose"}}
 NOTICE = "Local structural check only; live GitHub state and the truth of cited evidence require separate verification."
 
 
@@ -250,24 +256,34 @@ class Project:
         require(type(h.get("bytes")) is int and h["bytes"] > 0, "current.historical_handoff.bytes: expected positive integer")
         text(h.get("scope"), "current.historical_handoff.scope")
 
+    @staticmethod
+    def closed(value: Any, fields: set, label: str) -> dict:
+        """An object of schema 2 with no other field, so that no receipt is embedded at any level."""
+        for key in sorted(set(mapping(value, label)) - fields):
+            raise Invalid(f"{label}.{key}: schema 2 keeps receipts and phase records in linked history or in the task record")
+        return value
+
     def validate_pointers(self, c: dict) -> None:
         """Schema 2: the selected mode and checkpoint, unfinished scopes and links to retained history."""
-        for key in sorted(set(c) - CURRENT_FIELDS):
-            raise Invalid(f"current.{key}: schema 2 keeps receipts and phase records in linked history or in the task record")
+        self.closed(c, CURRENT_FIELDS, "current")
+        self.closed(c["next_action"], POINTER_FIELDS["next_action"], "current.next_action")
         active, mode = c.get("active_task"), c.get("execution_mode")
         if mode is not None:
             choice(mode, set(self.modes), "current.execution_mode")
         require((active is None) == (mode is None), "current.execution_mode: an active task needs its recorded mode, and only an active task has one")
-        checkpoint = mapping(c.get("checkpoint"), "current.checkpoint")
+        checkpoint = self.closed(c.get("checkpoint"), POINTER_FIELDS["checkpoint"], "current.checkpoint")
         for key in ("record", "session"):
             require(key in checkpoint, f"current.checkpoint.{key}: expected a path or null")
             if checkpoint[key] is not None:
                 self.path(checkpoint[key], f"current.checkpoint.{key}")
         require(active is None or checkpoint["record"] == f"{self.registry['task_root']}/{active}/task.json",
                 "current.checkpoint.record: must be the active task's record")
+        owner = f"{self.registry['task_root']}/{active or c['latest_task']}/"
+        require(checkpoint["session"] is None or checkpoint["session"].startswith(owner) and checkpoint["session"].endswith(".md"),
+                f"current.checkpoint.session: must be a Markdown record in {owner}")
         names = set()
         for item in sequence(c.get("unfinished"), "current.unfinished"):
-            item = mapping(item, "current.unfinished")
+            item = self.closed(item, POINTER_FIELDS["unfinished"], "current.unfinished")
             name = identifier(item.get("task"), "current.unfinished.task")
             require(name not in names and name != active, f"current.unfinished: {name} is repeated or is the active task")
             names.add(name)
@@ -285,11 +301,11 @@ class Project:
         policy = mapping(c.get("delivery_policy"), "current.delivery_policy")
         require(set(policy) == set(self.modes), f"current.delivery_policy: expected exactly {', '.join(sorted(self.modes))}")
         for name, entry in policy.items():
-            entry = mapping(entry, f"current.delivery_policy.{name}")
+            entry = self.closed(entry, POINTER_FIELDS.get(f"delivery_policy.{name}", set()), f"current.delivery_policy.{name}")
             self.source(entry.get("contract"), f"current.delivery_policy.{name}.contract")
             text(entry.get("completion_gate"), f"current.delivery_policy.{name}.completion_gate")
         for item in sequence(c.get("history"), "current.history", True):
-            item = mapping(item, "current.history")
+            item = self.closed(item, POINTER_FIELDS["history"], "current.history")
             file = self.path(item.get("path"), "current.history.path")
             digest = hashlib.sha256()
             with file.open("rb") as stream:
@@ -459,8 +475,9 @@ class Project:
         return {"passed": not self.errors, "errors": self.errors, "tasks_checked": len(self.tasks), "notice": NOTICE}
 
     def local_git(self, top_only: bool = False) -> dict:
-        # Another repository named in the caller's environment is not this checkout.
+        # Another repository named in the caller's environment is not this checkout, and nothing is fetched.
         environment = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
+        environment["GIT_NO_LAZY_FETCH"] = "1"
 
         def run(*args: str) -> str | None:
             try:
@@ -516,6 +533,7 @@ class Project:
         """
         if base is not None:
             sha(base, "new-task.base")
+            require(set(base) != {"0"}, "new-task.base: a commit is needed, not the all-zero placeholder")
             return base, "supplied with --base"
         local = self.local_git(top_only=True)
         require(local["head"] is not None and bool(SHA.fullmatch(local["head"])),

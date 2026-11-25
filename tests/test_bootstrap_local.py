@@ -1,12 +1,17 @@
 """Controls for the local setup tool. No package is installed and no network is used."""
 
 from contextlib import redirect_stderr, redirect_stdout
+import functools
 import io
 import json
 import os
 from pathlib import Path
+import platform
 import re
 import shutil
+import signal
+import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -67,6 +72,12 @@ class SetupCase(unittest.TestCase):
 
     def session(self, system="Darwin"):
         return setup.Session(self.project.root, self.project.spec, "macos-arm64", system, self.project.run, self.project.which)
+
+    def prepared(self, **overrides):
+        """A complete environment with the record that setup writes."""
+        self.project.create_environment(**overrides)
+        self.assertEqual(self.bootstrap()["outcome"], "changed", "Only the record is written.")
+        self.project.calls.clear()
 
     def changing_calls(self):
         return [call for call in self.project.calls if CHANGING & set(call) and call[0] not in {"git", "ps", "lsof"}]
@@ -132,6 +143,15 @@ class InterpreterTests(SetupCase):
         self.refused("version 3.9.6, expected 3.12.13.*Apple Command Line Tools, expected Homebrew", python=str(other))
         self.refused("does not exist", python=str(self.project.directory / "absent"))
 
+    def test_requested_interpreter_is_checked_also_when_the_environment_is_reused(self):
+        self.prepared()
+        other = self.project.directory / "interpreters/python3.9"
+        other.write_text("", encoding="utf-8")
+        self.project.base = self.project.facts(version="3.9.6")
+        self.refused("version 3.9.6, expected 3.12.13", python=str(other))
+        self.project.base = self.project.facts()
+        self.assertEqual(self.bootstrap(python=str(other))["outcome"], "unchanged")
+
     def test_other_patch_other_source_and_virtual_environments_are_not_compliant(self):
         for label, facts in (("patch", {"version": "3.12.14"}), ("uv", {"base_prefix_real": "/home/x/.local/share/uv/python/cpython-3.12.13"}),
                              ("environment", {"prefix": "/somewhere/.venv"})):
@@ -188,13 +208,12 @@ class EnvironmentTests(SetupCase):
         self.assertEqual((report["outcome"], setup.exit_status(report)), ("changed", setup.READY), report.get("failure"))
         create, install = self.changing_calls()
         self.assertEqual(create, [str(self.project.interpreter), "-I", "-m", "venv", str(self.project.venv)])
-        for flag in ("--require-hashes", "--only-binary=:all:", "--no-deps", "--isolated"):
-            self.assertIn(flag, install)
-        self.assertNotIn("--no-index", install)
-        self.assertEqual(install[0], str(self.project.venv / "bin/python"))
+        self.assertEqual(install[:-1], [str(self.project.venv / "bin/python"), "-I", "-m", "pip", "--isolated", "--disable-pip-version-check", "install", "--no-input",
+                                        "--no-deps", "--only-binary=:all:", "--require-hashes", "-r"])
         pins = doctor.parse_lock((self.project.root / MACOS_LOCK).read_text(encoding="utf-8"))
         self.assertEqual(sorted(self.selections[0]), sorted(pin["line"] for pin in pins.values()))
         self.assertEqual([item["passed"] for item in report["smoke"]], [True, True])
+        self.assertEqual({place for call, place in zip(self.project.calls, self.project.directories) if "ontokin" in call}, {self.project.root}, "Source checks run in the checkout.")
         self.assertEqual(self.project.git("status", "--porcelain"), "")
 
     def test_environment_record_says_what_was_installed_from_which_inputs(self):
@@ -217,12 +236,43 @@ class EnvironmentTests(SetupCase):
         self.assertEqual(self.changing_calls(), [])
         self.assertTrue(self.project.snapshot() == before, "A repeat run changed a file.")
 
+    def recorded(self):
+        return json.loads((self.project.venv / "ontokin-environment.json").read_text(encoding="utf-8"))
+
     def test_missing_record_of_a_healthy_environment_is_written_once(self):
         self.project.create_environment()
         report = self.bootstrap()
         self.assertEqual(([action["action"] for action in report["planned"]], report["outcome"], self.changing_calls()), (["record-environment"], "changed", []))
-        self.assertEqual(json.loads((self.project.venv / "ontokin-environment.json").read_text(encoding="utf-8"))["packages"]["Pillow"], "13.0.0")
+        self.assertEqual(self.recorded()["packages"]["Pillow"], "13.0.0")
+        self.assertEqual(json.loads(Path(report["run_report"]).read_text(encoding="utf-8"))["outcome"], "changed")
         self.assertEqual(self.bootstrap()["outcome"], "unchanged")
+
+    def test_record_that_no_longer_describes_the_environment_is_written_again(self):
+        self.prepared()
+        record = self.project.venv / "ontokin-environment.json"
+        kept = self.recorded()
+        for label, change, text in (("packages", lambda value: value["packages"].pop("Pillow"), "packages differs"), ("interpreter", lambda value: value["interpreter"].update(version="3.12.12"), "interpreter differs"),
+                                    ("lock", lambda value: value["digests"].update({MACOS_LOCK: "sha256:0"}), "the lock differs"), ("tools", lambda value: value.update(installation_tools={}), "installation_tools differs"),
+                                    ("platform", lambda value: value["platform"].update(os_version="26.0"), "platform differs")):
+            with self.subTest(case=label):
+                value = json.loads(json.dumps(kept))
+                change(value)
+                record.write_text(json.dumps(value), encoding="utf-8")
+                report = self.bootstrap()
+                self.assertEqual((report["outcome"], self.changing_calls()), ("changed", []))
+                self.assertIn(text, report["planned"][0]["detail"])
+                self.assertEqual({key: value for key, value in self.recorded().items() if key not in {"updated_at", "actions"}},
+                                 {key: value for key, value in kept.items() if key not in {"updated_at", "actions"}})
+        record.write_text("{", encoding="utf-8")
+        self.assertIn("unreadable", self.bootstrap()["planned"][0]["detail"])
+        self.assertEqual(self.bootstrap("core")["outcome"], "unchanged")
+        record.unlink()
+        self.bootstrap("core")
+        self.assertEqual(self.recorded()["profile"], "core")
+        self.bootstrap()
+        record.write_text(json.dumps({**self.recorded(), "profile": "python-verification", "packages": {}}), encoding="utf-8")
+        self.bootstrap("core")
+        self.assertEqual(self.recorded()["profile"], "python-verification", "A smaller profile does not hide what was prepared.")
 
     def test_only_missing_and_mismatched_packages_are_installed(self):
         packages = {**self.project.pins, "jsonschema": "4.25.0"}
@@ -249,7 +299,8 @@ class EnvironmentTests(SetupCase):
     def test_incompatible_environment_is_reported_and_kept(self):
         for label, arguments in (("patch", {"version": "3.12.14"}), ("copied", {"command": "python3.12 -m venv /elsewhere/.venv"}),
                                  ("system packages", {"system_site": "true"}), ("broken", {"version": "broken"}), ("no pip", {"packages": {}, "pip": None}),
-                                 ("path entry", {"sys_path": ["/another/worktree"]})):
+                                 ("path entry", {"sys_path": ["/another/worktree"]}), ("unrecorded place", {"command": "unrecorded"}),
+                                 ("duplicate", {"duplicates": {"attrs": ["26.1.0", "25.3.0"]}})):
             with self.subTest(case=label):
                 self.project.create_environment(**arguments)
                 self.refused("incompatible and was not changed.*--rebuild")
@@ -264,12 +315,16 @@ class EnvironmentTests(SetupCase):
         def without_pip():
             del self.project.installed["pip"]
 
+        def broken_pip_and_a_missing_package():
+            self.project.pip_error = "ModuleNotFoundError: No module named 'pip._internal'\n"
+            del self.project.installed["attrs"]
+
         def repaired_by_a_new_environment(argv):
             if "venv" in argv:
-                self.project.pip_conflict, self.project.broken_imports = None, {}
+                self.project.pip_conflict, self.project.pip_error, self.project.broken_imports = None, None, {}
 
         self.project.handlers.insert(0, repaired_by_a_new_environment)
-        for label, damage in (("conflict", conflict), ("import", broken), ("pip", without_pip)):
+        for label, damage in (("conflict", conflict), ("import", broken), ("pip", without_pip), ("broken pip", broken_pip_and_a_missing_package)):
             with self.subTest(case=label):
                 self.project.create_environment()
                 damage()
@@ -278,18 +333,19 @@ class EnvironmentTests(SetupCase):
                 self.assertEqual((report["outcome"], setup.exit_status(report)), ("changed", setup.READY), report.get("failure"))
 
     def test_rebuild_is_explicit_and_replaces_an_unused_environment(self):
-        self.project.create_environment(version="3.12.14")
-        (self.project.venv / "old").write_text("old", encoding="utf-8")
-        report = self.bootstrap(rebuild=True)
-        self.assertEqual([action["action"] for action in report["actions"]],
-                         ["set-aside-environment", "create-environment", "install-packages", "delete-replaced-environment"])
-        self.assertFalse((self.project.venv / "old").exists())
-        self.assertEqual(list((self.project.root / setup.STATE_DIRECTORY).glob("replaced-*")), [])
-        self.assertEqual((setup.exit_status(report), self.project.git("status", "--porcelain")), (setup.READY, ""))
+        for label, arguments in (("incompatible", {"version": "3.12.14"}), ("incomplete", {"packages": {**self.project.pins, "attrs": "25.0.0"}})):
+            with self.subTest(case=label):
+                self.project.create_environment(**arguments)
+                (self.project.venv / "old").write_text("old", encoding="utf-8")
+                report = self.bootstrap(rebuild=True)
+                self.assertEqual([action["action"] for action in report["actions"]],
+                                 ["set-aside-environment", "create-environment", "install-packages", "delete-replaced-environment"])
+                self.assertFalse((self.project.venv / "old").exists())
+                self.assertEqual(list((self.project.root / setup.STATE_DIRECTORY).glob(".replaced-*")), [])
+                self.assertEqual((setup.exit_status(report), self.project.git("status", "--porcelain")), (setup.READY, ""))
 
     def test_healthy_environment_is_not_rebuilt_even_on_request(self):
-        self.project.create_environment()
-        self.project.record()
+        self.prepared()
         report = self.bootstrap(rebuild=True)
         self.assertEqual((report["outcome"], self.changing_calls()), ("unchanged", []))
 
@@ -300,6 +356,7 @@ class EnvironmentTests(SetupCase):
         report = self.bootstrap(rebuild=True)
         self.assertEqual((report["outcome"], setup.exit_status(report)), ("failed", setup.UNMET))
         self.assertTrue((Path(report["set_aside"]) / "old").is_file())
+        self.assertTrue(Path(report["set_aside"]).name.startswith("."), "The documentation verifier skips names with a dot.")
         self.assertIn(report["set_aside"], setup.render(report))
 
     def test_remnant_of_a_replaced_environment_is_reported(self):
@@ -307,7 +364,7 @@ class EnvironmentTests(SetupCase):
         real = shutil.rmtree
 
         def busy(place, *arguments, **options):
-            if "replaced-" in str(place):
+            if ".replaced-" in str(place):
                 options["onerror"](os.unlink, str(place), (OSError, OSError("busy"), None))
             else:
                 real(place, *arguments, **options)
@@ -335,7 +392,8 @@ class EnvironmentTests(SetupCase):
         self.project.venv.unlink()
         self.project.venv.mkdir()
         (self.project.venv / "notes.txt").write_text("mine", encoding="utf-8")
-        self.refused("not an environment directory of this checkout", rebuild=True)
+        for preview in (False, True):
+            self.refused("not an environment directory of this checkout, so it is not replaced. Move it away by hand", rebuild=True, preview=preview)
 
     def test_failing_smoke_check_prevents_success(self):
         self.project.smoke_code = 1
@@ -345,11 +403,27 @@ class EnvironmentTests(SetupCase):
 
 
 class FailureTests(SetupCase):
+    def run_reports(self):
+        return sorted((self.project.root / setup.STATE_DIRECTORY).glob("run-*.json"))
+
+    def interrupted(self, when):
+        """Interrupt at the first command that the condition selects; the run passes the interruption on."""
+        def interrupt(argv):
+            if when(argv):
+                self.project.handlers.remove(interrupt)
+                raise KeyboardInterrupt
+
+        self.project.handlers.insert(0, interrupt)
+        with self.assertRaises(KeyboardInterrupt) as raised:
+            self.bootstrap()
+        return raised.exception.setup_report
+
     def test_failed_installation_is_kept_as_a_failure_and_can_be_resumed(self):
         self.install_code = 1
         report = self.bootstrap()
         self.assertEqual((report["outcome"], setup.exit_status(report)), ("failed", setup.UNMET))
         self.assertIn("DO NOT MATCH THE HASHES", report["failure"])
+        self.assertIn("failure: install-packages failed", setup.render(report), "A failed run can be shown also when no environment was set aside.")
         kept = json.loads(Path(report["run_report"]).read_text(encoding="utf-8"))
         self.assertEqual([(action["action"], action["code"]) for action in kept["actions"]], [("create-environment", 0), ("install-packages", 1)])
         self.assertFalse((self.project.venv / "ontokin-environment.json").exists())
@@ -357,25 +431,79 @@ class FailureTests(SetupCase):
         report = self.bootstrap()
         self.assertEqual([action["action"] for action in report["actions"]], ["install-packages"])
 
-    def test_interruption_is_recorded_and_passed_on(self):
-        def interrupt(argv):
-            if "pip" in argv and "install" in argv:
-                raise KeyboardInterrupt
+    def test_failed_run_is_never_reported_as_ready(self):
+        report = self.bootstrap()
+        self.assertEqual(setup.exit_status(report), setup.READY)
+        self.assertEqual(setup.exit_status(dict(report, outcome="failed")), setup.UNMET)
 
-        self.project.handlers.insert(0, interrupt)
+    def test_interruption_is_recorded_and_passed_on(self):
+        for label, when, last in (("during an action", lambda argv: "pip" in argv and "install" in argv, ("install-packages", "not finished")),
+                                  ("after the last action", lambda argv: "ontokin" in argv, ("install-packages", None))):
+            with self.subTest(case=label):
+                report = self.interrupted(when)
+                kept = json.loads(Path(report["run_report"]).read_text(encoding="utf-8"))
+                self.assertEqual((kept["outcome"], kept["actions"][-1]["action"], kept["actions"][-1]["error"]), ("failed", *last))
+                self.assertIn("Interrupted", kept["failure"])
+                self.assertEqual(setup.exit_status(self.bootstrap()), setup.READY)
+                shutil.rmtree(self.project.venv)
+
+    def test_interruption_before_any_change_is_reported_as_such(self):
+        reports = self.run_reports()
         with self.assertRaises(KeyboardInterrupt):
-            self.bootstrap()
-        kept = json.loads(next((self.project.root / setup.STATE_DIRECTORY).glob("run-*.json")).read_text(encoding="utf-8"))
-        self.assertEqual((kept["outcome"], kept["actions"][-1]["action"], kept["actions"][-1]["error"]), ("failed", "install-packages", "not finished"))
-        self.assertIn("Interrupted", kept["failure"])
-        self.project.handlers.pop(0)
-        self.assertEqual(setup.exit_status(self.bootstrap()), setup.READY)
+            with patch.object(setup, "carry_out", side_effect=KeyboardInterrupt):
+                self.bootstrap()
+        self.assertEqual((self.run_reports(), self.project.venv.exists()), (reports, False))
+
+    def test_interruption_waits_while_the_report_is_written(self):
+        with setup.uninterrupted():
+            self.assertIs(signal.getsignal(signal.SIGINT), signal.SIG_IGN)
+        self.assertIsNot(signal.getsignal(signal.SIGINT), signal.SIG_IGN)
+
+    def test_report_that_cannot_be_kept_is_refused_first_or_reported(self):
+        build = self.project.root / "build"
+        build.write_text("a file", encoding="utf-8")
+        self.refused("The report of this run cannot be created")
+        build.unlink()
+        build.symlink_to(self.project.directory / "absent", target_is_directory=True)
+        self.refused("The report of this run cannot be created")
+        build.unlink()
+        with patch.object(doctor, "write_new", side_effect=PermissionError("not permitted")):
+            report = self.bootstrap()
+        self.assertEqual((report["outcome"], report["run_report"], setup.exit_status(report)), ("failed", None, setup.UNMET))
+        self.assertIn("could not be kept: not permitted", setup.render(report))
+
+    def test_record_that_cannot_be_written_is_a_failure_with_a_report(self):
+        with patch.object(setup, "write_record", side_effect=PermissionError("not permitted")):
+            report = self.bootstrap()
+        self.assertEqual((report["outcome"], setup.exit_status(report)), ("failed", setup.UNMET))
+        self.assertIn("PermissionError", json.loads(Path(report["run_report"]).read_text(encoding="utf-8"))["failure"])
 
     def test_refusal_after_a_change_is_a_reported_failure(self):
         self.project.create_environment(version="3.12.14")
         with patch.object(setup, "create_environment", side_effect=setup.Refusal("stopped")):
             report = self.bootstrap(rebuild=True)
         self.assertEqual((report["outcome"], report["failure"], report["actions"][0]["action"]), ("failed", "stopped", "set-aside-environment"))
+
+    def test_environment_that_is_no_directory_is_refused(self):
+        self.project.venv.write_text("a file", encoding="utf-8")
+        self.refused("exists and is not a directory", rebuild=True)
+
+    def test_set_aside_moves_only_an_environment_of_this_checkout(self):
+        session = self.session()
+        elsewhere = self.project.directory / "elsewhere"
+        elsewhere.mkdir()
+        (elsewhere / "pyvenv.cfg").write_text("", encoding="utf-8")
+        for label, prepare in (("link", lambda: self.project.venv.symlink_to(elsewhere, target_is_directory=True)), ("unrelated", lambda: self.project.venv.mkdir())):
+            with self.subTest(case=label):
+                prepare()
+                with self.assertRaisesRegex(setup.Refusal, "not an environment directory of this checkout"):
+                    setup.set_aside(session)
+                self.project.venv.unlink() if label == "link" else self.project.venv.rmdir()
+
+    def test_long_output_is_cut_at_a_line(self):
+        self.assertEqual(setup.tail("short"), "short")
+        kept = setup.tail("x" * 50 + "/private/path\n" + "a line of text\n" * 500)
+        self.assertTrue(len(kept) <= 2000 and set(kept.splitlines()) == {"a line of text"})
 
     def test_concurrent_run_is_excluded_even_when_nothing_is_to_do(self):
         with self.session().exclusive():
@@ -387,6 +515,14 @@ class FailureTests(SetupCase):
             with self.assertRaises(setup.Busy):
                 self.bootstrap()
         self.assertEqual(self.bootstrap()["outcome"], "unchanged")
+
+    def test_run_beside_another_one_is_told_so_whatever_it_would_see(self):
+        with self.session().exclusive():
+            for label, prepare in (("half made", lambda: self.project.create_environment({}, pip=None)), ("incompatible", lambda: self.project.create_environment(version="3.12.14"))):
+                with self.subTest(case=label):
+                    prepare()
+                    with self.assertRaises(setup.Busy):
+                        self.bootstrap()
 
     def test_lock_stays_with_the_checkout_and_its_children(self):
         self.bootstrap()
@@ -400,10 +536,13 @@ class FailureTests(SetupCase):
 
     def test_work_finished_by_another_run_is_not_repeated(self):
         real = setup.Session.exclusive
+        self.prepared()
+        shutil.move(self.project.venv, self.project.directory / "kept")
+        installed, self.project.installed = self.project.installed, None
 
         def finished_meanwhile(session):
-            self.project.create_environment()
-            self.project.record()
+            shutil.move(self.project.directory / "kept", self.project.venv)
+            self.project.installed = installed
             return real(session)
 
         with patch.object(setup.Session, "exclusive", finished_meanwhile):
@@ -414,102 +553,147 @@ class FailureTests(SetupCase):
         with patch.object(setup, "fcntl", None):
             self.refused("no file lock")
 
+    def test_lock_that_cannot_be_opened_is_refused(self):
+        (self.project.root / ".git" / setup.LOCK_NAME).mkdir()
+        self.refused("The setup lock cannot be opened")
+
 
 class UseTests(SetupCase):
     def users(self, directory=None, system="Darwin"):
         return setup.users_of(self.session(system), directory or self.project.venv)
 
+    def alone(self, number, command, **options):
+        """One process beside the system's first one."""
+        self.project.processes[1:] = []
+        self.project.process(number, command, **options)
+
     def test_every_way_of_starting_from_the_environment_counts(self):
-        venv, root = self.project.venv, self.project.root
-        self.project.places = str(root)
-        self.project.launch = {"79": f"{FRAMEWORK} -m unittest PATH=/usr/bin:/bin __PYVENV_LAUNCHER__={venv}/bin/python",
-                               "85": f"python -m unittest HOME=/h PATH={venv}/bin:/usr/bin TERM=x", "86": f"python -m unittest PATH=/usr/bin VIRTUAL_ENV={venv} TERM=x",
-                               **{number: "python PATH=/usr/bin" for number in ("78", "80", "83", "84")}}
+        venv, root = self.project.venv, str(self.project.root)
         (venv / "bin").mkdir(parents=True)
         (venv / "bin/python").write_text("", encoding="utf-8")
-        cases = {"absolute": f"  77 {ME} {venv}/bin/python -m unittest\n", "relative": f"  78 {ME} .venv/bin/python -m unittest\n",
-                 "script": f"  80 {ME} python3 ./.venv/bin/pip list\n", "framework": f"  79 {ME} {FRAMEWORK} -m unittest\n",
-                 "path": f"  85 {ME} python -m unittest\n", "activated": f"  86 {ME} python -m unittest\n", "unreadable": f"  87 {ME} python -m unittest\n",
-                 "other user": f"  89 {OTHER} {venv}/bin/python -m unittest\n", "named script": f"  83 {ME} python3 {venv}/bin/pip list\n",
-                 "tool": f"  82 {ME} .venv/bin/tool --serve\n"}
-        for label, listing in cases.items():
+        plain = "PATH=/usr/bin:/bin"
+        cases = {"absolute": (f"{venv}/bin/python -m unittest", {"program": "python3.12", "environment": plain}),
+                 "relative": (".venv/bin/python -m unittest", {"program": "python3.12", "environment": plain}),
+                 "script": ("python3 ./.venv/bin/pip list", {"program": "python3.12", "environment": plain}),
+                 "named script": (f"python3 {venv}/bin/pip list", {"program": "python3.12", "environment": plain, "place": "/elsewhere"}),
+                 "framework": (f"{FRAMEWORK} -m unittest", {"program": "Python", "environment": f"{plain} __PYVENV_LAUNCHER__={venv}/bin/python"}),
+                 "empty environment": (f"{FRAMEWORK} -m unittest", {"program": "Python", "environment": f"__PYVENV_LAUNCHER__={venv}/bin/python", "place": "/elsewhere"}),
+                 "path": ("python -m unittest", {"program": "python3.12", "environment": f"HOME=/h PATH={venv}/bin:/usr/bin TERM=x"}),
+                 "activated": ("python -m unittest", {"program": "python3.12", "environment": f"PATH=/usr/bin VIRTUAL_ENV={venv} TERM=x"}),
+                 "renamed": ("worker: idle", {"program": "python3.12", "environment": f"PATH=/usr/bin VIRTUAL_ENV={venv}"}),
+                 "unreadable": ("python -m unittest", {"program": "python3.12"}),
+                 "unreadable, place unknown": ("python -m unittest", {"program": "python3.12", "place": None}),
+                 "tool": (".venv/bin/tool --serve", {"program": "tool"}),
+                 "other user": (f"{venv}/bin/python -m unittest", {"owner": OTHER})}
+        for label, (command, options) in cases.items():
             with self.subTest(start=label):
-                self.project.listing = listing
-                self.assertEqual(self.users(), [int(listing.split()[0])])
-        self.project.places = ""
+                self.alone(77, command, **{"place": root, **options})
+                self.assertEqual(self.users(), ([77], None))
         for label in ("relative", "script", "tool"):
             with self.subTest(start=label, place="unknown"):
-                self.project.listing = cases[label]
-                self.assertEqual(self.users(), [int(cases[label].split()[0])], "A start that cannot be excluded counts.")
-        self.project.listing, self.project.users = "  1 0 /sbin/launchd\n", "4242\n"
-        self.assertEqual(self.users(), [4242], "An open file counts.")
+                command, options = cases[label]
+                self.alone(77, command, **{**options, "place": None})
+                self.assertEqual(self.users(), ([77], None), "A start that cannot be excluded counts.")
+        self.project.processes[1:], self.project.users = [], "4242\n"
+        self.assertEqual(self.users(), ([4242], None), "An open file counts.")
+        self.project.ended = {4242}
+        self.assertEqual(self.users(), ([], None), "A process that has ended uses nothing.")
 
     def test_environment_variables_are_read_in_the_linux_form_too(self):
-        venv = self.project.venv
-        self.project.launch = {"85": f"HOME=/h\0VIRTUAL_ENV={venv}\0PATH=/usr/bin\0", "86": "HOME=/h\0VIRTUAL_ENV=/another/.venv\0PATH=/usr/bin\0"}
-        self.project.places = "/another"
-        self.project.listing = f"  85 {ME} python -m unittest\n  86 {ME} python -m unittest\n"
-        self.assertEqual(self.users(system="Linux"), [85])
+        self.project.process(85, "python -m unittest", program="python3.12", place="/another", environment=f"HOME=/h VIRTUAL_ENV={self.project.venv} PATH=/usr/bin")
+        self.project.process(86, "python -m unittest", program="python3.12", place="/another", environment="HOME=/h VIRTUAL_ENV=/another/.venv PATH=/usr/bin")
+        self.project.process(87, "python -m unittest", program="python3.12", place="/another", environment=f"HOME=/h OLD_VIRTUAL_ENV={self.project.venv} PATH=/usr/bin")
+        self.assertEqual(self.users(system="Linux"), ([85], None))
         self.assertTrue([call for call in self.project.calls if call[:2] == ["cat", "/proc/85/environ"]])
         self.assertFalse([call for call in self.project.calls if "-Eww" in call])
 
+    def test_paths_are_listed_in_a_locale_that_shows_them(self):
+        self.users()
+        listings = [environment for call, environment in zip(self.project.calls, self.project.environments) if call[0] in {"ps", "lsof"}]
+        self.assertEqual({environment["LC_ALL"] for environment in listings}, {"en_US.UTF-8"})
+        self.assertEqual(setup.listing_environment("Linux")["LC_ALL"], "C.UTF-8")
+
     def test_unrelated_processes_do_not_count(self):
-        root = self.project.root
-        self.project.places = "/another/checkout"
-        self.project.launch = {"83": f"{FRAMEWORK} PATH=/usr/bin __PYVENV_LAUNCHER__=/another/checkout/.venv/bin/python", "85": "python PATH=/usr/bin VIRTUAL_ENV=/another/.venv"}
-        self.project.listing = (f"  81 {ME} /bin/zsh -c cd {root} && .venv/bin/python -m unittest\n  82 {ME} .venv/bin/python -m unittest\n"
-                                f"  83 {ME} {FRAMEWORK} -m unittest\n  84 {ME} less {root}/README.md\n  85 {ME} python -m unittest\n  88 {ME} node server.js\n  1 0 /sbin/launchd\n")
-        self.assertEqual(self.users(), [])
-        self.project.places, self.project.launch = "", {}
-        self.project.listing = (f"  557 {OTHER} /System/Library/CoreServices/Software Update.app/Contents/Resources/softwareupdated\n"
-                                f"  558 {ME} /Applications/Some App.app/Contents/MacOS/helper.app/run --flag\n  559 {OTHER} python -m unittest\n"
-                                f"  560 {OTHER} node validator.mjs\n")
-        self.assertEqual(self.users(), [], "Programs with a space in their path and other users' interpreters are not users of this environment.")
+        root, venv = self.project.root, self.project.venv
+        for number, command, options in (
+                (81, f"/bin/zsh -c cd {root} && .venv/bin/python -m unittest", {"program": "zsh"}), (82, ".venv/bin/python -m unittest", {"program": "python3.12"}),
+                (83, f"{FRAMEWORK} -m unittest", {"program": "Python", "environment": "PATH=/usr/bin __PYVENV_LAUNCHER__=/another/checkout/.venv/bin/python"}),
+                (84, f"less {root}/README.md", {"program": "less"}), (85, "python -m unittest", {"program": "python3.12", "environment": "PATH=/usr/bin VIRTUAL_ENV=/another/.venv"}),
+                (86, f"{FRAMEWORK} -m unittest", {"program": "Python", "environment": f"PATH=/usr/bin __PYVENV_LAUNCHER__={venv}2/bin/python"}),
+                (87, "python -m unittest", {"program": "python3.12"}), (88, "node server.js", {"program": "node"}),
+                (89, "python -m unittest", {"program": "python3.12", "owner": OTHER}), (90, "node validator.mjs", {"program": "node", "owner": OTHER, "place": None}),
+                (557, "/System/Library/CoreServices/Software Update.app/Contents/Resources/softwareupdated", {"owner": OTHER, "place": None}),
+                (558, "/Applications/Some App.app/Contents/MacOS/helper.app/run --flag", {"program": "run", "place": None})):
+            self.project.process(number, command, **{"place": "/another/checkout", "environment": "PATH=/usr/bin" if number not in {87} else None, **options})
+        self.assertEqual(self.users(), ([], None))
+
+    def test_node_in_the_checkout_does_not_hold_the_environment(self):
+        self.prepared()
+        del self.project.installed["attrs"]
+        self.project.process(90, "node server.js", program="node", place=str(self.project.root))
+        self.assertEqual(self.bootstrap()["outcome"], "changed", "A language server is no user of .venv.")
+        self.project.process(91, f"node {self.project.venv}/bin/tool.js", program="node", place="/elsewhere")
+        del self.project.installed["attrs"]
+        self.refused("in use by process 91")
 
     def test_node_processes_of_the_checkout_count_for_its_dependencies(self):
-        directory = self.project.root / "tools/node_modules"
+        directory, root = self.project.root / "tools/node_modules", str(self.project.root)
         directory.mkdir(parents=True)
-        for label, place, listing, expected in (
-                ("working here", str(self.project.root), f"  90 {ME} node tools/validator.mjs\n", [90]), ("unknown place", "", f"  91 {ME} node validator.mjs\n", [91]),
-                ("named here", "/elsewhere", f"  92 {ME} node {self.project.root}/tools/validator.mjs\n", [92]), ("elsewhere", "/elsewhere", f"  93 {ME} node server.js\n", [])):
+        for label, command, options, expected in (
+                ("working here", "node tools/validator.mjs", {"place": root}, [90]), ("below", "node validator.mjs", {"place": root + "/tools"}, [90]),
+                ("unknown place", "node validator.mjs", {}, [90]), ("named here", f"node {root}/tools/validator.mjs", {"place": "/elsewhere"}, [90]),
+                ("renamed", "npm run dev", {"place": root}, [90]), ("program in another place", "/Users/x/Library/Application Support/fnm/node tools/validator.mjs", {"place": root}, [90]),
+                ("npx", "npx playwright", {"place": root, "program": "npx"}, [90]), ("elsewhere", "node server.js", {"place": "/elsewhere"}, []),
+                ("python here", "python -m unittest", {"place": root, "program": "python3.12"}, []), ("shell here", "zsh", {"place": root, "program": "zsh"}, [])):
             with self.subTest(case=label):
-                self.project.places, self.project.listing = place, listing
-                self.assertEqual(self.users(directory), expected)
+                self.alone(90, command, **{"program": "node", **options})
+                self.assertEqual(self.users(directory), (expected, None))
         workspace = self.project.directory / "workspace/tools"
         workspace.mkdir(parents=True)
         (workspace / "node_modules").symlink_to(directory, target_is_directory=True)
-        self.project.places, self.project.listing = str(workspace.parent), f"  94 {ME} node tools/validator.mjs\n"
-        self.assertEqual(self.users(directory), [94], "The driver's isolated workspace links to these dependencies.")
+        self.alone(94, "node tools/validator.mjs", program="node", place=str(workspace.parent))
+        self.assertEqual(self.users(directory), ([94], None), "The driver's isolated workspace links to these dependencies.")
 
     def test_use_that_cannot_be_established_is_not_taken_as_unused(self):
-        for label, change in (("lsof absent", lambda: self.project.commands.pop("lsof")), ("lsof error", lambda: setattr(self.project, "lsof_code", 2)),
-                              ("lsof message", lambda: setattr(self.project, "lsof_error", "lsof: status error\n")), ("ps error", lambda: setattr(self.project, "ps_code", 1)),
-                              ("ps silent", lambda: setattr(self.project, "listing", ""))):
+        self.prepared(version="3.12.13")
+        for label, change, reason in (("lsof absent", lambda: self.project.commands.pop("lsof"), "lsof was not found"), ("lsof error", lambda: setattr(self.project, "lsof_code", 2), "lsof: exit status 2"),
+                                      ("lsof message", lambda: setattr(self.project, "lsof_error", "lsof: status error\n"), "lsof: lsof: status error"),
+                                      ("ps error", lambda: setattr(self.project, "ps_code", 1), "ps: exit status 1"), ("ps silent", lambda: self.project.processes.clear(), "ps: exit status 0"),
+                                      ("ps forbidden", lambda: self.project.handlers.insert(0, lambda argv: {**self.project.result(argv), "code": None, "error": "PermissionError: ps"} if argv[0] == "ps" else None), "ps: PermissionError")):
             with self.subTest(case=label):
-                self.project.commands["lsof"], self.project.lsof_code, self.project.lsof_error = "/usr/sbin/lsof", None, ""
-                self.project.ps_code, self.project.listing = 0, "  1 0 /sbin/launchd\n"
-                self.assertEqual(self.users(), [])
+                kept = list(self.project.handlers)
+                self.assertEqual(self.users(), ([], None))
                 change()
-                self.assertIsNone(self.users())
+                users, why = self.users()
+                self.assertIsNone(users)
+                self.assertIn(reason, why)
                 self.project.create_environment(version="3.12.14")
-                self.refused("cannot be established", rebuild=True)
+                self.refused(re.escape(f"cannot be established here ({reason}"), rebuild=True)
+                self.project.handlers[:] = kept
+                self.project.commands["lsof"], self.project.lsof_code, self.project.lsof_error, self.project.ps_code = "/usr/sbin/lsof", None, "", 0
+                if not self.project.processes:
+                    self.project.process(1, "/sbin/launchd", owner=0)
 
     def test_used_environment_is_neither_rebuilt_nor_filled(self):
-        self.project.listing = f"  77 {ME} {self.project.venv}/bin/python -m unittest\n"
+        self.prepared()
+        self.project.process(77, f"{self.project.venv}/bin/python -m unittest", program="python3.12", place="/elsewhere")
+        self.assertEqual(self.bootstrap()["outcome"], "unchanged", "A healthy environment may be in use.")
         self.project.create_environment(version="3.12.14")
         self.refused("in use by process 77", rebuild=True)
         self.refused("in use by process 77", rebuild=True, preview=True)
         self.project.create_environment({**self.project.pins, "jsonschema": "4.25.0"})
         self.refused("in use by process 77")
-        self.project.create_environment()
-        self.project.record()
-        self.assertEqual(self.bootstrap()["outcome"], "unchanged", "A healthy environment may be in use.")
+
+    def test_setup_that_runs_from_the_environment_says_so(self):
+        self.project.create_environment({**self.project.pins, "jsonschema": "4.25.0"})
+        self.project.process(os.getpid(), f"{self.project.venv}/bin/python tools/bootstrap_local.py", program="python3.12", place=str(self.project.root))
+        self.refused("This setup tool itself runs from .venv")
 
 
 class PreviewTests(SetupCase):
     def test_preview_changes_nothing(self):
         self.project.node()
-        for prepare, profiles in ((lambda: None, ("core", "python-verification", "visual-verification")), (self.project.create_environment, ("python-verification",))):
+        for prepare, profiles in ((lambda: None, ("core", "python-verification", "visual-verification")), (self.prepared, ("python-verification",))):
             prepare()
             for profile in profiles:
                 with self.subTest(profile=profile):
@@ -546,9 +730,26 @@ class VisualProfileTests(SetupCase):
         self.assertEqual(browser[1:], ["tools/node_modules/playwright/cli.js", "install", "chromium", "--only-shell"])
         self.assertNotIn("--with-deps", json.dumps(report["actions"]))
         self.assertEqual(setup.exit_status(report), setup.READY)
-        used = self.project.environments[self.project.calls.index(npm)]
-        self.assertFalse([name for name in used if name.lower().startswith(("npm_", "node_"))], "Caller settings cannot change what npm installs.")
-        self.assertTrue(used["PATH"].startswith(str(Path(npm[0]).parent) + os.pathsep))
+        for command in (npm, browser):
+            used = self.project.environments[self.project.calls.index(command)]
+            self.assertFalse([name for name in used if name.lower().startswith(("npm_", "node_"))], "Caller settings cannot change what is installed.")
+            self.assertTrue(used["PATH"].startswith(str(Path(npm[0]).parent) + os.pathsep))
+        record = json.loads((self.project.venv / "ontokin-environment.json").read_text(encoding="utf-8"))
+        self.assertEqual((record["profile"], record["node"]["version"], record["npm"]["version"], record["browser"]["expected"]),
+                         ("visual-verification", "v22.11.0", "10.9.0", "chromium_headless_shell-1194"))
+        self.assertIn({"name": "three", "expected": "0.180.0", "installed": "0.180.0", "direct": True}, record["npm_dependencies"])
+
+    def test_tools_prepared_by_hand_are_recorded(self):
+        self.project.node()
+        self.bootstrap()
+        record = self.project.venv / "ontokin-environment.json"
+        self.assertIsNone(json.loads(record.read_text(encoding="utf-8"))["npm_dependencies"])
+        self.project.node_modules()
+        self.project.browser()
+        report = self.bootstrap("visual-verification")
+        self.assertEqual(([action["action"] for action in report["planned"]], report["outcome"]), (["record-environment"], "changed"))
+        self.assertEqual(json.loads(record.read_text(encoding="utf-8"))["browser"]["state"], "ready")
+        self.assertEqual(self.bootstrap("visual-verification")["outcome"], "unchanged")
 
     def test_healthy_dependencies_are_compared_and_kept(self):
         self.project.node()
@@ -567,8 +768,9 @@ class VisualProfileTests(SetupCase):
         self.project.users = "991\n"
         self.refused("node_modules is in use by process 991", "visual-verification", repair_node=True)
         self.project.users = ""
+        self.project.browser()
         report = self.bootstrap("visual-verification", repair_node=True)
-        self.assertEqual([action["action"] for action in report["actions"]], ["install-node-dependencies", "install-chromium"])
+        self.assertEqual([action["action"] for action in report["actions"]], ["install-node-dependencies", "install-chromium"], "The browser follows the dependencies that were just installed.")
 
     def test_refused_dependencies_stop_the_run_before_the_environment_changes(self):
         self.project.node()
@@ -590,6 +792,9 @@ class VisualProfileTests(SetupCase):
     def test_wrong_or_absent_node_is_refused_and_never_installed(self):
         self.refused("Node.js was not found", "visual-verification")
         self.project.node()
+        (Path(self.project.commands["node"]).parent / "npm").unlink()
+        self.refused("npm was not found", "visual-verification")
+        self.project.node()
         self.project.node_version = "v25.9.0\n"
         self.refused("target is Node.js 22", "visual-verification")
 
@@ -605,12 +810,14 @@ class OtherProfileTests(SetupCase):
         self.assertFalse(self.project.venv.exists())
         self.refused("new and outside the checkout", "package-smoke", work=work)
 
-    @unittest.skipIf(os.geteuid() == 0, "Root may write anywhere.")
     def test_unwritable_places_are_refused_before_anything_changes(self):
-        closed = self.project.directory / "closed"
+        occupied, closed = self.project.directory / "occupied", self.project.directory / "closed"
+        occupied.write_text("a file", encoding="utf-8")
         closed.mkdir(mode=0o500)
         self.addCleanup(closed.chmod, 0o700)
-        self.refused("cannot be created", "package-smoke", work=closed / "smoke")
+        for place in (occupied, closed) if os.geteuid() else (occupied,):  # Root may write anywhere.
+            with self.subTest(place=place.name):
+                self.refused("cannot be created", "package-smoke", work=place / "smoke")
 
     def test_native_and_container_profiles_are_refused(self):
         for profile in ("historical-native", "linux-container"):
@@ -622,6 +829,14 @@ class OtherProfileTests(SetupCase):
         (self.project.root / ".git").rename(self.project.directory / "moved")
         with self.assertRaisesRegex(setup.Refusal, "top of a Git checkout"):
             self.bootstrap()
+
+    def test_git_that_does_not_answer_is_named_as_the_cause(self):
+        for label, change, message in (("absent", {"code": None, "error": "FileNotFoundError: git"}, "Git could not be started: FileNotFoundError: git"),
+                                       ("refusing", {"code": 128, "err": "fatal: detected dubious ownership in repository\n"}, "top of a Git checkout or worktree: fatal: detected dubious ownership")):
+            with self.subTest(case=label):
+                self.project.handlers.insert(0, lambda argv, change=change: {**self.project.result(argv), **change} if argv[0] == "git" else None)
+                self.refused(message)
+                self.project.handlers.pop(0)
 
     def test_setup_never_publishes_or_changes_source(self):
         head = self.project.git("rev-parse", "HEAD")
@@ -647,7 +862,7 @@ class CommandLineTests(SetupCase):
         closed = self.project.directory / "closed"
         closed.mkdir(mode=0o500)
         self.addCleanup(closed.chmod, 0o700)
-        places = [(existing, "must be new")] + ([] if os.geteuid() == 0 else [(closed / "report.json", "cannot be created")])
+        places = [(existing, "must be new"), (existing / "report.json", "cannot be created")] + ([(closed / "report.json", "cannot be created")] if os.geteuid() else [])
         for place, message in places:
             with self.subTest(place=place.name), patch.object(setup, "bootstrap") as started:
                 code, _, errors = self.call("--report", str(place))
@@ -658,7 +873,7 @@ class CommandLineTests(SetupCase):
 
     def test_exit_statuses(self):
         for error, code in ((setup.Refusal("no"), setup.REFUSED), (doctor.SpecificationError("no"), setup.REFUSED), (setup.Busy("busy"), setup.BUSY),
-                            (KeyboardInterrupt(), setup.INTERRUPTED)):
+                            (PermissionError("no"), setup.REFUSED), (KeyboardInterrupt(), setup.INTERRUPTED)):
             with self.subTest(error=type(error).__name__), patch.object(setup, "bootstrap", side_effect=error):
                 self.assertEqual(self.call()[0], code)
 
@@ -680,6 +895,89 @@ class CommandLineTests(SetupCase):
         options = started.call_args.kwargs
         self.assertEqual({name: options[name] for name in ("preview", "python", "rebuild", "repair_node", "install")},
                          {"preview": True, "python": "/x/python", "rebuild": True, "repair_node": True, "install": True})
+
+    def run_setup(self, *arguments):
+        """The real command line and the real setup, on the controlled machine."""
+        real = functools.partial(setup.bootstrap, run=self.project.run, which=self.project.which, system="Darwin", machine="arm64", cache=self.project.directory / "browsers")
+        with patch.object(setup, "bootstrap", real):
+            return self.call(*arguments)
+
+    def test_command_line_carries_out_and_shows_every_outcome(self):
+        code, output, _ = self.run_setup("--preview")
+        self.assertEqual((code, output.splitlines()[0]), (setup.READY, "OntoKin local setup: profile python-verification, previewed"))
+        self.install_code = 1
+        code, output, _ = self.run_setup()
+        self.assertEqual((code, output.splitlines()[0]), (setup.UNMET, "OntoKin local setup: profile python-verification, failed"))
+        self.assertIn("failure: install-packages failed: ERROR: THESE PACKAGES DO NOT MATCH THE HASHES", output)
+        self.install_code = 0
+        code, output, _ = self.run_setup()
+        self.assertEqual((code, output.splitlines()[0]), (setup.READY, "OntoKin local setup: profile python-verification, changed"))
+        code, output, _ = self.run_setup()
+        self.assertEqual((code, output.splitlines()[0]), (setup.READY, "OntoKin local setup: profile python-verification, unchanged"))
+        self.assertIn("no change needed", output)
+        self.project.create_environment(version="3.12.14")
+        code, _, errors = self.run_setup()
+        self.assertEqual(code, setup.REFUSED)
+        self.assertIn("--rebuild", errors)
+        with self.session().exclusive():
+            self.assertEqual(self.run_setup()[0], setup.BUSY)
+        self.project.base = self.project.facts(version="3.12.14")
+        code, output, _ = self.run_setup("--rebuild")
+        self.assertEqual(code, setup.UNMET)
+        self.assertIn("interpreter-mismatch", output)
+        code, output, _ = self.run_setup("--json")
+        self.assertEqual((code, output), (setup.REFUSED, ""))
+
+    def test_command_line_reports_an_interruption(self):
+        def interrupt(argv):
+            if "pip" in argv and "install" in argv:
+                raise KeyboardInterrupt
+
+        self.project.handlers.insert(0, interrupt)
+        code, _, errors = self.run_setup()
+        self.assertEqual(code, setup.INTERRUPTED)
+        self.assertRegex(errors, r"The report of this run is .*/run-\w+\.json\.")
+        with patch.object(setup, "bootstrap", side_effect=KeyboardInterrupt):
+            self.assertIn("Nothing was changed.", self.call()[2])
+
+    def test_portable_report_names_no_place_that_was_passed(self):
+        wheels, report = self.project.directory.parent / "ontokin-test-wheels", self.project.directory / "out/report.json"
+        node = self.project.directory.parent / "ontokin-test-node"
+        code, _, errors = self.run_setup("--portable-paths", "--find-links", str(wheels), "--node", str(node), "--report", str(report))
+        self.assertEqual(code, setup.READY, errors)
+        text = report.read_text(encoding="utf-8")
+        for place in (wheels, node, self.project.root):
+            self.assertNotIn(str(place), text)
+        self.assertIn('"<find-links>"', text)
+        self.assertIn('"<node>"', text)
+
+
+class RealSetupTests(unittest.TestCase):
+    """The unmodified tool creates, keeps and repeats a real environment without any package or network."""
+
+    def test_real_core_environment_from_the_command_line(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            project = LocalProject(Path(temporary), "check out")
+            project.spec["interpreter"].update(implementation=platform.python_implementation(), version=platform.python_version(), distributions={})
+            project.spec["platforms"] = {"this": {"system": platform.system(), "machine": doctor.host_machine()}}
+            project.save()
+            (project.root / "ontokin/__main__.py").write_text("", encoding="utf-8")
+            base = getattr(sys, "_base_executable", None) or sys.executable
+            command = [sys.executable, "-I", "-B", str(doctor.ROOT / "tools/bootstrap_local.py"), "--root", str(project.root), "--profile", "core"]
+
+            def run(*arguments):
+                return subprocess.run([*command, *arguments], capture_output=True, text=True, timeout=300, stdin=subprocess.DEVNULL)
+
+            first = run("--python", base)
+            self.assertEqual(first.returncode, 0, first.stdout + first.stderr)
+            self.assertIn("done: create-environment", first.stdout)
+            record = json.loads((project.venv / "ontokin-environment.json").read_text(encoding="utf-8"))
+            self.assertEqual((record["profile"], record["interpreter"]["version"], list(record["packages"])), ("core", platform.python_version(), ["pip"]))
+            before = project.snapshot()
+            second = run()
+            self.assertEqual((second.returncode, second.stdout.splitlines()[0]), (0, "OntoKin local setup: profile core, unchanged"), second.stdout + second.stderr)
+            self.assertTrue(project.snapshot() == before, "A repeat run changed a file.")
+            self.assertEqual(len(list((project.root / setup.STATE_DIRECTORY).glob("run-*.json"))), 1)
 
 
 if __name__ == "__main__":

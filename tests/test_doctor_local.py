@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import platform
 import re
+import shlex
 import shutil
 import subprocess
 import sys
@@ -50,10 +51,11 @@ class LocalProject:
         self.base = self.facts()                      # What the specified interpreter command reports.
         self.installed = None                         # What the environment reports; None means no environment.
         self.environment = {}                         # Overrides of the environment interpreter's facts.
-        self.broken_imports, self.pip_conflict, self.smoke_code, self.source = {}, None, 0, None
+        self.broken_imports, self.pip_conflict, self.pip_error, self.smoke_code, self.source = {}, None, None, 0, None
         self.node_version, self.users, self.lsof_code, self.lsof_error, self.ps_code = "v22.11.0\n", "", None, "", 0
-        self.listing, self.places, self.launch = "  1 0 /sbin/launchd\n", "", {}
-        self.calls, self.environments, self.kept, self.handlers = [], [], [], []
+        self.processes, self.ended = [], set()
+        self.process(1, "/sbin/launchd", owner=0)
+        self.calls, self.environments, self.kept, self.directories, self.handlers = [], [], [], [], []
         self.git("init", "--quiet", "--template=")
         self.git("add", "-A")
         self.git("commit", "--quiet", "--no-verify", "-m", "Checkout")
@@ -61,10 +63,11 @@ class LocalProject:
     def save(self):
         (self.root / doctor.SPECIFICATION).write_text(json.dumps(self.spec, indent=2), encoding="utf-8")
 
-    def git(self, *arguments):
+    def git(self, *arguments, root=None):
+        """Git in a test repository only; a repository named by the caller is never used."""
         environment = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
         environment.update(GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_NOSYSTEM="1")
-        return subprocess.run(["git", "-c", "user.name=Test", "-c", "user.email=test@example.invalid", "-C", str(self.root), *arguments],
+        return subprocess.run(["git", "-c", "user.name=Test", "-c", "user.email=test@example.invalid", "-C", str(root or self.root), *arguments],
                               env=environment, check=True, capture_output=True, text=True).stdout.strip()
 
     def facts(self, **overrides):
@@ -72,7 +75,12 @@ class LocalProject:
                 "executable": "python3.12", "base_executable": "python3.12", "prefix": BASE, "base_prefix": BASE, "base_prefix_real": BASE,
                 "system": "Darwin", "machine": "arm64", "os_version": "26.6.2", "platform_tag": "macosx-26.0-arm64",
                 "sys_path": [BASE + "/lib/python312.zip", BASE + "/lib/python3.12"], "site_packages": BASE + "/lib/python3.12/site-packages",
-                "packages": {"pip": "26.0"}, "places": {}, "duplicates": {}, "imports": {}, **overrides}
+                "packages": {"pip": "26.0"}, "places": {}, "duplicates": {}, "editable": {}, "source_package": None, "imports": {}, **overrides}
+
+    def process(self, number, command, *, program="", place=None, environment=None, owner=None):
+        """One running process: what ps, lsof and the process environment would show of it."""
+        self.processes.append({"number": number, "owner": os.getuid() if owner is None else owner, "command": command, "program": program,
+                               "place": place, "environment": environment})
 
     @property
     def venv(self):
@@ -90,9 +98,6 @@ class LocalProject:
                                               f"version = 3.12.13\ncommand = {command or f'python3.12 -m venv {self.venv}'}\n", encoding="utf-8")
         self.installed = {**({"pip": pip} if pip else {}), **(self.pins if packages is None else packages)}
         self.environment = overrides
-
-    def record(self):
-        (self.venv / "ontokin-environment.json").write_text("{}", encoding="utf-8")
 
     def environment_facts(self, names):
         present = {doctor.normalize(name) for name in self.installed}
@@ -115,6 +120,7 @@ class LocalProject:
         self.calls.append(argv)
         self.environments.append(env)
         self.kept.append(keep)
+        self.directories.append(cwd)
         for handler in self.handlers:
             answer = handler(argv)
             if answer is not None:
@@ -123,15 +129,8 @@ class LocalProject:
             return self.result(argv, out="git-lfs/3.7.1 (GitHub; darwin arm64)\n")
         if argv[0] == "git" or any(part.endswith("tools/chat_workflow.py") for part in argv):
             return doctor.execute(argv, cwd, timeout, env)
-        if argv[0] == "lsof" and "-Fn" in argv:
-            return self.result(argv, out=f"p1\nfcwd\nn{self.places}\n" if self.places else "")
-        if argv[0] == "lsof":
-            return self.result(argv, code=self.lsof_code if self.lsof_code is not None else 0 if self.users else 1, out=self.users, err=self.lsof_error)
-        if argv[0] == "ps" and "-Eww" in argv or argv[0] == "cat":
-            text = self.launch.get(argv[-1].split("/")[2] if argv[0] == "cat" else argv[-1])
-            return self.result(argv, code=0 if text else 1, out=text or "")
-        if argv[0] == "ps":
-            return self.result(argv, code=self.ps_code, out=self.listing)
+        if argv[0] in {"lsof", "ps", "cat"}:
+            return self.observe_processes(argv)
         if argv[1:] == ["--version"]:
             return self.result(argv, out=self.node_version)
         inside = argv[0] == str(self.venv / "bin/python")
@@ -139,6 +138,8 @@ class LocalProject:
             facts = self.environment_facts(json.loads(argv[-1])) if inside else self.base
             return self.result(argv, code=3, err="cannot execute") if facts is None or self.environment.get("version") == "broken" and inside else \
                 self.result(argv, out=json.dumps(facts))
+        if "pip" in argv and argv[-1] == "check" and self.pip_error:
+            return self.result(argv, code=1, err=self.pip_error)
         if "pip" in argv and argv[-1] == "check":
             return self.result(argv, code=1 if self.pip_conflict else 0, out=self.pip_conflict or "No broken requirements found.\n")
         if argv[-1].endswith("check_native_reader_setup.py"):
@@ -149,6 +150,24 @@ class LocalProject:
         if "ontokin" in argv:
             return self.result(argv, code=self.smoke_code)
         raise AssertionError(f"Unexpected command: {argv}")
+
+    def observe_processes(self, argv):
+        if argv[0] == "lsof" and "-Fpcn" in argv:
+            own = [item for item in self.processes if item["owner"] == os.getuid()]
+            return self.result(argv, code=self.lsof_code or 0, err=self.lsof_error, out="".join(
+                f"p{item['number']}\nc{item['program']}\nfcwd\n" + (f"n{item['place']}\n" if item["place"] else "") for item in own))
+        if argv[0] == "lsof":
+            return self.result(argv, code=self.lsof_code if self.lsof_code is not None else 0 if self.users else 1, out=self.users, err=self.lsof_error)
+        if argv[:3] == ["ps", "-o", "pid="]:
+            alive = [number for number in argv[-1].split(",") if int(number) not in self.ended]
+            return self.result(argv, code=0 if alive else 1, out="".join(f"{number:>6}\n" for number in alive))
+        if argv[0] == "ps" and "-Eww" in argv or argv[0] == "cat":
+            number = argv[-1].split("/")[2] if argv[0] == "cat" else argv[-1]
+            item = next(item for item in self.processes if str(item["number"]) == number)
+            if argv[0] == "cat":
+                return self.result(argv, code=0 if item["environment"] else 1, out=(item["environment"] or "").replace(" ", "\0") + "\0")
+            return self.result(argv, out=f"{item['command']} {item['environment'] or ''}\n")
+        return self.result(argv, code=self.ps_code, out="".join(f"{item['number']:>6} {item['owner']:>5} {item['command']}\n" for item in self.processes) if not self.ps_code else "")
 
     def which(self, name):
         return str(self.interpreter) if name == "python3.12" else self.commands.get(name)
@@ -173,6 +192,8 @@ class LocalProject:
             target = self.root / "tools/node_modules" / row["name"] / "package.json"
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(json.dumps({"name": row["name"], "version": versions.get(row["name"], row["expected"])}), encoding="utf-8")
+        locked = doctor.locked_packages(self.root, self.spec["profiles"]["visual-verification"], self.system, self.machine)
+        (self.root / "tools/node_modules/.package-lock.json").write_text(json.dumps({"packages": locked}), encoding="utf-8")
         target = self.root / "tools/node_modules/playwright-core/browsers.json"
         target.write_text(json.dumps({"browsers": [{"name": "chromium-headless-shell", "revision": "1194"}]}), encoding="utf-8")
 
@@ -347,13 +368,81 @@ class ReadinessTests(DoctorCase):
         report = self.project.collect()
         self.assertEqual((self.check(report, "imports")["state"], self.check(report, "pip-check")["state"], self.state(report)), ("missing",) * 3)
         self.project.installed["attrs"] = "1.0"
-        self.assertEqual(self.state(self.project.collect()), "mismatch")
+        report = self.project.collect()
+        self.assertEqual({self.state(report), self.check(report, "imports")["state"], self.check(report, "pip-check")["state"]}, {"mismatch"})
 
     def test_one_unexecuted_check_prevents_readiness_and_names_the_rebuild(self):
         self.project.create_environment(pip=None)
         report = self.project.collect()
         self.assertEqual((self.check(report, "pip-check")["state"], self.state(report)), ("not_checked", "not_checked"))
         self.assertIn("--rebuild", report["selected"]["next_action"])
+
+    def test_pip_that_does_not_run_is_no_result_and_needs_a_rebuild(self):
+        packages = dict(self.project.pins)
+        del packages["attrs"]
+        self.project.create_environment(packages)
+        self.project.pip_error = "ModuleNotFoundError: No module named 'pip._internal'\n"
+        report = self.project.collect()
+        self.assertEqual((self.check(report, "pip-check")["state"], self.state(report)), ("not_checked", "missing"))
+        self.assertIn("pip does not run: ModuleNotFoundError", self.check(report, "pip-check")["detail"])
+        self.assertIn("--rebuild", report["selected"]["next_action"], "Nothing can be installed without pip.")
+
+    def test_each_unmet_check_names_an_action_that_can_resolve_it(self):
+        project = self.project
+        report = project.collect()
+        self.assertEqual(report["selected"]["next_action"], f"In {project.root}: Run: python3.12 tools/bootstrap_local.py --profile python-verification")
+        self.assertNotIn("--rebuild", report["readiness"]["visual-verification"]["next_action"])
+        self.assertIn("--profile python-verification", report["readiness"]["visual-verification"]["next_action"], "The environment does not wait for Node.js.")
+        with patch.object(doctor, "ROOT", project.root):
+            self.assertTrue(project.collect()["selected"]["next_action"].startswith("Run: "))
+        project.create_environment(duplicates={"attrs": ["26.1.0", "25.3.0"]})
+        self.assertIn("--rebuild", project.collect()["selected"]["next_action"])
+        (project.venv / "pyvenv.cfg").unlink()
+        self.assertIn("Move .venv away by hand", project.collect()["selected"]["next_action"])
+        shutil.rmtree(project.venv)
+        project.venv.mkdir()
+        self.assertIn("Move .venv away by hand", project.collect()["selected"]["next_action"])
+        shutil.rmtree(project.venv)
+        project.create_environment()
+        project.venv.rename(project.directory / "shared")
+        project.venv.symlink_to(project.directory / "shared", target_is_directory=True)
+        self.assertIn("Move .venv away by hand", project.collect()["selected"]["next_action"], "A link is moved away also when it leads to an environment.")
+        project.venv.unlink()
+        project.create_environment()
+        project.node()
+        project.node_modules(three="0.179.0")
+        self.assertIn("--profile visual-verification --repair-node", project.collect("visual-verification")["selected"]["next_action"])
+        self.assertIn(f"--node {shlex.quote(project.commands['node'])} --repair-node", project.collect("visual-verification", node=project.commands["node"])["selected"]["next_action"])
+        shutil.move(project.root / "tools/node_modules", project.directory / "modules")
+        self.assertTrue(project.collect("visual-verification")["selected"]["next_action"].endswith("--profile visual-verification"))
+        (project.root / "tools/node_modules").symlink_to(project.directory / "modules", target_is_directory=True)
+        self.assertIn("Remove the link tools/node_modules by hand", project.collect("visual-verification")["selected"]["next_action"])
+        (project.root / ".git/index").write_bytes(b"not an index")
+        self.assertIn("Repair the checkout", project.collect()["selected"]["next_action"])
+
+    def test_editable_install_may_name_this_checkout_only(self):
+        top = str(self.project.root)
+        self.project.create_environment(editable={"ontokin-reference": top}, source_package=f"{top}/ontokin/__init__.py")
+        self.assertEqual(self.check(self.project.collect(), "isolation", "core")["state"], "ready")
+        for label, overrides, text in (("recorded", {"editable": {"ontokin-reference": "/another/checkout"}}, "ontokin-reference from /another/checkout"),
+                                       ("unreadable", {"editable": {"ontokin-reference": "KeyError"}}, "ontokin-reference from KeyError"),
+                                       ("import hook", {"source_package": "/another/checkout/ontokin/__init__.py"}, "ontokin is imported from /another/checkout"),
+                                       ("worktree inside", {"sys_path": [BASE + "/lib/python3.12", self.project.site, f"{top}/.claude/worktrees/other"]}, "leaves the environment"),
+                                       ("packages inside", {"places": {"attrs": f"{top}/.claude/worktrees/other/attrs.egg-info"}}, "installed elsewhere")):
+            with self.subTest(case=label):
+                self.project.create_environment(**overrides)
+                report = self.project.collect()
+                self.assertEqual(self.check(report, "isolation", "core")["state"], "mismatch")
+                self.assertIn(text, self.check(report, "isolation", "core")["detail"])
+        self.project.create_environment(places={"ontokin-reference": f"{top}/ontokin_reference.egg-info"}, source_package=f"{self.project.site}/ontokin/__init__.py")
+        self.assertEqual(self.check(self.project.collect(), "isolation", "core")["state"], "ready", "The checkout's own metadata and an installed copy stay inside.")
+
+    def test_translated_interpreter_does_not_change_the_machine(self):
+        for system, machine, translated, expected in (("Darwin", "x86_64", "1\n", "arm64"), ("Darwin", "x86_64", "0\n", "x86_64"), ("Linux", "x86_64", "1\n", "x86_64"),
+                                                      ("Darwin", "arm64", "0\n", "arm64")):
+            with self.subTest(system=system, machine=machine, translated=translated), patch.object(doctor.platform, "system", return_value=system), \
+                    patch.object(doctor.platform, "machine", return_value=machine):
+                self.assertEqual(doctor.host_machine(lambda argv, **options: {"out": translated}), expected)
 
     def test_additional_packages_stay_visible(self):
         self.project.create_environment({**self.project.pins, "example": "1.0"})
@@ -451,7 +540,12 @@ class ReadinessTests(DoctorCase):
         self.project.handlers.append(lambda argv: {**self.project.result(argv), "code": None, "error": "FileNotFoundError: git"} if argv[0] == "git" else None)
         report = self.project.collect()
         self.assertEqual((self.check(report, "git", "core")["state"], report["storage"]["state"]), ("missing", "not_checked"))
-        self.assertIn("Install Git", report["selected"]["next_action"])
+        self.assertIn("Install Git or repair its installation: FileNotFoundError: git", report["selected"]["next_action"])
+        self.project.handlers[-1] = lambda argv: self.project.result(argv, code=128, err="fatal: detected dubious ownership in repository\n") if argv[0] == "git" else None
+        report = self.project.collect()
+        self.assertEqual(self.check(report, "git", "core")["state"], "mismatch")
+        self.assertIn("dubious ownership", report["selected"]["next_action"])
+        self.assertIn("dubious ownership", doctor.render(report))
 
     def test_unsupported_platform_is_unsupported(self):
         self.project.create_environment()
@@ -516,6 +610,8 @@ class RealEnvironmentTests(unittest.TestCase):
         (self.site / folder / "METADATA").write_text(f"Metadata-Version: 2.1\nName: {name}\nVersion: {version}\n", encoding="utf-8")
 
     def test_real_environment_is_ready_and_diagnosis_leaves_it_alone(self):
+        (self.site / "attrs").mkdir()
+        (self.site / "attrs/__init__.py").write_text("", encoding="utf-8")
         before = self.project.snapshot()
         state, checks = self.core()
         self.assertEqual(state, "ready", checks)
@@ -544,6 +640,37 @@ class RealEnvironmentTests(unittest.TestCase):
         row = next(row for row in self.report()["packages"]["expected"] if row["name"] == "attrs")
         self.assertEqual(row["state"], "mismatch")
         self.assertEqual(set(row["installed"].split(" and ")), {"26.1.0", "25.3.0"})
+
+    def test_real_editable_install_of_another_checkout_breaks_isolation(self):
+        other = self.project.directory / "other checkout"
+        (other / "ontokin").mkdir(parents=True)
+        (other / "ontokin/__init__.py").write_text("", encoding="utf-8")
+        self.metadata("ontokin_reference-0.4.0.dist-info", "ontokin-reference", "0.4.0")
+        link = self.site / "ontokin_reference-0.4.0.dist-info/direct_url.json"
+        link.write_text(json.dumps({"url": self.project.root.as_uri(), "dir_info": {"editable": True}}), encoding="utf-8")
+        self.assertEqual(self.core()[0], "ready", "This checkout itself may be installed.")
+        link.write_text(json.dumps({"url": other.as_uri(), "dir_info": {"editable": True}}), encoding="utf-8")
+        self.assertIn(f"ontokin-reference from {other}", self.core()[1]["isolation"]["detail"])
+        link.unlink()
+        # An import hook, as this project's layout installs it, adds no path entry.
+        hook = ("import importlib.machinery, importlib.util, sys\n"
+                "class Finder:\n"
+                "    @staticmethod\n"
+                "    def find_spec(name, path=None, target=None):\n"
+                f"        return importlib.util.spec_from_file_location(name, {str(other / 'ontokin/__init__.py')!r}) if name == 'ontokin' else None\n"
+                "sys.meta_path.insert(0, Finder)\n")
+        (self.site / "_editable_hook.py").write_text(hook, encoding="utf-8")
+        (self.site / "_editable.pth").write_text("import _editable_hook\n", encoding="utf-8")
+        self.assertIn(f"ontokin is imported from {other}", self.core()[1]["isolation"]["detail"])
+
+    @staticmethod
+    def ignores_case(directory):
+        return (directory / "CHECK OUT").exists()
+
+    def test_real_root_in_another_letter_case_is_the_same_place(self):
+        root = self.project.directory / ("CHECK OUT" if self.ignores_case(self.project.directory) else "check out")
+        report = doctor.collect(root, "core", run=doctor.execute, which=lambda name: None, system=self.system, machine=self.machine)
+        self.assertEqual(report["readiness"]["core"]["state"], "ready", report["readiness"]["core"])
 
     def test_real_source_import_needs_the_checkout_source(self):
         (self.project.root / "ontokin/__init__.py").unlink()
@@ -588,6 +715,40 @@ class VisualTests(DoctorCase):
         self.assertEqual(self.visual()["npm-dependencies"], "missing")
         (self.project.root / "tools/package-lock.json").write_text("{", encoding="utf-8")
         self.assertNotEqual(self.visual()["npm-dependencies"], "ready")
+
+    def test_manifests_and_links_alone_prove_no_installation(self):
+        self.project.node()
+        self.project.node_modules()
+        record = self.project.root / "tools/node_modules/.package-lock.json"
+        kept = json.loads(record.read_text(encoding="utf-8"))
+        for label, change, text in (("missing", lambda: record.unlink(), "record of the installation is missing"),
+                                    ("unreadable", lambda: record.write_text("{", encoding="utf-8"), "record of the installation is missing"),
+                                    ("integrity", lambda: record.write_text(json.dumps({"packages": {**kept["packages"], "node_modules/three": {
+                                        **kept["packages"]["node_modules/three"], "integrity": "sha512-other"}}}), encoding="utf-8"), "differs for three"),
+                                    ("absent", lambda: record.write_text(json.dumps({"packages": {}}), encoding="utf-8"), "differs for ")):
+            with self.subTest(case=label):
+                self.project.node_modules()
+                change()
+                checks = {item["id"]: item for item in self.project.collect()["readiness"]["visual-verification"]["checks"]}
+                self.assertEqual(checks["npm-dependencies"]["state"], "mismatch")
+                self.assertIn(text, checks["npm-dependencies"]["detail"])
+        self.project.node_modules()
+        for name in ("three", "@esbuild"):
+            with self.subTest(link=name):
+                package = self.project.root / "tools/node_modules" / name
+                package.rename(self.project.directory / "moved-package")
+                package.symlink_to(self.project.directory / "moved-package", target_is_directory=True)
+                self.assertEqual(self.visual()["npm-dependencies"], "mismatch")
+                package.unlink()
+                (self.project.directory / "moved-package").rename(package)
+        self.assertEqual(self.visual()["npm-dependencies"], "ready")
+
+    def test_browser_cache_follows_playwright_settings(self):
+        directory = self.project.root / "tools/node_modules"
+        with patch.dict(os.environ, {"PLAYWRIGHT_BROWSERS_PATH": "0"}):
+            self.assertEqual(doctor.browser_cache(directory), directory / "playwright-core/.local-browsers")
+        with patch.dict(os.environ, {"PLAYWRIGHT_BROWSERS_PATH": "/cache"}):
+            self.assertEqual(doctor.browser_cache(directory), Path("/cache"))
 
     def test_shared_dependency_directory_is_a_mismatch(self):
         self.project.node()
@@ -649,11 +810,17 @@ class SectionTests(DoctorCase):
         self.project.git("checkout", "--quiet", "-")
         other = self.project.directory / "linked"
         self.project.git("worktree", "add", "--quiet", "--detach", str(other))
-        subprocess.run(["git", "-c", "user.name=T", "-c", "user.email=t@example.invalid", "-C", str(other), "commit", "--quiet", "--allow-empty", "--no-verify", "-m", "Elsewhere"], check=True)
+        self.project.git("commit", "--quiet", "--allow-empty", "--no-verify", "-m", "Elsewhere", root=other)
         self.assertEqual(self.project.collect()["checkout"]["unpublished_commits"], 1)
+        self.project.git("branch", "aside", self.project.git("commit-tree", "HEAD^{tree}", "-p", "HEAD", "-m", "On a branch that is not checked out"))
+        self.assertEqual(self.project.collect()["checkout"]["unpublished_commits"], 2)
         (self.project.root / "pyproject.toml").write_text("changed", encoding="utf-8")
         self.project.git("stash", "push", "--quiet")
         self.assertEqual(self.project.collect()["checkout"]["stashes"], 1)
+        for number in range(doctor.UNTRACKED_LIMIT + 1):
+            (self.project.root / f"file-{number}.txt").write_text("", encoding="utf-8")
+        checkout = self.project.collect()["checkout"]
+        self.assertEqual((checkout["untracked_count"], len(checkout["untracked"])), (doctor.UNTRACKED_LIMIT + 1, doctor.UNTRACKED_LIMIT))
 
     def test_unreadable_state_is_never_reported_as_clean(self):
         self.project.create_environment()
@@ -664,6 +831,18 @@ class SectionTests(DoctorCase):
         self.assertIsNone(report["checkout"]["untracked_count"])
         self.assertIn("not read: status", doctor.render(report))
         self.assertIn("unread tracked modifications", doctor.render(report))
+        for command, name in (("rev-list", "unpublished_commits"), ("stash", "stashes")):
+            with self.subTest(command=command):
+                self.project.handlers.append(lambda argv, command=command: self.project.result(argv, code=128, err="fatal: bad object\n") if command in argv and argv[0] == "git" else None)
+                self.assertIsNone(self.project.collect()["checkout"][name])
+                self.project.handlers.pop()
+
+    def test_only_a_hosted_remote_names_a_repository(self):
+        for url, name in (("git@github.com-alias:Omegapy/OntoKin.git", "Omegapy/OntoKin"), ("https://github.com/Omegapy/OntoKin", "Omegapy/OntoKin"),
+                          ("ssh://git@example.invalid:22/Omegapy/OntoKin.git/", "Omegapy/OntoKin"), ("/Users/someone/OntoKin", None), ("file:///Users/someone/OntoKin", None),
+                          ("../someone/OntoKin", None), ("host:/home/someone/OntoKin", None), ("", None)):
+            with self.subTest(url=url):
+                self.assertEqual(doctor.repository_name(url), name)
 
     def test_linked_worktree_is_reported(self):
         other = self.project.directory / "linked"
@@ -686,6 +865,10 @@ class SectionTests(DoctorCase):
         self.assertEqual((environment["GIT_NO_LAZY_FETCH"], environment["PYTHONDONTWRITEBYTECODE"], environment["KEPT"]), ("1", "1", "yes"))
         for used in self.project.environments:
             self.assertFalse({"GIT_DIR", "PYTHONPATH", "PIP_INDEX_URL", "VIRTUAL_ENV"} & set(used or environment))
+        self.assertEqual(environment["GIT_OPTIONAL_LOCKS"], "0")
+        for call in self.project.calls:
+            if call[0] == "git" and call[1] != "lfs":
+                self.assertEqual(call[1:4], ["--no-optional-locks", "-c", "core.fsmonitor=false"])
 
     def test_storage_needs_a_client_only_when_files_are_selected(self):
         report = self.project.collect()
@@ -715,6 +898,8 @@ class SectionTests(DoctorCase):
         self.assertEqual((workflow["selected_task"], workflow["selected_task_status"], workflow["latest_checkpoint"]),
                          ("T1", "in_progress", "docs/workflow/tasks/T1/SESSION.md"))
         self.assertEqual(workflow["structure_check"]["state"], "not_checked")
+        current.write_text(json.dumps({"active_task": "T1", "latest_task": "T0"}), encoding="utf-8")
+        self.assertEqual(self.project.collect()["workflow"]["selected_task"], "T1")
         registry.write_text(json.dumps({"modes": {"local": {"entrypoint": "LOCAL-START-HERE.md"}, "browser": {"entrypoint": "CHATGPT-START-HERE.md"}, "odd": "text"}}), encoding="utf-8")
         current.write_text(json.dumps({"active_task": None, "latest_task": "T1", "checkpoint": {"session": "elsewhere.md"}}), encoding="utf-8")
         workflow = self.project.collect()["workflow"]
@@ -759,6 +944,22 @@ class ReportTests(DoctorCase):
         self.assertNotIn(tempfile.gettempdir(), text)
         self.assertNotIn(str(Path.home()) + "/", text)
         self.assertIn("<root>/.venv", text)
+        self.assertIn("<worktree-1>", text)
+        self.assertEqual(report["specification"]["digests"]["tools/package-lock.json"], doctor.digest(self.project.root / "tools/package-lock.json"))
+
+    def test_portable_text_is_labelled_also_behind_links_and_where_it_was_cut(self):
+        elsewhere, link = self.project.directory / "elsewhere", self.project.directory / "link"
+        elsewhere.mkdir()
+        link.symlink_to(elsewhere, target_is_directory=True)
+        labels = doctor.path_labels(link / "root", [], [("/opt/tools/node", "<node>"), ("relative", "<no>")])
+        self.assertEqual(doctor.portable(f"{link}/root/a {elsewhere}/root/b /opt/tools/node relative", labels), "<root>/a <root>/b <node> relative")
+        long = "x" * 250 + " "
+        for size in (6, len(str(link)) // 2, len(str(link)) - 1):
+            with self.subTest(size=size):
+                text = doctor.portable(long + str(link)[:size], labels)
+                self.assertTrue(text.startswith(long + "<"), text[250:])
+                self.assertNotIn(str(link)[:size], text)
+        self.assertEqual(doctor.portable("/private", labels), "/private", "Only a text that was cut short is treated as cut.")
 
     def test_command_line_runs_without_site_packages_and_writes_only_a_new_report(self):
         report = self.project.directory / "reports/doctor.json"
