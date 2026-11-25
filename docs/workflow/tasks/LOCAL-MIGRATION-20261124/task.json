@@ -438,7 +438,7 @@
       "depends_on": [
         "TASK-001"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/local-migration-20261124/R06-VERIFICATION.json"
       ],
@@ -461,7 +461,7 @@
         "TASK-005",
         "TASK-006"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/local-migration-20261124/RECONCILIATION.md"
       ],
@@ -480,7 +480,7 @@
       "depends_on": [
         "TASK-006"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/local-migration-20261124/STORAGE.md"
       ],
@@ -1257,18 +1257,6 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "TASK-030, as the session checkpoint SESSION.md states it; it waits for the session that the owner starts. TASK-006 to TASK-008 are blocked until the owner supplies the R06 archive and receipt.",
-  "blockers": [
-    {
-      "step": "TASK-006",
-      "since": "2026-11-25",
-      "reason": "The R06 transfer-capability handoff archive (41,730,084 bytes, SHA-256 4b8fae8b846c6f2b27ed5e2630c71240739786791cf39f043e787c55ad727bc9) and its delivery receipt (149,563 bytes, SHA-256 24aa014cb430d9b7269ee2e39ff08e7005d3630e8dd41c109f824e80039909d8) are not on the local machine. Both are in the owner's ChatGPT Library.",
-      "needs": "The owner places both files on the local machine.",
-      "also_waiting": [
-        "TASK-007",
-        "TASK-008",
-        "TASK-031"
-      ]
-    }
-  ]
+  "next_action": "TASK-030, as the session checkpoint SESSION.md states it; it waits for the session that the owner starts. Then TASK-031, the audit and the freeze of the candidate.",
+  "blockers": []
 }

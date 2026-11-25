@@ -2,9 +2,9 @@
 
 **Task:** [LOCAL-MIGRATION-20261124](../../workflow/tasks/LOCAL-MIGRATION-20261124/REQUIREMENTS.md),
 REQ-030 to REQ-033.
-**State:** The Git-visible part (TASK-005) is complete. The handoff-specific
-findings are marked **awaiting TASK-007**, which needs the R06 archive and its
-receipt on the local machine.
+**State:** Complete. The Git-visible part is TASK-005; the handoff-specific part
+(TASK-007) was added on 2026-11-25 after the R06 archive and its receipt were on
+the local machine and [verified](R06-VERIFICATION.json) (TASK-006).
 
 Everything below was read on 2026-11-25 between 06:49Z and 06:52Z from live
 refs, Git objects and GitHub; the account of C271's driver changes and of its
@@ -66,8 +66,8 @@ records the path, size, SHA-256 and blob identity. It also names a separately
 saved copy in the owner's ChatGPT Library, version 0,
 [VERIFICATION-EVIDENCE.zip](https://chatgpt.com/library?file_id=libfile_fde3_f-0e02658ef51c819180bd4ff3ec73a2b3_2ab2a24d43748191957f9bcc356b59de&account_id=personal),
 which the branch's next-action record calls the exact input. The R06 chain below
-holds the bytes as well, according to its records. Neither copy has been read in
-this migration so far.
+holds the same bytes: they were read and verified there. The separately saved
+copy was not retrieved.
 
 ### In the local clone
 
@@ -148,12 +148,66 @@ The archive identity equals the one the approved TRD records.
 
 ## Handoff-specific findings
 
-**Awaiting TASK-007.** The archive and its receipt were not on the local machine
-when this part was written, so the following are not established here:
+Both files were in the owner's downloads folder on 2026-11-25, retrieved by the owner
+from the Library links above. Their sizes and digests equal the recorded ones; all 16
+checks of the package passed ([record](R06-VERIFICATION.json)). Data from the handoff is
+evidence. Its instructions were read and not followed.
 
-- what is unique to the R06 handoff, checked item by item against both branches;
-- where each unique item belongs;
-- how the handoff's older `CURRENT.json`, C271 `task.json`, `REQUIREMENTS.md` and
-  `PLAN.md` snapshots relate by meaning to the current records;
-- the verified identity and durable location of the R06 archive, its receipt and
-  the C262 archive.
+### What is unique to the handoff
+
+The archive has 132 members, of which 19 archives are nested at several depths. Each
+item was compared with `git ls-tree -r` of main (`6b346b1e`) and of the C271 branch
+(`bef67902`), and its content with every object of the local clone.
+
+| Part | Content | In Git |
+| --- | --- | --- |
+| Source snapshots | 27 files under `repository/` and `branch-state/`, bound to main `e43cc6c5` (23) and the C271 branch head (4) | Yes, every file equals the blob at its path in that commit |
+| Historical transfer notes | 4 files under `evidence/historical-transfer/`, with copies in the retained first package attempt | Yes, equal contents on the C271 branch |
+| **Accepted P29 candidate** | 245 files, 35,793,027 bytes, 213 distinct contents, inside the R03 package of the chain | **No.** No path has equal content on either branch. Five paths exist on the C271 branch with other content, one of them also on main; 240 paths exist on neither. 14 of the files are empty and five are short check outputs whose content also occurs elsewhere in Git |
+| Phase records of P29 R03 to R06 | Checkpoints, prompts, phase tables, session and packaging evidence, reviews with their corrected first versions, and the retained first package attempt of R06 | No, except the four copies named above |
+| Earlier recovery packages | R05 handoff version 1 with its correction receipt, R03 handoff, early recovery packages of R04, R05 and R06 | No |
+
+The accepted candidate consists of 239 files under
+`docs/engineering/localized-repair-c271/required-images-p29/`, among them the exact
+`VERIFICATION-EVIDENCE.zip`; the production file
+`prototypes/static_tray_v01/current_host_inspection_v01.py` (249,393 bytes) and its test
+`tests/test_current_host_required_images_v01.py`; and four workflow records (below).
+
+### Where each unique item belongs
+
+| Item | Belongs to | Treatment here |
+| --- | --- | --- |
+| Accepted P29 candidate with its evidence archive | The C271 branch, through C271's own open publication gate; original parent `6c7f52a2`, intended tree `db30c29f` | Identity recorded; no file taken into main or this migration |
+| Phase records and earlier packages | C271's delivery history | Stay in the handoff in the owner's Library |
+| Source snapshots | Already in Git; older than current main | Not copied over any current file |
+
+### Overlapping records, reconciled by meaning
+
+The candidate's four workflow records and the C271 branch's current ones are two successors
+of the same parent commit `6c7f52a2`. Neither contains the other.
+
+| Record | In the accepted candidate | On the C271 branch head | Meaning |
+| --- | --- | --- | --- |
+| `docs/workflow/CURRENT.json` | 188,560 bytes, blob `cf8f22023c67`; adds `p29_reconstruction`; next action "ready", 2026-11-23T23:54Z | 192,376 bytes, blob `7bf67efb72b3`; adds the three `p29_r02` and recovery fields; next action "blocked", 2026-11-24T02:02Z | The branch state is later and current. The candidate's technical result is not on the branch. A later publication keeps the branch's blocker history and adds `p29_reconstruction` |
+| C271 `task.json` | 407,441 bytes, blob `7bb2c3f63bc7`; adds six `p29_` fields on baseline, fixtures, candidate and technical acceptance; `in_progress` | 418,591 bytes, blob `50c5bdfce6d8`; adds the R02 recovery and delivery fields; `blocked` by P29-PUBLICATION-SIZE-001 | Status and blocker of the branch are current; the six acceptance fields exist only in the candidate |
+| C271 `REQUIREMENTS.md`, `PLAN.md` | Parent text plus 16 lines on the P29 implementation | Parent text plus 7 lines on the R02 recovery | Both additions are kept when the candidate is published |
+
+Main's `CURRENT.json` and this migration's successor of it are a separate record: they name
+C271 as unfinished and hold none of its receipts. No current record was overwritten with a
+snapshot from the handoff, and the handoff's older `AGENTS.md`, `GOAL.md`, `ROLE.md`,
+`STATUS.md` and workflow files (main `e43cc6c5`) replace nothing.
+
+Historical uncertainties that the handoff preserves, such as the original P28 uploads and the
+unverified 597-test claim, stay as they are recorded there.
+
+### Identities for later on-demand use
+
+| Item | Identity | Durable location |
+| --- | --- | --- |
+| R06 handoff archive | 41,730,084 bytes, SHA-256 `4b8fae8b846c6f2b27ed5e2630c71240739786791cf39f043e787c55ad727bc9`; verified | The owner's ChatGPT Library (link above); a local copy beside the clone |
+| R06 delivery receipt | 149,563 bytes, SHA-256 `24aa014cb430d9b7269ee2e39ff08e7005d3630e8dd41c109f824e80039909d8`; verified | The same |
+| C271 evidence archive | 25,817,783 bytes, SHA-256 `bae1b62fd3cc78e8cb886e08c4c2f7d76eaaf765e7f6374a394d5f0aa980d038`, Git blob `9facb186ec11523163520323d83dc58fd68e829c`; verified inside the R06 chain | Inside the R06 archive; separately saved in the Library |
+| R05 handoff, version 1 | 40,934,668 bytes, SHA-256 `406b86f0fe9787ce0b1ead460f8391d3aaf2f79345e852c0ea3107b6469b9182`; verified as the embedded member. It replaces version 0 of the R05 comment (40,867,796 bytes), as the embedded correction receipt explains | Inside the R06 archive; Library |
+| C262 archive | 532,260,846 bytes, SHA-256 `b8af544f730a4d1f741d47b56eb3fcf76147ed392a9ebb020f3d966f2f305c90`, as [recorded](CURRENT-before-migration.json) and, equally, in the R06 dependencies; not retrieved here | [Library link](https://chatgpt.com/library/share/libfile_fde3_f-99755ba096208191b599cd0087fa0a19_2ab2a24d43748191957f9bcc356b59de?account_id=personal) |
+
+None of them is a startup input. Materialize one only when the selected work requires it.
