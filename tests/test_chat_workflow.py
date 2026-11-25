@@ -501,6 +501,10 @@ class ExecutionModeSchemaTests(ChatWorkflowTests):
         self.assertTrue(self.check()["passed"])
         self.completed()
         self.assertTrue(self.check()["passed"], "Without an active task the latest task's checkpoint stays.")
+        self.current["checkpoint"] = {"record": "AGENTS.md", "session": None}
+        self.rejected("without an active task, null or the latest task's record")
+        self.current["checkpoint"] = {"record": None, "session": None}
+        self.assertTrue(self.check()["passed"])
 
     def test_receipts_are_linked_and_not_embedded(self):
         for key in ("historical_handoff", "latest_handoff", "previous_handoff", "older_handoffs", "latest_recovery", "previous_recovery", "older_recoveries",
@@ -509,6 +513,16 @@ class ExecutionModeSchemaTests(ChatWorkflowTests):
                 self.current[key] = {"url": "https://example.com/receipt"}
                 self.rejected(f"current.{key}: schema 2 keeps receipts and phase records in linked history")
                 del self.current[key]
+        receipt = {"sha256": "0" * 64}
+        for place, key, fragment in ((self.current["unfinished"][0], "note", "current.unfinished C271.note"),
+                                     (self.current["delivery_policy"]["local"], "zip_required", "current.delivery_policy.local.zip_required: expected true or false"),
+                                     (self.current["delivery_policy"]["browser"], "required", "current.delivery_policy.browser.required: expected true or false"),
+                                     (self.current["delivery_policy"]["browser"], "kind", "current.delivery_policy.browser.kind"),
+                                     (self.current["delivery_policy"]["browser"], "folder", "current.delivery_policy.browser.folder")):
+            with self.subTest(value=key):
+                place[key] = receipt
+                self.rejected(fragment)
+                del place[key]
         for label, place in (("next_action", self.current["next_action"]), ("checkpoint", self.current["checkpoint"]), ("unfinished", self.current["unfinished"][0]),
                              ("delivery_policy.local", self.current["delivery_policy"]["local"]), ("delivery_policy.browser", self.current["delivery_policy"]["browser"]),
                              ("history", self.current["history"][0])):

@@ -393,8 +393,19 @@ class ReadinessTests(DoctorCase):
         self.assertEqual(report["selected"]["next_action"], f"In {project.root}: Run: python3.12 tools/bootstrap_local.py --profile python-verification")
         self.assertNotIn("--rebuild", report["readiness"]["visual-verification"]["next_action"])
         self.assertIn("--profile python-verification", report["readiness"]["visual-verification"]["next_action"], "The environment does not wait for Node.js.")
-        with patch.object(doctor, "ROOT", project.root):
+        with patch.object(doctor.os, "getcwd", return_value=str(project.root)):
             self.assertTrue(project.collect()["selected"]["next_action"].startswith("Run: "))
+        project.venv.write_text("a file", encoding="utf-8")
+        self.assertIn("Move .venv away by hand", project.collect()["selected"]["next_action"])
+        project.venv.unlink()
+        lock = project.root / "tools/native-reader-verification-macos-arm64-cp312.lock"
+        kept = lock.read_bytes()
+        lock.write_bytes(kept + b"# changed\n")
+        self.assertIn("Restore the committed files", project.collect()["selected"]["next_action"], "Setup refuses for the lock first.")
+        lock.write_bytes(kept)
+        project.handlers.append(lambda argv: project.result(argv, code=128, err="fatal: not a git repository\n") if argv[0] == "git" else None)
+        self.assertIn("Git reports: fatal: not a git repository", project.collect()["selected"]["next_action"], "Setup refuses without a checkout first.")
+        project.handlers.pop()
         project.create_environment(duplicates={"attrs": ["26.1.0", "25.3.0"]})
         self.assertIn("--rebuild", project.collect()["selected"]["next_action"])
         (project.venv / "pyvenv.cfg").unlink()
@@ -420,13 +431,31 @@ class ReadinessTests(DoctorCase):
         (project.root / ".git/index").write_bytes(b"not an index")
         self.assertIn("Repair the checkout", project.collect()["selected"]["next_action"])
 
+    def test_missing_preflight_is_named_and_no_reason_to_rebuild(self):
+        self.project.create_environment()
+        (self.project.root / "tools/check_native_reader_setup.py").unlink()
+        report = self.project.collect()
+        self.assertEqual((self.check(report, "native-reader")["state"], self.state(report)), ("not_checked", "mismatch"))
+        self.assertIn("Restore the committed files", report["selected"]["next_action"])
+        self.assertIn("tools/check_native_reader_setup.py: missing", report["selected"]["next_action"])
+
+    def test_relative_node_is_the_one_that_setup_would_start(self):
+        self.project.node()
+        node = os.path.relpath(self.project.commands["node"])
+        self.assertEqual(os.path.realpath(self.project.collect(node=node)["visual"]["node"]["path"]), os.path.realpath(self.project.commands["node"]))
+        self.assertTrue(os.path.isabs(self.project.collect(node=node)["visual"]["node"]["path"]))
+        self.assertEqual(self.project.collect(node="node")["visual"]["node"]["path"], self.project.commands["node"])
+
     def test_editable_install_may_name_this_checkout_only(self):
         top = str(self.project.root)
-        self.project.create_environment(editable={"ontokin-reference": top}, source_package=f"{top}/ontokin/__init__.py")
-        self.assertEqual(self.check(self.project.collect(), "isolation", "core")["state"], "ready")
+        for source in (f"{top}/ontokin/__init__.py", f"{top}/packaging/installed/ontokin/__init__.py"):
+            self.project.create_environment(editable={"ontokin-reference": top}, source_package=source)
+            self.assertEqual(self.check(self.project.collect(), "isolation", "core")["state"], "ready", source)
         for label, overrides, text in (("recorded", {"editable": {"ontokin-reference": "/another/checkout"}}, "ontokin-reference from /another/checkout"),
                                        ("unreadable", {"editable": {"ontokin-reference": "KeyError"}}, "ontokin-reference from KeyError"),
                                        ("import hook", {"source_package": "/another/checkout/ontokin/__init__.py"}, "ontokin is imported from /another/checkout"),
+                                       ("worktree hook", {"source_package": f"{top}/.claude/worktrees/other/ontokin/__init__.py"}, "ontokin is imported from"),
+                                       ("unreadable hook", {"source_package": "ImportError: broken"}, "ontokin is imported from ImportError"),
                                        ("worktree inside", {"sys_path": [BASE + "/lib/python3.12", self.project.site, f"{top}/.claude/worktrees/other"]}, "leaves the environment"),
                                        ("packages inside", {"places": {"attrs": f"{top}/.claude/worktrees/other/attrs.egg-info"}}, "installed elsewhere")):
             with self.subTest(case=label):
@@ -648,20 +677,29 @@ class RealEnvironmentTests(unittest.TestCase):
         self.metadata("ontokin_reference-0.4.0.dist-info", "ontokin-reference", "0.4.0")
         link = self.site / "ontokin_reference-0.4.0.dist-info/direct_url.json"
         link.write_text(json.dumps({"url": self.project.root.as_uri(), "dir_info": {"editable": True}}), encoding="utf-8")
+        installed = self.project.root / "packaging/installed/ontokin"
+        installed.mkdir(parents=True)
+        (installed / "__init__.py").write_text("", encoding="utf-8")
+        self.editable_hook(installed)
         self.assertEqual(self.core()[0], "ready", "This checkout itself may be installed.")
+        (self.site / "_editable.pth").unlink()
         link.write_text(json.dumps({"url": other.as_uri(), "dir_info": {"editable": True}}), encoding="utf-8")
         self.assertIn(f"ontokin-reference from {other}", self.core()[1]["isolation"]["detail"])
         link.unlink()
-        # An import hook, as this project's layout installs it, adds no path entry.
-        hook = ("import importlib.machinery, importlib.util, sys\n"
-                "class Finder:\n"
-                "    @staticmethod\n"
-                "    def find_spec(name, path=None, target=None):\n"
-                f"        return importlib.util.spec_from_file_location(name, {str(other / 'ontokin/__init__.py')!r}) if name == 'ontokin' else None\n"
-                "sys.meta_path.insert(0, Finder)\n")
-        (self.site / "_editable_hook.py").write_text(hook, encoding="utf-8")
-        (self.site / "_editable.pth").write_text("import _editable_hook\n", encoding="utf-8")
+        self.editable_hook(other / "ontokin")
         self.assertIn(f"ontokin is imported from {other}", self.core()[1]["isolation"]["detail"])
+
+    def editable_hook(self, package):
+        """An import hook with its placeholder on the path, as setuptools installs this project's layout."""
+        (self.site / "_editable_hook.py").write_text(
+            "import importlib.util, sys\n"
+            "class Finder:\n"
+            "    @staticmethod\n"
+            "    def find_spec(name, path=None, target=None):\n"
+            f"        return importlib.util.spec_from_file_location(name, {str(package / '__init__.py')!r}) if name == 'ontokin' else None\n"
+            "sys.meta_path.append(Finder)\n"
+            "sys.path.append('__editable__.ontokin_reference-0.4.0.finder.__path_hook__')\n", encoding="utf-8")
+        (self.site / "_editable.pth").write_text("import _editable_hook\n", encoding="utf-8")
 
     @staticmethod
     def ignores_case(directory):
@@ -953,13 +991,38 @@ class ReportTests(DoctorCase):
         link.symlink_to(elsewhere, target_is_directory=True)
         labels = doctor.path_labels(link / "root", [], [("/opt/tools/node", "<node>"), ("relative", "<no>")])
         self.assertEqual(doctor.portable(f"{link}/root/a {elsewhere}/root/b /opt/tools/node relative", labels), "<root>/a <root>/b <node> relative")
-        long = "x" * 250 + " "
+        self.assertEqual(doctor.portable(f"{str(link).upper()}/ROOT/a /opt/tools/npm", labels), "<root>/a <node-directory>/npm", "Another letter case and the place beside a passed file are labelled too.")
+        for text in (f"zz{link}/root/a", f"{link}/rooted", f"{link}/root-2", f"{link}/root.old"):
+            with self.subTest(text=text):
+                self.assertNotIn("<root>", doctor.portable(text, labels), "Only a whole path is a label's path.")
+        self.assertEqual(doctor.portable(f"file://{link}/root, ({link}/root). {link}/root.", labels), "file://<root>, (<root>). <root>.")
         for size in (6, len(str(link)) // 2, len(str(link)) - 1):
             with self.subTest(size=size):
-                text = doctor.portable(long + str(link)[:size], labels)
-                self.assertTrue(text.startswith(long + "<"), text[250:])
+                text = doctor.portable(f"first: {str(link)[:size]}{doctor.CUT}; second", labels)
                 self.assertNotIn(str(link)[:size], text)
+                self.assertTrue(text.startswith("first: <") and text.endswith("; second"), text)
         self.assertEqual(doctor.portable("/private", labels), "/private", "Only a text that was cut short is treated as cut.")
+        self.assertEqual((doctor.shorten("a" * 300), doctor.shorten("a" * 301)), ("a" * 300, "a" * 300 + doctor.CUT))
+
+    def test_failure_text_is_the_line_that_says_what_failed(self):
+        for output, expected in (("note\nlast\n", "last"), ("ERROR: THESE PACKAGES DO NOT MATCH\n  attrs:\n     Got  123\n", "ERROR: THESE PACKAGES DO NOT MATCH"),
+                                 ("fatal: bad object\nhint: try again\n", "fatal: bad object"), ("", "exit status 4")):
+            with self.subTest(output=output):
+                self.assertEqual(doctor.failure_text({"error": None, "err": output, "out": "", "code": 4}), expected)
+
+    def test_real_child_keeps_a_passed_descriptor_open(self):
+        with tempfile.TemporaryFile() as stream:
+            code = "import os, sys; os.fstat(int(sys.argv[1]))"
+            argv = [sys.executable, "-I", "-c", code, str(stream.fileno())]
+            self.assertEqual(doctor.execute(argv, keep=(stream.fileno(),))["code"], 0)
+            self.assertNotEqual(doctor.execute(argv)["code"], 0)
+
+    def test_places_are_compared_by_what_they_are(self):
+        first, second = self.project.directory / "first", self.project.directory / "second"
+        first.write_text("", encoding="utf-8")
+        os.link(first, second)
+        self.assertTrue(doctor.same_place(str(first), str(second)))
+        self.assertFalse(doctor.same_place(str(first), str(self.project.directory / "absent")))
 
     def test_command_line_runs_without_site_packages_and_writes_only_a_new_report(self):
         report = self.project.directory / "reports/doctor.json"
@@ -984,6 +1047,19 @@ class ReportTests(DoctorCase):
         self.assertNotIn(str(self.project.root), output.getvalue())
         with patch.object(doctor, "collect", return_value=self.project.collect("visual-verification")), redirect_stdout(io.StringIO()):
             self.assertEqual(doctor.main(["--profile", "visual-verification"]), 1)
+
+    def test_portable_report_labels_the_passed_node_and_the_root_behind_a_link(self):
+        self.project.node()
+        link, output = self.project.directory / "link", io.StringIO()
+        link.symlink_to(self.project.root, target_is_directory=True)
+        real = doctor.collect
+        with patch.object(doctor, "collect", lambda root, profile, online, node: real(root, profile, online, run=self.project.run, which=self.project.which, system="Darwin", machine="arm64", node=node)), \
+                patch.object(doctor.tempfile, "gettempdir", return_value="/nowhere"), redirect_stdout(output):
+            doctor.main(["--root", str(link), "--portable-paths", "--json", "--node", self.project.commands["node"]])
+        text = output.getvalue()
+        self.assertNotIn(str(self.project.directory), text)
+        self.assertIn('"<node>"', text)
+        self.assertIn('"<root>"', text)
 
     def test_command_line_reports_an_unusable_specification_or_profile(self):
         errors = io.StringIO()

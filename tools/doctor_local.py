@@ -43,6 +43,7 @@ STATES = ("ready", "missing", "mismatch", "unsupported", "not_checked")
 DEFAULT_PROFILE = "python-verification"
 LFS_MINIMUM = (3, 8, 1)
 UNTRACKED_LIMIT = 50
+CUT = "[cut]"
 INSTALL_TOOLS = {"pip"}
 ENVIRONMENT_CHECKS = ("interpreter", "isolation", "packages", "imports", "pip-check", "native-reader")
 NATIVE_NOTICE = ("Native and historical experiments keep their own contracts. This tool does not launch, "
@@ -55,17 +56,18 @@ import importlib, importlib.util, json, os, platform, re, sys, sysconfig
 from importlib import metadata
 from urllib.parse import unquote, urlsplit
 place = lambda value: os.path.realpath(value) if value else None
+brief = lambda error: (lambda text: text if len(text) <= 300 else text[:300] + "[cut]")(type(error).__name__ + ": " + str(error))
 try:
     source = importlib.util.find_spec("ontokin")
     source = place(source.origin) if source else None
 except BaseException as error:
-    source = type(error).__name__ + ": " + str(error)[:200]
+    source = brief(error)
 imports = {}
 for name in json.loads(sys.argv[1]):
     try:
         imports[name] = {"ok": True, "file": place(getattr(importlib.import_module(name), "__file__", None))}
     except BaseException as error:
-        imports[name] = {"ok": False, "file": None, "error": (type(error).__name__ + ": " + str(error))[:300]}
+        imports[name] = {"ok": False, "file": None, "error": brief(error)}
 packages, places, duplicates, editable, seen = {}, {}, {}, {}, {}
 for distribution in metadata.distributions():
     name, folder = distribution.metadata["Name"], str(getattr(distribution, "_path", ""))
@@ -89,7 +91,7 @@ print(json.dumps({
     "executable": sys.executable, "base_executable": getattr(sys, "_base_executable", None),
     "prefix": sys.prefix, "base_prefix": sys.base_prefix, "base_prefix_real": os.path.realpath(sys.base_prefix),
     "system": platform.system(), "machine": platform.machine(), "os_version": platform.mac_ver()[0] or platform.release(),
-    "platform_tag": sysconfig.get_platform(), "sys_path": [place(entry) for entry in sys.path if entry],
+    "platform_tag": sysconfig.get_platform(), "sys_path": [place(entry) for entry in sys.path if os.path.isabs(entry)],
     "site_packages": place(sysconfig.get_path("purelib")), "packages": packages, "places": places,
     "duplicates": duplicates, "editable": editable, "source_package": source, "imports": imports}))
 """
@@ -111,9 +113,15 @@ def execute(argv, cwd=None, timeout=60, env=None, keep=()) -> dict:
             "err": done.stderr.decode("utf-8", "replace"), "error": None}
 
 
+def shorten(text: str, limit=300) -> str:
+    """A text cut at a marked place, so that a portable report can tell a cut path from a whole one."""
+    return text if len(text) <= limit else text[:limit] + CUT
+
+
 def failure_text(result: dict) -> str:
-    text = result["error"] or result["err"].strip() or result["out"].strip() or f"exit status {result['code']}"
-    return text.splitlines()[-1][:300]
+    """The line that tells what failed: the last one that says so, or the last one."""
+    lines = (result["error"] or result["err"].strip() or result["out"].strip() or f"exit status {result['code']}").splitlines()
+    return shorten(([line for line in lines if line.startswith(("ERROR", "error:", "fatal:"))] or lines)[-1])
 
 
 def clean_environment() -> dict:
@@ -322,6 +330,8 @@ def profile_problems(root: Path, spec: dict, name: str) -> list:
             problems.append(f"{source}: {error}")
     for entry in profile.get("locks", {}).values():
         problems.extend(lock_problems(root, entry["path"], entry.get("provenance"), expected))
+    if "preflight" in profile and not (root / profile["preflight"]).is_file():
+        problems.append(f"{profile['preflight']}: missing")
     if "npm_manifest" in profile:
         try:
             manifest = json.loads((root / profile["npm_manifest"]).read_text(encoding="utf-8"))
@@ -437,10 +447,10 @@ def read_configuration(path: Path) -> dict:
 def inspect_environment(root: Path, spec: dict, imports=(), run=execute) -> dict:
     """Observe the checkout's environment directory without repairing it."""
     directory = root / spec["environment"]["directory"]
-    result = {"path": str(directory), "exists": directory.is_dir(), "symlink": None, "python": None, "configuration": {},
-              "facts": None, "pip_check": None, "pip_error": None, "record": None}
+    result = {"path": str(directory), "exists": directory.is_dir(), "occupied": os.path.lexists(str(directory)) and not directory.is_dir(), "symlink": None,
+              "python": None, "configuration": {}, "facts": None, "pip_check": None, "pip_error": None, "record": None}
     if directory.is_symlink():
-        result.update(exists=True, symlink=os.path.realpath(str(directory)))
+        result.update(exists=True, occupied=False, symlink=os.path.realpath(str(directory)))
     if not result["exists"]:
         return result
     python = directory / "bin" / "python"
@@ -456,7 +466,7 @@ def inspect_environment(root: Path, spec: dict, imports=(), run=execute) -> dict
         if checked["error"] or checked["code"] and not checked["out"].strip():  # A conflict is reported on stdout.
             result["pip_error"] = "pip does not run: " + failure_text(checked)
         else:
-            result["pip_check"] = {"code": checked["code"], "summary": failure_text(checked) if checked["code"] else checked["out"].strip()[:300]}
+            result["pip_check"] = {"code": checked["code"], "summary": failure_text(checked) if checked["code"] else shorten(checked["out"].strip())}
     record = directory / spec["environment"]["record"]
     if record.is_file():
         try:
@@ -550,8 +560,10 @@ def isolation_problems(root: Path, environment: dict):
     others = sorted(f"{name} from {place}" for name, place in facts["editable"].items() if place != top)
     if others:
         problems.append("editable installs of other locations: " + ", ".join(others))
-    if facts["source_package"] and not inside(facts["source_package"], here, os.path.join(top, "ontokin")):
-        problems.append(f"ontokin is imported from {facts['source_package']}")
+    # An editable install of this checkout imports from its package directories; a worktree inside it is another checkout.
+    source = facts["source_package"]
+    if source and not inside(source, here) and (not inside(source, top) or any(part.startswith(".") for part in Path(source).relative_to(top).parts)):
+        problems.append(f"ontokin is imported from {source}")
     _, separator, created = environment["configuration"].get("command", "").partition(" -m venv ")
     if not separator:
         return problems, "Where the environment was created is not recorded."
@@ -574,7 +586,7 @@ def rebuild_reasons(environment: dict, core: list, verification: list, rows: lis
     if twice:
         return ["packages: " + "; ".join(twice)]
     if all(row["state"] == "ready" for row in rows):
-        return [f"{item['id']}: {item['detail']}" for item in verification if item["id"] in {"imports", "pip-check", "native-reader"} and item["state"] != "ready"]
+        return [f"{item['id']}: {item['detail']}" for item in verification if item["id"] in {"imports", "pip-check", "native-reader"} and item["state"] in {"mismatch", "missing"}]
     return []
 
 
@@ -632,9 +644,11 @@ def verification_checks(root: Path, spec: dict, key, environment: dict, run=exec
     pip = environment["pip_check"]
     results.append(check("pip-check", "not_checked", environment["pip_error"] or "pip is not available in the environment.") if pip is None else
                    check("pip-check", "ready" if pip["code"] == 0 else failed, pip["summary"] or "No conflict."))
+    if not (root / profile["preflight"]).is_file():
+        return results + [check("native-reader", "not_checked", f"{profile['preflight']} is not present.")]
     done = run([environment["python"], "-I", "-B", str(root / profile["preflight"])], cwd=root, timeout=60, env=clean_environment())
     results.append(check("native-reader", "ready" if done["code"] == 0 else failed,
-                         done["out"].strip()[:300] if done["code"] == 0 else failure_text(done)))
+                         shorten(done["out"].strip()) if done["code"] == 0 else failure_text(done)))
     return results
 
 
@@ -713,7 +727,7 @@ def npm_record_problem(root: Path, profile: dict, system: str, machine: str):
 
 def visual_section(root: Path, spec: dict, run=execute, which=shutil.which, node=None, cache=None, system=None, machine=None) -> dict:
     profile = spec["profiles"]["visual-verification"]
-    node = node or which("node")
+    node = (os.path.abspath(str(node)) if os.sep in str(node) else which(str(node)) or str(node)) if node else which("node")
     npm = str(Path(node).parent / "npm") if node and (Path(node).parent / "npm").exists() else which("npm")
     version = None
     if node:
@@ -931,7 +945,7 @@ def next_action(root: Path, spec: dict, key, profile: str, failing: dict, interp
     distribution = spec["interpreter"].get("distributions", {}).get(key, {})
     if failing["state"] == "unsupported":
         return "No setup action applies on this machine: " + failing["detail"]
-    place = "" if os.path.realpath(str(root)) == str(ROOT) else f"In {root}: "
+    place = "" if same_place(os.getcwd(), str(root)) else f"In {root}: "
     # Visual setup refuses without Node.js, so the environment itself is prepared with its own profile.
     target = DEFAULT_PROFILE if identifier in ENVIRONMENT_CHECKS and profile == "visual-verification" else profile
     setup = f"{distribution.get('command', 'python3')} tools/bootstrap_local.py --profile {target}"
@@ -939,7 +953,7 @@ def next_action(root: Path, spec: dict, key, profile: str, failing: dict, interp
         setup += f" --node {shlex.quote(str(node))}"
     if identifier in ENVIRONMENT_CHECKS:
         compliant = [entry for entry in interpreters if entry["ok"] and not entry["differences"]]
-        if identifier == "interpreter" and not compliant:
+        if identifier == "interpreter" and not compliant and not environment["occupied"]:
             if interpreters:
                 return (f"The specified interpreter {version} was not found; found "
                         + ", ".join(f"{entry['version']} ({(entry['distribution'] or {}).get('name')})" for entry in interpreters)
@@ -947,7 +961,7 @@ def next_action(root: Path, spec: dict, key, profile: str, failing: dict, interp
             install = distribution.get("install")
             return ("Install the interpreter with the machine's existing mechanism: " + " ".join(install) if install else
                     f"Provide {spec['interpreter']['implementation']} {version} with the machine's existing mechanism.")
-        if environment["symlink"] or environment["exists"] and not environment["configuration"]:
+        if environment["occupied"] or environment["symlink"] or environment["exists"] and not environment["configuration"]:
             return f"{place}Move {spec['environment']['directory']} away by hand, because it is not an environment of this checkout, then run: {setup}"
         if rebuild:
             return f"{place}Review the incompatible environment, then rebuild it explicitly: {setup} --rebuild"
@@ -964,7 +978,7 @@ def next_action(root: Path, spec: dict, key, profile: str, failing: dict, interp
         return f"{place}Review the difference, then allow npm ci to replace {visual['npm_directory']}: {setup} --repair-node"
     return {
         "source-import": "Run from a complete checkout and inspect the reported import error.",
-        "lock": "Restore the committed lock and its provenance, or adopt a reviewed change.",
+        "lock": f"Restore the committed files, or adopt a reviewed change: {failing['detail']}",
         "node": f"Install Node.js {spec['profiles']['visual-verification']['node_major']} and pass it with --node if it is not first on PATH.",
         "npm": "Install the npm that belongs to the selected Node.js.",
         "npm-dependencies": f"{place}Run: {setup}", "chromium": f"{place}Run: {setup}",
@@ -988,6 +1002,8 @@ def readiness_section(root: Path, spec: dict, key, environment: dict, checkout: 
             own = [check(item, state, text) for item, text in profile["readiness_checks"].items()]
         # Base profiles come first, so a missing or wrong interpreter is the first action.
         unmet = [item for part in [*requires, name] for item in (section[part]["checks"] if part in section else own) if item["state"] != "ready"]
+        # What makes setup itself refuse comes before what setup would do.
+        unmet.sort(key=lambda item: 0 if item["state"] == "unsupported" else 1 if item["id"] in {"git", "lock"} else 2)
         first = next((item for item in unmet if item["state"] != "not_checked" or item["id"] == "pip-check" and usable(environment)), unmet[0] if unmet else None)
         section[name] = {"state": state, "kind": kind, "purpose": profile["purpose"], "requires": requires, "checks": own,
                          "next_action": None if state == "ready" else profile["purpose"] if kind != "environment" else
@@ -1035,7 +1051,10 @@ def collect(root: Path, profile: str = DEFAULT_PROFILE, online: bool = False, *,
 def path_labels(root: Path, worktrees=(), others=()) -> list:
     """This machine's paths and the labels that stand for them, longest path first."""
     labels = {tempfile.gettempdir(): "<tmp>", str(Path.home()): "<home>", str(root.parent): "<parent>"}
-    labels.update((str(path), label) for path, label in others if os.path.isabs(str(path)))
+    for path, label in others:
+        if os.path.isabs(str(path)):
+            labels[str(path)] = label
+            labels.setdefault(str(Path(path).parent), label.replace(">", "-directory>"))
     for number, worktree in enumerate(worktrees):
         labels.setdefault(str(Path(worktree).parent), "<worktree-parent>" if number else "<clone-parent>")
         labels[worktree] = f"<worktree-{number}>" if number else "<main-checkout>"
@@ -1052,11 +1071,13 @@ def portable(value, labels: list):
     if isinstance(value, list):
         return [portable(item, labels) for item in value]
     if isinstance(value, str):
-        for path, label in labels:
-            value = value.replace(path, label)
-        if len(value) >= 200:  # A text that was cut short may end inside a path.
-            ends = [size for path, _ in labels for size in range(5, len(path)) if value.endswith(path[:size])]
-            value = value[:-max(ends)] + "<cut>" if ends else value
+        for path, label in labels:  # Whole paths only, in any letter case.
+            if path.lower() in value.lower():
+                value = re.sub(r"(?<![\w.~-])" + re.escape(path) + r"(?![\w-]|\.\w)", lambda match, label=label: label, value, flags=re.IGNORECASE)
+        if CUT in value:  # A text that was cut short may hold the beginning of a path.
+            for path, _ in labels:
+                for size in range(len(path) - 1, 4, -1):
+                    value = re.sub(re.escape(path[:size] + CUT), lambda match: "<cut>" + CUT, value, flags=re.IGNORECASE)
     return value
 
 

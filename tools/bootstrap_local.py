@@ -114,23 +114,40 @@ class Session:
             raise ActionFailed(f"{name} failed: {doctor.failure_text(result)}")
         return result
 
+    def lock_path(self) -> Path:
+        located = doctor.git(self.root, "rev-parse", "--absolute-git-dir", run=self.run)
+        if located["code"] != 0:
+            raise Refusal("The checkout's Git directory was not found: " + doctor.failure_text(located))
+        return Path(located["out"].rstrip("\n")) / LOCK_NAME
+
+    @staticmethod
+    def take(stream, kind) -> None:
+        try:
+            fcntl.flock(stream, kind | fcntl.LOCK_NB)
+        except OSError as error:
+            raise Busy("Another setup run is changing this checkout's environment. Nothing was changed.") from error
+
+    def require_idle(self) -> None:
+        """Say so when a setup run is under way; nothing is created for this."""
+        try:
+            stream = self.lock_path().open("r")
+        except OSError:  # No setup has run here.
+            return
+        with stream:
+            if fcntl is not None:
+                self.take(stream, fcntl.LOCK_SH)
+
     @contextmanager
     def exclusive(self):
         """Hold the checkout's setup lock; a second run fails at once and a crash releases it."""
         if fcntl is None:
             raise Refusal("This platform offers no file lock, so concurrent setup runs cannot be excluded.")
-        located = doctor.git(self.root, "rev-parse", "--absolute-git-dir", run=self.run)
-        if located["code"] != 0:
-            raise Refusal("The checkout's Git directory was not found: " + doctor.failure_text(located))
         try:
-            stream = (Path(located["out"].rstrip("\n")) / LOCK_NAME).open("a")
+            stream = self.lock_path().open("a")
         except OSError as error:
             raise Refusal(f"The setup lock cannot be opened: {error}. Nothing was changed.") from error
         with stream:
-            try:
-                fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            except OSError as error:
-                raise Busy("Another setup run is changing this checkout's environment. Nothing was changed.") from error
+            self.take(stream, fcntl.LOCK_EX)
             self.keep = (stream.fileno(),)
             try:
                 yield
@@ -174,6 +191,21 @@ def parse_places(text: str) -> dict:
     return processes
 
 
+def finds_packages(session: Session, directory: Path, number: str, command: str, place: str) -> bool:
+    """Whether Node.js would look for packages in this directory: from the place or a script of the process upwards, or by NODE_PATH."""
+    starts = [place, os.path.join(place, directory.relative_to(session.root).parent)]
+    starts += [os.path.dirname(os.path.realpath(os.path.join(place, word))) for word in command.split()[1:6]
+               if not word.startswith("-") and os.path.exists(os.path.join(place, word))]
+    for start in map(os.path.realpath, starts):
+        if doctor.inside(start, str(session.root)):
+            return True
+        for above in (Path(start), *Path(start).parents):
+            if os.path.realpath(above / "node_modules") == str(directory):
+                return True
+    paths = variable(process_environment(session, number) or "", "NODE_PATH") or ""
+    return any(os.path.realpath(path) == str(directory) for path in paths.split(os.pathsep) if path)
+
+
 def started_from(session: Session, directory: Path, number: str, command: str, program: str, place) -> bool:
     """Whether a process of this user runs from a directory. One that cannot be excluded counts."""
     prefix, words = str(directory) + os.sep, command.split(None, 2)
@@ -186,8 +218,7 @@ def started_from(session: Session, directory: Path, number: str, command: str, p
         if os.sep in word and not word.startswith((os.sep, "-")) and (place is None or os.path.normpath(os.path.join(place, word)).startswith(prefix)):
             return True
     if directory != session.environment:  # Node dependencies; other programs use them only through open files.
-        return node and (place is None or doctor.inside(place, str(session.root)) or str(session.root) in command
-                         or os.path.realpath(os.path.join(place, directory.relative_to(session.root))) == str(directory))
+        return node and (place is None or str(session.root).lower() in command.lower() or finds_packages(session, directory, number, command, place))
     if not interpreter:
         return False
     environment = process_environment(session, number)
@@ -278,8 +309,10 @@ def plan_actions(session: Session, profile: str, observed: dict, rebuild: bool, 
     if problems:
         raise Refusal("The specification, pins and locks disagree: " + "; ".join(problems))
     directory, actions, notes, recreate = session.environment, [], [], not environment["exists"]
-    if recreate and os.path.lexists(directory):
+    if environment["occupied"]:
         raise Refusal(f"{directory.name} exists and is not a directory. Move it away by hand.")
+    if environment["symlink"] or environment["exists"] and not environment["configuration"]:
+        raise Refusal(f"{directory.name} is not an environment directory of this checkout, so it is not replaced. Move it away by hand.")
     rows = doctor.package_rows(spec, profile, environment)
     core, verification = (observed["readiness"][name]["checks"] for name in ("core", "python-verification"))
     reasons = doctor.rebuild_reasons(environment, core, verification, rows)
@@ -292,8 +325,6 @@ def plan_actions(session: Session, profile: str, observed: dict, rebuild: bool, 
         reason = "; ".join(reasons)
         if not rebuild:
             raise Refusal(f"The existing environment is incompatible and was not changed: {reason}. Review it, then use --rebuild to replace it.")
-        if environment["symlink"] or not environment["configuration"]:
-            raise Refusal(f"{directory.name} is not an environment directory of this checkout, so it is not replaced. Move it away by hand.")
         require_unused(session, directory)
         actions.append({"action": "rebuild-environment", "detail": f"Replace {directory.name}: {reason}."})
         recreate = True
@@ -430,11 +461,13 @@ def smoke_checks(session: Session) -> list:
 def environment_record(session: Session, profile: str, report: dict, lock) -> dict:
     """What was installed, from which inputs and with which tools."""
     environment = report["python"]["environment"]
-    facts, visual = environment["facts"] or {}, report["visual"]
-    kept = doctor.read_json(Path(environment["record"]["path"])).get("profile") if environment["record"] else None
-    prepared = max((name for name in (kept, profile) if name in session.spec["profiles"]), key=lambda name: len(doctor.profile_chain(session.spec, name)))
+    facts, visual, kept = environment["facts"] or {}, report["visual"], previous_record(environment)
+    names = [name for name in (kept.get("profile"), profile) if isinstance(name, str) and name in session.spec["profiles"]]
+    present, earlier = visual["npm_directory_exists"], kept.get("actions")
+    prepared = {"node": visual["node"], "npm": visual["npm"], "npm_dependencies": visual["npm_dependencies"] if present else None,
+                "browser": visual["browser"] if present else None}
     return {
-        "schema": RECORD_SCHEMA, "updated_at": utc_now(), "profile": prepared, "root": str(session.root), "environment": environment["path"],
+        "schema": RECORD_SCHEMA, "updated_at": utc_now(), "profile": max(names, key=lambda name: len(doctor.profile_chain(session.spec, name))), "root": str(session.root), "environment": environment["path"],
         "interpreter": {name: facts.get(name) for name in ("implementation", "version", "build", "compiler", "executable", "base_executable",
                                                              "base_prefix", "base_prefix_real", "distribution")},
         "platform": {"key": report["platform"]["key"], "system": facts.get("system"), "machine": facts.get("machine"),
@@ -443,11 +476,13 @@ def environment_record(session: Session, profile: str, report: dict, lock) -> di
         "installation_tools": report["packages"]["install_tools"], "build_tools": "None: binary wheels only.",
         "packages": dict(sorted((facts.get("packages") or {}).items())),
         "lock": lock, "digests": report["specification"]["digests"],
-        "node": visual["node"], "npm": visual["npm"],
-        "npm_dependencies": visual["npm_dependencies"] if visual["npm_directory_exists"] else None,
-        "browser": visual["browser"] if visual["npm_directory_exists"] else None,
+        **(prepared if profile == "visual-verification" else {name: kept.get(name) for name in prepared}),
         "source": {"head": report["checkout"].get("head"), "tracked_modifications": report["checkout"].get("tracked_modifications")},
-        "actions": session.log}
+        "actions": (earlier if isinstance(earlier, list) else []) + session.log}
+
+
+def previous_record(environment: dict) -> dict:
+    return doctor.read_json(Path(environment["record"]["path"])) if environment["record"] else {}
 
 
 def record_differences(session: Session, profile: str, observed: dict, lock) -> list:
@@ -455,11 +490,12 @@ def record_differences(session: Session, profile: str, observed: dict, lock) -> 
     kept = observed["python"]["environment"]["record"]
     if not kept:
         return ["it is missing"]
-    recorded, current = doctor.read_json(Path(kept["path"])), environment_record(session, profile, observed, lock)
+    recorded, current = previous_record(observed["python"]["environment"]), environment_record(session, profile, observed, lock)
     names = ["interpreter", "platform", "installation_tools", "packages"]
     names += ["node", "npm", "npm_dependencies", "browser"] if profile == "visual-verification" else []
     differing = [f"{name} differs" for name in names if recorded.get(name) != current[name]]
-    if lock["path"] and (recorded.get("digests") or {}).get(lock["path"]) != current["digests"][lock["path"]]:
+    digests = recorded.get("digests")
+    if lock["path"] and (not isinstance(digests, dict) or digests.get(lock["path"]) != current["digests"][lock["path"]]):
         differing.append("the lock differs")
     return differing if kept["readable"] else ["it is unreadable"]
 
@@ -481,6 +517,15 @@ def require_writable(path: Path, what: str) -> None:
         place = place.parent
     if not place.is_dir() or not os.access(place, os.W_OK | os.X_OK):
         raise Refusal(f"{what} cannot be created in {place}. Nothing was changed.")
+
+
+def canonical_new(path) -> Path:
+    """A path that need not exist yet, with its existing part in canonical form."""
+    path, rest = Path(os.path.abspath(str(path))), []
+    while not path.exists() and path != path.parent:
+        rest.insert(0, path.name)
+        path = path.parent
+    return doctor.canonical(path).joinpath(*rest)
 
 
 def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=False, repair_node=False, wheels=(), work=None,
@@ -505,7 +550,7 @@ def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=F
     if kind == "on-demand":
         if work is None:
             raise Refusal(f"{profile} needs --work-dir with a new directory outside the checkout.")
-        work = Path(work).resolve()
+        work = canonical_new(work)
         if work == root or root in work.parents or work.exists():
             raise Refusal(f"The {profile} working directory must be new and outside the checkout.")
         require_writable(work, "The working directory")
@@ -538,12 +583,13 @@ def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=F
         if report["changed"] or any(action["action"] == "record-environment" for action in report["planned"]):
             observe()
             if kind == "environment" and "failure" not in report and doctor.usable(report["observed"]["python"]["environment"]):
-                report["environment_record"] = str(write_record(session, environment_record(session, profile, report["observed"], report["lock"])))
                 report["changed"] = True
+                report["environment_record"] = str(write_record(session, environment_record(session, profile, report["observed"], report["lock"])))
         if report["outcome"] is None:
             finish(session, report, "failed" if "failure" in report else "changed" if report["changed"] else "unchanged")
 
     if preview:
+        session.require_idle()
         if prepare() and report["interpreter"]["status"] != "found":
             report["notes"].append(f"interpreter {report['interpreter']['status']}: {report['interpreter']['detail']}")
         return dict(report, outcome="previewed")
@@ -555,16 +601,19 @@ def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=F
         try:
             try:
                 carry_out(session, report, creates, python, install, wheels, work)
-            except (Refusal, ActionFailed, OSError) as error:
+            except Exception as error:
                 if isinstance(error, Refusal) and not session.log:
                     raise
-                report["failure"] = str(error) if not isinstance(error, OSError) else f"{type(error).__name__}: {error}"
+                report["failure"] = describe(error)
             settle()
         except KeyboardInterrupt as error:
             interruption = error
-            report.update(failure="Interrupted. Run the doctor before the next setup run.", outcome="failed", changed=bool(session.log))
-        except OSError as error:
-            report.update(failure=f"{type(error).__name__}: {error}", outcome="failed", changed=bool(session.log))
+            report.update(failure="Interrupted. Run the doctor before the next setup run.", outcome="failed")
+        except Refusal:
+            raise
+        except Exception as error:  # Whatever happens after a change, its report is kept.
+            report.update(failure="; ".join(filter(None, (report.get("failure"), describe(error)))), outcome="failed")
+        report["changed"] = report["changed"] or bool(session.log)
         if report["changed"]:
             with uninterrupted():
                 keep_report(root, report)
@@ -572,6 +621,10 @@ def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=F
         interruption.setup_report = report
         raise interruption
     return report
+
+
+def describe(error: Exception) -> str:
+    return str(error) if isinstance(error, (Refusal, ActionFailed)) else f"{type(error).__name__}: {error}"
 
 
 def keep_report(root: Path, report: dict) -> None:
@@ -648,6 +701,13 @@ def render(report: dict) -> str:
     return "\n".join(lines)
 
 
+def option_labels(find_links=(), work_dir=None, report=None, node=None, python=None) -> list:
+    """The places that were passed as options, for a portable report."""
+    places = [(path, "<find-links>") for path in find_links] + [(work_dir, "<work-dir>"), (report, "<report>"), (node, "<node>"), (python, "<python>")]
+    return [(form, label) for path, label in places if path and os.sep in str(path)
+            for form in dict.fromkeys((os.path.abspath(str(path)), str(canonical_new(path))))]
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--root", type=Path, default=ROOT, help="repository checkout or worktree to prepare")
@@ -670,7 +730,7 @@ def main(argv=None) -> int:
         if args.report:
             require_writable(args.report, "The report")
         report = bootstrap(args.root, args.profile, preview=args.preview, python=args.python, rebuild=args.rebuild,
-                           repair_node=args.repair_node, wheels=[path.resolve() for path in args.find_links], work=args.work_dir,
+                           repair_node=args.repair_node, wheels=[canonical_new(path) for path in args.find_links], work=args.work_dir,
                            install=args.install_interpreter, node=args.node)
     except (Refusal, doctor.SpecificationError) as error:
         print(f"Setup refused: {error}", file=sys.stderr)
@@ -688,8 +748,7 @@ def main(argv=None) -> int:
         return INTERRUPTED
     status = exit_status(report)
     if args.portable_paths:
-        named = [(path.resolve(), "<find-links>") for path in args.find_links] + [(Path(path).resolve(), label) for path, label in
-                 ((args.work_dir, "<work-dir>"), (args.report, "<report>")) if path] + [(path, label) for path, label in ((args.node, "<node>"), (args.python, "<python>")) if path]
+        named = option_labels(args.find_links, args.work_dir, args.report, args.node, args.python)
         report = doctor.portable(report, doctor.path_labels(doctor.canonical(args.root), report["observed"]["checkout"].get("worktrees", ()), named))
     text = json.dumps(report, indent=2, ensure_ascii=False) + "\n"
     if args.report:

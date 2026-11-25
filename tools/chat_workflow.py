@@ -281,6 +281,7 @@ class Project:
         owner = f"{self.registry['task_root']}/{active or c['latest_task']}/"
         require(checkpoint["session"] is None or checkpoint["session"].startswith(owner) and checkpoint["session"].endswith(".md"),
                 f"current.checkpoint.session: must be a Markdown record in {owner}")
+        require(active is not None or checkpoint["record"] in {None, owner + "task.json"}, "current.checkpoint.record: without an active task, null or the latest task's record")
         names = set()
         for item in sequence(c.get("unfinished"), "current.unfinished"):
             item = self.closed(item, POINTER_FIELDS["unfinished"], "current.unfinished")
@@ -298,12 +299,19 @@ class Project:
             for gate in sequence(item.get("open_gates"), f"current.unfinished {name}.open_gates", True):
                 text(gate, f"current.unfinished {name}.open_gates")
             self.source(item.get("record"), f"current.unfinished {name}.record")
+            if item.get("note") is not None:
+                text(item["note"], f"current.unfinished {name}.note")
         policy = mapping(c.get("delivery_policy"), "current.delivery_policy")
         require(set(policy) == set(self.modes), f"current.delivery_policy: expected exactly {', '.join(sorted(self.modes))}")
         for name, entry in policy.items():
             entry = self.closed(entry, POINTER_FIELDS.get(f"delivery_policy.{name}", set()), f"current.delivery_policy.{name}")
             self.source(entry.get("contract"), f"current.delivery_policy.{name}.contract")
             text(entry.get("completion_gate"), f"current.delivery_policy.{name}.completion_gate")
+            for key in ("kind", "folder"):
+                if key in entry:
+                    text(entry[key], f"current.delivery_policy.{name}.{key}")
+            for key in ("required", "zip_required"):
+                require(type(entry.get(key, False)) is bool, f"current.delivery_policy.{name}.{key}: expected true or false")
         for item in sequence(c.get("history"), "current.history", True):
             item = self.closed(item, POINTER_FIELDS["history"], "current.history")
             file = self.path(item.get("path"), "current.history.path")

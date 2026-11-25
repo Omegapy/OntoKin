@@ -263,8 +263,10 @@ class EnvironmentTests(SetupCase):
                 self.assertIn(text, report["planned"][0]["detail"])
                 self.assertEqual({key: value for key, value in self.recorded().items() if key not in {"updated_at", "actions"}},
                                  {key: value for key, value in kept.items() if key not in {"updated_at", "actions"}})
-        record.write_text("{", encoding="utf-8")
-        self.assertIn("unreadable", self.bootstrap()["planned"][0]["detail"])
+        for text in ("{", "[]", json.dumps({"profile": ["a"], "digests": "x", "actions": "y", "packages": 3})):
+            record.write_text(text, encoding="utf-8")
+            self.assertEqual([action["action"] for action in self.bootstrap()["planned"]], ["record-environment"], text)
+            self.assertEqual(self.bootstrap()["outcome"], "unchanged")
         self.assertEqual(self.bootstrap("core")["outcome"], "unchanged")
         record.unlink()
         self.bootstrap("core")
@@ -387,13 +389,14 @@ class EnvironmentTests(SetupCase):
         self.project.create_environment()
         self.project.venv.rename(shared)
         self.project.venv.symlink_to(shared, target_is_directory=True)
-        self.refused("not an environment directory of this checkout", rebuild=True)
+        for options in ({"rebuild": True}, {}):
+            self.refused("not an environment directory of this checkout, so it is not replaced. Move it away by hand", **options)
         self.assertTrue((shared / "bin/python").exists())
         self.project.venv.unlink()
         self.project.venv.mkdir()
         (self.project.venv / "notes.txt").write_text("mine", encoding="utf-8")
-        for preview in (False, True):
-            self.refused("not an environment directory of this checkout, so it is not replaced. Move it away by hand", rebuild=True, preview=preview)
+        for options in ({"rebuild": True}, {"rebuild": True, "preview": True}, {}):
+            self.refused("not an environment directory of this checkout, so it is not replaced. Move it away by hand", **options)
 
     def test_failing_smoke_check_prevents_success(self):
         self.project.smoke_code = 1
@@ -455,9 +458,46 @@ class FailureTests(SetupCase):
         self.assertEqual((self.run_reports(), self.project.venv.exists()), (reports, False))
 
     def test_interruption_waits_while_the_report_is_written(self):
-        with setup.uninterrupted():
-            self.assertIs(signal.getsignal(signal.SIGINT), signal.SIG_IGN)
+        real, during = setup.keep_report, []
+
+        def observed(*arguments):
+            during.append(signal.getsignal(signal.SIGINT))
+            return real(*arguments)
+
+        with patch.object(setup, "keep_report", observed):
+            self.bootstrap()
+        self.assertEqual(during, [signal.SIG_IGN])
         self.assertIsNot(signal.getsignal(signal.SIGINT), signal.SIG_IGN)
+
+    def test_interrupted_record_is_reported_as_a_change(self):
+        self.project.create_environment()
+        report = self.interrupted(lambda argv: "ontokin" in argv)
+        self.assertTrue(report["changed"])
+        self.assertEqual(json.loads(Path(report["run_report"]).read_text(encoding="utf-8"))["outcome"], "failed")
+
+    def test_input_that_changes_during_the_run_is_a_failure_with_a_report(self):
+        lock = self.project.root / MACOS_LOCK
+        kept = lock.read_bytes()
+
+        def edit_lock(argv):
+            if "venv" in argv:
+                lock.write_text("no pins here\n", encoding="utf-8")
+
+        self.project.handlers.insert(0, edit_lock)
+        self.project.create_environment(version="3.12.14")
+        report = self.bootstrap(rebuild=True)
+        self.assertEqual((report["outcome"], setup.exit_status(report)), ("failed", setup.UNMET))
+        self.assertIn("SpecificationError", report["failure"])
+        self.assertTrue(Path(report["run_report"]).is_file() and Path(report["set_aside"]).is_dir())
+        self.project.handlers.pop(0)
+        lock.write_bytes(kept)
+        specification = self.project.root / doctor.SPECIFICATION
+        shutil.rmtree(self.project.venv)
+        self.project.handlers.insert(0, lambda argv: specification.write_text("{", encoding="utf-8") and None if "install" in argv and "pip" in argv else None)
+        report = self.bootstrap()
+        self.assertEqual((report["outcome"], Path(report["run_report"]).is_file()), ("failed", True))
+        self.assertIn("SpecificationError", report["failure"])
+        self.assertIn("failed", setup.render(report))
 
     def test_report_that_cannot_be_kept_is_refused_first_or_reported(self):
         build = self.project.root / "build"
@@ -608,9 +648,11 @@ class UseTests(SetupCase):
         self.assertFalse([call for call in self.project.calls if "-Eww" in call])
 
     def test_paths_are_listed_in_a_locale_that_shows_them(self):
+        self.project.process(77, f"{FRAMEWORK} -m unittest", program="Python", environment=f"PATH=/usr/bin __PYVENV_LAUNCHER__={self.project.venv}/bin/python")
         self.users()
-        listings = [environment for call, environment in zip(self.project.calls, self.project.environments) if call[0] in {"ps", "lsof"}]
-        self.assertEqual({environment["LC_ALL"] for environment in listings}, {"en_US.UTF-8"})
+        listings = [(call, environment) for call, environment in zip(self.project.calls, self.project.environments) if call[0] in {"ps", "lsof"}]
+        self.assertTrue([call for call, _ in listings if "-Eww" in call])
+        self.assertEqual({environment["LC_ALL"] for _, environment in listings}, {"en_US.UTF-8"})
         self.assertEqual(setup.listing_environment("Linux")["LC_ALL"], "C.UTF-8")
 
     def test_unrelated_processes_do_not_count(self):
@@ -651,8 +693,20 @@ class UseTests(SetupCase):
         workspace = self.project.directory / "workspace/tools"
         workspace.mkdir(parents=True)
         (workspace / "node_modules").symlink_to(directory, target_is_directory=True)
-        self.alone(94, "node tools/validator.mjs", program="node", place=str(workspace.parent))
-        self.assertEqual(self.users(directory), ([94], None), "The driver's isolated workspace links to these dependencies.")
+        script, link = self.project.root / "tools/validator.mjs", self.project.directory / "linked.mjs"
+        script.write_text("", encoding="utf-8")
+        link.symlink_to(script)
+        beside = os.path.relpath(script, self.project.directory)
+        for label, command, options in (
+                ("isolated workspace", "node tools/validator.mjs", {"place": str(workspace.parent)}), ("its tools", "node validator.mjs", {"place": str(workspace)}),
+                ("below its tools", "node x.mjs", {"place": str(workspace / "deep")}), ("relative script", f"node {beside}", {"place": str(self.project.directory)}),
+                ("script after an option", f"node --trace-warnings {beside}", {"place": str(self.project.directory)}), ("linked script", "node linked.mjs", {"place": str(self.project.directory)}),
+                ("another letter case", f"node {str(script).upper()}", {"place": "/elsewhere"}), ("NODE_PATH", "node x.mjs", {"place": "/elsewhere", "environment": f"PATH=/usr/bin NODE_PATH=/a:{workspace}/node_modules"})):
+            with self.subTest(start=label):
+                self.alone(94, command, **{"program": "node", **options})
+                self.assertEqual(self.users(directory), ([94], None))
+        self.alone(95, "node x.mjs", program="node", place="/elsewhere", environment="PATH=/usr/bin NODE_PATH=/elsewhere/node_modules")
+        self.assertEqual(self.users(directory), ([], None))
 
     def test_use_that_cannot_be_established_is_not_taken_as_unused(self):
         self.prepared(version="3.12.13")
@@ -703,6 +757,13 @@ class PreviewTests(SetupCase):
                     self.assertEqual(self.changing_calls(), [])
                     self.assertTrue(self.project.snapshot() == before, "A preview changed a file.")
 
+    def test_preview_beside_a_running_setup_says_so(self):
+        self.project.create_environment({}, pip=None)
+        with self.session().exclusive():
+            with self.assertRaises(setup.Busy):
+                self.bootstrap(preview=True)
+        self.assertFalse((self.project.root / "build").exists())
+
     def test_preview_names_the_packages_and_an_unavailable_interpreter(self):
         self.project.base = self.project.facts(version="3.12.14")
         text = setup.render(self.bootstrap(preview=True))
@@ -739,11 +800,28 @@ class VisualProfileTests(SetupCase):
                          ("visual-verification", "v22.11.0", "10.9.0", "chromium_headless_shell-1194"))
         self.assertIn({"name": "three", "expected": "0.180.0", "installed": "0.180.0", "direct": True}, record["npm_dependencies"])
 
+    def test_record_keeps_what_was_done_and_what_the_visual_profile_prepared(self):
+        self.project.node()
+        self.bootstrap("visual-verification")
+        record = self.project.venv / "ontokin-environment.json"
+        first = json.loads(record.read_text(encoding="utf-8"))
+        self.assertEqual([action["action"] for action in first["actions"]], ["create-environment", "install-packages", "install-node-dependencies", "install-chromium"])
+        self.project.node_version = "v25.9.0\n"
+        self.assertEqual(self.bootstrap()["outcome"], "unchanged", "Another Node.js is no matter of this profile.")
+        record.write_text(json.dumps({**first, "packages": {}}), encoding="utf-8")
+        self.assertEqual(self.bootstrap()["outcome"], "changed")
+        again = json.loads(record.read_text(encoding="utf-8"))
+        self.assertEqual((again["profile"], again["node"], again["browser"], again["actions"]), ("visual-verification", first["node"], first["browser"], first["actions"]))
+        del self.project.installed["attrs"]
+        self.bootstrap()
+        self.assertEqual([action["action"] for action in json.loads(record.read_text(encoding="utf-8"))["actions"]],
+                         [action["action"] for action in first["actions"]] + ["install-packages"])
+
     def test_tools_prepared_by_hand_are_recorded(self):
         self.project.node()
         self.bootstrap()
         record = self.project.venv / "ontokin-environment.json"
-        self.assertIsNone(json.loads(record.read_text(encoding="utf-8"))["npm_dependencies"])
+        self.assertEqual({json.loads(record.read_text(encoding="utf-8"))[name] for name in ("node", "npm", "npm_dependencies", "browser")}, {None})
         self.project.node_modules()
         self.project.browser()
         report = self.bootstrap("visual-verification")
@@ -804,6 +882,12 @@ class OtherProfileTests(SetupCase):
         work = self.project.directory / "smoke"
         self.refused("needs --work-dir", "package-smoke")
         self.refused("new and outside the checkout", "package-smoke", work=self.project.root / "build/smoke")
+        other_case = self.project.directory / "CHECKOUT"
+        if other_case.exists():  # The file system ignores letter case.
+            self.refused("new and outside the checkout", "package-smoke", work=other_case / "smoke")
+        link = self.project.directory / "link"
+        link.symlink_to(self.project.root, target_is_directory=True)
+        self.refused("new and outside the checkout", "package-smoke", work=link / "smoke")
         report = self.bootstrap("package-smoke", work=work)
         self.assertEqual([call[-1] for call in self.changing_calls()], [str(work / "build-env"), str(work / "install-env")])
         self.assertEqual((report["selected"]["state"], setup.exit_status(report)), ("not_checked", setup.READY))
@@ -942,14 +1026,27 @@ class CommandLineTests(SetupCase):
 
     def test_portable_report_names_no_place_that_was_passed(self):
         wheels, report = self.project.directory.parent / "ontokin-test-wheels", self.project.directory / "out/report.json"
-        node = self.project.directory.parent / "ontokin-test-node"
-        code, _, errors = self.run_setup("--portable-paths", "--find-links", str(wheels), "--node", str(node), "--report", str(report))
+        self.project.node()
+        node, python = Path(self.project.commands["node"]), self.project.interpreter
+        code, _, errors = self.run_setup("--portable-paths", "--find-links", str(wheels), "--node", str(node), "--python", str(python), "--report", str(report))
         self.assertEqual(code, setup.READY, errors)
         text = report.read_text(encoding="utf-8")
-        for place in (wheels, node, self.project.root):
+        for place in (wheels, node.parent, python, self.project.root):
             self.assertNotIn(str(place), text)
-        self.assertIn('"<find-links>"', text)
-        self.assertIn('"<node>"', text)
+        for label in ('"<find-links>"', '"<node>"', '"<node-directory>/npm"', '"<python>"'):
+            self.assertIn(label, text)
+        work, report = self.project.directory.parent / "ontokin-test-work" / self.project.directory.name, self.project.directory / "out/second.json"
+        self.addCleanup(shutil.rmtree, work.parent, True)
+        code, output, errors = self.run_setup("--profile", "package-smoke", "--work-dir", str(work), "--portable-paths", "--report", str(report))
+        self.assertEqual(code, setup.READY, errors)
+        for text in (output, report.read_text(encoding="utf-8")):
+            self.assertNotIn(str(work), text)
+        self.assertIn("<work-dir>/build-env", report.read_text(encoding="utf-8"))
+        self.assertIn("<report>", self.portable_paths_of({"report": report}))
+
+    @staticmethod
+    def portable_paths_of(options):
+        return {label for _, label in setup.option_labels(**options)}
 
 
 class RealSetupTests(unittest.TestCase):
