@@ -2,7 +2,9 @@
 
 Base: `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774`. Branch:
 `work/local-migration-20261124`. Director and integration owner token:
-`local-migration-0e9ea0a483b1`. Scope issue: [277](https://github.com/Omegapy/OntoKin/issues/277).
+`local-migration-f58a0f3c1d5a`, which took over from `local-migration-0e9ea0a483b1` on
+2026-11-25 on the owner's instruction to continue executing the plan. Scope issue:
+[277](https://github.com/Omegapy/OntoKin/issues/277).
 
 The steps, dependencies and acceptance criteria below are those of
 PLAN-20261125-CB551B16, revision 3, which the owner approved and authorized for
@@ -72,6 +74,8 @@ Reviewers inspect and do not edit the candidate.
 | TASK-009 | Ignore rules in the root `.gitignore` | A nested `.claude/.gitignore` covers the worktrees and settings that the Claude application creates | The documentation verifier binds the bytes of the root file (SRC-01) |
 | TASK-027 | One candidate record | Driver runs were repeated at later commits; the last one, from the candidate worktree's own environment, is the candidate record | Independent pre-reviews led to changes of the tools and documents |
 | TASK-030 | One owner session provides every observation (DEC-010) | The owner is also asked for a second, read-only session with Worktree mode on | One session without parallel editing cannot show the Worktree criterion |
+| TASK-030 | One demonstration | The demonstration is made again; the account of the first run is kept unchanged as [FRESH-SESSION-1](../../../engineering/local-migration-20261124/FRESH-SESSION-1.md) and does not count | The session that had taken over had saved a private agent note about the unpublished commit; the application put it into the first run, which read it before the checkpoint. The note was removed on 2026-11-25 |
+| TASK-006 to TASK-008 | Records committed as they were made | Committed on a local ref while the branch stood still for the demonstration, then merged | The published checkpoint had promised a branch that does not move |
 
 ## Acceptance by step
 

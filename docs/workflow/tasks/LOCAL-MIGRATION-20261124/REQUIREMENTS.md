@@ -101,6 +101,6 @@ boundaries.
 ## Inputs that only the owner can supply
 
 - The R06 transfer-capability handoff archive and its delivery receipt, placed on
-  the local machine (TASK-006; REQ-030 and REQ-031 stay open until then).
+  the local machine (TASK-006). The owner supplied both on 2026-11-25.
 - A fresh session in the Claude Desktop Code tab with the instruction "Continue"
   (TASK-030).
