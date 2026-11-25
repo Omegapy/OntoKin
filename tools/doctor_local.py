@@ -27,6 +27,7 @@ import platform
 import re
 import shutil
 import subprocess
+import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SPECIFICATION = "tools/local-environment.json"
@@ -40,29 +41,38 @@ INSTALL_TOOLS = {"pip"}
 NATIVE_NOTICE = ("Native and historical experiments keep their own contracts. This tool does not launch, "
                  "prepare or accept one, and a ready profile is not native qualification.")
 
-# Runs inside the diagnosed interpreter, isolated and without writing bytecode.
+# Runs inside the diagnosed interpreter, isolated and without writing bytecode. The package version is
+# the one importlib.metadata resolves; a second metadata directory of the same package is a duplicate.
 PROBE = r"""
-import importlib, json, os, platform, sys, sysconfig
+import importlib, json, os, platform, re, sys, sysconfig
 from importlib import metadata
+place = lambda value: os.path.realpath(value) if value else None
 imports = {}
 for name in json.loads(sys.argv[1]):
     try:
-        module = importlib.import_module(name)
-        imports[name] = {"ok": True, "file": getattr(module, "__file__", None)}
+        imports[name] = {"ok": True, "file": place(getattr(importlib.import_module(name), "__file__", None))}
     except BaseException as error:
-        imports[name] = {"ok": False, "error": (type(error).__name__ + ": " + str(error))[:300]}
-packages = {}
+        imports[name] = {"ok": False, "file": None, "error": (type(error).__name__ + ": " + str(error))[:300]}
+packages, places, duplicates, seen = {}, {}, {}, {}
 for distribution in metadata.distributions():
-    name = distribution.metadata["Name"]
-    if name:
-        packages[name] = distribution.version
+    name, folder = distribution.metadata["Name"], str(getattr(distribution, "_path", ""))
+    if not name or os.path.basename(folder).startswith("~"):
+        continue
+    key = re.sub(r"[-_.]+", "-", name).lower()
+    if key in seen:
+        duplicates.setdefault(seen[key], [packages[seen[key]]]).append(distribution.version)
+        continue
+    seen[key] = name
+    packages[name], places[name] = metadata.version(name), place(folder)
 print(json.dumps({
     "implementation": platform.python_implementation(), "version": platform.python_version(),
     "build": list(platform.python_build()), "compiler": platform.python_compiler(),
     "executable": sys.executable, "base_executable": getattr(sys, "_base_executable", None),
     "prefix": sys.prefix, "base_prefix": sys.base_prefix, "base_prefix_real": os.path.realpath(sys.base_prefix),
     "system": platform.system(), "machine": platform.machine(), "os_version": platform.mac_ver()[0] or platform.release(),
-    "platform_tag": sysconfig.get_platform(), "packages": packages, "imports": imports}))
+    "platform_tag": sysconfig.get_platform(), "sys_path": [place(entry) for entry in sys.path if entry],
+    "site_packages": place(sysconfig.get_path("purelib")), "packages": packages, "places": places,
+    "duplicates": duplicates, "imports": imports}))
 """
 
 
@@ -70,11 +80,11 @@ class SpecificationError(ValueError):
     """The tracked specification cannot be used as written."""
 
 
-def execute(argv, cwd=None, timeout=60, env=None) -> dict:
+def execute(argv, cwd=None, timeout=60, env=None, keep=()) -> dict:
     """Run one command without a shell and return what happened; never raise for its result."""
     argv = [str(part) for part in argv]
     try:
-        done = subprocess.run(argv, cwd=None if cwd is None else str(cwd), env=env, timeout=timeout,
+        done = subprocess.run(argv, cwd=None if cwd is None else str(cwd), env=env, timeout=timeout, pass_fds=keep,
                               stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     except (OSError, subprocess.SubprocessError) as error:
         return {"argv": argv, "code": None, "out": "", "err": "", "error": f"{type(error).__name__}: {error}"}
@@ -88,12 +98,17 @@ def failure_text(result: dict) -> str:
 
 
 def clean_environment() -> dict:
-    """The caller's environment without Python, pip and Git redirection."""
+    """The caller's environment without Python, pip and Git redirection, and with no lazy object fetch."""
     environment = {key: value for key, value in os.environ.items()
                    if not key.startswith(("GIT_", "PYTHON", "PIP_")) and key not in {"VIRTUAL_ENV", "__PYVENV_LAUNCHER__"}}
     environment.update(PYTHONDONTWRITEBYTECODE="1", PIP_DISABLE_PIP_VERSION_CHECK="1",
-                       GIT_OPTIONAL_LOCKS="0", GIT_TERMINAL_PROMPT="0")
+                       GIT_OPTIONAL_LOCKS="0", GIT_TERMINAL_PROMPT="0", GIT_NO_LAZY_FETCH="1")
     return environment
+
+
+def inside(path, *directories) -> bool:
+    """Whether a resolved path is one of the directories or lies below one."""
+    return any(path == directory or path.startswith(directory.rstrip(os.sep) + os.sep) for directory in directories if directory)
 
 
 def git(root: Path, *arguments, run=execute, timeout=60) -> dict:
@@ -432,49 +447,77 @@ def core_checks(root: Path, spec: dict, key, environment: dict, checkout: dict, 
     elif not usable(environment):
         results.append(check("isolation", "not_checked", "The environment interpreter does not run."))
     else:
-        problems = []
-        here = os.path.realpath(environment["path"])
-        if facts["prefix"] == facts["base_prefix"]:
-            problems.append("it is not a virtual environment")
-        if os.path.realpath(facts["prefix"]) != here:
-            problems.append("its interpreter belongs to another location")
-        if environment["configuration"].get("include-system-site-packages", "").lower() != "false":
-            problems.append("system site-packages are not excluded")
-        created_at = environment["configuration"].get("command", "").split(" -m venv ")[-1].split()
-        if created_at and os.path.realpath(created_at[-1]) != here:
-            problems.append("it was created for another location and then copied or moved")
-        results.append(check("isolation", "mismatch" if problems else "ready",
-                             "; ".join(problems) if problems else "A real, isolated environment of this checkout."))
+        problems, unknown = isolation_problems(root, environment)
+        results.append(check("isolation", "mismatch", "; ".join(problems)) if problems else
+                       check("isolation", "not_checked", unknown) if unknown else
+                       check("isolation", "ready", "A real, isolated environment of this checkout."))
     if not checkout["git_available"]:
         results.append(check("git", "missing", "Git was not found."))
     elif not checkout["is_checkout"]:
         results.append(check("git", "mismatch", "The root is not the top of a Git checkout or worktree."))
+    elif checkout["unread"]:
+        results.append(check("git", "mismatch", "Git could not read: " + "; ".join(checkout["unread"])))
     else:
         results.append(check("git", "ready", "The root is a Git checkout."))
     if not usable(environment):
         results.append(check("source-import", "not_checked", "No usable environment interpreter."))
     else:
-        done = run([environment["python"], "-B", "-c", "import ontokin"], cwd=root, timeout=60, env=clean_environment())
-        results.append(check("source-import", "ready" if done["code"] == 0 else "mismatch",
-                             "The source package imports." if done["code"] == 0 else failure_text(done)))
+        done = run([environment["python"], "-B", "-c", "import ontokin; print(ontokin.__file__ or '')"], cwd=root, timeout=60, env=clean_environment())
+        place = os.path.realpath(done["out"].strip()) if done["code"] == 0 and done["out"].strip() else None
+        expected = os.path.join(os.path.realpath(str(root)), "ontokin")
+        results.append(check("source-import", "mismatch", failure_text(done)) if done["code"] != 0 else
+                       check("source-import", "ready", "The source package imports from the checkout.") if place and inside(place, expected) else
+                       check("source-import", "mismatch", f"ontokin is imported from {place or 'no source file'}, not from the checkout."))
     return results
 
 
+def isolation_problems(root: Path, environment: dict):
+    """What lets another location into the environment, and what could not be established about it."""
+    facts, problems, here, top = environment["facts"], [], os.path.realpath(environment["path"]), os.path.realpath(str(root))
+    if facts["prefix"] == facts["base_prefix"]:
+        problems.append("it is not a virtual environment")
+    if os.path.realpath(facts["prefix"]) != here:
+        problems.append("its interpreter belongs to another location")
+    if environment["configuration"].get("include-system-site-packages", "").lower() != "false":
+        problems.append("system site-packages are not excluded")
+    if not facts["site_packages"] or not inside(facts["site_packages"], here):
+        problems.append("its site-packages directory lies elsewhere")
+    # An editable install of this checkout may add the checkout itself, and nothing else.
+    foreign = [entry for entry in facts["sys_path"] if not inside(entry, here, top) and
+               (os.path.basename(entry) in {"site-packages", "dist-packages"} or not inside(entry, facts["base_prefix_real"]))]
+    if foreign:
+        problems.append("its import path leaves the environment: " + ", ".join(foreign))
+    strangers = sorted(name for name, place in facts["places"].items() if not place or not inside(place, here, top))
+    if strangers:
+        problems.append("packages are installed elsewhere: " + ", ".join(strangers))
+    _, separator, created = environment["configuration"].get("command", "").partition(" -m venv ")
+    if not separator:
+        return problems, "Where the environment was created is not recorded."
+    starts = [0] + [index + 1 for index, letter in enumerate(created) if letter == " "]
+    if not any(created[start:].startswith(os.sep) and os.path.realpath(created[start:]) == here for start in starts):
+        problems.append("it was created for another location and then copied or moved")
+    return problems, None
+
+
 def package_rows(spec: dict, profile: str, environment: dict) -> list:
-    installed = {}
+    installed, duplicates, here = {}, {}, os.path.realpath(environment["path"])
     if usable(environment):
         installed = {normalize(name): version for name, version in environment["facts"]["packages"].items()}
+        duplicates = {normalize(name): versions for name, versions in environment["facts"]["duplicates"].items()}
     rows = []
     for package in packages_of(spec, profile):
-        actual = installed.get(normalize(package["name"]))
+        name = normalize(package["name"])
+        actual, twice = installed.get(name), duplicates.get(name)
         imported = environment["facts"]["imports"].get(package["import"]) if usable(environment) else None
+        error = None if imported is None else imported.get("error")
+        if imported and imported["ok"] and not (imported["file"] and inside(imported["file"], here)):
+            error = f"imported from {imported['file'] or 'no file'}, outside the environment"
         if not usable(environment):
             state = "not_checked" if environment["exists"] else "missing"
         else:
-            state = "missing" if actual is None else "ready" if actual == package["version"] else "mismatch"
-        rows.append({"name": package["name"], "expected": package["version"], "installed": actual, "state": state,
-                     "import": package["import"], "import_ok": None if imported is None else imported["ok"],
-                     "import_error": None if imported is None else imported.get("error")})
+            state = "mismatch" if twice else "missing" if actual is None else "ready" if actual == package["version"] else "mismatch"
+        rows.append({"name": package["name"], "expected": package["version"], "installed": " and ".join(twice) if twice else actual, "state": state,
+                     "import": package["import"], "import_ok": None if imported is None else error is None, "import_error": error})
     return rows
 
 
@@ -541,7 +584,33 @@ def browser_cache() -> Path:
     return Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "ms-playwright"
 
 
-def visual_section(root: Path, spec: dict, run=execute, which=shutil.which, node=None, cache=None) -> dict:
+def npm_dependencies(root: Path, profile: dict, system: str, machine: str) -> list:
+    """Every package of the committed lock that belongs on this platform, with the version installed at its place."""
+    platform_names = ({"Darwin": "darwin", "Linux": "linux", "Windows": "win32"}.get(system, system.lower()),
+                      {"x86_64": "x64", "AMD64": "x64", "aarch64": "arm64"}.get(machine, machine))
+    wanted = {name: version for name, version in profile["npm_dependencies"].items()}
+    try:
+        lock = json.loads((root / profile["npm_lock"]).read_text(encoding="utf-8"))["packages"]
+        for place, entry in lock.items():
+            elsewhere = entry.get("optional") and any(allowed and name not in allowed for allowed, name in
+                                                      ((entry.get("os"), platform_names[0]), (entry.get("cpu"), platform_names[1])))
+            if place.startswith("node_modules/") and not elsewhere:
+                wanted[place[len("node_modules/"):]] = entry["version"]
+    except (OSError, UnicodeError, ValueError, KeyError, TypeError, AttributeError):
+        wanted["package-lock"] = "readable"
+    rows = []
+    for name, expected in sorted(wanted.items()):
+        manifest, actual = root / profile["npm_directory"] / name / "package.json", None
+        if manifest.is_file():
+            try:
+                actual = json.loads(manifest.read_text(encoding="utf-8")).get("version") or "unreadable"
+            except (OSError, UnicodeError, ValueError, AttributeError):
+                actual = "unreadable"
+        rows.append({"name": name, "expected": expected, "installed": actual, "direct": name in profile["npm_dependencies"]})
+    return rows
+
+
+def visual_section(root: Path, spec: dict, run=execute, which=shutil.which, node=None, cache=None, system=None, machine=None) -> dict:
     profile = spec["profiles"]["visual-verification"]
     node = node or which("node")
     npm = str(Path(node).parent / "npm") if node and (Path(node).parent / "npm").exists() else which("npm")
@@ -549,18 +618,10 @@ def visual_section(root: Path, spec: dict, run=execute, which=shutil.which, node
     if node:
         done = run([node, "--version"], timeout=30, env=clean_environment())
         version = done["out"].strip() if done["code"] == 0 else None
-    dependencies = []
-    for name, expected in sorted(profile["npm_dependencies"].items()):
-        manifest = root / profile["npm_directory"] / name / "package.json"
-        actual = None
-        if manifest.is_file():
-            try:
-                actual = json.loads(manifest.read_text(encoding="utf-8")).get("version")
-            except (OSError, UnicodeError, ValueError, AttributeError):
-                actual = "unreadable"
-        dependencies.append({"name": name, "expected": expected, "installed": actual})
+    dependencies = npm_dependencies(root, profile, system or platform.system(), machine or platform.machine())
+    directory = root / profile["npm_directory"]
     browser = {"state": "not_checked", "expected": None, "detail": "Playwright is not installed, so its expected browser revision is unknown."}
-    manifest = root / profile["npm_directory"] / "playwright-core" / "browsers.json"
+    manifest = directory / "playwright-core" / "browsers.json"
     if manifest.is_file():
         try:
             entries = json.loads(manifest.read_text(encoding="utf-8"))["browsers"]
@@ -573,7 +634,7 @@ def visual_section(root: Path, spec: dict, run=execute, which=shutil.which, node
             browser = {"state": "not_checked", "expected": None, "detail": "The installed Playwright browser list is unreadable."}
     return {"node": {"path": node, "version": version, "target_major": profile["node_major"]},
             "npm": {"path": npm, "version": npm_version(npm)}, "npm_directory": profile["npm_directory"],
-            "npm_directory_exists": (root / profile["npm_directory"]).is_dir(),
+            "npm_directory_exists": directory.is_dir() or directory.is_symlink(), "npm_directory_symlink": directory.is_symlink(),
             "npm_dependencies": dependencies, "browser": browser}
 
 
@@ -593,9 +654,11 @@ def visual_checks(visual: dict) -> list:
     rows = visual["npm_dependencies"]
     wrong = [f"{row['name']} {row['installed']}, expected {row['expected']}" for row in rows if row["installed"] not in {None, row["expected"]}]
     absent = [f"{row['name']} {row['expected']}" for row in rows if row["installed"] is None]
+    if visual["npm_directory_symlink"]:
+        wrong.append(f"{visual['npm_directory']} is a symbolic link; each checkout needs its own dependencies")
     results.append(check("npm-dependencies", "mismatch" if wrong else "missing" if absent else "ready",
                          "; ".join(wrong + [f"not installed: {', '.join(absent)}"] * bool(absent))
-                         if wrong or absent else "All npm dependencies are at their committed versions."))
+                         if wrong or absent else f"All {len(rows)} packages of the committed lock for this platform are at their versions."))
     results.append(check("chromium", visual["browser"]["state"], visual["browser"]["detail"]))
     return results
 
@@ -603,7 +666,7 @@ def visual_checks(visual: dict) -> list:
 # --- Checkout, storage, workflow and remote --------------------------------
 
 def checkout_section(root: Path, run=execute) -> dict:
-    section = {"root": str(root), "git_available": False, "is_checkout": False}
+    section = {"root": str(root), "git_available": False, "is_checkout": False, "unread": []}
     top = git(root, "rev-parse", "--show-toplevel", run=run)
     section["git_available"] = top["error"] is None
     if top["code"] != 0 or os.path.realpath(top["out"].rstrip("\n")) != os.path.realpath(str(root)):
@@ -614,12 +677,20 @@ def checkout_section(root: Path, run=execute) -> dict:
         return result["out"].strip() if result["code"] == 0 else None
 
     def lines(*arguments):
+        """The output lines, or None when Git could not answer; an unread state is never an empty one."""
         result = git(root, *arguments, run=run)
-        text = result["out"] if result["code"] == 0 else ""
-        return [line for line in text.split("\0" if "-z" in arguments else "\n") if line]
+        if result["code"] != 0:
+            section["unread"].append(f"{arguments[0]} ({failure_text(result)})")
+            return None
+        return [line for line in result["out"].split("\0" if "-z" in arguments else "\n") if line]
 
     directory, common = value("rev-parse", "--absolute-git-dir"), value("rev-parse", "--path-format=absolute", "--git-common-dir")
     untracked = lines("ls-files", "--others", "--exclude-standard", "-z")
+    modified = lines("status", "--porcelain=v1", "--untracked-files=no")
+    stashes = lines("stash", "list")
+    listed = lines("worktree", "list", "--porcelain")
+    heads = [line[len("HEAD "):] for line in listed or [] if line.startswith("HEAD ") and not set(line[len("HEAD "):]) <= {"0"}]
+    unpublished = lines("rev-list", "--branches", *heads, "--not", "--remotes")
     url = value("config", "--get", "remote.origin.url") or ""
     repository = re.search(r"([^/:]+/[^/:]+?)(?:\.git)?/?$", url)
     upstream = value("rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{upstream}")
@@ -627,16 +698,15 @@ def checkout_section(root: Path, run=execute) -> dict:
     section.update({
         "is_checkout": True, "linked_worktree": directory != common,
         "branch": value("symbolic-ref", "--quiet", "--short", "HEAD"), "head": value("rev-parse", "HEAD"),
-        "tree": value("rev-parse", "HEAD^{tree}"),
-        "tracked_modifications": lines("status", "--porcelain=v1", "--untracked-files=no"),
-        "untracked_count": len(untracked), "untracked": untracked[:UNTRACKED_LIMIT],
-        "stashes": len(lines("stash", "list")), "origin_repository": repository[1] if repository else None,
+        "tree": value("rev-parse", "HEAD^{tree}"), "tracked_modifications": modified,
+        "untracked_count": None if untracked is None else len(untracked), "untracked": None if untracked is None else untracked[:UNTRACKED_LIMIT],
+        "stashes": None if stashes is None else len(stashes), "origin_repository": repository[1] if repository else None,
         "upstream": upstream, "ahead_of_tracking_ref": int(counts[0]) if len(counts) == 2 else None,
         "behind_tracking_ref": int(counts[1]) if len(counts) == 2 else None,
-        "tracking_refs": dict(line.split(" ", 1)[::-1] for line in lines("for-each-ref", "--format=%(objectname) %(refname:short)", "refs/remotes/origin")
+        "tracking_refs": dict(line.split(" ", 1)[::-1] for line in lines("for-each-ref", "--format=%(objectname) %(refname:short)", "refs/remotes/origin") or []
                               if not line.endswith("/HEAD") and not line.endswith(" origin")),
-        "unpublished_commits": len(lines("rev-list", "--branches", "--not", "--remotes")),
-        "worktrees": [line[len("worktree "):] for line in lines("worktree", "list", "--porcelain") if line.startswith("worktree ")],
+        "unpublished_commits": None if unpublished is None else len(unpublished),
+        "worktrees": [line[len("worktree "):] for line in listed or [] if line.startswith("worktree ")],
         "note": "Local observation only. A tracking ref is the last fetched state, not the live remote."})
     return section
 
@@ -696,8 +766,8 @@ def workflow_section(root: Path, run=execute) -> dict:
     registry = read_json(root / "docs/workflow/registry.json")
     current = read_json(root / str(registry.get("current", "docs/workflow/CURRENT.json")))
     modes = registry.get("modes")
-    entries = {name: entry.get("entrypoint") for name, entry in modes.items()} if isinstance(modes, dict) else \
-        {"registered": registry.get("entrypoint")}
+    entries = {name: entry.get("entrypoint") if isinstance(entry, dict) else None for name, entry in modes.items()} \
+        if isinstance(modes, dict) else {"registered": registry.get("entrypoint")}
     task = current.get("active_task") or current.get("latest_task")
     folder = f"{registry.get('task_root', 'docs/workflow/tasks')}/{task}"
     checkpoint = current.get("checkpoint", {}).get("session") if isinstance(current.get("checkpoint"), dict) else None
@@ -761,7 +831,7 @@ def next_action(spec: dict, key, profile: str, failing: dict, interpreters: list
             return ("Install the interpreter with the machine's existing mechanism: " + " ".join(install) if install else
                     f"Provide {spec['interpreter']['implementation']} {version} with the machine's existing mechanism.")
         command = f"{distribution.get('command', 'python3')} tools/bootstrap_local.py --profile {profile}"
-        if failing["state"] == "mismatch" and identifier in {"interpreter", "isolation"}:
+        if failing["state"] in {"mismatch", "not_checked"} and identifier != "packages":
             return f"Review the incompatible environment, then rebuild it explicitly: {command} --rebuild"
         return f"Run: {command}"
     return {
@@ -791,7 +861,7 @@ def readiness_section(root: Path, spec: dict, key, environment: dict, checkout: 
             own = [check(item, state, text) for item, text in profile["readiness_checks"].items()]
         # Base profiles come first, so a missing or wrong interpreter is the first action.
         unmet = [item for part in [*requires, name] for item in (section[part]["checks"] if part in section else own) if item["state"] != "ready"]
-        first = next((item for item in unmet if item["state"] != "not_checked"), unmet[0] if unmet else None)
+        first = next((item for item in unmet if item["state"] != "not_checked" or item["id"] == "pip-check" and usable(environment)), unmet[0] if unmet else None)
         section[name] = {"state": state, "kind": kind, "purpose": profile["purpose"], "requires": requires, "checks": own,
                          "next_action": None if state == "ready" else profile["purpose"] if kind != "environment" else
                          next_action(spec, key, name, first, interpreters)}
@@ -811,7 +881,7 @@ def collect(root: Path, profile: str = DEFAULT_PROFILE, online: bool = False, *,
     imports = [package["import"] for package in packages_of(spec, DEFAULT_PROFILE)]
     environment = inspect_environment(root, spec, imports, run)
     interpreters = find_interpreters(spec, key, run, which)
-    visual = visual_section(root, spec, run, which, node, cache)
+    visual = visual_section(root, spec, run, which, node, cache, system, machine)
     readiness = readiness_section(root, spec, key, environment, checkout, visual, interpreters, run)
     known = {normalize(package["name"]) for package in packages_of(spec, DEFAULT_PROFILE)} | INSTALL_TOOLS
     installed = environment["facts"]["packages"] if usable(environment) else {}
@@ -824,6 +894,7 @@ def collect(root: Path, profile: str = DEFAULT_PROFILE, online: bool = False, *,
         "checkout": checkout,
         "python": {"specified": spec["interpreter"]["version"], "environment": environment, "available_interpreters": interpreters},
         "packages": {"expected": package_rows(spec, DEFAULT_PROFILE, environment), "pip_check": environment["pip_check"],
+                     "duplicates": environment["facts"]["duplicates"] if usable(environment) else {},
                      "additional": {name: version for name, version in sorted(installed.items()) if normalize(name) not in known},
                      "install_tools": {name: version for name, version in sorted(installed.items()) if normalize(name) in INSTALL_TOOLS}},
         "specification": specification_section(root, spec, profile, key, series),
@@ -835,7 +906,7 @@ def collect(root: Path, profile: str = DEFAULT_PROFILE, online: bool = False, *,
 
 def path_labels(root: Path, worktrees=()) -> list:
     """This machine's paths and the labels that stand for them, longest path first."""
-    labels = {str(Path.home()): "<home>", str(root.parent): "<parent>"}
+    labels = {tempfile.gettempdir(): "<tmp>", str(Path.home()): "<home>", str(root.parent): "<parent>"}
     for number, worktree in enumerate(worktrees):
         labels.setdefault(str(Path(worktree).parent), "<worktree-parent>" if number else "<clone-parent>")
         labels[worktree] = f"<worktree-{number}>" if number else "<main-checkout>"
@@ -857,6 +928,10 @@ def portable(value, labels: list):
     return value
 
 
+def count(value) -> str:
+    return "unread" if value is None else str(len(value) if isinstance(value, list) else value)
+
+
 def render(report: dict) -> str:
     checkout, python, lines = report["checkout"], report["python"], []
     environment = python["environment"]
@@ -873,10 +948,11 @@ def render(report: dict) -> str:
     if checkout["is_checkout"]:
         lines += [f"  branch    {checkout['branch'] or 'detached'}{' (linked worktree)' if checkout['linked_worktree'] else ''}",
                   f"  head      {checkout['head']}", f"  tree      {checkout['tree']}",
-                  f"  changes   {len(checkout['tracked_modifications'])} tracked modifications, {checkout['untracked_count']} untracked files, "
-                  f"{checkout['stashes']} stashes, {checkout['unpublished_commits']} commits not in a tracking ref"]
-        lines += [f"    {line}" for line in checkout["tracked_modifications"][:20]]
-        lines += [f"    ?? {line}" for line in checkout["untracked"][:20]]
+                  f"  changes   {count(checkout['tracked_modifications'])} tracked modifications, {count(checkout['untracked_count'])} untracked files, "
+                  f"{count(checkout['stashes'])} stashes, {count(checkout['unpublished_commits'])} commits not in a tracking ref"]
+        lines += [f"    not read: {item}" for item in checkout["unread"]]
+        lines += [f"    {line}" for line in (checkout["tracked_modifications"] or [])[:20]]
+        lines += [f"    ?? {line}" for line in (checkout["untracked"] or [])[:20]]
     else:
         lines.append("  not the top of a Git checkout")
     lines += ["", "Python", f"  specified    {python['specified']}", f"  environment  {environment['path']}"]
@@ -898,7 +974,7 @@ def render(report: dict) -> str:
     lines += [f"  {value or 'absent':<72}{path}" for path, value in specification["digests"].items()]
     visual = report["visual"]
     lines += ["", "Visual tools", f"  Node.js   {visual['node']['version'] or 'not found'} (target {visual['node']['target_major']}), npm {visual['npm']['version'] or 'not found'}"]
-    lines += [f"  {row['name']:<16}{row['expected']:<16}{row['installed'] or '-'}" for row in visual["npm_dependencies"]]
+    lines += [f"  {row['name']:<16}{row['expected']:<16}{row['installed'] or '-'}" for row in visual["npm_dependencies"] if row["direct"]]
     lines.append(f"  browser   {visual['browser']['detail']}")
     lines += ["", "Storage", f"  {report['storage']['detail']} Git LFS client: {report['storage']['client_version'] or 'not found'}."]
     workflow = report["workflow"]

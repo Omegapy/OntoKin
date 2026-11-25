@@ -18,6 +18,7 @@ from datetime import datetime
 import hashlib
 import ipaddress
 import json
+import os
 from pathlib import Path, PurePosixPath
 import re
 import subprocess
@@ -34,8 +35,8 @@ SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 TASK_STATES = {"draft", "ready", "in_progress", "blocked", "review", "done", "retired", "cancelled"}
 CLOSED_STATES = {"done", "retired", "cancelled"}
 MODES = {"local", "browser"}
-EMBEDDED_RECEIPTS = ("historical_handoff", "latest_handoff", "previous_handoff", "older_handoffs",
-                     "latest_recovery", "previous_recovery", "older_recoveries")
+CURRENT_FIELDS = {"schema_version", "project", "latest_task", "active_task", "execution_mode", "observed_main", "snapshot_date",
+                  "next_action", "checkpoint", "unfinished", "boundaries", "delivery_policy", "history"}
 NOTICE = "Local structural check only; live GitHub state and the truth of cited evidence require separate verification."
 
 
@@ -225,6 +226,7 @@ class Project:
 
     def validate_current(self) -> None:
         c = self.current = self.load(self.registry["current"], (1, 2))
+        require(c["schema_version"] == self.registry["schema_version"], "current.schema_version: must equal the registry's")
         require(c.get("project") == self.registry["repository"], "current.project: repository mismatch")
         identifier(c.get("latest_task"), "current.latest_task")
         if c.get("active_task") is not None:
@@ -250,11 +252,12 @@ class Project:
 
     def validate_pointers(self, c: dict) -> None:
         """Schema 2: the selected mode and checkpoint, unfinished scopes and links to retained history."""
-        for key in EMBEDDED_RECEIPTS:
-            require(key not in c, f"current.{key}: schema 2 keeps receipts in linked history")
+        for key in sorted(set(c) - CURRENT_FIELDS):
+            raise Invalid(f"current.{key}: schema 2 keeps receipts and phase records in linked history or in the task record")
         active, mode = c.get("active_task"), c.get("execution_mode")
-        require(mode is None or mode in self.modes, f"current.execution_mode: expected null or one of {', '.join(sorted(self.modes))}")
-        require(active is None or mode is not None, "current.execution_mode: an active task needs its recorded mode")
+        if mode is not None:
+            choice(mode, set(self.modes), "current.execution_mode")
+        require((active is None) == (mode is None), "current.execution_mode: an active task needs its recorded mode, and only an active task has one")
         checkpoint = mapping(c.get("checkpoint"), "current.checkpoint")
         for key in ("record", "session"):
             require(key in checkpoint, f"current.checkpoint.{key}: expected a path or null")
@@ -297,9 +300,14 @@ class Project:
             require(type(item.get("bytes")) is int and item["bytes"] == file.stat().st_size,
                     f"current.history {item['path']}: size differs from the retained file")
             sha(item.get("source_commit"), f"current.history {item['path']}.source_commit")
-            for key in sequence(item.get("holds"), f"current.history {item['path']}.holds", True):
-                text(key, f"current.history {item['path']}.holds")
             text(item.get("purpose"), f"current.history {item['path']}.purpose")
+            holds = [text(key, f"current.history {item['path']}.holds") for key in sequence(item.get("holds"), f"current.history {item['path']}.holds", True)]
+            try:
+                retained = json.loads(file.read_text(encoding="utf-8"))
+            except (UnicodeError, json.JSONDecodeError) as exc:
+                raise Invalid(f"current.history {item['path']}: expected a JSON record") from exc
+            for key in holds:
+                require(isinstance(retained, dict) and key in retained, f"current.history {item['path']}.holds: {key} is not in the retained file")
 
     def validate_task(self, task: dict, folder: str) -> None:
         name = identifier(task.get("id"), f"task {folder}.id")
@@ -380,9 +388,13 @@ class Project:
         if active:
             require(self.tasks[active]["status"] not in CLOSED_STATES,
                     "current.active_task: completed or retired tasks cannot be active")
-            if self.current["schema_version"] == 2:
+            if self.current.get("schema_version") == 2:
                 require(self.tasks[active].get("execution_mode") == self.current.get("execution_mode"),
                         "current.execution_mode: differs from the active task's recorded mode")
+        # A malformed CURRENT has its own diagnostics; this only compares well-formed entries with known records.
+        for item in self.current.get("unfinished") if isinstance(self.current.get("unfinished"), list) else []:
+            known = self.tasks.get(item.get("task")) if isinstance(item, dict) and isinstance(item.get("task"), str) else None
+            require(known is None or known["status"] not in CLOSED_STATES, f"current.unfinished: {item.get('task') if isinstance(item, dict) else item} is closed in its own record")
 
     def validate_memory(self) -> None:
         self.memory = self.load(self.registry["memory"])
@@ -447,11 +459,14 @@ class Project:
         return {"passed": not self.errors, "errors": self.errors, "tasks_checked": len(self.tasks), "notice": NOTICE}
 
     def local_git(self, top_only: bool = False) -> dict:
+        # Another repository named in the caller's environment is not this checkout.
+        environment = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
+
         def run(*args: str) -> str | None:
             try:
                 output = subprocess.run(["git", "--no-optional-locks", "-c", "core.fsmonitor=false",
                                          "-C", str(self.root), *args], capture_output=True,
-                                        text=True, timeout=5, check=True)
+                                        text=True, timeout=5, check=True, env=environment)
                 return output.stdout.strip()
             except (OSError, subprocess.SubprocessError):
                 return None
@@ -459,7 +474,8 @@ class Project:
         if top_only and head and Path(run("rev-parse", "--show-toplevel") or "/").resolve() != self.root:
             head = None  # A surrounding repository is not this checkout.
         dirty = run("status", "--porcelain", "--untracked-files=normal") if head else None
-        return {"head": head, "dirty": bool(dirty) if dirty is not None else None,
+        return {"head": head, "branch": run("symbolic-ref", "--quiet", "--short", "HEAD") if head else None,
+                "dirty": bool(dirty) if dirty is not None else None,
                 "scope": "local checkout only; no remote fetch or live-state verification"}
 
     def brief(self) -> dict:
@@ -473,7 +489,7 @@ class Project:
                     "requirements_done": sum(r["status"] == "done" for r in task["requirements"]),
                     "requirements_total": len(task["requirements"]), "completion": task["completion"]}
         # Schema 1 has one entry point; schema 2 reads the selected task's mode and guesses none.
-        mode = self.current.get("execution_mode") or (next(iter(self.modes)) if len(self.modes) == 1 else None)
+        mode = self.current.get("execution_mode") if self.current["schema_version"] == 2 else next(iter(self.modes))
         return {"project": self.registry["repository"], "current": self.current, "modes": self.modes,
                 "required_reads": self.modes[mode]["required_reads"] if mode else None, "skills": self.registry["skills"],
                 "active_task": task_summary(self.current.get("active_task")),
@@ -501,15 +517,17 @@ class Project:
         if base is not None:
             sha(base, "new-task.base")
             return base, "supplied with --base"
-        head = self.local_git(top_only=True)["head"]
-        require(head is not None and bool(SHA.fullmatch(head)),
+        local = self.local_git(top_only=True)
+        require(local["head"] is not None and bool(SHA.fullmatch(local["head"])),
                 "new-task.base: the local Git head of this root was not observed; supply --base with the observed starting commit")
-        return head, "observed local head of this checkout"
+        return local["head"], f"observed local head of this checkout, {'branch ' + local['branch'] if local['branch'] else 'detached'}"
 
-    def new_task(self, task_id: str, title: str, intent: str, base: str | None = None) -> dict:
+    def new_task(self, task_id: str, title: str, intent: str, base: str | None = None, mode: str | None = None) -> dict:
         identifier(task_id, "new-task.id")
         text(title, "new-task.title")
         text(intent, "new-task.intent")
+        if mode is not None:
+            choice(mode, MODES, "new-task.mode")
         relative = f"{self.registry['task_root']}/{task_id}"
         directory = self.path(relative, "new-task.directory", exists=False)
         require(not directory.exists() and not directory.is_symlink(), f"new-task: {task_id} already exists; refusing overwrite")
@@ -517,6 +535,7 @@ class Project:
         recorded = self.current["observed_main"]
         observation = origin + ("" if revision == recorded else f"; CURRENT.observed_main records {recorded}")
         task = {"schema_version": 1, "id": task_id, "title": title, "intent": intent, "status": "draft",
+                **({"execution_mode": mode} if mode else {}),
                 "owner": "unassigned", "branch": "unassigned", "base_sha": revision, "base_observation": observation,
                 "requirements": [], "plan": [], "checks": [],
                 "completion": {"implementation_commit": None, "merge_commit": None, "pull_request": None,
@@ -575,6 +594,7 @@ def main(argv: list[str] | None = None) -> int:
             command.add_argument("--title", required=True)
             command.add_argument("--intent", required=True)
             command.add_argument("--base", help="observed starting commit; default: the local head of this checkout")
+            command.add_argument("--mode", help="execution mode to record, local or browser; required before the task is selected")
     args = parser.parse_args(argv)
     project = Project(args.root)
     result = project.validate()
@@ -585,7 +605,7 @@ def main(argv: list[str] | None = None) -> int:
             elif args.command == "lookup":
                 result = project.lookup(args.query)
             elif args.command == "new-task":
-                result = project.new_task(args.id, args.title, args.intent, args.base)
+                result = project.new_task(args.id, args.title, args.intent, args.base, args.mode)
         except (Invalid, OSError, RuntimeError) as exc:
             result = {"passed": False, "errors": [str(exc)], "notice": NOTICE}
     failed = result.get("passed") is False

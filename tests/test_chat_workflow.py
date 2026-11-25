@@ -471,7 +471,8 @@ class ExecutionModeSchemaTests(ChatWorkflowTests):
         self.rejected("schema 2 names it only inside modes")
 
     def test_mode_is_explicit_and_agrees_with_the_task_record(self):
-        for mode, fragment in ((None, "an active task needs its recorded mode"), ("cloud", "expected null or one of"),
+        for mode, fragment in ((None, "an active task needs its recorded mode"), ("cloud", "expected one of browser, local"), (["local"], "expected one of browser, local"),
+                               ({"local": 1}, "expected one of browser, local"), (1, "expected one of browser, local"),
                                ("browser", "differs from the active task's recorded mode")):
             with self.subTest(mode=mode):
                 self.current["execution_mode"] = mode
@@ -494,11 +495,43 @@ class ExecutionModeSchemaTests(ChatWorkflowTests):
         self.assertTrue(self.check()["passed"])
 
     def test_receipts_are_linked_and_not_embedded(self):
-        for key in chat_workflow.EMBEDDED_RECEIPTS:
+        for key in ("historical_handoff", "latest_handoff", "previous_handoff", "older_handoffs", "latest_recovery", "previous_recovery", "older_recoveries",
+                    "pending_phase_delivery", "p29_r02_prior_current_fields", "prior_p24_start_pending_delivery", "anything_else"):
             with self.subTest(key=key):
                 self.current[key] = {"url": "https://example.com/receipt"}
-                self.rejected("schema 2 keeps receipts in linked history")
+                self.rejected(f"current.{key}: schema 2 keeps receipts and phase records in linked history")
                 del self.current[key]
+
+    def test_both_records_use_the_same_schema(self):
+        for version in (1, 2):
+            self.registry["schema_version"], self.current["schema_version"] = version, 3 - version
+            with self.subTest(registry=version):
+                self.assertFalse(self.check()["passed"])
+        self.registry["schema_version"], self.current["schema_version"] = 2, 1
+        self.rejected("must equal the registry's")
+
+    def test_mode_belongs_to_an_active_task_only(self):
+        self.completed()
+        self.assertTrue(self.check()["passed"])
+        self.current["execution_mode"] = "local"
+        self.rejected("only an active task has one")
+
+    def test_retained_keys_must_be_in_the_retained_file(self):
+        self.current["history"][0]["holds"].append("absent_key")
+        self.rejected("absent_key is not in the retained file")
+        self.write("evidence/notes.txt", "not JSON")
+        data = (self.root / "evidence/notes.txt").read_bytes()
+        self.current["history"][0].update(path="evidence/notes.txt", sha256=hashlib.sha256(data).hexdigest(), bytes=len(data))
+        self.rejected("expected a JSON record")
+
+    def test_unfinished_scope_is_not_closed_in_its_own_record(self):
+        other = deepcopy(self.task)
+        other.update(id="C271", status="cancelled")
+        self.write("docs/workflow/tasks/C271/task.json", json.dumps(other))
+        self.rejected("C271 is closed in its own record")
+        other["status"] = "blocked"
+        self.write("docs/workflow/tasks/C271/task.json", json.dumps(other))
+        self.assertTrue(self.check()["passed"])
 
     def test_retained_history_is_checked_against_its_bytes(self):
         entry = self.current["history"][0]
@@ -593,10 +626,38 @@ class StartingRevisionTests(ExecutionModeSchemaTests):
         self.assertEqual((code, task), (1, None))
         self.assertIn("supply --base", result["errors"][0])
         self.assertEqual(self.snapshot(), before)
-        outer = self.root.parent
-        subprocess.run(["git", "init", "--quiet", "--template=", str(outer)], check=True, capture_output=True)
+        outer, environment = self.root.parent, {**os.environ, "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1"}
+        for arguments in (["init", "--quiet", "--template="], ["-c", "user.name=T", "-c", "user.email=t@example.invalid", "commit", "--quiet", "--allow-empty", "-m", "Outer"]):
+            subprocess.run(["git", "-C", str(outer), *arguments], check=True, capture_output=True, env=environment)
         code, result, task = self.create("C300")
         self.assertEqual((code, task), (1, None), "A surrounding repository is not this checkout.")
+
+    def test_repository_named_by_the_caller_is_not_observed(self):
+        self.git("init", "--quiet", "--template=")
+        first = self.commit("First")
+        other = self.root.parent / "other"
+        other.mkdir()
+        for arguments in (["init", "--quiet", "--template="], ["-c", "user.name=T", "-c", "user.email=t@example.invalid", "commit", "--quiet", "--allow-empty", "-m", "Other"]):
+            subprocess.run(["git", "-C", str(other), *arguments], check=True, capture_output=True)
+        with patch.dict(os.environ, {"GIT_DIR": str(other / ".git"), "GIT_WORK_TREE": str(other)}):
+            code, _, task = self.create("C300")
+        self.assertEqual((code, task["base_sha"]), (0, first))
+
+    def test_observation_names_the_branch(self):
+        self.git("init", "--quiet", "--template=")
+        self.commit("First")
+        self.git("checkout", "--quiet", "-b", "work/example")
+        self.assertIn("branch work/example", self.create("C300")[2]["base_observation"])
+        self.git("checkout", "--quiet", "--detach")
+        self.assertIn("detached", self.create("C301")[2]["base_observation"])
+
+    def test_mode_is_recorded_only_when_it_is_given(self):
+        self.assertNotIn("execution_mode", self.create("C300", "--base", BASE)[2])
+        self.assertEqual(self.create("C301", "--base", BASE, "--mode", "local")[2]["execution_mode"], "local")
+        self.assertTrue(Project(self.root).validate()["passed"])
+        code, result, task = self.create("C302", "--base", BASE, "--mode", "cloud")
+        self.assertEqual((code, task), (1, None))
+        self.assertIn("expected one of browser, local", result["errors"][0])
 
     def test_base_observation_contacts_no_remote(self):
         self.git("init", "--quiet", "--template=")
@@ -610,8 +671,9 @@ class StartingRevisionTests(ExecutionModeSchemaTests):
 
         with patch.object(chat_workflow.subprocess, "run", record):
             self.create("C300")
-        commands = [next(part for part in argv[argv.index("-C") + 2:]) for argv in started]
-        self.assertLessEqual(set(commands), {"rev-parse", "status"})
+        commands = {argv[argv.index("-C") + 2] for argv in started}
+        self.assertIn("rev-parse", commands)
+        self.assertLessEqual(commands, {"rev-parse", "status", "symbolic-ref"})
 
 
 if __name__ == "__main__":
