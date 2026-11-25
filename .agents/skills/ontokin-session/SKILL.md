@@ -1,16 +1,22 @@
 ---
 name: ontokin-session
-description: Start or resume OntoKin work from a ChatGPT browser thread, including continuation after compaction, interruption, or an older ZIP handoff. Explicitly load current GitHub instructions, reconcile live state, and select one authorized bounded scope.
+description: Start or resume OntoKin work in a local session or a ChatGPT browser thread, including continuation after compaction or interruption. Explicitly load the mode's current instructions, reconcile actual state, and select one authorized bounded scope.
 ---
 
 # Start or resume an OntoKin session
 
-## Establish the current context
+## Establish the mode and current context
 
-Complete [START](../../../CHATGPT-START-HERE.md) and [PROTOCOL sections 1–3](../../../docs/workflow/PROTOCOL.md)
-unless read at the observed revision; reuse verified read-sets and record gaps in
+The mode is explicit under [AGENTS](../../../AGENTS.md#execution-modes); never infer it.
+Complete its entry document and [PROTOCOL sections 1–3](../../../docs/workflow/PROTOCOL.md)
+unless read at the observed revision; reuse verified read-sets and record mode and gaps in
 [SESSION](../../../docs/workflow/templates/SESSION.md). This procedure installs no
 skill, tool or permission.
+
+- **Local:** [LOCAL-START](../../../LOCAL-START-HERE.md). Reuse the checkout and a valid
+  environment; its "Go"/"Continue" rule resumes the first unmet step.
+- **Browser:** [START](../../../CHATGPT-START-HERE.md), with the ephemeral-host rule and any
+  older ZIP handoff reconciled against live GitHub.
 
 ## Select and execute one bounded scope
 
@@ -21,6 +27,12 @@ execution. Apply [ROLE](../../../ROLE.md) and PROTOCOL's worker/verification/int
 
 ## Resume after an interruption
 
-Apply PROTOCOL section 8/[HANDOFF](../../../docs/workflow/HANDOFF.md): reconcile
-unknown outcomes, preserve bytes, confirm required recovery/delivery. Finish via
-[ontokin-delivery](../ontokin-delivery/SKILL.md); stop at the declared phase.
+Apply PROTOCOL section 8 in the session's mode: reconcile unknown outcomes and preserve
+bytes before any retry.
+
+- **Local:** inspect the actual working tree, processes, refs and destination state; continue
+  from existing commits and checkpoints.
+- **Browser:** [HANDOFF](../../../docs/workflow/HANDOFF.md) governs required recovery and
+  delivery.
+
+Finish via [ontokin-delivery](../ontokin-delivery/SKILL.md); stop where the mode's rules say.
