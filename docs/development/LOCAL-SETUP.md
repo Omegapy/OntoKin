@@ -5,7 +5,9 @@ machine. Sessions start from [LOCAL-START-HERE](../../LOCAL-START-HERE.md); this
 guide holds the detail. Validation policy is
 [OK-ENG-006](../engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md).
 
-Run every command from the top of the checkout or worktree it should act on.
+Run every command from the top of the checkout or worktree it should act on. Places beside
+the clone are written as seen from the clone; in a worktree under `OntoKin-worktrees` use
+`../../OntoKin-local` instead of `../OntoKin-local`.
 
 ## Prepare the normal environment
 
@@ -37,6 +39,7 @@ activation is needed, and the `python3` that is first on `PATH` does not matter:
 | Package pins and locks | [six Agent pins](../../tools/force-agent-verification-requirements.txt), [Linux x86-64 lock](../../tools/native-reader-verification-linux-cp312.lock), [macOS arm64 lock](../../tools/native-reader-verification-macos-arm64-cp312.lock) with its [provenance](../../tools/native-reader-verification-macos-arm64-cp312.provenance.json), committed |
 | Environment and its record | `.venv/` and `.venv/ontokin-environment.json`, ignored: exact interpreter, distribution, platform, tools, packages, lock digests and actions |
 | Reports of setup runs that changed something | `build/local-environment/`, ignored |
+| Lock that keeps two setup runs apart | `ontokin-bootstrap.lock` in the checkout's own Git directory; an empty file that stays there |
 | Worktrees and driver output | Directories beside the clone, outside every checkout |
 | Worktrees that the Claude application creates, machine-specific Claude settings | `.claude/worktrees/` and `.claude/settings.local.json`, ignored by `.claude/.gitignore` |
 
@@ -75,9 +78,13 @@ editable install of `core` proves nothing about the installed package.
 
 The doctor changes nothing and runs on any Python 3.9 or later, with or without an
 environment. `--output` writes the report to a new file; `--portable-paths` replaces
-this machine's paths by labels so that a report can be published. Only `--online`
-contacts the remote, with `git ls-remote`; it fetches nothing. Package-manager paths such as
-the Homebrew prefix stay in a portable report.
+this machine's paths and the places passed as options by labels, so that a report can be
+published. Read such a report before publishing it; package-manager paths such as the
+Homebrew prefix stay. Only `--online` contacts the remote, with `git ls-remote`; it fetches
+nothing.
+
+Before the setup tool changes an environment or the Node dependencies, it looks for processes
+that use them. This needs `ps` and `lsof`, which macOS includes; without them it refuses.
 
 ## Run the checks
 
@@ -115,8 +122,8 @@ git worktree add --no-track -b work/NAME ../OntoKin-worktrees/NAME origin/main
 Then run the setup commands above in the new directory. Each worktree has its own
 `.venv`, created there. Never copy or link one from another worktree: the doctor
 reports a copied, moved or shared environment as a mismatch. Two agents never install
-into the same environment; a second setup run for the same checkout stops at once. In
-the Claude desktop application, turn Worktree mode on deliberately before parallel
+into the same environment; a second setup run for the same checkout is told that another
+one is running and changes nothing. In the Claude desktop application, turn Worktree mode on deliberately before parallel
 editing, and verify the actual checkout path and branch before the first edit.
 
 The [recorded test](../engineering/local-migration-20261124/SECOND-WORKTREE.json) made an
@@ -132,8 +139,8 @@ This is the `package-smoke` profile. It uses new directories outside the checkou
 python3.12 tools/bootstrap_local.py --profile package-smoke --work-dir ../OntoKin-local/package-smoke/NEW_NAME
 ```
 
-With `W` as that directory, extract an identified revision, build its wheel in
-`build-env`, install only that wheel in `install-env`, and run it from an empty
+With `W` as the absolute path of that directory, extract an identified revision, build its
+wheel in `build-env`, install only that wheel in `install-env`, and run it from an empty
 directory with an absolute input path and nothing of the checkout on the path:
 
 ```sh
@@ -177,8 +184,16 @@ node tools/node_modules/playwright/cli.js install chromium --only-shell
 preparation or deliberate repair, and only when no validator or other agent uses that
 directory. The setup tool compares the installed versions first, leaves healthy
 dependencies alone, and replaces differing ones only with `--repair-node` and only when
-no process uses them. System libraries for a Linux browser are a separate step on
+no process uses them. Manifests alone are not enough: npm's own record of the installation
+must show the committed lock. System libraries for a Linux browser are a separate step on
 Linux; the commands above add none on macOS.
+
+`--node` reaches the setup tool and the doctor only. `tools/check_local.py --full` takes the
+first `node` on `PATH`, so put Node.js 22 first for that command:
+
+```sh
+PATH="/DIRECTORY/OF/NODE22:$PATH" .venv/bin/python tools/check_local.py --full --timeout 14400 --output-dir ../OntoKin-local/checks/NEW_NAME
+```
 
 ## Native by default, no container
 
@@ -205,13 +220,16 @@ The doctor prints the next exact setup action. The common cases:
 | `interpreter: missing` | No environment in this checkout | Run the setup tool |
 | `interpreter-missing` from the setup tool | CPython 3.12 is not on the machine | Install it with the existing mechanism, on macOS `brew install python@3.12`, or allow that with `--install-interpreter` |
 | `interpreter-mismatch`, or `interpreter: mismatch` | Another patch, implementation or distribution than the specification names. Homebrew can upgrade the patch under an existing environment | Provide the exact interpreter, or adopt another patch through a reviewed change of the specification. Then rebuild explicitly |
-| `isolation: mismatch` | The environment was copied, moved, linked, opened to system packages, or reaches another location | Review it, then `python3.12 tools/bootstrap_local.py --rebuild` |
-| `pip-check`, `imports` or `native-reader` not ready although every package has its version | Installing cannot repair it, for example without pip | Review it, then rebuild explicitly |
-| `packages: missing` or `mismatch` | Absent or wrong versions | Run the setup tool; it replaces only those packages |
+| `isolation: mismatch` | The environment was copied, moved, opened to system packages, or reaches another location, for example through an editable install of another checkout | Review it, then `python3.12 tools/bootstrap_local.py --rebuild` |
+| `.venv is not an environment directory of this checkout`, or it is a link, a file or an empty directory | Setup never replaces what it did not make | Move it away by hand, then run the setup tool |
+| `pip-check`, `imports` or `native-reader` not ready although every package has its version, pip that does not run, or a package recorded twice | Installing cannot repair it | Review it, then rebuild explicitly |
+| `packages: missing` or `mismatch` | Absent or wrong versions | Run the setup tool; it replaces only those packages. With `--rebuild` it makes the whole environment anew |
 | `lock: unsupported` | No reviewed lock for this platform or Python series | Report the platform. Never install from another platform's lock or without hashes |
 | `lock: mismatch` | A lock, its provenance or a pin was changed | Restore it, or adopt a reviewed change |
-| `.venv is in use by process N` | A process uses the environment, or could not be excluded | Let it finish; the tool neither rebuilds nor fills a used environment. Start the tool itself with `python3.12` |
-| `build/local-environment/replaced-…` exists | A rebuild did not finish, or the old environment could not be deleted | Inspect it, then delete it |
+| `.venv is in use by process N` | A process uses the environment, or could not be excluded | Let it finish; the tool neither rebuilds nor fills a used environment |
+| `This setup tool itself runs from .venv` | In an activated shell `python3.12` is the environment's own | `deactivate`, or name the interpreter outside, for example `/opt/homebrew/bin/python3.12` |
+| `Whether a process uses .venv cannot be established` | `ps` or `lsof` is missing, forbidden or failed; the message names the cause | Make them available. Nothing is changed meanwhile |
+| `build/local-environment/.replaced-…` exists | A rebuild did not finish, or the old environment could not be deleted | Inspect it, then delete it |
 | Another setup run is changing this checkout | Two setup runs at once | Wait for the first |
 | Many unit tests fail with "symlink", "aliases" or `/private/var` against `/var` | The default macOS temporary directory is a symbolic link | Run with the resolved `TMPDIR` shown above |
 
@@ -228,7 +246,7 @@ Executed on macOS 26.6.2, arm64, with Homebrew CPython 3.12.13, on November 25, 
 | Commands | State |
 | --- | --- |
 | Setup preview, setup, repeat setup, doctor in every form above, `pip check`, native-reader preflight, `capabilities`, `check` | Run |
-| `--find-links`, refusal of an incompatible environment, refusal while a process uses it, `--rebuild` | Run in scratch worktrees |
+| `--find-links`, refusal of an incompatible environment, refusal while a process uses it, `--rebuild` | Run in scratch worktrees, also by an independent reviewer |
 | Driver list and the routine driver with `--timeout` and `--output-dir`, with the default and the resolved temporary directory | Run on the base revision and on the [candidate](../engineering/local-migration-20261124/CANDIDATE-CHECKS.json) |
 | `git worktree add`, setup and checks in the new worktree, `git worktree remove` | Run; the migration worktree was made this way, and [a second one](../engineering/local-migration-20261124/SECOND-WORKTREE.json) was made, tested and removed |
 | Package-smoke procedure | Run |

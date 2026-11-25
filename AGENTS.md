@@ -65,11 +65,11 @@ Owner's no-payment direction/[OK-ENG-006](docs/engineering/OK-ENG-006-local-vali
 
 Do not wait for hosted CI, retry blocked jobs or enable paid execution. Inspect older branches' changed workflows before integration: manual-only/default-false opt-in; no push/pull-request/scheduled jobs. Claim repository-wide Actions disablement only if observed.
 
-Select checks for actual scope; documentation-only changes require documentation and applicable workflow checks below.
+Select checks for actual scope; documentation-only changes require documentation and applicable workflow checks below. Local command forms, with macOS's resolved temporary directory: [LOCAL-SETUP](docs/development/LOCAL-SETUP.md#run-the-checks).
 
 | Scope | Required check |
 | --- | --- |
-| Routine development, except documentation-only | `python3 tools/check_local.py`; `--full` adds existing visual job after pinned-tool preparation. Local command forms: [LOCAL-SETUP](docs/development/LOCAL-SETUP.md#run-the-checks). |
+| Routine development, except documentation-only | `python3 tools/check_local.py`; `--full` adds existing visual job after pinned-tool preparation. |
 | Runtime/semantics | Normally `python3 -m unittest discover -s tests -v` and `python3 -m ontokin conformance --output /tmp/ontokin-conformance.json`. |
 | Documentation/navigation | `python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py`. |
 | Workflow records/tools | `python3 tools/chat_workflow.py check`; tool edits also need focused tests. |

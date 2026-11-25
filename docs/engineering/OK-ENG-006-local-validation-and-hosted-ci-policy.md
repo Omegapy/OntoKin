@@ -99,7 +99,7 @@ NEW_DIRECTORY/bin/python -I -m pip install --only-binary=:all: --require-hashes 
 NEW_DIRECTORY/bin/python -I -B tools/check_native_reader_setup.py && NEW_DIRECTORY/bin/python -m unittest discover -s tests -p 'test_torque_native_joint_parent_site_c093.py' -v
 ```
 
-The [preflight](../../tools/check_native_reader_setup.py) imports `PIL.Image` and checks the Pillow version before test discovery. The focused class contains 11 methods and 47 subtests. To install offline, add `--no-index` and `--find-links` for each directory containing the seven locked wheels, or give the setup tool `--find-links`. For the full invocation, prepare the Node and Chromium dependencies below, then run the following command with the same environment's interpreter: `.venv/bin/python` in local mode, `NEW_DIRECTORY/bin/python` in browser mode.
+The [preflight](../../tools/check_native_reader_setup.py) imports `PIL.Image` and checks the Pillow version before test discovery. The focused class contains 11 methods and 47 subtests. To install offline, add `--no-index` and `--find-links` for each directory containing the seven locked wheels, or give the setup tool `--find-links`. For the full invocation, prepare the Node and Chromium dependencies below, then run the following command with the same environment's interpreter: `.venv/bin/python` in local mode, `NEW_DIRECTORY/bin/python` in browser mode. A browser host that has the command may put the earlier form's outer `timeout 7200` before the second part.
 
 ```bash
 PYTHON -I -B tools/check_native_reader_setup.py && PYTHON tools/check_local.py --full --force-agent --timeout 3600 --output-dir NEW_OUTPUT_DIRECTORY
@@ -172,7 +172,7 @@ Official GitHub documentation checked October 19, 2026. Provider pricing and set
 | Version | Date | Authority | Change |
 | --- | --- | --- | --- |
 | 0.1 | October 19, 2026 | Owner direction of that date | Adopted. |
-| 0.2 | November 24, 2026 | [Owner's local-development direction](local-migration-20261124/DECISION.md) | Names the executor of each execution mode, adds the macOS arm64 lock, the setup tool and the doctor, and replaces the temporary-environment example with the persistent one. No required check, result meaning, hosted-workflow rule or release contract changed. |
+| 0.2 | November 24, 2026 | [Owner's local-development direction](local-migration-20261124/DECISION.md) | Names the executor of each execution mode, adds the macOS arm64 lock, the setup tool and the doctor, replaces the temporary-environment example with the persistent one, and makes the outer `timeout` of the full invocation optional. No required check, result meaning, hosted-workflow rule or release contract changed. |
 
 [billing]: https://docs.github.com/en/billing/concepts/product-billing/github-actions
 [budgets]: https://docs.github.com/en/billing/how-tos/set-up-budgets

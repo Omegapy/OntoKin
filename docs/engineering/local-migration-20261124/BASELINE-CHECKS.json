@@ -926,14 +926,20 @@
     "next_action": "Run the driver with a resolved TMPDIR on macOS, as docs/development/LOCAL-SETUP.md says. No test or expectation changes."
    },
    {
-    "cause": "One regenerated fixture differs from its stored bytes in the last digit of one floating-point value (039565 stored, 039564 regenerated) on macOS arm64.",
+    "cause": "Two of the 92 regenerated files differ from their stored bytes on macOS arm64: acceptance.json at two places, each in the last digit of the same floating-point value (0.5984721441039565 stored, 0.5984721441039564 regenerated), and member-manifest.json in the digest of that file. The test stops at the first. That the platform's floating-point results cause it is inferred; it was not shown on a second platform.",
     "evidence": "test_force_contract.ForceContractReviewTests.test_original_corpus_and_author_remain_byte_identical does not pass in either run.",
-    "effect": "Unchanged baseline failure on this platform. It is evidence of a platform difference in regeneration, not a pass and not a reason to change the stored corpus.",
-    "next_action": "A separately selected scope examines the platform difference; the stored corpus and the expectation stay unchanged."
+    "effect": "Unchanged baseline failure on this platform. It is evidence of a difference in regeneration, not a pass and not a reason to change the stored corpus.",
+    "next_action": "A separately selected scope examines the difference, on a second platform as well; the stored corpus and the expectation stay unchanged."
    }
   ],
   "skipped": "Three static-tray readback tests are skipped because the retained exact Node/readback dependencies are unavailable; the driver counts a skip as an incomplete regression.",
   "documents": "The isolated workspace omits CHATGPT-START-HERE.md, ROLE.md, LICENSING.md, NOTICE and .agents, so 23 links have no target there. The same verifier passes in place. TASK-026 amends the inventories.",
   "pending": "External release attestations reported as pending by the driver stay pending and are not passes."
- }
+ },
+ "limits": [
+  "One machine, one interpreter and one operating system: macOS 26.6.2 arm64 with CPython 3.12.13. Nothing is said about Linux or other versions.",
+  "The driver was run without --full and --force-agent; the visual profile is not prepared on this machine.",
+  "The three skipped tests and the 16 pending external cases are neither passes nor failures of this base.",
+  "The failing sets are those of these two runs; repetition on another day or machine was not part of this record."
+ ]
 }

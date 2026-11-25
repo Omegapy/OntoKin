@@ -2,12 +2,13 @@
 
 Entry document of **local mode**: ordinary development in the owner's persistent clone or
 one of its worktrees. Starting here declares the mode; record `local` in the session
-checkpoint, and in a task record that names no mode yet. A task that is recorded as
-`browser` is resumed here only on explicit owner direction. A ChatGPT browser thread starts
+checkpoint, and in a new task record that names no mode yet. A task recorded as `browser`,
+like every earlier record that names no mode, is resumed here only on explicit owner
+direction. A ChatGPT browser thread starts
 from [CHATGPT-START-HERE](CHATGPT-START-HERE.md). A session on a disposable or remote host
 is not local, whatever application runs it: say so and ask. The persistent clone shows itself
 by what it retains, such as the worktrees, branches and environment that earlier records
-name; a fresh copy without them is not it.
+name; a fresh copy without them is not it unless the owner says so.
 
 The checkout persists; your understanding does not. Rebuild it from the records below. No
 previous conversation and no ChatGPT Library download is needed.

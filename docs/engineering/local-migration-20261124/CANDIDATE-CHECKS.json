@@ -161,12 +161,12 @@
   {
    "failure": "test_force_contract.ForceContractReviewTests.test_original_corpus_and_author_remain_byte_identical in both runs",
    "class": "unchanged from the baseline",
-   "cause": "One regenerated fixture differs from its stored bytes in the last digit of one floating-point value (039565 stored, 039564 regenerated) on macOS arm64.",
-   "next_action": "A separately selected scope examines the platform difference; the stored corpus and the expectation stay unchanged."
+   "cause": "Two of the 92 regenerated files differ from their stored bytes on macOS arm64: acceptance.json at two places, each in the last digit of the same floating-point value (0.5984721441039565 stored, 0.5984721441039564 regenerated), and member-manifest.json in the digest of that file. The test stops at the first. That the platform's floating-point results cause it is inferred; it was not shown on a second platform.",
+   "next_action": "A separately selected scope examines the difference, on a second platform as well; the stored corpus and the expectation stay unchanged."
   }
  ],
  "limits": [
-  "One machine and one interpreter. The other unchanged baseline limits of BASELINE-CHECKS.json apply.",
+  "One machine and one interpreter. The limits of BASELINE-CHECKS.json apply.",
   "The driver reports its overall status as failed because of the unchanged unit failure; this record does not relabel that status.",
   "These checks say nothing about native tools, release acceptance or C271."
  ],

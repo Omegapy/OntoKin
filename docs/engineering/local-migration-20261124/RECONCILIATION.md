@@ -7,8 +7,10 @@ findings are marked **awaiting TASK-007**, which needs the R06 archive and its
 receipt on the local machine.
 
 Everything below was read on 2026-11-25 between 06:49Z and 06:52Z from live
-refs, Git objects and GitHub. The identities are observations made at that time,
-not instructions to reset a newer ref. The C271 branch was read through Git
+refs, Git objects and GitHub; the account of C271's driver changes and of its
+evidence identities was corrected from Git objects at 08:45Z and 10:18Z. The
+identities are observations made at those times, not instructions to reset a
+newer ref. The C271 branch was read through Git
 objects only; it was not checked out, merged or changed.
 
 ## What is already in Git
@@ -52,13 +54,20 @@ The large C271 records stay exactly as they are, readable from Git at that head:
 
 | Object | Local object store | Remote, as recorded |
 | --- | --- | --- |
-| Evidence blob `9facb186ec11523163520323d83dc58fd68e829c` (`VERIFICATION-EVIDENCE.zip`, 25,817,783 bytes) | Absent | Absent: the recorded remote blob read returned 404 |
+| Evidence blob `9facb186ec11523163520323d83dc58fd68e829c` (`VERIFICATION-EVIDENCE.zip`, 25,817,783 bytes, SHA-256 `bae1b62fd3cc78e8cb886e08c4c2f7d76eaaf765e7f6374a394d5f0aa980d038`) | Absent | Absent: the recorded remote blob read returned 404 |
 | Accepted candidate tree `db30c29f24c154f378a5acac713385fc8bb44f52` | Absent | Not published |
 | `docs/engineering/localized-repair-c271/required-images-p29/` | No path on either branch | Not published |
 | Candidate parent commit `6c7f52a2ee627a382eea91ce26bf58bac4e6cccb` | Present, on the C271 branch | Published |
 
-The exact evidence bytes must not be recreated from other bytes. Their identity
-is held by the handoff chain (below), not by Git.
+The exact evidence bytes must not be recreated from other bytes. Git holds their
+identity, not the bytes: the C271 branch's
+[publication blocker](https://github.com/Omegapy/OntoKin/blob/bef6790291d0cddc8c6d7de9dc0a92fb5a98c448/docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json)
+records the path, size, SHA-256 and blob identity. It also names a separately
+saved copy in the owner's ChatGPT Library, version 0,
+[VERIFICATION-EVIDENCE.zip](https://chatgpt.com/library?file_id=libfile_fde3_f-0e02658ef51c819180bd4ff3ec73a2b3_2ab2a24d43748191957f9bcc356b59de&account_id=personal),
+which the branch's next-action record calls the exact input. The R06 chain below
+holds the bytes as well, according to its records. Neither copy has been read in
+this migration so far.
 
 ### In the local clone
 

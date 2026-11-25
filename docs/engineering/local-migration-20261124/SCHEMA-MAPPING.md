@@ -30,11 +30,11 @@ no top-level `entrypoint` or `required_reads`.
 | --- | --- | --- |
 | `project`, `latest_task`, `active_task`, `observed_main`, `snapshot_date`, `next_action`, `boundaries` | Same names | Unchanged meaning. `observed_main` stays a recorded observation that can be older than the actual head. |
 | None | `execution_mode` | Mode of the active task, which must equal that task's recorded mode; null exactly when no task is active. |
-| None | `checkpoint.record`, `checkpoint.session` | Paths of the active task's record and its latest session checkpoint; the session may be null. |
+| None | `checkpoint.record`, `checkpoint.session` | Paths of the active task's record and its latest session checkpoint, a Markdown file in that task's directory; the session may be null. Without an active task they may stay those of the latest task. |
 | None | `unfinished` | Concise references to unfinished scopes that are not selected: task, state, mode, branch, observed head and time, pull request, issue, open gates and the record that explains them. |
 | `delivery_policy` | `delivery_policy.browser` | Unchanged object. `delivery_policy.local` names the local closing contract. |
 | `historical_handoff`, `latest_handoff`, `previous_handoff`, `latest_recovery`, `older_handoffs` | Linked by `history` | Not embedded any more. The unchanged earlier file is [CURRENT-before-migration.json](CURRENT-before-migration.json). |
-| Every other field of a schema 1 record, such as `previous_recovery`, `older_recoveries`, `pending_phase_delivery` and phase-specific records | Linked by `history`, or kept in the task record, when such a record is compacted | Schema 2 has a closed list of fields and refuses any other. |
+| Every other field of a schema 1 record, such as `previous_recovery`, `older_recoveries`, `pending_phase_delivery` and phase-specific records | Linked by `history`, or kept in the task record, when such a record is compacted | Schema 2 has a closed list of fields, at the top level and in each nested object, and refuses any other. |
 | None | `history` | Retained JSON files with path, SHA-256, size, source commit, the keys they hold and their purpose. The checker compares digest and size with the retained bytes and looks for each named key in the file. |
 
 A browser session that needs the C262 archive identity or an earlier saved handoff reads it
@@ -48,7 +48,7 @@ from the file that `history` names.
 | `base_sha` | A new task records the commit supplied with `--base`, or the observed local head of the checkout. It never inherits `CURRENT.observed_main`. Without either, `new-task` refuses. |
 | `base_observation` | Written into new drafts: where the base came from, with the branch that was observed, and the recorded `observed_main` when it differs. |
 
-`new-task` contacts no remote. A head that was observed on the remote, for example with
+`new-task` and `brief` contact no remote, also in a partial clone. A head that was observed on the remote, for example with
 `git ls-remote`, is supplied with `--base`.
 
 ## Brief output

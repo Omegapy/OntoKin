@@ -1191,14 +1191,24 @@
       ]
     },
     {
-      "name": "routine local driver compared with the baseline",
+      "name": "routine local driver",
       "command": ".venv/bin/python tools/check_local.py --timeout SECONDS --output-dir NEW_DIRECTORY_OUTSIDE_THE_CHECKOUT",
+      "result": "failed",
+      "required": false,
+      "evidence": [
+        "docs/engineering/local-migration-20261124/CANDIDATE-CHECKS.json"
+      ],
+      "note": "Its unit step fails on the base and on the candidate with the same tests; every other step passes."
+    },
+    {
+      "name": "comparison of the routine local driver with the recorded baseline",
+      "command": "unit outcomes and step reports of the driver runs compared with BASELINE-CHECKS.json",
       "result": "passed",
       "required": true,
       "evidence": [
         "docs/engineering/local-migration-20261124/CANDIDATE-CHECKS.json"
       ],
-      "note": "The comparison found no new or worsened failure. The driver itself reports failed, on the base and on the candidate, because of the unchanged unit failures."
+      "note": "No new or worsened failure on the candidate."
     },
     {
       "name": "installed-package check outside the checkout",

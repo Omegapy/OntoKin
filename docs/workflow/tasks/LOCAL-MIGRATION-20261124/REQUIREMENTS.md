@@ -23,6 +23,11 @@ One migration scope from main `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774` on
 [scope issue 277](https://github.com/Omegapy/OntoKin/issues/277). The TRD's "In
 scope" section governs.
 
+Before the task ID, the branch name and the evidence directory were used on
+2026-11-25, they were looked for and not found: in the task and engineering
+directories of main and of the C271 branch, among the remote heads, in all pull
+requests and issues, and in all commit messages.
+
 ## Exclusions
 
 The TRD's "Out of scope" section governs. In particular this scope does not

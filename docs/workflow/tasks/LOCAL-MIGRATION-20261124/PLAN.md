@@ -65,6 +65,14 @@ the registry, the index and commits of this branch, and all publication.
 Workers own only the paths assigned to them and return results to the Director.
 Reviewers inspect and do not edit the candidate.
 
+## Deviations from the approved plan
+
+| Step | Plan | What was done | Reason |
+| --- | --- | --- | --- |
+| TASK-009 | Ignore rules in the root `.gitignore` | A nested `.claude/.gitignore` covers the worktrees and settings that the Claude application creates | The documentation verifier binds the bytes of the root file (SRC-01) |
+| TASK-027 | One candidate record | Driver runs were repeated at later commits; the last one, from the candidate worktree's own environment, is the candidate record | Independent pre-reviews led to changes of the tools and documents |
+| TASK-030 | One owner session provides every observation (DEC-010) | The owner is also asked for a second, read-only session with Worktree mode on | One session without parallel editing cannot show the Worktree criterion |
+
 ## Acceptance by step
 
 ### PHASE-001 — Baseline, scope and authority
