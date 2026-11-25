@@ -4,41 +4,41 @@
  "step": "TASK-027",
  "purpose": "Checks of the candidate for the changed scope and their comparison with the recorded baseline on the unmodified base revision (OK-ENG-009 section 3, gate 4).",
  "candidate": {
-  "revision": "1d9e56847cce24345276053c9483e671dbadb332",
-  "tree": "70a99199845d953888523080eef1612811d82c4e",
+  "revision": "402a7d8ed8512535e2f87ed123c3f6a7b418dea0",
+  "tree": "4f2977e56ef0e83f7abdda28e454988014b74532",
   "base": "6b346b1e4126332fe3c98a4a98f3e0b0e2f63774",
   "branch": "work/local-migration-20261124",
   "checkout": "a detached worktree of this revision outside the main checkout, clean before and after all runs, with its own environment made by the setup tool from the committed lock",
-  "later_commits": "Commits after this revision are identified by Git. The audit before review names them and repeats the checks their paths need."
+  "later_commits": "Commits after this revision change documents and records only. Git identifies them; the audit names them and repeats the documentation verifier and the workflow check on the frozen candidate."
  },
  "platform": {
   "system": "macOS 26.6.2 arm64",
   "interpreter": "CPython 3.12.13 (Homebrew python@3.12), in the .venv of that worktree",
   "packages": {
-   "jsonschema-specifications": "2025.9.1",
-   "jsonschema": "4.26.0",
-   "pillow": "13.0.0",
-   "referencing": "0.37.0",
    "attrs": "26.1.0",
-   "typing_extensions": "4.16.0",
+   "jsonschema": "4.26.0",
+   "jsonschema-specifications": "2025.9.1",
+   "pillow": "13.0.0",
+   "pip": "26.0",
+   "referencing": "0.37.0",
    "rpds-py": "2026.5.1",
-   "pip": "26.0"
+   "typing_extensions": "4.16.0"
   },
-  "environment_variables": "No PYTHON*, PIP_* or GIT_* variable was set by the caller, apart from PYTHONDONTWRITEBYTECODE for the in-place verifier."
+  "environment_variables": "No PYTHON* or PIP_* variable was set for the driver runs, apart from PYTHONDONTWRITEBYTECODE for the in-place verifier. GIT_EDITOR was set by the agent application; no other GIT_* variable was."
  },
  "output_location": "New directories under the local checks directory beside the clone, outside every checkout. Raw logs stay local and reproducible; their identities are below.",
  "nothing_changed_to_obtain_this": "No expectation, fixture, stored corpus, timeout default or workflow definition was changed. The per-command timeout was stated as 14,400 seconds; no command timed out.",
- "superseded_runs": "Complete runs with the same comparison result preceded this one at c6835c4d (resolved TMPDIR only, 4,897 tests), ebcfee8c and 7d937e26 (both TMPDIR settings, 4,941 tests); the tools and documents were corrected after independent reviews. Two runs at 02797bb0 were stopped before completion because a later commit replaced that revision; nothing is claimed from them.",
+ "superseded_runs": "Complete runs with the same comparison result preceded this one at c6835c4d (resolved TMPDIR only, 4,897 tests), ebcfee8c and 7d937e26 (4,941 tests), 1d9e5684 (4,972 tests), f81a95a5 and 2a220d2f (4,989 tests at the latter), all others with both TMPDIR settings; the tools and documents were corrected after independent reviews. Two runs at 02797bb0 were stopped before completion because a later commit replaced that revision; nothing is claimed from them.",
  "items": [
   {
    "item": "documentation verifier, in place",
    "result": "passed",
    "command": "python3.12 -I -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
-   "observed": "1,339 documents, 6,035 local links, 131 anchors, no failure",
+   "observed": "1,342 documents, 6,051 local links, 134 anchors, no failure",
    "output": {
-    "name": "candidate-1d9e5684-documents-inplace.json",
+    "name": "candidate-402a7d8e-documents-inplace.json",
     "bytes": 6608,
-    "sha256": "82de80c35b193fb368f6a97f55571c7b7272772890c1bed39a54da047d88375b"
+    "sha256": "ded40f2050ab39b8eba0397aee252bcbd27300d6b8e213f2dc6c43989deb9940"
    }
   },
   {
@@ -47,7 +47,7 @@
    "command": ".venv/bin/python -B tools/chat_workflow.py check",
    "observed": "12 tasks",
    "output": {
-    "name": "candidate-1d9e5684-workflow-inplace.txt",
+    "name": "candidate-402a7d8e-workflow-inplace.txt",
     "bytes": 148,
     "sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
    }
@@ -56,11 +56,11 @@
    "item": "focused tool tests, resolved TMPDIR",
    "result": "passed",
    "command": ".venv/bin/python -B -m unittest tests.test_bootstrap_local tests.test_doctor_local tests.test_chat_workflow tests.test_local_checks -v",
-   "observed": "290 tests, OK (78, 61, 119, 32)",
+   "observed": "307 tests, OK (85, 71, 119, 32)",
    "output": {
-    "name": "candidate-1d9e5684-focused-resolved.log",
-    "bytes": 45483,
-    "sha256": "c4a2be44c9eb1b4f11259b16705aa6e69401c96c2249c912d2cb73b7da309357"
+    "name": "candidate-402a7d8e-focused-resolved.log",
+    "bytes": 48244,
+    "sha256": "819f645e6ac5c2286645b4f708de066adf6e0b8b7e40210e698b41139a558145"
    }
   },
   {
@@ -68,36 +68,36 @@
    "result": "failed",
    "classification": "unchanged from the baseline",
    "command": "the same command without a resolved TMPDIR",
-   "observed": "290 tests, 2 not passing: test_local_checks.LocalChecksTests.test_external_workspace_retains_real_git_revision_and_copied_changes_with_own_index and test_force_agent_plan_is_explicit_and_combines_with_existing_full_role. Both do not pass on the unmodified base either; the cause is the symlinked default directory.",
+   "observed": "307 tests, 2 not passing: test_local_checks.LocalChecksTests.test_external_workspace_retains_real_git_revision_and_copied_changes_with_own_index and test_force_agent_plan_is_explicit_and_combines_with_existing_full_role. Both do not pass on the unmodified base either; the cause is the symlinked default directory.",
    "output": {
-    "name": "candidate-1d9e5684-focused-default.log",
-    "bytes": 47543,
-    "sha256": "7c1b1408c97d2a938b7e350d964e49887e07bc53abae5238e47f9ed38470131d"
+    "name": "candidate-402a7d8e-focused-default.log",
+    "bytes": 50304,
+    "sha256": "2f917b58e7dee084110d7f3b743137711d7b007d7d80e4fce958cc82ad409cd2"
    }
   },
   {
    "item": "routine driver, resolved TMPDIR",
    "result": "failed",
    "classification": "unchanged from the baseline",
-   "observed": "Unit step: 4,972 tests, one not passing, the same test and reason as on the base; every other step passed, the documents step included."
+   "observed": "Unit step: 4,989 tests, one not passing, the same test and reason as on the base; every other step passed, the documents step included."
   },
   {
    "item": "routine driver, default macOS TMPDIR",
    "result": "failed",
    "classification": "unchanged from the baseline",
-   "observed": "Unit step: 4,972 tests, 307 not passing, the same tests, outcomes, subtest counts and reasons as on the base; every other step passed, the documents step included."
+   "observed": "Unit step: 4,989 tests, 307 not passing, the same tests, outcomes, subtest counts and reasons as on the base; every other step passed, the documents step included."
   },
   {
    "item": "workflow definitions",
    "result": "passed",
-   "command": "git diff 6b346b1e4126332fe3c98a4a98f3e0b0e2f63774..1d9e56847cce24345276053c9483e671dbadb332 -- .github",
+   "command": "git diff 6b346b1e4126332fe3c98a4a98f3e0b0e2f63774..402a7d8ed8512535e2f87ed123c3f6a7b418dea0 -- .github",
    "observed": "No difference, so no push, pull-request or scheduled trigger was added."
   },
   {
    "item": "expectations",
    "result": "passed",
-   "command": "git diff --name-status 6b346b1e4126332fe3c98a4a98f3e0b0e2f63774..1d9e56847cce24345276053c9483e671dbadb332",
-   "observed": "31 files added, 21 modified, none deleted or renamed. No file under an existing evidence, expected, fixture or corpus path changed. Modified tests are tests/test_chat_workflow.py and tests/test_local_checks.py, which change with the tools they test."
+   "command": "git diff --name-status 6b346b1e4126332fe3c98a4a98f3e0b0e2f63774..402a7d8ed8512535e2f87ed123c3f6a7b418dea0",
+   "observed": "35 files added, 21 modified, none deleted or renamed. No file under an existing evidence, expected, fixture or corpus path changed. Modified tests are tests/test_chat_workflow.py and tests/test_local_checks.py, which change with the tools they test."
   },
   {
    "item": "three static-tray readback tests",
@@ -126,6 +126,7 @@
   }
  ],
  "comparison": {
+  "method": "The raw unit logs of these runs and of the baseline runs were parsed by one program and compared by test, outcome, number of subtests and reason, with machine paths replaced by labels.",
   "resolved_tmpdir": {
    "baseline_run": "BASELINE-CHECKS.json, run resolved-temporary-directory",
    "unchanged": 1,
@@ -135,7 +136,24 @@
    "different_reason": [],
    "different_subtests": [],
    "tests_baseline": 4740,
-   "tests_candidate": 4972
+   "tests_candidate": 4989,
+   "steps_equal_to_baseline": [
+    "agent",
+    "construction",
+    "impulse",
+    "source",
+    "surface",
+    "unit-tests"
+   ],
+   "steps_different_from_baseline": [
+    [
+     "documents",
+     "failed",
+     "passed"
+    ]
+   ],
+   "pending_equal_to_baseline": true,
+   "skips_equal_to_baseline": true
   },
   "default": {
    "baseline_run": "BASELINE-CHECKS.json, run default",
@@ -146,7 +164,24 @@
    "different_reason": [],
    "different_subtests": [],
    "tests_baseline": 4740,
-   "tests_candidate": 4972
+   "tests_candidate": 4989,
+   "steps_equal_to_baseline": [
+    "agent",
+    "construction",
+    "impulse",
+    "source",
+    "surface",
+    "unit-tests"
+   ],
+   "steps_different_from_baseline": [
+    [
+     "documents",
+     "failed",
+     "passed"
+    ]
+   ],
+   "pending_equal_to_baseline": true,
+   "skips_equal_to_baseline": true
   },
   "other_steps": "source, agent, construction, surface and impulse passed with report summaries equal to the baseline; documents changed from failed to passed.",
   "new_or_worsened_failures": []
@@ -176,17 +211,17 @@
    "command": "TMPDIR=\"$(cd \"$TMPDIR\" && pwd -P)/\" .venv/bin/python -B tools/check_local.py --timeout 14400 --output-dir <new directory beside the clone>",
    "driver_status": "failed",
    "exit_status": 1,
-   "started_at": "2026-11-25T11:32:04.334297+00:00",
-   "finished_at": "2026-11-25T11:51:49.434413+00:00",
-   "duration_seconds": 1184.974,
+   "started_at": "2026-11-25T19:19:04.728396+00:00",
+   "finished_at": "2026-11-25T19:41:02.349673+00:00",
+   "duration_seconds": 1317.415,
    "source": {
-    "head": "1d9e56847cce24345276053c9483e671dbadb332",
-    "tree": "70a99199845d953888523080eef1612811d82c4e",
+    "head": "402a7d8ed8512535e2f87ed123c3f6a7b418dea0",
+    "tree": "4f2977e56ef0e83f7abdda28e454988014b74532",
     "tracked_status": "",
     "source_unchanged": true,
     "git_revision_unchanged": true,
-    "inventory_sha256": "sha256:8f628c72f4f1862b3344fc4a1d649554d0233a2d9d512aa7f1f912e02ce547da",
-    "inventory_files": 18670
+    "inventory_sha256": "sha256:cf4fd1b56a32c58091117545cc4203e1e5449027d26c815a15bd2697f792829c",
+    "inventory_files": 18674
    },
    "environment": {
     "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 17.0.0 (clang-1700.6.3.2)]",
@@ -195,41 +230,41 @@
    },
    "summary_file": {
     "name": "<output>/summary.json",
-    "sha256": "sha256:6ceced6443c06da8740d881a104cd992c8172efcde75b07946a5630764fccbbc",
+    "sha256": "sha256:c5d9537b588c8a83e06a259d58478b4cdbf3247f3ff5435e6b89ffef3b21f56c",
     "bytes": 23043
    },
    "steps": [
     {
      "id": "unit-tests",
      "status": "failed",
-     "seconds": 1090.635,
+     "seconds": 1211.883,
      "exit_status": 1,
      "log": {
       "name": "<output>/logs/unit-tests.log",
-      "sha256": "sha256:9dedf0e467c50a91efb6e5e76565444727059137a79dafe9809a7e221a956aeb",
-      "bytes": 926568
+      "sha256": "sha256:21996056eb823a7c7cd2fcbee91af6671b8db36d4d3fd37a85517ce2c586fb22",
+      "bytes": 929227
      },
      "test_execution": {
-      "tests_run": 4972,
+      "tests_run": 4989,
       "skipped": 3,
       "expected_failures": 0,
-      "executed_without_skips": 4969,
+      "executed_without_skips": 4986,
       "complete_regression_passed": false
      }
     },
     {
      "id": "source",
      "status": "passed",
-     "seconds": 0.556,
+     "seconds": 0.568,
      "exit_status": 0,
      "log": {
       "name": "<output>/logs/source.log",
-      "sha256": "sha256:ae7ab9757eac4b44533e1cd389c36c9463e6aa2e74e7c042b4b4663392123c62",
+      "sha256": "sha256:b2021167806082773b4d6db4136426f457bba84cf9076e3ca131b98ada99bcbd",
       "bytes": 317
      },
      "report": {
       "name": "<output>/reports/source.json",
-      "sha256": "sha256:2d70a194dfe7be8e08cc6bcec117a935abcb32199d26a0942836585430f42c57",
+      "sha256": "sha256:f60077fcdbfca23b26f68aa31b637b2042fb42038b696eb6a918d18f9718ae42",
       "bytes": 230306,
       "summary": {
        "passed": 43,
@@ -245,17 +280,17 @@
     {
      "id": "agent",
      "status": "passed",
-     "seconds": 0.738,
+     "seconds": 0.827,
      "exit_status": 0,
      "log": {
       "name": "<output>/logs/agent.log",
-      "sha256": "sha256:6dc1eb6e0048d4189f59e1792ddb4b2c2e9b3201b08225b64d9c3be87ef5b58d",
+      "sha256": "sha256:9a96ce4ca6abb761326aa517361a71bb1c059748153898b0d53bf98d16fd3ad8",
       "bytes": 193
      },
      "report": {
       "name": "<output>/reports/agent.json",
-      "sha256": "sha256:62fd9a42678b00c20174a02eb97f2176ef50f89c44cd8fd07bf514efcb772f3f",
-      "bytes": 257717,
+      "sha256": "sha256:e6d16d286b6decbbbd3d3f863f90f155ecae2673f5d266de270d705b73682388",
+      "bytes": 257715,
       "summary": {
        "total": 10,
        "passed": 10,
@@ -266,17 +301,17 @@
     {
      "id": "construction",
      "status": "passed",
-     "seconds": 24.791,
+     "seconds": 26.873,
      "exit_status": 0,
      "log": {
       "name": "<output>/logs/construction.log",
-      "sha256": "sha256:0585bd28e3555a443b027571be02a55327e8ed9c45f17fc701928215c425a549",
+      "sha256": "sha256:0dc5ecfd4d768dc1b6f4628b001cf82c055a211c1a456c0ef1e702ed37318b19",
       "bytes": 536
      },
      "report": {
       "name": "<output>/reports/construction.json",
-      "sha256": "sha256:c7ff35fccabfa68ca9b109fe64de6b289d7968419d500ff84010c820600aac20",
-      "bytes": 185984,
+      "sha256": "sha256:8dbb88a4ba34ae701b71abd769120858c4cee5b7638b180ff88a94c750f1c15b",
+      "bytes": 185978,
       "summary": {
        "total": 20,
        "passed": 19,
@@ -290,17 +325,17 @@
     {
      "id": "surface",
      "status": "passed",
-     "seconds": 14.023,
+     "seconds": 15.456,
      "exit_status": 0,
      "log": {
       "name": "<output>/logs/surface.log",
-      "sha256": "sha256:8aa5a7fee75640c96f6af719d1a4e38169833c627ac80922d8051888ea53fd43",
+      "sha256": "sha256:8cd9aecfc587435e696b6117b5515ad326257153f04558ea25bf0bfc720128d6",
       "bytes": 286
      },
      "report": {
       "name": "<output>/reports/surface.json",
-      "sha256": "sha256:185234656cbed771a520232265a6fe379aad3c879a771373b7ebd8d34a075994",
-      "bytes": 582938,
+      "sha256": "sha256:ead12a6fcf2ac347cd9a33b08025c0dd22619adcdc1fc8447ff98a192df5e68d",
+      "bytes": 582931,
       "summary": {
        "total": 12,
        "passed": 1,
@@ -314,7 +349,7 @@
     {
      "id": "impulse",
      "status": "passed",
-     "seconds": 35.929,
+     "seconds": 40.426,
      "exit_status": 0,
      "log": {
       "name": "<output>/logs/impulse.log",
@@ -323,8 +358,8 @@
      },
      "report": {
       "name": "<output>/reports/impulse.json",
-      "sha256": "sha256:ce37fd857c100abb3a6f06a358d7eb73e4481a4bcd9436bb04379cf825bc2013",
-      "bytes": 885996,
+      "sha256": "sha256:046be2abb628a16e9f6ff756cec016da5692524efb8e5c5e8226663652e53eec",
+      "bytes": 885994,
       "summary": {
        "total": 12,
        "passed": 8,
@@ -338,11 +373,11 @@
     {
      "id": "documents",
      "status": "passed",
-     "seconds": 1.616,
+     "seconds": 1.764,
      "exit_status": 0,
      "log": {
       "name": "<output>/logs/documents.log",
-      "sha256": "sha256:82de80c35b193fb368f6a97f55571c7b7272772890c1bed39a54da047d88375b",
+      "sha256": "sha256:ded40f2050ab39b8eba0397aee252bcbd27300d6b8e213f2dc6c43989deb9940",
       "bytes": 6608
      }
     }
@@ -367,8 +402,8 @@
     "impulse I12"
    ],
    "unit_tests": {
-    "ran": 4972,
-    "seconds": 1088.317,
+    "ran": 4989,
+    "seconds": 1209.266,
     "result": "FAILED",
     "detail": "failures=1, skipped=3",
     "distinct_not_passing": 1,
@@ -403,17 +438,17 @@
    "command": ".venv/bin/python -B tools/check_local.py --timeout 14400 --output-dir <new directory beside the clone>",
    "driver_status": "failed",
    "exit_status": 1,
-   "started_at": "2026-11-25T11:32:03.951798+00:00",
-   "finished_at": "2026-11-25T11:50:53.012718+00:00",
-   "duration_seconds": 1128.916,
+   "started_at": "2026-11-25T19:19:04.515727+00:00",
+   "finished_at": "2026-11-25T19:39:55.272517+00:00",
+   "duration_seconds": 1250.521,
    "source": {
-    "head": "1d9e56847cce24345276053c9483e671dbadb332",
-    "tree": "70a99199845d953888523080eef1612811d82c4e",
+    "head": "402a7d8ed8512535e2f87ed123c3f6a7b418dea0",
+    "tree": "4f2977e56ef0e83f7abdda28e454988014b74532",
     "tracked_status": "",
     "source_unchanged": true,
     "git_revision_unchanged": true,
-    "inventory_sha256": "sha256:8f628c72f4f1862b3344fc4a1d649554d0233a2d9d512aa7f1f912e02ce547da",
-    "inventory_files": 18670
+    "inventory_sha256": "sha256:cf4fd1b56a32c58091117545cc4203e1e5449027d26c815a15bd2697f792829c",
+    "inventory_files": 18674
    },
    "environment": {
     "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 17.0.0 (clang-1700.6.3.2)]",
@@ -422,41 +457,41 @@
    },
    "summary_file": {
     "name": "<output>/summary.json",
-    "sha256": "sha256:fb5e711d5309174f522fadf66e12355b2a135efd9a96bacdb7910dfc4dd668ff",
-    "bytes": 23054
+    "sha256": "sha256:bddfa74d9edb1cb32475c26f6c0ad399ad59d0ef14880502c4036cd36a3aef62",
+    "bytes": 23056
    },
    "steps": [
     {
      "id": "unit-tests",
      "status": "failed",
-     "seconds": 1031.649,
+     "seconds": 1142.854,
      "exit_status": 1,
      "log": {
       "name": "<output>/logs/unit-tests.log",
-      "sha256": "sha256:a742a01f6e517c605ff2688fc29a84940215b1fd0224d04845741a89e8204a09",
-      "bytes": 1993772
+      "sha256": "sha256:2834780d345b26a9f464af1274bba4317c4e7880b20946315c42ee5df439b80e",
+      "bytes": 1996431
      },
      "test_execution": {
-      "tests_run": 4972,
+      "tests_run": 4989,
       "skipped": 3,
       "expected_failures": 0,
-      "executed_without_skips": 4969,
+      "executed_without_skips": 4986,
       "complete_regression_passed": false
      }
     },
     {
      "id": "source",
      "status": "passed",
-     "seconds": 0.506,
+     "seconds": 0.566,
      "exit_status": 0,
      "log": {
       "name": "<output>/logs/source.log",
-      "sha256": "sha256:09dfe94c5bb107c5798369b2c2aeb36c9c12ed0fe9bb11384ade6d9b54846995",
+      "sha256": "sha256:6cc3edde212389625cd81dd75a1f31f5b2462e04c21a5379b09a7bca72f9801c",
       "bytes": 318
      },
      "report": {
       "name": "<output>/reports/source.json",
-      "sha256": "sha256:7e67e3be2719df8b5c78a27208baa008c4a028ded7d41a01dca9b867ec3ccbe7",
+      "sha256": "sha256:f2d640b4b7b131e46a82254da3ece7c1b2b1df4eced791b9ff182b3701ac706d",
       "bytes": 230306,
       "summary": {
        "passed": 43,
@@ -472,17 +507,17 @@
     {
      "id": "agent",
      "status": "passed",
-     "seconds": 0.738,
+     "seconds": 0.781,
      "exit_status": 0,
      "log": {
       "name": "<output>/logs/agent.log",
-      "sha256": "sha256:ab9eabba8f34b9e725c45caa09b6ee69d0cd2efef65d870a8f9a7a852501bdd1",
+      "sha256": "sha256:a61401ad2adeb85898b14d14aed71c0e02a9ff51e9eafd0ee5a6d0ac349b9eb8",
       "bytes": 194
      },
      "report": {
       "name": "<output>/reports/agent.json",
-      "sha256": "sha256:b5a247482d2e056ab76b041c199c25e8d773363517dd3cce6e809383f369f188",
-      "bytes": 257717,
+      "sha256": "sha256:8b005bfb1d31b5e3d18f3e688fec0c31af7d118f1b52e06a4987142fbc0426e5",
+      "bytes": 257716,
       "summary": {
        "total": 10,
        "passed": 10,
@@ -493,17 +528,17 @@
     {
      "id": "construction",
      "status": "passed",
-     "seconds": 24.631,
+     "seconds": 26.945,
      "exit_status": 0,
      "log": {
       "name": "<output>/logs/construction.log",
-      "sha256": "sha256:7b43d06e139d0b78db93790cdbd1096c31beccbade510846fcccbc3d9254824e",
+      "sha256": "sha256:c2dbef1da9b34c996ec637b01bd9a1893180b3122d84bc8291d3790571f1978a",
       "bytes": 537
      },
      "report": {
       "name": "<output>/reports/construction.json",
-      "sha256": "sha256:ce77f1e6f2f7a2cad0e5d8e07c8e8e7a6ec6bd8bf6a4ccdccb69d7079b301e4e",
-      "bytes": 185980,
+      "sha256": "sha256:51d9ca0e679f7836421536ebfd6e65e4b3eb685db6649a00631fb8219c29f59e",
+      "bytes": 185987,
       "summary": {
        "total": 20,
        "passed": 19,
@@ -517,17 +552,17 @@
     {
      "id": "surface",
      "status": "passed",
-     "seconds": 14.451,
+     "seconds": 15.795,
      "exit_status": 0,
      "log": {
       "name": "<output>/logs/surface.log",
-      "sha256": "sha256:bdbaf4e17993654a1e7840da978fa2d49e0416506498be8fb6e8923f22e43272",
+      "sha256": "sha256:3079f4b76695b9b873ac830c04ca57c9cb6af49c3820c9c6242fb8443c81d8b2",
       "bytes": 287
      },
      "report": {
       "name": "<output>/reports/surface.json",
-      "sha256": "sha256:648e914597b6462f0b3d2e07c6c894c3b7ebce285a675bfc861c8c33eabf82dc",
-      "bytes": 582937,
+      "sha256": "sha256:2f33355e42c2cfeba499f2ae60409beaf12a84efb1476ddbee2f60d97e336c0e",
+      "bytes": 582936,
       "summary": {
        "total": 12,
        "passed": 1,
@@ -541,7 +576,7 @@
     {
      "id": "impulse",
      "status": "passed",
-     "seconds": 38,
+     "seconds": 41.539,
      "exit_status": 0,
      "log": {
       "name": "<output>/logs/impulse.log",
@@ -550,8 +585,8 @@
      },
      "report": {
       "name": "<output>/reports/impulse.json",
-      "sha256": "sha256:822c9edc6f81980fbf51c3ac8fd98c922502cc149b51d198ce4f44f1ef5123ff",
-      "bytes": 886001,
+      "sha256": "sha256:f81660274e0f454417e4b62399555080791abd3e9356ab04c35bddcda132ac48",
+      "bytes": 885991,
       "summary": {
        "total": 12,
        "passed": 8,
@@ -565,11 +600,11 @@
     {
      "id": "documents",
      "status": "passed",
-     "seconds": 1.689,
+     "seconds": 1.866,
      "exit_status": 0,
      "log": {
       "name": "<output>/logs/documents.log",
-      "sha256": "sha256:82de80c35b193fb368f6a97f55571c7b7272772890c1bed39a54da047d88375b",
+      "sha256": "sha256:ded40f2050ab39b8eba0397aee252bcbd27300d6b8e213f2dc6c43989deb9940",
       "bytes": 6608
      }
     }
@@ -594,8 +629,8 @@
     "impulse I12"
    ],
    "unit_tests": {
-    "ran": 4972,
-    "seconds": 1029.271,
+    "ran": 4989,
+    "seconds": 1140.215,
     "result": "FAILED",
     "detail": "failures=103, errors=311, skipped=3",
     "distinct_not_passing": 307,
@@ -631,10 +666,9 @@
      "test_surface_conformance": 1
     },
     "not_passing": {
-     "note": "The list of test, outcome, number of subtests and normalised reason equals the default run of BASELINE-CHECKS.json, which names each test.",
+     "note": "The list of test, outcomes, number of subtests and reason, with machine paths replaced by labels, equals the same list of the default baseline run, whose tests BASELINE-CHECKS.json names. Both lists give the digest below.",
      "entries": 307,
-     "sha256_of_this_list": "e936c8dc2d53e7ac1da51a30deb9de4e3cfd7b0b4c73e16692fa9947494c29a3",
-     "sha256_of_baseline_list": "e936c8dc2d53e7ac1da51a30deb9de4e3cfd7b0b4c73e16692fa9947494c29a3"
+     "sha256_of_this_list": "2681454e00c20e1b561f933d08421de97882a0dd34ea7fa4099e88eb076173d4"
     }
    }
   }
