@@ -2,17 +2,18 @@
 
 **Task:** [LOCAL-MIGRATION-20261124](../../workflow/tasks/LOCAL-MIGRATION-20261124/REQUIREMENTS.md),
 TASK-031. **Auditor:** Director `local-migration-f58a0f3c1d5a`, who took over after the tools, tests
-and instructions had been written. This is the Director's own audit. The independent review of
+and instructions had been written. This is the Director's own audit, made
+again after the review of the first frozen candidate `7caaff61`. The independent review of
 the exact candidate is TASK-032 and has its own record.
 
 ## Candidate
 
 | Item | Value |
 | --- | --- |
-| Base | `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774`, the head of main on the remote at 2026-11-25T20:11Z; it is the merge base |
-| Audited content | Commit `7a0d46f4fdb4e155a28d03640625bfed5cbd5b63`, tree `1b29a86acd4a812f4a0e0be3071d7cb0e33194e7` |
-| Difference from the base | 36 files added, 21 modified, none deleted or renamed; 18,625 of 18,646 base files keep path, mode and blob |
-| Later commits | Only this audit and the records that state its result (ledger, CURRENT, session checkpoint); Git lists them |
+| Base | `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774`, the head of main on the remote (`git ls-remote` at 2026-11-25T21:02Z); it is the merge base |
+| Audited content | Commit `a80a3947f3f6c6ae174f048c70605b5c7c369d95`, tree `9f3fba65d8fd70986db02e9c58f6f38d8cb8bd9f` |
+| Difference from the base | 37 files added, 21 modified, none deleted or renamed; 18,625 of 18,646 base files keep path, mode and blob |
+| Later commits | Only this audit and the session checkpoint; Git lists them |
 | Frozen candidate | The commit that carries this file. A file cannot name its own commit, so the pull request and the review record name it, with its tree. No later change is made to it without renewed review |
 
 ## Method
@@ -27,20 +28,21 @@ here; the TRD governs.
 Computed again for this audit, not taken from earlier records: every identity in
 [PRESERVATION](PRESERVATION.json); the difference from the base; the searches below; the identities of
 the R06 archive, its 131 manifest entries, its receipt and the evidence archive inside it; the
-comparison of the raw driver logs with the raw baseline logs, with a second program; the doctor; the
-remote heads, pull request 274 and the issues. The audit draft of the previous Director was used as
+comparison of the raw driver logs with the raw baseline logs, with a second program; the doctor;
+and, at 2026-11-25T21:02Z, the remote heads, the state of pull request 274 (open draft at `bef67902`) and of
+issues 273 and 277 (open). The audit draft of the previous Director was used as
 a list of pointers; each pointer was checked to resolve.
 
 ## From the requirements to evidence
 
-95 criteria are met, 1 is met except for a part that the owner waived,
+94 criteria are met, 2 are met except for a part that the owner waived,
 15 are open for later steps, and none is unmet. Open: TASK-032 2, TASK-033 1, TASK-034 6, TASK-035 1, TASK-036 5.
 
 | Requirement | Criterion, in short | State | Evidence |
 | --- | --- | --- | --- |
-| REQ-001 | Host inventory, each item observed or "not observed" | met | [HOST-INVENTORY](HOST-INVENTORY.md) |
+| REQ-001 | Host inventory, each item observed or "not observed" | met | [HOST-INVENTORY](HOST-INVENTORY.md); backup coverage was observed, its value is withheld there on purpose |
 |  | Setup decisions cite the inventory | met | `selected_from` in [the specification](../../../tools/local-environment.json); [DECISION](DECISION.md) DEC-003 |
-|  | Everything the inventory found is still there | open: TASK-034 | Main checkout: head, untracked `TRDs/` and `Implementation_Plans/` unchanged; rechecked at integration |
+|  | Everything the inventory found is still there | open: TASK-034 | Main checkout: head, untracked `TRDs/` and `Implementation_Plans/`; rechecked at integration |
 | REQ-002 | One task record with requirements, plan, status, start and acceptance | met | [Task records](../../workflow/tasks/LOCAL-MIGRATION-20261124/); identifiers looked for before use ([REQUIREMENTS](../../workflow/tasks/LOCAL-MIGRATION-20261124/REQUIREMENTS.md)) |
 |  | Own branch from current main; C271 untouched | met | Merge base `6b346b1e`; C271 head `bef67902` in `git ls-remote` |
 | REQ-003 | Exact version, distribution and platform recorded and tracked | met | [Specification](../../../tools/local-environment.json); [ENVIRONMENT](ENVIRONMENT.json) |
@@ -50,7 +52,7 @@ a list of pointers; each pointer was checked to resolve.
 | REQ-004 | Healthy: nothing rebuilt. Incompatible: reported, rebuilt only on request | met | tests/test_bootstrap_local.py; scenario runs in [PRE-REVIEWS](PRE-REVIEWS.md) |
 |  | Nothing of the kind tracked or copied | met | Tree search; [SECOND-WORKTREE](SECOND-WORKTREE.json) |
 | REQ-005 | Profiles and their checks documented, missing dependencies inventoried | met | [LOCAL-SETUP](../../development/LOCAL-SETUP.md#profiles); [ENVIRONMENT](ENVIRONMENT.json) |
-|  | Readiness reported per profile | met | Doctor output below |
+|  | Readiness reported per profile | met | [Readiness](#readiness-completion-and-qualification) |
 | REQ-006 | Linux lock refused elsewhere, hashes always enforced | met | tests/test_bootstrap_local.py, PlatformSelectionTests |
 |  | Linux lock byte-identical | open: TASK-034 | [PRESERVATION](PRESERVATION.json) |
 |  | Reviewed macOS lock under its own name | met | [LOCK-REVIEW](LOCK-REVIEW.md); [provenance](../../../tools/native-reader-verification-macos-arm64-cp312.provenance.json) |
@@ -61,7 +63,7 @@ a list of pointers; each pointer was checked to resolve.
 |  | `npm ci` only for first preparation or deliberate repair, never in use | met | VisualProfileTests, UseTests; not exercised for real here |
 |  | No `--with-deps` in macOS instructions | met | [LOCAL-SETUP](../../development/LOCAL-SETUP.md#visual-verification) |
 | REQ-009 | Installed packages are those of the profile and pip | met | [ENVIRONMENT](ENVIRONMENT.json): no additional package |
-|  | No other package manager | met | Search below |
+|  | No other package manager | met | [Searches](#searches) |
 |  | Native applications only under a selecting task | met | Setup refuses those profiles |
 |  | Historical profiles only in their own environment | met | [LOCAL-SETUP](../../development/LOCAL-SETUP.md#native-by-default-no-container) |
 | REQ-010 | Decision and reasons stated; every check without a container | open: TASK-036 | [LOCAL-SETUP](../../development/LOCAL-SETUP.md#native-by-default-no-container); no container used so far |
@@ -88,21 +90,21 @@ a list of pointers; each pointer was checked to resolve.
 |  | Both modes routed, neither guessed | met | [AGENTS](../../../AGENTS.md#execution-modes); registry |
 | REQ-017 | Local closing without the Library | met | [HANDOFF](../../workflow/HANDOFF.md#local-sessions) |
 |  | Continues within the task; a new scope needs selection | met | [PROTOCOL](../../workflow/PROTOCOL.md#4-implement-delegate-and-bound-the-session) |
-| REQ-018 | No instruction both ways | met | Reading of every surface below |
+| REQ-018 | No instruction both ways | met | [Reading for conflicts](#reading-for-conflicts) |
 |  | GOAL boundaries and semantics unchanged | met | GOAL: one operating reference |
-|  | Documentation and workflow checks pass | met | Below |
+|  | Documentation and workflow checks pass | met | [Checks](#checks) |
 | REQ-019 | `CLAUDE.md` imports AGENTS and adds no rule | met | [CLAUDE](../../../CLAUDE.md) |
 |  | Observed to have loaded in the application | met | [FRESH-SESSION](FRESH-SESSION.md); [judgement](FRESH-SESSION-ACCEPTANCE.md) |
 | REQ-020 | Six links resolve and are discovered | met | [PRESERVATION](PRESERVATION.json); [FRESH-SESSION](FRESH-SESSION.md); [judgement](FRESH-SESSION-ACCEPTANCE.md) |
 |  | One version of each skill; no named skill invoked | met | Tree; task records |
 | REQ-021 | Documented workflow runs in the Code tab | met | [FRESH-SESSION](FRESH-SESSION.md); [judgement](FRESH-SESSION-ACCEPTANCE.md) |
 |  | Own version checked; Worktree mode deliberate; path and branch verified | **met, except a part the owner waived** | Version read from the application. Worktree mode not observed; waived by the owner ([judgement](FRESH-SESSION-ACCEPTANCE.md)) |
-| REQ-022 | No competing ledger | met | Search below |
+| REQ-022 | No competing ledger | met | [Searches](#searches) |
 |  | Pointers and statuses validate | open: TASK-036 | `tools/chat_workflow.py check` |
 | REQ-023 | Resumes the next unmet gate from records | met | [FRESH-SESSION](FRESH-SESSION.md); [judgement](FRESH-SESSION-ACCEPTANCE.md) |
 |  | Never selects a milestone or reruns native work | met | [LOCAL-START-HERE](../../../LOCAL-START-HERE.md) |
 |  | Depends on no Goals feature, Task or memory | met | Same document |
-| REQ-024 | The steps are there and are followed | met | [LOCAL-START-HERE](../../../LOCAL-START-HERE.md); steps followed in [FRESH-SESSION](FRESH-SESSION.md); the report before the first change only by a session with a fresh context, after the sentence was sharpened ([judgement](FRESH-SESSION-ACCEPTANCE.md#what-the-logs-show-beyond-the-accounts)) |
+| REQ-024 | The steps are there and are followed | **met, except a part the owner waived** | [LOCAL-START-HERE](../../../LOCAL-START-HERE.md); steps followed in [FRESH-SESSION](FRESH-SESSION.md). The report before the first change was not observed in an unguided session; accepted by the owner ([judgement](FRESH-SESSION-ACCEPTANCE.md#what-the-logs-show-beyond-the-accounts)) |
 |  | Offline rule | met | Same document |
 |  | No suite or archive at startup; identities recorded | met | [FRESH-SESSION](FRESH-SESSION.md); [RECONCILIATION](RECONCILIATION.md#identities-for-later-on-demand-use) |
 | REQ-025 | A checkpoint another agent can continue from | met | [SESSION](../../workflow/tasks/LOCAL-MIGRATION-20261124/SESSION.md); [FRESH-SESSION](FRESH-SESSION.md); [judgement](FRESH-SESSION-ACCEPTANCE.md) |
@@ -134,11 +136,11 @@ a list of pointers; each pointer was checked to resolve.
 |  | Isolation inspected, lease expiry no proof | met | [PROTOCOL](../../workflow/PROTOCOL.md) |
 |  | No hook | met | None in the diff |
 | REQ-036 | Passed, failed, pending and not run apart | met | [CANDIDATE-CHECKS](CANDIDATE-CHECKS.json) |
-|  | Required checks run on the actual candidate | met | Same record and the checks below |
+|  | Required checks run on the actual candidate | met | [CANDIDATE-CHECKS](CANDIDATE-CHECKS.json); [Checks](#checks) |
 |  | Per-command timeout, new outside output, no outer timeout | met | Same record; [LOCAL-SETUP](../../development/LOCAL-SETUP.md#run-the-checks) |
 |  | Existing failures preserved, no expectation changed | met | Same record |
 | REQ-037 | No trigger added | met | `git diff` of `.github`: empty |
-| REQ-038 | One unique artifact restored and verified | met | [STORAGE](STORAGE.md#restore-check); [R06-VERIFICATION](R06-VERIFICATION.json) |
+| REQ-038 | One unique artifact restored and verified | met | [STORAGE](STORAGE.md#restore-check); [R06-VERIFICATION](R06-VERIFICATION.json). Unique untracked local material is listed as protected by no project mechanism, as DEC-009 foresees |
 |  | Ignored directory, bundle and copied environment are no backups | met | [STORAGE](STORAGE.md#existing-durable-mechanisms) |
 |  | No nested handoffs | met | None in the diff |
 | REQ-039 | LFS rules and payload identities unchanged | open: TASK-034 | [PRESERVATION](PRESERVATION.json) |
@@ -149,6 +151,13 @@ a list of pointers; each pointer was checked to resolve.
 | REQ-042 | Install is no completion, qualification or release | open: TASK-036 | STATUS; reports |
 |  | A missing package prevents ready | met | [SECOND-WORKTREE](SECOND-WORKTREE.json) |
 |  | Closing report | open: TASK-036 | TASK-036 |
+
+Some evidence was made with earlier revisions of the tools, which were corrected later:
+[ENVIRONMENT](ENVIRONMENT.json) (`4bdb2ee6`), [PACKAGE-SMOKE](PACKAGE-SMOKE.json) (`3fd7b922`) and
+[SECOND-WORKTREE](SECOND-WORKTREE.json) (`3c7985db`). With the tools of `d4d486b3` a preview, a fresh setup, a
+repeat and the doctor were run in a new clone, and an independent reviewer did the same with those of
+`7caaff61`: ready, and unchanged on repeat. The isolation of two worktrees and the installed
+package were not tested again. The setup in the main checkout (TASK-035) is the next real run.
 
 ## From the changes back to the requirements
 
@@ -241,6 +250,15 @@ confines checks to a hosted workspace or requires a saved ZIP.
 | Preserved identities (13 files and links) | All equal |
 | Home directories, machine paths, addresses, keys and tokens in added lines | Only made-up values in tests |
 | Second ledger | None; `Implementation_Plans/` is not committed |
+
+## Checks
+
+| Check | Result |
+| --- | --- |
+| Documentation verifier, with this file | Passed: 1,344 documents, 6,160 local links, 161 anchors, no failure |
+| Workflow check | Passed: 12 tasks |
+| Focused tool tests at `16c83df5` | 307 tests, OK with a resolved temporary directory; two not passing with the default one, as on the base |
+| Routine driver at `16c83df5`, both temporary-directory settings | Fails with one and 307 tests, exactly those of the unmodified base; every other step passes ([CANDIDATE-CHECKS](CANDIDATE-CHECKS.json)) |
 
 ## Readiness, completion and qualification
 

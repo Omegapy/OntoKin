@@ -38,39 +38,42 @@ owner started for TASK-030.
 ## Source
 
 - Starting revision and current code checkpoint: `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774` to
-  `7a0d46f4fdb4e155a28d03640625bfed5cbd5b63`, tree `1b29a86acd4a812f4a0e0be3071d7cb0e33194e7`.
+  `a80a3947f3f6c6ae174f048c70605b5c7c369d95`, tree `9f3fba65d8fd70986db02e9c58f6f38d8cb8bd9f`.
 - Dirty and untracked state: the worktree was clean at that commit. The main checkout has no
   tracked change; its untracked `TRDs/` (equal to the committed copy) and
   `Implementation_Plans/` stay there on purpose.
 - Actual remote observation, with command and time, or offline and stale:
-  `git ls-remote --heads origin` at 2026-11-25T20:03Z: main `6b346b1e…`,
+  `git ls-remote --heads origin` at 2026-11-25T21:02Z: main `6b346b1e…`,
   `work/c271-missing-import-digest-control` `bef67902…`, `work/local-migration-20261124`
-  `3d02d7e0…`; no other head.
+  `7caaff61…`, the first frozen candidate; no other head.
 - Repository, actual main SHA/tree, and observation time: Omegapy/OntoKin, main
   `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774`, tree `812a17de3880f7c152beacccf7b2e690381f9716`,
   same observation.
-- Active branch/head, open PR, and scope issue: this branch at the checkpoint above; no pull
-  request yet; [scope277](https://github.com/Omegapy/OntoKin/issues/277) open.
+- Active branch/head, open PR, and scope issue: this branch at the checkpoint above; draft
+  pull request 278; [scope277](https://github.com/Omegapy/OntoKin/issues/277) open.
 - Local checkout identity and unpublished changes, if a workspace exists: clone with three
   linked worktrees: this one, and two detached ones that hold no unique work,
-  `baseline-6b346b1e` and `candidate-checks` at `402a7d8e`. No unpublished commit, no stash.
+  `baseline-6b346b1e` and `candidate-checks` at `16c83df5`. No unpublished commit, no stash.
 
 ## Work
 
-- Requirements completed, incomplete, blocked, and excluded: the ledger marks none of the 42
-  requirements done before the audit of TASK-031. Excluded: every C271 gate, product and
+- Requirements completed, incomplete, blocked, and excluded: the ledger marks the 42 requirements
+  in the closing step TASK-036, because 15 criteria depend on later steps; the audit has the state of
+  each criterion. Excluded: every C271 gate, product and
   native qualification, container profiles.
 - Completed acceptance items and last completed gate: TASK-001 to TASK-031. Last completed gate:
   the [audit](../../../engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md) that freezes the candidate.
   The Worktree criterion of TASK-030 is waived by the owner
   ([judgement](../../../engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md)).
 - Changed artifact paths and exact code/input identities: `git diff --name-status` from the
-  base to the code checkpoint: 36 added, 21 modified, none deleted. No expectation, fixture,
+  base to the code checkpoint: 37 added, 21 modified, none deleted. No expectation, fixture,
   evidence file, workflow definition or C271 file is among them. Since
-  `402a7d8ed8512535e2f87ed123c3f6a7b418dea0` only documents and records changed.
+  `16c83df531dbbef8019751dc44af8ee4df8d5c8b` only documents and records changed.
 - Decisions made: [DECISION](../../../engineering/local-migration-20261124/DECISION.md), with
-  the deviations recorded in [PLAN](PLAN.md#deviations-from-the-approved-plan); on the owner's
-  direction of 2026-11-25 details of the machine's protection are kept off the public record.
+  the deviations recorded in [PLAN](PLAN.md#deviations-from-the-approved-plan). On 2026-11-25 the
+  owner decided to merge normally although earlier published commits still hold details of the
+  machine's protection ([HOST-INVENTORY](../../../engineering/local-migration-20261124/HOST-INVENTORY.md)), and
+  accepted that the startup report was not observed in an unguided session.
 - Remaining items: TASK-032 to TASK-036.
 - Learning checkpoint result and capture preference: not performed yet; it belongs to the
   closing steps.
@@ -93,8 +96,7 @@ owner started for TASK-030.
 - Terminal and executed interpreter/platform: zsh; the worktree's `.venv/bin/python`, and
   `python3.12` for the setup tool.
 - Available read/write/conditional-update/merge operations: file and Git writes in the
-  worktree, SSH push of this branch (observed), `gh` reads (observed); pull request and merge
-  not used yet.
+  worktree, SSH push of this branch, pull request and issue comment (observed); merge not used yet.
 - Missing capabilities and their effect on this milestone: none.
 
 ## Verification
@@ -102,7 +104,7 @@ owner started for TASK-030.
 - Commands actually executed and observed outcomes: at `d4d486b3621e26e71830beddfe988ac8bc2e9461`
   in a scratch clone: documentation verifier and workflow check passed, 307 focused tests OK
   with a resolved TMPDIR; setup preview, setup, repeat and doctor run for real, the repeat
-  unchanged. At `402a7d8ed8512535e2f87ed123c3f6a7b418dea0`: both driver runs, 307 focused tests, the
+  unchanged. At `16c83df531dbbef8019751dc44af8ee4df8d5c8b`: both driver runs, 307 focused tests, the
   documentation verifier and the workflow check. At the code checkpoint: documentation verifier
   and workflow check passed. The R06 identities were computed again and are equal.
 - Failures: the driver reports failed. Its unit step ran 4,989 tests; one does not pass with a
@@ -120,7 +122,8 @@ owner started for TASK-030.
   beside the clone.
 - Relevant validation/CI results and source revisions: as above. No hosted run was started.
 - Current review eligibility and any changes since review: the commit that carries this record
-  is the frozen candidate; not yet reviewed.
+  is the frozen candidate. The first frozen candidate `7caaff61` was reviewed and not accepted; its
+  findings are corrected, and this one waits for the renewed review.
 
 ## Recovery
 
