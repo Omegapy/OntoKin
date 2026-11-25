@@ -14,7 +14,7 @@ unless read at the observed revision; reuse verified read-sets and record mode a
 skill, tool or permission.
 
 - **Local:** [LOCAL-START](../../../LOCAL-START-HERE.md). Reuse the checkout and a valid
-  environment; its "Go"/"Continue" rule resumes the first unmet step.
+  environment; its "Go"/"Continue" rule resumes the next unmet step.
 - **Browser:** [START](../../../CHATGPT-START-HERE.md), with the ephemeral-host rule and any
   older ZIP handoff reconciled against live GitHub.
 

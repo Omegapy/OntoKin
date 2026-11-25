@@ -283,7 +283,8 @@ only with no active scope.
 **Local, after an interruption:** inspect the actual working tree, processes, refs and
 destination state before retrying any operation. Continue from existing commits and
 checkpoint records; do not restart implementation when only a push, review or delivery
-step remains. Offline: work may continue within scope; label remote state stale and report
+step remains. The next unmet step is the one that CURRENT's next action names; a blocked step
+is reported and holds back no step that does not depend on it. Offline: work may continue within scope; label remote state stale and report
 push, merge and deletion as unconfirmed.
 
 **Browser:** every bounded development/recovery phase requires HANDOFF's verified saved

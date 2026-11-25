@@ -11,7 +11,7 @@ Every session works in exactly one explicit mode, under the owner's [November 24
 | **Local**: ordinary development | [LOCAL-START-HERE](LOCAL-START-HERE.md) | Owner's persistent clone and its worktrees. Inspect actual state; reuse validated resources; reconstruct only missing/incompatible inputs. |
 | **Browser**: ChatGPT browser threads | [CHATGPT-START-HERE](CHATGPT-START-HERE.md) | A different, disposable host for each thread, under the [ephemeral host rule](#ephemeral-host-rule-browser-mode). |
 
-The entry document a session starts from declares its mode; session checkpoint and task record state it. Never infer it from a path, machine, product or agent name. "Go"/"Continue" without a named entry document uses the mode recorded for the selected task; only explicit owner direction changes it. When neither names one, or the recorded mode does not fit the actual session, report it and ask: a ChatGPT browser thread or any session on a disposable or remote host is not local, whatever the record says.
+The entry document a session starts from declares its mode; session checkpoint and task record state it. Never infer it from a path, machine, product or agent name. "Go"/"Continue" without a named entry document uses the mode recorded for the selected task ([CURRENT](docs/workflow/CURRENT.json) `execution_mode` and the task record); only explicit owner direction changes it. When neither names one, or the recorded mode does not fit the actual session, report it and ask: a ChatGPT browser thread or any session on a disposable or remote host is not local, whatever the record says.
 
 A rule marked for one mode binds only that mode; unmarked rules bind both. A marker in a heading covers its section, one that starts a list item covers that item, and one in running text covers up to the next marker or the end of its paragraph.
 
@@ -26,7 +26,7 @@ attempt to find or repair a previous host. Follow
 
 ## Recenter and resume
 
-At session start, after compaction, and before milestone selection/closure, follow your mode's entry document and [PROTOCOL §1](docs/workflow/PROTOCOL.md#1-authority-and-explicit-loading). Their full load/read-set rules apply; GitHub skills are not automatically installed. Reconcile user direction, actual state and adopted contracts; identify goal/next unmet gate.
+At session start, after compaction, and before milestone selection/closure, follow your mode's entry document and [PROTOCOL §1](docs/workflow/PROTOCOL.md#1-authority-and-explicit-loading). Their full load/read-set rules apply. Reconcile user direction, actual state and adopted contracts; identify goal/next unmet gate. **Browser:** GitHub skills are not automatically installed.
 
 Inspect working tree, actual GitHub head, lease and relevant CI; preserve existing work. Synthetic snapshots are not remote heads. Read applicable specifications via [docs/README.md](docs/README.md), especially adopted language rules/active contract; historical proposals guarantee no implementation. Continue authorized useful work, recording real blockers/exact next actions. Never substitute an easier demonstration for an unmet goal.
 
@@ -69,7 +69,7 @@ Select checks for actual scope; documentation-only changes require documentation
 
 | Scope | Required check |
 | --- | --- |
-| Routine development, except documentation-only | `python3 tools/check_local.py`; `--full` adds existing visual job after pinned-tool preparation. |
+| Routine development, except documentation-only | `python3 tools/check_local.py`; `--full` adds existing visual job after pinned-tool preparation. Local command forms: [LOCAL-SETUP](docs/development/LOCAL-SETUP.md#run-the-checks). |
 | Runtime/semantics | Normally `python3 -m unittest discover -s tests -v` and `python3 -m ontokin conformance --output /tmp/ontokin-conformance.json`. |
 | Documentation/navigation | `python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py`. |
 | Workflow records/tools | `python3 tools/chat_workflow.py check`; tool edits also need focused tests. |

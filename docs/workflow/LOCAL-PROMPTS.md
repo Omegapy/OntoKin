@@ -12,9 +12,9 @@ ChatGPT Library link.
    own worktree while its branch is not integrated.
 2. Type one of the prompts below. The agent runs the setup and test commands; a terminal is
    not needed.
-3. Leave Worktree mode off for a single session in the main checkout. Turn it on deliberately
-   before parallel editing, and have the agent report the actual checkout path and branch
-   before it edits.
+3. Leave Worktree mode off for a single session: it then works in the folder and on the branch
+   you chose. With it on, the application makes a new checkout on a new branch. Turn it on
+   deliberately before parallel editing, and use the prompt below before the agent edits.
 4. Before archiving a session that used a worktree, have the agent commit or otherwise
    preserve the files you need from it.
 
@@ -38,8 +38,16 @@ workflow before work on it begins.
 Continue.
 ```
 
-"Go" means the same. The agent resumes the first unmet step of the selected scope, in the
+"Go" means the same. The agent resumes the next unmet step of the selected scope, in the
 mode that scope's record names.
+
+## Check where a session works
+
+```text
+Report this session's checkout, relative to the clone, with its branch and head, the output of
+git worktree list, whether a .venv exists here, and which instructions and skills you have.
+Change nothing.
+```
 
 ## Recover
 

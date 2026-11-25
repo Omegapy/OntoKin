@@ -1173,12 +1173,13 @@
     },
     {
       "name": "focused tool tests",
-      "command": ".venv/bin/python -m unittest tests.test_bootstrap_local tests.test_doctor_local tests.test_chat_workflow tests.test_local_checks -v",
+      "command": "TMPDIR=\"$(cd \"$TMPDIR\" && pwd -P)/\" .venv/bin/python -m unittest tests.test_bootstrap_local tests.test_doctor_local tests.test_chat_workflow tests.test_local_checks -v",
       "result": "passed",
       "required": true,
       "evidence": [
         "docs/engineering/local-migration-20261124/CANDIDATE-CHECKS.json"
-      ]
+      ],
+      "note": "With the default macOS TMPDIR two tests of tests.test_local_checks do not pass, unchanged from the baseline."
     },
     {
       "name": "python-verification readiness",
@@ -1256,15 +1257,6 @@
       "also_waiting": [
         "TASK-007",
         "TASK-008",
-        "TASK-031"
-      ]
-    },
-    {
-      "step": "TASK-030",
-      "since": "2026-11-25",
-      "reason": "The fresh-session demonstration is performed by the owner in the Claude Desktop Code tab after the session checkpoint (TASK-029) exists.",
-      "needs": "The owner starts a new session in the migration worktree and types Continue.",
-      "also_waiting": [
         "TASK-031"
       ]
     }

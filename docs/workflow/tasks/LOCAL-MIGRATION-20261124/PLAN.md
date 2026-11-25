@@ -8,7 +8,8 @@ The steps, dependencies and acceptance criteria below are those of
 PLAN-20261125-CB551B16, revision 3, which the owner approved and authorized for
 execution on 2026-11-24. That plan's tracker stays untracked in the owner's main
 checkout because it is bound to that project root. [task.json](task.json) is the
-acceptance ledger; a mismatch with the tracker is reported, not synchronized.
+acceptance ledger; a session that can read both reports a mismatch and does not
+synchronize them.
 Requirements: [REQUIREMENTS.md](REQUIREMENTS.md).
 
 ## Order and dependencies

@@ -4,7 +4,8 @@ The requirements baseline is the approved [TRD-20261124-E65C6113](../../../../TR
 revision 3, SHA-256 `12e905a76da826f52e61c1237977a836750ce89260e208ba8553ebc8aeb28d76`.
 It states each requirement, its sources, its acceptance criteria and its
 dependencies in full. This file does not restate them; the titles below are the
-TRD's own headings, and [task.json](task.json) records status and evidence.
+TRD's own headings, and [task.json](task.json) records status and evidence. A session reads
+the TRD's sections for the requirements of the step it carries out.
 
 ## Authority
 
