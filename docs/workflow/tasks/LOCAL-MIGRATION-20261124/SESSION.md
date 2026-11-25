@@ -7,7 +7,7 @@ owner starts for TASK-030.
 
 ## Identity
 
-- Checkpoint time and author identity: 2026-11-25T09:39Z, Director `local-migration-0e9ea0a483b1`.
+- Checkpoint time and author identity: 2026-11-25T15:27Z, Director `local-migration-0e9ea0a483b1`.
 - Task, session, and agent or tool identity: LOCAL-MIGRATION-20261124; the implementing
   session, one Claude Code command-line session, model Claude Opus 5.5.
 - Execution mode, and the entry document or record that declared it: `local`, declared by the
@@ -39,14 +39,14 @@ owner starts for TASK-030.
 ## Source
 
 - Starting revision and current code checkpoint: `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774` to
-  `27ede8cf12958229a82d79af154e30609591f2c7`, tree `39d3a4fdabff20757883c271905eeafe4461a3e2`.
+  `03d61c2dfd386698e0b6dead00c35b1fea70422a`, tree `998fefdbac11ac1ef3a6896e8575da5d6f7570db`.
 - Dirty and untracked state: the worktree was clean at that commit. The main checkout has no
   tracked change; its untracked `TRDs/` (equal to the committed copy) and
   `Implementation_Plans/` stay there on purpose.
 - Actual remote observation, with command and time, or offline and stale:
-  `git ls-remote --heads origin` at 2026-11-25T09:38Z: main `6b346b1e…`,
+  `git ls-remote --heads origin` at 2026-11-25T15:24Z: main `6b346b1e…`,
   `work/c271-missing-import-digest-control` `bef67902…`, `work/local-migration-20261124`
-  `27ede8cf…`; no other head.
+  `03d61c2d…`; no other head.
 - Repository, actual main SHA/tree, and observation time: Omegapy/OntoKin, main
   `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774`, tree `812a17de3880f7c152beacccf7b2e690381f9716`,
   same observation.
@@ -54,7 +54,7 @@ owner starts for TASK-030.
   request yet; [scope277](https://github.com/Omegapy/OntoKin/issues/277) open.
 - Local checkout identity and unpublished changes, if a workspace exists: clone with three
   linked worktrees: this one, and two detached ones that hold no unique work,
-  `baseline-6b346b1e` and `candidate-checks` at `ebcfee8c`. No unpublished commit, no stash.
+  `baseline-6b346b1e` and `candidate-checks` at `03d61c2d`. No unpublished commit, no stash.
 
 ## Work
 
@@ -68,7 +68,8 @@ owner starts for TASK-030.
   base to the code checkpoint: 31 added, 21 modified, none deleted. No expectation, fixture,
   evidence file, workflow definition or C271 file is among them.
 - Decisions made: [DECISION](../../../engineering/local-migration-20261124/DECISION.md), with
-  the recorded deviations.
+  the deviations recorded in [PLAN](PLAN.md#deviations-from-the-approved-plan); on the owner's
+  direction of 2026-11-25 details of the machine's protection are kept off the public record.
 - Remaining items: TASK-006 to TASK-008 (blocked, see Recovery); TASK-030; TASK-031 to
   TASK-036.
 - Learning checkpoint result and capture preference: not performed yet; it belongs to the
@@ -99,11 +100,11 @@ owner starts for TASK-030.
 ## Verification
 
 - Commands actually executed and observed outcomes: documentation verifier passed, workflow
-  check passed with 12 tasks, 259 focused tests OK with a resolved TMPDIR (with the default
-  one two do not pass, unchanged from the baseline), two routine driver runs, second-worktree
+  check passed with 12 tasks, 307 focused tests OK with a resolved TMPDIR (with the default
+  one two do not pass, unchanged from the baseline), routine driver runs, second-worktree
   test: [candidate checks](../../../engineering/local-migration-20261124/CANDIDATE-CHECKS.json),
   [second worktree](../../../engineering/local-migration-20261124/SECOND-WORKTREE.json).
-- Failures: the driver reports failed. Its unit step ran 4,941 tests; one does not pass with
+- Failures: the driver reports failed. Its unit step ran 4,989 tests; one does not pass with
   a resolved TMPDIR and 307 with the default one, all unchanged from the
   [baseline](../../../engineering/local-migration-20261124/BASELINE-CHECKS.json).
 - Pending and not-run checks: 16 external cases pending; three readback tests skipped;
@@ -115,10 +116,11 @@ owner starts for TASK-030.
   finding and disposition. They are not the review of TASK-032.
 - Evidence locations and hashes: digests of the raw logs are in the two records above; the
   logs are in `OntoKin-local/` beside the clone.
-- Relevant validation/CI results and source revisions: candidate
-  `ebcfee8ccb6402e7c1b99ef63ce406966ba9909a`. Later commits changed documents and records
-  only; the documentation verifier, the workflow check and the workflow and driver tests
-  were run again. No hosted run was started.
+- Relevant validation/CI results and source revisions: the candidate record binds
+  `1d9e56847cce24345276053c9483e671dbadb332`. The tools were corrected after it; driver runs at
+  `f81a95a592b53aabc6a9668a33ef88e059eb839f` and `2a220d2f295a2f4ec68eebdf6c8cd0d4282f475e` had the
+  same comparison result, and the one commit after them changed documents only. The record is
+  made again for the frozen candidate. No hosted run was started.
 - Current review eligibility and any changes since review: not eligible until TASK-031
   freezes a candidate.
 
@@ -131,7 +133,7 @@ owner starts for TASK-030.
 - Unknown operation and its intended parent/tree/commit or request identity: none.
 - Remote readback needed before retrying that operation: not applicable.
 - Current blockers with concrete evidence: TASK-006: the R06 archive (41,730,084 bytes) and
-  its receipt (149,563 bytes) were not found on the machine at 2026-11-25T08:58Z; identities
+  its receipt (149,563 bytes) were not found on the machine at 2026-11-25T15:24Z; identities
   in the [task record](task.json). TASK-030: needs the owner.
 - Unpublished work that must be recovered and its known location: none.
 - Actual unpublished recovery payloads and declared external dependencies: none; R06 stays
@@ -142,8 +144,8 @@ owner starts for TASK-030.
 - Active workers and reserved files: none. The implementing session writes nothing in this
   worktree after publishing this checkpoint, until FRESH-SESSION.md is on the branch or the
   owner says otherwise. The demonstrating session need not ask again.
-- Actual subagents, assigned scopes, and unresolved worker activity: the reviewers and the
-  rehearsal named in the pre-review record, read-only; all ended.
+- Actual subagents, assigned scopes, and unresolved worker activity: the reviewers, the
+  auditor and the rehearsal named in the pre-review record, read-only; all ended.
 - Integration owner, expiry, and latest verified ownership record: none; the lease was
   released on 2026-11-20 ([STATUS](../../../../STATUS.md#main-integration-lease)).
 - Lease status: released, not acquired by this migration.
@@ -187,7 +189,7 @@ owner starts for TASK-030.
 ## Delivery
 
 - Local checkpoint status: committed on this branch.
-- Verified push state, or unconfirmed: code checkpoint `27ede8cf…` confirmed on the remote by
+- Verified push state, or unconfirmed: code checkpoint `03d61c2d…` confirmed on the remote by
   `git ls-remote`; the later commit that carries this record is shown by Git.
 - Actual merge/resulting-main checks, or remaining integration gate: not integrated. Remaining:
   TASK-006 to TASK-008, TASK-030, audit, independent review, lease and merge.
