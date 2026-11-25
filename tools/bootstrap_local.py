@@ -136,15 +136,15 @@ def working_directory(number: str, run):
 
 
 def started_from(session: Session, directory: Path, number: str, command: str) -> bool:
-    """Whether a process runs from a directory. One that cannot be excluded counts."""
-    prefix, words = str(directory) + os.sep, command.split()[:2]  # The program and, for an interpreter, its script.
-    if not words:
-        return False
-    if command.startswith(prefix) or any(word.startswith(prefix) for word in words):
-        return True
-    program, place = Path(words[0]).name.lower(), None
-    relative = [word for word in words if os.sep in word and not word.startswith((os.sep, "-"))]
+    """Whether a process of this user runs from a directory. One that cannot be excluded counts."""
+    prefix, words = str(directory) + os.sep, command.split(None, 2)
+    program, place = os.path.basename(words[0]).lower(), None
     interpreter, node = program.startswith(("python", "pypy")), program.startswith("node")
+    if command.startswith(prefix) or (interpreter or node) and prefix in command:
+        return True
+    # The program and, for an interpreter, its script; a system program may have a space in its own path.
+    named = words[:1] + (words[1:2] if interpreter or node else [])
+    relative = [word for word in named if os.sep in word and not word.startswith((os.sep, "-"))]
     if relative or interpreter or node:
         place = working_directory(number, session.run)
     for word in relative:
@@ -172,17 +172,22 @@ def started_from(session: Session, directory: Path, number: str, command: str) -
 
 
 def users_of(session: Session, directory: Path):
-    """Process identifiers that use a directory, or None when that cannot be established."""
+    """Process identifiers that use a directory, or None when that cannot be established.
+
+    Open files and a start from the directory count for every process that shows them. Only this
+    user's processes are examined further; no other user works in this user's checkout.
+    """
     if not session.which("lsof"):
         return None
     listed = session.run(["lsof", "-w", "-t", "+D", str(directory)], timeout=300)
-    shown = session.run(["ps", "-axo", "pid=,command="], timeout=30)
+    shown = session.run(["ps", "-axo", "pid=,uid=,command="], timeout=30)
     if listed["error"] or listed["code"] not in (0, 1) or listed["err"].strip() or shown["code"] != 0 or not shown["out"].strip():
         return None
     users = {int(line) for line in listed["out"].split() if line.isdigit()}
     for line in shown["out"].splitlines():
-        number, _, command = line.strip().partition(" ")
-        if number.isdigit() and int(number) not in users and started_from(session, directory, number, command.strip()):
+        number, owner, command = (line.split(None, 2) + ["", "", ""])[:3]
+        if number.isdigit() and int(number) not in users and command and (
+                command.startswith(str(directory) + os.sep) or owner == str(os.getuid()) and started_from(session, directory, number, command)):
             users.add(int(number))
     return sorted(users)
 

@@ -52,7 +52,7 @@ class LocalProject:
         self.environment = {}                         # Overrides of the environment interpreter's facts.
         self.broken_imports, self.pip_conflict, self.smoke_code, self.source = {}, None, 0, None
         self.node_version, self.users, self.lsof_code, self.lsof_error, self.ps_code = "v22.11.0\n", "", None, "", 0
-        self.listing, self.places, self.launch = "  1 /sbin/launchd\n", "", {}
+        self.listing, self.places, self.launch = "  1 0 /sbin/launchd\n", "", {}
         self.calls, self.environments, self.kept, self.handlers = [], [], [], []
         self.git("init", "--quiet", "--template=")
         self.git("add", "-A")

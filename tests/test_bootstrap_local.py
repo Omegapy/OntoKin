@@ -22,6 +22,7 @@ except ModuleNotFoundError:  # Discovery that starts inside tests/.
 MACOS_LOCK = "tools/native-reader-verification-macos-arm64-cp312.lock"
 LINUX_LOCK = "tools/native-reader-verification-linux-cp312.lock"
 FRAMEWORK = "/opt/homebrew/Cellar/python@3.12/3.12.13/Python.app/Contents/MacOS/Python"
+ME, OTHER = os.getuid(), os.getuid() + 1
 CHANGING = {"venv", "install", "ci"}
 
 
@@ -422,24 +423,32 @@ class UseTests(SetupCase):
         venv, root = self.project.venv, self.project.root
         self.project.places = str(root)
         self.project.launch = {"79": f"{FRAMEWORK} -m unittest PATH=/usr/bin:/bin __PYVENV_LAUNCHER__={venv}/bin/python",
-                               "85": f"python -m unittest HOME=/h PATH={venv}/bin:/usr/bin TERM=x", "86": f"python -m unittest PATH=/usr/bin VIRTUAL_ENV={venv} TERM=x"}
+                               "85": f"python -m unittest HOME=/h PATH={venv}/bin:/usr/bin TERM=x", "86": f"python -m unittest PATH=/usr/bin VIRTUAL_ENV={venv} TERM=x",
+                               **{number: "python PATH=/usr/bin" for number in ("78", "80", "83", "84")}}
         (venv / "bin").mkdir(parents=True)
         (venv / "bin/python").write_text("", encoding="utf-8")
-        cases = {"absolute": f"  77 {venv}/bin/python -m unittest\n", "relative": "  78 .venv/bin/python -m unittest\n", "script": "  80 python3 ./.venv/bin/pip list\n",
-                 "framework": f"  79 {FRAMEWORK} -m unittest\n", "path": "  85 python -m unittest\n", "activated": "  86 python -m unittest\n",
-                 "unreadable": "  87 python -m unittest\n"}
+        cases = {"absolute": f"  77 {ME} {venv}/bin/python -m unittest\n", "relative": f"  78 {ME} .venv/bin/python -m unittest\n",
+                 "script": f"  80 {ME} python3 ./.venv/bin/pip list\n", "framework": f"  79 {ME} {FRAMEWORK} -m unittest\n",
+                 "path": f"  85 {ME} python -m unittest\n", "activated": f"  86 {ME} python -m unittest\n", "unreadable": f"  87 {ME} python -m unittest\n",
+                 "other user": f"  89 {OTHER} {venv}/bin/python -m unittest\n", "named script": f"  83 {ME} python3 {venv}/bin/pip list\n",
+                 "tool": f"  82 {ME} .venv/bin/tool --serve\n"}
         for label, listing in cases.items():
             with self.subTest(start=label):
                 self.project.listing = listing
                 self.assertEqual(self.users(), [int(listing.split()[0])])
-        self.project.listing, self.project.users = "  1 /sbin/launchd\n", "4242\n"
+        self.project.places = ""
+        for label in ("relative", "script", "tool"):
+            with self.subTest(start=label, place="unknown"):
+                self.project.listing = cases[label]
+                self.assertEqual(self.users(), [int(cases[label].split()[0])], "A start that cannot be excluded counts.")
+        self.project.listing, self.project.users = "  1 0 /sbin/launchd\n", "4242\n"
         self.assertEqual(self.users(), [4242], "An open file counts.")
 
     def test_environment_variables_are_read_in_the_linux_form_too(self):
         venv = self.project.venv
         self.project.launch = {"85": f"HOME=/h\0VIRTUAL_ENV={venv}\0PATH=/usr/bin\0", "86": "HOME=/h\0VIRTUAL_ENV=/another/.venv\0PATH=/usr/bin\0"}
         self.project.places = "/another"
-        self.project.listing = "  85 python -m unittest\n  86 python -m unittest\n"
+        self.project.listing = f"  85 {ME} python -m unittest\n  86 {ME} python -m unittest\n"
         self.assertEqual(self.users(system="Linux"), [85])
         self.assertTrue([call for call in self.project.calls if call[:2] == ["cat", "/proc/85/environ"]])
         self.assertFalse([call for call in self.project.calls if "-Eww" in call])
@@ -448,23 +457,28 @@ class UseTests(SetupCase):
         root = self.project.root
         self.project.places = "/another/checkout"
         self.project.launch = {"83": f"{FRAMEWORK} PATH=/usr/bin __PYVENV_LAUNCHER__=/another/checkout/.venv/bin/python", "85": "python PATH=/usr/bin VIRTUAL_ENV=/another/.venv"}
-        self.project.listing = (f"  81 /bin/zsh -c cd {root} && .venv/bin/python -m unittest\n  82 .venv/bin/python -m unittest\n  83 {FRAMEWORK} -m unittest\n"
-                                f"  84 less {root}/README.md\n  85 python -m unittest\n  88 node server.js\n  1 /sbin/launchd\n")
+        self.project.listing = (f"  81 {ME} /bin/zsh -c cd {root} && .venv/bin/python -m unittest\n  82 {ME} .venv/bin/python -m unittest\n"
+                                f"  83 {ME} {FRAMEWORK} -m unittest\n  84 {ME} less {root}/README.md\n  85 {ME} python -m unittest\n  88 {ME} node server.js\n  1 0 /sbin/launchd\n")
         self.assertEqual(self.users(), [])
+        self.project.places, self.project.launch = "", {}
+        self.project.listing = (f"  557 {OTHER} /System/Library/CoreServices/Software Update.app/Contents/Resources/softwareupdated\n"
+                                f"  558 {ME} /Applications/Some App.app/Contents/MacOS/helper.app/run --flag\n  559 {OTHER} python -m unittest\n"
+                                f"  560 {OTHER} node validator.mjs\n")
+        self.assertEqual(self.users(), [], "Programs with a space in their path and other users' interpreters are not users of this environment.")
 
     def test_node_processes_of_the_checkout_count_for_its_dependencies(self):
         directory = self.project.root / "tools/node_modules"
         directory.mkdir(parents=True)
         for label, place, listing, expected in (
-                ("working here", str(self.project.root), "  90 node tools/validator.mjs\n", [90]), ("unknown place", "", "  91 node validator.mjs\n", [91]),
-                ("named here", "/elsewhere", f"  92 node {self.project.root}/tools/validator.mjs\n", [92]), ("elsewhere", "/elsewhere", "  93 node server.js\n", [])):
+                ("working here", str(self.project.root), f"  90 {ME} node tools/validator.mjs\n", [90]), ("unknown place", "", f"  91 {ME} node validator.mjs\n", [91]),
+                ("named here", "/elsewhere", f"  92 {ME} node {self.project.root}/tools/validator.mjs\n", [92]), ("elsewhere", "/elsewhere", f"  93 {ME} node server.js\n", [])):
             with self.subTest(case=label):
                 self.project.places, self.project.listing = place, listing
                 self.assertEqual(self.users(directory), expected)
         workspace = self.project.directory / "workspace/tools"
         workspace.mkdir(parents=True)
         (workspace / "node_modules").symlink_to(directory, target_is_directory=True)
-        self.project.places, self.project.listing = str(workspace.parent), "  94 node tools/validator.mjs\n"
+        self.project.places, self.project.listing = str(workspace.parent), f"  94 {ME} node tools/validator.mjs\n"
         self.assertEqual(self.users(directory), [94], "The driver's isolated workspace links to these dependencies.")
 
     def test_use_that_cannot_be_established_is_not_taken_as_unused(self):
@@ -473,7 +487,7 @@ class UseTests(SetupCase):
                               ("ps silent", lambda: setattr(self.project, "listing", ""))):
             with self.subTest(case=label):
                 self.project.commands["lsof"], self.project.lsof_code, self.project.lsof_error = "/usr/sbin/lsof", None, ""
-                self.project.ps_code, self.project.listing = 0, "  1 /sbin/launchd\n"
+                self.project.ps_code, self.project.listing = 0, "  1 0 /sbin/launchd\n"
                 self.assertEqual(self.users(), [])
                 change()
                 self.assertIsNone(self.users())
@@ -481,7 +495,7 @@ class UseTests(SetupCase):
                 self.refused("cannot be established", rebuild=True)
 
     def test_used_environment_is_neither_rebuilt_nor_filled(self):
-        self.project.listing = f"  77 {self.project.venv}/bin/python -m unittest\n"
+        self.project.listing = f"  77 {ME} {self.project.venv}/bin/python -m unittest\n"
         self.project.create_environment(version="3.12.14")
         self.refused("in use by process 77", rebuild=True)
         self.refused("in use by process 77", rebuild=True, preview=True)
