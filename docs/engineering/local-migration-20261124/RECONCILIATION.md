@@ -41,6 +41,13 @@ modified.
 | `prototypes/static_tray_v01/`, `tools/prepare_current_host_readback.py`, `tests/` | 14 added | Current-host inspection and readback implementation, its tests and fixtures |
 | `STATUS.md`, `docs/README.md`, `docs/workflow/CURRENT.json`, `docs/workflow/memory.json`, `tools/check_local.py`, `tests/test_local_checks.py`, `tests/test_static_tray_readback_v01.py` | 7 modified | Workflow records (`CURRENT.json` is blob `7bf67efb`, 192,376 bytes), driver inventory and driver tests |
 
+The large C271 records stay exactly as they are, readable from Git at that head:
+
+| Record | Git blob | Bytes | SHA-256 |
+| --- | --- | --- | --- |
+| `docs/workflow/CURRENT.json` | `7bf67efb72b3554c9340f583b0bf2427bba69a11` | 192,376 | `46024c296602ecad251573fca0cf23b461d015f74d8743db5e80476abffc1a34` |
+| `docs/workflow/tasks/C271/task.json` | `50c5bdfce6d821ab553e259432d1dd36d8834cec` | 418,591 | `06aa614e893812c89ed86065c492fa48f2193ec1511c4ee6fb23977b1c664914` |
+
 ### Not in Git
 
 | Object | Local object store | Remote, as recorded |
