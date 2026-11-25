@@ -502,19 +502,17 @@ def verification_checks(root: Path, spec: dict, key, environment: dict, run=exec
     results.append(check("packages", "mismatch" if wrong else "missing" if absent else "ready",
                          "; ".join(wrong + [f"not installed: {', '.join(absent)}"] * bool(absent))
                          if wrong or absent else f"{len(rows)} packages at their adopted versions."))
+    # An absent package makes its dependents fail too; that is still an absence, not a conflict.
+    failed = "missing" if absent and not wrong else "mismatch"
     broken = [row for row in rows if not row["import_ok"]]
-    if not broken:
-        results.append(check("imports", "ready", f"{len(rows)} packages import."))
-    else:
-        state = "missing" if all(row["state"] == "missing" for row in broken) else "mismatch"
-        results.append(check("imports", state, "; ".join(f"{row['import']}: {row['import_error']}" for row in broken)))
+    results.append(check("imports", failed, "; ".join(f"{row['import']}: {row['import_error']}" for row in broken)) if broken else
+                   check("imports", "ready", f"{len(rows)} packages import."))
     pip = environment["pip_check"]
     results.append(check("pip-check", "not_checked", "pip is not available in the environment.") if pip is None else
-                   check("pip-check", "ready" if pip["code"] == 0 else "mismatch", pip["summary"] or "No conflict."))
+                   check("pip-check", "ready" if pip["code"] == 0 else failed, pip["summary"] or "No conflict."))
     done = run([environment["python"], "-I", "-B", str(root / profile["preflight"])], cwd=root, timeout=60, env=clean_environment())
-    pillow = next((row for row in rows if normalize(row["name"]) == "pillow"), None)
-    state = "ready" if done["code"] == 0 else "missing" if pillow and pillow["state"] == "missing" else "mismatch"
-    results.append(check("native-reader", state, done["out"].strip()[:300] if done["code"] == 0 else failure_text(done)))
+    results.append(check("native-reader", "ready" if done["code"] == 0 else failed,
+                         done["out"].strip()[:300] if done["code"] == 0 else failure_text(done)))
     return results
 
 

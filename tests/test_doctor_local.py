@@ -49,7 +49,7 @@ class LocalProject:
         self.installed = None                         # What the environment reports; None means no environment.
         self.environment = {}                         # Overrides of the environment interpreter's facts.
         self.broken_imports, self.pip_conflict, self.smoke_code = {}, None, 0
-        self.node_version, self.users, self.listing = "v22.11.0\n", "", ""
+        self.node_version, self.users, self.listing, self.places, self.launch = "v22.11.0\n", "", "", "", ""
         self.calls, self.handlers = [], []
         self.git("init", "--quiet", "--template=")
         self.git("add", "-A")
@@ -108,10 +108,12 @@ class LocalProject:
             return self.result(argv, out="git-lfs/3.7.1 (GitHub; darwin arm64)\n")
         if argv[0] == "git":
             return doctor.execute(argv, cwd, timeout, env)
+        if argv[0] == "lsof" and "-Fn" in argv:
+            return self.result(argv, out=f"p1\nfcwd\nn{self.places}\n" if self.places else "")
         if argv[0] == "lsof":
             return self.result(argv, code=0 if self.users else 1, out=self.users)
         if argv[0] == "ps":
-            return self.result(argv, out=self.listing)
+            return self.result(argv, out=self.launch if "-Eww" in argv else self.listing)
         if argv[1:] == ["--version"]:
             return self.result(argv, out=self.node_version)
         inside = argv[0] == str(self.venv / "bin/python")
@@ -294,6 +296,17 @@ class ReadinessTests(DoctorCase):
         report = self.project.collect()
         self.assertEqual((self.check(report, "packages")["state"], self.check(report, "imports")["state"], self.state(report)), ("missing",) * 3)
         self.assertEqual(self.check(report, "native-reader")["state"], "missing")
+
+    def test_dependents_of_an_absent_package_do_not_look_like_a_conflict(self):
+        packages = dict(self.project.pins)
+        del packages["rpds-py"]
+        self.project.create_environment(packages)
+        self.project.broken_imports = {name: "ModuleNotFoundError: No module named 'rpds'" for name in ("jsonschema", "referencing")}
+        self.project.pip_conflict = "referencing 0.37.0 requires rpds-py, which is not installed.\n"
+        report = self.project.collect()
+        self.assertEqual((self.check(report, "imports")["state"], self.check(report, "pip-check")["state"], self.state(report)), ("missing",) * 3)
+        self.project.installed["attrs"] = "1.0"
+        self.assertEqual(self.state(self.project.collect()), "mismatch")
 
     def test_one_unexecuted_check_prevents_readiness(self):
         self.project.create_environment()

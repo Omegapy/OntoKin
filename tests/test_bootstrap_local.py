@@ -249,16 +249,29 @@ class EnvironmentTests(SetupCase):
 
     def test_used_environment_is_never_replaced(self):
         self.project.create_environment(version="3.12.14")
-        listings = {"open file": ("4242\n", ""), "absolute command": ("", f"  77 {self.project.venv}/bin/python -m unittest\n"),
-                    "relative command": ("", "  78 .venv/bin/python -m unittest\n")}
-        self.project.handlers.append(lambda argv: self.project.result(argv, out=f"p78\nfcwd\nn{self.project.root}\n") if "-Fn" in argv else None)
-        for label, (users, listing) in listings.items():
+        framework = "/opt/homebrew/Cellar/python@3.12/3.12.13/Python.app/Contents/MacOS/Python"
+        cases = {"open file": ("4242\n", "", "4242"), "absolute start": ("", f"  77 {self.project.venv}/bin/python -m unittest\n", "77"),
+                 "relative start": ("", "  78 .venv/bin/python -m unittest\n", "78"), "script of it": ("", "  80 python3 ./.venv/bin/pip list\n", "80"),
+                 "framework start": ("", f"  79 {framework} -m unittest\n", "79")}
+        self.project.places = str(self.project.root)
+        self.project.launch = f"{framework} -m unittest __PYVENV_LAUNCHER__={self.project.venv}/bin/python"
+        for label, (users, listing, number) in cases.items():
             with self.subTest(case=label):
                 self.project.users, self.project.listing = users, listing
-                self.refused("in use by process", rebuild=True)
-        self.project.users, self.project.listing = "", "  78 .venv/bin/python -m unittest\n"
-        self.project.handlers[-1] = lambda argv: self.project.result(argv, out="p78\nfcwd\nn/another/checkout\n") if "-Fn" in argv else None
-        self.assertEqual(setup.users_of(self.project.root, self.project.venv, self.project.run, self.project.which), [])
+                self.refused(f"in use by process {number}", rebuild=True)
+
+    def test_unrelated_processes_do_not_count_as_users(self):
+        self.project.create_environment(version="3.12.14")
+        self.project.places, self.project.launch = "/another/checkout", "Python -m unittest __PYVENV_LAUNCHER__=/another/checkout/.venv/bin/python"
+        self.project.listing = (f"  81 /bin/zsh -c cd {self.project.root} && .venv/bin/python -m unittest\n  82 .venv/bin/python -m unittest\n"
+                                f"  83 /opt/Python.app/Contents/MacOS/Python -m unittest\n  84 less {self.project.root}/README.md\n")
+        self.assertEqual(setup.users_of(self.project.root, self.project.venv, "Darwin", self.project.run, self.project.which), [])
+        self.project.calls.clear()
+        setup.users_of(self.project.root, self.project.venv, "Linux", self.project.run, self.project.which)
+        self.assertFalse([call for call in self.project.calls if "-Eww" in call], "Launch variables are read only on macOS.")
+
+    def test_environment_is_kept_when_its_use_cannot_be_established(self):
+        self.project.create_environment(version="3.12.14")
         del self.project.commands["lsof"]
         self.refused("cannot be established", rebuild=True)
 

@@ -79,11 +79,12 @@ def exclusive(root: Path):
         yield
 
 
-def users_of(root: Path, directory: Path, run=doctor.execute, which=shutil.which):
+def users_of(root: Path, directory: Path, system: str, run=doctor.execute, which=shutil.which):
     """Process identifiers that use a directory, or None when that cannot be established.
 
-    Open files and absolute command lines are read for every process. A command line that names
-    the directory relatively counts only when that process works in this checkout.
+    A process uses it when it has a file open there or was started from it. A relative start counts
+    only when that process works in this checkout. A macOS framework interpreter shows its own path
+    instead of the environment's, so only for such a process its launch variable is read as well.
     """
     if not which("lsof"):
         return None
@@ -92,23 +93,29 @@ def users_of(root: Path, directory: Path, run=doctor.execute, which=shutil.which
     if listed["error"] is not None or shown["code"] != 0:
         return None
     users = {int(line) for line in listed["out"].split() if line.isdigit()}
-    relative = re.compile(r"(?:^|\s)(?:\./)?" + re.escape(directory.relative_to(root).as_posix()) + "/")
+    inside = str(directory) + os.sep
+    relative = re.compile(r"(?:\./)?" + re.escape(directory.relative_to(root).as_posix()) + "/")
     for line in shown["out"].splitlines():
         number, _, command = line.strip().partition(" ")
         if not number.isdigit() or int(number) in users:
             continue
-        if str(directory) + os.sep in command:
+        words = command.split()[:2]  # The program and, for an interpreter, its script.
+        if command.startswith(inside) or any(word.startswith(inside) for word in words):
             users.add(int(number))
-        elif relative.search(command):
+        elif any(relative.match(word) for word in words):
             place = run(["lsof", "-a", "-d", "cwd", "-p", number, "-Fn"], timeout=30)
             places = [entry[1:] for entry in place["out"].splitlines() if entry.startswith("n")]
             if not places or os.path.realpath(places[0]) == os.path.realpath(str(root)):
                 users.add(int(number))
+        elif system == "Darwin" and words and Path(words[0]).name.lower().startswith("python"):
+            launch = run(["ps", "-Eww", "-o", "command=", "-p", number], timeout=30)
+            if "__PYVENV_LAUNCHER__=" + inside in launch["out"]:
+                users.add(int(number))
     return sorted(users)
 
 
-def require_unused(root: Path, directory: Path, run, which) -> None:
-    users = users_of(root, directory, run, which)
+def require_unused(root: Path, directory: Path, system: str, run, which) -> None:
+    users = users_of(root, directory, system, run, which)
     if users is None:
         raise Refusal(f"Whether a process uses {directory.name} cannot be established here, so it is not replaced.")
     if users:
@@ -226,11 +233,11 @@ def create_environment(root: Path, spec: dict, key, python: str, log: list, run)
         raise ActionFailed("The created environment is not compliant: " + "; ".join(differences))
 
 
-def remove_environment(root: Path, spec: dict, log: list, run, which) -> None:
+def remove_environment(root: Path, spec: dict, system: str, log: list, run, which) -> None:
     directory = root / spec["environment"]["directory"]
     if directory.is_symlink() or not (directory / "pyvenv.cfg").is_file() or directory.resolve().parent != root.resolve():
         raise Refusal(f"{directory.name} is not an environment directory of this checkout, so it is not replaced.")
-    require_unused(root, directory, run, which)
+    require_unused(root, directory, system, run, which)
     shutil.rmtree(directory)
     log.append({"action": "remove-environment", "argv": None, "started_at": utc_now(), "seconds": 0, "code": 0,
                 "output_tail": "", "error": None})
@@ -249,7 +256,7 @@ def install_packages(root: Path, spec: dict, lock: str, packages: list, wheels: 
                                           "--no-deps", "--only-binary=:all:", "--require-hashes", *source, "-r", selection], run)
 
 
-def run_visual(root: Path, spec: dict, actions: list, visual: dict, log: list, run, which) -> None:
+def run_visual(root: Path, spec: dict, system: str, actions: list, visual: dict, log: list, run, which) -> None:
     profile = spec["profiles"]["visual-verification"]
     selected = [action for action in actions if action["action"] in {"install-node-dependencies", "install-chromium"}]
     if not selected:
@@ -262,7 +269,7 @@ def run_visual(root: Path, spec: dict, actions: list, visual: dict, log: list, r
                     run, cwd=root, env=environment)
             continue
         if action["replaces"]:
-            require_unused(root, root / profile["npm_directory"], run, which)
+            require_unused(root, root / profile["npm_directory"], system, run, which)
         perform(log, action["action"], [visual["npm"]["path"], "ci", "--prefix", "tools", "--ignore-scripts"], run, cwd=root, env=environment)
 
 
@@ -396,6 +403,7 @@ def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=F
 def carry_out(report: dict, root: Path, spec: dict, key, creates: bool, python, install: bool, wheels, work, run, which) -> None:
     """Perform the planned actions in order. The caller holds the checkout's setup lock."""
     log, names = report["actions"], {action["action"] for action in report["planned"]}
+    system = report["platform"]["system"]
     if creates and report["interpreter"]["status"] == "missing" and install:
         install_interpreter(spec, key, log, run, which)
         report["interpreter"] = resolve_interpreter(spec, key, python, run, which)
@@ -405,13 +413,13 @@ def carry_out(report: dict, root: Path, spec: dict, key, creates: bool, python, 
     if "create-smoke-environments" in names:
         report["smoke_environments"] = prepare_package_smoke(report["interpreter"]["path"], work, log, run)
     if "rebuild-environment" in names:
-        remove_environment(root, spec, log, run, which)
+        remove_environment(root, spec, system, log, run, which)
     if names & {"create-environment", "rebuild-environment"}:
         create_environment(root, spec, key, report["interpreter"]["path"], log, run)
     for action in report["planned"]:
         if action["action"] == "install-packages":
             install_packages(root, spec, action["lock"], action["packages"], list(wheels), log, run)
-    run_visual(root, spec, report["planned"], report["observed"]["visual"], log, run, which)
+    run_visual(root, spec, system, report["planned"], report["observed"]["visual"], log, run, which)
 
 
 def finish(report: dict, root: Path, spec: dict, run, outcome: str) -> dict:
