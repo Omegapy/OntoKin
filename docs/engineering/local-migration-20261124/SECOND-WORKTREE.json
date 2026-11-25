@@ -1,0 +1,1121 @@
+{
+ "schema": "ontokin.local-migration.second-worktree/1",
+ "task": "LOCAL-MIGRATION-20261124",
+ "step": "TASK-028",
+ "purpose": "Recreation of the environment from the committed files in a new location, and isolation of two worktrees from each other (REQ-004, REQ-014, REQ-035).",
+ "commit": {
+  "revision": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+  "tree": "6b80429891af1bcc9399934ee528095d7f9ec518",
+  "note": "Both worktrees were at this commit. The first is the migration worktree; its only difference was an uncommitted status update in the task record. The second was detached, so it created no branch."
+ },
+ "method": "One script ran every command below, each in the stated directory, with the caller's GIT_*, PYTHON*, PIP_* and VIRTUAL_ENV variables removed and TMPDIR resolved. Machine paths are replaced by labels. The complete command output and the script stay in the local evidence directory; their identities are below.",
+ "first_before": {
+  "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+  "status": [
+   " M docs/workflow/tasks/LOCAL-MIGRATION-20261124/task.json",
+   "!! .venv/",
+   "!! build/",
+   "!! tools/__pycache__/"
+  ],
+  "packages": [
+   "attrs==26.1.0",
+   "jsonschema-specifications==2025.9.1",
+   "jsonschema==4.26.0",
+   "pillow==13.0.0",
+   "pip==26.0",
+   "referencing==0.37.0",
+   "rpds-py==2026.5.1",
+   "typing_extensions==4.16.0"
+  ],
+  "environment": {
+   "entries": 1539,
+   "content_sha256": "968045c3f00d328a167a0133cb64cc0ba2518c8d39b5caa2ce8adc3ca75a262e",
+   "content_and_times_sha256": "f5fad757e8946ae2bedd874070aa8e0f1eeb2c2cc71087073a804156fb2cdd26"
+  },
+  "doctor": {
+   "checkout_root": "<first-worktree>",
+   "branch": "work/local-migration-20261124",
+   "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+   "linked_worktree": true,
+   "environment_path": "<first-worktree>/.venv",
+   "environment_exists": true,
+   "interpreter": "<first-worktree>/.venv/bin/python",
+   "prefix": "<first-worktree>/.venv",
+   "base_interpreter": "/opt/homebrew/Cellar/python@3.12/3.12.13/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+   "version": "3.12.13",
+   "created_by": "/opt/homebrew/opt/python@3.12/bin/python3.12 -m venv <first-worktree>/.venv",
+   "site_packages": "<first-worktree>/.venv/lib/python3.12/site-packages",
+   "readiness": {
+    "core": "ready",
+    "python-verification": "ready",
+    "visual-verification": "mismatch",
+    "package-smoke": "not_checked",
+    "historical-native": "not_checked",
+    "linux-container": "unsupported"
+   },
+   "exit_status": 0
+  }
+ },
+ "main_before": {
+  "status": [
+   "?? Implementation_Plans/",
+   "?? TRDs/"
+  ],
+  "head": "6b346b1e4126332fe3c98a4a98f3e0b0e2f63774"
+ },
+ "creation": {
+  "location_before": {
+   "exists": false,
+   "note": "No file, link or environment existed at the location."
+  },
+  "after_git_worktree_add": {
+   "ignored_and_untracked": [],
+   "has_venv": false,
+   "has_node_modules": false,
+   "has_build": false,
+   "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+   "tree": "6b80429891af1bcc9399934ee528095d7f9ec518"
+  },
+  "doctor": {
+   "checkout_root": "<second-worktree>",
+   "branch": null,
+   "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+   "linked_worktree": true,
+   "environment_path": "<second-worktree>/.venv",
+   "environment_exists": false,
+   "interpreter": null,
+   "prefix": null,
+   "base_interpreter": null,
+   "version": null,
+   "created_by": null,
+   "site_packages": null,
+   "readiness": {
+    "core": "missing",
+    "python-verification": "missing",
+    "visual-verification": "mismatch",
+    "package-smoke": "not_checked",
+    "historical-native": "not_checked",
+    "linux-container": "unsupported"
+   },
+   "exit_status": 1
+  },
+  "preview": {
+   "code": 0,
+   "has_venv_after": false,
+   "status_after": []
+  },
+  "setup": {
+   "code": 0,
+   "outcome": "changed",
+   "planned": [
+    "create-environment",
+    "install-packages"
+   ],
+   "actions": [
+    {
+     "action": "create-environment",
+     "argv": [
+      "/opt/homebrew/bin/python3.12",
+      "-I",
+      "-m",
+      "venv",
+      "<second-worktree>/.venv"
+     ],
+     "started_at": "2026-11-25T09:03:47+00:00",
+     "seconds": 1.17,
+     "code": 0
+    },
+    {
+     "action": "install-packages",
+     "argv": [
+      "<second-worktree>/.venv/bin/python",
+      "-I",
+      "-m",
+      "pip",
+      "--isolated",
+      "--disable-pip-version-check",
+      "install",
+      "--no-input",
+      "--no-deps",
+      "--only-binary=:all:",
+      "--require-hashes",
+      "-r",
+      "<tmp>/ontokin-bootstrap-w8n7i3q7/selected.lock"
+     ],
+     "started_at": "2026-11-25T09:03:48+00:00",
+     "seconds": 1.09,
+     "code": 0
+    }
+   ],
+   "lock": "tools/native-reader-verification-macos-arm64-cp312.lock",
+   "smoke": [
+    {
+     "check": "capabilities",
+     "passed": true
+    },
+    {
+     "check": "check",
+     "passed": true
+    }
+   ],
+   "selected": {
+    "profile": "python-verification",
+    "state": "ready",
+    "next_action": null
+   }
+  },
+  "record": {
+   "lock": {
+    "state": "ready",
+    "required": true,
+    "path": "tools/native-reader-verification-macos-arm64-cp312.lock",
+    "provenance": "tools/native-reader-verification-macos-arm64-cp312.provenance.json",
+    "detail": "tools/native-reader-verification-macos-arm64-cp312.lock is valid for this platform and Python 3.12."
+   },
+   "packages": {
+    "attrs": "26.1.0",
+    "jsonschema": "4.26.0",
+    "jsonschema-specifications": "2025.9.1",
+    "pillow": "13.0.0",
+    "pip": "26.0",
+    "referencing": "0.37.0",
+    "rpds-py": "2026.5.1",
+    "typing_extensions": "4.16.0"
+   },
+   "actions": [
+    {
+     "action": "create-environment",
+     "argv": [
+      "/opt/homebrew/bin/python3.12",
+      "-I",
+      "-m",
+      "venv",
+      "<second-worktree>/.venv"
+     ],
+     "code": 0
+    },
+    {
+     "action": "install-packages",
+     "argv": [
+      "<second-worktree>/.venv/bin/python",
+      "-I",
+      "-m",
+      "pip",
+      "--isolated",
+      "--disable-pip-version-check",
+      "install",
+      "--no-input",
+      "--no-deps",
+      "--only-binary=:all:",
+      "--require-hashes",
+      "-r",
+      "<tmp>/ontokin-bootstrap-w8n7i3q7/selected.lock"
+     ],
+     "code": 0
+    }
+   ]
+  },
+  "doctor_after_setup": {
+   "checkout_root": "<second-worktree>",
+   "branch": null,
+   "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+   "linked_worktree": true,
+   "environment_path": "<second-worktree>/.venv",
+   "environment_exists": true,
+   "interpreter": "<second-worktree>/.venv/bin/python",
+   "prefix": "<second-worktree>/.venv",
+   "base_interpreter": "/opt/homebrew/Cellar/python@3.12/3.12.13/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+   "version": "3.12.13",
+   "created_by": "/opt/homebrew/opt/python@3.12/bin/python3.12 -m venv <second-worktree>/.venv",
+   "site_packages": "<second-worktree>/.venv/lib/python3.12/site-packages",
+   "readiness": {
+    "core": "ready",
+    "python-verification": "ready",
+    "visual-verification": "mismatch",
+    "package-smoke": "not_checked",
+    "historical-native": "not_checked",
+    "linux-container": "unsupported"
+   },
+   "exit_status": 0
+  },
+  "repeat_setup": {
+   "code": 0,
+   "first_line": "OntoKin local setup: profile python-verification, unchanged"
+  },
+  "readiness_equals_first": true,
+  "packages_equal_first": true,
+  "nothing_was_copied": {
+   "has_environment_after_git_worktree_add": false,
+   "created_by": "/opt/homebrew/opt/python@3.12/bin/python3.12 -m venv <second-worktree>/.venv",
+   "files_with_the_same_inode": 0,
+   "link_targets_in_second_environment": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "python3.12"
+   ]
+  }
+ },
+ "use": {
+  "paths": {
+   "second": {
+    "executable": "<second-worktree>/.venv/bin/python",
+    "prefix": "<second-worktree>/.venv",
+    "ontokin": "<second-worktree>/ontokin/__init__.py",
+    "jsonschema": "<second-worktree>/.venv/lib/python3.12/site-packages/jsonschema/__init__.py",
+    "PIL": "<second-worktree>/.venv/lib/python3.12/site-packages/PIL/__init__.py",
+    "rpds": "<second-worktree>/.venv/lib/python3.12/site-packages/rpds/__init__.py"
+   },
+   "first": {
+    "executable": "<first-worktree>/.venv/bin/python",
+    "prefix": "<first-worktree>/.venv",
+    "ontokin": "<first-worktree>/ontokin/__init__.py",
+    "jsonschema": "<first-worktree>/.venv/lib/python3.12/site-packages/jsonschema/__init__.py",
+    "PIL": "<first-worktree>/.venv/lib/python3.12/site-packages/PIL/__init__.py",
+    "rpds": "<first-worktree>/.venv/lib/python3.12/site-packages/rpds/__init__.py"
+   }
+  },
+  "modules_tested": {
+   "tests": "<second-worktree>/tests/test_doctor_local.py",
+   "tools": "<second-worktree>/tools/doctor_local.py",
+   "repository": "<second-worktree>"
+  },
+  "commands": [
+   {
+    "command": "capabilities",
+    "code": 0,
+    "observed": null
+   },
+   {
+    "command": "check",
+    "code": 0,
+    "observed": null
+   },
+   {
+    "command": "workflow-check",
+    "code": 0,
+    "observed": "Workflow structure passed (12 tasks)."
+   },
+   {
+    "command": "documents",
+    "code": 0,
+    "observed": "passed"
+   },
+   {
+    "command": "driver-list",
+    "code": 0,
+    "observed": {
+     "steps": [
+      "unit-tests",
+      "source",
+      "agent",
+      "construction",
+      "surface",
+      "impulse",
+      "documents"
+     ],
+     "interpreters": [
+      "<second-worktree>/.venv/bin/python"
+     ]
+    }
+   },
+   {
+    "command": "focused-tests",
+    "code": 0,
+    "observed": "Ran 259 tests in 97.173s / OK"
+   }
+  ],
+  "note": "check and capabilities returned 0. The focused tests and the driver listing name only the second worktree's interpreter and files."
+ },
+ "isolation": {
+  "first_after_use_of_second": {
+   "equal_to_before": {
+    "head": true,
+    "status": true,
+    "packages": true,
+    "environment_content": true,
+    "environment_content_and_times": true
+   }
+  },
+  "package_removed_in_second": {
+   "command_status": 0,
+   "second": {
+    "readiness": "missing",
+    "checks": [
+     {
+      "id": "lock",
+      "state": "ready"
+     },
+     {
+      "id": "packages",
+      "state": "missing"
+     },
+     {
+      "id": "imports",
+      "state": "missing"
+     },
+     {
+      "id": "pip-check",
+      "state": "missing"
+     },
+     {
+      "id": "native-reader",
+      "state": "ready"
+     }
+    ]
+   },
+   "first": {
+    "readiness": "ready",
+    "equal_to_before": {
+     "head": true,
+     "status": true,
+     "packages": true,
+     "environment_content": true,
+     "environment_content_and_times": true
+    }
+   }
+  },
+  "repair_in_second": {
+   "status": 0,
+   "planned": [
+    {
+     "action": "install-packages",
+     "packages": [
+      "attrs"
+     ]
+    }
+   ],
+   "readiness": "ready"
+  },
+  "use_of_first_leaves_second": {
+   "equal": true,
+   "second": {
+    "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+    "status": [
+     "!! .venv/",
+     "!! build/"
+    ],
+    "packages": [
+     "attrs==26.1.0",
+     "jsonschema-specifications==2025.9.1",
+     "jsonschema==4.26.0",
+     "pillow==13.0.0",
+     "pip==26.0",
+     "referencing==0.37.0",
+     "rpds-py==2026.5.1",
+     "typing_extensions==4.16.0"
+    ],
+    "environment": {
+     "entries": 1539,
+     "content_sha256": "5c677ed4b928b22b7057ae9658a8dc7134e64fd140361bc09ab94af7f07dc399",
+     "content_and_times_sha256": "1c3a2aa251b0cd030a17b2a931971a34da17e72bc65b118701e4acbaf0dd6c84"
+    }
+   }
+  },
+  "setup_locks": {
+   "git_directories": {
+    "first": "<clone>/.git/worktrees/local-migration-20261124",
+    "second": "<clone>/.git/worktrees/second-local-migration-20261125",
+    "main": "<clone>/.git"
+   },
+   "exit_status_while_the_first_lock_is_held": {
+    "first": 3,
+    "second": 0
+   },
+   "note": "While the first worktree's setup lock was held, setup in the first ended with status 3 and changed nothing, and setup in the second ran."
+  },
+  "first_after": {
+   "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+   "status": [
+    " M docs/workflow/tasks/LOCAL-MIGRATION-20261124/task.json",
+    "!! .venv/",
+    "!! build/",
+    "!! tools/__pycache__/"
+   ],
+   "packages": [
+    "attrs==26.1.0",
+    "jsonschema-specifications==2025.9.1",
+    "jsonschema==4.26.0",
+    "pillow==13.0.0",
+    "pip==26.0",
+    "referencing==0.37.0",
+    "rpds-py==2026.5.1",
+    "typing_extensions==4.16.0"
+   ],
+   "environment": {
+    "entries": 1539,
+    "content_sha256": "968045c3f00d328a167a0133cb64cc0ba2518c8d39b5caa2ce8adc3ca75a262e",
+    "content_and_times_sha256": "f5fad757e8946ae2bedd874070aa8e0f1eeb2c2cc71087073a804156fb2cdd26"
+   },
+   "equal_to_before": {
+    "head": true,
+    "status": true,
+    "packages": true,
+    "environment_content": true,
+    "environment_content_and_times": true
+   }
+  },
+  "main_after": {
+   "status": [
+    "?? Implementation_Plans/",
+    "?? TRDs/"
+   ],
+   "head": "6b346b1e4126332fe3c98a4a98f3e0b0e2f63774"
+  }
+ },
+ "removal": {
+  "evidence_preserved_first": true,
+  "command": "git worktree remove <second-worktree>",
+  "status": 0,
+  "forced": false,
+  "status_before_removal": [],
+  "location_after": "absent",
+  "note": "The ignored environment and setup reports went with the worktree; copies of its environment record, pyvenv.cfg and setup reports were kept first."
+ },
+ "commands_with_nonzero_status": [
+  {
+   "step": "doctor-second-fresh",
+   "status": 1,
+   "reason": "The doctor reports a missing environment with status 1."
+  },
+  {
+   "step": "doctor-second-broken",
+   "status": 1,
+   "reason": "The doctor reports the removed package with status 1."
+  },
+  {
+   "step": "bootstrap-first-while-held",
+   "status": 3,
+   "reason": "Expected: the lock was held by another process."
+  }
+ ],
+ "limits": [
+  "One machine: macOS arm64. The package index was reached over the network; every wheel was checked against the committed hash.",
+  "Both worktrees share the Git object store and refs of the clone, as Git worktrees do. Their HEAD, index, environment, dependency directories and setup lock are separate.",
+  "The visual profile was not prepared in either worktree."
+ ],
+ "local_evidence": {
+  "directory": "<local-evidence>/evidence/second-worktree/20261125T0904Z",
+  "script": {
+   "name": "second_worktree.py",
+   "sha256": "0160fa354aaec9856a110476715e0b3b419cfdbdb9c365e3f4653e4987ed9a1a"
+  },
+  "files": [
+   {
+    "name": "result.json",
+    "bytes": 52168,
+    "sha256": "5af04722f63ff35f1f7fc28d15f8c2891081ca1dc4a1cd02a3347b8742e4d014"
+   },
+   {
+    "name": "second-bootstrap.json",
+    "bytes": 26634,
+    "sha256": "daece8b04fed968182e537e2e1189f215b570b1fe37968a32112cd420877ae6a"
+   },
+   {
+    "name": "second-repair.json",
+    "bytes": 24032,
+    "sha256": "ba09beaa46a8cbe60929f07d774494b77f52b248ffadd56a2f7af64af1d5ef0b"
+   },
+   {
+    "name": "second-ontokin-environment.json",
+    "bytes": 4532,
+    "sha256": "c4e49774cd2f3080cd919cf2bd42e9573af28db409095994ad44acc183a34477"
+   },
+   {
+    "name": "second-pyvenv.cfg",
+    "bytes": 349,
+    "sha256": "bb1d2d07eba217144041af00ee2a48b0f3c22d90115aa6ccbf589d9a78cf77da"
+   }
+  ],
+  "steps": [
+   {
+    "step": "head-first-before",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "01-head-first-before.txt",
+     "bytes": 161,
+     "sha256": "0d58dc643f462a2d772ac704cdf2dae72cb5b34e69d3c8c4a2157572907c1d50"
+    }
+   },
+   {
+    "step": "status-first-before",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "02-status-first-before.txt",
+     "bytes": 234,
+     "sha256": "af7beb477fce42fd45a6560ef16731cbad10eebcfe6b333a56dcefc1ca35c605"
+    }
+   },
+   {
+    "step": "packages-first-before",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "03-packages-first-before.txt",
+     "bytes": 611,
+     "sha256": "11d2d777e8dfaf79577c3395b3fc47f242ddb2ace3d2c84ecf4b56ffc7dcc4bb"
+    }
+   },
+   {
+    "step": "main-status-before",
+    "code": 0,
+    "seconds": 0.2,
+    "output": {
+     "name": "04-main-status-before.txt",
+     "bytes": 123,
+     "sha256": "eff08cbf3ab5e96125e5c025dce3a75927a57b5c34c86e67ed4e9dbb8ea264e1"
+    }
+   },
+   {
+    "step": "main-head-before",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "05-main-head-before.txt",
+     "bytes": 126,
+     "sha256": "4880455327f9f01fbc8ff980b302277033a5ae74e092c801fb2e42c525e762ff"
+    }
+   },
+   {
+    "step": "doctor-first-before",
+    "code": 0,
+    "seconds": 0.8,
+    "output": {
+     "name": "06-doctor-first-before.txt",
+     "bytes": 19662,
+     "sha256": "00d0e6830f4b13a09330075805fc7403790d7a2aa4565020ee2330850219fd78"
+    }
+   },
+   {
+    "step": "worktree-add",
+    "code": 0,
+    "seconds": 2.8,
+    "output": {
+     "name": "07-worktree-add.txt",
+     "bytes": 2905,
+     "sha256": "48792067f1a4ac9eaf8af960307af98ae84707842a1192b7099b7f5000fc171a"
+    }
+   },
+   {
+    "step": "second-fresh-status",
+    "code": 0,
+    "seconds": 0.3,
+    "output": {
+     "name": "08-second-fresh-status.txt",
+     "bytes": 141,
+     "sha256": "a75266bffa435a69509063a1dcb4d15db31ce37dcd08a9e01e6b7878adaf49c8"
+    }
+   },
+   {
+    "step": "second-head",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "09-second-head.txt",
+     "bytes": 168,
+     "sha256": "517a2898ed9e86d8c938b2a9aa7017af1eb5a48d6e7f4498fbbea5273dfd50d2"
+    }
+   },
+   {
+    "step": "second-tree",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "10-second-tree.txt",
+     "bytes": 175,
+     "sha256": "5f99be5c0c0880a8ea3d509de0137e3e971b78dd3e97fc4c004afdc33d0d2897"
+    }
+   },
+   {
+    "step": "doctor-second-fresh",
+    "code": 1,
+    "seconds": 0.8,
+    "output": {
+     "name": "11-doctor-second-fresh.txt",
+     "bytes": 14031,
+     "sha256": "5a7c8077071eb8801013f5c3f13b1415c9f0b4d9c9354e8f37d5a5750cee3c85"
+    }
+   },
+   {
+    "step": "second-preview",
+    "code": 0,
+    "seconds": 1.2,
+    "output": {
+     "name": "12-second-preview.txt",
+     "bytes": 1005,
+     "sha256": "76bd6ce20c7dff7c87aa8caa696a77e1f5dd4c7212d8fe87b3065bd477f6c81c"
+    }
+   },
+   {
+    "step": "second-status-after-preview",
+    "code": 0,
+    "seconds": 0.3,
+    "output": {
+     "name": "13-second-status-after-preview.txt",
+     "bytes": 141,
+     "sha256": "a75266bffa435a69509063a1dcb4d15db31ce37dcd08a9e01e6b7878adaf49c8"
+    }
+   },
+   {
+    "step": "second-bootstrap",
+    "code": 0,
+    "seconds": 7.7,
+    "output": {
+     "name": "14-second-bootstrap.txt",
+     "bytes": 1145,
+     "sha256": "00adf7c779411b5f32e7d4c5e5468f1ff4e9b3bc09e68d4f052927f5c79e5cf2"
+    }
+   },
+   {
+    "step": "doctor-second-ready",
+    "code": 0,
+    "seconds": 0.9,
+    "output": {
+     "name": "15-doctor-second-ready.txt",
+     "bytes": 19793,
+     "sha256": "6232ce4c278ec0de1e79b3ae9a9c7cc6b1cd01db1d08fb60a1dcd67cc9da01b6"
+    }
+   },
+   {
+    "step": "doctor-first-meanwhile",
+    "code": 0,
+    "seconds": 0.9,
+    "output": {
+     "name": "16-doctor-first-meanwhile.txt",
+     "bytes": 19744,
+     "sha256": "6806306c3e2f4ee8f502544c43f37513eecbe75409773d41cd796ff4b8ef1f84"
+    }
+   },
+   {
+    "step": "second-repeat",
+    "code": 0,
+    "seconds": 4.0,
+    "output": {
+     "name": "17-second-repeat.txt",
+     "bytes": 705,
+     "sha256": "277eda7f264bccb0d765e9a60f6f8d3e0ef6962414fc366a87573deb6db03983"
+    }
+   },
+   {
+    "step": "second-paths",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "18-second-paths.txt",
+     "bytes": 1159,
+     "sha256": "8706a12d1fd26e3b1040744a07232b44bc941dfaa42059e361c696782b1ece0e"
+    }
+   },
+   {
+    "step": "first-paths",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "19-first-paths.txt",
+     "bytes": 1103,
+     "sha256": "95fd5a3e1a18e24b7ecebbcb628d248bee62f8c29df0baab9fc7117509f5c30e"
+    }
+   },
+   {
+    "step": "second-capabilities",
+    "code": 0,
+    "seconds": 1.8,
+    "output": {
+     "name": "20-second-capabilities.txt",
+     "bytes": 64859,
+     "sha256": "09d27decebedaf02e3b0eadf96acaff11ac3978f0ba1f683aedf0fca1f28133f"
+    }
+   },
+   {
+    "step": "second-check",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "21-second-check.txt",
+     "bytes": 788,
+     "sha256": "e0f816e087a4ed7666bf478b724530a0878dca00c6e7aadf07a94aaeb790fb56"
+    }
+   },
+   {
+    "step": "second-workflow-check",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "22-second-workflow-check.txt",
+     "bytes": 378,
+     "sha256": "3e5b5729822f92f0ee49e12c27fc0c877df2cff13b24ed11f32c12f1d97e1aef"
+    }
+   },
+   {
+    "step": "second-documents",
+    "code": 0,
+    "seconds": 1.8,
+    "output": {
+     "name": "23-second-documents.txt",
+     "bytes": 6877,
+     "sha256": "01c848200f75365f0bd208863a1f13ade2b01a1b08834466eb49a7f7e23681b1"
+    }
+   },
+   {
+    "step": "second-driver-list",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "24-second-driver-list.txt",
+     "bytes": 3250,
+     "sha256": "dcb781fdd5cdebe9fcf5e095b1a289c2bb982a1e0fe5667c2a62c512b8918f5b"
+    }
+   },
+   {
+    "step": "second-focused-tests",
+    "code": 0,
+    "seconds": 97.3,
+    "output": {
+     "name": "25-second-focused-tests.txt",
+     "bytes": 673,
+     "sha256": "fea5abd3047c3bd86cfa0d1f6823ee37d0dffe828b749fbec82b085aa0bd3c85"
+    }
+   },
+   {
+    "step": "second-test-module",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "26-second-test-module.txt",
+     "bytes": 677,
+     "sha256": "3b15f5bae236717c4fae4fbc51635a35cdcfadb5bbbce9bd006537547cd17009"
+    }
+   },
+   {
+    "step": "head-first-after-use",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "27-head-first-after-use.txt",
+     "bytes": 161,
+     "sha256": "0d58dc643f462a2d772ac704cdf2dae72cb5b34e69d3c8c4a2157572907c1d50"
+    }
+   },
+   {
+    "step": "status-first-after-use",
+    "code": 0,
+    "seconds": 0.2,
+    "output": {
+     "name": "28-status-first-after-use.txt",
+     "bytes": 234,
+     "sha256": "af7beb477fce42fd45a6560ef16731cbad10eebcfe6b333a56dcefc1ca35c605"
+    }
+   },
+   {
+    "step": "packages-first-after-use",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "29-packages-first-after-use.txt",
+     "bytes": 611,
+     "sha256": "11d2d777e8dfaf79577c3395b3fc47f242ddb2ace3d2c84ecf4b56ffc7dcc4bb"
+    }
+   },
+   {
+    "step": "second-break",
+    "code": 0,
+    "seconds": 0.2,
+    "output": {
+     "name": "30-second-break.txt",
+     "bytes": 370,
+     "sha256": "f72fc0c8a57b9ec595bdf3c4bce9227ca6f6b5e3aef29cf45bcdd235f4c7876c"
+    }
+   },
+   {
+    "step": "doctor-second-broken",
+    "code": 1,
+    "seconds": 0.8,
+    "output": {
+     "name": "31-doctor-second-broken.txt",
+     "bytes": 19986,
+     "sha256": "1f9dfeddeb74f5d1a51e7c20fdbafedcb86d028e0e02bb692c0abe534b1c36d3"
+    }
+   },
+   {
+    "step": "doctor-first-while-second-broken",
+    "code": 0,
+    "seconds": 0.8,
+    "output": {
+     "name": "32-doctor-first-while-second-broken.txt",
+     "bytes": 19744,
+     "sha256": "a434f10f867378c6155ea9ebe3350888a682de7cc3d3defcf6a4e86d73edd2be"
+    }
+   },
+   {
+    "step": "head-first-while-broken",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "33-head-first-while-broken.txt",
+     "bytes": 161,
+     "sha256": "0d58dc643f462a2d772ac704cdf2dae72cb5b34e69d3c8c4a2157572907c1d50"
+    }
+   },
+   {
+    "step": "status-first-while-broken",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "34-status-first-while-broken.txt",
+     "bytes": 234,
+     "sha256": "af7beb477fce42fd45a6560ef16731cbad10eebcfe6b333a56dcefc1ca35c605"
+    }
+   },
+   {
+    "step": "packages-first-while-broken",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "35-packages-first-while-broken.txt",
+     "bytes": 611,
+     "sha256": "11d2d777e8dfaf79577c3395b3fc47f242ddb2ace3d2c84ecf4b56ffc7dcc4bb"
+    }
+   },
+   {
+    "step": "second-repair",
+    "code": 0,
+    "seconds": 9.2,
+    "output": {
+     "name": "36-second-repair.txt",
+     "bytes": 924,
+     "sha256": "3e8a930c028fcc0fbf42bd684bae9de50b9aacc3ad732a5f87b443ebf557901d"
+    }
+   },
+   {
+    "step": "doctor-second-repaired",
+    "code": 0,
+    "seconds": 0.8,
+    "output": {
+     "name": "37-doctor-second-repaired.txt",
+     "bytes": 19793,
+     "sha256": "4d61d39c848a5c58ae2946ced9e274118ef9348873af2d2583543d5c913a82d6"
+    }
+   },
+   {
+    "step": "head-second-before-first-use",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "38-head-second-before-first-use.txt",
+     "bytes": 168,
+     "sha256": "517a2898ed9e86d8c938b2a9aa7017af1eb5a48d6e7f4498fbbea5273dfd50d2"
+    }
+   },
+   {
+    "step": "status-second-before-first-use",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "39-status-second-before-first-use.txt",
+     "bytes": 161,
+     "sha256": "522cc1bf98b8bf560a24564b39748502c462e0eb3cc67694860b1d06217586aa"
+    }
+   },
+   {
+    "step": "packages-second-before-first-use",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "40-packages-second-before-first-use.txt",
+     "bytes": 625,
+     "sha256": "783426369eec9d378185b5e711b31a4bfd76c3b2ec20f8c46527579ae8c689b2"
+    }
+   },
+   {
+    "step": "doctor-first-use",
+    "code": 0,
+    "seconds": 0.8,
+    "output": {
+     "name": "41-doctor-first-use.txt",
+     "bytes": 19744,
+     "sha256": "7cc76389207179411edc5a2873289fbd450a92b4e566c5cb4c165fde607104a3"
+    }
+   },
+   {
+    "step": "first-bootstrap",
+    "code": 0,
+    "seconds": 3.9,
+    "output": {
+     "name": "42-first-bootstrap.txt",
+     "bytes": 691,
+     "sha256": "2beead332cc2481be4f7d517e84deda4066e01eb53ebd48d0f17a1f648908673"
+    }
+   },
+   {
+    "step": "first-check",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "43-first-check.txt",
+     "bytes": 774,
+     "sha256": "1ab911ab5c9d87dd3b6dad0bdf8a64183cf1976a71e18c29c0c5720840137f80"
+    }
+   },
+   {
+    "step": "head-second-after-first-use",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "44-head-second-after-first-use.txt",
+     "bytes": 168,
+     "sha256": "517a2898ed9e86d8c938b2a9aa7017af1eb5a48d6e7f4498fbbea5273dfd50d2"
+    }
+   },
+   {
+    "step": "status-second-after-first-use",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "45-status-second-after-first-use.txt",
+     "bytes": 161,
+     "sha256": "522cc1bf98b8bf560a24564b39748502c462e0eb3cc67694860b1d06217586aa"
+    }
+   },
+   {
+    "step": "packages-second-after-first-use",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "46-packages-second-after-first-use.txt",
+     "bytes": 625,
+     "sha256": "783426369eec9d378185b5e711b31a4bfd76c3b2ec20f8c46527579ae8c689b2"
+    }
+   },
+   {
+    "step": "first-git-dir",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "47-first-git-dir.txt",
+     "bytes": 205,
+     "sha256": "64383d0bf30835df066015c10262549bdec4114489bd8534892f38b8e73ca5db"
+    }
+   },
+   {
+    "step": "second-git-dir",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "48-second-git-dir.txt",
+     "bytes": 219,
+     "sha256": "a1c36a8829d8e32a9d89c0df18b7c9ec7e133e41340fcd9664c07743aef3aa3e"
+    }
+   },
+   {
+    "step": "main-git-dir",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "49-main-git-dir.txt",
+     "bytes": 135,
+     "sha256": "05edf6c51fa07e2a7ec82edb30d9b384d4ea1686a40d4af75e41f18beb49021f"
+    }
+   },
+   {
+    "step": "bootstrap-first-while-held",
+    "code": 3,
+    "seconds": 1.1,
+    "output": {
+     "name": "50-bootstrap-first-while-held.txt",
+     "bytes": 220,
+     "sha256": "e41403c304d6310159e5e33229fc2493ce414a97fce197712b38ece85fefe0f6"
+    }
+   },
+   {
+    "step": "bootstrap-second-while-first-held",
+    "code": 0,
+    "seconds": 3.9,
+    "output": {
+     "name": "51-bootstrap-second-while-first-held.txt",
+     "bytes": 705,
+     "sha256": "277eda7f264bccb0d765e9a60f6f8d3e0ef6962414fc366a87573deb6db03983"
+    }
+   },
+   {
+    "step": "head-first-after",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "52-head-first-after.txt",
+     "bytes": 161,
+     "sha256": "0d58dc643f462a2d772ac704cdf2dae72cb5b34e69d3c8c4a2157572907c1d50"
+    }
+   },
+   {
+    "step": "status-first-after",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "53-status-first-after.txt",
+     "bytes": 234,
+     "sha256": "af7beb477fce42fd45a6560ef16731cbad10eebcfe6b333a56dcefc1ca35c605"
+    }
+   },
+   {
+    "step": "packages-first-after",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "54-packages-first-after.txt",
+     "bytes": 611,
+     "sha256": "11d2d777e8dfaf79577c3395b3fc47f242ddb2ace3d2c84ecf4b56ffc7dcc4bb"
+    }
+   },
+   {
+    "step": "main-status-after",
+    "code": 0,
+    "seconds": 0.2,
+    "output": {
+     "name": "55-main-status-after.txt",
+     "bytes": 123,
+     "sha256": "eff08cbf3ab5e96125e5c025dce3a75927a57b5c34c86e67ed4e9dbb8ea264e1"
+    }
+   },
+   {
+    "step": "main-head-after",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "56-main-head-after.txt",
+     "bytes": 126,
+     "sha256": "4880455327f9f01fbc8ff980b302277033a5ae74e092c801fb2e42c525e762ff"
+    }
+   },
+   {
+    "step": "head-second-final",
+    "code": 0,
+    "seconds": 0.0,
+    "output": {
+     "name": "57-head-second-final.txt",
+     "bytes": 168,
+     "sha256": "517a2898ed9e86d8c938b2a9aa7017af1eb5a48d6e7f4498fbbea5273dfd50d2"
+    }
+   },
+   {
+    "step": "status-second-final",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "58-status-second-final.txt",
+     "bytes": 161,
+     "sha256": "522cc1bf98b8bf560a24564b39748502c462e0eb3cc67694860b1d06217586aa"
+    }
+   },
+   {
+    "step": "packages-second-final",
+    "code": 0,
+    "seconds": 0.1,
+    "output": {
+     "name": "59-packages-second-final.txt",
+     "bytes": 625,
+     "sha256": "783426369eec9d378185b5e711b31a4bfd76c3b2ec20f8c46527579ae8c689b2"
+    }
+   }
+  ]
+ }
+}

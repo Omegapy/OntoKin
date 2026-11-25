@@ -900,7 +900,7 @@
         "TASK-019",
         "TASK-020"
       ],
-      "status": "in_progress",
+      "status": "done",
       "artifacts": [
         "tools/check_local.py",
         "tests/test_local_checks.py"
@@ -928,7 +928,7 @@
         "TASK-025",
         "TASK-026"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/local-migration-20261124/CANDIDATE-CHECKS.json"
       ],
@@ -952,7 +952,7 @@
         "TASK-013",
         "TASK-016"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/local-migration-20261124/SECOND-WORKTREE.json"
       ],
@@ -1156,23 +1156,29 @@
     {
       "name": "documentation and navigation verifier",
       "command": "python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/local-migration-20261124/CANDIDATE-CHECKS.json"
+      ]
     },
     {
       "name": "workflow structure check",
       "command": "python3 tools/chat_workflow.py check",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/local-migration-20261124/CANDIDATE-CHECKS.json"
+      ]
     },
     {
       "name": "focused tool tests",
       "command": ".venv/bin/python -m unittest tests.test_bootstrap_local tests.test_doctor_local tests.test_chat_workflow tests.test_local_checks -v",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/local-migration-20261124/CANDIDATE-CHECKS.json"
+      ]
     },
     {
       "name": "python-verification readiness",
@@ -1186,9 +1192,12 @@
     {
       "name": "routine local driver compared with the baseline",
       "command": ".venv/bin/python tools/check_local.py --timeout SECONDS --output-dir NEW_DIRECTORY_OUTSIDE_THE_CHECKOUT",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/local-migration-20261124/CANDIDATE-CHECKS.json"
+      ],
+      "note": "The comparison found no new or worsened failure. The driver itself reports failed, on the base and on the candidate, because of the unchanged unit failures."
     },
     {
       "name": "installed-package check outside the checkout",
@@ -1202,9 +1211,11 @@
     {
       "name": "second-worktree recreation and isolation",
       "command": "bootstrap and doctor in a second worktree of the migration branch",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/local-migration-20261124/SECOND-WORKTREE.json"
+      ]
     },
     {
       "name": "fresh-session demonstration",
@@ -1235,7 +1246,7 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Finish TASK-026 (driver run outside the checkout, read its documents step), then TASK-027 (candidate checks against the baseline), TASK-028 (second worktree) and TASK-029 (session checkpoint). TASK-006 to TASK-008 wait for the owner-supplied R06 archive and receipt; TASK-030 waits for the owner.",
+  "next_action": "TASK-029: write the session checkpoint under the extended template. TASK-030 then waits for the owner; TASK-006 to TASK-008 wait for the owner-supplied R06 archive and receipt.",
   "blockers": [
     {
       "step": "TASK-006",

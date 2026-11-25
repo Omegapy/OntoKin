@@ -119,6 +119,11 @@ into the same environment; a second setup run for the same checkout stops at onc
 the Claude desktop application, turn Worktree mode on deliberately before parallel
 editing, and verify the actual checkout path and branch before the first edit.
 
+The [recorded test](../engineering/local-migration-20261124/SECOND-WORKTREE.json) made an
+environment this way in a new place, ran the checks there, removed a package from it and
+found the first worktree unchanged throughout. When a worktree is finished, preserve its
+evidence outside it, then use `git worktree remove`; its ignored environment goes with it.
+
 ## Prove the installed package
 
 This is the `package-smoke` profile. It uses new directories outside the checkout.
@@ -224,8 +229,8 @@ Executed on macOS 26.6.2, arm64, with Homebrew CPython 3.12.13, on November 25, 
 | --- | --- |
 | Setup preview, setup, repeat setup, doctor in every form above, `pip check`, native-reader preflight, `capabilities`, `check` | Run |
 | `--find-links`, refusal of an incompatible environment, refusal while a process uses it, `--rebuild` | Run in scratch worktrees |
-| Driver list and the routine driver with `--timeout` and `--output-dir`, with the default and the resolved temporary directory | Run on the base revision |
-| `git worktree add` and setup in the new worktree | Run; the migration worktree was made this way |
+| Driver list and the routine driver with `--timeout` and `--output-dir`, with the default and the resolved temporary directory | Run on the base revision and on the [candidate](../engineering/local-migration-20261124/CANDIDATE-CHECKS.json) |
+| `git worktree add`, setup and checks in the new worktree, `git worktree remove` | Run; the migration worktree was made this way, and [a second one](../engineering/local-migration-20261124/SECOND-WORKTREE.json) was made, tested and removed |
 | Package-smoke procedure | Run |
 | `visual-verification` preview | Run; refused because only Node.js 25.9.0 is installed |
 | `visual-verification` setup, `npm ci`, Chromium installation, `--repair-node`, `--install-interpreter`, `brew install python@3.12` | **Not run** on this machine; the options are covered by controlled tests only |
