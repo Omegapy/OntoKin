@@ -155,8 +155,8 @@ a list of pointers; each pointer was checked to resolve.
 Some evidence was made with earlier revisions of the tools, which were corrected later:
 [ENVIRONMENT](ENVIRONMENT.json) (`4bdb2ee6`), [PACKAGE-SMOKE](PACKAGE-SMOKE.json) (`3fd7b922`) and
 [SECOND-WORKTREE](SECOND-WORKTREE.json) (`3c7985db`). With the tools of `d4d486b3` a preview, a fresh setup, a
-repeat and the doctor were run in a new clone, and an independent reviewer did the same with those of
-`7caaff61`: ready, and unchanged on repeat. The isolation of two worktrees and the installed
+repeat and the doctor were run in a new clone. With those of `7caaff61` the Director made a fresh
+environment in the reviewer's clone, and the reviewer's repeat changed nothing. Both were ready. The isolation of two worktrees and the installed
 package were not tested again. The setup in the main checkout (TASK-035) is the next real run.
 
 ## From the changes back to the requirements
