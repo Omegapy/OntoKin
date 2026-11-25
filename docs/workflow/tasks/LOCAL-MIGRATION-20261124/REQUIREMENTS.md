@@ -12,8 +12,8 @@ TRD's own headings, and [task.json](task.json) records status and evidence.
 - The owner approved PLAN-20261125-CB551B16 with its decisions DEC-002 to
   DEC-012 as written, and then instructed on 2026-11-24:
   "execute PLAN-20261125-CB551B16".
-- The decision record `docs/engineering/local-migration-20261124/DECISION.md`
-  states the prospective owner direction (TASK-003).
+- The [decision record](../../../engineering/local-migration-20261124/DECISION.md)
+  states the prospective owner direction.
 
 ## Scope
 
