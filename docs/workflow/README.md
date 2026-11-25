@@ -1,8 +1,12 @@
-# Develop OntoKin through browser chats
+# Develop OntoKin with an agent
 
-Use [CHATGPT-START-HERE.md](../../CHATGPT-START-HERE.md) for each new ChatGPT
-thread. It contains a reusable prompt and the explicit reading order. The
-GitHub repository holds current work; the chat provides the working session.
+Two ways of working share one repository, one task system and one set of rules.
+The entry document a session starts from decides which one applies.
+
+| Mode | Entry | Use it for |
+| --- | --- | --- |
+| Local | `LOCAL-START-HERE.md` | Ordinary development in the owner's clone, normally from the Code tab of the Claude desktop application. |
+| Browser | [CHATGPT-START-HERE.md](../../CHATGPT-START-HERE.md) | ChatGPT browser threads, each on a different, disposable host. |
 
 ## What happens in a session
 
@@ -10,14 +14,21 @@ The agent reads current instructions and the live checkpoint, checks what its
 tools can actually do, and selects the scope authorized by your request. It
 records requirements and a plan, implements the change, verifies it and updates
 GitHub. Independent workers can help when available. Completed approved work
-is integrated into main and the work branch is resolved. The agent then verifies
-and saves the required browser-session ZIP under [HANDOFF.md](HANDOFF.md).
-Use the separate [continuation and recovery prompts](BROWSER-PROMPTS.md).
+is integrated into main and the work branch is resolved.
 
-A task can span several chats. The next chat resumes the same task and branch
-after checking their current state. It does not create another branch simply
-because the conversation changed. If the previous operation timed out, it
-checks GitHub before repeating it.
+- A **local** session reuses the checkout and its environment, may continue
+  through the selected task's planned steps, and closes on commits, truthful
+  records, verified push state and durable evidence. It needs no ZIP unless the
+  task asks for one. See [HANDOFF.md](HANDOFF.md#local-sessions).
+- A **browser** session rebuilds what it needs on its current host, works on one
+  declared phase, and then verifies and saves the required browser-session ZIP
+  under [HANDOFF.md](HANDOFF.md). Use the separate
+  [continuation and recovery prompts](BROWSER-PROMPTS.md).
+
+A task can span several sessions. The next session resumes the same task and
+branch after checking their current state. It does not create another branch
+simply because the conversation changed. If the previous operation timed out, it
+checks the actual state before repeating it.
 
 ## Where information lives
 
@@ -29,7 +40,7 @@ checks GitHub before repeating it.
 | [Registry](registry.json) | Required reads and the small set of reusable repository skills. |
 | [ROLE.md](../../ROLE.md) | Director, worker and reviewer accountability. |
 | [PROTOCOL.md](PROTOCOL.md) | Startup, execution, recovery, verification and integration rules. |
-| [HANDOFF.md](HANDOFF.md) | Required saved session ZIP, early checkpoints and confirmed delivery. |
+| [HANDOFF.md](HANDOFF.md) | Browser: required saved session ZIP, early checkpoints and confirmed delivery. Local: what closes a session or scope. |
 | [Browser prompts](BROWSER-PROMPTS.md) | Copyable normal continuation and interrupted-thread recovery prompts. |
 | [Memory](memory.json) | Source-backed decisions, constraints and lessons; current instructions retain authority. |
 | [Knowledge guide](KNOWLEDGE.md) | Project vocabulary, relationships and documented capability boundaries. |
@@ -41,6 +52,8 @@ task ledger is unnecessary. [Templates](templates/SESSION.md) help capture
 session observations without saving entire conversations.
 
 ## When capabilities differ
+
+Browser threads differ in what they can do:
 
 | Available in this chat | Supported route |
 | --- | --- |
