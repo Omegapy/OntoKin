@@ -2,9 +2,20 @@
 
 Owner authorization: autonomous technical development/stewardship toward [GOAL.md](GOAL.md), through implementation, verification and reviewable publication within selected scope. No legal ownership, wider platform authority or outside-project authority.
 
+## Execution modes
+
+Every session works in exactly one explicit mode, under the owner's [November 24, 2026 direction](docs/engineering/local-migration-20261124/DECISION.md), which is prospective.
+
+| Mode | Entry document | Execution host |
+| --- | --- | --- |
+| **Local**: ordinary development | `LOCAL-START-HERE.md` | Owner's persistent clone and its worktrees. Inspect actual state; reuse validated resources; reconstruct only missing/incompatible inputs. |
+| **Browser**: ChatGPT browser threads | [CHATGPT-START-HERE](CHATGPT-START-HERE.md) | A different, disposable host for each thread, under the ephemeral host rule below. |
+
+The entry document a session starts from declares its mode; session checkpoint and task record state it. Never infer it from a path, machine, product or agent name. "Go"/"Continue" without a named entry document uses the mode recorded for the selected task; only explicit owner direction changes it. When neither names one, ask. A session on a disposable or remote host is not a local session. A rule marked for one mode binds only that mode; unmarked rules bind both.
+
 ## Ephemeral host rule
 
-Each new ChatGPT browser thread uses a **different, disposable execution host**.
+Browser mode: each new ChatGPT browser thread uses a **different, disposable execution host**.
 Never assume previous local paths, environments, packages, running workers or
 installed inputs persist. Current GitHub and verified Library files provide
 continuity; reconstruct only task-needed inputs in the current host. Do not
@@ -13,17 +24,20 @@ attempt to find or repair a previous host. Follow
 
 ## Recenter and resume
 
-At session start, after compaction, and before milestone selection/closure, follow [CHATGPT-START-HERE](CHATGPT-START-HERE.md) and [PROTOCOL §1](docs/workflow/PROTOCOL.md#1-authority-and-explicit-loading). Their full load/read-set rules apply; GitHub skills are not automatically installed. Reconcile user direction, actual state and adopted contracts; identify goal/next unmet gate.
+At session start, after compaction, and before milestone selection/closure, follow your mode's entry document and [PROTOCOL §1](docs/workflow/PROTOCOL.md#1-authority-and-explicit-loading). Their full load/read-set rules apply; GitHub skills are not automatically installed. Reconcile user direction, actual state and adopted contracts; identify goal/next unmet gate.
 
 Inspect working tree, actual GitHub head, lease and relevant CI; preserve existing work. Synthetic snapshots are not remote heads. Read applicable specifications via [docs/README.md](docs/README.md), especially adopted language rules/active contract; historical proposals guarantee no implementation. Continue authorized useful work, recording real blockers/exact next actions. Never substitute an easier demonstration for an unmet goal.
 
-## GitHub-owned browser workflow
+## GitHub-owned workflow
 
-[ROLE](ROLE.md)/[PROTOCOL](docs/workflow/PROTOCOL.md) own requirements, plans, workers, evidence, memory and bounded phases. Their rules on source-backed knowledge, named TRD/plan skills and native ChatGPT Tasks apply. [HANDOFF](docs/workflow/HANDOFF.md)/[BROWSER-PROMPTS](docs/workflow/BROWSER-PROMPTS.md) own early recovery, separate GitHub/save gates, verified handoff and stop. Read-only questions alone require no scope/ZIP; assume neither compaction nor context warnings.
+[ROLE](ROLE.md)/[PROTOCOL](docs/workflow/PROTOCOL.md) own requirements, plans, workers, evidence, memory and bounded phases. Their rules on source-backed knowledge, named TRD/plan skills and native ChatGPT Tasks apply. Read-only questions alone require no scope/ZIP; assume neither compaction nor context warnings.
+
+- **Browser:** [HANDOFF](docs/workflow/HANDOFF.md)/[BROWSER-PROMPTS](docs/workflow/BROWSER-PROMPTS.md) own early recovery, separate GitHub/save gates, verified handoff and stop.
+- **Local:** PROTOCOL's local rules own recoverable starting state, conduct, checkpoints and closing. Ordinary authenticated Git publishes source and evidence. A ZIP is optional unless the selected task requires one. "Go"/"Continue" resumes the selected authorized scope's next unmet step and selects no new milestone.
 
 ## Coordinate parallel workers and main integration
 
-Apply full [PROTOCOL §7](docs/workflow/PROTOCOL.md#7-integration-and-branch-lifecycle): independent nonoverlapping work; verified lease ownership; observed-head conditional/nonforce update or protected PR merge; readback/checks; preservation; roughly 30-minute leases/expiry reconciliation. Existing routine authorization needs no repeated permission. Unavailable conditional writes block that operation, not independent work.
+Apply full [PROTOCOL §7](docs/workflow/PROTOCOL.md#7-integration-and-branch-lifecycle): independent nonoverlapping work; verified lease ownership; observed-head conditional/nonforce update or protected PR merge; readback/checks; preservation; roughly 30-minute leases/expiry reconciliation. Existing routine authorization needs no repeated permission. Unavailable conditional writes block that operation, not independent work. Local writers also use separate worktrees, environments and owned files under PROTOCOL §4.
 
 ## Development integration and branch lifecycle
 
@@ -42,7 +56,7 @@ Follow PROTOCOL §7 for one branch per bounded scope, normally at most three, ch
 
 ## Verify the actual change
 
-Owner's no-payment direction/[OK-ENG-006](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md): fresh relevant local checks in the assistant's hosted workspace, not user's computer. Do not wait for hosted CI, retry blocked jobs or enable paid execution. Inspect older branches' changed workflows before integration: manual-only/default-false opt-in; no push/pull-request/scheduled jobs. Claim repository-wide Actions disablement only if observed.
+Owner's no-payment direction/[OK-ENG-006](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md): fresh relevant checks on the mode's explicitly selected executor. Local mode: the owner's prepared environment, run as `.venv/bin/python`, or another verification executor named for the check. Browser mode: the assistant's hosted workspace, not user's computer. Do not wait for hosted CI, retry blocked jobs or enable paid execution. Inspect older branches' changed workflows before integration: manual-only/default-false opt-in; no push/pull-request/scheduled jobs. Claim repository-wide Actions disablement only if observed.
 
 Select checks for actual scope; documentation-only changes require documentation and applicable workflow checks below.
 
@@ -52,6 +66,7 @@ Select checks for actual scope; documentation-only changes require documentation
 | Runtime/semantics | Normally `python3 -m unittest discover -s tests -v` and `python3 -m ontokin conformance --output /tmp/ontokin-conformance.json`. |
 | Documentation/navigation | `python3 docs/maintenance/reorganization-2026-10-17/verify_reorganization.py`. |
 | Workflow records/tools | `python3 tools/chat_workflow.py check`; tool edits also need focused tests. |
+| Local environment specification, locks or setup tools | Focused tests; `tools/doctor_local.py` for each affected profile; independent review before a changed lock is used. |
 | Agent/0.5 | Prepare pinned verification packages; `python3 tools/check_local.py --force-agent`: exact dependencies, zero-skip cohort, fresh source workflow, independent audit. May combine `--full`; neither closes release. |
 | Exporter/viewer | Fresh source-to-GLB builds, independent Khronos/Three.js checks, visual inspection per [OK-ENG-002](docs/engineering/OK-ENG-002-3d-scene-animation-export-and-visual-validation.md). |
 | Agent interface | Execute actual protocol cases, including failure/retry; schemas are insufficient. |
