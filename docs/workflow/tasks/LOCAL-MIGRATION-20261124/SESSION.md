@@ -3,11 +3,11 @@
 Follows the [template](../../templates/SESSION.md). Detailed evidence is linked, not
 repeated. Machine paths are left out; places beside the clone are named relative to it. The
 **continuing session** wrote this record; the **demonstrating session** is the one that the
-owner starts for TASK-030.
+owner started for TASK-030.
 
 ## Identity
 
-- Checkpoint time and author identity: 2026-11-25T18:43Z, Director `local-migration-f58a0f3c1d5a`.
+- Checkpoint time and author identity: 2026-11-25T20:03Z, Director `local-migration-f58a0f3c1d5a`.
 - Task, session, and agent or tool identity: LOCAL-MIGRATION-20261124; the continuing
   session, one Claude Code command-line session in the main checkout, model Claude Opus 5.5.
 - Execution mode, and the entry document or record that declared it: `local`, declared by the
@@ -18,7 +18,7 @@ owner starts for TASK-030.
   `work/local-migration-20261124`.
 - Current user objective and bounded milestone: the owner's instruction of 2026-11-25 is to
   continue executing PLAN-20261125-CB551B16, the local development migration; the milestone
-  is a clean run of TASK-030.
+  is the Worktree observation of TASK-030.
 - Task, requirements, and plan paths: [task.json](task.json), [REQUIREMENTS](REQUIREMENTS.md),
   [PLAN](PLAN.md).
 
@@ -38,14 +38,14 @@ owner starts for TASK-030.
 ## Source
 
 - Starting revision and current code checkpoint: `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774` to
-  `dc04523f0ed1a15bcf2a83ea3d2bb69600f6c9ca`, tree `d186b0e011d3c460e13821444b544c4af192fb56`.
+  `3d02d7e0acda7aeb0c722a2a24e9a88a97a9cde4`, tree `41ec357a29882d57f9358c55b5d365beecafc072`.
 - Dirty and untracked state: the worktree was clean at that commit. The main checkout has no
   tracked change; its untracked `TRDs/` (equal to the committed copy) and
   `Implementation_Plans/` stay there on purpose.
 - Actual remote observation, with command and time, or offline and stale:
-  `git ls-remote --heads origin` at 2026-11-25T18:43Z: main `6b346b1e…`,
+  `git ls-remote --heads origin` at 2026-11-25T20:03Z: main `6b346b1e…`,
   `work/c271-missing-import-digest-control` `bef67902…`, `work/local-migration-20261124`
-  `dc04523f…`; no other head.
+  `3d02d7e0…`; no other head.
 - Repository, actual main SHA/tree, and observation time: Omegapy/OntoKin, main
   `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774`, tree `812a17de3880f7c152beacccf7b2e690381f9716`,
   same observation.
@@ -53,20 +53,20 @@ owner starts for TASK-030.
   request yet; [scope277](https://github.com/Omegapy/OntoKin/issues/277) open.
 - Local checkout identity and unpublished changes, if a workspace exists: clone with three
   linked worktrees: this one, and two detached ones that hold no unique work,
-  `baseline-6b346b1e` and `candidate-checks` at `03d61c2d`. No unpublished commit, no stash.
+  `baseline-6b346b1e` and `candidate-checks` at `402a7d8e`. No unpublished commit, no stash.
 
 ## Work
 
 - Requirements completed, incomplete, blocked, and excluded: the ledger marks none of the 42
   requirements done before the audit of TASK-031. Excluded: every C271 gate, product and
   native qualification, container profiles.
-- Completed acceptance items and last completed gate: TASK-001 to TASK-029. Last completed
-  gate: the R06 handoff, TASK-006 with TASK-007 and TASK-008, which came after TASK-027 to
-  TASK-029.
+- Completed acceptance items and last completed gate: TASK-001 to TASK-029, and TASK-030 except
+  its Worktree criterion ([judgement](../../../engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md)).
+  Last completed gate: the clean run of TASK-030.
 - Changed artifact paths and exact code/input identities: `git diff --name-status` from the
-  base to the code checkpoint: 34 added, 21 modified, none deleted. No expectation, fixture,
+  base to the code checkpoint: 36 added, 21 modified, none deleted. No expectation, fixture,
   evidence file, workflow definition or C271 file is among them. Since
-  `2a220d2f295a2f4ec68eebdf6c8cd0d4282f475e` only documents and records changed.
+  `402a7d8ed8512535e2f87ed123c3f6a7b418dea0` only documents and records changed.
 - Decisions made: [DECISION](../../../engineering/local-migration-20261124/DECISION.md), with
   the deviations recorded in [PLAN](PLAN.md#deviations-from-the-approved-plan); on the owner's
   direction of 2026-11-25 details of the machine's protection are kept off the public record.
@@ -102,17 +102,16 @@ owner starts for TASK-030.
 - Commands actually executed and observed outcomes: at `d4d486b3621e26e71830beddfe988ac8bc2e9461`
   in a scratch clone: documentation verifier and workflow check passed, 307 focused tests OK
   with a resolved TMPDIR; setup preview, setup, repeat and doctor run for real, the repeat
-  unchanged. At the code checkpoint: documentation verifier (1,341 documents, no failure) and
-  workflow check (12 tasks) passed. The R06 identities were computed again and are equal.
-- Failures: the driver reports failed. At `2a220d2f295a2f4ec68eebdf6c8cd0d4282f475e` its unit step
-  ran 4,989 tests; one does not pass with a resolved TMPDIR and 307 with the default one, all
-  unchanged from the [baseline](../../../engineering/local-migration-20261124/BASELINE-CHECKS.json),
-  as a second comparison of the raw logs also found. The
-  [candidate record](../../../engineering/local-migration-20261124/CANDIDATE-CHECKS.json) binds an
-  earlier revision and is made again for the frozen candidate.
+  unchanged. At `402a7d8ed8512535e2f87ed123c3f6a7b418dea0`: both driver runs, 307 focused tests, the
+  documentation verifier and the workflow check. At the code checkpoint: documentation verifier
+  and workflow check passed. The R06 identities were computed again and are equal.
+- Failures: the driver reports failed. Its unit step ran 4,989 tests; one does not pass with a
+  resolved TMPDIR and 307 with the default one, all unchanged from the
+  [baseline](../../../engineering/local-migration-20261124/BASELINE-CHECKS.json)
+  ([candidate record](../../../engineering/local-migration-20261124/CANDIDATE-CHECKS.json)).
 - Pending and not-run checks: 16 external cases pending; three readback tests skipped;
-  `--full`, `--force-agent`, hosted CI and Linux not run; clean demonstration, Worktree
-  observation, independent review and resulting-main checks not run.
+  `--full`, `--force-agent`, hosted CI and Linux not run; Worktree observation, independent
+  review and resulting-main checks not run.
 - Durable logs, review findings, and evidence links: records in
   [local-migration-20261124](../../../engineering/local-migration-20261124/); the
   [pre-reviews](../../../engineering/local-migration-20261124/PRE-REVIEWS.md) with every
@@ -140,61 +139,36 @@ owner starts for TASK-030.
 
 ## Coordination
 
-- Active workers and reserved files: none. The continuing session writes nothing in this
-  worktree after publishing this checkpoint, until FRESH-SESSION.md is on the branch or the
-  owner says otherwise. The demonstrating session need not ask again.
+- Active workers and reserved files: none. The continuing session goes on writing here.
 - Actual subagents, assigned scopes, and unresolved worker activity: none active. Desktop
-  sessions of the owner that have this worktree as their folder: the first demonstrating
-  session and one read-only check; both ended their turn. One further desktop session has the
-  main checkout as its folder and changed nothing.
+  sessions of the owner that have this worktree as their folder: the two demonstrating sessions
+  and two read-only checks; all ended their turn. One further desktop session has the main
+  checkout as its folder and changed nothing.
 - Integration owner, expiry, and latest verified ownership record: none; the lease was
   released on 2026-11-20 ([STATUS](../../../../STATUS.md#main-integration-lease)).
 - Lease status: released, not acquired by this migration.
 - Ownership released, renewed, transferred, or still uncertain: the Director role passed from
   `local-migration-0e9ea0a483b1`, whose process was observed to have ended on 2026-11-25, to
-  `local-migration-f58a0f3c1d5a` on the owner's instruction. The demonstrating session acts as
-  a worker for one file, FRESH-SESSION.md; it takes no Director role and no lease.
+  `local-migration-f58a0f3c1d5a` on the owner's instruction. A session with Worktree mode on only
+  reports; it takes no Director role and no lease.
 
 ## Continuation
 
-- One exact next action, inputs, acceptance gate, and stopping condition: **TASK-030, a clean
-  run, for the demonstrating session.** The account of a first run is kept as
-  `FRESH-SESSION-1.md`; it does not count, because a private agent note was in that session's
-  context ([PLAN](PLAN.md#deviations-from-the-approved-plan)). The demonstrating session is the
-  one which the owner starts in the Claude Desktop Code tab with this worktree as its folder,
-  Worktree mode off, and the instruction `Continue`. It recognises itself by its own process:
-  the running Claude Code lies in the desktop application's support directory, under
-  `claude-code/VERSION/` (`ps -o command= -p $PPID` from its shell). **Any other session that
-  reads this, and any session that finds FRESH-SESSION.md already present, reports the state
-  and stops.**
-  1. Report the startup items before writing anything.
-  2. Write `docs/engineering/local-migration-20261124/FRESH-SESSION.md` from this session's own
-     observation, without machine paths and without opening `FRESH-SESSION-1.md`: the
-     application version (`CFBundleShortVersionString` of the installed application) and the
-     bundled Claude Code version (from that process path, not from a terminal's
-     `claude --version`); the checkout relative to the clone, branch, head and Worktree setting;
-     the instruction files that were present without being opened, and those that were opened;
-     the project skills it sees; its account of the selected task, the environment, the completed
-     work, the last completed gate, the next action and the blockers, compared with
-     [CURRENT](../../CURRENT.json), the [task record](task.json) and this checkpoint; and whether
-     any earlier conversation, private agent memory, ZIP or Library download was present or used.
-     Name every difference.
-  3. Run `.venv/bin/python -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py`
-     and `.venv/bin/python -B tools/chat_workflow.py check`.
-  4. Commit only that file, push this branch, confirm the push with `git ls-remote`, and
-     stop. The continuing session then updates the ledger, CURRENT and this checkpoint.
-
-  Gate: the acceptance of TASK-030 in [PLAN](PLAN.md), except its Worktree criterion. For that
-  one the owner starts a read-only session with Worktree mode on and the prompt "Check where a
-  session works" of [LOCAL-PROMPTS](../../LOCAL-PROMPTS.md); the continuing session records it. A
-  first check of 2026-11-25 ran with Worktree mode off, in this worktree, and does not count.
-- The condition that makes that action safe and useful to execute: the worktree is clean at
-  the head that carries this checkpoint, and the remote shows the same head.
+- One exact next action, inputs, acceptance gate, and stopping condition: **TASK-030, the Worktree
+  observation.** The owner starts a read-only session in the Claude Desktop Code tab with the
+  `OntoKin` folder and Worktree mode **on**, and asks where it works ("Check where a session works"
+  in [LOCAL-PROMPTS](../../LOCAL-PROMPTS.md), or the same in own words). The continuing session
+  records path and branch, completes the
+  [judgement](../../../engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md) and the ledger,
+  and goes on with TASK-031. **Any other session that reads this reports the state and stops.**
+  Gate: the last criterion of TASK-030 in [PLAN](PLAN.md).
+- The condition that makes that action safe and useful to execute: the session changes nothing;
+  the checkout that the application makes is removed after its state has been recorded.
 
 ## Delivery
 
 - Local checkpoint status: committed on this branch.
-- Verified push state, or unconfirmed: code checkpoint `dc04523f…` confirmed on the remote by
+- Verified push state, or unconfirmed: code checkpoint `3d02d7e0…` confirmed on the remote by
   `git ls-remote`; the later commit that carries this record is shown by Git.
 - Actual merge/resulting-main checks, or remaining integration gate: not integrated. Remaining:
   TASK-030, audit, independent review, lease and merge.
