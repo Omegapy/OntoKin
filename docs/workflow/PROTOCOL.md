@@ -24,6 +24,9 @@ each local rule replaces the browser rule beside it:
 | Where checks run | The assistant's hosted workspace. | The explicitly selected local or dedicated verification executor. |
 | Continuation input | The latest saved handoff and live GitHub. | The local entry instructions and repository task pointers; no Library link. |
 
+A session resumes a task recorded for the other mode only on explicit owner direction, and
+then reconciles that task's own delivery requirements.
+
 [Owner direction](../engineering/local-migration-20261124/DECISION.md), November 24, 2026:
 prospective. Earlier handoffs, receipts and failed observations keep their interpretation.
 
