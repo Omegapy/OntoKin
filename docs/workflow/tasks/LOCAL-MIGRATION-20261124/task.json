@@ -595,7 +595,7 @@
         "TASK-011",
         "TASK-012"
       ],
-      "status": "not_done",
+      "status": "done",
       "artifacts": [
         "docs/engineering/local-migration-20261124/ENVIRONMENT.json"
       ],
@@ -1176,9 +1176,11 @@
     {
       "name": "python-verification readiness",
       "command": ".venv/bin/python tools/doctor_local.py --json",
-      "result": "not_run",
+      "result": "passed",
       "required": true,
-      "evidence": []
+      "evidence": [
+        "docs/engineering/local-migration-20261124/ENVIRONMENT.json"
+      ]
     },
     {
       "name": "routine local driver compared with the baseline",
@@ -1230,5 +1232,5 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Continue TASK-013: create the python-verification environment in the migration worktree with the bootstrap tool, then the installed-package check (TASK-014) and the routine-driver baseline (TASK-015)."
+  "next_action": "Continue TASK-014 (installed-package check), TASK-015 (routine-driver baseline on 6b346b1e) and TASK-016 (setup guide)."
 }

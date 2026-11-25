@@ -1,0 +1,467 @@
+{
+  "schema": "ontokin.local-migration.environment/1",
+  "task": "LOCAL-MIGRATION-20261124",
+  "step": "TASK-013",
+  "note": "Machine paths are replaced by labels. The unedited records stay in the ignored .venv and in the local evidence directory beside the clone.",
+  "record": {
+    "schema": "ontokin.local-environment-record/1",
+    "updated_at": "2026-11-25T07:15:05+00:00",
+    "profile": "python-verification",
+    "root": "<root>",
+    "environment": "<root>/.venv",
+    "interpreter": {
+      "implementation": "CPython",
+      "version": "3.12.13",
+      "build": [
+        "main",
+        "Mar  3 2026 12:39:30"
+      ],
+      "compiler": "Clang 17.0.0 (clang-1700.6.3.2)",
+      "executable": "<root>/.venv/bin/python",
+      "base_executable": "/opt/homebrew/Cellar/python@3.12/3.12.13/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+      "base_prefix": "/opt/homebrew/opt/python@3.12/Frameworks/Python.framework/Versions/3.12",
+      "base_prefix_real": "/opt/homebrew/Cellar/python@3.12/3.12.13/Frameworks/Python.framework/Versions/3.12",
+      "distribution": {
+        "name": "Homebrew",
+        "formula": "python@3.12"
+      }
+    },
+    "platform": {
+      "key": "macos-arm64",
+      "system": "Darwin",
+      "machine": "arm64",
+      "os_version": "26.6.2",
+      "platform_tag": "macosx-26.0-arm64"
+    },
+    "configuration": {
+      "home": "/opt/homebrew/opt/python@3.12/bin",
+      "include-system-site-packages": "false",
+      "version": "3.12.13",
+      "executable": "/opt/homebrew/Cellar/python@3.12/3.12.13/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+      "command": "/opt/homebrew/opt/python@3.12/bin/python3.12 -m venv <root>/.venv"
+    },
+    "installation_tools": {
+      "pip": "26.0"
+    },
+    "build_tools": "None: binary wheels only.",
+    "packages": {
+      "attrs": "26.1.0",
+      "jsonschema": "4.26.0",
+      "jsonschema-specifications": "2025.9.1",
+      "pillow": "13.0.0",
+      "pip": "26.0",
+      "referencing": "0.37.0",
+      "rpds-py": "2026.5.1",
+      "typing_extensions": "4.16.0"
+    },
+    "lock": {
+      "state": "ready",
+      "required": true,
+      "path": "tools/native-reader-verification-macos-arm64-cp312.lock",
+      "provenance": "tools/native-reader-verification-macos-arm64-cp312.provenance.json",
+      "detail": "tools/native-reader-verification-macos-arm64-cp312.lock is valid for this platform and Python 3.12."
+    },
+    "digests": {
+      "pyproject.toml": "sha256:171347b6cdceb3850d53a82f9dd8a344c231f42e5c06db1aaaa0df7b2687032e",
+      "tools/check_native_reader_setup.py": "sha256:585fac8ff9074c88a9bde9bc88054ca72fed5364b02c475910881800014268c3",
+      "tools/force-agent-verification-requirements.txt": "sha256:6d5fefcbd7ccced7d39bf8d20e87ec1c4401fc6b252aea41677d41d9124555d1",
+      "tools/local-environment.json": "sha256:c70b9d43634f9a35170e4ac633a6e352e7a986a6fb8ab10639fa60a9c776f9b4",
+      "tools/native-reader-verification-linux-cp312.lock": "sha256:a7f17491000c2e139ccc5d213ca0e8a6f917e5befb4b878fef29f5ff72ae780f",
+      "tools/native-reader-verification-macos-arm64-cp312.lock": "sha256:b1e3e86668421539c6817faefe7f126b4dbf25153fcbb2fab6325e080cf7a81c",
+      "tools/native-reader-verification-macos-arm64-cp312.provenance.json": "sha256:cbcc1b27797ab4a8742ad8b0360a25164e1dadb61f8da12d54e930c317355415",
+      "tools/package-lock.json": "sha256:f1351b945f847f937dcacc9736fea07a710f1c066dbc9d7a5e19e89a858d635a",
+      "tools/package.json": "sha256:ce695b672904c8c01d699c06b0ed16f97e34e6e34115b65fb192e25d70dee4cb"
+    },
+    "node": null,
+    "npm": null,
+    "npm_dependencies": null,
+    "browser": null,
+    "source": {
+      "head": "4bdb2ee694e8caede7a813565f4e071a915d251a",
+      "tracked_modifications": []
+    },
+    "actions": [
+      {
+        "action": "create-environment",
+        "argv": [
+          "/opt/homebrew/bin/python3.12",
+          "-I",
+          "-m",
+          "venv",
+          "<root>/.venv"
+        ],
+        "started_at": "2026-11-25T07:15:01+00:00",
+        "seconds": 1.04,
+        "code": 0,
+        "output_tail": "",
+        "error": null
+      },
+      {
+        "action": "install-packages",
+        "argv": [
+          "<root>/.venv/bin/python",
+          "-I",
+          "-m",
+          "pip",
+          "--isolated",
+          "--disable-pip-version-check",
+          "install",
+          "--no-input",
+          "--no-deps",
+          "--only-binary=:all:",
+          "--require-hashes",
+          "-r",
+          "/var/folders/2k/jj9s1zzs5sxdb_7g557y533c0000gn/T/ontokin-bootstrap-8jwodn6h/selected.lock"
+        ],
+        "started_at": "2026-11-25T07:15:02+00:00",
+        "seconds": 1.49,
+        "code": 0,
+        "output_tail": "Collecting attrs==26.1.0 (from -r /var/folders/2k/jj9s1zzs5sxdb_7g557y533c0000gn/T/ontokin-bootstrap-8jwodn6h/selected.lock (line 1))\n  Using cached attrs-26.1.0-py3-none-any.whl (67 kB)\nCollecting jsonschema==4.26.0 (from -r /var/folders/2k/jj9s1zzs5sxdb_7g557y533c0000gn/T/ontokin-bootstrap-8jwodn6h/selected.lock (line 2))\n  Using cached jsonschema-4.26.0-py3-none-any.whl (90 kB)\nCollecting jsonschema-specifications==2025.9.1 (from -r /var/folders/2k/jj9s1zzs5sxdb_7g557y533c0000gn/T/ontokin-bootstrap-8jwodn6h/selected.lock (line 3))\n  Using cached jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)\nCollecting referencing==0.37.0 (from -r /var/folders/2k/jj9s1zzs5sxdb_7g557y533c0000gn/T/ontokin-bootstrap-8jwodn6h/selected.lock (line 4))\n  Using cached referencing-0.37.0-py3-none-any.whl (26 kB)\nCollecting rpds-py==2026.5.1 (from -r /var/folders/2k/jj9s1zzs5sxdb_7g557y533c0000gn/T/ontokin-bootstrap-8jwodn6h/selected.lock (line 5))\n  Downloading rpds_py-2026.5.1-cp312-cp312-macosx_11_0_arm64.whl (345 kB)\nCollecting typing_extensions==4.16.0 (from -r /var/folders/2k/jj9s1zzs5sxdb_7g557y533c0000gn/T/ontokin-bootstrap-8jwodn6h/selected.lock (line 6))\n  Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)\nCollecting Pillow==13.0.0 (from -r /var/folders/2k/jj9s1zzs5sxdb_7g557y533c0000gn/T/ontokin-bootstrap-8jwodn6h/selected.lock (line 7))\n  Using cached pillow-13.0.0-cp312-cp312-macosx_11_0_arm64.whl (4.9 MB)\nInstalling collected packages: typing_extensions, rpds-py, referencing, Pillow, jsonschema-specifications, jsonschema, attrs\n\nSuccessfully installed Pillow-13.0.0 attrs-26.1.0 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 referencing-0.37.0 rpds-py-2026.5.1 typing_extensions-4.16.0\n",
+        "error": null
+      }
+    ]
+  },
+  "first_run": {
+    "outcome": "changed",
+    "planned": [
+      {
+        "action": "create-environment",
+        "detail": "Create .venv with the specified interpreter."
+      },
+      {
+        "action": "install-packages",
+        "lock": "tools/native-reader-verification-macos-arm64-cp312.lock",
+        "packages": [
+          {
+            "name": "attrs",
+            "version": "26.1.0",
+            "replaces": null
+          },
+          {
+            "name": "jsonschema",
+            "version": "4.26.0",
+            "replaces": null
+          },
+          {
+            "name": "jsonschema-specifications",
+            "version": "2025.9.1",
+            "replaces": null
+          },
+          {
+            "name": "referencing",
+            "version": "0.37.0",
+            "replaces": null
+          },
+          {
+            "name": "rpds-py",
+            "version": "2026.5.1",
+            "replaces": null
+          },
+          {
+            "name": "typing_extensions",
+            "version": "4.16.0",
+            "replaces": null
+          },
+          {
+            "name": "Pillow",
+            "version": "13.0.0",
+            "replaces": null
+          }
+        ],
+        "detail": "Install 7 of 7 packages from tools/native-reader-verification-macos-arm64-cp312.lock with hash enforcement."
+      }
+    ],
+    "actions": [
+      {
+        "action": "create-environment",
+        "argv": [
+          "/opt/homebrew/bin/python3.12",
+          "-I",
+          "-m",
+          "venv",
+          "<root>/.venv"
+        ],
+        "started_at": "2026-11-25T07:15:01+00:00",
+        "seconds": 1.04,
+        "code": 0
+      },
+      {
+        "action": "install-packages",
+        "argv": [
+          "<root>/.venv/bin/python",
+          "-I",
+          "-m",
+          "pip",
+          "--isolated",
+          "--disable-pip-version-check",
+          "install",
+          "--no-input",
+          "--no-deps",
+          "--only-binary=:all:",
+          "--require-hashes",
+          "-r",
+          "/var/folders/2k/jj9s1zzs5sxdb_7g557y533c0000gn/T/ontokin-bootstrap-8jwodn6h/selected.lock"
+        ],
+        "started_at": "2026-11-25T07:15:02+00:00",
+        "seconds": 1.49,
+        "code": 0
+      }
+    ],
+    "smoke": [
+      {
+        "check": "capabilities",
+        "argv": [
+          "<root>/.venv/bin/python",
+          "-B",
+          "-m",
+          "ontokin",
+          "capabilities"
+        ],
+        "code": 0,
+        "passed": true,
+        "detail": null
+      },
+      {
+        "check": "check",
+        "argv": [
+          "<root>/.venv/bin/python",
+          "-B",
+          "-m",
+          "ontokin",
+          "check",
+          "docs/language-design/core-v0.1/01-independent-parts.ok"
+        ],
+        "code": 0,
+        "passed": true,
+        "detail": null
+      }
+    ],
+    "selected": {
+      "profile": "python-verification",
+      "state": "ready",
+      "next_action": null
+    }
+  },
+  "second_run": {
+    "outcome": "unchanged",
+    "planned": [],
+    "changed": false,
+    "notes": [
+      "The existing environment is compatible and is reused.",
+      "Every pinned package is already at its adopted version."
+    ],
+    "smoke": [
+      {
+        "check": "capabilities",
+        "passed": true
+      },
+      {
+        "check": "check",
+        "passed": true
+      }
+    ],
+    "selected": {
+      "profile": "python-verification",
+      "state": "ready",
+      "next_action": null
+    }
+  },
+  "checks": [
+    {
+      "command": ".venv/bin/python -m pip check",
+      "result": "passed",
+      "observed": "No broken requirements found."
+    },
+    {
+      "command": ".venv/bin/python -I -B tools/check_native_reader_setup.py",
+      "result": "passed",
+      "observed": "Native-reader image decoder ready: Pillow 13.0.0 (PIL.Image)."
+    },
+    {
+      "command": ".venv/bin/python -B -m ontokin capabilities",
+      "result": "passed",
+      "observed": "ontokin-reference 0.4.0"
+    },
+    {
+      "command": ".venv/bin/python -B -m ontokin check docs/language-design/core-v0.1/01-independent-parts.ok",
+      "result": "passed",
+      "observed": "outcome valid, level evaluated"
+    },
+    {
+      "command": "second bootstrap run, package list and every environment file hash before and after",
+      "result": "passed",
+      "observed": "outcome unchanged; package list and file hashes equal"
+    },
+    {
+      "command": "git status --porcelain --ignored",
+      "result": "passed",
+      "observed": "only the ignored .venv/ and build/ directories"
+    }
+  ],
+  "doctor": {
+    "diagnosed_by": {
+      "executable": "<root>/.venv/bin/python",
+      "version": "3.12.13",
+      "tool_sha256": "sha256:b2add5d5cd345792b246077db1bc541db7bb4cc00d1cae0ce8d670b4ab691882"
+    },
+    "readiness": {
+      "core": {
+        "state": "ready",
+        "checks": [
+          {
+            "id": "interpreter",
+            "state": "ready",
+            "detail": "CPython 3.12.13 (Homebrew)."
+          },
+          {
+            "id": "isolation",
+            "state": "ready",
+            "detail": "A real, isolated environment of this checkout."
+          },
+          {
+            "id": "git",
+            "state": "ready",
+            "detail": "The root is a Git checkout."
+          },
+          {
+            "id": "source-import",
+            "state": "ready",
+            "detail": "The source package imports."
+          }
+        ]
+      },
+      "python-verification": {
+        "state": "ready",
+        "checks": [
+          {
+            "id": "lock",
+            "state": "ready",
+            "detail": "tools/native-reader-verification-macos-arm64-cp312.lock is valid for this platform and Python 3.12."
+          },
+          {
+            "id": "packages",
+            "state": "ready",
+            "detail": "7 packages at their adopted versions."
+          },
+          {
+            "id": "imports",
+            "state": "ready",
+            "detail": "7 packages import."
+          },
+          {
+            "id": "pip-check",
+            "state": "ready",
+            "detail": "No broken requirements found."
+          },
+          {
+            "id": "native-reader",
+            "state": "ready",
+            "detail": "Native-reader image decoder ready: Pillow 13.0.0 (PIL.Image)."
+          }
+        ]
+      },
+      "visual-verification": {
+        "state": "mismatch",
+        "checks": [
+          {
+            "id": "node",
+            "state": "mismatch",
+            "detail": "Node.js v25.9.0; the target is Node.js 22."
+          },
+          {
+            "id": "npm",
+            "state": "ready",
+            "detail": "npm 11.12.1."
+          },
+          {
+            "id": "npm-dependencies",
+            "state": "missing",
+            "detail": "not installed: esbuild 0.25.10, gltf-validator 2.0.0-dev.3.10, playwright 1.56.1, three 0.180.0"
+          },
+          {
+            "id": "chromium",
+            "state": "not_checked",
+            "detail": "Playwright is not installed, so its expected browser revision is unknown."
+          }
+        ]
+      },
+      "package-smoke": {
+        "state": "not_checked",
+        "checks": [
+          {
+            "id": "clean-build",
+            "state": "not_checked",
+            "detail": "The wheel is built in the clean build environment and its tool versions are recorded."
+          },
+          {
+            "id": "clean-install",
+            "state": "not_checked",
+            "detail": "The wheel is installed into the separate clean environment."
+          },
+          {
+            "id": "outside-run",
+            "state": "not_checked",
+            "detail": "The installed entry point runs from outside the checkout with source-path injection removed."
+          }
+        ]
+      },
+      "historical-native": {
+        "state": "not_checked",
+        "checks": [
+          {
+            "id": "owning-contract",
+            "state": "not_checked",
+            "detail": "Established only by the contract of the selected experiment. General setup neither prepares nor accepts it, and a newer interpreter never inherits an old qualification."
+          }
+        ]
+      },
+      "linux-container": {
+        "state": "unsupported",
+        "checks": [
+          {
+            "id": "adoption",
+            "state": "unsupported",
+            "detail": "A later profile must state its purpose and carry its own acceptance. An emulated amd64 container is never native Linux qualification."
+          }
+        ]
+      }
+    },
+    "additional_packages": {},
+    "install_tools": {
+      "pip": "26.0"
+    },
+    "problems": []
+  },
+  "local_evidence": [
+    {
+      "name": "bootstrap-run-1.json",
+      "bytes": 23454,
+      "sha256": "sha256:da884b10b81bf905f4fa935e0416365826d189f9d5ed0385ea202aa7637ac35a"
+    },
+    {
+      "name": "bootstrap-run-2.json",
+      "bytes": 19411,
+      "sha256": "sha256:da48e73d75f9cab0836f46e6fa5d989490bcaf82824094572e48161e88a86f2b"
+    },
+    {
+      "name": "doctor.json",
+      "bytes": 16711,
+      "sha256": "sha256:b94a3067b82234706b2c72382de2e7af07f074f98b4a135ed961146943939ddd"
+    },
+    {
+      "name": "doctor-portable.json",
+      "bytes": 15752,
+      "sha256": "sha256:cbe41d2f91ed55aad0748c6f691ea3c4b7ff0b8e7df19b4b5632f10902b4cfbb"
+    },
+    {
+      "name": "capabilities.json",
+      "bytes": 64634,
+      "sha256": "sha256:7ecd276d359626ae9610b27ff920b908841d0ce467ed360fc12c0296dac0a923"
+    },
+    {
+      "name": "pip-list-before.json",
+      "bytes": 367,
+      "sha256": "sha256:80106413edab5d7682d0fbcd45f791abe0afc6bb0151378085358aa8378c6188"
+    }
+  ]
+}
