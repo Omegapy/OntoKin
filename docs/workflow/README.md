@@ -79,15 +79,24 @@ python3 tools/chat_workflow.py check
 python3 tools/chat_workflow.py brief --json
 python3 tools/chat_workflow.py lookup "hinge"
 python3 tools/chat_workflow.py new-task C265 --title "Selected scope" --intent "Owner's request"
+python3 tools/chat_workflow.py new-task C265 --title "Selected scope" --intent "Owner's request" --base OBSERVED_COMMIT
 ```
+
+In a local session run them with `.venv/bin/python`, together with
+`tools/doctor_local.py`, which diagnoses the environment without changing it.
 
 `check` checks record structure, references and completion fields. It cannot
 prove that evidence is scientifically correct or that a branch was merged.
 `brief` summarizes the saved checkpoint and local checkout. `lookup` finds
 actual memory/knowledge entries with their sources and status. `new-task`
-creates local draft task, requirements and plan files and refuses to overwrite an existing task. It does not
+creates local draft task, requirements and plan files and refuses to overwrite an existing task. Its base is
+the local head of the checkout, or the commit given with `--base`; it never takes the recorded
+`CURRENT.observed_main`, which can be older than the actual head. It does not
 publish, select the task in CURRENT or authorize work. Review and commit a
 draft through the normal branch procedure when that scope is authorized.
+
+The registry and CURRENT have two record schemas; the
+[mapping](../engineering/local-migration-20261124/SCHEMA-MAPPING.md) explains both.
 
 In a connector-only session, use the same JSON records directly and follow the
 manual acceptance checks in the protocol. Do not claim that the CLI ran.
