@@ -7,7 +7,7 @@ owner started for TASK-030.
 
 ## Identity
 
-- Checkpoint time and author identity: 2026-11-25T20:03Z, Director `local-migration-f58a0f3c1d5a`.
+- Checkpoint time and author identity: 2026-11-25T20:12Z, Director `local-migration-f58a0f3c1d5a`.
 - Task, session, and agent or tool identity: LOCAL-MIGRATION-20261124; the continuing
   session, one Claude Code command-line session in the main checkout, model Claude Opus 5.5.
 - Execution mode, and the entry document or record that declared it: `local`, declared by the
@@ -18,7 +18,7 @@ owner started for TASK-030.
   `work/local-migration-20261124`.
 - Current user objective and bounded milestone: the owner's instruction of 2026-11-25 is to
   continue executing PLAN-20261125-CB551B16, the local development migration; the milestone
-  is the Worktree observation of TASK-030.
+  is the review, integration and closing of the audited candidate.
 - Task, requirements, and plan paths: [task.json](task.json), [REQUIREMENTS](REQUIREMENTS.md),
   [PLAN](PLAN.md).
 
@@ -38,7 +38,7 @@ owner started for TASK-030.
 ## Source
 
 - Starting revision and current code checkpoint: `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774` to
-  `3d02d7e0acda7aeb0c722a2a24e9a88a97a9cde4`, tree `41ec357a29882d57f9358c55b5d365beecafc072`.
+  `7a0d46f4fdb4e155a28d03640625bfed5cbd5b63`, tree `1b29a86acd4a812f4a0e0be3071d7cb0e33194e7`.
 - Dirty and untracked state: the worktree was clean at that commit. The main checkout has no
   tracked change; its untracked `TRDs/` (equal to the committed copy) and
   `Implementation_Plans/` stay there on purpose.
@@ -60,9 +60,10 @@ owner started for TASK-030.
 - Requirements completed, incomplete, blocked, and excluded: the ledger marks none of the 42
   requirements done before the audit of TASK-031. Excluded: every C271 gate, product and
   native qualification, container profiles.
-- Completed acceptance items and last completed gate: TASK-001 to TASK-029, and TASK-030 except
-  its Worktree criterion ([judgement](../../../engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md)).
-  Last completed gate: the clean run of TASK-030.
+- Completed acceptance items and last completed gate: TASK-001 to TASK-031. Last completed gate:
+  the [audit](../../../engineering/local-migration-20261124/REQUIREMENTS-AUDIT.md) that freezes the candidate.
+  The Worktree criterion of TASK-030 is waived by the owner
+  ([judgement](../../../engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md)).
 - Changed artifact paths and exact code/input identities: `git diff --name-status` from the
   base to the code checkpoint: 36 added, 21 modified, none deleted. No expectation, fixture,
   evidence file, workflow definition or C271 file is among them. Since
@@ -70,7 +71,7 @@ owner started for TASK-030.
 - Decisions made: [DECISION](../../../engineering/local-migration-20261124/DECISION.md), with
   the deviations recorded in [PLAN](PLAN.md#deviations-from-the-approved-plan); on the owner's
   direction of 2026-11-25 details of the machine's protection are kept off the public record.
-- Remaining items: TASK-030; TASK-031 to TASK-036.
+- Remaining items: TASK-032 to TASK-036.
 - Learning checkpoint result and capture preference: not performed yet; it belongs to the
   closing steps.
 
@@ -94,8 +95,7 @@ owner started for TASK-030.
 - Available read/write/conditional-update/merge operations: file and Git writes in the
   worktree, SSH push of this branch (observed), `gh` reads (observed); pull request and merge
   not used yet.
-- Missing capabilities and their effect on this milestone: no graphical session, so TASK-030
-  waits for the owner.
+- Missing capabilities and their effect on this milestone: none.
 
 ## Verification
 
@@ -110,8 +110,8 @@ owner started for TASK-030.
   [baseline](../../../engineering/local-migration-20261124/BASELINE-CHECKS.json)
   ([candidate record](../../../engineering/local-migration-20261124/CANDIDATE-CHECKS.json)).
 - Pending and not-run checks: 16 external cases pending; three readback tests skipped;
-  `--full`, `--force-agent`, hosted CI and Linux not run; Worktree observation, independent
-  review and resulting-main checks not run.
+  `--full`, `--force-agent`, hosted CI and Linux not run; independent review and resulting-main
+  checks not run; Worktree observation not made (waived).
 - Durable logs, review findings, and evidence links: records in
   [local-migration-20261124](../../../engineering/local-migration-20261124/); the
   [pre-reviews](../../../engineering/local-migration-20261124/PRE-REVIEWS.md) with every
@@ -119,8 +119,8 @@ owner started for TASK-030.
 - Evidence locations and hashes: in the records above; raw logs are in `OntoKin-local/`
   beside the clone.
 - Relevant validation/CI results and source revisions: as above. No hosted run was started.
-- Current review eligibility and any changes since review: not eligible until TASK-031
-  freezes a candidate.
+- Current review eligibility and any changes since review: the commit that carries this record
+  is the frozen candidate; not yet reviewed.
 
 ## Recovery
 
@@ -128,11 +128,10 @@ owner started for TASK-030.
   was removed after that commit had been merged and pushed.
 - Unique uncommitted files: none in this worktree. In the main checkout, the plan tracker in
   `Implementation_Plans/`, which no remote holds.
-- Outstanding operations and owned processes: one read-only watcher of the continuing session;
-  it ends by itself.
+- Outstanding operations and owned processes: none.
 - Unknown operation and its intended parent/tree/commit or request identity: none.
 - Remote readback needed before retrying that operation: not applicable.
-- Current blockers with concrete evidence: none; TASK-030 waits for the owner's session.
+- Current blockers with concrete evidence: none.
 - Unpublished work that must be recovered and its known location: none.
 - Actual unpublished recovery payloads and declared external dependencies: none. The R06
   archive and its receipt are in the owner's ChatGPT Library, with copies beside the clone.
@@ -154,24 +153,20 @@ owner started for TASK-030.
 
 ## Continuation
 
-- One exact next action, inputs, acceptance gate, and stopping condition: **TASK-030, the Worktree
-  observation.** The owner starts a read-only session in the Claude Desktop Code tab with the
-  `OntoKin` folder and Worktree mode **on**, and asks where it works ("Check where a session works"
-  in [LOCAL-PROMPTS](../../LOCAL-PROMPTS.md), or the same in own words). The continuing session
-  records path and branch, completes the
-  [judgement](../../../engineering/local-migration-20261124/FRESH-SESSION-ACCEPTANCE.md) and the ledger,
-  and goes on with TASK-031. **Any other session that reads this reports the state and stops.**
-  Gate: the last criterion of TASK-030 in [PLAN](PLAN.md).
-- The condition that makes that action safe and useful to execute: the session changes nothing;
-  the checkout that the application makes is removed after its state has been recorded.
+- One exact next action, inputs, acceptance gate, and stopping condition: **TASK-032**: a separate
+  reviewer examines the frozen candidate, the commit that carries this record. Mandatory findings
+  are resolved with renewed review. Then TASK-033 to TASK-036 as [PLAN](PLAN.md) states them. The
+  continuing session carries this out; **any other session reports the state and stops.**
+- The condition that makes that action safe and useful to execute: the branch head on the remote
+  is that commit, and no later change is made to it without renewed review.
 
 ## Delivery
 
 - Local checkpoint status: committed on this branch.
-- Verified push state, or unconfirmed: code checkpoint `3d02d7e0…` confirmed on the remote by
-  `git ls-remote`; the later commit that carries this record is shown by Git.
+- Verified push state, or unconfirmed: the code checkpoint and the later
+  commit that carries this record are shown by Git and `git ls-remote`.
 - Actual merge/resulting-main checks, or remaining integration gate: not integrated. Remaining:
-  TASK-030, audit, independent review, lease and merge.
+  independent review, lease, merge and resulting-main checks.
 - Branch retention/deletion evidence, or exact pending cleanup instruction: branch active. The
   two detached worktrees are removed in TASK-034.
 - Durable evidence references: the records linked above.
