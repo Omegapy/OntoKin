@@ -4,18 +4,16 @@
  "step": "TASK-028",
  "purpose": "Recreation of the environment from the committed files in a new location, and isolation of two worktrees from each other (REQ-004, REQ-014, REQ-035).",
  "commit": {
-  "revision": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
-  "tree": "6b80429891af1bcc9399934ee528095d7f9ec518",
-  "note": "Both worktrees were at this commit. The first is the migration worktree; its only difference was an uncommitted status update in the task record. The second was detached, so it created no branch."
+  "revision": "3c7985dba6b2312c2172c051614bd4bd220ef339",
+  "tree": "fe4ee2c809c5ca777cbde35efd9b5381de652b71",
+  "note": "Both worktrees were clean and detached at this commit, so the second created no branch. The first is the candidate worktree with its own environment. An earlier run of the same test at ebcfee8ccb6402e7c1b99ef63ce406966ba9909a, with the migration worktree as the first, had the same results; the setup tools were corrected after it."
  },
  "method": "One script ran every command below, each in the stated directory, with the caller's GIT_*, PYTHON*, PIP_* and VIRTUAL_ENV variables removed and TMPDIR resolved. Machine paths are replaced by labels. The complete command output and the script stay in the local evidence directory; their identities are below.",
  "first_before": {
-  "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+  "head": "3c7985dba6b2312c2172c051614bd4bd220ef339",
   "status": [
-   " M docs/workflow/tasks/LOCAL-MIGRATION-20261124/task.json",
    "!! .venv/",
-   "!! build/",
-   "!! tools/__pycache__/"
+   "!! build/"
   ],
   "packages": [
    "attrs==26.1.0",
@@ -29,13 +27,13 @@
   ],
   "environment": {
    "entries": 1539,
-   "content_sha256": "968045c3f00d328a167a0133cb64cc0ba2518c8d39b5caa2ce8adc3ca75a262e",
-   "content_and_times_sha256": "f5fad757e8946ae2bedd874070aa8e0f1eeb2c2cc71087073a804156fb2cdd26"
+   "content_sha256": "196fb8382968221e780cfe2b078ffbad071a6acc6a0c5e322263e46816677182",
+   "content_and_times_sha256": "e91591c932f5d765021f2e908b5beddabc0e017afc2e20b9583fe8d74e1c970d"
   },
   "doctor": {
    "checkout_root": "<first-worktree>",
-   "branch": "work/local-migration-20261124",
-   "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+   "branch": null,
+   "head": "3c7985dba6b2312c2172c051614bd4bd220ef339",
    "linked_worktree": true,
    "environment_path": "<first-worktree>/.venv",
    "environment_exists": true,
@@ -73,13 +71,13 @@
    "has_venv": false,
    "has_node_modules": false,
    "has_build": false,
-   "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
-   "tree": "6b80429891af1bcc9399934ee528095d7f9ec518"
+   "head": "3c7985dba6b2312c2172c051614bd4bd220ef339",
+   "tree": "fe4ee2c809c5ca777cbde35efd9b5381de652b71"
   },
   "doctor": {
    "checkout_root": "<second-worktree>",
    "branch": null,
-   "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+   "head": "3c7985dba6b2312c2172c051614bd4bd220ef339",
    "linked_worktree": true,
    "environment_path": "<second-worktree>/.venv",
    "environment_exists": false,
@@ -121,8 +119,8 @@
       "venv",
       "<second-worktree>/.venv"
      ],
-     "started_at": "2026-11-25T09:03:47+00:00",
-     "seconds": 1.17,
+     "started_at": "2026-11-25T11:56:43+00:00",
+     "seconds": 0.99,
      "code": 0
     },
     {
@@ -140,10 +138,10 @@
       "--only-binary=:all:",
       "--require-hashes",
       "-r",
-      "<tmp>/ontokin-bootstrap-w8n7i3q7/selected.lock"
+      "<tmp>/ontokin-bootstrap-t43ozkc1/selected.lock"
      ],
-     "started_at": "2026-11-25T09:03:48+00:00",
-     "seconds": 1.09,
+     "started_at": "2026-11-25T11:56:44+00:00",
+     "seconds": 0.76,
      "code": 0
     }
    ],
@@ -209,7 +207,7 @@
       "--only-binary=:all:",
       "--require-hashes",
       "-r",
-      "<tmp>/ontokin-bootstrap-w8n7i3q7/selected.lock"
+      "<tmp>/ontokin-bootstrap-t43ozkc1/selected.lock"
      ],
      "code": 0
     }
@@ -218,7 +216,7 @@
   "doctor_after_setup": {
    "checkout_root": "<second-worktree>",
    "branch": null,
-   "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+   "head": "3c7985dba6b2312c2172c051614bd4bd220ef339",
    "linked_worktree": true,
    "environment_path": "<second-worktree>/.venv",
    "environment_exists": true,
@@ -320,7 +318,7 @@
    {
     "command": "focused-tests",
     "code": 0,
-    "observed": "Ran 259 tests in 97.173s / OK"
+    "observed": "Ran 290 tests in 108.442s / OK"
    }
   ],
   "note": "check and capabilities returned 0. The focused tests and the driver listing name only the second worktree's interpreter and files."
@@ -388,7 +386,7 @@
   "use_of_first_leaves_second": {
    "equal": true,
    "second": {
-    "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+    "head": "3c7985dba6b2312c2172c051614bd4bd220ef339",
     "status": [
      "!! .venv/",
      "!! build/"
@@ -405,15 +403,15 @@
     ],
     "environment": {
      "entries": 1539,
-     "content_sha256": "5c677ed4b928b22b7057ae9658a8dc7134e64fd140361bc09ab94af7f07dc399",
-     "content_and_times_sha256": "1c3a2aa251b0cd030a17b2a931971a34da17e72bc65b118701e4acbaf0dd6c84"
+     "content_sha256": "3724e88506e76e96a93a4b89c8325bbeb0d4a04f8c198157427e72b373a615f1",
+     "content_and_times_sha256": "a7a2d34d08d35fce7016b98395ea90e21b48b3fd71cc4dd0e50dd8f320ec08fa"
     }
    }
   },
   "setup_locks": {
    "git_directories": {
-    "first": "<clone>/.git/worktrees/local-migration-20261124",
-    "second": "<clone>/.git/worktrees/second-local-migration-20261125",
+    "first": "<clone>/.git/worktrees/candidate-checks",
+    "second": "<clone>/.git/worktrees/second-local-migration-20261125b",
     "main": "<clone>/.git"
    },
    "exit_status_while_the_first_lock_is_held": {
@@ -423,12 +421,10 @@
    "note": "While the first worktree's setup lock was held, setup in the first ended with status 3 and changed nothing, and setup in the second ran."
   },
   "first_after": {
-   "head": "ebcfee8ccb6402e7c1b99ef63ce406966ba9909a",
+   "head": "3c7985dba6b2312c2172c051614bd4bd220ef339",
    "status": [
-    " M docs/workflow/tasks/LOCAL-MIGRATION-20261124/task.json",
     "!! .venv/",
-    "!! build/",
-    "!! tools/__pycache__/"
+    "!! build/"
    ],
    "packages": [
     "attrs==26.1.0",
@@ -442,8 +438,8 @@
    ],
    "environment": {
     "entries": 1539,
-    "content_sha256": "968045c3f00d328a167a0133cb64cc0ba2518c8d39b5caa2ce8adc3ca75a262e",
-    "content_and_times_sha256": "f5fad757e8946ae2bedd874070aa8e0f1eeb2c2cc71087073a804156fb2cdd26"
+    "content_sha256": "196fb8382968221e780cfe2b078ffbad071a6acc6a0c5e322263e46816677182",
+    "content_and_times_sha256": "e91591c932f5d765021f2e908b5beddabc0e017afc2e20b9583fe8d74e1c970d"
    },
    "equal_to_before": {
     "head": true,
@@ -493,7 +489,7 @@
   "The visual profile was not prepared in either worktree."
  ],
  "local_evidence": {
-  "directory": "<local-evidence>/evidence/second-worktree/20261125T0904Z",
+  "directory": "<local-evidence>/evidence/second-worktree/20261125T1157Z",
   "script": {
    "name": "second_worktree.py",
    "sha256": "0160fa354aaec9856a110476715e0b3b419cfdbdb9c365e3f4653e4987ed9a1a"
@@ -501,28 +497,28 @@
   "files": [
    {
     "name": "result.json",
-    "bytes": 52168,
-    "sha256": "5af04722f63ff35f1f7fc28d15f8c2891081ca1dc4a1cd02a3347b8742e4d014"
+    "bytes": 51383,
+    "sha256": "6c64522b5732503f2557b29c468bbcd90de5cf9f600a5154318a57d13b7f990c"
    },
    {
     "name": "second-bootstrap.json",
-    "bytes": 26634,
-    "sha256": "daece8b04fed968182e537e2e1189f215b570b1fe37968a32112cd420877ae6a"
+    "bytes": 27254,
+    "sha256": "6e72a5194f6a9598a028fa7ac6637e0172fd8ea5f79f29c1c42b099e42c687ff"
    },
    {
     "name": "second-repair.json",
-    "bytes": 24032,
-    "sha256": "ba09beaa46a8cbe60929f07d774494b77f52b248ffadd56a2f7af64af1d5ef0b"
+    "bytes": 24652,
+    "sha256": "fa009598e6b259a37ca30f1b737175b9fa2f0b0e06376698fc84a6bb0c2587fd"
    },
    {
     "name": "second-ontokin-environment.json",
-    "bytes": 4532,
-    "sha256": "c4e49774cd2f3080cd919cf2bd42e9573af28db409095994ad44acc183a34477"
+    "bytes": 4688,
+    "sha256": "27721f9af04eb3dab4ab37a5fd19932e40e88e2194e886c9a72e3c7470ea5052"
    },
    {
     "name": "second-pyvenv.cfg",
-    "bytes": 349,
-    "sha256": "bb1d2d07eba217144041af00ee2a48b0f3c22d90115aa6ccbf589d9a78cf77da"
+    "bytes": 350,
+    "sha256": "3d893c02ffc8a41cae4d56019871fc6aa7c22625334f3269619c5bea7e0839e0"
    }
   ],
   "steps": [
@@ -532,8 +528,8 @@
     "seconds": 0.0,
     "output": {
      "name": "01-head-first-before.txt",
-     "bytes": 161,
-     "sha256": "0d58dc643f462a2d772ac704cdf2dae72cb5b34e69d3c8c4a2157572907c1d50"
+     "bytes": 153,
+     "sha256": "1e9fd9e7e36b5a84e6f03efcf6840a5259241e9ac5492a23206e63155b811160"
     }
    },
    {
@@ -542,8 +538,8 @@
     "seconds": 0.1,
     "output": {
      "name": "02-status-first-before.txt",
-     "bytes": 234,
-     "sha256": "af7beb477fce42fd45a6560ef16731cbad10eebcfe6b333a56dcefc1ca35c605"
+     "bytes": 146,
+     "sha256": "a15a812a63067fcb1028c4e7c0b46f0c7a70643ed38cd26548eb2e2f6d44aa8f"
     }
    },
    {
@@ -552,8 +548,8 @@
     "seconds": 0.1,
     "output": {
      "name": "03-packages-first-before.txt",
-     "bytes": 611,
-     "sha256": "11d2d777e8dfaf79577c3395b3fc47f242ddb2ace3d2c84ecf4b56ffc7dcc4bb"
+     "bytes": 595,
+     "sha256": "d9420f8e3200e6a84d5d4de67f82047dd1cd281a3e4965a8e0a97f782b804f6e"
     }
    },
    {
@@ -579,31 +575,31 @@
    {
     "step": "doctor-first-before",
     "code": 0,
-    "seconds": 0.8,
+    "seconds": 0.7,
     "output": {
      "name": "06-doctor-first-before.txt",
-     "bytes": 19662,
-     "sha256": "00d0e6830f4b13a09330075805fc7403790d7a2aa4565020ee2330850219fd78"
+     "bytes": 19897,
+     "sha256": "9c89618bc506684161905ba06da4f4b8c8da28d977f7a572f99dac3d3c65ed16"
     }
    },
    {
     "step": "worktree-add",
     "code": 0,
-    "seconds": 2.8,
+    "seconds": 2.5,
     "output": {
      "name": "07-worktree-add.txt",
-     "bytes": 2905,
-     "sha256": "48792067f1a4ac9eaf8af960307af98ae84707842a1192b7099b7f5000fc171a"
+     "bytes": 2822,
+     "sha256": "dcabbe349e7a29aaa5d07b719eb4734e3fc808845314845c9b5209b92926bb94"
     }
    },
    {
     "step": "second-fresh-status",
     "code": 0,
-    "seconds": 0.3,
+    "seconds": 0.6,
     "output": {
      "name": "08-second-fresh-status.txt",
-     "bytes": 141,
-     "sha256": "a75266bffa435a69509063a1dcb4d15db31ce37dcd08a9e01e6b7878adaf49c8"
+     "bytes": 142,
+     "sha256": "53a0a1bcc13a4ee278c93ba7b8acf4adf23541f01b47345057568969cca6ade2"
     }
    },
    {
@@ -612,8 +608,8 @@
     "seconds": 0.0,
     "output": {
      "name": "09-second-head.txt",
-     "bytes": 168,
-     "sha256": "517a2898ed9e86d8c938b2a9aa7017af1eb5a48d6e7f4498fbbea5273dfd50d2"
+     "bytes": 169,
+     "sha256": "bdb7e20b71e0c8132fc75697e4617d202a64118b6b166df7b2da3442ff96a296"
     }
    },
    {
@@ -622,78 +618,78 @@
     "seconds": 0.0,
     "output": {
      "name": "10-second-tree.txt",
-     "bytes": 175,
-     "sha256": "5f99be5c0c0880a8ea3d509de0137e3e971b78dd3e97fc4c004afdc33d0d2897"
+     "bytes": 176,
+     "sha256": "ef7455a7d3aa605abe7634c8860145fdb42c96212f79499f978151a9e62d4798"
     }
    },
    {
     "step": "doctor-second-fresh",
     "code": 1,
-    "seconds": 0.8,
+    "seconds": 0.5,
     "output": {
      "name": "11-doctor-second-fresh.txt",
-     "bytes": 14031,
-     "sha256": "5a7c8077071eb8801013f5c3f13b1415c9f0b4d9c9354e8f37d5a5750cee3c85"
+     "bytes": 14540,
+     "sha256": "b6dfc2800c3ccc296f7e044ebe36c563c9c98474a99ffe8354856f8c86e2f5d5"
     }
    },
    {
     "step": "second-preview",
     "code": 0,
-    "seconds": 1.2,
+    "seconds": 0.9,
     "output": {
      "name": "12-second-preview.txt",
-     "bytes": 1005,
-     "sha256": "76bd6ce20c7dff7c87aa8caa696a77e1f5dd4c7212d8fe87b3065bd477f6c81c"
+     "bytes": 1007,
+     "sha256": "850ef2b2e8fb0682c6848dc4e2137e0d472a2322db7716dc48de2e676f57658c"
     }
    },
    {
     "step": "second-status-after-preview",
     "code": 0,
-    "seconds": 0.3,
+    "seconds": 0.1,
     "output": {
      "name": "13-second-status-after-preview.txt",
-     "bytes": 141,
-     "sha256": "a75266bffa435a69509063a1dcb4d15db31ce37dcd08a9e01e6b7878adaf49c8"
+     "bytes": 142,
+     "sha256": "53a0a1bcc13a4ee278c93ba7b8acf4adf23541f01b47345057568969cca6ade2"
     }
    },
    {
     "step": "second-bootstrap",
     "code": 0,
-    "seconds": 7.7,
+    "seconds": 6.5,
     "output": {
      "name": "14-second-bootstrap.txt",
-     "bytes": 1145,
-     "sha256": "00adf7c779411b5f32e7d4c5e5468f1ff4e9b3bc09e68d4f052927f5c79e5cf2"
+     "bytes": 1147,
+     "sha256": "26f01028a7cbce698fd94f5c021b74f4f6f4d74c2e0582042c8b5de4b9e35a99"
     }
    },
    {
     "step": "doctor-second-ready",
     "code": 0,
-    "seconds": 0.9,
+    "seconds": 0.8,
     "output": {
      "name": "15-doctor-second-ready.txt",
-     "bytes": 19793,
-     "sha256": "6232ce4c278ec0de1e79b3ae9a9c7cc6b1cd01db1d08fb60a1dcd67cc9da01b6"
+     "bytes": 20380,
+     "sha256": "adae51e27e0d53d7d86e76029e7082eb9a0b3c3c6c15f356ca3b82593e1f4ed7"
     }
    },
    {
     "step": "doctor-first-meanwhile",
     "code": 0,
-    "seconds": 0.9,
+    "seconds": 0.8,
     "output": {
      "name": "16-doctor-first-meanwhile.txt",
-     "bytes": 19744,
-     "sha256": "6806306c3e2f4ee8f502544c43f37513eecbe75409773d41cd796ff4b8ef1f84"
+     "bytes": 19980,
+     "sha256": "3ca4bf3adadfa7c095f1743a003c733b089d6d0060d629eb01a0c507a08f3db6"
     }
    },
    {
     "step": "second-repeat",
     "code": 0,
-    "seconds": 4.0,
+    "seconds": 2.8,
     "output": {
      "name": "17-second-repeat.txt",
-     "bytes": 705,
-     "sha256": "277eda7f264bccb0d765e9a60f6f8d3e0ef6962414fc366a87573deb6db03983"
+     "bytes": 707,
+     "sha256": "15495f8e3f102b2523b1732836a2defa3990e9757a6ac3eb3bf4a0d6f03062e5"
     }
    },
    {
@@ -702,8 +698,8 @@
     "seconds": 0.1,
     "output": {
      "name": "18-second-paths.txt",
-     "bytes": 1159,
-     "sha256": "8706a12d1fd26e3b1040744a07232b44bc941dfaa42059e361c696782b1ece0e"
+     "bytes": 1167,
+     "sha256": "2773bf7e705e4bb84132ddf0d2eb9db5050f26c92137836654df31626e44eb2f"
     }
    },
    {
@@ -712,18 +708,18 @@
     "seconds": 0.1,
     "output": {
      "name": "19-first-paths.txt",
-     "bytes": 1103,
-     "sha256": "95fd5a3e1a18e24b7ecebbcb628d248bee62f8c29df0baab9fc7117509f5c30e"
+     "bytes": 1039,
+     "sha256": "515cc3c282abdb139aba57696d2fe30a394b52d51c5df8af5af9078a8bdba037"
     }
    },
    {
     "step": "second-capabilities",
     "code": 0,
-    "seconds": 1.8,
+    "seconds": 1.6,
     "output": {
      "name": "20-second-capabilities.txt",
-     "bytes": 64859,
-     "sha256": "09d27decebedaf02e3b0eadf96acaff11ac3978f0ba1f683aedf0fca1f28133f"
+     "bytes": 64861,
+     "sha256": "4eb408d6ad7b2fc985a1bbc6df731d9ad7453ec3ac58bade68500ef2ac6083ce"
     }
    },
    {
@@ -732,8 +728,8 @@
     "seconds": 0.1,
     "output": {
      "name": "21-second-check.txt",
-     "bytes": 788,
-     "sha256": "e0f816e087a4ed7666bf478b724530a0878dca00c6e7aadf07a94aaeb790fb56"
+     "bytes": 790,
+     "sha256": "fc3436f40f7fba8a2b723086c56c944e5d5cfc57a3cda783b7b807f1e6f7872c"
     }
    },
    {
@@ -742,18 +738,18 @@
     "seconds": 0.1,
     "output": {
      "name": "22-second-workflow-check.txt",
-     "bytes": 378,
-     "sha256": "3e5b5729822f92f0ee49e12c27fc0c877df2cff13b24ed11f32c12f1d97e1aef"
+     "bytes": 380,
+     "sha256": "4a168a87b26ae33ed829553358f1118f49fd3be5affd8a061476b431b2b1f454"
     }
    },
    {
     "step": "second-documents",
     "code": 0,
-    "seconds": 1.8,
+    "seconds": 1.6,
     "output": {
      "name": "23-second-documents.txt",
-     "bytes": 6877,
-     "sha256": "01c848200f75365f0bd208863a1f13ade2b01a1b08834466eb49a7f7e23681b1"
+     "bytes": 6879,
+     "sha256": "d4ceac4954eb867a71762593092dc0577aeb5ddd3d59f040d72348978e58ac71"
     }
    },
    {
@@ -762,18 +758,18 @@
     "seconds": 0.1,
     "output": {
      "name": "24-second-driver-list.txt",
-     "bytes": 3250,
-     "sha256": "dcb781fdd5cdebe9fcf5e095b1a289c2bb982a1e0fe5667c2a62c512b8918f5b"
+     "bytes": 3265,
+     "sha256": "34c19b27879b2824948a09afa193565d9277b0622ddf447927df26a510b2135b"
     }
    },
    {
     "step": "second-focused-tests",
     "code": 0,
-    "seconds": 97.3,
+    "seconds": 108.5,
     "output": {
      "name": "25-second-focused-tests.txt",
-     "bytes": 673,
-     "sha256": "fea5abd3047c3bd86cfa0d1f6823ee37d0dffe828b749fbec82b085aa0bd3c85"
+     "bytes": 707,
+     "sha256": "26f085bd001854511e67070240c8bd0fea70e0203363fffc3eb61fb103aa56c5"
     }
    },
    {
@@ -782,8 +778,8 @@
     "seconds": 0.1,
     "output": {
      "name": "26-second-test-module.txt",
-     "bytes": 677,
-     "sha256": "3b15f5bae236717c4fae4fbc51635a35cdcfadb5bbbce9bd006537547cd17009"
+     "bytes": 682,
+     "sha256": "4ae414d0d8102faeb668a8d12e8e5ec54d4240650f2477f6da4239b9585376b3"
     }
    },
    {
@@ -792,18 +788,18 @@
     "seconds": 0.0,
     "output": {
      "name": "27-head-first-after-use.txt",
-     "bytes": 161,
-     "sha256": "0d58dc643f462a2d772ac704cdf2dae72cb5b34e69d3c8c4a2157572907c1d50"
+     "bytes": 153,
+     "sha256": "1e9fd9e7e36b5a84e6f03efcf6840a5259241e9ac5492a23206e63155b811160"
     }
    },
    {
     "step": "status-first-after-use",
     "code": 0,
-    "seconds": 0.2,
+    "seconds": 0.1,
     "output": {
      "name": "28-status-first-after-use.txt",
-     "bytes": 234,
-     "sha256": "af7beb477fce42fd45a6560ef16731cbad10eebcfe6b333a56dcefc1ca35c605"
+     "bytes": 146,
+     "sha256": "a15a812a63067fcb1028c4e7c0b46f0c7a70643ed38cd26548eb2e2f6d44aa8f"
     }
    },
    {
@@ -812,28 +808,28 @@
     "seconds": 0.1,
     "output": {
      "name": "29-packages-first-after-use.txt",
-     "bytes": 611,
-     "sha256": "11d2d777e8dfaf79577c3395b3fc47f242ddb2ace3d2c84ecf4b56ffc7dcc4bb"
+     "bytes": 595,
+     "sha256": "d9420f8e3200e6a84d5d4de67f82047dd1cd281a3e4965a8e0a97f782b804f6e"
     }
    },
    {
     "step": "second-break",
     "code": 0,
-    "seconds": 0.2,
+    "seconds": 0.1,
     "output": {
      "name": "30-second-break.txt",
-     "bytes": 370,
-     "sha256": "f72fc0c8a57b9ec595bdf3c4bce9227ca6f6b5e3aef29cf45bcdd235f4c7876c"
+     "bytes": 372,
+     "sha256": "d1cf6d51243ee914c4f8e0ea3bfe0ba8a4857a361e7becce72c4c37da7ea9cd4"
     }
    },
    {
     "step": "doctor-second-broken",
     "code": 1,
-    "seconds": 0.8,
+    "seconds": 0.7,
     "output": {
      "name": "31-doctor-second-broken.txt",
-     "bytes": 19986,
-     "sha256": "1f9dfeddeb74f5d1a51e7c20fdbafedcb86d028e0e02bb692c0abe534b1c36d3"
+     "bytes": 20568,
+     "sha256": "f307952a69a20aa2073cc7c55a0e26bf9d4410f47a8238f2e4470c8368a1b561"
     }
    },
    {
@@ -842,8 +838,8 @@
     "seconds": 0.8,
     "output": {
      "name": "32-doctor-first-while-second-broken.txt",
-     "bytes": 19744,
-     "sha256": "a434f10f867378c6155ea9ebe3350888a682de7cc3d3defcf6a4e86d73edd2be"
+     "bytes": 19980,
+     "sha256": "132639f69e75d881518b89d77cae987fafb4cc45d3158f846ba6fc7104a9a6b7"
     }
    },
    {
@@ -852,8 +848,8 @@
     "seconds": 0.0,
     "output": {
      "name": "33-head-first-while-broken.txt",
-     "bytes": 161,
-     "sha256": "0d58dc643f462a2d772ac704cdf2dae72cb5b34e69d3c8c4a2157572907c1d50"
+     "bytes": 153,
+     "sha256": "1e9fd9e7e36b5a84e6f03efcf6840a5259241e9ac5492a23206e63155b811160"
     }
    },
    {
@@ -862,8 +858,8 @@
     "seconds": 0.1,
     "output": {
      "name": "34-status-first-while-broken.txt",
-     "bytes": 234,
-     "sha256": "af7beb477fce42fd45a6560ef16731cbad10eebcfe6b333a56dcefc1ca35c605"
+     "bytes": 146,
+     "sha256": "a15a812a63067fcb1028c4e7c0b46f0c7a70643ed38cd26548eb2e2f6d44aa8f"
     }
    },
    {
@@ -872,18 +868,18 @@
     "seconds": 0.1,
     "output": {
      "name": "35-packages-first-while-broken.txt",
-     "bytes": 611,
-     "sha256": "11d2d777e8dfaf79577c3395b3fc47f242ddb2ace3d2c84ecf4b56ffc7dcc4bb"
+     "bytes": 595,
+     "sha256": "d9420f8e3200e6a84d5d4de67f82047dd1cd281a3e4965a8e0a97f782b804f6e"
     }
    },
    {
     "step": "second-repair",
     "code": 0,
-    "seconds": 9.2,
+    "seconds": 4.3,
     "output": {
      "name": "36-second-repair.txt",
-     "bytes": 924,
-     "sha256": "3e8a930c028fcc0fbf42bd684bae9de50b9aacc3ad732a5f87b443ebf557901d"
+     "bytes": 926,
+     "sha256": "8d68b5ae226d379634a40773b3517a2b57923866a9b28b6d12c81a78f2cd8d5b"
     }
    },
    {
@@ -892,8 +888,8 @@
     "seconds": 0.8,
     "output": {
      "name": "37-doctor-second-repaired.txt",
-     "bytes": 19793,
-     "sha256": "4d61d39c848a5c58ae2946ced9e274118ef9348873af2d2583543d5c913a82d6"
+     "bytes": 20380,
+     "sha256": "3b3ae291fc127d85c49bc925c82beffeac9ea6497c1e6bfb88d41e88fc47fa96"
     }
    },
    {
@@ -902,8 +898,8 @@
     "seconds": 0.0,
     "output": {
      "name": "38-head-second-before-first-use.txt",
-     "bytes": 168,
-     "sha256": "517a2898ed9e86d8c938b2a9aa7017af1eb5a48d6e7f4498fbbea5273dfd50d2"
+     "bytes": 169,
+     "sha256": "bdb7e20b71e0c8132fc75697e4617d202a64118b6b166df7b2da3442ff96a296"
     }
    },
    {
@@ -912,8 +908,8 @@
     "seconds": 0.1,
     "output": {
      "name": "39-status-second-before-first-use.txt",
-     "bytes": 161,
-     "sha256": "522cc1bf98b8bf560a24564b39748502c462e0eb3cc67694860b1d06217586aa"
+     "bytes": 162,
+     "sha256": "66867e249720ad6e9ebb9de8c61a0c48d76cc409084ff0ec201ba51e3c4e8f57"
     }
    },
    {
@@ -922,28 +918,28 @@
     "seconds": 0.1,
     "output": {
      "name": "40-packages-second-before-first-use.txt",
-     "bytes": 625,
-     "sha256": "783426369eec9d378185b5e711b31a4bfd76c3b2ec20f8c46527579ae8c689b2"
+     "bytes": 627,
+     "sha256": "e425c4e69061a3a5460db67743e54ee764f5267ec681401b7b72b570e9a4153d"
     }
    },
    {
     "step": "doctor-first-use",
     "code": 0,
-    "seconds": 0.8,
+    "seconds": 0.7,
     "output": {
      "name": "41-doctor-first-use.txt",
-     "bytes": 19744,
-     "sha256": "7cc76389207179411edc5a2873289fbd450a92b4e566c5cb4c165fde607104a3"
+     "bytes": 19980,
+     "sha256": "23d9c265557fee62a46ebbff2ae53d78b4a41020bd9c02dcab88ca8fc3037944"
     }
    },
    {
     "step": "first-bootstrap",
     "code": 0,
-    "seconds": 3.9,
+    "seconds": 2.7,
     "output": {
      "name": "42-first-bootstrap.txt",
-     "bytes": 691,
-     "sha256": "2beead332cc2481be4f7d517e84deda4066e01eb53ebd48d0f17a1f648908673"
+     "bytes": 675,
+     "sha256": "53c02212af77fc9788830ceab47c438aa80c23151d14c103e9065f456e4af051"
     }
    },
    {
@@ -952,8 +948,8 @@
     "seconds": 0.1,
     "output": {
      "name": "43-first-check.txt",
-     "bytes": 774,
-     "sha256": "1ab911ab5c9d87dd3b6dad0bdf8a64183cf1976a71e18c29c0c5720840137f80"
+     "bytes": 758,
+     "sha256": "dce543ac699d8890b005ea78011500e173fcc76610a7e172e4d63783937b2b47"
     }
    },
    {
@@ -962,8 +958,8 @@
     "seconds": 0.0,
     "output": {
      "name": "44-head-second-after-first-use.txt",
-     "bytes": 168,
-     "sha256": "517a2898ed9e86d8c938b2a9aa7017af1eb5a48d6e7f4498fbbea5273dfd50d2"
+     "bytes": 169,
+     "sha256": "bdb7e20b71e0c8132fc75697e4617d202a64118b6b166df7b2da3442ff96a296"
     }
    },
    {
@@ -972,8 +968,8 @@
     "seconds": 0.1,
     "output": {
      "name": "45-status-second-after-first-use.txt",
-     "bytes": 161,
-     "sha256": "522cc1bf98b8bf560a24564b39748502c462e0eb3cc67694860b1d06217586aa"
+     "bytes": 162,
+     "sha256": "66867e249720ad6e9ebb9de8c61a0c48d76cc409084ff0ec201ba51e3c4e8f57"
     }
    },
    {
@@ -982,8 +978,8 @@
     "seconds": 0.1,
     "output": {
      "name": "46-packages-second-after-first-use.txt",
-     "bytes": 625,
-     "sha256": "783426369eec9d378185b5e711b31a4bfd76c3b2ec20f8c46527579ae8c689b2"
+     "bytes": 627,
+     "sha256": "e425c4e69061a3a5460db67743e54ee764f5267ec681401b7b72b570e9a4153d"
     }
    },
    {
@@ -992,8 +988,8 @@
     "seconds": 0.0,
     "output": {
      "name": "47-first-git-dir.txt",
-     "bytes": 205,
-     "sha256": "64383d0bf30835df066015c10262549bdec4114489bd8534892f38b8e73ca5db"
+     "bytes": 189,
+     "sha256": "0bd77672fdbf016829ec62734dbb2ec388aea1fc5366b0cca0d022ef1050998c"
     }
    },
    {
@@ -1002,8 +998,8 @@
     "seconds": 0.0,
     "output": {
      "name": "48-second-git-dir.txt",
-     "bytes": 219,
-     "sha256": "a1c36a8829d8e32a9d89c0df18b7c9ec7e133e41340fcd9664c07743aef3aa3e"
+     "bytes": 221,
+     "sha256": "0ebb11130d5ca3d458e572ddfd46746c962a48f3c2e3a83722e8f72273b64a69"
     }
    },
    {
@@ -1019,21 +1015,21 @@
    {
     "step": "bootstrap-first-while-held",
     "code": 3,
-    "seconds": 1.1,
+    "seconds": 0.3,
     "output": {
      "name": "50-bootstrap-first-while-held.txt",
-     "bytes": 220,
-     "sha256": "e41403c304d6310159e5e33229fc2493ce414a97fce197712b38ece85fefe0f6"
+     "bytes": 212,
+     "sha256": "dff14a12cf090687e7b853bfd7168354d27be0e8632aaa4bdf216178f3e1b1d8"
     }
    },
    {
     "step": "bootstrap-second-while-first-held",
     "code": 0,
-    "seconds": 3.9,
+    "seconds": 2.8,
     "output": {
      "name": "51-bootstrap-second-while-first-held.txt",
-     "bytes": 705,
-     "sha256": "277eda7f264bccb0d765e9a60f6f8d3e0ef6962414fc366a87573deb6db03983"
+     "bytes": 707,
+     "sha256": "15495f8e3f102b2523b1732836a2defa3990e9757a6ac3eb3bf4a0d6f03062e5"
     }
    },
    {
@@ -1042,8 +1038,8 @@
     "seconds": 0.0,
     "output": {
      "name": "52-head-first-after.txt",
-     "bytes": 161,
-     "sha256": "0d58dc643f462a2d772ac704cdf2dae72cb5b34e69d3c8c4a2157572907c1d50"
+     "bytes": 153,
+     "sha256": "1e9fd9e7e36b5a84e6f03efcf6840a5259241e9ac5492a23206e63155b811160"
     }
    },
    {
@@ -1052,8 +1048,8 @@
     "seconds": 0.1,
     "output": {
      "name": "53-status-first-after.txt",
-     "bytes": 234,
-     "sha256": "af7beb477fce42fd45a6560ef16731cbad10eebcfe6b333a56dcefc1ca35c605"
+     "bytes": 146,
+     "sha256": "a15a812a63067fcb1028c4e7c0b46f0c7a70643ed38cd26548eb2e2f6d44aa8f"
     }
    },
    {
@@ -1062,14 +1058,14 @@
     "seconds": 0.1,
     "output": {
      "name": "54-packages-first-after.txt",
-     "bytes": 611,
-     "sha256": "11d2d777e8dfaf79577c3395b3fc47f242ddb2ace3d2c84ecf4b56ffc7dcc4bb"
+     "bytes": 595,
+     "sha256": "d9420f8e3200e6a84d5d4de67f82047dd1cd281a3e4965a8e0a97f782b804f6e"
     }
    },
    {
     "step": "main-status-after",
     "code": 0,
-    "seconds": 0.2,
+    "seconds": 0.1,
     "output": {
      "name": "55-main-status-after.txt",
      "bytes": 123,
@@ -1092,8 +1088,8 @@
     "seconds": 0.0,
     "output": {
      "name": "57-head-second-final.txt",
-     "bytes": 168,
-     "sha256": "517a2898ed9e86d8c938b2a9aa7017af1eb5a48d6e7f4498fbbea5273dfd50d2"
+     "bytes": 169,
+     "sha256": "bdb7e20b71e0c8132fc75697e4617d202a64118b6b166df7b2da3442ff96a296"
     }
    },
    {
@@ -1102,8 +1098,8 @@
     "seconds": 0.1,
     "output": {
      "name": "58-status-second-final.txt",
-     "bytes": 161,
-     "sha256": "522cc1bf98b8bf560a24564b39748502c462e0eb3cc67694860b1d06217586aa"
+     "bytes": 162,
+     "sha256": "66867e249720ad6e9ebb9de8c61a0c48d76cc409084ff0ec201ba51e3c4e8f57"
     }
    },
    {
@@ -1112,8 +1108,8 @@
     "seconds": 0.1,
     "output": {
      "name": "59-packages-second-final.txt",
-     "bytes": 625,
-     "sha256": "783426369eec9d378185b5e711b31a4bfd76c3b2ec20f8c46527579ae8c689b2"
+     "bytes": 627,
+     "sha256": "e425c4e69061a3a5460db67743e54ee764f5267ec681401b7b72b570e9a4153d"
     }
    }
   ]
