@@ -274,7 +274,7 @@ class EnvironmentTests(SetupCase):
         self.bootstrap()
         record.write_text(json.dumps({**self.recorded(), "profile": "python-verification", "packages": {}}), encoding="utf-8")
         self.bootstrap("core")
-        self.assertEqual(self.recorded()["profile"], "python-verification", "A smaller profile does not hide what was prepared.")
+        self.assertEqual((self.recorded()["profile"], self.recorded()["lock"]["path"]), ("python-verification", MACOS_LOCK), "A smaller profile does not hide what was prepared.")
 
     def test_only_missing_and_mismatched_packages_are_installed(self):
         packages = {**self.project.pins, "jsonschema": "4.25.0"}
@@ -438,6 +438,26 @@ class FailureTests(SetupCase):
         report = self.bootstrap()
         self.assertEqual(setup.exit_status(report), setup.READY)
         self.assertEqual(setup.exit_status(dict(report, outcome="failed")), setup.UNMET)
+        report = self.bootstrap("package-smoke", work=self.project.directory / "smoke")
+        self.assertEqual(setup.exit_status(report), setup.READY)
+        self.assertEqual(setup.exit_status(dict(report, outcome="failed")), setup.UNMET, "Also after its environments were made.")
+
+    def test_refusal_inside_the_run_before_any_change_stays_a_refusal(self):
+        self.project.interpreter.unlink()
+        self.project.which = lambda name: None if name == "brew" else self.project.commands.get(name)
+        self.refused("installation mechanism for the interpreter is not available", install=True)
+
+    def test_every_failure_is_kept_and_an_unexpected_one_with_its_traceback(self):
+        self.install_code = 1
+        with patch.object(setup, "finish", side_effect=TypeError("unexpected")):
+            report = self.bootstrap()
+        self.assertEqual((report["outcome"], report["failure"].count("; ")), ("failed", 1))
+        self.assertIn("install-packages failed", report["failure"])
+        self.assertIn("TypeError: unexpected", report["failure"])
+        kept = json.loads(Path(report["run_report"]).read_text(encoding="utf-8"))
+        self.assertIn("Traceback (most recent call last)", kept["traceback"])
+        self.assertIn("its traceback is in the report of this run", setup.render(report))
+        self.assertNotIn("traceback", self.bootstrap())
 
     def test_interruption_is_recorded_and_passed_on(self):
         for label, when, last in (("during an action", lambda argv: "pip" in argv and "install" in argv, ("install-packages", "not finished")),
@@ -489,6 +509,7 @@ class FailureTests(SetupCase):
         self.assertEqual((report["outcome"], setup.exit_status(report)), ("failed", setup.UNMET))
         self.assertIn("SpecificationError", report["failure"])
         self.assertTrue(Path(report["run_report"]).is_file() and Path(report["set_aside"]).is_dir())
+        self.assertEqual(report["observed"]["python"]["environment"]["facts"]["version"], "3.12.13", "What was reached is observed also after a failure.")
         self.project.handlers.pop(0)
         lock.write_bytes(kept)
         specification = self.project.root / doctor.SPECIFICATION
@@ -701,12 +722,19 @@ class UseTests(SetupCase):
                 ("isolated workspace", "node tools/validator.mjs", {"place": str(workspace.parent)}), ("its tools", "node validator.mjs", {"place": str(workspace)}),
                 ("below its tools", "node x.mjs", {"place": str(workspace / "deep")}), ("relative script", f"node {beside}", {"place": str(self.project.directory)}),
                 ("script after an option", f"node --trace-warnings {beside}", {"place": str(self.project.directory)}), ("linked script", "node linked.mjs", {"place": str(self.project.directory)}),
-                ("another letter case", f"node {str(script).upper()}", {"place": "/elsewhere"}), ("NODE_PATH", "node x.mjs", {"place": "/elsewhere", "environment": f"PATH=/usr/bin NODE_PATH=/a:{workspace}/node_modules"})):
+                ("another letter case", f"node {str(script).upper()}", {"place": "/elsewhere"}), ("script after many options", f"node --a --b=1 --c --d --e --f {beside}", {"place": str(self.project.directory)}),
+                ("imported script", f"node --import={beside} /elsewhere/x.mjs", {"place": str(self.project.directory)}), ("NODE_PATH", "node x.mjs", {"place": "/elsewhere", "environment": f"PATH=/usr/bin NODE_PATH=/a:{workspace}/node_modules"})):
             with self.subTest(start=label):
                 self.alone(94, command, **{"program": "node", **options})
                 self.assertEqual(self.users(directory), ([94], None))
-        self.alone(95, "node x.mjs", program="node", place="/elsewhere", environment="PATH=/usr/bin NODE_PATH=/elsewhere/node_modules")
-        self.assertEqual(self.users(directory), ([], None))
+        if (self.project.directory / "CHECKOUT").exists():  # The file system ignores letter case.
+            for label, command, options in (("relative script", f"node {beside.upper()}", {"place": str(self.project.directory)}),
+                                            ("NODE_PATH", "node x.mjs", {"place": "/elsewhere", "environment": f"PATH=/usr/bin NODE_PATH={str(directory).upper()}"})):
+                with self.subTest(start=label, case="other"):
+                    self.alone(94, command, **{"program": "node", **options})
+                    self.assertEqual(self.users(directory), ([94], None))
+        self.alone(95, f"node {self.project.root}-sibling/x.mjs", program="node", place="/elsewhere", environment="PATH=/usr/bin NODE_PATH=/elsewhere/node_modules")
+        self.assertEqual(self.users(directory), ([], None), "A neighbour whose name begins alike is another place.")
 
     def test_use_that_cannot_be_established_is_not_taken_as_unused(self):
         self.prepared(version="3.12.13")
@@ -1033,8 +1061,9 @@ class CommandLineTests(SetupCase):
         text = report.read_text(encoding="utf-8")
         for place in (wheels, node.parent, python, self.project.root):
             self.assertNotIn(str(place), text)
-        for label in ('"<find-links>"', '"<node>"', '"<node-directory>/npm"', '"<python>"'):
-            self.assertIn(label, text)
+        for label in ('"<find-links>"', '"<node>"', '"<npm>"', '"<python>"'):
+            self.assertTrue(label in text, label)
+        self.assertTrue("/opt/homebrew/" in text, "Package-manager paths stay.")
         work, report = self.project.directory.parent / "ontokin-test-work" / self.project.directory.name, self.project.directory / "out/second.json"
         self.addCleanup(shutil.rmtree, work.parent, True)
         code, output, errors = self.run_setup("--profile", "package-smoke", "--work-dir", str(work), "--portable-paths", "--report", str(report))
@@ -1042,11 +1071,20 @@ class CommandLineTests(SetupCase):
         for text in (output, report.read_text(encoding="utf-8")):
             self.assertNotIn(str(work), text)
         self.assertIn("<work-dir>/build-env", report.read_text(encoding="utf-8"))
-        self.assertIn("<report>", self.portable_paths_of({"report": report}))
+        self.assertTrue(any(label == "<report>" for _, label in setup.option_labels(report=report)))
 
-    @staticmethod
-    def portable_paths_of(options):
-        return {label for _, label in setup.option_labels(**options)}
+    def test_places_passed_in_any_form_are_labelled(self):
+        target, link = self.project.directory / "target", self.project.directory / "link"
+        target.mkdir()
+        link.symlink_to(target, target_is_directory=True)
+        for given in (str(link / "wheels"), os.path.relpath(link / "wheels"), str(target / "../target/wheels")):
+            with self.subTest(given=given):
+                forms = {form for form, label in setup.option_labels(find_links=[Path(given)]) if label == "<find-links>"}
+                self.assertIn(str(target / "wheels"), forms)
+                self.assertIn(str(Path(given).absolute()), forms)
+        self.assertEqual(setup.option_labels(node="node22", python="python3.12"), [], "A command name is no place.")
+        labels = dict(setup.option_labels(node=os.path.relpath(target / "node"), python=str(target / "python")))
+        self.assertEqual((labels[str(target / "node")], labels[str(target / "npm")], labels[str(target / "python")]), ("<node>", "<npm>", "<python>"))
 
 
 class RealSetupTests(unittest.TestCase):

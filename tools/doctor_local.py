@@ -91,7 +91,7 @@ print(json.dumps({
     "executable": sys.executable, "base_executable": getattr(sys, "_base_executable", None),
     "prefix": sys.prefix, "base_prefix": sys.base_prefix, "base_prefix_real": os.path.realpath(sys.base_prefix),
     "system": platform.system(), "machine": platform.machine(), "os_version": platform.mac_ver()[0] or platform.release(),
-    "platform_tag": sysconfig.get_platform(), "sys_path": [place(entry) for entry in sys.path if os.path.isabs(entry)],
+    "platform_tag": sysconfig.get_platform(), "sys_path": [place(entry) for entry in sys.path if os.path.isabs(entry) or os.path.exists(entry)],
     "site_packages": place(sysconfig.get_path("purelib")), "packages": packages, "places": places,
     "duplicates": duplicates, "editable": editable, "source_package": source, "imports": imports}))
 """
@@ -120,7 +120,7 @@ def shorten(text: str, limit=300) -> str:
 
 def failure_text(result: dict) -> str:
     """The line that tells what failed: the last one that says so, or the last one."""
-    lines = (result["error"] or result["err"].strip() or result["out"].strip() or f"exit status {result['code']}").splitlines()
+    lines = re.sub(r"\x1b\[[0-9;]*m", "", result["error"] or result["err"].strip() or result["out"].strip() or f"exit status {result['code']}").splitlines()
     return shorten(([line for line in lines if line.startswith(("ERROR", "error:", "fatal:"))] or lines)[-1])
 
 
@@ -128,7 +128,8 @@ def clean_environment() -> dict:
     """The caller's environment without Python, pip and Git redirection, and with no lazy object fetch."""
     environment = {key: value for key, value in os.environ.items()
                    if not key.startswith(("GIT_", "PYTHON", "PIP_")) and key not in {"VIRTUAL_ENV", "__PYVENV_LAUNCHER__"}}
-    environment.update(PYTHONDONTWRITEBYTECODE="1", PIP_DISABLE_PIP_VERSION_CHECK="1",
+    environment.pop("FORCE_COLOR", None)
+    environment.update(PYTHONDONTWRITEBYTECODE="1", PIP_DISABLE_PIP_VERSION_CHECK="1", NO_COLOR="1",
                        GIT_OPTIONAL_LOCKS="0", GIT_TERMINAL_PROMPT="0", GIT_NO_LAZY_FETCH="1")
     return environment
 
@@ -557,7 +558,7 @@ def isolation_problems(root: Path, environment: dict):
     strangers = sorted(name for name, place in facts["places"].items() if not place or not inside(place, here) and os.path.dirname(place) != top)
     if strangers:
         problems.append("packages are installed elsewhere: " + ", ".join(strangers))
-    others = sorted(f"{name} from {place}" for name, place in facts["editable"].items() if place != top)
+    others = sorted(f"{name} from {place}" for name, place in facts["editable"].items() if not same_place(str(place), top))
     if others:
         problems.append("editable installs of other locations: " + ", ".join(others))
     # An editable install of this checkout imports from its package directories; a worktree inside it is another checkout.
@@ -654,6 +655,12 @@ def verification_checks(root: Path, spec: dict, key, environment: dict, run=exec
 
 # --- Visual tools ----------------------------------------------------------
 
+def located(program) -> str:
+    """The absolute path of a program, with its directory resolved as the system would and its own name kept."""
+    directory, name = os.path.split(os.path.join(os.getcwd(), str(program)))
+    return os.path.join(os.path.realpath(directory), name)
+
+
 def npm_version(npm):
     """Read npm's own manifest; running npm would write a log."""
     if not npm:
@@ -727,7 +734,7 @@ def npm_record_problem(root: Path, profile: dict, system: str, machine: str):
 
 def visual_section(root: Path, spec: dict, run=execute, which=shutil.which, node=None, cache=None, system=None, machine=None) -> dict:
     profile = spec["profiles"]["visual-verification"]
-    node = (os.path.abspath(str(node)) if os.sep in str(node) else which(str(node)) or str(node)) if node else which("node")
+    node = (located(node) if os.sep in str(node) else which(str(node)) or str(node)) if node else which("node")
     npm = str(Path(node).parent / "npm") if node and (Path(node).parent / "npm").exists() else which("npm")
     version = None
     if node:
@@ -750,7 +757,7 @@ def visual_section(root: Path, spec: dict, run=execute, which=shutil.which, node
     return {"node": {"path": node, "version": version, "target_major": profile["node_major"]},
             "npm": {"path": npm, "version": npm_version(npm)}, "npm_directory": profile["npm_directory"],
             "npm_directory_exists": directory.is_dir() or directory.is_symlink(), "npm_directory_symlink": directory.is_symlink(),
-            "npm_dependencies": dependencies, "npm_record_problem": npm_record_problem(root, profile, system or platform.system(), machine or platform.machine()),
+            "manifest_problems": profile_problems(root, spec, "visual-verification"), "npm_dependencies": dependencies, "npm_record_problem": npm_record_problem(root, profile, system or platform.system(), machine or platform.machine()),
             "browser": browser}
 
 
@@ -769,6 +776,7 @@ def visual_checks(visual: dict) -> list:
         results.append(check("npm", "ready" if npm["version"] else "not_checked", f"npm {npm['version'] or 'version not established'}."))
     rows = visual["npm_dependencies"]
     wrong = [f"{row['name']} {row['installed']}, expected {row['expected']}" for row in rows if row["installed"] not in {None, row["expected"]}]
+    wrong = visual["manifest_problems"] + wrong
     absent = [f"{row['name']} {row['expected']}" for row in rows if row["installed"] is None]
     if visual["npm_directory_symlink"]:
         wrong.append(f"{visual['npm_directory']} is a symbolic link; each checkout needs its own dependencies")
@@ -907,7 +915,7 @@ def workflow_section(root: Path, run=execute) -> dict:
         try:
             report = json.loads(done["out"])
             section["structure_check"] = {"state": "ready" if report["passed"] else "mismatch", "detail":
-                                          f"{report['tasks_checked']} tasks checked." if report["passed"] else "; ".join(report["errors"])[:1000]}
+                                          f"{report['tasks_checked']} tasks checked." if report["passed"] else shorten("; ".join(report["errors"]), 1000)}
         except (ValueError, KeyError, TypeError):
             section["structure_check"] = {"state": "not_checked", "detail": failure_text(done)}
     return section
@@ -950,10 +958,10 @@ def next_action(root: Path, spec: dict, key, profile: str, failing: dict, interp
     target = DEFAULT_PROFILE if identifier in ENVIRONMENT_CHECKS and profile == "visual-verification" else profile
     setup = f"{distribution.get('command', 'python3')} tools/bootstrap_local.py --profile {target}"
     if target == "visual-verification" and node:
-        setup += f" --node {shlex.quote(str(node))}"
+        setup += f" --node {shlex.quote(str(visual['node']['path']))}"
     if identifier in ENVIRONMENT_CHECKS:
         compliant = [entry for entry in interpreters if entry["ok"] and not entry["differences"]]
-        if identifier == "interpreter" and not compliant and not environment["occupied"]:
+        if (identifier == "interpreter" or rebuild) and not compliant and not environment["occupied"]:
             if interpreters:
                 return (f"The specified interpreter {version} was not found; found "
                         + ", ".join(f"{entry['version']} ({(entry['distribution'] or {}).get('name')})" for entry in interpreters)
@@ -972,6 +980,8 @@ def next_action(root: Path, spec: dict, key, profile: str, failing: dict, interp
         if checkout["unread"]:
             return "Repair the checkout before any setup. Git could not read: " + "; ".join(checkout["unread"])
         return "Run from the top of a Git checkout or worktree" + (f". Git reports: {checkout['problem']}" if checkout["problem"] else ".")
+    if identifier == "npm-dependencies" and visual["manifest_problems"]:
+        return "Restore the committed files, or adopt a reviewed change: " + "; ".join(visual["manifest_problems"])
     if identifier == "npm-dependencies" and visual["npm_directory_symlink"]:
         return f"{place}Remove the link {visual['npm_directory']} by hand, then run: {setup}"
     if identifier == "npm-dependencies" and visual["npm_directory_exists"]:
@@ -1003,8 +1013,8 @@ def readiness_section(root: Path, spec: dict, key, environment: dict, checkout: 
         # Base profiles come first, so a missing or wrong interpreter is the first action.
         unmet = [item for part in [*requires, name] for item in (section[part]["checks"] if part in section else own) if item["state"] != "ready"]
         # What makes setup itself refuse comes before what setup would do.
-        unmet.sort(key=lambda item: 0 if item["state"] == "unsupported" else 1 if item["id"] in {"git", "lock"} else 2)
-        first = next((item for item in unmet if item["state"] != "not_checked" or item["id"] == "pip-check" and usable(environment)), unmet[0] if unmet else None)
+        unmet.sort(key=lambda item: 0 if item["state"] == "unsupported" else 1 if item["id"] in {"git", "lock"} or item["id"] == "npm-dependencies" and visual["manifest_problems"] else 2)
+        first = next((item for item in unmet if item["state"] != "not_checked" or item["id"] in {"pip-check", "isolation"} and usable(environment)), unmet[0] if unmet else None)
         section[name] = {"state": state, "kind": kind, "purpose": profile["purpose"], "requires": requires, "checks": own,
                          "next_action": None if state == "ready" else profile["purpose"] if kind != "environment" else
                          next_action(root, spec, key, name, first, interpreters, environment, checkout, visual, rebuild, node)}
@@ -1051,10 +1061,10 @@ def collect(root: Path, profile: str = DEFAULT_PROFILE, online: bool = False, *,
 def path_labels(root: Path, worktrees=(), others=()) -> list:
     """This machine's paths and the labels that stand for them, longest path first."""
     labels = {tempfile.gettempdir(): "<tmp>", str(Path.home()): "<home>", str(root.parent): "<parent>"}
-    for path, label in others:
-        if os.path.isabs(str(path)):
-            labels[str(path)] = label
-            labels.setdefault(str(Path(path).parent), label.replace(">", "-directory>"))
+    labels[str(ROOT)] = "<tool-root>"
+    if sys.prefix != sys.base_prefix:
+        labels[sys.prefix] = "<tool-environment>"
+    labels.update((str(path), label) for path, label in others if os.path.isabs(str(path)))
     for number, worktree in enumerate(worktrees):
         labels.setdefault(str(Path(worktree).parent), "<worktree-parent>" if number else "<clone-parent>")
         labels[worktree] = f"<worktree-{number}>" if number else "<main-checkout>"
@@ -1062,6 +1072,25 @@ def path_labels(root: Path, worktrees=(), others=()) -> list:
     for path, label in list(labels.items()):
         labels.setdefault(os.path.realpath(path), label)
     return sorted(((path, label) for path, label in labels.items() if len(path) > 1), key=lambda item: -len(item[0]))
+
+
+def option_labels(places) -> list:
+    """The forms in which a place that was passed as an option can occur in a report."""
+    return [(form, label) for path, label in places for form in dict.fromkeys((str(Path(path).absolute()), str(canonical_new(path))))]
+
+
+def canonical_new(path) -> Path:
+    """A path that need not exist yet, with its existing part in canonical form."""
+    path, rest = Path(path).absolute(), []
+    while not path.exists() and path != path.parent:
+        rest.insert(0, path.name)
+        path = path.parent
+    return Path(os.path.normpath(canonical(path).joinpath(*rest)))
+
+
+def node_labels(node) -> list:
+    """A Node.js that was passed as a path, and the npm beside it; a plain command name is no place."""
+    return option_labels([(node, "<node>"), (Path(located(node)).parent / "npm", "<npm>")]) + [(located(node), "<node>")] if node and os.sep in str(node) else []
 
 
 def portable(value, labels: list):
@@ -1161,7 +1190,7 @@ def main(argv=None) -> int:
     try:
         report = collect(args.root, args.profile, args.online, node=args.node)
         if args.portable_paths:
-            report = portable(report, path_labels(canonical(args.root), report["checkout"].get("worktrees", ()), [(args.node, "<node>")] if args.node else ()))
+            report = portable(report, path_labels(canonical(args.root), report["checkout"].get("worktrees", ()), node_labels(args.node)))
         text = json.dumps(report, indent=2, ensure_ascii=False) + "\n"
         if args.output:
             write_new(args.output, text)

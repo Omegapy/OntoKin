@@ -31,6 +31,7 @@ import shutil
 import signal
 import tempfile
 import time
+import traceback
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -193,17 +194,14 @@ def parse_places(text: str) -> dict:
 
 def finds_packages(session: Session, directory: Path, number: str, command: str, place: str) -> bool:
     """Whether Node.js would look for packages in this directory: from the place or a script of the process upwards, or by NODE_PATH."""
+    scripts = [os.path.join(place, word.rpartition("=")[2]) for word in command.split()[1:64]]  # Also --import=SCRIPT.
     starts = [place, os.path.join(place, directory.relative_to(session.root).parent)]
-    starts += [os.path.dirname(os.path.realpath(os.path.join(place, word))) for word in command.split()[1:6]
-               if not word.startswith("-") and os.path.exists(os.path.join(place, word))]
-    for start in map(os.path.realpath, starts):
-        if doctor.inside(start, str(session.root)):
+    for start in starts + [os.path.dirname(doctor.canonical(script)) for script in scripts if os.path.isfile(script)]:
+        start = Path(os.path.realpath(start))
+        if doctor.inside(str(start), str(session.root)) or any(doctor.same_place(str(above / "node_modules"), str(directory)) for above in (start, *start.parents)):
             return True
-        for above in (Path(start), *Path(start).parents):
-            if os.path.realpath(above / "node_modules") == str(directory):
-                return True
     paths = variable(process_environment(session, number) or "", "NODE_PATH") or ""
-    return any(os.path.realpath(path) == str(directory) for path in paths.split(os.pathsep) if path)
+    return any(doctor.same_place(path, str(directory)) for path in paths.split(os.pathsep) if path)
 
 
 def started_from(session: Session, directory: Path, number: str, command: str, program: str, place) -> bool:
@@ -218,7 +216,8 @@ def started_from(session: Session, directory: Path, number: str, command: str, p
         if os.sep in word and not word.startswith((os.sep, "-")) and (place is None or os.path.normpath(os.path.join(place, word)).startswith(prefix)):
             return True
     if directory != session.environment:  # Node dependencies; other programs use them only through open files.
-        return node and (place is None or str(session.root).lower() in command.lower() or finds_packages(session, directory, number, command, place))
+        named = re.search(re.escape(str(session.root)) + r"(?=$|[/\s'\"])", command, re.IGNORECASE)
+        return node and (place is None or bool(named) or finds_packages(session, directory, number, command, place))
     if not interpreter:
         return False
     environment = process_environment(session, number)
@@ -463,11 +462,14 @@ def environment_record(session: Session, profile: str, report: dict, lock) -> di
     environment = report["python"]["environment"]
     facts, visual, kept = environment["facts"] or {}, report["visual"], previous_record(environment)
     names = [name for name in (kept.get("profile"), profile) if isinstance(name, str) and name in session.spec["profiles"]]
+    recorded = max(names, key=lambda name: len(doctor.profile_chain(session.spec, name)))
+    if recorded != profile:
+        lock = doctor.select_lock(session.spec, recorded, session.key, ".".join(session.spec["interpreter"]["version"].split(".")[:2]))
     present, earlier = visual["npm_directory_exists"], kept.get("actions")
     prepared = {"node": visual["node"], "npm": visual["npm"], "npm_dependencies": visual["npm_dependencies"] if present else None,
                 "browser": visual["browser"] if present else None}
     return {
-        "schema": RECORD_SCHEMA, "updated_at": utc_now(), "profile": max(names, key=lambda name: len(doctor.profile_chain(session.spec, name))), "root": str(session.root), "environment": environment["path"],
+        "schema": RECORD_SCHEMA, "updated_at": utc_now(), "profile": recorded, "root": str(session.root), "environment": environment["path"],
         "interpreter": {name: facts.get(name) for name in ("implementation", "version", "build", "compiler", "executable", "base_executable",
                                                              "base_prefix", "base_prefix_real", "distribution")},
         "platform": {"key": report["platform"]["key"], "system": facts.get("system"), "machine": facts.get("machine"),
@@ -519,15 +521,6 @@ def require_writable(path: Path, what: str) -> None:
         raise Refusal(f"{what} cannot be created in {place}. Nothing was changed.")
 
 
-def canonical_new(path) -> Path:
-    """A path that need not exist yet, with its existing part in canonical form."""
-    path, rest = Path(os.path.abspath(str(path))), []
-    while not path.exists() and path != path.parent:
-        rest.insert(0, path.name)
-        path = path.parent
-    return doctor.canonical(path).joinpath(*rest)
-
-
 def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=False, repair_node=False, wheels=(), work=None,
               install=False, node=None, run=doctor.execute, which=shutil.which, system=None, machine=None, cache=None) -> dict:
     """Prepare one profile and report what happened. Parameters from run on exist for controlled tests."""
@@ -550,7 +543,7 @@ def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=F
     if kind == "on-demand":
         if work is None:
             raise Refusal(f"{profile} needs --work-dir with a new directory outside the checkout.")
-        work = canonical_new(work)
+        work = doctor.canonical_new(work)
         if work == root or root in work.parents or work.exists():
             raise Refusal(f"The {profile} working directory must be new and outside the checkout.")
         require_writable(work, "The working directory")
@@ -604,7 +597,7 @@ def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=F
             except Exception as error:
                 if isinstance(error, Refusal) and not session.log:
                     raise
-                report["failure"] = describe(error)
+                describe(report, error)
             settle()
         except KeyboardInterrupt as error:
             interruption = error
@@ -612,7 +605,8 @@ def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=F
         except Refusal:
             raise
         except Exception as error:  # Whatever happens after a change, its report is kept.
-            report.update(failure="; ".join(filter(None, (report.get("failure"), describe(error)))), outcome="failed")
+            describe(report, error)
+            report["outcome"] = "failed"
         report["changed"] = report["changed"] or bool(session.log)
         if report["changed"]:
             with uninterrupted():
@@ -623,8 +617,12 @@ def bootstrap(root: Path, profile: str, *, preview=False, python=None, rebuild=F
     return report
 
 
-def describe(error: Exception) -> str:
-    return str(error) if isinstance(error, (Refusal, ActionFailed)) else f"{type(error).__name__}: {error}"
+def describe(report: dict, error: Exception) -> None:
+    """Add a failure to the report; one that no precondition explains keeps its traceback."""
+    expected = isinstance(error, (Refusal, ActionFailed))
+    report["failure"] = "; ".join(filter(None, (report.get("failure"), str(error) if expected else f"{type(error).__name__}: {error}")))
+    if not expected and not isinstance(error, (OSError, doctor.SpecificationError)):
+        report["traceback"] = traceback.format_exc()
 
 
 def keep_report(root: Path, report: dict) -> None:
@@ -671,10 +669,12 @@ def finish(session: Session, report: dict, outcome: str) -> None:
 
 
 def exit_status(report: dict) -> int:
-    if report["outcome"] == "previewed" or report.get("smoke_environments"):
+    if report["outcome"] == "previewed":
         return READY
+    if report["outcome"] not in {"changed", "unchanged"}:
+        return UNMET
     passed = all(item["passed"] for item in report["smoke"])
-    return READY if report["outcome"] in {"changed", "unchanged"} and report["selected"]["state"] == "ready" and passed else UNMET
+    return READY if report.get("smoke_environments") or report["selected"]["state"] == "ready" and passed else UNMET
 
 
 def render(report: dict) -> str:
@@ -690,6 +690,8 @@ def render(report: dict) -> str:
     lines += [f"  smoke: {item['check']} {'passed' if item['passed'] else 'did not pass: ' + str(item['detail'])}" for item in report["smoke"]]
     if report.get("failure"):
         lines.append(f"  failure: {report['failure']}")
+        if report.get("traceback"):
+            lines.append("  an unexpected error; its traceback is in the report of this run")
         if os.path.isdir(report.get("set_aside", "")):
             lines.append(f"  the replaced environment was kept in {report['set_aside']}")
     if report["outcome"].startswith("interpreter-"):
@@ -702,10 +704,9 @@ def render(report: dict) -> str:
 
 
 def option_labels(find_links=(), work_dir=None, report=None, node=None, python=None) -> list:
-    """The places that were passed as options, for a portable report."""
-    places = [(path, "<find-links>") for path in find_links] + [(work_dir, "<work-dir>"), (report, "<report>"), (node, "<node>"), (python, "<python>")]
-    return [(form, label) for path, label in places if path and os.sep in str(path)
-            for form in dict.fromkeys((os.path.abspath(str(path)), str(canonical_new(path))))]
+    """The places that were passed as options, for a portable report; a plain command name is no place."""
+    places = [(path, "<find-links>") for path in find_links] + [(work_dir, "<work-dir>"), (report, "<report>")]
+    return doctor.option_labels([(path, label) for path, label in places if path] + ([(python, "<python>")] if python and os.sep in str(python) else [])) + doctor.node_labels(node)
 
 
 def main(argv=None) -> int:
@@ -730,7 +731,7 @@ def main(argv=None) -> int:
         if args.report:
             require_writable(args.report, "The report")
         report = bootstrap(args.root, args.profile, preview=args.preview, python=args.python, rebuild=args.rebuild,
-                           repair_node=args.repair_node, wheels=[canonical_new(path) for path in args.find_links], work=args.work_dir,
+                           repair_node=args.repair_node, wheels=[doctor.canonical_new(path) for path in args.find_links], work=args.work_dir,
                            install=args.install_interpreter, node=args.node)
     except (Refusal, doctor.SpecificationError) as error:
         print(f"Setup refused: {error}", file=sys.stderr)

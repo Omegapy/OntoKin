@@ -13,13 +13,14 @@ review has its own record.
 | Second review of the tools and tests | Independent reviewer subagent, fresh context, no change to the checkout | Commit `7d937e26` | 6 mandatory, 13 minor, 7 notes; 28 of 54 mutations survived |
 | Audit of all 42 requirements | Independent auditor subagent, fresh context, read-only | Commit `7d937e26` | 111 criteria: 78 met, 21 complete with later steps, 12 wait for the owner, none not met; 1 mandatory, 10 minor findings, 9 notes |
 | Third review of the tools, on the corrections | Independent reviewer subagent, fresh context, in its own clone | Commit `26d429ca` | 1 mandatory, 11 minor, 4 notes; 11 of 36 mutations survived |
+| Fourth review, on the last corrections | Independent reviewer subagent, fresh context, in its own clone | Commit `f81a95a5` | None mandatory, 9 minor, 3 notes; 19 of 26 mutations survived, six kinds of which matter |
 
 Every reviewer was a separate agent of the same model family, inherited from the session,
 and wrote none of the work. The rehearsal is no fresh-session demonstration (DEC-010), and
 the early audit is not the audit of TASK-031. "Fixed" means changed on this branch and, for
 code, covered by a test. The commits are `3c4694f9` and `ebcfee8c` (first tool review),
 `02797bb0` (documents), `27ede8cf` and `7d937e26` (rehearsal), and the later commits whose
-messages name the second and third tool review and the audit.
+messages name the second, third and fourth tool review and the audit.
 
 ## Documents and records
 
@@ -181,3 +182,22 @@ partly fixed; its findings below complete them.
 
 49 further mutations were tried after these corrections; the two that were not detected do not
 change what a run does or reports.
+
+## Fourth review, on the last corrections
+
+It found R1, R2, R3, R7 to R9 and R13 to R15 fixed, R4 to R6, R10 and R11 partly fixed, and
+these items, which complete them:
+
+| ID | Severity | Finding, in short | Disposition |
+| --- | --- | --- | --- |
+| S1 | Minor | A failed package-smoke preparation ended with status 0 | Fixed |
+| S2, S3 | Minor | Options given as relative paths, or through a link and its parent, were not labelled or were read differently from the system | Fixed |
+| S4 | Minor | A relative path entry that exists counted as harmless | Fixed |
+| S5 | Minor | Remaining next actions that setup refuses | Fixed |
+| S6, S7 | Minor | Node.js scripts in another letter case, after many options or imported by an option; a neighbour whose name begins alike | Fixed |
+| S8 | Minor | The directory of a passed program was labelled too | Fixed; only npm beside a passed node is |
+| S9 | Minor | A record kept its profile but not that profile's lock | Fixed |
+| S10 to S12 | Note | An unmarked cut, an unexpected error without its traceback, letter case of an editable install, coloured output | Fixed |
+
+32 further mutations were tried after these corrections; all that change behaviour are
+detected.

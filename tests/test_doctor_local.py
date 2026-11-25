@@ -423,7 +423,8 @@ class ReadinessTests(DoctorCase):
         project.node()
         project.node_modules(three="0.179.0")
         self.assertIn("--profile visual-verification --repair-node", project.collect("visual-verification")["selected"]["next_action"])
-        self.assertIn(f"--node {shlex.quote(project.commands['node'])} --repair-node", project.collect("visual-verification", node=project.commands["node"])["selected"]["next_action"])
+        for node in (project.commands["node"], os.path.relpath(project.commands["node"])):
+            self.assertIn(f"--node {shlex.quote(project.commands['node'])} --repair-node", project.collect("visual-verification", node=node)["selected"]["next_action"])
         shutil.move(project.root / "tools/node_modules", project.directory / "modules")
         self.assertTrue(project.collect("visual-verification")["selected"]["next_action"].endswith("--profile visual-verification"))
         (project.root / "tools/node_modules").symlink_to(project.directory / "modules", target_is_directory=True)
@@ -441,10 +442,35 @@ class ReadinessTests(DoctorCase):
 
     def test_relative_node_is_the_one_that_setup_would_start(self):
         self.project.node()
-        node = os.path.relpath(self.project.commands["node"])
-        self.assertEqual(os.path.realpath(self.project.collect(node=node)["visual"]["node"]["path"]), os.path.realpath(self.project.commands["node"]))
-        self.assertTrue(os.path.isabs(self.project.collect(node=node)["visual"]["node"]["path"]))
-        self.assertEqual(self.project.collect(node="node")["visual"]["node"]["path"], self.project.commands["node"])
+        node = self.project.commands["node"]
+        for given in (os.path.relpath(node), node, "node"):
+            with self.subTest(given=given):
+                self.assertEqual(self.project.collect(node=given)["visual"]["node"]["path"], node)
+        # A path is read as the system reads it: the link first, then its parent.
+        (self.project.directory / "far/away").mkdir(parents=True)
+        (self.project.directory / "link").symlink_to(self.project.directory / "far/away", target_is_directory=True)
+        self.assertEqual(doctor.located(f"{self.project.directory}/link/../tool"), f"{self.project.directory}/far/tool")
+        self.assertEqual(doctor.canonical_new(f"{self.project.directory}/link/../new/place"), self.project.directory / "far/new/place")
+        self.assertEqual(doctor.canonical_new(f"{self.project.directory}/absent/../new"), self.project.directory / "new")
+
+    def test_changed_npm_manifest_is_named_before_anything_is_installed(self):
+        self.project.create_environment()
+        manifest = self.project.root / "tools/package.json"
+        manifest.write_text(manifest.read_text(encoding="utf-8").replace("0.180.0", "0.181.0"), encoding="utf-8")
+        report = self.project.collect("visual-verification")
+        self.assertEqual(self.check(report, "npm-dependencies", "visual-verification")["state"], "mismatch")
+        self.assertIn("Restore the committed files", report["selected"]["next_action"], "Also without Node.js.")
+        self.assertIn("npm dependencies differ from tools/package.json", report["selected"]["next_action"])
+
+    def test_unrecorded_place_and_absent_interpreter_come_before_later_actions(self):
+        self.project.create_environment(command="unrecorded")
+        self.assertIn("--rebuild", self.project.collect("visual-verification")["selected"]["next_action"])
+        self.project.create_environment(version="3.12.14")
+        self.project.interpreter.unlink()
+        self.project.which = lambda name: self.project.commands.get(name)
+        self.assertIn("brew install python@3.12", self.project.collect()["selected"]["next_action"])
+        self.project.create_environment(system_site="true")
+        self.assertIn("brew install python@3.12", self.project.collect()["selected"]["next_action"], "A rebuild needs the interpreter first.")
 
     def test_editable_install_may_name_this_checkout_only(self):
         top = str(self.project.root)
@@ -463,6 +489,9 @@ class ReadinessTests(DoctorCase):
                 report = self.project.collect()
                 self.assertEqual(self.check(report, "isolation", "core")["state"], "mismatch")
                 self.assertIn(text, self.check(report, "isolation", "core")["detail"])
+        if (self.project.directory / "CHECKOUT").exists():  # The file system ignores letter case.
+            self.project.create_environment(editable={"ontokin-reference": str(self.project.directory / "CHECKOUT")})
+            self.assertEqual(self.check(self.project.collect(), "isolation", "core")["state"], "ready")
         self.project.create_environment(places={"ontokin-reference": f"{top}/ontokin_reference.egg-info"}, source_package=f"{self.project.site}/ontokin/__init__.py")
         self.assertEqual(self.check(self.project.collect(), "isolation", "core")["state"], "ready", "The checkout's own metadata and an installed copy stay inside.")
 
@@ -658,6 +687,20 @@ class RealEnvironmentTests(unittest.TestCase):
         shutil.copytree(self.project.root, other, symlinks=True)
         report = doctor.collect(other, "core", run=doctor.execute, which=lambda name: None, system=self.system, machine=self.machine)
         self.assertIn("copied or moved", next(item["detail"] for item in report["readiness"]["core"]["checks"] if item["id"] == "isolation"))
+
+    def test_real_relative_path_entry_counts_where_it_exists(self):
+        elsewhere = self.project.directory / "elsewhere"
+        elsewhere.mkdir()
+        (self.site / "relative.pth").write_text(f"import sys; sys.path.append({os.path.relpath(elsewhere)!r})\n", encoding="utf-8")
+        self.assertIn(str(elsewhere), self.core()[1]["isolation"]["detail"])
+        elsewhere.rmdir()
+        self.assertEqual(self.core()[1]["isolation"]["state"], "ready")
+
+    def test_real_long_import_error_is_cut_at_a_marked_place(self):
+        (self.site / "attrs").mkdir()
+        (self.site / "attrs/__init__.py").write_text("raise ImportError('x' * 400)\n", encoding="utf-8")
+        row = next(row for row in self.report()["packages"]["expected"] if row["name"] == "attrs")
+        self.assertTrue(row["import_error"].endswith("x" + doctor.CUT), row["import_error"])
 
     def test_real_metadata_is_read_as_the_interpreter_reads_it(self):
         self.metadata("attrs-26.1.0.dist-info", "attrs", "26.1.0")
@@ -896,11 +939,12 @@ class SectionTests(DoctorCase):
         self.assertEqual(report["storage"]["state"], "not_checked")
 
     def test_commands_run_without_redirection_or_lazy_fetching(self):
-        injected = {"GIT_DIR": "/elsewhere", "PYTHONPATH": "/elsewhere", "PIP_INDEX_URL": "https://example.invalid", "VIRTUAL_ENV": "/elsewhere", "KEPT": "yes"}
+        injected = {"GIT_DIR": "/elsewhere", "PYTHONPATH": "/elsewhere", "PIP_INDEX_URL": "https://example.invalid", "VIRTUAL_ENV": "/elsewhere", "KEPT": "yes", "FORCE_COLOR": "1"}
         with patch.dict(os.environ, injected):
             environment = doctor.clean_environment()
             self.project.collect()
-        self.assertEqual((environment["GIT_NO_LAZY_FETCH"], environment["PYTHONDONTWRITEBYTECODE"], environment["KEPT"]), ("1", "1", "yes"))
+        self.assertEqual((environment["GIT_NO_LAZY_FETCH"], environment["PYTHONDONTWRITEBYTECODE"], environment["KEPT"], environment["NO_COLOR"]), ("1", "1", "yes", "1"))
+        self.assertNotIn("FORCE_COLOR", environment)
         for used in self.project.environments:
             self.assertFalse({"GIT_DIR", "PYTHONPATH", "PIP_INDEX_URL", "VIRTUAL_ENV"} & set(used or environment))
         self.assertEqual(environment["GIT_OPTIONAL_LOCKS"], "0")
@@ -950,6 +994,8 @@ class SectionTests(DoctorCase):
             with self.subTest(state=state):
                 tool.write_text(f"print({json.dumps(output)!r})\n" if output else "raise SystemExit('no report')\n", encoding="utf-8")
                 self.assertEqual(self.project.collect()["workflow"]["structure_check"]["state"], state)
+        tool.write_text(f"print({json.dumps({'passed': False, 'tasks_checked': 1, 'errors': ['x' * 1500]})!r})\n", encoding="utf-8")
+        self.assertEqual(self.project.collect()["workflow"]["structure_check"]["detail"], "x" * 1000 + doctor.CUT)
 
 
 class ReportTests(DoctorCase):
@@ -991,7 +1037,10 @@ class ReportTests(DoctorCase):
         link.symlink_to(elsewhere, target_is_directory=True)
         labels = doctor.path_labels(link / "root", [], [("/opt/tools/node", "<node>"), ("relative", "<no>")])
         self.assertEqual(doctor.portable(f"{link}/root/a {elsewhere}/root/b /opt/tools/node relative", labels), "<root>/a <root>/b <node> relative")
-        self.assertEqual(doctor.portable(f"{str(link).upper()}/ROOT/a /opt/tools/npm", labels), "<root>/a <node-directory>/npm", "Another letter case and the place beside a passed file are labelled too.")
+        self.assertEqual(doctor.portable(f"{str(link).upper()}/ROOT/a /opt/tools/npm", labels), "<root>/a /opt/tools/npm", "Another letter case is labelled too, a directory that was not passed is not.")
+        tool = doctor.portable([str(doctor.ROOT / "tools"), sys.prefix], labels)
+        self.assertEqual(tool[0], "<tool-root>/tools")
+        self.assertTrue(sys.prefix == sys.base_prefix or tool[1].startswith("<tool-"), tool[1])
         for text in (f"zz{link}/root/a", f"{link}/rooted", f"{link}/root-2", f"{link}/root.old"):
             with self.subTest(text=text):
                 self.assertNotIn("<root>", doctor.portable(text, labels), "Only a whole path is a label's path.")
@@ -1006,7 +1055,8 @@ class ReportTests(DoctorCase):
 
     def test_failure_text_is_the_line_that_says_what_failed(self):
         for output, expected in (("note\nlast\n", "last"), ("ERROR: THESE PACKAGES DO NOT MATCH\n  attrs:\n     Got  123\n", "ERROR: THESE PACKAGES DO NOT MATCH"),
-                                 ("fatal: bad object\nhint: try again\n", "fatal: bad object"), ("", "exit status 4")):
+                                 ("fatal: bad object\nhint: try again\n", "fatal: bad object"), ("", "exit status 4"),
+                                 ("\x1b[31mERROR: no\x1b[0m\nmore\n", "ERROR: no"), ("x" * 400, "x" * 300 + doctor.CUT)):
             with self.subTest(output=output):
                 self.assertEqual(doctor.failure_text({"error": None, "err": output, "out": "", "code": 4}), expected)
 
