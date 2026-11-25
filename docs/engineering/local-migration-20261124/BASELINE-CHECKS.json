@@ -1,0 +1,939 @@
+{
+ "schema": "ontokin.local-migration.baseline-checks/1",
+ "task": "LOCAL-MIGRATION-20261124",
+ "step": "TASK-015",
+ "purpose": "Results of the existing local driver and the in-place checks on the unmodified base revision, so that a later candidate failure can be classified as unchanged or new (OK-ENG-009 section 3, gate 4).",
+ "base": {
+  "revision": "6b346b1e4126332fe3c98a4a98f3e0b0e2f63774",
+  "tree": "812a17de3880f7c152beacccf7b2e690381f9716",
+  "checkout": "a detached worktree of the base revision outside the main checkout, clean before and after both runs (only ignored __pycache__)"
+ },
+ "platform": {
+  "system": "macOS 26.6.2 arm64",
+  "interpreter": "CPython 3.12.13 (Homebrew python@3.12), the environment recorded in ENVIRONMENT.json",
+  "packages": {
+   "attrs": "26.1.0",
+   "jsonschema": "4.26.0",
+   "jsonschema-specifications": "2025.9.1",
+   "pillow": "13.0.0",
+   "pip": "26.0",
+   "referencing": "0.37.0",
+   "rpds-py": "2026.5.1",
+   "typing_extensions": "4.16.0"
+  },
+  "environment_variables": "No PYTHON*, PIP_* or GIT_* variable was set by the caller."
+ },
+ "output_location": "New directories under the local checks directory beside the clone, outside every checkout. Raw logs stay local and reproducible; their identities are below.",
+ "nothing_changed_to_obtain_this": "No expectation, test, driver file or timeout default was changed. The per-command timeout was stated as 14,400 seconds; no command timed out. The unit suite took longer than the 900-second default.",
+ "in_place_checks": [
+  {
+   "command": ".venv/bin/python -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+   "result": "passed",
+   "observed": "1,324 documents, 5,901 local links, 111 anchors, 29 sources verified, no failure"
+  },
+  {
+   "command": ".venv/bin/python -B tools/chat_workflow.py check",
+   "result": "passed",
+   "observed": "11 tasks"
+  }
+ ],
+ "runs": [
+  {
+   "label": "default",
+   "command": ".venv/bin/python -B tools/check_local.py --timeout 14400 --output-dir <new directory beside the clone>",
+   "driver_status": "failed",
+   "exit_status": 1,
+   "started_at": "2026-11-25T07:16:29.573609+00:00",
+   "finished_at": "2026-11-25T07:34:07.745384+00:00",
+   "duration_seconds": 1057.971,
+   "source": {
+    "head": "6b346b1e4126332fe3c98a4a98f3e0b0e2f63774",
+    "tree": "812a17de3880f7c152beacccf7b2e690381f9716",
+    "tracked_status": "",
+    "source_unchanged": true,
+    "git_revision_unchanged": true,
+    "inventory_sha256": "sha256:76a84c48bf166c224baf009d5fffd12fa4ed0d5f7dd75065ad00d73b3ad4a8d3",
+    "inventory_files": 18602
+   },
+   "environment": {
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 17.0.0 (clang-1700.6.3.2)]",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "architecture": "arm64"
+   },
+   "summary_file": {
+    "name": "<output>/summary.json",
+    "sha256": "sha256:32ad8c653c788c6e4012e3e82d8d30a69eb30b1adb39bf55d03ce880c3a7b13f",
+    "bytes": 24880
+   },
+   "steps": [
+    {
+     "id": "unit-tests",
+     "status": "failed",
+     "seconds": 956.858,
+     "exit_status": 1,
+     "log": {
+      "name": "<output>/logs/unit-tests.log",
+      "sha256": "sha256:ff9e8b714008e912743007845ba3bed1b76295dcba93062e99b2042844a916c2",
+      "bytes": 1935428
+     },
+     "test_execution": {
+      "tests_run": 4740,
+      "skipped": 3,
+      "expected_failures": 0,
+      "executed_without_skips": 4737,
+      "complete_regression_passed": false
+     }
+    },
+    {
+     "id": "source",
+     "status": "passed",
+     "seconds": 0.553,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/source.log",
+      "sha256": "sha256:03d330a88455a4ada4277f4bb674e9d67a2923209439c7c6807aacb25b0dfb7d",
+      "bytes": 309
+     },
+     "report": {
+      "name": "<output>/reports/source.json",
+      "sha256": "sha256:e0bca0c70b3884e3a16112758ee8a92c41b8f52934209d158f014f7c3481785d",
+      "bytes": 230306,
+      "summary": {
+       "passed": 43,
+       "failed": 0,
+       "total": 43,
+       "assertions": 694,
+       "expected_valid": 12,
+       "expected_invalid_or_conflicting": 29,
+       "expected_unsupported": 2
+      }
+     }
+    },
+    {
+     "id": "agent",
+     "status": "passed",
+     "seconds": 0.738,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/agent.log",
+      "sha256": "sha256:989a996ede48be2def824199a4622e78b41beb8b860e7e2dec96ffe519cf39d1",
+      "bytes": 185
+     },
+     "report": {
+      "name": "<output>/reports/agent.json",
+      "sha256": "sha256:6efeed6b431665e9eb11af13da297e0ebbe0492696c6cc2710e198beacd2e7ff",
+      "bytes": 257716,
+      "summary": {
+       "total": 10,
+       "passed": 10,
+       "failed": 0
+      }
+     }
+    },
+    {
+     "id": "construction",
+     "status": "passed",
+     "seconds": 25.115,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/construction.log",
+      "sha256": "sha256:eece06ae1ed49ec39e5d69c4d9cd32cbe93ca3b482f17989310e9d5b854dc351",
+      "bytes": 528
+     },
+     "report": {
+      "name": "<output>/reports/construction.json",
+      "sha256": "sha256:8b3729ff7aabf731f969ca6c6b3fa8b414b3e4157567947c3fa088afefade6b3",
+      "bytes": 185052,
+      "summary": {
+       "total": 20,
+       "passed": 19,
+       "failed": 0,
+       "pending": 1,
+       "all_adopted_cases_selected": true,
+       "case_gate_complete": false
+      }
+     }
+    },
+    {
+     "id": "surface",
+     "status": "passed",
+     "seconds": 14.632,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/surface.log",
+      "sha256": "sha256:84f516d093a0cb9a87fe0fb9cd9f7eaca287d534d7231ef044055936d86a3597",
+      "bytes": 278
+     },
+     "report": {
+      "name": "<output>/reports/surface.json",
+      "sha256": "sha256:e531e8a4979dd3d626ac5e9aadf285984f2ceafbdad2c9eec474121bbf678505",
+      "bytes": 582013,
+      "summary": {
+       "total": 12,
+       "passed": 1,
+       "failed": 0,
+       "pending": 11,
+       "all_adopted_cases_selected": true,
+       "full_gate_complete": false
+      }
+     }
+    },
+    {
+     "id": "impulse",
+     "status": "passed",
+     "seconds": 39.429,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/impulse.log",
+      "sha256": "sha256:82160c6e197af610b7f5228784d297908afc81d25f253f9bc2a114cdcbbf4dca",
+      "bytes": 157
+     },
+     "report": {
+      "name": "<output>/reports/impulse.json",
+      "sha256": "sha256:9ae99d96116540ec89b9818248f20a02ada9919913d66628cda00cfe2973fbd2",
+      "bytes": 885074,
+      "summary": {
+       "total": 12,
+       "passed": 8,
+       "failed": 0,
+       "pending": 4,
+       "all_adopted_cases_selected": true,
+       "full_gate_complete": false
+      }
+     }
+    },
+    {
+     "id": "documents",
+     "status": "failed",
+     "seconds": 1.651,
+     "exit_status": 1,
+     "log": {
+      "name": "<output>/logs/documents.log",
+      "sha256": "sha256:85b728b6ce01be16a6147d6b193d0ef6a3701a27a292c8d538d3bde3a596dee0",
+      "bytes": 11706
+     }
+    }
+   ],
+   "not_executed_steps": [],
+   "pending_external_cases": [
+    "construction C20",
+    "surface M01",
+    "surface M02",
+    "surface M03",
+    "surface M04",
+    "surface M05",
+    "surface M06",
+    "surface M07",
+    "surface M08",
+    "surface M09",
+    "surface M11",
+    "surface M12",
+    "impulse I07",
+    "impulse I09",
+    "impulse I11",
+    "impulse I12"
+   ],
+   "unit_tests": {
+    "ran": 4740,
+    "seconds": 954.446,
+    "result": "FAILED",
+    "detail": "failures=103, errors=311, skipped=3",
+    "distinct_not_passing": 307,
+    "skipped": [
+     [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries",
+      "'Retained exact Node/readback dependencies are unavailable'"
+     ],
+     [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries",
+      "'Retained exact Node/readback dependencies are unavailable'"
+     ],
+     [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference",
+      "'Retained exact Node/readback dependencies are unavailable'"
+     ]
+    ],
+    "not_passing_by_module": {
+     "test_force_evidence_collection": 2,
+     "test_static_tray_admission_c201_input_lock": 61,
+     "test_static_tray_admission_c201_ledger": 31,
+     "test_static_tray_admission_c201_readback_binding": 52,
+     "test_static_tray_admission_c201_readback_entries": 61,
+     "test_static_tray_admission_c201_transaction": 47,
+     "test_static_tray_admission_c201_working_directories": 16,
+     "test_static_tray_admission_c231_ledger_identity": 23,
+     "test_static_tray_reader_v01": 3,
+     "test_texture_bundle": 4,
+     "test_force_conformance": 1,
+     "test_force_contract": 1,
+     "test_local_checks": 2,
+     "test_reach_destination_inventory": 2,
+     "test_surface_conformance": 1
+    },
+    "not_passing": {
+     "test_force_evidence_collection": {
+      "ValueError: Symbolic links are not collection inputs: <tmp>/*/plan.json": [
+       "ForceEvidenceCollectionTests.test_complete_collection_preserves_raw_failed_report_and_review_bytes"
+      ],
+      "ValueError: Symbolic links are not collection inputs: <tmp>/*/output": [
+       "ForceEvidenceCollectionTests.test_directory_copy_discloses_excluded_live_state_and_rejects_symlinks"
+      ]
+     },
+     "test_static_tray_admission_c201_input_lock": {
+      "prototypes.static_tray_admission_c201.input_lock.InputLockError: Missing, unsafe or inaccessible bound path": [
+       "InputLockControls.test_context_and_result_are_immutable",
+       "InputLockControls.test_dependency_reachable_only_through_frozen_role_passes",
+       "InputLockControls.test_real_fixture_bindings_pass_without_authorization",
+       "InputLockControls.test_root_host_namespace_represents_actual_absolute_input_paths"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'APPROVAL'": [
+       "InputLockControls.test_approval_cannot_grant_native_authority",
+       "InputLockControls.test_approval_missing_fields_rejected_after_repin",
+       "InputLockControls.test_false_gate_receipt_rejected_after_repin",
+       "InputLockControls.test_gate_receipts_wrong_type_rejected",
+       "InputLockControls.test_missing_gate_receipt_rejected"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'AUTHORITY'": [
+       "InputLockControls.test_authority_cannot_change_with_output_directory",
+       "InputLockControls.test_replaced_authority_same_path_rejected"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'INPUT'": [
+       "InputLockControls.test_boolean_input_size_rejected"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'DIGEST'": [
+       "InputLockControls.test_changed_approval_bytes_rejected_without_repin",
+       "InputLockControls.test_changed_lock_bytes_rejected_without_repin"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'COMMAND'": [
+       "InputLockControls.test_changed_command_rejected_by_sealed_plan",
+       "InputLockControls.test_changed_environment_rejected",
+       "InputLockControls.test_missing_native_home_rejected_even_with_resealed_plan",
+       "InputLockControls.test_native_command_cannot_enable_autoexec_even_with_resealed_plan",
+       "InputLockControls.test_node_safe_flags_cannot_be_removed_even_with_resealed_plan",
+       "InputLockControls.test_unexpanded_command_rejected_even_with_resealed_plan",
+       "InputLockControls.test_wrong_native_job_output_rejected_even_with_resealed_plan",
+       "InputLockControls.test_wrong_stage_executable_rejected"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'FILE'": [
+       "InputLockControls.test_changed_current_source_bytes_rejected",
+       "InputLockControls.test_changed_executable_mode_rejected",
+       "InputLockControls.test_changed_gate_receipt_rejected",
+       "InputLockControls.test_fifo_approval_rejected_without_blocking",
+       "InputLockControls.test_fifo_input_rejected_without_blocking",
+       "InputLockControls.test_fifo_lock_rejected_without_blocking",
+       "InputLockControls.test_hard_link_input_rejected"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'LIMITS'": [
+       "InputLockControls.test_changed_limits_rejected_after_repin",
+       "InputLockControls.test_float_limit_rejected_after_repin"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'PROTOCOL'": [
+       "InputLockControls.test_changed_protocol_bytes_rejected",
+       "InputLockControls.test_changed_protocol_review_rejected"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'PATH'": [
+       "InputLockControls.test_double_slash_cannot_hide_output_inside_repository",
+       "InputLockControls.test_file_parent_traversal_rejected",
+       "InputLockControls.test_host_namespace_cannot_hide_input_in_repository",
+       "InputLockControls.test_nonempty_store_rejected",
+       "InputLockControls.test_output_alias_rejected",
+       "InputLockControls.test_output_inside_authority_rejected",
+       "InputLockControls.test_shared_environment_root_rejected"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'DEPENDENCY'": [
+       "InputLockControls.test_duplicate_dependency_rejected",
+       "InputLockControls.test_missing_dependency_node_rejected",
+       "InputLockControls.test_omitted_transitive_dependency_rejected_after_repin",
+       "InputLockControls.test_unreachable_extra_input_rejected",
+       "InputLockControls.test_unresolved_dependency_rejected"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'JSON'": [
+       "InputLockControls.test_duplicate_json_object_key_rejected_after_repin",
+       "InputLockControls.test_nonfinite_json_rejected_after_repin"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'REPLAY'": [
+       "InputLockControls.test_existing_invocation_receipt_rejected",
+       "InputLockControls.test_orphaned_journal_rejected"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'ROLE'": [
+       "InputLockControls.test_extra_role_rejected",
+       "InputLockControls.test_historical_transaction_cannot_replace_c201_role",
+       "InputLockControls.test_missing_role_rejected_even_with_resealed_closure",
+       "InputLockControls.test_node_loader_requires_exactly_one_input"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'SCHEMA'": [
+       "InputLockControls.test_extra_top_level_field_rejected",
+       "InputLockControls.test_fixture_cannot_be_relabelled_production",
+       "InputLockControls.test_missing_top_level_field_rejected",
+       "InputLockControls.test_old_twelve_slot_schema_rejected"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'HOST'": [
+       "InputLockControls.test_host_version_rejected_after_repin"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'FROZEN'": [
+       "InputLockControls.test_missing_frozen_binding_rejected_even_with_resealed_closure"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'SOURCE'": [
+       "InputLockControls.test_stale_source_commit_rejected",
+       "InputLockControls.test_stale_source_tree_rejected"
+      ]
+     },
+     "test_static_tray_admission_c201_ledger": {
+      "prototypes.static_tray_admission_c201.schedule.LedgerError: Directory aliases and missing ancestors are forbidden": [
+       "LedgerControls.test_active_reservation_cannot_be_repeated_or_completed_with_forged_receipt [2 subtests]",
+       "LedgerControls.test_complete_observation_schedule_consumes_exactly_four_each",
+       "LedgerControls.test_concurrent_reservation_cannot_double_consume",
+       "LedgerControls.test_control_requires_named_finding_and_accepted_closure_preservation [6 subtests]",
+       "LedgerControls.test_controls_must_follow_a01_node_and_d01_then_d03 [3 subtests]",
+       "LedgerControls.test_corrupt_replaced_aliased_or_missing_files_poison_live_capability [10 subtests]",
+       "LedgerControls.test_directory_change_does_not_allow_second_invocation",
+       "LedgerControls.test_each_failed_unknown_timeout_or_cancelled_stage_is_consumed [12 subtests]",
+       "LedgerControls.test_explicit_unknown_stop_and_journal_bound_are_terminal",
+       "LedgerControls.test_failed_cleanup_blocks_receiving_or_promotion_or_next_slot [3 subtests]",
+       "LedgerControls.test_fifo_reservation_files_are_rejected_without_open_blocking [2 subtests]",
+       "LedgerControls.test_inspection_rejects_partial_or_noncanonical_journal",
+       "LedgerControls.test_interrupt_after_durable_event_poisons_every_public_mutation [5 subtests]",
+       "LedgerControls.test_interrupted_finalization_is_not_reported_as_completed",
+       "LedgerControls.test_invalid_stage_evidence_or_cleanup_type_stops [3 subtests]",
+       "LedgerControls.test_lost_append_sync_result_never_returns_a_reservation",
+       "LedgerControls.test_missing_or_cleared_journal_never_resets_invocation [2 subtests]",
+       "LedgerControls.test_mutating_caller_schedule_cannot_change_live_contract",
+       "LedgerControls.test_node_cannot_skip_conditional_promotion",
+       "LedgerControls.test_orphaned_journal_also_blocks_new_invocation",
+       "LedgerControls.test_partial_append_is_preserved_and_poisoned",
+       "LedgerControls.test_promotion_failure_or_uncertainty_blocks_node [4 subtests]",
+       "LedgerControls.test_readonly_inspection_never_creates_or_resumes_capability",
+       "LedgerControls.test_receiving_node_and_promotion_cannot_skip_predecessors [3 subtests]",
+       "LedgerControls.test_regeneration_must_bind_its_exact_baseline_and_predecessor",
+       "LedgerControls.test_replaced_authority_or_output_directory_poison_live_capability [2 subtests]",
+       "LedgerControls.test_result_persistence_failure_preserves_prior_consumption",
+       "LedgerControls.test_structural_failure_cannot_substitute_for_a_delivered_control [2 subtests]",
+       "LedgerControls.test_wrong_slot_route_or_reference_stops_before_reservation [6 subtests]"
+      ],
+      "AssertionError: False is not true": [
+       "LedgerControls.test_directory_sync_failure_does_not_erase_marker",
+       "LedgerControls.test_marker_sync_failure_preserves_consumed_authority"
+      ]
+     },
+     "test_static_tray_admission_c201_readback_binding": {
+      "prototypes.static_tray_admission_c201.transaction.TransactionError: Missing, unsafe or inaccessible bound path": [
+       "ReadbackBindingControls.test_actual_four_slot_bindings_and_measurements_without_authority",
+       "ReadbackBindingControls.test_bare_pass_boolean_rejects",
+       "ReadbackBindingControls.test_boolean_start_count_rejects",
+       "ReadbackBindingControls.test_changed_accepted_glb_rejects_without_replacing_pointer",
+       "ReadbackBindingControls.test_changed_accepted_measurements_rejects",
+       "ReadbackBindingControls.test_changed_child_budget_rejects",
+       "ReadbackBindingControls.test_changed_local_positions_reject",
+       "ReadbackBindingControls.test_changed_material_rejects",
+       "ReadbackBindingControls.test_changed_normal_rejects",
+       "ReadbackBindingControls.test_changed_requested_checks_rejects",
+       "ReadbackBindingControls.test_changed_triangle_indices_reject",
+       "ReadbackBindingControls.test_changed_world_vertex_rejects",
+       "ReadbackBindingControls.test_duplicate_prepare_rejects",
+       "ReadbackBindingControls.test_edited_job_rejects",
+       "ReadbackBindingControls.test_extra_probe_field_rejects",
+       "ReadbackBindingControls.test_factory_rejects_arbitrary_constructor",
+       "ReadbackBindingControls.test_failed_probe_stops_same_session_and_preserves_accepted_state",
+       "ReadbackBindingControls.test_false_measurement_pass_flag_rejects",
+       "ReadbackBindingControls.test_historical_twelve_slot_result_rejects",
+       "ReadbackBindingControls.test_interruption_returns_unknown_and_blocks_retry",
+       "ReadbackBindingControls.test_job_names_exact_accepted_bytes_outputs_flags_limits",
+       "ReadbackBindingControls.test_khronos_inconsistent_message_counts_reject",
+       "ReadbackBindingControls.test_khronos_truncation_rejects",
+       "ReadbackBindingControls.test_khronos_warning_cannot_hide_behind_passed",
+       "ReadbackBindingControls.test_missing_imported_node_rejects",
+       "ReadbackBindingControls.test_missing_required_measurement_rejects",
+       "ReadbackBindingControls.test_node_child_deadline_cannot_use_outer_allowance",
+       "ReadbackBindingControls.test_node_failed_exit_rejects",
+       "ReadbackBindingControls.test_node_outer_deadline_rejects",
+       "ReadbackBindingControls.test_node_receipt_changed_log_rejects",
+       "ReadbackBindingControls.test_node_receipt_wrong_command_rejects",
+       "ReadbackBindingControls.test_node_unknown_cleanup_rejects",
+       "ReadbackBindingControls.test_outputs_changed_during_verification_reject",
+       "ReadbackBindingControls.test_reconstructed_handle_rejects",
+       "ReadbackBindingControls.test_replaced_node_directory_rejects",
+       "ReadbackBindingControls.test_result_extra_output_rejects",
+       "ReadbackBindingControls.test_result_hardlink_rejects",
+       "ReadbackBindingControls.test_result_missing_output_rejects",
+       "ReadbackBindingControls.test_result_size_limit_rejects",
+       "ReadbackBindingControls.test_result_symlink_rejects",
+       "ReadbackBindingControls.test_result_wrong_accepted_revision_rejects",
+       "ReadbackBindingControls.test_result_wrong_artifact_digest_rejects",
+       "ReadbackBindingControls.test_result_wrong_job_digest_rejects",
+       "ReadbackBindingControls.test_result_wrong_measurement_digest_rejects",
+       "ReadbackBindingControls.test_result_wrong_slot_rejects",
+       "ReadbackBindingControls.test_result_wrong_source_revision_rejects",
+       "ReadbackBindingControls.test_success_cannot_be_consumed_twice",
+       "ReadbackBindingControls.test_unknown_probe_is_unknown_and_not_retryable",
+       "ReadbackBindingControls.test_wrong_measurement_threshold_rejects",
+       "ReadbackBindingControls.test_wrong_parent_rejects",
+       "ReadbackBindingControls.test_wrong_slot_handle_cannot_prepare",
+       "ReadbackBindingControls.test_wrong_three_dependency_version_rejects"
+      ]
+     },
+     "test_static_tray_admission_c201_readback_entries": {
+      "prototypes.static_tray_admission_c201.transaction.TransactionError: Missing, unsafe or inaccessible bound path": [
+       "EntryGraphControls.test_aliased_validator_main",
+       "EntryGraphControls.test_ambiguous_three_export",
+       "EntryGraphControls.test_binding_validates_real_files_without_output_or_authority",
+       "EntryGraphControls.test_changed_transitive_bytes",
+       "EntryGraphControls.test_duplicate_json_key",
+       "EntryGraphControls.test_duplicate_validator_package",
+       "EntryGraphControls.test_entry_missing_metadata_edge",
+       "EntryGraphControls.test_entry_wrong_host_role",
+       "EntryGraphControls.test_globally_reachable_not_probe_dependency",
+       "EntryGraphControls.test_gltfloader_missing_three_edge",
+       "EntryGraphControls.test_hardlink_entry_rejected",
+       "EntryGraphControls.test_helper_only_globally_reachable",
+       "EntryGraphControls.test_loader_missing_three_direct_edge",
+       "EntryGraphControls.test_metadata_not_in_package_role",
+       "EntryGraphControls.test_missing_entry_file",
+       "EntryGraphControls.test_node_dependency_outside_package_roots",
+       "EntryGraphControls.test_node_dependency_wrong_role",
+       "EntryGraphControls.test_package_aliases_other_role",
+       "EntryGraphControls.test_symlink_entry_rejected",
+       "EntryGraphControls.test_transitive_only_not_direct_probe_dependency",
+       "EntryGraphControls.test_unsafe_input_path_rejected_by_existing_lock",
+       "EntryGraphControls.test_validator_conditional_exports",
+       "EntryGraphControls.test_wrong_helper_bytes_even_when_repinned",
+       "EntryGraphControls.test_wrong_loader_export",
+       "EntryGraphControls.test_wrong_metadata_name",
+       "EntryGraphControls.test_wrong_three_module_type",
+       "EntryGraphControls.test_wrong_three_version",
+       "EntryGraphControls.test_wrong_three_webgpu_export",
+       "EntryGraphControls.test_wrong_validator_main",
+       "EntryGraphControls.test_wrong_validator_version",
+       "PreparationFailureControls.test_interrupted_write_reports_unknown_and_stops",
+       "PreparationFailureControls.test_nonempty_stage_stops_and_retains_existing_evidence",
+       "PreparationFailureControls.test_unknown_after_actual_job_write_retains_exact_bytes",
+       "PreparationFailureControls.test_write_failure_stops_without_authority",
+       "PreparedEntryControls.test_absolute_named_probe_mapping",
+       "PreparedEntryControls.test_ambient_bare_package_rejected",
+       "PreparedEntryControls.test_bare_three_exact_declared_mapping",
+       "PreparedEntryControls.test_changed_helper_after_preparation",
+       "PreparedEntryControls.test_changed_job_bytes",
+       "PreparedEntryControls.test_changed_package_after_preparation",
+       "PreparedEntryControls.test_cross_package_relative_escape_rejected",
+       "PreparedEntryControls.test_extension_inference_rejected",
+       "PreparedEntryControls.test_file_url_rejected",
+       "PreparedEntryControls.test_forged_bindings",
+       "PreparedEntryControls.test_global_input_without_direct_edge_rejected",
+       "PreparedEntryControls.test_inspection_returns_copy",
+       "PreparedEntryControls.test_job01_verifier_rejects_job02_handle",
+       "PreparedEntryControls.test_job_version_named_bindings_graph_and_false_authority",
+       "PreparedEntryControls.test_node_builtin_rejected",
+       "PreparedEntryControls.test_noncanonical_absolute_path_rejected",
+       "PreparedEntryControls.test_package_subpath_rejected",
+       "PreparedEntryControls.test_reconstructed_handle",
+       "PreparedEntryControls.test_relative_declared_transitive_mapping",
+       "PreparedEntryControls.test_repeated_preparation",
+       "PreparedEntryControls.test_stale_closure_context",
+       "PreparedEntryControls.test_stale_lock_digest",
+       "PreparedEntryControls.test_stale_source_context",
+       "PreparedEntryControls.test_stale_source_in_retained_job",
+       "PreparedEntryControls.test_stale_validation_result",
+       "PreparedEntryControls.test_unknown_importer_rejected",
+       "PreparedEntryControls.test_url_query_hash_or_encoding_rejected"
+      ]
+     },
+     "test_static_tray_admission_c201_transaction": {
+      "prototypes.static_tray_admission_c201.transaction.TransactionError: Missing, unsafe or inaccessible bound path": [
+       "TransactionControls.test_actual_replace_then_interruption_is_unknown",
+       "TransactionControls.test_baseline_pointer_mutation_during_regeneration_blocks_promotion",
+       "TransactionControls.test_changed_accepted_source_blocks_regeneration",
+       "TransactionControls.test_changed_construction_job_rejected",
+       "TransactionControls.test_changed_frozen_source_after_binding_rejected",
+       "TransactionControls.test_changed_native_receipt_binding_rejected",
+       "TransactionControls.test_changed_native_startup_policy_rejected",
+       "TransactionControls.test_changed_receiving_job_rejected",
+       "TransactionControls.test_changed_retained_receipt_blocks_regeneration",
+       "TransactionControls.test_changed_runtime_dependency_after_binding_rejected",
+       "TransactionControls.test_changed_source_before_sealing_rejected",
+       "TransactionControls.test_changed_source_provenance_rejected",
+       "TransactionControls.test_completed_promotion_then_lost_return_is_unknown",
+       "TransactionControls.test_constructor_cannot_bypass_validated_factory",
+       "TransactionControls.test_expired_original_clock_cannot_be_restarted",
+       "TransactionControls.test_extra_artifact_rejected",
+       "TransactionControls.test_extra_or_duplicate_prior_rejected",
+       "TransactionControls.test_failed_construction_cleanup_rejected",
+       "TransactionControls.test_failed_native_validation_is_terminal",
+       "TransactionControls.test_failed_receiver_cleanup_preserves_pointer",
+       "TransactionControls.test_failed_receiver_measurements_preserve_pointer",
+       "TransactionControls.test_fifo_artifact_rejected_without_blocking",
+       "TransactionControls.test_four_real_component_transactions_from_synthetic_stage_files",
+       "TransactionControls.test_hardlinked_artifact_rejected",
+       "TransactionControls.test_missing_accepted_dependency_blocks_regeneration",
+       "TransactionControls.test_missing_artifact_rejected",
+       "TransactionControls.test_missing_prior_rejected",
+       "TransactionControls.test_missing_runtime_dependency_after_binding_rejected",
+       "TransactionControls.test_pointer_commit_failure_preserves_absence",
+       "TransactionControls.test_post_commit_readback_failure_is_unknown",
+       "TransactionControls.test_production_shaped_cpu_transactions_grant_no_native_authority",
+       "TransactionControls.test_read_only_inspection_rejects_forged_handle",
+       "TransactionControls.test_repeat_prepare_rejected",
+       "TransactionControls.test_replaced_store_directory_rejected",
+       "TransactionControls.test_same_revision_changed_pointer_blocks_regeneration",
+       "TransactionControls.test_symlink_store_rejected",
+       "TransactionControls.test_unknown_or_historical_slot_rejected",
+       "TransactionControls.test_unrelated_null_revision_pointer_is_not_empty",
+       "TransactionControls.test_unrelated_pointer_preserved_before_promotion",
+       "TransactionControls.test_unrelated_process_observation_rejected",
+       "TransactionControls.test_unrelated_receiver_inputs_rejected",
+       "TransactionControls.test_unrelated_underlying_supervisor_receipt_rejected",
+       "TransactionControls.test_wrong_equality_reference_rejected",
+       "TransactionControls.test_wrong_prior_type_rejected",
+       "TransactionControls.test_wrong_regeneration_reference_rejected",
+       "TransactionControls.test_wrong_route_rejected_before_staging",
+       "TransactionControls.test_wrong_schedule_predecessor_rejected"
+      ]
+     },
+     "test_static_tray_admission_c201_working_directories": {
+      "prototypes.static_tray_admission_c201.input_lock.InputLockError: Missing, unsafe or inaccessible bound path": [
+       "WorkingDirectoryControls.test_all_twelve_plans_bind_stage_cwd_output_and_job"
+      ],
+      "prototypes.static_tray_admission_c201.transaction.TransactionError: Missing, unsafe or inaccessible bound path": [
+       "WorkingDirectoryControls.test_changed_retained_plan_rejected_before_staging [3 subtests]",
+       "WorkingDirectoryControls.test_native_jobs_and_process_receipts_share_the_planned_cwd",
+       "WorkingDirectoryControls.test_replaced_stage_directory_rejected_before_source_is_staged [3 subtests]",
+       "WorkingDirectoryControls.test_wrong_construction_job_directory_rejected_without_promotion",
+       "WorkingDirectoryControls.test_wrong_observed_command_cwd_rejected_for_both_native_stages [2 subtests]",
+       "WorkingDirectoryControls.test_wrong_receiving_job_directory_rejected_without_promotion",
+       "WorkingDirectoryControls.test_wrong_supervisor_cwd_rejected_for_both_native_stages [2 subtests]"
+      ],
+      "AssertionError: 'FILESYSTEM' != 'COMMAND'": [
+       "WorkingDirectoryControls.test_changed_declared_output_rejected_even_with_resealed_plan [3 subtests]",
+       "WorkingDirectoryControls.test_changed_job_argument_rejected_for_each_stage_even_with_resealed_plan [3 subtests]",
+       "WorkingDirectoryControls.test_consistent_path_change_still_requires_independently_reviewed_plan",
+       "WorkingDirectoryControls.test_noncanonical_cwd_rejected_even_with_resealed_plan [3 subtests]",
+       "WorkingDirectoryControls.test_other_slot_cwd_rejected_even_with_resealed_plan [3 subtests]",
+       "WorkingDirectoryControls.test_other_stage_cwd_rejected_even_with_resealed_plan [3 subtests]",
+       "WorkingDirectoryControls.test_repository_cwd_rejected_for_every_slot_stage_even_with_resealed_plan [12 subtests]",
+       "WorkingDirectoryControls.test_wrong_command_output_rejected_even_with_resealed_plan [3 subtests]"
+      ]
+     },
+     "test_static_tray_admission_c231_ledger_identity": {
+      "prototypes.static_tray_admission_c201.schedule.LedgerError: Directory aliases and missing ancestors are forbidden": [
+       "IdentityLifecycleControls.test_abandoned_object_finalizer_does_not_retain_capability",
+       "IdentityLifecycleControls.test_cleanup_interrupt_poisoning_preserves_original_failure [2 subtests]",
+       "IdentityLifecycleControls.test_completion_cleanup_interruption_cannot_report_completion",
+       "IdentityLifecycleControls.test_context_body_exception_survives_secondary_cleanup_failure [2 subtests]",
+       "IdentityLifecycleControls.test_context_exit_closes_on_normal_and_exceptional_exit [2 subtests]",
+       "IdentityLifecycleControls.test_explicit_close_is_idempotent_and_preserves_consumed_evidence",
+       "IdentityLifecycleControls.test_fork_child_releases_pins_and_parent_capability_remains_live",
+       "IdentityLifecycleControls.test_initial_append_failure_and_lost_reply_close_both_pins [2 subtests]",
+       "IdentityLifecycleControls.test_interrupted_cleanup_lock_retains_handles_and_original_error [2 subtests]",
+       "IdentityLifecycleControls.test_interrupted_completion_closes_pins_without_claiming_completion",
+       "IdentityLifecycleControls.test_invalid_mutation_and_explicit_stop_close_pins [2 subtests]",
+       "IdentityLifecycleControls.test_later_persistence_failure_closes_pins_and_forbids_retry [2 subtests]",
+       "IdentityLifecycleControls.test_negative_promotion_and_control_observations_close_pins [2 subtests]",
+       "IdentityLifecycleControls.test_negative_stage_and_cleanup_observations_close_pins [5 subtests]",
+       "IdentityLifecycleControls.test_normal_schedule_completion_closes_pins",
+       "IdentityLifecycleControls.test_numeric_identity_collision_cannot_admit_same_content_replacement [2 subtests]",
+       "IdentityLifecycleControls.test_original_objects_remain_pinned_and_noninheritable",
+       "IdentityLifecycleControls.test_partial_creation_interruptions_close_pins_without_deleting_authority [2 subtests]",
+       "IdentityLifecycleControls.test_pid_mismatch_rejects_before_acquiring_inherited_mutex",
+       "IdentityLifecycleControls.test_post_append_interruptions_close_every_public_mutation [5 subtests]",
+       "IdentityLifecycleControls.test_replacement_during_path_read_is_rejected_before_append [2 subtests]",
+       "IdentityLifecycleControls.test_uncertain_close_is_not_retried_and_other_pin_is_attempted"
+      ],
+      "AssertionError: False is not true": [
+       "IdentityLifecycleControls.test_each_creation_sync_failure_closes_all_acquired_pins [4 subtests]"
+      ]
+     },
+     "test_static_tray_reader_v01": {
+      "ValueError: Corruption output ancestors may not be symlinks": [
+       "StaticTrayReaderTests.test_d08_copy_and_reordered_json",
+       "StaticTrayReaderTests.test_delivered_corruption_findings_and_input_preservation [7 subtests]",
+       "StaticTrayReaderTests.test_position_data_overrides_falsified_accessor_bounds"
+      ]
+     },
+     "test_texture_bundle": {
+      "ontokin.bundle.BundleError: A texture manifest path must traverse ordinary directories without symlinks.": [
+       "TextureBundleTests.test_manifest_and_every_declared_component_refuse_symlinks_and_escape",
+       "TextureBundleTests.test_one_secure_manifest_read_returns_exact_transport_and_protected_paths"
+      ],
+      "AssertionError: False is not true": [
+       "TextureBundleTests.test_manifest_replacement_during_input_reads_cannot_change_protection_paths",
+       "TextureBundleTests.test_replacing_input_during_held_descriptor_read_is_refused"
+      ]
+     },
+     "test_force_conformance": {
+      "AssertionError: PosixPath('...') != PosixPath('...')": [
+       "ForceEvidenceInputTests.test_retained_paths_are_confined_and_hash_and_length_are_checked"
+      ]
+     },
+     "test_force_contract": {
+      "AssertionError: b'...' != b'...' : acceptance.json": [
+       "ForceContractReviewTests.test_original_corpus_and_author_remain_byte_identical"
+      ]
+     },
+     "test_local_checks": {
+      "AssertionError: '...' != '...'": [
+       "LocalChecksTests.test_external_workspace_retains_real_git_revision_and_copied_changes_with_own_index"
+      ],
+      "AssertionError: '...' not found in ['<migration-worktree>/.venv/bin/python', '-B', 'tools/build_force_agent_demo.py', '--output-dir', '...']": [
+       "LocalChecksTests.test_force_agent_plan_is_explicit_and_combines_with_existing_full_role"
+      ]
+     },
+     "test_reach_destination_inventory": {
+      "AssertionError: PosixPath('...') != PosixPath('...')": [
+       "ReachDestinationInventoryTests.test_agent_intake_requires_actual_identities_and_fixed_source_revision",
+       "ReachDestinationInventoryTests.test_normalized_member_paths_and_hashes_are_required"
+      ]
+     },
+     "test_surface_conformance": {
+      "AssertionError: PosixPath('...') != PosixPath('...')": [
+       "SurfaceConformanceMappingTests.test_evidence_path_hash_traversal_and_symlink_escape_are_rejected"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "label": "resolved-temporary-directory",
+   "command": "TMPDIR=\"$(cd \"$TMPDIR\" && pwd -P)/\" .venv/bin/python -B tools/check_local.py --timeout 14400 --output-dir <new directory beside the clone>",
+   "driver_status": "failed",
+   "exit_status": 1,
+   "started_at": "2026-11-25T07:35:07.213338+00:00",
+   "finished_at": "2026-11-25T07:53:35.878065+00:00",
+   "duration_seconds": 1108.462,
+   "source": {
+    "head": "6b346b1e4126332fe3c98a4a98f3e0b0e2f63774",
+    "tree": "812a17de3880f7c152beacccf7b2e690381f9716",
+    "tracked_status": "",
+    "source_unchanged": true,
+    "git_revision_unchanged": true,
+    "inventory_sha256": "sha256:76a84c48bf166c224baf009d5fffd12fa4ed0d5f7dd75065ad00d73b3ad4a8d3",
+    "inventory_files": 18602
+   },
+   "environment": {
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 17.0.0 (clang-1700.6.3.2)]",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "architecture": "arm64"
+   },
+   "summary_file": {
+    "name": "<output>/summary.json",
+    "sha256": "sha256:6e0007875d8c3a94e6a54f56756c0fdd3252f21f4cc8d39cf8f471b8283fd4b2",
+    "bytes": 24960
+   },
+   "steps": [
+    {
+     "id": "unit-tests",
+     "status": "failed",
+     "seconds": 1009.324,
+     "exit_status": 1,
+     "log": {
+      "name": "<output>/logs/unit-tests.log",
+      "sha256": "sha256:41a613e2a24689fc2bfb9ae1076d1b963c2c49d52505daaf0eb8fe462e74d43f",
+      "bytes": 891957
+     },
+     "test_execution": {
+      "tests_run": 4740,
+      "skipped": 3,
+      "expected_failures": 0,
+      "executed_without_skips": 4737,
+      "complete_regression_passed": false
+     }
+    },
+    {
+     "id": "source",
+     "status": "passed",
+     "seconds": 0.559,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/source.log",
+      "sha256": "sha256:bf0ee6dde53d8cf5e2881898a9dbc3be58eba67a1a8afb9850be61723766efba",
+      "bytes": 316
+     },
+     "report": {
+      "name": "<output>/reports/source.json",
+      "sha256": "sha256:57182b92cd61e1d193dbd45733278bb90e11c262a39a3fb7b451446591d3c531",
+      "bytes": 230306,
+      "summary": {
+       "passed": 43,
+       "failed": 0,
+       "total": 43,
+       "assertions": 694,
+       "expected_valid": 12,
+       "expected_invalid_or_conflicting": 29,
+       "expected_unsupported": 2
+      }
+     }
+    },
+    {
+     "id": "agent",
+     "status": "passed",
+     "seconds": 0.73,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/agent.log",
+      "sha256": "sha256:32690bb78cf3778d3c5a9bb58ad823a8dce0fb6c0c01a8605cd479df61b42b66",
+      "bytes": 192
+     },
+     "report": {
+      "name": "<output>/reports/agent.json",
+      "sha256": "sha256:2f26b095ceb907e1e2add2e417534372751371bd472d22021b6cb7fe8cfbe520",
+      "bytes": 257717,
+      "summary": {
+       "total": 10,
+       "passed": 10,
+       "failed": 0
+      }
+     }
+    },
+    {
+     "id": "construction",
+     "status": "passed",
+     "seconds": 25.401,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/construction.log",
+      "sha256": "sha256:b59004f9d39f284800c568e4b6ab182ab0f83c4d4eb0dee0726a95a3976697b0",
+      "bytes": 535
+     },
+     "report": {
+      "name": "<output>/reports/construction.json",
+      "sha256": "sha256:5e8f39a7aa6c28a3b47ae11e988e4570e14d81e9912f064c2284612456f57241",
+      "bytes": 185058,
+      "summary": {
+       "total": 20,
+       "passed": 19,
+       "failed": 0,
+       "pending": 1,
+       "all_adopted_cases_selected": true,
+       "case_gate_complete": false
+      }
+     }
+    },
+    {
+     "id": "surface",
+     "status": "passed",
+     "seconds": 15.218,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/surface.log",
+      "sha256": "sha256:a9fabe07a2df2a0b9bf245598c14a58067858fcf188dddf680e307e850a9b46b",
+      "bytes": 285
+     },
+     "report": {
+      "name": "<output>/reports/surface.json",
+      "sha256": "sha256:c764b2f229df1720eaca4205653e8ff0e11d6e3037174f23d593eefa7e92891e",
+      "bytes": 582016,
+      "summary": {
+       "total": 12,
+       "passed": 1,
+       "failed": 0,
+       "pending": 11,
+       "all_adopted_cases_selected": true,
+       "full_gate_complete": false
+      }
+     }
+    },
+    {
+     "id": "impulse",
+     "status": "passed",
+     "seconds": 37.17,
+     "exit_status": 0,
+     "log": {
+      "name": "<output>/logs/impulse.log",
+      "sha256": "sha256:82160c6e197af610b7f5228784d297908afc81d25f253f9bc2a114cdcbbf4dca",
+      "bytes": 157
+     },
+     "report": {
+      "name": "<output>/reports/impulse.json",
+      "sha256": "sha256:af1e99b436d3585313d4a5958c92d44f8ae05fd337525f2faf7e1cf0b41634bb",
+      "bytes": 885078,
+      "summary": {
+       "total": 12,
+       "passed": 8,
+       "failed": 0,
+       "pending": 4,
+       "all_adopted_cases_selected": true,
+       "full_gate_complete": false
+      }
+     }
+    },
+    {
+     "id": "documents",
+     "status": "failed",
+     "seconds": 1.6,
+     "exit_status": 1,
+     "log": {
+      "name": "<output>/logs/documents.log",
+      "sha256": "sha256:85b728b6ce01be16a6147d6b193d0ef6a3701a27a292c8d538d3bde3a596dee0",
+      "bytes": 11706
+     }
+    }
+   ],
+   "not_executed_steps": [],
+   "pending_external_cases": [
+    "construction C20",
+    "surface M01",
+    "surface M02",
+    "surface M03",
+    "surface M04",
+    "surface M05",
+    "surface M06",
+    "surface M07",
+    "surface M08",
+    "surface M09",
+    "surface M11",
+    "surface M12",
+    "impulse I07",
+    "impulse I09",
+    "impulse I11",
+    "impulse I12"
+   ],
+   "unit_tests": {
+    "ran": 4740,
+    "seconds": 1007.063,
+    "result": "FAILED",
+    "detail": "failures=1, skipped=3",
+    "distinct_not_passing": 1,
+    "skipped": [
+     [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_q01_actual_synthetic_meshes_load_in_both_libraries",
+      "'Retained exact Node/readback dependencies are unavailable'"
+     ],
+     [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_q03_actual_synthetic_rotations_load_in_both_libraries",
+      "'Retained exact Node/readback dependencies are unavailable'"
+     ],
+     [
+      "test_static_tray_readback_v01.ReadbackCPUControls.test_three_rejects_changed_synthetic_reference",
+      "'Retained exact Node/readback dependencies are unavailable'"
+     ]
+    ],
+    "not_passing_by_module": {
+     "test_force_contract": 1
+    },
+    "not_passing": {
+     "test_force_contract": {
+      "AssertionError: b'...' != b'...' : acceptance.json": [
+       "ForceContractReviewTests.test_original_corpus_and_author_remain_byte_identical"
+      ]
+     }
+    }
+   }
+  }
+ ],
+ "classification": {
+  "unit_tests": [
+   {
+    "cause": "macOS presents the default temporary directory through the symbolic link /var, which is /private/var. Tests and readers that refuse symlinked or aliased ancestors, or compare a path with its resolved form, then do not pass.",
+    "evidence": "306 of the 307 distinct tests that do not pass in the default run pass in the second run, whose only difference is a resolved TMPDIR.",
+    "effect": "Local environment condition on macOS; not a product defect established here.",
+    "next_action": "Run the driver with a resolved TMPDIR on macOS, as docs/development/LOCAL-SETUP.md says. No test or expectation changes."
+   },
+   {
+    "cause": "One regenerated fixture differs from its stored bytes in the last digit of one floating-point value (039565 stored, 039564 regenerated) on macOS arm64.",
+    "evidence": "test_force_contract.ForceContractReviewTests.test_original_corpus_and_author_remain_byte_identical does not pass in either run.",
+    "effect": "Unchanged baseline failure on this platform. It is evidence of a platform difference in regeneration, not a pass and not a reason to change the stored corpus.",
+    "next_action": "A separately selected scope examines the platform difference; the stored corpus and the expectation stay unchanged."
+   }
+  ],
+  "skipped": "Three static-tray readback tests are skipped because the retained exact Node/readback dependencies are unavailable; the driver counts a skip as an incomplete regression.",
+  "documents": "The isolated workspace omits CHATGPT-START-HERE.md, ROLE.md, LICENSING.md, NOTICE and .agents, so 23 links have no target there. The same verifier passes in place. TASK-026 amends the inventories.",
+  "pending": "External release attestations reported as pending by the driver stay pending and are not passes."
+ }
+}

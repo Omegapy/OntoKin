@@ -85,6 +85,17 @@ contacts the remote, with `git ls-remote`; it fetches nothing.
 .venv/bin/python tools/check_local.py --timeout 14400 --output-dir ../OntoKin-local/checks/NEW_NAME
 ```
 
+On macOS give the driver a resolved temporary directory. The default one is reached
+through a symbolic link, and tests that refuse symlinked ancestors then do not pass:
+
+```sh
+TMPDIR="$(cd "$TMPDIR" && pwd -P)/" .venv/bin/python tools/check_local.py --timeout 14400 --output-dir ../OntoKin-local/checks/NEW_NAME
+```
+
+The [baseline record](../engineering/local-migration-20261124/BASELINE-CHECKS.json) shows
+both forms on the unmodified base revision: 307 distinct unit tests do not pass with the
+default directory, and one with the resolved one.
+
 Write driver output **outside the checkout**. The driver retains an isolated copy of
 the source, and the documentation verifier scans every non-dot directory of a
 checkout, including `build/`. Output left under `build/` would be read as project
@@ -194,6 +205,7 @@ The doctor prints the next exact setup action. The common cases:
 | `lock: mismatch` | A lock, its provenance or a pin was changed | Restore it, or adopt a reviewed change |
 | `.venv is in use by process N` | A running process uses the environment | Let it finish; the tool never replaces a used environment |
 | Another setup run is changing this checkout | Two setup runs at once | Wait for the first |
+| Many unit tests fail with "symlink", "aliases" or `/private/var` against `/var` | The default macOS temporary directory is a symbolic link | Run with the resolved `TMPDIR` shown above |
 
 Without network access, install from a directory that holds the locked wheels:
 
@@ -209,7 +221,7 @@ Executed on macOS 26.6.2, arm64, with Homebrew CPython 3.12.13, on November 25, 
 | --- | --- |
 | Setup preview, setup, repeat setup, doctor in every form above, `pip check`, native-reader preflight, `capabilities`, `check` | Run |
 | `--find-links`, refusal of an incompatible environment, refusal while a process uses it, `--rebuild` | Run in scratch worktrees |
-| Driver list and the routine driver with `--timeout` and `--output-dir` | Run |
+| Driver list and the routine driver with `--timeout` and `--output-dir`, with the default and the resolved temporary directory | Run on the base revision |
 | `git worktree add` and setup in the new worktree | Run; the migration worktree was made this way |
 | Package-smoke procedure | Run |
 | `visual-verification` preview | Run; refused because only Node.js 25.9.0 is installed |
