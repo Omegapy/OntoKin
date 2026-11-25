@@ -76,7 +76,8 @@ editable install of `core` proves nothing about the installed package.
 The doctor changes nothing and runs on any Python 3.9 or later, with or without an
 environment. `--output` writes the report to a new file; `--portable-paths` replaces
 this machine's paths by labels so that a report can be published. Only `--online`
-contacts the remote, with `git ls-remote`; it fetches nothing.
+contacts the remote, with `git ls-remote`; it fetches nothing. Package-manager paths such as
+the Homebrew prefix stay in a portable report.
 
 ## Run the checks
 
@@ -199,11 +200,13 @@ The doctor prints the next exact setup action. The common cases:
 | `interpreter: missing` | No environment in this checkout | Run the setup tool |
 | `interpreter-missing` from the setup tool | CPython 3.12 is not on the machine | Install it with the existing mechanism, on macOS `brew install python@3.12`, or allow that with `--install-interpreter` |
 | `interpreter-mismatch`, or `interpreter: mismatch` | Another patch, implementation or distribution than the specification names. Homebrew can upgrade the patch under an existing environment | Provide the exact interpreter, or adopt another patch through a reviewed change of the specification. Then rebuild explicitly |
-| `isolation: mismatch` | The environment was copied, moved, linked or opened to system packages | Review it, then `python3.12 tools/bootstrap_local.py --rebuild` |
+| `isolation: mismatch` | The environment was copied, moved, linked, opened to system packages, or reaches another location | Review it, then `python3.12 tools/bootstrap_local.py --rebuild` |
+| `pip-check`, `imports` or `native-reader` not ready although every package has its version | Installing cannot repair it, for example without pip | Review it, then rebuild explicitly |
 | `packages: missing` or `mismatch` | Absent or wrong versions | Run the setup tool; it replaces only those packages |
 | `lock: unsupported` | No reviewed lock for this platform or Python series | Report the platform. Never install from another platform's lock or without hashes |
 | `lock: mismatch` | A lock, its provenance or a pin was changed | Restore it, or adopt a reviewed change |
-| `.venv is in use by process N` | A running process uses the environment | Let it finish; the tool never replaces a used environment |
+| `.venv is in use by process N` | A process uses the environment, or could not be excluded | Let it finish; the tool neither rebuilds nor fills a used environment. Start the tool itself with `python3.12` |
+| `build/local-environment/replaced-…` exists | A rebuild did not finish, or the old environment could not be deleted | Inspect it, then delete it |
 | Another setup run is changing this checkout | Two setup runs at once | Wait for the first |
 | Many unit tests fail with "symlink", "aliases" or `/private/var` against `/var` | The default macOS temporary directory is a symbolic link | Run with the resolved `TMPDIR` shown above |
 
@@ -225,5 +228,5 @@ Executed on macOS 26.6.2, arm64, with Homebrew CPython 3.12.13, on November 25, 
 | `git worktree add` and setup in the new worktree | Run; the migration worktree was made this way |
 | Package-smoke procedure | Run |
 | `visual-verification` preview | Run; refused because only Node.js 25.9.0 is installed |
-| `visual-verification` setup, `npm ci`, Chromium installation, `--repair-node`, `--install-interpreter` | **Not run** on this machine; covered by controlled tests only |
+| `visual-verification` setup, `npm ci`, Chromium installation, `--repair-node`, `--install-interpreter`, `brew install python@3.12` | **Not run** on this machine; the options are covered by controlled tests only |
 | Everything on Linux x86-64 | **Not run** here |

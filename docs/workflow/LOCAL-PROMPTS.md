@@ -7,7 +7,9 @@ ChatGPT Library link.
 
 ## In the Claude desktop application
 
-1. Open the **Code** tab and choose the local environment and the `OntoKin` project folder.
+1. Open the **Code** tab, choose the local environment, and choose the folder of the checkout
+   or worktree that holds the selected scope: normally the `OntoKin` clone, or that scope's
+   own worktree while its branch is not integrated.
 2. Type one of the prompts below. The agent runs the setup and test commands; a terminal is
    not needed.
 3. Leave Worktree mode off for a single session in the main checkout. Turn it on deliberately

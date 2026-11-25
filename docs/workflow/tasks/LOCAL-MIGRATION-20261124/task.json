@@ -900,7 +900,7 @@
         "TASK-019",
         "TASK-020"
       ],
-      "status": "not_done",
+      "status": "in_progress",
       "artifacts": [
         "tools/check_local.py",
         "tests/test_local_checks.py"
@@ -1235,5 +1235,27 @@
     "branch_disposition": "active",
     "evidence": []
   },
-  "next_action": "Continue TASK-014 (installed-package check), TASK-015 (routine-driver baseline on 6b346b1e) and TASK-016 (setup guide)."
+  "next_action": "Finish TASK-026 (driver run outside the checkout, read its documents step), then TASK-027 (candidate checks against the baseline), TASK-028 (second worktree) and TASK-029 (session checkpoint). TASK-006 to TASK-008 wait for the owner-supplied R06 archive and receipt; TASK-030 waits for the owner.",
+  "blockers": [
+    {
+      "step": "TASK-006",
+      "since": "2026-11-25",
+      "reason": "The R06 transfer-capability handoff archive (41,730,084 bytes, SHA-256 4b8fae8b846c6f2b27ed5e2630c71240739786791cf39f043e787c55ad727bc9) and its delivery receipt (149,563 bytes, SHA-256 24aa014cb430d9b7269ee2e39ff08e7005d3630e8dd41c109f824e80039909d8) are not on the local machine. Both are in the owner's ChatGPT Library.",
+      "needs": "The owner places both files on the local machine.",
+      "also_waiting": [
+        "TASK-007",
+        "TASK-008",
+        "TASK-031"
+      ]
+    },
+    {
+      "step": "TASK-030",
+      "since": "2026-11-25",
+      "reason": "The fresh-session demonstration is performed by the owner in the Claude Desktop Code tab after the session checkpoint (TASK-029) exists.",
+      "needs": "The owner starts a new session in the migration worktree and types Continue.",
+      "also_waiting": [
+        "TASK-031"
+      ]
+    }
+  ]
 }

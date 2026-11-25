@@ -10,9 +10,9 @@ Scope: procedure; no language-semantics changes.
 [AGENTS](../../AGENTS.md#execution-modes) requires one explicit mode for each session,
 declared by its entry document: [LOCAL-START-HERE](../../LOCAL-START-HERE.md) (local) or
 [CHATGPT-START-HERE](../../CHATGPT-START-HERE.md) (browser). Session checkpoint and task
-record state it. A **Browser** or **Local** marker binds only that mode, up to the next
-marker or the end of its paragraph; all other text binds both. For local sessions only,
-each local rule replaces the browser rule beside it:
+record state it. A **Browser** or **Local** marker binds only that mode: in a heading for
+its section, otherwise up to the next marker or the end of its paragraph. All other text
+binds both. For local sessions only, each local rule replaces the browser rule beside it:
 
 | Subject | Browser rule | Local rule |
 | --- | --- | --- |
@@ -25,7 +25,8 @@ each local rule replaces the browser rule beside it:
 | Continuation input | The latest saved handoff and live GitHub. | The local entry instructions and repository task pointers; no Library link. |
 
 A session resumes a task recorded for the other mode only on explicit owner direction, and
-then reconciles that task's own delivery requirements.
+then reconciles that task's own delivery requirements. Without that direction it reports the
+recorded mode and asks.
 
 [Owner direction](../engineering/local-migration-20261124/DECISION.md), November 24, 2026:
 prospective. Earlier handoffs, receipts and failed observations keep their interpretation.

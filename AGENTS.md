@@ -9,13 +9,15 @@ Every session works in exactly one explicit mode, under the owner's [November 24
 | Mode | Entry document | Execution host |
 | --- | --- | --- |
 | **Local**: ordinary development | [LOCAL-START-HERE](LOCAL-START-HERE.md) | Owner's persistent clone and its worktrees. Inspect actual state; reuse validated resources; reconstruct only missing/incompatible inputs. |
-| **Browser**: ChatGPT browser threads | [CHATGPT-START-HERE](CHATGPT-START-HERE.md) | A different, disposable host for each thread, under the ephemeral host rule below. |
+| **Browser**: ChatGPT browser threads | [CHATGPT-START-HERE](CHATGPT-START-HERE.md) | A different, disposable host for each thread, under the [ephemeral host rule](#ephemeral-host-rule-browser-mode). |
 
-The entry document a session starts from declares its mode; session checkpoint and task record state it. Never infer it from a path, machine, product or agent name. "Go"/"Continue" without a named entry document uses the mode recorded for the selected task; only explicit owner direction changes it. When neither names one, ask. A session on a disposable or remote host is not a local session. A rule marked for one mode binds only that mode; unmarked rules bind both.
+The entry document a session starts from declares its mode; session checkpoint and task record state it. Never infer it from a path, machine, product or agent name. "Go"/"Continue" without a named entry document uses the mode recorded for the selected task; only explicit owner direction changes it. When neither names one, or the recorded mode does not fit the actual session, report it and ask: a ChatGPT browser thread or any session on a disposable or remote host is not local, whatever the record says.
 
-## Ephemeral host rule
+A rule marked for one mode binds only that mode; unmarked rules bind both. A marker in a heading covers its section, one that starts a list item covers that item, and one in running text covers up to the next marker or the end of its paragraph.
 
-Browser mode: each new ChatGPT browser thread uses a **different, disposable execution host**.
+## Ephemeral host rule (browser mode)
+
+Each new ChatGPT browser thread uses a **different, disposable execution host**.
 Never assume previous local paths, environments, packages, running workers or
 installed inputs persist. Current GitHub and verified Library files provide
 continuity; reconstruct only task-needed inputs in the current host. Do not
@@ -56,7 +58,12 @@ Follow PROTOCOL §7 for one branch per bounded scope, normally at most three, ch
 
 ## Verify the actual change
 
-Owner's no-payment direction/[OK-ENG-006](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md): fresh relevant checks on the mode's explicitly selected executor. Local mode: the owner's prepared environment, run as `.venv/bin/python`, or another verification executor named for the check. Browser mode: the assistant's hosted workspace, not user's computer. Do not wait for hosted CI, retry blocked jobs or enable paid execution. Inspect older branches' changed workflows before integration: manual-only/default-false opt-in; no push/pull-request/scheduled jobs. Claim repository-wide Actions disablement only if observed.
+Owner's no-payment direction/[OK-ENG-006](docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md): fresh relevant checks on the mode's explicitly selected executor:
+
+- **Local:** the owner's prepared environment, run as `.venv/bin/python`, or another verification executor named for the check.
+- **Browser:** the assistant's hosted workspace, not user's computer.
+
+Do not wait for hosted CI, retry blocked jobs or enable paid execution. Inspect older branches' changed workflows before integration: manual-only/default-false opt-in; no push/pull-request/scheduled jobs. Claim repository-wide Actions disablement only if observed.
 
 Select checks for actual scope; documentation-only changes require documentation and applicable workflow checks below.
 

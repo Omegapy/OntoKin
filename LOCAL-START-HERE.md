@@ -2,9 +2,10 @@
 
 Entry document of **local mode**: ordinary development in the owner's persistent clone or
 one of its worktrees. Starting here declares the mode; record `local` in the session
-checkpoint and task record. A ChatGPT browser thread starts from
-[CHATGPT-START-HERE](CHATGPT-START-HERE.md). A session on a disposable or remote host is
-not local, whatever application runs it: say so and ask.
+checkpoint, and in a task record that names no mode yet. A task that is recorded as
+`browser` is resumed here only on explicit owner direction. A ChatGPT browser thread starts
+from [CHATGPT-START-HERE](CHATGPT-START-HERE.md). A session on a disposable or remote host
+is not local, whatever application runs it: say so and ask.
 
 The checkout persists; your understanding does not. Rebuild it from the records below. No
 previous conversation and no ChatGPT Library download is needed.
@@ -28,7 +29,10 @@ reporting meaningful progress, and checkpointing at completion or at a concrete 
 Report each item before starting work.
 
 1. **Identify** the repository, working directory, branch or worktree, head, tracked changes,
-   untracked work, and any active agent or lease ownership.
+   untracked work, the other worktrees and work branches, and any active agent or lease
+   ownership. When the selected task's branch is checked out in another worktree, or its
+   records there are newer, report that and work there. When another agent may be active on
+   it, ask before writing.
 2. **Read** the shared instructions [AGENTS](AGENTS.md), [GOAL](GOAL.md), [STATUS](STATUS.md),
    [ROLE](ROLE.md), the [registry](docs/workflow/registry.json),
    [CURRENT](docs/workflow/CURRENT.json) and [PROTOCOL](docs/workflow/PROTOCOL.md); then the

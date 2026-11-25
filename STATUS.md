@@ -30,7 +30,7 @@ Unqualified: complete C260 H groups, site/world behavior, authentic revisions, i
 
 ## Verification and remaining limits
 
-Local baseline on macOS arm64, CPython 3.12.13, unmodified `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774`: unit suite **FAILED** (4,740 run; 307 distinct tests not passing with the default symlinked temporary directory, one with a resolved one; three skipped); source, agent, construction, surface and impulse steps passed; isolated documents step failed on uncopied instruction files. [Record](docs/engineering/local-migration-20261124/BASELINE-CHECKS.json): no expectation changed; the one remaining failure is a last-digit platform difference.
+Local baseline on macOS arm64, CPython 3.12.13, unmodified `6b346b1e4126332fe3c98a4a98f3e0b0e2f63774`: unit suite **FAILED** (4,740 run; 307 distinct tests not passing with the default symlinked temporary directory, one with a resolved one; three skipped); source, agent, construction, surface and impulse steps passed; isolated documents step failed on uncopied instruction files; 16 external cases stay pending. [Record](docs/engineering/local-migration-20261124/BASELINE-CHECKS.json): no expectation changed; the one remaining failure is a last-digit platform difference.
 
 Historical full regression **FAILED**: **4,239** distinct passing methods; **13 torque-read methods NOT RUN**, unchanged **30,000 ms** setup timeout. [C233 default aggregate](docs/engineering/aggregate-regression-c233/RESULTS.md) passed only recorded inputs; historical failure remains. New/worsened failures block integration.
 

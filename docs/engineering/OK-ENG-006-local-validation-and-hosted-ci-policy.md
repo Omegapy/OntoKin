@@ -61,7 +61,7 @@ Prepare the native-reader environment below before running the routine Python an
 python3 tools/check_local.py
 ```
 
-The output directory must be new or empty, and under `build/` or outside the checkout. In local mode write it outside the checkout with `--output-dir`: the documentation verifier scans every non-dot directory of a checkout, including `build/`, so a retained workspace under `build/` would be read as documentation. `--timeout` is the limit for each command; state it explicitly for long runs, and report a timeout as a timeout. Do not wrap the driver in an outer shell `timeout`, which macOS does not provide.
+The output directory must be new or empty, and under `build/` or outside the checkout. In local mode write it outside the checkout with `--output-dir`: the documentation verifier scans every non-dot directory of a checkout, including `build/`, so a retained workspace under `build/` would be read as documentation. `--timeout` is the limit for each command; state it explicitly for long runs, and report a timeout as a timeout. Local instructions do not depend on an outer shell `timeout`, which macOS does not provide.
 
 For Agent/0.5 integration, prepare the separate pinned packages in
 [`tools/force-agent-verification-requirements.txt`](../../tools/force-agent-verification-requirements.txt)
@@ -91,7 +91,7 @@ python3.12 tools/bootstrap_local.py --profile python-verification
 .venv/bin/python -I -B tools/check_native_reader_setup.py && .venv/bin/python -m unittest discover -s tests -p 'test_torque_native_joint_parent_site_c093.py' -v
 ```
 
-**Browser mode.** A disposable host prepares the Linux lock in a new directory of that host; the directory is not a resource of any later thread.
+**Browser mode.** A disposable host prepares the Linux lock in a new directory of that host, outside the checkout; the directory is not a resource of any later thread.
 
 ```bash
 python3.12 -m venv NEW_DIRECTORY
@@ -99,10 +99,10 @@ NEW_DIRECTORY/bin/python -I -m pip install --only-binary=:all: --require-hashes 
 NEW_DIRECTORY/bin/python -I -B tools/check_native_reader_setup.py && NEW_DIRECTORY/bin/python -m unittest discover -s tests -p 'test_torque_native_joint_parent_site_c093.py' -v
 ```
 
-The [preflight](../../tools/check_native_reader_setup.py) imports `PIL.Image` and checks the Pillow version before test discovery. The focused class contains 11 methods and 47 subtests. To install offline, add `--no-index` and `--find-links` for each directory containing the seven locked wheels, or give the setup tool `--find-links`. For the full invocation, prepare the Node and Chromium dependencies below, then run the following command with the same environment's interpreter.
+The [preflight](../../tools/check_native_reader_setup.py) imports `PIL.Image` and checks the Pillow version before test discovery. The focused class contains 11 methods and 47 subtests. To install offline, add `--no-index` and `--find-links` for each directory containing the seven locked wheels, or give the setup tool `--find-links`. For the full invocation, prepare the Node and Chromium dependencies below, then run the following command with the same environment's interpreter: `.venv/bin/python` in local mode, `NEW_DIRECTORY/bin/python` in browser mode.
 
 ```bash
-.venv/bin/python -I -B tools/check_native_reader_setup.py && .venv/bin/python tools/check_local.py --full --force-agent --timeout 3600 --output-dir NEW_OUTPUT_DIRECTORY
+PYTHON -I -B tools/check_native_reader_setup.py && PYTHON tools/check_local.py --full --force-agent --timeout 3600 --output-dir NEW_OUTPUT_DIRECTORY
 ```
 
 ### Independent geometry and browser checks

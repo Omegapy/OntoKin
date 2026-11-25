@@ -6,9 +6,10 @@
 every declared phase, including partial handoffs. GitHub remains current operational
 state. Use complete [continuation/recovery prompts](BROWSER-PROMPTS.md).
 
-**Local sessions** close under [Local sessions](#local-sessions). The ZIP, Library and
-receipt rules in the other sections bind browser sessions, and a local session only when
-its selected task explicitly requires a ZIP.
+**Local sessions** follow only [Local sessions](#local-sessions) and the definitions in
+[Integrated, delivered and complete](#integrated-delivered-and-complete). Every other rule
+here binds browser sessions. A selected task that explicitly requires a ZIP adds only the
+package, verification and save rules to a local session.
 
 ## Preserve progress before the thread ends
 
@@ -104,13 +105,14 @@ parent stays `in_progress`/`review`, with open issue, recoverable branch, remain
 gates. Planned pause is not blocker. Completed branches: mandatory PROTOCOL section 7,
 including exact `deletion_pending` instructions when tools absent.
 
-ZIP cannot contain future save receipt; checkpoint may say `save_pending` and point
+**Browser:** ZIP cannot contain future save receipt; checkpoint may say `save_pending` and point
 to external delivery record. After confirmed save: publish receipt; update actual
 phase/gates; release ownership appropriately. Close only after all parent gates pass.
 Receipt/closure commit needs no rebuild; reconcile boundary through live GitHub.
 Material packaged-work/recovery-instruction change: newly verified package/updated receipt.
 
-After delivery: report phase result; stop. Resume unfinished work in fresh parent chat.
+**Browser:** after delivery, report phase result; stop. Resume unfinished work in fresh
+parent chat.
 
 ## Local sessions
 

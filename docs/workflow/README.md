@@ -79,7 +79,7 @@ python3 tools/chat_workflow.py check
 python3 tools/chat_workflow.py brief --json
 python3 tools/chat_workflow.py lookup "hinge"
 python3 tools/chat_workflow.py new-task C265 --title "Selected scope" --intent "Owner's request"
-python3 tools/chat_workflow.py new-task C265 --title "Selected scope" --intent "Owner's request" --base OBSERVED_COMMIT
+python3 tools/chat_workflow.py new-task C265 --title "Selected scope" --intent "Owner's request" --base OBSERVED_COMMIT --mode local
 ```
 
 In a local session run them with `.venv/bin/python`, together with
@@ -91,7 +91,8 @@ prove that evidence is scientifically correct or that a branch was merged.
 actual memory/knowledge entries with their sources and status. `new-task`
 creates local draft task, requirements and plan files and refuses to overwrite an existing task. Its base is
 the local head of the checkout, or the commit given with `--base`; it never takes the recorded
-`CURRENT.observed_main`, which can be older than the actual head. It does not
+`CURRENT.observed_main`, which can be older than the actual head. `--mode` records the
+execution mode, which a task needs before it is selected. It does not
 publish, select the task in CURRENT or authorize work. Review and commit a
 draft through the normal branch procedure when that scope is authorized.
 

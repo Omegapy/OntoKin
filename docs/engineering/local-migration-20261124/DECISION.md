@@ -37,7 +37,9 @@ execution mode beside the existing **browser** mode.
 ## Prospective effect
 
 The change applies from its integration into main onward. It does not change how
-any earlier session, handoff or check is read.
+any earlier session, handoff or check is read. The migration scope itself runs and
+closes under the local rules it adopts (TRD decision D09), on the execution
+instruction above; other sessions follow them after integration.
 
 [PROTOCOL section 8](../../workflow/PROTOCOL.md#8-recovery-and-stopping) requires
 a saved ZIP for every bounded browser phase "unless owner changes requirement".

@@ -24,8 +24,8 @@ C271 implementation.
 Main has four commits that the C271 branch does not have, from merge base
 `e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d`: the Apache-2.0 license publication
 (`b5557b8e`, merged by `70ca7e68`), the ephemeral-host clarification
-(`e43cc6c5`) and the three added skills with their `.claude/skills` links
-(`6b346b1e`).
+(`e43cc6c5`) and three added skills with the six `.claude/skills` links of all
+project skills (`6b346b1e`).
 
 ### On the C271 branch
 
@@ -39,7 +39,7 @@ modified.
 | `docs/engineering/localized-repair-c271/` | 3,320 added | C271 evidence, designs, receipts and preserved failures through the P29 R02 recovery |
 | `docs/workflow/tasks/C271/` | 23 added | Task record: `task.json` (blob `50c5bdfc`, 418,591 bytes), `REQUIREMENTS.md`, `PLAN.md`, session and learning records |
 | `prototypes/static_tray_v01/`, `tools/prepare_current_host_readback.py`, `tests/` | 14 added | Current-host inspection and readback implementation, its tests and fixtures |
-| `STATUS.md`, `docs/README.md`, `docs/workflow/CURRENT.json`, `docs/workflow/memory.json`, `tools/check_local.py`, `tests/test_local_checks.py`, `tests/test_static_tray_readback_v01.py` | 7 modified | Workflow records (`CURRENT.json` is blob `7bf67efb`, 192,376 bytes), driver inventory and driver tests |
+| `STATUS.md`, `docs/README.md`, `docs/workflow/CURRENT.json`, `docs/workflow/memory.json`, `tools/check_local.py`, `tests/test_local_checks.py`, `tests/test_static_tray_readback_v01.py` | 7 modified | Workflow records (`CURRENT.json` is blob `7bf67efb`, 192,376 bytes), the driver with its readback selection, and tests |
 
 The large C271 records stay exactly as they are, readable from Git at that head:
 
@@ -112,11 +112,11 @@ commits is taken here.
 | File | C271's change | This migration's change |
 | --- | --- | --- |
 | `STATUS.md` | C271 phase state | Local-mode wording, migration status and the concise C271 reference |
-| `docs/README.md` | C271 navigation | Local entry point, browser workflow and setup guide links |
+| `docs/README.md` | A C271 loader-path section | Local entry point, browser workflow and setup guide links |
 | `docs/workflow/CURRENT.json` | C271 pointers and embedded receipts (192,376 bytes) | Compact pointers with the retained history linked |
 | `docs/workflow/memory.json` | C271 lessons | Only if the learning checkpoint records a lesson |
-| `tools/check_local.py` | Adds `.agents` to the source directories and `CHATGPT-START-HERE.md` and `ROLE.md` to the root files | The same additions and the new local-mode files |
-| `tests/test_local_checks.py` | Matches its driver inventory | Matches the amended driver inventory |
+| `tools/check_local.py` | 130 lines added and 12 removed. Adds `.agents` to the source directories and `CHATGPT-START-HERE.md` and `ROLE.md` to the root files, and also an explicit readback selection (`--readback-config` and `--readback-config-sha256`, required before the unit step), environment scrubbing for that step and process accounting | Only the inventories: the same three names, plus `TRDs`, `LOCAL-START-HERE.md`, `CLAUDE.md`, `LICENSING.md` and `NOTICE` |
+| `tests/test_local_checks.py` | 56 lines added and two removed: binds the readback seam in the synthetic runs and adds an instruction-file copy test | Extends the declared-input test and adds two inventory tests |
 
 ## Delivery chain recorded on GitHub after the branch head
 

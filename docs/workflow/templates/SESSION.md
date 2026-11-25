@@ -6,8 +6,8 @@ what was observed and what remains uncertain. Do not store full transcripts,
 credentials, private reasoning, or an additional competing task ledger.
 
 Fill every group from observed state; write `none`, `not applicable` or `not observed`
-instead of leaving a field out. Fields marked (browser) or (local) belong to that
-execution mode. A record written under an earlier form of this template stays valid.
+instead of leaving a field out. Fields marked (browser) belong to browser sessions. A
+record written under an earlier form of this template stays valid.
 
 ## Identity
 
