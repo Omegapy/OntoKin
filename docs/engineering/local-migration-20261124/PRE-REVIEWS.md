@@ -157,7 +157,7 @@ partly fixed; its findings below complete them.
 | F-11 | Minor | Rehearsal fixes attributed to one commit | Fixed above |
 | N-1, N-2, N-4, N-7, N-8 | Note | Read window, outer timeout for browser hosts, pointer to local command forms, fresh persistent clones, the lock file | Fixed |
 | N-3 | Note | The browser startup read-set grew from 64,217 to 78,191 bytes | Left; it states both modes, and no limit is set for it |
-| N-5 | Note | HOST-INVENTORY publishes backup, encryption and permission facts | Taken out of the record on the owner's direction of 2026-11-25 |
+| N-5 | Note | HOST-INVENTORY publishes backup, encryption and permission facts | Taken out of the file on 2026-11-25; earlier published commits still hold them, which the owner accepted ([HOST-INVENTORY](HOST-INVENTORY.md)) |
 | N-6 | Note | OK-ENG-009 gate 2 and the untracked TRDs copy at integration | Belongs to TASK-031 and TASK-033 |
 | N-9 | Note | The candidate run used another worktree's interpreter | Later runs use the candidate worktree's own environment |
 
@@ -194,7 +194,7 @@ these items, which complete them:
 | S2, S3 | Minor | Options given as relative paths, or through a link and its parent, were not labelled or were read differently from the system | Fixed |
 | S4 | Minor | A relative path entry that exists counted as harmless | Fixed |
 | S5 | Minor | Remaining next actions that setup refuses | Fixed |
-| S6, S7 | Minor | Node.js scripts in another letter case, after many options or imported by an option; a neighbour whose name begins alike | Fixed |
+| S6, S7 | Minor | Node.js scripts in another letter case, after many options or imported by an option; a neighbour whose name begins alike | Fixed. The fix missed further forms, which the review of the first frozen candidate found; they are covered by `16c83df5` |
 | S8 | Minor | The directory of a passed program was labelled too | Fixed; only npm beside a passed node is |
 | S9 | Minor | A record kept its profile but not that profile's lock | Fixed |
 | S10 to S12 | Note | An unmarked cut, an unexpected error without its traceback, letter case of an editable install, coloured output | Fixed |

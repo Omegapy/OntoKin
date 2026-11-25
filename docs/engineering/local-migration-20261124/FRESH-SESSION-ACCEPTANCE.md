@@ -35,11 +35,15 @@ and it did not open the first account.
 
 - **Startup report.** Both accounts say that the startup items were reported. Both sessions
   observed every item and wrote it into the account, but neither showed the owner a report in
-  its replies before it wrote the file. REQ-024 asks for that. LOCAL-START-HERE now says so in
-  words that leave no other reading (`402a7d8ed8512535e2f87ed123c3f6a7b418dea0`). With that text a session
-  with a fresh context, a subagent in its own clone that was told only `Continue.`, replied with
-  all seven items at 19:17:46Z and made its first change at 19:17:53Z. It was no desktop session
-  and is no part of the demonstration; it shows what the sentence causes.
+  its replies before it wrote the file. REQ-024 asks for that. LOCAL-START-HERE now says it more
+  plainly (`402a7d8ed8512535e2f87ed123c3f6a7b418dea0`). One guided run with that text followed, a subagent
+  in its own clone. Its prompt said that it was a fresh local session, that the folder was the
+  owner's persistent clone, to read CLAUDE.md and AGENTS.md first, that the owner's only message
+  was `Continue.`, and to write to the owner whenever the instructions ask for it; CURRENT and the
+  checkpoint of its clone had been changed to hand it a rehearsal step. It replied with all seven
+  items at 19:17:46Z and made its first change at 19:17:53Z. Because the prompt itself asked it to
+  write to the owner, this does not show what the sentence causes. **No unguided session was
+  observed to report first. The owner accepted this on 2026-11-25.**
 - **Fetch.** The first run also ran `git fetch`, which changed nothing.
 - **The instruction.** The application marked the text as pasted, because a link had filled it
   in; the owner sent it.

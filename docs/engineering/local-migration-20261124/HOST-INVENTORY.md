@@ -8,9 +8,12 @@ one machine at that time. Setup decisions in this migration cite this record.
 
 The repository is public. Credentials, the GitHub account name, the configured
 author identity, the SSH host alias and absolute machine paths are left out on
-purpose; they stay on the machine. On 2026-11-25 the owner directed the same for
-details of disk protection, backup software and account permissions; those
-observations were made and are left out here. "Not observed" means the item was
+purpose; they stay on the machine. On 2026-11-25, after a question to the owner,
+who left the choice to the Director, details of disk protection, backup software
+and account permissions were taken out of this file; those observations were made.
+Earlier commits of this branch (`d611c449` to `2a220d2f`) had already been published
+with them and still hold them. The owner was told so on 2026-11-25 and decided to
+merge normally, with that history. "Not observed" means the item was
 looked for or considered and no value was established.
 
 ## Clone and Git state
