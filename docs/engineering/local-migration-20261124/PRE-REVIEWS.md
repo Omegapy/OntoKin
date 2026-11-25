@@ -12,13 +12,14 @@ review has its own record.
 | Rehearsal of "Continue" | Independent subagent, fresh context, read-only | Commit `1d974e4a` | Right account and next action; 27 findings |
 | Second review of the tools and tests | Independent reviewer subagent, fresh context, no change to the checkout | Commit `7d937e26` | 6 mandatory, 13 minor, 7 notes; 28 of 54 mutations survived |
 | Audit of all 42 requirements | Independent auditor subagent, fresh context, read-only | Commit `7d937e26` | 111 criteria: 78 met, 21 complete with later steps, 12 wait for the owner, none not met; 1 mandatory, 10 minor findings, 9 notes |
+| Third review of the tools, on the corrections | Independent reviewer subagent, fresh context, in its own clone | Commit `26d429ca` | 1 mandatory, 11 minor, 4 notes; 11 of 36 mutations survived |
 
 Every reviewer was a separate agent of the same model family, inherited from the session,
 and wrote none of the work. The rehearsal is no fresh-session demonstration (DEC-010), and
 the early audit is not the audit of TASK-031. "Fixed" means changed on this branch and, for
 code, covered by a test. The commits are `3c4694f9` and `ebcfee8c` (first tool review),
 `02797bb0` (documents), `27ede8cf` and `7d937e26` (rehearsal), and the later commits whose
-messages name the second tool review and the audit.
+messages name the second and third tool review and the audit.
 
 ## Documents and records
 
@@ -135,7 +136,8 @@ to F13, F22 and F24 partly fixed; the findings below complete them.
 | N1 to N7 | Note | Letter case of the root, Rosetta, the set-aside place, paths inside the checkout, record-only runs, Playwright's setting 0, an all-zero base | Fixed |
 
 After the corrections 118 mutations, its own and new ones, were tried; every one that changes
-behaviour is detected.
+behaviour is detected. The third review found T3, T4, T6, T8 to T11, T15, N1, N4 and N5 only
+partly fixed; its findings below complete them.
 
 ## Audit of all 42 requirements
 
@@ -157,3 +159,25 @@ behaviour is detected.
 | N-5 | Note | HOST-INVENTORY publishes backup, encryption and permission facts | Left as observed; reported to the owner |
 | N-6 | Note | OK-ENG-009 gate 2 and the untracked TRDs copy at integration | Belongs to TASK-031 and TASK-033 |
 | N-9 | Note | The candidate run used another worktree's interpreter | Later runs use the candidate worktree's own environment |
+
+## Third review of the tools
+
+| ID | Severity | Finding, in short | Disposition |
+| --- | --- | --- | --- |
+| R1 | Mandatory | An editable install of this checkout itself counted as a mismatch | Fixed; tested with the import hook and placeholder that setuptools writes for this layout |
+| R2 | Minor | An interrupted record-only run said that nothing was changed | Fixed |
+| R3 | Minor | A lock or specification that changes during a run lost the report | Fixed; a report is kept whatever fails |
+| R4 | Minor | Some next actions named a setup run that refuses, or omitted the root | Fixed; what makes setup refuse comes first |
+| R5 | Minor | Portable reports: npm beside a passed node, cut paths inside joined text, letter case, path boundaries | Fixed |
+| R6 | Minor | A refreshed record lost recorded actions and took over another Node.js | Fixed |
+| R7 | Minor | Receipts as values of allowed fields in CURRENT | Fixed; value types are checked |
+| R8 | Minor | `--work-dir` inside the checkout in another letter case was accepted | Fixed |
+| R9 | Minor | A missing preflight file led to repeated rebuilds | Fixed; the file is named |
+| R10 | Minor | Node.js started by a relative, linked or differently cased path or with NODE_PATH was not seen | Fixed; the remaining limit is stated in LOCAL-SETUP |
+| R11 | Minor | A relative `--node` worked in the doctor only | Fixed |
+| R12 | Minor | Eight surviving mutations that matter | Fixed with tests |
+| R13 to R15 | Note | Malformed record values, preview beside a running setup, the line shown for a tampered wheel | Fixed |
+| R16 | Note | The published checkpoint names an older code checkpoint | Updated with the next checkpoint |
+
+49 further mutations were tried after these corrections; the two that were not detected do not
+change what a run does or reports.

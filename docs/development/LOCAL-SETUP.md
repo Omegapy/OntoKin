@@ -84,7 +84,10 @@ Homebrew prefix stay. Only `--online` contacts the remote, with `git ls-remote`;
 nothing.
 
 Before the setup tool changes an environment or the Node dependencies, it looks for processes
-that use them. This needs `ps` and `lsof`, which macOS includes; without them it refuses.
+that use them. This needs `ps` and `lsof`, which macOS includes; without them it refuses. It
+recognises open files, starts from the environment, and Node processes that work in the
+checkout, run one of its scripts or would find their packages here. A program that loads the
+Node dependencies in yet another way is not recognised, so end such programs by hand.
 
 ## Run the checks
 
@@ -220,7 +223,7 @@ The doctor prints the next exact setup action. The common cases:
 | `interpreter: missing` | No environment in this checkout | Run the setup tool |
 | `interpreter-missing` from the setup tool | CPython 3.12 is not on the machine | Install it with the existing mechanism, on macOS `brew install python@3.12`, or allow that with `--install-interpreter` |
 | `interpreter-mismatch`, or `interpreter: mismatch` | Another patch, implementation or distribution than the specification names. Homebrew can upgrade the patch under an existing environment | Provide the exact interpreter, or adopt another patch through a reviewed change of the specification. Then rebuild explicitly |
-| `isolation: mismatch` | The environment was copied, moved, opened to system packages, or reaches another location, for example through an editable install of another checkout | Review it, then `python3.12 tools/bootstrap_local.py --rebuild` |
+| `isolation: mismatch` | The environment was copied, moved, opened to system packages, or reaches another location, for example through an editable install of another checkout. An editable install of this checkout is no mismatch | Review it, then `python3.12 tools/bootstrap_local.py --rebuild` |
 | `.venv is not an environment directory of this checkout`, or it is a link, a file or an empty directory | Setup never replaces what it did not make | Move it away by hand, then run the setup tool |
 | `pip-check`, `imports` or `native-reader` not ready although every package has its version, pip that does not run, or a package recorded twice | Installing cannot repair it | Review it, then rebuild explicitly |
 | `packages: missing` or `mismatch` | Absent or wrong versions | Run the setup tool; it replaces only those packages. With `--rebuild` it makes the whole environment anew |
@@ -230,7 +233,7 @@ The doctor prints the next exact setup action. The common cases:
 | `This setup tool itself runs from .venv` | In an activated shell `python3.12` is the environment's own | `deactivate`, or name the interpreter outside, for example `/opt/homebrew/bin/python3.12` |
 | `Whether a process uses .venv cannot be established` | `ps` or `lsof` is missing, forbidden or failed; the message names the cause | Make them available. Nothing is changed meanwhile |
 | `build/local-environment/.replaced-…` exists | A rebuild did not finish, or the old environment could not be deleted | Inspect it, then delete it |
-| Another setup run is changing this checkout | Two setup runs at once | Wait for the first |
+| Another setup run is changing this checkout | Two setup runs at once, or a preview beside one | Wait for the first |
 | Many unit tests fail with "symlink", "aliases" or `/private/var` against `/var` | The default macOS temporary directory is a symbolic link | Run with the resolved `TMPDIR` shown above |
 
 Without network access, install from a directory that holds the locked wheels:
