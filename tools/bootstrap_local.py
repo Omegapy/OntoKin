@@ -194,9 +194,15 @@ def parse_places(text: str) -> dict:
 
 def finds_packages(session: Session, directory: Path, number: str, command: str, place: str) -> bool:
     """Whether Node.js would look for packages in this directory: from the place or a script of the process upwards, or by NODE_PATH."""
-    scripts = [os.path.join(place, word.rpartition("=")[2]) for word in command.split()[1:64]]  # Also --import=SCRIPT.
     starts = [place, os.path.join(place, directory.relative_to(session.root).parent)]
-    for start in starts + [os.path.dirname(doctor.canonical(script)) for script in scripts if os.path.isfile(script)]:
+    for word in command.split()[1:64]:
+        for named in filter(None, (word, word.partition("=")[2])):  # Also --import=SCRIPT and --prefix=DIRECTORY.
+            path = os.path.join(place, named)
+            if os.path.isdir(path):
+                starts.append(doctor.canonical(path))
+            elif os.path.isdir(os.path.dirname(path)):  # A script, also one that is named without its extension.
+                starts.append(os.path.dirname(doctor.canonical(path)))
+    for start in starts:
         start = Path(os.path.realpath(start))
         if doctor.inside(str(start), str(session.root)) or any(doctor.same_place(str(above / "node_modules"), str(directory)) for above in (start, *start.parents)):
             return True

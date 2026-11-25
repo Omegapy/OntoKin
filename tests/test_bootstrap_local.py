@@ -717,8 +717,13 @@ class UseTests(SetupCase):
         script, link = self.project.root / "tools/validator.mjs", self.project.directory / "linked.mjs"
         script.write_text("", encoding="utf-8")
         link.symlink_to(script)
-        beside = os.path.relpath(script, self.project.directory)
+        beside, tools = os.path.relpath(script, self.project.directory), os.path.relpath(script.parent, self.project.directory)
+        (script.parent / "a=b.mjs").write_text("", encoding="utf-8")
+        here = {"place": str(self.project.directory)}
         for label, command, options in (
+                ("npm for another directory", f"npm --prefix {tools} run dev", here), ("npm for the checkout", f"npm --prefix={os.path.dirname(tools)} run dev", here),
+                ("script without its extension", f"node {beside[:-4]}", here), ("after an option", f"node --trace-warnings {beside[:-4]}", here),
+                ("directory as script", f"node {tools}", here), ("script with a sign in its name", f"node {tools}/a=b.mjs", here),
                 ("isolated workspace", "node tools/validator.mjs", {"place": str(workspace.parent)}), ("its tools", "node validator.mjs", {"place": str(workspace)}),
                 ("below its tools", "node x.mjs", {"place": str(workspace / "deep")}), ("relative script", f"node {beside}", {"place": str(self.project.directory)}),
                 ("script after an option", f"node --trace-warnings {beside}", {"place": str(self.project.directory)}), ("linked script", "node linked.mjs", {"place": str(self.project.directory)}),
