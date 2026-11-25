@@ -32,7 +32,8 @@ reporting meaningful progress, and checkpointing at completion or at a concrete 
 
 ## Startup
 
-Report each item before starting work.
+Report each item to the owner in your reply, before the first change. A file, a plan tool or
+unseen reasoning is no report.
 
 1. **Identify** the repository, working directory, branch or worktree, head, tracked changes,
    untracked work, the other worktrees and work branches, and any active agent or lease
