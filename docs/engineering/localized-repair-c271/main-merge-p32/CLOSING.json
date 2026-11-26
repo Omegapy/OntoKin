@@ -1,0 +1,55 @@
+{
+  "schema": "ontokin.c271.p32-closing/1",
+  "task": "C271",
+  "phase": "C271-P32-main-merge-mb",
+  "owner": "c271-p32-08e8ceaa9140",
+  "purpose": "The phase's closing record: the push of its outcome records commit, the checks of that commit's tree, the checkpoint comments, the pull request's state and the release of ownership. Git reveals the commit that carries this record; its own push is observed in the final report.",
+  "outcome_records_commit": {
+    "commit": "237b68ed2bc8d9b94e7f3336a178f4b3bf153e73",
+    "parent": "5f30f26b313946d1fdd763670b340341d2eed489"
+  },
+  "push_observation": {
+    "command": "git push origin work/c271-missing-import-digest-control (no force), then git ls-remote --heads origin",
+    "observed_at_utc": "2026-11-26T06:17:30Z",
+    "update": "5f30f26b..237b68ed, fast-forward",
+    "remote_heads": {
+      "refs/heads/main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "refs/heads/work/c271-missing-import-digest-control": "237b68ed2bc8d9b94e7f3336a178f4b3bf153e73"
+    }
+  },
+  "checks_of_final_tree": {
+    "started_at_utc": "2026-11-26T06:17:24Z",
+    "ended_at_utc": "2026-11-26T06:17:27Z",
+    "tree": "the working tree then staged and committed unchanged as 237b68ed (git diff --cached --check passed)",
+    "workflow": {
+      "result": "passed",
+      "observed": "Workflow structure passed (13 tasks).",
+      "output_sha256": "93548ae025eed40b1ee3ff4cd34a1ffffd319a645f20e7fb51e4dfc45e6fe293"
+    },
+    "documentation": {
+      "result": "passed",
+      "documents": 1706,
+      "failures": 0,
+      "output_sha256": "1821102af15da84b4a1bdba142fc1826c542eaf3c8ddff363462db20b36e5090"
+    }
+  },
+  "checkpoint_comments": {
+    "pull_request_274": {
+      "id": 7184288942,
+      "created_at_utc": "2026-11-26T06:17:48Z"
+    },
+    "issue_273": {
+      "id": 7184289228,
+      "created_at_utc": "2026-11-26T06:17:49Z"
+    },
+    "body_sha256": "bb34a4191c15fb9e886e5ed9d0866ec3e2fb9230bb619e7ca137392f9635d999"
+  },
+  "github_state_after": {
+    "pull_request_274": "open, draft, head 237b68ed, mergeable MERGEABLE, merge state CLEAN (no conflict with main after this merge)",
+    "issue_273": "open",
+    "observed_at_utc": "2026-11-26T06:18Z"
+  },
+  "ownership": "Owner c271-p32-08e8ceaa9140 is released with the push of this record. It makes no further write. The next phase declares its own owner.",
+  "unknown_operations": [],
+  "next_action": "Gate MI of the adopted contract; a separate phase that needs the owner's selection."
+}
