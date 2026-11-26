@@ -17,6 +17,8 @@ outcome version replaces it in a later commit, and Git keeps this one.
   The owner selected this phase on 2026-11-25 (America/Denver) with the reply "begin the /0.1.5",
   typed in the session that started this one and relayed here word for word
   ([phase declaration](../../../engineering/localized-repair-c271/operational-plan-review-p30/PHASE.json)).
+  Before that selection, this session reported the startup items to the owner and asked whether a
+  Linux x86-64 machine or VM should be considered as an existing executor; the reply named none.
 - Worktree and branch: `../OntoKin-worktrees/c271` beside the clone, on
   `work/c271-missing-import-digest-control`, tracking origin.
 - Current user objective and bounded milestone: the review of the `/0.1.5` operational plan

@@ -4,9 +4,9 @@
   "phase": "C271-P30-operational-plan-review",
   "owner": "c271-p30-55a168e30426",
   "reviewed_revision": "7a4ab16248ed071a211ded3e24e1558ec064f0b1",
-  "inputs_identical_to": "4ee55b037b909b36cb8a6330aa07ccc78071af88",
+  "inputs_identical_to": "Every input is byte-identical to 4ee55b03 except the four workflow records that the declaration updated (task.json, the branch CURRENT.json, REQUIREMENTS.md, PLAN.md); in those, remaining_h0_constraint, the requirement and plan states and the task status are unchanged.",
   "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-  "recorded_at_utc": "2026-11-26T03:40Z",
+  "recorded_at_utc": "2026-11-26T03:28Z",
   "scope": "What the adopted contract ontokin.current-host-readback/0.1.0, as supplemented through inspection-plan /0.1.5 and implemented by the published P29 inspector, requires of the executor and its inputs for H0 and H1. Line numbers refer to the reviewed revision.",
   "inspector": {
     "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
@@ -18,7 +18,7 @@
       "id": "E1",
       "requirement": "Linux kernel with glibc; the static host check refuses any other system as UNSUPPORTED ('Unsupported platform/architecture/libc') and reads the boot identity from /proc/sys/kernel/random/boot_id; the bound images are x86-64.",
       "sources": [
-        "prototypes/static_tray_v01/current_host_inspection_v01.py lines 1202-1219 (_platform, _check_host_static)",
+        "prototypes/static_tray_v01/current_host_inspection_v01.py lines 1202-1221 (_platform, _check_host_static)",
         "docs/engineering/localized-repair-c271/current-host-p05/CONTRACT.md section 4 (HOST.json)"
       ]
     },
@@ -112,7 +112,70 @@
         "docs/engineering/localized-repair-c271/current-host-p05/CONTRACT.md section 7",
         "docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md sections 4 and 6"
       ]
+    },
+    {
+      "id": "E13",
+      "requirement": "The original supervisor prototypes/static_tray_v01/supervisor.py for H1's commands and for the three CPU checkers, called once per checker through the provider's guarded_run_process. It is Linux-only: run_process sets prctl(36, 1) (PR_SET_CHILD_SUBREAPER) and otherwise raises Stop 'Cannot establish Linux descendant reaping'.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/current-host-p05/CONTRACT.md sections 3 and 7",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md section 1 (H1)",
+        "prototypes/static_tray_v01/supervisor.py lines 165-173",
+        "prototypes/static_tray_v01/current_host_inspection_v01.py _load_helpers (line 2685), _run_command (line 3456)",
+        "prototypes/static_tray_v01/current_host_readback_v01.py guarded_run_process (lines 825 and 869)"
+      ]
+    },
+    {
+      "id": "E14",
+      "requirement": "The seven package metadata pins of tools/native-reader-verification-linux-cp312.lock.",
+      "sources": [
+        "prototypes/static_tray_v01/current_host_inspection_v01.py _check_metadata (line 2813)",
+        "prototypes/static_tray_v01/current_host_readback_v01.py _python_pins (lines 441-443)"
+      ]
+    },
+    {
+      "id": "E15",
+      "requirement": "The exact launcher -I -S -B, whose environment equals the declared ENVIRONMENT.",
+      "sources": [
+        "prototypes/static_tray_v01/current_host_inspection_v01.py _check_launcher (line 2750)"
+      ]
+    },
+    {
+      "id": "E16",
+      "requirement": "The existing preparer's installation receipts, INSTALLED_EXACT or ALREADY_PRESENT_EXACT, with zero Node, ldd and checker starts.",
+      "sources": [
+        "prototypes/static_tray_v01/current_host_inspection_v01.py _check_installation (line 2862)",
+        "docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md section 2"
+      ]
+    },
+    {
+      "id": "E17",
+      "requirement": "The outer capture's authority and log descriptors: an existing external evidence parent with its ancestor identities, absent per-command and per-attempt output paths, and a separately approved failure capture and reconciliation procedure.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md section 2"
+      ]
+    },
+    {
+      "id": "E18",
+      "requirement": "The admitted Git closure of the source commands.",
+      "sources": [
+        "prototypes/static_tray_v01/current_host_inspection_v01.py _check_git (line 2710)"
+      ]
+    },
+    {
+      "id": "E19",
+      "requirement": "The provider's and probe's host bindings: Linux platform, glibc, the procfs boot identity, the /usr/bin/ldd role, an ELF interpreter for Node, the Linux Node pin and the linux-cp312 lock.",
+      "sources": [
+        "prototypes/static_tray_v01/current_host_readback_v01.py _verify_host and _python_pins (lines 441-488)",
+        "prototypes/static_tray_v01/current_host_readback_v01.mjs lines 54 and 451-461"
+      ]
     }
   ],
-  "host_class": "E1 to E8 describe one class of host: the disposable Linux x86-64 hosts of the ChatGPT browser threads, whose Codex runtime supplied the Node build and the author Python. P23 observed all three Python, libc and loader pins matching on such a host."
+  "host_class": "E1 to E8, E13, E14 and E19 describe one class of host: the disposable Linux x86-64 hosts of the ChatGPT browser threads, whose Codex runtime supplied the Node build and the author Python. P23 observed all three Python, libc and loader pins matching on such a host.",
+  "corrections": [
+    {
+      "corrected_at_utc": "2026-11-26T04:10Z",
+      "found_by": "INDEPENDENT-REVIEW-001 F-01, F-08, F-09 and F-10",
+      "change": "E1's line range is 1202-1221; E13 to E19 added; recorded_at_utc is the first version's commit time (03:28:47Z), not 03:40Z; inputs_identical_to restated. The first version is retrievable from commit 8aa4a800."
+    }
+  ]
 }

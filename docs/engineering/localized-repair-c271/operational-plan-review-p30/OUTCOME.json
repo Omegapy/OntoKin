@@ -4,10 +4,10 @@
   "phase": "C271-P30-operational-plan-review",
   "owner": "c271-p30-55a168e30426",
   "reviewed_revision": "7a4ab16248ed071a211ded3e24e1558ec064f0b1",
-  "inputs_identical_to": "4ee55b037b909b36cb8a6330aa07ccc78071af88",
+  "inputs_identical_to": "Every input is byte-identical to 4ee55b03 except the four workflow records that the declaration updated; in those, the parts this review relies on are unchanged.",
   "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-  "recorded_at_utc": "2026-11-26T03:40Z",
-  "status": "candidate_rejected_corrections_pending",
+  "recorded_at_utc": "2026-11-26T03:28Z",
+  "status": "corrected_candidate_pending_re_review",
   "outcome": "No existing executor available to this local session meets the adopted contract; the /0.1.5 operational plan can be neither prepared nor executed here.",
   "blocker": {
     "id": "P30-EXECUTOR-001",
@@ -45,7 +45,7 @@
     {
       "item": "configure linux-container or install virtualization",
       "selected": false,
-      "reason": "New host tooling; an amd64 guest here is emulated and never native Linux qualification."
+      "reason": "New host tooling; an amd64 guest here is emulated or translated, never native Linux qualification; an arm64 guest needs new pins (route E)."
     },
     {
       "item": "prepare main's visual-verification profile",
@@ -53,9 +53,9 @@
       "reason": "Different Node build and Three.js 0.180.0; P05 section 5 rules out the general tools lock."
     },
     {
-      "item": "macOS host tooling",
+      "item": "host tooling for macOS or for an arm64 Linux guest",
       "selected": false,
-      "reason": "Justified only if the owner selects route C, and then design first."
+      "reason": "Justified only if the owner selects route C or E, and then design first."
     },
     {
       "item": "H0 on a disposable browser-thread host",
@@ -77,21 +77,29 @@
     {
       "id": "C",
       "route": "explicit substitution to the owner's macOS arm64 environment through a new reviewed versioned contract",
-      "substitutes": "Node build (v24.22.1 kept, darwin-arm64 build pinned), qualification Python (3.12.13), the host inspection (Linux ELF closure stages replaced by a new reviewed observation)"
+      "substitutes": "Node build (v24.22.1 kept, darwin-arm64 build pinned); qualification Python (3.12.13); the host inspection (Linux ELF closure stages replaced by a new reviewed observation); the process supervisor for the CPU checkers and any H1 replacement (Darwin has no child-subreaper equivalent, so the Linux descendant-reaping guarantee is not kept); the provider's host verification with its HOST, lock and configuration schemas and the probe's bootstrap bindings",
+      "unchanged": "the seven method bodies, check_case and seam bodies, the synthetic GLBs and geometry oracle, the 24 reader files byte for byte, the probe's scientific body, thresholds and limits, exactly three real checker starts through the substituted supervisor, the no-skip rule and the numerical audit"
     },
     {
       "id": "D",
       "route": "retain the refusal",
-      "substitutes": "nothing; H0, H1 and R03 stay unmet"
+      "substitutes": "nothing; H0, H1 and R03 stay unmet; needs neither a new machine nor a change of mode"
+    },
+    {
+      "id": "E",
+      "route": "a native arm64 Linux guest under this host's hardware virtualization",
+      "substitutes": "every architecture-bound pin (Node linux-arm64 build, author Python, libc, loader, catalog images, RTLD path list, ldd script, linux-cp312 lock) and P16, P17 and P27's x86-64 image rules, each by versioned amendment; needs a virtualization tool, a guest image and a profile decision",
+      "unchanged": "Linux and glibc, the original supervisor and its child-subreaper reaping, the procfs and ldd bindings, the ELF closure model"
     }
   ],
-  "recommendation": "If C271 is to reach R03 and R04 in local mode, route C, starting with a design-only phase for an independently reviewed versioned contract; otherwise route D. The owner decides; this phase adopts no route.",
+  "recommendation": "If C271 is to reach R03 and R04 in local mode, the next phase should be design only: an independently reviewed decision between route C and route E (or another reviewed amendment of the driver's selection rule), made before any host tooling is built. Route E keeps more of the original test meaning; route C needs no virtualization tool but substitutes the supervisor's lifecycle mechanism and the host bindings. Otherwise route D. The owner decides; this phase adopts no route.",
   "never_supported_by_a_substitution": [
     "Linux x86-64 qualification",
     "historical C199/C225 replay",
     "P05 Gate H for the Codex Node build",
-    "exercise of the /0.1.1-/0.1.5 ELF policies on a real host",
-    "N34 for the Linux loader"
+    "exercise of the x86-64 ELF policies of /0.1.2-/0.1.5 on a real host",
+    "N34 for the Linux x86-64 loader",
+    "under route C, the original supervisor's Linux descendant-reaping guarantees"
   ],
   "gates": {
     "H0": "open; blocked in local mode by P30-EXECUTOR-001",
@@ -99,7 +107,7 @@
     "N34": "open",
     "N57": "open, external review only",
     "R03": "not_done",
-    "R04": "not_done",
+    "R04": "not_done; after integration, main's default local routine would refuse to start without a qualified readback selection (source inference), so R04 needs a reviewed resolution (route C, route E or another reviewed amendment of the selection rule)",
     "R05": "not_done"
   },
   "requirements": {
@@ -122,7 +130,9 @@
     "routine_driver": 0,
     "unit_or_behavioural_tests": 0,
     "installations": 0,
-    "read_only_inspection_commands": "platform identification, command -v, file(1), ls, cmp and shasum as recorded"
+    "record_checks": "this branch's tools/chat_workflow.py check and documentation verifier, run at the baseline (4ee55b03), the declaration, the candidate, the interim review record and the corrected candidate, with git diff --check on the staged files",
+    "read_only_inspection": "platform identification, command -v, file(1), ls, sysctl, cmp and shasum, as EXECUTOR-INVENTORY.json and R06-DOWNLOADS-COPIES.json record",
+    "before_the_declaration": "main's doctor_local.py (startup step 5 of LOCAL-START-HERE) started Homebrew's Node.js once with --version and read npm's version from npm's manifest; main's tools/chat_workflow.py check"
   },
   "independent_review": {
     "review": "INDEPENDENT-REVIEW-001",
@@ -131,6 +141,14 @@
       "F-01"
     ],
     "record": "INDEPENDENT-REVIEW-001-PROVENANCE.json",
-    "next": "corrections and re-review before the outcome is final"
-  }
+    "dispositions": "REVIEW-DISPOSITION.json",
+    "next": "re-review of the corrected candidate by the same reviewer"
+  },
+  "corrections": [
+    {
+      "corrected_at_utc": "2026-11-26T04:10Z",
+      "found_by": "INDEPENDENT-REVIEW-001",
+      "change": "Routes C and E, the recommendation, the claims list, R04's consequence, executed_in_phase and recorded_at_utc corrected; the first version is retrievable from commit 8aa4a800."
+    }
+  ]
 }

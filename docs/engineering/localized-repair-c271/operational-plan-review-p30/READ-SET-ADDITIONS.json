@@ -1,0 +1,108 @@
+{
+  "schema": "ontokin.c271.p30-read-set-additions/1",
+  "task": "C271",
+  "phase": "C271-P30-operational-plan-review",
+  "branch_revision": "4ee55b037b909b36cb8a6330aa07ccc78071af88",
+  "main_revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+  "method": "git show <revision>:<path>, SHA-256 of the blob bytes; git rev-parse <revision>:<directory> for tree identities",
+  "recorded_at_utc": "2026-11-26T04:00:40Z",
+  "purpose": "Inputs that the outcome cites beyond READ-SET.json (finding F-09 of INDEPENDENT-REVIEW-001), and the extent to which the named H0 plan directories were read.",
+  "branch": [
+    {
+      "path": "docs/engineering/localized-repair-c271/h0-plan-p23/readiness/run001.stdout.json",
+      "bytes": 3004,
+      "sha256": "20c75289f7bea264bc57f64df8b6da5be13d51835c72bcc5f6ac5e02b4ff1790",
+      "used_for": "E4, E5 pins and their observation"
+    },
+    {
+      "path": "tools/check_local.py",
+      "bytes": 41254,
+      "sha256": "76705ca4c812572e0b24e5840818008848dc5ad2fb4262a3e9d3ab0dc0a83c4e",
+      "used_for": "the driver's readback selection (prepare_readback_selection, call before the workspace copy)"
+    },
+    {
+      "path": "docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json",
+      "bytes": 19901,
+      "sha256": "21fd6bad8738ed51d4ced8036a0fcde5dd046823f55f71de52b9b81df659ccd5",
+      "used_for": "the 24 reader files and their types"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/current-host-p05/RUNTIME-CANDIDATE-LOCATION.json",
+      "bytes": 1256,
+      "sha256": "dc14eb953d720ec0933052a262abeec591e674cf0fde75350fded9c8550ed058",
+      "used_for": "E2 archive identity and location"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/host-preparation-p09/EVIDENCE-LOCATION.json",
+      "bytes": 1670,
+      "sha256": "e7f8138ad3c70a41efa2283c301786e424ef99f6c466a4137216bc83bd24da0e",
+      "used_for": "the retained inert author-Python snapshot"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/h0-plan-p26/libdl.so.2.inert",
+      "bytes": 14408,
+      "sha256": "295fa521a03cd2faa99974f378c9e23dd622021ec7d32bcad4f8ea61aec8a872",
+      "used_for": "the retained counterexample"
+    },
+    {
+      "path": "prototypes/static_tray_v01/supervisor.py",
+      "bytes": 11286,
+      "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+      "used_for": "the original supervisor (F-01)"
+    },
+    {
+      "path": "prototypes/static_tray_v01/current_host_readback_v01.py",
+      "bytes": 65533,
+      "sha256": "2a8144624ea00f3f350a6b7f482c993665b4049b363b93bc399ed0cd7a14ba78",
+      "used_for": "the provider's Linux host bindings (F-01)"
+    },
+    {
+      "path": "prototypes/static_tray_v01/current_host_readback_v01.mjs",
+      "bytes": 55792,
+      "sha256": "218d22e8b279daf667ff9717ad8eacc30612e2d83bb6dd2a37b50f2d30162ff1",
+      "used_for": "the probe's Linux bootstrap bindings (F-01)"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/p29-local-publication-r07/MAIN-CONFLICTS.md",
+      "bytes": 4940,
+      "sha256": "2a4e8ecf55eb164b6cfdf2f68f25c8b01153697910e89549a44a49c62f8bc0fb",
+      "used_for": "the R04 overlap"
+    }
+  ],
+  "main": [
+    {
+      "path": "tests/test_static_tray_readback_v01.py",
+      "bytes": 9812,
+      "sha256": "2f0abd812aa668b7abf9e249315acdb9c0fd175adb59672ab1c454679d494394",
+      "used_for": "main's skipUnless on the historical C199 inputs"
+    },
+    {
+      "path": "tools/doctor_local.py",
+      "bytes": 72988,
+      "sha256": "acf4947bd6d753ddb0a305f551fe93553c5bb43c7f094f22f287d30f9dc9e24b",
+      "used_for": "what the startup doctor starts (Node --version once; npm's version from its manifest)"
+    }
+  ],
+  "directories": [
+    {
+      "path": "docs/engineering/localized-repair-c271/h0-plan-p21",
+      "tree": "0168a5f21f7cc5302428257b2f7f9bcd8b72a390",
+      "files": 59,
+      "read": "only the files bound in READ-SET.json and in this record"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/h0-plan-p23",
+      "tree": "f967e9a870a03ae081b69cdacec10b5f14729b41",
+      "files": 187,
+      "read": "only the files bound in READ-SET.json and in this record"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/h0-plan-p26",
+      "tree": "2088886fef0f6852d127a86fee7c5f512b5d12cb",
+      "files": 22,
+      "read": "only the files bound in READ-SET.json and in this record"
+    }
+  ],
+  "opened_entries": "All READ-SET.json entries were opened, except that the h0-plan directories were read only through the files listed there and below; HOST-INSPECTION-DESIGN.md, CONTRACT.json and IMPLEMENTATION-PLAN.md of P05, DECISION-CANDIDATE.md of P24, DESIGN.md, DECISION.json and FUTURE-SURFACE.json of P27, CONTROL-PLAN.md of C260 and tests/test_current_host_required_images_v01.py were bound but read only in part or by search.",
+  "unchanged_by_declaration": "Every READ-SET.json input is byte-identical at 7a4ab162 except the four workflow records that the declaration updated: docs/workflow/tasks/C271/task.json, docs/workflow/CURRENT.json, docs/workflow/tasks/C271/REQUIREMENTS.md and docs/workflow/tasks/C271/PLAN.md. In those, the parts this review relies on (remaining_h0_constraint, the requirement and plan states, the task status) are unchanged."
+}

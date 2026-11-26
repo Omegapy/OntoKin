@@ -1,0 +1,82 @@
+{
+  "schema": "ontokin.c271.p30-review-disposition/1",
+  "task": "C271",
+  "phase": "C271-P30-operational-plan-review",
+  "owner": "c271-p30-55a168e30426",
+  "review": "INDEPENDENT-REVIEW-001",
+  "candidate_commit": "8aa4a80012a14a521a441b306635c4fad68ca573",
+  "recorded_at_utc": "2026-11-26T04:10Z",
+  "dispositions": [
+    {
+      "id": "F-01",
+      "severity": "mandatory",
+      "disposition": "resolved",
+      "verified_by_director": "supervisor.py lines 165-173 (prctl 36, 'Cannot establish Linux descendant reaping'); provider _verify_host and _python_pins; probe lines 54 and 451-461",
+      "change": "Route C substitutes the supervisor (with the Linux reaping guarantee stated as not kept) and the provider's and probe's host bindings; 'exactly three real checker starts, now through the substituted supervisor'; the claims list adds the supervisor's guarantees; the recommendation is restated; E13 and E19 added to A2."
+    },
+    {
+      "id": "F-02",
+      "severity": "nonmandatory",
+      "disposition": "resolved",
+      "change": "X6 added and X4 widened to remote agent sandboxes; installed applications are named only generically in the public records."
+    },
+    {
+      "id": "F-03",
+      "severity": "nonmandatory",
+      "disposition": "resolved",
+      "verified_by_director": "kern.hv_support 1 and RosettaLinux present (EXECUTORS-SUPPLEMENT.txt)",
+      "change": "Route E (native arm64 Linux guest) added; X2 and the virtualization disposition restated; Rosetta for Linux addressed."
+    },
+    {
+      "id": "F-04",
+      "severity": "nonmandatory",
+      "disposition": "resolved",
+      "verified_by_director": "tools/check_local.py lines 575-592: the selection is prepared before the source inventory and prepare_workspace",
+      "change": "The whole default routine refuses to start, not only the unit stage; R04 needs route C, route E or another reviewed amendment; route D also needs no new machine or mode change."
+    },
+    {
+      "id": "F-05",
+      "severity": "nonmandatory",
+      "disposition": "resolved",
+      "change": "X3 labelled as not observed with E7 not established; X5's question recorded in the session checkpoint; E8 and E3 removed from X1's unmet list and the Markdown and JSON agree; the refusal order (author runtime before static host) stated."
+    },
+    {
+      "id": "F-06",
+      "severity": "nonmandatory",
+      "disposition": "resolved",
+      "verified_by_director": "EXECUTORS-SUPPLEMENT.txt (04:01:12Z): /usr/lib/x86_64-linux-gnu absent",
+      "change": "Absent paths cite the raw output; the supplement records /usr/lib/x86_64-linux-gnu."
+    },
+    {
+      "id": "F-07",
+      "severity": "nonmandatory",
+      "disposition": "resolved",
+      "verified_by_director": "main tools/doctor_local.py lines 664-676 (npm_version reads the manifest) and 741 (node --version)",
+      "change": "The doctor disclosure is exact; executed_in_phase lists the record checks and the pre-declaration runs."
+    },
+    {
+      "id": "F-08",
+      "severity": "nonmandatory",
+      "disposition": "resolved",
+      "change": "recorded_at_utc is 03:28Z with corrections dated separately."
+    },
+    {
+      "id": "F-09",
+      "severity": "nonmandatory",
+      "disposition": "resolved",
+      "change": "READ-SET-ADDITIONS.json binds the twelve added inputs, the three h0-plan trees and the extent read; the byte-identity statement is restated."
+    },
+    {
+      "id": "F-10",
+      "severity": "nonmandatory",
+      "disposition": "resolved",
+      "change": "E13 to E19 added; E1's line range is 1202-1221."
+    },
+    {
+      "id": "F-11",
+      "severity": "nonmandatory",
+      "disposition": "resolved",
+      "change": "Route A attributes a runtime change to E4 and a host-image change to E5 to E7; E2 comes from the retained archive."
+    }
+  ]
+}

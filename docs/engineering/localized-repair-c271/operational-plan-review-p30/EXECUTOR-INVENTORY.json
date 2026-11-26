@@ -4,7 +4,7 @@
   "phase": "C271-P30-operational-plan-review",
   "owner": "c271-p30-55a168e30426",
   "reviewed_revision": "7a4ab16248ed071a211ded3e24e1558ec064f0b1",
-  "inputs_identical_to": "4ee55b037b909b36cb8a6330aa07ccc78071af88",
+  "inputs_identical_to": "Every input is byte-identical to 4ee55b03 except the four workflow records that the declaration updated (task.json, the branch CURRENT.json, REQUIREMENTS.md, PLAN.md); in those, remaining_h0_constraint, the requirement and plan states and the task status are unchanged.",
   "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
   "observed_at_utc": "2026-11-26T03:20:05Z",
   "method": "Read-only: uname, sw_vers, sysctl, the shell's command -v for each tool name, the presence of application bundles and of ELF loader paths, and file(1) on interpreter and Node executables. Nothing was launched except these inspection commands; no Node, ldd, loader, container or test.",
@@ -20,11 +20,11 @@
     "translated": false,
     "rosetta_runtime_directory_present": true,
     "python": "CPython 3.12.13 (Homebrew), Mach-O 64-bit arm64; the main checkout's and this worktree's .venv use it",
-    "node": "Homebrew Node.js, Mach-O 64-bit arm64; v25.9.0 by main's startup doctor",
+    "node": "Homebrew Node.js, Mach-O 64-bit arm64; v25.9.0 by main's startup doctor, which started it once with --version and read npm's version from npm's manifest",
     "absent_paths": [
       "/usr/bin/ldd",
       "/lib64",
-      "/usr/lib/x86_64-linux-gnu",
+      "/lib/x86_64-linux-gnu",
       "/etc/ld.so.cache"
     ],
     "absent_tools": [
@@ -58,7 +58,13 @@
       "Lima",
       "Podman Desktop",
       "Rancher Desktop"
-    ]
+    ],
+    "absent_paths_note": "As the raw output shows; /usr/lib/x86_64-linux-gnu was observed absent in the supplement.",
+    "absent_paths_supplement": [
+      "/usr/lib/x86_64-linux-gnu"
+    ],
+    "hardware_virtualization_supported": true,
+    "rosetta_for_linux_present": true
   },
   "executors": [
     {
@@ -72,15 +78,17 @@
         "E5",
         "E6",
         "E7",
-        "E8"
+        "E13",
+        "E14",
+        "E19"
       ],
-      "reason": "Darwin arm64 without glibc, an ELF loader or ldd; the inspector's first host check would refuse it (source inference); the E2 build is a Linux x86-64 executable."
+      "reason": "Darwin arm64 without glibc, an ELF loader or ldd. For /0.1.1 and later plans the inspector's author-runtime check (E4, line 3011) runs before its static host check (E1, line 3013); either refuses this host (source inference). The E2 build is a Linux x86-64 executable, and the original supervisor (E13) cannot run on Darwin."
     },
     {
       "id": "X2",
       "executor": "a container or virtual machine on this host",
       "verdict": "none_exists",
-      "reason": "No container or virtualization tool is installed; main's linux-container profile is unconfigured and states that an emulated amd64 container is never native Linux qualification; an amd64 guest on this arm64 host would be emulated."
+      "reason": "No container or virtualization tool is installed, although the OS supports hardware virtualization and Rosetta for Linux is present. Main's linux-container profile is unconfigured and states that an emulated amd64 container is never native Linux qualification. An amd64 guest here would be emulated; Rosetta for Linux translates x86-64 code inside an arm64 guest, which is translation rather than native execution, so the same rule applies by inference. An arm64 Linux guest would run natively but fails the x86-64 pins (route E). Either needs new host tooling."
     },
     {
       "id": "X3",
@@ -91,11 +99,12 @@
         "E5",
         "E6"
       ],
-      "reason": "Hosted jobs are optional, manual-only and default-false under OK-ENG-006 and the no-payment direction; the local-mode executor is the owner's prepared environment or a named dedicated machine; GitHub's Linux runners are Ubuntu images, not the Debian glibc 2.41-12+deb13u4 build whose bytes are pinned, and lack the Codex runtime's Python image."
+      "reason": "Hosted jobs are optional, manual-only and default-false under OK-ENG-006 and the no-payment direction; the local-mode executor is the owner's prepared environment or a named dedicated machine. Not observed in this phase (general knowledge): GitHub's Linux runners are Ubuntu images, not the Debian glibc 2.41-12+deb13u4 build whose bytes are pinned, and they lack the Codex runtime's Python image. E7 is not established.",
+      "observed": false
     },
     {
       "id": "X4",
-      "executor": "a disposable ChatGPT browser-thread host",
+      "executor": "a disposable ChatGPT browser-thread host, or another remote agent sandbox",
       "verdict": "not_an_executor_of_this_local_session",
       "reason": "The class of host on which the pins were observed (P23: all three matched). Using one means running that phase in browser mode on explicit owner direction under the ephemeral-host rule; every pin must be observed afresh there."
     },
@@ -103,13 +112,43 @@
       "id": "X5",
       "executor": "another machine of the owner",
       "verdict": "none_named",
-      "reason": "The startup report asked whether a Linux x86-64 machine or VM should be considered; the owner's reply selected the phase and named none."
+      "reason": "None named. This session's startup report asked whether a Linux x86-64 machine or VM should be considered (recorded in docs/workflow/tasks/C271/P30-SESSION.md); the owner's reply selected the phase and named none."
+    },
+    {
+      "id": "X6",
+      "executor": "other Node and Python executables on this host",
+      "verdict": "does_not_meet",
+      "unmet": [
+        "E2",
+        "E4"
+      ],
+      "observed_by": "the independent reviewer (INDEPENDENT-REVIEW-001, F-02); not re-observed by the Director",
+      "reason": "Node builds bundled inside three installed applications (24.14.0, 24.22.3 and one whose version was not read) and Node embedded through Electron, all Mach-O arm64; uv-managed CPython 3.12.11 and 3.11.14 and the system Python 3.9.6. None is v24.22.1 or 126,951,512 bytes, and none is the pinned Linux image."
     }
   ],
   "conclusion": "No existing executor available to this local session meets the adopted contract (P30-EXECUTOR-001).",
   "related_source_facts": [
     "Main's tests/test_static_tray_readback_v01.py keeps skipUnless(NODE.is_file() and DEPS.is_dir() and HOST.is_file(), 'Retained exact Node/readback dependencies are unavailable'); main's local runs skipped the three CPU methods (docs/engineering/local-migration-20261124/BASELINE-CHECKS.json and CANDIDATE-CHECKS.json).",
-    "This branch's tools/check_local.py prepare_readback_selection raises 'The unit stage requires --readback-config ABSOLUTE_FILE and --readback-config-sha256 EXPECTED_DIGEST from the reviewed execution plan.'; its ReadbackCPUControls.setUpClass reports missing prerequisites as setup errors, never skips (source inference; not executed)."
+    "This branch's tools/check_local.py resolves the readback selection before its source inventory, workspace copy and every step whenever the unit stage is planned (the default routine); prepare_readback_selection raises 'The unit stage requires --readback-config ABSOLUTE_FILE and --readback-config-sha256 EXPECTED_DIGEST from the reviewed execution plan.' Its ReadbackCPUControls.setUpClass reports missing prerequisites as setup errors, never skips. So the branch's default local routine cannot start on X1 (source inference; not executed)."
   ],
-  "limits": "Covers platform identity and the presence of common container and virtualization tools; no network or remote host was probed and no SSH configuration was read."
+  "limits": "Covers platform identity, the presence of common container and virtualization tools and, through the reviewer, other Node and Python executables; no network or remote host was probed and no SSH configuration was read.",
+  "supplement": {
+    "observed_at_utc": "2026-11-26T04:01:12Z",
+    "raw_output": {
+      "location": "../OntoKin-local/c271-p30/inventory/EXECUTORS-SUPPLEMENT.txt beside the clone",
+      "sha256": "b9c92d6444e65c89bf120e8d638cd0f801c65f82e26416d11a21129ab11b5178"
+    },
+    "observed": [
+      "/usr/lib/x86_64-linux-gnu is absent",
+      "kern.hv_support is 1",
+      "Rosetta for Linux is present (/Library/Apple/usr/libexec/oah/RosettaLinux holds rosetta and rosettad)"
+    ]
+  },
+  "corrections": [
+    {
+      "corrected_at_utc": "2026-11-26T04:10Z",
+      "found_by": "INDEPENDENT-REVIEW-001 F-01 to F-07 and F-09",
+      "change": "X1's unmet list and refusal order; X2's virtualization facts and the arm64 guest; X3 labelled as not observed and E7 not established; X5's source; X6 added; absent paths as the raw output shows, with a supplement; the driver fact restated; the doctor's Node start stated exactly. The first version is retrievable from commit 8aa4a800."
+    }
+  ]
 }
