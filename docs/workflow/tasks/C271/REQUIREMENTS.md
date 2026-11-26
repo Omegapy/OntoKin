@@ -658,3 +658,18 @@ The pinned inputs of the macOS readback qualification are prepared from the boun
   - product completion: no.
 - **Unchanged:** R01/R02 remain done and R03–R05 not_done.
 - **Next gate:** MH, the first that starts the pinned Node. It needs the owner's selection. Until then the `.venv` runs only with `-B`.
+
+## P35 gate MH: host qualification of the readback methods — November 26, 2026
+
+The owner answered "Start gate MH" in this session. Phase C271-P35-macos-host-qualification-mh runs in local mode ([phase declaration](../../../engineering/localized-repair-c271/macos-qualification-p35/PHASE.json), [MH plan](../../../engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md), [session checkpoint](P35-SESSION.md)).
+- **Objective:** gate MH of the adopted contract `ontokin.current-host-readback/0.2.0`, at design revision 4:
+  - N34-M, the independent review of the Mach-O parser and the closure claim against the actual load commands;
+  - M0 and M1 on this host, under an independently frozen and reviewed observation plan, giving an independently reviewed HOST;
+  - the qualifying cohort under a reviewed operational freeze: the probe syntax check, the direct negatives P06-H01 and P06-H02, the original seven methods with exactly three real CPU starts, and the controls assigned to MH;
+  - an independent audit.
+- **Fixed state:** from the observation plan's freeze to the audit, one boot, HEAD at one commit and no commit; the `.venv` only with `-B`.
+- **Downloads:** none.
+- **Not run:** `ldd`, `codesign`, the complete default routine (MR).
+- **Main:** not written.
+- **Excluded:** MR, R04 and R05.
+- **Unchanged:** R01/R02 remain done and R03–R05 not_done.

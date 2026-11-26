@@ -1,0 +1,65 @@
+{
+  "schema": "ontokin.c271.p35-macos-host-qualification/1",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "owner": "c271-p35-e38e3aa82ade",
+  "declared_at_utc": "2026-11-26T23:08:24Z",
+  "status": "declared_qualification_pending",
+  "execution_mode": {
+    "mode": "local",
+    "entry_document": "https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/LOCAL-START-HERE.md",
+    "governing_instructions": "current main at 51223c9b94a222f29d38eb6c33808f8e55e2bff9; gate MB merged it into this branch, so the branch's instruction files are main's bytes"
+  },
+  "owner_direction": {
+    "date": "2026-11-26 (America/Denver and UTC)",
+    "question": "Should I start gate MH, the first gate that runs Node?",
+    "reply": "Start gate MH",
+    "how_received": "typed by the owner in this session",
+    "scope_of_selection": "gate MH of the adopted contract ontokin.current-host-readback/0.2.0 only"
+  },
+  "objective": "Gate MH of docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md section 11, as amended by P33-AMENDMENT-001: N34-M; the reviewed observational tooling; M0 and M1 on this host under an independently frozen and reviewed observation plan, giving an independently reviewed HOST; the operational freeze; the qualifying cohort (the probe syntax check, the direct negatives P06-H01 and P06-H02, the original seven methods) and the controls assigned to MH; and an independent audit. Nothing is integrated, and the complete default routine (MR) is not run.",
+  "plan": "docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md",
+  "starting_state": {
+    "branch_head": "30e00d83df8bd87216b15ec1e4a4f0ca349fc78d",
+    "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "remote_observation": "git ls-remote --heads origin at 2026-11-26T22:53:48Z",
+    "pull_request": "PR274 open, draft, head 30e00d83",
+    "scope_issue": "issue273 open",
+    "environment": "MP's prepared inputs intact: the framework and the .venv byte-identical to MP's after-snapshot (inventory digest c277bdd3ac6aa731...); the doctor reports python-verification not_checked by design (no pip); the Node runtime and the reader tree under ../OntoKin-local/c271-macos/, never run",
+    "boot": "the boot session of 2026-11-23; the observation plan binds the boot session that is current when it is frozen"
+  },
+  "acceptance": [
+    {"id": "A1", "check": "This declaration and its plan are pushed before any MH work."},
+    {"id": "A2", "check": "N34-M: before the observation plan is adopted, an independent reviewer examines the Mach-O parser's source and the closure claim of contract section 7 against the actual load commands of the prepared bin/node and the interpreter installation's Mach-O files, read statically, with no start."},
+    {"id": "A3", "check": "Tooling: the failure-capture procedure and the observational harnesses that P07 section 3 item 6 names (a runtime-discovery collector, a unittest outcome collector and an independent numerical-audit harness), with a direct-probe runner for the direct negatives, are written by an independent author, reviewed, and committed at one commit C before any observation; the plans bind their identities."},
+    {"id": "A4", "check": "Observation plan: frozen by an independent author at C under the observer's plan schema, with the Python installation inventory frozen, the source inventory of C, the Git binding, the boot, the evidence parent with its ancestors and the failure-capture procedure; reviewed by a fresh reviewer; applied with its digest supplied from outside the plan."},
+    {"id": "A5", "check": "M0 and M1 run through the observer's observe command under that plan, with exactly one Git and one Node start, and write HOST (OBSERVED_UNAPPROVED); an independent review accepts HOST before any configuration binds it; a failed or unknown attempt is retained and never silently repeated."},
+    {"id": "A6", "check": "Operational freeze: the configuration (config/0.2.0, source at C, HOST, dependencies, runtime, methods and discovery), the positive and mutated fixtures, the control table with exact expected outcomes, starts and evidence predicates, and every command, frozen by the independent author and reviewed before execution; the configuration digest supplied from outside it."},
+    {"id": "A7", "check": "Cohort: the probe syntax check, P06-H01 and P06-H02, the original seven methods (exactly three real CPU starts; the intended matrix_0_3 negative; the four coordinator seams labelled mocked) and the MH controls (MC11 on the module loader and the 24 reader files, MC24 to MC28, MC30 for the probe, MC36, MC37 again, and the reruns that MI's findings F-01, F-03, F-04 and F-05 require) run as frozen; every start is counted and every failure or unknown retained."},
+    {"id": "A8", "check": "An independent audit recomputes every numerical row, the start counts and receipts, the method outcomes and the bound digests, and accepts the results, or its mandatory findings are resolved and re-audited."},
+    {"id": "A9", "check": "No ldd start; Node only through the bounded routes, counted; the .venv only with -B; from the observation plan's freeze to the audit one boot, HEAD at C and no commit; the workflow check, the documentation verifier and a scoped whitespace check pass."},
+    {"id": "A10", "check": "Pushed without force and read back; outcome records with path-portable copies (no machine path), session checkpoint and task record; one checkpoint comment on PR274 and issue273; PR274 stays draft; main is not written."}
+  ],
+  "ownership": {
+    "director": "c271-p35-e38e3aa82ade",
+    "director_session": "the same Claude Code session that carried out C271-P30 to P34",
+    "owned": [
+      "the C271 worktree, its index and .venv",
+      "every update of this branch in this phase",
+      "the working evidence directory ../OntoKin-local/c271-p35/"
+    ],
+    "workers": "W1 (N34-M reviewer), W2 (independent author), W3 (independent reviewer) and W4 (independent auditor) of the plan, section 3; no worker makes a Git write or starts a process other than those its brief allows",
+    "main": "not written; the integration lease is not used"
+  },
+  "stopping_condition": "The audited cohort pushed and read back with its records, or a concrete blocker, such as a real-host refusal that needs an amendment.",
+  "excluded": [
+    "any download or install; any change to the prepared runtime, reader tree or .venv",
+    "any ldd start; a codesign inspection (optional in the contract, not selected)",
+    "the complete default routine and MC23 on a real qualifying run (MR); R03, R04 and R05",
+    "changes to the implementation, the adopted contract, its amendment or the frozen controls of MI; a needed change is a finding and, if it changes the contract, an amendment",
+    "integration into main and the main lease; PR274 state changes, issue closure, branch deletion"
+  ],
+  "records": {
+    "session_checkpoint": "docs/workflow/tasks/C271/P35-SESSION.md"
+  }
+}

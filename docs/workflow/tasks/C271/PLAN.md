@@ -641,3 +641,18 @@ Every step ran as planned:
 - these outcome records.
 
 One recorded failure: the Director's exact `.venv` check crashed on its first run and was rerun after a fix on the retained snapshots. Each push was without force and read back. The next phase, not begun here, is gate MH. Then come MR (R03), R04 and R05, each a separate phase.
+
+## P35 gate MH: host qualification of the readback methods — November 26, 2026
+
+Local mode, on the owner's selection ([phase declaration](../../../engineering/localized-repair-c271/macos-qualification-p35/PHASE.json)). Director `c271-p35-e38e3aa82ade`. The [MH plan](../../../engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md) fixes the stages, the workers, the fixed state and the start accounting.
+
+Ordered steps:
+1. Declare and push.
+2. Have an independent reviewer, W1, carry out N34-M, while an independent author, W2, writes the observational tooling, which a fresh reviewer (W3) reviews.
+3. Commit the N34-M records and the reviewed tooling at one commit C, push and read back.
+4. Have W2 freeze the observation plan at C, outside Git, and a fresh W3 review it; the digest comes from the review.
+5. Run M0 and M1 once through the observer, and have a fresh W3 review HOST.
+6. Have W2 freeze the configuration, the fixtures, the control table and the commands, and a fresh W3 review them.
+7. Run the cohort and the MH controls exactly as frozen, counting every start.
+8. Have an independent auditor, W4, recompute the results.
+9. Record, push without force, read the push back, comment once on PR274 and issue273, and stop.

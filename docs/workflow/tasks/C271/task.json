@@ -4,7 +4,7 @@
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
   "status": "in_progress",
-  "owner": "c271-p34-ec1a7de2360d",
+  "owner": "c271-p35-e38e3aa82ade",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -1620,27 +1620,24 @@
       "scope": "gate MP only: the pinned runtime, reader tree and .venv prepared and receipted; nothing observed, qualified or integrated"
     }
   },
-  "next_action": "C271-P34 prepared gate MP of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001) from the bound commit 601f39361940422179ff7683aa602c2b36622944: the pinned Node.js v24.22.1 runtime and the 24-file reader tree, both INSTALLED_EXACT outside Git with zero Node, ldd and checker starts, and the worktree's .venv with exactly the seven pinned packages and no pip, under independently frozen and reviewed plans and an independent result review (ACCEPT_WITH_NONMANDATORY_FINDINGS). Nothing is observed, qualified or integrated. The next gate is MH: N34-M, then M0 and M1 on this host, then the qualifying cohort of the seven readback methods and the direct negatives, with an independent audit; it is the first gate that starts the pinned Node, and a separate phase that needs the owner's selection. Until then the .venv runs only with -B. Then MR (R03), R04 and R05.",
+  "next_action": "C271-P35-macos-host-qualification-mh is declared and in progress: gate MH of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001). An independent reviewer carries out N34-M; an independent author writes the observational tooling, the observation plan and the operational freeze, and a fresh reviewer reviews each before it runs; M0 and M1 run once on this host (one Git and one Node start) and give HOST; the qualifying cohort runs the probe syntax check, the direct negatives P06-H01 and P06-H02 and the original seven methods (exactly three real CPU starts), with the controls assigned to MH; an independent audit recomputes the results. From the observation plan's freeze to the audit, one boot and one commit. Nothing is integrated, and the complete default routine is not run. Then MR (R03), R04 and R05, each a separate phase.",
   "session_phase": {
-    "schema": "ontokin.c271.p34-macos-preparation/1",
+    "schema": "ontokin.c271.p35-macos-host-qualification/1",
     "task": "C271",
-    "phase": "C271-P34-macos-preparation-mp",
-    "owner": "c271-p34-ec1a7de2360d",
-    "declared_at_utc": "2026-11-26T21:01:00Z",
+    "phase": "C271-P35-macos-host-qualification-mh",
+    "owner": "c271-p35-e38e3aa82ade",
+    "declared_at_utc": "2026-11-26T23:08:24Z",
     "execution_mode": "local",
     "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-    "starting_branch_head": "180075b7952fb4df50ec35eb64106410bfa1d8f9",
+    "starting_branch_head": "30e00d83df8bd87216b15ec1e4a4f0ca349fc78d",
     "branch": "work/c271-missing-import-digest-control",
     "worktree": "../OntoKin-worktrees/c271",
     "pull_request": 274,
     "scope_issue": 273,
-    "record": "docs/engineering/localized-repair-c271/macos-preparation-p34/PHASE.json",
-    "plan": "docs/engineering/localized-repair-c271/macos-preparation-p34/PREPARATION-PLAN.md",
-    "session_checkpoint": "docs/workflow/tasks/C271/P34-SESSION.md",
-    "status": "preparation_complete_reviewed_pushed",
-    "completed_at_utc": "2026-11-26T22:32:39Z",
-    "bound_commit": "601f39361940422179ff7683aa602c2b36622944",
-    "outcome": "docs/engineering/localized-repair-c271/macos-preparation-p34/OUTCOME.json"
+    "record": "docs/engineering/localized-repair-c271/macos-qualification-p35/PHASE.json",
+    "plan": "docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md",
+    "session_checkpoint": "docs/workflow/tasks/C271/P35-SESSION.md",
+    "status": "declared_qualification_pending"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -8345,6 +8342,99 @@
         "p33_macos_implementation",
         "p33_prior_current_fields",
         "p34_prior_current_fields"
+      ]
+    }
+  },
+  "p35_prior_current_fields": {
+    "recorded_at_utc": "2026-11-26T23:08:24Z",
+    "purpose": "The current values that the C271-P35 declaration replaced, kept unchanged as P34's closing state.",
+    "owner": "c271-p34-ec1a7de2360d",
+    "next_action": "C271-P34 prepared gate MP of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001) from the bound commit 601f39361940422179ff7683aa602c2b36622944: the pinned Node.js v24.22.1 runtime and the 24-file reader tree, both INSTALLED_EXACT outside Git with zero Node, ldd and checker starts, and the worktree's .venv with exactly the seven pinned packages and no pip, under independently frozen and reviewed plans and an independent result review (ACCEPT_WITH_NONMANDATORY_FINDINGS). Nothing is observed, qualified or integrated. The next gate is MH: N34-M, then M0 and M1 on this host, then the qualifying cohort of the seven readback methods and the direct negatives, with an independent audit; it is the first gate that starts the pinned Node, and a separate phase that needs the owner's selection. Until then the .venv runs only with -B. Then MR (R03), R04 and R05.",
+    "session_phase": {
+      "schema": "ontokin.c271.p34-macos-preparation/1",
+      "task": "C271",
+      "phase": "C271-P34-macos-preparation-mp",
+      "owner": "c271-p34-ec1a7de2360d",
+      "declared_at_utc": "2026-11-26T21:01:00Z",
+      "execution_mode": "local",
+      "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "starting_branch_head": "180075b7952fb4df50ec35eb64106410bfa1d8f9",
+      "branch": "work/c271-missing-import-digest-control",
+      "worktree": "../OntoKin-worktrees/c271",
+      "pull_request": 274,
+      "scope_issue": 273,
+      "record": "docs/engineering/localized-repair-c271/macos-preparation-p34/PHASE.json",
+      "plan": "docs/engineering/localized-repair-c271/macos-preparation-p34/PREPARATION-PLAN.md",
+      "session_checkpoint": "docs/workflow/tasks/C271/P34-SESSION.md",
+      "status": "preparation_complete_reviewed_pushed",
+      "completed_at_utc": "2026-11-26T22:32:39Z",
+      "bound_commit": "601f39361940422179ff7683aa602c2b36622944",
+      "outcome": "docs/engineering/localized-repair-c271/macos-preparation-p34/OUTCOME.json"
+    }
+  },
+  "p35_macos_qualification": {
+    "phase": "C271-P35-macos-host-qualification-mh",
+    "owner": "c271-p35-e38e3aa82ade",
+    "record": "docs/engineering/localized-repair-c271/macos-qualification-p35/PHASE.json",
+    "plan": "docs/engineering/localized-repair-c271/macos-qualification-p35/MH-PLAN.md",
+    "session_checkpoint": "docs/workflow/tasks/C271/P35-SESSION.md",
+    "declared_at_utc": "2026-11-26T23:08:24Z",
+    "status": "declared_qualification_pending",
+    "owner_direction": [
+      {
+        "date": "2026-11-26 (America/Denver and UTC)",
+        "question": "Should I start gate MH, the first gate that runs Node?",
+        "reply": "Start gate MH",
+        "how_received": "typed by the owner in this session",
+        "scope_of_selection": "gate MH of the adopted contract ontokin.current-host-readback/0.2.0 only"
+      }
+    ],
+    "gate": "MH of ontokin.current-host-readback/0.2.0",
+    "downloads": "none needed and none approved",
+    "parent_complete": false
+  },
+  "p35_fields_index": {
+    "recorded_at_utc": "2026-11-26T23:08:24Z",
+    "purpose": "Extends p34_fields_index, which stays unchanged: p35_macos_qualification joins the current-state fields of task.json, and p34_macos_preparation becomes history.",
+    "current_state_fields": {
+      "task.json": [
+        "status",
+        "blocked_reason",
+        "owner",
+        "branch",
+        "scope_issue",
+        "requirements",
+        "plan",
+        "checks",
+        "completion",
+        "next_action",
+        "session_phase",
+        "execution_mode",
+        "execution_mode_record",
+        "delivery_reconciliation",
+        "p35_macos_qualification"
+      ],
+      "CURRENT.json": [
+        "schema_version",
+        "project",
+        "latest_task",
+        "active_task",
+        "execution_mode",
+        "observed_main",
+        "snapshot_date",
+        "next_action",
+        "checkpoint",
+        "unfinished",
+        "boundaries",
+        "delivery_policy",
+        "history"
+      ]
+    },
+    "now_history": {
+      "task.json": [
+        "p34_macos_preparation",
+        "p34_prior_current_fields",
+        "p35_prior_current_fields"
       ]
     }
   }
