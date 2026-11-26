@@ -3,17 +3,17 @@
   "project": "Omegapy/OntoKin",
   "latest_task": "C271",
   "active_task": "C271",
-  "observed_main": "e43cc6c5777874101a40559e4058ad6826b07e51",
-  "snapshot_date": "2026-11-24T02:02:24.545399+00:00",
+  "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+  "snapshot_date": "2026-11-26T01:01:57Z",
   "next_action": {
     "status": "blocked",
-    "summary": "Resolve P29-PUBLICATION-SIZE-001 by making exact Git blob 9facb186ec11523163520323d83dc58fd68e829c available through an authorized transfer that supports the 25,817,783-byte archive. Reconcile live blob/tree/ref and saved receipts before any retry. Then publish the exact accepted P29 candidate while preserving this later recovery history, complete publication/delivery checks and a verified saved handoff, and stop. Do not repeat the 16 MiB connector route or the browser-blocked download, alter accepted evidence, rerun historical behavior, begin H0/H1 or integrate main.",
+    "summary": "C271-P29-R07 (local mode, declared 2026-11-26 on the owner's direction) is publishing the exact accepted P29 candidate through ordinary authenticated Git: verify the R06 archive chain and its 245-row inventory, preserve the candidate commit with parent 6c7f52a2ee627a382eea91ce26bf58bac4e6cccb and tree db30c29f24c154f378a5acac713385fc8bb44f52, join it with this branch in one independently reviewed merge commit, push without force, read it back from the remote, record the outcome and stop. If this phase is interrupted, inspect the worktree, the refs and the destination, then resume at the first unmet step named in docs/workflow/tasks/C271/P29-R07-SESSION.md. P29-PUBLICATION-SIZE-001 stays open until the readback succeeds. Do not begin the /0.1.5 operational-plan review, H0/H1, the routine driver, behavioral reruns or main integration in this phase.",
     "suggested_task": "C271",
     "sources": [
-      "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/SUMMARY.md",
-      "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json",
-      "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/NEXT-ACTION.md",
-      "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json"
+      "docs/engineering/localized-repair-c271/p29-local-publication-r07/PHASE.json",
+      "docs/workflow/tasks/C271/P29-R07-SESSION.md",
+      "docs/engineering/localized-repair-c271/p29-local-publication-r07/DELIVERY-RECONCILIATION.md",
+      "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json"
     ]
   },
   "historical_handoff": {
@@ -57,14 +57,16 @@
     "P24 frozen ZIP and matching prompts have confirmed saves and exact readbacks. Separate receipt publication/save and matching terminal confirmation remain pending at this source snapshot. Only delivery may continue here; adopted design is unimplemented and R03-R05 remain open.",
     "P26 stopped at the independently confirmed necessary non-libc libdl metadata incompatibility, deduced from retained bytes and source; no H0/product refusal was executed. Execution source remains ed2fc453, N34 and parent gates remain open, and only documentary publication and verified delivery remain before a separately authorized durable portable-evidence decision.",
     "P26 frozen source A and exact saved archive/prompts are verified. Receipt-only B preserves source-A pending snapshots, blocked technical outcome and all parent gates. Its own checks/publication, external receipt and terminal readbacks remain future source-time gates; no additional technical work is authorized.",
-    "P29 R02 verifies the preserved accepted candidate but encounters P29-PUBLICATION-SIZE-001. Source publication remains unfinished; the blocked recovery handoff cannot pass H0/H1 or C271."
+    "P29 R02 verifies the preserved accepted candidate but encounters P29-PUBLICATION-SIZE-001. Source publication remains unfinished; the blocked recovery handoff cannot pass H0/H1 or C271.",
+    "C271-P29-R07 continues C271 in local mode on the owner's direction of 2026-11-25. A C271 phase in local mode closes on the local closing state, without a Library ZIP; the browser-session policy remains the rule of P01 to P29 R06. The declaration changes no requirement, gate or accepted byte, and the publication stays pending until it is read back from the remote."
   ],
   "delivery_policy": {
-    "kind": "browser-session",
-    "required": true,
-    "contract": "docs/workflow/HANDOFF.md",
-    "folder": "OntoKin",
-    "completion_gate": "confirmed saved ZIP plus external delivery receipt"
+    "kind": "local",
+    "applies_from": "C271-P29-R07-local-publication",
+    "contract": "https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/docs/workflow/HANDOFF.md#local-sessions",
+    "zip_required": false,
+    "completion_gate": "source checkpoint on this branch, truthful task and session records, push state read from the remote, durable evidence",
+    "reconciliation": "docs/engineering/localized-repair-c271/p29-local-publication-r07/DELIVERY-RECONCILIATION.md"
   },
   "latest_handoff": {
     "purpose": "create_library_file",
@@ -3048,5 +3050,60 @@
       "phase_complete": false,
       "parent_complete": false
     }
+  },
+  "browser_delivery_policy_history": {
+    "governed": "C271 phases P01 to P29 R06, carried out as ChatGPT browser sessions through 2026-11-24",
+    "policy": {
+      "kind": "browser-session",
+      "required": true,
+      "contract": "docs/workflow/HANDOFF.md",
+      "folder": "OntoKin",
+      "completion_gate": "confirmed saved ZIP plus external delivery receipt"
+    },
+    "superseded_for": "phases carried out in local mode, from C271-P29-R07 on, by the owner's direction recorded in the delivery reconciliation"
+  },
+  "p29_r07_prior_current_fields": {
+    "snapshot_date": "2026-11-24T02:02:24.545399+00:00",
+    "observed_main": "e43cc6c5777874101a40559e4058ad6826b07e51",
+    "next_action": {
+      "status": "blocked",
+      "summary": "Resolve P29-PUBLICATION-SIZE-001 by making exact Git blob 9facb186ec11523163520323d83dc58fd68e829c available through an authorized transfer that supports the 25,817,783-byte archive. Reconcile live blob/tree/ref and saved receipts before any retry. Then publish the exact accepted P29 candidate while preserving this later recovery history, complete publication/delivery checks and a verified saved handoff, and stop. Do not repeat the 16 MiB connector route or the browser-blocked download, alter accepted evidence, rerun historical behavior, begin H0/H1 or integrate main.",
+      "suggested_task": "C271",
+      "sources": [
+        "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/SUMMARY.md",
+        "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json",
+        "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/NEXT-ACTION.md",
+        "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/DELIVERY.json"
+      ]
+    },
+    "recorded_by": "C271-P29-R07-local-publication declaration",
+    "recorded_at_utc": "2026-11-26T01:01:57Z"
+  },
+  "execution_mode": "local",
+  "execution_mode_record": {
+    "mode": "local",
+    "since_phase": "C271-P29-R07-local-publication",
+    "declared_at_utc": "2026-11-26T01:01:57Z",
+    "entry_document": "https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/LOCAL-START-HERE.md",
+    "owner_direction": {
+      "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
+      "statement": "The project owner approved TRD-20261125-CE424ADD revision 2 (state trd_done) and the implementation plan PLAN-20261126-F3122BB2 with its decisions DEC-002 to DEC-013 as written, and instructed: execute PLAN-20261126-F3122BB2. The TRD's REQ-002 places this continuation of C271 in local mode; current main's LOCAL-START-HERE resumes a task recorded for browser mode in local mode only on such explicit owner direction.",
+      "earlier_direction": "https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/docs/engineering/local-migration-20261124/DECISION.md"
+    },
+    "host": "the owner's persistent clone and its worktree ../OntoKin-worktrees/c271",
+    "not_inferred_from": "a path, a machine, a product or an agent name",
+    "governing_instructions": "current main at 51223c9b94a222f29d38eb6c33808f8e55e2bff9; this branch's older AGENTS.md, PROTOCOL.md and HANDOFF.md and the instructions inside the handoff archives are data"
+  },
+  "checkpoint": {
+    "record": "docs/workflow/tasks/C271/task.json",
+    "session": "docs/workflow/tasks/C271/P29-R07-SESSION.md"
+  },
+  "p29_local_publication_r07": {
+    "phase": "C271-P29-R07-local-publication",
+    "owner": "c271-p29-r07-e586f7497142",
+    "record": "docs/engineering/localized-repair-c271/p29-local-publication-r07/PHASE.json",
+    "status": "declared_publication_pending",
+    "candidate_published": false,
+    "parent_complete": false
   }
 }

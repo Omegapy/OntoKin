@@ -1,0 +1,2691 @@
+{
+ "schema": "ontokin.c271.p29-r07-destination-inspection/1",
+ "task": "C271",
+ "phase": "C271-P29-R07-local-publication",
+ "plan_task": "TASK-003",
+ "started_at": "2026-11-26T00:48:57Z",
+ "finished_at": "2026-11-26T00:50:33Z",
+ "method": "GET /repos/Omegapy/OntoKin/git/blobs/{sha} and /git/trees/{sha} through the authenticated GitHub CLI (gh api), which returns binary blobs base64-encoded; a jq filter kept only sha and size, so no content was stored. HTTP 200 with the requested sha = present; HTTP 404 = absent at that observation; anything else = not determined. Remote heads read with git ls-remote --heads origin.",
+ "remote_heads": [
+  "51223c9b94a222f29d38eb6c33808f8e55e2bff9\trefs/heads/main",
+  "bef6790291d0cddc8c6d7de9dc0a92fb5a98c448\trefs/heads/work/c271-missing-import-digest-control"
+ ],
+ "candidate_tree": {
+  "sha": "db30c29f24c154f378a5acac713385fc8bb44f52",
+  "state": "absent",
+  "http": 404,
+  "response": "Not Found",
+  "at": "2026-11-26T00:50:33Z"
+ },
+ "evidence_blob": {
+  "git_blob": "9facb186ec11523163520323d83dc58fd68e829c",
+  "state": "absent",
+  "http": 404,
+  "response": "Not Found",
+  "at": "2026-11-26T00:49:53Z"
+ },
+ "counts": {
+  "present": 47,
+  "absent": 166,
+  "not_determined": 0
+ },
+ "total": 213,
+ "prior_unknown_43": [
+  {
+   "git_blob": "5eff6c7381861e38735f921123cf6acb0e414da0",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/control-attempts/implementation-focused-001.zip",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "3989235db788281311cb28ca82c8679f5eccbde9",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B01.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "e511301cb7e8aa718f1d260a0f4c0e16dbc2b782",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B02.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "e35fadd929547c3433aec061542dd1ad0bcf39de",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B03.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "1fc855c15f0faf420c7b6f0c8111dae4c830fa63",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B04.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "a401803466fa5ba4fda0ea17a5d3aaf42589998c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B05.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "291ed51e2acf70b6a6d7c6bcbf756cf41bbd1b10",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B06.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "058d4b0329f8f0ef8cf56f0a7e3bbecb4dc714c5",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B07.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "5556fe038e8ba7105b900845a6db7d289f6fdde2",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B08.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "641e4558de8205c4f7b6b602e7440457066c1492",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B09.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "4e48d43b993070494164cafd9730eca21da9fcbf",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B10.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "a07f727eeff2f241f8116cb7d367d0b6da598769",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B11.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "518375cd2a0e82a5031793479a9fde116e69965d",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B12.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "f4d03db13474170aefb7f8e25c4dfbe0995d7fed",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B13.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "5da6f25036e27c7c5179ff81c8165d5f618d4498",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B14.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "24ed5bf53b51d8bdedd24081783137a3dca21c72",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B15.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "4b22e0975244731ca2a69181d9d39b45b94090b6",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-S12.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "e0489900b088994e5d87538fcf12649c48aedd2e",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N01.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "d95a31ad1093c8b75feec06d97f38c2e359132c2",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N02.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "fce434168814d152ad9e519530ce6ab72fd62dcd",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N03.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "e84745fe6eb29e189bf399a1e7789d738673dafe",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N04.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "16ed607458c905db4e6b971a5d25a56925fa2ac0",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N05.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "54ed8e079072a3b7d9d94018acb94d19fd4de4ae",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N06.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "cc8d9bc1f8e3f963bd2ea2cee2b654bd16cf7bca",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N07.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "e04f33f159d324cc1d0ab277cab3149c49f73388",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N08.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "7b49c4a6a66780b4ced90eb7cd5883c3ef696252",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N09.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "15b636e82154dcc06eb0c5798a52f2ebbea8bc6c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N12.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "a96de5a2e2cdcca2045bcfd0e90ee30ebe6a437f",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N11.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "bfd52c10f8657f144eb26e2aba2a6441a0e81abb",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N13.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "2a7e8c97cd76fbd80f701a9e02f89cd7e1f52ee1",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N14.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "0300d9448ab28f4a8d849deadb944ac7f74d6aff",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N15.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "3bcb9403d6f56bc8aa291152339bea1f538b88a4",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N16.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "62d085063ff7a56b8c524a2199c4588755757a4c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N17.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "187c9ab207afffb9c48bd4de26d15d284d27b330",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N18.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "75201ad094f2c741d0090130bf2068e6dbbc265e",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N19.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "74f28f107e2d6ef34324882a54ee839d968da907",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N20.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "4d0d3eedccb5f4dd184039bc3c898fc0bd3803f0",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N21.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "df6d2c46ae239d01179aaaa10da689deaf05f01d",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N22.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "dbf4096f2e2933c25da545a8a64e4c9bd2e94434",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N23.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "36db4e3a1358fa7b6b8e5f54f5ecfaabc8a85915",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N24.elf.inert",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "e81d71196e9069a98c640590e814271c2e0c1066",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE001.zip",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "5823fa33e5ffa5b42979b4fb4110d6fb48825044",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE002.zip",
+   "state_now": "present",
+   "http": 200
+  },
+  {
+   "git_blob": "60de25dc9fe18d64948a2d9d323e9b9f501d7364",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE003.zip",
+   "state_now": "present",
+   "http": 200
+  }
+ ],
+ "prior_unknown_count": 43,
+ "candidate_paths_on_remote_branch_head": {
+  "head": "bef6790291d0cddc8c6d7de9dc0a92fb5a98c448",
+  "candidate_paths": 245,
+  "paths_present": 5,
+  "paths_with_candidate_content": 0,
+  "rows": [
+   {
+    "path": "docs/workflow/CURRENT.json",
+    "branch_blob": "7bf67efb72b3554c9340f583b0bf2427bba69a11",
+    "candidate_blob": "cf8f22023c676ad0eb4ba5820b301e61b3852d36",
+    "same_content": false
+   },
+   {
+    "path": "docs/workflow/tasks/C271/PLAN.md",
+    "branch_blob": "199f1921fcba71c3b6695b655985b083dd581544",
+    "candidate_blob": "0e48c1e29ac22b9fe9e971ab915d2f875b6da2dc",
+    "same_content": false
+   },
+   {
+    "path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+    "branch_blob": "99ac3b6b710d8e2e8379e192b8e0dfe68a1e5d2c",
+    "candidate_blob": "591451bd56a88c9e3940fbaa0afe2bc7950c9643",
+    "same_content": false
+   },
+   {
+    "path": "docs/workflow/tasks/C271/task.json",
+    "branch_blob": "50c5bdfce6d821ab553e259432d1dd36d8834cec",
+    "candidate_blob": "7bb2c3f63bc7b2cf6bf20d67175802ca1584f744",
+    "same_content": false
+   },
+   {
+    "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "branch_blob": "c583073999493e1c4bd76c5d2093bb34c07d1c05",
+    "candidate_blob": "5afcf8337a11fa64ea58f626be4f8a3e653c919d",
+    "same_content": false
+   }
+  ]
+ },
+ "path_list_source": {
+  "file": "recovery-review.json copy staged by the migration beside the clone (staging/r06-20261125/outer/evidence/reviews/)",
+  "sha256": "39f51cf433eb96f18820959fb3d0830cd8db4f2d99ea5758b1df4b55f80eb6ea",
+  "note": "Used here only for the list of candidate paths; TASK-008 verifies the inventory against the archive."
+ },
+ "records": [
+  {
+   "git_blob": "b85f54ab8692d1d5bcc2f3ba2bfe34e485df09cc",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/BASELINE-STATUS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:48:58Z"
+  },
+  {
+   "git_blob": "478596ab0219b140a4ba8980413b8fafb942ae55",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/CAPABILITIES.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:48:59Z"
+  },
+  {
+   "git_blob": "69ab45744473ebd0ed2eb3978209477d31ca02a6",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/EARLY-RECOVERY-RECEIPT.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:48:59Z"
+  },
+  {
+   "git_blob": "8d4a0cede5c011330c0f3d15b148710f57211434",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/FIXTURE-FREEZE-003-RECEIPT.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:00Z"
+  },
+  {
+   "git_blob": "3d6c916630771b8a448b8a9f738f3bf32fa08c6e",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/FIXTURE-FREEZE-004-RECEIPT.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:00Z"
+  },
+  {
+   "git_blob": "2f868b2aa85eb440cff703be386f52cfefe37fac",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/FIXTURE-FREEZE-CANDIDATE003-DECISION.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:01Z"
+  },
+  {
+   "git_blob": "8bc09a560422bef10ea45ecfb7643e010502d580",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/FIXTURE-FREEZE-CANDIDATE004-DECISION.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:01Z"
+  },
+  {
+   "git_blob": "80c230ae07743a199da663bb54653701a67c4d17",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/FIXTURE-FREEZE-DECISION.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:01Z"
+  },
+  {
+   "git_blob": "ae098ea1306d26e74a0b05933ef9c83d1913017e",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/FIXTURE-FREEZE-RECEIPT.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:02Z"
+  },
+  {
+   "git_blob": "1acbdf578428504f0c21c7c4408057155cbb7c42",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/INCIDENTS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:02Z"
+  },
+  {
+   "git_blob": "71f3cfa3b36eac88bd1de1f89ab4dda310a58f28",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/INHERITED-COHORT-CORRECTION.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:03Z"
+  },
+  {
+   "git_blob": "7ebea93b5785984aa9c51bc863eed4e79164ab74",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/INHERITED-COHORT.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:03Z"
+  },
+  {
+   "git_blob": "2b8952af79eec3e9b89f92a72f7dc0270738b94e",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/LEARNING-DECISION.md",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:04Z"
+  },
+  {
+   "git_blob": "39ea1bcd6c6f45dbbaedd2c526a2e3a049e1031a",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/PHASE.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:04Z"
+  },
+  {
+   "git_blob": "f99f659da772c748cc8a6e051247b3c9835deaef",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/PROTECTED-INPUTS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:05Z"
+  },
+  {
+   "git_blob": "de6c7521750f558426fb9c46143d3cd058c2b6b3",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/PROTECTED-SOURCE-INVENTORY.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:05Z"
+  },
+  {
+   "git_blob": "814797969ef46dbb900147d9686f7797092ee4dd",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/READ-SET.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:05Z"
+  },
+  {
+   "git_blob": "7a6f39da95acb0fed9e2880652d697325d95c9c2",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/RECONCILIATION.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:06Z"
+  },
+  {
+   "git_blob": "f5af84610a19b28d7ec36688cd4c1dcef59a1b13",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/RECONSTRUCTION-DECISION.md",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:06Z"
+  },
+  {
+   "git_blob": "933dbf22c460b1c41489377dfb925f9b2343f9f1",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/ROOT-ADDITIONAL-READS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:07Z"
+  },
+  {
+   "git_blob": "90263728aa52f7443af2181193fe859695a3962f",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/SUMMARY.md",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:07Z"
+  },
+  {
+   "git_blob": "34a278be1573b77658d71c849effae6aef6a1c33",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/VERIFICATION-ATTEMPTS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:08Z"
+  },
+  {
+   "git_blob": "b3b55aec045bac174c019a1e70b2a98420ea571d",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/VERIFICATION.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:08Z"
+  },
+  {
+   "git_blob": "f2399c70d3365e51368075951b3393f103c1de27",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/control-attempts/implementation-focused-001-ARCHIVE.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:08Z"
+  },
+  {
+   "git_blob": "5eff6c7381861e38735f921123cf6acb0e414da0",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/control-attempts/implementation-focused-001.zip",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "5eff6c7381861e38735f921123cf6acb0e414da0",
+    "size": 851096
+   },
+   "at": "2026-11-26T00:49:09Z"
+  },
+  {
+   "git_blob": "3a3cb2a06b2edb55a2c84d6d7f13d95f25527879",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/ADAPTER-CONTRACT.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:10Z"
+  },
+  {
+   "git_blob": "6aae70eae25acb75666116685fbe91f129250882",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-P08.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:10Z"
+  },
+  {
+   "git_blob": "09461b13095f6dc6eb81f46de921bcb077180d03",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/COMMANDS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:11Z"
+  },
+  {
+   "git_blob": "2d060d094962f8d204474d4a1b21f5f6d688d02b",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/COMPANIONS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:11Z"
+  },
+  {
+   "git_blob": "e7e82c3a80e50c737e59442dbd41827cd8b1b014",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/CONTROL-CROSSWALK.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:11Z"
+  },
+  {
+   "git_blob": "d08291963f8d1b846325096f01deae72e83b7e56",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/FIXTURE-MANIFEST.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:12Z"
+  },
+  {
+   "git_blob": "8be075d7d10f3e2f9d6624faae5060842896fc08",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/FREEZE.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:12Z"
+  },
+  {
+   "git_blob": "2c229d95a43dc4bd23774bff4fd38cad87664717",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/INHERITED-INVENTORIES.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:13Z"
+  },
+  {
+   "git_blob": "081106e98938e64dee86a52268f78f13e84a7251",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/INHERITED-METADATA-STUB.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:13Z"
+  },
+  {
+   "git_blob": "6d9f123fbdc17d0bc6c5e78aa53bb5c0c80aacb5",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/MOCK-COMMAND.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:14Z"
+  },
+  {
+   "git_blob": "3139e8e9c40592186842008828bfaa126cc3dc5a",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/MOCK-PRELAUNCH.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:14Z"
+  },
+  {
+   "git_blob": "bbc0b402bdb03f2f3ca9cae56572f46f56b3979c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/README.md",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:15Z"
+  },
+  {
+   "git_blob": "4be22c8221a38611d2031859f466272ff1a8a314",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/REVISION.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:15Z"
+  },
+  {
+   "git_blob": "7b3b3eecbd62c64df33059fed0265a9c6908ae9b",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-C01.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:15Z"
+  },
+  {
+   "git_blob": "92f7bc0e9c057ce5a3b77dd4b4f446108c9272d2",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-C02.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:16Z"
+  },
+  {
+   "git_blob": "c3598a9d824c7172a01c1ea2044db6ecba21d611",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D01.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:16Z"
+  },
+  {
+   "git_blob": "44546ca071a63e423917a9919d6c0930995e17c4",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D02.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:17Z"
+  },
+  {
+   "git_blob": "c7a9776f15e4a4d9dcd8fb81c7c169a3d63bfd69",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D03.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:17Z"
+  },
+  {
+   "git_blob": "9138aa09e04e465abb7185d7775494ab93f415c8",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D04.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:18Z"
+  },
+  {
+   "git_blob": "ad85360efd5ad5ab00bf9cb135311cc479602e01",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D05.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:18Z"
+  },
+  {
+   "git_blob": "b8779a862461ff9f27a28eaca92c07c86efc17f9",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D06.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:19Z"
+  },
+  {
+   "git_blob": "03df2f77fe863233b15b799bd71d1143b8515e0e",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D07.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:19Z"
+  },
+  {
+   "git_blob": "7c0cb8323cb001a5efaaa363d868c9fc6edea263",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D08.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:19Z"
+  },
+  {
+   "git_blob": "5e69cee9ebf0fc0df3ee56b5d6627ee9789a6c41",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D09.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:20Z"
+  },
+  {
+   "git_blob": "471b7d07d199077913ea17257ee2ac455ee1a347",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D10.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:20Z"
+  },
+  {
+   "git_blob": "da0c6de6373eccbfe0ee1c547d2af3349fbff0b4",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D11.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:21Z"
+  },
+  {
+   "git_blob": "41ab46d7048fca784293dcfcae7cbe6c42a3577e",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D12.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:21Z"
+  },
+  {
+   "git_blob": "879ea786f502a71fd33b8f305b822eede2c65086",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D13.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:22Z"
+  },
+  {
+   "git_blob": "5b620620ffa60c5740125fac71323ea956e520d3",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D14.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:22Z"
+  },
+  {
+   "git_blob": "10816b4acfac2a6311922eb4348e1c1c5f7a5db6",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D15.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:22Z"
+  },
+  {
+   "git_blob": "ce834d63bd2444684a6c133aa0b037afbcc9ea73",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D16.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:23Z"
+  },
+  {
+   "git_blob": "5893d9ccdb8ea4e57101f87025040c07c8bc070e",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D17A.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:23Z"
+  },
+  {
+   "git_blob": "0d2b05461d251aaf111738f9a4af66854404b1bd",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D17B.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:24Z"
+  },
+  {
+   "git_blob": "ad055a13636fad968f20915446e8ab2fac92d925",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D17C.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:24Z"
+  },
+  {
+   "git_blob": "b03dfaa68e2248910c75c6ed96cf5935d6c0209f",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D17D.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:25Z"
+  },
+  {
+   "git_blob": "e44bce48767f2bfedf996419fd32baff116d6cef",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D17E.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:25Z"
+  },
+  {
+   "git_blob": "892a51c0a59640fe42202328c0552088993578d3",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D17F.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:25Z"
+  },
+  {
+   "git_blob": "9f933d2ac235a141e1db4dfdf4ae35063020de34",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D17G.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:26Z"
+  },
+  {
+   "git_blob": "a0ec1ec919ec9654a0b9bb315b75bc861fc5f9a5",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D17H.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:26Z"
+  },
+  {
+   "git_blob": "7f489894f1958b149d01ff1f8dbf3f996575410f",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-D18.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:27Z"
+  },
+  {
+   "git_blob": "1df2a9af521c986005924dfb92a4eb21cf436b4b",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-L09A.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:27Z"
+  },
+  {
+   "git_blob": "c306761f806390fc76803a1aef7989384b8787f8",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-L09B.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:27Z"
+  },
+  {
+   "git_blob": "0c2a450a307f4ff9963f7b12fd183e6d6f779de9",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-L09C.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:28Z"
+  },
+  {
+   "git_blob": "289f1ea77f85762d3609e975149b11a53ffdaa8c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-L09D.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:28Z"
+  },
+  {
+   "git_blob": "a5952d026b79ff935b8bcef5d1fcb3b411cb24cd",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-L09E.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:29Z"
+  },
+  {
+   "git_blob": "5322959f479682d23f9811959829b8a2c5da2abf",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S01.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:29Z"
+  },
+  {
+   "git_blob": "8c284a8d32f1ed848f2e173643202b90c54fe94f",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S02.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:30Z"
+  },
+  {
+   "git_blob": "9e8a34e9fb3e93c9ee88023dd851e4d744c30062",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S03.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:30Z"
+  },
+  {
+   "git_blob": "a11bcf1be4c1f77449299b021886a6550aaceaa9",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S04.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:31Z"
+  },
+  {
+   "git_blob": "869485e613de09262ae2b6a4ab775b00ff07d10d",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S05.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:31Z"
+  },
+  {
+   "git_blob": "f9bf4d478d163f9a4a90f8a91273126667556aa1",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S06.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:31Z"
+  },
+  {
+   "git_blob": "53740ce06b475f9afd9770a04c9198992cef4797",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S07.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:32Z"
+  },
+  {
+   "git_blob": "300ccc6c641bd08fc14de74365716b92d98a6af1",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S08.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:32Z"
+  },
+  {
+   "git_blob": "6a3b27cd8bd553335e1da662a6af166f256422ce",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S09.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:33Z"
+  },
+  {
+   "git_blob": "be1414ad3c480bcc3aa23414b4ca996e2d3bd303",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S10.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:33Z"
+  },
+  {
+   "git_blob": "688bb79a22c91f8016c8efcac62069bb63a525da",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S11.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:33Z"
+  },
+  {
+   "git_blob": "1539d6beaf4cb011321da2fe6591a81d7f0bc9ad",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S13.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:34Z"
+  },
+  {
+   "git_blob": "dfc1c218d02dd66567690e0e02664b88b9a89824",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S14.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:34Z"
+  },
+  {
+   "git_blob": "8ae5b30c77e466828d6e6169d65b1b345dff6aec",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S15.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:35Z"
+  },
+  {
+   "git_blob": "f7d4a15dcd1f90d5f3a3a507d08e88ca6b0c6361",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/contexts/RI-S16.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:35Z"
+  },
+  {
+   "git_blob": "3989235db788281311cb28ca82c8679f5eccbde9",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B01.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "3989235db788281311cb28ca82c8679f5eccbde9",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:35Z"
+  },
+  {
+   "git_blob": "e511301cb7e8aa718f1d260a0f4c0e16dbc2b782",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B02.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "e511301cb7e8aa718f1d260a0f4c0e16dbc2b782",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:36Z"
+  },
+  {
+   "git_blob": "e35fadd929547c3433aec061542dd1ad0bcf39de",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B03.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "e35fadd929547c3433aec061542dd1ad0bcf39de",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:36Z"
+  },
+  {
+   "git_blob": "1fc855c15f0faf420c7b6f0c8111dae4c830fa63",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B04.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "1fc855c15f0faf420c7b6f0c8111dae4c830fa63",
+    "size": 662
+   },
+   "at": "2026-11-26T00:49:37Z"
+  },
+  {
+   "git_blob": "a401803466fa5ba4fda0ea17a5d3aaf42589998c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B05.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "a401803466fa5ba4fda0ea17a5d3aaf42589998c",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:37Z"
+  },
+  {
+   "git_blob": "291ed51e2acf70b6a6d7c6bcbf756cf41bbd1b10",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B06.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "291ed51e2acf70b6a6d7c6bcbf756cf41bbd1b10",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:38Z"
+  },
+  {
+   "git_blob": "058d4b0329f8f0ef8cf56f0a7e3bbecb4dc714c5",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B07.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "058d4b0329f8f0ef8cf56f0a7e3bbecb4dc714c5",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:38Z"
+  },
+  {
+   "git_blob": "5556fe038e8ba7105b900845a6db7d289f6fdde2",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B08.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "5556fe038e8ba7105b900845a6db7d289f6fdde2",
+    "size": 677
+   },
+   "at": "2026-11-26T00:49:39Z"
+  },
+  {
+   "git_blob": "641e4558de8205c4f7b6b602e7440457066c1492",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B09.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "641e4558de8205c4f7b6b602e7440457066c1492",
+    "size": 693
+   },
+   "at": "2026-11-26T00:49:39Z"
+  },
+  {
+   "git_blob": "4e48d43b993070494164cafd9730eca21da9fcbf",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B10.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "4e48d43b993070494164cafd9730eca21da9fcbf",
+    "size": 693
+   },
+   "at": "2026-11-26T00:49:39Z"
+  },
+  {
+   "git_blob": "a07f727eeff2f241f8116cb7d367d0b6da598769",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B11.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "a07f727eeff2f241f8116cb7d367d0b6da598769",
+    "size": 678
+   },
+   "at": "2026-11-26T00:49:40Z"
+  },
+  {
+   "git_blob": "518375cd2a0e82a5031793479a9fde116e69965d",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B12.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "518375cd2a0e82a5031793479a9fde116e69965d",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:40Z"
+  },
+  {
+   "git_blob": "f4d03db13474170aefb7f8e25c4dfbe0995d7fed",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B13.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "f4d03db13474170aefb7f8e25c4dfbe0995d7fed",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:41Z"
+  },
+  {
+   "git_blob": "5da6f25036e27c7c5179ff81c8165d5f618d4498",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B14.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "5da6f25036e27c7c5179ff81c8165d5f618d4498",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:41Z"
+  },
+  {
+   "git_blob": "24ed5bf53b51d8bdedd24081783137a3dca21c72",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-B15.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "24ed5bf53b51d8bdedd24081783137a3dca21c72",
+    "size": 66070
+   },
+   "at": "2026-11-26T00:49:41Z"
+  },
+  {
+   "git_blob": "4b22e0975244731ca2a69181d9d39b45b94090b6",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-S12.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "4b22e0975244731ca2a69181d9d39b45b94090b6",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:42Z"
+  },
+  {
+   "git_blob": "e0489900b088994e5d87538fcf12649c48aedd2e",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N01.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "e0489900b088994e5d87538fcf12649c48aedd2e",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:42Z"
+  },
+  {
+   "git_blob": "d95a31ad1093c8b75feec06d97f38c2e359132c2",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N02.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "d95a31ad1093c8b75feec06d97f38c2e359132c2",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:43Z"
+  },
+  {
+   "git_blob": "fce434168814d152ad9e519530ce6ab72fd62dcd",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N03.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "fce434168814d152ad9e519530ce6ab72fd62dcd",
+    "size": 710
+   },
+   "at": "2026-11-26T00:49:43Z"
+  },
+  {
+   "git_blob": "e84745fe6eb29e189bf399a1e7789d738673dafe",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N04.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "e84745fe6eb29e189bf399a1e7789d738673dafe",
+    "size": 710
+   },
+   "at": "2026-11-26T00:49:44Z"
+  },
+  {
+   "git_blob": "16ed607458c905db4e6b971a5d25a56925fa2ac0",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N05.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "16ed607458c905db4e6b971a5d25a56925fa2ac0",
+    "size": 678
+   },
+   "at": "2026-11-26T00:49:44Z"
+  },
+  {
+   "git_blob": "54ed8e079072a3b7d9d94018acb94d19fd4de4ae",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N06.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "54ed8e079072a3b7d9d94018acb94d19fd4de4ae",
+    "size": 646
+   },
+   "at": "2026-11-26T00:49:44Z"
+  },
+  {
+   "git_blob": "cc8d9bc1f8e3f963bd2ea2cee2b654bd16cf7bca",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N07.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "cc8d9bc1f8e3f963bd2ea2cee2b654bd16cf7bca",
+    "size": 710
+   },
+   "at": "2026-11-26T00:49:45Z"
+  },
+  {
+   "git_blob": "e04f33f159d324cc1d0ab277cab3149c49f73388",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N08.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "e04f33f159d324cc1d0ab277cab3149c49f73388",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:45Z"
+  },
+  {
+   "git_blob": "7b49c4a6a66780b4ced90eb7cd5883c3ef696252",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N09.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "7b49c4a6a66780b4ced90eb7cd5883c3ef696252",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:46Z"
+  },
+  {
+   "git_blob": "15b636e82154dcc06eb0c5798a52f2ebbea8bc6c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N12.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "15b636e82154dcc06eb0c5798a52f2ebbea8bc6c",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:46Z"
+  },
+  {
+   "git_blob": "a96de5a2e2cdcca2045bcfd0e90ee30ebe6a437f",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N11.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "a96de5a2e2cdcca2045bcfd0e90ee30ebe6a437f",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:47Z"
+  },
+  {
+   "git_blob": "bfd52c10f8657f144eb26e2aba2a6441a0e81abb",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N13.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "bfd52c10f8657f144eb26e2aba2a6441a0e81abb",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:47Z"
+  },
+  {
+   "git_blob": "2a7e8c97cd76fbd80f701a9e02f89cd7e1f52ee1",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N14.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "2a7e8c97cd76fbd80f701a9e02f89cd7e1f52ee1",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:48Z"
+  },
+  {
+   "git_blob": "0300d9448ab28f4a8d849deadb944ac7f74d6aff",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N15.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "0300d9448ab28f4a8d849deadb944ac7f74d6aff",
+    "size": 710
+   },
+   "at": "2026-11-26T00:49:48Z"
+  },
+  {
+   "git_blob": "3bcb9403d6f56bc8aa291152339bea1f538b88a4",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N16.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "3bcb9403d6f56bc8aa291152339bea1f538b88a4",
+    "size": 710
+   },
+   "at": "2026-11-26T00:49:48Z"
+  },
+  {
+   "git_blob": "62d085063ff7a56b8c524a2199c4588755757a4c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N17.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "62d085063ff7a56b8c524a2199c4588755757a4c",
+    "size": 710
+   },
+   "at": "2026-11-26T00:49:49Z"
+  },
+  {
+   "git_blob": "187c9ab207afffb9c48bd4de26d15d284d27b330",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N18.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "187c9ab207afffb9c48bd4de26d15d284d27b330",
+    "size": 678
+   },
+   "at": "2026-11-26T00:49:49Z"
+  },
+  {
+   "git_blob": "75201ad094f2c741d0090130bf2068e6dbbc265e",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N19.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "75201ad094f2c741d0090130bf2068e6dbbc265e",
+    "size": 694
+   },
+   "at": "2026-11-26T00:49:50Z"
+  },
+  {
+   "git_blob": "74f28f107e2d6ef34324882a54ee839d968da907",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N20.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "74f28f107e2d6ef34324882a54ee839d968da907",
+    "size": 66086
+   },
+   "at": "2026-11-26T00:49:50Z"
+  },
+  {
+   "git_blob": "4d0d3eedccb5f4dd184039bc3c898fc0bd3803f0",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N21.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "4d0d3eedccb5f4dd184039bc3c898fc0bd3803f0",
+    "size": 696
+   },
+   "at": "2026-11-26T00:49:51Z"
+  },
+  {
+   "git_blob": "df6d2c46ae239d01179aaaa10da689deaf05f01d",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N22.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "df6d2c46ae239d01179aaaa10da689deaf05f01d",
+    "size": 722
+   },
+   "at": "2026-11-26T00:49:51Z"
+  },
+  {
+   "git_blob": "dbf4096f2e2933c25da545a8a64e4c9bd2e94434",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N23.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "dbf4096f2e2933c25da545a8a64e4c9bd2e94434",
+    "size": 678
+   },
+   "at": "2026-11-26T00:49:51Z"
+  },
+  {
+   "git_blob": "36db4e3a1358fa7b6b8e5f54f5ecfaabc8a85915",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/controls/images/RI-N24.elf.inert",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "36db4e3a1358fa7b6b8e5f54f5ecfaabc8a85915",
+    "size": 693
+   },
+   "at": "2026-11-26T00:49:52Z"
+  },
+  {
+   "git_blob": "2c79b00e62a0bb6af9ed6f7a3dcc7c52a408a2e3",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/evidence/ARCHIVE-VERIFICATION.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:52Z"
+  },
+  {
+   "git_blob": "9facb186ec11523163520323d83dc58fd68e829c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/evidence/VERIFICATION-EVIDENCE.zip",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:53Z"
+  },
+  {
+   "git_blob": "17e2f3f423cdfb6dabb3a853441dfbcdff510355",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-author/ATTEMPTS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:53Z"
+  },
+  {
+   "git_blob": "2bd4226cee5e646221da6590f4216cb9e8e9a0ee",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-author/CANDIDATE004-ADAPTER-DIFF.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:54Z"
+  },
+  {
+   "git_blob": "9a943af3a85a70a356056f0c3798b80f9b28d6f6",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-author/REPORT.md",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:54Z"
+  },
+  {
+   "git_blob": "55dc6eafbc34496d3d2dcd447f3f5edc5207c0cc",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-author/STATIC-CHECKS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:54Z"
+  },
+  {
+   "git_blob": "ab8ad09054098926182739ad6bf88287e6dfcf38",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-author/build_fixtures.py",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:55Z"
+  },
+  {
+   "git_blob": "3930dfa8a884510c0326bdd1ed034964c56ac7cd",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-author/freeze_static.py",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:55Z"
+  },
+  {
+   "git_blob": "73c53bc0e0cd56d150d6ce277b1cbcb56af3d8a5",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-author/preserve_candidate002.py",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:56Z"
+  },
+  {
+   "git_blob": "c58ed55cf8bba692947341228f51a1e85df3b0d8",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-author/preserve_candidate003.py",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:56Z"
+  },
+  {
+   "git_blob": "543300a0d1aded1456087e5f583908b099e2381c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-author/rebind_candidate003.py",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:57Z"
+  },
+  {
+   "git_blob": "400fbaeaf0beb7391d8c00d9ca68368e13d735c9",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-author/revise_candidate004.py",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:57Z"
+  },
+  {
+   "git_blob": "b493f574fa79d5b91c72870ca3655f73afa38ad3",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE001-ARCHIVE.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:58Z"
+  },
+  {
+   "git_blob": "e81d71196e9069a98c640590e814271c2e0c1066",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE001.zip",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "e81d71196e9069a98c640590e814271c2e0c1066",
+    "size": 364122
+   },
+   "at": "2026-11-26T00:49:58Z"
+  },
+  {
+   "git_blob": "ac365538598cb512fd9b98a4e719db7967683e73",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE002-ARCHIVE.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:49:59Z"
+  },
+  {
+   "git_blob": "5823fa33e5ffa5b42979b4fb4110d6fb48825044",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE002.zip",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "5823fa33e5ffa5b42979b4fb4110d6fb48825044",
+    "size": 1434172
+   },
+   "at": "2026-11-26T00:50:00Z"
+  },
+  {
+   "git_blob": "5c58a0496b2a7ee945681467c58e9ff4eb48bf90",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE003-ARCHIVE.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:00Z"
+  },
+  {
+   "git_blob": "60de25dc9fe18d64948a2d9d323e9b9f501d7364",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE003.zip",
+   "prior_state_2026_11_24": "existence_unknown",
+   "prior_response": "INVALID_ARGUMENT",
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "60de25dc9fe18d64948a2d9d323e9b9f501d7364",
+    "size": 1437202
+   },
+   "at": "2026-11-26T00:50:01Z"
+  },
+  {
+   "git_blob": "31c1363e4289109864684a96f8380fb8eeb40d54",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/implementation-author/CANDIDATE001-REPORT.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:02Z"
+  },
+  {
+   "git_blob": "14486fde111ed172b6c80677386c59e9898cd1cf",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/implementation-author/CANDIDATE001.patch",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:02Z"
+  },
+  {
+   "git_blob": "f9346a09cbdaff3f06d6a108c41224781a67f454",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/ATTEMPT-READINESS-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:03Z"
+  },
+  {
+   "git_blob": "4d13ed5f03226558c81dcee7586813357d300d9f",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/BASELINE-003-EVIDENCE-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:03Z"
+  },
+  {
+   "git_blob": "0e66206663250eb73b8f3040d7add5d7f3a48614",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/BASELINE-EVIDENCE-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:03Z"
+  },
+  {
+   "git_blob": "cfc190f6bcb01a15fcce53f1bfd407b183510912",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/BASELINE-PASS-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:04Z"
+  },
+  {
+   "git_blob": "3d03c0349cea4f638eb399b12192ca0a9f6e1c10",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/CANDIDATE001-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:04Z"
+  },
+  {
+   "git_blob": "1a2cfc15f01c1ced9dd2934d370dd714f1176e7b",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/CANDIDATE001-STATIC-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:05Z"
+  },
+  {
+   "git_blob": "cce5cde7cefe74823b1af079d7c02f33b60b3b9b",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/CANDIDATE003-READ-SET.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:05Z"
+  },
+  {
+   "git_blob": "d7cab8930b1362b9d26fda1247cbade12882e205",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/COHORT-INVENTORY-CORRECTION.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:06Z"
+  },
+  {
+   "git_blob": "875b2c4e67b46738ff76631490ad106452f30f5d",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/EVIDENCE-ARCHIVE-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:06Z"
+  },
+  {
+   "git_blob": "ac66ffbb73ae059943cdfbc7a753884bce3d0547",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/FINAL-EVIDENCE-CHECKS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:06Z"
+  },
+  {
+   "git_blob": "783d14156c3e9b921df4ff14f6c238f8fb4420a1",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/FINAL-IMPLEMENTATION-ACCEPTANCE.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:07Z"
+  },
+  {
+   "git_blob": "40271df461b6a6a9dc29e99fedee6dbf0d34e004",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/FINAL-READ-SET.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:07Z"
+  },
+  {
+   "git_blob": "f4b40879610c6fb03f87054de63a1f52a5b9dab3",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/FIXTURE-CANDIDATE004-ACCEPTANCE.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:08Z"
+  },
+  {
+   "git_blob": "2c53149bfc3cef933e6804667c63bb76aedfb798",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/FIXTURE-CANDIDATE004-READ-SET.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:08Z"
+  },
+  {
+   "git_blob": "53c965b3c1f0a547c5c16973847ca9f73422fb99",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/FIXTURE-READ-SET.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:09Z"
+  },
+  {
+   "git_blob": "9e5bb118f6de2ba630dbb2bb49d7a4283c33e405",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/FOCUSED-001-FAILURE-DISPOSITION.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:09Z"
+  },
+  {
+   "git_blob": "82b323c41eb79b4105b9a7d52c90974abc1f372f",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/FREEZE-ACCEPTANCE.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:10Z"
+  },
+  {
+   "git_blob": "8cff3ab3523533837234b2acc72ea95839869a66",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/FREEZE-CANDIDATE003-ACCEPTANCE.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:10Z"
+  },
+  {
+   "git_blob": "7054acec74ecdf771d20d2be19683bdfb5542418",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/IMPLEMENTER-INHERITED-SCOPE-AUDIT-ID-CORRECTION.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:10Z"
+  },
+  {
+   "git_blob": "f76e6808751e2a1afbecef4f74016f233df6327f",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/IMPLEMENTER-INHERITED-SCOPE-AUDIT.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:11Z"
+  },
+  {
+   "git_blob": "867ad01a53a4b01f9d4c649acbf22566f5f184d6",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/INHERITED-COHORT-CANDIDATE003-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:11Z"
+  },
+  {
+   "git_blob": "0c50551f71f11012b8e7c15ba630495ff5472295",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/INHERITED-COHORT-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:12Z"
+  },
+  {
+   "git_blob": "eb6d76b823187f3e8b27c81c43daf2ff6351efc5",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/ORCHESTRATION-RETENTION-CORRECTION-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:12Z"
+  },
+  {
+   "git_blob": "ccf151892edc4e577ed34fd2e51c6ad8a4127e9c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/ORCHESTRATION-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:13Z"
+  },
+  {
+   "git_blob": "9d5317833d1f5a51dd3ce6ab90fc4420ade9b4ba",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/PACKAGE-CHRONOLOGY-RECHECK.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:13Z"
+  },
+  {
+   "git_blob": "652d15b6058981a3a315667858965e1f0550859b",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/PHASE-BOUNDARY-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:14Z"
+  },
+  {
+   "git_blob": "219e7d4077d923fb20da9bee475c84040c5d736d",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/PREBUILD-RECHECK.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:14Z"
+  },
+  {
+   "git_blob": "80d9deab68a45fd7ed222722fa7a006c017864a0",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/PREBUILD-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:14Z"
+  },
+  {
+   "git_blob": "d959210f6c9d0b96c2ea62e59c0da34ec95b9f5d",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/PUBLICATION-RECHECK.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:15Z"
+  },
+  {
+   "git_blob": "4807e2a63212c84343e1e59a9a16192aa20d3583",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/STARTUP-RECORD-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:15Z"
+  },
+  {
+   "git_blob": "4f76b23ba14d229d48a1f423750cde0a4c487db6",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/WHITESPACE-DISPOSITION-REVIEW.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:16Z"
+  },
+  {
+   "git_blob": "479fc5f6a0a4c4b3943680cceff31b12a85b2619",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/intake-review/CHECKS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:16Z"
+  },
+  {
+   "git_blob": "f279766570f8ec829f8ff838565f085dca34c3a9",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/intake-review/REPORT.md",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:17Z"
+  },
+  {
+   "git_blob": "f972572668fa07122f6ca695f635df67aaaf9fa5",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/intake-review/audit.py",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:17Z"
+  },
+  {
+   "git_blob": "70daf0dfe63d6dc0c7d88854834c02b37d362fef",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/orchestration/run_verification-original.py",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:18Z"
+  },
+  {
+   "git_blob": "254bd4e1fcefa4f775e03eec7a29d54217b4c74b",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/orchestration/run_verification.py",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:18Z"
+  },
+  {
+   "git_blob": "b5128d428f58c0518adcfaa1d8fdccb0190dc328",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/GIT-PUSH-DRY-RUN.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:18Z"
+  },
+  {
+   "git_blob": "85b647f77653d5d75a0df339c9b80558b02a544c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/INHERITED-COHORT-CANDIDATE001.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:19Z"
+  },
+  {
+   "git_blob": "8afb3449f4a9005c448ab9e0ce90bd7951bf45a2",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/INHERITED-COHORT-CANDIDATE002.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:19Z"
+  },
+  {
+   "git_blob": "bf5d0eca1864c84bb7cea1a7b64fde9369dbb101",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/final/CHECKS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:20Z"
+  },
+  {
+   "git_blob": "3879b5a72f23ebe4806a6c6bb3bf662585c03b0b",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/final/documentation.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:20Z"
+  },
+  {
+   "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/startup/workflow.stderr",
+   "prior_state_2026_11_24": "readable_exists",
+   "prior_response": null,
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    "size": 0
+   },
+   "at": "2026-11-26T00:50:21Z"
+  },
+  {
+   "git_blob": "265494c857ff409bebd98548d477d19f9f79cb27",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/final/documentation.stdout",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:21Z"
+  },
+  {
+   "git_blob": "dc6ff24e07ee90e4bc71238cb24778f07a2d97e1",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/final/whitespace-full.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:21Z"
+  },
+  {
+   "git_blob": "d8e5dd7ce694a18f0c434dd2f2f70ffa911586ae",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/final/whitespace-full.stdout",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:22Z"
+  },
+  {
+   "git_blob": "628c07ab8c1f93cc04657cb6fa2eb8941b5081a3",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/final/whitespace-scoped.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:22Z"
+  },
+  {
+   "git_blob": "6501b9ce022fe9e674e03b9773873b7d2f5737cc",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/final/workflow.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:23Z"
+  },
+  {
+   "git_blob": "40357d223ca00eea4a48fb5223db1dfc26fad66f",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/startup-attempt003/workflow.stdout",
+   "prior_state_2026_11_24": "readable_exists",
+   "prior_response": null,
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "40357d223ca00eea4a48fb5223db1dfc26fad66f",
+    "size": 148
+   },
+   "at": "2026-11-26T00:50:23Z"
+  },
+  {
+   "git_blob": "1ce6d376215061d6b8f6a84de72faf97a1ec8e7d",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/fixture-candidate002/WHITESPACE.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:24Z"
+  },
+  {
+   "git_blob": "217614f2764fe5fdc6db8efc38fd9158b466f5ff",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/fixture-candidate002/documentation.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:24Z"
+  },
+  {
+   "git_blob": "c207f85137536dce314f1e156b97ea28bf0d19a7",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/fixture-candidate002/documentation.stdout",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:25Z"
+  },
+  {
+   "git_blob": "956598bddce39bc210186347fcc1d93b49fdcd9c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/fixture-candidate002/workflow.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:25Z"
+  },
+  {
+   "git_blob": "05499418a0aaef7da1c247e9829a173362668376",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/startup-attempt002/CHECKS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:25Z"
+  },
+  {
+   "git_blob": "9912f2c0e12db0a71689703915e758e018fd5f96",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/startup-attempt002/documentation.stdout",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:26Z"
+  },
+  {
+   "git_blob": "8354e190278296204cddaf08407042224fa058bc",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/startup-attempt002/workflow.stdout",
+   "prior_state_2026_11_24": "readable_exists",
+   "prior_response": null,
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "8354e190278296204cddaf08407042224fa058bc",
+    "size": 194
+   },
+   "at": "2026-11-26T00:50:26Z"
+  },
+  {
+   "git_blob": "59525c8b758ff2a52ada28c7c9a1282a43208353",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/startup-attempt003/CHECKS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:27Z"
+  },
+  {
+   "git_blob": "6e30773c9087d0da89f387cd4ca42bb82cd32fb1",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/startup/CHECKS.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:27Z"
+  },
+  {
+   "git_blob": "48e6f1c2a951e85fd7b86b0d7311757c9f2ece34",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/startup/documentation.stdout",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:28Z"
+  },
+  {
+   "git_blob": "771a7df97eb07679ba0724a403eb7bcf63d7c11c",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/record-checks/startup/workflow.stdout",
+   "prior_state_2026_11_24": "readable_exists",
+   "prior_response": null,
+   "state": "present",
+   "http": 200,
+   "response": {
+    "sha": "771a7df97eb07679ba0724a403eb7bcf63d7c11c",
+    "size": 219
+   },
+   "at": "2026-11-26T00:50:28Z"
+  },
+  {
+   "git_blob": "c76aaeef107a50027b1b96ce71e2e86224ad6733",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/scope-review/COPY-NOTE.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:29Z"
+  },
+  {
+   "git_blob": "a1bb8bd0da51877df33a55984f84c46da69d2b36",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/scope-review/READ-SET.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:29Z"
+  },
+  {
+   "git_blob": "d2ff3722f89ab7ad4c722d873796aab6cdec3218",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/scope-review/RESULT.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:30Z"
+  },
+  {
+   "git_blob": "e8dccfc24a9f3cc16c169583c0119660290ee1d5",
+   "path": "docs/engineering/localized-repair-c271/required-images-p29/scope-review/SCOPE-REVIEW.md",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:30Z"
+  },
+  {
+   "git_blob": "cf8f22023c676ad0eb4ba5820b301e61b3852d36",
+   "path": "docs/workflow/CURRENT.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:30Z"
+  },
+  {
+   "git_blob": "0e48c1e29ac22b9fe9e971ab915d2f875b6da2dc",
+   "path": "docs/workflow/tasks/C271/PLAN.md",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:31Z"
+  },
+  {
+   "git_blob": "591451bd56a88c9e3940fbaa0afe2bc7950c9643",
+   "path": "docs/workflow/tasks/C271/REQUIREMENTS.md",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:31Z"
+  },
+  {
+   "git_blob": "7bb2c3f63bc7b2cf6bf20d67175802ca1584f744",
+   "path": "docs/workflow/tasks/C271/task.json",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:32Z"
+  },
+  {
+   "git_blob": "5afcf8337a11fa64ea58f626be4f8a3e653c919d",
+   "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:32Z"
+  },
+  {
+   "git_blob": "5f6e3018ed1fc586018252eee654784323f38bea",
+   "path": "tests/test_current_host_required_images_v01.py",
+   "prior_state_2026_11_24": "known_absent",
+   "prior_response": "NOT_FOUND",
+   "state": "absent",
+   "http": 404,
+   "response": "Not Found",
+   "at": "2026-11-26T00:50:33Z"
+  }
+ ],
+ "repeat_reads": [
+  {
+   "git_blob": "5eff6c7381861e38735f921123cf6acb0e414da0",
+   "first": "present",
+   "first_size": 851096,
+   "repeat": "present",
+   "repeat_size": 851096,
+   "repeat_at": "2026-11-26T00:51:05Z",
+   "equal": true
+  },
+  {
+   "git_blob": "e84745fe6eb29e189bf399a1e7789d738673dafe",
+   "first": "present",
+   "first_size": 710,
+   "repeat": "present",
+   "repeat_size": 710,
+   "repeat_at": "2026-11-26T00:51:06Z",
+   "equal": true
+  },
+  {
+   "git_blob": "60de25dc9fe18d64948a2d9d323e9b9f501d7364",
+   "first": "present",
+   "first_size": 1437202,
+   "repeat": "present",
+   "repeat_size": 1437202,
+   "repeat_at": "2026-11-26T00:51:07Z",
+   "equal": true
+  },
+  {
+   "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "first": "present",
+   "first_size": 0,
+   "repeat": "present",
+   "repeat_size": 0,
+   "repeat_at": "2026-11-26T00:51:07Z",
+   "equal": true
+  },
+  {
+   "git_blob": "b85f54ab8692d1d5bcc2f3ba2bfe34e485df09cc",
+   "first": "absent",
+   "first_size": null,
+   "repeat": "absent",
+   "repeat_size": null,
+   "repeat_at": "2026-11-26T00:51:07Z",
+   "equal": true
+  },
+  {
+   "git_blob": "1539d6beaf4cb011321da2fe6591a81d7f0bc9ad",
+   "first": "absent",
+   "first_size": null,
+   "repeat": "absent",
+   "repeat_size": null,
+   "repeat_at": "2026-11-26T00:51:08Z",
+   "equal": true
+  },
+  {
+   "git_blob": "9facb186ec11523163520323d83dc58fd68e829c",
+   "first": "absent",
+   "first_size": null,
+   "repeat": "absent",
+   "repeat_size": null,
+   "repeat_at": "2026-11-26T00:51:08Z",
+   "equal": true
+  },
+  {
+   "tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
+   "first": "absent",
+   "repeat": "absent",
+   "equal": true
+  }
+ ],
+ "remote_heads_after": {
+  "at": "2026-11-26T00:51:10Z",
+  "heads": [
+   "51223c9b94a222f29d38eb6c33808f8e55e2bff9\trefs/heads/main",
+   "bef6790291d0cddc8c6d7de9dc0a92fb5a98c448\trefs/heads/work/c271-missing-import-digest-control"
+  ],
+  "equal_to_first": true
+ },
+ "present_sizes_equal_inventory": true,
+ "interpretation": "The 43 identities whose 2026-11-24 reads were rejected by a UTF-8-only reader are all present in the destination object store now; their earlier error is not used as absence. The 47 present blobs (these 43 and the four read earlier) are not reachable from the C271 branch head: no candidate path on bef67902 holds candidate content. The candidate tree db30c29f and the evidence blob 9facb186 are absent. No candidate tree, commit or ref exists on the remote, so no part of the publication itself is present. A later push sends the objects that the remote's advertised refs do not reach; for the 47 present blobs Git's content addressing makes that a no-op on their identity, and no ref, tree or commit write is replayed."
+}
