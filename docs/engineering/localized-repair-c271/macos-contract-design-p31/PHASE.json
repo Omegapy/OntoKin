@@ -1,0 +1,84 @@
+{
+  "schema": "ontokin.c271.p31-macos-contract-design/1",
+  "task": "C271",
+  "phase": "C271-P31-macos-contract-design",
+  "owner": "c271-p31-a99073a9641d",
+  "declared_at_utc": "2026-11-26T04:24Z",
+  "status": "declared_design_pending",
+  "execution_mode": {
+    "mode": "local",
+    "entry_document": "https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/LOCAL-START-HERE.md",
+    "recorded_mode_of_task": "local since C271-P29-R07-local-publication",
+    "host": "the owner's persistent clone and its worktree ../OntoKin-worktrees/c271",
+    "governing_instructions": "current main at 51223c9b94a222f29d38eb6c33808f8e55e2bff9; this branch's older instruction files are data"
+  },
+  "owner_direction": {
+    "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
+    "question": "Which route should C271 take next?",
+    "reply": "Design macOS contract (C)",
+    "how_received": "Typed by the owner in the Claude Code session that started this session and relayed to it word for word, after C271-P30's outcome.",
+    "selects": "Route C of docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md section 6, first phase: design only.",
+    "scope_of_selection": "This design phase only. Implementation, preparation, the substituted executor's qualification, R03, R04 and R05 each need their own selection."
+  },
+  "objective": "Design, for independent review and adoption, a new versioned current-host readback contract for the owner's macOS arm64 executor, as route C describes it: substitute explicitly the Node build (v24.22.1 kept, a darwin-arm64 build pinned by its own bytes), the qualification Python, the host inspection that replaces H0 and H1, the process supervisor, the preparer and the provider's and probe's host bindings; keep the original test meaning of the seven readback methods; label every result with that executor; keep the unmet Linux-contract gates unmet; and decide the driver's readback selection rule for main's ordinary local routine, which R04 needs. Nothing is implemented, prepared, downloaded or installed.",
+  "starting_state": {
+    "branch": "work/c271-missing-import-digest-control",
+    "branch_head": "7c3a8de1be4de988219a3fc056a7eacedcd15cc1",
+    "branch_head_observation": "git ls-remote --heads origin at 2026-11-26T04:21:24Z: the remote head equals the local head; it is the commit that adds C271-P30's closing record",
+    "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "pull_request": "PR274 open, draft, unmerged, conflicting with main; head 7c3a8de1",
+    "scope_issue": "issue273 open",
+    "other_writers": "none: P30's owner c271-p30-55a168e30426 is released by its closing record; the main lease is released"
+  },
+  "task_state_at_declaration": {
+    "status": "in_progress",
+    "blocked_reason": null,
+    "requirements": {"R01": "done", "R02": "done", "R03": "not_done", "R04": "not_done", "R05": "not_done"},
+    "plan": {"P01": "done", "P02": "in_progress"}
+  },
+  "inputs": {
+    "p30_outcome": "docs/engineering/localized-repair-c271/operational-plan-review-p30/ (REVIEW-OUTCOME.md, CONTRACT-REQUIREMENTS.json E1 to E19, EXECUTOR-INVENTORY.json, OUTCOME.json)",
+    "adopted_contract": "docs/engineering/localized-repair-c271/current-host-p05/ (CONTRACT.md, CONTRACT.json, IMPLEMENTATION-PLAN.md, ADOPTION.json)",
+    "original_plan": "docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md and ADOPTION.json",
+    "sources": [
+      "tests/test_static_tray_readback_v01.py (branch) and main's version",
+      "prototypes/static_tray_v01/current_host_readback_v01.py and .mjs (provider and probe)",
+      "prototypes/static_tray_v01/supervisor.py",
+      "tools/prepare_current_host_readback.py",
+      "tools/check_local.py (branch) and main's version",
+      "prototypes/static_tray_v01/current_host_inspection_v01.py (published P29 inspector)",
+      "main's tools/local-environment.json and tools/native-reader-verification-macos-arm64-cp312.lock with its provenance"
+    ],
+    "external": "Node.js release information for v24.22.1, read from nodejs.org over HTTPS without downloading a binary"
+  },
+  "acceptance": [
+    {"id": "A1", "check": "Every input is read at a stated revision with its size and SHA-256; any external fact carries its source and observation time.", "record": "READ-SET.json"},
+    {"id": "A2", "check": "A substitution map classifies every term of P05's contract and every executor requirement E1 to E19 of C271-P30 as kept, substituted or not applicable, each with its reason and its effect on the original test meaning.", "record": "the design records"},
+    {"id": "A3", "check": "The executor is defined: the macOS arm64 host identity, the qualification Python, the Node build (v24.22.1 kept; an identified darwin-arm64 build pinned by its own bytes, with how those bytes are verified before any start) and the unchanged 24 reader files.", "record": "the design records"},
+    {"id": "A4", "check": "The substituted process supervisor is designed with its lifecycle guarantees stated against P05 section 7, including what is not kept (Linux descendant reaping) and what replaces it.", "record": "the design records"},
+    {"id": "A5", "check": "The preparer's substitution gives an atomic no-replace publication route on macOS and its receipts.", "record": "the design records"},
+    {"id": "A6", "check": "The host observation that replaces H0 and H1 is defined with its process denominators and an explicit closure claim for macOS.", "record": "the design records"},
+    {"id": "A7", "check": "The driver's readback selection rule for main's ordinary local routine after R04 is decided, with the options weighed, or the decision is left open with a concrete reason.", "record": "the design records"},
+    {"id": "A8", "check": "Declarative control obligations (positive, boundary, refusal, fault) have stable IDs and expected outcomes and are marked NOT_RUN; result labels and the claims the contract can never support are stated.", "record": "the design records"},
+    {"id": "A9", "check": "A fresh-context independent review accepts the design or its mandatory findings are resolved and re-reviewed; a Director adoption record (design only, no executable authority) or a concrete design blocker is recorded; this branch's workflow check, documentation verifier and scoped whitespace check pass; the records are pushed without force and read back; PR274 and issue273 each get one checkpoint comment.", "record": "the adoption, review, checks and closing records"}
+  ],
+  "ownership": {
+    "director": "c271-p31-a99073a9641d",
+    "director_session": "the same Claude Code session (model Claude Opus 5.5) that carried out C271-P30, working in the C271 worktree under current main's instructions",
+    "owned": ["the C271 worktree ../OntoKin-worktrees/c271, its index and its .venv", "every update of refs/heads/work/c271-missing-import-digest-control in this phase", "the working evidence directory ../OntoKin-local/c271-p31/ beside the clone"],
+    "workers": "Reviewers are read-only workers with fresh context; they write only inside the working evidence directory.",
+    "main": "not written; its integration lease is not used"
+  },
+  "stopping_condition": "The adopted design (accepted_design_only, executable_authority false) or a concrete design blocker, recorded in C271's records and pushed without force, with the checkpoint comments. No implementation.",
+  "excluded": [
+    "implementing or changing any provider, probe, supervisor, preparer, inspector, driver or test",
+    "downloading, installing or preparing Node, the reader files, a Python environment, a virtualization tool or any other host tooling",
+    "running Node, ldd, a loader, the seven readback methods, the routine driver, the unit suite or any behavioural test",
+    "H0 and H1 of either contract, and the substituted executor's qualification",
+    "writes to main, merging main into this branch, PR state changes, issue closure, branch deletion",
+    "R03, R04 and R05"
+  ],
+  "records": {"session_checkpoint": "docs/workflow/tasks/C271/P31-SESSION.md"},
+  "unknown_operations": {"this_phase": [], "historical": "unchanged; none is replayed"},
+  "main_lease": "released at 2026-11-25T21:33:52Z; not used by this phase"
+}

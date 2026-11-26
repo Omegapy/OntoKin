@@ -532,3 +532,24 @@ No existing executor available to a local session meets the adopted contract. Th
 A fresh-context independent review rejected the first candidate on one mandatory finding: route C omitted the original supervisor and the Linux host bindings. The re-review accepted the corrected candidate with nonmandatory findings, which were then resolved. See the [review outcome](../../../engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md), the [outcome record](../../../engineering/localized-repair-c271/operational-plan-review-p30/OUTCOME.json) and the [session checkpoint](P30-SESSION.md).
 
 On 2026-11-25 (America/Denver), asked "Which route should C271 take next?", the owner answered "Design macOS contract (C)". Route C's first phase is therefore C271's next action. It is design only: a new, versioned contract for the owner's macOS arm64 executor, independently reviewed and adopted before any implementation. It keeps the original test meaning, labels results with that executor and keeps the unmet Linux-contract gates unmet. It installs no host tooling and implements nothing. R01/R02 remain done and R03–R05 not_done; P01 is done and P02 in_progress. PR274 stays draft and open, issue273 open.
+
+## P31 route C: macOS arm64 contract design — November 26, 2026
+
+On November 25, 2026 (America/Denver), after C271-P30's outcome, the owner chose route C: asked "Which route should C271 take next?", the owner answered "Design macOS contract (C)". The reply was relayed word for word from the session that started this phase's session. Phase C271-P31-macos-contract-design runs in **local** execution mode under current main's instructions. See the [phase declaration](../../../engineering/localized-repair-c271/macos-contract-design-p31/PHASE.json) and the [session checkpoint](P31-SESSION.md).
+
+Its single objective is a design, for independent review and adoption: a new versioned current-host readback contract for the owner's macOS arm64 executor, as route C of the [P30 review](../../../engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md) describes it.
+- **Substituted, explicitly:**
+  - the Node build (`v24.22.1` kept, a darwin-arm64 build pinned by its own bytes);
+  - the qualification Python;
+  - the host observation that replaces H0 and H1;
+  - the process supervisor;
+  - the preparer;
+  - the provider's and probe's host bindings.
+- **Kept:** the original test meaning of the seven readback methods.
+- **Labelled:** every result, with that executor.
+- **Unchanged:** the unmet Linux-contract gates stay unmet.
+- **Decided:** the driver's readback selection rule for main's ordinary local routine, which R04 needs.
+
+Acceptance is an independently reviewed and adopted design (design only, with no executable authority) or a concrete design blocker, recorded on this branch and pushed without force.
+
+The phase implements, downloads, installs and runs nothing: no Node, no readback method, no routine driver and no test. It writes nothing to main. PR274 stays draft and open and issue273 open. R01/R02 remain done and R03–R05 not_done; P01 is done and P02 in_progress. The wording of R01–R05 and of the earlier sections is unchanged.

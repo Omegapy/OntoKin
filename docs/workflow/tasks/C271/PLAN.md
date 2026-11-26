@@ -531,3 +531,20 @@ Every step ran as planned, with one review cycle more than planned:
 - the final records, with those findings resolved.
 
 Each push was without force and read back from the remote. The outcome is P30-EXECUTOR-001 ([review outcome](../../../engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md)). The owner then chose route C. The next phase, not begun here, is route C's design-only phase: a new versioned contract for the owner's macOS arm64 executor, declared in C271's records before its substantive work. H0 and H1 (or their reviewed replacements on the substituted executor), R03, R04 and R05 follow as separate phases.
+
+## P31 route C: macOS arm64 contract design — November 26, 2026
+
+Local mode, on the owner's choice of route C of November 25, 2026 ([phase declaration](../../../engineering/localized-repair-c271/macos-contract-design-p31/PHASE.json)). Director `c271-p31-a99073a9641d` alone owns the C271 worktree, its index and every push of this branch in this phase; reviewers are read-only workers with fresh context. Main is not written and its integration lease is not used.
+
+Ordered steps:
+1. Declare the phase and push this recoverable checkpoint.
+2. Read the inputs with their identities, and the Node.js release information for `v24.22.1` without downloading a binary.
+3. Write the substitution map of P05's terms and of P30's requirements E1 to E19.
+4. Define the executor, the substituted supervisor and its lifecycle guarantees, the macOS no-replace preparer, the host observation that replaces H0 and H1, and the driver's selection rule for main's ordinary routine.
+5. Write the declarative control obligations, the result labels and the claims the contract can never support.
+6. Obtain a fresh-context independent review, and resolve and re-review its mandatory findings.
+7. Record the Director's adoption, design only, or the concrete design blocker.
+8. Run this branch's workflow check, documentation verifier and a scoped whitespace check.
+9. Push without force, read the push back, comment once on PR274 and issue273, and stop.
+
+Not part of this phase: any implementation, download, installation or host tooling, any Node or test execution, H0 and H1 of either contract, the substituted executor's qualification, the required regression, main integration and parent closure.
