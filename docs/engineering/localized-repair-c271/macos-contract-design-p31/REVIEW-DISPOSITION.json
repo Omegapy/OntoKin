@@ -85,7 +85,7 @@
       "re_review": "INDEPENDENT-REVIEW-002 (G-19): overstated; only six schemas were versioned; corrected in revision 3, which versions every provider document schema; the read set adds OK-ENG-009 and main's migration records"
     }
   ],
-  "next": "re-review of revision 3 by the same reviewer",
+  "next": "none: the design is adopted (ADOPTION.json)",
   "second_review": {
     "review": "INDEPENDENT-REVIEW-002",
     "candidate_commit": "90e8a5fbff6a43a1ed08284662e16f9aa5e96a83",
@@ -146,5 +146,41 @@
         "change": "G-11 and G-12 dispositions annotated; MC33 to MC35; every provider schema versioned; OK-ENG-009 and main's migration records added to the read set"
       }
     ]
+  },
+  "third_review": {
+    "review": "INDEPENDENT-REVIEW-003",
+    "candidate_commit": "dd98e9830fffc0da96bf1cfc408c7f246867a20a",
+    "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "resolved": [
+      "G-13",
+      "G-14",
+      "G-15",
+      "G-16",
+      "G-17",
+      "G-18",
+      "G-19"
+    ],
+    "recorded_at_utc": "2026-11-26T05:45Z",
+    "dispositions": [
+      {
+        "id": "G-20",
+        "severity": "nonmandatory",
+        "disposition": "resolved_after_re_review",
+        "change": "the S10 predicate reads 'exactly the declared environment, optionally plus that one variable with the recorded value'; MC30's case without the variable is labelled a simulated boundary; MC36 adds a direct-probe refusal with one start"
+      },
+      {
+        "id": "G-21",
+        "severity": "nonmandatory",
+        "disposition": "resolved_after_re_review",
+        "change": "exact-set comparison of both trees with an added-bytecode case in MC32; transitive dependencies by referenced path with every symbolic-link hop followed at each check; the interpreter-selection chain bound and the resolved launcher checked at each use; @-relative LC_RPATH entries resolved as search directories"
+      },
+      {
+        "id": "G-22",
+        "severity": "nonmandatory",
+        "disposition": "resolved_after_re_review",
+        "change": "the host fact states the four variables passed and the reviewer's five-variable observation; install, install-result and observation-plan schemas versioned /0.2.0"
+      }
+    ],
+    "note": "G-20 to G-22 are resolved after the accepting re-review, without a further review."
   }
 }

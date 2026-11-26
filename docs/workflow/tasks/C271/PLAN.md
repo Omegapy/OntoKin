@@ -548,3 +548,14 @@ Ordered steps:
 9. Push without force, read the push back, comment once on PR274 and issue273, and stop.
 
 Not part of this phase: any implementation, download, installation or host tooling, any Node or test execution, H0 and H1 of either contract, the substituted executor's qualification, the required regression, main integration and parent closure.
+
+### P31 design outcome (2026-11-26, UTC)
+
+Every step ran as planned, with two review cycles more than planned:
+- declaration `af6340debba1345dd7290c19ec8279c8568f3d8a`;
+- revision 1 `4ee691aedc30dac1e3ec9a63917d7e6ac7493912`, rejected;
+- revision 2 `90e8a5fbff6a43a1ed08284662e16f9aa5e96a83`, rejected;
+- revision 3 `dd98e9830fffc0da96bf1cfc408c7f246867a20a`, accepted with nonmandatory findings;
+- the final records, with the adoption.
+
+Each push was without force and read back from the remote. The next phase, not begun here, is gate MB of the adopted contract: a reviewed merge of main into this branch. Then come MI, MP, MH, MR (R03), R04 and R05, each a separate phase.

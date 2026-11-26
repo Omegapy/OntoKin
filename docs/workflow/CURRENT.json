@@ -4,15 +4,15 @@
   "latest_task": "C271",
   "active_task": "C271",
   "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-  "snapshot_date": "2026-11-26T04:24:00Z",
+  "snapshot_date": "2026-11-26T05:47:00Z",
   "next_action": {
-    "status": "ready",
-    "summary": "C271-P31-macos-contract-design is declared and in progress: route C's design-only phase, selected by the owner. Design a new versioned current-host readback contract for the owner's macOS arm64 executor that explicitly substitutes the Node build (v24.22.1 kept, a darwin-arm64 build pinned by its own bytes), the qualification Python, the host observation that replaces H0 and H1, the process supervisor, the preparer and the provider's and probe's host bindings; keep the original test meaning; label results with that executor; keep the unmet Linux-contract gates unmet; decide the driver's selection rule for main's ordinary local routine. Stop at the adopted design or a concrete design blocker. Nothing is implemented, downloaded or installed. Implementation, the substituted executor's qualification, R03, R04 and R05 follow as separate phases.",
+    "status": "awaiting_user_direction",
+    "summary": "C271-P31 adopted the design-only contract ontokin.current-host-readback/0.2.0 for the owner's macOS arm64 executor (docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json). The next gate is MB: a reviewed merge of main into this branch that resolves the six overlaps by meaning (MAIN-CONFLICTS.md), bringing main's macOS lock, local environment specification and tools; it does not integrate into main. MB is a separate phase that needs the owner's selection. Then MI (implementation of the 0.2.0 adaptations), MP (preparation, with the owner's approval of the Node download), MH (qualification on the owner's executor), MR (the complete qualifying routine, R03), R04 and R05.",
     "suggested_task": "C271",
     "sources": [
       "docs/workflow/tasks/C271/task.json",
       "docs/workflow/tasks/C271/P31-SESSION.md",
-      "docs/engineering/localized-repair-c271/macos-contract-design-p31/PHASE.json"
+      "docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json"
     ]
   },
   "historical_handoff": {
@@ -3334,7 +3334,7 @@
     "record": "docs/engineering/localized-repair-c271/macos-contract-design-p31/PHASE.json",
     "session_checkpoint": "docs/workflow/tasks/C271/P31-SESSION.md",
     "declared_at_utc": "2026-11-26T04:24:00Z",
-    "status": "declared_design_pending",
+    "status": "design_adopted",
     "owner_direction": {
       "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
       "question": "Which route should C271 take next?",
@@ -3342,14 +3342,16 @@
       "how_received": "Typed by the owner in the Claude Code session that started this phase's session and relayed to it word for word."
     },
     "gates_still_open": [
-      "route C design (this phase, in progress)",
-      "implementation of the adopted contract",
-      "the substituted executor's qualification",
-      "H0 and H1 under /0.1.5 (P30-EXECUTOR-001, unmet)",
-      "N34 and N57",
-      "required regression (R03)",
-      "reviewed integration and actual-main verification (R04)",
-      "parent completion and final delivery (R05)"
-    ]
+      "MB: merge of main into the branch (next; needs the owner's selection)",
+      "MI: implementation",
+      "MP: preparation (owner's download approval)",
+      "MH: qualification on the owner's executor",
+      "MR: complete qualifying routine (R03)",
+      "R04: integration and actual-main verification",
+      "R05: parent completion and final delivery",
+      "H0 and H1 of the Linux contract (P30-EXECUTOR-001), N34, N57: unchanged and open"
+    ],
+    "completed_at_utc": "2026-11-26T05:47:00Z",
+    "adoption": "docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json"
   }
 }

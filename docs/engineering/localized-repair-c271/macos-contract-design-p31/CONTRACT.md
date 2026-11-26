@@ -1,7 +1,7 @@
 # Current-host CPU readback contract for the owner's macOS arm64 executor
 
 **Identifier:** `ontokin.current-host-readback/0.2.0`, profile `darwin-arm64-v1`
-**Decision state:** design candidate of C271-P31, revision 3, for independent review. Adoption is a
+**Decision state:** design of C271-P31, revision 3 with the nonmandatory corrections after its accepting re-review; adopted by the separate [adoption record](ADOPTION.json) for later bounded phases only. Adoption is a
 separate record. Implementation, preparation, qualification, R03, R04 and R05 are separate later
 gates.
 **Scope:** the same seven methods of `tests/test_static_tray_readback_v01.py` as P05's contract,
@@ -21,7 +21,9 @@ selected by the owner on 2026-11-25 ("Design macOS contract (C)"). Machine-reada
   and kept the 0.1.0 argv. The re-review rejected it on three mandatory findings, G-13 to G-15. macOS
   adds `__CF_USER_TEXT_ENCODING` to the environment, the Python binding claimed more than it bound,
   and the statements about main's driver and R04 were wrong.
-- **This revision** resolves G-13 to G-19.
+- **Revision 3**, commit `dd98e9830fffc0da96bf1cfc408c7f246867a20a`, resolved G-13 to G-19. The
+  re-review accepted it with nonmandatory findings G-20 to G-22.
+- **This final version** resolves G-20 to G-22 after that re-review, without a further review.
 
 [REVIEW-DISPOSITION](REVIEW-DISPOSITION.json) maps every finding to its change.
 
@@ -72,7 +74,10 @@ literal list, N34 for the Linux loader and N57. They stay adopted and open for t
 **Document schemas.** Under this contract, every document schema of the provider is versioned
 `/0.2.0`: config, lock, host, result and node-source, and also source, dependencies, methods,
 discovery, workspace, inspection, attempt, setup, cohort, refusal and preserved-cohort. The entry
-points of each version refuse the other version's documents.
+points of each version refuse the other version's documents. The preparer's plan and result
+schemas, `ontokin.current-host-readback-install/0.2.0` and `install-result/0.2.0`, and M0's plan
+schema, `ontokin.current-host-readback-observation-plan/0.2.0`, which replaces the inspector's, are
+versioned in the same way.
 
 ## 2. The executor requirements E1 to E19 of C271-P30
 
@@ -158,10 +163,22 @@ points of each version refuse the other version's documents.
   - every Mach-O dependency outside `/usr/lib/` and `/System/Library/` of every Mach-O file in
     those trees, for example Homebrew's OpenSSL libraries;
   - the version, build string and `sys.flags`.
+- **Exact sets.** Both trees are compared as exact sets at every check, so an extra or missing
+  file refuses, not only a changed one. Bytecode files belong to the set. An added `__pycache__`
+  file refuses (MC32); the tree is writable by its owner, and another use of the interpreter
+  without `-B` could add bytecode that would then be loaded.
+- **Dependencies and links.** Dependencies are bound transitively, by each referenced path. Every
+  symbolic-link hop on the way is recorded, for example `<prefix>/opt/openssl@3` to its Cellar
+  directory, and is followed again at each check.
+- **Interpreter selection.** The selection chain is bound the same way, and the resolved launcher
+  path is checked again at each use. The chain runs from `.venv/bin/python` to `python3.12`, through
+  the `<prefix>/opt/python@3.12/…` links, and includes `pyvenv.cfg`'s `home`.
 - **Python-side Mach-O rules.** These files have their own rules, separate from Node's:
   - accepted file types are `MH_EXECUTE`, `MH_DYLIB` and `MH_BUNDLE`;
   - `LC_ID_DYLIB` and `LC_RPATH` are accepted in addition to Node's allow-list, and every
-    `LC_RPATH` entry is recorded;
+    `LC_RPATH` entry is recorded. An `LC_RPATH` entry that is itself `@`-relative, such as
+    libmpdec's `@loader_path/../lib`, is a search directory. It is resolved as a directory, and a
+    reference found through it must still resolve to a bound file;
   - an `@rpath`, `@loader_path` or `@executable_path` reference is accepted only if, by dyld's
     rules with the recorded rpaths, it resolves to a bound file;
   - any other `@`-relative reference, `LC_DYLD_ENVIRONMENT`, `LC_LOAD_UPWARD_DYLIB` and unknown
@@ -287,8 +304,9 @@ commands follow a closed allow-list: `LC_SEGMENT_64`, `LC_SYMTAB`, `LC_DYSYMTAB`
 
 **Environment predicate (S10).** Three checks use the same predicate: M0, the provider's HOST
 comparison, and the probe's `process.env` check, which is a bootstrap binding and not the
-scientific body. Each accepts exactly the declared environment. If the process has loaded
-CoreFoundation, it also accepts `__CF_USER_TEXT_ENCODING`, with the value recorded in HOST.
+scientific body. Each accepts exactly the declared environment, optionally plus that one variable,
+`__CF_USER_TEXT_ENCODING`, with the value recorded in HOST. None of them checks whether the
+process loaded CoreFoundation.
 
 The supervisor still passes exactly the declared environment to the child, and its receipt records
 what was passed. Whether the official `node` loads CoreFoundation is not established in this
@@ -423,12 +441,13 @@ The full table, with the P05 controls each one covers, is in [CONTRACT.json](CON
 | MC27 | direct negatives | P06-H01 and P06-H02 as P07 section 5 defines them, with `--expected-config-sha256` | one start each; refusal before reader imports | 2 | 0 |
 | MC28 | discovery | the complete default inventory against the baseline plus approved additions | exact match; no hidden skip or missing method in a qualifying run | 0 | 0 |
 | MC29 | time of use | a change of source, runtime, dependency, configuration or OS build after preflight | the current attempt is invalid; zero new starts before launch | 0 | 0 |
-| MC30 | environment | only the declared variables, plus `__CF_USER_TEXT_ENCODING` with the recorded value (and, separately, without it) | accepted by M0, the provider and the probe | 1 | 0 |
+| MC30 | environment | only the declared variables, plus `__CF_USER_TEXT_ENCODING` with the recorded value; the case without the variable is a simulated boundary, labelled mocked | accepted by M0, the provider and the probe | 1 | 0 |
 | MC31 | environment | an extra variable other than `__CF_USER_TEXT_ENCODING`, or that variable with a value other than the recorded one | refused | 0 | 0 |
-| MC32 | Python | a changed standard-library or bytecode file, a changed `pyvenv.cfg`, or an `@`-relative load that does not resolve to a bound file | refused | 0 | 0 |
+| MC32 | Python | a changed, added or missing file in either tree (among them an added bytecode file and a changed `pyvenv.cfg`), a retargeted symbolic-link hop, or an `@`-relative load that does not resolve to a bound file | refused | 0 | 0 |
 | MC33 | configuration | declared Node version other than `v24.22.1` | refused before any start | 0 | 0 |
 | MC34 | dependencies | C195 archive with an absolute, traversing, duplicate, linked or special entry, or an unexpected mode | refused before extraction | 0 | 0 |
 | MC35 | installation | existing destination partial, changed, extra, linked or inaccessible | refused; nothing repaired or replaced | 0 | 0 |
+| MC36 | direct negative | a probe start whose frozen HOST input carries an altered `__CF_USER_TEXT_ENCODING` value | the probe refuses at its environment binding, before reader imports | 1 | 0 |
 
 P05's CH01 to CH20 are covered as follows; `CONTRACT.json` gives the map.
 - **CH04 and CH05** (the ELF closure and `ldd` provenance): replaced by MC05 to MC09.

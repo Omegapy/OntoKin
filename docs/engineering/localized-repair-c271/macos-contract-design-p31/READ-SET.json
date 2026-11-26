@@ -249,9 +249,9 @@
     },
     {
       "observed_at_utc": "between 2026-11-26T05:13:23Z and 05:33:28Z (not recorded more exactly)",
-      "method": "read-only: env -i with the five declared variables, then the qualification Python under -I -S -B printing sorted(os.environ); otool -L and otool -l (static file reads)",
+      "method": "read-only: env -i with four of the five declared variables (PATH, LANG, LC_ALL, TZ; UV_THREADPOOL_SIZE omitted), then the qualification Python under -I -S -B printing sorted(os.environ); otool -L and otool -l (static file reads)",
       "facts": [
-        "the qualification Python's os.environ holds __CF_USER_TEXT_ENCODING in addition to LANG, LC_ALL, PATH and TZ, under an exact clean launch",
+        "the qualification Python's os.environ holds __CF_USER_TEXT_ENCODING in addition to the four variables passed (LANG, LC_ALL, PATH, TZ), under a clean launch; the independent review observed the same with all five declared variables",
         "the venv's python resolves to the Homebrew framework's bin/python3.12, which links the framework's Python library and libSystem",
         "Homebrew's node, not the contract's build, links Homebrew libraries through @rpath and absolute paths"
       ]

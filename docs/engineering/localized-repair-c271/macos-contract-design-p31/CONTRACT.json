@@ -2,7 +2,7 @@
   "schema": "ontokin.current-host-readback-design/0.2.0",
   "contract": "ontokin.current-host-readback/0.2.0",
   "profile": "darwin-arm64-v1",
-  "status": "design_candidate_revision_3_pending_independent_review",
+  "status": "adopted_design_only",
   "phase": "C271-P31-macos-contract-design",
   "basis": "route C of docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md; owner's choice of 2026-11-25 ('Design macOS contract (C)')",
   "relation_to_0_1_0": "A separate version. ontokin.current-host-readback/0.1.0 and inspection plans /0.1.1-/0.1.5 stay adopted and unchanged for the Linux x86-64 executor class; their H0 and H1 stay unmet in local mode (P30-EXECUTOR-001). Each version's entry points refuse the other's documents.",
@@ -100,7 +100,7 @@
         "LC_ID_DYLIB",
         "LC_RPATH"
       ],
-      "rpath": "every LC_RPATH entry recorded",
+      "rpath": "every LC_RPATH entry recorded; an @-relative LC_RPATH entry (for example libmpdec's @loader_path/../lib) is a search directory, resolved as a directory; a reference found through it must still resolve to a bound file",
       "at_references": "accepted only if, by dyld's rules with the recorded rpaths, the reference resolves to a bound file",
       "refused": [
         "any other @-relative reference",
@@ -108,7 +108,10 @@
         "LC_LOAD_UPWARD_DYLIB",
         "unknown commands"
       ]
-    }
+    },
+    "exact_sets": "both trees compared as exact sets at every check; an extra, missing or changed file refuses; bytecode files belong to the set and an added __pycache__ file refuses",
+    "dependencies": "bound transitively by each referenced path, with every symbolic-link hop recorded (for example <prefix>/opt/openssl@3 to its Cellar directory) and followed again at each check",
+    "interpreter_selection": "the chain from .venv/bin/python to python3.12, through the <prefix>/opt/python@3.12/... links, and pyvenv.cfg's home are bound; the resolved launcher path is checked again at each use"
   },
   "dependencies": {
     "files": 24,
@@ -358,7 +361,10 @@
     "refusal": "ontokin.current-host-readback-refusal/0.2.0",
     "preserved-cohort": "ontokin.current-host-readback-preserved-cohort/0.2.0",
     "rule": "every provider document schema is versioned /0.2.0; each version's entry points refuse the other's documents",
-    "process_receipt": "unchanged original supervisor receipt fields"
+    "process_receipt": "unchanged original supervisor receipt fields",
+    "install": "ontokin.current-host-readback-install/0.2.0",
+    "install-result": "ontokin.current-host-readback-install-result/0.2.0",
+    "observation-plan": "ontokin.current-host-readback-observation-plan/0.2.0 (M0's plan, replacing the inspector's)"
   },
   "limits": {
     "source_operations": 100000,
@@ -748,7 +754,7 @@
     {
       "id": "MC30",
       "route": "environment",
-      "case": "only the declared variables plus __CF_USER_TEXT_ENCODING with the recorded value (and, separately, without it)",
+      "case": "only the declared variables plus __CF_USER_TEXT_ENCODING with the recorded value; the case without the variable is a simulated boundary, labelled mocked",
       "expected": "accepted by M0, the provider and the probe",
       "node_starts": 1,
       "other_starts": 0,
@@ -774,7 +780,7 @@
     {
       "id": "MC32",
       "route": "Python",
-      "case": "a changed standard-library or bytecode file, a changed pyvenv.cfg, or an @-relative load that does not resolve to a bound file",
+      "case": "a changed, added or missing file in either tree (among them an added bytecode file and a changed pyvenv.cfg), a retargeted symbolic-link hop, or an @-relative load that does not resolve to a bound file",
       "expected": "refused",
       "node_starts": 0,
       "other_starts": 0,
@@ -819,6 +825,19 @@
         "CH08"
       ],
       "status": "NOT_RUN"
+    },
+    {
+      "id": "MC36",
+      "route": "direct negative",
+      "case": "a probe start whose frozen HOST input carries an altered __CF_USER_TEXT_ENCODING value",
+      "expected": "the probe refuses at its environment binding, before reader imports",
+      "node_starts": 1,
+      "other_starts": 0,
+      "covers_p05": [
+        "CH05",
+        "CH11-C"
+      ],
+      "status": "NOT_RUN"
     }
   ],
   "p05_control_map": {
@@ -846,7 +865,8 @@
       "MC06",
       "MC07",
       "MC30",
-      "MC31"
+      "MC31",
+      "MC36"
     ],
     "CH06": [
       "MC18"
@@ -875,7 +895,8 @@
       "kept with the 0.2.0 schemas"
     ],
     "CH11-C": [
-      "MC27"
+      "MC27",
+      "MC36"
     ],
     "CH12": [
       "MC07",
@@ -1010,7 +1031,12 @@
       }
     ],
     "this_revision": "resolves G-13 to G-19",
-    "dispositions": "REVIEW-DISPOSITION.json"
+    "dispositions": "REVIEW-DISPOSITION.json",
+    "final": {
+      "note": "revision 3 with the nonmandatory corrections G-20 to G-22, made after the accepting re-review INDEPENDENT-REVIEW-003 without a further review",
+      "accepting_review": "INDEPENDENT-REVIEW-003",
+      "reviewed_commit": "dd98e9830fffc0da96bf1cfc408c7f246867a20a"
+    }
   },
   "argv": {
     "unchanged_from": "0.1.0 (provider lines 747-749; probe line 659)",
@@ -1068,7 +1094,7 @@
     "os_supplied_allowance": {
       "name": "__CF_USER_TEXT_ENCODING",
       "reason": "CoreFoundation adds it to a process that loads it; observed under an exact clean launch of the qualification Python",
-      "rule": "admitted only with the value recorded in HOST; checked by M0, the provider's HOST comparison and the probe's process.env check (a bootstrap binding); the supervisor still passes exactly the declared environment and records it",
+      "rule": "exactly the declared environment, optionally plus __CF_USER_TEXT_ENCODING with the value recorded in HOST; no check of whether the process loaded CoreFoundation; checked by M0, the provider's HOST comparison and the probe's process.env check (a bootstrap binding); the supervisor still passes exactly the declared environment and records it",
       "node": "whether the official node loads CoreFoundation is not established; the predicate admits the variable either way (MC30, MC31)"
     }
   },

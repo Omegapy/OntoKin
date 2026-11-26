@@ -553,3 +553,23 @@ Its single objective is a design, for independent review and adoption: a new ver
 Acceptance is an independently reviewed and adopted design (design only, with no executable authority) or a concrete design blocker, recorded on this branch and pushed without force.
 
 The phase implements, downloads, installs and runs nothing: no Node, no readback method, no routine driver and no test. It writes nothing to main. PR274 stays draft and open and issue273 open. R01/R02 remain done and R03–R05 not_done; P01 is done and P02 in_progress. The wording of R01–R05 and of the earlier sections is unchanged.
+
+### P31 design outcome (2026-11-26, UTC)
+
+The design of `ontokin.current-host-readback/0.2.0` (profile `darwin-arm64-v1`) for the owner's macOS arm64 executor is adopted for later bounded phases only. The decision is `accepted_design_only`, with no executable authority ([adoption](../../../engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json), [contract](../../../engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md)).
+- **Substituted:**
+  - the Node build: the official `v24.22.1` darwin-arm64 archive, pinned by SHA-256 `89c682593d76cd44233fa53b1563264e7de9cbb189cad169135c5b4fadfbc0a7`;
+  - the qualification Python, bound by its installation-tree inventory;
+  - the host observation (M0 and M1);
+  - the supervisor: a Darwin variant without the child-subreaper precondition;
+  - the preparer;
+  - the host bindings;
+  - the driver environment and the Git binding;
+  - one OS-supplied environment variable, admitted.
+- **Kept:** the 0.1.0 argv and the original test meaning.
+- **Selection rule:** ordinary runs proceed and fail the readback class visibly at setup, never as a skip. Qualifying runs keep every rule.
+- **Controls:** 36 declarative controls, NOT_RUN.
+
+A fresh-context independent review rejected revision 1 on six mandatory findings and revision 2 on three. It accepted revision 3 with nonmandatory findings, which were resolved afterwards without a further review.
+
+The Linux contract and its plans stay adopted and unchanged, and P30-EXECUTOR-001, N34 and N57 stay open for it. R01/R02 remain done and R03–R05 not_done; P01 is done and P02 in_progress. The next gate, MB, is a reviewed merge of main into this branch, and it needs the owner's selection.

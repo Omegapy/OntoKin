@@ -1,0 +1,80 @@
+{
+  "schema": "ontokin.c271.p31-adoption/1",
+  "decision_id": "P31-MACOS-CONTRACT-001",
+  "task": "C271",
+  "phase": "C271-P31-macos-contract-design",
+  "director": "c271-p31-a99073a9641d",
+  "adopted_at_utc": "2026-11-26T05:45Z",
+  "status": "accepted_design_only",
+  "executable_authority": false,
+  "contract": "ontokin.current-host-readback/0.2.0",
+  "profile": "darwin-arm64-v1",
+  "basis": "the owner's choice of route C on 2026-11-25 ('Design macOS contract (C)'); C271-P30's reviewed outcome (P30-EXECUTOR-001); the independent reviews below",
+  "accepted_payloads": {
+    "CONTRACT.md": {
+      "bytes": 42769,
+      "sha256": "42db98dc6099ee605b0963f3734f7bff2d68c019ff6c00a0ee97bd753c03fdc9"
+    },
+    "CONTRACT.json": {
+      "bytes": 43340,
+      "sha256": "c843fc96f19b36b3ea141c5be0fb08c8260565188e8f5f199ff5b0bc08ca3920"
+    },
+    "READ-SET.json": {
+      "bytes": 10791,
+      "sha256": "9a5e7bed98ea8941bf0dd0dd689f41086e1df27bc85e435b05e88aeea19353dc"
+    }
+  },
+  "review_chain": [
+    {
+      "review": "INDEPENDENT-REVIEW-001",
+      "candidate": "4ee691aedc30dac1e3ec9a63917d7e6ac7493912",
+      "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+      "mandatory": [
+        "G-01",
+        "G-02",
+        "G-03",
+        "G-04",
+        "G-05",
+        "G-06"
+      ]
+    },
+    {
+      "review": "INDEPENDENT-REVIEW-002",
+      "candidate": "90e8a5fbff6a43a1ed08284662e16f9aa5e96a83",
+      "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+      "mandatory": [
+        "G-13",
+        "G-14",
+        "G-15"
+      ]
+    },
+    {
+      "review": "INDEPENDENT-REVIEW-003",
+      "candidate": "dd98e9830fffc0da96bf1cfc408c7f246867a20a",
+      "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "mandatory": []
+    }
+  ],
+  "post_review_changes": "The accepted payloads are revision 3 plus the nonmandatory corrections G-20 to G-22, made after INDEPENDENT-REVIEW-003 without a further review (REVIEW-DISPOSITION.json, third_review).",
+  "reviewer": "one fresh-context subagent launched by the Director, read-only, reviewing three times",
+  "scope": "Design only, for later bounded phases. No implementation, preparation, download, installation, qualification, R03, integration or parent completion is authorized by this record.",
+  "unchanged": [
+    "ontokin.current-host-readback/0.1.0 and inspection plans /0.1.1 to /0.1.5 stay adopted for the Linux x86-64 executor class",
+    "P30-EXECUTOR-001 stays open for that contract's H0 and H1 in local mode",
+    "N34 and N57 stay open for the Linux contract",
+    "R01 and R02 done; R03, R04 and R05 not_done; P01 done, P02 in_progress"
+  ],
+  "next_gate": {
+    "id": "MB",
+    "scope": "main's local-mode files on this branch, through a reviewed merge of main into the branch that resolves the six overlaps by meaning; no integration into main",
+    "selection": "a separate phase that needs the owner's selection"
+  },
+  "later_gates": [
+    "MI",
+    "MP (needs the owner's approval of the Node download)",
+    "MH",
+    "MR (R03)",
+    "R04",
+    "R05"
+  ]
+}

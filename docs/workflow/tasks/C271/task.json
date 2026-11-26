@@ -94,7 +94,9 @@
         "docs/engineering/localized-repair-c271/h0-plan-p26/EVIDENCE.zip",
         "docs/engineering/localized-repair-c271/h0-plan-p26/EVIDENCE-MANIFEST.json",
         "docs/engineering/localized-repair-c271/operational-plan-review-p30/OUTCOME.json",
-        "docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md"
+        "docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md",
+        "docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json",
+        "docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md"
       ]
     },
     {
@@ -1275,6 +1277,39 @@
         "docs/engineering/localized-repair-c271/operational-plan-review-p30/INDEPENDENT-REVIEW-002.md",
         "docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-DISPOSITION.json"
       ]
+    },
+    {
+      "name": "P31 workflow check of this branch",
+      "command": ".venv/bin/python tools/chat_workflow.py check",
+      "result": "passed",
+      "required": true,
+      "scope": "Structure of the workflow records at each P31 commit.",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-contract-design-p31/CHECKS.json"
+      ]
+    },
+    {
+      "name": "P31 documentation verifier of this branch",
+      "command": ".venv/bin/python docs/maintenance/reorganization-2026-10-17/verify_reorganization.py --json-output <working evidence directory>",
+      "result": "passed",
+      "required": true,
+      "scope": "Links, anchors and sections at each P31 commit.",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-contract-design-p31/CHECKS.json"
+      ]
+    },
+    {
+      "name": "P31 independent review of the macOS contract design",
+      "command": "Fresh-context subagent review with recomputed read-set identities, external and host fact checks; two re-reviews",
+      "result": "passed",
+      "required": true,
+      "scope": "Revisions 1 and 2 rejected; revision 3 accepted with nonmandatory findings, resolved afterwards without a further review. Design acceptance only.",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-contract-design-p31/INDEPENDENT-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-contract-design-p31/INDEPENDENT-REVIEW-002.md",
+        "docs/engineering/localized-repair-c271/macos-contract-design-p31/INDEPENDENT-REVIEW-003.md",
+        "docs/engineering/localized-repair-c271/macos-contract-design-p31/REVIEW-DISPOSITION.json"
+      ]
     }
   ],
   "completion": {
@@ -1399,7 +1434,7 @@
       }
     }
   },
-  "next_action": "C271-P31-macos-contract-design is declared and in progress: route C's design-only phase, selected by the owner. Design a new versioned current-host readback contract for the owner's macOS arm64 executor that explicitly substitutes the Node build (v24.22.1 kept, a darwin-arm64 build pinned by its own bytes), the qualification Python, the host observation that replaces H0 and H1, the process supervisor, the preparer and the provider's and probe's host bindings; keep the original test meaning; label results with that executor; keep the unmet Linux-contract gates unmet; decide the driver's selection rule for main's ordinary local routine. Stop at the adopted design or a concrete design blocker. Nothing is implemented, downloaded or installed. Implementation, the substituted executor's qualification, R03, R04 and R05 follow as separate phases.",
+  "next_action": "C271-P31 adopted the design-only contract ontokin.current-host-readback/0.2.0 for the owner's macOS arm64 executor (docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json). The next gate is MB: a reviewed merge of main into this branch that resolves the six overlaps by meaning (MAIN-CONFLICTS.md), bringing main's macOS lock, local environment specification and tools; it does not integrate into main. MB is a separate phase that needs the owner's selection. Then MI (implementation of the 0.2.0 adaptations), MP (preparation, with the owner's approval of the Node download), MH (qualification on the owner's executor), MR (the complete qualifying routine, R03), R04 and R05.",
   "session_phase": {
     "schema": "ontokin.c271.p31-macos-contract-design/1",
     "task": "C271",
@@ -1415,7 +1450,9 @@
     "scope_issue": 273,
     "record": "docs/engineering/localized-repair-c271/macos-contract-design-p31/PHASE.json",
     "session_checkpoint": "docs/workflow/tasks/C271/P31-SESSION.md",
-    "status": "declared_design_pending"
+    "status": "design_adopted",
+    "completed_at_utc": "2026-11-26T05:47:00Z",
+    "outcome": "docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -7716,7 +7753,7 @@
     "record": "docs/engineering/localized-repair-c271/macos-contract-design-p31/PHASE.json",
     "session_checkpoint": "docs/workflow/tasks/C271/P31-SESSION.md",
     "declared_at_utc": "2026-11-26T04:24:00Z",
-    "status": "declared_design_pending",
+    "status": "design_adopted",
     "owner_direction": {
       "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
       "question": "Which route should C271 take next?",
@@ -7727,15 +7764,37 @@
     "excluded": "implementation, downloads, installation or host tooling, Node or test execution, H0 and H1 of either contract, the substituted executor's qualification, writes to main, PR state changes, R03 to R05",
     "parent_complete": false,
     "gates_still_open": [
-      "route C design (this phase, in progress)",
-      "implementation of the adopted contract",
-      "the substituted executor's qualification",
-      "H0 and H1 under /0.1.5 (P30-EXECUTOR-001, unmet)",
-      "N34 and N57",
-      "required regression (R03)",
-      "reviewed integration and actual-main verification (R04)",
-      "parent completion and final delivery (R05)"
-    ]
+      "MB: merge of main into the branch (next; needs the owner's selection)",
+      "MI: implementation",
+      "MP: preparation (owner's download approval)",
+      "MH: qualification on the owner's executor",
+      "MR: complete qualifying routine (R03)",
+      "R04: integration and actual-main verification",
+      "R05: parent completion and final delivery",
+      "H0 and H1 of the Linux contract (P30-EXECUTOR-001), N34, N57: unchanged and open"
+    ],
+    "completed_at_utc": "2026-11-26T05:47:00Z",
+    "outcome": "The design of ontokin.current-host-readback/0.2.0 (profile darwin-arm64-v1) is adopted for later bounded phases only (accepted_design_only, executable_authority false).",
+    "adoption": "docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json",
+    "contract": "docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md",
+    "independent_review": [
+      {
+        "review": "docs/engineering/localized-repair-c271/macos-contract-design-p31/INDEPENDENT-REVIEW-001.md",
+        "candidate": "4ee691aedc30dac1e3ec9a63917d7e6ac7493912",
+        "verdict": "REJECT_WITH_MANDATORY_FINDINGS"
+      },
+      {
+        "review": "docs/engineering/localized-repair-c271/macos-contract-design-p31/INDEPENDENT-REVIEW-002.md",
+        "candidate": "90e8a5fbff6a43a1ed08284662e16f9aa5e96a83",
+        "verdict": "REJECT_WITH_MANDATORY_FINDINGS"
+      },
+      {
+        "review": "docs/engineering/localized-repair-c271/macos-contract-design-p31/INDEPENDENT-REVIEW-003.md",
+        "candidate": "dd98e9830fffc0da96bf1cfc408c7f246867a20a",
+        "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS"
+      }
+    ],
+    "post_review_changes": "G-20 to G-22 resolved after the accepting re-review, without a further review"
   },
   "p31_fields_index": {
     "recorded_at_utc": "2026-11-26T04:24:00Z",
