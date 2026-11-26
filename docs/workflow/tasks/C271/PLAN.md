@@ -614,3 +614,17 @@ The corrections:
 - **D-20,** in step 5: the review's implementation findings fixed, and two controls added by their author.
 
 Each push was without force and read back. The next phase, not begun here, is gate MP: the reviewed preparation of the runtime, the packages and the reader tree, with the owner's approval of the Node download. Then come MH, MR (R03), R04 and R05, each a separate phase.
+
+## P34 gate MP: preparation of the runtime, reader tree and .venv — November 26, 2026
+
+Local mode, on the owner's selection and download approval ([phase declaration](../../../engineering/localized-repair-c271/macos-preparation-p34/PHASE.json)). Director `c271-p34-ec1a7de2360d`. The [preparation plan](../../../engineering/localized-repair-c271/macos-preparation-p34/PREPARATION-PLAN.md) fixes inputs, places, workers and the `.venv` procedure.
+
+Ordered steps:
+1. Declare and push.
+2. Make the two approved downloads, each into a new, empty directory, and check each against its pin.
+3. Have an independent author, W1, freeze the member inventories, the Node executable's binding, the exact `NODE-SOURCE.json` bytes and the two plans, before any extraction.
+4. Obtain a fresh-context independent review (W2) of the plans and the `.venv` procedure before execution.
+5. Commit the reviewed plans; that commit is the preparing checkout's bound commit.
+6. Prepare from a clean checkout at that commit: a dry run, then the application of each plan, and the `.venv` procedure, under a process-start audit.
+7. Verify the receipts, the trees and the `.venv`, and have W2 review the results.
+8. Push without force, read the push back, record, comment once on PR274 and issue273, and stop.

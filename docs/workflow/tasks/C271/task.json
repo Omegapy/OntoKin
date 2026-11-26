@@ -4,7 +4,7 @@
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
   "status": "in_progress",
-  "owner": "c271-p33-a99647756bed",
+  "owner": "c271-p34-ec1a7de2360d",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -1538,27 +1538,24 @@
       "scope": "gate MI only: source and synthetic-input tests; nothing prepared, qualified or integrated"
     }
   },
-  "next_action": "C271-P33 implemented gate MI of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001): the Darwin supervisor variant, the preparer route, the M0 and M1 observer, the provider and probe host bindings and the driver's selection rule, environment and Git binding, in source, with independently frozen controls that pass and an independent review, repeated after its findings were resolved (ACCEPT_WITH_NONMANDATORY_FINDINGS), of candidate c534e7b72201dbf0ed6b366f5b0ec631415dedb0. Nothing is prepared, qualified or integrated. The next gate is MP: the reviewed preparation of the Node runtime, the Python verification packages and the reader tree. It is a separate phase that needs the owner's selection and the owner's explicit approval of the download of node-v24.22.1-darwin-arm64.tar.gz (about 53 MB) from nodejs.org. Then MH, MR (R03), R04 and R05.",
+  "next_action": "C271-P34-macos-preparation-mp is declared and in progress: gate MP of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001), the preparation, under independently frozen and reviewed plans, of the pinned Node.js v24.22.1 runtime, the 24-file reader tree from the committed C195 archive, and the worktree's .venv with exactly the seven pinned packages and no pip. The owner approved both downloads (the Node archive, 53,062,778 bytes; the seven wheels, 5,447,056 bytes). No Node, ldd or codesign process starts; nothing is observed, qualified or integrated. Then MH, MR (R03), R04 and R05, each a separate phase.",
   "session_phase": {
-    "schema": "ontokin.c271.p33-macos-implementation/1",
+    "schema": "ontokin.c271.p34-macos-preparation/1",
     "task": "C271",
-    "phase": "C271-P33-macos-implementation-mi",
-    "owner": "c271-p33-a99647756bed",
-    "declared_at_utc": "2026-11-26T14:36:34Z",
+    "phase": "C271-P34-macos-preparation-mp",
+    "owner": "c271-p34-ec1a7de2360d",
+    "declared_at_utc": "2026-11-26T21:01:00Z",
     "execution_mode": "local",
     "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-    "starting_branch_head": "1c2f25ba224a5c3419004d1d331d29e01378ae00",
+    "starting_branch_head": "180075b7952fb4df50ec35eb64106410bfa1d8f9",
     "branch": "work/c271-missing-import-digest-control",
     "worktree": "../OntoKin-worktrees/c271",
     "pull_request": 274,
     "scope_issue": 273,
-    "record": "docs/engineering/localized-repair-c271/macos-implementation-p33/PHASE.json",
-    "plan": "docs/engineering/localized-repair-c271/macos-implementation-p33/IMPLEMENTATION-PLAN.md",
-    "session_checkpoint": "docs/workflow/tasks/C271/P33-SESSION.md",
-    "status": "implementation_complete_reviewed_pushed",
-    "completed_at_utc": "2026-11-26T20:02:37Z",
-    "reviewed_candidate": "c534e7b72201dbf0ed6b366f5b0ec631415dedb0",
-    "outcome": "docs/engineering/localized-repair-c271/macos-implementation-p33/OUTCOME.json"
+    "record": "docs/engineering/localized-repair-c271/macos-preparation-p34/PHASE.json",
+    "plan": "docs/engineering/localized-repair-c271/macos-preparation-p34/PREPARATION-PLAN.md",
+    "session_checkpoint": "docs/workflow/tasks/C271/P34-SESSION.md",
+    "status": "declared_preparation_pending"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -8157,6 +8154,105 @@
         "p32_main_merge",
         "p32_prior_current_fields",
         "p33_prior_current_fields"
+      ]
+    }
+  },
+  "p34_prior_current_fields": {
+    "recorded_at_utc": "2026-11-26T21:01:00Z",
+    "purpose": "The current values that the C271-P34 declaration replaced, kept unchanged as P33's closing state.",
+    "owner": "c271-p33-a99647756bed",
+    "next_action": "C271-P33 implemented gate MI of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001): the Darwin supervisor variant, the preparer route, the M0 and M1 observer, the provider and probe host bindings and the driver's selection rule, environment and Git binding, in source, with independently frozen controls that pass and an independent review, repeated after its findings were resolved (ACCEPT_WITH_NONMANDATORY_FINDINGS), of candidate c534e7b72201dbf0ed6b366f5b0ec631415dedb0. Nothing is prepared, qualified or integrated. The next gate is MP: the reviewed preparation of the Node runtime, the Python verification packages and the reader tree. It is a separate phase that needs the owner's selection and the owner's explicit approval of the download of node-v24.22.1-darwin-arm64.tar.gz (about 53 MB) from nodejs.org. Then MH, MR (R03), R04 and R05.",
+    "session_phase": {
+      "schema": "ontokin.c271.p33-macos-implementation/1",
+      "task": "C271",
+      "phase": "C271-P33-macos-implementation-mi",
+      "owner": "c271-p33-a99647756bed",
+      "declared_at_utc": "2026-11-26T14:36:34Z",
+      "execution_mode": "local",
+      "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "starting_branch_head": "1c2f25ba224a5c3419004d1d331d29e01378ae00",
+      "branch": "work/c271-missing-import-digest-control",
+      "worktree": "../OntoKin-worktrees/c271",
+      "pull_request": 274,
+      "scope_issue": 273,
+      "record": "docs/engineering/localized-repair-c271/macos-implementation-p33/PHASE.json",
+      "plan": "docs/engineering/localized-repair-c271/macos-implementation-p33/IMPLEMENTATION-PLAN.md",
+      "session_checkpoint": "docs/workflow/tasks/C271/P33-SESSION.md",
+      "status": "implementation_complete_reviewed_pushed",
+      "completed_at_utc": "2026-11-26T20:02:37Z",
+      "reviewed_candidate": "c534e7b72201dbf0ed6b366f5b0ec631415dedb0",
+      "outcome": "docs/engineering/localized-repair-c271/macos-implementation-p33/OUTCOME.json"
+    }
+  },
+  "p34_macos_preparation": {
+    "phase": "C271-P34-macos-preparation-mp",
+    "owner": "c271-p34-ec1a7de2360d",
+    "record": "docs/engineering/localized-repair-c271/macos-preparation-p34/PHASE.json",
+    "plan": "docs/engineering/localized-repair-c271/macos-preparation-p34/PREPARATION-PLAN.md",
+    "session_checkpoint": "docs/workflow/tasks/C271/P34-SESSION.md",
+    "declared_at_utc": "2026-11-26T21:01:00Z",
+    "status": "declared_preparation_pending",
+    "owner_direction": [
+      {
+        "date": "2026-11-26 (America/Denver and UTC)",
+        "question": "Should I start gate MP, the preparation phase?",
+        "reply": "Start gate MP",
+        "how_received": "typed by the owner in this session",
+        "scope_of_selection": "gate MP of the adopted contract ontokin.current-host-readback/0.2.0 only"
+      },
+      {
+        "date": "2026-11-26 (America/Denver and UTC)",
+        "question": "Gate MP needs two downloads, each checked against its pinned SHA-256 before use. Which do you approve? (1) node-v24.22.1-darwin-arm64.tar.gz from https://nodejs.org/dist/v24.22.1/, 53,062,778 bytes (53.1 MB). (2) The seven wheels pinned in tools/native-reader-verification-macos-arm64-cp312.lock, from files.pythonhosted.org: attrs 26.1.0, jsonschema 4.26.0, jsonschema-specifications 2025.9.1, referencing 0.37.0, rpds-py 2026.5.1 (macOS arm64), typing_extensions 4.16.0 and Pillow 13.0.0 (macOS arm64), 5,447,056 bytes in all (5.4 MB). Both go into new, empty directories beside the clone, outside the repository.",
+        "reply": "Node archive (53.1 MB), Seven wheels (5.4 MB)",
+        "how_received": "both options selected by the owner in this session's question dialog",
+        "scope_of_approval": "exactly these two downloads, from these sources, for gate MP; no other download"
+      }
+    ],
+    "gate": "MP of ontokin.current-host-readback/0.2.0",
+    "parent_complete": false
+  },
+  "p34_fields_index": {
+    "recorded_at_utc": "2026-11-26T21:01:00Z",
+    "purpose": "Extends p33_fields_index, which stays unchanged: p34_macos_preparation joins the current-state fields of task.json, and p33_macos_implementation becomes history.",
+    "current_state_fields": {
+      "task.json": [
+        "status",
+        "blocked_reason",
+        "owner",
+        "branch",
+        "scope_issue",
+        "requirements",
+        "plan",
+        "checks",
+        "completion",
+        "next_action",
+        "session_phase",
+        "execution_mode",
+        "execution_mode_record",
+        "delivery_reconciliation",
+        "p34_macos_preparation"
+      ],
+      "CURRENT.json": [
+        "schema_version",
+        "project",
+        "latest_task",
+        "active_task",
+        "execution_mode",
+        "observed_main",
+        "snapshot_date",
+        "next_action",
+        "checkpoint",
+        "unfinished",
+        "boundaries",
+        "delivery_policy",
+        "history"
+      ]
+    },
+    "now_history": {
+      "task.json": [
+        "p33_macos_implementation",
+        "p33_prior_current_fields",
+        "p34_prior_current_fields"
       ]
     }
   }

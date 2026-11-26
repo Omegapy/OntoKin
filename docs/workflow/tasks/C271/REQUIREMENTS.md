@@ -628,3 +628,16 @@ The 0.2.0 adaptations are implemented in source and independently reviewed. The 
   - product completion: no.
 - **Unchanged:** R01/R02 remain done and R03–R05 not_done.
 - **Next gate:** MP. It needs the owner's selection and the owner's approval of the Node archive download.
+
+## P34 gate MP: preparation of the runtime, reader tree and .venv — November 26, 2026
+
+The owner answered "Start gate MP" in this session and approved both downloads. Phase C271-P34-macos-preparation-mp runs in local mode ([phase declaration](../../../engineering/localized-repair-c271/macos-preparation-p34/PHASE.json), [preparation plan](../../../engineering/localized-repair-c271/macos-preparation-p34/PREPARATION-PLAN.md), [session checkpoint](P34-SESSION.md)).
+- **Objective:** gate MP of the adopted contract `ontokin.current-host-readback/0.2.0`. It prepares, under independently frozen and reviewed plans with receipts:
+  - the pinned Node.js `v24.22.1` runtime from the official archive, with its frozen member inventory and `NODE-SOURCE.json`;
+  - the 24-file reader tree from the committed C195 archive;
+  - the worktree's `.venv` with exactly the seven pinned packages and no other distribution, pip included.
+- **Downloads:** exactly the two that the owner approved, the Node archive (53,062,778 bytes) and the seven wheels (5,447,056 bytes), each checked against its pin.
+- **Not run:** no Node, `ldd` or `codesign` start, no M0, M1 or qualifying cohort, no routine driver.
+- **Main:** not written.
+- **Excluded:** MH, MR, R04 and R05.
+- **Unchanged:** R01/R02 remain done and R03–R05 not_done.

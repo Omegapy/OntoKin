@@ -1,0 +1,74 @@
+{
+  "schema": "ontokin.c271.p34-macos-preparation/1",
+  "task": "C271",
+  "phase": "C271-P34-macos-preparation-mp",
+  "owner": "c271-p34-ec1a7de2360d",
+  "declared_at_utc": "2026-11-26T21:01:00Z",
+  "status": "declared_preparation_pending",
+  "execution_mode": {
+    "mode": "local",
+    "entry_document": "https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/LOCAL-START-HERE.md",
+    "governing_instructions": "current main at 51223c9b94a222f29d38eb6c33808f8e55e2bff9; gate MB merged it into this branch, so the branch's instruction files are main's bytes"
+  },
+  "owner_direction": [
+    {
+      "date": "2026-11-26 (America/Denver and UTC)",
+      "question": "Should I start gate MP, the preparation phase?",
+      "reply": "Start gate MP",
+      "how_received": "typed by the owner in this session",
+      "scope_of_selection": "gate MP of the adopted contract ontokin.current-host-readback/0.2.0 only"
+    },
+    {
+      "date": "2026-11-26 (America/Denver and UTC)",
+      "question": "Gate MP needs two downloads, each checked against its pinned SHA-256 before use. Which do you approve? (1) node-v24.22.1-darwin-arm64.tar.gz from https://nodejs.org/dist/v24.22.1/, 53,062,778 bytes (53.1 MB). (2) The seven wheels pinned in tools/native-reader-verification-macos-arm64-cp312.lock, from files.pythonhosted.org: attrs 26.1.0, jsonschema 4.26.0, jsonschema-specifications 2025.9.1, referencing 0.37.0, rpds-py 2026.5.1 (macOS arm64), typing_extensions 4.16.0 and Pillow 13.0.0 (macOS arm64), 5,447,056 bytes in all (5.4 MB). Both go into new, empty directories beside the clone, outside the repository.",
+      "reply": "Node archive (53.1 MB), Seven wheels (5.4 MB)",
+      "how_received": "both options selected by the owner in this session's question dialog",
+      "scope_of_approval": "exactly these two downloads, from these sources, for gate MP; no other download"
+    }
+  ],
+  "objective": "Gate MP of docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md section 11, as amended by P33-AMENDMENT-001: under independently frozen and independently reviewed plans, prepare (1) the pinned Node.js v24.22.1 runtime from the official archive, with its frozen member inventory and NODE-SOURCE.json, (2) the 24-file reader tree from the committed C195 archive, and (3) the worktree's .venv with exactly the seven pinned packages and no other distribution; with receipts and an independent review of the results. Nothing is observed, qualified or integrated.",
+  "plan": "docs/engineering/localized-repair-c271/macos-preparation-p34/PREPARATION-PLAN.md",
+  "starting_state": {
+    "branch_head": "180075b7952fb4df50ec35eb64106410bfa1d8f9",
+    "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "remote_observation": "git ls-remote --heads origin at 2026-11-26T20:42:12Z",
+    "pull_request": "PR274 open, draft, head 180075b7",
+    "scope_issue": "issue273 open",
+    "environment": "worktree .venv: CPython 3.12.13 (Homebrew), created without pip, empty site-packages; the doctor reports core ready, python-verification missing (the seven packages) and visual-verification out of scope"
+  },
+  "acceptance": [
+    {"id": "A1", "check": "This declaration and its preparation plan are pushed before any download or preparation."},
+    {"id": "A2", "check": "Exactly the two approved downloads, each into a new, empty directory beside the clone; the Node archive's SHA-256 equals the adopted pin and each wheel's SHA-256 equals the macOS lock before any use; a download record states URL, time, size and digest."},
+    {"id": "A3", "check": "An independent author freezes, before any extraction: the Node archive's complete member inventory, bin/node's digest, size and mode, the exact bytes of NODE-SOURCE.json, the C195 archive's member inventory with the 24-file mapping, and the two install/0.2.0 plans; it confirms the official archive's member names and modes (D-06)."},
+    {"id": "A4", "check": "A fresh-context independent reviewer accepts the plans and the .venv procedure before execution, or its mandatory findings are resolved and re-reviewed; the reviewed plans are committed and pushed, and that commit is the preparing checkout's bound commit (D-17)."},
+    {"id": "A5", "check": "The preparer runs from a clean checkout at the bound commit (I-03): a dry run, then the application of each plan; the receipts are INSTALLED_EXACT (or ALREADY_PRESENT_EXACT on a repeat) with zero Node, ldd and checker starts; each destination holds exactly its planned tree; the receipt's preparer_source is checked against the bound commit's files."},
+    {"id": "A6", "check": "The .venv holds exactly the seven pinned distributions at their versions and no other, pip included (M0's exact package rule); every site-packages file is owned by one of their RECORD files; hash enforcement is kept; no bytecode is written into the framework or the venv during preparation (W3's F4); the doctor's package and import checks and the native-reader preflight pass, and the doctor's pip check is recorded as not run because the .venv has no pip by design."},
+    {"id": "A7", "check": "No Node, ldd or codesign start during the phase, shown by the preparer's receipts and a process-start audit of the preparation commands; the workflow check, the documentation verifier and a scoped whitespace check pass."},
+    {"id": "A8", "check": "The independent reviewer accepts the results (receipts, trees, .venv), or its mandatory findings are resolved and re-reviewed."},
+    {"id": "A9", "check": "Pushed without force and read back; outcome records with path-portable copies (no machine path), session checkpoint and task record; one checkpoint comment on PR274 and issue273; PR274 stays draft; main is not written."}
+  ],
+  "ownership": {
+    "director": "c271-p34-ec1a7de2360d",
+    "director_session": "the same Claude Code session that carried out C271-P30 to P33",
+    "owned": [
+      "the C271 worktree, its index and .venv",
+      "every update of this branch in this phase",
+      "the working evidence directory ../OntoKin-local/c271-p34/",
+      "the prepared-tree parent ../OntoKin-local/c271-macos/, created empty for this phase"
+    ],
+    "workers": "W1 (independent preparation author) and W2 (independent reviewer) of the preparation plan, section 4; no worker makes a Git write, downloads anything or starts Node, ldd or codesign",
+    "main": "not written; the integration lease is not used"
+  },
+  "stopping_condition": "The reviewed preparation pushed and read back with its records, or a concrete blocker.",
+  "excluded": [
+    "any download other than the two approved ones",
+    "any Node, ldd or codesign start; M0, M1, N34-M and the qualifying cohort (MH); freezing the Python installation inventory (MH)",
+    "the routine driver and the complete default routine (MR); R03, R04 and R05",
+    "the visual-verification profile, its npm dependencies and its browser",
+    "changes to the implementation, the adopted contract, its amendment or the frozen controls",
+    "integration into main and the main lease; PR274 state changes, issue closure, branch deletion"
+  ],
+  "records": {
+    "session_checkpoint": "docs/workflow/tasks/C271/P34-SESSION.md"
+  }
+}
