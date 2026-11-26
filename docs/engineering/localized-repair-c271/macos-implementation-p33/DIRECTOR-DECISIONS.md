@@ -133,3 +133,12 @@ revision and the amendments.
 - **M0's receipt check** admits the install result's two new fields (W3's follow-up).
 - **Concurrency:** W2's follow-up runs imported the 0.1.0 provider while W5 was editing it. The
   Director's final verification runs every test on the committed tree.
+
+## D-14: the supervisor's process receipt carries no labels (W1's follow-up)
+
+D-13's "receipt" means the preparer's install receipts. The supervisor's `<label>.process.json`
+is the original process receipt. The contract keeps its fields unchanged (CONTRACT.json
+`schemas.process_receipt`), and the amendment keeps `run_process`'s tokens apart from the
+precondition (section 3.2). It therefore carries no labels and no design revision. The documents
+that contain such a receipt carry them: the inspection receipts of M0 and M1, and the provider's
+attempt and result documents.

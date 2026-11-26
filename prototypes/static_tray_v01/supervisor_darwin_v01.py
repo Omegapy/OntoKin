@@ -1,16 +1,27 @@
 """Bounded Darwin arm64 process groups for the 0.2.0 current-host readback contract.
 
-Contract ``ontokin.current-host-readback/0.2.0``, profile ``darwin-arm64-v1``, section 5
-(S4).  ``run_process`` is the original ``supervisor.run_process`` with one change: the Linux
-precondition ``prctl(PR_SET_CHILD_SUBREAPER)`` is replaced by the Darwin precondition, which
-requires ``sys.platform == "darwin"``, ``os.uname().machine == "arm64"`` and
-``sysctl.proc_translated`` equal to 0, read through ``sysctlbyname`` from libSystem.  A failed
-or unreadable precondition raises the original kind of ``Stop`` before any process start.
+Contract ``ontokin.current-host-readback/0.2.0``, profile ``darwin-arm64-v1``, section 5 (S4),
+as amended by P33-AMENDMENT-001 (design revision 4).  ``run_process``, ``group_exists`` and
+``terminate_group`` are the originals of ``supervisor.py`` with exactly five changes:
 
-Every other name comes unchanged from ``supervisor.py``, which stays byte-identical and remains
-the Linux contract's supervisor.  Darwin has no child subreaper: orphaned descendants are
-re-parented to launchd, not to this supervisor.  The receipt fields keep their text, with the
-narrowed meaning that contract section 5 states.
+1. ``run_process``: the Linux precondition ``prctl(PR_SET_CHILD_SUBREAPER)`` is replaced by the
+   Darwin precondition, which requires ``sys.platform == "darwin"``,
+   ``os.uname().machine == "arm64"`` and ``sysctl.proc_translated`` equal to 0, read through
+   ``sysctlbyname`` from libSystem.  A failed or unreadable precondition raises the original
+   kind of ``Stop`` before any process start.
+2. ``group_exists``: an ``EPERM`` answer of ``killpg(pgid, 0)`` counts as present.  On Darwin a
+   group whose remaining members have exited unreaped answers ``EPERM``; only ``ESRCH`` counts
+   as absent.
+3. to 5. ``terminate_group``: each of its three sends passes over a refusal with ``EPERM``,
+   which is never taken as proof of absence.
+
+``Clock``, ``Stop``, ``LIMITS``, ``inventory``, ``json_bytes`` and ``_reap`` come unchanged from
+``supervisor.py``, which stays byte-identical and remains the Linux contract's supervisor.  The
+names ``group_exists`` and ``terminate_group`` in this module's ``run_process`` resolve to the
+re-implementations here.  Darwin has no child subreaper: orphaned descendants are re-parented
+to launchd.  A group that keeps answering ``EPERM`` fails at the cleanup ceiling with the
+original ``Stop``.  The receipt fields keep their text, with the meanings of contract section 5
+as amended.
 """
 from __future__ import annotations
 
@@ -18,12 +29,13 @@ import ctypes
 import os
 from pathlib import Path
 import selectors
+import signal
 import subprocess
 import sys
 import time
 
 from prototypes.static_tray_v01.supervisor import (
-    Clock, LIMITS, Stop, group_exists, inventory, json_bytes, terminate_group)
+    Clock, LIMITS, Stop, _reap, inventory, json_bytes)
 
 
 LIBSYSTEM = "/usr/lib/libSystem.B.dylib"
@@ -66,6 +78,58 @@ def darwin_precondition():
     if translated != 0:
         return "sysctl.proc_translated is not 0"
     return None
+
+
+def group_exists(pid):
+    try:
+        os.killpg(pid, 0)
+        return True
+    except PermissionError:
+        return True
+    except ProcessLookupError:
+        return False
+
+
+def terminate_group(process, clock):
+    """Graceful group stop followed by a mandatory kill and bounded reaping."""
+    started = time.monotonic()
+    try:
+        os.killpg(process.pid, signal.SIGTERM)
+    except (ProcessLookupError, PermissionError):
+        pass
+    grace = min(started + LIMITS["terminate_grace_ms"] / 1000, clock.end)
+    while time.monotonic() < grace:
+        process.poll()
+        if process.returncode is not None:
+            _reap(process.pid)
+        if not group_exists(process.pid):
+            break
+        time.sleep(0.01)
+    if group_exists(process.pid):
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except (ProcessLookupError, PermissionError):
+            pass
+    deadline = min(started + LIMITS["cleanup_ms"] / 1000, clock.end)
+    while time.monotonic() < deadline:
+        process.poll()
+        if process.returncode is not None:
+            _reap(process.pid)
+        if not group_exists(process.pid):
+            process.wait(timeout=max(0.001, deadline - time.monotonic()))
+            return {"passed": True, "elapsed_ms": (time.monotonic()-started)*1000,
+                    "process_group_absent": True, "reaped": True}
+        time.sleep(0.01)
+    # Never leave an owned process running even after a scheduler overrun.
+    # Such an overrun is retained as a failed cleanup/transaction, not success.
+    try:
+        os.killpg(process.pid, signal.SIGKILL)
+    except (ProcessLookupError, PermissionError):
+        pass
+    process.poll()
+    if process.returncode is not None:
+        _reap(process.pid)
+    raise Stop("OTRAY-E-BACKEND", "Owned process group cleanup exceeded stage or transaction ceiling")
 
 
 def run_process(argv, *, stage, label, clock, stage_end, env=None,
