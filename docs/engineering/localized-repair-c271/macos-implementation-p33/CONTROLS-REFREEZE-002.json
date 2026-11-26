@@ -1,0 +1,298 @@
+{
+ "schema": "ontokin.c271.p33-controls-refreeze/1",
+ "task": "C271",
+ "phase": "C271-P33-macos-implementation-mi",
+ "gate": "MI",
+ "refreeze": "REFREEZE-002",
+ "status": "ADDED_NOT_RUN",
+ "author": "W6, the independent control author; it wrote none of the implementation",
+ "requested_by": "the Director c271-p33-a99647756bed, refreeze request 002, after DIRECTOR-DECISIONS.md D-20 (independent review 001, findings I-01 and I-08)",
+ "frozen_at_utc": "2026-11-26T19:43:43Z",
+ "executed_by_author": false,
+ "author_checks": [
+  "ast.parse syntax check of the module with .venv/bin/python -I -S -B",
+  "this generator's ast comparison with the previous module: no existing unit changed or was removed; exactly the two test methods and the three Mach-O helpers were added; nothing was imported or run",
+  "byte comparison of the two changed implementation files with their freeze-time copies"
+ ],
+ "retained_records": {
+  "docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-FROZEN.json": {
+   "sha256": "cd7ae80f93cc28b0a9fa69994a77672611eee2c3127b460a595d745c13230594",
+   "state": "byte-identical"
+  },
+  "docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-REFREEZE-001.json": {
+   "sha256": "fb01cd4aec4a2703ce2993f45a6193c10b395af543f4964fff9b5f1584ddb15f",
+   "state": "byte-identical"
+  }
+ },
+ "previous_module_sha256": "17a137e3c19e8502c0ca7696a89b45bc4299538ffc432a11b8feae18e54b10cc",
+ "checkout": {
+  "branch": "work/c271-missing-import-digest-control",
+  "head": "df9420f21e001265b02fcce8583dd680ce143c66",
+  "implementation_read": {
+   "prototypes/static_tray_v01/supervisor.py": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+   "prototypes/static_tray_v01/supervisor_darwin_v01.py": "bd4a5e3fcdfb5367994bfeeb93d211dd627b830017b17f607cd94d71ade2bd2b",
+   "tools/prepare_current_host_readback.py": "dbb8cdec7bf43ec3618af17c7b322d5cc85a21d7375233959441f2e6f92ad46c",
+   "prototypes/static_tray_v01/current_host_observation_v02.py": "471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+   "prototypes/static_tray_v01/current_host_readback_v01.py": "cb3f0c7f247331c79171a9e1ac71141d93205392ff426382046cfa61999d1126",
+   "prototypes/static_tray_v01/current_host_readback_v02.py": "d34ea2f98cf77188750b7819f0b5418d4811d0bfcd8612fdd71be58210f59071",
+   "prototypes/static_tray_v01/current_host_readback_v02.mjs": "bca11b2ab3acfb818fd6b43636a51056a60b4af888d77fefa0b1214fec4054cd",
+   "tools/check_local.py": "4c55033d51bdd33700f6d8a847b3ed44e6b4f7f6489bf11b5f497279a5a4cb70",
+   "tools/storage_identity.py": "c8a88e9ead1e52f6e1b5d545fc3950cab14100f04366604a9ebee6ee215fe93c",
+   "prototypes/static_tray_v01/format_check.py": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447"
+  },
+  "changed_since_freeze": [
+   "prototypes/static_tray_v01/current_host_readback_v01.py",
+   "prototypes/static_tray_v01/current_host_readback_v02.py"
+  ]
+ },
+ "dependency_check": [
+  {
+   "file": "prototypes/static_tray_v01/current_host_readback_v01.py",
+   "freeze_sha256": "6f04e2d21602b25f4dc55366e9048e2395c5b8e2fe8f9e40f92a104d3d1b3d8d",
+   "now_sha256": "cb3f0c7f247331c79171a9e1ac71141d93205392ff426382046cfa61999d1126",
+   "change": "D-20 (I-01): the facade appended to the 0.1.0 provider binds the version that setup_cpu_cohort selects, to the class and to one module binding, until finish_cpu_cohort has run or the setup fails; guarded_run_process and finish_cpu_cohort dispatch by that binding, and outside a cohort by the selection as before",
+   "first_65533_bytes_unchanged": true,
+   "common_prefix_with_freeze_bytes": 71544,
+   "changed_line_ranges": [
+    {
+     "change": "insert",
+     "freeze_lines": [
+      1161,
+      1160
+     ],
+     "now_lines": [
+      1161,
+      1182
+     ]
+    },
+    {
+     "change": "replace",
+     "freeze_lines": [
+      1162,
+      1163
+     ],
+     "now_lines": [
+      1184,
+      1185
+     ]
+    },
+    {
+     "change": "replace",
+     "freeze_lines": [
+      1170,
+      1170
+     ],
+     "now_lines": [
+      1192,
+      1195
+     ]
+    },
+    {
+     "change": "replace",
+     "freeze_lines": [
+      1173,
+      1174
+     ],
+     "now_lines": [
+      1198,
+      1207
+     ]
+    },
+    {
+     "change": "replace",
+     "freeze_lines": [
+      1178,
+      1180
+     ],
+     "now_lines": [
+      1211,
+      1217
+     ]
+    }
+   ],
+   "frozen_cases_reaching_it": [
+    {
+     "cases": "MC09 (7), MC29 (6), MC21 provider attempts (4) and MC31's provider launch case",
+     "path": "facade.guarded_run_process outside any cohort: no setup ran, so the binding is empty and the call is dispatched by the selection exactly as before"
+    },
+    {
+     "cases": "MC21's provider setup case (one selection variable)",
+     "path": "facade.setup_cpu_cohort binds 0.1.0, the 0.1.0 setup refuses the partial selection, and the binding ends with the refusal; the expected refusal is unchanged, and the binding is empty for every later case"
+    },
+    {
+     "cases": "MC22's facade setup case and MC22's driver case (the readback module in a child)",
+     "path": "an ordinary run raises before any binding is made; the coordinator seams then run with no binding"
+    }
+   ],
+   "depends_on_old_behaviour": false,
+   "reason": "no frozen case runs a facade setup that passes followed by the facade's accounting, which is the only path whose dispatch changed; every other path is dispatched as before"
+  },
+  {
+   "file": "prototypes/static_tray_v01/current_host_readback_v02.py",
+   "freeze_sha256": "30b8e5d81fe29801207fb37b42fcc8d9f80161e1b221a0090735803e360d0b40",
+   "now_sha256": "d34ea2f98cf77188750b7819f0b5418d4811d0bfcd8612fdd71be58210f59071",
+   "change": "D-20 (I-07): finish_cpu_cohort requires every attempt ledger to be an attempt/0.2.0 document of this contract, design revision and amendments",
+   "changed_line_ranges": [
+    {
+     "change": "insert",
+     "freeze_lines": [
+      1297,
+      1296
+     ],
+     "now_lines": [
+      1297,
+      1300
+     ]
+    }
+   ],
+   "frozen_cases_reaching_it": [],
+   "depends_on_old_behaviour": false,
+   "reason": "no frozen case calls the 0.2.0 accounting: MC23's missing-method case simulates it by a class teardown error in a synthetic unit child, and MC09 reads the ledger that the unchanged guarded_run_process writes"
+  }
+ ],
+ "added_cases": [
+  {
+   "method": "HostObservationControls.test_mc06_allow_listed_dyld_info_only_node_executable_is_accepted",
+   "control": "MC06",
+   "finding": "I-08",
+   "label": {
+    "kind": "real",
+    "boundary": "none; synthetic Mach-O bytes, never executed"
+   },
+   "inputs": "node_commands_with_dyld_info(): the MC06 baseline's commands (LC_SEGMENT_64 x3, LC_SYMTAB, LC_DYSYMTAB, LC_LOAD_DYLINKER /usr/lib/dyld, LC_UUID, LC_BUILD_VERSION, LC_SOURCE_VERSION, LC_MAIN, the three system dylibs, LC_FUNCTION_STARTS, LC_DATA_IN_CODE, LC_CODE_SIGNATURE) with one LC_DYLD_INFO_ONLY (0x80000022, cmdsize 48, ten zero offsets and sizes) in place of LC_DYLD_CHAINED_FIXUPS and LC_DYLD_EXPORTS_TRIE; macho() makes a thin arm64 MH_EXECUTE image of it",
+   "entry_point": "observation.read_macho(path, maximum, private=True, category='RUNTIME') then observation.check_node_macho(summary), through HostObservationControls.node_rules as the MC06 baseline",
+   "expected": {
+    "outcome": "accepted",
+    "detail": "references equal the three system dylib paths in order, as in the baseline",
+    "side_effects": [
+     "none"
+    ]
+   },
+   "premises": [
+    "observation.parse_macho reads exactly one command named LC_DYLD_INFO_ONLY and neither LC_DYLD_CHAINED_FIXUPS nor LC_DYLD_EXPORTS_TRIE"
+   ],
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "harness_process_starts": "none; a guard fails the test on any subprocess or os process start"
+   },
+   "post_test_checks": [
+    "the guard recorded no process start"
+   ],
+   "sources": [
+    "CONTRACT.md section 7, Load commands: the closed allow-list names LC_DYLD_INFO_ONLY",
+    "CONTRACT.md section 9 row MC06",
+    "CONTRACT.json host_observation.M0.mach_o_rules",
+    "INDEPENDENT-REVIEW-001.md I-08",
+    "DIRECTOR-DECISIONS.md D-20"
+   ],
+   "method_source_sha256": "16111c22be77d6a118bcb283be4f7be1e48651c7a023642f88cca1849979a626"
+  },
+  {
+   "method": "ProviderControls.test_mc29_configuration_change_after_setup_is_refused_and_accounted_by_the_0_2_0_cohort_only",
+   "control": "MC29",
+   "also_covers": [
+    "contract section 1, document schemas: the version-refusal rule",
+    "contract section 10: the labels of the recorded refusal"
+   ],
+   "finding": "I-01",
+   "mapping": "both. MC29 is the time-of-use rule: a configuration that changes after the cohort's preflight (its setup bound the selection and wrote the manifest) invalidates the current attempt with zero starts, and the case is named under MC29. Section 1's rule decides the rest: every document of the 0.2.0 provider is /0.2.0, and the entry points of each version refuse the other version's documents, so a 0.2.0 cohort is accounted only by the 0.2.0 accounting and no 0.1.0 document may enter it. Section 10 sets the labels that its refusal records. MC29 alone says nothing about which version accounts the cohort, and section 1 alone says nothing about the change at time of use; the finding needs both.",
+   "label": {
+    "kind": "mocked",
+    "boundary": "the Darwin supervisor and the provider's host, source, dependency and method verifications are substituted (ProviderWorld.boundaries; the 0.2.0 setup cannot pass at MI without MP's inputs), and the provider labels its records mocked; the facade's seams, the 0.2.0 setup, attempt and accounting, the configuration's digest checks and the change itself are real"
+   },
+   "inputs": "ProviderWorld: a canonical config/0.2.0 selection outside the checkout with the real contract and adoption-record bindings, an existing external evidence parent, and the synthetic HOST, source, dependency and method results; both selection variables set and STATIC_TRAY_READBACK_CPU_OUTPUT unset, so that the setup owns a temporary cohort; a fresh class Cohort, which stands for the readback CPU class; the module binding isolated per test (mock.patch.dict of facade._COHORT_BINDING); then: facade.setup_cpu_cohort(Cohort); one stage Q01-positive in the cohort root with synthetic.glb, synthetic-audit.json and job.json, and the argv of slot 1 with that job, as the class's check_case builds them; one space appended to the configuration file (its digest no longer matches the selected digest); facade.guarded_run_process for that stage with Clock(total_ms=30000), stage_end = clock.started + 28, the manifest's environment and label synthetic-readback; facade.finish_cpu_cohort(Cohort)",
+   "entry_point": "prototypes.static_tray_v01.current_host_readback_v01: setup_cpu_cohort, guarded_run_process and finish_cpu_cohort, the facade that the readback class imports",
+   "premises": [
+    "the setup selected 0.2.0 (the class carries readback_dispatch_version 0.2.0) and setup.json is setup/0.2.0 with passed true",
+    "after the change the selection alone selects 0.1.0 (facade._environment_version), while the facade's bound version stays 0.2.0 (facade._bound_version)"
+   ],
+   "expected": {
+    "outcome": "refused twice, by the 0.2.0 provider",
+    "attempt": "refused by the 0.2.0 provider's CurrentHostBindingError (not the facade's 0.1.0 class), code CH-SELECTION; its refusal record is refusal/0.2.0 with actual_checker_starts 0 and labels.boundary mocked; zero starts",
+    "accounting": "refused by the 0.2.0 provider's CurrentHostBindingError, code CH-SELECTION (the changed configuration, as D-20 states); its refusal record is refusal/0.2.0; the accounting records cohort.json as cohort/0.2.0 with contract, design_revision 4 and amendments [P33-AMENDMENT-001], passed false, error.code CH-SELECTION, and exactly the labels {executor macos-arm64-local, contract, design_revision 4, amendments, profile darwin-arm64-v1, run_kind qualifying, boundary mocked, os, node, python_inventory_sha256 and git of the verified HOST}",
+    "side_effects": [
+     "no 0.1.0 document anywhere under the evidence parent",
+     "every schema-bearing JSON document under the evidence parent is an ontokin.current-host-readback-*/0.2.0 document",
+     "the module binding is empty and the class carries no binding after the accounting; the facade then follows the selection again (0.1.0 for the changed bytes)"
+    ]
+   },
+   "starts": {
+    "node": 0,
+    "other": 0,
+    "harness_process_starts": "none; the mocked Darwin supervisor records no call, and a guard fails the test on any process start"
+   },
+   "post_test_checks": [
+    "the mocked Darwin supervisor recorded no call, and the attempt's on_started was never called",
+    "no JSON document under the evidence parent has a schema ending in /0.1.0; every schema there is a /0.2.0 provider schema",
+    "at least one cohort record exists, and every one is as expected",
+    "facade._COHORT_BINDING is {version: None}, readback_dispatch_version is not in vars(Cohort), and facade._bound_version() is 0.1.0",
+    "the guard recorded no process start",
+    "a CONTROL-EVIDENCE line records both refusals, the schemas found and the binding after the accounting"
+   ],
+   "sources": [
+    "CONTRACT.md section 1, Document schemas: every provider document is /0.2.0; each version's entry points refuse the other version's documents",
+    "CONTRACT.md section 9 row MC29: a configuration change after preflight; the current attempt is invalid; zero new starts",
+    "CONTRACT.md section 10: the labels of every result",
+    "CONTRACT.md section 8: a mismatched selection fails; a qualifying run's refusal fails the run",
+    "IMPLEMENTATION-PLAN.md section 5: a mocked boundary is labelled",
+    "DIRECTOR-DECISIONS.md D-12 and D-13: design_revision 4 and the amendments",
+    "DIRECTOR-DECISIONS.md D-20: the 0.2.0 accounting refuses a changed configuration and writes cohort/0.2.0 with its labels; the binding ends after the accounting",
+    "INDEPENDENT-REVIEW-001.md I-01"
+   ],
+   "names_observed": "the binding is observed through the facade's D-20 names DISPATCH_VERSION_ATTRIBUTE, _COHORT_BINDING, _bound_version and _environment_version; a rename makes the case fail visibly, not pass",
+   "would_fail_before_d20": "yes: the attempt would raise the facade's 0.1.0 class, the accounting would write cohort/0.1.0, and DISPATCH_VERSION_ATTRIBUTE would not exist",
+   "method_source_sha256": "29abb38b683bbd1c0d747412849f7e369f59895c9de4e9491e0efcfcf73d40ee"
+  }
+ ],
+ "added_helpers": [
+  {
+   "unit": "LC_DYLD_INFO_ONLY",
+   "source_sha256": "6a6d12d20351b285bf6d9cbeb0001cb35a1dfb1e1ed105af49cf5d54bb4d7a88",
+   "used_by": "the added MC06 case"
+  },
+  {
+   "unit": "dyld_info_only_command",
+   "source_sha256": "730e1ed70a617031886e14d4e61d3eb5d01a9bb8c08440ef47af88505650c775",
+   "used_by": "the added MC06 case"
+  },
+  {
+   "unit": "node_commands_with_dyld_info",
+   "source_sha256": "4fbe2118a647c15ac09e700c5b2312c0d47950ae52df7a1f9e2b753167247508",
+   "used_by": "the added MC06 case"
+  }
+ ],
+ "unchanged": {
+  "test_methods": 149,
+  "statement": "every existing test method and helper is byte-identical; the module's diff from the previous module consists of insertions only",
+  "inserted_line_ranges": [
+   [
+    310,
+    328
+   ],
+   [
+    1764,
+    1776
+   ],
+   [
+    2754,
+    2845
+   ]
+  ]
+ },
+ "module": {
+  "path": "tests/test_current_host_readback_controls_v02.py",
+  "sha256": "3b8c91b7767c2db0ac3dd5c7dd48d035eb6dd602dc8c01e08bb0e49ac21bd618",
+  "size_bytes": 204751,
+  "test_methods": 151,
+  "labels": {
+   "real": 61,
+   "simulated": 67,
+   "mocked": 23
+  }
+ },
+ "execution": {
+  "by": "the Director",
+  "command": "TMPDIR=\"$(cd \"$TMPDIR\" && pwd -P)/\" .venv/bin/python -B -m unittest tests.test_current_host_readback_controls_v02 -v"
+ }
+}

@@ -309,6 +309,25 @@ NON_CONFORMING_EXECUTABLES = {
     "script": b"#!/bin/sh\nexit 0\n"}
 
 
+# Refreeze 002, review finding I-08: LC_DYLD_INFO_ONLY (<mach-o/loader.h>), which the contract's closed allow-list
+# admits (section 7); the baseline above uses chained fixups and the exports trie instead.
+LC_DYLD_INFO_ONLY = 0x22 | LC_REQ_DYLD
+
+
+def dyld_info_only_command():
+    """A dyld_info_command of 48 bytes: the rebase, bind, weak-bind, lazy-bind and export (offset, size) pairs."""
+    return load_command(LC_DYLD_INFO_ONLY, struct.pack("<10I", *([0] * 10)))
+
+
+def node_commands_with_dyld_info():
+    """The baseline's commands with LC_DYLD_INFO_ONLY in place of LC_DYLD_CHAINED_FIXUPS and LC_DYLD_EXPORTS_TRIE."""
+    replaced = {linkedit_command("LC_DYLD_CHAINED_FIXUPS"), linkedit_command("LC_DYLD_EXPORTS_TRIE")}
+    commands = node_commands()
+    position = next(index for index, command in enumerate(commands) if command in replaced)
+    kept = [command for command in commands if command not in replaced]
+    return kept[:position] + [dyld_info_only_command()] + kept[position:]
+
+
 # ---------------------------------------------------------------------------
 # Synthetic archives with the official member names; never executed or extracted by the controls
 # ---------------------------------------------------------------------------
@@ -1742,6 +1761,19 @@ class HostObservationControls(ControlCase):
                 self.assert_node_rule_refusal(macho(node_commands(dylib_command("LC_LOAD_DYLIB", path))),
                                               "MACHO-AT-PATH")
 
+    def test_mc06_allow_listed_dyld_info_only_node_executable_is_accepted(self):
+        """Label: real (synthetic bytes). LC_DYLD_INFO_ONLY in place of chained fixups and the exports trie.
+
+        Refreeze 002, review finding I-08: the contract's closed allow-list admits LC_DYLD_INFO_ONLY (section 7),
+        and the baseline uses chained fixups, so this variant shows the allow-listed alternative accepted.
+        """
+        data = macho(node_commands_with_dyld_info())
+        names = [row["name"] for row in observation.parse_macho(data, len(data))["commands"]]
+        self.assertEqual(names.count("LC_DYLD_INFO_ONLY"), 1, "premise: the image carries one LC_DYLD_INFO_ONLY")
+        self.assertNotIn("LC_DYLD_CHAINED_FIXUPS", names)
+        self.assertNotIn("LC_DYLD_EXPORTS_TRIE", names)
+        self.assertEqual(self.node_rules(data)["references"], NODE_REFERENCES)
+
     # MC07 ------------------------------------------------------------------
 
     def assert_m0_predicate_refuses(self, names):
@@ -2718,6 +2750,98 @@ class ProviderControls(ControlCase):
         def change(world):
             world.states = [world.changed("OS build")]
         self.assert_changed_after_preflight(change)
+
+    # MC29 with contract section 1: a cohort keeps the version its setup selected (refreeze 002, I-01) -----
+
+    def test_mc29_configuration_change_after_setup_is_refused_and_accounted_by_the_0_2_0_cohort_only(self):
+        """Label: mocked (Darwin supervisor; host, source, dependency and method verifications). The change is real.
+
+        Refreeze 002, review finding I-01 (D-20): the facade's setup selects 0.2.0; the configuration's bytes then
+        change, so that the selection alone would no longer select 0.2.0. One attempt and the cohort accounting
+        follow through the facade, as the readback class's first method and its teardown call them. Both are the
+        0.2.0 provider's and refuse; no 0.1.0 document is written; the 0.2.0 accounting records the refusal with
+        its labels; the binding ends after the accounting.
+        """
+        world = ProviderWorld(self)
+        started = []
+        Cohort = type("Cohort", (), {"__doc__": "Stands for the readback CPU class that the facade's seams take."})
+        with world.boundaries(), mock.patch.dict(os.environ), \
+                mock.patch.dict(facade._COHORT_BINDING, {"version": None}):
+            os.environ.pop("STATIC_TRAY_READBACK_CPU_OUTPUT", None)
+            os.environ.update({CONFIG_ENV: str(world.config_path), DIGEST_ENV: world.digest})
+            facade.setup_cpu_cohort(Cohort)
+            setup_version = vars(Cohort).get(facade.DISPATCH_VERSION_ATTRIBUTE)
+            setup_record = json.loads((Cohort.root / "setup.json").read_bytes())
+            stage = Cohort.root / "Q01-positive"
+            stage.mkdir()
+            artifact = write(stage / "synthetic.glb", b"glTF synthetic control bytes", 0o644)
+            audit = write(stage / "synthetic-audit.json", b'{"passed":true}', 0o644)
+            job = {"slot": "CPU-Q01-positive", "case": "Q01", "manifest": str(Cohort.manifest_path),
+                   "supplemental_manifest_sha256": Cohort.manifest_hash,
+                   "input_lock_sha256": "CPU-ONLY-SYNTHETIC-NOT-NATIVE", "artifact": str(artifact),
+                   "artifact_sha256": sha256(artifact.read_bytes()), "audit": str(audit),
+                   "audit_sha256": sha256(audit.read_bytes()), "result": str(stage / "probe.json")}
+            write(stage / "job.json", canonical(job), 0o644)
+            argv = Cohort.manifest["slots"][0]["argv"][:-1] + [str(stage / "job.json")]
+            write(world.config_path, world.config_path.read_bytes() + b" ", 0o600)
+            selected_after_change, bound_after_change = facade._environment_version(), facade._bound_version()
+            clock = original.Clock(total_ms=30000)
+            with self.assertRaises(BINDING_ERRORS) as attempt:
+                facade.guarded_run_process(argv, stage=stage, label="synthetic-readback", clock=clock,
+                                           stage_end=clock.started + 28, env=dict(Cohort.manifest["environment"]),
+                                           on_started=started.append)
+            with self.assertRaises(BINDING_ERRORS) as accounting:
+                facade.finish_cpu_cohort(Cohort)
+            binding_after, bound_after = dict(facade._COHORT_BINDING), facade._bound_version()
+        documents = {}
+        for path in sorted(world.evidence.rglob("*.json")):
+            value = json.loads(path.read_bytes())
+            if type(value) is dict and type(value.get("schema")) is str:
+                documents[path.relative_to(world.evidence).as_posix()] = value
+        schemas = {rel: value["schema"] for rel, value in documents.items()}
+        evidence("MC29-I-01", attempt=attempt.exception.as_dict(), accounting=accounting.exception.as_dict(),
+                 schemas=schemas, binding_after=binding_after)
+        # Premises: the setup was the 0.2.0 provider's and passed; the change alone would select 0.1.0.
+        self.assertEqual(setup_version, "0.2.0")
+        self.assertEqual(setup_record["schema"], "ontokin.current-host-readback-setup/0.2.0")
+        self.assertIs(setup_record["passed"], True, setup_record.get("error"))
+        self.assertEqual(selected_after_change, "0.1.0", "premise: the changed bytes no longer select 0.2.0")
+        self.assertEqual(bound_after_change, "0.2.0", "the cohort did not keep the version its setup selected")
+        # The attempt: refused by the 0.2.0 provider for the changed configuration, with zero starts.
+        self.assertIs(type(attempt.exception), provider.CurrentHostBindingError, "the attempt was not the 0.2.0 provider's")
+        self.assertEqual(attempt.exception.code, "CH-SELECTION", attempt.exception.as_dict())
+        self.assertEqual(attempt.exception.refusal_record["schema"], "ontokin.current-host-readback-refusal/0.2.0")
+        self.assertEqual(attempt.exception.refusal_record["actual_checker_starts"], 0)
+        self.assertEqual(attempt.exception.refusal_record["labels"]["boundary"], "mocked")
+        self.assertEqual(world.starts, [], "a start happened")
+        self.assertEqual(started, [])
+        # The accounting: refused by the 0.2.0 provider and recorded as cohort/0.2.0 with its labels.
+        self.assertIs(type(accounting.exception), provider.CurrentHostBindingError,
+                      "the accounting was not the 0.2.0 provider's")
+        self.assertEqual(accounting.exception.code, "CH-SELECTION", accounting.exception.as_dict())
+        self.assertEqual(accounting.exception.refusal_record["schema"], "ontokin.current-host-readback-refusal/0.2.0")
+        self.assertFalse([rel for rel, schema in schemas.items() if schema.endswith("/0.1.0")], schemas)
+        self.assertTrue(all(schema.startswith("ontokin.current-host-readback-") and schema.endswith("/0.2.0")
+                            for schema in schemas.values()), schemas)
+        cohorts = [value for rel, value in documents.items() if Path(rel).name == "cohort.json"]
+        self.assertTrue(cohorts, "the accounting recorded no cohort document")
+        host = world.host
+        for record in cohorts:
+            self.assertEqual(record["schema"], "ontokin.current-host-readback-cohort/0.2.0")
+            self.assertEqual([record.get(key) for key in ("contract", "design_revision", "amendments")],
+                             [CONTRACT, 4, ["P33-AMENDMENT-001"]])
+            self.assertIs(record["passed"], False)
+            self.assertEqual(record["error"]["code"], "CH-SELECTION", record["error"])
+            self.assertEqual(record["labels"], {
+                "executor": "macos-arm64-local", "contract": CONTRACT, "design_revision": 4,
+                "amendments": ["P33-AMENDMENT-001"], "profile": "darwin-arm64-v1", "run_kind": "qualifying",
+                "boundary": "mocked", "os": host["labels"]["os"], "node": host["labels"]["node"],
+                "python_inventory_sha256": host["python"]["inventory_sha256"],
+                "git": {"path": host["git"]["path"], "sha256": host["git"]["sha256"]}})
+        # The binding ended after the accounting: the facade follows the selection again.
+        self.assertEqual(binding_after, {"version": None}, "the module's cohort binding did not end")
+        self.assertNotIn(facade.DISPATCH_VERSION_ATTRIBUTE, vars(Cohort), "the class's binding did not end")
+        self.assertEqual(bound_after, "0.1.0")
 
     # MC21 at the provider --------------------------------------------------
 
