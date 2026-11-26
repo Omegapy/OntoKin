@@ -217,3 +217,29 @@ All of these are in this directory:
 - `OUTCOME.json`, `LEARNING-DECISION.md` and `CLOSING.json`.
 
 The exact files stay beside the clone, and their SHA-256 values are recorded.
+
+## 10. Changes after N34-M
+
+W1's [N34-M review](n34m/N34-M-REVIEW.md) accepted with nine nonmandatory findings. The
+[disposition](n34m/N34-M-DISPOSITION.json) adopts these changes. The sections above keep their
+first wording.
+
+- **N-09, the `-B` rule (section 5).** On this host, `python3` on `PATH` is the framework
+  interpreter that HOST binds. The rule therefore covers every start of that interpreter, whatever
+  its name, the Director's own workflow and documentation checks included: `-B` on the command
+  line, or `PYTHONDONTWRITEBYTECODE=1` in the environment and recorded. The starts of M0 and of the
+  cohort carry `-B` on their command lines, because their environment admits no Python variable.
+  The shared hand-over note asks the other sessions on this host to follow the same rule until MH
+  ends.
+- **N-04, MC36.** The operational freeze ties MC36 to a positive probe start of the same freeze
+  that observed `__CF_USER_TEXT_ENCODING` with HOST's value (MC30). If none observed it, MC36 stays
+  `NOT_RUN` pending an amendment of D-16. Its expected outcome is not weakened.
+- **N-05.** The observation plan's review cites W3-OBSERVER section 6 as the implemented rule set,
+  which is stricter than the contract's text.
+- **N-07.** The observation plan's review confirms that the bound Git is the developer tools' Git
+  that N34-M read, or re-reads the load commands of another candidate. The HOST review compares the
+  recorded version line with the version text embedded in that file.
+- **N-06.** The HOST review notes the unused `LC_RPATH` entries, among them an absent build path.
+- **N-08.** The observation plan and its review use the frozen inventory's figures, not those that
+  W3-OBSERVER section 5 measured before MP.
+- **Carried to a later implementation phase, not needed for this host:** N-01, N-02 and N-03.

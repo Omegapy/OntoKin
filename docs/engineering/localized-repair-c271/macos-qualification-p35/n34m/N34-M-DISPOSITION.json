@@ -1,0 +1,94 @@
+{
+  "schema": "ontokin.c271.p35-n34m-disposition/1",
+  "task": "C271",
+  "phase": "C271-P35-macos-host-qualification-mh",
+  "owner": "c271-p35-e38e3aa82ade",
+  "recorded_at_utc": "2026-11-26T23:53:05Z",
+  "obligation": "N34-M of contract section 7; MH-PLAN stage S2; acceptance A2",
+  "review": {
+    "record": "N34-M-REVIEW.md",
+    "structured": "N34-M-REVIEW.json",
+    "reviewer": "W1, a Claude Code subagent in a fresh context with the session's model; it wrote none of the parser, the contract, the amendment, the preparation or the plans",
+    "launched_at_utc": "2026-11-26T23:10Z",
+    "written_at_utc": "2026-11-26T23:49:59Z",
+    "bound_commit": "16d4f9f4a13bb7edef709a1ac050b81469fb3063",
+    "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "files_examined": "bin/node and the 111 Mach-O images of the interpreter installation (79 framework, 27 .venv, 5 external libraries), all read statically by W1's own reader and compared with the parser under review",
+    "scripts": "n34m_reader.py, n34m_compare.py, n34m_git_scan.py and n34m_report.py, copied unchanged; their SHA-256 values are listed in the review's section 7",
+    "raw_outputs": "beside the clone, in ../OntoKin-local/c271-p35/workers/W1/; they keep machine paths and are not copied; the review's section 7 lists their SHA-256 values"
+  },
+  "acceptance": "A2 met: N34-M is complete before any execution plan exists. The parser's source and the closure claim were examined against the actual load commands, with no Node, ldd, codesign, otool or Git --version start.",
+  "director_checks": [
+    "Read the verdict, the method, the answers (b), (c), (d) and (g), all nine findings, the conduct section and the file table.",
+    "The four scripts' SHA-256 values equal the review's section 7, and the copy of N34-M-REVIEW.json is byte-identical to W1's. The repository copy of N34-M-REVIEW.md differs from W1's original (SHA-256 e9936d4ff71d541acf0709c3052f796a90e0d88603742f8129f9d609882f5259, kept beside the clone) in one way only: lines 3, 4, 5, 6, 7 ended in two spaces, a Markdown hard line break that the repository's whitespace check refuses, and now end in a backslash, which renders the same; its SHA-256 is 55e4a0568a35201f8064b606af8bcd8eed0f5d3758f72d20a315cc75ffd17547.",
+    "This session's environment sets PYTHONDONTWRITEBYTECODE=1 (observed at 2026-11-26T23:50Z), which supports the review's statement that its bare python3 starts wrote nothing.",
+    "The review files hold no machine path of this host; the absolute paths they name are system paths and a build path embedded in a third-party library (N-06)."
+  ],
+  "facts_for_later_stages": {
+    "d16": "bin/node's command 14 is a plain LC_LOAD_DYLIB of /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation; MC36's premise holds at the link level (N-04 for the variable)",
+    "subtypes": "all 112 files thin, cputype 0x0100000c, cpusubtype 0 (CPU_SUBTYPE_ARM64_ALL); none fat or arm64e",
+    "python_inventory": "the parser's python_inventory gives c277bdd3ac6aa73105df3924707a271a402a0dc7c722be27a6834f2c78605633, equal to MP's after-snapshot",
+    "git": "the developer tools' Git, /Library/Developer/CommandLineTools/usr/bin/git, SHA-256 be4afb2b..., 7,604,272 bytes, fat (x86_64 and arm64); it embeds 2.50.1 (Apple Git-155); predicted version line 'git version 2.50.1 (Apple Git-155)'; no Git was started"
+  },
+  "findings": [
+    {
+      "id": "N-01",
+      "severity": "nonmandatory",
+      "subject": "reference-resolution edge cases (@loader_path spellings, @rpath candidates, @executable_path, LC_ID_DYLIB)",
+      "disposition": "No change for this host: no bound image has an @rpath or @executable_path reference, and each @loader_path loader has one spelling. Carried to a later implementation phase, for any plan that binds a tree with @rpath references, symlinked Mach-O files or several rpaths."
+    },
+    {
+      "id": "N-02",
+      "severity": "nonmandatory",
+      "subject": "structural properties recorded but not decided; the parse_macho docstring claims more",
+      "disposition": "Carried to a later implementation phase: narrow the docstring and W3-OBSERVER section 6.1 to the checks made, or add the checks. No contract rule depends on them, and the bytes are pinned."
+    },
+    {
+      "id": "N-03",
+      "severity": "nonmandatory",
+      "subject": "the system side of the closure claim rests on facts that M0 does not record (shared-cache membership, firmlinks, dyld unbound)",
+      "disposition": "Carried to a later implementation phase or amendment. The HOST review may compare HOST's OS identity with the shared-cache facts that the review records; no change for this plan."
+    },
+    {
+      "id": "N-04",
+      "severity": "nonmandatory",
+      "subject": "D-16 settles MC36's premise from the link, not from the variable",
+      "disposition": "Adopted (MH-PLAN section 10): the operational freeze ties MC36 to a positive probe start of the same freeze that observed __CF_USER_TEXT_ENCODING with HOST's value (MC30). If it was not observed, MC36 stays NOT_RUN pending an amendment of D-16, and its expected outcome is not weakened."
+    },
+    {
+      "id": "N-05",
+      "severity": "nonmandatory",
+      "subject": "implemented rules stricter than the contract's text",
+      "disposition": "Adopted (MH-PLAN section 10): the observation plan's review cites W3-OBSERVER section 6 as the implemented rule set. A later amendment may write the fat and subtype rules into contract section 4."
+    },
+    {
+      "id": "N-06",
+      "severity": "nonmandatory",
+      "subject": "unused LC_RPATH entries, one an absent build-machine path",
+      "disposition": "Adopted (MH-PLAN section 10): the HOST review notes it. It fails closed."
+    },
+    {
+      "id": "N-07",
+      "severity": "nonmandatory",
+      "subject": "Git: M0 does not check E18's premise",
+      "disposition": "Adopted (MH-PLAN section 10): the observation plan's review confirms that the bound Git is the file this review read, or re-reads the load commands of another candidate; the HOST review compares the recorded version line with the embedded text."
+    },
+    {
+      "id": "N-08",
+      "severity": "nonmandatory",
+      "subject": "W3-OBSERVER section 5's measured figures predate MP",
+      "disposition": "Adopted (MH-PLAN section 10): the observation plan and its review use the frozen inventory's figures."
+    },
+    {
+      "id": "N-09",
+      "severity": "nonmandatory",
+      "subject": "the -B rule names the .venv's interpreter, but python3 on this host's PATH is the same framework interpreter",
+      "disposition": "Adopted (MH-PLAN section 10): the -B rule covers every start of the framework interpreter, whatever its name, the Director's own checks included; the starts of M0 and of the cohort carry -B on their command lines, because their environment admits no Python variable. The shared hand-over note asks the other sessions on this host to start the framework interpreter only with -B or PYTHONDONTWRITEBYTECODE=1 until MH ends."
+    }
+  ],
+  "conduct": {
+    "reported_deviations": "five read-only Git commands in the worktree (git status twice with and without --ignored, git rev-parse HEAD) and four starts of bare python3 under PYTHONDONTWRITEBYTECODE=1, outside the brief's 'static reads and its own scripts under -I -S -B'",
+    "disposition": "Accepted as without effect: the review reports that the index file kept its modification time, no worktree file was created, and the inventory digest after them equals MP's after-snapshot. Later briefs name these starts explicitly."
+  },
+  "next": "S3 continues: W2's tooling, then its review; N34-M records and the reviewed tooling are both in the history of commit C."
+}
