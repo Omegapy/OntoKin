@@ -1,0 +1,392 @@
+{
+  "schema": "ontokin.c271.p33-outcome/1",
+  "task": "C271",
+  "phase": "C271-P33-macos-implementation-mi",
+  "owner": "c271-p33-a99647756bed",
+  "recorded_at_utc": "2026-11-26T20:02:37Z",
+  "status": "implementation_complete_reviewed",
+  "gate": "MI of ontokin.current-host-readback/0.2.0, profile darwin-arm64-v1, design revision 4 (P33-AMENDMENT-001)",
+  "outcome": "The 0.2.0 adaptations are implemented in source and tested with synthetic inputs on the owner's macOS host: the Darwin supervisor variant (S4), the preparer route (S6), the M0 and M1 observer (S2, S3, S7, S10), the provider and probe host bindings with every provider document at /0.2.0 (S7, S8, S10), and the driver's selection rule, environment and Git binding (S8, S9). The independently frozen controls pass, the existing modules keep their phase-start results apart from D-18's stated exception, and the independent review, after D-20's fixes, returned ACCEPT_WITH_NONMANDATORY_FINDINGS. Nothing was prepared, run against Node, qualified or integrated.",
+  "starting_revision": "1c2f25ba224a5c3419004d1d331d29e01378ae00",
+  "reviewed_candidate": {
+    "commit": "c534e7b72201dbf0ed6b366f5b0ec631415dedb0",
+    "tree": "dd43e6579644083c869af7de0ac870226b1f1469",
+    "implementation_and_controls": "7b759de0a0a395bdf6714206b703a43b093db581, which final-003 ran; the candidate adds only the checks records"
+  },
+  "commits": [
+    {
+      "commit": "f3a5acf8d14d9464ee8719c8846acdbc66d76af0",
+      "subject": "C271-P33: declare gate MI, the implementation of the 0.2.0 adaptations"
+    },
+    {
+      "commit": "a23761919e92c41489f26a57d02fa1d5dc9d8e19",
+      "subject": "C271-P33: W1 checkpoint, the Darwin supervisor before amendment 001"
+    },
+    {
+      "commit": "5dc76ccf1a763a3454e34f97db842a2192d3129e",
+      "subject": "C271-P33: propose amendment 001, Darwin's group probe (design revision 4)"
+    },
+    {
+      "commit": "939942e31b9bbfa8768269ff6274a66c183d2202",
+      "subject": "C271-P33: W2 checkpoint, the 0.2.0 preparer route (S6)"
+    },
+    {
+      "commit": "a97ef91d8de5f55cfc6ffdd42d433e1fcd14b752",
+      "subject": "C271-P33: record the Director's decisions D-01 to D-07 on W2's questions"
+    },
+    {
+      "commit": "86a0e750ae48039798234585b8913f0ae9be7210",
+      "subject": "C271-P33: amendment 001 revision 2, after its rejecting review"
+    },
+    {
+      "commit": "b377ab969af5adc53d247bb714cc9fbfa89b938c",
+      "subject": "C271-P33: W4 checkpoint, the driver's selection rule, environment and Git binding"
+    },
+    {
+      "commit": "767aeafc5fb2b8e7176e1142a9b16302439542bc",
+      "subject": "C271-P33: record decisions D-08 and D-09 on W4's findings"
+    },
+    {
+      "commit": "579184134ab8dd2fcce0500672c0ded2c0e98471",
+      "subject": "C271-P33: W3 checkpoint, the M0 and M1 observer"
+    },
+    {
+      "commit": "2fcf55057514d48b35d58e5849dfd8c96ca09c53",
+      "subject": "C271-P33: record decisions D-10 and D-11 on W3's findings"
+    },
+    {
+      "commit": "3ffabb3f9e30e654aa10de027f42ace1eda1e396",
+      "subject": "C271-P33: adopt amendment 001 to the 0.2.0 contract (design revision 4)"
+    },
+    {
+      "commit": "227f790abb51220ed23d80bb78d5986bdec8a82c",
+      "subject": "C271-P33: W4 follow-up, route storage_identity's Git starts through the bound Git (D-09)"
+    },
+    {
+      "commit": "fb86cd6357b13d62086f80cfb08550c0491a1541",
+      "subject": "C271-P33: W2 follow-up, reconciled receipts with design revision and OS labels (D-11, D-12, D-13)"
+    },
+    {
+      "commit": "66e632958eee53cfc278050fb8d29993ce9d206e",
+      "subject": "C271-P33: W1 revision, the Darwin supervisor under amendment 001 (S4, design revision 4)"
+    },
+    {
+      "commit": "bb15dddadf8d933500a1ae22740ae7401e841938",
+      "subject": "C271-P33: W3 follow-up, observer documents at design revision 4 and receipt shapes (D-12, D-13)"
+    },
+    {
+      "commit": "77a72d56a5a7fe88762a845e24b21582488357e2",
+      "subject": "C271-P33: W5 checkpoint, the 0.2.0 provider, the 0.2.0 probe and the version dispatch"
+    },
+    {
+      "commit": "fa1da6b89f3634a8c694320a0c2a1b408468e561",
+      "subject": "C271-P33: decision D-17, revise D-01 on the 0.2.0 preparer's source binding"
+    },
+    {
+      "commit": "65c54179016b99959b366e8c336134e37631ee40",
+      "subject": "C271-P33: W6 frozen controls of gate MI, committed before execution"
+    },
+    {
+      "commit": "ad244277c995bb0b731e2c150afb1e970aef994b",
+      "subject": "C271-P33: D-18 and D-19, keep P29's frozen companion and return two control defects"
+    },
+    {
+      "commit": "574dc19680c2333b8623d43c6f848ac1476e0f8d",
+      "subject": "C271-P33: W6 refreeze 001 of six control cases, committed before execution"
+    },
+    {
+      "commit": "3fb21667cf821c77f0edc10319664b6233b446c5",
+      "subject": "C271-P33: the final verification of gate MI and the inventory additions"
+    },
+    {
+      "commit": "2d8d6d15cd04725e0d29050253e22768f58e2c78",
+      "subject": "C271-P33: add the process-start audit to the final verification record"
+    },
+    {
+      "commit": "df9420f21e001265b02fcce8583dd680ce143c66",
+      "subject": "C271-P33: independent review 001 and D-20, resolve its implementation findings"
+    },
+    {
+      "commit": "7b759de0a0a395bdf6714206b703a43b093db581",
+      "subject": "C271-P33: W6 refreeze 002, two added control cases, committed before execution"
+    },
+    {
+      "commit": "c534e7b72201dbf0ed6b366f5b0ec631415dedb0",
+      "subject": "C271-P33: the final verification after D-20 and refreeze 002"
+    }
+  ],
+  "components": {
+    "S4, the Darwin supervisor (W1)": {
+      "files": [
+        "prototypes/static_tray_v01/supervisor_darwin_v01.py",
+        "tests/test_supervisor_darwin_v01.py"
+      ],
+      "note": "supervisor.py stays byte-identical; the five change sites of P33-AMENDMENT-001 (MC14)"
+    },
+    "S6, the preparer route (W2)": {
+      "files": [
+        "tools/prepare_current_host_readback.py",
+        "tests/test_prepare_current_host_readback_v02.py"
+      ],
+      "note": "install/0.2.0 and install-result/0.2.0; renamex_np with RENAME_EXCL bound from the SDK header, no fallback; the 0.1.0 route unchanged"
+    },
+    "S2, S3, S7 and S10, the M0 and M1 observer (W3)": {
+      "files": [
+        "prototypes/static_tray_v01/current_host_observation_v02.py",
+        "tests/test_current_host_observation_v02.py"
+      ],
+      "note": "standard library only; not run on the real host"
+    },
+    "S7, S8 and S10, the provider and probe (W5)": {
+      "files": [
+        "prototypes/static_tray_v01/current_host_readback_v02.py",
+        "prototypes/static_tray_v01/current_host_readback_v02.mjs",
+        "prototypes/static_tray_v01/current_host_readback_v01.py (the appended dispatch)",
+        "tests/test_current_host_readback_provider_v02.py"
+      ],
+      "note": "the 0.1.0 provider's first 65,533 bytes unchanged; the probe's scientific body byte-identical to the 0.1.0 probe's; after D-20 the facade binds the version a cohort's setup selects, and the 0.2.0 accounting accepts only attempt/0.2.0 ledgers"
+    },
+    "S8 and S9, the driver (W4)": {
+      "files": [
+        "tools/check_local.py",
+        "tools/storage_identity.py",
+        "tests/test_current_host_readback_driver_v02.py (moved there by D-18)",
+        "tools/storage_tests/test_storage_identity.py",
+        "tests/test_static_tray_readback_v01.py (docstring only)"
+      ],
+      "note": "ordinary runs proceed and fail the readback class's setup visibly; qualifying runs keep every rule; Git bound by absolute path and digest"
+    }
+  },
+  "amendment": {
+    "id": "P33-AMENDMENT-001",
+    "design_revision": 4,
+    "records": [
+      "AMENDMENT-001.md",
+      "AMENDMENT-001.json",
+      "AMENDMENT-001-REVIEW-001.md",
+      "AMENDMENT-001-REVIEW-002.md",
+      "AMENDMENT-001-REVIEW-DISPOSITION.json",
+      "ADOPTION-AMENDMENT-001.json"
+    ],
+    "adopted_in": "3ffabb3f9e30e654aa10de027f42ace1eda1e396",
+    "reason": "Darwin's killpg(pgid, 0) answers EPERM for a group of exited, unreaped members"
+  },
+  "controls": {
+    "original_freeze": {
+      "record": "CONTROLS-FROZEN.json",
+      "committed_before_any_run": "65c54179016b99959b366e8c336134e37631ee40",
+      "controls": 33,
+      "cases": 149,
+      "labels": {
+        "real": 64,
+        "simulated": 67,
+        "mocked": 18
+      }
+    },
+    "first_run": "as frozen, on 65c54179: 3 errors (MC10) and 1 failure (MC21), no skip",
+    "refreeze": {
+      "record": "CONTROLS-REFREEZE-001.json",
+      "committed_before_any_run": "574dc19680c2333b8623d43c6f848ac1476e0f8d",
+      "decision": "D-19",
+      "cases_changed": 6,
+      "expected_outcomes_changed": 0,
+      "labels": {
+        "real": 60,
+        "simulated": 67,
+        "mocked": 22
+      }
+    },
+    "refreeze_002": {
+      "record": "CONTROLS-REFREEZE-002.json",
+      "committed_before_any_run": "7b759de0a0a395bdf6714206b703a43b093db581",
+      "decision": "D-20",
+      "cases_added": 2,
+      "cases_changed": 0,
+      "added": [
+        "MC29 with contract section 1: a cohort keeps the version its setup selected (review finding I-01), mocked",
+        "MC06: an allow-listed LC_DYLD_INFO_ONLY executable is accepted (review finding I-08), real"
+      ],
+      "methods": 151,
+      "labels": {
+        "real": 61,
+        "simulated": 67,
+        "mocked": 23
+      }
+    },
+    "final_run": "final-003: 151 tests, OK, no skip, and the same in its process-start audit",
+    "partial_at_MI": [
+      "MC11",
+      "MC23",
+      "MC30"
+    ],
+    "not_at_MI": [
+      "MC24 to MC28",
+      "MC36",
+      "MC11's reader-file scan",
+      "MC23 on a real qualifying run",
+      "MC30 for the probe",
+      "MC37's run on each qualifying host"
+    ]
+  },
+  "checks": "CHECKS.json",
+  "inventory_additions": {
+    "record": "INVENTORY-ADDITIONS.json",
+    "added": 407,
+    "removed": 0,
+    "approval": "MH's execution plan must approve them (MC28)"
+  },
+  "independent_review": {
+    "first": {
+      "records": [
+        "INDEPENDENT-REVIEW-001.md",
+        "INDEPENDENT-REVIEW-001.json"
+      ],
+      "candidate": "2d8d6d15cd04725e0d29050253e22768f58e2c78",
+      "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "findings": [
+        {
+          "id": "I-01",
+          "severity": "nonmandatory"
+        },
+        {
+          "id": "I-02",
+          "severity": "nonmandatory"
+        },
+        {
+          "id": "I-03",
+          "severity": "nonmandatory"
+        },
+        {
+          "id": "I-04",
+          "severity": "nonmandatory"
+        },
+        {
+          "id": "I-05",
+          "severity": "nonmandatory"
+        },
+        {
+          "id": "I-06",
+          "severity": "nonmandatory"
+        },
+        {
+          "id": "I-07",
+          "severity": "nonmandatory"
+        },
+        {
+          "id": "I-08",
+          "severity": "nonmandatory"
+        }
+      ],
+      "disposition": "REVIEW-DISPOSITION-001.json and DIRECTOR-DECISIONS.md D-20"
+    },
+    "re_review": {
+      "records": [
+        "INDEPENDENT-REVIEW-002.md",
+        "INDEPENDENT-REVIEW-002.json"
+      ],
+      "candidate": "c534e7b72201dbf0ed6b366f5b0ec631415dedb0",
+      "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "findings": [
+        {
+          "id": "I-09",
+          "severity": "nonmandatory"
+        },
+        {
+          "id": "I-10",
+          "severity": "nonmandatory"
+        }
+      ],
+      "disposition": "REVIEW-DISPOSITION-002.json and DIRECTOR-DECISIONS.md D-21"
+    }
+  },
+  "acceptance": [
+    {
+      "id": "A1",
+      "status": "met",
+      "evidence": "declaration f3a5acf8 pushed before W1's first checkpoint a2376191"
+    },
+    {
+      "id": "A2",
+      "status": "met as amended",
+      "evidence": "supervisor_darwin_v01.py; supervisor.py byte-identical; MC12 to MC14, MC17 and MC37 to MC39 pass. From design revision 4, AMENDMENT-001 section 3 replaces 'only the precondition differs' with its five change sites (D-12)"
+    },
+    {
+      "id": "A3",
+      "status": "met",
+      "evidence": "59 preparer tests; MC01 to MC05, MC15, MC16, MC34, MC35 and the preparer part of MC20; the 0.1.0 route unchanged"
+    },
+    {
+      "id": "A4",
+      "status": "met with synthetic inputs",
+      "evidence": "109 observer tests; MC06, MC08, MC10 and MC32, with the observer parts of MC07, MC20, MC30, MC31 and MC33; not run on the real host (MH)"
+    },
+    {
+      "id": "A5",
+      "status": "met",
+      "evidence": "49 provider tests; MC09, MC11 (the probe), MC18, MC19 and MC29, with the provider parts of MC20 to MC22, MC30, MC31 and MC33; the probe's scientific body byte-identical (interfaces/W5-PROBE-MAP.json); the 0.1.0 provider's prefix unchanged"
+    },
+    {
+      "id": "A6",
+      "status": "met",
+      "evidence": "22 driver tests in tests/test_current_host_readback_driver_v02.py; the driver parts of MC07 and MC21 to MC23; the readback test file changes in its docstring only"
+    },
+    {
+      "id": "A7",
+      "status": "met, with D-18's stated exception",
+      "evidence": "CHECKS.json final-003: the frozen controls (151, after refreeze 002) and the new modules pass with no skip; the first run's failures were control defects refrozen by the independent author with no expected outcome changed (D-19); the review's implementation findings were fixed and their controls added by the independent author (D-20, refreeze 002); the existing modules keep their phase-start results except the two 0.1.0 driver tests that assert the refusal S8 removes (D-18); workflow, documentation and whitespace checks pass"
+    },
+    {
+      "id": "A8",
+      "status": "met",
+      "evidence": "INDEPENDENT-REVIEW-001: ACCEPT_WITH_NONMANDATORY_FINDINGS; its findings resolved or carried by D-20; INDEPENDENT-REVIEW-002 of the change: ACCEPT_WITH_NONMANDATORY_FINDINGS, its findings resolved by D-21"
+    },
+    {
+      "id": "A9",
+      "status": "completed by the closing record",
+      "evidence": "the push of these records without force and its readback, the two checkpoint comments and the GitHub state are recorded in CLOSING.json"
+    }
+  ],
+  "decisions": "DIRECTOR-DECISIONS.md, D-01 to D-21 (D-17 revises D-01)",
+  "for_later_gates": {
+    "MP": [
+      "Approval of the download of node-v24.22.1-darwin-arm64.tar.gz (about 53 MB) from nodejs.org; the python-verification profile's seven packages; the C195 reader tree",
+      "D-02: a failed signature-check status is a mandatory finding of MP's review",
+      "D-06: MP's independent author confirms the official archive's member names and modes",
+      "D-17: MP's plan binds the preparing checkout's commit, and its review checks preparer_source",
+      "I-03 (D-20): preparer_source names four files, not the preparer's whole import closure; MP's plan states this limit and requires a separately verified clean checkout at the bound commit",
+      "M0's exact package rule (D-21): no distribution other than the seven pins, pip for example, may be in the venv's site-packages",
+      "W3's F4 (D-21), for MP and MH: the qualification interpreter must not run without -B between the freezing of the Python inventory and M0"
+    ],
+    "MH": [
+      "D-16: establish from M0's load commands whether the official node links CoreFoundation before MC36 runs; if it does not, MC36 needs an amendment first",
+      "CONTROLS-FROZEN.json findings F-01, F-03, F-04, F-05 and F-09: MC10 with real static bindings, MC29 with the real detectors, the provider's real host_state, the cohort's missing-method accounting with MC28, and MC11's scan of the module loader and the 24 reader files",
+      "MC24 to MC28, MC30 for the probe, MC36, MC37 again on the qualifying host, N34-M and the cohort",
+      "interfaces/W3-OBSERVER.md's open questions (fat files refused; @rpath resolution stricter than dyld's; MH_OBJECT refused; the Git version checked by grammar only), against the real builds",
+      "W5's Q5 (D-20): a refused probe result carries the manifest's labels before verifyBootstrap verifies them; MH's plan states that they are unverified, and its review checks how they are read",
+      "W3's Q3 (D-21), with N34-M: only CPU_SUBTYPE_ARM64_ALL is admitted for Node and the Python images; the real files confirm or refute it",
+      "W3's F4 (D-21): see MP; it binds MH too"
+    ],
+    "MR": [
+      "D-19's note: the driver's environment record starts uname and file through PATH in every run",
+      "MC23 on a real qualifying run and MC28 on the complete default inventory, the 401 additions included",
+      "O-01 of AMENDMENT-001-REVIEW-002: the driver's stop_process lets a Darwin EPERM escape at a timeout (observed by code only), for the driver's owner",
+      "I-05 (D-20): inside the driver's unit stage, MC16's real cases need the evidence root and TMPDIR on different volumes",
+      "I-05 (D-20): D-18's two failing 0.1.0 driver tests also confront MR's complete routine"
+    ],
+    "R04": [
+      "Classify S8's outcome changes with exact inputs: the readback class's setup error (contract section 8), the two 0.1.0 driver tests that assert the removed refusal (D-18), and the test ids added to the default inventory (INVENTORY-ADDITIONS.json)",
+      "I-02 (D-20): off Darwin, the observer module's Darwin-only tests skip, which both drivers count as a stage failure"
+    ],
+    "Linux contract work": [
+      "D-07: the 0.1.0 preparer writes its report even to a path it refuses; unchanged in MI",
+      "I-07's inherited half (D-21): the 0.1.0 accounting reads its ledgers without a schema check; a 0.2.0 cohort no longer reaches it"
+    ]
+  },
+  "status_kept_separate": {
+    "environment_readiness": "in this worktree core is ready and python-verification is missing; gate MP prepares it",
+    "test_qualification": "none; no qualifying run and no readback method ran",
+    "integration": "none; main is not written",
+    "product_completion": "C271 is not complete; R01 and R02 are done, R03 to R05 are not done"
+  },
+  "next_action": "Gate MP of the adopted contract: the reviewed preparation of the Node runtime, the Python verification packages and the reader tree. It is a separate phase that needs the owner's selection and the owner's explicit approval of the Node archive download."
+}

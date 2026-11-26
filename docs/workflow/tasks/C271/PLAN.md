@@ -595,3 +595,22 @@ Ordered steps:
 4. Run the frozen controls and the focused tests, then the workflow check, the documentation verifier and a whitespace check.
 5. Obtain a fresh-context independent review (W7), and resolve its mandatory findings.
 6. Push without force, read the push back, record, comment once on PR274 and issue273, and stop.
+
+### P33 implementation outcome (2026-11-26, UTC)
+
+Every step ran, with four corrections that the phase records as it made them:
+- the declaration `f3a5acf8d14d9464ee8719c8846acdbc66d76af0`;
+- the workers' checkpoints and decisions D-01 to D-17; amendment 001 was adopted in `3ffabb3f9e30e654aa10de027f42ace1eda1e396` after its own review;
+- the frozen controls in `65c54179016b99959b366e8c336134e37631ee40`, committed before they ran;
+- decisions D-18 and D-19 in `ad244277c995bb0b731e2c150afb1e970aef994b`, and the independent author's refreeze in `574dc19680c2333b8623d43c6f848ac1476e0f8d`, also committed before it ran;
+- the final verification records in `3fb21667cf821c77f0edc10319664b6233b446c5` and `2d8d6d15cd04725e0d29050253e22768f58e2c78`, which W7 reviewed (ACCEPT_WITH_NONMANDATORY_FINDINGS);
+- decision D-20 and its fixes in `df9420f21e001265b02fcce8583dd680ce143c66`, the independent author's refreeze 002 in `7b759de0a0a395bdf6714206b703a43b093db581`, committed before it ran, and the final verification in `c534e7b72201dbf0ed6b366f5b0ec631415dedb0`, which W7 re-reviewed (ACCEPT_WITH_NONMANDATORY_FINDINGS);
+- these outcome records.
+
+The corrections:
+- **Amendment 001,** in step 2: the adopted supervisor rule did not hold on Darwin.
+- **D-18,** in step 4: it restores a frozen companion of P29's controls that step 2 had changed.
+- **D-19,** in steps 3 and 4: two control defects, refrozen by their author.
+- **D-20,** in step 5: the review's implementation findings fixed, and two controls added by their author.
+
+Each push was without force and read back. The next phase, not begun here, is gate MP: the reviewed preparation of the runtime, the packages and the reader tree, with the owner's approval of the Node download. Then come MH, MR (R03), R04 and R05, each a separate phase.

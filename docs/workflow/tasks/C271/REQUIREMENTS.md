@@ -611,3 +611,20 @@ The owner answered "Start gate MI" in this session. Phase C271-P33-macos-impleme
 - **Main:** not written.
 - **Excluded:** MP, MH, MR, R04 and R05.
 - **Unchanged:** R01/R02 remain done and R03–R05 not_done.
+
+### P33 implementation outcome (2026-11-26, UTC)
+
+The 0.2.0 adaptations are implemented in source and independently reviewed. The first review accepted them with nonmandatory findings; after their resolution, the re-review returned ACCEPT_WITH_NONMANDATORY_FINDINGS. The reviewed candidate is `c534e7b72201dbf0ed6b366f5b0ec631415dedb0`, pushed without force and read back ([outcome](../../../engineering/localized-repair-c271/macos-implementation-p33/OUTCOME.json), [checks](../../../engineering/localized-repair-c271/macos-implementation-p33/CHECKS.json), [review](../../../engineering/localized-repair-c271/macos-implementation-p33/INDEPENDENT-REVIEW-001.md), [re-review](../../../engineering/localized-repair-c271/macos-implementation-p33/INDEPENDENT-REVIEW-002.md)).
+- **Implemented:** the Darwin supervisor variant, the preparer route, the M0 and M1 observer, the provider and probe host bindings with every provider document at `/0.2.0`, and the driver's selection rule, environment and Git binding.
+- **Amendment:** P33-AMENDMENT-001 (design revision 4) handles Darwin's EPERM answer for a process group of exited, unreaped members. It was adopted after a rejecting review and an accepting re-review.
+- **Controls:** an independent author froze 33 controls in 149 cases before they ran. The first run found two defects in the controls. The author refroze six cases without changing an expected outcome, and later added two cases for the review's findings. All 151 pass.
+- **Review findings:** D-20 fixed three of them in the implementation: the facade binds the version a cohort's setup selects, the 0.2.0 accounting accepts only its own ledgers, and one test no longer depends on where TMPDIR resolves. The rest are carried to MP, MH, MR and R04.
+- **Existing tests:** their results are unchanged, except two 0.1.0 driver tests that assert the refusal S8 removes. They fail visibly, because their file is a frozen companion of P29's controls and stays byte-identical (D-18). R04 classifies the change.
+- **Not run:** no Node, `ldd` or `codesign` start, no download or install, no preparation, no qualification and no routine driver.
+- **Status, kept separate:**
+  - environment readiness: `core` ready, `python-verification` missing;
+  - test qualification: none;
+  - integration: none;
+  - product completion: no.
+- **Unchanged:** R01/R02 remain done and R03–R05 not_done.
+- **Next gate:** MP. It needs the owner's selection and the owner's approval of the Node archive download.

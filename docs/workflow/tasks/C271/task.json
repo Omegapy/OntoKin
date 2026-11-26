@@ -1341,6 +1341,71 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/main-merge-p32/INDEPENDENT-REVIEW.md"
       ]
+    },
+    {
+      "name": "P33 independently frozen controls of gate MI",
+      "command": ".venv/bin/python -B -m unittest -v tests.test_current_host_readback_controls_v02 (resolved TMPDIR)",
+      "result": "passed",
+      "required": true,
+      "scope": "151 cases, no skip; 149 frozen before the first run (65c54179), six of them refrozen by their independent author with no expected outcome changed (574dc196), and two added for the review's findings I-01 and I-08 (7b759de0)",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-FROZEN.json",
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-REFREEZE-001.json",
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-REFREEZE-002.json",
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CHECKS.json"
+      ]
+    },
+    {
+      "name": "P33 focused tests of the 0.2.0 components",
+      "command": ".venv/bin/python -B -m unittest -v <module>, for the five development test modules",
+      "result": "passed",
+      "required": true,
+      "scope": "supervisor 17, preparer 59, observer 109, provider 49 and driver 22 tests, no skip",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CHECKS.json"
+      ]
+    },
+    {
+      "name": "P33 existing modules against their phase-start baselines",
+      "command": ".venv/bin/python -B -m unittest -v <module>, for ten existing modules, compared with runs on 1c2f25ba",
+      "result": "passed",
+      "required": true,
+      "scope": "identical non-passing sets (Linux-only failures), with one stated exception: the two 0.1.0 driver tests that assert the refusal S8 removes fail visibly (D-18), for R04 to classify",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CHECKS.json",
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/DIRECTOR-DECISIONS.md"
+      ]
+    },
+    {
+      "name": "P33 workflow, documentation, whitespace and byte-identity checks",
+      "command": "tools/chat_workflow.py check; the documentation verifier; git diff --check 1c2f25ba HEAD; git diff --quiet on supervisor.py, the 0.1.0 probe and the inspector",
+      "result": "passed",
+      "required": true,
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CHECKS.json"
+      ]
+    },
+    {
+      "name": "P33 process-start audit of the final verification",
+      "command": "the sixteen modules again under a Python audit hook recording every process start",
+      "result": "passed",
+      "required": true,
+      "scope": "877 starts, none of Node, ldd or codesign; starts by children are outside the hook",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CHECKS.json"
+      ]
+    },
+    {
+      "name": "P33 independent review of gate MI",
+      "command": "Fresh-context subagent W7, read-only, against the contract as amended; then the same reviewer on the change that resolved its findings (D-20, refreeze 002)",
+      "result": "passed",
+      "required": true,
+      "scope": "review 001: ACCEPT_WITH_NONMANDATORY_FINDINGS, I-01 to I-08; review 002: ACCEPT_WITH_NONMANDATORY_FINDINGS; not an integration approval",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/INDEPENDENT-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/REVIEW-DISPOSITION-001.json",
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/INDEPENDENT-REVIEW-002.md"
+      ]
     }
   ],
   "completion": {
@@ -1463,9 +1528,17 @@
         "tree": "6bf8d88e034bbb318d7015caa665a88a14175970",
         "verified": true
       }
+    },
+    "macos_0_2_0_implementation": {
+      "reviewed_candidate": "c534e7b72201dbf0ed6b366f5b0ec631415dedb0",
+      "implementation_tree_commit": "7b759de0a0a395bdf6714206b703a43b093db581",
+      "outcome": "docs/engineering/localized-repair-c271/macos-implementation-p33/OUTCOME.json",
+      "review": "docs/engineering/localized-repair-c271/macos-implementation-p33/INDEPENDENT-REVIEW-002.md",
+      "checks": "docs/engineering/localized-repair-c271/macos-implementation-p33/CHECKS.json",
+      "scope": "gate MI only: source and synthetic-input tests; nothing prepared, qualified or integrated"
     }
   },
-  "next_action": "C271-P33-macos-implementation-mi is declared and in progress: gate MI of the adopted macOS contract ontokin.current-host-readback/0.2.0, the implementation of the 0.2.0 adaptations (Darwin supervisor variant, preparer route, M0 and M1 observer, provider and probe host bindings, driver environment, Git binding and selection rule) with independently frozen controls and independent review. It starts no Node process, downloads nothing and prepares nothing. Then MP (preparation, with the owner's approval of the Node download), MH, MR (R03), R04 and R05, each a separate phase.",
+  "next_action": "C271-P33 implemented gate MI of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001): the Darwin supervisor variant, the preparer route, the M0 and M1 observer, the provider and probe host bindings and the driver's selection rule, environment and Git binding, in source, with independently frozen controls that pass and an independent review, repeated after its findings were resolved (ACCEPT_WITH_NONMANDATORY_FINDINGS), of candidate c534e7b72201dbf0ed6b366f5b0ec631415dedb0. Nothing is prepared, qualified or integrated. The next gate is MP: the reviewed preparation of the Node runtime, the Python verification packages and the reader tree. It is a separate phase that needs the owner's selection and the owner's explicit approval of the download of node-v24.22.1-darwin-arm64.tar.gz (about 53 MB) from nodejs.org. Then MH, MR (R03), R04 and R05.",
   "session_phase": {
     "schema": "ontokin.c271.p33-macos-implementation/1",
     "task": "C271",
@@ -1482,7 +1555,10 @@
     "record": "docs/engineering/localized-repair-c271/macos-implementation-p33/PHASE.json",
     "plan": "docs/engineering/localized-repair-c271/macos-implementation-p33/IMPLEMENTATION-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P33-SESSION.md",
-    "status": "declared_implementation_pending"
+    "status": "implementation_complete_reviewed_pushed",
+    "completed_at_utc": "2026-11-26T20:02:37Z",
+    "reviewed_candidate": "c534e7b72201dbf0ed6b366f5b0ec631415dedb0",
+    "outcome": "docs/engineering/localized-repair-c271/macos-implementation-p33/OUTCOME.json"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -8020,7 +8096,7 @@
     "plan": "docs/engineering/localized-repair-c271/macos-implementation-p33/IMPLEMENTATION-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P33-SESSION.md",
     "declared_at_utc": "2026-11-26T14:36:34Z",
-    "status": "declared_implementation_pending",
+    "status": "implementation_complete_reviewed_pushed",
     "owner_direction": {
       "date": "2026-11-26 (America/Denver and UTC)",
       "question": "Should I start gate MI, the implementation of the 0.2.0 macOS adaptations?",
@@ -8029,7 +8105,15 @@
       "scope_of_selection": "gate MI of the adopted contract ontokin.current-host-readback/0.2.0 only"
     },
     "gate": "MI of ontokin.current-host-readback/0.2.0",
-    "parent_complete": false
+    "parent_complete": false,
+    "completed_at_utc": "2026-11-26T20:02:37Z",
+    "reviewed_candidate": "c534e7b72201dbf0ed6b366f5b0ec631415dedb0",
+    "implementation_tree_commit": "7b759de0a0a395bdf6714206b703a43b093db581",
+    "review_verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "outcome": "docs/engineering/localized-repair-c271/macos-implementation-p33/OUTCOME.json",
+    "checks": "docs/engineering/localized-repair-c271/macos-implementation-p33/CHECKS.json",
+    "closing": "docs/engineering/localized-repair-c271/macos-implementation-p33/CLOSING.json",
+    "learning": "docs/engineering/localized-repair-c271/macos-implementation-p33/LEARNING-DECISION.md"
   },
   "p33_fields_index": {
     "recorded_at_utc": "2026-11-26T14:36:34Z",

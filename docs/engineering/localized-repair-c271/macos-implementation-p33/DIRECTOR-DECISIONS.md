@@ -318,3 +318,26 @@ preparation and qualification gates. The other findings are carried in one list,
 **Re-review.** The implementation changed after the review: the facade appended to the 0.1.0
 provider, and the 0.2.0 accounting. The 0.1.0 provider's first 65,533 bytes are unchanged. The
 reviewer is asked to review this change and refreeze 002 before the phase closes.
+
+## D-21: the dispositions of independent review 002
+
+[INDEPENDENT-REVIEW-002](INDEPENDENT-REVIEW-002.md) reviewed the change that resolved review 001's
+findings and accepted candidate `c534e7b7` with nonmandatory findings I-09 and I-10, and no
+mandatory one.
+
+- **I-09, resolved at closing.** The outcome record lists the obligations for later gates. It
+  adds the three items the draft left out:
+  - **MP:** M0's exact package rule. No distribution other than the seven pins, `pip` for
+    example, may be in the venv's `site-packages`.
+  - **MP and MH:** W3's F4. The qualification interpreter must not run without `-B` between the
+    freezing of the Python inventory and M0.
+  - **MH, with N34-M:** W3's Q3. Only `CPU_SUBTYPE_ARM64_ALL` is admitted for Node and the Python
+    images.
+
+  The inherited half of I-07, the 0.1.0 accounting, moves to the Linux contract's work, because a
+  0.2.0 cohort no longer reaches it.
+- **I-10, superseded record.** Section 4 of `interfaces/W5-PROVIDER.md` says that
+  `guarded_run_process`, `setup_cpu_cohort` and `finish_cpu_cohort` dispatch on the environment's
+  selection. From D-20 on, the process adapter and the accounting follow the version that the
+  cohort's setup bound. Section 4 is superseded for these three seams, and the note stays as
+  written.

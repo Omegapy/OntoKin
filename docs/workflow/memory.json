@@ -229,6 +229,78 @@
       "scope": "Local Claude sessions and demonstrations of resumption from the repository; observed once, with one application version.",
       "recorded_at": "2026-11-25",
       "supersedes": null
+    },
+    {
+      "id": "memory-c271-frozen-companion-check",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "Before a plan gives an existing test file to a worker, search the test modules for runtime freezes of companion bytes. C271-P29's required-images controls authenticate 24 inherited companions when they load; C271-P33's sanctioned change to one of them, tests/test_current_host_readback_driver.py, made that whole frozen control set refuse to load. Keep a frozen companion's bytes and put new tests in a new module.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/DIRECTOR-DECISIONS.md",
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CHECKS.json",
+        "docs/engineering/localized-repair-c271/required-images-p29/controls/COMPANIONS.json",
+        "tests/test_current_host_required_images_v01.py"
+      ],
+      "scope": "Frozen control sets that authenticate companion files when they load; observed once, in C271's gate MI (decision D-18).",
+      "recorded_at": "2026-11-26",
+      "supersedes": null
+    },
+    {
+      "id": "memory-c271-facade-binds-version",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "A facade that dispatches between contract versions must bind the version once per transaction, at its start, rather than decide it again at every call from mutable input. C271-P33's first facade chose the version per call from the configuration's current bytes, so a configuration changed between a cohort's setup and its accounting sent the 0.2.0 cohort to the 0.1.0 accounting, which wrote an unlabelled 0.1.0 record; the independent review found it, and D-20 binds the version at setup.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/INDEPENDENT-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/DIRECTOR-DECISIONS.md",
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-REFREEZE-002.json",
+        "prototypes/static_tray_v01/current_host_readback_v01.py"
+      ],
+      "scope": "Versioned facades of the current-host readback provider; observed once, in C271's gate MI. A later contract version that keeps the facade pattern inherits the rule.",
+      "recorded_at": "2026-11-26",
+      "supersedes": null
+    },
+    {
+      "id": "memory-c271-platform-metadata-starts",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "On macOS, CPython's platform.platform() starts uname -p and file -b on its first call in a process and caches the answer. A control that counts every process start of code that calls it depends on test order unless it isolates this metadata leaf, as the project's driver tests do; C271-P33's MC21 driver cases failed for this reason only when they ran first.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/DIRECTOR-DECISIONS.md",
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CONTROLS-REFREEZE-001.json",
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CHECKS.json",
+        "tests/test_current_host_readback_driver.py"
+      ],
+      "scope": "CPython 3.12.13 on macOS 26.6.2 arm64 (decision D-19); the project's earlier Linux driver tests stubbed the same call because it started uname (commit 113e1b85).",
+      "recorded_at": "2026-11-26",
+      "supersedes": null
+    },
+    {
+      "id": "memory-c271-darwin-killpg-eperm",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "On Darwin, killpg(pgid, 0) answers EPERM while the members of a process group have exited but are not yet reaped, and ESRCH after reaping. A supervisor that treats only ESRCH as absence must count EPERM as present; ontokin.current-host-readback/0.2.0 does so since P33-AMENDMENT-001.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/AMENDMENT-001.md",
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/evidence/zombie_group_probe.out.json",
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CHECKS.json"
+      ],
+      "scope": "macOS 26.6.2 (25G83) arm64, one host; the direct probe and control MC37 observed it. Other systems are not covered.",
+      "recorded_at": "2026-11-26",
+      "supersedes": null
+    },
+    {
+      "id": "memory-mock-call-environment-leak",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "When a unittest assertion on a mocked subprocess.Popen fails, its message lists the recorded calls with their env argument, which prints the parent process environment, private values included. Redact such logs before keeping them, and never publish raw test output.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/macos-implementation-p33/CHECKS.json",
+        "tests/test_current_host_readback_driver.py"
+      ],
+      "scope": "Tests that assert on a mocked Popen called with an env argument, under CPython 3.12's unittest.mock; observed in C271's gate MI, where two 0.1.0 driver tests fail by design.",
+      "recorded_at": "2026-11-26",
+      "supersedes": null
     }
   ]
 }

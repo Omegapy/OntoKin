@@ -1,0 +1,91 @@
+{
+  "schema": "ontokin.c271.p33-independent-review/1",
+  "review": "INDEPENDENT-REVIEW-002",
+  "kind": "re-review of D-20 and refreeze 002",
+  "task": "C271",
+  "phase": "C271-P33-macos-implementation-mi",
+  "gate": "MI",
+  "reviewer": "W7, the same fresh-context independent reviewer as INDEPENDENT-REVIEW-001; it wrote none of the implementation, the controls or the decisions; read-only in the checkout",
+  "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+  "candidate_commit": "c534e7b72201dbf0ed6b366f5b0ec631415dedb0",
+  "previous_candidate_commit": "2d8d6d15cd04725e0d29050253e22768f58e2c78",
+  "change_under_review": "git diff 2d8d6d15 c534e7b7: df9420f2 (D-20, its implementation and test changes, review 001, REVIEW-DISPOSITION-001.json), 7b759de0 (W6's refreeze 002), c534e7b7 (CHECKS.json with final-003, INVENTORY-ADDITIONS.json)",
+  "contract": {
+    "id": "ontokin.current-host-readback/0.2.0",
+    "profile": "darwin-arm64-v1",
+    "design_revision": 4,
+    "amendments": ["P33-AMENDMENT-001"]
+  },
+  "summary": {
+    "mandatory_findings": 0,
+    "nonmandatory_findings": 2,
+    "I-01": "resolved: the facade binds the version that setup selects; the process adapter and the accounting follow it; the binding ends after the accounting, or when the setup fails; outside a cohort calls follow the selection; 0.1.0 behaviour unchanged; the 0.1.0 provider's first 65,533 bytes are still the committed file",
+    "I-07": "resolved: the 0.2.0 accounting requires attempt/0.2.0 with this contract's identity, which is exactly what guarded_run_process writes; W5's fixture now writes that ledger and no expectation changed",
+    "I-02": "resolved for the TMPDIR case: MC20's system-link case keeps its three assertions, runs under the fixed /private/var/tmp whatever TMPDIR resolves to, and leaves nothing behind; the off-Darwin skips are correctly placed at R04",
+    "I-08": "resolved by refreeze 002's accepting LC_DYLD_INFO_ONLY case",
+    "other_dispositions": "I-03, I-04, I-06 and W5's Q5 are sound and placed at the right gates; the drafted for_later_gates list omits three items and misplaces one (I-09)",
+    "refreeze_002": "additive; faithful to the contract; committed before final-003; CONTROLS-FROZEN.json and CONTROLS-REFREEZE-001.json byte-identical",
+    "final_003": "supports every claim, with the same D-18 exception; its audit records no Node, ldd or codesign start",
+    "new": "no new safety path, hidden skip, leftover process or source-tree write"
+  },
+  "findings": [
+    {
+      "id": "I-09",
+      "severity": "nonmandatory",
+      "timing": "check at closing",
+      "location": "REVIEW-DISPOSITION-001.json (I-05) and the outcome record's for_later_gates, drafted in ../OntoKin-local/c271-p33/director/drafts/build_outcome.py",
+      "issue": "The disposition says the obligations are consolidated in OUTCOME.json, but that record is not in the candidate. The draft omits three items of review 001's I-05. MP: M0's exact package rule, under which no distribution other than the seven pins (for example pip) may be in the venv's site-packages. MP and MH: W3's F4, under which the qualification interpreter must not run without -B between the freezing of the Python inventory and M0. N34-M and MH: W3's Q3 and its assumption that only CPU_SUBTYPE_ARM64_ALL is admitted for Node and the Python images. The draft also places I-07's inherited half, the 0.1.0 accounting, under MH, though a 0.2.0 cohort no longer reaches it.",
+      "required_change": "Commit the outcome record at closing with the three items added, and move the inherited half to 'Linux contract work'. The closing check confirms that the record exists."
+    },
+    {
+      "id": "I-10",
+      "severity": "nonmandatory",
+      "location": "docs/engineering/localized-repair-c271/macos-implementation-p33/interfaces/W5-PROVIDER.md, section 4, the dispatch table",
+      "issue": "It still says that guarded_run_process, setup_cpu_cohort and finish_cpu_cohort dispatch on the environment's selection. After D-20, the adapter and the accounting follow the version that the cohort's setup bound.",
+      "required_change": "Record that section 4 is superseded by D-20 for these seams, as D-20 does for W2's note."
+    }
+  ],
+  "previous_findings": {
+    "I-01": "fixed (D-20), with three development tests and refreeze 002's MC29 case",
+    "I-02": "fixed for the TMPDIR case; the off-Darwin skips are placed at R04",
+    "I-03": "carried to MP, soundly",
+    "I-04": "superseded record in D-20",
+    "I-05": "consolidated in the draft outcome record; see I-09",
+    "I-06": "noted; task.json round-trips exactly",
+    "I-07": "fixed (D-20), with one development test",
+    "I-08": "fixed by refreeze 002's MC06 case"
+  },
+  "reproduction": [
+    {"command": "git --no-optional-locks diff --stat 2d8d6d15 c534e7b7, with each commit's --stat", "outcome": "12 files; 7b759de0 adds only CONTROLS-REFREEZE-002.json and the controls module; c534e7b7 adds only CHECKS.json and INVENTORY-ADDITIONS.json"},
+    {"command": "python prefix comparison of prototypes/static_tray_v01/current_host_readback_v01.py at 1c2f25ba, 2d8d6d15 and c534e7b7", "outcome": "the first 65,533 bytes are identical to 1c2f25ba; the common prefix with 2d8d6d15 is 71,544 bytes"},
+    {"command": "git --no-optional-locks diff --quiet 1c2f25ba c534e7b7 -- supervisor.py, the 0.1.0 probe, the inspector, readback.mjs and tests/test_current_host_readback_driver.py; git diff --quiet 2d8d6d15 c534e7b7 -- the other implementation files and tools/", "outcome": "exit 0 for both"},
+    {"command": "python3 -I -S -B ../OntoKin-local/c271-p33/reviews/mi-002/units_diff.py on the three changed test modules", "outcome": "controls: 5 units added, 0 changed or removed; provider_v02: CohortAccountingTests.ledgers and DispatchTests.setUp changed, 4 tests added; observation_v02: only the MC20 system-link case changed"},
+    {"command": "shasum -a 256 of CONTROLS-FROZEN.json, CONTROLS-REFREEZE-001.json, the controls module and the two changed implementation files; label count of the controls module", "outcome": "cd7ae80f... and fb01cd4a... unchanged; 3b8c91b7..., cb3f0c7f... and d34ea2f9... match refreeze 002; 151 methods: real 61, simulated 67, mocked 23"},
+    {"command": "git log -1 --format=%cI 7b759de0, against final-003's started_at_utc", "outcome": "committed 19:44:51Z; final-003 started 19:45:05Z on 7b759de0 with a clean tree"},
+    {"command": "zsh ../OntoKin-local/c271-p33/reviews/mi-002/run_modules.sh run-001: .venv/bin/python -B -m unittest -v <module> for each of the sixteen modules, from the checkout root, TMPDIR resolved, each log redacted with director/redact_logs.py", "outcome": "non-passing sets identical to final-003 for all sixteen; identical to the phase-start baselines except D-18's three entries; controls 151 OK, provider_v02 49 OK, observation_v02 109 OK, the other new modules and test_local_checks OK, zero skips; one line redacted in the 0.1.0 driver log; tree clean before and after, no new __pycache__, nothing left in /private/var/tmp, no test process left"},
+    {"command": ".venv/bin/python -B -m unittest -v tests.test_current_host_observation_v02 with TMPDIR resolved on the checkout's volume", "outcome": "109 OK, the MC20 system-link case ok, no skip; the temporary directory and /private/var/tmp left empty"},
+    {"command": ".venv/bin/python -I -B ../OntoKin-local/c271-p33/reviews/mi-002/binding_demo.py <checkout>", "outcome": "A: setup bound 0.2.0; after the change the selection alone gave 0.1.0 and the bound version stayed 0.2.0; the attempt was refused by the 0.2.0 provider (CH-SELECTION, refusal/0.2.0, zero starts); the accounting was refused by the 0.2.0 provider; only cohort/0.2.0, with design revision 4 and labels, was written. B: binding and class attribute gone; dispatch follows the selection. C: a failed 0.2.0 setup left no binding. D: an accounting on a class that the facade never set up follows the selection (outside a cohort). No process started"},
+    {"command": ".venv/bin/python -I -B ../OntoKin-local/c271-p33/reviews/mi-002/ledger_check.py <checkout>", "outcome": "the ledger literal in guarded_run_process begins with schema attempt/0.2.0 and **_identity(); its canonical round-trip satisfies the accounting's predicate"},
+    {"command": "python digest check of every log_sha256 in CHECKS.json", "outcome": "final-003 16 of 16; final-001 and final-002 31 of 31"},
+    {"command": "python summary of ../OntoKin-local/c271-p33/checks/final-003-audit/starts.jsonl", "outcome": "877 subprocess.Popen events, 0 hook errors, no Node, ldd or codesign start"},
+    {"command": "marker scan of ../OntoKin-local/c271-p33/checks/ and reviews/ for environment dumps", "outcome": "none; the 0.1.0 driver logs of final-002, final-003 and their audits each carry one redaction line"},
+    {"command": "python json round-trip of docs/workflow/tasks/C271/task.json", "outcome": "byte-identical with indent=2 and ensure_ascii=False (D-20's I-06 statement holds)"},
+    {"command": "cmp of the published INDEPENDENT-REVIEW-001.md and .json with the originals", "outcome": "byte-identical; digests equal REVIEW-DISPOSITION-001.json"},
+    {"command": "git --no-optional-locks diff --check 2d8d6d15 c534e7b7, and from 1c2f25ba", "outcome": "clean"}
+  ],
+  "not_run": [
+    "any Node, ldd or codesign start",
+    "any test module other than the sixteen listed in CHECKS.json, and any discovery",
+    "tools/chat_workflow.py check and the documentation verifier (final-003 records both as passed)",
+    "downloads and installs"
+  ],
+  "evidence": {
+    "scratch": "../OntoKin-local/c271-p33/reviews/mi-002/",
+    "director_runs": ["../OntoKin-local/c271-p33/checks/final-003/", "../OntoKin-local/c271-p33/checks/final-003-audit/", "../OntoKin-local/c271-p33/checks/d20-dev/"],
+    "previous_review_scratch": "../OntoKin-local/c271-p33/reviews/mi-001/"
+  },
+  "limits": [
+    "This review covers only the executed Python on this host; it qualifies nothing.",
+    "MP, N34-M, MH, MR, R04 and R05 remain separate gates."
+  ]
+}
