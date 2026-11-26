@@ -4,15 +4,15 @@
   "latest_task": "C271",
   "active_task": "C271",
   "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-  "snapshot_date": "2026-11-26T05:47:00Z",
+  "snapshot_date": "2026-11-26T05:53:00Z",
   "next_action": {
-    "status": "awaiting_user_direction",
-    "summary": "C271-P31 adopted the design-only contract ontokin.current-host-readback/0.2.0 for the owner's macOS arm64 executor (docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json). The next gate is MB: a reviewed merge of main into this branch that resolves the six overlaps by meaning (MAIN-CONFLICTS.md), bringing main's macOS lock, local environment specification and tools; it does not integrate into main. MB is a separate phase that needs the owner's selection. Then MI (implementation of the 0.2.0 adaptations), MP (preparation, with the owner's approval of the Node download), MH (qualification on the owner's executor), MR (the complete qualifying routine, R03), R04 and R05.",
+    "status": "ready",
+    "summary": "C271-P32-main-merge-mb is declared and in progress: gate MB of the adopted macOS contract, a reviewed merge of main 51223c9b into this branch that resolves the six overlaps by meaning and converts CURRENT.json to schema 2, without integrating into main. Then MI, MP, MH, MR (R03), R04 and R05, each a separate phase.",
     "suggested_task": "C271",
     "sources": [
       "docs/workflow/tasks/C271/task.json",
-      "docs/workflow/tasks/C271/P31-SESSION.md",
-      "docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json"
+      "docs/workflow/tasks/C271/P32-SESSION.md",
+      "docs/engineering/localized-repair-c271/main-merge-p32/PHASE.json"
     ]
   },
   "historical_handoff": {
@@ -3097,7 +3097,7 @@
   },
   "checkpoint": {
     "record": "docs/workflow/tasks/C271/task.json",
-    "session": "docs/workflow/tasks/C271/P31-SESSION.md"
+    "session": "docs/workflow/tasks/C271/P32-SESSION.md"
   },
   "p29_local_publication_r07": {
     "phase": "C271-P29-R07-local-publication",
@@ -3353,5 +3353,40 @@
     ],
     "completed_at_utc": "2026-11-26T05:47:00Z",
     "adoption": "docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json"
+  },
+  "p32_prior_current_fields": {
+    "recorded_at_utc": "2026-11-26T05:53:00Z",
+    "snapshot_date": "2026-11-26T05:47:00Z",
+    "next_action": {
+      "status": "awaiting_user_direction",
+      "summary": "C271-P31 adopted the design-only contract ontokin.current-host-readback/0.2.0 for the owner's macOS arm64 executor (docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json). The next gate is MB: a reviewed merge of main into this branch that resolves the six overlaps by meaning (MAIN-CONFLICTS.md), bringing main's macOS lock, local environment specification and tools; it does not integrate into main. MB is a separate phase that needs the owner's selection. Then MI (implementation of the 0.2.0 adaptations), MP (preparation, with the owner's approval of the Node download), MH (qualification on the owner's executor), MR (the complete qualifying routine, R03), R04 and R05.",
+      "suggested_task": "C271",
+      "sources": [
+        "docs/workflow/tasks/C271/task.json",
+        "docs/workflow/tasks/C271/P31-SESSION.md",
+        "docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json"
+      ]
+    },
+    "checkpoint": {
+      "record": "docs/workflow/tasks/C271/task.json",
+      "session": "docs/workflow/tasks/C271/P31-SESSION.md"
+    }
+  },
+  "p32_main_merge": {
+    "phase": "C271-P32-main-merge-mb",
+    "owner": "c271-p32-08e8ceaa9140",
+    "record": "docs/engineering/localized-repair-c271/main-merge-p32/PHASE.json",
+    "session_checkpoint": "docs/workflow/tasks/C271/P32-SESSION.md",
+    "declared_at_utc": "2026-11-26T05:53:00Z",
+    "status": "declared_merge_pending",
+    "owner_direction": {
+      "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
+      "question": "Should I start gate MB next: a reviewed merge of main into the C271 branch?",
+      "reply": "Start gate MB",
+      "how_received": "typed by the owner in this session",
+      "scope_of_selection": "gate MB of the adopted contract ontokin.current-host-readback/0.2.0 only"
+    },
+    "gate": "MB of ontokin.current-host-readback/0.2.0",
+    "parent_complete": false
   }
 }

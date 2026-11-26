@@ -4,7 +4,7 @@
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
   "status": "in_progress",
-  "owner": "c271-p31-a99073a9641d",
+  "owner": "c271-p32-08e8ceaa9140",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -1434,25 +1434,23 @@
       }
     }
   },
-  "next_action": "C271-P31 adopted the design-only contract ontokin.current-host-readback/0.2.0 for the owner's macOS arm64 executor (docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json). The next gate is MB: a reviewed merge of main into this branch that resolves the six overlaps by meaning (MAIN-CONFLICTS.md), bringing main's macOS lock, local environment specification and tools; it does not integrate into main. MB is a separate phase that needs the owner's selection. Then MI (implementation of the 0.2.0 adaptations), MP (preparation, with the owner's approval of the Node download), MH (qualification on the owner's executor), MR (the complete qualifying routine, R03), R04 and R05.",
+  "next_action": "C271-P32-main-merge-mb is declared and in progress: gate MB of the adopted macOS contract, a reviewed merge of main 51223c9b into this branch that resolves the six overlaps by meaning and converts CURRENT.json to schema 2, without integrating into main. Then MI, MP, MH, MR (R03), R04 and R05, each a separate phase.",
   "session_phase": {
-    "schema": "ontokin.c271.p31-macos-contract-design/1",
+    "schema": "ontokin.c271.p32-main-merge/1",
     "task": "C271",
-    "phase": "C271-P31-macos-contract-design",
-    "owner": "c271-p31-a99073a9641d",
-    "declared_at_utc": "2026-11-26T04:24:00Z",
+    "phase": "C271-P32-main-merge-mb",
+    "owner": "c271-p32-08e8ceaa9140",
+    "declared_at_utc": "2026-11-26T05:53:00Z",
     "execution_mode": "local",
     "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-    "starting_branch_head": "7c3a8de1be4de988219a3fc056a7eacedcd15cc1",
+    "starting_branch_head": "07d0ff5a41338f05810e9c086df00d48a22874f4",
     "branch": "work/c271-missing-import-digest-control",
     "worktree": "../OntoKin-worktrees/c271",
     "pull_request": 274,
     "scope_issue": 273,
-    "record": "docs/engineering/localized-repair-c271/macos-contract-design-p31/PHASE.json",
-    "session_checkpoint": "docs/workflow/tasks/C271/P31-SESSION.md",
-    "status": "design_adopted",
-    "completed_at_utc": "2026-11-26T05:47:00Z",
-    "outcome": "docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json"
+    "record": "docs/engineering/localized-repair-c271/main-merge-p32/PHASE.json",
+    "session_checkpoint": "docs/workflow/tasks/C271/P32-SESSION.md",
+    "status": "declared_merge_pending"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -7837,5 +7835,47 @@
       "p31_prior_current_fields": "The values that the P31 declaration replaced.",
       "p30_fields_index": "P30's index, unchanged."
     }
+  },
+  "p32_prior_current_fields": {
+    "recorded_at_utc": "2026-11-26T05:53:00Z",
+    "purpose": "The current values that the C271-P32 declaration replaced, kept unchanged as P31's closing state.",
+    "owner": "c271-p31-a99073a9641d",
+    "next_action": "C271-P31 adopted the design-only contract ontokin.current-host-readback/0.2.0 for the owner's macOS arm64 executor (docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json). The next gate is MB: a reviewed merge of main into this branch that resolves the six overlaps by meaning (MAIN-CONFLICTS.md), bringing main's macOS lock, local environment specification and tools; it does not integrate into main. MB is a separate phase that needs the owner's selection. Then MI (implementation of the 0.2.0 adaptations), MP (preparation, with the owner's approval of the Node download), MH (qualification on the owner's executor), MR (the complete qualifying routine, R03), R04 and R05.",
+    "session_phase": {
+      "schema": "ontokin.c271.p31-macos-contract-design/1",
+      "task": "C271",
+      "phase": "C271-P31-macos-contract-design",
+      "owner": "c271-p31-a99073a9641d",
+      "declared_at_utc": "2026-11-26T04:24:00Z",
+      "execution_mode": "local",
+      "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "starting_branch_head": "7c3a8de1be4de988219a3fc056a7eacedcd15cc1",
+      "branch": "work/c271-missing-import-digest-control",
+      "worktree": "../OntoKin-worktrees/c271",
+      "pull_request": 274,
+      "scope_issue": 273,
+      "record": "docs/engineering/localized-repair-c271/macos-contract-design-p31/PHASE.json",
+      "session_checkpoint": "docs/workflow/tasks/C271/P31-SESSION.md",
+      "status": "design_adopted",
+      "completed_at_utc": "2026-11-26T05:47:00Z",
+      "outcome": "docs/engineering/localized-repair-c271/macos-contract-design-p31/ADOPTION.json"
+    }
+  },
+  "p32_main_merge": {
+    "phase": "C271-P32-main-merge-mb",
+    "owner": "c271-p32-08e8ceaa9140",
+    "record": "docs/engineering/localized-repair-c271/main-merge-p32/PHASE.json",
+    "session_checkpoint": "docs/workflow/tasks/C271/P32-SESSION.md",
+    "declared_at_utc": "2026-11-26T05:53:00Z",
+    "status": "declared_merge_pending",
+    "owner_direction": {
+      "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
+      "question": "Should I start gate MB next: a reviewed merge of main into the C271 branch?",
+      "reply": "Start gate MB",
+      "how_received": "typed by the owner in this session",
+      "scope_of_selection": "gate MB of the adopted contract ontokin.current-host-readback/0.2.0 only"
+    },
+    "gate": "MB of ontokin.current-host-readback/0.2.0",
+    "parent_complete": false
   }
 }

@@ -559,3 +559,15 @@ Every step ran as planned, with two review cycles more than planned:
 - the final records, with the adoption.
 
 Each push was without force and read back from the remote. The next phase, not begun here, is gate MB of the adopted contract: a reviewed merge of main into this branch. Then come MI, MP, MH, MR (R03), R04 and R05, each a separate phase.
+
+## P32 gate MB: merge of main into the branch — November 26, 2026
+
+Local mode, on the owner's selection ([phase declaration](../../../engineering/localized-repair-c271/main-merge-p32/PHASE.json)). Director `c271-p32-08e8ceaa9140`.
+
+Ordered steps:
+1. Declare and push.
+2. Merge `51223c9b` in the worktree, and resolve each overlap by meaning with a per-file record.
+3. Retain this branch's schema-1 `CURRENT.json` as history and write the schema-2 `CURRENT.json`.
+4. Run main's workflow check, the documentation verifier, a scoped whitespace check and the merged driver's focused tests, and record the doctor's diagnosis.
+5. Obtain a fresh-context independent review of the exact merge commit.
+6. Push without force, read the push back, record, comment once on PR274 and issue273, and stop.

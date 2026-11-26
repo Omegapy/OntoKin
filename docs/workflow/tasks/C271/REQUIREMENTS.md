@@ -573,3 +573,14 @@ The design of `ontokin.current-host-readback/0.2.0` (profile `darwin-arm64-v1`) 
 A fresh-context independent review rejected revision 1 on six mandatory findings and revision 2 on three. It accepted revision 3 with nonmandatory findings, which were resolved afterwards without a further review.
 
 The Linux contract and its plans stay adopted and unchanged, and P30-EXECUTOR-001, N34 and N57 stay open for it. R01/R02 remain done and R03–R05 not_done; P01 is done and P02 in_progress. The next gate, MB, is a reviewed merge of main into this branch, and it needs the owner's selection.
+
+## P32 gate MB: merge of main into the branch — November 26, 2026
+
+The owner answered "Start gate MB" in this session. Phase C271-P32-main-merge-mb runs in local mode ([phase declaration](../../../engineering/localized-repair-c271/main-merge-p32/PHASE.json), [session checkpoint](P32-SESSION.md)).
+- **Objective:** one reviewed merge commit of main `51223c9b` into this branch.
+  - It resolves the six files changed on both sides by meaning, as MAIN-CONFLICTS.md requires.
+  - It converts `CURRENT.json` to main's schema 2 for C271, keeping the old bytes as bound history.
+  - It brings main's local-mode files onto the branch.
+- **Main:** not written; nothing is integrated, and the lease is not used.
+- **Excluded:** MI, MP, R03, R04 and R05.
+- **Unchanged:** R01/R02 remain done and R03–R05 not_done.

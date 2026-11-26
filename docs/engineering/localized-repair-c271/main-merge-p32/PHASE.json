@@ -1,0 +1,98 @@
+{
+  "schema": "ontokin.c271.p32-main-merge/1",
+  "task": "C271",
+  "phase": "C271-P32-main-merge-mb",
+  "owner": "c271-p32-08e8ceaa9140",
+  "declared_at_utc": "2026-11-26T05:53:00Z",
+  "status": "declared_merge_pending",
+  "execution_mode": {
+    "mode": "local",
+    "entry_document": "https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/LOCAL-START-HERE.md",
+    "governing_instructions": "current main at 51223c9b94a222f29d38eb6c33808f8e55e2bff9; this branch's older instruction files are data until this merge replaces them"
+  },
+  "owner_direction": {
+    "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
+    "question": "Should I start gate MB next: a reviewed merge of main into the C271 branch?",
+    "reply": "Start gate MB",
+    "how_received": "typed by the owner in this session",
+    "scope_of_selection": "gate MB of the adopted contract ontokin.current-host-readback/0.2.0 only"
+  },
+  "objective": "Gate MB of docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md section 11: merge main 51223c9b into this branch in one reviewed merge commit that resolves the six files changed on both sides by meaning, as docs/engineering/localized-repair-c271/p29-local-publication-r07/MAIN-CONFLICTS.md requires, so that the branch receives main's local-mode files (the macOS lock, the local environment specification and its tools, the current instructions). Nothing is integrated into main.",
+  "starting_state": {
+    "branch_head": "07d0ff5a41338f05810e9c086df00d48a22874f4",
+    "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "merge_base": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+    "remote_observation": "git ls-remote --heads origin at 2026-11-26T05:52:26Z",
+    "pull_request": "PR274 open, draft, conflicting with main",
+    "scope_issue": "issue273 open",
+    "dry_merge": {
+      "command": "git merge-tree --write-tree --name-only origin/main HEAD (changes no ref and no working file)",
+      "files_changed_on_both_sides": [
+        "STATUS.md",
+        "docs/README.md",
+        "docs/workflow/CURRENT.json",
+        "docs/workflow/memory.json",
+        "tests/test_local_checks.py",
+        "tools/check_local.py"
+      ],
+      "content_conflicts": [
+        "STATUS.md",
+        "docs/workflow/CURRENT.json",
+        "docs/workflow/memory.json",
+        "tests/test_local_checks.py",
+        "tools/check_local.py"
+      ],
+      "clean": [
+        "docs/README.md"
+      ]
+    }
+  },
+  "acceptance": [
+    {
+      "id": "A1",
+      "check": "The starting state, merge base and overlap list are recorded; the overlap equals MAIN-CONFLICTS.md's six files."
+    },
+    {
+      "id": "A2",
+      "check": "One merge commit with parents (this branch's head, main 51223c9b). Files changed only on main take main's bytes; files changed only on this branch keep this branch's bytes; each of the six overlaps is resolved by meaning, keeping both purposes, with a per-file resolution record."
+    },
+    {
+      "id": "A3",
+      "check": "docs/workflow/CURRENT.json becomes schema 2 for active task C271 in local mode; this branch's schema-1 CURRENT.json is retained byte for byte as a history file bound by SHA-256 in CURRENT's history."
+    },
+    {
+      "id": "A4",
+      "check": "On the merged tree: main's workflow check, the documentation verifier, a scoped whitespace check and the focused tests of the merged driver (tests/test_local_checks.py) pass; the doctor's read-only diagnosis of this worktree is recorded as environment readiness, separately."
+    },
+    {
+      "id": "A5",
+      "check": "A fresh-context independent review of the exact merge commit accepts it, or its mandatory findings are resolved and re-reviewed."
+    },
+    {
+      "id": "A6",
+      "check": "Pushed without force and read back; outcome records, session checkpoint and task record; one checkpoint comment on PR274 and issue273; PR274 stays draft; main is not written."
+    }
+  ],
+  "ownership": {
+    "director": "c271-p32-08e8ceaa9140",
+    "director_session": "the same Claude Code session that carried out C271-P30 and P31",
+    "owned": [
+      "the C271 worktree, its index and .venv",
+      "every update of this branch in this phase",
+      "the working evidence directory ../OntoKin-local/c271-p32/"
+    ],
+    "main": "not written; the integration lease is not used"
+  },
+  "stopping_condition": "The reviewed merge commit pushed and read back with its records, or a concrete blocker.",
+  "excluded": [
+    "integration into main (R04) and the main lease",
+    "implementing any 0.2.0 adaptation (MI)",
+    "preparation, downloads or installs (MP)",
+    "Node, the readback methods, the routine driver and behavioural tests other than the focused tests of the merged driver",
+    "R03 and R05",
+    "PR274 state changes, issue closure, branch deletion"
+  ],
+  "records": {
+    "session_checkpoint": "docs/workflow/tasks/C271/P32-SESSION.md"
+  }
+}
