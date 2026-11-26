@@ -7171,7 +7171,15 @@
       }
     ],
     "main_conflicts_record": "docs/engineering/localized-repair-c271/p29-local-publication-r07/MAIN-CONFLICTS.md",
-    "r02_source_time_fields": "The fields delivery and pending_phase_delivery (and latest_handoff in CURRENT.json) are R02's source-time delivery records, resolved by its terminal comment; the later R03 to R06 handoffs are named in p29_recovery_records_r03_r06; this local phase produces no handoff ZIP."
+    "r02_source_time_fields": "The fields delivery and pending_phase_delivery (and latest_handoff in CURRENT.json) are R02's source-time delivery records, resolved by its terminal comment; the later R03 to R06 handoffs are named in p29_recovery_records_r03_r06; this local phase produces no handoff ZIP.",
+    "h0_open_items": [
+      "Complete author/runtime/metadata/alias/guard and loader closure",
+      "N34 actual loader/script source completeness",
+      "Historical N57 obligation",
+      "Independent complete H0 plan acceptance and execution",
+      "H1 and parent runtime/merge gates"
+    ],
+    "plan_decisions_record": "docs/engineering/localized-repair-c271/p29-local-publication-r07/PLAN-DECISIONS.md"
   },
   "p29_predecessor_state": {
     "commit": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
@@ -7457,5 +7465,34 @@
     },
     "issue_comments": "issue273 holds a comment with the identical body for R02 terminal, R03, R05 and R06",
     "boundary": "These recovery phases changed no file on this branch after bef67902. Their records exist only in these comments and inside the R06 handoff, which stays in the owner's Library and beside the clone and is not added to the repository."
+  },
+  "p29_r07_superseded_fields_index": {
+    "recorded_at_utc": "2026-11-26T02:12Z",
+    "purpose": "Fields that keep superseded values where they stand. They are history, not the current state, and none is rewritten.",
+    "current_state_fields": {
+      "task.json": [
+        "status",
+        "blocked_reason",
+        "next_action",
+        "session_phase",
+        "p29_local_publication_r07"
+      ],
+      "CURRENT.json": [
+        "next_action",
+        "p29_local_publication_r07",
+        "delivery_policy",
+        "execution_mode",
+        "checkpoint"
+      ]
+    },
+    "fields": {
+      "delivery": "R02's source-time delivery receipt record (browser session); resolved by the R02 terminal comment 7120290539.",
+      "pending_phase_delivery": "R02's source-time pending delivery; resolved by the same terminal comment.",
+      "authorization": "P01's browser-era authorization of the task; later phases record their own direction; C271-P29-R07's is in execution_mode_record.",
+      "remaining_h0_constraint": "P26's H0 constraint; its selected_implementation is the P25 inspector, superseded in code by the published P29 implementation (p29_implementation_candidate); reconciling the constraint is for the /0.1.5 operational-plan review.",
+      "p29_r02_prior_current_fields, p29_r07_prior_current_fields, p29_candidate_superseded_current_fields": "Prior current values replaced by R02, by the R07 declaration and by the candidate's source time.",
+      "docs/engineering/localized-repair-c271/p29-local-publication-r07/PHASE.json": "The R07 declaration record; the outcome is in PUBLICATION.json.",
+      "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json": "R02's source-time blocker record with status blocked; the blocker is resolved as a transfer gate only in blocked_reason_history."
+    }
   }
 }

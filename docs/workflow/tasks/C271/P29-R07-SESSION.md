@@ -2,12 +2,16 @@
 
 Follows current main's [session template](https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/docs/workflow/templates/SESSION.md).
 Detailed evidence is linked, not repeated. Machine paths are left out; places beside the clone
-are named relative to it. Times are UTC. This is the outcome checkpoint of the phase; the
-declaration version is retrievable from commit `80fecf97b785544e8044a60df849cc5918929599`.
+are named relative to it. Times are UTC. This is the outcome checkpoint of the phase, corrected
+after the fresh-context resumability check. The declaration version is retrievable from commit
+`80fecf97b785544e8044a60df849cc5918929599`, and the first outcome version from
+`12d7e55472f8b1d2b67414857ec310b288025244`.
 
 ## Identity
 
-- Checkpoint time and author identity: 2026-11-26T02:00Z (UTC), Director `c271-p29-r07-e586f7497142`.
+- Checkpoint time and author identity: 2026-11-26T02:12Z (UTC), the correction after the
+  resumability check, by Director `c271-p29-r07-e586f7497142`. The first outcome version stated
+  02:00Z, later than its own commit time (01:54:49Z); its commit time is the correct one.
 - Task, session, and agent or tool identity: C271, phase C271-P29-R07-local-publication; one
   Claude Code session (model Claude Opus 5.5) started in the main checkout.
 - Execution mode, and the entry document or record that declared it: `local`, declared by
@@ -31,9 +35,17 @@ declaration version is retrievable from commit `80fecf97b785544e8044a60df849cc59
 - Governing instructions: current main at `51223c9b94a222f29d38eb6c33808f8e55e2bff9` (LOCAL-START-HERE,
   AGENTS, CLAUDE, GOAL, STATUS, ROLE, the registry, CURRENT, PROTOCOL, HANDOFF's local section, the
   session and worker templates, and the skills ontokin-session, ontokin-delivery and
-  ontokin-learning). This branch's own older AGENTS, PROTOCOL and HANDOFF, and every instruction
-  inside the handoff archives, are data. A new session reads current main's instructions in place
-  of the branch copies.
+  ontokin-learning). This branch predates the local migration. Its own copies are older
+  snapshots: `AGENTS.md`, `CHATGPT-START-HERE.md`, `STATUS.md`, `ROLE.md`, `GOAL.md`,
+  `docs/workflow/registry.json` (whose entry point is still `CHATGPT-START-HERE.md`),
+  `docs/workflow/PROTOCOL.md`, `HANDOFF.md`, `BROWSER-PROMPTS.md`, the skills under `.agents/skills/`
+  and `tools/chat_workflow.py`. They and every instruction inside the handoff archives are data;
+  none of them declares the mode of a session on this branch. They stay unchanged here until R04
+  brings main into the branch.
+- How a new local session starts: in the owner's main checkout, from current main's
+  [LOCAL-START-HERE](https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/LOCAL-START-HERE.md). It reads current main's instructions,
+  then works in the C271 worktree. Startup step 1 of that document sends a session to the
+  worktree whose records are newer, and here that is the C271 branch (see Continuation).
 - Required read-set actually opened, with revision or hash: listed with full SHA-256 in the
   declaration version of this checkpoint (commit `80fecf97`), group Context loaded.
 - Required files missing, truncated, or inaccessible: none.
@@ -176,10 +188,21 @@ declaration version is retrievable from commit `80fecf97b785544e8044a60df849cc59
 - Current blockers with concrete evidence: none for C271's next step.
 - Unpublished work that must be recovered and its known location: none.
 - Actual unpublished recovery payloads and declared external dependencies: none. The R06 handoff
-  stays in the owner's Library and beside the clone. The fields `latest_handoff`,
-  `pending_phase_delivery` and `delivery` in CURRENT.json and task.json are R02's source-time
-  delivery records, resolved by its terminal comment. The later R03 to R06 handoffs are named in
-  `p29_recovery_records_r03_r06`. This local phase produces no handoff ZIP.
+  stays in the owner's Library and beside the clone. This local phase produces no handoff ZIP.
+- Superseded values kept where they stand: they are listed in the field
+  `p29_r07_superseded_fields_index` of [task.json](task.json) and of the branch `CURRENT.json`.
+  - `delivery`, `pending_phase_delivery` and `latest_handoff` are R02's source-time delivery
+    records, resolved by its terminal comment. The R03 to R06 handoffs are named in
+    `p29_recovery_records_r03_r06`.
+  - `authorization` is P01's browser-era authorization.
+  - `PHASE.json` of this phase is the declaration record; the outcome is in `PUBLICATION.json`.
+  - R02's `PUBLICATION-BLOCKER.json` keeps its source-time status `blocked`; the blocker is
+    resolved in `blocked_reason_history`.
+  - `remaining_h0_constraint` is P26's record, discussed under Continuation.
+
+  None of these values is rewritten. The current state is `status`, `blocked_reason`,
+  `next_action`, `session_phase` and `p29_local_publication_r07` in task.json, and `next_action`
+  and `p29_local_publication_r07` in CURRENT.json.
 
 ## Coordination
 
@@ -205,14 +228,60 @@ declaration version is retrievable from commit `80fecf97b785544e8044a60df849cc59
   - It makes any executor substitution explicit and keeps the original test meaning.
   - It reads the original qualification plan and its later adopted supplements before any
     execution.
-- Open gates after it, each a separate phase: H0, H1 and the later qualification stages, the
-  required regression with independent integration review (R03), reviewed integration with
-  actual-main verification (R04), and parent completion with final delivery (R05). The files that
+- Inputs of that review, all in this commit:
+  - the published candidate under `docs/engineering/localized-repair-c271/required-images-p29/`:
+    [SUMMARY](../../../engineering/localized-repair-c271/required-images-p29/SUMMARY.md), which defines `/0.1.5`,
+    [VERIFICATION](../../../engineering/localized-repair-c271/required-images-p29/VERIFICATION.json) and
+    [RECONSTRUCTION-DECISION](../../../engineering/localized-repair-c271/required-images-p29/RECONSTRUCTION-DECISION.md);
+  - the staged qualification plan of P07:
+    [QUALIFICATION-PLAN](../../../engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md), with its JSON,
+    stages H0 to H3;
+  - the later adopted designs that refine that plan, which the review reads as its adopted
+    supplements and checks where they differ from it: the P16
+    [tag decision](../../../engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json), the P17
+    [flags decision](../../../engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json), the P24
+    [path design](../../../engineering/localized-repair-c271/path-design-p24/ADOPTION.json) and the P27
+    [required-image design](../../../engineering/localized-repair-c271/required-image-design-p27/ADOPTION.json);
+  - the unchanged C260 [contract](../../../engineering/localized-repair-c260/CONTRACT.md) and
+    [control plan](../../../engineering/localized-repair-c260/CONTROL-PLAN.md);
+  - the H0 plan records `h0-plan-p21/`, `h0-plan-p23/` and `h0-plan-p26/`.
+- Wording: the next action stated in task.json and CURRENT.json is current. The candidate's
+  earlier wording of the same step, in `p29_reconstruction.next_technical_action` and in the P29
+  summary ("prepare and independently review the executable /0.1.5 inspection plan ... stopping at
+  any new blocker before H0/H1 execution"), stays as its source-time text. Whether preparing an
+  executable plan is in scope is for that review to decide, and it needs a concrete reason for any
+  further preparation.
+- Questions the review has to settle, which this phase did not decide:
+  - `remaining_h0_constraint` in task.json is P26's record. Its `selected_implementation` is the
+    P25 inspector (233,502 bytes, SHA-256 `eea3e634...`), while the published P29 inspector is
+    249,393 bytes, SHA-256 `71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758`
+    (`p29_implementation_candidate`). Its `next_phase_action` predates P27 and P29, and its
+    `source_inventory` path lies on a disposable host.
+  - No local executor meets the historical Linux x86-64 CPython 3.12.14 contract: the local host
+    is macOS arm64 with CPython 3.12.13, and the container profile is unsupported. Whether an
+    existing executor meets the adopted contract is the review's first question.
+- Open gates after it, each a separate phase:
+  - H0, with its open items as `remaining_h0_constraint.remaining_gates` lists them: complete
+    author, runtime, metadata, alias, guard and loader closure; N34 actual loader and script source
+    completeness; the historical N57 obligation; and independent acceptance and execution of the
+    H0 plan;
+  - H1 and the later qualification stages;
+  - the required regression with independent integration review (R03);
+  - reviewed integration with actual-main verification (R04);
+  - parent completion with final delivery (R05). The files that
   main and this branch both changed are documented for R04 in
   [MAIN-CONFLICTS](../../../engineering/localized-repair-c271/p29-local-publication-r07/MAIN-CONFLICTS.md).
 - The condition that makes that action safe and useful to execute: an explicit owner selection of
-  that phase; the branch head equal to the head this phase's closing record observed; no other
-  writer on this branch.
+  that phase; the branch head read from the remote equal to, or descended from, the head that this
+  phase's final report names; no other writer on this branch.
+- Where a session that starts from main finds C271: main's `STATUS.md` and `CURRENT.json` still
+  describe C271 as observed on 2026-11-25 (browser mode, head `bef67902`, publication gate open).
+  This phase does not write main, so those entries stay dated observations until R04 or a
+  separately authorized update of main. The current state is on this branch.
+- The decisions of the approved plan that governed this phase are copied unchanged in
+  [PLAN-DECISIONS](../../../engineering/localized-repair-c271/p29-local-publication-r07/PLAN-DECISIONS.md).
+- This phase's closing record (`PUSH-OBSERVATION.json`, `RESUMABILITY.md`, `AUDIT.md`) and the
+  checkpoint comments on PR274 and issue273 follow this commit.
 
 ## Delivery
 
