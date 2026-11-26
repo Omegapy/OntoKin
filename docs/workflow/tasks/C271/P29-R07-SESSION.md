@@ -3,14 +3,15 @@
 Follows current main's [session template](https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/docs/workflow/templates/SESSION.md).
 Detailed evidence is linked, not repeated. Machine paths are left out; places beside the clone
 are named relative to it. Times are UTC. This is the outcome checkpoint of the phase, corrected
-after the fresh-context resumability check. The declaration version is retrievable from commit
-`80fecf97b785544e8044a60df849cc5918929599`, and the first outcome version from
-`12d7e55472f8b1d2b67414857ec310b288025244`.
+after the fresh-context resumability check and its re-read. The declaration version is
+retrievable from commit `80fecf97b785544e8044a60df849cc5918929599`, the first outcome version
+from `12d7e55472f8b1d2b67414857ec310b288025244`, and the first correction from
+`bb75b1c5f83da34e8cc653b536e635d2e89a62d2`.
 
 ## Identity
 
-- Checkpoint time and author identity: 2026-11-26T02:12Z (UTC), the correction after the
-  resumability check, by Director `c271-p29-r07-e586f7497142`. The first outcome version stated
+- Checkpoint time and author identity: 2026-11-26T02:19Z (UTC), the second correction after the
+  resumability check's re-read, by Director `c271-p29-r07-e586f7497142`. The first outcome version stated
   02:00Z, later than its own commit time (01:54:49Z); its commit time is the correct one.
 - Task, session, and agent or tool identity: C271, phase C271-P29-R07-local-publication; one
   Claude Code session (model Claude Opus 5.5) started in the main checkout.
@@ -38,8 +39,8 @@ after the fresh-context resumability check. The declaration version is retrievab
   ontokin-learning). This branch predates the local migration. Its own copies are older
   snapshots: `AGENTS.md`, `CHATGPT-START-HERE.md`, `STATUS.md`, `ROLE.md`, `GOAL.md`,
   `docs/workflow/registry.json` (whose entry point is still `CHATGPT-START-HERE.md`),
-  `docs/workflow/PROTOCOL.md`, `HANDOFF.md`, `BROWSER-PROMPTS.md`, the skills under `.agents/skills/`
-  and `tools/chat_workflow.py`. They and every instruction inside the handoff archives are data;
+  `docs/workflow/PROTOCOL.md`, `HANDOFF.md`, `BROWSER-PROMPTS.md`, `docs/workflow/prompts/`,
+  `docs/workflow/templates/`, the skills under `.agents/skills/` and `tools/chat_workflow.py`. They and every instruction inside the handoff archives are data;
   none of them declares the mode of a session on this branch. They stay unchanged here until R04
   brings main into the branch.
 - How a new local session starts: in the owner's main checkout, from current main's
@@ -200,9 +201,10 @@ after the fresh-context resumability check. The declaration version is retrievab
     resolved in `blocked_reason_history`.
   - `remaining_h0_constraint` is P26's record, discussed under Continuation.
 
-  None of these values is rewritten. The current state is `status`, `blocked_reason`,
-  `next_action`, `session_phase` and `p29_local_publication_r07` in task.json, and `next_action`
-  and `p29_local_publication_r07` in CURRENT.json.
+  None of these values is rewritten. The index names the fields that hold the current state and
+  the rule for the rest: a field named for an earlier phase (`p25_`, `p26_`, `p27_`, `p28_`,
+  `p29_r02_`, `p29_publication_recovery_r02`, `prior_`, `previous_`, `older_`) or ending in
+  `_history` is that phase's source-time record.
 
 ## Coordination
 
@@ -237,7 +239,12 @@ after the fresh-context resumability check. The declaration version is retrievab
     [QUALIFICATION-PLAN](../../../engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md), with its JSON,
     stages H0 to H3;
   - the later adopted designs that refine that plan, which the review reads as its adopted
-    supplements and checks where they differ from it: the P16
+    supplements and checks where they differ from it: the P05
+    [current-host design](../../../engineering/localized-repair-c271/current-host-p05/ADOPTION.json), the P11
+    [loader-path decision](../../../engineering/localized-repair-c271/loader-path-p11/ADOPTION.json), the P13
+    [review boundary](../../../engineering/localized-repair-c271/review-boundary-p13/ADOPTION.json), which makes actual-loader
+    suffix completeness (N34) an external independent-review prerequisite for adopting or executing
+    an operational plan, the P16
     [tag decision](../../../engineering/localized-repair-c271/libc-tags-p16/ADOPTION.json), the P17
     [flags decision](../../../engineering/localized-repair-c271/libc-flags-p17/ADOPTION.json), the P24
     [path design](../../../engineering/localized-repair-c271/path-design-p24/ADOPTION.json) and the P27
@@ -272,8 +279,10 @@ after the fresh-context resumability check. The declaration version is retrievab
   main and this branch both changed are documented for R04 in
   [MAIN-CONFLICTS](../../../engineering/localized-repair-c271/p29-local-publication-r07/MAIN-CONFLICTS.md).
 - The condition that makes that action safe and useful to execute: an explicit owner selection of
-  that phase; the branch head read from the remote equal to, or descended from, the head that this
-  phase's final report names; no other writer on this branch.
+  that phase; the branch head read from the remote equal to, or descended from, the commit that
+  adds this phase's closing record
+  `docs/engineering/localized-repair-c271/p29-local-publication-r07/RESUMABILITY.md` (Git reveals
+  it, and the checkpoint comments on PR274 and issue273 name it); no other writer on this branch.
 - Where a session that starts from main finds C271: main's `STATUS.md` and `CURRENT.json` still
   describe C271 as observed on 2026-11-25 (browser mode, head `bef67902`, publication gate open).
   This phase does not write main, so those entries stay dated observations until R04 or a

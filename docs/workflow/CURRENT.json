@@ -3216,23 +3216,45 @@
       "task.json": [
         "status",
         "blocked_reason",
+        "owner",
+        "branch",
+        "scope_issue",
+        "requirements",
+        "plan",
+        "checks",
+        "completion",
         "next_action",
         "session_phase",
+        "execution_mode",
+        "execution_mode_record",
+        "delivery_reconciliation",
         "p29_local_publication_r07"
       ],
       "CURRENT.json": [
+        "latest_task",
+        "active_task",
+        "observed_main",
+        "snapshot_date",
         "next_action",
-        "p29_local_publication_r07",
+        "boundaries",
         "delivery_policy",
         "execution_mode",
-        "checkpoint"
+        "execution_mode_record",
+        "checkpoint",
+        "p29_local_publication_r07",
+        "historical_handoff"
       ]
     },
     "fields": {
       "latest_handoff, previous_handoff, latest_recovery, previous_recovery, older_handoffs, older_recoveries": "Browser-era handoff and recovery records through R02; the R03 to R06 handoffs are named in p29_recovery_records_r03_r06; C271-P29-R07 produces no handoff.",
       "pending_phase_delivery": "R02's source-time pending delivery; resolved by the R02 terminal comment 7120290539.",
       "browser_delivery_policy_history": "The delivery policy of P01 to P29 R06.",
-      "p29_r02_prior_current_fields, p29_r07_prior_current_fields, p29_candidate_superseded_current_fields": "Prior current values replaced by R02, by the R07 declaration and by the candidate's source time."
-    }
+      "p29_r02_prior_current_fields, p29_r07_prior_current_fields, p29_candidate_superseded_current_fields": "Prior current values replaced by R02, by the R07 declaration and by the candidate's source time.",
+      "p29_publication_recovery_r02": "R02's source-time record (candidate_published false, terminal_pending true); superseded by p29_local_publication_r07 and the R02 terminal comment.",
+      "p29_reconstruction": "The accepted candidate's P29 entry; its technical outcome stands; its flags phase_complete false and delivery_complete false are P29's source-time state, superseded by p29_local_publication_r07.",
+      "concurrent_main_observation": "A main observation of an earlier phase; the current one is observed_main."
+    },
+    "corrected_at_utc": "2026-11-26T02:19Z",
+    "rule": "A field named for an earlier phase (prefix p25_, p26_, p27_, p28_, p29_r02_, p29_publication_recovery_r02, prior_, previous_ or older_) or ending in _history records that phase's state at its source time; the fields listed in current_state_fields hold the current state; the fields listed in fields are named one by one because their names do not show it."
   }
 }

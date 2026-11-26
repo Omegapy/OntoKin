@@ -7473,16 +7473,33 @@
       "task.json": [
         "status",
         "blocked_reason",
+        "owner",
+        "branch",
+        "scope_issue",
+        "requirements",
+        "plan",
+        "checks",
+        "completion",
         "next_action",
         "session_phase",
+        "execution_mode",
+        "execution_mode_record",
+        "delivery_reconciliation",
         "p29_local_publication_r07"
       ],
       "CURRENT.json": [
+        "latest_task",
+        "active_task",
+        "observed_main",
+        "snapshot_date",
         "next_action",
-        "p29_local_publication_r07",
+        "boundaries",
         "delivery_policy",
         "execution_mode",
-        "checkpoint"
+        "execution_mode_record",
+        "checkpoint",
+        "p29_local_publication_r07",
+        "historical_handoff"
       ]
     },
     "fields": {
@@ -7492,7 +7509,11 @@
       "remaining_h0_constraint": "P26's H0 constraint; its selected_implementation is the P25 inspector, superseded in code by the published P29 implementation (p29_implementation_candidate); reconciling the constraint is for the /0.1.5 operational-plan review.",
       "p29_r02_prior_current_fields, p29_r07_prior_current_fields, p29_candidate_superseded_current_fields": "Prior current values replaced by R02, by the R07 declaration and by the candidate's source time.",
       "docs/engineering/localized-repair-c271/p29-local-publication-r07/PHASE.json": "The R07 declaration record; the outcome is in PUBLICATION.json.",
-      "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json": "R02's source-time blocker record with status blocked; the blocker is resolved as a transfer gate only in blocked_reason_history."
-    }
+      "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json": "R02's source-time blocker record with status blocked; the blocker is resolved as a transfer gate only in blocked_reason_history.",
+      "p29_publication_recovery_r02": "R02's source-time record (candidate_published false, terminal_pending true); superseded by p29_local_publication_r07 and the R02 terminal comment.",
+      "p29_technical_acceptance, p29_reconstruction_decision, p29_baseline, p29_fixture_freeze, p29_implementation_candidate, p29_predecessor_state": "The accepted candidate's P29 records; their technical results stand; their phase and delivery flags (phase_complete false, delivery_complete false) are P29's source-time state, superseded by p29_local_publication_r07."
+    },
+    "corrected_at_utc": "2026-11-26T02:19Z",
+    "rule": "A field named for an earlier phase (prefix p25_, p26_, p27_, p28_, p29_r02_, p29_publication_recovery_r02, prior_, previous_ or older_) or ending in _history records that phase's state at its source time; the fields listed in current_state_fields hold the current state; the fields listed in fields are named one by one because their names do not show it."
   }
 }
