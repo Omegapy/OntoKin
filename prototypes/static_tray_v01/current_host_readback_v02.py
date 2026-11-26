@@ -1294,6 +1294,10 @@ def finish_cpu_cohort(cls):
         rows = {}
         for label in CASES:
             row, _ = _read(directory / label / "result.json", 8 * 1024 * 1024, category="EVIDENCE")
+            # D-20 (review finding I-07): only an attempt document of this contract is accounted.
+            _require(type(row) is dict and row.get("schema") == PREFIX + "attempt" + VERSION
+                     and {key: row.get(key) for key in _identity()} == _identity(), "EVIDENCE",
+                     "A checker attempt ledger is not an attempt/0.2.0 document of this contract")
             _require(row["actual_checker_starts"] == 1 and row["provider_failure"] is None and row["postflight"] == row["preflight"]
                      and row["process"]["handles_closed"] and row["process"]["cleanup"]["passed"]
                      and not (directory / label / "finalization.failed.json").exists(), "EVIDENCE", "A CPU provider attempt failed or is unknown")

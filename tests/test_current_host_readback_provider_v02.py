@@ -433,6 +433,8 @@ class DispatchTests(unittest.TestCase):
 
     def setUp(self):
         self.base = resolved_temporary(self, "w5-dispatch-")
+        # D-20: no test may leave the facade's cohort binding behind.
+        self.addCleanup(v01._COHORT_BINDING.__setitem__, "version", None)
         self.v02_path = write(self.base / "v02.json", canonical({"schema": v02.PREFIX + "config/0.2.0"}), 0o600)
         self.v01_path = write(self.base / "v01.json", canonical({"schema": v01.PREFIX + "config/0.1.0"}), 0o600)
         self.other_path = write(self.base / "other.json", canonical({"schema": v01.PREFIX + "config/0.3.0"}), 0o600)
@@ -479,6 +481,81 @@ class DispatchTests(unittest.TestCase):
                         patch.dict(v01._V010_ENTRY_POINTS, {name: lambda *a, **k: "v01"}):
                     self.assertEqual(invoke(), expected)
                     self.assertEqual(new.call_count, 1 if expected == "v02" else 0)
+
+    def test_d20_a_cohort_keeps_the_version_its_setup_selected_until_its_accounting(self):
+        """Review finding I-01: a configuration that changes after setup does not switch the cohort's version."""
+        stage = self.base / "Q01-positive"
+        for label, path, chosen, other in (("0.2.0", self.v02_path, "v02", "v01"), ("0.1.0", self.v01_path, "v01", "v02")):
+            with self.subTest(schema=label):
+                subject = type("Subject", (), {})
+                calls = []
+
+                def implementation(name, version):
+                    def call(*args, **kwargs):
+                        calls.append((name, version))
+                        return version + " " + name
+                    return call
+                originals = {name: implementation(name, "v01") for name in ("setup_cpu_cohort", "guarded_run_process",
+                                                                            "finish_cpu_cohort")}
+                with patch.dict(os.environ, {v01.CONFIG_ENV: str(path), v01.DIGEST_ENV: sha(path)}), \
+                        patch.object(subprocess, "Popen", side_effect=no_process_start), \
+                        patch.object(v02, "setup_cpu_cohort", implementation("setup_cpu_cohort", "v02")), \
+                        patch.object(v02, "guarded_run_process", implementation("guarded_run_process", "v02")), \
+                        patch.object(v02, "finish_cpu_cohort", implementation("finish_cpu_cohort", "v02")), \
+                        patch.dict(v01._V010_ENTRY_POINTS, originals):
+                    self.assertEqual(v01.setup_cpu_cohort(subject), chosen + " setup_cpu_cohort")
+                    self.assertEqual(vars(subject)[v01.DISPATCH_VERSION_ATTRIBUTE], label)
+                    original_bytes = path.read_bytes()
+                    path.write_bytes(original_bytes + b" ")  # the configuration changes after the setup
+                    try:
+                        self.assertFalse(v01._environment_selects_v02())
+                        self.assertEqual(v01.guarded_run_process(["node"], stage=stage, label="synthetic-readback",
+                                                                 clock=None, stage_end=0), chosen + " guarded_run_process")
+                        self.assertEqual(v01.finish_cpu_cohort(subject), chosen + " finish_cpu_cohort")
+                    finally:
+                        path.write_bytes(original_bytes)
+                self.assertEqual(calls, [("setup_cpu_cohort", chosen), ("guarded_run_process", chosen),
+                                         ("finish_cpu_cohort", chosen)])
+                self.assertNotIn(other, {version for _, version in calls})
+                self.assertIsNone(v01._COHORT_BINDING["version"])
+                self.assertNotIn(v01.DISPATCH_VERSION_ATTRIBUTE, vars(subject))
+
+    def test_d20_the_0_2_0_accounting_records_a_configuration_changed_after_setup(self):
+        """Review finding I-01: the real 0.2.0 accounting refuses and writes cohort/0.2.0 with labels; no 0.1.0 document."""
+        root = self.base / "cohort"
+        (root / "provider-ledgers").mkdir(parents=True)
+
+        def passed_setup(cls):  # stands for a 0.2.0 setup that passed; it starts nothing
+            cls.root, cls.temporary, cls.manifest_path = root, None, root / "supplemental-cpu.json"
+        subject = type("Subject", (), {})
+        with patch.dict(os.environ, {v01.CONFIG_ENV: str(self.v02_path), v01.DIGEST_ENV: sha(self.v02_path)}), \
+                patch.object(subprocess, "Popen", side_effect=no_process_start), \
+                patch.object(os, "posix_spawn", side_effect=no_process_start), \
+                patch.object(v02, "setup_cpu_cohort", side_effect=passed_setup), \
+                patch.dict(v01._V010_ENTRY_POINTS, {"finish_cpu_cohort": lambda cls: self.fail("the 0.1.0 accounting ran")}):
+            v01.setup_cpu_cohort(subject)
+            self.v02_path.write_bytes(self.v02_path.read_bytes() + b" ")
+            with self.assertRaises(v02.CurrentHostBindingError):
+                v01.finish_cpu_cohort(subject)
+        record = json.loads((root / "cohort.json").read_bytes())
+        self.assertEqual((record["schema"], record["contract"], record["design_revision"], record["amendments"]),
+                         (v02.PREFIX + "cohort/0.2.0", v02.CONTRACT, 4, ["P33-AMENDMENT-001"]))
+        self.assertIs(record["passed"], False)
+        self.assertIn("labels", record)
+        self.assertEqual(sorted(p.name for p in root.iterdir()), ["cohort.json", "provider-ledgers"])
+        self.assertIsNone(v01._COHORT_BINDING["version"])
+
+    def test_d20_a_failed_setup_ends_the_binding(self):
+        """Review finding I-01: unittest runs no class teardown after a failed setup, so the facade ends the binding."""
+        subject = type("Subject", (), {})
+        refusal = v02.CurrentHostBindingError("SELECTION", "synthetic setup refusal")
+        with patch.dict(os.environ, {v01.CONFIG_ENV: str(self.v02_path), v01.DIGEST_ENV: sha(self.v02_path)}), \
+                patch.object(v02, "setup_cpu_cohort", side_effect=refusal):
+            with self.assertRaises(v02.CurrentHostBindingError) as caught:
+                v01.setup_cpu_cohort(subject)
+        self.assertIs(caught.exception, refusal)
+        self.assertIsNone(v01._COHORT_BINDING["version"])
+        self.assertNotIn(v01.DISPATCH_VERSION_ATTRIBUTE, vars(subject))
 
     def test_git_binding_from_selection_reads_host_and_starts_nothing(self):
         world = World(self.base)
@@ -1152,7 +1229,9 @@ class CohortAccountingTests(unittest.TestCase):
 
     def ledgers(self, cases, **changes):
         for case in cases:
-            row = {"actual_checker_starts": 1, "provider_failure": None, "preflight": {"x": 1}, "postflight": {"x": 1},
+            # An attempt/0.2.0 ledger with this contract's identity, as guarded_run_process writes it (D-20, I-07).
+            row = {"schema": v02.PREFIX + "attempt/0.2.0", **v02._identity(),
+                   "actual_checker_starts": 1, "provider_failure": None, "preflight": {"x": 1}, "postflight": {"x": 1},
                    "process": {"handles_closed": True, "cleanup": {"passed": True},
                                "returncode": 1 if case == "Q01-changed-reference" else 0}} | changes
             write(self.cohort.cohort / "provider-ledgers" / case / "result.json", canonical(row), 0o600)
@@ -1189,6 +1268,24 @@ class CohortAccountingTests(unittest.TestCase):
         error, record = self.finish()
         self.assertIsInstance(error, v02.CurrentHostBindingError)
         self.assertFalse(record["passed"])
+
+    def test_d20_a_ledger_that_is_not_an_attempt_0_2_0_document_fails_the_run(self):
+        """Review finding I-07: the accounting requires attempt/0.2.0 with this contract's identity."""
+        variants = {"another schema": {"schema": v02.PREFIX + "attempt/0.1.0"},
+                    "no schema": {"schema": None},
+                    "another contract": {"contract": "ontokin.current-host-readback/0.1.0"},
+                    "another design revision": {"design_revision": 3},
+                    "no amendment": {"amendments": []}}
+        for number, (label, change) in enumerate(variants.items()):
+            with self.subTest(label):
+                self.world = World(self.base / ("variant-%d" % number))
+                self.cohort = Cohort(self.world)
+                self.ledgers(v02.CASES, **change)
+                error, record = self.finish()
+                self.assertIsInstance(error, v02.CurrentHostBindingError)
+                self.assertEqual(error.reason, "A checker attempt ledger is not an attempt/0.2.0 document of this contract")
+                self.assertFalse(record["passed"])
+                self.assertEqual(record["error"]["code"], "CH-EVIDENCE")
 
     def test_setup_records_the_boot_before_the_cohort_labels_and_run_kind(self):
         with self.world.mocked_host(), self.cohort.environment(), self.cohort.selection_boundary(), \

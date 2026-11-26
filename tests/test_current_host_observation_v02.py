@@ -846,11 +846,17 @@ class CanonicalPathTests(RefusalMixin, unittest.TestCase):
         self.assertEqual(observation.canonical_path(self.base + "/real/absent", allow_absent=True),
                          self.base + "/real/absent")
 
-    @unittest.skipUnless(DARWIN and tempfile.gettempdir().startswith("/private/var/"), "needs /var -> /private/var")
+    @unittest.skipUnless(DARWIN, "needs /var -> /private/var")
     def test_mc20_system_link_ancestor_is_admitted_and_resolved(self):
-        spelled = self.base[len("/private"):] + "/real/inner/file"
+        # D-20 (review finding I-02): the fixture lies under the fixed /private/var/tmp, so the case runs
+        # whatever TMPDIR resolves to; only its absence off Darwin remains.
+        base = tempfile.mkdtemp(prefix="ontokin-mc20-", dir="/private/var/tmp")
+        self.addCleanup(shutil.rmtree, base, True)
+        os.makedirs(base + "/real/inner")
+        write(base + "/real/inner/file", "x")
+        spelled = base[len("/private"):] + "/real/inner/file"
         self.assertTrue(spelled.startswith("/var/"))
-        self.assertEqual(observation.canonical_path(spelled), self.base + "/real/inner/file")
+        self.assertEqual(observation.canonical_path(spelled), base + "/real/inner/file")
         with self.assertRaises(observation.ObservationError):
             observation._canonical_value(spelled, "PATH")
 

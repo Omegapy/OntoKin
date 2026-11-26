@@ -1,0 +1,129 @@
+{
+  "schema": "ontokin.c271.p33-independent-review/1",
+  "review": "INDEPENDENT-REVIEW-001",
+  "task": "C271",
+  "phase": "C271-P33-macos-implementation-mi",
+  "gate": "MI",
+  "reviewer": "W7, a fresh-context independent reviewer launched by the Director; it wrote none of the implementation, the controls or the decisions; read-only in the checkout",
+  "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+  "candidate_commit": "2d8d6d15cd04725e0d29050253e22768f58e2c78",
+  "phase_start_commit": "1c2f25ba224a5c3419004d1d331d29e01378ae00",
+  "contract": {
+    "id": "ontokin.current-host-readback/0.2.0",
+    "profile": "darwin-arm64-v1",
+    "design_revision": 4,
+    "amendments": ["P33-AMENDMENT-001"]
+  },
+  "summary": {
+    "mandatory_findings": 0,
+    "nonmandatory_findings": 8,
+    "conformance": "S1, S2, S3/S7, S4 (exactly the five change sites), S6, S8, S9, S10, section 1 schemas and section 10 labels conform; one abnormal path writes a 0.1.0 cohort record into a 0.2.0 cohort (I-01)",
+    "preservation": "supervisor.py, the 0.1.0 probe, the inspector, readback.mjs and P29's driver companion are byte-identical; the 0.1.0 provider's first 65,533 bytes are the committed file; the readback test module differs only in its docstring; the probe's scientific body is byte-identical (re-derived from readback.mjs); MC14 holds (re-run)",
+    "controls": "faithful to the contract; ran as frozen on committed clean trees; final-002 outcomes reproduced; labels recorded per case",
+    "baselines": "identical to the phase start except D-18's three entries in tests.test_current_host_readback_driver; the readback setUpClass error now carries S8's fixed reason",
+    "decisions": "D-10 and D-17 are sound readings; D-18 is the right preservation of P29's controls and its failures are exactly S8's change; D-19's two defects are control defects and the refreeze weakens no contract expectation; no hidden contract change",
+    "safety": "no Node, ldd or codesign start; no refusal bypass, hidden skip, leftover process, source-tree write or weakened 0.1.0 rule found",
+    "records": "CHECKS.json is accurate and keeps readiness, test qualification, integration and completion apart"
+  },
+  "findings": [
+    {
+      "id": "I-01",
+      "severity": "nonmandatory",
+      "timing": "resolve before MH",
+      "location": "prototypes/static_tray_v01/current_host_readback_v01.py, the facade's setup_cpu_cohort, guarded_run_process and finish_cpu_cohort",
+      "issue": "The facade decides the version again at every call from the configuration's current bytes. When a 0.2.0 configuration changes between setup and teardown, finish_cpu_cohort dispatches to the 0.1.0 accounting. That accounting refuses, then writes cohort/0.1.0 into the 0.2.0 cohort root without design revision or labels; with an owned temporary cohort it also writes preserved-cohort/0.1.0. The run still fails closed. Reproduced by ../OntoKin-local/c271-p33/reviews/mi-001/dispatch_finish_demo.py, which started no process. Related: refusals of unverifiable selections and the ordinary-run refusal name refusal/0.1.0 and setup/0.1.0 in memory (W6 F-07, W5 Q4); a refused probe result can carry unverified manifest labels (W5 Q5).",
+      "required_change": "Bind the version chosen at setup to the class and dispatch guarded_run_process and finish_cpu_cohort by it, so that a 0.2.0 cohort is always reconciled by the 0.2.0 accounting, which refuses and writes cohort/0.2.0 with labels. Consider a version-neutral refusal for unverifiable selections, and mark the labels of a refused probe result as unverified. Add a control."
+    },
+    {
+      "id": "I-02",
+      "severity": "nonmandatory",
+      "location": "tests/test_current_host_observation_v02.py: CanonicalPathTests.test_mc20_system_link_ancestor_is_admitted_and_resolved; also needs_darwin (ObservationTests, RenameTests, SourceTests.test_changed_source_or_head_refuses) and PlatformTests.test_real_readers_return_their_shapes",
+      "issue": "The first test skips unless the resolved TMPDIR lies under /private/var; the others skip off Darwin. None skipped on the executor with its default TMPDIR. A qualifying run with another resolved TMPDIR would report a skip and fail its unit stage. The other new modules fail visibly instead of skipping.",
+      "required_change": "Build the /var case from a fixed /private/var location, independent of TMPDIR, or turn the skips into visible failures. Otherwise record the TMPDIR premise for MH and MR."
+    },
+    {
+      "id": "I-03",
+      "severity": "nonmandatory",
+      "location": "tools/prepare_current_host_readback.py PREPARER_FILES_V02; DIRECTOR-DECISIONS.md D-17",
+      "issue": "D-17 is a sound reading of P05 section 5, but its substitute is narrower than its wording suggests. preparer_source records four files; the preparer also executes errors.py, format_check.py, lock.py, supervisor.py and the package __init__ files, and no commit or clean-state check runs. The check that D-17 assigns to MP's reviewer therefore covers only those four files.",
+      "required_change": "Record the preparer's import closure, or a source inventory, in preparer_source. Otherwise have MP's plan state the receipt's limit and require a separately verified clean checkout at the bound commit."
+    },
+    {
+      "id": "I-04",
+      "severity": "nonmandatory",
+      "location": "docs/engineering/localized-repair-c271/macos-implementation-p33/interfaces/W2-PREPARER.md, section 11 (D2) and section 12 (Q1)",
+      "issue": "The note still says that D-01's source check will be added and is not implemented yet. D-17 replaced D-01, and the route starts no Git by design.",
+      "required_change": "Mark D2 and Q1 as superseded by D-17, in the note or in the closing record."
+    },
+    {
+      "id": "I-05",
+      "severity": "nonmandatory",
+      "location": "the phase's closing records (CHECKS.json and the outcome records still to be written)",
+      "issue": "MI's obligations for later gates are scattered: D-16 (MC36's premise), D-19 (uname -p and file -b started by name in every driver run), O-01 (the EPERM window of stop_process), W6 F-01, F-03, F-04 and F-05, D-02 and D-06, W3 F4 and Q1/Q3, M0's exact seven-package rule, and the MC16 note of the frozen record. Two are not stated where the next gates will look. First, inside the driver's unit stage the controls run from the isolated workspace under the evidence root, so MC16's real cases need the evidence root and TMPDIR on different volumes. Second, D-18's two failing 0.1.0 driver tests also confront MR's complete routine, not only R04.",
+      "required_change": "List the carried obligations for MP, MH, MR and R04 in one place in the closing record, with these two added."
+    },
+    {
+      "id": "I-06",
+      "severity": "nonmandatory",
+      "location": "docs/workflow/tasks/C271/task.json, the P10 and P16 entries",
+      "issue": "The declaration's rewrite re-encoded two historical strings (\\u2013 became the literal en dash). The values are unchanged, but the historical bytes changed.",
+      "required_change": "Keep historical entries byte-stable in later writes, or note the re-encoding."
+    },
+    {
+      "id": "I-07",
+      "severity": "nonmandatory",
+      "location": "prototypes/static_tray_v01/current_host_readback_v02.py finish_cpu_cohort (inherited from the 0.1.0 function)",
+      "issue": "The cohort accounting reads each attempt ledger without checking its schema, so a 0.1.0 ledger placed in the 0.2.0 provider-ledgers directory would be accepted. The risk is low, because the directory is fresh and owned.",
+      "required_change": "Require attempt/0.2.0, with the contract, design revision and amendments, in the 0.2.0 accounting."
+    },
+    {
+      "id": "I-08",
+      "severity": "nonmandatory",
+      "location": "tests/test_current_host_readback_controls_v02.py, MC06",
+      "issue": "No control shows that the allow-listed LC_DYLD_INFO_ONLY is accepted: the baseline executable uses chained fixups. The implementation admits the command (0x80000022).",
+      "required_change": "Add an accepting variant at the next refreeze, or at N34-M or MH."
+    }
+  ],
+  "decision_assessments": {
+    "D-10": "a sound reading: the copy is bound by its canonical path; the conventional name and the one hop observed on this host are recorded and followed again by M0's recheck, the provider's host_state comparison and the probe; plan- and configuration-supplied paths keep the strict rule",
+    "D-17": "a sound reading of P05 section 5, which requires no check of the checkout's commit; see I-03",
+    "D-18": "the right choice: P29's 116 controls load with only their two phase-start errors, S8's change stays visible, and no expectation changed. The two failures are exactly S8's change; for the second test, which relies on implicit selection preparation, D-18's phrase 'assert the ordinary-run refusal' is loose. See I-05 for MR",
+    "D-19": "C-01 and C-02 are control defects. The original is retained, six methods are refrozen, and no contract expectation is weaker. MC21's driver cases now mock the platform metadata leaf and are labelled mocked, so their zero-start assertion, which the original freeze stated beyond the contract's Node and other columns, no longer covers uname and file",
+    "others": "no hidden contract change; D-06 and the observer's refusal of universal files and of CPU subtypes other than ARM64_ALL are stricter than the contract and fail closed"
+  },
+  "reproduction": [
+    {"command": "shasum -a 256 CONTRACT.md, CONTRACT.json, AMENDMENT-001.md and .json, AMENDMENT-001-REVIEW-001/-002 and the evidence files", "outcome": "every digest equals ADOPTION-AMENDMENT-001.json; git diff 1c2f25ba 2d8d6d15 over the P05, P29 and P31 directories is empty"},
+    {"command": "git --no-optional-locks diff --quiet 1c2f25ba 2d8d6d15 -- prototypes/static_tray_v01/supervisor.py prototypes/static_tray_v01/current_host_readback_v01.mjs prototypes/static_tray_v01/current_host_inspection_v01.py prototypes/static_tray_v01/readback.mjs tests/test_current_host_readback_driver.py", "outcome": "exit 0"},
+    {"command": "python byte comparison of the 0.1.0 provider at 1c2f25ba and at the candidate", "outcome": "the first 65,533 bytes are identical; the facade is appended"},
+    {"command": "python AST and byte comparison of tests/test_static_tray_readback_v01.py", "outcome": "only the module docstring differs"},
+    {"command": "python3 -I -S -B ../OntoKin-local/c271-p33/reviews/mi-001/mc14_tokens.py base.supervisor.py cand.supervisor_darwin_v01.py", "outcome": "exactly five statement-level change sites: the precondition, the inserted PermissionError clause, three sends"},
+    {"command": "python3 -I -S -B ../OntoKin-local/c271-p33/reviews/mi-001/probe_body.py readback.mjs v01.mjs v02.mjs", "outcome": "scientific body identical in both probes, SHA-256 5d72ac44b551d0942be6367aa3389a47f0e84c5b61cf09900fb5ebc377c0c147; v01 lines 1-38, 679, 683-691, 695-809; v02 lines 1-38, 703, 708-716, 720-834; no contiguity break"},
+    {"command": "python3 -I -S -B ../OntoKin-local/c271-p33/reviews/mi-001/js_balance.py", "outcome": "readback.mjs, the 0.1.0 probe and the 0.2.0 probe balance; a heuristic, not a syntax check"},
+    {"command": "zsh ../OntoKin-local/c271-p33/reviews/mi-001/run_modules.sh run-001: .venv/bin/python -B -m unittest -v <module> for each of the sixteen modules, from the checkout root, TMPDIR resolved, each log redacted with director/redact_logs.py", "outcome": "controls 149 OK, supervisor 17 OK, preparer 59 OK, observer 109 OK, provider_v02 45 OK, driver_v02 22 OK, local_checks 33 OK, all with zero skips; driver 10 (2 failures, 1 error), provider 25 (2 failures, 1 error), inspection 135 (64 failures, 8 errors), libc_plt 73 OK, loader_path 96 OK, required_images 116 (2 errors), rtld_paths 61 (38 failures, 2 errors), storage_identity 19 (8 errors), static_tray_readback 4 (1 error, S8's fixed reason). Non-passing sets are identical to final-002 for all sixteen and identical to the phase-start baselines except D-18's three entries. One line redacted, in the 0.1.0 driver log. Tree clean before and after; no new __pycache__"},
+    {"command": "python digest check of the log_sha256 values in CHECKS.json against checks/final-001 and checks/final-002", "outcome": "31 of 31 match"},
+    {"command": "git --no-optional-locks diff --stat 65c54179 2d8d6d15; shasum of CONTROLS-FROZEN.json and of the implementation files", "outcome": "no implementation file changed after the freeze; every digest in the freeze and the refreeze matches; CONTROLS-FROZEN.json byte-identical (cd7ae80f...); 3fb21667 and 2d8d6d15 add only CHECKS.json and INVENTORY-ADDITIONS.json"},
+    {"command": "python digest check of required-images-p29/controls/COMPANIONS.json against the candidate", "outcome": "24 of 24 companions match"},
+    {"command": "python AST unit comparison of tests/test_current_host_readback_driver.py at 65c54179 with tests/test_current_host_readback_driver_v02.py", "outcome": "every moved unit identical; W4 had changed only the two S8 tests of the 0.1.0 class"},
+    {"command": "python summary of ../OntoKin-local/c271-p33/checks/final-002-audit/starts.jsonl", "outcome": "877 subprocess.Popen events, 0 hook errors, no Node, ldd or codesign; the provider_v02 module's 22 git starts are temporary stand-ins"},
+    {"command": ".venv/bin/python -I -B ../OntoKin-local/c271-p33/reviews/mi-001/dispatch_finish_demo.py <checkout>", "outcome": "the dispatch routes to 0.2.0 while the bytes match and to 0.1.0 after they change; finish refused and wrote cohort/0.1.0 with passed false and no design revision or labels (I-01); no process started"},
+    {"command": "git --no-optional-locks diff --check 1c2f25ba 2d8d6d15", "outcome": "clean"},
+    {"command": "grep of sys/stdio.h in the installed macOS SDKs", "outcome": "#define RENAME_EXCL 0x00000004; int renamex_np(const char *, const char *, unsigned int); digests equal to W2's note"},
+    {"command": "python lstat and readlink of the OS cryptex link", "outcome": "one hop; the realpath of the copy has no other linked component"},
+    {"command": "process listing after the runs", "outcome": "no test process left running"}
+  ],
+  "not_run": [
+    "any Node, ldd or codesign start",
+    "any test module other than the sixteen listed in CHECKS.json, and any discovery",
+    "tools/chat_workflow.py check and the documentation verifier, which are not among the sixteen modules (final-002 records both as passed)",
+    "downloads and installs"
+  ],
+  "evidence": {
+    "scratch": "../OntoKin-local/c271-p33/reviews/mi-001/",
+    "director_runs": ["../OntoKin-local/c271-p33/checks/final-001/", "../OntoKin-local/c271-p33/checks/final-002/", "../OntoKin-local/c271-p33/checks/final-002-audit/", "../OntoKin-local/c271-p33/checks/d18-split/"],
+    "baselines": "../OntoKin-local/c271-p33/baseline-1c2f25ba/"
+  },
+  "limits": [
+    "This review covers only the executed Python on this host; it qualifies nothing.",
+    "MP, N34-M, MH, MR, R04 and R05 remain separate gates."
+  ]
+}

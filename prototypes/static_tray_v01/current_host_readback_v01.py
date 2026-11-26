@@ -1158,23 +1158,60 @@ def verify_case_manifest(path, *, config_path, config_sha256, source_root, sched
                           schedule_root=schedule_root, check=check)
 
 
+# Decision D-20 (independent review finding I-01): the version that a class's setup selects stays
+# bound until that class's cohort accounting has run. A configuration that changes in between is
+# then reconciled by the provider that set the cohort up, which refuses and records the change, and
+# never by the other version's code. Outside a cohort every call is dispatched by the selection.
+DISPATCH_VERSION_ATTRIBUTE = "readback_dispatch_version"
+_COHORT_BINDING = {"version": None}
+
+
+def _environment_version():
+    return "0.2.0" if _environment_selects_v02() else "0.1.0"
+
+
+def _bound_version():
+    return _COHORT_BINDING["version"] or _environment_version()
+
+
+def _end_binding(cls):
+    _COHORT_BINDING["version"] = None
+    if DISPATCH_VERSION_ATTRIBUTE in vars(cls):
+        delattr(cls, DISPATCH_VERSION_ATTRIBUTE)
+
+
 def guarded_run_process(argv, *, stage, label, clock, stage_end, env=None, on_started=None, cancel_after_ms=None):
-    """Facade of the process adapter, dispatched by the schema of the environment's selection."""
-    implementation = (_v02().guarded_run_process if _environment_selects_v02()
+    """Facade of the process adapter: the version bound by the cohort's setup, else the environment's selection."""
+    implementation = (_v02().guarded_run_process if _bound_version() == "0.2.0"
                       else _V010_ENTRY_POINTS["guarded_run_process"])
     return implementation(argv, stage=stage, label=label, clock=clock, stage_end=stage_end, env=env,
                           on_started=on_started, cancel_after_ms=cancel_after_ms)
 
 
 def setup_cpu_cohort(cls):
-    """Facade of the class setup: an ordinary run fails visibly (S8); a selection is dispatched by its schema."""
+    """Facade of the class setup: an ordinary run fails visibly (S8); a selection is dispatched by its schema.
+
+    The version selected here stays bound to the class until finish_cpu_cohort has run (D-20).
+    """
     if not os.environ.get(CONFIG_ENV) and not os.environ.get(DIGEST_ENV):
         _ordinary_run(cls)
-    implementation = _v02().setup_cpu_cohort if _environment_selects_v02() else _V010_ENTRY_POINTS["setup_cpu_cohort"]
-    return implementation(cls)
+    version = _environment_version()
+    implementation = _v02().setup_cpu_cohort if version == "0.2.0" else _V010_ENTRY_POINTS["setup_cpu_cohort"]
+    setattr(cls, DISPATCH_VERSION_ATTRIBUTE, version)
+    _COHORT_BINDING["version"] = version
+    try:
+        return implementation(cls)
+    except BaseException:
+        # unittest runs no class teardown after a failed class setup, so the binding ends here.
+        _end_binding(cls)
+        raise
 
 
 def finish_cpu_cohort(cls):
-    """Facade of the cohort accounting, dispatched by the schema of the environment's selection."""
-    implementation = _v02().finish_cpu_cohort if _environment_selects_v02() else _V010_ENTRY_POINTS["finish_cpu_cohort"]
-    return implementation(cls)
+    """Facade of the cohort accounting: the version its setup bound, else the environment's selection (D-20)."""
+    version = vars(cls).get(DISPATCH_VERSION_ATTRIBUTE) or _bound_version()
+    implementation = _v02().finish_cpu_cohort if version == "0.2.0" else _V010_ENTRY_POINTS["finish_cpu_cohort"]
+    try:
+        return implementation(cls)
+    finally:
+        _end_binding(cls)

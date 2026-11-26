@@ -259,3 +259,62 @@ recorded beside it.
 summary. The contract binds Git by absolute path and says nothing about these two. MR's execution
 plan decides whether a qualifying run may start them, or whether the record is read without a
 start.
+
+## D-20: the dispositions of independent review 001
+
+[INDEPENDENT-REVIEW-001](INDEPENDENT-REVIEW-001.md) accepted candidate `2d8d6d15` with
+nonmandatory findings I-01 to I-08 and no mandatory one. The reviewer asked for I-01 before MH. MI
+resolves the implementation findings now, so that no implementation work is left for the
+preparation and qualification gates. The other findings are carried in one list, the field
+`for_later_gates` of the phase's outcome record.
+
+- **I-01, fixed: the facade binds the version at setup.** `setup_cpu_cohort` binds the version it
+  selects, both to the class and to the module's one cohort binding. `guarded_run_process` and
+  `finish_cpu_cohort` then dispatch by that binding, so a 0.2.0 cohort is always reconciled by the
+  0.2.0 accounting, which refuses a changed configuration and writes `cohort/0.2.0` with its labels.
+  - **When the binding ends:** after the accounting has run, or at once when the setup fails,
+    because unittest runs no class teardown after a failed class setup.
+  - **Outside a cohort:** calls are dispatched by the selection, as before.
+  - **Tests:** three development tests; the independent author is asked for a frozen control
+    (refreeze 002).
+  - **Related items the reviewer raised:**
+    - A version-neutral refusal of unverifiable selections is not adopted. Such refusals are
+      raised, not written as documents, and claim nothing (review section 5). The contract also
+      defines no document of that kind.
+    - The labels of a refused probe result (W5's Q5) are carried to MH, where the probe first
+      runs. MH's execution plan states that such labels are the manifest's claim, not verified
+      ones, and its review checks how they are read.
+- **I-02, fixed in part.** MC20's case with a system link ancestor now builds its fixture under
+  the fixed `/private/var/tmp`, so it runs whatever TMPDIR resolves to. It still passed with TMPDIR
+  on the checkout's volume. Its assertions are unchanged. The observer module's skips off Darwin
+  remain. They are recorded for R04: on another system, both drivers count each of them as a
+  stage failure.
+- **I-03, carried to MP.**
+  - **The limit:** `preparer_source` names four files. It does not include the rest of the
+    preparer's import closure: `errors.py`, `format_check.py`, `lock.py`, `supervisor.py` and the
+    package `__init__` files. No commit or clean-state check runs either.
+  - **What MP does:** its plan states this limit, and requires a separately verified clean checkout
+    at the bound commit before preparation. Its review checks both.
+  - **D-17** is read with this limit.
+- **I-04, superseded record.** Sections 11 (D2) and 12 (Q1) of `interfaces/W2-PREPARER.md` are
+  superseded by D-17. The note stays as written.
+- **I-05, consolidated.** The obligations for MP, MH, MR and R04 are listed in one place. Two items
+  are added:
+  - Inside the driver's unit stage, MC16's real cases need the evidence root and TMPDIR on
+    different volumes.
+  - D-18's two failing 0.1.0 driver tests also confront MR's complete routine, not only R04.
+- **I-06, noted.** The declaration's rewrite of `task.json` wrote two historical strings with the
+  literal character in place of its escape sequence. Their values are unchanged. The file now
+  round-trips exactly, and later writes keep its bytes. Restoring the escapes would re-encode them
+  once more, so they are not restored.
+- **I-07, fixed: the 0.2.0 accounting checks each ledger.** It requires every attempt ledger to be
+  an `attempt/0.2.0` document with this contract, design revision and amendments.
+  - **Fixture:** W5's development test now writes each ledger as `guarded_run_process` does. Its
+    expected outcomes are unchanged.
+  - **Test:** a new development test covers the refusal.
+- **I-08, returned to the independent author.** W6 is asked to add an accepting
+  `LC_DYLD_INFO_ONLY` variant to MC06 in refreeze 002.
+
+**Re-review.** The implementation changed after the review: the facade appended to the 0.1.0
+provider, and the 0.2.0 accounting. The 0.1.0 provider's first 65,533 bytes are unchanged. The
+reviewer is asked to review this change and refreeze 002 before the phase closes.
