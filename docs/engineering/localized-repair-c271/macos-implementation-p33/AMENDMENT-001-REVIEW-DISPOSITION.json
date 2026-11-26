@@ -1,0 +1,36 @@
+{
+  "schema": "ontokin.c271.p33-amendment-review-disposition/1",
+  "amendment": "P33-AMENDMENT-001",
+  "recorded_at_utc": "2026-11-26T15:59Z",
+  "director": "c271-p33-a99647756bed",
+  "first_review": {
+    "review": "AMENDMENT-001-REVIEW-001",
+    "candidate": "5dc76ccf1a763a3454e34f97db842a2192d3129e",
+    "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+    "dispositions": {
+      "A-01": "resolved in revision 2: MC37-MC39 added with start counts and CH19; the five change sites stated once and used in S4, only_change, substitutions.S4, the section 5 comparison item and MC14; CONTRACT.json controls named (accepted by REVIEW-002)",
+      "A-02": "resolved in revision 2: premise stated exactly; design revision and amendments in section 10 and labels.carried_with; 'every label' removed from the unchanged list; the adoption record states the meaning from revision 4 (accepted by REVIEW-002)",
+      "A-03": "resolved in revision 2: affected clauses named with amended text in both forms (accepted by REVIEW-002)",
+      "A-04": "resolved in revision 2: the third lasting-EPERM cause named; the reason does not distinguish causes (accepted by REVIEW-002)",
+      "A-05": "resolved in revision 2: stricter meaning qualified by the observed build; MC37 re-run on each qualifying host; launchd reaping assumption (accepted by REVIEW-002)",
+      "A-06": "resolved in revision 2: logs and evidence cited by path and SHA-256 (accepted by REVIEW-002; refined by A-10)",
+      "A-07": "resolved as a commitment, carried out by the adoption record's follow-ups"
+    }
+  },
+  "second_review": {
+    "review": "AMENDMENT-001-REVIEW-002",
+    "candidate": "86a0e750ae48039798234585b8913f0ae9be7210",
+    "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "dispositions": {
+      "A-08": "resolved in the final version: MC37 and MC38 establish the exit before the probe, without reaping and independently of the code under test, through kqueue EVFILT_PROC with NOTE_EXIT; MC39 runs both cases through run_process with one start each (other starts 2), case (b) with the signal-0 probe made to fail with PermissionError while real signals pass through; MC38 states that it covers the handling of a refused send",
+      "A-09": "resolved in the final version: both forms are generated from one source, so every quoted CONTRACT.md text in the JSON is the Markdown text of the MD; the added rows are given exactly; the keys are written supervisor.assertion_meanings[\"cleanup.passed\"] and controls[id=MC14]; row E13 of CONTRACT.md section 2 and executor_requirements.E13 are replaced; the misnumbered pointer is replaced by a named place",
+      "A-10": "resolved in the final version: log 02 is attributed to an intermediate test file whose module traceback lines match the checkpoint's; the logs corroborate by line numbers, not by bytes; REVIEW-001's R2 and R3 are cited for the exact bytes",
+      "A-11": "resolved in the final version: the comparison with the Linux contract is dropped",
+      "A-12": "resolved in the final version and the adoption record: the premise is restated as of the adoption with W1-W4's checkpoints; the plan's control assignment and decisions D-03 and D-04 are extended by decision D-12 (MC37-MC39, amendments)"
+    },
+    "observation": {
+      "O-01": "tools/check_local.py stop_process (unchanged from main) has the same EPERM window around its SIGTERM killpg; outside the amendment and S4; recorded as a follow-up for the driver's owner in the adoption record"
+    }
+  },
+  "further_review": "none after REVIEW-002, as P31 did with its last nonmandatory findings; the final payloads are bound by the adoption record"
+}

@@ -107,3 +107,15 @@ W3 wrote M0's receipt rule from W2's interface note. W2 confirms that its prepar
 the shapes its note states, or corrects the note or the code, whichever differs from the
 contract, and lists the correction. This follow-up is W2's, together with D-03 and D-04 for the
 install result. W3's rule then follows the confirmed shape.
+
+## D-12: after the adoption of P33-AMENDMENT-001
+
+The amendment is adopted ([ADOPTION-AMENDMENT-001](ADOPTION-AMENDMENT-001.json)).
+- **D-03 and D-04:** every document that a 0.2.0 component writes carries
+  `"design_revision": 4` and `"amendments": ["P33-AMENDMENT-001"]`, beside its contract field.
+- **Plan section 6:** the control assignment extends to MC37, MC38 and MC39. MI executes all
+  three. MC37 runs again on each qualifying host at MH.
+- **Superseded:** from revision 4 on, the amendment's section 3 supersedes these records, and they
+  stay as written:
+  - PHASE.json's acceptance A2, which says that only the precondition differs;
+  - plan section 4.1, which imports `group_exists` and `terminate_group` unchanged.

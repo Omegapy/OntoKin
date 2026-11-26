@@ -1,0 +1,89 @@
+{
+  "schema": "ontokin.c271.p33-amendment-adoption/1",
+  "decision_id": "P33-AMENDMENT-001",
+  "task": "C271",
+  "phase": "C271-P33-macos-implementation-mi",
+  "director": "c271-p33-a99647756bed",
+  "adopted_at_utc": "2026-11-26T15:59Z",
+  "status": "accepted_design_only",
+  "executable_authority": false,
+  "contract": "ontokin.current-host-readback/0.2.0",
+  "profile": "darwin-arm64-v1",
+  "design_revision": 4,
+  "meaning": "From design revision 4 on, ontokin.current-host-readback/0.2.0 means CONTRACT.md and CONTRACT.json (docs/engineering/localized-repair-c271/macos-contract-design-p31/, bound by its ADOPTION.json) as amended by P33-AMENDMENT-001. Every 0.2.0 result names design_revision 4 and amendments ['P33-AMENDMENT-001'].",
+  "basis": "finding P33-SUPERVISOR-001 during gate MI, selected by the owner ('Start gate MI'); the independent reviews below; the Director's authority under the owner's autonomous stewardship of the selected scope, as for P31-MACOS-CONTRACT-001",
+  "accepted_payloads": {
+    "AMENDMENT-001.md": {
+      "bytes": 18291,
+      "sha256": "9ac21432c11818a488e462bfb139138058493c7ff8ecf947617210df10870bc2"
+    },
+    "AMENDMENT-001.json": {
+      "bytes": 25161,
+      "sha256": "6dcfbfbf245d2d950942eddac015546995a01e4994a24981ca60f6bbee29824c"
+    }
+  },
+  "adopted_contract_files_unchanged": {
+    "CONTRACT.md": {
+      "bytes": 42769,
+      "sha256": "42db98dc6099ee605b0963f3734f7bff2d68c019ff6c00a0ee97bd753c03fdc9"
+    },
+    "CONTRACT.json": {
+      "bytes": 43340,
+      "sha256": "c843fc96f19b36b3ea141c5be0fb08c8260565188e8f5f199ff5b0bc08ca3920"
+    }
+  },
+  "review_chain": [
+    {
+      "review": "AMENDMENT-001-REVIEW-001",
+      "candidate": "5dc76ccf1a763a3454e34f97db842a2192d3129e",
+      "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+      "mandatory": [
+        "A-01",
+        "A-02"
+      ],
+      "files": {
+        "AMENDMENT-001-REVIEW-001.md": {
+          "bytes": 26423,
+          "sha256": "7fe34ca4c78d17f1259922f00b04d414e2e357417936e8a5ed61bb08f7798e51"
+        },
+        "AMENDMENT-001-REVIEW-001.json": {
+          "bytes": 23977,
+          "sha256": "82df3b37bc42c375e1a24003fad91da75db4419e2cc56411d8055f22ea0fcc37"
+        }
+      }
+    },
+    {
+      "review": "AMENDMENT-001-REVIEW-002",
+      "candidate": "86a0e750ae48039798234585b8913f0ae9be7210",
+      "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "mandatory": [],
+      "files": {
+        "AMENDMENT-001-REVIEW-002.md": {
+          "bytes": 17928,
+          "sha256": "0c8bdae414c8975e4b88d40601eb17025a87f0ada537603b269426c21575149e"
+        },
+        "AMENDMENT-001-REVIEW-002.json": {
+          "bytes": 18657,
+          "sha256": "6dc0e61f0b23b00786a7ce757ed0d1c2e94f8095194a8a1d8e0a5c1501918588"
+        }
+      }
+    }
+  ],
+  "post_review_changes": "The accepted payloads are revision 2 plus the corrections of nonmandatory findings A-08 to A-12, made after AMENDMENT-001-REVIEW-002 without a further review (AMENDMENT-001-REVIEW-DISPOSITION.json).",
+  "reviewer": "one fresh-context subagent launched by the Director, read-only, reviewing twice; it wrote none of the amendment or the implementation",
+  "premise_as_of_adoption": "no reviewed or accepted implementation, no preparation and no contract result or refusal document exists under 0.2.0; MI's unreviewed checkpoints: W1 a23761919e92c41489f26a57d02fa1d5dc9d8e19 (revision 3's S4, superseded, failed evidence), W2 939942e31b9bbfa8768269ff6274a66c183d2202 (S6), W4 b377ab969af5adc53d247bb714cc9fbfa89b938c (S8, S9, Git binding), W3 579184134ab8dd2fcce0500672c0ded2c0e98471 (S3, S7, S10); W5 in progress and uncommitted",
+  "superseded_records": [
+    "PHASE.json acceptance A2 ('a token-level comparison shows that only the precondition differs'): from revision 4, MC14 as amended applies",
+    "IMPLEMENTATION-PLAN.md section 4.1 (group_exists and terminate_group imported unchanged): from revision 4, AMENDMENT-001 section 3 applies",
+    "IMPLEMENTATION-PLAN.md section 6 (control assignment): MC37, MC38 and MC39 are executed by MI, and MC37 again at MH (decision D-12)",
+    "DIRECTOR-DECISIONS.md D-03 and D-04 (design revision only): the documents also carry amendments ['P33-AMENDMENT-001'] (decision D-12)"
+  ],
+  "follow_ups": [
+    "W1 revises supervisor_darwin_v01.py to the amended S4: re-implements group_exists and terminate_group with the four EPERM handlings, keeps run_process's tokens apart from the precondition, and updates its docstring, its IMPORTED and body-globals development tests and the MC14 comparison over the three functions",
+    "W1's development guards no_group_left and _gone count EPERM as gone; they are revised to the amended rule (EPERM means present)",
+    "the independent control author freezes MC37, MC38 and MC39 with the other MI controls, and the post-test checks of every frozen supervisor control apply the amended rule",
+    "every 0.2.0 component writes design_revision 4 and amendments ['P33-AMENDMENT-001'] (D-03, D-12)",
+    "O-01, outside this amendment: tools/check_local.py stop_process, unchanged from main, catches only ProcessLookupError around its SIGTERM killpg and has the same EPERM window on Darwin; recorded for the driver's owner, not changed by MI"
+  ],
+  "scope": "Design only. No implementation, preparation, download, installation, qualification, R03, integration or parent completion is authorized by this record."
+}

@@ -1,12 +1,12 @@
 {
   "schema": "ontokin.current-host-readback-amendment/0.2.0",
   "amendment": "P33-AMENDMENT-001",
-  "amendment_revision": 2,
   "contract": "ontokin.current-host-readback/0.2.0",
   "profile": "darwin-arm64-v1",
   "design_revision": 4,
-  "status": "proposed",
+  "status": "final_for_adoption",
   "proposed_by": "C271-P33 Director c271-p33-a99647756bed",
+  "single_source": "AMENDMENT-001.md and this file are generated from one source; every quoted CONTRACT.md text here is the Markdown text of AMENDMENT-001.md section 3.4",
   "revision_history": [
     {
       "amendment_revision": 1,
@@ -17,13 +17,46 @@
         "A-01",
         "A-02"
       ]
+    },
+    {
+      "amendment_revision": 2,
+      "commit": "86a0e750ae48039798234585b8913f0ae9be7210",
+      "review": "AMENDMENT-001-REVIEW-002",
+      "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "mandatory": []
+    },
+    {
+      "amendment_revision": "final",
+      "post_review": "resolves A-08 to A-12 without a further review"
     }
   ],
-  "adoption": "a separate adoption record after an independent review; design only; it states that from design revision 4 on ontokin.current-host-readback/0.2.0 means CONTRACT.md and CONTRACT.json as amended by P33-AMENDMENT-001",
   "version_and_premise": {
     "identifiers": "the contract identifier and every schema identifier stay 0.2.0",
-    "premise": "no reviewed or accepted implementation, no preparation, and no contract result or refusal document exists under 0.2.0; the only implementations are MI's unreviewed working checkpoints: W1's Darwin supervisor a23761919e92c41489f26a57d02fa1d5dc9d8e19 (revision 3's S4, superseded by this amendment and kept as failed evidence) and W2's preparer route 939942e31b9bbfa8768269ff6274a66c183d2202 (revision 3's S6, unchanged by this amendment)",
+    "premise_as_of_adoption": "no reviewed or accepted implementation, no preparation, and no contract result or refusal document exists under 0.2.0; the only implementations are MI's unreviewed working checkpoints listed in checkpoints; W5's provider and probe are in progress and uncommitted",
+    "checkpoints": [
+      {
+        "worker": "W1, Darwin supervisor",
+        "commit": "a23761919e92c41489f26a57d02fa1d5dc9d8e19",
+        "implements": "revision 3's S4; superseded by this amendment and kept as failed evidence"
+      },
+      {
+        "worker": "W2, preparer route",
+        "commit": "939942e31b9bbfa8768269ff6274a66c183d2202",
+        "implements": "revision 3's S6, unchanged by this amendment"
+      },
+      {
+        "worker": "W4, driver",
+        "commit": "b377ab969af5adc53d247bb714cc9fbfa89b938c",
+        "implements": "S8, S9 and the Git binding, unchanged by this amendment"
+      },
+      {
+        "worker": "W3, M0 and M1 observer",
+        "commit": "579184134ab8dd2fcce0500672c0ded2c0e98471",
+        "implements": "S3, S7 and S10, unchanged by this amendment"
+      }
+    ],
     "meaning_from_revision_4": "ontokin.current-host-readback/0.2.0 means CONTRACT.md and CONTRACT.json as amended by P33-AMENDMENT-001",
+    "results": "every result names its design revision and adopted amendments (CONTRACT.md section 10 as amended)",
     "adopted_files_unchanged": [
       "docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md",
       "docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.json"
@@ -58,25 +91,26 @@
         "path": "../OntoKin-local/c271-p33/workers/W1/01-test-run-draft.txt (beside the clone)",
         "sha256": "fcacda9a15cba087165d34f12017545f40e27b1895fcace9b280e4387ecad652",
         "runs": 1,
-        "code": "an earlier draft of the test file; the module as at the checkpoint"
+        "code": "an earlier draft of the test file; the module's traceback lines match the checkpoint's"
       },
       {
         "path": "../OntoKin-local/c271-p33/workers/W1/02-repeat-real-child-runs.txt (beside the clone)",
         "sha256": "fcd1bbf192bf8798d4ce8392386b7d5f9fb3a51e01ce27c2da9eaf51ea49d67a",
         "runs": 10,
-        "code": "checkpoint a23761919e92c41489f26a57d02fa1d5dc9d8e19"
+        "code": "an intermediate test file (its MC12 and MC13 calls at lines 393, 417 and 437, where the checkpoint has 395, 419 and 439); the module's traceback lines match the checkpoint's"
       },
       {
         "path": "../OntoKin-local/c271-p33/workers/W1/03-test-run-final.txt (beside the clone)",
         "sha256": "68b5f1a44d7de88ba0cfd7a3ceb71f2f1a36cf6ec3d05f5471f285d04f279e76",
         "runs": 1,
-        "code": "checkpoint a23761919e92c41489f26a57d02fa1d5dc9d8e19"
+        "code": "the checkpoint's test file by its line numbers (line 419); the module's traceback lines match the checkpoint's"
       },
       {
         "path": "docs/engineering/localized-repair-c271/macos-implementation-p33/AMENDMENT-001-REVIEW-001.md",
-        "note": "the independent review's reproduction records R and D"
+        "note": "R2 and R3 reproduced the finding at the checkpoint's exact bytes"
       }
     ],
+    "logs_corroborate": "by traceback line numbers, not by bytes",
     "failures_across_12_runs": {
       "MC12": 10,
       "MC13 timeout": 3,
@@ -90,7 +124,7 @@
       "a member whose parent never reaps it: a descendant moves itself into its own process group and never reaps its exited child, which stays in the owned group; lasts while that parent lives; needs no privilege (review D4)",
       "a genuine permission refusal: a member this process may not signal"
     ],
-    "effect_on_revision_3": "the imported group_exists treats only ESRCH as an answer, so EPERM escapes as PermissionError in terminate_group's polling, in its three killpg signal sends (which catch only ProcessLookupError) and in run_process's group check after exit; the caller receives PermissionError instead of the original Stop, no cleanup receipt is recorded, and after a timeout or cancellation the direct child can stay unreaped"
+    "effect_on_revision_3": "the imported group_exists treats only ESRCH as an answer, so EPERM escapes as PermissionError in terminate_group's polling, its three killpg signal sends and run_process's group check after exit; the caller receives PermissionError instead of the original Stop, no cleanup receipt is recorded, and after a timeout or cancellation the direct child can stay unreaped"
   },
   "decision": {
     "imported_unchanged": [
@@ -108,6 +142,8 @@
     ],
     "rule": "the group counts as absent only when the probe reports ESRCH; EPERM counts as present; a send refused with EPERM is passed over and never taken as proof of absence",
     "allowed_differences": {
+      "count": 5,
+      "eperm_handling_sites": 4,
       "sites": [
         "run_process: the precondition block; the original's three statements `libc = ctypes.CDLL(None, use_errno=True)`, `if libc.prctl(36, 1, 0, 0, 0) != 0:` and `raise Stop(\"OTRAY-E-BACKEND\", \"Cannot establish Linux descendant reaping\")` are replaced by statements that evaluate the Darwin precondition of contract section 5 and raise Stop(\"OTRAY-E-BACKEND\", ...) when it is unmet",
         "group_exists: the clause `except PermissionError:` / `return True` inserted immediately before `except ProcessLookupError:`",
@@ -115,84 +151,87 @@
         "terminate_group, the SIGKILL send after the grace period: the same change",
         "terminate_group, the final SIGKILL send before the ceiling Stop: the same change"
       ],
-      "count": 5,
-      "eperm_handling_sites": 4,
       "nothing_else": "no other token differs, docstrings and comments included"
     },
-    "fail_closed": "a group that keeps answering EPERM fails at the cleanup ceiling with the original Stop('OTRAY-E-BACKEND', 'Owned process group cleanup exceeded stage or transaction ceiling'), receipt cleanup {passed: false, reason}; this Stop replaces an earlier message of the same run; the recorded reason does not distinguish a never-reaped member, a permission refusal or a slow reaping; a descendant that moved itself out of the group survives, within 'no enforcement against descendants'",
+    "fail_closed": "a group that keeps answering EPERM fails at the cleanup ceiling with the original Stop('OTRAY-E-BACKEND', 'Owned process group cleanup exceeded stage or transaction ceiling'); the receipt holds cleanup {passed: false, reason} and an error equal to that Stop; that Stop replaces an earlier message of the same run; the recorded reason does not distinguish a never-reaped member, a permission refusal or a slow reaping; a descendant that moved itself out of the group survives, within 'no enforcement against descendants'",
     "original_supervisor": "byte-identical; stays the Linux contract's supervisor"
   },
   "replaces_contract_md": {
-    "section 1 row S4, macOS arm64 term": {
+    "section 1, row S4, macOS arm64 term": {
       "adopted": "a Darwin variant with the same logic except that precondition (section 5)",
-      "amended": "a Darwin variant whose only changes are the precondition and the four EPERM handlings of P33-AMENDMENT-001 (section 5 as amended)"
+      "amended": "a Darwin variant whose only changes are the precondition and the four `EPERM` handlings of P33-AMENDMENT-001 (section 5 as amended)"
     },
-    "section 1 row S4, Reason": {
+    "section 1, row S4, Reason": {
       "adopted": "Darwin has no child-subreaper",
-      "amended": "Darwin has no child-subreaper, and its group probe answers EPERM for a group of unreaped members (P33-SUPERVISOR-001)"
+      "amended": "Darwin has no child-subreaper, and its group probe answers `EPERM` for a group of unreaped members (P33-SUPERVISOR-001)"
     },
-    "section 1 row S4, Effect on meaning": {
+    "section 1, row S4, Effect on meaning": {
       "adopted": "the lifecycle assertions keep their text with a narrowed meaning (section 5)",
       "amended": "the lifecycle assertions keep their text with the meanings of section 5 as amended: narrower where descendants are re-parented to launchd, stricter where an unreaped or unsignalable member remains"
     },
-    "section 5 first list, first item": {
+    "section 2, row E13, Under 0.2.0": {
+      "adopted": "substituted (S4)",
+      "amended": "substituted (S4, as amended by P33-AMENDMENT-001)"
+    },
+    "section 2, row E13, Reason and effect on meaning": {
+      "adopted": "narrowed meaning of the lifecycle assertions (section 5)",
+      "amended": "the meanings of the lifecycle assertions in section 5 as amended"
+    },
+    "section 5, first list, first item": {
       "adopted": "It imports `Clock`, `Stop`, `LIMITS`, `inventory`, `group_exists`, `terminate_group` and `json_bytes` unchanged from the original `supervisor.py`.",
       "amended": "It imports `Clock`, `Stop`, `LIMITS`, `inventory`, `json_bytes` and `_reap` unchanged from the original `supervisor.py`."
     },
-    "section 5 first list, second item, opening": {
+    "section 5, first list, second item, opening": {
       "adopted": "It re-implements only `run_process`. In it, the Linux precondition `prctl(PR_SET_CHILD_SUBREAPER)` is replaced by a Darwin precondition: `sys.platform == \"darwin\"`, machine `arm64`, and `sysctl.proc_translated` equal to 0, read through `sysctlbyname`. If the precondition fails, it raises the same kind of `Stop`. Everything else stays as in the original:",
       "amended": "It re-implements `run_process`, `group_exists` and `terminate_group`. In `run_process`, the Linux precondition `prctl(PR_SET_CHILD_SUBREAPER)` is replaced by a Darwin precondition: `sys.platform == \"darwin\"`, machine `arm64`, and `sysctl.proc_translated` equal to 0, read through `sysctlbyname`. If the precondition fails, it raises the same kind of `Stop`. `group_exists` and `terminate_group` handle `EPERM` as P33-AMENDMENT-001 section 3 states. Everything else stays as in the original:"
     },
-    "section 5 nested list, group check": {
+    "section 5, nested list, group check item": {
       "adopted": "the group check after exit",
       "amended": "the group check after exit, whose tokens are unchanged and whose probe counts `EPERM` as present"
     },
-    "section 5 nested list, terminate_group": {
+    "section 5, nested list, terminate_group item": {
       "adopted": "`terminate_group`'s SIGTERM, mandatory SIGKILL and bounded reaping",
       "amended": "`terminate_group`'s SIGTERM, mandatory SIGKILL and bounded reaping; a send refused with `EPERM` is passed over, and the group must still become absent (`ESRCH`) within the ceiling"
     },
-    "section 5 first list, third item": {
+    "section 5, first list, third item": {
       "adopted": "A reviewed token-level comparison with the original `run_process` must show only that change.",
       "amended": "A reviewed token-level comparison of `run_process`, `group_exists` and `terminate_group` with the originals must show exactly the five change sites of P33-AMENDMENT-001 section 3.2 and nothing else."
     },
-    "section 5 table, process_group_absent (Darwin)": {
+    "section 5, table, row process_group_absent, 0.2.0 on Darwin": {
       "adopted": "the same probe. Whether Darwin counts a zombie member is not established here.",
       "amended": "the same probe failed with `ESRCH`. On the observed OS build (25G83), a group of unreaped members answers `EPERM` and counts as present, so absent means that no member remains, live or unreaped. A member this process may not signal also counts as present."
     },
-    "section 5 table, cleanup.passed (Darwin)": {
+    "section 5, table, row cleanup.passed, 0.2.0 on Darwin": {
       "adopted": "the same, with the two meanings above",
       "amended": "the group became absent (`ESRCH`) within the cleanup ceiling, with the meanings of `reaped` and `process_group_absent` above"
     },
-    "section 5 No descendant, last paragraph, first sentence": {
+    "section 5, No descendant, last paragraph, first sentence": {
       "adopted": "That property, the unchanged group check after exit, and the result labels together state the Darwin lifecycle.",
       "amended": "That property, the group check after exit (its tokens unchanged, its probe counting `EPERM` as present), and the result labels together state the Darwin lifecycle."
     },
-    "section 9 MC14": {
-      "adopted": {
-        "case": "token-level comparison with the original `run_process`",
-        "expected": "only the precondition differs"
-      },
-      "amended": {
-        "case": "token-level comparison of run_process, group_exists and terminate_group with the originals",
-        "expected": "exactly the five change sites of P33-AMENDMENT-001 section 3.2, four of them EPERM handlings, and nothing else"
-      }
+    "section 9, row MC14, Case": {
+      "adopted": "token-level comparison with the original `run_process`",
+      "amended": "token-level comparison of `run_process`, `group_exists` and `terminate_group` with the originals"
     },
-    "section 9 added rows": {
-      "adopted": null,
-      "amended": [
-        "MC37",
-        "MC38",
-        "MC39"
-      ]
+    "section 9, row MC14, Expected outcome": {
+      "adopted": "only the precondition differs",
+      "amended": "exactly the five change sites of P33-AMENDMENT-001 section 3.2, four of them `EPERM` handlings, and nothing else"
     },
-    "section 10 first list, contract item": {
+    "section 10, first list, contract item": {
       "adopted": "the contract `ontokin.current-host-readback/0.2.0`;",
       "amended": "the contract `ontokin.current-host-readback/0.2.0`, with its design revision and its adopted amendments (from revision 4: `design_revision` 4 and `amendments` [`P33-AMENDMENT-001`]);"
     },
-    "section 12 Zombies": {
+    "section 12, bullet Zombies": {
       "adopted": "**Zombies:** whether Darwin's `killpg(pid, 0)` counts a zombie group member is not established.",
-      "amended": "**Unreaped members:** on the observed OS build (25G83), a group of unreaped members answers `EPERM` (P33-SUPERVISOR-001). Its safety does not rely on that answer, since `EPERM` never counts as absent; the stricter meaning of `process_group_absent` relies on `ESRCH` after the last reaping, and MC37 re-observes it on each qualifying host. **launchd's reaping:** orphaned descendants are reaped by launchd, observed within 1.5 to 1.8 ms; a slower reaping can only delay or fail a cleanup, never pass one."
+      "amended": "**Unreaped members:** on the observed OS build (25G83), a group of unreaped members answers `EPERM` (P33-SUPERVISOR-001). Its safety does not rely on that answer, since `EPERM` never counts as absent. The stricter meaning of `process_group_absent` relies on `ESRCH` after the last reaping, and MC37 re-observes it on each qualifying host. **launchd's reaping:** orphaned descendants are reaped by launchd, observed within 1.5 to 1.8 ms; a slower reaping can only delay or fail a cleanup, never pass one."
     }
+  },
+  "added_contract_md_rows": {
+    "section 9, after MC36": [
+      "| MC37 | supervisor | real: a group whose only member is the supervisor's own direct child, exited and not reaped; the exit is established before the probe, without reaping and independently of the code under test, through kqueue `EVFILT_PROC` with `NOTE_EXIT` | `group_exists` is true while the child is unreaped and false after it is reaped; part of MI's evidence, and run again on each qualifying host at MH | 0 | 1 |",
+      "| MC38 | supervisor | real: `terminate_group` started on such a group, with the exit established in the same way | the original receipt `{\"passed\": true, \"process_group_absent\": true, \"reaped\": true, \"elapsed_ms\": …}` within 2,000 ms; no `PermissionError` reaches the caller; this also covers the handling of a send refused with `EPERM` | 0 | 1 |",
+      "| MC39 | supervisor | a group that keeps answering `EPERM`, through `run_process`, with one start per case: (a) real, a descendant that moves itself into its own process group and never reaps its exited child, which stays in the owned group; (b) one real child, with the probe `os.killpg(pid, 0)` made to fail with `PermissionError` at the `os.killpg` boundary while real signals pass through, labelled simulated | the original cleanup-ceiling `Stop`; the receipt holds `cleanup: {\"passed\": false, \"reason\": …}` and an `error` equal to that `Stop`, and never `process_group_absent: true`; in (a) the control's own teardown removes the escaped descendant and its unreaped child | 0 | 2 |"
+    ]
   },
   "replaces_contract_json": {
     "supervisor.imported": {
@@ -238,17 +277,21 @@
     },
     "supervisor.assertion_meanings.process_group_absent": {
       "adopted": "killpg(pid, 0) finds no member of the child's group; whether Darwin counts a zombie member is not established",
-      "amended": "killpg(pid, 0) failed with ESRCH; on the observed OS build (25G83) a group of unreaped members answers EPERM and counts as present, so absent means no member remains, live or unreaped; a member this process may not signal also counts as present"
+      "amended": "the same probe failed with ESRCH. On the observed OS build (25G83), a group of unreaped members answers EPERM and counts as present, so absent means that no member remains, live or unreaped. A member this process may not signal also counts as present."
     },
-    "supervisor.assertion_meanings.cleanup.passed": {
+    "supervisor.assertion_meanings[\"cleanup.passed\"]": {
       "adopted": "the group was gone within the cleanup ceiling, with the two meanings above",
-      "amended": "the group became absent (ESRCH) within the cleanup ceiling, with the meanings of reaped and process_group_absent"
+      "amended": "the group became absent (ESRCH) within the cleanup ceiling, with the meanings of reaped and process_group_absent above"
     },
     "substitutions.S4": {
       "adopted": "process supervisor: Darwin variant without the child-subreaper precondition",
       "amended": "process supervisor: Darwin variant with the precondition and the four EPERM handlings of P33-AMENDMENT-001 instead of PR_SET_CHILD_SUBREAPER"
     },
-    "controls.MC14": {
+    "executor_requirements.E13": {
+      "adopted": "substituted (S4)",
+      "amended": "substituted (S4, as amended by P33-AMENDMENT-001)"
+    },
+    "controls[id=MC14]": {
       "adopted": {
         "id": "MC14",
         "route": "supervisor",
@@ -275,14 +318,14 @@
         "amended_by": "P33-AMENDMENT-001"
       }
     },
-    "controls (added)": {
+    "controls[+] (appended after MC36)": {
       "adopted": null,
       "amended": [
         {
           "id": "MC37",
           "route": "supervisor",
-          "case": "real: a group whose only member is the supervisor's own exited, unreaped direct child",
-          "expected": "group_exists is true while the child is unreaped and false after it is reaped; part of MI's evidence and run again on each qualifying host at MH",
+          "case": "real: a group whose only member is the supervisor's own direct child, exited and not reaped; the exit is established before the probe, without reaping and independently of the code under test, through kqueue EVFILT_PROC with NOTE_EXIT",
+          "expected": "group_exists is true while the child is unreaped and false after it is reaped; part of MI's evidence, and run again on each qualifying host at MH",
           "node_starts": 0,
           "other_starts": 1,
           "covers_p05": [
@@ -294,8 +337,8 @@
         {
           "id": "MC38",
           "route": "supervisor",
-          "case": "real: terminate_group started on such a group",
-          "expected": "returns the original receipt {passed: true, process_group_absent: true, reaped: true, ...} within 2,000 ms; no PermissionError reaches the caller",
+          "case": "real: terminate_group started on such a group, with the exit established in the same way",
+          "expected": "the original receipt {\"passed\": true, \"process_group_absent\": true, \"reaped\": true, \"elapsed_ms\": …} within 2,000 ms; no PermissionError reaches the caller; this also covers the handling of a send refused with EPERM",
           "node_starts": 0,
           "other_starts": 1,
           "covers_p05": [
@@ -307,10 +350,10 @@
         {
           "id": "MC39",
           "route": "supervisor",
-          "case": "a group that keeps answering EPERM: (a) real, a descendant that moves itself into its own process group and never reaps its exited child, which stays in the owned group, run through run_process; (b) simulated at the os.killpg boundary and labelled simulated",
-          "expected": "the original cleanup-ceiling Stop ('Owned process group cleanup exceeded stage or transaction ceiling'); the receipt holds cleanup {passed: false, ...} and never process_group_absent true; in (a) the control's own teardown removes the escaped descendant and its unreaped child",
+          "case": "a group that keeps answering EPERM, through run_process, with one start per case: (a) real, a descendant that moves itself into its own process group and never reaps its exited child, which stays in the owned group; (b) one real child, with the probe os.killpg(pid, 0) made to fail with PermissionError at the os.killpg boundary while real signals pass through, labelled simulated",
+          "expected": "the original cleanup-ceiling Stop; the receipt holds cleanup: {\"passed\": false, \"reason\": …} and an error equal to that Stop, and never process_group_absent: true; in (a) the control's own teardown removes the escaped descendant and its unreaped child",
           "node_starts": 0,
-          "other_starts": 1,
+          "other_starts": 2,
           "covers_p05": [
             "CH19"
           ],
@@ -358,26 +401,21 @@
     },
     "trust_assumptions[2]": {
       "adopted": "whether Darwin's killpg(pid, 0) counts a zombie member is not established",
-      "amended": "on the observed OS build (25G83) a group of unreaped members answers EPERM (P33-SUPERVISOR-001); safety does not rely on it, the stricter meaning of process_group_absent relies on ESRCH after the last reaping and MC37 re-observes it on each qualifying host; launchd reaps orphaned descendants (1.5 to 1.8 ms observed), and a slower reaping can only delay or fail a cleanup"
+      "amended": "Unreaped members: on the observed OS build (25G83), a group of unreaped members answers EPERM (P33-SUPERVISOR-001). Its safety does not rely on that answer, since EPERM never counts as absent. The stricter meaning of process_group_absent relies on ESRCH after the last reaping, and MC37 re-observes it on each qualifying host. launchd's reaping: orphaned descendants are reaped by launchd, observed within 1.5 to 1.8 ms; a slower reaping can only delay or fail a cleanup, never pass one."
     }
   },
   "unchanged": [
     "every other clause, among them section 5's opening sentence",
     "MC12, MC13 and MC17 and their expected outcomes",
     "the meanings of reaped and handles_closed",
-    "every label other than the contract item",
+    "every label other than the contract item of section 10",
     "the never-supported claims, including no enforcement against descendants",
     "supervisor.py and the Linux contract"
   ],
-  "post_test_rule": "the post-test checks of every frozen supervisor control apply the amended rule: EPERM means present",
-  "effect_on_meaning": "stricter on the observed build (absence means no live or unreaped member; an exited descendant not yet reaped by launchd refuses the run at the group check after exit); conservative (EPERM can only delay or fail a cleanup); the lifecycle assertions keep their text",
-  "review_resolution": {
-    "A-01": "MC37-MC39 added; five change sites stated once and used in S4, only_change, the section 5 comparison item and MC14; CONTRACT.json controls named",
-    "A-02": "premise stated exactly; design revision and amendments added to section 10 and labels.carried_with; 'every label' removed from unchanged; adoption record states the meaning from revision 4",
-    "A-03": "affected clauses named with amended text in both forms",
-    "A-04": "cause 3 named; reason does not distinguish causes",
-    "A-05": "stricter meaning qualified by the observed build; MC37 re-run on each qualifying host; launchd reaping assumption added",
-    "A-06": "logs and evidence cited by path and SHA-256 with the code each run used",
-    "A-07": "adoption record lists superseded records and W1 follow-ups; post-test rule stated"
-  }
+  "controls_note": {
+    "distinguish": "counting EPERM as absent fails MC37 and MC39; keeping the original sends fails MC38 and MC39",
+    "post_test_rule": "the post-test checks of every frozen supervisor control apply the amended rule: EPERM means present",
+    "gates": "MI executes MC37, MC38 and MC39; MC37 runs again on each qualifying host at MH"
+  },
+  "effect_on_meaning": "stricter on the observed build (absence means no live or unreaped member; an exited descendant not yet reaped by launchd refuses the run at the group check after exit); conservative (EPERM can only delay or fail a cleanup); the lifecycle assertions keep their text"
 }

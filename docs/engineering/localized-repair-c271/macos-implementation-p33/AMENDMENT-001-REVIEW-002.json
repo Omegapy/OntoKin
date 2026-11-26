@@ -1,0 +1,164 @@
+{
+  "schema": "ontokin.c271.p33-amendment-review/1",
+  "review": "AMENDMENT-001-REVIEW-002: re-review of P33-AMENDMENT-001, revision 2",
+  "task": "C271",
+  "phase": "C271-P33-macos-implementation-mi",
+  "director": "c271-p33-a99647756bed",
+  "execution_mode": "local",
+  "reviewer": "the author of AMENDMENT-001-REVIEW-001, re-reviewing read-only, with that review's context; wrote none of revision 2",
+  "candidate_commit": "86a0e750ae48039798234585b8913f0ae9be7210",
+  "candidate_tree": "f579ca9195826c84db2f8303aa5b45f42b906763",
+  "candidate_parent": "a97ef91d8de5f55cfc6ffdd42d433e1fcd14b752",
+  "main_revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+  "head_observed_at_end": {
+    "commit": "2fcf55057514d48b35d58e5849dfd8c96ca09c53",
+    "later_commits": [
+      "b377ab96 C271-P33: W4 checkpoint, the driver's selection rule, environment and Git binding",
+      "767aeafc C271-P33: record decisions D-08 and D-09 on W4's findings",
+      "57918413 C271-P33: W3 checkpoint, the M0 and M1 observer",
+      "2fcf5505 C271-P33: record decisions D-10 and D-11 on W3's findings"
+    ],
+    "amendment_files_contract_supervisor_and_w1_module_unchanged": true
+  },
+  "candidate_files": [
+    {
+      "path": "docs/engineering/localized-repair-c271/macos-implementation-p33/AMENDMENT-001.md",
+      "bytes": 17554,
+      "sha256": "6faac1ef3b729ad6f1dcccf4632d7e7cbf10259dfc018916516d9d0ccb54c326"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/macos-implementation-p33/AMENDMENT-001.json",
+      "bytes": 21872,
+      "sha256": "c325c79a4663138162f6440778cd469358fc614a02e585c081d9c944a6b1e567"
+    }
+  ],
+  "retained_first_review": {
+    "AMENDMENT-001-REVIEW-001.md": {"bytes": 26423, "sha256": "7fe34ca4c78d17f1259922f00b04d414e2e357417936e8a5ed61bb08f7798e51", "byte_identical_to_original": true},
+    "AMENDMENT-001-REVIEW-001.json": {"bytes": 23977, "sha256": "82df3b37bc42c375e1a24003fad91da75db4419e2cc56411d8055f22ea0fcc37", "byte_identical_to_original": true}
+  },
+  "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+  "verdict_summary": "A-01 and A-02 are resolved, and so are A-03 to A-07. MC37 to MC39 tell the amended rule apart from the one that counts EPERM as absent, and their expected outcomes match the original receipts (reproduced). Every adopted value quoted in replaces_contract_md and replaces_contract_json matches the adopted contract exactly. Five nonmandatory findings, A-08 to A-12, and one observation outside the amendment.",
+  "answers": {
+    "check1_findings_resolved": "Yes. A-01: MC37 to MC39 are added with start counts; CH19 is updated; the five change sites are stated once and used identically in S4, the section 5 comparison item, MC14, only_change and substitutions.S4; CONTRACT.json controls is named. A-02: the premise is exact for the committed checkpoints at 86a0e750; section 10 and labels.carried_with carry the design revision and the amendments; 'every label' is no longer listed as unchanged; the meaning from revision 4 is assigned to the adoption record. A-03 to A-06 are resolved. A-07 is resolved as a commitment of the adoption record. The residuals are A-08 to A-12.",
+    "check2_controls": "Yes. Run as worded against four variants (R12). The variant that counts EPERM as absent fails MC37 (false while unreaped), MC39 (a) (run accepted with process_group_absent true) and both routes of MC39 (b); it passes MC38, which section 4 does not claim otherwise. The variant that keeps the original sends fails MC38 and MC39. The amended variant meets every expected outcome. MC38 returns the original four-key receipt. MC39 through run_process gives the ceiling Stop, with cleanup {\"passed\": false, \"reason\": \"Owned process group cleanup exceeded stage or transaction ceiling\"} and error equal to that Stop, exactly what the original run_process records when terminate_group raises. Two conditions of the specification decide the result: A-08.",
+    "check3_nothing_new_wrong": "Nothing unsafe. All 26 adopted quotations match exactly: 14 CONTRACT.md places, each found exactly once after line wraps are joined, with the S4 and MC14 cells equal, and 12 CONTRACT.json values equal as parsed. New nonmandatory points: a wrong cross-reference, differences between the two forms of the amended text, two JSON keys that do not resolve as written, and E13 left standing (A-09); an inaccurate code attribution of log 02 (A-10); an unsupported comparison with the Linux contract (A-11); follow-ups for the adoption record (A-12)."
+  },
+  "previous_findings_status": [
+    {"id": "A-01", "severity": "mandatory", "status": "resolved", "basis": "MC37-MC39 added (section 4; JSON 'controls (added)'; CH19); five change sites stated once (section 3.2) and used in rows 1, 8 and 11, only_change and substitutions.S4; controls.MC14 named. R12: the amended variant meets all three; the unsafe variant fails MC37 and MC39.", "residual": "A-08"},
+    {"id": "A-02", "severity": "mandatory", "status": "resolved", "basis": "premise exact for the committed checkpoints at 86a0e750 (W1 a2376191, W2 939942e3); row 13 and labels.carried_with carry design_revision 4 and amendments [P33-AMENDMENT-001]; 'every label other than row 13's'; the adoption record is to state the meaning from revision 4.", "residual": "A-09 (cross-reference), A-12 (D-03 and D-04; time-scoped premise)"},
+    {"id": "A-03", "severity": "nonmandatory", "status": "resolved", "basis": "rows 1-10, 15 and 16 name each place with exact adopted and amended text (K4); the refusal at the group check after exit is stated (section 5).", "residual": "E13 (A-09)"},
+    {"id": "A-04", "severity": "nonmandatory", "status": "resolved", "basis": "cause 3 in section 2; section 3.3 states that the reason does not distinguish the causes"},
+    {"id": "A-05", "severity": "nonmandatory", "status": "resolved", "basis": "rows 9 and 14 and trust_assumptions[2] qualify the meaning by build 25G83; MC37 runs again at MH; launchd's reaping is an assumption; 'which Darwin answers' removed"},
+    {"id": "A-06", "severity": "nonmandatory", "status": "resolved in form", "basis": "logs and evidence cited by path and SHA-256, with correct digests", "residual": "A-10"},
+    {"id": "A-07", "severity": "nonmandatory", "status": "resolved as a commitment", "basis": "the adoption record is to list the superseded records and W1's follow-ups; the post-test rule is in section 4", "residual": "A-12"}
+  ],
+  "findings": [
+    {
+      "id": "A-08",
+      "severity": "nonmandatory",
+      "location": "AMENDMENT-001.md section 4; AMENDMENT-001.json replaces_contract_json['controls (added)']",
+      "issue": "MC37 and MC38 need the child to have exited before the probe or the cleanup starts. If it is still alive, killpg returns 0, and both the amended and the unsafe rule answer true, so MC37 would not discriminate. The case says 'exited, unreaped' but not how that state is established independently of the code under test. In the qualification Python, os.waitid is not available, and os.kill(pid, 0) returns 0 for the unreaped child, so neither can establish the exit; kqueue NOTE_EXIT can (R11). MC39 (b) has no stated route. The expected receipt cleanup {passed: false, ...} exists only through run_process, which starts a child, while MC39 counts one other start that (a) already uses. Through terminate_group with a stand-in process there is no start and no receipt, only the raised Stop. Both routes discriminate (R12).",
+      "required_change": "In MC37 and MC38, state that the exit is established before the probe, without reaping and independently of the code under test, for example through kqueue NOTE_EXIT. State MC39 (b)'s route: either count its start (two other starts through run_process), or give (b)'s expected outcome as the raised Stop alone. Optionally, say that MC38 covers the send handling."
+    },
+    {
+      "id": "A-09",
+      "severity": "nonmandatory",
+      "location": "AMENDMENT-001.md section 1 ('section 3, row 10') and section 3.4 rows 1, 2, 3 and 11-14; AMENDMENT-001.json replaces_contract_md and the keys of replaces_contract_json; CONTRACT.md section 2 row E13",
+      "issue": "Section 1 points to 'section 3, row 10' for the labels; row 10 is the 'No descendant' sentence, and the labels are row 13. Section 3.4 says that the JSON holds the exact amended text, but the two forms differ (R14). Rows 1, 2 and 11 lose their code spans in the JSON; row 13 differs by its final semicolon; row 14 differs in wording; for section 9's added rows, the JSON gives only the identifiers. Two JSON place keys do not resolve as written: supervisor.assertion_meanings.cleanup.passed (the key is 'cleanup.passed') and controls.MC14 (controls is a list). Row 3 now says 'narrower ... stricter ...', while CONTRACT.md section 2's E13 row still says 'narrowed meaning of the lifecycle assertions (section 5)', and the amendment does not name it.",
+      "required_change": "Point section 1 to row 13. Make the MD's quoted amended texts identical to the JSON's, keeping CONTRACT.md's Markdown in the JSON's CONTRACT.md places, and give the exact text of the added rows. Write the two keys as the MD does: assertion_meanings[\"cleanup.passed\"] and controls[id=MC14]. Name E13's cell, or state why it stands."
+    },
+    {
+      "id": "A-10",
+      "severity": "nonmandatory",
+      "location": "AMENDMENT-001.md section 2, the table of logs, column 'Code'; AMENDMENT-001.json finding.evidence",
+      "issue": "Log 02 is attributed to checkpoint a23761919e92c41489f26a57d02fa1d5dc9d8e19. But its tracebacks place the MC12, MC13 timeout and MC13 cancellation calls at test-file lines 393, 417 and 437, where the checkpoint has them at 395, 419 and 439, so those ten runs used an intermediate test file (R13). The module's traceback lines (106, 107, 126 and 138) match the checkpoint in all three logs, and log 03 matches the checkpoint's test line 419. No log shows byte identity; REVIEW-001's R2 and R3 reproduced the finding at the exact checkpoint bytes.",
+      "required_change": "Attribute log 02 to an intermediate test file whose module line numbers match the checkpoint's. Say that the logs corroborate the module by line numbers, not by bytes."
+    },
+    {
+      "id": "A-11",
+      "severity": "nonmandatory",
+      "location": "AMENDMENT-001.md section 5, 'Stricter' ('as an unreaped member also does under the Linux contract')",
+      "issue": "No evidence in the amendment, the contract or the repository records what Linux's killpg(pid, 0) answers for an unreaped member. The Linux-side files that mention zombies concern reaping only. Local mode has no Linux executor (P30-EXECUTOR-001). The JSON form does not carry the claim.",
+      "required_change": "Drop the comparison, or mark it as not observed in this phase."
+    },
+    {
+      "id": "A-12",
+      "severity": "nonmandatory",
+      "location": "AMENDMENT-001.md sections 1 and 6 (A-07); IMPLEMENTATION-PLAN.md section 6; DIRECTOR-DECISIONS.md decisions D-03 and D-04",
+      "issue": "The plan's control assignment does not list MC37 to MC39: MI executes all three, and MC37 runs again at MH. D-03 and D-04 name only design_revision, while revision 2's label carries design_revision 4 and amendments [P33-AMENDMENT-001]. The premise's list of checkpoints is exact at 86a0e750, but W4's checkpoint b377ab96 and W3's 57918413 were committed after it; they implement clauses that the amendment does not change.",
+      "required_change": "Have the adoption record list these items with A-07's follow-ups, and restate the premise as of the adoption."
+    }
+  ],
+  "observations": [
+    {
+      "id": "O-01",
+      "scope": "outside the amendment and outside S4; no change to the amendment",
+      "location": "tools/check_local.py stop_process (unchanged from main 51223c9b)",
+      "observation": "stop_process catches only ProcessLookupError around its SIGTERM killpg. On Darwin, a step may time out at the moment its last group member has exited but is not yet reaped. A PermissionError then escapes, and the caller's 'except OSError' records the step as 'unavailable' instead of as the timeout. By code only; not observed. It could be recorded for the driver's owner."
+    }
+  ],
+  "reproduction": [
+    {
+      "id": "R10",
+      "command": ".venv/bin/python -I -S -B <review>/harness/check_adopted_quotes.py inputs/CONTRACT.md inputs/CONTRACT.json inputs/AMENDMENT-001.json inputs/ADOPTION.json (inputs from git --no-optional-locks show 86a0e750:...; cwd <review>/rev2)",
+      "starts": "none",
+      "observed": "0 mismatches across 26 places. The 14 CONTRACT.md quotations each occur exactly once after line wraps are joined, with the S4 and MC14 cells equal; the 12 CONTRACT.json values are equal. The adopted digests equal ADOPTION.json's."
+    },
+    {
+      "id": "R11",
+      "command": "inline: start one child in a new session that reads stdin; register kqueue NOTE_EXIT; close stdin; wait for the event; probe; wait; probe again",
+      "starts": "one Python child",
+      "observed": "os.waitid absent. NOTE_EXIT delivered 1 event. Right after it, killpg answered EPERM x3 and os.kill(pid, 0) returned 0. After wait: ESRCH, exit status 0."
+    },
+    {
+      "id": "R12",
+      "command": ".venv/bin/python -I -S -B <review>/harness/mc37_39_checks.py <review>/tree-{a2376191,amended,wrong,nosend} <label> <review>/rev2/mc37-39-<label>.json; tree-nosend is tree-amended with its three send clauses restored to 'except ProcessLookupError:'",
+      "starts": "Python children; MC39 (b) through terminate_group starts nothing",
+      "observed": "MC37 (exit established through NOTE_EXIT): checkpoint PermissionError; amended true, then false; unsafe false while unreaped; nosend true, then false. MC38: checkpoint PermissionError at the SIGTERM send; amended passed receipt in 0.04 ms; unsafe passed; nosend PermissionError. MC39 (a), real, through run_process with 1 start: checkpoint PermissionError; amended ceiling Stop after 2,126 ms, cleanup {passed: false, reason: ceiling}, error equal to the Stop; unsafe run accepted with process_group_absent true; nosend PermissionError. MC39 (b), simulated, through run_process with 1 start: amended ceiling Stop after 2,021 ms with the same receipt; unsafe run accepted; checkpoint and nosend PermissionError. MC39 (b), simulated, through terminate_group with a stand-in: amended ceiling Stop after 2,002 ms with no receipt on this route; unsafe passed; checkpoint and nosend PermissionError. After the post-test wait, every started group answered ESRCH in every variant."
+    },
+    {
+      "id": "R13",
+      "command": "grep -oE of the traceback file and line references in ../../OntoKin-local/c271-p33/workers/W1/01-test-run-draft.txt, 02-repeat-real-child-runs.txt and 03-test-run-final.txt, compared with the checkpoint's files",
+      "starts": "none",
+      "observed": "Log 02: test lines 393, 417 and 437, against the checkpoint's 395, 419 and 439. Module lines 106, 107, 126 and 138 match the checkpoint in all logs. Log 03 matches at test line 419. Log 01 has the draft's test lines 241, 345 and 369."
+    },
+    {
+      "id": "R14",
+      "command": "inline: compare the AMENDMENT-001.md section 3.4 table with replaces_contract_md, and resolve the replaces_contract_json keys literally",
+      "starts": "none",
+      "observed": "Rows 3, 4, 6, 7, 8 and 10 are identical. Rows 1, 2 and 11 differ only by code spans, row 13 by its final semicolon, row 14 in wording. Resolving supervisor.assertion_meanings.cleanup.passed literally raises KeyError 'cleanup'."
+    },
+    {
+      "id": "R15",
+      "command": "ps -axo pid,ppid,pgid,stat,command filtered for the review's children; a listing of the temporary stages",
+      "starts": "ps",
+      "observed": "No process and no temporary stage remain."
+    }
+  ],
+  "harness_digests": {
+    "check_adopted_quotes.py": "496dd0d55deebf97dfa0280bdaa7633be89044b93dbb875f5d598fdeac955888",
+    "mc37_39_checks.py": "1d500e4f4a29d0e0809e89fecab61c0655c14dc9cff087e8bdf1476bd39deeb6"
+  },
+  "output_digests": {
+    "rev2/adopted-quotes.json": "3027a8654809140f12d0f231588b971e376b160e843ddf67acb50fb19c7477ab",
+    "rev2/mc37-39-a2376191.json": "4cbbf505b2aee555b663146c707effc3cf03f23b17a3ec19107c771957efafc5",
+    "rev2/mc37-39-amended.json": "1f218ac54f3d0424990bf9e53525ce186849fc810e3dd8cf0b7d0076610b408a",
+    "rev2/mc37-39-wrong.json": "73aa8f58a160fe69baca644f2158d1d36c297b5b9a3fbaf2da125aece1ea0db5",
+    "rev2/mc37-39-nosend.json": "e47aa48bd8d3b257cc6252ecc046e3ff865bd57ded504e69aee7351e47017cfb"
+  },
+  "checks": [
+    {"id": "K1", "check": "commit, tree, parent and diff stat", "result": "four files: the two amendment files and the two retained review files"},
+    {"id": "K2", "check": "retained REVIEW-001", "result": "byte-identical to the originals"},
+    {"id": "K3", "check": "adopted payloads and code", "result": "CONTRACT.md 42db98dc... and CONTRACT.json c843fc96... equal ADOPTION.json; supervisor.py c47b84ab... and W1's module unchanged"},
+    {"id": "K4", "check": "every adopted value quoted in replaces_contract_md and replaces_contract_json", "result": "0 mismatches across 26 places (R10)"},
+    {"id": "K5", "check": "section 3.2's five change sites against REVIEW-001's amended variant", "result": "they agree"},
+    {"id": "K6", "check": "the change set in each place", "result": "consistent in rows 1, 8 and 11, only_change and substitutions.S4: five sites, four EPERM handlings"},
+    {"id": "K7", "check": "the two forms of the amended text, and the JSON keys", "result": "differences listed under A-09 (R14)"},
+    {"id": "K8", "check": "control entries", "result": "the amended entries add amended_by and added_by, which the adopted entries lack; they record provenance; no finding"},
+    {"id": "K9", "check": "callers of the group helpers at the end head", "result": "W3's observer reaches the supervisor through supervisor_darwin_v01; apart from supervisor.py, only tools/check_local.py calls killpg (O-01)"}
+  ],
+  "executed_commands_policy_respected": true,
+  "executed_commands_policy_note": "Started: the checkout's Python interpreter (-I -S -B) and its Python children, and git (each with --no-optional-locks), tar, shasum, ps, grep, stat and cp for reads and scratch copies. No Node, ldd, codesign or driver started. Nothing downloaded or installed. No write to the repository or its index. No process left running.",
+  "write_scope": "../../OntoKin-local/c271-p33/reviews/AMENDMENT-001-REVIEW-002.md and .json, and scratch material under ../../OntoKin-local/c271-p33/reviews/amendment-001/ (rev2/, harness/, tree-nosend/)",
+  "reviewed_at_utc": "2026-11-26T15:55Z"
+}
