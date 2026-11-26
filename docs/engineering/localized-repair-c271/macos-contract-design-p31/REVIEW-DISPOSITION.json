@@ -49,7 +49,8 @@
       "id": "G-07",
       "severity": "nonmandatory",
       "disposition": "resolved_in_revision_2",
-      "change": "Section 4 binds the framework launcher and library, lib-dynload modules and their non-system Mach-O dependencies by file hash, and states the weaker claim."
+      "change": "Section 4 binds the framework launcher and library, lib-dynload modules and their non-system Mach-O dependencies by file hash, and states the weaker claim.",
+      "re_review": "INDEPENDENT-REVIEW-002: replaced by G-14 and resolved in revision 3"
     },
     {
       "id": "G-08",
@@ -73,14 +74,77 @@
       "id": "G-11",
       "severity": "nonmandatory",
       "disposition": "resolved_in_revision_2",
-      "change": "Controls renumbered MC01 to MC29 with Node and other starts counted separately and consistently in both files; MC12 is 0 Node and 1 other; new controls for the member policy, the precondition (MC17), ENOTSUP (MC16), paths (MC20), time of use (MC29) and the static scan (MC11); the CH map lists partial coverage explicitly."
+      "change": "Controls renumbered MC01 to MC29 with Node and other starts counted separately and consistently in both files; MC12 is 0 Node and 1 other; new controls for the member policy, the precondition (MC17), ENOTSUP (MC16), paths (MC20), time of use (MC29) and the static scan (MC11); the CH map lists partial coverage explicitly.",
+      "re_review": "INDEPENDENT-REVIEW-002 (G-19): overstated; CH03, CH07 and CH08 lacked controls; corrected in revision 3 by MC33, MC34 and MC35 and by the CH map note"
     },
     {
       "id": "G-12",
       "severity": "nonmandatory",
       "disposition": "resolved_in_revision_2",
-      "change": "READ-SET.json adds the P29 inspector, main's check_local.py, P30's EXECUTOR-INVENTORY.json, P07's ADOPTION.json, format_check.py and tests/test_local_checks.py; section 1 no longer says only impossible terms change (S8 is deliberate); N57 is in section 10; every document schema is versioned, including NODE-SOURCE; the test docstring update is assigned to MI."
+      "change": "READ-SET.json adds the P29 inspector, main's check_local.py, P30's EXECUTOR-INVENTORY.json, P07's ADOPTION.json, format_check.py and tests/test_local_checks.py; section 1 no longer says only impossible terms change (S8 is deliberate); N57 is in section 10; every document schema is versioned, including NODE-SOURCE; the test docstring update is assigned to MI.",
+      "re_review": "INDEPENDENT-REVIEW-002 (G-19): overstated; only six schemas were versioned; corrected in revision 3, which versions every provider document schema; the read set adds OK-ENG-009 and main's migration records"
     }
   ],
-  "next": "re-review of revision 2 by the same reviewer"
+  "next": "re-review of revision 3 by the same reviewer",
+  "second_review": {
+    "review": "INDEPENDENT-REVIEW-002",
+    "candidate_commit": "90e8a5fbff6a43a1ed08284662e16f9aa5e96a83",
+    "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+    "resolved_from_first": [
+      "G-01",
+      "G-02",
+      "G-03",
+      "G-04",
+      "G-05",
+      "G-06",
+      "G-09",
+      "G-10"
+    ],
+    "recorded_at_utc": "2026-11-26T05:33Z",
+    "dispositions": [
+      {
+        "id": "G-13",
+        "severity": "mandatory",
+        "disposition": "resolved_in_revision_3",
+        "verified_by_director": "a clean launch of the qualification Python shows __CF_USER_TEXT_ENCODING (READ-SET host_facts)",
+        "change": "S10 admits exactly __CF_USER_TEXT_ENCODING with the value recorded in HOST, in M0, the provider's HOST comparison and the probe's process.env check; any other extra variable refuses; MC30 and MC31"
+      },
+      {
+        "id": "G-14",
+        "severity": "mandatory",
+        "disposition": "resolved_in_revision_3",
+        "change": "section 4 binds the whole framework version tree (including Python.app's executable, the standard library and its bytecode, lib-dynload) and the whole .venv (including pyvenv.cfg), plus non-system Mach-O dependencies; Python-side Mach-O rules with LC_RPATH recording and resolved @-references; run-time loads stated as unbound; MC32"
+      },
+      {
+        "id": "G-15",
+        "severity": "mandatory",
+        "disposition": "resolved_in_revision_3",
+        "change": "only the branch's driver refuses today; main's driver has no selection; the unittest outcome is one class-level setUpClass error with the methods not run (tests run -3, skipped -3, errors +1); the R04 consequence is an obligation under OK-ENG-009 section 3, items 2 and 4, not a pre-decided classification"
+      },
+      {
+        "id": "G-16",
+        "severity": "nonmandatory",
+        "disposition": "resolved_in_revision_3",
+        "change": "JSON preparer.rules, M0 starts and bound_at_preparation aligned with CONTRACT.md; MR restores P05's Gate R wording"
+      },
+      {
+        "id": "G-17",
+        "severity": "nonmandatory",
+        "disposition": "resolved_in_revision_3",
+        "change": "the property is 'to be shown by MC11 (NOT_RUN)'; the scan's patterns include dynamic constructs and its limit is stated"
+      },
+      {
+        "id": "G-18",
+        "severity": "nonmandatory",
+        "disposition": "resolved_in_revision_3",
+        "change": "the preparer writes NODE-SOURCE.json at MP; its bytes are frozen in the plan; exact-tree and no-replace checks cover it; MP's reviewer checks it"
+      },
+      {
+        "id": "G-19",
+        "severity": "nonmandatory",
+        "disposition": "resolved_in_revision_3",
+        "change": "G-11 and G-12 dispositions annotated; MC33 to MC35; every provider schema versioned; OK-ENG-009 and main's migration records added to the read set"
+      }
+    ]
+  }
 }

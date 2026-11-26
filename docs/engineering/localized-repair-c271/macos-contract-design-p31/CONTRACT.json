@@ -2,7 +2,7 @@
   "schema": "ontokin.current-host-readback-design/0.2.0",
   "contract": "ontokin.current-host-readback/0.2.0",
   "profile": "darwin-arm64-v1",
-  "status": "design_candidate_revision_2_pending_independent_review",
+  "status": "design_candidate_revision_3_pending_independent_review",
   "phase": "C271-P31-macos-contract-design",
   "basis": "route C of docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md; owner's choice of 2026-11-25 ('Design macOS contract (C)')",
   "relation_to_0_1_0": "A separate version. ontokin.current-host-readback/0.1.0 and inspection plans /0.1.1-/0.1.5 stay adopted and unchanged for the Linux x86-64 executor class; their H0 and H1 stay unmet in local mode (P30-EXECUTOR-001). Each version's entry points refuse the other's documents.",
@@ -25,7 +25,8 @@
     },
     "bound_at_preparation": [
       "kernel name, release and machine (os.uname)",
-      "product version and build (/System/Library/CoreServices/SystemVersion.plist)",
+      "product version, build and ProductVersionExtra (/System/Library/CoreServices/SystemVersion.plist)",
+      "the OS cryptex's SystemVersion.plist, if present",
       "sysctl.proc_translated = 0 (sysctlbyname)",
       "kern.bootsessionuuid (sysctlbyname)"
     ]
@@ -61,7 +62,8 @@
         "bin/node",
         "NODE-SOURCE.json"
       ],
-      "receipt_rule": "_check_installation's selected-Node receipt adapts to this layout under the 0.2.0 schemas"
+      "receipt_rule": "_check_installation's selected-Node receipt adapts to this layout under the 0.2.0 schemas",
+      "provenance_writer": "the preparer writes NODE-SOURCE.json at MP (not taken from the archive); its exact bytes are frozen in the reviewed preparation plan before publication; the exact-tree check and no-replace publication cover it as a planned non-archive file; MP's independent reviewer checks it; the provider reads it at preflight"
     },
     "executable_pin": "SHA-256, size and mode recorded at preparation and frozen in the reviewed execution plan before any start",
     "mach_o": "thin 64-bit arm64 executable",
@@ -70,13 +72,12 @@
   },
   "python": {
     "interpreter": "the C271 worktree's own .venv, created in place from main's committed local environment specification",
-    "observed_today": "CPython 3.12.13 (Homebrew); the venv's python3.12 is the framework launcher (about 52 KB); the interpreter code is in the framework's Python library",
+    "observed_today": "CPython 3.12.13 (Homebrew); the venv's python3.12 is the framework launcher (about 52 KB), which re-executes Resources/Python.app/Contents/MacOS/Python; the interpreter code is in the framework's Python library",
     "bound_by_m0": [
-      "resolved launcher and framework library: path and SHA-256",
-      "version, build string, sys.flags",
-      "every extension module under lib-dynload: path and SHA-256",
-      "every Mach-O dependency of these files outside /usr/lib/ and /System/Library/ (for example OpenSSL for _hashlib and _ssl), found recursively by the static parser: path and SHA-256",
-      "the seven installed packages through their RECORD files"
+      "installation-tree inventory by path and SHA-256, symlinks by target, of every regular file of the framework version directory .../Python.framework/Versions/3.12/: Resources/Python.app/Contents/MacOS/Python (the process image), the Python library, bin/python3.12, the standard library with its __pycache__ bytecode, lib-dynload",
+      "every file of the .venv, including pyvenv.cfg and site-packages, with the seven packages' RECORD files verified",
+      "every Mach-O dependency outside /usr/lib/ and /System/Library/ of every Mach-O file in those trees (for example Homebrew's OpenSSL)",
+      "version, build string, sys.flags"
     ],
     "lock": "tools/native-reader-verification-macos-arm64-cp312.lock (main)",
     "pins": {
@@ -88,7 +89,26 @@
       "typing_extensions": "4.16.0",
       "Pillow": "13.0.0"
     },
-    "claim": "binds the files the interpreter loads from outside the OS, not their runtime behaviour; weaker than E4's single image pin"
+    "claim": "binds the files of the interpreter installation and the non-system libraries its Mach-O files reference; not their runtime behaviour, nor files that libraries load at run time by their own logic (for example OpenSSL's configuration and provider modules); weaker than E4's single image pin",
+    "mach_o_rules": {
+      "file_types": [
+        "MH_EXECUTE",
+        "MH_DYLIB",
+        "MH_BUNDLE"
+      ],
+      "additional_accepted_commands": [
+        "LC_ID_DYLIB",
+        "LC_RPATH"
+      ],
+      "rpath": "every LC_RPATH entry recorded",
+      "at_references": "accepted only if, by dyld's rules with the recorded rpaths, the reference resolves to a bound file",
+      "refused": [
+        "any other @-relative reference",
+        "LC_DYLD_ENVIRONMENT",
+        "LC_LOAD_UPWARD_DYLIB",
+        "unknown commands"
+      ]
+    }
   },
   "dependencies": {
     "files": 24,
@@ -127,7 +147,7 @@
       "not_claimed": [
         "any enforcement against descendants"
       ],
-      "source_backed_property": "the probe, module loader and 24 reader files contain no process-creation call (reviewed static check MC11)"
+      "source_backed_property": "to be shown by the reviewed static check MC11 (NOT_RUN): the probe, module loader and 24 reader files make no use of child_process, cluster, worker_threads or process.dlopen"
     },
     "assertion_meanings": {
       "reaped": "the direct child was reaped; orphaned descendants are re-parented to launchd, not to the supervisor",
@@ -135,10 +155,24 @@
       "cleanup.passed": "the group was gone within the cleanup ceiling, with the two meanings above",
       "handles_closed": "unchanged"
     },
-    "durability": "the probe's fs.fsyncSync is unchanged; on macOS fsync does not force data to permanent storage as F_FULLFSYNC does; results claim no durability beyond fsync"
+    "durability": "the probe's fs.fsyncSync is unchanged; on macOS fsync does not force data to permanent storage as F_FULLFSYNC does; results claim no durability beyond fsync",
+    "static_scan": {
+      "patterns": [
+        "child_process",
+        "cluster",
+        "worker_threads",
+        "process.dlopen",
+        "computed require",
+        "computed import()",
+        "eval",
+        "Function"
+      ],
+      "rule": "every dynamic construct found is reviewed",
+      "limit": "a scan of names cannot exclude every dynamic route; the result states that limit"
+    }
   },
   "preparer": {
-    "rules": "P05 section 5 unchanged",
+    "rules": "P05 section 5, amended for the official archive's member policy (section 3) and the planned non-archive NODE-SOURCE.json",
     "publication": "renamex_np(staged, destination, RENAME_EXCL) from libSystem within one volume; ENOTSUP or any failure refuses; never a fallback rename",
     "flag_binding": "the implementation binds RENAME_EXCL's value from the SDK header or Apple's documentation and proves no-replace with control MC15",
     "receipts": [
@@ -154,17 +188,21 @@
   "host_observation": {
     "M0": {
       "schema": "ontokin.current-host-readback-host/0.2.0",
-      "starts": 0,
+      "starts": {
+        "node": 0,
+        "other": 1,
+        "other_start": "Git --version"
+      },
       "fields": [
         "kernel name, release, machine",
         "product version, build, ProductVersionExtra, and the OS cryptex's SystemVersion.plist if present",
         "translation",
         "boot identity",
-        "Python file inventory (section 4)",
+        "Python installation-tree inventory (section 4)",
         "Node executable and NODE-SOURCE.json",
         "Mach-O header and load commands",
         "Git implementation used for source reads: absolute path (not the /usr/bin/git dispatcher), SHA-256, version from one bounded --version start",
-        "exact clean environment",
+        "exact declared environment plus __CF_USER_TEXT_ENCODING with its recorded value when CoreFoundation added it (S10)",
         "24-file reader tree",
         "source inventory"
       ],
@@ -208,7 +246,7 @@
       "expected_stdout": "v24.22.1\\n",
       "optional": "one codesign --verify --strict inspection start, counted separately; not required"
     },
-    "closure_claim": "The Node executable's bytes and load commands and the interpreter files of section 4 are bound; the system libraries come from the OS build's dyld shared cache in the signed system volume and the OS cryptex and are identified only by the recorded OS product version, build and cryptex version, not by per-file hashes; Apple's sealed system volume and SIP are assumed, not verified.",
+    "closure_claim": "The Node executable's bytes and load commands are bound, and so is the interpreter installation of section 4 within the limits stated there; the system libraries come from the OS build's dyld shared cache in the signed system volume and the OS cryptex and are identified only by the recorded OS product version, build and cryptex version, not by per-file hashes; Apple's sealed system volume and SIP are assumed, not verified.",
     "canonical_paths": [
       "every bound path recorded canonically (realpath once, rechecked before use)",
       "/tmp, /var and /etc resolve into /private; any other symlinked ancestor refuses",
@@ -255,7 +293,7 @@
   },
   "selection_rule": {
     "qualifying_run": "driver receives --readback-config and --readback-config-sha256 from an independently reviewed execution plan; all existing rules apply; any skip, error, expected failure or missing method of the readback cohort fails the run; only a qualifying run can be cited for the readback methods, the macOS qualification or R03",
-    "ordinary_run": "neither argument: the driver proceeds with every stage, records readback_selection {status: absent, run_kind: ordinary} and passes no selection to the unit process; the readback CPU class's setUpClass fails visibly with 'No approved current-host readback selection: ordinary run, not a qualification' (setup error, never a skip); coordinator seams run; the unit stage is failed for this reason under both drivers' rule that any skip, error or failure fails a stage; no ordinary run is evidence for the readback methods",
+    "ordinary_run": "neither argument: the driver proceeds with every stage, records readback_selection {status: absent, run_kind: ordinary} and passes no selection to the unit process; the readback CPU class's setUpClass fails visibly with 'No approved current-host readback selection: ordinary run, not a qualification'; unittest reports one class-level error and neither runs nor reports the class's three methods; never a skip; coordinator seams run; the unit stage is failed for this reason under both drivers' rule that any skip, error or failure fails a stage; no ordinary run is evidence for the readback methods",
     "partial_selection": "fails in either kind of run",
     "direct_invocation": "without the driver: an ordinary run (visible setup error) unless both selection variables are set, as P05 section 2 provides",
     "amends": "only the driver's refusal to start without a selection, for ordinary runs; P05's no-skip rule and CH13's 'fails visibly; no skip' stay",
@@ -263,18 +301,20 @@
       "revision 1's labelled skip for ordinary runs: adds a skip, which P05 forbids, and changes no stage outcome under the drivers' zero-skip rule",
       "requiring a selection for every run: main's ordinary routine would run no stage without one"
     ],
-    "r04_consequence": "in main's ordinary runs the three CPU methods change from skipped to visible setup errors; R04 records this under OK-ENG-009 section 4 as the unchanged outcome of an explicitly incomplete feature, with exact inputs"
+    "today": "the branch's driver refuses to start any step without a selection; main's driver has no readback selection and main's version of the test skips the three CPU methods",
+    "r04_obligation": "after integration, main's ordinary runs would change from three skipped methods to one class-level setUpClass error with the three methods not executed (tests run -3, skipped -3, errors +1); R04 classifies this change under OK-ENG-009 section 3, items 2 and 4, with exact inputs, and states whether the readback methods belong to released behaviour; this contract does not decide it"
   },
   "substitutions": {
     "S1": "Node build: official v24.22.1 darwin-arm64 release",
-    "S2": "qualification Python: worktree .venv with main's macOS lock, bound by file inventory",
+    "S2": "qualification Python: worktree .venv with main's macOS lock, bound by its installation-tree inventory",
     "S3": "host observation: M0 and M1 instead of the ELF closure, ldd and /0.1.1-/0.1.5 plans",
     "S4": "process supervisor: Darwin variant without the child-subreaper precondition",
     "S5": "withdrawn in revision 2; the argv stays as in 0.1.0",
     "S6": "preparer: renamex_np with RENAME_EXCL, official archive member policy, layout {bin/node, NODE-SOURCE.json}",
     "S7": "host bindings of provider and probe: Darwin identity, Mach-O binding, S1 pins, macOS lock; boot identity checked by the provider",
     "S8": "selection rule: ordinary runs proceed and fail the readback class visibly at setup; qualifying runs keep every rule",
-    "S9": "driver environment removal list extended with DYLD_*, __PYVENV_LAUNCHER__, PYTHONEXECUTABLE; Git bound by absolute path, SHA-256 and version"
+    "S9": "driver environment removal list extended with DYLD_*, __PYVENV_LAUNCHER__, PYTHONEXECUTABLE; Git bound by absolute path, SHA-256 and version",
+    "S10": "OS-supplied environment variable: exactly __CF_USER_TEXT_ENCODING, added by CoreFoundation, admitted with the value recorded in HOST; any other extra variable refuses"
   },
   "kept": [
     "seven method identities and bodies, check_case, four coordinator seam bodies",
@@ -302,10 +342,22 @@
   "schemas": {
     "design": "ontokin.current-host-readback-design/0.2.0",
     "config": "ontokin.current-host-readback-config/0.2.0",
-    "manifest": "ontokin.current-host-readback-lock/0.2.0",
+    "lock": "ontokin.current-host-readback-lock/0.2.0",
     "host": "ontokin.current-host-readback-host/0.2.0",
     "result": "ontokin.current-host-readback-result/0.2.0",
-    "node_source": "ontokin.current-host-readback-node-source/0.2.0",
+    "node-source": "ontokin.current-host-readback-node-source/0.2.0",
+    "source": "ontokin.current-host-readback-source/0.2.0",
+    "dependencies": "ontokin.current-host-readback-dependencies/0.2.0",
+    "methods": "ontokin.current-host-readback-methods/0.2.0",
+    "discovery": "ontokin.current-host-readback-discovery/0.2.0",
+    "workspace": "ontokin.current-host-readback-workspace/0.2.0",
+    "inspection": "ontokin.current-host-readback-inspection/0.2.0",
+    "attempt": "ontokin.current-host-readback-attempt/0.2.0",
+    "setup": "ontokin.current-host-readback-setup/0.2.0",
+    "cohort": "ontokin.current-host-readback-cohort/0.2.0",
+    "refusal": "ontokin.current-host-readback-refusal/0.2.0",
+    "preserved-cohort": "ontokin.current-host-readback-preserved-cohort/0.2.0",
+    "rule": "every provider document schema is versioned /0.2.0; each version's entry points refuse the other's documents",
     "process_receipt": "unchanged original supervisor receipt fields"
   },
   "limits": {
@@ -464,8 +516,8 @@
     {
       "id": "MC11",
       "route": "static",
-      "case": "reviewed scan of the probe, loader and 24 reader files for process-creation calls",
-      "expected": "none found",
+      "case": "reviewed static scan of the probe, loader and 24 reader files for child_process, cluster, worker_threads, process.dlopen and dynamic constructs (computed require or import(), eval, Function)",
+      "expected": "no process-creation use; every dynamic construct reviewed; the scan's limit stated",
       "node_starts": 0,
       "other_starts": 0,
       "covers_p05": [
@@ -692,6 +744,81 @@
         "CH10"
       ],
       "status": "NOT_RUN"
+    },
+    {
+      "id": "MC30",
+      "route": "environment",
+      "case": "only the declared variables plus __CF_USER_TEXT_ENCODING with the recorded value (and, separately, without it)",
+      "expected": "accepted by M0, the provider and the probe",
+      "node_starts": 1,
+      "other_starts": 0,
+      "covers_p05": [
+        "CH05",
+        "CH12"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC31",
+      "route": "environment",
+      "case": "an extra variable other than __CF_USER_TEXT_ENCODING, or that variable with a value other than the recorded one",
+      "expected": "refused",
+      "node_starts": 0,
+      "other_starts": 0,
+      "covers_p05": [
+        "CH05",
+        "CH12"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC32",
+      "route": "Python",
+      "case": "a changed standard-library or bytecode file, a changed pyvenv.cfg, or an @-relative load that does not resolve to a bound file",
+      "expected": "refused",
+      "node_starts": 0,
+      "other_starts": 0,
+      "covers_p05": [
+        "CH04",
+        "CH09"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC33",
+      "route": "configuration",
+      "case": "declared Node version other than v24.22.1",
+      "expected": "refused before any start",
+      "node_starts": 0,
+      "other_starts": 0,
+      "covers_p05": [
+        "CH03"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC34",
+      "route": "dependencies",
+      "case": "C195 archive with an absolute, traversing, duplicate, linked or special entry, or an unexpected mode",
+      "expected": "refused before extraction",
+      "node_starts": 0,
+      "other_starts": 0,
+      "covers_p05": [
+        "CH07"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC35",
+      "route": "installation",
+      "case": "existing destination partial, changed, extra, linked or inaccessible",
+      "expected": "refused; nothing repaired or replaced",
+      "node_starts": 0,
+      "other_starts": 0,
+      "covers_p05": [
+        "CH08"
+      ],
+      "status": "NOT_RUN"
     }
   ],
   "p05_control_map": {
@@ -705,17 +832,21 @@
       "MC20"
     ],
     "CH03": [
-      "MC10"
+      "MC10",
+      "MC33"
     ],
     "CH04": [
       "MC05",
       "MC06",
       "MC08",
-      "MC09"
+      "MC09",
+      "MC32"
     ],
     "CH05": [
       "MC06",
-      "MC07"
+      "MC07",
+      "MC30",
+      "MC31"
     ],
     "CH06": [
       "MC18"
@@ -724,14 +855,17 @@
       "MC02",
       "MC03",
       "MC04",
-      "MC18"
+      "MC18",
+      "MC34"
     ],
     "CH08": [
       "MC15",
-      "MC16"
+      "MC16",
+      "MC35"
     ],
     "CH09": [
-      "MC19"
+      "MC19",
+      "MC32"
     ],
     "CH10": [
       "MC09",
@@ -745,7 +879,9 @@
     ],
     "CH12": [
       "MC07",
-      "MC24"
+      "MC24",
+      "MC30",
+      "MC31"
     ],
     "CH13": [
       "MC21",
@@ -786,7 +922,7 @@
       "contract ontokin.current-host-readback/0.2.0",
       "OS product version, build and cryptex version",
       "Node archive and executable pins",
-      "Python file inventory digest",
+      "Python installation inventory digest",
       "Git binding",
       "run kind"
     ]
@@ -799,7 +935,8 @@
     "N34 for the Linux loader, or N57",
     "the original supervisor's Linux descendant-reaping guarantee, or any enforcement against descendants",
     "a per-file closure of the macOS system libraries",
-    "durable storage beyond what fsync gives on macOS"
+    "durable storage beyond what fsync gives on macOS",
+    "a binding of files that libraries load at run time by their own logic"
   ],
   "gates": [
     {
@@ -829,7 +966,7 @@
     },
     {
       "id": "MR",
-      "scope": "complete default routine as a qualifying run with zero skipped readback obligations; main's recorded macOS baseline outcomes compared under OK-ENG-009 with exact inputs; R03 acceptance",
+      "scope": "complete default routine as a qualifying run with zero missing or skipped obligations, as P05's Gate R requires; main's recorded macOS baseline outcomes compared under OK-ENG-009 with exact inputs; R03 acceptance",
       "status": "pending"
     },
     {
@@ -844,9 +981,35 @@
     }
   ],
   "revision": {
-    "number": 2,
-    "previous": "4ee691aedc30dac1e3ec9a63917d7e6ac7493912",
-    "reason": "INDEPENDENT-REVIEW-001 of C271-P31 rejected revision 1 on G-01 to G-06; this revision withdraws the permission model, keeps the 0.1.0 argv and resolves G-01 to G-12",
+    "number": 3,
+    "history": [
+      {
+        "number": 1,
+        "commit": "4ee691aedc30dac1e3ec9a63917d7e6ac7493912",
+        "review": "INDEPENDENT-REVIEW-001",
+        "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+        "mandatory": [
+          "G-01",
+          "G-02",
+          "G-03",
+          "G-04",
+          "G-05",
+          "G-06"
+        ]
+      },
+      {
+        "number": 2,
+        "commit": "90e8a5fbff6a43a1ed08284662e16f9aa5e96a83",
+        "review": "INDEPENDENT-REVIEW-002",
+        "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+        "mandatory": [
+          "G-13",
+          "G-14",
+          "G-15"
+        ]
+      }
+    ],
+    "this_revision": "resolves G-13 to G-19",
     "dispositions": "REVIEW-DISPOSITION.json"
   },
   "argv": {
@@ -894,41 +1057,50 @@
       ]
     },
     "m0_refuses": [
+      "any variable outside the declared environment other than __CF_USER_TEXT_ENCODING with the recorded value",
       "DYLD_*",
       "__PYVENV_LAUNCHER__",
       "PYTHONEXECUTABLE",
       "NODE_OPTIONS",
       "NODE_PATH",
       "Python startup variables"
-    ]
+    ],
+    "os_supplied_allowance": {
+      "name": "__CF_USER_TEXT_ENCODING",
+      "reason": "CoreFoundation adds it to a process that loads it; observed under an exact clean launch of the qualification Python",
+      "rule": "admitted only with the value recorded in HOST; checked by M0, the provider's HOST comparison and the probe's process.env check (a bootstrap binding); the supervisor still passes exactly the declared environment and records it",
+      "node": "whether the official node loads CoreFoundation is not established; the predicate admits the variable either way (MC30, MC31)"
+    }
   },
   "executor_requirements": {
     "E1": "substituted (S3, S7)",
     "E2": "substituted (S1)",
     "E3": "kept",
-    "E4": "substituted (S2)",
+    "E4": "substituted (S2): installation-tree inventory instead of one image pin",
     "E5": "not applicable",
     "E6": "not applicable",
     "E7": "not applicable",
-    "E8": "kept and extended (S9)",
+    "E8": "kept, extended (S9) and amended (S10)",
     "E9": "kept, restated",
     "E10": "not applicable; replaced by N34-M",
     "E11": "not applicable; open for the Linux contract",
     "E12": "kept",
     "E13": "substituted (S4)",
     "E14": "kept",
-    "E15": "kept for M0 (metadata read by path)",
+    "E15": "kept for M0, amended by S10 (metadata read by path; the environment predicate admits the S10 variable)",
     "E16": "substituted (S6)",
     "E17": "kept, restated",
     "E18": "substituted (S9)",
     "E19": "substituted (S7); boot check moves to the provider"
   },
-  "p05_control_map_note": "CH04 and CH05 are replaced by MC05 to MC09; CH13 keeps its meaning for qualifying runs and becomes a visible setup error for ordinary runs; the other CH keep their meaning with the macOS controls listed",
+  "p05_control_map_note": "CH04 and CH05 are replaced by MC05 to MC09 with MC30 to MC32; CH13 keeps its meaning for qualifying runs and becomes a visible setup error for ordinary runs; CH03, CH07 and CH08 are fully covered only with MC33, MC34 and MC35; the other CH keep their meaning with the macOS controls listed",
   "trust_assumptions": [
     "Apple's signed system volume, SIP and the cryptex delivery of the dyld shared cache are assumed, not verified",
     "the static Mach-O parser binds files and load commands, not runtime behaviour",
     "whether Darwin's killpg(pid, 0) counts a zombie member is not established",
     "Node v24.22.1 on darwin-arm64 is assumed to compute the same JavaScript results as on Linux x86-64 within the unchanged thresholds; the qualification observes it",
-    "the test module's docstring still mentions ldd; MI updates the docstring only"
+    "the test module's docstring still mentions ldd; MI updates the docstring only",
+    "files that libraries load at run time by their own logic (for example OpenSSL's configuration and provider modules) are not bound",
+    "__CF_USER_TEXT_ENCODING's value depends on the user and the text encoding; HOST records it and a different value refuses (MC31)"
   ]
 }

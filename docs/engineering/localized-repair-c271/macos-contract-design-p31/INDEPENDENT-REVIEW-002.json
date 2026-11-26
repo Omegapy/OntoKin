@@ -1,0 +1,471 @@
+{
+ "schema": "ontokin.c271.p31-independent-review/1",
+ "review": "INDEPENDENT-REVIEW-002 (re-review of revision 2)",
+ "candidate_commit": "90e8a5fbff6a43a1ed08284662e16f9aa5e96a83",
+ "candidate_tree": "5373f0ca42045ec307327c5150a781cb654105df",
+ "candidate_parent": "4ee691aedc30dac1e3ec9a63917d7e6ac7493912",
+ "main_revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+ "candidate_files": [
+  {
+   "path": "docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md",
+   "bytes": 35257,
+   "sha256": "0cefe6de78700f636a3d2c599dfb28cc860e490889c87048b5d1d582b76d7e06"
+  },
+  {
+   "path": "docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.json",
+   "bytes": 33538,
+   "sha256": "88ddcbee858cb617acde02fbc475620cf8efa2f78b13f3ef9437938777e84225"
+  },
+  {
+   "path": "docs/engineering/localized-repair-c271/macos-contract-design-p31/READ-SET.json",
+   "bytes": 8998,
+   "sha256": "c355449d861ad6f7902586c4029e123c76360839e9add610cc422c80a6c4cd99"
+  },
+  {
+   "path": "docs/engineering/localized-repair-c271/macos-contract-design-p31/REVIEW-DISPOSITION.json",
+   "bytes": 5252,
+   "sha256": "499f1a8ee316f28e007772d20b747e7bd10cce1f1acb5dea9002105387419cec"
+  },
+  {
+   "path": "docs/engineering/localized-repair-c271/macos-contract-design-p31/INDEPENDENT-REVIEW-001.md",
+   "bytes": 41352,
+   "sha256": "b4d3ff32d0ab2b7a3dc84d2363b57583364b6f50bc876d944742b7b375097c16"
+  },
+  {
+   "path": "docs/engineering/localized-repair-c271/macos-contract-design-p31/INDEPENDENT-REVIEW-001.json",
+   "bytes": 21922,
+   "sha256": "feeddf536cad68dbac293bf561519eaae2aa894b8f0c7e40bda5215a57d89980"
+  },
+  {
+   "path": "docs/engineering/localized-repair-c271/macos-contract-design-p31/INDEPENDENT-REVIEW-001-PROVENANCE.json",
+   "bytes": 1491,
+   "sha256": "c202447daea889cc4f3ba7683c9c84d8abac5b3fb7e383fd3531df4641b4266f"
+  },
+  {
+   "path": "docs/engineering/localized-repair-c271/macos-contract-design-p31/PHASE.json",
+   "bytes": 8293,
+   "sha256": "57d866ba0b901f4d809a72a5604df417bbf9f1434cd4483b6e16c65c0c3c7034"
+  }
+ ],
+ "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+ "previous_findings_status": {
+  "G-01": "resolved (S5 withdrawn; 0.1.0 argv and probe fsync kept; no enforcement claimed); wording residual G-17",
+  "G-02": "resolved (no grants; boot check moved to the provider; probe-side E19 weakening stated)",
+  "G-03": "resolved (argv includes --experimental-loader and --expected-config-sha256)",
+  "G-04": "resolved (member policy sound; P05 section 5 amended explicitly); residual G-18",
+  "G-05": "resolved in form (E1-E19 classified; S9; Git binding consistent with observed developer-tools Git); E15 'kept' infeasible: G-13",
+  "G-06": "resolved (narrowed meanings of reaped, process_group_absent, cleanup.passed, handles_closed stated)",
+  "G-07": "not resolved: replaced by a false binding claim, G-14",
+  "G-08": "resolved in substance (no skip; CH13 kept; direct invocation and zero-skip rule stated); new false statements G-15",
+  "G-09": "resolved (M-prefixed gates; MB reordering explicit and reasoned; MR keeps macOS baseline outcomes visible); residual G-16",
+  "G-10": "resolved",
+  "G-11": "mostly resolved (counts consistent; new controls); residual G-19",
+  "G-12": "mostly resolved (read-set additions verified; N57 listed); residual G-19"
+ },
+ "findings": [
+  {
+   "id": "G-13",
+   "severity": "mandatory",
+   "location": "CONTRACT.md section 2 (E15 kept for M0, E8, E19), section 7 M0 Environment row, MC07; CONTRACT.json executor_requirements.E15, host_observation.M0.fields, environment.m0_refuses; probe line 450 unchanged by S7",
+   "summary": "CoreFoundation adds __CF_USER_TEXT_ENCODING to a process's environment. Observed: under an exact clean launch, the qualification interpreter (-I -S -B) sees six variables where a non-CoreFoundation tool sees five. M0 under E15, which requires os.environ == ENVIRONMENT, would refuse every time. The probe's exact process.env check would fail every start if the official node loads CoreFoundation; a different Node build on this host links it (not verified for the official one). The macOS environment predicate is never defined."
+  },
+  {
+   "id": "G-14",
+   "severity": "mandatory",
+   "location": "CONTRACT.md section 4 (claim), S2 and E4 rows, section 7 closure claim, section 10 label; CONTRACT.json python.bound_by_m0, python.claim, host_observation.closure_claim, labels",
+   "summary": "'Binds the files the interpreter loads from outside the OS' is false as specified. Not bound: the Python.app executable that the launcher re-executes as the process image (strings), the pure-Python standard library and its bytecode, and pyvenv.cfg. LC_RPATH appears in the Python.app executable, the framework library and all 76 lib-dynload modules, yet section 7's rules cannot apply to these files and no Python-side rules exist. Run-time loads are not covered."
+  },
+  {
+   "id": "G-15",
+   "severity": "mandatory",
+   "location": "CONTRACT.md section 8 (line 310; lines 340-342); CONTRACT.json selection_rule.r04_consequence",
+   "summary": "Main's driver has no readback selection, so 'Today, both drivers refuse' is false. The R04 consequence cites OK-ENG-009 section 4 (branches and leases) instead of section 3 items 2 and 4, calls a changed outcome 'unchanged', and pre-records R04's classification. It also misdescribes unittest: a failing setUpClass is one class error, with three methods not executed, not three method errors."
+  },
+  {
+   "id": "G-16",
+   "severity": "nonmandatory",
+   "location": "CONTRACT.json preparer.rules, host_observation.M0.starts, executor.bound_at_preparation; CONTRACT.md section 11 MR and JSON gates",
+   "summary": "'P05 section 5 unchanged' contradicts the link amendment. M0 'starts: 0' contradicts the Git --version start. bound_at_preparation omits the cryptex version. MR's 'zero skipped obligations in the readback cohort' narrows P05 Gate R without saying so."
+  },
+  {
+   "id": "G-17",
+   "severity": "nonmandatory",
+   "location": "CONTRACT.md section 5 'No descendant'; CONTRACT.json supervisor.guarantees.source_backed_property",
+   "summary": "The property is stated as already verified, though MC11 has not run and the 24 files were not examined. A literal-name scan cannot exclude dynamic require, import, eval or Function. 'worker_threads process spawn' and '--allow-* facility' are not code constructs."
+  },
+  {
+   "id": "G-18",
+   "severity": "nonmandatory",
+   "location": "CONTRACT.md section 3 provenance record and layout; CONTRACT.json node.extraction.layout",
+   "summary": "NODE-SOURCE.json is written by the preparer, but the existing preparer stages only archive members and maps every planned file to one (_plan_shape, lines 116-122). Who writes it, how its bytes are frozen, and how the exact-tree checks and no-replace publication cover it are unstated."
+  },
+  {
+   "id": "G-19",
+   "severity": "nonmandatory",
+   "location": "CONTRACT.md section 9 CH summary; CONTRACT.json schemas and relation_to_0_1_0; READ-SET.json; REVIEW-DISPOSITION.json G-11 and G-12",
+   "summary": "Three P05 cases have no MC (CH03 declared version, CH07 C195-archive checks, CH08 existing-destination states), yet 'every other CH kept'. Only six schemas are versioned, although every entry point is to refuse the other version's documents. OK-ENG-009 and main's local-migration records are relied on but absent from the read set."
+  }
+ ],
+ "acceptance_claims": {
+  "A1": "28/28 identities; two relied-on inputs missing (G-19)",
+  "A2": "E1-E19 classified; E15 kept is infeasible and S2 effect overstated (G-13, G-14)",
+  "A3": "Node defined; Python identity claim false (G-14)",
+  "A4": "met; property wording premature (G-17)",
+  "A5": "met; provenance-file mechanics open (G-18)",
+  "A6": "defined; M0 environment predicate infeasible and Python-side closure overstated (G-13, G-14)",
+  "A7": "decided without a skip; statements about main and R04 false (G-15)",
+  "A8": "controls consistent; residual coverage and gate wording (G-16, G-19)"
+ },
+ "read_set_recomputed": {
+  "method": "git --no-optional-locks show <revision>:<path>; SHA-256 and length of blob bytes; branch entries at branch_revision in the worktree, main entries at main_revision in the main checkout",
+  "branch_revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+  "main_revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+  "entries": 28,
+  "all_match": true,
+  "rows": [
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md",
+    "bytes": 30015,
+    "sha256": "8fdd0d841df32c120c3be7f71edc2759da4e5dab4c66c520d6749fd03aa8b675",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/operational-plan-review-p30/CONTRACT-REQUIREMENTS.json",
+    "bytes": 12264,
+    "sha256": "7cb966d8c18a3035a5638d5c348969c698bd0c7dcc30eb668a8f98051e686318",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/operational-plan-review-p30/OUTCOME.json",
+    "bytes": 9880,
+    "sha256": "76c4ca6d6ab75ff25e355cfd332e42a012ec9292e2854366a48db5d16332e8b2",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/current-host-p05/CONTRACT.md",
+    "bytes": 26139,
+    "sha256": "32af491828bcfcb384f7e811da36165a74c8e38cd974d977275331155bf021c2",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/current-host-p05/CONTRACT.json",
+    "bytes": 23359,
+    "sha256": "2033574a52749f7962741b3ad9450bdf0635611d70320a62acd3f56a90768af2",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/current-host-p05/IMPLEMENTATION-PLAN.md",
+    "bytes": 4516,
+    "sha256": "f175d305ad20523a13b472df518917e5512696d4d75fea4005a1d5c0be737376",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/current-host-p05/ADOPTION.json",
+    "bytes": 5883,
+    "sha256": "661d86b949fcd92284a46ff8f650d4d9be49ecda058b41b81bbed0bbfdd0aa6c",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md",
+    "bytes": 23696,
+    "sha256": "cfb4200ea3745cfe590d9059cd272e244a2ba3cd8c9969f8df5982dc58a69bc1",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/p29-local-publication-r07/MAIN-CONFLICTS.md",
+    "bytes": 4940,
+    "sha256": "2a4e8ecf55eb164b6cfdf2f68f25c8b01153697910e89549a44a49c62f8bc0fb",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "prototypes/static_tray_v01/supervisor.py",
+    "bytes": 11286,
+    "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "prototypes/static_tray_v01/current_host_readback_v01.py",
+    "bytes": 65533,
+    "sha256": "2a8144624ea00f3f350a6b7f482c993665b4049b363b93bc399ed0cd7a14ba78",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "prototypes/static_tray_v01/current_host_readback_v01.mjs",
+    "bytes": 55792,
+    "sha256": "218d22e8b279daf667ff9717ad8eacc30612e2d83bb6dd2a37b50f2d30162ff1",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "tools/prepare_current_host_readback.py",
+    "bytes": 19788,
+    "sha256": "fd4da23dde3cd75a95c3f5edc071028e5884da62932c32cba4be928e72f87bb3",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "tools/check_local.py",
+    "bytes": 41254,
+    "sha256": "76705ca4c812572e0b24e5840818008848dc5ad2fb4262a3e9d3ab0dc0a83c4e",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "tests/test_static_tray_readback_v01.py",
+    "bytes": 9167,
+    "sha256": "4847505f0ebff603d53dd2b5756c3e1063c81c5466565f0ed90449c44806b51b",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "tools/native-reader-verification-linux-cp312.lock",
+    "bytes": 779,
+    "sha256": "a7f17491000c2e139ccc5d213ca0e8a6f917e5befb4b878fef29f5ff72ae780f",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json",
+    "bytes": 19901,
+    "sha256": "21fd6bad8738ed51d4ced8036a0fcde5dd046823f55f71de52b9b81df659ccd5",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "bytes": 249393,
+    "sha256": "71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758",
+    "match": true,
+    "added_in_revision": 2,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/operational-plan-review-p30/EXECUTOR-INVENTORY.json",
+    "bytes": 9242,
+    "sha256": "e61eea96a3a97f448b020ac04274cb37461a7aa4afc901442cf6bbe6cc6cdafb",
+    "match": true,
+    "added_in_revision": 2,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json",
+    "bytes": 3140,
+    "sha256": "683d367b3b9b55e4a7ec25af20989c72fd0fbede7abb0826d8bbd42c113ed4db",
+    "match": true,
+    "added_in_revision": 2,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "prototypes/static_tray_v01/format_check.py",
+    "bytes": 15959,
+    "sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447",
+    "match": true,
+    "added_in_revision": 2,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "tests/test_local_checks.py",
+    "bytes": 33339,
+    "sha256": "7926391528212297b9f7e6514654108f278685b66fb73a434354c1b1ea5d6ce4",
+    "match": true,
+    "added_in_revision": 2,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "main",
+    "revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "path": "tools/local-environment.json",
+    "bytes": 7982,
+    "sha256": "c70b9d43634f9a35170e4ac633a6e352e7a986a6fb8ab10639fa60a9c776f9b4",
+    "match": true
+   },
+   {
+    "group": "main",
+    "revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "path": "tools/native-reader-verification-macos-arm64-cp312.lock",
+    "bytes": 799,
+    "sha256": "b1e3e86668421539c6817faefe7f126b4dbf25153fcbb2fab6325e080cf7a81c",
+    "match": true
+   },
+   {
+    "group": "main",
+    "revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "path": "tools/native-reader-verification-macos-arm64-cp312.provenance.json",
+    "bytes": 6508,
+    "sha256": "cbcc1b27797ab4a8742ad8b0360a25164e1dadb61f8da12d54e930c317355415",
+    "match": true
+   },
+   {
+    "group": "main",
+    "revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "path": "tests/test_static_tray_readback_v01.py",
+    "bytes": 9812,
+    "sha256": "2f0abd812aa668b7abf9e249315acdb9c0fd175adb59672ab1c454679d494394",
+    "match": true
+   },
+   {
+    "group": "main",
+    "revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "path": "docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+    "bytes": 17273,
+    "sha256": "f0ef22f3d63ac9ee4748f9fabadffcda98377ceb1dfacc734e41d2d90740eca8",
+    "match": true
+   },
+   {
+    "group": "main",
+    "revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "path": "tools/check_local.py",
+    "bytes": 33335,
+    "sha256": "40d1f9fd376ce652de2612f49114f9ac4b555b1b7de9f43f7aa81ccee5ae3b57",
+    "match": true,
+    "added_in_revision": 2
+   }
+  ]
+ },
+ "external_facts_checked": [
+  {
+   "source": "no network read in this re-review",
+   "note": "the Node checksum and documentation facts were checked in INDEPENDENT-REVIEW-001; revision 2 records them in READ-SET.json (external entry 'facts_added_in_revision_2'), which matches that review's C3 to C5"
+  }
+ ],
+ "host_facts_checked": [
+  {
+   "id": "K5",
+   "fact": "qualification Python Mach-O files: launcher links framework library + libSystem; Python.app executable links CoreFoundation + framework library + libSystem with LC_RPATH <prefix>/lib; framework library MH_DYLIB with LC_ID_DYLIB and LC_RPATH <prefix>/lib; 76 lib-dynload MH_BUNDLE modules with LC_RPATH <prefix>/lib; non-system deps OpenSSL, sqlite, liblzma, mpdecimal; libmpdec LC_RPATH @loader_path/../lib",
+   "method": "bytes parsed by an inline script; nothing executed"
+  },
+  {
+   "id": "K6",
+   "fact": "launcher contains Python.app, Contents/MacOS, posix_spawn, _NSGetExecutablePath, __PYVENV_LAUNCHER__ and not Py_BytesMain; Python.app executable contains Py_BytesMain",
+   "method": "byte-string search"
+  },
+  {
+   "id": "K7",
+   "fact": "under env -i with exactly the five ENVIRONMENT variables, /usr/bin/env sees five; the venv interpreter under -I -S -B sees six (adds __CF_USER_TEXT_ENCODING); __PYVENV_LAUNCHER__ absent",
+   "method": "two interpreter starts listing os.environ; one /usr/bin/env start"
+  },
+  {
+   "id": "K8",
+   "fact": "a different Node build on this host (not the official build) links CoreFoundation and Security frameworks",
+   "method": "load commands parsed; not run"
+  },
+  {
+   "id": "K9",
+   "fact": "developer-tools Git selected by /usr/bin/git: 7,604,272 bytes, universal x86_64+arm64, links only /usr/lib and /System/Library libraries",
+   "method": "load commands parsed; not run"
+  },
+  {
+   "id": "K10",
+   "fact": "/System/Cryptexes/OS/System/Library/CoreServices/SystemVersion.plist present (603 bytes); /System/Library/CoreServices/SystemVersion.plist is an XML plist",
+   "method": "ls and head of the file"
+  }
+ ],
+ "checks": [
+  {
+   "id": "K1",
+   "check": "commit, tree, parent, diff stat",
+   "result": "7 files changed; PHASE.json unchanged; worktree clean at 90e8a5fb"
+  },
+  {
+   "id": "K2",
+   "check": "INDEPENDENT-REVIEW-001 copies vs originals",
+   "result": "byte-identical"
+  },
+  {
+   "id": "K3",
+   "check": "READ-SET recomputation",
+   "result": "28/28 match"
+  },
+  {
+   "id": "K4",
+   "check": "MD vs JSON controls and CH map",
+   "result": "29 IDs, routes and Node/other counts consistent; maps agree"
+  },
+  {
+   "id": "K5-K10",
+   "check": "host facts",
+   "result": "see host_facts_checked"
+  },
+  {
+   "id": "K11",
+   "check": "main's driver and local-migration records",
+   "result": "main's check_local.py has no readback selection; resolved TMPDIR failures=1 (last-digit fixture) and skipped=3; default TMPDIR failures=103, errors=311, skipped=3"
+  },
+  {
+   "id": "K12",
+   "check": "OK-ENG-009 sections 3 and 4 at main",
+   "result": "section 4 is branch/scope/lease policy; failure accounting is section 3 item 4"
+  },
+  {
+   "id": "K13",
+   "check": "main's PROTOCOL.md on merging main into a branch",
+   "result": "no prohibition; OK-ENG-009 section 4 asks successors to reconcile against actual main"
+  }
+ ],
+ "executed_commands_policy_respected": true,
+ "executed_commands_policy_note": "No node, npm, ldd, codesign, VM tool, test or driver started; nothing downloaded or installed; Git read-only with --no-optional-locks; Mach-O files read as bytes, not executed; the qualification interpreter started twice under env -i with -I -S -B only to list its environment; /usr/bin/env started once.",
+ "write_scope": {
+  "review_directory": "/Volumes/P-SSD/Omegapy/OntoKin-local/c271-p31/review/",
+  "files": [
+   "REVIEW-002.md",
+   "REVIEW-002.json"
+  ],
+  "exceptions": "none"
+ },
+ "reviewed_at_utc": "2026-11-26T05:29Z"
+}

@@ -1,7 +1,7 @@
 # Current-host CPU readback contract for the owner's macOS arm64 executor
 
 **Identifier:** `ontokin.current-host-readback/0.2.0`, profile `darwin-arm64-v1`
-**Decision state:** design candidate of C271-P31, revision 2, for independent review. Adoption is a
+**Decision state:** design candidate of C271-P31, revision 3, for independent review. Adoption is a
 separate record. Implementation, preparation, qualification, R03, R04 and R05 are separate later
 gates.
 **Scope:** the same seven methods of `tests/test_static_tray_readback_v01.py` as P05's contract,
@@ -11,18 +11,19 @@ macOS arm64 environment.
 selected by the owner on 2026-11-25 ("Design macOS contract (C)"). Machine-readable form:
 [CONTRACT.json](CONTRACT.json). Inputs: [read set](READ-SET.json).
 
-**Revision 2.** Revision 1, commit `4ee691aedc30dac1e3ec9a63917d7e6ac7493912`, was rejected by the
-independent review on six mandatory findings, G-01 to G-06.
-- Its permission-model launch could not start: the module loader needs a worker grant, and the
-  model disables the probe's fsync.
-- Its read grants left out documents the probe must read.
-- It dropped an argument from the argv.
-- Its archive rules conflicted with the official tarball.
-- It never classified E1 to E19.
-- It did not state the narrowed meaning of the lifecycle assertions.
+**Revision history.**
+- **Revision 1**, commit `4ee691aedc30dac1e3ec9a63917d7e6ac7493912`, was rejected by the independent
+  review on six mandatory findings, G-01 to G-06. Among them: its permission-model launch could not
+  start, its read grants left out documents the probe reads, it dropped an argv element, its
+  archive rules conflicted with the official tarball, it never classified E1 to E19, and it did not
+  state the narrowed meaning of the lifecycle assertions.
+- **Revision 2**, commit `90e8a5fbff6a43a1ed08284662e16f9aa5e96a83`, withdrew the permission model
+  and kept the 0.1.0 argv. The re-review rejected it on three mandatory findings, G-13 to G-15. macOS
+  adds `__CF_USER_TEXT_ENCODING` to the environment, the Python binding claimed more than it bound,
+  and the statements about main's driver and R04 were wrong.
+- **This revision** resolves G-13 to G-19.
 
-This revision withdraws the permission model, keeps the 0.1.0 argv, and resolves all twelve
-findings. [REVIEW-DISPOSITION](REVIEW-DISPOSITION.json) maps each finding to its change.
+[REVIEW-DISPOSITION](REVIEW-DISPOSITION.json) maps every finding to its change.
 
 This document changes nothing that exists. It specifies a new contract version beside P05's
 `ontokin.current-host-readback/0.1.0`. That version stays adopted and unchanged, with its
@@ -54,7 +55,7 @@ changes deliberately (S8). Each is named, with its reason and its effect on mean
 | ID | Changed | Linux x86-64 term | macOS arm64 term | Reason | Effect on meaning |
 | --- | --- | --- | --- | --- | --- |
 | S1 | Node build | the Codex runtime's `v24.22.1` executable `acbe4b8d…` | the official Node.js `v24.22.1` darwin-arm64 release (section 3) | a Linux executable cannot run on Darwin | same version and same JavaScript; a different build of V8 and libuv, bound by its own bytes |
-| S2 | Qualification Python | the Codex runtime's CPython 3.12.14 image and the linux-cp312 lock | the worktree's `.venv` on the owner's CPython 3.12, with main's macos-arm64-cp312 lock (section 4) | the pinned image is a Linux ELF, not retained with its closure | same seven package versions; a different interpreter build, bound by file inventory, not by one image hash |
+| S2 | Qualification Python | the Codex runtime's CPython 3.12.14 image and the linux-cp312 lock | the worktree's `.venv` on the owner's CPython 3.12, with main's macos-arm64-cp312 lock (section 4) | the pinned image is a Linux ELF, not retained with its closure | same seven package versions; a different interpreter build, bound by its installation-tree inventory, not by one image hash |
 | S3 | Host observation | ELF closure, `ldd`, loader and alias pins, plans `/0.1.1`–`/0.1.5` | M0, static, and M1, one version start (section 7) | no ELF loader or `ldd`; system libraries live in the dyld shared cache | a weaker closure claim, stated in section 7 |
 | S4 | Process supervisor | `supervisor.run_process`, requiring `PR_SET_CHILD_SUBREAPER` | a Darwin variant with the same logic except that precondition (section 5) | Darwin has no child-subreaper | the lifecycle assertions keep their text with a narrowed meaning (section 5) |
 | S5 | Node launch flags | — | **withdrawn in revision 2**; the argv stays as in 0.1.0 | — | none |
@@ -62,10 +63,16 @@ changes deliberately (S8). Each is named, with its reason and its effect on mean
 | S7 | Host bindings of provider and probe | Linux platform, glibc, procfs boot identity, ELF interpreter, `ldd` role, Linux Node pin, linux-cp312 lock | Darwin platform and build, arm64, not translated, Mach-O binding, the S1 pins, the macOS lock. The boot identity is checked by the provider, not by the probe (section 7). | the probe cannot read `kern.bootsessionuuid` without a child process or an addon | the probe can no longer bind the boot itself, which is a stated weakening |
 | S8 | Selection rule | absent selection fails driver preparation before any step | absent selection makes an ordinary run: the driver proceeds, and the readback class fails visibly at setup (section 8) | a selection binds one clean commit and one boot, and main's ordinary routine must still run its other stages | a deliberate rule change; no skip is added; qualifying runs keep every rule |
 | S9 | Driver environment and Git binding | removal of `LD_*`, `NODE_*` and seven `PYTHON*` variables; Git from the ambient `PATH` | the same list plus every `DYLD_*` variable, `__PYVENV_LAUNCHER__` and `PYTHONEXECUTABLE`; Git bound by absolute path (section 7) | dyld honours `DYLD_*`; `/usr/bin/git` on macOS is a dispatcher | none on the methods; stronger binding of the source reads |
+| S10 | OS-supplied environment variable | — | exactly `__CF_USER_TEXT_ENCODING`, which CoreFoundation adds to a process that loads it, admitted with the value recorded in HOST (section 7) | macOS adds it even under an exact clean launch (observed for the qualification Python) | none on the methods; any other extra variable still refuses |
 
 Not applicable on macOS, and therefore never exercised under this contract: the ELF policies of
 `/0.1.1` to `/0.1.5` (origin RPATH, PLT tags, `DT_FLAGS`, RTLD paths, required images), the `ldd`
 literal list, N34 for the Linux loader and N57. They stay adopted and open for the Linux contract.
+
+**Document schemas.** Under this contract, every document schema of the provider is versioned
+`/0.2.0`: config, lock, host, result and node-source, and also source, dependencies, methods,
+discovery, workspace, inspection, attempt, setup, cohort, refusal and preserved-cohort. The entry
+points of each version refuse the other version's documents.
 
 ## 2. The executor requirements E1 to E19 of C271-P30
 
@@ -74,18 +81,18 @@ literal list, N34 for the Linux loader and N57. They stay adopted and open for t
 | E1 | Linux with glibc | substituted (S3, S7): Darwin, arm64, native | the inspector's Linux checks are not used; M0 binds the Darwin identity |
 | E2 | Codex Node build `acbe4b8d…` | substituted (S1) | same version; different build |
 | E3 | exact 24 reader files | kept | unchanged bytes |
-| E4 | Codex author Python `fa674435…` | substituted (S2) | file-inventory binding instead of one image pin |
+| E4 | Codex author Python `fa674435…` | substituted (S2) | installation-tree inventory instead of one image pin |
 | E5 | libc and loader pins | not applicable | no glibc; the dyld shared cache is identified by OS build |
 | E6 | five catalog images | not applicable | ELF images do not exist on Darwin |
 | E7 | `/usr/bin/ldd` and RTLD paths | not applicable | no `ldd`; M0's Mach-O rules replace the inspection |
-| E8 | clean environment | kept and extended (S9) | `DYLD_*`, `__PYVENV_LAUNCHER__` and `PYTHONEXECUTABLE` are added to the driver's removal list and refused by M0 |
+| E8 | clean environment | kept, extended (S9) and amended (S10) | `DYLD_*`, `__PYVENV_LAUNCHER__` and `PYTHONEXECUTABLE` are added to the driver's removal list and refused by M0; the one OS-supplied variable of S10 is admitted |
 | E9 | P07 section 2's real fields | kept, restated for the macOS plan (section 7) | literal argv, canonical macOS paths, no unresolved field |
 | E10 | N34 | not applicable; replaced by N34-M (section 7) | an independent review of the Mach-O parser and of the closure claim before the macOS plan is adopted |
 | E11 | N57 | not applicable | stays open, unchanged, for the Linux contract |
 | E12 | fixed obligations of the seven methods | kept | unchanged |
 | E13 | original supervisor | substituted (S4) | narrowed meaning of the lifecycle assertions (section 5) |
 | E14 | seven package pins | kept | same names and versions, macOS lock |
-| E15 | launcher `-I -S -B` | kept for M0 | M0 reads package metadata by path, not through `importlib.metadata` |
+| E15 | launcher `-I -S -B` | kept for M0, amended by S10 | M0 reads package metadata by path; its environment predicate admits the S10 variable |
 | E16 | Linux preparer | substituted (S6) | same rules; amended link policy for the official archive |
 | E17 | outer capture descriptors | kept, restated (section 7) | existing evidence parent, absent per-attempt paths, approved failure capture, canonical paths |
 | E18 | admitted Git closure | substituted (S9) | Git bound by absolute path, SHA-256 and version; its system libraries identified by OS build |
@@ -120,6 +127,11 @@ literal list, N34 for the Linux loader and N57. They stay adopted and open for t
   - the archive name, pin, checksum-file identity and signature-check result;
   - the frozen member-inventory digest;
   - the extracted member and its SHA-256, size and mode.
+
+  The preparer writes it at MP; it is not taken from the archive. Its exact bytes are frozen in the
+  reviewed preparation plan before publication. The exact-tree check and the no-replace publication
+  cover it as a planned non-archive file. MP's independent reviewer checks it, and the provider
+  reads it at preflight.
 - **Layout and receipt:** the task-specific runtime directory holds exactly `{bin/node,
   NODE-SOURCE.json}`. The inspector-side receipt rule of `_check_installation` adapts to that
   layout under the 0.2.0 schemas.
@@ -135,21 +147,34 @@ literal list, N34 for the Linux loader and N57. They stay adopted and open for t
 - **Interpreter:** the C271 worktree's own `.venv`, created in place from main's committed local
   environment specification. On this host its `python3.12` is Homebrew's framework launcher, about
   52 KB. The interpreter's code lives in the framework's Python library.
-- **Identity bound by M0:**
-  - the resolved launcher and the framework library, by path and SHA-256;
-  - the version, build string and `sys.flags`;
-  - every extension module under the interpreter's `lib-dynload`, by path and SHA-256;
-  - every Mach-O dependency of these files outside `/usr/lib/` and `/System/Library/` (for
-    example the OpenSSL libraries that `_hashlib` and `_ssl` load), by path and SHA-256. These are
-    found by the same static Mach-O parser, recursively.
-  - the seven installed packages, through their `RECORD` files.
+- **Identity bound by M0:** an installation-tree inventory, by path and SHA-256, with each symlink
+  recorded by its target. It covers:
+  - every regular file of the framework version directory `…/Python.framework/Versions/3.12/`. That
+    includes `Resources/Python.app/Contents/MacOS/Python`, which the launcher re-executes and which
+    becomes the process image, the `Python` library, `bin/python3.12`, the standard library with
+    its `__pycache__` bytecode (`-B` stops writing bytecode, not reading it), and `lib-dynload`;
+  - every file of the `.venv`, among them `pyvenv.cfg` and `site-packages`, with the seven
+    packages' `RECORD` files verified against their contents;
+  - every Mach-O dependency outside `/usr/lib/` and `/System/Library/` of every Mach-O file in
+    those trees, for example Homebrew's OpenSSL libraries;
+  - the version, build string and `sys.flags`.
+- **Python-side Mach-O rules.** These files have their own rules, separate from Node's:
+  - accepted file types are `MH_EXECUTE`, `MH_DYLIB` and `MH_BUNDLE`;
+  - `LC_ID_DYLIB` and `LC_RPATH` are accepted in addition to Node's allow-list, and every
+    `LC_RPATH` entry is recorded;
+  - an `@rpath`, `@loader_path` or `@executable_path` reference is accepted only if, by dyld's
+    rules with the recorded rpaths, it resolves to a bound file;
+  - any other `@`-relative reference, `LC_DYLD_ENVIRONMENT`, `LC_LOAD_UPWARD_DYLIB` and unknown
+    commands refuse.
 - **Lock:** `tools/native-reader-verification-macos-arm64-cp312.lock` from main. It pins the same
   seven names and versions as the linux-cp312 lock: attrs 26.1.0, jsonschema 4.26.0,
   jsonschema-specifications 2025.9.1, referencing 0.37.0, rpds-py 2026.5.1, typing_extensions
   4.16.0 and Pillow 13.0.0.
-- **Claim:** this binds the files the interpreter loads from outside the OS. It does not bind their
-  runtime behaviour. The OS libraries are identified by OS build, as in section 7. This is weaker
-  than E4's single image pin, and the results say so.
+- **Claim:** this binds the files of the interpreter installation and the non-system libraries
+  that its Mach-O files reference. It does not bind their runtime behaviour, nor files that
+  libraries load at run time by their own logic (for example OpenSSL's configuration and provider
+  modules). The OS libraries are identified by OS build, as in section 7. This is weaker than E4's
+  single image pin, and the results say so.
 
 ## 5. Process lifecycle (S4)
 
@@ -183,11 +208,15 @@ unchanged; under this contract they mean exactly this:
 | `cleanup.passed` | the group was gone within the cleanup ceiling | the same, with the two meanings above |
 | `handles_closed` | the supervisor closed its pipes and logs | unchanged |
 
-**No descendant.** The contract claims no enforcement against descendants. It keeps one
-source-backed property of the bound code, which is verified by a reviewed static check (MC11).
-The probe, the module loader and the 24 reader files contain no process-creation call: no
-`child_process`, `cluster`, `worker_threads` process spawn, `process.dlopen` or `--allow-*`
-facility.
+**No descendant.** The contract claims no enforcement against descendants. It records one
+property of the bound code, which the reviewed static check MC11 (NOT_RUN) is to show. The
+property: the probe, the module loader and the 24 reader files make no use of `child_process`,
+`cluster`, `worker_threads` or `process.dlopen`.
+
+The scan looks for these module names and calls. It also looks for the dynamic constructs that
+could hide them: a computed `require` or `import()`, `eval`, and `Function`. Every dynamic construct
+it finds must be reviewed. A scan of names cannot exclude every dynamic route, and its result states
+that limit.
 
 That property, the unchanged group check after exit, and the result labels together state the
 Darwin lifecycle. It is weaker than Linux's, and results never claim the Linux guarantee. A
@@ -228,7 +257,7 @@ external paths.
 - A `.DS_Store` file, or any other untracked file, in a source, evidence or dependency tree
   refuses that tree. Finder must not be used on those directories during a run.
 
-**M0, static, no target start.** The observer runs under the launcher `-I -S -B` (E15). It reads
+**M0, static.** M0 starts no Node process; its only bounded start is Git's `--version`. The observer runs under the launcher `-I -S -B` (E15). It reads
 package metadata from the files under the `.venv`'s `site-packages` by explicit path, not through
 `importlib.metadata`. It records the HOST document, schema `ontokin.current-host-readback-host/0.2.0`:
 
@@ -242,7 +271,7 @@ package metadata from the files under the `.venv`'s `site-packages` by explicit 
 | Node executable | path in the task-specific directory, regular and not a symlink, SHA-256, size and mode; `NODE-SOURCE.json` |
 | Mach-O binding of Node | a reviewed static parser reads the header and every load command (see below) |
 | Git | the absolute path of the Git implementation used for source reads (not the `/usr/bin/git` dispatcher), its SHA-256 and its version string from one bounded `--version` start, counted separately |
-| Environment | exactly the declared clean environment; no `DYLD_*`, `__PYVENV_LAUNCHER__`, `PYTHONEXECUTABLE`, `NODE_OPTIONS`, `NODE_PATH` or Python startup variable |
+| Environment | exactly the declared clean environment, plus `__CF_USER_TEXT_ENCODING` when CoreFoundation has added it (S10). Its value is recorded and compared. Nothing else is admitted: no `DYLD_*`, `__PYVENV_LAUNCHER__`, `PYTHONEXECUTABLE`, `NODE_OPTIONS`, `NODE_PATH` or Python startup variable. |
 | Reader files and source | the exact 24-file tree; the source inventory of the clean commit and tree |
 
 **Load commands.** The executable must be thin 64-bit arm64, file type executable. Its load
@@ -256,8 +285,18 @@ commands follow a closed allow-list: `LC_SEGMENT_64`, `LC_SYMTAB`, `LC_DYSYMTAB`
   `@rpath`, `@loader_path` or `@executable_path` reference, and any unknown command refuse the
   executable. A needed addition is an amendment.
 
-**Closure claim.** The Node executable's bytes and load commands are bound, and so are the
-interpreter files of section 4. The system libraries come from the OS build's dyld shared cache,
+**Environment predicate (S10).** Three checks use the same predicate: M0, the provider's HOST
+comparison, and the probe's `process.env` check, which is a bootstrap binding and not the
+scientific body. Each accepts exactly the declared environment. If the process has loaded
+CoreFoundation, it also accepts `__CF_USER_TEXT_ENCODING`, with the value recorded in HOST.
+
+The supervisor still passes exactly the declared environment to the child, and its receipt records
+what was passed. Whether the official `node` loads CoreFoundation is not established in this
+phase. The predicate admits the variable either way, and MC30 and MC31 test both directions.
+
+**Closure claim.** The Node executable's bytes and load commands are bound, and so is the
+interpreter installation of section 4, within the limits stated there. The system libraries come
+from the OS build's dyld shared cache,
 in the signed system volume and the OS cryptex. They are identified only by the recorded OS
 product version, build and cryptex version, not by per-file hashes. The contract assumes, and does
 not verify, Apple's sealed system volume and System Integrity Protection. This claim is weaker than
@@ -307,8 +346,9 @@ unchanged.
 
 The selection binds one exact clean commit and tree and the current boot. After R04, main's
 default local routine runs on uncommitted changes and across reboots, where no approved selection
-can exist. Today, both drivers refuse to start any step without one. This contract distinguishes
-two kinds of run.
+can exist. Today the branch's driver refuses to start any step without one. Main's driver has no
+readback selection, and main's version of the test skips the three CPU methods. This contract
+distinguishes two kinds of run.
 
 - **Qualifying run.** The driver receives `--readback-config` and `--readback-config-sha256` from
   an independently reviewed execution plan. Every existing rule applies: missing, partial,
@@ -320,10 +360,12 @@ two kinds of run.
     `readback_selection: {"status": "absent", "run_kind": "ordinary"}`, and passes no selection
     to the unit process.
   - The readback CPU class's `setUpClass` fails visibly with "No approved current-host readback
-    selection: ordinary run, not a qualification". That is a setup error, never a skip. The
-    coordinator seams run.
-  - Both drivers already fail a stage with any skip, error or failure, so the unit stage of an
-    ordinary run is failed for this reason. Main's unit stage is failed today for its three skips.
+    selection: ordinary run, not a qualification". unittest reports one class-level error, and the
+    class's three methods are neither run nor reported. It is never a skip. The coordinator seams
+    run.
+  - Both drivers fail a stage with any skip, error or failure, so the unit stage of an ordinary
+    run is failed for this reason. Main's unit stage is failed today too, among other reasons for
+    its three skips.
   - No ordinary run is evidence for the readback methods.
 - **Partial selection** (one of the two arguments) fails in either kind of run.
 - **Direct invocation** of the module without the driver behaves as an ordinary run (a visible
@@ -337,9 +379,11 @@ P05 forbids, and it changes no stage outcome under the drivers' zero-skip rule. 
 selection for every run is also rejected, because main's ordinary routine would then run no stage
 at all without one.
 
-**R04 consequence.** In main's ordinary runs, the three CPU methods change from skipped to visible
-setup errors. Under OK-ENG-009 section 4, R04 records this as the unchanged outcome of an
-explicitly incomplete feature, with exact inputs, not as a regression.
+**R04 obligation.** After integration, main's ordinary runs would change from three skipped
+methods to one class-level `setUpClass` error, with the three methods not executed: tests run −3,
+skipped −3, errors +1. R04 classifies this change under OK-ENG-009 section 3, items 2 and 4, with
+exact inputs. It also states whether the readback methods belong to released behaviour. This
+contract does not decide that classification.
 
 ## 9. Declarative control obligations (NOT_RUN)
 
@@ -379,11 +423,20 @@ The full table, with the P05 controls each one covers, is in [CONTRACT.json](CON
 | MC27 | direct negatives | P06-H01 and P06-H02 as P07 section 5 defines them, with `--expected-config-sha256` | one start each; refusal before reader imports | 2 | 0 |
 | MC28 | discovery | the complete default inventory against the baseline plus approved additions | exact match; no hidden skip or missing method in a qualifying run | 0 | 0 |
 | MC29 | time of use | a change of source, runtime, dependency, configuration or OS build after preflight | the current attempt is invalid; zero new starts before launch | 0 | 0 |
+| MC30 | environment | only the declared variables, plus `__CF_USER_TEXT_ENCODING` with the recorded value (and, separately, without it) | accepted by M0, the provider and the probe | 1 | 0 |
+| MC31 | environment | an extra variable other than `__CF_USER_TEXT_ENCODING`, or that variable with a value other than the recorded one | refused | 0 | 0 |
+| MC32 | Python | a changed standard-library or bytecode file, a changed `pyvenv.cfg`, or an `@`-relative load that does not resolve to a bound file | refused | 0 | 0 |
+| MC33 | configuration | declared Node version other than `v24.22.1` | refused before any start | 0 | 0 |
+| MC34 | dependencies | C195 archive with an absolute, traversing, duplicate, linked or special entry, or an unexpected mode | refused before extraction | 0 | 0 |
+| MC35 | installation | existing destination partial, changed, extra, linked or inaccessible | refused; nothing repaired or replaced | 0 | 0 |
 
 P05's CH01 to CH20 are covered as follows; `CONTRACT.json` gives the map.
 - **CH04 and CH05** (the ELF closure and `ldd` provenance): replaced by MC05 to MC09.
 - **CH13:** keeps its meaning for qualifying runs (MC21). For ordinary runs, the driver's refusal
   to start becomes a visible setup error (MC22).
+- **CH03, CH07 and CH08:** fully covered only with MC33 (declared version), MC34 (the C195
+  archive's extraction checks) and MC35 (an existing destination), next to the controls the map
+  lists.
 - **Every other CH:** kept, with the macOS controls named in the map.
 
 ## 10. Labels and claims
@@ -392,7 +445,7 @@ Every result carries the executor label `macos-arm64-local`, together with:
 - the contract `ontokin.current-host-readback/0.2.0`;
 - the OS product version, build and cryptex version;
 - the Node archive and executable pins;
-- the Python file inventory digest;
+- the Python installation inventory digest;
 - the Git binding;
 - the run kind.
 
@@ -405,7 +458,8 @@ Results under this contract can never support:
 - the original supervisor's Linux descendant-reaping guarantee, or any enforcement against
   descendants;
 - a per-file closure of the macOS system libraries;
-- durable storage beyond what `fsync` gives on macOS.
+- durable storage beyond what `fsync` gives on macOS;
+- a binding of files that libraries load at run time by their own logic.
 
 Unmet Linux-contract gates stay recorded as unmet. They are never relabelled.
 
@@ -421,7 +475,7 @@ the plan step P02.
 | MI | Implementation of the 0.2.0 adaptations: Darwin supervisor variant, provider and probe host bindings, preparer route, driver environment, Git binding and selection rule. Independently frozen controls where they are not runtime; independent review. |
 | MP | Preparation, after the owner's download approval: the Node archive with its frozen member inventory, the reader tree from the C195 archive, and the `.venv` from the macOS lock. Receipts; independent review. |
 | MH | N34-M, then M0 and M1, then the qualifying cohort: the seven methods and the direct negatives on the owner's executor. Independent audit. |
-| MR | A complete default routine as a qualifying run, with zero skipped obligations in the readback cohort. Main's recorded macOS baseline outcomes stay visible and are compared, under OK-ENG-009, with exact inputs. That includes the test with a last-digit fixture difference, and the failures that occur only under a symlinked temporary directory. R03 acceptance follows. |
+| MR | A complete default routine as a qualifying run, with zero missing or skipped obligations, as P05's Gate R requires. Main's recorded macOS baseline outcomes stay visible and are compared, under OK-ENG-009, with exact inputs. That includes the test with a last-digit fixture difference, and the failures that occur only under a symlinked temporary directory. R03 acceptance follows. |
 | R04, R05 | Integration with actual-main verification, then parent completion, as before |
 
 Each gate is a separately selected phase with its own declaration, and each stops at its own
@@ -437,5 +491,9 @@ boundary.
 - **Node behaviour:** this contract assumes that Node `v24.22.1` on darwin-arm64 computes the same
   JavaScript results as on Linux x86-64, within the unchanged thresholds. The qualification
   observes it; this design does not prove it.
+- **Run-time loads:** files that libraries load at run time by their own logic, for example
+  OpenSSL's configuration and provider modules, are not bound.
+- **`__CF_USER_TEXT_ENCODING`:** its value depends on the user and the text encoding. HOST records
+  it, and a different value refuses (MC31).
 - **Test file:** its module docstring still mentions `ldd`. MI updates the docstring only; no
   method body changes.

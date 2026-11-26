@@ -153,6 +153,30 @@
       "bytes": 33335,
       "sha256": "40d1f9fd376ce652de2612f49114f9ac4b555b1b7de9f43f7aa81ccee5ae3b57",
       "added_in_revision": 2
+    },
+    {
+      "path": "docs/engineering/OK-ENG-009-development-integration-and-branch-lifecycle.md",
+      "bytes": 11426,
+      "sha256": "a037c8584f5bd94beea9bbb83079c437de90556a9d3ec8ec6295f6c93e459a45",
+      "added_in_revision": 3
+    },
+    {
+      "path": "docs/engineering/local-migration-20261124/BASELINE-CHECKS.json",
+      "bytes": 46096,
+      "sha256": "498ad7d1d318c603c7ffa1a25b63cc7df2abc08cff167190809f306b2bd8d820",
+      "added_in_revision": 3
+    },
+    {
+      "path": "docs/engineering/local-migration-20261124/CANDIDATE-CHECKS.json",
+      "bytes": 23779,
+      "sha256": "e412fb9bf8703f9327aaf3199b49c6ba896eead1050a6a3091a5001b9fc6d53a",
+      "added_in_revision": 3
+    },
+    {
+      "path": "docs/engineering/local-migration-20261124/RESULTS.md",
+      "bytes": 4379,
+      "sha256": "d489e253294171ea69c340c9fb9fb246dbf07bc88a9f482d972f0233e3f99b15",
+      "added_in_revision": 3
     }
   ],
   "external": [
@@ -222,7 +246,16 @@
         "the RENAME_EXCL value was not bound: no SDK header is installed"
       ],
       "method": "read-only: sysctl -n, plutil -extract, ctypes attribute lookup without a call"
+    },
+    {
+      "observed_at_utc": "between 2026-11-26T05:13:23Z and 05:33:28Z (not recorded more exactly)",
+      "method": "read-only: env -i with the five declared variables, then the qualification Python under -I -S -B printing sorted(os.environ); otool -L and otool -l (static file reads)",
+      "facts": [
+        "the qualification Python's os.environ holds __CF_USER_TEXT_ENCODING in addition to LANG, LC_ALL, PATH and TZ, under an exact clean launch",
+        "the venv's python resolves to the Homebrew framework's bin/python3.12, which links the framework's Python library and libSystem",
+        "Homebrew's node, not the contract's build, links Homebrew libraries through @rpath and absolute paths"
+      ]
     }
   ],
-  "revision": 2
+  "revision": 3
 }
