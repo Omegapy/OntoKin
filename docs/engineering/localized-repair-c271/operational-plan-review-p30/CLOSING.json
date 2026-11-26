@@ -1,0 +1,73 @@
+{
+  "schema": "ontokin.c271.p30-closing/1",
+  "task": "C271",
+  "phase": "C271-P30-operational-plan-review",
+  "owner": "c271-p30-55a168e30426",
+  "purpose": "The phase's closing record: the push of its final records commit, the checks of that commit's tree, the checkpoint comments and the release of ownership. Git reveals the commit that carries this record; its own push is observed in the final report.",
+  "final_records_commit": {
+    "commit": "c9015486d264a3e26271d1108061a968805814a3",
+    "tree": "f6ddc1519587d05365218c170d375476bd7abca9",
+    "parent": "96847fae5c3f0a6d9e9d6da3095b056a8b929b62"
+  },
+  "push_observation": {
+    "command": "git push origin work/c271-missing-import-digest-control (no force), then git ls-remote --heads origin",
+    "observed_at_utc": "2026-11-26T04:20:28Z",
+    "update": "96847fae..c9015486, fast-forward",
+    "remote_heads": {
+      "refs/heads/main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "refs/heads/work/c271-missing-import-digest-control": "c9015486d264a3e26271d1108061a968805814a3"
+    }
+  },
+  "checks_of_final_tree": {
+    "run": "final2",
+    "started_at_utc": "2026-11-26T04:20:10Z",
+    "ended_at_utc": "2026-11-26T04:20:11Z",
+    "tree": "the working tree that was then staged and committed unchanged as c9015486 (git diff --cached --check passed)",
+    "workflow": {
+      "result": "passed",
+      "observed": "Workflow structure passed (12 tasks).",
+      "output_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    "documentation": {
+      "result": "passed",
+      "documents": 1673,
+      "local_links": 6454,
+      "failures": 0,
+      "output_sha256": "f778cdfbcef020c291981bde7ed20beb3c417fd72eda066c12ef02c49775993b"
+    },
+    "earlier_runs": "CHECKS.json, including the failed run before CHECKS.json existed"
+  },
+  "checkpoint_comments": {
+    "pull_request_274": {
+      "id": 7182515119,
+      "created_at_utc": "2026-11-26T04:20:52Z",
+      "url": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7182515119"
+    },
+    "issue_273": {
+      "id": 7182515446,
+      "created_at_utc": "2026-11-26T04:20:54Z",
+      "url": "https://github.com/Omegapy/OntoKin/issues/273#issuecomment-7182515446"
+    },
+    "body_sha256": "c48daa2fc4b047cf704c60bb1c9234fc4239f6577fe3a9d2c5e414c8b876b502"
+  },
+  "github_state_after": {
+    "pull_request_274": "open, draft, head c9015486",
+    "issue_273": "open",
+    "observed_at_utc": "2026-11-26T04:21Z"
+  },
+  "owner_decision_after_outcome": {
+    "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
+    "question": "Which route should C271 take next?",
+    "reply": "Design macOS contract (C)",
+    "how_received": "Typed by the owner in the Claude Code session that started this phase's session and relayed to it word for word.",
+    "recorded_in": [
+      "docs/workflow/tasks/C271/task.json p30_operational_plan_review.owner_decision_after_outcome",
+      "docs/workflow/CURRENT.json p30_operational_plan_review",
+      "OUTCOME.json",
+      "docs/workflow/tasks/C271/P30-SESSION.md"
+    ]
+  },
+  "ownership": "Owner c271-p30-55a168e30426 is released with the push of this record. It makes no further write. The next phase declares its own owner.",
+  "unknown_operations": [],
+  "next_action": "Route C's design-only phase, selected by the owner; declared in C271's records before its substantive work."
+}
