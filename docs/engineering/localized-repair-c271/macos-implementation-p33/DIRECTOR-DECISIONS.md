@@ -84,3 +84,26 @@ The driver's workspace preparation reaches `tools/storage_identity.py`, which st
 name from `PATH`: four starts per run. Plan section 4.5 requires every Git start that the
 driver reaches to go through `git_executable()`. W4 routes them, as a follow-up within its
 ownership. The other callers of `storage_identity` keep their behaviour unless they bind Git.
+
+## D-10: the cryptex copy of `SystemVersion.plist` (W3 F1)
+
+On this host `/System/Cryptexes/OS` is a symbolic link. Contract section 7 asks for "the OS
+cryptex's copy of that file if present", without a path form. The canonical-path rule asks that
+every bound path be "recorded in its canonical form, the realpath taken once and checked again
+before use".
+- **Path form:** the cryptex copy is an OS-provided file located by its conventional name, and
+  is bound by its canonical path.
+- **Hops:** the conventional name and each symbolic-link hop are recorded beside the binding and
+  followed again at each check, as contract section 4 does for the Python selection chain. A
+  retargeted hop refuses.
+- **Scope:** this admits no symbolic-link ancestor for any path that a plan or configuration
+  supplies; those keep the rule as written.
+- **Review:** this is a reading of the contract, not an amendment. The independent reviewer is
+  asked to confirm it.
+
+## D-11: the install receipt that M0 checks (W3 F2)
+
+W3 wrote M0's receipt rule from W2's interface note. W2 confirms that its preparer writes exactly
+the shapes its note states, or corrects the note or the code, whichever differs from the
+contract, and lists the correction. This follow-up is W2's, together with D-03 and D-04 for the
+install result. W3's rule then follows the confirmed shape.
