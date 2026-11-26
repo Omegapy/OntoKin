@@ -430,7 +430,7 @@
     {
       "run": "final-002",
       "commit": "574dc19680c2333b8623d43c6f848ac1476e0f8d",
-      "commit_note": "after D-18 and W6's refreeze (D-19); the reviewed candidate",
+      "commit_note": "after D-18 and W6's refreeze (D-19); reviewed by INDEPENDENT-REVIEW-001",
       "started_at_utc": "2026-11-26T18:42:42Z",
       "finished_at_utc": "2026-11-26T18:43:23Z",
       "tree_clean_before": true,
@@ -834,14 +834,568 @@
           }
         }
       ]
+    },
+    {
+      "run": "d20-dev",
+      "commit_note": "D-20's fixes in the worktree, before their commit df9420f2; five modules",
+      "results": {
+        "tests.test_current_host_readback_provider_v02": "49 tests, OK (four new development tests)",
+        "tests.test_current_host_observation_v02": "109 tests, OK; MC20's system-link case also passed with TMPDIR on the checkout's volume",
+        "tests.test_current_host_readback_controls_v02": "149 tests, OK, unchanged cases on the fixed implementation",
+        "tests.test_current_host_readback_provider": "identical to its phase-start baseline",
+        "tests.test_static_tray_readback_v01": "identical to its phase-start baseline"
+      }
+    },
+    {
+      "run": "final-003",
+      "commit": "7b759de0a0a395bdf6714206b703a43b093db581",
+      "commit_note": "after D-20 and W6's refreeze 002; the candidate of the re-review",
+      "started_at_utc": "2026-11-26T19:45:05Z",
+      "finished_at_utc": "2026-11-26T19:45:47Z",
+      "tree_clean_before": true,
+      "tree_clean_after": true,
+      "workflow_check_exit": 0,
+      "documentation_verifier_exit": 0,
+      "whitespace_check_exit": 0,
+      "byte_identical_0_1_0_files_exit": 0,
+      "leftover_python_children": 0,
+      "new_pycache_directories": 0,
+      "modules": [
+        {
+          "module": "tests.test_current_host_readback_controls_v02",
+          "tests": 151,
+          "status": "OK",
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [],
+          "log_sha256": "e574bff7834adb7880424b3b06a9ffb9d348caa06f1dd450b22d5f1f806191cc"
+        },
+        {
+          "module": "tests.test_supervisor_darwin_v01",
+          "tests": 17,
+          "status": "OK",
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [],
+          "log_sha256": "1c17f5221f66f91962dbdf5c691ffe7a4562e180ee1b103a7c7ffebfa4a7e470"
+        },
+        {
+          "module": "tests.test_prepare_current_host_readback_v02",
+          "tests": 59,
+          "status": "OK",
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [],
+          "log_sha256": "897f0d03fc2a0e977f992d8fba5051628d9416dbd2658aae457d0c882395ad52"
+        },
+        {
+          "module": "tests.test_current_host_observation_v02",
+          "tests": 109,
+          "status": "OK",
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [],
+          "log_sha256": "6f5d6f32077f2466c0bd35059f52d0947f658669ac4a8dfb649cda734ba51a18"
+        },
+        {
+          "module": "tests.test_current_host_readback_provider_v02",
+          "tests": 49,
+          "status": "OK",
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [],
+          "log_sha256": "0006cb8e4b03cd13e5d65909467a74195b48750d2c2081379221194e8d24f29d"
+        },
+        {
+          "module": "tests.test_current_host_readback_driver_v02",
+          "tests": 22,
+          "status": "OK",
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [],
+          "log_sha256": "aac7ff96f7226a2edd159acd0f83f470eeeedd1644b4a40b2fd0ae61154c64ef"
+        },
+        {
+          "module": "tests.test_local_checks",
+          "tests": 33,
+          "status": "OK",
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [],
+          "log_sha256": "ce4b70a391a54c82d160f53c65f270140f2ea5af76d529e25ab97c06ac99d79c",
+          "phase_start_baseline": {
+            "phase_start_non_passing": 0,
+            "result": "identical"
+          }
+        },
+        {
+          "module": "tests.test_current_host_readback_driver",
+          "tests": 10,
+          "status": "FAILED",
+          "failures": 2,
+          "errors": 1,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [
+            "ERROR: test_failed_prelaunch_is_recorded_unexecuted_even_if_later_inventory_fails",
+            "FAIL: test_failed_prelaunch_is_recorded_unexecuted_even_if_later_inventory_fails",
+            "FAIL: test_missing_explicit_selection_cannot_use_ambient_approval"
+          ],
+          "log_sha256": "8a58d3fca4d7edd78ab4acf6dfb005881a0192506471251511fa49934c65d266",
+          "phase_start_baseline": {
+            "phase_start_non_passing": 0,
+            "result": "differs",
+            "added": [
+              "ERROR: test_failed_prelaunch_is_recorded_unexecuted_even_if_later_inventory_fails",
+              "FAIL: test_failed_prelaunch_is_recorded_unexecuted_even_if_later_inventory_fails",
+              "FAIL: test_missing_explicit_selection_cannot_use_ambient_approval"
+            ],
+            "removed": [],
+            "stated_exception": "D-18: the two 0.1.0 tests assert the ordinary-run refusal that contract section 8 (S8) removes; they keep their expectations and fail visibly; R04 classifies the change"
+          }
+        },
+        {
+          "module": "tests.test_current_host_readback_provider",
+          "tests": 25,
+          "status": "FAILED",
+          "failures": 2,
+          "errors": 1,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [
+            "ERROR: test_absent_install_is_exact_and_reuse_does_not_replace",
+            "FAIL: test_publication_race_never_deletes_other_writer",
+            "FAIL: test_uncertain_publication_is_unknown_and_keeps_destination"
+          ],
+          "log_sha256": "09a48f1700a8b41073bc18098232695688c96acc405e4ac0da7e40dac4cbd7aa",
+          "phase_start_baseline": {
+            "phase_start_non_passing": 3,
+            "result": "identical"
+          }
+        },
+        {
+          "module": "tests.test_current_host_inspection_v01",
+          "tests": 135,
+          "status": "FAILED",
+          "failures": 64,
+          "errors": 8,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [
+            "ERROR: test_HI19_A",
+            "ERROR: test_HI19_B",
+            "ERROR: test_HI19_C",
+            "ERROR: test_HI19_D",
+            "ERROR: test_HI19_E",
+            "ERROR: test_HI19_F",
+            "ERROR: test_HI_P03",
+            "ERROR: test_HI_P04",
+            "FAIL: test_HI09_D",
+            "FAIL: test_HI10_A",
+            "FAIL: test_HI10_B",
+            "FAIL: test_HI10_C",
+            "FAIL: test_HI11_A",
+            "FAIL: test_HI11_B",
+            "FAIL: test_HI11_C",
+            "FAIL: test_HI12_A",
+            "FAIL: test_HI12_B",
+            "FAIL: test_HI12_B",
+            "FAIL: test_HI12_B",
+            "FAIL: test_HI12_B",
+            "FAIL: test_HI12_C",
+            "FAIL: test_HI12_D",
+            "FAIL: test_HI12_D",
+            "FAIL: test_HI13_G",
+            "FAIL: test_HI14_A",
+            "FAIL: test_HI14_B",
+            "FAIL: test_HI14_C",
+            "FAIL: test_HI14_D",
+            "FAIL: test_HI15_A",
+            "FAIL: test_HI15_B",
+            "FAIL: test_HI15_C",
+            "FAIL: test_HI15_D",
+            "FAIL: test_HI15_E",
+            "FAIL: test_HI16_A",
+            "FAIL: test_HI16_B",
+            "FAIL: test_HI16_B",
+            "FAIL: test_HI16_B",
+            "FAIL: test_HI16_B",
+            "FAIL: test_HI16_D",
+            "FAIL: test_HI16_D",
+            "FAIL: test_HI16_D",
+            "FAIL: test_HI16_D",
+            "FAIL: test_HI16_D",
+            "FAIL: test_HI16_D",
+            "FAIL: test_HI16_D",
+            "FAIL: test_HI16_D",
+            "FAIL: test_HI17_A",
+            "FAIL: test_HI17_A",
+            "FAIL: test_HI17_B",
+            "FAIL: test_HI17_B",
+            "FAIL: test_HI17_B",
+            "FAIL: test_HI17_B",
+            "FAIL: test_HI17_C",
+            "FAIL: test_HI17_C",
+            "FAIL: test_HI17_C",
+            "FAIL: test_HI17_C",
+            "FAIL: test_HI17_C",
+            "FAIL: test_HI17_C",
+            "FAIL: test_HI17_C",
+            "FAIL: test_HI17_C",
+            "FAIL: test_HI17_D",
+            "FAIL: test_HI17_E",
+            "FAIL: test_HI18_A",
+            "FAIL: test_HI18_B",
+            "FAIL: test_HI18_C",
+            "FAIL: test_HI18_E",
+            "FAIL: test_HI18_F",
+            "FAIL: test_HI18_G",
+            "FAIL: test_REVIEW_process_group_type",
+            "FAIL: test_SUP_04",
+            "FAIL: test_SUP_05",
+            "FAIL: test_SUP_16"
+          ],
+          "log_sha256": "c12e12ccd3632dee7866f58ce5fd5988cabee2a9f609e786c771ec98786db491",
+          "phase_start_baseline": {
+            "phase_start_non_passing": 72,
+            "result": "identical"
+          }
+        },
+        {
+          "module": "tests.test_current_host_libc_plt_metadata_v01",
+          "tests": 73,
+          "status": "OK",
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [],
+          "log_sha256": "eeda8439934c5a1208a4a16585d27c38e631640abad3cda3a9035578d6de41c2",
+          "phase_start_baseline": {
+            "phase_start_non_passing": 0,
+            "result": "identical"
+          }
+        },
+        {
+          "module": "tests.test_current_host_loader_path_v01",
+          "tests": 96,
+          "status": "OK",
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [],
+          "log_sha256": "dc3f2b8841a7f71bfb9f3de5aa6799975fbba10c22ced30cec09d78dc4088c86",
+          "phase_start_baseline": {
+            "phase_start_non_passing": 0,
+            "result": "identical"
+          }
+        },
+        {
+          "module": "tests.test_current_host_required_images_v01",
+          "tests": 116,
+          "status": "FAILED",
+          "failures": 0,
+          "errors": 2,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [
+            "ERROR: test_RI_L07",
+            "ERROR: test_RI_L08"
+          ],
+          "log_sha256": "232742ca766c7a74cb797d65f7e8cc5ac544735f266941f92890a3abfb24633b",
+          "phase_start_baseline": {
+            "phase_start_non_passing": 2,
+            "result": "identical"
+          }
+        },
+        {
+          "module": "tests.test_current_host_rtld_paths_v01",
+          "tests": 61,
+          "status": "FAILED",
+          "failures": 38,
+          "errors": 2,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [
+            "ERROR: test_S04_snapshot_excludes_only_fixed_names_and_proves_fresh",
+            "ERROR: test_S05_guard_chain_exclusions_follow_successful_proof",
+            "FAIL: test_F01",
+            "FAIL: test_F02",
+            "FAIL: test_F03",
+            "FAIL: test_F04",
+            "FAIL: test_F05",
+            "FAIL: test_F06",
+            "FAIL: test_F07",
+            "FAIL: test_F08",
+            "FAIL: test_F09",
+            "FAIL: test_F10",
+            "FAIL: test_F11",
+            "FAIL: test_F12",
+            "FAIL: test_F13",
+            "FAIL: test_N12",
+            "FAIL: test_N13",
+            "FAIL: test_N14",
+            "FAIL: test_N15",
+            "FAIL: test_N16",
+            "FAIL: test_N17",
+            "FAIL: test_N18",
+            "FAIL: test_N19",
+            "FAIL: test_N20",
+            "FAIL: test_N21",
+            "FAIL: test_N22",
+            "FAIL: test_N23",
+            "FAIL: test_N24",
+            "FAIL: test_N25",
+            "FAIL: test_N26",
+            "FAIL: test_P01",
+            "FAIL: test_P02",
+            "FAIL: test_P03",
+            "FAIL: test_P04",
+            "FAIL: test_P05",
+            "FAIL: test_S01_close_fault_blocks_success",
+            "FAIL: test_S02_callback_plus_all_close_faults",
+            "FAIL: test_S03_partial_read_does_not_claim_complete_binding",
+            "FAIL: test_S09_final_launch_clock_faults_keep_existing_handling",
+            "FAIL: test_S09_final_launch_clock_faults_keep_existing_handling"
+          ],
+          "log_sha256": "2570d65866e37f6f1708a4070b89f9984e4f909b9b3b030660d86c844f33ca48",
+          "phase_start_baseline": {
+            "phase_start_non_passing": 40,
+            "result": "identical"
+          }
+        },
+        {
+          "module": "tools.storage_tests.test_storage_identity",
+          "tests": 19,
+          "status": "FAILED",
+          "failures": 0,
+          "errors": 8,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [
+            "ERROR: test_corpus_snapshot_preserves_payload_fields_and_adds_pointer_binding",
+            "ERROR: test_local_runner_copies_hydration_into_private_clean_workspace_without_source_config",
+            "ERROR: test_migration_rejects_an_unrelated_gitlink",
+            "ERROR: test_missing_payload_blocks_workspace_before_any_steps",
+            "ERROR: test_only_committed_or_index_attributes_select_lfs",
+            "ERROR: test_plan_has_exact_paths_and_proposed_pointers_without_repository_mutation",
+            "ERROR: test_unhydrated_missing_and_corrupt_payloads_fail",
+            "ERROR: test_valid_pointer_has_separate_git_and_hydrated_payload_identities"
+          ],
+          "log_sha256": "de0c91ff1fa790b1e05281bb1f704201ef03a60a9ef688846581e7ccc6028f14",
+          "phase_start_baseline": {
+            "phase_start_non_passing": 8,
+            "result": "identical"
+          }
+        },
+        {
+          "module": "tests.test_static_tray_readback_v01",
+          "tests": 4,
+          "status": "FAILED",
+          "failures": 0,
+          "errors": 1,
+          "skipped": 0,
+          "expected_failures": 0,
+          "unexpected_successes": 0,
+          "skip_lines": 0,
+          "non_passing": [
+            "ERROR: setUpClass"
+          ],
+          "log_sha256": "7453ee913503465212000280634133e5b1cb9a51ce7ed3d4adc3a82e66ef134f",
+          "phase_start_baseline": {
+            "phase_start_non_passing": 1,
+            "result": "identical"
+          }
+        }
+      ]
     }
   ],
   "outcome": {
     "final_001": "the frozen controls ran as frozen: 149 tests, 3 errors (MC10) and 1 failure (MC21), no skip; P29's required-images module did not load (its frozen companion had changed); every other module was identical to its phase-start baseline",
     "resolution": "D-18 restored the companion and moved W4's driver tests; D-19 returned C-01 (MC10) and C-02 (MC21) to W6, who confirmed both and refroze six cases with unchanged expected outcomes (CONTROLS-REFREEZE-001.json); no implementation file changed",
-    "final_002": "every new module passes with no skip, the 149 frozen controls included; every existing module is identical to its phase-start baseline except the stated D-18 exception; the workflow check, documentation verifier, whitespace and byte-identity checks pass; no process or bytecode left"
+    "final_002": "every new module passes with no skip, the 149 frozen controls included; every existing module is identical to its phase-start baseline except the stated D-18 exception; the workflow check, documentation verifier, whitespace and byte-identity checks pass; no process or bytecode left",
+    "review": "INDEPENDENT-REVIEW-001 accepted final-002's candidate with nonmandatory findings; D-20 fixed I-01, I-07 and I-02 in part, and W6's refreeze 002 added the controls that I-01 and I-08 ask for",
+    "final_003": "on 7b759de0, after D-20 and refreeze 002: every new module passes with no skip, the 151 frozen controls included; every existing module is identical to its phase-start baseline except the stated D-18 exception; the workflow check, documentation verifier, whitespace and byte-identity checks pass; nothing was left running; its audit run gives the same results and records 877 starts, none of Node, ldd or codesign"
   },
   "process_start_audit": {
+    "run": "final-003-audit",
+    "commit": "7b759de0 (D-20's fixes and W6's refreeze 002)",
+    "method": "each of the sixteen modules run again, one process each, under a Python audit hook (director/audited_unittest.py) that records every subprocess.Popen, os.posix_spawn, os.exec, os.spawn, os.system and os.fork of the test process itself, with program and arguments but never the environment",
+    "starts_recorded": 877,
+    "hook_errors": 0,
+    "starts_by_module_and_program": {
+      "tests.test_current_host_observation_v02": {
+        "python": 5
+      },
+      "tests.test_current_host_readback_controls_v02": {
+        "file": 1,
+        "git": 68,
+        "git-stand-in": 14,
+        "python": 19,
+        "uname": 1
+      },
+      "tests.test_current_host_readback_driver": {
+        "python": 1
+      },
+      "tests.test_current_host_readback_driver_v02": {
+        "git": 89,
+        "python": 16
+      },
+      "tests.test_current_host_readback_provider_v02": {
+        "git": 22
+      },
+      "tests.test_current_host_rtld_paths_v01": {
+        "file": 1,
+        "uname": 1
+      },
+      "tests.test_local_checks": {
+        "file": 1,
+        "git": 331,
+        "nonexistent-executable": 1,
+        "python": 24,
+        "uname": 1
+      },
+      "tests.test_supervisor_darwin_v01": {
+        "python": 8
+      },
+      "tools.storage_tests.test_storage_identity": {
+        "git": 263,
+        "git-lfs": 10
+      }
+    },
+    "node_ldd_or_codesign_starts": 0,
+    "module_results": {
+      "tests.test_current_host_readback_controls_v02": {
+        "tests": 151,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_supervisor_darwin_v01": {
+        "tests": 17,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_prepare_current_host_readback_v02": {
+        "tests": 59,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_current_host_observation_v02": {
+        "tests": 109,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_current_host_readback_provider_v02": {
+        "tests": 49,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_current_host_readback_driver_v02": {
+        "tests": 22,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_local_checks": {
+        "tests": 33,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_current_host_readback_driver": {
+        "tests": 10,
+        "status": "FAILED",
+        "non_passing": 3
+      },
+      "tests.test_current_host_readback_provider": {
+        "tests": 25,
+        "status": "FAILED",
+        "non_passing": 3
+      },
+      "tests.test_current_host_inspection_v01": {
+        "tests": 135,
+        "status": "FAILED",
+        "non_passing": 72
+      },
+      "tests.test_current_host_libc_plt_metadata_v01": {
+        "tests": 73,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_current_host_loader_path_v01": {
+        "tests": 96,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_current_host_required_images_v01": {
+        "tests": 116,
+        "status": "FAILED",
+        "non_passing": 2
+      },
+      "tests.test_current_host_rtld_paths_v01": {
+        "tests": 61,
+        "status": "FAILED",
+        "non_passing": 40
+      },
+      "tools.storage_tests.test_storage_identity": {
+        "tests": 19,
+        "status": "FAILED",
+        "non_passing": 8
+      },
+      "tests.test_static_tray_readback_v01": {
+        "tests": 4,
+        "status": "FAILED",
+        "non_passing": 1
+      }
+    },
+    "same_results_as": "final-003",
+    "limit": "starts made by the children of a test process (the Python children, the driver's unit-stage children, Git) are outside the hook; those children run synthetic programs, the controls' Python codes, Git and the readback module's refused setup",
+    "context": "Node is installed on this host and reachable through PATH; ldd is not; codesign is"
+  },
+  "earlier_process_start_audit": {
     "run": "final-002-audit",
     "commit": "3fb21667 (574dc196's tree plus CHECKS.json and INVENTORY-ADDITIONS.json)",
     "method": "each of the sixteen modules run again, one process each, under a Python audit hook (director/audited_unittest.py) that records every subprocess.Popen, os.posix_spawn, os.exec, os.spawn, os.system and os.fork of the test process itself, with program and arguments but never the environment",
@@ -970,7 +1524,7 @@
         "non_passing": 1
       }
     },
-    "same_results_as_final_002": true,
+    "same_results_as": "final-002",
     "limit": "starts made by the children of a test process (the Python children, the driver's unit-stage children, Git) are outside the hook; those children run synthetic programs, the controls' Python codes, Git and the readback module's refused setup",
     "context": "Node is installed on this host and reachable through PATH; ldd is not; codesign is"
   },
@@ -985,16 +1539,16 @@
   "default_inventory": {
     "method": "unittest discovery of the unit stage's start directory, as tools/check_local.py runs it (python -m unittest discover -s tests, from the root); test ids are listed, nothing is run",
     "base_commit": "1c2f25ba224a5c3419004d1d331d29e01378ae00",
-    "candidate_commit": "574dc19680c2333b8623d43c6f848ac1476e0f8d",
+    "candidate_commit": "7b759de0a0a395bdf6714206b703a43b093db581",
     "base_count": 5587,
-    "candidate_count": 5988,
-    "added_count": 401,
+    "candidate_count": 5994,
+    "added_count": 407,
     "removed_count": 0,
     "added_by_module": {
       "test_current_host_observation_v02": 109,
-      "test_current_host_readback_controls_v02": 149,
+      "test_current_host_readback_controls_v02": 151,
       "test_current_host_readback_driver_v02": 22,
-      "test_current_host_readback_provider_v02": 45,
+      "test_current_host_readback_provider_v02": 49,
       "test_prepare_current_host_readback_v02": 59,
       "test_supervisor_darwin_v01": 17
     },
@@ -1010,7 +1564,7 @@
     "the routine driver (gate MR) and the qualifying cohort (gate MH)",
     "MC24 to MC28 and MC36; MC11's reader-file scan; MC23 on a real qualifying run; MC30 for the probe"
   ],
-  "evidence": "the logs are retained outside the repository, in the working evidence directory beside the clone. When a 0.1.0 driver test fails, its mocked Popen's call list prints the parent process environment; such lines are redacted there (one line in final-002 and one in d18-split; final-001 had none)",
+  "evidence": "the logs are retained outside the repository, in the working evidence directory beside the clone. When a 0.1.0 driver test fails, its mocked Popen's call list prints the parent process environment; such lines are redacted there: one line in each of final-002, final-003, their audit runs and d18-split; final-001 had none",
   "storage_tests": "tools/storage_tests/test_storage_identity.py gains 4 tests (D-09); the driver's unit stage does not discover that directory, so they are not in default_inventory",
   "limits": [
     "These runs cover only the executed Python on this host; they qualify nothing.",
