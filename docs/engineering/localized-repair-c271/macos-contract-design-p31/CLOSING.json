@@ -1,0 +1,61 @@
+{
+  "schema": "ontokin.c271.p31-closing/1",
+  "task": "C271",
+  "phase": "C271-P31-macos-contract-design",
+  "owner": "c271-p31-a99073a9641d",
+  "purpose": "The phase's closing record: the push of its adoption records commit, the checks of that commit's tree, the checkpoint comments and the release of ownership. Git reveals the commit that carries this record; its own push is observed in the final report.",
+  "adoption_records_commit": {
+    "commit": "1e0e601da1c532331ec5a5baf6c16b9dfb6fd7bc",
+    "tree": "2ca600600c4e0462f3fc1c21d00f1cc7616dac6a",
+    "parent": "dd98e9830fffc0da96bf1cfc408c7f246867a20a"
+  },
+  "push_observation": {
+    "command": "git push origin work/c271-missing-import-digest-control (no force), then git ls-remote --heads origin",
+    "observed_at_utc": "2026-11-26T05:47:33Z",
+    "update": "dd98e983..1e0e601d, fast-forward",
+    "remote_heads": {
+      "refs/heads/main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "refs/heads/work/c271-missing-import-digest-control": "1e0e601da1c532331ec5a5baf6c16b9dfb6fd7bc",
+      "refs/heads/work/c271-p29-trd-record": "880933a40aac70f583c97373133e43a4e8244491 (not created or touched by this phase)"
+    }
+  },
+  "checks_of_final_tree": {
+    "started_at_utc": "2026-11-26T05:47:09Z",
+    "ended_at_utc": "2026-11-26T05:47:11Z",
+    "tree": "the working tree that was then staged and committed unchanged as 1e0e601d (git diff --cached --check passed)",
+    "workflow": {
+      "result": "passed",
+      "observed": "Workflow structure passed (12 tasks).",
+      "output_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    "documentation": {
+      "result": "passed",
+      "documents": 1679,
+      "local_links": 6483,
+      "failures": 0,
+      "output_sha256": "3f7b5dd486e92805ffe484892d600fd2dea968e93d0db599834ede0264358140"
+    },
+    "adopted_payload_hashes_rechecked": true
+  },
+  "checkpoint_comments": {
+    "pull_request_274": {
+      "id": 7183814601,
+      "created_at_utc": "2026-11-26T05:47:54Z",
+      "url": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7183814601"
+    },
+    "issue_273": {
+      "id": 7183814869,
+      "created_at_utc": "2026-11-26T05:47:56Z",
+      "url": "https://github.com/Omegapy/OntoKin/issues/273#issuecomment-7183814869"
+    },
+    "body_sha256": "a14a72cc2a5dfb1660acf40a6f1a4748490e21385bf923f1c752c9f140ff5f8e"
+  },
+  "github_state_after": {
+    "pull_request_274": "open, draft, head 1e0e601d",
+    "issue_273": "open",
+    "observed_at_utc": "2026-11-26T05:48Z"
+  },
+  "ownership": "Owner c271-p31-a99073a9641d is released with the push of this record. It makes no further write. The next phase declares its own owner.",
+  "unknown_operations": [],
+  "next_action": "Gate MB of the adopted contract, a reviewed merge of main into this branch; a separate phase that needs the owner's selection."
+}
