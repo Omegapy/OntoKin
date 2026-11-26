@@ -3,7 +3,7 @@
   "id": "C271",
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
-  "status": "blocked",
+  "status": "in_progress",
   "owner": "c271-p29-r07-e586f7497142",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
@@ -1210,6 +1210,37 @@
         "docs/engineering/localized-repair-c271/h0-plan-p26/FINAL-ARCHIVE-REVIEW.json",
         "docs/engineering/localized-repair-c271/h0-plan-p26/SAVED-DELIVERY.json"
       ]
+    },
+    {
+      "name": "P29 R07 branch record checks at the reconciled merge",
+      "command": "tools/chat_workflow.py check; docs/maintenance/reorganization-2026-10-17/verify_reorganization.py; git diff --check scoped to this phase's records",
+      "result": "passed",
+      "required": true,
+      "scope": "Workflow, documentation and scoped whitespace checks of this branch's tools at the reconciled merge, twice, on the C271 worktree's own CPython 3.12.13 environment on macOS arm64. Documentary only; no behavioural test.",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/p29-local-publication-r07/CHECKS.json",
+        "docs/engineering/localized-repair-c271/p29-local-publication-r07/CHECKS-BASELINE.json"
+      ]
+    },
+    {
+      "name": "P29 R07 independent review of the exact publication candidate",
+      "command": "Fresh-context subagent review with recomputed identities, inventory, ancestry and reconciliation",
+      "result": "passed",
+      "required": true,
+      "scope": "Accepts the exact head that was published; not an integration approval.",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/p29-local-publication-r07/REVIEW.md"
+      ]
+    },
+    {
+      "name": "P29 R07 remote readback of the published branch",
+      "command": "New bare repository without alternates; git fetch of the branch from origin; explicit fetch of the accepted blobs; git rev-parse, cat-file and merge-base there",
+      "result": "passed",
+      "required": true,
+      "scope": "Verifies the published head, the candidate commit's parent and tree, the accepted payload contents and the evidence blob from objects obtained from the remote.",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/p29-local-publication-r07/PUBLICATION.json"
+      ]
     }
   ],
   "completion": {
@@ -1334,7 +1365,7 @@
       }
     }
   },
-  "next_action": "The accepted P29 candidate is preserved as commit dbf20beed1bd6274a42531c997d054c09fb8ebb8 (parent 6c7f52a2ee627a382eea91ce26bf58bac4e6cccb, tree db30c29f24c154f378a5acac713385fc8bb44f52) and joined with this branch's later recovery history in one merge commit of phase C271-P29-R07 (local mode). Publication is pending: this branch's record checks, an independent review of the exact merge, a non-forced push and a readback in a separate repository without alternates. P29-PUBLICATION-SIZE-001 stays open until that readback succeeds. If this phase is interrupted, inspect the worktree, the refs and the destination, then resume at the first unmet step named in docs/workflow/tasks/C271/P29-R07-SESSION.md. Do not begin the /0.1.5 operational-plan review, H0/H1, the routine driver, behavioral reruns or main integration in this phase.",
+  "next_action": "Review the /0.1.5 operational plan against the published P29 candidate and current host facts, as a separate phase that has not begun: require a concrete reason for any further preparation work, assess whether an existing executor meets the adopted contract before more host tooling is built, make any executor substitution explicit and keep the original test meaning; read the original qualification plan and its later adopted supplements before execution. H0, H1, the required regression (R03), reviewed integration with actual-main verification (R04) and parent completion with final delivery (R05) follow as further separate phases.",
   "session_phase": {
     "schema": "ontokin.c271.p29-r07-local-publication/1",
     "task": "C271",
@@ -1350,9 +1381,12 @@
     "scope_issue": 273,
     "record": "docs/engineering/localized-repair-c271/p29-local-publication-r07/PHASE.json",
     "session_checkpoint": "docs/workflow/tasks/C271/P29-R07-SESSION.md",
-    "status": "candidate_joined_locally_publication_pending",
+    "status": "publication_complete_verified",
     "candidate_commit": "dbf20beed1bd6274a42531c997d054c09fb8ebb8",
-    "declaration_commit": "80fecf97b785544e8044a60df849cc5918929599"
+    "declaration_commit": "80fecf97b785544e8044a60df849cc5918929599",
+    "published_head": "4a9585a0ce66b1ff0b407e41824d68b2417c2686",
+    "published_tree": "a374bfb05f9ffea1b894efeb336e30260113aca9",
+    "completed_at_utc": "2026-11-26T01:54:07Z"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -5709,6 +5743,11 @@
       "phase": "through_P25",
       "value": "P25 finite RTLD path implementation is independently accepted only for its bounded synthetic/mocked contract. No current-host /0.1.4 H0 plan or actual loader/script source-completeness review has been accepted. H0/H1, full routine and integration gates remain unmet; no earlier failure is waived.",
       "meaning": "Historical source-specific constraint preserved without rewriting."
+    },
+    {
+      "phase": "through_P29_R07",
+      "value": "P29-PUBLICATION-SIZE-001: accepted implementation preserved; exact evidence archive cannot be transferred by currently permitted routes",
+      "meaning": "Resolved on 2026-11-26 as a transfer gate only: ordinary authenticated Git published the exact accepted bytes, verified from the remote. Only the transfer route changed; the evidence is unchanged and no host is qualified. Historical failed routes and their records are preserved."
     }
   ],
   "remaining_h0_constraint": {
@@ -6009,7 +6048,7 @@
     }
   ],
   "p20_outcome_recorded": true,
-  "blocked_reason": "P29-PUBLICATION-SIZE-001: accepted implementation preserved; exact evidence archive cannot be transferred by currently permitted routes",
+  "blocked_reason": null,
   "p26_source_time_snapshots": [
     {
       "stage": "source_a_pre_delivery",
@@ -7094,14 +7133,45 @@
     },
     "candidate_parent": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
     "expected_candidate_tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
-    "candidate_published": false,
-    "status": "candidate_joined_locally_publication_pending",
+    "candidate_published": true,
+    "status": "publication_complete_verified",
     "parent_complete": false,
     "declaration_commit": "80fecf97b785544e8044a60df849cc5918929599",
     "candidate_commit": "dbf20beed1bd6274a42531c997d054c09fb8ebb8",
     "candidate_tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
     "candidate_tree_reproduced": true,
-    "earlier_values": "The declaration's next_action, session_phase and this entry are retrievable unchanged from the declaration commit."
+    "earlier_values": "The declaration's next_action, session_phase and this entry are retrievable unchanged from the declaration commit.",
+    "published_head": "4a9585a0ce66b1ff0b407e41824d68b2417c2686",
+    "published_tree": "a374bfb05f9ffea1b894efeb336e30260113aca9",
+    "publication_record": "docs/engineering/localized-repair-c271/p29-local-publication-r07/PUBLICATION.json",
+    "review": "docs/engineering/localized-repair-c271/p29-local-publication-r07/REVIEW.md",
+    "checks": "docs/engineering/localized-repair-c271/p29-local-publication-r07/CHECKS.json",
+    "completed_at_utc": "2026-11-26T01:54:07Z",
+    "ownership": "Owner c271-p29-r07-e586f7497142 is released once the closing record of this phase is on the remote and the matching checkpoint comments are on PR274 and issue273; it makes no write after them.",
+    "gates_still_open": [
+      "/0.1.5 operational-plan review",
+      "H0",
+      "H1",
+      "required regression (R03)",
+      "reviewed integration and actual-main verification (R04)",
+      "parent completion and final delivery (R05)"
+    ],
+    "next_gate": "the /0.1.5 operational-plan review, as a separate phase not begun here",
+    "test_and_environment_facts": "Recorded unchanged in the session checkpoint (Environment and Verification groups) and on main in STATUS.md and docs/engineering/local-migration-20261124/RESULTS.md.",
+    "corrections": [
+      {
+        "recorded_at_utc": "2026-11-26T01:55Z",
+        "found_by": "independent review finding O-01",
+        "records": [
+          "DESTINATION-INSPECTION.json, field interpretation",
+          "PHASE.json, field destination_finding"
+        ],
+        "statement_corrected": "that the 47 candidate blobs present remotely before this phase are unreachable from this branch",
+        "correct_statement": "Of the 47 present blobs, the 43 of unknown existence after the 2026-11-24 text-only reads are unreachable from the branch head bef6790291d0cddc8c6d7de9dc0a92fb5a98c448; the other four, read before this phase, are blobs of that head's own tree at other paths: e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 (the empty blob), 40357d223ca00eea4a48fb5223db1dfc26fad66f, 8354e190278296204cddaf08407042224fa058bc and 771a7df97eb07679ba0724a403eb7bcf63d7c11c. The HTTP observations stand, no step depended on the statement, and the two declaration records stay unchanged in the declaration commit."
+      }
+    ],
+    "main_conflicts_record": "docs/engineering/localized-repair-c271/p29-local-publication-r07/MAIN-CONFLICTS.md",
+    "r02_source_time_fields": "The fields delivery and pending_phase_delivery (and latest_handoff in CURRENT.json) are R02's source-time delivery records, resolved by its terminal comment; the later R03 to R06 handoffs are named in p29_recovery_records_r03_r06; this local phase produces no handoff ZIP."
   },
   "p29_predecessor_state": {
     "commit": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",

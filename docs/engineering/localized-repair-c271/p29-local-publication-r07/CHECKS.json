@@ -1,0 +1,134 @@
+{
+ "schema": "ontokin.c271.p29-r07-checks/1",
+ "task": "C271",
+ "phase": "C271-P29-R07-local-publication",
+ "plan_task": "TASK-014",
+ "source_revision": "4a9585a0ce66b1ff0b407e41824d68b2417c2686",
+ "source_tree": "a374bfb05f9ffea1b894efeb336e30260113aca9",
+ "checkout": "the C271 worktree ../OntoKin-worktrees/c271, clean, at that revision",
+ "executor": {
+  "implementation": "CPython",
+  "version": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 17.0.0 (clang-1700.6.3.2)]",
+  "distribution": "Homebrew python@3.12, formula version 3.12.13",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "environment": "the C271 worktree's own .venv beside the clone (../OntoKin-worktrees/c271/.venv), created in place with python3.12 -m venv --without-pip, include-system-site-packages false, no package installed",
+  "flags": "sys.flags.dont_write_bytecode is 1 in this shell environment (PYTHONDONTWRITEBYTECODE set by the owner's shell profile); isolated 0, ignore_environment 0",
+  "specification_comparison": "equal: implementation, exact patch 3.12.13, distribution and platform match; the profile packages of python-verification are not installed because this phase runs only the branch's standard-library checks",
+  "why_not_the_doctor": "Main's doctor reads tools/local-environment.json of the checkout it diagnoses; the C271 branch has no such file, so the doctor cannot diagnose this worktree. Its identity is recorded here by direct observation."
+ },
+ "statement": "This branch's own check tools at the revision checked. Each check ran twice; both runs gave the same exit status and the same output. Output went to the working evidence directory beside the clone.",
+ "checks": [
+  {
+   "id": "workflow",
+   "command": ".venv/bin/python tools/chat_workflow.py check",
+   "required": true,
+   "runs": [
+    {
+     "start": "2026-11-26T01:21:30Z",
+     "end": "2026-11-26T01:21:30Z",
+     "exit": "0"
+    },
+    {
+     "start": "2026-11-26T01:21:32Z",
+     "end": "2026-11-26T01:21:32Z",
+     "exit": "0"
+    }
+   ],
+   "result": "passed",
+   "observed": "Workflow structure passed (12 tasks).",
+   "baseline": "passed (12 tasks) at bef67902",
+   "difference": "none",
+   "output_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+  },
+  {
+   "id": "documentation",
+   "command": ".venv/bin/python docs/maintenance/reorganization-2026-10-17/verify_reorganization.py --json-output <working evidence directory>",
+   "required": true,
+   "runs": [
+    {
+     "start": "2026-11-26T01:21:30Z",
+     "end": "2026-11-26T01:21:32Z",
+     "exit": "0"
+    },
+    {
+     "start": "2026-11-26T01:21:32Z",
+     "end": "2026-11-26T01:21:34Z",
+     "exit": "0"
+    }
+   ],
+   "result": "passed",
+   "observed": {
+    "status": "passed",
+    "links": {
+     "documents": 1664,
+     "local_links": 6365,
+     "anchors": 113,
+     "external_skipped": 1064
+    },
+    "sections_verified": 233,
+    "sources_verified": 29,
+    "failures": 0
+   },
+   "baseline": {
+    "status": "passed",
+    "links": {
+     "documents": 1651,
+     "local_links": 6341,
+     "anchors": 113,
+     "external_skipped": 1056
+    },
+    "failures": 0
+   },
+   "difference": "13 more documents and 24 more local links, all in Markdown files added since bef67902: four by the declaration (STARTING-STATE.md, DELIVERY-RECONCILIATION.md, P29-R07-SESSION.md, the TRD), two phase records of the merge (RECORD-RECONCILIATION.md, MAIN-CONFLICTS.md) and seven of the accepted candidate; no failure in either.",
+   "output_sha256": "059ad8c451495d1413cb0e0e1b71328db6a2061a68f5b8bae81e0e03af7a4687"
+  },
+  {
+   "id": "whitespace-scoped",
+   "command": "git diff --check bef6790291d0cddc8c6d7de9dc0a92fb5a98c448 HEAD -- docs/engineering/localized-repair-c271/p29-local-publication-r07 docs/workflow/tasks/C271/P29-R07-SESSION.md docs/workflow/CURRENT.json docs/workflow/tasks/C271/task.json docs/workflow/tasks/C271/REQUIREMENTS.md docs/workflow/tasks/C271/PLAN.md TRDs",
+   "required": true,
+   "runs": [
+    {
+     "start": "2026-11-26T01:21:32Z",
+     "end": "2026-11-26T01:21:32Z",
+     "exit": "0"
+    },
+    {
+     "start": "2026-11-26T01:21:34Z",
+     "end": "2026-11-26T01:21:34Z",
+     "exit": "0"
+    }
+   ],
+   "result": "passed",
+   "observed": "no output; exit status 0",
+   "baseline": "not applicable at the unmodified head",
+   "difference": "not applicable"
+  },
+  {
+   "id": "whitespace-full-informational",
+   "command": "git diff --check bef6790291d0cddc8c6d7de9dc0a92fb5a98c448 HEAD",
+   "required": false,
+   "runs": [
+    {
+     "start": "2026-11-26T01:21:32Z",
+     "end": "2026-11-26T01:21:32Z",
+     "exit": "2"
+    },
+    {
+     "start": "2026-11-26T01:21:34Z",
+     "end": "2026-11-26T01:21:34Z",
+     "exit": "2"
+    }
+   ],
+   "result": "findings_in_accepted_bytes",
+   "observed": "exit status 2 with 37 findings, all in accepted candidate files: 19 equal, line for line, the candidate's own recorded full whitespace check (record-checks/final/whitespace-full.stdout, which recorded exit status 2 on 2026-11-23) in controls/README.md, implementation-author/CANDIDATE001.patch and scope-review/SCOPE-REVIEW.md, and 18 concern that recorded output file itself. None is in a record of this phase.",
+   "disposition": "Informational, as in the candidate's own record checks. The accepted bytes are not changed to remove the findings."
+  }
+ ],
+ "not_run": [
+  "tools/check_local.py (the routine driver), the unit suite and the candidate's inherited tests: R03's required regression, a later phase",
+  "H0, H1, historical behavioral reruns and native loader execution: excluded from this phase",
+  "current main's newer workflow tool against this tree: not applicable (DEC-004)",
+  "hosted CI: manual-only; not started"
+ ],
+ "changes_to_expectations": "none: no expectation, fixture or tolerance was changed"
+}

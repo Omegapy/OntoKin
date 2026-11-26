@@ -4,17 +4,16 @@
   "latest_task": "C271",
   "active_task": "C271",
   "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-  "snapshot_date": "2026-11-26T01:16:29Z",
+  "snapshot_date": "2026-11-26T01:54:07Z",
   "next_action": {
-    "status": "blocked",
-    "summary": "The accepted P29 candidate is preserved as commit dbf20beed1bd6274a42531c997d054c09fb8ebb8 (parent 6c7f52a2ee627a382eea91ce26bf58bac4e6cccb, tree db30c29f24c154f378a5acac713385fc8bb44f52) and joined with this branch's later recovery history in one merge commit of phase C271-P29-R07 (local mode). Publication is pending: this branch's record checks, an independent review of the exact merge, a non-forced push and a readback in a separate repository without alternates. P29-PUBLICATION-SIZE-001 stays open until that readback succeeds. If this phase is interrupted, inspect the worktree, the refs and the destination, then resume at the first unmet step named in docs/workflow/tasks/C271/P29-R07-SESSION.md. Do not begin the /0.1.5 operational-plan review, H0/H1, the routine driver, behavioral reruns or main integration in this phase.",
+    "status": "ready",
+    "summary": "Review the /0.1.5 operational plan against the published P29 candidate and current host facts, as a separate phase that has not begun: require a concrete reason for any further preparation work, assess whether an existing executor meets the adopted contract before more host tooling is built, make any executor substitution explicit and keep the original test meaning; read the original qualification plan and its later adopted supplements before execution. H0, H1, the required regression (R03), reviewed integration with actual-main verification (R04) and parent completion with final delivery (R05) follow as further separate phases.",
     "suggested_task": "C271",
     "sources": [
-      "docs/engineering/localized-repair-c271/p29-local-publication-r07/PHASE.json",
+      "docs/workflow/tasks/C271/task.json",
       "docs/workflow/tasks/C271/P29-R07-SESSION.md",
-      "docs/engineering/localized-repair-c271/p29-local-publication-r07/CANDIDATE-COMMIT.json",
-      "docs/engineering/localized-repair-c271/p29-local-publication-r07/RECORD-RECONCILIATION.md",
-      "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json"
+      "docs/engineering/localized-repair-c271/p29-local-publication-r07/PUBLICATION.json",
+      "docs/engineering/localized-repair-c271/required-images-p29/RECONSTRUCTION-DECISION.md"
     ]
   },
   "historical_handoff": {
@@ -60,7 +59,8 @@
     "P26 frozen source A and exact saved archive/prompts are verified. Receipt-only B preserves source-A pending snapshots, blocked technical outcome and all parent gates. Its own checks/publication, external receipt and terminal readbacks remain future source-time gates; no additional technical work is authorized.",
     "P29 independently accepts a new bounded /0.1.5 required-image implementation: 116 focused controls and 481 inherited tests pass on held source. All three failed attempts and all six attempt records are retained. Original P28 source and reported597 evidence remain unavailable/unverified. Source publication and verified final delivery are pending at this snapshot. R03-R05, P02, H0/H1, full routine, main integration and parent closure remain open; only delivery continues here.",
     "P29 R02 verifies the preserved accepted candidate but encounters P29-PUBLICATION-SIZE-001. Source publication remains unfinished; the blocked recovery handoff cannot pass H0/H1 or C271.",
-    "C271-P29-R07 continues C271 in local mode on the owner's direction of 2026-11-25. A C271 phase in local mode closes on the local closing state, without a Library ZIP; the browser-session policy remains the rule of P01 to P29 R06. The declaration changes no requirement, gate or accepted byte, and the publication stays pending until it is read back from the remote."
+    "C271-P29-R07 continues C271 in local mode on the owner's direction of 2026-11-25. A C271 phase in local mode closes on the local closing state, without a Library ZIP; the browser-session policy remains the rule of P01 to P29 R06. The declaration changes no requirement, gate or accepted byte, and the publication stays pending until it is read back from the remote.",
+    "C271-P29-R07 (local mode) published the exact accepted P29 candidate: candidate commit dbf20beed1bd6274a42531c997d054c09fb8ebb8 (parent 6c7f52a2ee627a382eea91ce26bf58bac4e6cccb, tree db30c29f24c154f378a5acac713385fc8bb44f52) is joined with the later recovery history in merge commit 4a9585a0ce66b1ff0b407e41824d68b2417c2686, accepted by an independent reviewer, pushed without force and verified from a separate readback repository. P29-PUBLICATION-SIZE-001 is resolved as a transfer gate only. R01/R02 done; R03-R05 not_done; every remaining gate is open. Publication is a transfer gate only: it changes no evidence, qualifies no host and passes none of R03, R04, R05, H0 or H1; C271, H22, C260 and the product remain incomplete."
   ],
   "delivery_policy": {
     "kind": "local",
@@ -3104,13 +3104,31 @@
     "phase": "C271-P29-R07-local-publication",
     "owner": "c271-p29-r07-e586f7497142",
     "record": "docs/engineering/localized-repair-c271/p29-local-publication-r07/PHASE.json",
-    "status": "candidate_joined_locally_publication_pending",
-    "candidate_published": false,
+    "status": "publication_complete_verified",
+    "candidate_published": true,
     "parent_complete": false,
     "declaration_commit": "80fecf97b785544e8044a60df849cc5918929599",
     "candidate_commit": "dbf20beed1bd6274a42531c997d054c09fb8ebb8",
     "candidate_tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
-    "earlier_values": "The declaration's snapshot_date, next_action and this entry are retrievable unchanged from the declaration commit."
+    "earlier_values": "The declaration's snapshot_date, next_action and this entry are retrievable unchanged from the declaration commit.",
+    "published_head": "4a9585a0ce66b1ff0b407e41824d68b2417c2686",
+    "published_tree": "a374bfb05f9ffea1b894efeb336e30260113aca9",
+    "publication_record": "docs/engineering/localized-repair-c271/p29-local-publication-r07/PUBLICATION.json",
+    "completed_at_utc": "2026-11-26T01:54:07Z",
+    "main_conflicts_record": "docs/engineering/localized-repair-c271/p29-local-publication-r07/MAIN-CONFLICTS.md",
+    "corrections": [
+      {
+        "recorded_at_utc": "2026-11-26T01:55Z",
+        "found_by": "independent review finding O-01",
+        "records": [
+          "DESTINATION-INSPECTION.json, field interpretation",
+          "PHASE.json, field destination_finding"
+        ],
+        "statement_corrected": "that the 47 candidate blobs present remotely before this phase are unreachable from this branch",
+        "correct_statement": "Of the 47 present blobs, the 43 of unknown existence after the 2026-11-24 text-only reads are unreachable from the branch head bef6790291d0cddc8c6d7de9dc0a92fb5a98c448; the other four, read before this phase, are blobs of that head's own tree at other paths: e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 (the empty blob), 40357d223ca00eea4a48fb5223db1dfc26fad66f, 8354e190278296204cddaf08407042224fa058bc and 771a7df97eb07679ba0724a403eb7bcf63d7c11c. The HTTP observations stand, no step depended on the statement, and the two declaration records stay unchanged in the declaration commit."
+      }
+    ],
+    "r02_source_time_fields": "The fields delivery and pending_phase_delivery (and latest_handoff in CURRENT.json) are R02's source-time delivery records, resolved by its terminal comment; the later R03 to R06 handoffs are named in p29_recovery_records_r03_r06; this local phase produces no handoff ZIP."
   },
   "p29_reconstruction": {
     "phase": "C271-P29-required-images-reconstruction",

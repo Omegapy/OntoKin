@@ -1,0 +1,246 @@
+{
+ "schema": "ontokin.c271.p29-r07-publication/1",
+ "task": "C271",
+ "phase": "C271-P29-R07-local-publication",
+ "outcome": "published_and_verified_from_the_remote",
+ "transfer_route": "ordinary authenticated Git over the owner's configured SSH remote, normal non-forced pushes from the observed remote head; no connector request, browser upload or browser-chat transfer",
+ "source_identities": {
+  "r06_archive": {
+   "bytes": 41730084,
+   "sha256": "4b8fae8b846c6f2b27ed5e2630c71240739786791cf39f043e787c55ad727bc9"
+  },
+  "r06_receipt": {
+   "name": "OntoKin_C271_P29_R06_Delivery_Receipt_2026-11-24.json",
+   "bytes": 149563,
+   "sha256": "24aa014cb430d9b7269ee2e39ff08e7005d3630e8dd41c109f824e80039909d8"
+  },
+  "nested_chain": [
+   {
+    "order": 1,
+    "member": "previous-recovery/OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip",
+    "bytes": 40934668,
+    "sha256": "406b86f0fe9787ce0b1ead460f8391d3aaf2f79345e852c0ea3107b6469b9182",
+    "git_blob": "ff8eb91565e14a519b3dfd9cad75fa2dbd0b0b65",
+    "equals_recorded": true
+   },
+   {
+    "order": 2,
+    "member": "previous-recovery/OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip",
+    "bytes": 39644692,
+    "sha256": "d1d099eff1ccbec55ea01ac61d65fc1d698466cde65fd8142c8b480fdd68f19e",
+    "git_blob": "134aa3f9c776014b0b7eff7097e9bd6a33b93b16",
+    "equals_recorded": true
+   },
+   {
+    "order": 3,
+    "member": "pending-candidate/OntoKin_C271_P29_accepted_Publication_Recovery_2026-11-23.zip",
+    "bytes": 38143260,
+    "sha256": "84b4c7781779a108bf7f6f991bafdcc06632289e4031135c6484c373e6ed114f",
+    "git_blob": "5b14676d53c0fea1c0378230655e15f649b24af6",
+    "equals_recorded": true
+   }
+  ],
+  "inventory": {
+   "member": "evidence/reviews/recovery-review.json",
+   "bytes": 152197,
+   "sha256": "39f51cf433eb96f18820959fb3d0830cd8db4f2d99ea5758b1df4b55f80eb6ea",
+   "rows": 245,
+   "declared_intent_header": {
+    "schema": "ontokin.c271.p29-publication-intent/1",
+    "label": "accepted",
+    "branch": "work/c271-missing-import-digest-control",
+    "expected_head": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
+    "base_tree": "6620a0ed0c2a580ea018fa5d8c9eb1010828f78f",
+    "expected_tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
+    "force": false,
+    "status": "prepared_not_uploaded"
+   }
+  },
+  "copy_used": "the local copy beside the clone (OntoKin-local/handoffs); the owner's downloads folder holds the second recorded copy",
+  "archive_checks": {
+   "passed": 16,
+   "failed": 0
+  },
+  "staged_files": {
+   "written": 245,
+   "staged_files": 245,
+   "set_equals_inventory": true,
+   "mismatched": [],
+   "symlinks": [],
+   "empty_staged": 14,
+   "empty_equal_to_rows": true,
+   "git_hash_object_results": 245
+  }
+ },
+ "candidate_commit": {
+  "commit": "dbf20beed1bd6274a42531c997d054c09fb8ebb8",
+  "parent": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
+  "tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
+  "newly_created": true,
+  "created_at_utc": "2026-11-26T01:11:16Z",
+  "local_ref": "refs/ontokin/c271-p29-r07/candidate"
+ },
+ "declaration_commit": "80fecf97b785544e8044a60df849cc5918929599",
+ "reconciled_commit": {
+  "commit": "4a9585a0ce66b1ff0b407e41824d68b2417c2686",
+  "tree": "a374bfb05f9ffea1b894efeb336e30260113aca9",
+  "parents": [
+   "80fecf97b785544e8044a60df849cc5918929599",
+   "dbf20beed1bd6274a42531c997d054c09fb8ebb8"
+  ]
+ },
+ "push": {
+  "command": "git push --porcelain origin refs/heads/work/c271-missing-import-digest-control:refs/heads/work/c271-missing-import-digest-control",
+  "force_option": "none (no --force, no --force-with-lease, no + in the refspec)",
+  "route": "the owner's configured SSH remote (host alias), the same route that the declaration push used",
+  "started_at_utc": "2026-11-26T01:49:44Z",
+  "finished_at_utc": "2026-11-26T01:49:59Z",
+  "exit_status": 0,
+  "porcelain_result": "refs/heads/work/c271-missing-import-digest-control:refs/heads/work/c271-missing-import-digest-control\t80fecf97..4a9585a0",
+  "remote_head_before": "80fecf97b785544e8044a60df849cc5918929599",
+  "remote_head_before_observed_at_utc": "2026-11-26T01:49:36Z (and again immediately before the push)",
+  "remote_head_after": "4a9585a0ce66b1ff0b407e41824d68b2417c2686",
+  "remote_head_after_observed_at_utc": "2026-11-26T01:49:59Z",
+  "fast_forward": true,
+  "accepted_head": "4a9585a0ce66b1ff0b407e41824d68b2417c2686",
+  "pushed_head_equals_accepted_head": true,
+  "note": "The push exit status and output are not the proof of publication; the readback in a separate repository is."
+ },
+ "readback": {
+  "readback_repository": "a new bare repository under the working evidence directory beside the clone (c271-p29-r07/readback.git)",
+  "created_with": "git init --bare; git remote add origin <the owner's configured SSH remote>; remote.origin.promisor true, partialclonefilter blob:none",
+  "alternates_file_present": false,
+  "fetch_command": "git fetch --filter=blob:none --no-tags origin +refs/heads/work/c271-missing-import-digest-control:refs/remotes/origin/work/c271-missing-import-digest-control",
+  "blob_fetch_command": "git fetch --no-tags --no-write-fetch-head --filter=blob:none --stdin origin, with the 213 accepted blob identities on standard input",
+  "fetch_started_at_utc": "2026-11-26T01:50:53Z",
+  "fetch_finished_at_utc": "2026-11-26T01:50:54Z",
+  "remote_head_readback": "4a9585a0ce66b1ff0b407e41824d68b2417c2686",
+  "head_equals_expected": true,
+  "ls_remote_heads": [
+   "51223c9b94a222f29d38eb6c33808f8e55e2bff9\trefs/heads/main",
+   "4a9585a0ce66b1ff0b407e41824d68b2417c2686\trefs/heads/work/c271-missing-import-digest-control"
+  ],
+  "ls_remote_at_utc": "2026-11-26T01:51:00Z",
+  "candidate_commit": {
+   "commit": "dbf20beed1bd6274a42531c997d054c09fb8ebb8",
+   "parents": [
+    "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb"
+   ],
+   "tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
+   "parent_equals_recorded": true,
+   "tree_equals_recorded": true,
+   "rows_matching_tree": 245,
+   "mismatched": []
+  },
+  "published_head": {
+   "commit": "4a9585a0ce66b1ff0b407e41824d68b2417c2686",
+   "tree": "a374bfb05f9ffea1b894efeb336e30260113aca9",
+   "parents": [
+    "80fecf97b785544e8044a60df849cc5918929599",
+    "dbf20beed1bd6274a42531c997d054c09fb8ebb8"
+   ],
+   "accepted_files_other_than_records_matching": 241,
+   "mismatched": []
+  },
+  "accepted_blob_contents": {
+   "distinct_blobs_obtained": 213,
+   "rows_matching_size_sha256_blob": 245,
+   "mismatched": []
+  },
+  "evidence_blob": {
+   "git_blob": "9facb186ec11523163520323d83dc58fd68e829c",
+   "bytes": 25817783,
+   "sha256": "bae1b62fd3cc78e8cb886e08c4c2f7d76eaaf765e7f6374a394d5f0aa980d038",
+   "in_published_tree": [
+    "100644",
+    "blob",
+    "9facb186ec11523163520323d83dc58fd68e829c"
+   ],
+   "zip_signature": true
+  },
+  "ancestry": {
+   "previous_branch_head_bef67902": true,
+   "declaration_80fecf97": true,
+   "candidate_dbf20bee": true
+  },
+  "result": "passed"
+ },
+ "checks": {
+  "workflow": "passed",
+  "documentation": "passed",
+  "whitespace-scoped": "passed",
+  "whitespace-full-informational": "findings_in_accepted_bytes"
+ },
+ "checks_record": "CHECKS.json",
+ "independent_review": {
+  "record": "REVIEW.md",
+  "disposition": "accepted",
+  "accepted_head": "4a9585a0ce66b1ff0b407e41824d68b2417c2686",
+  "reviewer": {
+   "role": "Reviewer (ROLE.md on main 51223c9b)",
+   "agent_type": "general-purpose (one fresh subagent started with the Agent tool, as the assignment states)",
+   "model_self_reported": "Opus 5.5 (model ID claude-opus-5-5), as my system context states",
+   "assigning_director": "c271-p29-r07-e586f7497142",
+   "independence": "separate agent with fresh context; did not author or edit any reviewed commit; no access to the Director's conversation"
+  }
+ },
+ "failures_and_limits": [
+  "The owner's downloads-folder copy of the R06 archive was not read in this session (macOS folder access was not granted); the copy beside the clone, with the recorded identities, was used.",
+  "The informational full whitespace pass reports 37 findings inside accepted candidate files, identical to the candidate's own recorded full check; accepted bytes were not changed.",
+  "No behavioural test, routine driver, H0, H1 or native loader ran; historical P29 results stay historical evidence."
+ ],
+ "blocker": {
+  "id": "P29-PUBLICATION-SIZE-001",
+  "status": "resolved_as_transfer_gate_only",
+  "meaning": "The exact accepted bytes, including the 25,817,783-byte evidence archive, are now on the remote branch. Only the transfer route changed; the evidence is unchanged and no host is qualified."
+ },
+ "gates_still_open": [
+  "/0.1.5 operational-plan review",
+  "H0",
+  "H1",
+  "required regression (R03)",
+  "reviewed integration and actual-main verification (R04)",
+  "parent completion and final delivery (R05)"
+ ],
+ "next_gate": "the /0.1.5 operational-plan review, as a separate phase not begun here",
+ "record_reconciliation": {
+  "record": "RECORD-RECONCILIATION.md",
+  "checks_run": 24,
+  "checks_passed": 24,
+  "summary": "Both JSON records parse without duplicate keys, keep schema_version 1 and the branch's formatting; every key of the parent and of both successors is present (candidate-changed values kept as history, candidate-unchanged keys taking the branch's value); the candidate's six p29_ task fields and p29_reconstruction are unchanged; boundaries in parent, candidate, branch order; every line of both Markdown successors present in order; P29 still a reviewed reconstruction and the P28 uploads and 597-test report still unverified."
+ },
+ "main_conflicts": {
+  "record": "MAIN-CONFLICTS.md",
+  "files": [
+   "STATUS.md",
+   "docs/README.md",
+   "docs/workflow/CURRENT.json",
+   "docs/workflow/memory.json",
+   "tools/check_local.py",
+   "tests/test_local_checks.py"
+  ],
+  "resolving_gate": "R04"
+ },
+ "corrections": [
+  {
+   "recorded_at_utc": "2026-11-26T01:55Z",
+   "found_by": "independent review finding O-01",
+   "records": [
+    "DESTINATION-INSPECTION.json, field interpretation",
+    "PHASE.json, field destination_finding"
+   ],
+   "statement_corrected": "that the 47 candidate blobs present remotely before this phase are unreachable from this branch",
+   "correct_statement": "Of the 47 present blobs, the 43 of unknown existence after the 2026-11-24 text-only reads are unreachable from the branch head bef6790291d0cddc8c6d7de9dc0a92fb5a98c448; the other four, read before this phase, are blobs of that head's own tree at other paths: e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 (the empty blob), 40357d223ca00eea4a48fb5223db1dfc26fad66f, 8354e190278296204cddaf08407042224fa058bc and 771a7df97eb07679ba0724a403eb7bcf63d7c11c. The HTTP observations stand, no step depended on the statement, and the two declaration records stay unchanged in the declaration commit."
+  }
+ ],
+ "executor": {
+  "implementation": "CPython",
+  "version": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 17.0.0 (clang-1700.6.3.2)]",
+  "distribution": "Homebrew python@3.12, formula version 3.12.13",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "environment": "the C271 worktree's own .venv beside the clone (../OntoKin-worktrees/c271/.venv), created in place with python3.12 -m venv --without-pip, include-system-site-packages false, no package installed",
+  "flags": "sys.flags.dont_write_bytecode is 1 in this shell environment (PYTHONDONTWRITEBYTECODE set by the owner's shell profile); isolated 0, ignore_environment 0",
+  "specification_comparison": "equal: implementation, exact patch 3.12.13, distribution and platform match; the profile packages of python-verification are not installed because this phase runs only the branch's standard-library checks",
+  "why_not_the_doctor": "Main's doctor reads tools/local-environment.json of the checkout it diagnoses; the C271 branch has no such file, so the doctor cannot diagnose this worktree. Its identity is recorded here by direct observation."
+ }
+}
