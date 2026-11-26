@@ -177,3 +177,26 @@ attempt and result documents.
   W2's test module still named the old constant. The Director rewrote that single line to
   compare W3's `ALREADY_PRESENT_EXACT` key set, the shape the old constant stood for. No
   expectation changed, and the module's 59 tests pass.
+
+## D-17: D-01 revised, how the 0.2.0 preparer binds its source
+
+D-01 asked the 0.2.0 route to verify its checkout's commit, tree and clean state "as the 0.1.0
+route does". A reading of P05 section 5 shows that this is not one of its rules. Section 5
+requires:
+- authenticated source bytes and a predeclared member inventory;
+- the refusals;
+- staging and no-replace publication;
+- that runtime and dependency trees stay outside Git, "preserve their authenticated source
+  identity and full reproduction receipt instead".
+
+The 0.1.0 route's check of the checkout is an implementation choice tied to the 0.1.0 source
+document. The 0.2.0 route meets section 5's rule. Its result records `preparer_source`: the root
+and the identity of each preparer file at start. Under contract section 6 it keeps every rule of
+P05 section 5.
+
+D-17 therefore replaces D-01:
+- The 0.2.0 route does not start Git, and it does not verify the checkout's commit.
+- MP's reviewed preparation plan binds the commit of the preparing checkout.
+- MP's independent review checks the receipt's `preparer_source` against that commit's files.
+
+The final independent review of MI is asked to assess this.
