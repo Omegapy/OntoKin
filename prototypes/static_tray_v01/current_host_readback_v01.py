@@ -1049,3 +1049,132 @@ def finish_cpu_cohort(cls):
             _preserve_temporary(cls)
     if failure:
         raise failure
+
+
+# ---------------------------------------------------------------------------
+# Version dispatch: C271-P33 gate MI, plan sections 4.6 and 4.8, and section 8 (S8) of
+# ontokin.current-host-readback/0.2.0. The 0.1.0 definitions above are unchanged and stay
+# reachable through _V010_ENTRY_POINTS. The facade below takes their module-level names:
+# a configuration whose bytes match the expected digest and whose schema is
+# ontokin.current-host-readback-config/0.2.0 goes to current_host_readback_v02; every
+# other call takes the unchanged 0.1.0 code, whose own checks refuse anything that is not
+# a 0.1.0 selection. Calls between 0.1.0 entry points pass through the same dispatch,
+# which sends a 0.1.0 selection back to the 0.1.0 code. Nothing here starts a process.
+# ---------------------------------------------------------------------------
+
+ORDINARY_RUN_REASON = "No approved current-host readback selection: ordinary run, not a qualification"
+V02_CONFIG_SCHEMA = PREFIX + "config/0.2.0"
+_V010_ENTRY_POINTS = {
+    "validate_selection": validate_selection, "derive_workspace_binding": derive_workspace_binding,
+    "prepare_case_manifest": prepare_case_manifest, "verify_case_manifest": verify_case_manifest,
+    "guarded_run_process": guarded_run_process, "setup_cpu_cohort": setup_cpu_cohort,
+    "finish_cpu_cohort": finish_cpu_cohort}
+
+
+def _v02():
+    from . import current_host_readback_v02
+    return current_host_readback_v02
+
+
+def _configured_schema(config_path, config_sha256):
+    """The schema of the configuration whose bytes match the expected digest, else None; never raises."""
+    try:
+        if type(config_sha256) is not str or re.fullmatch(r"[0-9a-f]{64}", config_sha256) is None:
+            return None
+        config, actual = _read(config_path, 1024 * 1024, category="SELECTION")
+    except Exception:
+        return None
+    if actual["sha256"] != config_sha256 or type(config) is not dict or type(config.get("schema")) is not str:
+        return None
+    return config["schema"]
+
+
+def _selects_v02(config_path, config_sha256):
+    return _configured_schema(config_path, config_sha256) == V02_CONFIG_SCHEMA
+
+
+def _environment_selects_v02():
+    path, digest = os.environ.get(CONFIG_ENV), os.environ.get(DIGEST_ENV)
+    return bool(path) and bool(digest) and _selects_v02(path, digest)
+
+
+def _ordinary_run(cls):
+    """S8: neither selection variable is set; the readback class fails visibly at setup and is never skipped."""
+    cls.temporary = None
+    cls.root = None
+    record = {"schema": PREFIX + "setup" + VERSION, "passed": False, "checker_starts": 0, "run_kind": "ordinary"}
+    failure = CurrentHostBindingError("SELECTION", ORDINARY_RUN_REASON)
+    record["error"] = failure.as_dict()
+    failure.ledger_path = None
+    failure.refusal_record.update(actual_checker_starts=0, setup=record, run_kind="ordinary",
+                                  authorized_evidence_destination="unavailable", evidence_finalized=False)
+    raise failure
+
+
+def git_binding_from_selection(config_path, config_sha256):
+    """The Git binding of a digest-checked selection, which a qualifying run binds before its first Git start.
+
+    Returns {"path", "sha256"} from the HOST document of a 0.2.0 selection, and None for a 0.1.0
+    selection, whose Git stays the one PATH resolves. Any other configuration refuses. It reads
+    files only and starts no Git and no other process (plan section 4.5).
+    """
+    _digest(config_sha256, "SELECTION")
+    config, actual = _read(_absolute(config_path, category="SELECTION"), 1024 * 1024, category="SELECTION")
+    _require(actual["sha256"] == config_sha256, "SELECTION", "Configuration differs from the independently supplied expected digest")
+    if type(config) is dict and config.get("schema") == V02_CONFIG_SCHEMA:
+        return _v02().git_binding_from_selection(config_path, config_sha256)
+    _schema(config, "config", CONFIG_KEYS)
+    _require(config["contract"] == CONTRACT, "SCHEMA", "Unsupported current-host contract")
+    return None
+
+
+def validate_selection(config_path, config_sha256, source_root):
+    """Facade: a 0.2.0 selection goes to the 0.2.0 provider, every other one to the 0.1.0 code."""
+    if _selects_v02(config_path, config_sha256):
+        return _v02().validate_selection(config_path, config_sha256, source_root)
+    return _V010_ENTRY_POINTS["validate_selection"](config_path, config_sha256, source_root)
+
+
+def derive_workspace_binding(config_path, config_sha256, source_root, workspace_root, output, source_before, workspace_inventory):
+    """Facade of derive_workspace_binding, dispatched by the selected configuration's schema."""
+    implementation = (_v02().derive_workspace_binding if _selects_v02(config_path, config_sha256)
+                      else _V010_ENTRY_POINTS["derive_workspace_binding"])
+    return implementation(config_path, config_sha256, source_root, workspace_root, output, source_before, workspace_inventory)
+
+
+def prepare_case_manifest(output, *, config_path, config_sha256, source_root, schedule_root):
+    """Facade of prepare_case_manifest, dispatched by the selected configuration's schema."""
+    implementation = (_v02().prepare_case_manifest if _selects_v02(config_path, config_sha256)
+                      else _V010_ENTRY_POINTS["prepare_case_manifest"])
+    return implementation(output, config_path=config_path, config_sha256=config_sha256, source_root=source_root,
+                          schedule_root=schedule_root)
+
+
+def verify_case_manifest(path, *, config_path, config_sha256, source_root, schedule_root, check=lambda: None):
+    """Facade of verify_case_manifest, dispatched by the selected configuration's schema."""
+    implementation = (_v02().verify_case_manifest if _selects_v02(config_path, config_sha256)
+                      else _V010_ENTRY_POINTS["verify_case_manifest"])
+    return implementation(path, config_path=config_path, config_sha256=config_sha256, source_root=source_root,
+                          schedule_root=schedule_root, check=check)
+
+
+def guarded_run_process(argv, *, stage, label, clock, stage_end, env=None, on_started=None, cancel_after_ms=None):
+    """Facade of the process adapter, dispatched by the schema of the environment's selection."""
+    implementation = (_v02().guarded_run_process if _environment_selects_v02()
+                      else _V010_ENTRY_POINTS["guarded_run_process"])
+    return implementation(argv, stage=stage, label=label, clock=clock, stage_end=stage_end, env=env,
+                          on_started=on_started, cancel_after_ms=cancel_after_ms)
+
+
+def setup_cpu_cohort(cls):
+    """Facade of the class setup: an ordinary run fails visibly (S8); a selection is dispatched by its schema."""
+    if not os.environ.get(CONFIG_ENV) and not os.environ.get(DIGEST_ENV):
+        _ordinary_run(cls)
+    implementation = _v02().setup_cpu_cohort if _environment_selects_v02() else _V010_ENTRY_POINTS["setup_cpu_cohort"]
+    return implementation(cls)
+
+
+def finish_cpu_cohort(cls):
+    """Facade of the cohort accounting, dispatched by the schema of the environment's selection."""
+    implementation = _v02().finish_cpu_cohort if _environment_selects_v02() else _V010_ENTRY_POINTS["finish_cpu_cohort"]
+    return implementation(cls)

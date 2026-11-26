@@ -1190,7 +1190,7 @@ class ResultShapes(PreparerCase):
     def test_D11_result_keys_are_closed_by_state_without_publication(self):
         """Dry run, reuse, and refusals before and after the report path is bound; no renamex_np."""
         self.assertEqual(RECEIPT_KEYS, W3_RESULT_KEYS | {"design_revision", "amendments"})
-        self.assertTrue(W3_RESULT_KEYS <= set(observation.INSTALL_RESULT_KEYS) <= RECEIPT_KEYS)
+        self.assertTrue(W3_RESULT_KEYS <= set(observation.INSTALL_RECEIPT_KEYS["ALREADY_PRESENT_EXACT"]) <= RECEIPT_KEYS)
         with self.subTest(state="DRY_RUN_READY"):
             fixture = self.node_fixture()
             dry = self.assert_shape(self.install(fixture, apply=False), RECEIPT_KEYS)

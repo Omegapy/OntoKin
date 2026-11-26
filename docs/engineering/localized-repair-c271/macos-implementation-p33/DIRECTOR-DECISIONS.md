@@ -152,3 +152,28 @@ attempt and result documents.
   records the OS at preparation. M0 binds the current OS itself in HOST, and the provider checks
   HOST against the host at every start. An OS update between MP and MH therefore shows in HOST
   and in the provider's checks, not as a receipt refusal.
+
+## D-16: W5's findings and one integration correction
+
+- **D-08 confirmed:** the cohort accounting fails the run when a CPU method did not run. The
+  0.1.0 accounting already does this, and the 0.2.0 provider keeps it. No new rule is added.
+- **The adoption-record digest:** the probe constant `AMENDMENT_ADOPTION_SHA` is filled with the
+  SHA-256 of `ADOPTION-AMENDMENT-001.json` as committed in `3ffabb3f`. The Director checked it
+  against the committed bytes.
+- **`SOURCE_FILES`** does not list the adoption record. The configuration binds that record
+  separately, as it binds CONTRACT.md, and the source inventory keeps 0.1.0's trees.
+- **The provider's environment check (W5 F3):** it can test only HOST's recorded environment and
+  the declared map. The probe tests its own `process.env`, as contract section 7 assigns.
+- **For MH, MC36:** an altered `__CF_USER_TEXT_ENCODING` value in HOST makes the probe refuse
+  only if the variable is present in the probe's environment. The predicate admits its absence.
+  Whether the official `node` loads CoreFoundation is not established. Before MH's execution
+  plan is adopted, MH establishes from M0's load commands whether the Node build links
+  CoreFoundation:
+  - If it links CoreFoundation, MC36 stands as written.
+  - If it does not, MC36's expected outcome needs an amendment before it runs. The expectation
+    is never weakened silently.
+- **Integration correction:** W3's follow-up replaced the observer constant
+  `INSTALL_RESULT_KEYS` with `INSTALL_RECEIPT_KEYS`, which is keyed by state. One assertion of
+  W2's test module still named the old constant. The Director rewrote that single line to
+  compare W3's `ALREADY_PRESENT_EXACT` key set, the shape the old constant stood for. No
+  expectation changed, and the module's 59 tests pass.
