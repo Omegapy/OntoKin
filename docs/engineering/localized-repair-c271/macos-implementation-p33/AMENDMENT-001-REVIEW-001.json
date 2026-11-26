@@ -1,0 +1,178 @@
+{
+  "schema": "ontokin.c271.p33-amendment-review/1",
+  "review": "AMENDMENT-001-REVIEW: independent review of P33-AMENDMENT-001 (Darwin's group probe)",
+  "task": "C271",
+  "phase": "C271-P33-macos-implementation-mi",
+  "director": "c271-p33-a99647756bed",
+  "execution_mode": "local",
+  "reviewer": "independent reviewer with fresh context, read-only in the repository; wrote none of the reviewed material",
+  "candidate_commit": "5dc76ccf1a763a3454e34f97db842a2192d3129e",
+  "candidate_tree": "c979be7998e8eb9c602691edecf8882b924150e6",
+  "candidate_parent": "a23761919e92c41489f26a57d02fa1d5dc9d8e19",
+  "main_revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+  "head_observed_at_end": {
+    "commit": "a97ef91d8de5f55cfc6ffdd42d433e1fcd14b752",
+    "later_commits": [
+      "939942e3 C271-P33: W2 checkpoint, the 0.2.0 preparer route (S6)",
+      "a97ef91d C271-P33: record the Director's decisions D-01 to D-07 on W2's questions"
+    ],
+    "reviewed_files_contract_directory_and_supervisor_unchanged": true
+  },
+  "candidate_files": [
+    {
+      "path": "docs/engineering/localized-repair-c271/macos-implementation-p33/AMENDMENT-001.md",
+      "bytes": 8899,
+      "sha256": "8bc138a2d77114d376c1e3a50a3a4bb739f2fa5d40fb69f553c9b26e05572ab3"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/macos-implementation-p33/AMENDMENT-001.json",
+      "bytes": 6358,
+      "sha256": "7e204e788a9b72914d2bb3b2b660d49b8dece53399933de58dc09fae7ac7a2a0"
+    }
+  ],
+  "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+  "verdict_summary": "The finding P33-SUPERVISOR-001 is true and reproduced, and the decision is correct, minimal and fail-closed. It cannot be adopted as written: no control is obliged to exercise the amended rule, and the existing behavioural controls pass an implementation that counts EPERM as absent (A-01). The 0.2.0 version decision rests on a premise that the candidate tree contradicts, and on a label rule that no replaced clause carries (A-02).",
+  "answers": {
+    "q1_finding_true": "Yes. The Director's probe reproduced three times. W1's checkpoint at a2376191, extracted from Git: in 12 runs, the observation test passed 12 times; MC12 raised PermissionError 4 times and the MC13 timeout case 2 times. In 20 more runs: MC12 10, MC13 timeout 4. Every error was at run_process:138 > terminate_group:135 > group_exists:107. Both by-code paths were reproduced deterministically: the SIGTERM send at line 127 (D2), and the group check after exit (D4). W1's three logs tally to the cited 12-run counts.",
+    "q2_decision": "Correct, minimal and fail-closed. Absence requires ESRCH, and EPERM counts as present. POSIX kill fails with EPERM only when no receiving process may be signalled, so passing over a send's EPERM skips no deliverable signal. A cleanup passes only when group_exists returns false. A group that keeps answering EPERM fails at the ceiling with the original Stop: after 2,002 ms simulated (D3) and 2,148 ms real (D4). An exited direct child is reaped on the next poll (D2). No new unreaped-child path exists. The import list Clock, Stop, LIMITS, inventory, json_bytes and _reap, with the standard library's signal, is complete and minimal. run_process is token-identical to W1's, and no other caller uses group_exists or terminate_group.",
+    "q3_replaced_clauses": "Incomplete. Not replaced: CONTRACT.json controls MC14 (A-01); the statement of the change set, which differs between S4, only_change, the section 5 row and MC14 (A-01); section 10 and labels.carried_with (A-02); supervisor.assertion_meanings['cleanup.passed'], supervisor.guarantees.kept, substitutions.S4, row S4's Reason and Effect cells, section 5's 'unchanged group check after exit', and the scope of 'first list' (A-03). Unaffected: section 1's Kept-unchanged table, MC12's and MC13's expected outcomes, MC17, never_supported, reaped, handles_closed, and p05_control_map unless controls are added.",
+    "q4_version": "Acceptable in principle, not as written (A-02). For keeping 0.2.0: no reviewed implementation, no preparation and no contract result exist, and the change is fail-closed and confined to the supervisor. Against it as written: the stated premise is contradicted by W1's 0.2.0-labelled module and tests in the candidate tree; the design-revision safeguard is in no replaced clause, while every label is listed as unchanged; and this contract family versioned earlier semantic changes separately (inspection plans /0.1.2 to /0.1.4).",
+    "q5_other": "A-04: a group can keep answering EPERM with no permission refusal (reproduced in D4). A-05: the stricter meaning of absence and launchd's reaping depend on the host. A-06: evidence without digests, and the 12-run counts without their logs. A-07: dependent phase records, and W1's development guard, restate the superseded rule. None of these makes the decision itself unsafe."
+  },
+  "findings": [
+    {
+      "id": "A-01",
+      "severity": "mandatory",
+      "location": "AMENDMENT-001.md section 3 (row 'Section 9, MC14') and section 4 ('Controls'); AMENDMENT-001.json replaces['CONTRACT.md section 9 MC14']; CONTRACT.json controls (MC12 to MC14) and p05_control_map.CH19",
+      "issue": "The amendment changes the supervisor's semantics, yet it keeps every control's expected outcome except MC14's. MC12 and MC13 cannot tell the amended rule from an unsafe one: a variant that counts EPERM as absent passed W1's four real-child cases 20 of 20, like the amended variant (R5). That unsafe variant passes a cleanup whose simulated member never exits, with passed, process_group_absent and reaped all true (D3), and accepts a real run whose group still answers EPERM (D4). MC14 discriminates only through a reviewer reading section 2. Its amended expected outcome says where tokens may differ, not what the handling returns: the unsafe 'except (ProcessLookupError, PermissionError): return False' also differs only at the PermissionError clause of group_exists (R4). The counts disagree: MC14 says 'the precondition and the three EPERM handlings', the section 5 row says 'three changes' counting the precondition, and there are four EPERM handling sites. Row S4 and supervisor.only_change name only the counting of EPERM as present, not the passing over of a refused send. The fail-closed claim has no control. CONTRACT.json controls, the full control table, is not named as replaced. AGENTS.md requires conformance evidence with a semantic change.",
+      "required_change": "(1) Add NOT_RUN control obligations under CH19, with start counts. (a) Real: a group whose only member is the supervisor's exited, unreaped direct child; group_exists is true, and false after reaping (D1). (b) Real: terminate_group on that group returns the original passed receipt, with no PermissionError (D2). (c) A group that keeps answering EPERM, real (D4) or simulated at the os.killpg boundary and labelled (D3); expected: the original cleanup-ceiling Stop, cleanup.passed false, and never process_group_absent true. (2) State the allowed token differences once, exactly: in group_exists, 'except PermissionError: return True' before 'except ProcessLookupError'; in each of terminate_group's three send clauses, '(ProcessLookupError, PermissionError)'. Use that statement, with a correct count, in row S4, supervisor.only_change, the section 5 comparison row and MC14. (3) Name CONTRACT.json controls MC14, and every added control, among the replaced clauses in both forms."
+    },
+    {
+      "id": "A-02",
+      "severity": "mandatory",
+      "location": "AMENDMENT-001.md 'Contract version' paragraph and section 3 'Unchanged' ('every label'); AMENDMENT-001.json contract_version_and_schemas and unchanged",
+      "issue": "Premise: the amendment says that nothing has been implemented, prepared or executed under 0.2.0, so that no document could be confused with an amended one. Yet the candidate tree contains W1's prototypes/static_tray_v01/supervisor_darwin_v01.py and tests/test_supervisor_darwin_v01.py. Both are labelled ontokin.current-host-readback/0.2.0, implement revision 3's S4 ('Every other name comes unchanged from supervisor.py'), and had their development tests run; the amendment's section 1 cites them. After the candidate, 939942e3 committed W2's 0.2.0 preparer route. Safeguard: 'Every 0.2.0 result names the design revision it follows' is a new obligation on results. Section 10 and labels.carried_with carry no design revision; neither is replaced, and 'every label' is listed as unchanged. The adopted files remain at revision.number 3, with no pointer to the amendment, so nothing makes a result name revision 4. Earlier semantic changes in this contract family were versioned separately (inspection plans /0.1.2, /0.1.3 and /0.1.4). The Director's D-03, recorded at a97ef91d after the candidate, states the intended 'design_revision': 4. But it is outside the amendment, and that file's own preamble routes contract changes through an amendment.",
+      "required_change": "Either give the change its own version, or keep 0.2.0 and do three things. (1) State the premise exactly: no reviewed or accepted implementation, no preparation, and no contract result or refusal document exists; W1's checkpoint a2376191 is the only implementation of revision 3, unreviewed, superseded and kept as failed evidence. (2) Add the design revision and the amendment identifier to section 10's carried labels and to labels.carried_with, as replaced clauses in both forms (D-03's list can serve), and remove 'every label' from the unchanged list. (3) Require the adoption record to state that from design revision 4 on, ontokin.current-host-readback/0.2.0 means CONTRACT.md and CONTRACT.json as amended by P33-AMENDMENT-001."
+    },
+    {
+      "id": "A-03",
+      "severity": "nonmandatory",
+      "location": "CONTRACT.json supervisor.assertion_meanings['cleanup.passed'], supervisor.guarantees.kept and substitutions.S4; CONTRACT.md section 1 row S4 (Reason and Effect cells), section 5's first list and its 'No descendant' paragraph",
+      "issue": "The amendment says that everything else stands, yet these clauses are affected. The cleanup.passed MD row is replaced, but its JSON key is not. guarantees.kept says 'a live member ... after exit refuses the run', although an exited but unreaped member, or one this process may not signal, now refuses the run too. Its 'SIGTERM then SIGKILL of the group' omits that a send refused with EPERM is passed over. Section 5's 'the unchanged group check after exit' is inaccurate: the check's tokens are unchanged, but its probe is not. A descendant that has exited but is not yet reaped by launchd now refuses the run, and that consequence of 'Stricter' is not stated. Row S4's Reason and Effect cells, and substitutions.S4, still describe only the precondition. 'Section 5, first list' does not say whether its nested 'Everything else stays as in the original' list is replaced; that list includes terminate_group's SIGTERM, mandatory SIGKILL and bounded reaping.",
+      "required_change": "Name each clause as replaced, with its amended text in both forms, or state why it stands. For 'first list' and row S4, quote the exact text that is replaced."
+    },
+    {
+      "id": "A-04",
+      "severity": "nonmandatory",
+      "location": "AMENDMENT-001.md section 1 ('That last member is either ...') and section 2 ('Fail-closed case'); AMENDMENT-001.json finding.effect_on_adopted_S4 and decision.fail_closed",
+      "issue": "The analysis says that the unreaped last member is either the direct child before the next poll or a descendant before launchd reaps it. It attributes a lasting EPERM only to a genuine permission refusal. D4 produces a third case with no privilege: a descendant moves itself into its own process group and never reaps its exited child, which stays in the owned group. The group then answers EPERM until that parent ends. The amended code fails closed after 2,148 ms with the cleanup-ceiling Stop, which replaces 'Child exited while an owned descendant remained'. The escaped descendant survives, within 'no enforcement against descendants'. The receipt cannot tell this case from a permission refusal or a slow reaping.",
+      "required_change": "Name this case in sections 1 and 2, and state that the recorded reason does not distinguish the causes of a lasting EPERM."
+    },
+    {
+      "id": "A-05",
+      "severity": "nonmandatory",
+      "location": "AMENDMENT-001.md section 2 ('Rule kept'), section 3 (the process_group_absent and section 12 rows) and section 4 ('Stricter'); AMENDMENT-001.json replaces['CONTRACT.json supervisor.assertion_meanings.process_group_absent']",
+      "issue": "'Absent means that no member, live or unreaped, remains' holds only because this build answers ESRCH after every member is reaped. 'The decision does not rely on the observation' is true for safety, since EPERM is never counted as absent, but not for this stricter meaning. The JSON text says 'which Darwin answers', where the MD says 'on this host'. A cleanup with orphaned descendants passes only after launchd reaps them, outside the supervisor's control. Observed: 1.5 to 1.8 ms; a slower reaping can only delay or fail a cleanup.",
+      "required_change": "Qualify the stricter meaning by the observed OS build in both forms, or make control A-01(a) part of each qualifying host's evidence. Add launchd's reaping to section 12's replacement as an assumption."
+    },
+    {
+      "id": "A-06",
+      "severity": "nonmandatory",
+      "location": "AMENDMENT-001.md section 1; AMENDMENT-001.json finding.evidence",
+      "issue": "The 12-run counts rest on W1's working logs outside Git, which the amendment does not cite: ../../OntoKin-local/c271-p33/workers/W1/01-test-run-draft.txt (sha256 fcacda9a15cba087165d34f12017545f40e27b1895fcace9b280e4387ecad652), 02-repeat-real-child-runs.txt (fcd1bbf192bf8798d4ce8392386b7d5f9fb3a51e01ce27c2da9eaf51ea49d67a) and 03-test-run-final.txt (68b5f1a44d7de88ba0cfd7a3ceb71f2f1a36cf6ec3d05f5471f285d04f279e76). Their tally matches the counts (R7). Run 01 used a draft test file, whose source-binding test fails on __name__ while the checkpoint's passes, so 'at the checkpoint above' holds for at most 11 of the 12 runs. The probe and its output are cited without digests.",
+      "required_change": "Cite the three logs by path and SHA-256, or retain them under evidence/. Give the evidence files' digests, and say which code each run used."
+    },
+    {
+      "id": "A-07",
+      "severity": "nonmandatory",
+      "location": "PHASE.json acceptance A2; IMPLEMENTATION-PLAN.md section 4.1; W1's checkpoint docstring and its IMPORTED and body-globals development tests; W1's development guards no_group_left and _gone",
+      "issue": "Once the amendment is adopted, these records contradict the contract: A2 says that only the precondition differs, and section 4.1 imports group_exists and terminate_group unchanged. The plan treats such a difference as a defect. W1's development guard counts EPERM as gone, the opposite of the amended rule, so a guard written that way would not report a group like D4's.",
+      "required_change": "List these records as follow-ups in the adoption record. Require the frozen controls' post-test checks to apply the amended rule: EPERM means present."
+    }
+  ],
+  "reproduction": [
+    {
+      "id": "R0",
+      "command": "git archive a23761919e92c41489f26a57d02fa1d5dc9d8e19 prototypes/__init__.py prototypes/static_tray_v01/__init__.py prototypes/static_tray_v01/supervisor.py prototypes/static_tray_v01/supervisor_darwin_v01.py tests/test_supervisor_darwin_v01.py | tar -x -C <review>/tree-a2376191; git show 5dc76ccf:docs/engineering/localized-repair-c271/macos-implementation-p33/evidence/zombie_group_probe.py > <review>/harness/zombie_group_probe.py",
+      "observed": "The extracted supervisor.py has SHA-256 c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10. The probe copy, baec807b7b269d95dbf1a691b10da7e86f1af5b7d823e3d70fbcaf330b05ba29, is byte-identical to the committed probe."
+    },
+    {
+      "id": "R1",
+      "command": "TMPDIR=\"$(cd \"$TMPDIR\" && pwd -P)/\" .venv/bin/python -I -S -B <review>/harness/zombie_group_probe.py, three times, from <review>/out",
+      "starts": "Python forks only",
+      "observed": "Three byte-identical outputs (4725c2f78c7c9f788f722c6157a7f9fc7fedcb0a15fcd4367875bca4f07a61ba). Case 1: PermissionError errno 1, then ProcessLookupError errno 3 after waitpid. Case 2: 0 while the grandchild is alive; after SIGKILL, EPERM x1 then ESRCH x1, at 1.5 ms."
+    },
+    {
+      "id": "R2",
+      "command": ".venv/bin/python -I -S -B <review>/harness/run_w1_checkpoint.py <review>/tree-a2376191 12 <review>/out/w1-checkpoint-12-runs.json",
+      "starts": "Python children of W1's tests",
+      "observed": "Observation test 12/12. Positive case 12/12. MC12: 8 passed, 4 PermissionError. MC13 timeout: 10 passed, 2 PermissionError. MC13 cancellation 12/12. No process left."
+    },
+    {
+      "id": "R3",
+      "command": ".venv/bin/python -I -S -B <review>/harness/locate_w1_failures.py <review>/tree-a2376191 20 <review>/out/w1-failure-sites-20-runs.json",
+      "starts": "Python children of W1's tests",
+      "observed": "MC12: 10 errors in 20. MC13 timeout: 4 in 20. All 14 at run_process:138 > terminate_group:135 > group_exists:107, with __context__ the original Stop ('Child exited while an owned descendant remained', or 'Monotonic stage or transaction deadline')."
+    },
+    {
+      "id": "R4",
+      "command": ".venv/bin/python -I -S -B <review>/harness/build_variants.py <review>/tree-a2376191 <review>",
+      "starts": "none",
+      "observed": "tree-amended follows amendment section 2, built by exact text edits of supervisor.py's functions: one clause inserted in group_exists, three except clauses widened in terminate_group (6 opcodes), run_process identical to W1's, imports Clock, LIMITS, Stop, _reap, inventory and json_bytes. tree-wrong counts EPERM as absent; its group_exists differs only by the tokens '(' and ', PermissionError )'. Comparison: out/variant-token-comparison.json."
+    },
+    {
+      "id": "R5",
+      "command": ".venv/bin/python -I -S -B <review>/harness/run_w1_checkpoint.py <review>/tree-{amended,wrong} 20 <review>/out/w1-tests-on-{amended,wrong}-20-runs.json children-only",
+      "starts": "Python children of W1's tests",
+      "observed": "Amended and unsafe variants alike pass the positive case, MC12, the MC13 timeout case and the MC13 cancellation case 20 of 20 each."
+    },
+    {
+      "id": "R6",
+      "command": ".venv/bin/python -I -S -B <review>/harness/deterministic_checks.py <review>/tree-{a2376191,amended,wrong} <label> <review>/out/deterministic-<label>.json",
+      "starts": "Python children; D3 starts nothing",
+      "observed": "D1, real, group_exists on an exited, unreaped direct child: checkpoint PermissionError at group_exists:107; amended true; unsafe false; after reaping, ESRCH and false for all. D2, real, terminate_group on that child: checkpoint PermissionError at terminate_group:127 (the SIGTERM send); amended passed in 0.03 ms; unsafe passed. D3, simulated at os.killpg, every call EPERM: checkpoint PermissionError at the first send; amended, the ceiling Stop after 2,002 ms (167 calls, signals 0, 9 and 15); unsafe passed in 0.1 ms with reaped and process_group_absent true. D4, real lasting EPERM: checkpoint PermissionError at line 127, raised while handling the group check's PermissionError; amended, the ceiling Stop after 2,148 ms with cleanup.passed false; unsafe accepted the run (exit status 0, cleanup passed) while the group answered EPERM. In D4 the escaped descendant was alive after the run in every variant; the harness killed it, and every group in D4 then answered ESRCH."
+    },
+    {
+      "id": "R7",
+      "command": "grep -E '^(ERROR|FAIL): ' over ../../OntoKin-local/c271-p33/workers/W1/01-test-run-draft.txt, 02-repeat-real-child-runs.txt and 03-test-run-final.txt; W1's three source tests at the checkpoint",
+      "starts": "none",
+      "observed": "12 runs (1 + 10 + 1): MC12 10, MC13 timeout 3, MC13 cancellation 1, positive 0, all PermissionError. Run 01 also fails a source-binding test on __name__, with a test text that differs from the checkpoint's; the checkpoint's three source tests pass, 3 of 3."
+    },
+    {
+      "id": "R8",
+      "command": "ps -axo pid,ppid,pgid,stat,command filtered for the review's children, and a listing of the temporary stages",
+      "starts": "ps",
+      "observed": "No process and no temporary stage remain."
+    }
+  ],
+  "harness_digests": {
+    "build_variants.py": "9c5ebd886129055c5fa381363995da6924fcf71f6066d1515cceb2bb3f43ca37",
+    "deterministic_checks.py": "6a70af27294db7b39ed7e7a3b39dc3b5d095430c686ce95676f8b9cea274a940",
+    "locate_w1_failures.py": "45436c2211be09d37bcee1741f43bcaf60b5a3af4827623cdd517e15394489b4",
+    "run_w1_checkpoint.py": "3aba04fc84e2e0ac1d9c8ca4bb5ac04515a1149e7ef7f409491183613d98173e (the final text; R2 ran an earlier text that lacked only the optional children-only argument)",
+    "zombie_group_probe.py": "baec807b7b269d95dbf1a691b10da7e86f1af5b7d823e3d70fbcaf330b05ba29"
+  },
+  "output_digests": {
+    "w1-checkpoint-12-runs.json": "28cf87fb4770a6b6e526f1013ca4553439dcdfda80fb1b7faecbcdf4ae71bc35",
+    "w1-failure-sites-20-runs.json": "b39d06b2d66567eb9dc7fca06d0cc37051efa50cda0f1ef28290bddf638ec96d",
+    "w1-tests-on-amended-20-runs.json": "832d3e9b8d5b8650f862f308d5d59675a13a32464697e593befd343fa8d46ec1",
+    "w1-tests-on-wrong-20-runs.json": "9184c01b8e21026e993c47dcb0709f4025e33bc4ad87d621dd2ab3f3978ed7ae",
+    "variant-token-comparison.json": "7f5e0c1129ef9b2b3947022568419f305b3e54f2e1bc30f93eff39a6dc1a40be",
+    "deterministic-a2376191.json": "dfdb78ec753d93484518deac7beb5e75045aad6dd33d89e16f9a57689757c5d0",
+    "deterministic-amended.json": "2ceccb1e538ce159dc06ef08f58457bdd4e16955cb614d72ca62bcebf0bad03e",
+    "deterministic-wrong.json": "02347144cacacd8dad2fd5749b80f03920f2a29678ec6940b1c093ee97e8346c",
+    "probe-run-1.json, probe-run-2.json, probe-run-3.json": "4725c2f78c7c9f788f722c6157a7f9fc7fedcb0a15fcd4367875bca4f07a61ba"
+  },
+  "checks": [
+    {"id": "K1", "check": "candidate commit, tree, parent and diff stat", "result": "only the two amendment files are added, 216 lines"},
+    {"id": "K2", "check": "adopted payloads at the candidate against ADOPTION.json", "result": "CONTRACT.md 42db98dc..., CONTRACT.json c843fc96... and READ-SET.json 9a5e7bed... are byte-identical to the adopted payloads"},
+    {"id": "K3", "check": "supervisor.py identity", "result": "c47b84ab..., unchanged since C199 74eba60c"},
+    {"id": "K4", "check": "host facts read as files", "result": "26.6.2, build 25G83 (system and OS cryptex copies); Darwin 25.6.0 arm64; CPython 3.12.13; they match the amendment"},
+    {"id": "K5", "check": "links and JSON form", "result": "every link resolves at the candidate; AMENDMENT-001.json parses, with 12 replaces keys"},
+    {"id": "K6", "check": "callers of group_exists and terminate_group", "result": "only supervisor.py; the 0.1.0 provider uses run_process, inventory, Stop and Clock"}
+  ],
+  "executed_commands_policy_respected": true,
+  "executed_commands_policy_note": "Started: the checkout's Python interpreter (-I -S -B) and its Python children, and git, tar, shasum, ps and grep for reads. No Node, ldd, codesign, sw_vers or driver started. Nothing downloaded or installed. Git read commands only: two early git status runs did not pass --no-optional-locks and may have refreshed the index's stat cache; no object, ref, index entry or working file changed. No process left running.",
+  "write_scope": "../../OntoKin-local/c271-p33/reviews/AMENDMENT-001-REVIEW.md and .json, and scratch material under ../../OntoKin-local/c271-p33/reviews/amendment-001/ (harness, out, and the extracted and variant trees, none of them repository files)",
+  "reviewed_at_utc": "2026-11-26T15:40Z"
+}
