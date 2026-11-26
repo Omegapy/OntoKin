@@ -1,0 +1,40 @@
+{
+  "schema": "ontokin.c271.p30-r06-downloads-copies/1",
+  "task": "C271",
+  "phase": "C271-P30-operational-plan-review",
+  "recorded_at_utc": "2026-11-26T03:20Z",
+  "purpose": "Dated note on the second recorded copy of the R06 handoff. It changes no R07 record and no verification result.",
+  "note": "The R06 archive and its receipt in the owner's downloads folder are byte-identical to the copies that R07 used beside the clone. R07's records (ARCHIVE-VERIFICATION.json, PUBLICATION.json and P29-R07-SESSION.md) call the downloads copies not observed. That held for the R07 session, whose read waited on macOS access to the folder. The match was found after R07 by the session that started this one, with cmp, and observed again by this session as recorded here. R07's working evidence is in ../OntoKin-local/c271-p29-r07/ beside the clone.",
+  "observation": {
+    "observer": "this phase's Director, c271-p30-55a168e30426",
+    "started_at_utc": "2026-11-26T03:14:17+00:00",
+    "completed_at_utc": "2026-11-26T03:14:17+00:00",
+    "method": "/usr/bin/cmp of each downloads copy against the copy in OntoKin-local/handoffs beside the clone, then the size and SHA-256 of each downloads copy, compared with the identities recorded in R07's ARCHIVE-VERIFICATION.json",
+    "locations": {
+      "used_by_r07": "OntoKin-local/handoffs beside the clone",
+      "second_copy": "the owner's downloads folder (machine path not recorded)"
+    },
+    "files": [
+      {
+        "name": "OntoKin_C271_P29_R06_Transfer_Capability_Handoff_2026-11-24.zip",
+        "cmp_exit": 0,
+        "bytes": 41730084,
+        "sha256": "4b8fae8b846c6f2b27ed5e2630c71240739786791cf39f043e787c55ad727bc9",
+        "equals_recorded_identity": true
+      },
+      {
+        "name": "OntoKin_C271_P29_R06_Delivery_Receipt_2026-11-24.json",
+        "cmp_exit": 0,
+        "bytes": 149563,
+        "sha256": "24aa014cb430d9b7269ee2e39ff08e7005d3630e8dd41c109f824e80039909d8",
+        "equals_recorded_identity": true
+      }
+    ]
+  },
+  "r07_records_unchanged": [
+    "docs/engineering/localized-repair-c271/p29-local-publication-r07/ARCHIVE-VERIFICATION.json",
+    "docs/engineering/localized-repair-c271/p29-local-publication-r07/PUBLICATION.json",
+    "docs/workflow/tasks/C271/P29-R07-SESSION.md"
+  ],
+  "effect": "None on R07's outcome: R07 used the copy beside the clone, which already matched the recorded identities."
+}

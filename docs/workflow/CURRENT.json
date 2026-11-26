@@ -4,16 +4,15 @@
   "latest_task": "C271",
   "active_task": "C271",
   "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-  "snapshot_date": "2026-11-26T01:54:07Z",
+  "snapshot_date": "2026-11-26T03:20:00Z",
   "next_action": {
     "status": "ready",
-    "summary": "Review the /0.1.5 operational plan against the published P29 candidate and current host facts, as a separate phase that has not begun: require a concrete reason for any further preparation work, assess whether an existing executor meets the adopted contract before more host tooling is built, make any executor substitution explicit and keep the original test meaning; read the original qualification plan and its later adopted supplements before execution. H0, H1, the required regression (R03), reviewed integration with actual-main verification (R04) and parent completion with final delivery (R05) follow as further separate phases.",
+    "summary": "C271-P30-operational-plan-review is declared and in progress: review the /0.1.5 operational plan against the published P29 candidate and current host facts; require a concrete reason for any further preparation work, assess whether an existing executor meets the adopted contract before more host tooling is built, make any executor substitution explicit and keep the original test meaning; read the original qualification plan and its later adopted supplements before any execution. Stop at the independently reviewed outcome or the first concrete blocker. H0, H1, the required regression (R03), reviewed integration with actual-main verification (R04) and parent completion with final delivery (R05) follow as further separate phases.",
     "suggested_task": "C271",
     "sources": [
       "docs/workflow/tasks/C271/task.json",
-      "docs/workflow/tasks/C271/P29-R07-SESSION.md",
-      "docs/engineering/localized-repair-c271/p29-local-publication-r07/PUBLICATION.json",
-      "docs/engineering/localized-repair-c271/required-images-p29/RECONSTRUCTION-DECISION.md"
+      "docs/workflow/tasks/C271/P30-SESSION.md",
+      "docs/engineering/localized-repair-c271/operational-plan-review-p30/PHASE.json"
     ]
   },
   "historical_handoff": {
@@ -3098,7 +3097,7 @@
   },
   "checkpoint": {
     "record": "docs/workflow/tasks/C271/task.json",
-    "session": "docs/workflow/tasks/C271/P29-R07-SESSION.md"
+    "session": "docs/workflow/tasks/C271/P30-SESSION.md"
   },
   "p29_local_publication_r07": {
     "phase": "C271-P29-R07-local-publication",
@@ -3256,5 +3255,50 @@
     },
     "corrected_at_utc": "2026-11-26T02:19Z",
     "rule": "A field named for an earlier phase (prefix p25_, p26_, p27_, p28_, p29_r02_, p29_publication_recovery_r02, prior_, previous_ or older_) or ending in _history records that phase's state at its source time; the fields listed in current_state_fields hold the current state; the fields listed in fields are named one by one because their names do not show it."
+  },
+  "p30_prior_current_fields": {
+    "recorded_at_utc": "2026-11-26T03:20:00Z",
+    "purpose": "The current values that the C271-P30 declaration replaced, kept unchanged as R07's source-time state.",
+    "snapshot_date": "2026-11-26T01:54:07Z",
+    "next_action": {
+      "status": "ready",
+      "summary": "Review the /0.1.5 operational plan against the published P29 candidate and current host facts, as a separate phase that has not begun: require a concrete reason for any further preparation work, assess whether an existing executor meets the adopted contract before more host tooling is built, make any executor substitution explicit and keep the original test meaning; read the original qualification plan and its later adopted supplements before execution. H0, H1, the required regression (R03), reviewed integration with actual-main verification (R04) and parent completion with final delivery (R05) follow as further separate phases.",
+      "suggested_task": "C271",
+      "sources": [
+        "docs/workflow/tasks/C271/task.json",
+        "docs/workflow/tasks/C271/P29-R07-SESSION.md",
+        "docs/engineering/localized-repair-c271/p29-local-publication-r07/PUBLICATION.json",
+        "docs/engineering/localized-repair-c271/required-images-p29/RECONSTRUCTION-DECISION.md"
+      ]
+    },
+    "checkpoint": {
+      "record": "docs/workflow/tasks/C271/task.json",
+      "session": "docs/workflow/tasks/C271/P29-R07-SESSION.md"
+    }
+  },
+  "p30_operational_plan_review": {
+    "phase": "C271-P30-operational-plan-review",
+    "owner": "c271-p30-55a168e30426",
+    "record": "docs/engineering/localized-repair-c271/operational-plan-review-p30/PHASE.json",
+    "session_checkpoint": "docs/workflow/tasks/C271/P30-SESSION.md",
+    "declared_at_utc": "2026-11-26T03:20:00Z",
+    "status": "declared_review_pending",
+    "owner_direction": {
+      "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
+      "question": "Should I start the /0.1.5 operational-plan review as C271's next phase?",
+      "reply": "begin the /0.1.5",
+      "how_received": "Typed by the owner in the Claude Code session that started this phase's session and relayed to this session word for word as the owner's selection of this phase."
+    },
+    "gates_still_open": [
+      "/0.1.5 operational-plan review (this phase, in progress)",
+      "H0",
+      "H1",
+      "required regression (R03)",
+      "reviewed integration and actual-main verification (R04)",
+      "parent completion and final delivery (R05)"
+    ],
+    "dated_notes": [
+      "2026-11-26 (UTC): the R06 archive and its receipt in the owner's downloads folder are byte-identical to the copies that R07 used beside the clone (cmp exit 0 for both; recorded sizes and SHA-256). R07's records call them not observed, which held for the R07 session. The match was found after R07 by the session that started this one and observed again in this phase. R07's records stay unchanged; R07's working evidence is in ../OntoKin-local/c271-p29-r07/ beside the clone. Record: docs/engineering/localized-repair-c271/operational-plan-review-p30/R06-DOWNLOADS-COPIES.json."
+    ]
   }
 }

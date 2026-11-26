@@ -1,0 +1,40 @@
+{
+  "schema": "ontokin.c271.p30-checks-baseline/1",
+  "task": "C271",
+  "phase": "C271-P30-operational-plan-review",
+  "source_revision": "4ee55b037b909b36cb8a6330aa07ccc78071af88",
+  "checkout": "the C271 worktree ../OntoKin-worktrees/c271, clean, at that revision",
+  "started_at_utc": "2026-11-26T03:14:56Z",
+  "ended_at_utc": "2026-11-26T03:14:58Z",
+  "executor": "the C271 worktree's own .venv/bin/python (CPython 3.12.13, Homebrew python@3.12, macOS 26.6.2 arm64), created with venv --without-pip and holding no package, as R07's CHECKS.json records it",
+  "checks": [
+    {
+      "id": "workflow",
+      "command": ".venv/bin/python tools/chat_workflow.py check",
+      "exit": 0,
+      "result": "passed",
+      "observed": "Workflow structure passed (12 tasks).",
+      "output_sha256": "c45acaa10e8dc61dc64c8f4c136b41cc22f84bf215624e9e3bf29cf1af9119e1"
+    },
+    {
+      "id": "documentation",
+      "command": ".venv/bin/python docs/maintenance/reorganization-2026-10-17/verify_reorganization.py --json-output <working evidence directory>/checks/baseline/docs",
+      "exit": 0,
+      "result": "passed",
+      "observed": {
+        "links": {
+          "documents": 1668,
+          "local_links": 6399,
+          "anchors": 113,
+          "external_skipped": 1067
+        },
+        "sections_verified": 233,
+        "sources_verified": 29,
+        "failures": 0
+      },
+      "output_sha256": "ffe456cfbb85e7f8bfae530fc2ed1d5b279e99980226e570a0c01060c6eac45e"
+    }
+  ],
+  "not_run": "No routine driver, unit test or behavioural test; they are excluded from this phase.",
+  "output_location": "../OntoKin-local/c271-p30/checks/baseline/ beside the clone"
+}

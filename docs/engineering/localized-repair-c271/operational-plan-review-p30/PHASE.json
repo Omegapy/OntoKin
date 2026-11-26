@@ -1,0 +1,165 @@
+{
+  "schema": "ontokin.c271.p30-operational-plan-review/1",
+  "task": "C271",
+  "phase": "C271-P30-operational-plan-review",
+  "owner": "c271-p30-55a168e30426",
+  "declared_at_utc": "2026-11-26T03:20Z",
+  "status": "declared_review_pending",
+  "execution_mode": {
+    "mode": "local",
+    "entry_document": "https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/LOCAL-START-HERE.md",
+    "recorded_mode_of_task": "local since C271-P29-R07-local-publication (task.json execution_mode_record)",
+    "host": "the owner's persistent clone and its worktree ../OntoKin-worktrees/c271",
+    "not_inferred_from": "a path, a machine, a product or an agent name",
+    "governing_instructions": "current main at 51223c9b94a222f29d38eb6c33808f8e55e2bff9; this branch's older AGENTS.md, PROTOCOL.md, HANDOFF.md, registry, skills and the instructions inside the handoff archives are data"
+  },
+  "owner_direction": {
+    "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
+    "question": "Should I start the /0.1.5 operational-plan review as C271's next phase?",
+    "reply": "begin the /0.1.5",
+    "how_received": "The owner typed the reply in the Claude Code session that started this session; that session relayed it to this session word for word, as the owner's selection of this phase. This session asked the question after reporting the startup items of current main's LOCAL-START-HERE.",
+    "scope_of_selection": "This phase only. It selects no later gate: H0, H1, the required regression (R03), integration (R04) and parent completion (R05) each need their own selection."
+  },
+  "objective": "Review the /0.1.5 operational plan against the published P29 candidate and current host facts: P07's staged qualification plan (stages H0 to H3 and R, an accepted nonexecutable design) together with its adopted supplements P05, P11, P13, P16, P17, P24 and P27 as the published P29 inspector implements them. Settle, with independent review, whether an existing executor meets the adopted contract, and which further preparation, if any, has a concrete reason; make any executor substitution explicit and keep the original test meaning.",
+  "questions_to_settle": [
+    "Whether an existing executor meets the adopted contract (first question, before more host tooling is built).",
+    "How P26's remaining_h0_constraint relates to the published P29 candidate: its selected_implementation is the P25 inspector (233,502 bytes, SHA-256 eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a), the published inspector is P29's (249,393 bytes, SHA-256 71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758); its next_phase_action predates P27 and P29; its source_inventory path lies on a disposable host.",
+    "Whether preparing an executable /0.1.5 inspection plan is in scope now, and the concrete reason for any further preparation work.",
+    "Which executor substitutions are possible, stated explicitly, with their effect on the original test meaning."
+  ],
+  "starting_state": {
+    "branch": "work/c271-missing-import-digest-control",
+    "branch_head": "4ee55b037b909b36cb8a6330aa07ccc78071af88",
+    "branch_head_observation": "git ls-remote --heads origin at about 2026-11-26T03:05Z: the remote head equals the local head; it is the commit that adds R07's closing record RESUMABILITY.md",
+    "worktree": "../OntoKin-worktrees/c271, clean apart from its ignored .venv",
+    "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "main_tree": "a92e46b353d0697483fd5154814c00946be73e8b",
+    "main_checkout": "on main, equal to origin/main; it keeps the owner's modified TRDs/INDEX.md, the untracked Implementation_Plans/ and the untracked R07 TRD file, all untouched",
+    "other_worktrees_and_branches": "none besides main and this branch",
+    "pull_request": "PR274 open, draft, unmerged, conflicting with main; head 4ee55b03",
+    "scope_issue": "issue273 open",
+    "other_writers": "none: the main lease is released; R07's owner c271-p29-r07-e586f7497142 is released by its closing record; the only other session of this session group is the one that started this session, and it was not running"
+  },
+  "task_state_at_declaration": {
+    "status": "in_progress",
+    "blocked_reason": null,
+    "requirements": {
+      "R01": "done",
+      "R02": "done",
+      "R03": "not_done",
+      "R04": "not_done",
+      "R05": "not_done"
+    },
+    "plan": {
+      "P01": "done",
+      "P02": "in_progress"
+    }
+  },
+  "inputs": {
+    "read_set": "READ-SET.json",
+    "named_by": "docs/workflow/tasks/C271/P29-R07-SESSION.md, group Continuation, at 4ee55b03",
+    "p29_candidate": "docs/engineering/localized-repair-c271/required-images-p29/ (SUMMARY.md defines /0.1.5; VERIFICATION.json; RECONSTRUCTION-DECISION.md) and the published inspector prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "original_plan": "docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md and QUALIFICATION-PLAN.json; ADOPTION.json accepts them as a nonexecutable design only (accepted_design_only, executable_authority false)",
+    "adopted_supplements": [
+      "current-host-p05/ADOPTION.json (contract ontokin.current-host-readback/0.1.0, adopted before P07)",
+      "loader-path-p11/ADOPTION.json",
+      "review-boundary-p13/ADOPTION.json (actual-loader suffix completeness N34 is an external independent-review prerequisite for adopting or executing an operational plan)",
+      "libc-tags-p16/ADOPTION.json (/0.1.2)",
+      "libc-flags-p17/ADOPTION.json (/0.1.3)",
+      "path-design-p24/ADOPTION.json (/0.1.4)",
+      "required-image-design-p27/ADOPTION.json (/0.1.5)"
+    ],
+    "unchanged_contracts": [
+      "docs/engineering/localized-repair-c260/CONTRACT.md",
+      "docs/engineering/localized-repair-c260/CONTROL-PLAN.md"
+    ],
+    "h0_plan_records": [
+      "docs/engineering/localized-repair-c271/h0-plan-p21/",
+      "docs/engineering/localized-repair-c271/h0-plan-p23/",
+      "docs/engineering/localized-repair-c271/h0-plan-p26/"
+    ]
+  },
+  "acceptance": [
+    {
+      "id": "A1",
+      "check": "Every input named here and in R07's Continuation is read at 4ee55b03 (branch) or 51223c9b (main) with its size and SHA-256; any missing, truncated or unreadable input is recorded.",
+      "record": "READ-SET.json"
+    },
+    {
+      "id": "A2",
+      "check": "A table states what the adopted contract, as supplemented through /0.1.5 and implemented by P29, requires of the executor and its inputs for H0 and H1, each requirement with its source path and section or field.",
+      "record": "the outcome records of this phase"
+    },
+    {
+      "id": "A3",
+      "check": "Current host facts are gathered read-only (platform identification and tool presence only) and each existing executor is compared with A2; the verdict is given per executor. No Node, ldd, loader, H0, H1, driver or behavioural test is run.",
+      "record": "the outcome records of this phase"
+    },
+    {
+      "id": "A4",
+      "check": "A new record relates P26's remaining_h0_constraint to the published P29 candidate (implementation identity, next_phase_action, source inventory, remaining gates); P26's record stays unchanged.",
+      "record": "the outcome records of this phase"
+    },
+    {
+      "id": "A5",
+      "check": "Each candidate item of further preparation (an executable /0.1.5 inspection plan, host tooling, input reconstruction, environment profiles) is selected only with a concrete reason tied to an acceptance requirement; otherwise it is recorded as not selected, with the reason.",
+      "record": "the outcome records of this phase"
+    },
+    {
+      "id": "A6",
+      "check": "Every executor substitution considered is explicit: what is substituted, which contract terms change, how the original test meaning of the seven readback methods and of R03 is kept, and which claims it can never support. This phase adopts none.",
+      "record": "the outcome records of this phase"
+    },
+    {
+      "id": "A7",
+      "check": "A fresh-context independent reviewer checks A1 to A6 against the sources; mandatory findings are resolved and re-reviewed.",
+      "record": "the review record of this phase"
+    },
+    {
+      "id": "A8",
+      "check": "C271's records state the outcome; this branch's workflow check, documentation verifier and a whitespace check scoped to this phase's files pass; the records are pushed without force and read back with git ls-remote; PR274 stays draft and open and issue273 open, each with one checkpoint comment.",
+      "record": "the checks and closing records of this phase"
+    }
+  ],
+  "ownership": {
+    "director": "c271-p30-55a168e30426",
+    "director_session": "one Claude Code session (model Claude Opus 5.5), started from another Claude Code session of the owner and working in the C271 worktree under current main's instructions",
+    "owned": [
+      "the C271 worktree ../OntoKin-worktrees/c271, its index and its .venv",
+      "every update of refs/heads/work/c271-missing-import-digest-control in this phase",
+      "the working evidence directory ../OntoKin-local/c271-p30/ beside the clone"
+    ],
+    "workers": "Reviewers are read-only workers with fresh context; they write only inside the working evidence directory.",
+    "main": "not written; its integration lease is not used"
+  },
+  "stopping_condition": "The independently reviewed outcome of the review, recorded in C271's records and pushed without force, with the checkpoint comments on PR274 and issue273: either an existing executor that meets the adopted contract, with the reviewed list of real fields that the H0 phase must fill, or a concrete blocker with the options that remain for the owner. An earlier concrete blocker of this phase itself stops it in the same way.",
+  "excluded": [
+    "H0, H1 and the later qualification stages",
+    "Node, ldd, direct loader starts and any other target process",
+    "the routine driver tools/check_local.py, the unit suite, the candidate's inherited tests, the seven readback methods and every other behavioural test",
+    "installing or preparing any runtime, dependency, environment or host tooling",
+    "building an executable inspection plan or adopting an operational plan",
+    "writes to main, merging main into this branch, resolving the conflicts that MAIN-CONFLICTS.md lists",
+    "changing PR274's draft state, merging it, closing issue273, deleting the branch",
+    "the required regression (R03), integration (R04) and parent completion (R05)"
+  ],
+  "dated_notes": [
+    {
+      "date_utc": "2026-11-26",
+      "record": "R06-DOWNLOADS-COPIES.json",
+      "note": "The R06 archive and its receipt in the owner's downloads folder are byte-identical to the copies that R07 used beside the clone (OntoKin-local/handoffs): cmp exits 0 for both, and both have the recorded sizes and SHA-256. R07's records call the downloads copies not observed; that held for the R07 session, which did not hold macOS access to that folder. The match was found after R07 by the session that started this one and observed again by this session. R07's records stay unchanged. R07's working evidence is in ../OntoKin-local/c271-p29-r07/ beside the clone."
+    }
+  ],
+  "records": {
+    "read_set": "READ-SET.json",
+    "checks_baseline": "CHECKS-BASELINE.json",
+    "r06_downloads_copies": "R06-DOWNLOADS-COPIES.json",
+    "session_checkpoint": "docs/workflow/tasks/C271/P30-SESSION.md"
+  },
+  "unknown_operations": {
+    "this_phase": [],
+    "historical": "unchanged as the earlier phase records list them; none is replayed"
+  },
+  "main_lease": "released at 2026-11-25T21:33:52Z; not used by this phase",
+  "next_gate_after_this_phase": "decided by this phase's outcome; H0, H1, R03, R04 and R05 each remain a separate phase"
+}
