@@ -5,13 +5,13 @@ Detailed evidence is linked, not repeated. Machine paths are left out; places be
 are named relative to it. Times are UTC. This is the outcome checkpoint of the phase, corrected
 after the fresh-context resumability check and its re-read. The declaration version is
 retrievable from commit `80fecf97b785544e8044a60df849cc5918929599`, the first outcome version
-from `12d7e55472f8b1d2b67414857ec310b288025244`, and the first correction from
-`bb75b1c5f83da34e8cc653b536e635d2e89a62d2`.
+from `12d7e55472f8b1d2b67414857ec310b288025244`, and the two earlier corrections from
+`bb75b1c5f83da34e8cc653b536e635d2e89a62d2` and `cda16e6dbc5c1aac328396858e2021e972f08b82`.
 
 ## Identity
 
-- Checkpoint time and author identity: 2026-11-26T02:19Z (UTC), the second correction after the
-  resumability check's re-read, by Director `c271-p29-r07-e586f7497142`. The first outcome version stated
+- Checkpoint time and author identity: 2026-11-26T02:23Z (UTC), the third correction after the
+  resumability check's second re-read, by Director `c271-p29-r07-e586f7497142`. The first outcome version stated
   02:00Z, later than its own commit time (01:54:49Z); its commit time is the correct one.
 - Task, session, and agent or tool identity: C271, phase C271-P29-R07-local-publication; one
   Claude Code session (model Claude Opus 5.5) started in the main checkout.
@@ -237,10 +237,13 @@ from `12d7e55472f8b1d2b67414857ec310b288025244`, and the first correction from
     [RECONSTRUCTION-DECISION](../../../engineering/localized-repair-c271/required-images-p29/RECONSTRUCTION-DECISION.md);
   - the staged qualification plan of P07:
     [QUALIFICATION-PLAN](../../../engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md), with its JSON,
-    stages H0 to H3;
-  - the later adopted designs that refine that plan, which the review reads as its adopted
-    supplements and checks where they differ from it: the P05
-    [current-host design](../../../engineering/localized-repair-c271/current-host-p05/ADOPTION.json), the P11
+    stages H0 to H3. Its [adoption record](../../../engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json) accepts
+    it as a nonexecutable design only (`accepted_design_only`, `executable_authority` false), so it
+    grants no authority to execute;
+  - the adopted designs around that plan, which the review reads as its adopted supplements and
+    checks where they differ from it: the earlier P05
+    [current-host design](../../../engineering/localized-repair-c271/current-host-p05/ADOPTION.json), adopted before P07, and the
+    later P11
     [loader-path decision](../../../engineering/localized-repair-c271/loader-path-p11/ADOPTION.json), the P13
     [review boundary](../../../engineering/localized-repair-c271/review-boundary-p13/ADOPTION.json), which makes actual-loader
     suffix completeness (N34) an external independent-review prerequisite for adopting or executing
