@@ -1,0 +1,170 @@
+{
+  "all_agree": true,
+  "author": "W1, independent preparation author",
+  "checks": [
+    {
+      "agrees": true,
+      "check": "plan bytes are canonical JSON of the plan value",
+      "plan": "node-install-plan.json"
+    },
+    {
+      "agrees": true,
+      "check": "plan keys equal PLAN_KEYS_V02",
+      "plan": "node-install-plan.json"
+    },
+    {
+      "agrees": true,
+      "check": "validate_plan_v02 accepts the plan",
+      "plan": "node-install-plan.json",
+      "sha256": "1fee042d5e3c809a89d4975df40f69d7a27e88abf9ba58d8cf91ca16795c5ff1"
+    },
+    {
+      "agrees": true,
+      "check": "plan bytes are canonical JSON of the plan value",
+      "plan": "node-install-plan.dry-run.json"
+    },
+    {
+      "agrees": true,
+      "check": "plan keys equal PLAN_KEYS_V02",
+      "plan": "node-install-plan.dry-run.json"
+    },
+    {
+      "agrees": true,
+      "check": "validate_plan_v02 accepts the plan",
+      "plan": "node-install-plan.dry-run.json",
+      "sha256": "869b6414d42f6ced4ee4ad017ceff7cc63c33b563fcdffcc5999cebebae01d48"
+    },
+    {
+      "agrees": true,
+      "check": "plan bytes are canonical JSON of the plan value",
+      "plan": "reader-install-plan.json"
+    },
+    {
+      "agrees": true,
+      "check": "plan keys equal PLAN_KEYS_V02",
+      "plan": "reader-install-plan.json"
+    },
+    {
+      "agrees": true,
+      "check": "validate_plan_v02 accepts the plan",
+      "plan": "reader-install-plan.json",
+      "sha256": "ff5a95da6d349e0bd6ea1d2c79fc02757de48ac9cbb89dc59737b67c6d7a71c8"
+    },
+    {
+      "agrees": true,
+      "check": "plan bytes are canonical JSON of the plan value",
+      "plan": "reader-install-plan.dry-run.json"
+    },
+    {
+      "agrees": true,
+      "check": "plan keys equal PLAN_KEYS_V02",
+      "plan": "reader-install-plan.dry-run.json"
+    },
+    {
+      "agrees": true,
+      "check": "validate_plan_v02 accepts the plan",
+      "plan": "reader-install-plan.dry-run.json",
+      "sha256": "a81897783b9df86bb216eb5c371a1191de0a89762e6cd88360c8cc7b7fecf10e"
+    },
+    {
+      "agrees": true,
+      "check": "member_inventory_sha256_v02 equals the author's Node inventory digest",
+      "value": "0b2b6072fd2e6b22fd4d2715d9db9429adf17d960825b0048411d1a1d4c0f27d"
+    },
+    {
+      "agrees": true,
+      "check": "member_inventory_sha256_v02 equals the author's C195 inventory digest",
+      "value": "72dc3175953b29edce2e2343613c08fb2f0bfb2b40e72faaaa5c9d457d67cb8a"
+    },
+    {
+      "agrees": true,
+      "author_sha256": "e928a8ec87a6fcd8f21d7bef3e080392e0bdaad3acbf2e767997dae5ead9ea2c",
+      "check": "node_source_bytes_v02 equals NODE-SOURCE.json.expected",
+      "implementation_sha256": "e928a8ec87a6fcd8f21d7bef3e080392e0bdaad3acbf2e767997dae5ead9ea2c"
+    },
+    {
+      "agrees": true,
+      "check": "files[NODE-SOURCE.json] binds the built bytes"
+    },
+    {
+      "agrees": true,
+      "check": "dependency_inventory(ROOT) equals the reader plan's 24 files by digest and size",
+      "files": 24
+    },
+    {
+      "agrees": true,
+      "check": "constant agrees: NODE_ARCHIVE_SHA256_V02"
+    },
+    {
+      "agrees": true,
+      "check": "constant agrees: NODE_CHECKSUM_FILE_V02"
+    },
+    {
+      "agrees": true,
+      "check": "constant agrees: NODE_MEMBER_V02"
+    },
+    {
+      "agrees": true,
+      "check": "constant agrees: NODE_ARCHIVE_NAME_V02"
+    },
+    {
+      "agrees": true,
+      "check": "constant agrees: NODE_SOURCE_SCHEMA_V02"
+    },
+    {
+      "agrees": true,
+      "check": "constant agrees: SCHEMA_V02"
+    },
+    {
+      "agrees": true,
+      "check": "constant agrees: CONTRACT_V02"
+    },
+    {
+      "agrees": true,
+      "check": "constant agrees: NODE_MEMBER_KEYS_V02"
+    },
+    {
+      "agrees": true,
+      "check": "constant agrees: DEPENDENCY_MEMBER_KEYS_V02"
+    },
+    {
+      "agrees": true,
+      "check": "constant agrees: provider.ARCHIVE_SHA256"
+    },
+    {
+      "agrees": true,
+      "check": "constant agrees: provider.EXTERNAL_SHA256"
+    },
+    {
+      "agrees": true,
+      "check": "constant agrees: preparer ROOT"
+    }
+  ],
+  "helpers_called": [
+    "validate_plan_v02",
+    "member_inventory_sha256_v02",
+    "node_source_bytes_v02",
+    "provider.dependency_inventory"
+  ],
+  "not_called": [
+    "install_plan_v02",
+    "main (the CLI)",
+    "any archive pass"
+  ],
+  "paths_at_check": {
+    "destination parent": {
+      "entries": 0,
+      "is_directory": true,
+      "same_device_as_reports": true
+    },
+    "node destination": "absent",
+    "node dry-run report": "absent",
+    "node report": "absent",
+    "reader destination": "absent",
+    "reader dry-run report": "absent",
+    "reader report": "absent",
+    "report parent is a directory": true
+  },
+  "phase": "C271-P34-macos-preparation-mp",
+  "schema": "ontokin.c271.p34-w1-crosscheck/1"
+}

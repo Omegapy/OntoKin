@@ -136,3 +136,82 @@ write, downloads anything, or starts Node, `ldd` or `codesign`.
 | I-03: `preparer_source` names four files | Step 6, the clean checkout at B; the limit is recorded |
 | M0's exact package rule | Section 3, and step 7's early package check |
 | W3's F4: no interpreter run without `-B` before M0 | Section 3; every MP command uses `-B`. The rule continues until MH has frozen the inventory and run M0. |
+
+## 7. Changes after plan review 001
+
+The fresh-context review [PLAN-REVIEW-001](reviews/PLAN-REVIEW-001.md) accepted the plans, the
+expectation and the `.venv` procedure. It raised nonmandatory findings P-01 to P-10, and no
+mandatory one. It also accepted the Director's addition of `--no-cache-dir`. All ten findings are
+adopted. This section supersedes the parts of sections 3 and 5 that it names.
+
+- **The plans and their digests (P-07).** The preparer runs exactly these reviewed files, each
+  passed by its recorded digest, never by one recomputed at run time:
+
+  | Plan | SHA-256 |
+  | --- | --- |
+  | `node-install-plan.dry-run.json` | `869b6414d42f6ced4ee4ad017ceff7cc63c33b563fcdffcc5999cebebae01d48` |
+  | `node-install-plan.json` | `1fee042d5e3c809a89d4975df40f69d7a27e88abf9ba58d8cf91ca16795c5ff1` |
+  | `reader-install-plan.dry-run.json` | `a81897783b9df86bb216eb5c371a1191de0a89762e6cd88360c8cc7b7fecf10e` |
+  | `reader-install-plan.json` | `ff5a95da6d349e0bd6ea1d2c79fc02757de48ac9cbb89dc59737b67c6d7a71c8` |
+
+  Each dry-run plan differs from its plan only in `report`, because every preparer run needs an
+  absent report path (W1's F1). The portable copies are in [plans/](plans/).
+- **The bound commit (P-06).** B is the commit that adds these records.
+  - It descends from `6d08e026`, against which the review validated the plans.
+  - It changes none of the preparer's ten-file import closure: the four `preparer_source` files,
+    `errors.py`, `format_check.py`, `lock.py`, `supervisor.py` and the two package `__init__`
+    files.
+  - It changes neither the C199 manifest, nor the C195 archive, nor the lock or its provenance.
+  - Before and after each run, HEAD is B, `git status --porcelain -uall` is empty, and
+    `git status --porcelain --ignored` shows only `.venv/`.
+- **The `.venv` command (P-03, P-10, `--no-cache-dir`).** It runs from the worktree root, with
+  umask `022`, under this declared environment and no other variable:
+
+  ```sh
+  env -i HOME=<fresh empty directory> PATH=/usr/bin:/bin TMPDIR=<resolved> LANG=C.UTF-8 LC_ALL=C.UTF-8 \
+    PYTHONDONTWRITEBYTECODE=1 PIP_CONFIG_FILE=/dev/null \
+    <homebrew python3.12> -I -B -m pip --python <worktree>/.venv/bin/python --isolated \
+    --disable-pip-version-check install --no-input --no-deps --only-binary=:all: --require-hashes \
+    --no-compile --no-cache-dir --no-index --find-links <downloads>/wheels \
+    -r tools/native-reader-verification-macos-arm64-cp312.lock
+  ```
+
+  - **Why the bytecode variable (P-10):** pip's `--python` reruns the base installation's pip
+    under the `.venv` interpreter, without `-I`, `-E` or `-B`. `PYTHONDONTWRITEBYTECODE=1` is
+    needed because that child runs without `-B`. It takes effect because the child also runs
+    without `-I` and `-E`.
+  - **Configuration:** `PIP_CONFIG_FILE=/dev/null` keeps pip from reading any configuration file.
+  - **Recorded:** the receipts record the variable names, pip's version and a digest of the
+    installing pip's files.
+- **The exact result (P-05).** The `.venv`'s added entries must equal
+  [venv-expectation.json](plans/venv-expectation.json) exactly, and nothing else in the `.venv`
+  may be added, removed or changed. The additions are:
+  - 291 `site-packages` files: 270 by their wheels' SHA-256 and size, pip's `INSTALLER` and
+    `REQUESTED` by digest, and the seven rewritten `RECORD` files by name;
+  - their directories;
+  - `bin/jsonschema`.
+- **In place of `pip check` (P-01).** A metadata-level check reads the `Requires-Dist` of the
+  seven installed `METADATA` files. Each requirement that applies on Python 3.12, without an extra,
+  must be met by the installed pins.
+- **The doctor's expected result (P-01, P-02).** It runs with a minimal `PATH` and an absent
+  `--node` path, and its JSON report is kept.
+  - **Ready:** lock, packages, imports and native reader.
+  - **Not checked:** pip check, and so the `python-verification` profile; exit status 1.
+  - **Rebuild advice:** the doctor advises a rebuild with the setup tool. It is deliberately not
+    followed, because that route installs pip (D-21).
+  - **The absent Node path:** the doctor makes one attempt to start it, which fails before any
+    image runs. The audit records it as a failed attempt on a non-existent path, not a Node start
+    (A7).
+- **The audit's limit (P-04).** The hook sees the starts of the audited process, among them pip's
+  one start of the `.venv` interpreter. Starts by that child are outside it. By reading pip 26.0,
+  that child starts nothing for this offline, binary-only, no-dependency install: packaging's
+  `mac_platforms` starts an interpreter only when it reports macOS 10.16, and this one reports
+  26.6.2.
+- **The audit wrapper (P-08)** leaves `sys.path` as `-I` sets it.
+- **Retention (P-09).** M0 binds each plan's archive again by path, SHA-256, size and mode (the
+  observer's `_install_receipts`). So both archives stay unchanged at their paths until MH:
+  - the Node archive, with mode `0o444` and one link;
+  - the committed C195 archive.
+
+  Contract section 7's `.DS_Store` rule applies to the prepared trees once they are published, so
+  the trees are not opened in Finder.

@@ -1,0 +1,586 @@
+{
+ "schema": "ontokin.c271.p34-plan-review/1",
+ "review": "PLAN-REVIEW-001",
+ "task": "C271",
+ "phase": "C271-P34-macos-preparation-mp",
+ "gate": "MP",
+ "reviewer": "W2, fresh-context independent reviewer; wrote none of the implementation, plans or decisions",
+ "director": "c271-p34-ec1a7de2360d",
+ "contract": "ontokin.current-host-readback/0.2.0",
+ "design_revision": 4,
+ "amendments": [
+  "P33-AMENDMENT-001"
+ ],
+ "reviewed_base": {
+  "branch": "work/c271-missing-import-digest-control",
+  "commit": "6d08e0266623507786e991d8617a4a6a0d72e171",
+  "state": "clean; the only ignored entry is .venv/; no __pycache__ in the checkout"
+ },
+ "date": "2026-11-26",
+ "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+ "mandatory_findings": [],
+ "settle_before_step_6": [
+  "P-01",
+  "P-06",
+  "P-07"
+ ],
+ "no_cache_dir_proposal": {
+  "decision": "accepted unchanged",
+  "basis": "pip 26.0: a general option valid after install; sets cache_dir false, so the HTTP and wheel caches are neither read nor written; with --no-index and local wheels the cache is unused anyway, and the flag makes that true by construction; the installed result is unchanged"
+ },
+ "reproduced": {
+  "downloads": "8 files hashed again; the Node archive equals the adopted pin, the approved URL and size, HTTP 200, mode 0o444, one link; each wheel equals the lock hash and its provenance URL, size and version; the lock equals its provenance digest; 5,447,056 wheel bytes",
+  "node_inventory": {
+   "members": 5888,
+   "files": 4797,
+   "directories": 1088,
+   "symlinks": 3,
+   "expanded_bytes": 197423496,
+   "member_inventory_sha256": "0b2b6072fd2e6b22fd4d2715d9db9429adf17d960825b0048411d1a1d4c0f27d",
+   "equals_plan_members": true,
+   "policy_violations": 0,
+   "d06": "all names and link targets ASCII; highest mode 0o755; no special bit"
+  },
+  "bin_node": {
+   "sha256": "6f32069480ec14d52b6d7b1f3c7124cfbbc46203abf5ddf5c65b127435f3f329",
+   "size_bytes": 122545856,
+   "header_mode": "0o755",
+   "planned_mode": "0o755",
+   "macho": "thin 64-bit little-endian, cputype 0x0100000c, cpusubtype 0, MH_EXECUTE, 21 load commands",
+   "links_core_foundation": true
+  },
+  "node_source": {
+   "sha256": "e928a8ec87a6fcd8f21d7bef3e080392e0bdaad3acbf2e767997dae5ead9ea2c",
+   "size_bytes": 976,
+   "equals": [
+    "NODE-SOURCE.json.expected",
+    "the plan's files['NODE-SOURCE.json']",
+    "node_source_bytes_v02(plan)"
+   ],
+   "observer_check_node_source": "accepted",
+   "signature_status": "not_performed"
+  },
+  "reader": {
+   "members": 730,
+   "member_inventory_sha256": "72dc3175953b29edce2e2343613c08fb2f0bfb2b40e72faaaa5c9d457d67cb8a",
+   "mapping": "c195-validation/receiving/<rel> -> <rel>, 24 files, each with the pinned bytes",
+   "equals_plan": true,
+   "files_equal_dependency_inventory": true,
+   "directories": 13,
+   "modes": "files 0o644; directories and root 0o755"
+  },
+  "static_validation": {
+   "validate_plan_v02": {
+    "node-install-plan.json": "accepted",
+    "node-install-plan.dry-run.json": "accepted",
+    "reader-install-plan.json": "accepted",
+    "reader-install-plan.dry-run.json": "accepted"
+   },
+   "member_inventory_sha256_v02": {
+    "node": "0b2b6072fd2e6b22fd4d2715d9db9429adf17d960825b0048411d1a1d4c0f27d",
+    "reader": "72dc3175953b29edce2e2343613c08fb2f0bfb2b40e72faaaa5c9d457d67cb8a"
+   }
+  },
+  "places": "destinations and all four reports absent, normalized, outside the checkout, without link components, parents present; side files absent; destination parent and receipts empty; one APFS volume with VOL_CAP_INT_RENAME_EXCL valid and set",
+  "portable_copies": "each restores to its exact plan byte for byte; no machine path or user name in any portable copy or W1 file; exact plans canonical",
+  "venv": "pip 26.0 code read; predicted site-packages (291 files) and bin/jsonschema accepted by the observer's verify_packages with reads served from memory, refused once pip is present; 27 wheel Mach-O files pass parse_macho and check_python_macho; python_inventory of the current .venv and framework computable (3,788 framework entries, 414 cached bytecode files for 1,969 sources)"
+ },
+ "w1_findings": {
+  "F1": "correct; the dry-run variants differ only in report and both validate; a further report-only variant keeps this review's other checks but its digest must be recorded before its run",
+  "F2": "correct as a static fact (plain LC_LOAD_DYLIB of CoreFoundation); it does not establish that a start adds __CF_USER_TEXT_ENCODING; D-16 stays with MH and points to MC36 standing as written",
+  "F3": "correct; pip 26.0 writes INSTALLER (pip\\n), an empty REQUESTED, a rewritten RECORD and the console script, and no direct_url.json",
+  "F4": "correct; P-09 adds that both archives must stay unchanged until MH"
+ },
+ "findings": [
+  {
+   "id": "P-01",
+   "severity": "nonmandatory",
+   "location": "PREPARATION-PLAN.md section 3 'The doctor' and section 5 step 7; tools/doctor_local.py (verification_checks, combine, rebuild_reasons, next_action, main)",
+   "issue": "The pip check is correctly reported as not checked, but its consequences are not stated: combine makes the python-verification profile not_checked, so the doctor exits 1, and because pip_check is null, rebuild_reasons is not empty and the next action recommends 'tools/bootstrap_local.py --profile python-verification --rebuild', the route that installs pip (D-21). The plan also omits what pip check verifies, the installed distributions' Requires-Dist; read from the seven METADATA files they are lower bounds met by the pins (typing-extensions applies on 3.12).",
+   "required_change": "State the expected doctor result exactly (lock, packages, imports and native-reader ready; pip-check not_checked; profile not_checked; exit status 1; the rebuild advice deliberately not followed), keep the doctor's JSON report as a fresh file, and record a metadata-level requirement check in place of pip check."
+  },
+  {
+   "id": "P-02",
+   "severity": "nonmandatory",
+   "location": "PREPARATION-PLAN.md section 5 step 7; tools/doctor_local.py visual_section",
+   "issue": "node resolves on this host's default PATH, so the doctor without --node starts 'node --version'. With --node naming an absent path it still calls subprocess.run once; the call fails (no such file) before any image runs, but a Python-level audit records a start event.",
+   "required_change": "Keep the absent --node path mandatory in the command, with a minimal PATH, and classify that audit row as a failed attempt on a non-existent path, not a Node start (A7)."
+  },
+  {
+   "id": "P-03",
+   "severity": "nonmandatory",
+   "location": "PREPARATION-PLAN.md section 3 (the pip command) and section 5 step 6",
+   "issue": "pip's --python re-runs the base installation's pip under .venv/bin/python with neither -I nor -E; that child inherits the ambient environment and honours every PYTHON* variable (PYTHONEXECUTABLE would even change sys.executable and so the console script's first line). --isolated ignores PIP_* variables and user configuration, but pip still reads global and site configuration files and PIP_CONFIG_FILE. None of those files exists at review time. The procedure records neither its environment, nor its working directory (the lock path is relative), nor its umask (installed modes follow it), nor the installer's identity (the base pip has a METADATA, version 26.0, and no RECORD).",
+   "required_change": "Run the step under a declared environment, for example env -i with HOME, PATH=/usr/bin:/bin, the resolved TMPDIR, LANG and LC_ALL, PYTHONDONTWRITEBYTECODE=1 and PIP_CONFIG_FILE=/dev/null, from the worktree root, with umask 022; record the variable names, pip's version and a digest of the installing pip's files."
+  },
+  {
+   "id": "P-04",
+   "severity": "nonmandatory",
+   "location": "PREPARATION-PLAN.md section 5 step 6 'Audit'; PHASE.json A7",
+   "issue": "The audit hook runs in the parent interpreter and sees one start, the child interpreter; starts made by the child are outside it. By reading pip 26.0, the child starts nothing for this offline, binary-only, no-dependency install: packaging's mac_platforms starts the interpreter only when it reports macOS 10.16, and this one reports 26.6.2.",
+   "required_change": "State that limit, and the code reading that covers it, in the receipts, rather than a complete audit of the step."
+  },
+  {
+   "id": "P-05",
+   "severity": "nonmandatory",
+   "location": "PREPARATION-PLAN.md section 3 'Framework unchanged' and step 7; venv-expectation.json rule 0; the Director's draft ../OntoKin-local/c271-p34/director/venv_snapshot.py (compare)",
+   "issue": "The draft comparison reports additions only as a count and top-level names, and verify_packages checks ownership only inside site-packages, so nothing would fail on an unexpected file elsewhere in the .venv.",
+   "required_change": "Compare the added entries exactly with venv-expectation.json: 291 site-packages files (270 by the wheels' SHA-256 and size, INSTALLER and REQUESTED by digest, the seven RECORD files by name), their directories and bin/jsonschema, and nothing else. W2's prediction for bin/jsonschema from pip 26.0's template is 207 bytes, SHA-256 1cdcd273309e7172baf9d6dc83f3f6b8e79f3d79c750077a564bb2bc7ec867cc, valid if the child's sys.executable is <worktree>/.venv/bin/python, as the interpreter reports today."
+  },
+  {
+   "id": "P-06",
+   "severity": "nonmandatory",
+   "location": "PREPARATION-PLAN.md section 5 steps 5 to 8; D-17; I-03",
+   "issue": "This review validated the plans against the preparer, provider and observer, the C199 manifest, the C195 archive and the lock at 6d08e026. Step 5 defines B as the commit that adds the reviewed plans but does not require that B leaves those unchanged. 'git status is empty' omits ignored files, and -B stops writing bytecode, not reading it; today the only ignored entry is .venv/ and the checkout has no __pycache__.",
+   "required_change": "Require B to descend from 6d08e026 with no change to the preparer's ten-file import closure (the four preparer_source files, errors.py, format_check.py, lock.py, supervisor.py and the two package __init__ files), the C199 manifest, the C195 archive, the lock or its provenance, or repeat the static validation at B; before and after each run, require 'git status --porcelain --ignored' to show only .venv/; at A8, compare preparer_source with B's blobs."
+  },
+  {
+   "id": "P-07",
+   "severity": "nonmandatory",
+   "location": "PREPARATION-PLAN.md section 5 step 6 (--plan-sha256 D); the Director's draft ../OntoKin-local/c271-p34/director/run_preparation.sh (run_plan)",
+   "issue": "D is not defined. The exact plans live outside Git, so their reviewed digests are the only binding between the applied plan and the reviewed one; the draft computes D from the plan file at run time, so the CLI's frozen-digest check cannot fail.",
+   "required_change": "Define D as the reviewed digests (node 1fee042d5e3c809a89d4975df40f69d7a27e88abf9ba58d8cf91ca16795c5ff1, node dry run 869b6414d42f6ced4ee4ad017ceff7cc63c33b563fcdffcc5999cebebae01d48, reader ff5a95da6d349e0bd6ea1d2c79fc02757de48ac9cbb89dc59737b67c6d7a71c8, reader dry run a81897783b9df86bb216eb5c371a1191de0a89762e6cd88360c8cc7b7fecf10e), committed at B, pass those recorded values, and record them in the receipts."
+  },
+  {
+   "id": "P-08",
+   "severity": "nonmandatory",
+   "location": "The Director's draft ../OntoKin-local/c271-p34/director/audited_run.py",
+   "issue": "In module mode it sets sys.path[0] to the working directory, so the import of pip itself searches the worktree root first, which '-I -m pip' never does (pip's __main__ then drops the entry); in script mode it puts tools/ on the preparer's path, which -I omits. No name in the worktree root or tools/ collides with the standard library or with pip today, so no effect was found.",
+   "required_change": "Leave sys.path as -I sets it, so that the audited commands keep the plan's isolation."
+  },
+  {
+   "id": "P-09",
+   "severity": "nonmandatory",
+   "location": "PREPARATION-PLAN.md section 2; W1's F4; the observer's _install_receipts",
+   "issue": "M0's receipt rule binds each plan's archive again by path, SHA-256, size and mode, so the Node archive (mode 0o444, one link) and the C195 archive must stay unchanged at those paths until MH. Contract section 7's .DS_Store rule applies to the prepared trees once published.",
+   "required_change": "State the retention of both archives and the .DS_Store rule in the plan or the outcome."
+  },
+  {
+   "id": "P-10",
+   "severity": "nonmandatory",
+   "location": "PREPARATION-PLAN.md section 3 'No bytecode'",
+   "issue": "The variable is said to be 'needed because pip starts the .venv interpreter without -I'. It is needed because the child runs without -B, and it takes effect because the child also runs without -I and -E.",
+   "required_change": "Reword."
+  }
+ ],
+ "observations_for_later_gates": [
+  "MH, W3's Q3: cpusubtype CPU_SUBTYPE_ARM64_ALL for bin/node and all 27 Mach-O files of the binary wheels; the observer's parse_macho and check_node_macho accept bin/node in memory (preview only)",
+  "MH, N34-M: one dylib bundled in the Pillow wheel carries an absolute LC_RPATH naming a directory of the wheel's builder that does not exist here; the image has no @rpath reference, and the observer records it as an absent search directory"
+ ],
+ "reviewed_files": [
+  {
+   "path": "<worktree>/AGENTS.md",
+   "sha256": "c2783b51b8c33db6f06bf56112cad141521af2c779580750264ff138783c9c87",
+   "size_bytes": 9957
+  },
+  {
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-preparation-p34/PHASE.json",
+   "sha256": "16c901d48d1c29f1d3cfe81275cebb11f1c5f1807a09b9abc0dd2a327aebc449",
+   "size_bytes": 7229
+  },
+  {
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-preparation-p34/PREPARATION-PLAN.md",
+   "sha256": "8fa3d312aadec8ae3c4c32f9879bf4c368dd45a8cc3124f864886c1960e46644",
+   "size_bytes": 9468
+  },
+  {
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md",
+   "sha256": "42db98dc6099ee605b0963f3734f7bff2d68c019ff6c00a0ee97bd753c03fdc9",
+   "size_bytes": 42769
+  },
+  {
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/interfaces/W2-PREPARER.md",
+   "sha256": "687b3dbe4c80d99a7734f6f11dc4bd8ed50f02fd28dd72532565379fe5f9b67f",
+   "size_bytes": 34467
+  },
+  {
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/OUTCOME.json",
+   "sha256": "edcc257ae4008bc5a10f06c40e47ad6d7f24530c24c61f5fe27e223adeaa38d0",
+   "size_bytes": 18210
+  },
+  {
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-implementation-p33/DIRECTOR-DECISIONS.md",
+   "sha256": "f596bc9fb85e33984eaf84c2067f15922749f523723274e49510cd798bed035f",
+   "size_bytes": 21484
+  },
+  {
+   "path": "<worktree>/tools/prepare_current_host_readback.py",
+   "sha256": "dbb8cdec7bf43ec3618af17c7b322d5cc85a21d7375233959441f2e6f92ad46c",
+   "size_bytes": 55622
+  },
+  {
+   "path": "<worktree>/prototypes/static_tray_v01/current_host_readback_v01.py",
+   "sha256": "cb3f0c7f247331c79171a9e1ac71141d93205392ff426382046cfa61999d1126",
+   "size_bytes": 74144
+  },
+  {
+   "path": "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py",
+   "sha256": "471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+   "size_bytes": 162557
+  },
+  {
+   "path": "<worktree>/prototypes/static_tray_v01/canonical.py",
+   "sha256": "ce3f67349ade5af1d966ed0f1f240b264278c14f1f77c8ecc5cdeabb12ad6433",
+   "size_bytes": 12078
+  },
+  {
+   "path": "<worktree>/prototypes/static_tray_v01/errors.py",
+   "sha256": "ebd82d6945722f6ab896ddfd5763818432d3e53f8bd3aec1e9c5bfee5aa4300b",
+   "size_bytes": 903
+  },
+  {
+   "path": "<worktree>/prototypes/static_tray_v01/format_check.py",
+   "sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447",
+   "size_bytes": 15959
+  },
+  {
+   "path": "<worktree>/prototypes/static_tray_v01/lock.py",
+   "sha256": "bb98718bcfcca82e7eabb310bccc51cbf2ab2903af5b0c203c673d56bebb47e0",
+   "size_bytes": 23327
+  },
+  {
+   "path": "<worktree>/prototypes/static_tray_v01/supervisor.py",
+   "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+   "size_bytes": 11286
+  },
+  {
+   "path": "<worktree>/prototypes/__init__.py",
+   "sha256": "84edcdc6554cf9f1e2b7b5f10729866fa31e6ba3d389043e716a751ea5271fc2",
+   "size_bytes": 72
+  },
+  {
+   "path": "<worktree>/prototypes/static_tray_v01/__init__.py",
+   "sha256": "f63210895af2901371763f24f7ddb301c2a7c1f73f4133335ae85bbb559832e8",
+   "size_bytes": 85
+  },
+  {
+   "path": "<worktree>/tools/doctor_local.py",
+   "sha256": "acf4947bd6d753ddb0a305f551fe93553c5bb43c7f094f22f287d30f9dc9e24b",
+   "size_bytes": 72988
+  },
+  {
+   "path": "<worktree>/tools/check_native_reader_setup.py",
+   "sha256": "585fac8ff9074c88a9bde9bc88054ca72fed5364b02c475910881800014268c3",
+   "size_bytes": 749
+  },
+  {
+   "path": "<worktree>/tools/local-environment.json",
+   "sha256": "c70b9d43634f9a35170e4ac633a6e352e7a986a6fb8ab10639fa60a9c776f9b4",
+   "size_bytes": 7982
+  },
+  {
+   "path": "<worktree>/tools/native-reader-verification-macos-arm64-cp312.lock",
+   "sha256": "b1e3e86668421539c6817faefe7f126b4dbf25153fcbb2fab6325e080cf7a81c",
+   "size_bytes": 799
+  },
+  {
+   "path": "<worktree>/tools/native-reader-verification-macos-arm64-cp312.provenance.json",
+   "sha256": "cbcc1b27797ab4a8742ad8b0360a25164e1dadb61f8da12d54e930c317355415",
+   "size_bytes": 6508
+  },
+  {
+   "path": "<worktree>/docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json",
+   "sha256": "21fd6bad8738ed51d4ced8036a0fcde5dd046823f55f71de52b9b81df659ccd5",
+   "size_bytes": 19901
+  },
+  {
+   "path": "<worktree>/docs/engineering/ownership-recovery-c195/evidence/recorded-evidence.tar.xz",
+   "sha256": "b1e54a6cfef133f7004b1988c90bc718fc954409843c2bcac3772d42e904a0c9",
+   "size_bytes": 2611764
+  },
+  {
+   "path": "<local>/c271-p34/workers/W2-PLAN-REVIEW.md",
+   "sha256": "6939e7d32b80f8c92cdb977e8d5fd22336ae949151b713bf33af7a586d6ebcdd",
+   "size_bytes": 6084
+  },
+  {
+   "path": "<local>/c271-p34/receipts-downloads.json",
+   "sha256": "1f70ef991f09844174bc3218ae29021e3f0c93bb7f15ba404d2f8d15912b9cf7",
+   "size_bytes": 7980
+  },
+  {
+   "path": "<local>/c271-p34/downloads/node/node-v24.22.1-darwin-arm64.tar.gz",
+   "sha256": "89c682593d76cd44233fa53b1563264e7de9cbb189cad169135c5b4fadfbc0a7",
+   "size_bytes": 53062778
+  },
+  {
+   "path": "<local>/c271-p34/downloads/wheels/attrs-26.1.0-py3-none-any.whl",
+   "sha256": "c647aa4a12dfbad9333ca4e71fe62ddc36f4e63b2d260a37a8b83d2f043ac309",
+   "size_bytes": 67548
+  },
+  {
+   "path": "<local>/c271-p34/downloads/wheels/jsonschema-4.26.0-py3-none-any.whl",
+   "sha256": "d489f15263b8d200f8387e64b4c3a75f06629559fb73deb8fdfb525f2dab50ce",
+   "size_bytes": 90630
+  },
+  {
+   "path": "<local>/c271-p34/downloads/wheels/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+   "sha256": "98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe",
+   "size_bytes": 18437
+  },
+  {
+   "path": "<local>/c271-p34/downloads/wheels/pillow-13.0.0-cp312-cp312-macosx_11_0_arm64.whl",
+   "sha256": "fc481f742ccda20e9ed760b8f978dff50f2a4e9bc253ac167fb0a05b0783ef52",
+   "size_bytes": 4852329
+  },
+  {
+   "path": "<local>/c271-p34/downloads/wheels/referencing-0.37.0-py3-none-any.whl",
+   "sha256": "381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231",
+   "size_bytes": 26766
+  },
+  {
+   "path": "<local>/c271-p34/downloads/wheels/rpds_py-2026.5.1-cp312-cp312-macosx_11_0_arm64.whl",
+   "sha256": "58b1d94308ddf0b1982f61f2eb54bf92997c9ece8a8093ef014250f4a517906c",
+   "size_bytes": 345775
+  },
+  {
+   "path": "<local>/c271-p34/downloads/wheels/typing_extensions-4.16.0-py3-none-any.whl",
+   "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+   "size_bytes": 45571
+  },
+  {
+   "path": "<local>/c271-p34/plans/AUTHOR-CROSSCHECK.json",
+   "sha256": "99b5f58a0c8a622a441241119314b8835e0d4c75938648db223d4b00117c5663",
+   "size_bytes": 4801
+  },
+  {
+   "path": "<local>/c271-p34/plans/AUTHOR-NOTES.md",
+   "sha256": "36c2bdb4cb31aa6e94df0a291ac3efbbd9e60965cfdc56d585adf42e2e63b202",
+   "size_bytes": 14031
+  },
+  {
+   "path": "<local>/c271-p34/plans/AUTHOR-OBSERVATIONS.json",
+   "sha256": "77d68343b58113adb078f94206d3c2d7ac683d8522155d62e65869123e329de5",
+   "size_bytes": 13444
+  },
+  {
+   "path": "<local>/c271-p34/plans/NODE-SOURCE.json.expected",
+   "sha256": "e928a8ec87a6fcd8f21d7bef3e080392e0bdaad3acbf2e767997dae5ead9ea2c",
+   "size_bytes": 976
+  },
+  {
+   "path": "<local>/c271-p34/plans/SHA256SUMS",
+   "sha256": "6e32a26772817a094d43930e3ad16c8118c3e1b1f3b6f1417bcb03481e0c9bc2",
+   "size_bytes": 1398
+  },
+  {
+   "path": "<local>/c271-p34/plans/node-install-plan.dry-run.json",
+   "sha256": "869b6414d42f6ced4ee4ad017ceff7cc63c33b563fcdffcc5999cebebae01d48",
+   "size_bytes": 956650
+  },
+  {
+   "path": "<local>/c271-p34/plans/node-install-plan.dry-run.portable.json",
+   "sha256": "352a43ee42fedf210f1ba12991c0428e982d4dab4d61d0827fddd8660d4a85e5",
+   "size_bytes": 956528
+  },
+  {
+   "path": "<local>/c271-p34/plans/node-install-plan.json",
+   "sha256": "1fee042d5e3c809a89d4975df40f69d7a27e88abf9ba58d8cf91ca16795c5ff1",
+   "size_bytes": 956650
+  },
+  {
+   "path": "<local>/c271-p34/plans/node-install-plan.portable.json",
+   "sha256": "314978d39c798fefc36022281fe18b90f514e415a4eb06eb14ff1cd2808abcd0",
+   "size_bytes": 956528
+  },
+  {
+   "path": "<local>/c271-p34/plans/reader-install-plan.dry-run.json",
+   "sha256": "a81897783b9df86bb216eb5c371a1191de0a89762e6cd88360c8cc7b7fecf10e",
+   "size_bytes": 158115
+  },
+  {
+   "path": "<local>/c271-p34/plans/reader-install-plan.dry-run.portable.json",
+   "sha256": "bba9aa9d73c89fcee92db27e07202b32276b4362fc88791a7d384a962b566d67",
+   "size_bytes": 157987
+  },
+  {
+   "path": "<local>/c271-p34/plans/reader-install-plan.json",
+   "sha256": "ff5a95da6d349e0bd6ea1d2c79fc02757de48ac9cbb89dc59737b67c6d7a71c8",
+   "size_bytes": 158115
+  },
+  {
+   "path": "<local>/c271-p34/plans/reader-install-plan.portable.json",
+   "sha256": "28714bad179cb55e649deeb95ab91e86920b1a862633973c296d27359da2fc0f",
+   "size_bytes": 157987
+  },
+  {
+   "path": "<local>/c271-p34/plans/venv-expectation.json",
+   "sha256": "171cd9d15407eca9622c8233c967027de06352ae6165378043322e49ea77478c",
+   "size_bytes": 57172
+  },
+  {
+   "path": "<local>/c271-p34/plans/w1_crosscheck_mp.py",
+   "sha256": "df09aac49b649a12df95d5531f8b92461b90385b36a14800e1688886ef8fbd0a",
+   "size_bytes": 7515
+  },
+  {
+   "path": "<local>/c271-p34/plans/w1_freeze_mp.py",
+   "sha256": "e8c537e3defd4553fe4ff0ae1c1b0e9ec06066d3c4293c915047adf3fa82cc88",
+   "size_bytes": 51872
+  },
+  {
+   "path": "<local>/c271-p34/director/audited_run.py",
+   "sha256": "347778ea25df6f2d58307454db3ba481d0a9df5fe04b33c86f4c3f65fd53516a",
+   "size_bytes": 2239
+  },
+  {
+   "path": "<local>/c271-p34/director/download_inputs.py",
+   "sha256": "93938c308c7560ef00944675c95ff3459024d81b2d1c0165544f753905cb5d14",
+   "size_bytes": 4739
+  },
+  {
+   "path": "<local>/c271-p34/director/run_preparation.sh",
+   "sha256": "27d9c78e67c9d3e6e9dd5e37bbbad2b277cd6e72abd89627ab5139f9f496ce39",
+   "size_bytes": 3806
+  },
+  {
+   "path": "<local>/c271-p34/director/venv_snapshot.py",
+   "sha256": "dadf2ccb3597a68e83b920c37e3c49ce6116bedead0c06c6cd15f6e93919d8a4",
+   "size_bytes": 4001
+  },
+  {
+   "path": "<base-site-packages>/pip/_internal/cli/main_parser.py",
+   "sha256": "623cc9023a9fefc01136c2e59c94fd97a7cd6e9c833c903e6ab3885d8b0ae489",
+   "size_bytes": 4403
+  },
+  {
+   "path": "<base-site-packages>/pip/__pip-runner__.py",
+   "sha256": "24ea04653c2bb6fee345a5c1920490280134e323727c59861f1aa91e2187bcbd",
+   "size_bytes": 1450
+  },
+  {
+   "path": "<base-site-packages>/pip/__main__.py",
+   "sha256": "5b36e11d74db484ea0058d7d98d37d9b8b39a3fdfae4b3af4d84a0aa06dd0611",
+   "size_bytes": 854
+  },
+  {
+   "path": "<base-site-packages>/pip/_internal/build_env.py",
+   "sha256": "5e980e2254d02e0cf73ef0d3da7ee3d8dcd7feb54564b0881bbb7b6f675d85c3",
+   "size_bytes": 21911
+  },
+  {
+   "path": "<base-site-packages>/pip/_internal/operations/install/wheel.py",
+   "sha256": "150225d809cd69d1d5e58186395126387b5450d3bc969ce3dc8728a384b6c62b",
+   "size_bytes": 27923
+  },
+  {
+   "path": "<base-site-packages>/pip/_internal/req/req_install.py",
+   "sha256": "befe5c6ecdcfe607f8ddeff5bfbda0c1243637f0ffaa9b1fb973b27ab3210ee2",
+   "size_bytes": 31273
+  },
+  {
+   "path": "<base-site-packages>/pip/_internal/configuration.py",
+   "sha256": "5b1c304b063f066e90cc381fdf606cba31323bc76045e75e802a606d47c3bccf",
+   "size_bytes": 14568
+  },
+  {
+   "path": "<base-site-packages>/pip/_internal/cli/cmdoptions.py",
+   "sha256": "85f03d076f4d9eadaf60c5a115583b11c5a37657dd3c13d4e16c164f62e4ab80",
+   "size_bytes": 36164
+  },
+  {
+   "path": "<base-site-packages>/pip/_vendor/distlib/scripts.py",
+   "sha256": "42fa7be84f49737220c98b9b9e9a88f5f4bb7ac78639ee058e97952aa2adf48c",
+   "size_bytes": 18612
+  },
+  {
+   "path": "<base-site-packages>/pip/_vendor/distlib/util.py",
+   "sha256": "bcc3c6bec4b88fd845e98f64dd3ca89b569a1cb6f4ac5999004cb378075e97dc",
+   "size_bytes": 66682
+  },
+  {
+   "path": "<base-site-packages>/pip/_vendor/packaging/tags.py",
+   "sha256": "7172d5d69243dd4b4994383b5b3df3adf75085166aafc8ee99200a28001ddb11",
+   "size_bytes": 22856
+  },
+  {
+   "path": "<base-site-packages>/pip-26.0.dist-info/METADATA",
+   "sha256": "09cab52f0b9d16a8b84a3d41e615391c40fb3c7bf0870b2a9d2899941b9ffac8",
+   "size_bytes": 4673
+  }
+ ],
+ "reproduction": {
+  "interpreter": "<worktree>/.venv/bin/python (CPython 3.12.13), -I -S -B, standard library only, under an audit hook that refuses process starts and writes outside reviews/plan-001/",
+  "commands": [
+   "$PY -I -S -B plan-001/w2_parts.py PART <worktree> <local> plan-001/result-PART.json  (PART: downloads, node, reader, wheels, places, portable)",
+   "$PY -I -S -B plan-001/w2_static.py <worktree> <local> plan-001/result-static.json --inventory",
+   "$PY -I -S -B plan-001/w2_simulate_packages.py <worktree> <local> plan-001/result-simulated-packages.json",
+   "$PY -I -S -B plan-001/w2_digests.py <worktree> <local> <base-site-packages> plan-001/reviewed-files.json"
+  ],
+  "check_counts": {
+   "result-downloads.json": {
+    "checks": 68,
+    "failed": []
+   },
+   "result-node.json": {
+    "checks": 22,
+    "failed": []
+   },
+   "result-places.json": {
+    "checks": 15,
+    "failed": []
+   },
+   "result-portable-r2.json": {
+    "checks": 20,
+    "failed": []
+   },
+   "result-portable.json": {
+    "checks": 20,
+    "failed": [
+     "venv-expectation.json: no machine path or user name",
+     "w1_freeze_mp.py: no machine path or user name"
+    ]
+   },
+   "result-reader.json": {
+    "checks": 40,
+    "failed": []
+   },
+   "result-simulated-packages.json": {
+    "checks": 0,
+    "failed": []
+   },
+   "result-static.json": {
+    "checks": 16,
+    "failed": []
+   },
+   "result-wheels.json": {
+    "checks": 40,
+    "failed": []
+   }
+  },
+  "check_notes": {
+   "result-portable.json": "its two failures are false positives of an over-broad pattern for the base installation's link directory: it matched the labelled launcher path under <prefix> in venv-expectation.json and a string literal in w1_freeze_mp.py; result-portable-r2.json repeats the check with the base installation's actual prefix and the other machine roots, and passes all 20 checks",
+   "result-simulated-packages.json": "reports outcomes, not check rows: verify_packages passed on the prediction and refused it with pip present"
+  },
+  "scratch_sha256": {
+   "plan-001/result-downloads.json": "856e4ec0d85e33a85b97ea6696acce1d80b1acf85a9deb7be937bd2e42f453eb",
+   "plan-001/result-node.json": "6d5d928f0e9a387845ae6a22170e99f9a046d508df054629ea7fddaa95d62916",
+   "plan-001/result-places.json": "2ac5371dba2f60d32f7d950dfd7744e9b7fc58a4e950a6d46e85251b69bd879c",
+   "plan-001/result-portable-r2.json": "aa52664d6a9c3dd5d1ff20d1a44d4102b08466c928a77578b77bbaf3ed20d402",
+   "plan-001/result-portable.json": "b58e79057572605ab530a5b316e3b6d656914d59e5e4636b53ee73f155be3b98",
+   "plan-001/result-reader.json": "756721e0582d263d74edded11c1ec89788a364cf341e9b52aad4c5556e20680d",
+   "plan-001/result-simulated-packages.json": "c81a761169891a9d67d5ec2710afcec00784ea276da56c521d621b74c32bd7cc",
+   "plan-001/result-static.json": "8c514acc0dd13fec9ca629f7abd300b42bb8cb3d817b72b6e55ed2236d3b2932",
+   "plan-001/result-wheels.json": "a45a44177ac5de0c68cd3cbe41253b4481fae4783d8d944b94fd7f3ee4d8a2fa",
+   "plan-001/reviewed-files.json": "4c158e6dd6d7f6cb102b1609c713edef1df88c7b6c946fbcc7626c1a93736262",
+   "plan-001/w2_common.py": "e7702de5921919d646c3fe3b44993f3d791b9fe869c817d5b2fc8e462bc1f052",
+   "plan-001/w2_digests.py": "912ed7290f0a7b4d594fcb2aa400ae47d3ce6c14221cc896682ac6c1639301be",
+   "plan-001/w2_parts.py": "d52a4e2d24a4a61659cf32183d18a1bf5be59b85cbf26916d8e0b6c36a38646e",
+   "plan-001/w2_simulate_packages.py": "2f745e40644bb7ce88b8b6612b78fc4a8303a6df48dccbd81956dd2179da2af3",
+   "plan-001/w2_static.py": "d0809e5fe549d1467c708cd9f731df14fcdcf47b1bb61ec363818236006688ce",
+   "plan-001/w2_write_json.py": "1f132b8e29914170c6aba489b56ff9b2de85120db81bae5cd1030263b17eac4f"
+  }
+ },
+ "conduct": {
+  "node_ldd_codesign_starts": 0,
+  "downloads": 0,
+  "git_writes": 0,
+  "repository_edits": 0,
+  "archives_extracted": 0,
+  "install_plan_v02_or_cli_called": false,
+  "pip_run": false,
+  "writes": "only under ../OntoKin-local/c271-p34/reviews/",
+  "checkout_after": "clean; no __pycache__; .venv unchanged at 15 entries",
+  "also_read": "pip 26.0 source in the base installation; the Director's draft scripts in ../OntoKin-local/c271-p34/director/ (outside the reviewed set; P-05, P-07 and P-08 describe them for information)"
+ }
+}
