@@ -841,6 +841,139 @@
     "resolution": "D-18 restored the companion and moved W4's driver tests; D-19 returned C-01 (MC10) and C-02 (MC21) to W6, who confirmed both and refroze six cases with unchanged expected outcomes (CONTROLS-REFREEZE-001.json); no implementation file changed",
     "final_002": "every new module passes with no skip, the 149 frozen controls included; every existing module is identical to its phase-start baseline except the stated D-18 exception; the workflow check, documentation verifier, whitespace and byte-identity checks pass; no process or bytecode left"
   },
+  "process_start_audit": {
+    "run": "final-002-audit",
+    "commit": "3fb21667 (574dc196's tree plus CHECKS.json and INVENTORY-ADDITIONS.json)",
+    "method": "each of the sixteen modules run again, one process each, under a Python audit hook (director/audited_unittest.py) that records every subprocess.Popen, os.posix_spawn, os.exec, os.spawn, os.system and os.fork of the test process itself, with program and arguments but never the environment",
+    "starts_recorded": 877,
+    "hook_errors": 0,
+    "starts_by_module_and_program": {
+      "tests.test_current_host_observation_v02": {
+        "python": 5
+      },
+      "tests.test_current_host_readback_controls_v02": {
+        "file": 1,
+        "git": 68,
+        "git-stand-in": 14,
+        "python": 19,
+        "uname": 1
+      },
+      "tests.test_current_host_readback_driver": {
+        "python": 1
+      },
+      "tests.test_current_host_readback_driver_v02": {
+        "git": 89,
+        "python": 16
+      },
+      "tests.test_current_host_readback_provider_v02": {
+        "git": 22
+      },
+      "tests.test_current_host_rtld_paths_v01": {
+        "file": 1,
+        "uname": 1
+      },
+      "tests.test_local_checks": {
+        "file": 1,
+        "git": 331,
+        "nonexistent-executable": 1,
+        "python": 24,
+        "uname": 1
+      },
+      "tests.test_supervisor_darwin_v01": {
+        "python": 8
+      },
+      "tools.storage_tests.test_storage_identity": {
+        "git": 263,
+        "git-lfs": 10
+      }
+    },
+    "node_ldd_or_codesign_starts": 0,
+    "module_results": {
+      "tests.test_current_host_readback_controls_v02": {
+        "tests": 149,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_supervisor_darwin_v01": {
+        "tests": 17,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_prepare_current_host_readback_v02": {
+        "tests": 59,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_current_host_observation_v02": {
+        "tests": 109,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_current_host_readback_provider_v02": {
+        "tests": 45,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_current_host_readback_driver_v02": {
+        "tests": 22,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_local_checks": {
+        "tests": 33,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_current_host_readback_driver": {
+        "tests": 10,
+        "status": "FAILED",
+        "non_passing": 3
+      },
+      "tests.test_current_host_readback_provider": {
+        "tests": 25,
+        "status": "FAILED",
+        "non_passing": 3
+      },
+      "tests.test_current_host_inspection_v01": {
+        "tests": 135,
+        "status": "FAILED",
+        "non_passing": 72
+      },
+      "tests.test_current_host_libc_plt_metadata_v01": {
+        "tests": 73,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_current_host_loader_path_v01": {
+        "tests": 96,
+        "status": "OK",
+        "non_passing": 0
+      },
+      "tests.test_current_host_required_images_v01": {
+        "tests": 116,
+        "status": "FAILED",
+        "non_passing": 2
+      },
+      "tests.test_current_host_rtld_paths_v01": {
+        "tests": 61,
+        "status": "FAILED",
+        "non_passing": 40
+      },
+      "tools.storage_tests.test_storage_identity": {
+        "tests": 19,
+        "status": "FAILED",
+        "non_passing": 8
+      },
+      "tests.test_static_tray_readback_v01": {
+        "tests": 4,
+        "status": "FAILED",
+        "non_passing": 1
+      }
+    },
+    "same_results_as_final_002": true,
+    "limit": "starts made by the children of a test process (the Python children, the driver's unit-stage children, Git) are outside the hook; those children run synthetic programs, the controls' Python codes, Git and the readback module's refused setup",
+    "context": "Node is installed on this host and reachable through PATH; ldd is not; codesign is"
+  },
   "other_modules_checked": {
     "rule": "every test module that imports a changed source module was either run above or shown unaffected",
     "unaffected": {
