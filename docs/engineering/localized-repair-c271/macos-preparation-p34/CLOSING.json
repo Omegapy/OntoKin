@@ -1,0 +1,71 @@
+{
+  "schema": "ontokin.c271.p34-closing/1",
+  "task": "C271",
+  "phase": "C271-P34-macos-preparation-mp",
+  "owner": "c271-p34-ec1a7de2360d",
+  "purpose": "The phase's closing record: the push of its outcome records commit, the checks of that commit's tree, the checkpoint comments, the retention for MH and the release of ownership. It completes acceptance A9. Git reveals the commit that carries this record; its own push is observed in the final report.",
+  "outcome_records_commit": {
+    "commit": "ad4b872660d3f4ccd48b8f972c80e4edf9f68550",
+    "tree": "70ae769cc9f018b6b73a406319feb65cb56ac230",
+    "parent": "601f39361940422179ff7683aa602c2b36622944"
+  },
+  "bound_commit": "601f39361940422179ff7683aa602c2b36622944",
+  "push_observation": {
+    "command": "git push origin work/c271-missing-import-digest-control (no force), then git ls-remote --heads origin",
+    "observed_at_utc": "2026-11-26T22:35:16Z",
+    "update": "601f3936..ad4b8726, fast-forward",
+    "remote_heads": {
+      "refs/heads/main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "refs/heads/work/c271-missing-import-digest-control": "ad4b872660d3f4ccd48b8f972c80e4edf9f68550",
+      "refs/heads/work/c271-p29-trd-record": "880933a40aac70f583c97373133e43a4e8244491 (not created or touched by this phase)"
+    },
+    "earlier_refused_commit": "a first commit attempt of these records was refused by the whitespace check (trailing spaces in the portable run log); nothing was committed or pushed by it; the portable copy was corrected (run-001/README.md) before this commit"
+  },
+  "checks_of_final_tree": {
+    "started_at_utc": "2026-11-26T22:35:59Z",
+    "ended_at_utc": "2026-11-26T22:36:01Z",
+    "tree": "the clean checkout at ad4b8726",
+    "workflow": {
+      "result": "passed",
+      "observed": "Workflow structure passed (13 tasks).",
+      "output_sha256": "93548ae025eed40b1ee3ff4cd34a1ffffd319a645f20e7fb51e4dfc45e6fe293"
+    },
+    "documentation": {
+      "result": "passed",
+      "documents": 1728,
+      "local_links": 6913,
+      "failures": 0,
+      "output_sha256": "c1dd2c4e1f5a1312a583c2e27606ae06f1fcc7b0359fd99cbece4ce1b6ff638b"
+    },
+    "whitespace": "passed (git diff --check 180075b7 HEAD)"
+  },
+  "checkpoint_comments": {
+    "pull_request_274": {
+      "id": 7204817777,
+      "created_at_utc": "2026-11-26T22:35:42Z",
+      "url": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7204817777"
+    },
+    "issue_273": {
+      "id": 7204818002,
+      "created_at_utc": "2026-11-26T22:35:43Z",
+      "url": "https://github.com/Omegapy/OntoKin/issues/273#issuecomment-7204818002"
+    },
+    "body_sha256": "53e3c1dcd63fdb9b4e429e47fb0884cc45b1f506ea6aabb3cfac7156b6023850",
+    "readback": "both posted bodies read back byte-identical to the body"
+  },
+  "github_state_after": {
+    "pull_request_274": "open, draft, head ad4b8726",
+    "issue_273": "open",
+    "observed_at_utc": "2026-11-26T22:35:59Z"
+  },
+  "retained_for_mh": [
+    "the Node archive ../OntoKin-local/c271-p34/downloads/node/node-v24.22.1-darwin-arm64.tar.gz, mode 0o444, and the committed C195 archive, unchanged at their paths",
+    "the two exact apply plans in ../OntoKin-local/c271-p34/plans/ and the two install receipts in ../OntoKin-local/c271-p34/receipts/, unchanged at their paths with their modes; the dry-run receipts and sidecars as evidence",
+    "the prepared trees under ../OntoKin-local/c271-macos/, not opened in Finder",
+    "the worktree's .venv, run only with -B (or PYTHONDONTWRITEBYTECODE=1) until MH has frozen the Python inventory and run M0"
+  ],
+  "processes": "no process started by the phase remains",
+  "ownership": "Owner c271-p34-ec1a7de2360d is released with the push of this record. It makes no further write. The next phase declares its own owner.",
+  "unknown_operations": [],
+  "next_action": "Gate MH of the adopted contract: N34-M, then M0 and M1 on this host, then the qualifying cohort of the seven readback methods and the direct negatives, with an independent audit. It is the first gate that starts the pinned Node, and a separate phase that needs the owner's selection."
+}
