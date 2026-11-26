@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -271,6 +272,93 @@ class StorageIdentityTests(unittest.TestCase):
         self.commit()
         with self.assertRaisesRegex(StorageIdentityError, "existing attributes"):
             prepare_lfs_archives.prepare(self.root, self.directory / "nested-attributes-plan")
+
+    def recorded_starts(self):
+        """Record every subprocess.run command line, then run it unchanged."""
+        commands, run = [], subprocess.run
+        def record(command, *args, **kwargs):
+            commands.append(list(command))
+            return run(command, *args, **kwargs)
+        return commands, patch("tools.storage_identity.subprocess.run", side_effect=record)
+
+    def test_callers_that_inject_no_resolver_still_start_git_by_name(self):
+        """No LFS client needed. Starts Git by name, as before, in this throwaway repository."""
+        (self.root / ".gitattributes").write_text(prepare_lfs_archives.BOOTSTRAP_ATTRIBUTES)
+        self.path.write_bytes(self.payload)
+        self.commit()
+        commands, recording = self.recorded_starts()
+        with recording:
+            self.assertEqual(StorageContext(self.root).lfs_paths, ())
+            self.assertEqual(prepare_offline_workspace(self.root)["lfs_files"], [])
+            self.assertEqual(prepare_lfs_archives.prepare(self.root, self.directory / "plan")["archive_count"], 1)
+            with patch.object(run_reach_source_corpus, "ROOT", self.root):
+                self.assertEqual(run_reach_source_corpus._snapshot()["git_status"], "")
+        prefix = ["git", "-c", "core.fsmonitor=false", "-c", "core.hooksPath=" + os.devnull,
+                  "-c", "core.attributesFile=" + os.devnull, "-C"]
+        self.assertGreater(len(commands), 10)
+        self.assertEqual([command for command in commands if command[:8] != prefix], [])
+
+    def test_injected_resolver_names_the_git_of_every_start(self):
+        """No LFS client needed. Starts the Git that PATH names, by its absolute path."""
+        (self.root / ".gitattributes").write_text(prepare_lfs_archives.BOOTSTRAP_ATTRIBUTES)
+        self.path.write_bytes(self.payload)
+        self.commit()
+        executable = shutil.which("git")
+        self.assertTrue(executable and os.path.isabs(executable), executable)
+        resolved = []
+        def resolver():
+            resolved.append(executable)
+            return executable
+        commands, recording = self.recorded_starts()
+        with recording:
+            self.assertEqual(prepare_offline_workspace(self.root, git_executable=resolver)["lfs_files"], [])
+        self.assertGreaterEqual(len(commands), 7)
+        self.assertEqual(len(resolved), len(commands))
+        self.assertEqual([command for command in commands if command[0] != executable], [])
+
+    def test_lfs_branch_starts_git_by_name_by_default_and_through_an_injected_resolver(self):
+        """No LFS client needed: a /bin/sh stand-in answers only the version query. Starts Git by name,
+        then by the resolver's absolute path, in this throwaway repository."""
+        (self.root / ".gitattributes").write_text("docs/engineering/**/*.zip filter=lfs diff=lfs merge=lfs -text\n")
+        self.path.write_bytes(pointer_bytes(hashlib.sha256(self.payload).hexdigest(), len(self.payload)))
+        self.commit()  # No filter is configured, so Git stores the pointer text itself.
+        self.path.write_bytes(self.payload)  # The hydrated payload, as a copied workspace holds it.
+        stand_in = self.directory / "lfs-stand-in" / "git-lfs"
+        stand_in.parent.mkdir()
+        stand_in.write_text("#!/bin/sh\necho 'git-lfs/3.8.1 (synthetic stand-in)'\n")
+        stand_in.chmod(0o755)
+        executable = shutil.which("git")
+        resolved = []
+        def resolver():
+            resolved.append(executable)
+            return executable
+        searched = {"PATH": str(stand_in.parent) + os.pathsep + os.environ.get("PATH", "")}
+        for injected in (None, resolver):
+            with self.subTest(resolver=injected is not None):
+                commands, recording = self.recorded_starts()
+                with patch.dict(os.environ, searched), recording:
+                    report = prepare_offline_workspace(self.root, git_executable=injected)
+                self.assertEqual([binding["path"] for binding in report["lfs_files"]], [self.name])
+                self.assertEqual(report["client"]["executable"], str(stand_in.resolve()))
+                starts = [command for command in commands if command[0] != str(stand_in.resolve())]
+                self.assertIn(["config", "--local", "filter.lfs.required", "true"], [command[-4:] for command in starts])
+                self.assertEqual({command[0] for command in starts}, {"git" if injected is None else executable})
+                self.assertEqual(len(resolved), 0 if injected is None else len(starts))
+
+    def test_a_refusing_resolver_starts_nothing(self):
+        """Starts no process. A refusal propagates; an absent Git keeps the storage error."""
+        class Refusal(ValueError):
+            pass
+        def refusing():
+            raise Refusal("synthetic binding refusal")
+        def absent():
+            raise FileNotFoundError(2, "No git executable was found on PATH", "git")
+        with patch("tools.storage_identity.subprocess.run") as start:
+            with self.assertRaisesRegex(Refusal, "synthetic binding refusal"):
+                StorageContext(self.root, git_executable=refusing)
+            with self.assertRaisesRegex(StorageIdentityError, "No git executable was found on PATH"):
+                git(self.root, "rev-parse", "HEAD", git_executable=absent)
+        start.assert_not_called()
 
 
 if __name__ == "__main__":

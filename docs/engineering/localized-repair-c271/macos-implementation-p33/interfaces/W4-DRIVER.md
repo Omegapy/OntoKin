@@ -10,7 +10,8 @@ Environment and Git rows of
 [contract section 7](../../macos-contract-design-p31/CONTRACT.md#7-host-observation-in-place-of-h0-and-h1-s3-s7-s9).
 Changed source: [`tools/check_local.py`](../../../../../tools/check_local.py).
 Sections 7 and 8 record two findings: a part of MC23 and a part of plan section 4.5 that this work
-does not meet.
+does not meet. Section 10 records the follow-up that resolves the second finding, under the
+Director's decision D-09.
 
 ## 1. The `readback_selection` records
 
@@ -203,6 +204,9 @@ There are two ways to resolve it, and the choice is the Director's:
   function, because `check_local` imports `storage_identity`;
 - record an exception.
 
+This finding stands as first recorded. Section 10 resolves it, and there `check_local` injects
+its resolver, so `storage_identity` imports nothing from the driver.
+
 ## 9. Checks and evidence
 
 The evidence is in `../OntoKin-local/c271-p33/workers/W4/`, beside the clone. Every command ran
@@ -223,3 +227,68 @@ readback provider. The one setup error of `tests.test_static_tray_readback_v01` 
 absent selection, and the eight storage errors from the missing `git-lfs` client; both are
 unchanged. The provider and inspector test modules were not run. They import W2's preparer, and
 the assignment keeps W2's work out of W4's checks. Plan section 7 assigns them to the Director.
+
+## 10. Follow-up: storage Git starts through the driver's Git (D-09)
+
+The follow-up ran on head `767aeafc`, which then moved to `2fcf5505`. The added commits are W3's
+checkpoint and the Director's decisions, and none of them touches these files.
+
+It changed four files:
+- `tools/storage_identity.py`;
+- `tools/check_local.py`;
+- `tests/test_current_host_readback_driver.py`;
+- `tools/storage_tests/test_storage_identity.py`, the existing module that covers `storage_identity`.
+
+**Resolver in `tools/storage_identity.py`.**
+- `git(root, *arguments, input=None, git_executable=None)`: `git_executable` is a callable that
+  names the Git for one start. It is called before every start, inside the start's error handling.
+  - `None` starts `git` by name from `PATH`, with the former command line.
+  - An `OSError` from it, such as no Git on `PATH`, becomes `StorageIdentityError`, as a missing
+    `git` did before.
+  - Any other exception, such as `GitBindingError`, propagates unchanged, and nothing starts.
+- `StorageContext(root, revision="HEAD", *, git_executable=None)` keeps it and passes it to each of
+  its starts through `_git`.
+- `configure_offline_filters(root, *, git_executable=None)` and
+  `prepare_offline_workspace(root, *, git_executable=None)` pass it on.
+- The `git-lfs version` start is not a Git start, and it is unchanged.
+- **No import cycle:** `storage_identity` imports nothing from the driver. `check_local` passes its
+  own function as an argument.
+
+**Driver.** `prepare_workspace` calls `prepare_offline_workspace(workspace, git_executable=git_executable)`.
+So every storage start of a run calls `git_executable()` first:
+- **bound:** the path and SHA-256 are checked again before each start. A failure raises
+  `GitBindingError`, and nothing starts;
+- **unbound:** the start uses the `PATH` Git resolved once, by its absolute path.
+
+**Other callers.** `tools/prepare_lfs_archives.py`, `tools/run_reach_source_corpus.py` and the
+existing tests pass no resolver. They start `git` by name, as before. Nothing is set globally, so a
+process that imports `check_local` keeps that default.
+
+**Not exercised here:** the LFS branch with a real `git-lfs` client. None is installed, and MI
+installs nothing. One test runs that branch with a stand-in that answers only `git-lfs version`.
+
+**New tests.** "Wrapper" means a `/bin/sh` script that logs each start and then execs the Git that
+`PATH` named at setup.
+
+| Test | Covers | Starts |
+| --- | --- | --- |
+| `tests/test_current_host_readback_driver.py`, `DriverStorageGitTests.test_driver_storage_git_starts_use_the_bound_executable` | a qualifying run's storage starts use the bound Git; `prepare_workspace` passes `git_executable` | two wrappers, and that Git, in throwaway repositories |
+| `DriverStorageGitTests.test_each_driver_storage_git_start_checks_the_binding_again` | one check for each start; after the bound file changes, nothing starts | the bound wrapper, and that Git |
+| `DriverStorageGitTests.test_ordinary_run_storage_git_starts_use_the_path_git_resolved_once` | an ordinary run's storage starts use the `PATH` Git resolved once, never `git` by name | the `PATH` wrapper, and that Git |
+| `tools/storage_tests/test_storage_identity.py`, `StorageIdentityTests.test_callers_that_inject_no_resolver_still_start_git_by_name` | the default of `StorageContext`, `prepare_offline_workspace`, `prepare_lfs_archives.prepare` and `run_reach_source_corpus._snapshot` | Git, by name |
+| `StorageIdentityTests.test_injected_resolver_names_the_git_of_every_start` | one resolver call for each start | Git, by its absolute path |
+| `StorageIdentityTests.test_lfs_branch_starts_git_by_name_by_default_and_through_an_injected_resolver` | the LFS branch, with and without a resolver | Git, and the version-only `git-lfs` stand-in |
+| `StorageIdentityTests.test_a_refusing_resolver_starts_nothing` | a refusal propagates; an absent Git keeps the storage error | nothing |
+
+- The three driver tests add to the default inventory, and MH's plan must approve them (MC28). The
+  storage suite is outside that inventory.
+- No existing expectation changed, in either module.
+
+**Checks.** The evidence is in `../OntoKin-local/c271-p33/workers/W4/followup-f2/`.
+
+| Check | Before | After |
+| --- | --- | --- |
+| `tests.test_local_checks tests.test_current_host_readback_driver` | 60 tests, OK | 63 tests, OK |
+| Storage suite (`tools/storage_tests`) | 15 tests: 7 ok, 8 errors (no `git-lfs` client) | 19 tests: 11 ok, the same 8 errors |
+| F2 evidence script | 21 starts through the binding, 4 from `PATH` | 25 through the binding, 0 from `PATH` |
+| Mutations M6 to M9 of the routing | | each one detected |

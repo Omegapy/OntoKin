@@ -15,6 +15,7 @@ import unittest
 from unittest.mock import patch
 
 from tools import check_local as checks
+from tools import storage_identity as storage
 
 FACADE = "prototypes.static_tray_v01.current_host_readback_v01"
 ORDINARY_REASON = "No approved current-host readback selection: ordinary run, not a qualification"
@@ -747,6 +748,104 @@ class QualifyingUnitDecisionTests(DriverFixture):
         self.assertEqual((unit["status"], unit["returncode"]), ("failed", 0))
         self.assertEqual(unit["test_execution"]["expected_failures"], 1)
         self.assertFalse(unit["test_execution"]["complete_regression_passed"])
+
+
+class DriverStorageGitTests(DriverFixture):
+    """S9 for the Git starts of tools/storage_identity.py that the driver's run reaches."""
+
+    def setUp(self):
+        super().setUp()
+        # Resolved before any PATH change, so that no wrapper can start itself.
+        self.git = shutil.which("git")
+        self.assertTrue(self.git and os.path.isabs(self.git), "These tests need Git on PATH")
+
+    def wrapper(self, directory, label):
+        """A /bin/sh wrapper that logs each start, then runs the Git that PATH named at setup."""
+        path = self.base / directory / "git"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(f'#!/bin/sh\nprintf "%s\\n" "{label} $*" >> {shlex.quote(str(self.events))}\n'
+                        f'exec {shlex.quote(self.git)} "$@"\n', encoding="utf-8")
+        path.chmod(0o755)
+        return str(path), hashlib.sha256(path.read_bytes()).hexdigest()
+
+    def repository(self):
+        """A committed throwaway source with committed attributes, made with the Git that PATH names."""
+        (self.root / "ontokin").mkdir()
+        (self.root / "ontokin/__init__.py").write_text("VALUE = 1\n", encoding="utf-8")
+        (self.root / ".gitattributes").write_text("*.py text\n", encoding="utf-8")
+        for arguments in (("init", "--quiet", "--template="), ("add", "--", "."),
+                          ("-c", "user.name=Driver storage fixture", "-c", "user.email=fixture@example.invalid",
+                           "commit", "--quiet", "-m", "Driver storage fixture")):
+            subprocess.run([self.git, "-C", str(self.root), *arguments], env=checks.git_environment(self.root),
+                           check=True, capture_output=True)
+
+    @staticmethod
+    def storage_starts(lines):
+        """storage_identity's command lines carry its hook and attribute overrides; the driver's do not."""
+        return [line for line in lines if "-c core.hooksPath=" in line]
+
+    def test_driver_storage_git_starts_use_the_bound_executable(self):
+        """Starts two /bin/sh wrappers, which exec the Git that PATH named at setup, and that Git, in
+        throwaway repositories. The facade, the provider's validation and the workspace derivation are mocked."""
+        self.repository()
+        bound, digest = self.wrapper("bound", "bound-git")
+        path_git, _ = self.wrapper("path", "path-git")
+        with self.with_path(path_git), \
+                patch.object(checks, "prepare_offline_workspace", wraps=storage.prepare_offline_workspace) as prepared:
+            code, summary = self.qualifying_run({"path": bound, "sha256": digest})
+        self.assertEqual(code, 0, summary)
+        self.assertIs(prepared.call_args.kwargs["git_executable"], checks.git_executable)
+        events = self.logged()
+        self.assertEqual(events[:2], ["facade", "validate"])
+        self.assertEqual([line for line in events[2:] if not line.startswith("bound-git ")], [])
+        for command in ("rev-parse --show-object-format", "ls-tree -r -z", "init --quiet --template=",
+                        "cat-file -s", "check-attr -z --stdin filter"):
+            self.assertTrue(any(command in line for line in self.storage_starts(events)), (command, events))
+        self.assertTrue(summary["git"]["available"])
+        self.assertEqual(summary["workspace_storage"]["lfs_files"], [])
+
+    def test_each_driver_storage_git_start_checks_the_binding_again(self):
+        """Starts the bound /bin/sh wrapper, which execs the Git that PATH named at setup, and that Git,
+        in a throwaway repository; after the wrapper changes, nothing starts."""
+        self.repository()
+        bound, digest = self.wrapper("bound", "bound-git")
+        checks.bind_git(bound, digest)
+        checked = []
+        def driver_git():
+            checked.append(checks.git_executable())
+            return checked[-1]
+        self.assertEqual(storage.prepare_offline_workspace(self.root, git_executable=driver_git)["lfs_files"], [])
+        starts = self.logged()
+        self.assertTrue(starts)
+        self.assertEqual(len(checked), len(starts))
+        self.assertEqual([line for line in starts if not line.startswith("bound-git ")], [])
+        with open(bound, "a", encoding="utf-8") as stream:
+            stream.write("# changed after binding\n")
+        with self.assertRaisesRegex(checks.GitBindingError, "no longer matches"):
+            storage.prepare_offline_workspace(self.root, git_executable=checks.git_executable)
+        self.assertEqual(len(self.logged()), len(starts))
+
+    def test_ordinary_run_storage_git_starts_use_the_path_git_resolved_once(self):
+        """Starts the PATH /bin/sh wrapper, which execs the Git that PATH named at setup, and that Git, in
+        throwaway repositories. Every start names the wrapper by its absolute path, never git by name."""
+        self.repository()
+        path_git, digest = self.wrapper("path", "path-git")
+        commands, run = [], subprocess.run
+        def record(command, *args, **kwargs):
+            commands.append(list(command))
+            return run(command, *args, **kwargs)
+        with self.with_path(path_git), patch.object(checks.subprocess, "run", side_effect=record), \
+                patch.object(checks, "build_plan", return_value=[]), \
+                patch.object(checks.platform, "platform", return_value="mocked platform metadata leaf"), \
+                redirect_stdout(io.StringIO()):
+            code = checks.run(self.root, self.output, False, 30)
+        summary = self.summary()
+        self.assertEqual(code, 0, summary)
+        self.assertEqual(summary["readback_selection"], {"status": "absent", "run_kind": "ordinary"})
+        self.assertEqual(summary["git_binding"], {"path": path_git, "sha256": digest, "bound": False, "source": "PATH"})
+        self.assertTrue(self.storage_starts(self.logged()))
+        self.assertTrue(commands)
+        self.assertEqual([command[0] for command in commands if command[0] != path_git], [])
 
 
 if __name__ == "__main__":

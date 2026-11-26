@@ -344,7 +344,8 @@ def prepare_workspace(root: Path, output: Path, full: bool, *, source_git: dict 
         if (root / name).is_file():
             shutil.copy2(root / name, workspace / name)
     prepare_workspace_git(root, workspace, source_git)
-    storage = (prepare_offline_workspace(workspace) if source_git["available"] else
+    # Storage's Git starts use the driver's Git, checked again before each start (S9).
+    storage = (prepare_offline_workspace(workspace, git_executable=git_executable) if source_git["available"] else
                {"lfs_files": [], "git_available": False, "network_transfers": False})
     write_json(output / "workspace-storage.json", storage)
     dependencies = root / "tools/node_modules"

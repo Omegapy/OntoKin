@@ -4,9 +4,14 @@ Ordinary files retain raw Git-blob equality. LFS is selected only by attributes
 from the identified commit/index, and binds a canonical pointer to the actual
 hydrated bytes. This module imports no product/runtime code and never transfers
 objects or copies repository credentials/configuration.
+
+Git is started by name from PATH unless a caller injects git_executable, a callable
+that names the Git executable for each start. The local driver injects its own,
+which checks its Git binding again before every start.
 """
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 import hashlib
 import os
@@ -40,10 +45,13 @@ def git_environment(root: Path) -> dict[str, str]:
     return environment
 
 
-def git(root: Path, *arguments: str, input: bytes | None = None) -> bytes:
+def git(root: Path, *arguments: str, input: bytes | None = None,
+        git_executable: Callable[[], str] | None = None) -> bytes:
+    """Run one local Git command; git_executable, when given, is called before this start."""
     try:
+        program = "git" if git_executable is None else git_executable()
         return subprocess.run(
-            ["git", "-c", "core.fsmonitor=false", "-c", "core.hooksPath=" + os.devnull,
+            [program, "-c", "core.fsmonitor=false", "-c", "core.hooksPath=" + os.devnull,
              "-c", "core.attributesFile=" + os.devnull, "-C", str(root), *arguments],
             input=input, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             env=git_environment(root), check=True, timeout=120).stdout
@@ -93,18 +101,20 @@ class Entry:
 class StorageContext:
     """Resolve storage from one exact Git commit or the current stage-zero index."""
 
-    def __init__(self, root: Path, revision: str | None = "HEAD"):
+    def __init__(self, root: Path, revision: str | None = "HEAD", *,
+                 git_executable: Callable[[], str] | None = None):
         self.root = Path(root).resolve()
-        if Path(git(self.root, "rev-parse", "--show-toplevel").decode().strip()).resolve() != self.root:
+        self._git_executable = git_executable
+        if Path(self._git(self.root, "rev-parse", "--show-toplevel").decode().strip()).resolve() != self.root:
             raise StorageIdentityError("Storage identity requires a Git checkout at the supplied root")
-        self.revision = (git(self.root, "rev-parse", "--verify", revision + "^{commit}").decode().strip()
+        self.revision = (self._git(self.root, "rev-parse", "--verify", revision + "^{commit}").decode().strip()
                          if revision is not None else None)
-        self.algorithm = git(self.root, "rev-parse", "--show-object-format").decode().strip()
+        self.algorithm = self._git(self.root, "rev-parse", "--show-object-format").decode().strip()
         if self.algorithm not in {"sha1", "sha256"}:
             raise StorageIdentityError("Unsupported Git object format")
         self.entries: dict[str, Entry] = {}
         command = ("ls-files", "--stage", "-z") if revision is None else ("ls-tree", "-r", "-z", self.revision)
-        for record in git(self.root, *command).split(b"\0"):
+        for record in self._git(self.root, *command).split(b"\0"):
             if not record:
                 continue
             metadata, encoded_name = record.split(b"\t", 1)
@@ -126,6 +136,9 @@ class StorageContext:
             if not archive_path(name) or self.entries[name].mode != "100644":
                 raise StorageIdentityError("LFS is outside the bounded engineering archive profile: " + name)
 
+    def _git(self, root: Path, *arguments: str, input: bytes | None = None) -> bytes:
+        return git(root, *arguments, input=input, git_executable=self._git_executable)
+
     def _attributes(self) -> dict[str, str]:
         sources = [(name, entry) for name, entry in self.entries.items() if PurePosixPath(name).name == ".gitattributes"]
         if not sources:
@@ -133,23 +146,23 @@ class StorageContext:
         total = 0
         with tempfile.TemporaryDirectory(prefix="ontokin-committed-attributes-") as temporary:
             root = Path(temporary)
-            git(root, "init", "--quiet", "--template=")
+            self._git(root, "init", "--quiet", "--template=")
             for name, entry in sources:
                 if entry.mode != "100644":
                     raise StorageIdentityError("Attributes must be regular nonexecutable files: " + name)
-                size = int(git(self.root, "cat-file", "-s", entry.blob))
+                size = int(self._git(self.root, "cat-file", "-s", entry.blob))
                 total += size
                 if total > MAX_ATTRIBUTES_BYTES:
                     raise StorageIdentityError("Committed attribute files exceed the bounded metadata limit")
-                raw = git(self.root, "cat-file", "blob", entry.blob)
+                raw = self._git(self.root, "cat-file", "blob", entry.blob)
                 if len(raw) != size or blob_id(raw, self.algorithm) != entry.blob:
                     raise StorageIdentityError("Attribute blob identity differs: " + name)
                 destination = root / name
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 destination.write_bytes(raw)
             names = tuple(self.entries)
-            raw = git(root, "check-attr", "-z", "--stdin", "filter",
-                      input=b"\0".join(name.encode("utf-8") for name in names) + b"\0")
+            raw = self._git(root, "check-attr", "-z", "--stdin", "filter",
+                            input=b"\0".join(name.encode("utf-8") for name in names) + b"\0")
             fields = raw.split(b"\0")
             if fields[-1:] != [b""] or len(fields) != 3 * len(names) + 1:
                 raise StorageIdentityError("Incomplete committed-attribute resolution")
@@ -163,10 +176,10 @@ class StorageContext:
 
     def _pointer(self, name: str) -> tuple[bytes, dict]:
         entry = self.entries[name]
-        size = int(git(self.root, "cat-file", "-s", entry.blob))
+        size = int(self._git(self.root, "cat-file", "-s", entry.blob))
         if size > MAX_POINTER_BYTES:
             raise StorageIdentityError("LFS-selected file is still an ordinary blob: " + name)
-        raw = git(self.root, "cat-file", "blob", entry.blob)
+        raw = self._git(self.root, "cat-file", "blob", entry.blob)
         if len(raw) != size or blob_id(raw, self.algorithm) != entry.blob:
             raise StorageIdentityError("Committed pointer blob differs: " + name)
         return raw, parse_pointer(raw)
@@ -209,7 +222,7 @@ class StorageContext:
                 "pointer": pointer, "payload": payload, "hydrated": True}
 
 
-def configure_offline_filters(root: Path) -> dict:
+def configure_offline_filters(root: Path, *, git_executable: Callable[[], str] | None = None) -> dict:
     """Set only known local filters; no hooks, remotes, credentials or transfers."""
     executable = shutil.which("git-lfs")
     if executable is None:
@@ -221,7 +234,7 @@ def configure_offline_filters(root: Path) -> dict:
     if matched is None or tuple(map(int, matched.groups())) < (3, 8, 1):
         raise StorageIdentityError("This storage profile requires a separately prepared Git LFS 3.8.1 or newer client")
     command = shlex.quote(executable)
-    git_directory = Path(git(root, "rev-parse", "--absolute-git-dir").decode().strip())
+    git_directory = Path(git(root, "rev-parse", "--absolute-git-dir", git_executable=git_executable).decode().strip())
     if not git_directory.is_relative_to(Path(root).resolve()):
         raise StorageIdentityError("Offline filter configuration requires owned isolated Git metadata")
     settings = {"core.hooksPath": os.devnull, "core.attributesFile": os.devnull,
@@ -231,24 +244,24 @@ def configure_offline_filters(root: Path) -> dict:
                 "filter.lfs.process": command + " filter-process --skip",
                 "filter.lfs.required": "true"}
     for key, value in settings.items():
-        git(root, "config", "--local", key, value)
+        git(root, "config", "--local", key, value, git_executable=git_executable)
     return {"executable": executable, "version": version, "automatic_downloads": False,
             "source_configuration_copied": False, "hooks_installed": False,
             "private_cache": str(git_directory / "lfs")}
 
 
-def prepare_offline_workspace(root: Path) -> dict:
+def prepare_offline_workspace(root: Path, *, git_executable: Callable[[], str] | None = None) -> dict:
     """Verify copied hydration and populate a private cache before status checks."""
-    context = StorageContext(root)
+    context = StorageContext(root, git_executable=git_executable)
     bindings = [{"path": name, **context.verify_file(name)} for name in context.lfs_paths]
     report = {"schema_version": SCHEMA, "profile": PROFILE, "lfs_files": bindings,
               "network_transfers": False, "source_configuration_copied": False}
     if not bindings:
         return report
-    git_directory = Path(git(root, "rev-parse", "--absolute-git-dir").decode().strip())
+    git_directory = Path(git(root, "rev-parse", "--absolute-git-dir", git_executable=git_executable).decode().strip())
     if not git_directory.is_relative_to(Path(root).resolve()):
         raise StorageIdentityError("The isolated workspace must own its Git metadata and LFS cache")
-    report["client"] = configure_offline_filters(root)
+    report["client"] = configure_offline_filters(root, git_executable=git_executable)
     for binding in bindings:
         oid = binding["pointer"]["oid"].removeprefix("sha256:")
         target = git_directory / "lfs/objects" / oid[:2] / oid[2:4] / oid
