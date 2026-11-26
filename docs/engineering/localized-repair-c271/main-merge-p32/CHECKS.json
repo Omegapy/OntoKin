@@ -1,0 +1,47 @@
+{
+  "schema": "ontokin.c271.p32-checks/1",
+  "task": "C271",
+  "phase": "C271-P32-main-merge-mb",
+  "owner": "c271-p32-08e8ceaa9140",
+  "executor": "the worktree's own .venv/bin/python (CPython 3.12.13, Homebrew, macOS 26.6.2 arm64), holding no package; main's tools from the merge",
+  "runs": [
+    {
+      "run": "merged tree before the commit",
+      "started_at_utc": "2026-11-26T05:56:01Z",
+      "workflow": {
+        "result": "passed",
+        "observed": "Workflow structure passed (13 tasks).",
+        "output_sha256": "93548ae025eed40b1ee3ff4cd34a1ffffd319a645f20e7fb51e4dfc45e6fe293"
+      },
+      "documentation": {
+        "result": "passed",
+        "documents": 1704,
+        "failures": 0,
+        "output_sha256": "316209f06978290a07589975deb659a70a598ca40189bde8c96c77352c4239d4"
+      },
+      "whitespace": "passed (git diff --cached --check on the six files and this phase's records)",
+      "focused_tests": {
+        "command": ".venv/bin/python -B -m unittest tests.test_local_checks -v",
+        "tmpdir": "a resolved directory under the working evidence directory",
+        "tests": 33,
+        "result": "passed",
+        "skipped": 0,
+        "output_sha256": "1e3e24db1816f26ecfaeddb69e794ee94c37cefd1c5138b9115668c6818fa91e"
+      },
+      "doctor": {
+        "command": ".venv/bin/python tools/doctor_local.py --root . --node /nonexistent/node-not-started",
+        "exit": 1,
+        "summary": "core ready; python-verification missing; no Node started",
+        "output_sha256": "111ab0c918170d4b24d46c2bdd1d2dcc7b1a04459285f4e3d1fcb5c446dfd1c2"
+      },
+      "note": "MERGE-RESOLUTION.md was added after the focused tests and the doctor ran; the workflow check, documentation verifier and whitespace check were run again with it before the commit (finding M-01)"
+    },
+    {
+      "run": "the exact merge commit 5f30f26b, by the independent reviewer in a temporary detached worktree",
+      "result": "workflow check (13 tasks), documentation verifier, 33 focused tests with no skip and git diff --check all passed",
+      "record": "INDEPENDENT-REVIEW.md"
+    }
+  ],
+  "final_tree_run": "the run of the records commit that carries this file is recorded in the phase's closing record",
+  "not_run": "no routine driver, readback method or behavioural test; no Node"
+}

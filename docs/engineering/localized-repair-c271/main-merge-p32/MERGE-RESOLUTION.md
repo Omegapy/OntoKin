@@ -50,3 +50,14 @@ the worktree's `.venv` holds none of the seven pinned packages; preparing them b
 The doctor was given a non-existent Node path, so no Node process started.
 
 No routine driver, no readback method and no behavioural test ran.
+
+## Corrections after the independent review
+
+The [independent review](INDEPENDENT-REVIEW.md) accepted this merge commit with nonmandatory
+findings. Two of them correct this account.
+
+- **M-02:** REQUIREMENTS section P22 holds the substance of the dropped P22 status line, not its
+  exact text. The exact text stays in Git history at `6fb6525f`.
+- **M-01:** the focused tests and the doctor ran before this file was added. The workflow check,
+  the documentation verifier and the whitespace check ran again with it before the commit. The
+  reviewer ran all four checks on the exact merge commit, and all passed.

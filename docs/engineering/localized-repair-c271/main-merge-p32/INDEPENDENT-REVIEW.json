@@ -1,0 +1,126 @@
+{
+  "schema": "ontokin.c271.p32-independent-review/1",
+  "candidate_commit": "5f30f26b313946d1fdd763670b340341d2eed489",
+  "candidate_tree": "f0a017e2a01aaecd22340a3e7b20e5d686ea57f6",
+  "first_parent": "6fb6525f670ac619857d4830cda0a3e2bf298d93",
+  "second_parent": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+  "merge_base": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+  "ancestry_verified": true,
+  "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+  "mandatory_findings": 0,
+  "findings": [
+    {
+      "id": "M-01",
+      "severity": "nonmandatory",
+      "location": "docs/engineering/localized-repair-c271/main-merge-p32/MERGE-RESOLUTION.md (Checks of the merged tree); merge commit message; ../OntoKin-local/c271-p32/checks/merge/",
+      "summary": "The recorded pre-commit checks ran before MERGE-RESOLUTION.md existed, not on tree f0a017e2: the verifier counted 1,704 documents and 6,776 local links against 1,705 and 6,779 on the commit, and the doctor saw 111 tracked modifications against 112 changed paths. This review's fresh checks on the exact commit pass. Bind A4 to checks of 5f30f26b/f0a017e2 and state which tree the earlier runs used."
+    },
+    {
+      "id": "M-02",
+      "severity": "nonmandatory",
+      "location": "MERGE-RESOLUTION.md, STATUS.md row",
+      "summary": "Dropping the branch's stale P22 STATUS line is justified, but the stated reason is imprecise. REQUIREMENTS section P22 holds the line's substance, not its text; the text is in 6fb6525f:STATUS.md, and the delivery details are in the retained P22 records. Reword the row."
+    },
+    {
+      "id": "M-03",
+      "severity": "nonmandatory",
+      "location": "docs/workflow/CURRENT.json history[1].holds",
+      "summary": "holds names 15 of the retained schema-1 file's 40 non-identity top-level keys. It omits previous_recovery, older_recoveries, pending_phase_delivery, p29_reconstruction, next_action, checkpoint and others, whereas main's own entry lists every key. The checker accepts it, and the listed p29_r07_superseded_fields_index indexes most omitted keys. List all keys, or say in purpose that holds is a selection."
+    },
+    {
+      "id": "M-04",
+      "severity": "nonmandatory",
+      "location": "docs/workflow/tasks/C271/task.json p31_fields_index and p29_r07_superseded_fields_index (current_state_fields[CURRENT.json])",
+      "summary": "The task record, which the merge leaves unchanged, still names execution_mode_record, historical_handoff, p31_macos_contract_design and p29_local_publication_r07 as current-state CURRENT.json fields. Schema-2 CURRENT no longer has them. Add a P32 fields index in the outcome update of the task record (A6)."
+    },
+    {
+      "id": "M-05",
+      "severity": "nonmandatory",
+      "location": "STATUS.md (main's bytes on the branch)",
+      "summary": "On the branch, STATUS says 'No scope is selected' and gives C271 at bef67902 blocked at P29-PUBLICATION-SIZE-001, while CURRENT has C271 active at P32. CURRENT boundary 9 discloses this, and MAIN-CONFLICTS keeps main's dated entries until R04. No change in this merge; R04 must replace them."
+    },
+    {
+      "id": "M-06",
+      "severity": "nonmandatory",
+      "location": "TRDs/INDEX.md (main-only path)",
+      "summary": "Main's generated TRD index, correctly taken as main's bytes, does not list the branch's trd_c271-p29-exact-publication-in-local-mode_2026-11-25.md, which now sits beside it. MERGE-RESOLUTION does not carry forward MAIN-CONFLICTS' regeneration note. Record the note in P32's outcome and regenerate the index in a later commit."
+    }
+  ],
+  "paths_compared": 22348,
+  "path_classification": {
+    "unchanged_on_both_sides": 18577,
+    "main_only": 104,
+    "main_only_added": 82,
+    "main_only_modified": 22,
+    "branch_only": 3659,
+    "branch_only_added": 3658,
+    "branch_only_modified": 1,
+    "both_sides": 6,
+    "added_by_merge_commit": 2,
+    "deleted_on_either_side": 0,
+    "mismatches": 0,
+    "method": "git ls-tree -r -z --full-tree of base, both parents and merge; comparison of (mode, type, object id); compare_paths.py, path-comparison.json"
+  },
+  "both_sides_resolution": {
+    "STATUS.md": "main's blob 99ab22fb; equal to git merge-file --theirs; only the stale P22 paragraph is not carried forward (justified; see M-02)",
+    "docs/README.md": "f8084990, equal to the clean 3-way merge; both sections kept",
+    "docs/workflow/CURRENT.json": "fa702ef8, valid schema 2 for active C271 in local mode; main's boundaries, delivery_policy and history[0] kept; two boundaries added; the unfinished C271 entry removed because the checker refuses an entry for the active task",
+    "docs/workflow/memory.json": "c69f0138, 15 base records unchanged, then the branch record, then the main record, each byte-equal",
+    "tools/check_local.py": "859d776d, the branch's file with only main's SOURCE_DIRS and ROOT_FILES statements substituted; every C271 readback and process control is unchanged",
+    "tests/test_local_checks.py": "1e359887, the automatic merge with its single hunk resolved as branch side then main side; 33 methods with no duplicate; all three new tests and main's inventory-test change intact"
+  },
+  "current_json": {
+    "schema_2_check": "passed",
+    "schema1_retained_path": "docs/engineering/localized-repair-c271/main-merge-p32/CURRENT-C271-schema1.json",
+    "schema1_byte_identical_to_6fb6525f_CURRENT_json": true,
+    "schema1_blob": "e098a6fc40ffd5b6883a9a5dbab9a9b97c16533c",
+    "schema1_bytes": 215534,
+    "schema1_sha256": "b0f51618e0aa9c706f33d8de5ad8e49323f1574d7484ed100adf20c414a6c368",
+    "history_entry_sha256_correct": true,
+    "history_entry_bytes_correct": true,
+    "history_entry_source_commit_correct": true,
+    "history_entry_holds_keys_present": true,
+    "history_entry_holds_complete": false
+  },
+  "checks_run": [
+    {
+      "command": "/Volumes/P-SSD/Omegapy/OntoKin-worktrees/c271/.venv/bin/python -B tools/chat_workflow.py check (and --json)",
+      "cwd": "detached worktree of 5f30f26b at /Volumes/P-SSD/Omegapy/OntoKin-local/c271-p32/review/wt",
+      "exit_code": 0,
+      "result": "passed: Workflow structure passed (13 tasks); errors []",
+      "evidence": ["checks/workflow.out", "checks/workflow.json"]
+    },
+    {
+      "command": "/Volumes/P-SSD/Omegapy/OntoKin-worktrees/c271/.venv/bin/python -B docs/maintenance/reorganization-2026-10-17/verify_reorganization.py",
+      "cwd": "detached worktree of 5f30f26b",
+      "exit_code": 0,
+      "result": "passed: failures []; 29/29 sources verified; 233 sections; 1,705 documents; 6,779 local links; 165 anchors; baseline tree 72aa56f6 reconstructed",
+      "evidence": ["checks/docs.out"]
+    },
+    {
+      "command": "TMPDIR=/Volumes/P-SSD/Omegapy/OntoKin-local/c271-p32/review/tmp /Volumes/P-SSD/Omegapy/OntoKin-worktrees/c271/.venv/bin/python -B -m unittest tests.test_local_checks -v",
+      "cwd": "detached worktree of 5f30f26b",
+      "exit_code": 0,
+      "result": "passed: Ran 33 tests in 5.466s, OK, no skip, no expected failure",
+      "evidence": ["checks/focused-tests.out"]
+    },
+    {
+      "command": "git diff --check 6fb6525f 5f30f26b -- <six files and two new records>; git diff --check 51223c9b 5f30f26b -- <same>",
+      "cwd": "/Volumes/P-SSD/Omegapy/OntoKin-worktrees/c271 (object read only)",
+      "exit_code": 0,
+      "result": "passed: no whitespace error"
+    }
+  ],
+  "executor": "CPython 3.12.13 at /Volumes/P-SSD/Omegapy/OntoKin-worktrees/c271/.venv/bin/python (no packages, no pip)",
+  "executed_commands_policy_respected": true,
+  "policy_notes": [
+    "Comparisons used Git object reads only; dry merges used git merge-file -p on copies extracted into review/blobs.",
+    "One read-only git status ran in each existing checkout at the start, before GIT_OPTIONAL_LOCKS=0 was set; both index modification times stayed unchanged, so no index was written.",
+    "The only write outside review/ was the authorized detached worktree's metadata, which was removed. All 8 refs were identical before and after; the main checkout's status was unchanged; the C271 worktree was clean.",
+    "No commit, push, fetch, reset, branch checkout, stash, network access, Node, npm, ldd, routine driver, readback test or other test ran. No other agent was launched."
+  ],
+  "worktree_removed": true,
+  "worktree_removal_command": "git -C /Volumes/P-SSD/Omegapy/OntoKin-worktrees/c271 worktree remove --force /Volumes/P-SSD/Omegapy/OntoKin-local/c271-p32/review/wt",
+  "writes_to_main_or_integration_claims": "none: refs/heads/main and origin/main stay at 51223c9b; the merge is not an ancestor of main; the commit, CURRENT and MERGE-RESOLUTION all state that nothing is integrated into main",
+  "reviewed_at_utc": "2026-11-26T06:14:00Z"
+}

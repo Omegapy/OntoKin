@@ -571,3 +571,12 @@ Ordered steps:
 4. Run main's workflow check, the documentation verifier, a scoped whitespace check and the merged driver's focused tests, and record the doctor's diagnosis.
 5. Obtain a fresh-context independent review of the exact merge commit.
 6. Push without force, read the push back, record, comment once on PR274 and issue273, and stop.
+
+### P32 merge outcome (2026-11-26, UTC)
+
+Every step ran as planned:
+- declaration `6fb6525f670ac619857d4830cda0a3e2bf298d93`;
+- the reviewed merge `5f30f26b313946d1fdd763670b340341d2eed489`;
+- these outcome records.
+
+Each push was without force and read back from the remote. The next phase, not begun here, is gate MI: implementation of the adopted 0.2.0 adaptations. Then come MP, MH, MR (R03), R04 and R05, each a separate phase.

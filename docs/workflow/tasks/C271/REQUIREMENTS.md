@@ -584,3 +584,15 @@ The owner answered "Start gate MB" in this session. Phase C271-P32-main-merge-mb
 - **Main:** not written; nothing is integrated, and the lease is not used.
 - **Excluded:** MI, MP, R03, R04 and R05.
 - **Unchanged:** R01/R02 remain done and R03–R05 not_done.
+
+### P32 merge outcome (2026-11-26, UTC)
+
+Main `51223c9b` is merged into this branch in the independently reviewed merge commit `5f30f26b313946d1fdd763670b340341d2eed489`, pushed without force and read back ([resolution](../../../engineering/localized-repair-c271/main-merge-p32/MERGE-RESOLUTION.md), [review](../../../engineering/localized-repair-c271/main-merge-p32/INDEPENDENT-REVIEW.md)).
+- **What the branch receives:** main's current instructions, workflow tool, local environment specification, doctor and setup tools, and the macOS lock.
+- **The six overlaps:** resolved by meaning, with both purposes kept.
+- **`CURRENT.json`:** now schema 2. The old schema-1 file is retained byte for byte as bound history.
+- **Checks:** main's workflow check, the documentation verifier and the merged driver's 33 focused tests pass, on the exact commit too.
+- **Main:** nothing is integrated; main is unchanged.
+- **Environment readiness (separate):** in this worktree `core` is ready and `python-verification` is missing. Gate MP prepares it.
+- **Unchanged:** R01/R02 remain done and R03–R05 not_done.
+- **Next gate:** MI, which needs the owner's selection.

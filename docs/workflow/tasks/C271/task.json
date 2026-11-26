@@ -1310,6 +1310,37 @@
         "docs/engineering/localized-repair-c271/macos-contract-design-p31/INDEPENDENT-REVIEW-003.md",
         "docs/engineering/localized-repair-c271/macos-contract-design-p31/REVIEW-DISPOSITION.json"
       ]
+    },
+    {
+      "name": "P32 main's workflow check on the merged tree",
+      "command": ".venv/bin/python tools/chat_workflow.py check (main's tool, from the merge)",
+      "result": "passed",
+      "required": true,
+      "scope": "13 tasks; schema-2 CURRENT",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/main-merge-p32/CHECKS.json"
+      ]
+    },
+    {
+      "name": "P32 focused tests of the merged driver",
+      "command": ".venv/bin/python -B -m unittest tests.test_local_checks -v (resolved TMPDIR)",
+      "result": "passed",
+      "required": true,
+      "scope": "33 tests, no skip; also run by the independent reviewer on the exact merge commit",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/main-merge-p32/CHECKS.json",
+        "docs/engineering/localized-repair-c271/main-merge-p32/INDEPENDENT-REVIEW.md"
+      ]
+    },
+    {
+      "name": "P32 independent review of the merge commit",
+      "command": "Fresh-context subagent: per-path comparison of all paths with base and parents, conflict resolutions by meaning, schema-2 CURRENT, checks on the exact commit",
+      "result": "passed",
+      "required": true,
+      "scope": "ACCEPT_WITH_NONMANDATORY_FINDINGS; not an integration approval",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/main-merge-p32/INDEPENDENT-REVIEW.md"
+      ]
     }
   ],
   "completion": {
@@ -1434,7 +1465,7 @@
       }
     }
   },
-  "next_action": "C271-P32-main-merge-mb is declared and in progress: gate MB of the adopted macOS contract, a reviewed merge of main 51223c9b into this branch that resolves the six overlaps by meaning and converts CURRENT.json to schema 2, without integrating into main. Then MI, MP, MH, MR (R03), R04 and R05, each a separate phase.",
+  "next_action": "C271-P32 merged main 51223c9b into this branch (gate MB of the adopted macOS contract ontokin.current-host-readback/0.2.0) in reviewed merge commit 5f30f26b313946d1fdd763670b340341d2eed489, pushed without force; nothing is integrated into main. The next gate is MI: implementation of the 0.2.0 adaptations (Darwin supervisor variant, provider and probe host bindings, preparer route, driver environment, Git binding and selection rule) with independently frozen non-runtime controls and independent review. MI is a separate phase that needs the owner's selection. Then MP (preparation, with the owner's approval of the Node download), MH, MR (R03), R04 and R05.",
   "session_phase": {
     "schema": "ontokin.c271.p32-main-merge/1",
     "task": "C271",
@@ -1450,7 +1481,9 @@
     "scope_issue": 273,
     "record": "docs/engineering/localized-repair-c271/main-merge-p32/PHASE.json",
     "session_checkpoint": "docs/workflow/tasks/C271/P32-SESSION.md",
-    "status": "declared_merge_pending"
+    "status": "merge_complete_reviewed_pushed",
+    "completed_at_utc": "2026-11-26T06:16:48Z",
+    "merge_commit": "5f30f26b313946d1fdd763670b340341d2eed489"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -7867,7 +7900,7 @@
     "record": "docs/engineering/localized-repair-c271/main-merge-p32/PHASE.json",
     "session_checkpoint": "docs/workflow/tasks/C271/P32-SESSION.md",
     "declared_at_utc": "2026-11-26T05:53:00Z",
-    "status": "declared_merge_pending",
+    "status": "merge_complete_reviewed_pushed",
     "owner_direction": {
       "date": "2026-11-25 (America/Denver; 2026-11-26 UTC)",
       "question": "Should I start gate MB next: a reviewed merge of main into the C271 branch?",
@@ -7876,6 +7909,84 @@
       "scope_of_selection": "gate MB of the adopted contract ontokin.current-host-readback/0.2.0 only"
     },
     "gate": "MB of ontokin.current-host-readback/0.2.0",
-    "parent_complete": false
+    "parent_complete": false,
+    "completed_at_utc": "2026-11-26T06:16:48Z",
+    "merge_commit": {
+      "commit": "5f30f26b313946d1fdd763670b340341d2eed489",
+      "tree": "f0a017e2a01aaecd22340a3e7b20e5d686ea57f6",
+      "parents": [
+        "6fb6525f670ac619857d4830cda0a3e2bf298d93",
+        "51223c9b94a222f29d38eb6c33808f8e55e2bff9"
+      ],
+      "merge_base": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
+      "pushed": "6fb6525f..5f30f26b without force; read back with git ls-remote at 2026-11-26T06:16:00Z"
+    },
+    "resolution": "docs/engineering/localized-repair-c271/main-merge-p32/MERGE-RESOLUTION.md",
+    "independent_review": {
+      "record": "docs/engineering/localized-repair-c271/main-merge-p32/INDEPENDENT-REVIEW.md",
+      "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "findings": [
+        "M-01",
+        "M-02",
+        "M-03",
+        "M-04",
+        "M-05",
+        "M-06"
+      ]
+    },
+    "current_schema": "docs/workflow/CURRENT.json is schema 2 from the merge on; this branch's schema-1 file is retained as docs/engineering/localized-repair-c271/main-merge-p32/CURRENT-C271-schema1.json and bound in its history",
+    "environment_readiness": "the doctor now diagnoses this worktree: core ready; python-verification missing (the worktree .venv holds none of the seven pinned packages; gate MP prepares it)",
+    "gates_still_open": [
+      "MI: implementation (next; needs the owner's selection)",
+      "MP: preparation (owner's download approval)",
+      "MH: qualification on the owner's executor",
+      "MR: complete qualifying routine (R03)",
+      "R04: integration and actual-main verification",
+      "R05: parent completion and final delivery",
+      "H0 and H1 of the Linux contract (P30-EXECUTOR-001), N34, N57: unchanged and open"
+    ]
+  },
+  "p32_fields_index": {
+    "recorded_at_utc": "2026-11-26T06:16:48Z",
+    "purpose": "Extends p31_fields_index, which stays unchanged, after gate MB converted docs/workflow/CURRENT.json to schema 2.",
+    "current_state_fields": {
+      "task.json": [
+        "status",
+        "blocked_reason",
+        "owner",
+        "branch",
+        "scope_issue",
+        "requirements",
+        "plan",
+        "checks",
+        "completion",
+        "next_action",
+        "session_phase",
+        "execution_mode",
+        "execution_mode_record",
+        "delivery_reconciliation",
+        "p32_main_merge"
+      ],
+      "CURRENT.json": [
+        "schema_version",
+        "project",
+        "latest_task",
+        "active_task",
+        "execution_mode",
+        "observed_main",
+        "snapshot_date",
+        "next_action",
+        "checkpoint",
+        "unfinished",
+        "boundaries",
+        "delivery_policy",
+        "history"
+      ]
+    },
+    "now_history": {
+      "CURRENT.json schema-1 fields": "retained unchanged in docs/engineering/localized-repair-c271/main-merge-p32/CURRENT-C271-schema1.json (bound in CURRENT's history); the CURRENT.json field lists of p29_r07_superseded_fields_index, p30_fields_index and p31_fields_index describe that schema-1 file",
+      "p31_macos_contract_design": "C271-P31's completed phase record",
+      "p32_prior_current_fields": "the values that the P32 declaration replaced"
+    }
   }
 }
