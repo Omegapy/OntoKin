@@ -580,3 +580,18 @@ Every step ran as planned:
 - these outcome records.
 
 Each push was without force and read back from the remote. The next phase, not begun here, is gate MI: implementation of the adopted 0.2.0 adaptations. Then come MP, MH, MR (R03), R04 and R05, each a separate phase.
+
+## P33 gate MI: implementation of the 0.2.0 adaptations — November 26, 2026
+
+Local mode, on the owner's selection ([phase declaration](../../../engineering/localized-repair-c271/macos-implementation-p33/PHASE.json)). Director `c271-p33-a99647756bed`. The [implementation plan](../../../engineering/localized-repair-c271/macos-implementation-p33/IMPLEMENTATION-PLAN.md) fixes files, owners, interfaces and the control assignment.
+
+Ordered steps:
+1. Declare and push.
+2. Implement through workers with disjoint files, the Director making every commit:
+   - W1, the Darwin supervisor; W2, the preparer route; W3, the M0 and M1 observer; these three in parallel;
+   - W4, the driver, after W1;
+   - W5, the provider and probe, after W2, W3 and W4.
+3. Have an independent author, W6, freeze the exact inputs and expected outcomes of the controls MI executes.
+4. Run the frozen controls and the focused tests, then the workflow check, the documentation verifier and a whitespace check.
+5. Obtain a fresh-context independent review (W7), and resolve its mandatory findings.
+6. Push without force, read the push back, record, comment once on PR274 and issue273, and stop.

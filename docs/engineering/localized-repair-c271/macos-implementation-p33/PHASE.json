@@ -1,0 +1,63 @@
+{
+  "schema": "ontokin.c271.p33-macos-implementation/1",
+  "task": "C271",
+  "phase": "C271-P33-macos-implementation-mi",
+  "owner": "c271-p33-a99647756bed",
+  "declared_at_utc": "2026-11-26T14:36:34Z",
+  "status": "declared_implementation_pending",
+  "execution_mode": {
+    "mode": "local",
+    "entry_document": "https://github.com/Omegapy/OntoKin/blob/51223c9b94a222f29d38eb6c33808f8e55e2bff9/LOCAL-START-HERE.md",
+    "governing_instructions": "current main at 51223c9b94a222f29d38eb6c33808f8e55e2bff9; gate MB merged it into this branch, so the branch's instruction files are main's bytes"
+  },
+  "owner_direction": {
+    "date": "2026-11-26 (America/Denver and UTC)",
+    "question": "Should I start gate MI, the implementation of the 0.2.0 macOS adaptations?",
+    "reply": "Start gate MI",
+    "how_received": "typed by the owner in this session",
+    "scope_of_selection": "gate MI of the adopted contract ontokin.current-host-readback/0.2.0 only"
+  },
+  "objective": "Gate MI of docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md section 11: implement the 0.2.0 adaptations in source (Darwin supervisor variant, preparer route, M0 and M1 host observation, provider and probe host bindings with every provider document at /0.2.0, driver environment, Git binding and selection rule), with independently frozen controls for the controls that need no prepared runtime, and an independent review. Nothing is prepared, qualified or integrated.",
+  "plan": "docs/engineering/localized-repair-c271/macos-implementation-p33/IMPLEMENTATION-PLAN.md",
+  "starting_state": {
+    "branch_head": "1c2f25ba224a5c3419004d1d331d29e01378ae00",
+    "main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "remote_observation": "git ls-remote --heads origin at 2026-11-26T14:24:42Z and again at 2026-11-26T14:35:07Z",
+    "pull_request": "PR274 open, draft, mergeable and clean against main",
+    "scope_issue": "issue273 open",
+    "environment": "worktree .venv: CPython 3.12.13; the doctor reports core ready and python-verification missing (none of the seven pinned packages); MI uses the standard library only"
+  },
+  "acceptance": [
+    {"id": "A1", "check": "This declaration and its implementation plan are pushed before any implementation."},
+    {"id": "A2", "check": "Darwin supervisor variant (S4): a new module with the original run_process signature and receipt; supervisor.py stays byte-identical; a token-level comparison shows that only the precondition differs (MC14)."},
+    {"id": "A3", "check": "Preparer route (S6): install/0.2.0 and install-result/0.2.0; the official archive's member policy; NODE-SOURCE.json as a planned non-archive file; renamex_np with RENAME_EXCL bound from the SDK header, never a fallback rename; the 0.1.0 route keeps its behaviour."},
+    {"id": "A4", "check": "M0 and M1 observer (S3, S7, S10): observation-plan/0.2.0 to HOST/0.2.0; the Mach-O parser with Node and Python rules; the Python installation-tree inventory; OS identity with the cryptex copy; translation and boot identity; Git binding; the environment predicate; canonical paths; M1 through the Darwin supervisor. Implemented and tested with synthetic inputs; not run on the real host."},
+    {"id": "A5", "check": "Provider and probe (S7, S8, S10): every provider document schema at /0.2.0; each version's entry points refuse the other's documents; the provider's boot, OS-build and cryptex checks around each start; delegation to the Darwin supervisor; the probe's scientific body preserved byte for byte with a reviewed token-equivalence check; the 0.1.0 provider and probe keep their behaviour apart from S8's ordinary-run reason."},
+    {"id": "A6", "check": "Driver (S8, S9): ordinary runs proceed and record their run kind; partial selection fails; qualifying runs keep every rule; the removal list adds DYLD_*, __PYVENV_LAUNCHER__ and PYTHONEXECUTABLE; Git is bound by absolute path. The readback test file changes in its docstring only."},
+    {"id": "A7", "check": "An independent author freezes the exact inputs and expected outcomes of the controls MI executes before they run; they, the new focused tests and the existing 0.1.0 tests of the changed files pass, or each failure is recorded and the implementation corrected without changing a frozen expectation; the workflow check, the documentation verifier and a scoped whitespace check pass."},
+    {"id": "A8", "check": "A fresh-context independent review accepts the implementation, or its mandatory findings are resolved and re-reviewed."},
+    {"id": "A9", "check": "Pushed without force and read back; outcome records, session checkpoint and task record; one checkpoint comment on PR274 and issue273; PR274 stays draft; main is not written."}
+  ],
+  "ownership": {
+    "director": "c271-p33-a99647756bed",
+    "director_session": "the same Claude Code session that carried out C271-P30, P31 and P32",
+    "owned": [
+      "the C271 worktree, its index and .venv",
+      "every update of this branch in this phase",
+      "the working evidence directory ../OntoKin-local/c271-p33/"
+    ],
+    "workers": "W1 to W7 of the implementation plan, section 3, each with exclusive writes to its listed files and no Git write",
+    "main": "not written; the integration lease is not used"
+  },
+  "stopping_condition": "The reviewed implementation pushed and read back with its records, or a concrete blocker.",
+  "excluded": [
+    "downloads and installs: the Node archive, the reader tree and the .venv packages (MP)",
+    "any Node, ldd or codesign start; M0 and M1 on the real host; N34-M; the qualifying cohort (MH)",
+    "the routine driver and the complete default routine (MR); R03, R04 and R05",
+    "changes to the 0.1.0 adopted documents, supervisor.py, the 0.1.0 probe, the inspector, or the seven method bodies",
+    "integration into main and the main lease; PR274 state changes, issue closure, branch deletion"
+  ],
+  "records": {
+    "session_checkpoint": "docs/workflow/tasks/C271/P33-SESSION.md"
+  }
+}

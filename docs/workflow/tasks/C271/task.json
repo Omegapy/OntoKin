@@ -4,7 +4,7 @@
   "title": "H22 isolated missing source import-digest control",
   "intent": "Resolve the isolated H22.02 evidence gap without changing observer behavior or the C260 contract.",
   "status": "in_progress",
-  "owner": "c271-p32-08e8ceaa9140",
+  "owner": "c271-p33-a99647756bed",
   "branch": "work/c271-missing-import-digest-control",
   "base_sha": "e1a48f7d0635e9aa4f4b6d6a586e7305eb81999d",
   "scope_issue": "https://github.com/Omegapy/OntoKin/issues/273",
@@ -550,7 +550,7 @@
       "evidence": [
         "docs/engineering/localized-repair-c271/elf-string-table-p10/P10-DELIVERY.json"
       ],
-      "scope": "P10 partial delivery only. R03\u2013R05 and integration remain open."
+      "scope": "P10 partial delivery only. R03–R05 and integration remain open."
     },
     {
       "name": "P11 independent intake and verified early recovery",
@@ -875,7 +875,7 @@
         "docs/engineering/localized-repair-c271/libc-tags-p16/P16-DELIVERY.json",
         "docs/engineering/localized-repair-c271/libc-tags-p16/FINAL-READBACK-VERIFICATION.json"
       ],
-      "limit": "P16 partial delivery only. Parent R03\u2013R05 and P02 remain open. This receipt checkpoint requires its own conditional publication/readback; late evidence is preserved separately."
+      "limit": "P16 partial delivery only. Parent R03–R05 and P02 remain open. This receipt checkpoint requires its own conditional publication/readback; late evidence is preserved separately."
     },
     {
       "name": "P17 startup reconciliation and independently verified early recovery",
@@ -1465,25 +1465,24 @@
       }
     }
   },
-  "next_action": "C271-P32 merged main 51223c9b into this branch (gate MB of the adopted macOS contract ontokin.current-host-readback/0.2.0) in reviewed merge commit 5f30f26b313946d1fdd763670b340341d2eed489, pushed without force; nothing is integrated into main. The next gate is MI: implementation of the 0.2.0 adaptations (Darwin supervisor variant, provider and probe host bindings, preparer route, driver environment, Git binding and selection rule) with independently frozen non-runtime controls and independent review. MI is a separate phase that needs the owner's selection. Then MP (preparation, with the owner's approval of the Node download), MH, MR (R03), R04 and R05.",
+  "next_action": "C271-P33-macos-implementation-mi is declared and in progress: gate MI of the adopted macOS contract ontokin.current-host-readback/0.2.0, the implementation of the 0.2.0 adaptations (Darwin supervisor variant, preparer route, M0 and M1 observer, provider and probe host bindings, driver environment, Git binding and selection rule) with independently frozen controls and independent review. It starts no Node process, downloads nothing and prepares nothing. Then MP (preparation, with the owner's approval of the Node download), MH, MR (R03), R04 and R05, each a separate phase.",
   "session_phase": {
-    "schema": "ontokin.c271.p32-main-merge/1",
+    "schema": "ontokin.c271.p33-macos-implementation/1",
     "task": "C271",
-    "phase": "C271-P32-main-merge-mb",
-    "owner": "c271-p32-08e8ceaa9140",
-    "declared_at_utc": "2026-11-26T05:53:00Z",
+    "phase": "C271-P33-macos-implementation-mi",
+    "owner": "c271-p33-a99647756bed",
+    "declared_at_utc": "2026-11-26T14:36:34Z",
     "execution_mode": "local",
     "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-    "starting_branch_head": "07d0ff5a41338f05810e9c086df00d48a22874f4",
+    "starting_branch_head": "1c2f25ba224a5c3419004d1d331d29e01378ae00",
     "branch": "work/c271-missing-import-digest-control",
     "worktree": "../OntoKin-worktrees/c271",
     "pull_request": 274,
     "scope_issue": 273,
-    "record": "docs/engineering/localized-repair-c271/main-merge-p32/PHASE.json",
-    "session_checkpoint": "docs/workflow/tasks/C271/P32-SESSION.md",
-    "status": "merge_complete_reviewed_pushed",
-    "completed_at_utc": "2026-11-26T06:16:48Z",
-    "merge_commit": "5f30f26b313946d1fdd763670b340341d2eed489"
+    "record": "docs/engineering/localized-repair-c271/macos-implementation-p33/PHASE.json",
+    "plan": "docs/engineering/localized-repair-c271/macos-implementation-p33/IMPLEMENTATION-PLAN.md",
+    "session_checkpoint": "docs/workflow/tasks/C271/P33-SESSION.md",
+    "status": "declared_implementation_pending"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -7987,6 +7986,94 @@
       "CURRENT.json schema-1 fields": "retained unchanged in docs/engineering/localized-repair-c271/main-merge-p32/CURRENT-C271-schema1.json (bound in CURRENT's history); the CURRENT.json field lists of p29_r07_superseded_fields_index, p30_fields_index and p31_fields_index describe that schema-1 file",
       "p31_macos_contract_design": "C271-P31's completed phase record",
       "p32_prior_current_fields": "the values that the P32 declaration replaced"
+    }
+  },
+  "p33_prior_current_fields": {
+    "recorded_at_utc": "2026-11-26T14:36:34Z",
+    "purpose": "The current values that the C271-P33 declaration replaced, kept unchanged as P32's closing state.",
+    "owner": "c271-p32-08e8ceaa9140",
+    "next_action": "C271-P32 merged main 51223c9b into this branch (gate MB of the adopted macOS contract ontokin.current-host-readback/0.2.0) in reviewed merge commit 5f30f26b313946d1fdd763670b340341d2eed489, pushed without force; nothing is integrated into main. The next gate is MI: implementation of the 0.2.0 adaptations (Darwin supervisor variant, provider and probe host bindings, preparer route, driver environment, Git binding and selection rule) with independently frozen non-runtime controls and independent review. MI is a separate phase that needs the owner's selection. Then MP (preparation, with the owner's approval of the Node download), MH, MR (R03), R04 and R05.",
+    "session_phase": {
+      "schema": "ontokin.c271.p32-main-merge/1",
+      "task": "C271",
+      "phase": "C271-P32-main-merge-mb",
+      "owner": "c271-p32-08e8ceaa9140",
+      "declared_at_utc": "2026-11-26T05:53:00Z",
+      "execution_mode": "local",
+      "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+      "starting_branch_head": "07d0ff5a41338f05810e9c086df00d48a22874f4",
+      "branch": "work/c271-missing-import-digest-control",
+      "worktree": "../OntoKin-worktrees/c271",
+      "pull_request": 274,
+      "scope_issue": 273,
+      "record": "docs/engineering/localized-repair-c271/main-merge-p32/PHASE.json",
+      "session_checkpoint": "docs/workflow/tasks/C271/P32-SESSION.md",
+      "status": "merge_complete_reviewed_pushed",
+      "completed_at_utc": "2026-11-26T06:16:48Z",
+      "merge_commit": "5f30f26b313946d1fdd763670b340341d2eed489"
+    }
+  },
+  "p33_macos_implementation": {
+    "phase": "C271-P33-macos-implementation-mi",
+    "owner": "c271-p33-a99647756bed",
+    "record": "docs/engineering/localized-repair-c271/macos-implementation-p33/PHASE.json",
+    "plan": "docs/engineering/localized-repair-c271/macos-implementation-p33/IMPLEMENTATION-PLAN.md",
+    "session_checkpoint": "docs/workflow/tasks/C271/P33-SESSION.md",
+    "declared_at_utc": "2026-11-26T14:36:34Z",
+    "status": "declared_implementation_pending",
+    "owner_direction": {
+      "date": "2026-11-26 (America/Denver and UTC)",
+      "question": "Should I start gate MI, the implementation of the 0.2.0 macOS adaptations?",
+      "reply": "Start gate MI",
+      "how_received": "typed by the owner in this session",
+      "scope_of_selection": "gate MI of the adopted contract ontokin.current-host-readback/0.2.0 only"
+    },
+    "gate": "MI of ontokin.current-host-readback/0.2.0",
+    "parent_complete": false
+  },
+  "p33_fields_index": {
+    "recorded_at_utc": "2026-11-26T14:36:34Z",
+    "purpose": "Extends p32_fields_index, which stays unchanged: p33_macos_implementation joins the current-state fields of task.json, and p32_main_merge becomes history.",
+    "current_state_fields": {
+      "task.json": [
+        "status",
+        "blocked_reason",
+        "owner",
+        "branch",
+        "scope_issue",
+        "requirements",
+        "plan",
+        "checks",
+        "completion",
+        "next_action",
+        "session_phase",
+        "execution_mode",
+        "execution_mode_record",
+        "delivery_reconciliation",
+        "p33_macos_implementation"
+      ],
+      "CURRENT.json": [
+        "schema_version",
+        "project",
+        "latest_task",
+        "active_task",
+        "execution_mode",
+        "observed_main",
+        "snapshot_date",
+        "next_action",
+        "checkpoint",
+        "unfinished",
+        "boundaries",
+        "delivery_policy",
+        "history"
+      ]
+    },
+    "now_history": {
+      "task.json": [
+        "p32_main_merge",
+        "p32_prior_current_fields",
+        "p33_prior_current_fields"
+      ]
     }
   }
 }

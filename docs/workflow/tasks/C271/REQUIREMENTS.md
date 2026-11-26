@@ -596,3 +596,18 @@ Main `51223c9b` is merged into this branch in the independently reviewed merge c
 - **Environment readiness (separate):** in this worktree `core` is ready and `python-verification` is missing. Gate MP prepares it.
 - **Unchanged:** R01/R02 remain done and R03–R05 not_done.
 - **Next gate:** MI, which needs the owner's selection.
+
+## P33 gate MI: implementation of the 0.2.0 adaptations — November 26, 2026
+
+The owner answered "Start gate MI" in this session. Phase C271-P33-macos-implementation-mi runs in local mode ([phase declaration](../../../engineering/localized-repair-c271/macos-implementation-p33/PHASE.json), [implementation plan](../../../engineering/localized-repair-c271/macos-implementation-p33/IMPLEMENTATION-PLAN.md), [session checkpoint](P33-SESSION.md)).
+- **Objective:** gate MI of the adopted contract `ontokin.current-host-readback/0.2.0`. It implements in source:
+  - the Darwin supervisor variant;
+  - the preparer route;
+  - M0 and M1;
+  - the provider and probe host bindings, with every provider document at `/0.2.0`;
+  - the driver environment, the Git binding and the selection rule.
+- **Controls:** an independent author freezes the controls that need no prepared runtime before they run. An independent review follows.
+- **Not run:** no Node, `ldd` or `codesign` start, no download or install, no preparation, no qualification, no routine driver.
+- **Main:** not written.
+- **Excluded:** MP, MH, MR, R04 and R05.
+- **Unchanged:** R01/R02 remain done and R03–R05 not_done.
