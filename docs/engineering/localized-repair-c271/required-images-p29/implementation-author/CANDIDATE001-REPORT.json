@@ -1,0 +1,117 @@
+{
+  "schema": "ontokin.c271.p29-implementation-candidate/1",
+  "worker": "/root/implementation",
+  "candidate": "candidate001",
+  "status": "held_for_independent_focused_harness_adjudication",
+  "source": {
+    "path": "repository/prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "bytes": 249393,
+    "sha256": "71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758"
+  },
+  "baseline": {
+    "path": "verification/baseline-inherited-fixed-retention/source-snapshot/current_host_inspection_v01.py",
+    "bytes": 233502,
+    "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a"
+  },
+  "patch": {
+    "path": "reviews/implementation/CANDIDATE001.patch",
+    "bytes": 27560,
+    "sha256": "42e70441bf873dae134e1526d88f27bd36a3aec535163ca00f7736b862073b7f"
+  },
+  "changed_existing_definitions": [
+    "_uses_rtld_paths",
+    "_check_rtld_operational_paths",
+    "_plan_shape",
+    "_select_origin_profile",
+    "_uses_libc_profile",
+    "_prepare_libc_plt_policy",
+    "_read_plan_elf_metadata",
+    "_read_elf_metadata",
+    "_check_resolution"
+  ],
+  "new_definitions": [
+    "_prepare_required_images_policy",
+    "_read_required_image_elf_metadata",
+    "_required_image_checkpoint",
+    "_required_image_require",
+    "_select_required_images_profile"
+  ],
+  "all_existing_top_level_assignments_unchanged": true,
+  "unchanged_critical_definitions": [
+    "read_elf_metadata",
+    "_select_rtld_paths_profile",
+    "_read_libc_plt_elf_metadata",
+    "_read_libc_static_tls_elf_metadata",
+    "_validate",
+    "_recheck",
+    "_required_paths",
+    "_input_snapshot",
+    "_launch_check",
+    "_run_command"
+  ],
+  "focused_attempt": {
+    "path": "verification/implementation-focused-001",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_current_host_required_images_v01.py",
+      "-v"
+    ],
+    "runner": {
+      "path": "/workspace/scratch/2eb33b59a678/scripts/run_verification.py",
+      "bytes": 6954,
+      "sha256": "ef30c5505fe0941aa132a9fb92ed0b836300f8cb50077076a0e93c9b5e7a24e7"
+    },
+    "freeze": {
+      "accepted_freeze_sha256": "ca54eae3708af5e72f6d01c39a17b625511b8de1411b77d0a7ac0d7427eeae1a",
+      "verified_payloads": 115,
+      "verified_companions": 24,
+      "verified_generated_inventory_sources": 6,
+      "verified_before_process_start": true
+    },
+    "result": {
+      "label": "implementation-focused-001",
+      "kind": "focused",
+      "returncode": 1,
+      "pid": 6,
+      "completed_at_utc": "2026-11-23T23:18:54.640004+00:00",
+      "source_changes_during_run": [],
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 25592,
+        "sha256": "502e5ec19a592010c9cfa2c21448d0823ab5e3a1f74e85a755fed4354bc84118"
+      }
+    },
+    "obligation_count": 116,
+    "passed_obligations": 115,
+    "failed_obligations": [
+      "RI-L08"
+    ],
+    "inherited_nested_status": "P16/P17 cohort passed inside RI-L07. RI-L08 retained one RTLDPathControls.setUpClass error, ten supplemental methods run, 51 RTLD methods unrun.",
+    "failure": {
+      "source": "Python standard-library platform.platform() lazy processor discovery in unchanged RTLD test setUpClass",
+      "attempted_command": [
+        "uname",
+        "-p"
+      ],
+      "outcome": "outer new-adapter subprocess.check_output guard raised before actual subprocess launch",
+      "trace": "verification/implementation-focused-001/control-data/required-images/RI-L08.json",
+      "classification": "suspected harness/adapter setup issue; Director and independent reviewers notified",
+      "production_fix_applied": false
+    }
+  },
+  "next_action": "Director adjudicates the retained setup failure. Do not edit implementation or rerun controls until released. Complete inherited candidate verification and independent implementation acceptance remain unmet.",
+  "limits": [
+    "No operational host admission/preparation/install/H0/H1 or native target execution.",
+    "No old test/fixture/oracle/production-pin changes.",
+    "No main integration, Git mutation or parent completion."
+  ]
+}

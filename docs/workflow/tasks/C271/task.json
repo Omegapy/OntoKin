@@ -1334,7 +1334,7 @@
       }
     }
   },
-  "next_action": "C271-P29-R07 (local mode, declared 2026-11-26 on the owner's direction) is publishing the exact accepted P29 candidate through ordinary authenticated Git: verify the R06 archive chain and its 245-row inventory, preserve the candidate commit with parent 6c7f52a2ee627a382eea91ce26bf58bac4e6cccb and tree db30c29f24c154f378a5acac713385fc8bb44f52, join it with this branch in one independently reviewed merge commit, push without force, read it back from the remote, record the outcome and stop. If this phase is interrupted, inspect the worktree, the refs and the destination, then resume at the first unmet step named in docs/workflow/tasks/C271/P29-R07-SESSION.md. P29-PUBLICATION-SIZE-001 stays open until the readback succeeds. Do not begin the /0.1.5 operational-plan review, H0/H1, the routine driver, behavioral reruns or main integration in this phase.",
+  "next_action": "The accepted P29 candidate is preserved as commit dbf20beed1bd6274a42531c997d054c09fb8ebb8 (parent 6c7f52a2ee627a382eea91ce26bf58bac4e6cccb, tree db30c29f24c154f378a5acac713385fc8bb44f52) and joined with this branch's later recovery history in one merge commit of phase C271-P29-R07 (local mode). Publication is pending: this branch's record checks, an independent review of the exact merge, a non-forced push and a readback in a separate repository without alternates. P29-PUBLICATION-SIZE-001 stays open until that readback succeeds. If this phase is interrupted, inspect the worktree, the refs and the destination, then resume at the first unmet step named in docs/workflow/tasks/C271/P29-R07-SESSION.md. Do not begin the /0.1.5 operational-plan review, H0/H1, the routine driver, behavioral reruns or main integration in this phase.",
   "session_phase": {
     "schema": "ontokin.c271.p29-r07-local-publication/1",
     "task": "C271",
@@ -1350,7 +1350,9 @@
     "scope_issue": 273,
     "record": "docs/engineering/localized-repair-c271/p29-local-publication-r07/PHASE.json",
     "session_checkpoint": "docs/workflow/tasks/C271/P29-R07-SESSION.md",
-    "status": "declared_publication_pending"
+    "status": "candidate_joined_locally_publication_pending",
+    "candidate_commit": "dbf20beed1bd6274a42531c997d054c09fb8ebb8",
+    "declaration_commit": "80fecf97b785544e8044a60df849cc5918929599"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -7093,7 +7095,297 @@
     "candidate_parent": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
     "expected_candidate_tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
     "candidate_published": false,
-    "status": "declared_publication_pending",
-    "parent_complete": false
+    "status": "candidate_joined_locally_publication_pending",
+    "parent_complete": false,
+    "declaration_commit": "80fecf97b785544e8044a60df849cc5918929599",
+    "candidate_commit": "dbf20beed1bd6274a42531c997d054c09fb8ebb8",
+    "candidate_tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
+    "candidate_tree_reproduced": true,
+    "earlier_values": "The declaration's next_action, session_phase and this entry are retrievable unchanged from the declaration commit."
+  },
+  "p29_predecessor_state": {
+    "commit": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
+    "task": "docs/workflow/tasks/C271/task.json",
+    "blocked_reason": "P28-RECOVERY-BYTES-001: exact later P28 implementation, frozen controls, raw verification, reviews and publication object identities unavailable in verified inputs",
+    "session_phase": "C271-P28-R02-exact-candidate-recovery",
+    "next_action": "Supply the exact original P28 final uploaded tree SHA plus complete publication manifest/group inventory, or a saved implementation/fixtures/tests/review artifact. If those bytes are unavailable, obtain an explicit bounded reconstruction decision under the adopted P27 design. Do not repeat this same recovery phase without a new durable input or that decision; do not call new implementation recovered work.",
+    "delivery_resolved_by": [
+      7115411913,
+      7115412292
+    ]
+  },
+  "p29_reconstruction_decision": "docs/engineering/localized-repair-c271/required-images-p29/RECONSTRUCTION-DECISION.md",
+  "p29_fixture_freeze": {
+    "candidate": "004",
+    "accepted": true,
+    "freeze_sha256": "69065e25738c81ab88cd502edc7069b3b005ba6ae4a67181c30c83f950aa54d5",
+    "decision": "docs/engineering/localized-repair-c271/required-images-p29/FIXTURE-FREEZE-CANDIDATE004-DECISION.json",
+    "save_pending": false,
+    "receipt": "docs/engineering/localized-repair-c271/required-images-p29/FIXTURE-FREEZE-004-RECEIPT.json"
+  },
+  "p29_baseline": {
+    "tests_run": 481,
+    "passed": 481,
+    "status": "accepted_after_preserved_orchestration_failures",
+    "evidence": "docs/engineering/localized-repair-c271/required-images-p29/BASELINE-STATUS.json"
+  },
+  "p29_implementation_candidate": {
+    "sha256": "71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758",
+    "bytes": 249393,
+    "static_review": "accepted",
+    "runtime_acceptance": "accepted",
+    "final_focused_passed": 116,
+    "final_inherited_passed": 481,
+    "independent_review": "docs/engineering/localized-repair-c271/required-images-p29/independent-review/FINAL-IMPLEMENTATION-ACCEPTANCE.json"
+  },
+  "p29_technical_acceptance": {
+    "accepted": true,
+    "recorded_at_utc": "2026-11-23T23:54:00.752698+00:00",
+    "verification": "docs/engineering/localized-repair-c271/required-images-p29/VERIFICATION.json",
+    "summary": "docs/engineering/localized-repair-c271/required-images-p29/SUMMARY.md",
+    "phase_complete": false,
+    "delivery_complete": false,
+    "parent_complete": false,
+    "next_technical_action_after_delivery_in_fresh_phase": "In a fresh phase, prepare and independently review the executable /0.1.5 inspection plan against the adopted P27 finite policy and all existing H0 prerequisites; stop at a new blocker before any H0/H1 execution."
+  },
+  "p29_candidate_superseded_current_fields": {
+    "candidate_commit": "dbf20beed1bd6274a42531c997d054c09fb8ebb8",
+    "candidate_tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
+    "candidate_source_time": "P29 technical acceptance, 2026-11-23T23:54:00Z",
+    "status": "in_progress",
+    "owner": "c271-p29-2eb33b59a678",
+    "next_action": "Complete final documentary checks and conditional publication on the retained branch; verify and save the immutable handoff ZIP and matching prompts, record the separate delivery receipt and matching terminal comments, release this phase owner, then stop.",
+    "session_phase": {
+      "schema": "ontokin.c271.p29-phase/1",
+      "task": "C271",
+      "phase": "C271-P29-required-images-reconstruction",
+      "owner": "c271-p29-2eb33b59a678",
+      "observed_at_utc": "2026-11-23T22:32:43.378038+00:00",
+      "observed_main": "e43cc6c5777874101a40559e4058ad6826b07e51",
+      "observed_main_tree": "2a4712e9d1c6ddd2fb4571292e239d1b16bb5fda",
+      "starting_branch_head": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
+      "branch": "work/c271-missing-import-digest-control",
+      "pull_request": 274,
+      "scope_issue": 273,
+      "scope": "New reconstruction of the adopted P27 required-image inspection implementation and independently frozen inert controls; not recovery of original P28 bytes",
+      "acceptance": [
+        "Confirm early saved recovery before substantive work",
+        "Independently freeze and review exact inert fixtures, adapter, commands and oracles for all 116 P27 obligations before implementation or product control execution",
+        "Implement only the adopted finite surface and preserve prior behavior/pins",
+        "Execute focused and complete applicable inherited controls with fresh exact-source evidence",
+        "Independently review the exact candidate and preserve all findings/failures",
+        "Conditionally publish on retained branch; verify and save final handoff and separate receipt"
+      ],
+      "stop": "Independently accepted bounded implementation or first new design blocker, followed only by verification/publication/delivery; no second phase",
+      "exclusions": [
+        "host profiling/preparation or package installation",
+        "H0/H1 operational execution",
+        "Node/ldd/direct-loader/CPU-checker starts",
+        "original-seven/full routine",
+        "main integration",
+        "branch deletion",
+        "parent closure"
+      ],
+      "phase_complete": false,
+      "parent_complete": false,
+      "parent_status": "in_progress",
+      "main_lease_held": false,
+      "requirements": {
+        "R01": "done",
+        "R02": "done",
+        "R03": "not_done",
+        "R04": "not_done",
+        "R05": "not_done"
+      },
+      "parent_plan": {
+        "P01": "done",
+        "P02": "in_progress"
+      },
+      "original_p28_implementation_verified": false,
+      "original_p28_597_tests": "reported_unverified",
+      "original_uploads": {
+        "intended_parent": "360c80062e769230199602326fa8de25660df714",
+        "tree_sha": null,
+        "commit_sha": null,
+        "replayed": false
+      },
+      "historical_unknown_operations": [
+        "C270 ancillary broad-driver completion",
+        "Global prior-process termination",
+        "P13 read-only difflib completion; do not retry"
+      ],
+      "current_session_unknown_operations": [],
+      "early_save_confirmed": true,
+      "decision": "RECONSTRUCTION-DECISION.md",
+      "next_action": "Complete final documentary checks and conditional publication on the retained branch; verify and save the immutable handoff ZIP and matching prompts, record the separate delivery receipt and matching terminal comments, release this phase owner, then stop.",
+      "prior_owner_release": {
+        "pr_comment": 7115411913,
+        "issue_comment": 7115412292,
+        "terminal_payloads_match": true
+      },
+      "source_time_boundary": "Technical acceptance before conditional source publication and final saved delivery; later external receipt records actual completion.",
+      "early_receipt": "docs/engineering/localized-repair-c271/required-images-p29/EARLY-RECOVERY-RECEIPT.json",
+      "ownership_comment": 7115917208,
+      "stage": "technical_accepted_delivery_pending",
+      "fixture_candidate001": {
+        "freeze_sha256": "4e794172745f0cdb99b6050313eca8a08967fefe871ee4cf636dfb6ed1a4be14",
+        "accepted": false,
+        "archive": "fixture-revisions/CANDIDATE001.zip",
+        "review": "independent-review/CANDIDATE001-REVIEW.json",
+        "product_execution": false,
+        "production_modified": false
+      },
+      "fixture_freeze": {
+        "schema": "ontokin.c271.p29-fixture-director-decision/1",
+        "candidate": "004",
+        "decision": "accepted_saved_and_readback_verified_before_final_runs",
+        "recorded_at_utc": "2026-11-23T23:37:41.831292+00:00",
+        "freeze_sha256": "69065e25738c81ab88cd502edc7069b3b005ba6ae4a67181c30c83f950aa54d5",
+        "adapter_sha256": "92ed832d2f78509cc60185b5bbfd9da0ff563f595561f5a2cc46e5ff515581a7",
+        "cohort_sha256": "7aa9e1278419e6b4fd27afbc758d5dcea195a245960cd4c972d8102a34dcce77",
+        "independent_review": "independent-review/FIXTURE-CANDIDATE004-ACCEPTANCE.json",
+        "independent_review_sha256": "1266d55a0f9f043af65f5939c5852b8139b75850febfa12e91a7204d31ec7ea4",
+        "production_sha256": "71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758",
+        "production_bytes": 249393,
+        "new_obligations": 116,
+        "inherited_methods": 481,
+        "prior_focused_attempt": "115passed/1failed; full source and513-file attempt retained in control-attempts/implementation-focused-001.zip",
+        "change_scope": "Only recording metadata leaf in RI-L08; all oracles, inherited commands and production unchanged.",
+        "next_action": "Completed; final focused116 and inherited481 passed on held source."
+      },
+      "fixture_saved_receipt": "FIXTURE-FREEZE-004-RECEIPT.json",
+      "baseline_preflight": {
+        "attempt": "baseline-inherited",
+        "returncode": 1,
+        "tests_run": 0,
+        "reason": "discovered481 vsdeclared372; exact comparison refused before running tests"
+      },
+      "baseline": {
+        "attempt": "baseline-inherited-fixed-retention",
+        "tests_run": 481,
+        "passed": 481,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "production_sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a",
+        "frozen_inputs_unchanged": true
+      },
+      "runner_sha256": "ef30c5505fe0941aa132a9fb92ed0b836300f8cb50077076a0e93c9b5e7a24e7",
+      "production_candidate": {
+        "sha256": "71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758",
+        "bytes": 249393,
+        "static_review": "accepted",
+        "focused_attempt": "implementation-focused-001",
+        "focused_passed": 115,
+        "focused_failed": 1,
+        "edits_held": true,
+        "runtime_acceptance": "accepted",
+        "final_focused_attempt": "final-focused-004",
+        "final_focused_passed": 116,
+        "final_focused_failed": 0,
+        "final_inherited_attempt": "final-inherited-004",
+        "final_inherited_passed": 481,
+        "final_independent_review": {
+          "path": "independent-review/FINAL-IMPLEMENTATION-ACCEPTANCE.json",
+          "bytes": 14108,
+          "sha256": "54d8dd3a72fcc06626897a0decda5cb9f020bc691ea211512a2db35b6a84bcfd"
+        }
+      },
+      "phase_outcome": "accepted_implementation",
+      "technical_phase_complete": true,
+      "delivery_complete": false,
+      "next_technical_action": "In a fresh phase, prepare and independently review the executable /0.1.5 inspection plan against the adopted P27 finite policy and all existing H0 prerequisites; stop at a new blocker before any H0/H1 execution.",
+      "technical_accepted_at_utc": "2026-11-23T23:54:00.752698+00:00",
+      "final_verification": "VERIFICATION.json",
+      "final_independent_review": {
+        "path": "independent-review/FINAL-IMPLEMENTATION-ACCEPTANCE.json",
+        "bytes": 14108,
+        "sha256": "54d8dd3a72fcc06626897a0decda5cb9f020bc691ea211512a2db35b6a84bcfd"
+      },
+      "evidence_archive_independent_review": {
+        "path": "independent-review/EVIDENCE-ARCHIVE-REVIEW.json",
+        "bytes": 6820,
+        "sha256": "c801a6c9dbdeb7a7a57b8e4805597383edbfb1f0cf0cd027b5f5b5247656d81f"
+      },
+      "workers_history": [
+        {
+          "identity": "/root/handoff_audit",
+          "role": "fixture author; prior independent intake audit completed",
+          "owned": [
+            "tests/test_current_host_required_images_v01.py",
+            "docs/engineering/localized-repair-c271/required-images-p29/controls/"
+          ]
+        },
+        {
+          "identity": "/root/implementation",
+          "role": "production implementer; read-only until accepted fixture freeze",
+          "owned": [
+            "prototypes/static_tray_v01/current_host_inspection_v01.py"
+          ]
+        },
+        {
+          "identity": "/root/scope_review",
+          "role": "independent fixture and implementation reviewer",
+          "owned": [
+            "reviews/fixture-review/",
+            "reviews/implementation-review/"
+          ]
+        }
+      ],
+      "active_workers_at_technical_review": [],
+      "worker_boundary_note": "Independent technical reviews completed; any later worker task is documentary publication or delivery review only."
+    },
+    "blocked_reason": null,
+    "recorded_at_utc": "2026-11-26T01:16:29Z",
+    "note": "The accepted candidate's own current-state values at its source time. The later branch state (P29 R02 recovery, then C271-P29-R07) is current; these values are kept unchanged as history, and the candidate's exact task.json stays retrievable from the candidate commit."
+  },
+  "p29_recovery_records_r03_r06": {
+    "R02_terminal": {
+      "record": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7120290539"
+    },
+    "R03": {
+      "record": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7121353920",
+      "handoff": {
+        "name": "OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip",
+        "bytes": 39644692,
+        "sha256": "d1d099eff1ccbec55ea01ac61d65fc1d698466cde65fd8142c8b480fdd68f19e"
+      }
+    },
+    "R04": {
+      "record": "no comment exists on PR274",
+      "early_recovery": {
+        "name": "OntoKin_C271_P29_R04_Early_Recovery_2026-11-23.zip",
+        "bytes": 223424,
+        "sha256": "29e1a0bd49098c34508352bdff1f55c6d5a547535209c4bb5e6bca6a67715f64",
+        "held_in": "the R06 handoff chain"
+      }
+    },
+    "R05": {
+      "record": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7122919784",
+      "handoff_version_0_in_comment": {
+        "name": "OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip",
+        "bytes": 40867796,
+        "sha256": "3dc1b44edf43d92ad4de53e326b167a7269f9508266810d85056301a832027bd"
+      },
+      "handoff_version_1_in_r06_chain": {
+        "bytes": 40934668,
+        "sha256": "406b86f0fe9787ce0b1ead460f8391d3aaf2f79345e852c0ea3107b6469b9182"
+      }
+    },
+    "R06": {
+      "record": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7136207682",
+      "handoff": {
+        "name": "OntoKin_C271_P29_R06_Transfer_Capability_Handoff_2026-11-24.zip",
+        "bytes": 41730084,
+        "sha256": "4b8fae8b846c6f2b27ed5e2630c71240739786791cf39f043e787c55ad727bc9"
+      },
+      "receipt": {
+        "name": "OntoKin_C271_P29_R06_Delivery_Receipt_2026-11-24.json",
+        "bytes": 149563,
+        "sha256": "24aa014cb430d9b7269ee2e39ff08e7005d3630e8dd41c109f824e80039909d8"
+      }
+    },
+    "issue_comments": "issue273 holds a comment with the identical body for R02 terminal, R03, R05 and R06",
+    "boundary": "These recovery phases changed no file on this branch after bef67902. Their records exist only in these comments and inside the R06 handoff, which stays in the owner's Library and beside the clone and is not added to the repository."
   }
 }

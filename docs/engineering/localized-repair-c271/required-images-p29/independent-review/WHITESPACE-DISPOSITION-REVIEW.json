@@ -1,0 +1,41 @@
+{
+  "schema": "ontokin.c271.p29-independent-whitespace-disposition/1",
+  "reviewer": "/root/scope_review",
+  "recorded_at_utc": "2026-11-23T23:08:34.438676+00:00",
+  "result": "accepted_retained_documentary_format_limit_not_functional_gate_failure",
+  "evidence": [
+    {
+      "path": "/workspace/scratch/2eb33b59a678/repository/docs/engineering/localized-repair-c271/required-images-p29/record-checks/fixture-candidate002/WHITESPACE.json",
+      "bytes": 985,
+      "sha256": "ff37ae2d75bda2f35f9a8f593dfc378c4e8fc1b8c41cf9697c7f5405f02a0bf7"
+    },
+    {
+      "path": "/workspace/scratch/2eb33b59a678/repository/docs/engineering/localized-repair-c271/required-images-p29/record-checks/fixture-candidate002/whitespace-full.combined.log",
+      "bytes": 501,
+      "sha256": "55955e26215c38de7838aafb0e2be28c871f5282eba88056b6496609913775fd"
+    }
+  ],
+  "observed_full_check": {
+    "returncode": 2,
+    "findings": 4,
+    "files": 3,
+    "status": "failed_and_preserved"
+  },
+  "findings": [
+    "controls/README.md: new blank line at EOF",
+    "fixture-author/REPORT.md: new blank line at EOF",
+    "scope-review/SCOPE-REVIEW.md: two trailing-space lines that intentionally encode Markdown hard breaks"
+  ],
+  "governing_basis": [
+    "PROTOCOL section5 requires relevant checks, preservation of failed/interrupted outcomes, independent review, workflow checker for workflow records and documentation checker for documentation/navigation. It does not impose zero whitespace lint findings as a separate universal gate.",
+    "OK-ENG-006 sections2 and4 select checks from changed scope and require truthful identified outcomes. They do not authorize relabeling a failed lint check as passed.",
+    "These exact findings affect only evidence/Markdown formatting; no product code, adapter behavior, canonical workflow data, adopted oracle, hash comparison, or selected command is changed by retaining them."
+  ],
+  "conditions": [
+    "Retain the full exit2 output and identify its scope and disposition in the candidate evidence.",
+    "Describe the scoped production/adapter/canonical-workflow check only as a scoped pass; never as a full git diff --check pass.",
+    "Continue required functional, workflow-record and documentation/navigation checks; this disposition does not excuse a failure in those gates.",
+    "Preserve adopted/frozen input identity and copy provenance; any chosen formatting edit to frozen payloads must receive a newly bound freeze."
+  ],
+  "execution": "Read-only review; no product import or test execution."
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "ontokin.c271.p29-package-chronology-recheck/1",
+  "reviewer": "/root/handoff_audit",
+  "verdict": "accepted_exact_source_time_completion_correction",
+  "previous": {
+    "path": "reviews/package-review/accepted-scripts001/package_phase.py",
+    "bytes": 16088,
+    "sha256": "a8292135b9ac93a38ce28fb56db65659bdad1238022af393258326e86b2af07c",
+    "preserved": true
+  },
+  "current": {
+    "path": "scripts/package_phase.py",
+    "bytes": 16310,
+    "sha256": "edc03391a6d1f7c847ef722b2c9e651118b094147391d20a7166d4ded2e58981"
+  },
+  "exact_diff_verified": [
+    "Require technical_phase_complete and delivery_complete alongside existing phase_complete.",
+    "Require phase_complete=false and delivery_complete=false for every immutable final ZIP because its own save has not yet occurred.",
+    "For accepted_implementation, require technical_phase_complete=true while retaining empty current unknown operations and accepted verification/review."
+  ],
+  "rationale": "The immutable source checkpoint may record completed technical work but cannot contain a future successful save. The external confirmed save/readback receipt later records delivery and phase completion. Parent status remains incomplete and no source-time receipt is fabricated.",
+  "unchanged": "All other bytes match the previously accepted a8292135 script after exactly these replacements. Source/Git/clean-tree/evidence/predecessor/path/ZIP/manifest/prompt guards remain unchanged.",
+  "checks": {
+    "exact_prior_hash": true,
+    "exact_new_hash": true,
+    "only_declared_replacements": true,
+    "ast_parse": true,
+    "script_execution": false,
+    "build": false,
+    "remote_write": false
+  },
+  "remaining": "Review the actual final checkpoint and constructed ZIP after technical outcomes and publication are known; Director owns later save/readback/receipt/ownership chronology."
+}

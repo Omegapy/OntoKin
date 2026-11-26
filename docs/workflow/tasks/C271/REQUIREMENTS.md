@@ -478,6 +478,22 @@ The current continuation resumes the retained branch from `46b0fce68afb65cfbfcab
 
 The [R02 outcome](../../../engineering/localized-repair-c271/p28-recovery-r02-20261123/OUTCOME.json) retains all requirement/plan states and unknown uploads. Exact original source evidence or the [separate reconstruction decision](../../../engineering/localized-repair-c271/p28-recovery-r02-20261123/RECONSTRUCTION-OPTION.md) is required before technical continuation. Do not repeat an equivalent recovery phase without new input. C271 remains blocked/open, PR274 draft/unmerged and the branch retained; no main lease or integration.
 
+## P29 new required-image implementation — November 23, 2026
+
+The current generic continuation request and standing autonomous development authorization support one new reconstruction under the already adopted P27 design. The Director records this route decision in [P29 decision](../../../engineering/localized-repair-c271/required-images-p29/RECONSTRUCTION-DECISION.md); the prior R02 proposal is now selected explicitly. No original P28 candidate was recovered, no unknown upload is replayed, and the reported 597 tests remain unverified history. The retained branch starts at `6c7f52a2ee627a382eea91ce26bf58bac4e6cccb`; governing main is `e43cc6c5777874101a40559e4058ad6826b07e51`. Matching R02 terminal comments resolve its delivery/ownership only.
+
+The [P29 phase](../../../engineering/localized-repair-c271/required-images-p29/PHASE.json) requires independent freeze/review of exact inert fixtures, adapters, commands and oracles for all 116 P27 obligations before implementation or product-control execution. Then implement only the adopted finite surface, preserve all inherited profiles/pins/fixtures/oracles, execute focused and complete applicable inherited checks with fresh evidence, and independently review the exact candidate. The early recovery ZIP is confirmed saved and byte-verified before substantive work.
+
+Stop at accepted bounded implementation or the first new design defect, followed only by documentary checks, conditional branch publication, verified saved handoff and external receipt. Host preparation, H0/H1 operational execution, original-seven/full routine, main integration, branch deletion and parent closure remain later gates. R01/R02 remain done; R03-R05 not_done; P01 done/P02 in_progress. PR274 remains draft/open/unmerged and issue273 open. Original P28 missing-source history remains unresolved; C271 is in_progress for this selected new work.
+
+## P29 technical acceptance and delivery boundary
+
+The exact new implementation is independently accepted. Its production SHA256 is `71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758`. Candidate004 passed all 116 frozen focused obligations and all 481 inherited methods, with zero final failures, errors or skips. The corrected baseline also passed all 481 inherited methods. Nested legacy runs are not additional distinct tests. See [P29 summary](../../../engineering/localized-repair-c271/required-images-p29/SUMMARY.md), [verification](../../../engineering/localized-repair-c271/required-images-p29/VERIFICATION.json) and [independent acceptance](../../../engineering/localized-repair-c271/required-images-p29/independent-review/FINAL-IMPLEMENTATION-ACCEPTANCE.json).
+
+All six attempts remain in the independently verified evidence archive. The three earlier failed attempts record the incomplete inherited inventory, mapping retention setup, and RI-L08 recording-metadata setup; none is replaced by a later pass. No original P28 code or test evidence was recovered. No H0/H1, host preparation, target launch, full routine, main lease or integration occurred. R01/R02 remain done; R03-R05 not_done; P01 done/P02 in_progress; C271 remains in_progress and PR274 draft/open/unmerged.
+
+Only documentary checks, conditional retained-branch publication and verified final delivery remain in this phase. The immutable source snapshot cannot assert its own future save; a separate receipt must bind the actual ZIP/prompts and terminal publication. Stop after that delivery. A fresh phase may prepare and independently review the executable /0.1.5 inspection plan against P27 and existing H0 prerequisites, stopping at any new blocker before H0/H1 execution.
+
 
 ## P29 publication and delivery recovery R02
 

@@ -1,0 +1,112 @@
+{
+  "schema": "ontokin.c271.p29-packaging-prebuild-review/1",
+  "reviewer": "/root/handoff_audit",
+  "scope": "Static review of packaging/publication/evidence collection; no script execution, product execution, Git mutation or remote write.",
+  "verdict": "changes_required_before_final_build; final ZIP and final checkpoint not yet available",
+  "reviewed_sources": [
+    {
+      "path": "scripts/package_phase.py",
+      "bytes": 10563,
+      "sha256": "e6db453546294055abed47ad5b07635a29ac30ab2f00f75b262f240fb73f64fc"
+    },
+    {
+      "path": "scripts/publication_payload.py",
+      "bytes": 4333,
+      "sha256": "6def56aa697a1b1330636f2861a342f5276c80a3af7001ccbadcc3c68c2447b2"
+    },
+    {
+      "path": "scripts/collect_evidence.py",
+      "bytes": 3495,
+      "sha256": "d3f1f3434ea917f9d6e524ef5be0685dfcd45863b35bf6500d1777061fc3c437"
+    }
+  ],
+  "source_preservation": "Director confirmed original two packaging scripts preserved under reviews/package-review/original-scripts at these hashes. package_phase and collector review copies are also retained locally. Corrected versions have not been accepted by this report.",
+  "findings": [
+    {
+      "id": "PKG-01",
+      "severity": "high",
+      "location": "package_phase.build: final checkpoint loading/update",
+      "observation": "FINAL-CHECKPOINT.json is optional. A final build can silently retain preimplementation PHASE fields and generic summary. When present, its unrestricted update can replace the computed source_commit, source_tree, package_type, package_kind, frozen_at_utc and pending save state without an equality check.",
+      "required_change": "Require an explicit complete final checkpoint. Validate required outcome/remaining-work/ownership/operation fields, and reject conflicts with the computed immutable Git revision/tree, package kind/type and source-time save boundary. Validate the first unmet gate, phase acceptance and stop without inventing a technical result."
+    },
+    {
+      "id": "PKG-02",
+      "severity": "medium",
+      "location": "package_phase.build and publication_payload.prepare: ZipFile mode",
+      "observation": "Both use ZIP write mode w. Existing stage-directory guards normally prevent a repeat, but they do not independently protect an existing archive if stage state is absent or changed.",
+      "required_change": "Use exclusive archive creation and explicit immutable attempt identities. Preserve prior failed attempts; do not regenerate an already saved early or final archive in place."
+    },
+    {
+      "id": "PKG-03",
+      "severity": "high",
+      "location": "package_phase local copy loops; publication_payload label/staged-file handling",
+      "observation": "Path.is_file and shutil.copyfile follow file symlinks. publication_payload accepts unrestricted labels and stages all cached paths without a scope allowlist, blob-mode restriction, index-stage check, or no-symlink working-file guard. No relevant symlinks were observed in the current inspected copy roots, but the scripts do not enforce the requested boundary.",
+      "required_change": "Validate labels and safe canonical relative names before IO. Permit only the declared staged scope and regular blob modes/stage zero; reject symlinks/special files and directory traversal. Use a reviewed recovery inventory or explicit roots/exclusions so unrelated/private local data cannot be copied merely because it exists."
+    },
+    {
+      "id": "PKG-04",
+      "severity": "high",
+      "location": "package_phase recovery inventory and final source selection",
+      "observation": "The copied roots are session/reviews/scripts plus Git AREA content. Raw verification/ and publication/ are outside them. A final source lacking the new adapter is silently tolerated. Dirty unique repository payloads are not preserved merely by packaging the previous HEAD. The new collector can preserve verification bytes, but the package builder does not require its archive/verification record to exist at the final source or prove complete attempt coverage.",
+      "required_change": "Before final freeze, bind the collected verification ZIP and verification manifest at the selected source and reconcile all attempt records, including failures. Preserve publication intents, intended parent/tree, exact files and observed responses explicitly. Require every expected implementation/control/evidence file at the source, or retain an explicit complete unpublished patch/payload with application instructions and honest partial status."
+    },
+    {
+      "id": "PKG-05",
+      "severity": "medium",
+      "location": "publication_payload.prepare: write-tree followed by cached/index reads",
+      "observation": "expected_tree is captured once, while changed paths, modes, blobs and bytes are then read from the mutable index. The script does not verify that the resulting items are exactly the parent-to-expected_tree change set or recheck head/index stability before freezing.",
+      "required_change": "Bind payload rows directly to the captured immutable tree, or recheck parent/index/tree stability and compare exact paths/modes/blob IDs against that captured tree. Keep deletions explicitly unsupported unless a complete deletion representation is added. Conditional remote update/readback remain Director-owned separate gates."
+    },
+    {
+      "id": "PKG-06",
+      "severity": "medium",
+      "location": "package_phase predecessor copy and dependency records",
+      "observation": "Every regular file currently in inputs/OntoKin is copied without matching an expected filename/size/hash set. The P29 early ZIP remains outside this copy; its confirmed receipt is copied as session data. The old historical dependency record is reused without an explicit current-dependency reconciliation.",
+      "required_change": "Select and verify the exact R02 ZIP/receipt predecessor identities before copying. Preserve the P29 early ZIP unchanged and either embed it or explicitly bind its durable saved identity/bytes/hash/purpose as an external early recovery dependency. Do not imply that historical dependency links are a full offline backup."
+    },
+    {
+      "id": "PKG-07",
+      "severity": "medium",
+      "location": "package_phase generated PROMPT-2-RECOVER.md, NEXT-TASK.md and recovery status",
+      "observation": "The two prompts differ mainly in title. They describe reconciliation and one-phase stopping, but do not explicitly prioritize delivery-only recovery when the source checkpoint is already published and only save/receipt/ownership finalization remains. The generic recovery text defers worker/unknown-operation state to fields the builder does not require.",
+      "required_change": "Give Prompt 2 an explicit delivery-only branch that reconciles exact save/publication outcomes before retry and does not rebuild an unchanged frozen package. Require current worker/job/unknown-write disposition, concrete next inputs, acceptance and stop fields; retain the parent-incomplete boundary."
+    },
+    {
+      "id": "COLLECT-01",
+      "severity": "medium",
+      "location": "collect_evidence.main: SOURCE traversal and regular-file capture",
+      "observation": "The collector correctly uses lstat and followlinks=False for descendant classification and records symlink/special metadata without opening those nodes. It does not validate the source root itself, require a reconciled attempt set, or establish that regular files stayed unchanged between lstat/read/freeze. Its final attempts listing uses is_dir, which can follow a top-level symlink for classification.",
+      "required_change": "Verify a real in-scope source directory, reconcile active/finished/prelaunch-refused attempts before claiming complete coverage, use stable no-follow regular-file reads or an explicitly verified quiescent source snapshot, and classify top-level attempts using lstat. Check duplicate names and parse the nested manifest back as part of final independent audit."
+    }
+  ],
+  "observed_passes_and_boundaries": [
+    "The saved P29 early archive currently measures 10,337,642 bytes and SHA256 cd52a47eb7b60d6d6946e24f71493b4cac6903bc12436a7fc8574ccb1e6253d5, exactly matching session/EARLY-RECOVERY-RECEIPT.json. It was read only.",
+    "package_phase computes every payload size/SHA256, checks CRC/duplicate names/exact ZIP inventory, extracts freshly, compares payload bytes, and reopens frozen Git files at the declared commit. These are useful checks; final artifact verification remains pending.",
+    "publication_payload independently checks each ZIP payload SHA256/size and Git blob SHA1, and preserves the expected parent/base tree/target tree in intent. It performs no remote write.",
+    "The package identifies an online GitHub handoff, includes both prompts and the host-boundary file, keeps main CURRENT separate from active-branch CURRENT, and avoids a full offline restoration claim.",
+    "The source-time pending save boundary and external later receipt are stated. No future receipt or original P28 test verification is claimed.",
+    "The scope-review exclusion is intentional and documented by the project copy's COPY-NOTE.json. Its project verdict/source evidence is retained in AREA; incidental platform-instruction discussion is appropriately omitted.",
+    "No sensitive credential/download-token key was found in the inspected session JSON scan. This bounded scan is not a general secret-scanning certification."
+  ],
+  "required_final_checkpoint_fields": [
+    "schema, task, phase, package type/kind, immutable source_commit/source_tree and observed main SHA/tree/time",
+    "retained branch/head, PR274/issue273 state, owner/main-lease disposition",
+    "summary plus exact completed/incomplete gates with candidate/freeze/check/review/evidence identities",
+    "phase_complete versus parent_complete/status and unchanged requirement/plan status boundaries",
+    "actual runtime changes, focused/inherited execution counts and failures/skips/unrun checks; original P28 597-test report remains reported_unverified",
+    "current workers/jobs/processes and current-session unknown operations, explicitly none when reconciled; preserved historical unknown upload/process records",
+    "exact first unmet next action, needed inputs, bounded acceptance and stop; no automatic second phase",
+    "source-time pending Library/save/delivery receipt fields; later actual archive identity and save/readback stay external",
+    "early recovery identity and predecessor/current external dependencies with exact bytes/hash and purpose",
+    "main integration false, branch retained and parent incomplete unless independently authorized and actually observed otherwise"
+  ],
+  "remaining_acceptance": [
+    "Read and statically recheck corrected script identities.",
+    "Inspect the actual final checkpoint after outcomes are available; this review invents none.",
+    "Independently audit constructed final ZIP, fresh extraction, both manifests, source bindings, nested evidence archive, predecessor/early identities, complete unpublished-byte inventory, and prompts.",
+    "Director separately verifies final save/readback, external receipt publication and ownership/terminal chronology."
+  ],
+  "product_tests_executed": 0,
+  "remote_writes": 0,
+  "frozen_fixture_or_adapter_changes": 0
+}

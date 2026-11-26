@@ -1,0 +1,84 @@
+{
+  "schema": "ontokin.c271.p29-packaging-prebuild-recheck/1",
+  "reviewer": "/root/handoff_audit",
+  "scope": "Static corrected-script review and bounded filesystem identity checks only. No script execution, product import/test, build, Git mutation or remote write by reviewer.",
+  "verdict": "corrected_scripts_accepted_for_director_owned_preparation; final_checkpoint_and_constructed_archives_pending",
+  "reviewed_sources": [
+    {
+      "path": "scripts/package_phase.py",
+      "bytes": 16088,
+      "sha256": "a8292135b9ac93a38ce28fb56db65659bdad1238022af393258326e86b2af07c"
+    },
+    {
+      "path": "scripts/publication_payload.py",
+      "bytes": 5961,
+      "sha256": "da484302d457d1dabefb9ba07826b787eccf7ce45594b8581095b595cbfb9162"
+    },
+    {
+      "path": "scripts/collect_evidence.py",
+      "bytes": 6292,
+      "sha256": "b67c96409be6a63f05395f20a052233b415ee3c80fcc53855fd37e20fe71a1a5"
+    }
+  ],
+  "prior_review": {
+    "path": "reviews/package-review/PREBUILD-REVIEW.json",
+    "sha256": "ea54f1abe8fb0df77e7b1163adf465b720bcb5b494cedfde9fb02bddb7af7bd7",
+    "preserved": true
+  },
+  "findings": [
+    {
+      "id": "PKG-01",
+      "status": "resolved_in_script; actual_final_checkpoint_pending",
+      "evidence": "Final checkpoint is mandatory and ordinary, requires outcome/publication/verification/review/ownership/operation/next-action/state fields, validates source commit/tree, rejects protected provenance overrides, requires parent incomplete and fixed requirement/plan statuses, and enforces no workers/unknown operations on accepted outcome. Final package retains pending-at-freeze save semantics."
+    },
+    {
+      "id": "PKG-02",
+      "status": "resolved",
+      "evidence": "Package/publication archives use exclusive x creation and absent stage/archive guards. Collector destination is exclusive and its ZIP also uses x."
+    },
+    {
+      "id": "PKG-03",
+      "status": "resolved_for_explicit_reviewed_roots",
+      "evidence": "Package selects explicit session/reviews/scripts/publication roots, rejects symlinks, copies only canonical ordinary files, excludes private Library inventories and documented incidental instruction records. Publication validates label, relative path, scope, stage zero, ordinary blob mode and canonical ordinary working file. Current bounded copy roots contained no symlink or special nodes. Two excluded .reviewed files exactly duplicate preserved original-scripts/*.py."
+    },
+    {
+      "id": "PKG-04",
+      "status": "resolved_in_script; final_evidence_coverage_pending",
+      "evidence": "Final package requires clean repository and source-tracked evidence ZIP plus verification record, checks byte/hash/pass identity, includes full P29 tree and required accepted implementation/adapter, and copies publication payload/intents/responses. Collector requires exact declared attempt-root equality and reconciled operation records."
+    },
+    {
+      "id": "PKG-05",
+      "status": "resolved",
+      "evidence": "Publication changes, modes and blob IDs derive from captured immutable tree; working/index equality and final HEAD/tree equality are checked before freeze. See PUBLICATION-RECHECK.json."
+    },
+    {
+      "id": "PKG-06",
+      "status": "resolved",
+      "evidence": "Only exact named R02 ZIP/receipt predecessors are copied after fixed byte/hash checks. Final package independently checks unchanged early P29 ZIP bytes/hash and records its confirmed durable Library identity and scope under CURRENT-DEPENDENCIES. Historical records remain explicitly historical."
+    },
+    {
+      "id": "PKG-07",
+      "status": "resolved_in_script; actual_next_gate_pending",
+      "evidence": "Prompt 2 contains an explicit delivery-only branch, exact immutable archive/ref/receipt reconciliation, no unchanged-package rebuild, and technical next-gate prerequisite. Both prompts state fresh-host limits, one phase and stop. Final checkpoint requires worker/operation disposition; NEXT-TASK uses its concrete next_action."
+    },
+    {
+      "id": "COLLECT-01",
+      "status": "resolved_in_script; collected_archive_pending",
+      "evidence": "Collector validates canonical real root and exact real top-level attempt directories, requires reconciled status/PID/result or prelaunch-refusal identity, uses O_NOFOLLOW descriptor reads with stable dev/ino/mode/nlink/size/mtime/ctime checks and guaranteed close, never reads nonregular fixture content, verifies duplicate-free exact ZIP membership and parsed manifest, and rereads every source regular file against archived bytes."
+    }
+  ],
+  "accepted_fixture_unchanged": {
+    "freeze_sha256": "a705a493a37d907eb677bc3e207a99670ef2ca3d906ef82087a3a815f218bc09",
+    "adapter_sha256": "ca650e2b0d2557bb050dcfc5b5269ccc3519d0a357a1ff3a0c2f89d03f5bb717"
+  },
+  "remaining_acceptance": [
+    "Director must reconcile all processes/attempts and keep copy roots quiescent while capturing. Static acceptance is not proof of a future build or save.",
+    "Review actual FINAL-CHECKPOINT.json: accurate outcome/counts/failures/skips/unrun limits, source/ref/readback, stopped workers, historical uncertainty, concrete first unmet next phase with inputs/acceptance/stop, and source-time pending delivery.",
+    "Independently audit the constructed final ZIP, required documents, CRC/path/duplicate/exact inventory/manifest, all Git bytes/modes/source bindings, exact predecessors and early dependency, nested evidence archive and complete attempt/publication recovery coverage.",
+    "Director verifies save/readback and later external receipt/terminal ownership chronology; a future receipt must not be represented inside the immutable source-time ZIP."
+  ],
+  "product_tests_executed": 0,
+  "remote_writes": 0,
+  "frozen_fixture_or_adapter_changes": 0,
+  "original_p28_597_tests": "reported_unverified"
+}

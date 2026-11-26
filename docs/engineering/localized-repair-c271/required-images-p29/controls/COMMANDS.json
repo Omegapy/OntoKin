@@ -1,0 +1,48 @@
+{
+  "evidence_environment": "ONTOKIN_REQUIRED_IMAGES_RETAIN_ROOT=<new empty absolute evidence directory>; inherited roots are selected under it by the adapter. For the separate full inherited command set ONTOKIN_INHERITED_RETAIN_ROOT=<another new absolute evidence directory>; its per-module retained roots are set by the frozen command.",
+  "focused": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_current_host_required_images_v01.py",
+    "-v"
+  ],
+  "inherited_cohort": {
+    "path": "docs/engineering/localized-repair-c271/required-images-p29/INHERITED-COHORT.json",
+    "selected_ids": 481,
+    "sha256": "7aa9e1278419e6b4fd27afbc758d5dcea195a245960cd4c972d8102a34dcce77"
+  },
+  "inherited_command": [
+    "python3",
+    "-c",
+    "import hashlib,json,os,sys,unittest\nfrom pathlib import Path\ncohort_path=Path('docs/engineering/localized-repair-c271/required-images-p29/INHERITED-COHORT.json')\nraw=cohort_path.read_bytes()\nassert hashlib.sha256(raw).hexdigest()=='7aa9e1278419e6b4fd27afbc758d5dcea195a245960cd4c972d8102a34dcce77', 'Frozen cohort differs'\ncohort=json.loads(raw)\nout=Path(os.environ.get('ONTOKIN_INHERITED_RETAIN_ROOT') or str(Path(os.environ['ONTOKIN_INHERITED_INVENTORY_PATH']).parent/'inherited-results'))\nout.mkdir(parents=True,exist_ok=False)\nfor key,name in [('ONTOKIN_HI_RETAIN_ROOT','inspection'),('ONTOKIN_ELF_RETAIN_ROOT','mapping'),('ONTOKIN_LP_RETAIN_ROOT','loader'),('ONTOKIN_LIBC_RETAIN_ROOT','libc'),('ONTOKIN_RTLD_RETAIN_ROOT','rtld')]:\n    os.environ.setdefault(key,str(out/name))\nsys.path.insert(0,'tests')\nsuite=unittest.defaultTestLoader.loadTestsFromNames(['test_current_host_inspection_v01', 'test_current_host_elf_mapping_v01', 'test_current_host_loader_path_v01', 'test_current_host_libc_plt_metadata_v01', 'test_current_host_libc_static_tls_flags_v01', 'test_current_host_rtld_paths_v01', 'test_current_host_readback_provider', 'test_current_host_readback_driver'])\ndef flatten(suite):\n    for item in suite:\n        if isinstance(item,unittest.TestSuite):\n            yield from flatten(item)\n        else:\n            yield item.id()\nids=sorted(flatten(suite))\ninventory={'expected_ids':sorted(cohort['selected_test_ids']),'actual_ids':ids,'exact_match':ids==sorted(cohort['selected_test_ids']),'cohort_sha256':'7aa9e1278419e6b4fd27afbc758d5dcea195a245960cd4c972d8102a34dcce77','production_sha256':hashlib.sha256(Path('prototypes/static_tray_v01/current_host_inspection_v01.py').read_bytes()).hexdigest(),'expected_non_target_child':cohort['expected_non_target_child'],'exclusions':[]}\ninventory_path=Path(os.environ.get('ONTOKIN_INHERITED_INVENTORY_PATH',str(out/'RUNTIME-INVENTORY.json')))\nwith inventory_path.open('x') as stream:\n    stream.write(json.dumps(inventory,indent=2)+'\\n')\nprint(json.dumps({'runtime_methods':len(ids),'exact_inventory_match':inventory['exact_match']}),flush=True)\nassert inventory['exact_match'], 'Runtime method inventory differs before execution'\nclass RecordingResult(unittest.TextTestResult):\n    def __init__(self,*args,**kwargs):\n        super().__init__(*args,**kwargs); self.methods=[]\n    def addSuccess(self,test):\n        self.methods.append({'id':test.id(),'status':'passed'}); super().addSuccess(test)\n    def addError(self,test,error):\n        self.methods.append({'id':test.id(),'status':'error'}); super().addError(test,error)\n    def addFailure(self,test,error):\n        self.methods.append({'id':test.id(),'status':'failed'}); super().addFailure(test,error)\n    def addSkip(self,test,reason):\n        self.methods.append({'id':test.id(),'status':'skipped','reason':reason}); super().addSkip(test,reason)\nwith (out/'unittest.txt').open('x') as stream:\n    result=unittest.TextTestRunner(stream=stream,verbosity=2,resultclass=RecordingResult).run(suite)\nreport={'tests_run':result.testsRun,'methods':result.methods,'failures':[(t.id(),text) for t,text in result.failures],'errors':[(t.id(),text) for t,text in result.errors],'skipped':[(t.id(),reason) for t,reason in result.skipped],'expected_non_target_child':cohort['expected_non_target_child']}\n(out/'RESULTS.json').write_text(json.dumps(report,indent=2)+'\\n')\nprint(json.dumps({'tests_run':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'skipped':len(result.skipped)}))\nsys.exit(not(result.wasSuccessful() and not result.skipped and result.testsRun==len(ids)))\n"
+  ],
+  "inherited_exclusions": [],
+  "inherited_non_target_child": "The unchanged driver transport control starts one inline Python unittest child for environment transport; it imports no OntoKin product or CPU/native readback. Director/reviewer explicitly retained this control.",
+  "required_inherited_modules": [
+    "tests/test_current_host_inspection_v01.py",
+    "tests/test_current_host_elf_mapping_v01.py",
+    "tests/test_current_host_loader_path_v01.py",
+    "tests/test_current_host_libc_plt_metadata_v01.py",
+    "tests/test_current_host_libc_static_tls_flags_v01.py",
+    "tests/test_current_host_rtld_paths_v01.py",
+    "tests/test_current_host_readback_provider.py",
+    "tests/test_current_host_readback_driver.py"
+  ],
+  "retained_prior_attempt": {
+    "path": "verification/baseline-inherited/",
+    "product_module_imports": true,
+    "production_unchanged": true,
+    "returncode": 1,
+    "runtime_inventory_sha256": "51c06426550538d2abba19e86659ff0198002e3f5a6e11709de501bd51cb2dfd",
+    "status": "discovery_inventory_refused_before_runner",
+    "test_methods_executed": 0
+  },
+  "scope": "Run only after independent fixture/adapter freeze acceptance. No host admission or Node/ldd/direct-loader/CPU-checker target starts.",
+  "status": "NOT_RUN",
+  "superseded_proposal": "The 371-method exclusion proposal was superseded by 372 with zero exclusions. Candidate002 baseline-inherited discovery then exposed 109 omitted CONTROL_VARIANTS methods; the comparison failed before any test method ran. Candidate003 binds all 481 statically derived IDs, independently reconciled with the retained runtime inventory, with zero exclusions."
+}

@@ -1,0 +1,171 @@
+{
+  "schema": "ontokin.c271.p29-independent-evidence-archive-review/1",
+  "reviewer": "/root/handoff_audit",
+  "verdict": "accepted_complete_byte_and_metadata_preservation_of_all_six_attempts",
+  "archive": {
+    "path": "repository/docs/engineering/localized-repair-c271/required-images-p29/evidence/VERIFICATION-EVIDENCE.zip",
+    "bytes": 25817783,
+    "sha256": "bae1b62fd3cc78e8cb886e08c4c2f7d76eaaf765e7f6374a394d5f0aa980d038"
+  },
+  "manifest": {
+    "member": "EVIDENCE-MANIFEST.json",
+    "bytes": 11280999,
+    "sha256": "e73bc3d8f3a42f7fc143fb179844add42c4bdd32036f37d2f5abba7482d3454e"
+  },
+  "counts": {
+    "archive_members": 33404,
+    "regular_file_payloads": 33403,
+    "directory_metadata": 14436,
+    "symlink_metadata": 45,
+    "special_fixture_metadata": 3,
+    "attempts": 6,
+    "uncompressed_regular_file_bytes": 944488731,
+    "checks_passed": 15
+  },
+  "attempts": [
+    {
+      "label": "baseline-inherited",
+      "returncode": 1,
+      "test_methods_executed": 0,
+      "passed": 0,
+      "failed": 0,
+      "classification": "discovery_refused_before_test_execution",
+      "source_sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a",
+      "adapter_sha256": "ca650e2b0d2557bb050dcfc5b5269ccc3519d0a357a1ff3a0c2f89d03f5bb717",
+      "freeze_sha256": "a705a493a37d907eb677bc3e207a99670ef2ca3d906ef82087a3a815f218bc09"
+    },
+    {
+      "label": "baseline-inherited-003",
+      "returncode": 1,
+      "test_methods_executed": 481,
+      "passed": 441,
+      "failed": 40,
+      "classification": "mapping_output_parent_setup_failure",
+      "source_sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a",
+      "adapter_sha256": "a6d5f9622eecd0f8a4e52621c851637a8b97f816b8d70a464c93ce97f5917de5",
+      "freeze_sha256": "ca54eae3708af5e72f6d01c39a17b625511b8de1411b77d0a7ac0d7427eeae1a"
+    },
+    {
+      "label": "baseline-inherited-fixed-retention",
+      "returncode": 0,
+      "test_methods_executed": 481,
+      "passed": 481,
+      "failed": 0,
+      "classification": "complete_unchanged_source_baseline_pass",
+      "source_sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a",
+      "adapter_sha256": "a6d5f9622eecd0f8a4e52621c851637a8b97f816b8d70a464c93ce97f5917de5",
+      "freeze_sha256": "ca54eae3708af5e72f6d01c39a17b625511b8de1411b77d0a7ac0d7427eeae1a"
+    },
+    {
+      "label": "implementation-focused-001",
+      "returncode": 1,
+      "test_methods_executed": 116,
+      "passed": 115,
+      "failed": 1,
+      "classification": "RI_L08_recording_metadata_leaf_setup_failure",
+      "source_sha256": "71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758",
+      "adapter_sha256": "a6d5f9622eecd0f8a4e52621c851637a8b97f816b8d70a464c93ce97f5917de5",
+      "freeze_sha256": "ca54eae3708af5e72f6d01c39a17b625511b8de1411b77d0a7ac0d7427eeae1a"
+    },
+    {
+      "label": "final-focused-004",
+      "returncode": 0,
+      "test_methods_executed": 116,
+      "passed": 116,
+      "failed": 0,
+      "classification": "final_focused_pass",
+      "source_sha256": "71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758",
+      "adapter_sha256": "92ed832d2f78509cc60185b5bbfd9da0ff563f595561f5a2cc46e5ff515581a7",
+      "freeze_sha256": "69065e25738c81ab88cd502edc7069b3b005ba6ae4a67181c30c83f950aa54d5"
+    },
+    {
+      "label": "final-inherited-004",
+      "returncode": 0,
+      "test_methods_executed": 481,
+      "passed": 481,
+      "failed": 0,
+      "classification": "final_inherited_pass",
+      "source_sha256": "71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758",
+      "adapter_sha256": "92ed832d2f78509cc60185b5bbfd9da0ff563f595561f5a2cc46e5ff515581a7",
+      "freeze_sha256": "69065e25738c81ab88cd502edc7069b3b005ba6ae4a67181c30c83f950aa54d5"
+    }
+  ],
+  "reconciliation_sha256": "818d38130b15804e4d90ffa6b9ebed4ac26db4da527c88c84282a534f7d396fe",
+  "readiness_review_sha256": "ff320d78ccb04869767617897f324f312afee57dd7a94cae90df453a0f3ad2b4",
+  "checks": [
+    {
+      "check": "exact_announced_archive_identity",
+      "passed": true
+    },
+    {
+      "check": "exact_completed_six_attempts",
+      "passed": true
+    },
+    {
+      "check": "reconciliation_manifest_binding",
+      "passed": true
+    },
+    {
+      "check": "source_inventory_unchanged_since_readiness",
+      "passed": true
+    },
+    {
+      "check": "zip_crc_all_members",
+      "passed": true
+    },
+    {
+      "check": "zip_safe_unique_regular_members",
+      "passed": true
+    },
+    {
+      "check": "manifest_schema_and_closed_sections",
+      "passed": true
+    },
+    {
+      "check": "manifest_no_duplicate_paths_or_type_collisions",
+      "passed": true
+    },
+    {
+      "check": "exact_regular_file_membership",
+      "passed": true
+    },
+    {
+      "check": "all_directory_metadata_preserved",
+      "passed": true
+    },
+    {
+      "check": "all_nonregular_metadata_preserved_without_entries",
+      "passed": true
+    },
+    {
+      "check": "embedded_reconciliation_exact",
+      "passed": true
+    },
+    {
+      "check": "every_regular_byte_hash_size_and_mode_matches_source",
+      "passed": true,
+      "files": 33403,
+      "total_uncompressed_file_bytes": 944488731
+    },
+    {
+      "check": "all_failed_and_successful_attempt_source_and_result_records_inside_archive",
+      "passed": true,
+      "attempts": 6
+    },
+    {
+      "check": "immutable_archive_still_same_after_audit",
+      "passed": true
+    }
+  ],
+  "safety_boundary": "Every regular payload was read through stable O_NOFOLLOW descriptors and compared byte-for-byte. Symlink targets and special nodes were inspected as metadata only, never followed/opened. No archive payload or product code was executed and no ZIP extraction was needed.",
+  "preservation_scope": "All raw files in the six verification roots, including failures, logs, source snapshots, inert fixtures and per-case observations. Directory/symlink/special metadata is retained rather than materializing nonregular nodes.",
+  "limits": [
+    "This is evidence preservation and identity verification, not an independent repetition of product controls or final implementation acceptance.",
+    "All three failed attempts remain failures. Later passes do not rewrite their outcomes.",
+    "Original P28 reported597 verification, N34/N57 external obligations, host qualification, H0/H1, original-seven/full routine, main integration and parent completion remain outside this archive proof.",
+    "No global system-process termination claim is made; only the six recorded child outcomes are reconciled.",
+    "Final handoff ZIP source bindings, required documents, next-phase instructions and future save/receipt chronology remain a separate audit."
+  ],
+  "review_product_execution": 0,
+  "source_or_archive_changes": 0
+}

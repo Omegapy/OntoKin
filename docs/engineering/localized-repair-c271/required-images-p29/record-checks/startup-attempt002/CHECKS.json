@@ -1,0 +1,28 @@
+{
+  "scope": "Corrected startup documentary candidate",
+  "source_base": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 1,
+      "stdout": "workflow.stdout",
+      "stderr": "workflow.stderr"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 0,
+      "stdout": "documentation.stdout",
+      "stderr": "documentation.stderr"
+    }
+  ],
+  "prior_failures": "../startup/CHECKS.json"
+}

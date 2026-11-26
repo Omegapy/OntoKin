@@ -1,0 +1,142 @@
+{
+  "schema": "ontokin.p29.inherited-cohort-review/1",
+  "reviewer": "/root/scope_review",
+  "reviewed_at_utc": "2026-11-23T22:45:26.259243+00:00",
+  "verdict": "ACCEPTED_STATIC_COHORT",
+  "candidate": {
+    "path": "docs/engineering/localized-repair-c271/required-images-p29/INHERITED-COHORT.json",
+    "bytes": 49870,
+    "sha256": "dab30610b44cdb0596c395505a940722506e2c5535ed58b0984317f261de6efe"
+  },
+  "checks": [
+    {
+      "check": "inventory_sha_matches_director",
+      "passed": true
+    },
+    {
+      "check": "372_distinct_methods",
+      "passed": true,
+      "counts": {
+        "test_current_host_elf_mapping_v01": 40,
+        "test_current_host_inspection_v01": 26,
+        "test_current_host_libc_plt_metadata_v01": 73,
+        "test_current_host_libc_static_tls_flags_v01": 41,
+        "test_current_host_loader_path_v01": 96,
+        "test_current_host_readback_driver": 10,
+        "test_current_host_readback_provider": 25,
+        "test_current_host_rtld_paths_v01": 61
+      }
+    },
+    {
+      "check": "exact_all_eight_module_inventory",
+      "passed": true,
+      "missing": [],
+      "extra": []
+    },
+    {
+      "check": "all_module_hashes_match",
+      "passed": true
+    },
+    {
+      "check": "all_generated_sources_match",
+      "passed": true
+    },
+    {
+      "check": "no_runtime_exclusions",
+      "passed": true
+    },
+    {
+      "check": "transport_child_explicit",
+      "passed": true
+    },
+    {
+      "check": "prior371_proposal_retained",
+      "passed": true
+    },
+    {
+      "check": "external_review_obligations_remain_external",
+      "passed": true
+    }
+  ],
+  "sources": [
+    {
+      "path": "tests/test_current_host_inspection_v01.py",
+      "bytes": 139313,
+      "sha256": "797eb208670f6f74f14c9b5849485bd6cf3522a265d4129618c4b50ddc0a739a"
+    },
+    {
+      "path": "tests/test_current_host_elf_mapping_v01.py",
+      "bytes": 5937,
+      "sha256": "6860891b40f2bc63c4dd8b62c2e3f05fd8ac2d0616e39dd13d363b288c1e8826"
+    },
+    {
+      "path": "tests/test_current_host_loader_path_v01.py",
+      "bytes": 36940,
+      "sha256": "cf521b4c14d6488c457a942c1fc151b3483729ec26c6c24e721f6ce05d6b2066"
+    },
+    {
+      "path": "tests/test_current_host_libc_plt_metadata_v01.py",
+      "bytes": 27946,
+      "sha256": "661b7a96aae871e83fcfc4f1fcf975467ac81400961dad81c19283d13f2978d7"
+    },
+    {
+      "path": "tests/test_current_host_libc_static_tls_flags_v01.py",
+      "bytes": 1211,
+      "sha256": "d91ad24b3fc62d1b8abd4e8ac5aa68a8459d20a54224a102dbd3ba181a0523d5"
+    },
+    {
+      "path": "tests/test_current_host_rtld_paths_v01.py",
+      "bytes": 71062,
+      "sha256": "363bfb5c3b7dbb40410412cafb1aa453e966aebdd79b55efabcda1a2572ca0da"
+    },
+    {
+      "path": "tests/test_current_host_readback_provider.py",
+      "bytes": 15801,
+      "sha256": "c74fb400a99b148e7f858f466f9e2b899fe83741de9f6872db5ac20ad0ec5f15"
+    },
+    {
+      "path": "tests/test_current_host_readback_driver.py",
+      "bytes": 10339,
+      "sha256": "cb103f558204392cff20fbb82a62587a61d5388d01b8883b995c7d55a6b930c8"
+    },
+    {
+      "path": "tests/fixtures/current_host_elf_mapping_v01/ORACLE.json",
+      "bytes": 30806,
+      "sha256": "35b8535599cc24276dfe66e57b9ed80348c12d429e9a61441c4f449a7cb4ce8a"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/review-boundary-p13/design/candidate001/CONTROL-MAPPING.json",
+      "bytes": 56749,
+      "sha256": "03c2a04733abcf41ef29281f69504d27b567ac1e9921e4e34858225af18f9be2"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/libc-tags-p16/design/CANDIDATE001.zip",
+      "bytes": 264916,
+      "sha256": "05d1cbe971678b8f505795e436f2bd096b81848f68b4f9da6adc64392f6fb5af"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/libc-flags-p17/design/CANDIDATE001.zip",
+      "bytes": 166919,
+      "sha256": "d59d4d71a9f73065a000ae3de8233beb82ad5a33a3b526de93debb845f0d86c4"
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/path-design-p24/reviews/path/CONTROL-MATRIX.json",
+      "bytes": 67833,
+      "sha256": "d52f64ffc28f7baf04e360f167fb56192cc6fb0baf6b36fd9f085907732a3196"
+    }
+  ],
+  "source_only_review": true,
+  "product_imports_or_execution": false,
+  "scope_rationale": {
+    "driver_transport": "The included real-child method launches a temporary inline Python unittest checking only configuration/environment transport. It imports no OntoKin module and runs no readback or native target. One expected non-target Python child is explicitly distinguished from Node/ldd/direct-loader/CPU-checker counts.",
+    "provider_inert_install": "All seven SafeArchiveInstallation methods use two inert temporary files and synthetic tar variants. They test bounded atomic fixture materialization, refusals and no-replace preservation; they do not prepare retained Node/readers, install runtime dependencies, qualify a host or execute package code.",
+    "other_modules": "Static process-call scan and inspected guard/caller code found no additional excluded target execution. HI and RTLD process boundary controls use explicit fake supervisors and guards; libc controls guard process operations, and loader/ELF controls operate on inert bytes or stipulated observation seams.",
+    "external_obligations": "N34 and historical N57 are unsatisfied source-completeness review obligations, never generated runtime methods or skips."
+  },
+  "limits": [
+    "This is static applicability and exact-ID review, not an execution pass.",
+    "Runtime discovery must match all372 IDs before execution; no exclusions/skips are added by this review.",
+    "The one expected transport child is not a claim that the entire Python environment uses exactly one OS process; ordinary environment metadata such as platform.platform is outside that count.",
+    "Executable new fixture freeze remains pending and product execution must still wait for its independent approval."
+  ]
+}

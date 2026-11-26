@@ -1,0 +1,836 @@
+{
+  "schema": "ontokin.c271.p29-independent-production-static-review/1",
+  "reviewer": "/root/scope_review",
+  "recorded_at_utc": "2026-11-23T23:25:55.545546+00:00",
+  "status": "static_review_accepted_pending_required_execution",
+  "candidate": {
+    "path": "repository/prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "bytes": 249393,
+    "sha256": "71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758"
+  },
+  "baseline": {
+    "path": "verification/baseline-inherited-fixed-retention/source-snapshot/current_host_inspection_v01.py",
+    "bytes": 233502,
+    "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a"
+  },
+  "patch": {
+    "path": "reviews/implementation/CANDIDATE001.patch",
+    "bytes": 27560,
+    "sha256": "42e70441bf873dae134e1526d88f27bd36a3aec535163ca00f7736b862073b7f"
+  },
+  "controlling_inputs": [
+    {
+      "path": "repository/docs/engineering/localized-repair-c271/required-image-design-p27/design/DESIGN.md",
+      "bytes": 24195,
+      "sha256": "d337c26e8068a5888f24dc33ade097862d6296f4409160064d8cdc61a84bd3d1"
+    },
+    {
+      "path": "repository/docs/engineering/localized-repair-c271/required-image-design-p27/design/DECISION.json",
+      "bytes": 19073,
+      "sha256": "07825a49e2d9f6c49ee7b18413278ffd150b09032e3a2d891e293ff310029da1"
+    },
+    {
+      "path": "repository/docs/engineering/localized-repair-c271/required-image-design-p27/design/FUTURE-SURFACE.json",
+      "bytes": 5354,
+      "sha256": "4040b3657ef17a0df9cdabdc6431acd9d2afc59725aa7afde1f09b0efb76e35c"
+    },
+    {
+      "path": "repository/docs/engineering/localized-repair-c271/required-image-design-p27/design/CONTROL-PLAN.json",
+      "bytes": 118522,
+      "sha256": "55dc8e776253232e7eb23e51593754f9b69cf72e23732246424adb6ed58ba89f"
+    }
+  ],
+  "protected_source_inventory": {
+    "path": "repository/docs/engineering/localized-repair-c271/required-images-p29/PROTECTED-SOURCE-INVENTORY.json",
+    "bytes": 163592,
+    "sha256": "c39c2f27072b6490f28ae4e338278f78898c1d8ea5cdf09f589d7e354007e13b"
+  },
+  "protected_source_count": 943,
+  "protected_source_mismatches": [],
+  "changed_existing_definitions": [
+    {
+      "name": "_check_resolution",
+      "start_line": 2335,
+      "end_line": 2532
+    },
+    {
+      "name": "_check_rtld_operational_paths",
+      "start_line": 758,
+      "end_line": 806
+    },
+    {
+      "name": "_plan_shape",
+      "start_line": 966,
+      "end_line": 1043
+    },
+    {
+      "name": "_prepare_libc_plt_policy",
+      "start_line": 1388,
+      "end_line": 1429
+    },
+    {
+      "name": "_read_elf_metadata",
+      "start_line": 2030,
+      "end_line": 2232
+    },
+    {
+      "name": "_read_plan_elf_metadata",
+      "start_line": 1988,
+      "end_line": 2027
+    },
+    {
+      "name": "_select_origin_profile",
+      "start_line": 1272,
+      "end_line": 1313
+    },
+    {
+      "name": "_uses_libc_profile",
+      "start_line": 1316,
+      "end_line": 1318
+    },
+    {
+      "name": "_uses_rtld_paths",
+      "start_line": 332,
+      "end_line": 333
+    }
+  ],
+  "added_definitions": [
+    {
+      "name": "_prepare_required_images_policy",
+      "start_line": 1487,
+      "end_line": 1575
+    },
+    {
+      "name": "_read_required_image_elf_metadata",
+      "start_line": 1981,
+      "end_line": 1985
+    },
+    {
+      "name": "_required_image_checkpoint",
+      "start_line": 1452,
+      "end_line": 1454
+    },
+    {
+      "name": "_required_image_require",
+      "start_line": 1447,
+      "end_line": 1449
+    },
+    {
+      "name": "_select_required_images_profile",
+      "start_line": 1457,
+      "end_line": 1484
+    }
+  ],
+  "unchanged_definition_count": 130,
+  "unchanged_definitions": [
+    {
+      "name": "HostInspectionError",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "ValidatedPlan",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_Deadline",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_EvidenceStore",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_Parser",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_RtldCleanupInterrupted",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_RtldPass",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_absolute",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_actual_counts",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_alias",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_ancestors",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_binding",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_binding_shape",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_bound",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_bounded_include",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_canonical",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_alias_files",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_author_host_bindings",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_author_runtime",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_evidence",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_git",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_guards",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_host_static",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_inspector_script",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_installation",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_installed_tree",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_kernel_origin",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_launcher",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_libc_plt_bindings",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_loader_inputs",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_log_prefix",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_metadata",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_origin_bounds",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_origin_role",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_origin_rule",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_origin_subject_binding",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_plan_digest",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_plan_guards",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_rtld_absence_relation",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_rtld_absence_trace",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_rtld_alias_trace",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_rtld_candidate_relation",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_rtld_candidate_sequence",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_rtld_guard_relations",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_rtld_paths",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_runtime_dependencies",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_check_source_files",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_compare_rtld_snapshot",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_count_observed",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_decode",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_describe",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_digest",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_directory_entries",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_document",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_existing_chain",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_expected_source_reads",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_failure",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_freeze",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_git_environment",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_git_state",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_guard_receipt",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_host",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_identity",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_input_snapshot",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_inspection",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_keys",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_launch_check",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_libc_metadata_checkpoint",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_libc_plt_shape",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_load_helpers",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_new_attempt",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_number",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_origin_absent",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_origin_auxv",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_origin_checkpoint",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_origin_keys",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_origin_path",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_origin_raw_paths",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_origin_require",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_origin_subject_observation",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_origin_variant_document",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_p06_definitions",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_path_readback",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_path_row",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_platform",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_prepare_origin_policy",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_process_success",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_read_file",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_read_kernel_origin",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_read_libc_plt_elf_metadata",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_read_libc_static_tls_elf_metadata",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_read_origin_elf_metadata",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_read_retained",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_recheck",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_reconcile_command",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_relative",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_require",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_required_paths",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_retain_outcome",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_rtld_alias_projection",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_rtld_error",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_rtld_fault",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_rtld_known_path",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_rtld_observation",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_rtld_paths_shape",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_rtld_proof",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_rtld_require",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_rtld_spelling",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_run_command",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_schema_check",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_select_libc_plt_profile",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_select_libc_static_tls_profile",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_select_rtld_paths_profile",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_selected_git",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_source_paths",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_strings",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_thaw",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_uses_origin_profile",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_utc",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_validate",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_validate_host_projection",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "_walk_bounded",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "inspect_host",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "main",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "output_paths",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "parse_ldd_output",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "read_elf_metadata",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "reconcile_attempt",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "source_commands",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    },
+    {
+      "name": "validate_inspection_plan",
+      "source_bytes_equal": true,
+      "ast_equal": true
+    }
+  ],
+  "existing_assignments_count": 53,
+  "all_existing_assignments_ast_equal": true,
+  "imports_ast_equal": true,
+  "literal_catalog_pair_loader_and_diagnostics_match_adopted_decision": true,
+  "checks": [
+    {
+      "id": "IR-01",
+      "status": "static_pass",
+      "finding": "Exactly nine existing functions and five added private functions changed in the sole authorized production source. All earlier top-level named assignments, imports and other function/class bodies remain identical. All 943 protected prior source files still match recorded bytes/hashes."
+    },
+    {
+      "id": "IR-02",
+      "status": "static_pass",
+      "finding": "The exact /0.1.5 pair is added to plan/origin/libc/RTLD gates. Its own closed selector runs before inherited shape checks; required and libc descriptor path validation uses links=True in pure selectors. The old RTLD selector and public parser signature/body are unchanged. No prior schema is relabeled."
+    },
+    {
+      "id": "IR-03",
+      "status": "static_pass",
+      "finding": "Fixed-root distinctness/exclusion precedes extension/command exclusion and loader proof; per sorted key actual-needed/selected-edge/role/alias resolution precedes complete descriptor/alias/file equality, then fixed pin. All five subject relationships finish before real _bound calls on five sorted subjects followed by loader. Existing descriptor/path shape validation is retained; no new bound-file content read occurs during relation construction. The returned policy recursively freezes actual schema, complete subject descriptors and loader."
+    },
+    {
+      "id": "IR-04",
+      "status": "static_pass",
+      "finding": "Private dispatch derives key from exact proven canonical path and checks actual SONAME. Private raw mode excludes libc/path modes, rejects unknown catalog keys before opening, and preserves inherited structural prefix. Exactly three tags are added; unknown tags precede once-only trio and flags. Tag values never become addresses, allocation sizes or bounds. Only libm adds flags 24 and librt adds flags1 9; inherited strings/names/identity/result keys and finite limits are unchanged."
+    },
+    {
+      "id": "IR-05",
+      "status": "static_pass",
+      "finding": "New primitive wraps only its actual zero-argument callback, retaining its exception object across the existing parse-exception catch. Callback ValueError/OSError/UnicodeError are re-raised as the same object; noncallback I/O/parsing still wraps as before. Existing finally owns exactly one close attempt; a close failure replaces body outcome according to inherited behavior. Old routes do not enter new checkpoints."
+    },
+    {
+      "id": "IR-06",
+      "status": "static_pass",
+      "finding": "Each _check_resolution retains selected-Python real metadata read and declared equality first, unchanged libc proof second, required-image proof third. Every later required-image read retains its enclosing _bound call. Existing complete origin/closure/guard checks, _validate and _recheck bodies are unchanged; each invocation obtains a fresh local required policy and no global cache is introduced."
+    },
+    {
+      "id": "IR-07",
+      "status": "static_pass",
+      "finding": "Required subjects/loader are proved members of both existing file maps. _required_paths, _input_snapshot, _launch_check and _run_command are byte-identical; no final-launch hashing or allowance change was added, and inherited drift wrappers/receipt accounting remain."
+    },
+    {
+      "id": "IR-08",
+      "status": "pending_complete_runtime_evidence",
+      "finding": "Focused attempt001 retained 115 passed of 116 outer obligations; RI-L08 failed in inherited class evidence setup, with 10 supplemental methods run and 51 runtime methods unrun. Candidate003 must not be called a focused pass. Complete corrected frozen focused execution and candidate inherited481 execution remain required."
+    }
+  ],
+  "concrete_production_defects_found": [],
+  "new_design_blockers_found": [],
+  "next_required_steps": [
+    "Independent exact candidate004 metadata-only adapter freeze acceptance and verified saved recovery by Director.",
+    "Corrected focused116 execution and candidate inherited481 execution on the same candidate source, with retained raw results and no skips/errors/failures.",
+    "Independent review of all exact evidence before final implementation acceptance."
+  ],
+  "claim_limits": [
+    "Static source review is not final implementation/control acceptance.",
+    "No current-host preparation/admission, H0/H1, original-seven, full-routine, C271 closure or native target claim.",
+    "Original missing P28 bytes and original reported597 remain unverified."
+  ],
+  "reviewer_product_imports_or_execution": 0
+}

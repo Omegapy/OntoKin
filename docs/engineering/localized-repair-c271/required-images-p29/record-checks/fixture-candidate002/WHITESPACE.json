@@ -1,0 +1,32 @@
+{
+  "full": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "returncode": 2,
+    "finding_count": 4,
+    "files": 3,
+    "combined_output": "whitespace-full.combined.log",
+    "disposition": "Retain exact frozen and copied evidence bytes; findings are blank EOF lines and intentional Markdown hard-break spaces. No product or canonical workflow-file whitespace finding."
+  },
+  "scoped": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      "prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "tests/test_current_host_required_images_v01.py",
+      "docs/workflow/CURRENT.json",
+      "docs/workflow/tasks/C271/task.json",
+      "docs/workflow/tasks/C271/REQUIREMENTS.md",
+      "docs/workflow/tasks/C271/PLAN.md"
+    ],
+    "returncode": 0,
+    "scope": "Only selected production/adapter and four canonical task/workflow files; this pass does not replace the full failure."
+  }
+}

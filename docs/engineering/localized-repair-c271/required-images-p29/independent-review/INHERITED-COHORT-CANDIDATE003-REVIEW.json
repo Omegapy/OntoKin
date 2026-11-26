@@ -1,0 +1,58 @@
+{
+  "schema": "ontokin.c271.p29-independent-cohort-acceptance/1",
+  "reviewer": "/root/scope_review",
+  "recorded_at_utc": "2026-11-23T23:07:54.441534+00:00",
+  "result": "accepted_exact_amended_inventory_for_candidate003_binding",
+  "cohort": {
+    "path": "/workspace/scratch/2eb33b59a678/repository/docs/engineering/localized-repair-c271/required-images-p29/INHERITED-COHORT.json",
+    "bytes": 67770,
+    "sha256": "7aa9e1278419e6b4fd27afbc758d5dcea195a245960cd4c972d8102a34dcce77"
+  },
+  "selected_methods": 481,
+  "exclusions": [],
+  "per_module_counts": {
+    "test_current_host_elf_mapping_v01": 40,
+    "test_current_host_inspection_v01": 135,
+    "test_current_host_libc_plt_metadata_v01": 73,
+    "test_current_host_libc_static_tls_flags_v01": 41,
+    "test_current_host_loader_path_v01": 96,
+    "test_current_host_readback_driver": 10,
+    "test_current_host_readback_provider": 25,
+    "test_current_host_rtld_paths_v01": 61
+  },
+  "generated_sources": 6,
+  "checks": {
+    "module_source_hashes_unchanged": true,
+    "all_direct_static_method_rows_match_AST_definitions": true,
+    "all_explicit_methods_in_selected_list": true,
+    "all_six_generated_source_hashes_match": true,
+    "added109_source_derived": true,
+    "source_derived_complete_list_equals_retained_runtime_discovery": true,
+    "zero_missing_previously_selected_ids": true,
+    "all109_scope_reviewed_inert_or_mocked": true,
+    "original116_oracles_unchanged": true
+  },
+  "scope_rationale": {
+    "shared_setUp": "Patches subprocess.Popen/run/check_output/call/check_call and os.system/fork/posix_spawn/posix_spawnp/killpg/waitpid to fail; tearDown asserts zero calls.",
+    "filesystem": "All new and mutated data lives beneath test-owned retained or temporary fixture roots. /etc loader configuration reads are translated to fixture files.",
+    "process_behavior": "MockedSupervisor creates dictionaries/raw receipt files and calls in-process callbacks; it does not spawn a process. Git read controls use a mocked driver.",
+    "imports": "Shared setUp imports existing supervisor/preparation modules to use types and file-publication helpers; it does not invoke preparation, installation, native target execution or the original seven/full routine.",
+    "expected_transport_child": "The unchanged driver control still accounts for one explicitly allowed inline Python environment-transport child when the complete inherited suite runs."
+  },
+  "supersedes": {
+    "path": "/workspace/scratch/2eb33b59a678/reviews/fixture-review/INHERITED-COHORT-REVIEW.json",
+    "historical_result": "372-method completeness finding was wrong; preserved unchanged.",
+    "correction": {
+      "path": "/workspace/scratch/2eb33b59a678/reviews/fixture-review/COHORT-INVENTORY-CORRECTION.json",
+      "sha256": "5017d31e61e4e57fd0c7ad0034f84cb3bb28717a4788bd5d474c8d6babd8cc61"
+    }
+  },
+  "additional_scope_audit": {
+    "path": "/workspace/scratch/2eb33b59a678/reviews/implementation/INHERITED-SCOPE-AUDIT.json",
+    "status": "Read; agrees with independent scope inspection. Its source-qualified tests. prefix is not used as runtime IDs in this acceptance."
+  },
+  "execution_gate": "Candidate003 must bind this exact cohort, receive independent exact-byte acceptance, and be saved before baseline retry or implementation. No further product controls authorized by this inventory-only record.",
+  "tests_executed_by_reviewer": 0,
+  "original_p28_597_claim": "Still unverified; reconstructed inventory arithmetic does not establish historical execution.",
+  "reviewer_check_attempt": "COHORT-STATIC-CHECK-ATTEMPT001.json retains a review-script assertion caused by treating direct static_methods rows as complete inventory; corrected without changing reviewed inputs."
+}

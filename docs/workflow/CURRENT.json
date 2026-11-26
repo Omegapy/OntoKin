@@ -4,15 +4,16 @@
   "latest_task": "C271",
   "active_task": "C271",
   "observed_main": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
-  "snapshot_date": "2026-11-26T01:01:57Z",
+  "snapshot_date": "2026-11-26T01:16:29Z",
   "next_action": {
     "status": "blocked",
-    "summary": "C271-P29-R07 (local mode, declared 2026-11-26 on the owner's direction) is publishing the exact accepted P29 candidate through ordinary authenticated Git: verify the R06 archive chain and its 245-row inventory, preserve the candidate commit with parent 6c7f52a2ee627a382eea91ce26bf58bac4e6cccb and tree db30c29f24c154f378a5acac713385fc8bb44f52, join it with this branch in one independently reviewed merge commit, push without force, read it back from the remote, record the outcome and stop. If this phase is interrupted, inspect the worktree, the refs and the destination, then resume at the first unmet step named in docs/workflow/tasks/C271/P29-R07-SESSION.md. P29-PUBLICATION-SIZE-001 stays open until the readback succeeds. Do not begin the /0.1.5 operational-plan review, H0/H1, the routine driver, behavioral reruns or main integration in this phase.",
+    "summary": "The accepted P29 candidate is preserved as commit dbf20beed1bd6274a42531c997d054c09fb8ebb8 (parent 6c7f52a2ee627a382eea91ce26bf58bac4e6cccb, tree db30c29f24c154f378a5acac713385fc8bb44f52) and joined with this branch's later recovery history in one merge commit of phase C271-P29-R07 (local mode). Publication is pending: this branch's record checks, an independent review of the exact merge, a non-forced push and a readback in a separate repository without alternates. P29-PUBLICATION-SIZE-001 stays open until that readback succeeds. If this phase is interrupted, inspect the worktree, the refs and the destination, then resume at the first unmet step named in docs/workflow/tasks/C271/P29-R07-SESSION.md. Do not begin the /0.1.5 operational-plan review, H0/H1, the routine driver, behavioral reruns or main integration in this phase.",
     "suggested_task": "C271",
     "sources": [
       "docs/engineering/localized-repair-c271/p29-local-publication-r07/PHASE.json",
       "docs/workflow/tasks/C271/P29-R07-SESSION.md",
-      "docs/engineering/localized-repair-c271/p29-local-publication-r07/DELIVERY-RECONCILIATION.md",
+      "docs/engineering/localized-repair-c271/p29-local-publication-r07/CANDIDATE-COMMIT.json",
+      "docs/engineering/localized-repair-c271/p29-local-publication-r07/RECORD-RECONCILIATION.md",
       "docs/engineering/localized-repair-c271/p29-publication-recovery-r02-20261123/PUBLICATION-BLOCKER.json"
     ]
   },
@@ -57,6 +58,7 @@
     "P24 frozen ZIP and matching prompts have confirmed saves and exact readbacks. Separate receipt publication/save and matching terminal confirmation remain pending at this source snapshot. Only delivery may continue here; adopted design is unimplemented and R03-R05 remain open.",
     "P26 stopped at the independently confirmed necessary non-libc libdl metadata incompatibility, deduced from retained bytes and source; no H0/product refusal was executed. Execution source remains ed2fc453, N34 and parent gates remain open, and only documentary publication and verified delivery remain before a separately authorized durable portable-evidence decision.",
     "P26 frozen source A and exact saved archive/prompts are verified. Receipt-only B preserves source-A pending snapshots, blocked technical outcome and all parent gates. Its own checks/publication, external receipt and terminal readbacks remain future source-time gates; no additional technical work is authorized.",
+    "P29 independently accepts a new bounded /0.1.5 required-image implementation: 116 focused controls and 481 inherited tests pass on held source. All three failed attempts and all six attempt records are retained. Original P28 source and reported597 evidence remain unavailable/unverified. Source publication and verified final delivery are pending at this snapshot. R03-R05, P02, H0/H1, full routine, main integration and parent closure remain open; only delivery continues here.",
     "P29 R02 verifies the preserved accepted candidate but encounters P29-PUBLICATION-SIZE-001. Source publication remains unfinished; the blocked recovery handoff cannot pass H0/H1 or C271.",
     "C271-P29-R07 continues C271 in local mode on the owner's direction of 2026-11-25. A C271 phase in local mode closes on the local closing state, without a Library ZIP; the browser-session policy remains the rule of P01 to P29 R06. The declaration changes no requirement, gate or accepted byte, and the publication stays pending until it is read back from the remote."
   ],
@@ -3102,8 +3104,91 @@
     "phase": "C271-P29-R07-local-publication",
     "owner": "c271-p29-r07-e586f7497142",
     "record": "docs/engineering/localized-repair-c271/p29-local-publication-r07/PHASE.json",
-    "status": "declared_publication_pending",
+    "status": "candidate_joined_locally_publication_pending",
     "candidate_published": false,
-    "parent_complete": false
+    "parent_complete": false,
+    "declaration_commit": "80fecf97b785544e8044a60df849cc5918929599",
+    "candidate_commit": "dbf20beed1bd6274a42531c997d054c09fb8ebb8",
+    "candidate_tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
+    "earlier_values": "The declaration's snapshot_date, next_action and this entry are retrievable unchanged from the declaration commit."
+  },
+  "p29_reconstruction": {
+    "phase": "C271-P29-required-images-reconstruction",
+    "source_start": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
+    "original_p28_unresolved": true,
+    "phase_complete": false,
+    "parent_complete": false,
+    "technical_phase_complete": true,
+    "delivery_complete": false,
+    "phase_outcome": "accepted_implementation",
+    "verification": "docs/engineering/localized-repair-c271/required-images-p29/VERIFICATION.json",
+    "next_technical_action": "In a fresh phase, prepare and independently review the executable /0.1.5 inspection plan against the adopted P27 finite policy and all existing H0 prerequisites; stop at a new blocker before any H0/H1 execution."
+  },
+  "p29_candidate_superseded_current_fields": {
+    "candidate_commit": "dbf20beed1bd6274a42531c997d054c09fb8ebb8",
+    "candidate_tree": "db30c29f24c154f378a5acac713385fc8bb44f52",
+    "candidate_source_time": "P29 technical acceptance, 2026-11-23T23:54:00Z",
+    "snapshot_date": "2026-11-23T23:54:00.752698+00:00",
+    "next_action": {
+      "status": "ready",
+      "summary": "Complete final documentary checks and conditional publication on the retained branch; verify and save the immutable handoff ZIP and matching prompts, record the separate delivery receipt and matching terminal comments, release this phase owner, then stop.",
+      "sources": [
+        "docs/workflow/tasks/C271/task.json",
+        "docs/engineering/localized-repair-c271/required-images-p29/PHASE.json",
+        "docs/engineering/localized-repair-c271/required-images-p29/RECONSTRUCTION-DECISION.md"
+      ],
+      "suggested_task": "Complete P29 delivery only; do not begin another technical phase in this chat."
+    },
+    "recorded_at_utc": "2026-11-26T01:16:29Z",
+    "note": "The accepted candidate's own current-state values at its source time, superseded by the later branch state; kept unchanged as history. The candidate's exact CURRENT.json stays retrievable from the candidate commit."
+  },
+  "p29_recovery_records_r03_r06": {
+    "R02_terminal": {
+      "record": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7120290539"
+    },
+    "R03": {
+      "record": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7121353920",
+      "handoff": {
+        "name": "OntoKin_C271_P29_R03_Transfer_Blocker_Handoff_2026-11-23.zip",
+        "bytes": 39644692,
+        "sha256": "d1d099eff1ccbec55ea01ac61d65fc1d698466cde65fd8142c8b480fdd68f19e"
+      }
+    },
+    "R04": {
+      "record": "no comment exists on PR274",
+      "early_recovery": {
+        "name": "OntoKin_C271_P29_R04_Early_Recovery_2026-11-23.zip",
+        "bytes": 223424,
+        "sha256": "29e1a0bd49098c34508352bdff1f55c6d5a547535209c4bb5e6bca6a67715f64",
+        "held_in": "the R06 handoff chain"
+      }
+    },
+    "R05": {
+      "record": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7122919784",
+      "handoff_version_0_in_comment": {
+        "name": "OntoKin_C271_P29_R05_Authentication_Blocker_Handoff_2026-11-23.zip",
+        "bytes": 40867796,
+        "sha256": "3dc1b44edf43d92ad4de53e326b167a7269f9508266810d85056301a832027bd"
+      },
+      "handoff_version_1_in_r06_chain": {
+        "bytes": 40934668,
+        "sha256": "406b86f0fe9787ce0b1ead460f8391d3aaf2f79345e852c0ea3107b6469b9182"
+      }
+    },
+    "R06": {
+      "record": "https://github.com/Omegapy/OntoKin/pull/274#issuecomment-7136207682",
+      "handoff": {
+        "name": "OntoKin_C271_P29_R06_Transfer_Capability_Handoff_2026-11-24.zip",
+        "bytes": 41730084,
+        "sha256": "4b8fae8b846c6f2b27ed5e2630c71240739786791cf39f043e787c55ad727bc9"
+      },
+      "receipt": {
+        "name": "OntoKin_C271_P29_R06_Delivery_Receipt_2026-11-24.json",
+        "bytes": 149563,
+        "sha256": "24aa014cb430d9b7269ee2e39ff08e7005d3630e8dd41c109f824e80039909d8"
+      }
+    },
+    "issue_comments": "issue273 holds a comment with the identical body for R02 terminal, R03, R05 and R06",
+    "boundary": "These recovery phases changed no file on this branch after bef67902. Their records exist only in these comments and inside the R06 handoff, which stays in the owner's Library and beside the clone and is not added to the repository."
   }
 }

@@ -1,0 +1,29 @@
+{
+  "source_base": "6c7f52a2ee627a382eea91ce26bf58bac4e6cccb",
+  "scope": "Director startup documentary changes only",
+  "checked_at_utc": "2026-11-23T22:37:15.899039+00:00",
+  "checks": [
+    {
+      "name": "workflow",
+      "command": [
+        "python3",
+        "tools/chat_workflow.py",
+        "check"
+      ],
+      "exit_code": 1,
+      "stdout": "workflow.stdout",
+      "stderr": "workflow.stderr"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "python3",
+        "docs/maintenance/reorganization-2026-10-17/verify_reorganization.py"
+      ],
+      "exit_code": 1,
+      "stdout": "documentation.stdout",
+      "stderr": "documentation.stderr"
+    }
+  ],
+  "product_tests": 0
+}

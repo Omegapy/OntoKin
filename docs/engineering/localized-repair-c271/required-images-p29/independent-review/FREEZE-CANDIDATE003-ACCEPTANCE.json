@@ -1,0 +1,111 @@
+{
+  "schema": "ontokin.c271.p29-independent-freeze-acceptance/1",
+  "reviewer": "/root/scope_review",
+  "recorded_at_utc": "2026-11-23T23:09:52.805245+00:00",
+  "candidate": "candidate003",
+  "result": "accepted",
+  "blocking_findings": [],
+  "design_defect_found": false,
+  "accepted_freeze": {
+    "path": "/workspace/scratch/2eb33b59a678/repository/docs/engineering/localized-repair-c271/required-images-p29/controls/FREEZE.json",
+    "bytes": 31129,
+    "sha256": "ca54eae3708af5e72f6d01c39a17b625511b8de1411b77d0a7ac0d7427eeae1a"
+  },
+  "accepted_adapter": {
+    "path": "/workspace/scratch/2eb33b59a678/repository/tests/test_current_host_required_images_v01.py",
+    "bytes": 48369,
+    "sha256": "a6d5f9622eecd0f8a4e52621c851637a8b97f816b8d70a464c93ce97f5917de5"
+  },
+  "accepted_fixture_manifest": {
+    "path": "/workspace/scratch/2eb33b59a678/repository/docs/engineering/localized-repair-c271/required-images-p29/controls/FIXTURE-MANIFEST.json",
+    "bytes": 20972,
+    "sha256": "a2c5d6e9277bd109f506b40843ac743b7e02528aab693b01c14663424f9b74cd"
+  },
+  "accepted_cohort": {
+    "path": "/workspace/scratch/2eb33b59a678/repository/docs/engineering/localized-repair-c271/required-images-p29/INHERITED-COHORT.json",
+    "bytes": 67770,
+    "sha256": "7aa9e1278419e6b4fd27afbc758d5dcea195a245960cd4c972d8102a34dcce77"
+  },
+  "accepted_runner": {
+    "path": "/workspace/scratch/2eb33b59a678/scripts/run_verification.py",
+    "bytes": 6746,
+    "sha256": "d24bc4362c18388c37cb6bed7331b88b57976c71557b1cc8bc143c13fc0648ac"
+  },
+  "unchanged_preimplementation_production": {
+    "path": "/workspace/scratch/2eb33b59a678/repository/prototypes/static_tray_v01/current_host_inspection_v01.py",
+    "bytes": 233502,
+    "sha256": "eea3e6343ae34d9c930a810ca4f363cbcd4264a8d943731f927e41b213755d7a"
+  },
+  "checks": {
+    "closed_payload_hash_mode_inventory": true,
+    "all24_companions_bound": true,
+    "six_generated_inventory_sources_bound": true,
+    "all116_original_case_fields_identical": true,
+    "candidate002_to003_only_declared_six_payloads_changed": true,
+    "adapter_bytes_identical_except_manifest_hash_literal": true,
+    "inherited_command_identical_except_two_cohort_hash_literals": true,
+    "all109_other_payloads_identical": true,
+    "all47_synthetic_ELFs_and56_contexts_unchanged": true,
+    "all_four_candidate001_adapter_fixes_remain_intact": true,
+    "corrected481_expected_IDs_source_derived_and_equal_actual_discovery": true,
+    "zero_exclusions_and_no_oracle_changes": true,
+    "prior_discovery_failure_and_imports_truthfully_retained": true,
+    "original_P28_597_report_still_unverified": true,
+    "reviewer_product_imports_or_execution": 0
+  },
+  "counts": {
+    "frozen_payloads": 115,
+    "manifest_payloads": 113,
+    "companions": 24,
+    "hash_oracle_checks": 1238,
+    "adopted_cases": 116,
+    "inherited_methods": 481,
+    "generated_source_files": 6
+  },
+  "scope": "Previously accepted finite P27 required-image implementation and exact inert/mocked controls. Added inventory IDs were already present in the selected unchanged modules; every HI01-HI20 branch is within scope. One separate inline Python environment-transport child remains declared. No host profiling, operational install, native target start, H0/H1, full routine or main integration.",
+  "historical_review_failure": {
+    "cause": "The prior372-method completeness review omitted CONTROL_VARIANTS-generated methods. This was a reviewer/inventory defect, not an implementation or adopted-oracle defect.",
+    "earlier_acceptance": {
+      "path": "/workspace/scratch/2eb33b59a678/reviews/fixture-review/FREEZE-ACCEPTANCE.json",
+      "bytes": 87416,
+      "sha256": "b1429be922b50606ca644a95d4606bae4cf2eac73074968b1c9e6f457ea600a8"
+    },
+    "preserved_candidate002": {
+      "path": "/workspace/scratch/2eb33b59a678/repository/docs/engineering/localized-repair-c271/required-images-p29/fixture-revisions/CANDIDATE002.zip",
+      "bytes": 1434172,
+      "sha256": "5db85af0b84fb4712dffe94c69297a9bfe459614e3312b7c27f41c32ec119cf6"
+    },
+    "correction_record": {
+      "path": "/workspace/scratch/2eb33b59a678/reviews/fixture-review/COHORT-INVENTORY-CORRECTION.json",
+      "bytes": 62263,
+      "sha256": "5017d31e61e4e57fd0c7ad0034f84cb3bb28717a4788bd5d474c8d6babd8cc61"
+    },
+    "amended_cohort_review": {
+      "path": "/workspace/scratch/2eb33b59a678/reviews/fixture-review/INHERITED-COHORT-CANDIDATE003-REVIEW.json",
+      "bytes": 3746,
+      "sha256": "580a4cc7f663384cfd4aa37a0cd2c1dcd51136a2afd057ce6a4418d56114305b"
+    }
+  },
+  "prior_attempt": {
+    "runtime_inventory": {
+      "path": "/workspace/scratch/2eb33b59a678/verification/baseline-inherited/RUNTIME-INVENTORY.json",
+      "bytes": 76293,
+      "sha256": "51c06426550538d2abba19e86659ff0198002e3f5a6e11709de501bd51cb2dfd"
+    },
+    "returncode": 1,
+    "test_methods_executed": 0,
+    "module_imports_and_discovery_occurred": true,
+    "source_changes": [],
+    "retained": true
+  },
+  "orchestration": "Unchanged reviewed runner d24bc436\u20268ac authenticates the supplied accepted freeze and iterates all six generated-source identities before selecting the frozen command. The first failed baseline demonstrates its exact runtime-ID refusal before test execution; retry must use a new attempt root.",
+  "whitespace_disposition": {
+    "path": "/workspace/scratch/2eb33b59a678/reviews/fixture-review/WHITESPACE-DISPOSITION-REVIEW.json",
+    "bytes": 2542,
+    "sha256": "8a5bcdee7465deffd2cde13302a6620acddae00c2c102e0b69a2717b454ca5bb"
+  },
+  "placement": "FUTURE-SURFACE allows the next implementation documentary area; recorded Director reconstruction decision supports P29 placement without altering oldP27/P28 history or semantic scope.",
+  "gate_effect": "Save and verify this exact candidate003 freeze and amended cohort checkpoint before retrying the baseline. Use a new attempt directory and the accepted freeze SHA explicitly. Implementation remains subject to the Director release and required baseline reconciliation; this acceptance is not a runtime test pass.",
+  "runtime_test_results": "NOT_RUN; prior attempt stopped during inventory discovery",
+  "change_rule": "Any subsequent frozen input change requires new identification and independent affected review; retain all prior candidates, raw failed attempt evidence and superseded reviews."
+}
