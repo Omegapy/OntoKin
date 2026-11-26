@@ -90,6 +90,36 @@
       "path": "docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json",
       "bytes": 19901,
       "sha256": "21fd6bad8738ed51d4ced8036a0fcde5dd046823f55f71de52b9b81df659ccd5"
+    },
+    {
+      "path": "prototypes/static_tray_v01/current_host_inspection_v01.py",
+      "bytes": 249393,
+      "sha256": "71e837c31df06df7ce10262683c5d28a72bdb3c039f09b97eec58839f4121758",
+      "added_in_revision": 2
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/operational-plan-review-p30/EXECUTOR-INVENTORY.json",
+      "bytes": 9242,
+      "sha256": "e61eea96a3a97f448b020ac04274cb37461a7aa4afc901442cf6bbe6cc6cdafb",
+      "added_in_revision": 2
+    },
+    {
+      "path": "docs/engineering/localized-repair-c271/host-inspection-p07/ADOPTION.json",
+      "bytes": 3140,
+      "sha256": "683d367b3b9b55e4a7ec25af20989c72fd0fbede7abb0826d8bbd42c113ed4db",
+      "added_in_revision": 2
+    },
+    {
+      "path": "prototypes/static_tray_v01/format_check.py",
+      "bytes": 15959,
+      "sha256": "e0d71482b9878fbdf9ca1287013756fc0f6b9df530864f5634b8863354a29447",
+      "added_in_revision": 2
+    },
+    {
+      "path": "tests/test_local_checks.py",
+      "bytes": 33339,
+      "sha256": "7926391528212297b9f7e6514654108f278685b66fb73a434354c1b1ea5d6ce4",
+      "added_in_revision": 2
     }
   ],
   "main": [
@@ -117,6 +147,12 @@
       "path": "docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
       "bytes": 17273,
       "sha256": "f0ef22f3d63ac9ee4748f9fabadffcda98377ceb1dfacc734e41d2d90740eca8"
+    },
+    {
+      "path": "tools/check_local.py",
+      "bytes": 33335,
+      "sha256": "40d1f9fd376ce652de2612f49114f9ac4b555b1b7de9f43f7aa81ccee5ae3b57",
+      "added_in_revision": 2
     }
   ],
   "external": [
@@ -162,6 +198,18 @@
         "--allow-addons absent: ERR_DLOPEN_DISABLED",
         "--no-addons and --max-old-space-size exist"
       ]
+    },
+    {
+      "url": "https://nodejs.org/docs/v24.22.1/api/permissions.html and cli.html",
+      "read_by": "the independent reviewer of revision 1 (INDEPENDENT-REVIEW-001), 2026-11-26T04:44Z",
+      "facts_added_in_revision_2": [
+        "--experimental-loader requires --allow-worker when the permission model is on",
+        "the model is not inherited by worker threads",
+        "descriptor-only fs operations, among them fsync and fdatasync, are disabled and throw ERR_ACCESS_DENIED",
+        "existing directories in grants carry an implicit wildcard; entry points are readable implicitly",
+        "seat-belt model for trusted code; no guarantee against malicious code"
+      ],
+      "effect": "S5, the permission-model launch, is withdrawn in revision 2"
     }
   ],
   "host_facts": [
@@ -175,5 +223,6 @@
       ],
       "method": "read-only: sysctl -n, plutil -extract, ctypes attribute lookup without a call"
     }
-  ]
+  ],
+  "revision": 2
 }

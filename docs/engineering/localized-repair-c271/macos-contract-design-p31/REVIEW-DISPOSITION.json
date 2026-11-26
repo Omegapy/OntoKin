@@ -1,0 +1,86 @@
+{
+  "schema": "ontokin.c271.p31-review-disposition/1",
+  "task": "C271",
+  "phase": "C271-P31-macos-contract-design",
+  "owner": "c271-p31-a99073a9641d",
+  "review": "INDEPENDENT-REVIEW-001",
+  "candidate_commit": "4ee691aedc30dac1e3ec9a63917d7e6ac7493912",
+  "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+  "recorded_at_utc": "2026-11-26T05:13Z",
+  "corrected_candidate": "revision 2 (this commit)",
+  "dispositions": [
+    {
+      "id": "G-01",
+      "severity": "mandatory",
+      "disposition": "resolved_in_revision_2",
+      "change": "S5 withdrawn: no --permission; the 0.1.0 argv kept; the probe's fsync kept; 'no descendant' is no longer claimed as enforced but as a source-backed property of bound code (MC11); the omitted documentation facts are recorded in READ-SET.json; MC24 shows a positive start under the unchanged argv with the result written and synced."
+    },
+    {
+      "id": "G-02",
+      "severity": "mandatory",
+      "disposition": "resolved_in_revision_2",
+      "change": "With the permission model withdrawn there are no read grants. The boot identity moves to the provider (before the cohort, before and after each start); the probe checks os.type/release/machine and the OS build file and no longer the boot, a stated weakening of E19 (MC09)."
+    },
+    {
+      "id": "G-03",
+      "severity": "mandatory",
+      "disposition": "resolved_in_revision_2",
+      "change": "The argv keeps --expected-config-sha256 and every other 0.1.0 element (section 1; MC27)."
+    },
+    {
+      "id": "G-04",
+      "severity": "mandatory",
+      "disposition": "resolved_in_revision_2",
+      "change": "Archive member policy for the official tarball: whole-archive name checks, a frozen complete member inventory, declared in-archive relative links permitted and never extracted, hard links, devices, FIFOs, undeclared members and escaping targets refused, only bin/node extracted; P05 section 5 amended for this archive only; NODE-SOURCE.json and the {bin/node, NODE-SOURCE.json} layout and receipt rule defined (MC02, MC03, MC04)."
+    },
+    {
+      "id": "G-05",
+      "severity": "mandatory",
+      "disposition": "resolved_in_revision_2",
+      "change": "Section 2 classifies E1 to E19 with reasons and effects on meaning; S9 extends the driver's removal list with DYLD_*, __PYVENV_LAUNCHER__ and PYTHONEXECUTABLE and binds Git by absolute path, SHA-256 and version; M0 keeps -I -S -B and reads metadata by path; E9 and E17 restated; N34-M defined; N57 recorded as not applicable and open for the Linux contract."
+    },
+    {
+      "id": "G-06",
+      "severity": "mandatory",
+      "disposition": "resolved_in_revision_2",
+      "change": "Section 5 states the meaning of reaped, process_group_absent, cleanup.passed and handles_closed under 0.2.0, including that orphaned descendants go to launchd and that zombie counting by killpg on Darwin is not established; the labels and claims say so."
+    },
+    {
+      "id": "G-07",
+      "severity": "nonmandatory",
+      "disposition": "resolved_in_revision_2",
+      "change": "Section 4 binds the framework launcher and library, lib-dynload modules and their non-system Mach-O dependencies by file hash, and states the weaker claim."
+    },
+    {
+      "id": "G-08",
+      "severity": "nonmandatory",
+      "disposition": "resolved_in_revision_2",
+      "change": "S8 revised to the 'proceed and fail visibly at setup' rule the review named; no skip; CH13's meaning kept for qualifying runs; direct invocation and the drivers' zero-skip stage rule stated; revision 1's skip rejected with reasons."
+    },
+    {
+      "id": "G-09",
+      "severity": "nonmandatory",
+      "disposition": "resolved_in_revision_2",
+      "change": "Gates renamed MD, MB, MI, MP, MH, MR; MB's move before R03 against MAIN-CONFLICTS is stated; MR keeps main's recorded macOS baseline outcomes visible under OK-ENG-009."
+    },
+    {
+      "id": "G-10",
+      "severity": "nonmandatory",
+      "disposition": "resolved_in_revision_2",
+      "change": "Cryptex version bound; SSV and SIP stated as trust assumptions; closed load-command allow-list; ENOTSUP refusal without fallback; canonical paths with /tmp, /var and /etc; fsync versus F_FULLFSYNC durability; .DS_Store refusal."
+    },
+    {
+      "id": "G-11",
+      "severity": "nonmandatory",
+      "disposition": "resolved_in_revision_2",
+      "change": "Controls renumbered MC01 to MC29 with Node and other starts counted separately and consistently in both files; MC12 is 0 Node and 1 other; new controls for the member policy, the precondition (MC17), ENOTSUP (MC16), paths (MC20), time of use (MC29) and the static scan (MC11); the CH map lists partial coverage explicitly."
+    },
+    {
+      "id": "G-12",
+      "severity": "nonmandatory",
+      "disposition": "resolved_in_revision_2",
+      "change": "READ-SET.json adds the P29 inspector, main's check_local.py, P30's EXECUTOR-INVENTORY.json, P07's ADOPTION.json, format_check.py and tests/test_local_checks.py; section 1 no longer says only impossible terms change (S8 is deliberate); N57 is in section 10; every document schema is versioned, including NODE-SOURCE; the test docstring update is assigned to MI."
+    }
+  ],
+  "next": "re-review of revision 2 by the same reviewer"
+}

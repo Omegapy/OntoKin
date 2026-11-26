@@ -1,0 +1,429 @@
+{
+ "schema": "ontokin.c271.p31-independent-review/1",
+ "candidate_commit": "4ee691aedc30dac1e3ec9a63917d7e6ac7493912",
+ "candidate_tree": "728d4e8ebe77d9fafde1fa1b29377b13e29739d4",
+ "candidate_parent": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+ "main_revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+ "candidate_files": [
+  {
+   "path": "docs/engineering/localized-repair-c271/macos-contract-design-p31/PHASE.json",
+   "bytes": 8293,
+   "sha256": "57d866ba0b901f4d809a72a5604df417bbf9f1434cd4483b6e16c65c0c3c7034"
+  },
+  {
+   "path": "docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.md",
+   "bytes": 23502,
+   "sha256": "9bc72c9900cd938005bb0e8498d03367cf9cf0263295a4afe240225a349b73a4"
+  },
+  {
+   "path": "docs/engineering/localized-repair-c271/macos-contract-design-p31/CONTRACT.json",
+   "bytes": 23196,
+   "sha256": "4528d53aeee88c4b1d8d0a25dfeba23f49bc5b5592d43db71039e5b55d376277"
+  },
+  {
+   "path": "docs/engineering/localized-repair-c271/macos-contract-design-p31/READ-SET.json",
+   "bytes": 6909,
+   "sha256": "d3a3603c1d1830036127cae28d189209653c6e0ad07cb879e15251ce4be88881"
+  }
+ ],
+ "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+ "findings": [
+  {
+   "id": "G-01",
+   "severity": "mandatory",
+   "location": "CONTRACT.md section 1 (S5), section 4 (launch, guarantees 'A Node checker creates no descendant'); CONTRACT.json launch.forbidden_grants, launch.node_facts, supervisor.guarantees.added; READ-SET.json external docs entries",
+   "summary": "Per the Node v24.22.1 docs, --experimental-loader requires --allow-worker under --permission, and the contract forbids that grant, so every checker and direct-negative start would be refused at start-up. With --allow-worker, the model is not inherited by the loader's worker thread. Under the model, fsync on a descriptor throws ERR_ACCESS_DENIED, and the probe's preserved output() calls fs.fsyncSync outside any try: positive cases would exit 1, and the negative's exit 1 would no longer show the intended rejection. 'Flags do not change what the readers compute' and 'no descendant: enforced' are unsupported, and the recorded Node facts omit these points."
+  },
+  {
+   "id": "G-02",
+   "severity": "mandatory",
+   "location": "CONTRACT.md section 4 item 2, section 1 S7; CONTRACT.json launch.read_roots, launch.mitigations, substitutions.S7",
+   "summary": "The three read roots omit documents the probe must read before importing any reader: the configuration, which lives in <output>/readback-binding while the cohort is a fresh mkdtemp under the evidence root; the evidence root itself; the frozen source, host, methods, discovery and dependency documents; the workspace-binding records and parent configuration; the saved Node archive; the runtime directory and other host files; and the original checkout's baseline map. Every start would fail. Node cannot read kern.bootsessionuuid, and the OS-build file is not granted, so S7's probe-side bindings are unobservable. Ancestor-realpath needs and symlinks in the granted workspace root are unaddressed."
+  },
+  {
+   "id": "G-03",
+   "severity": "mandatory",
+   "location": "CONTRACT.md section 4 items 1-6 ('checks this exact argv'); CONTRACT.json launch.order",
+   "summary": "The normative argv omits --expected-config-sha256 DIGEST, which approvedEnvelope requires and P06-H01 (MC24, P07 section 5) depends on, and it does not name --experimental-loader. This contradicts the kept external-digest selection."
+  },
+  {
+   "id": "G-04",
+   "severity": "mandatory",
+   "location": "CONTRACT.md sections 2 (Extraction) and 5; CONTRACT.json node.extraction, preparer.rules",
+   "summary": "The contract keeps P05 section 5's whole-archive rules: a predeclared member inventory and refusal of linked entries. The preparer enforces them (lines 105, 171, 173), and _source requires the {bin/node, SOURCE.json} layout. The official tarball is generally known to carry npm, npx and corepack as symlinks (not observed here), so as written it is refused. Otherwise P05 section 5 is changed silently, with no stated member policy or provenance and receipt layout."
+  },
+  {
+   "id": "G-05",
+   "severity": "mandatory",
+   "location": "CONTRACT.md section 1; CONTRACT.json substitutions, kept, not_applicable",
+   "summary": "A2 is not met: E1-E19 are never classified, and no effect on test meaning is given. Terms that change on macOS are left out: E8's driver-side injection scrub (DYLD_* is not added to driver lines 489-491); E18's Git closure (/usr/bin/git is a dispatcher-sized universal binary, and the driver uses the ambient git); E15's -I -S -B, which conflicts with M0's importlib.metadata reads; E9 and E17, whose operational-plan and outer-capture fields change; and E10/E11, with no N34 analogue decided and N57 unmentioned."
+  },
+  {
+   "id": "G-06",
+   "severity": "mandatory",
+   "location": "CONTRACT.md section 4 guarantees table and S4 'Why'; CONTRACT.json supervisor.guarantees",
+   "summary": "check_case asserts cleanup.passed and handles_closed. On Darwin the receipts still say reaped and process_group_absent, but only the direct child is reaped, and launchd reaps orphans. P30's known difficulty, that these assertions change meaning, is unanswered: the stated replacement (the permission model prevents descendants) is unsupported (G-01), and the narrowed meaning is not stated."
+  },
+  {
+   "id": "G-07",
+   "severity": "nonmandatory",
+   "location": "CONTRACT.md sections 3 and 6 (M0 Python row, closure claim); CONTRACT.json python, host_observation.closure_claim",
+   "summary": "The recorded 'resolved executable' is the 52,448-byte framework launcher. The interpreter's code is in the framework library, and the extension modules and non-system libraries (for example OpenSSL for hashlib) are real files. The Python is neither byte-bound nor covered by the closure claim, which is weaker than E4 and unstated."
+  },
+  {
+   "id": "G-08",
+   "severity": "nonmandatory",
+   "location": "CONTRACT.md sections 7 and 8; CONTRACT.json selection_rule, MC19",
+   "summary": "MC19 inverts CH13, so 'CH01 to CH20 keep their meaning' is false for CH13. The amendment also changes P05 section 2's no-skip text and direct invocation without naming them. The ordinary run's unit stage stays failed under both drivers' zero-skip rule, which is unstated. The 'proceed and let setup fail visibly' alternative, which needs no skip, was not weighed."
+  },
+  {
+   "id": "G-09",
+   "severity": "nonmandatory",
+   "location": "CONTRACT.md section 10; CONTRACT.json gates",
+   "summary": "Gate names H2, R and P2 collide with P07's H2, the P05/P07 Gate R and plan step P02. Gate B moves conflict resolution before R03, against MAIN-CONFLICTS ('after R03'), without saying so. Gate R does not address main's recorded macOS unit baseline (103 failures, 311 errors) under OK-ENG-009."
+  },
+  {
+   "id": "G-10",
+   "severity": "nonmandatory",
+   "location": "CONTRACT.md sections 5 and 6; CONTRACT.json preparer, host_observation",
+   "summary": "Not addressed: cryptex security updates to the shared cache, and SIP and the sealed volume as trust boundaries; a closed load-command allow-list (LC_LOAD_UPWARD_DYLIB, LC_DYLD_ENVIRONMENT, unknown commands); the volume's RENAME_EXCL capability and ENOTSUP handling; canonical paths given that /tmp, /var and /etc are symlinks; fsync versus F_FULLFSYNC durability; and .DS_Store in walked source trees."
+  },
+  {
+   "id": "G-11",
+   "severity": "nonmandatory",
+   "location": "CONTRACT.md section 8; CONTRACT.json controls, p05_control_map",
+   "summary": "MC12's non-Node child is counted as one Node start, and MC13 and MC20 are null in JSON but given counts in MD. 'One to one' is inaccurate. CH02, CH03, CH07, CH08 and CH10 are only partly covered. No control covers grant sufficiency, the loader under the flags, ENOTSUP, or the Darwin supervisor's precondition."
+  },
+  {
+   "id": "G-12",
+   "severity": "nonmandatory",
+   "location": "READ-SET.json; CONTRACT.md sections 1 and 9; CONTRACT.json schemas",
+   "summary": "The read set omits declared inputs: the P29 inspector, main's check_local.py, P30's EXECUTOR-INVENTORY.json, P07's ADOPTION.json and format_check.py. 'Substitutes only what cannot exist on macOS' does not fit S5 or S8. N57 is absent from section 9. Only four document schemas are versioned. The test docstring still names ldd."
+  }
+ ],
+ "acceptance_claims": {
+  "A1": "identities correct (22/22); declared inputs missing and decisive Node facts omitted (G-12, G-01)",
+  "A2": "not met (G-05, G-06, G-08)",
+  "A3": "met for Node pins, verification route and the 24 files; Python identity weak (G-07)",
+  "A4": "not met (G-01, G-06)",
+  "A5": "not met as written (G-04; G-10)",
+  "A6": "defined; closure claim honest for Node, silent for Python; denominators rest on a launch that cannot run (G-01, G-07, G-10)",
+  "A7": "decided and explicit about absent_behavior; scope understated, one alternative unweighed (G-08)",
+  "A8": "present and NOT_RUN; count inconsistencies, partial coverage, gate-name collisions (G-11, G-09)"
+ },
+ "read_set_recomputed": {
+  "method": "git --no-optional-locks show <revision>:<path>; SHA-256 and length of the blob bytes; branch entries at the stated branch_revision in the worktree, main entries at main_revision in the main checkout",
+  "branch_revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+  "main_revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+  "entries": 22,
+  "all_match": true,
+  "rows": [
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md",
+    "bytes": 30015,
+    "sha256": "8fdd0d841df32c120c3be7f71edc2759da4e5dab4c66c520d6749fd03aa8b675",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/operational-plan-review-p30/CONTRACT-REQUIREMENTS.json",
+    "bytes": 12264,
+    "sha256": "7cb966d8c18a3035a5638d5c348969c698bd0c7dcc30eb668a8f98051e686318",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/operational-plan-review-p30/OUTCOME.json",
+    "bytes": 9880,
+    "sha256": "76c4ca6d6ab75ff25e355cfd332e42a012ec9292e2854366a48db5d16332e8b2",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/current-host-p05/CONTRACT.md",
+    "bytes": 26139,
+    "sha256": "32af491828bcfcb384f7e811da36165a74c8e38cd974d977275331155bf021c2",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/current-host-p05/CONTRACT.json",
+    "bytes": 23359,
+    "sha256": "2033574a52749f7962741b3ad9450bdf0635611d70320a62acd3f56a90768af2",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/current-host-p05/IMPLEMENTATION-PLAN.md",
+    "bytes": 4516,
+    "sha256": "f175d305ad20523a13b472df518917e5512696d4d75fea4005a1d5c0be737376",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/current-host-p05/ADOPTION.json",
+    "bytes": 5883,
+    "sha256": "661d86b949fcd92284a46ff8f650d4d9be49ecda058b41b81bbed0bbfdd0aa6c",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/host-inspection-p07/QUALIFICATION-PLAN.md",
+    "bytes": 23696,
+    "sha256": "cfb4200ea3745cfe590d9059cd272e244a2ba3cd8c9969f8df5982dc58a69bc1",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/localized-repair-c271/p29-local-publication-r07/MAIN-CONFLICTS.md",
+    "bytes": 4940,
+    "sha256": "2a4e8ecf55eb164b6cfdf2f68f25c8b01153697910e89549a44a49c62f8bc0fb",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "prototypes/static_tray_v01/supervisor.py",
+    "bytes": 11286,
+    "sha256": "c47b84ab464e89d4c8673d7541679a45ddf3fc4816a906aff4546e074b4c5a10",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "prototypes/static_tray_v01/current_host_readback_v01.py",
+    "bytes": 65533,
+    "sha256": "2a8144624ea00f3f350a6b7f482c993665b4049b363b93bc399ed0cd7a14ba78",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "prototypes/static_tray_v01/current_host_readback_v01.mjs",
+    "bytes": 55792,
+    "sha256": "218d22e8b279daf667ff9717ad8eacc30612e2d83bb6dd2a37b50f2d30162ff1",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "tools/prepare_current_host_readback.py",
+    "bytes": 19788,
+    "sha256": "fd4da23dde3cd75a95c3f5edc071028e5884da62932c32cba4be928e72f87bb3",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "tools/check_local.py",
+    "bytes": 41254,
+    "sha256": "76705ca4c812572e0b24e5840818008848dc5ad2fb4262a3e9d3ab0dc0a83c4e",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "tests/test_static_tray_readback_v01.py",
+    "bytes": 9167,
+    "sha256": "4847505f0ebff603d53dd2b5756c3e1063c81c5466565f0ed90449c44806b51b",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "tools/native-reader-verification-linux-cp312.lock",
+    "bytes": 779,
+    "sha256": "a7f17491000c2e139ccc5d213ca0e8a6f917e5befb4b878fef29f5ff72ae780f",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "branch",
+    "revision": "af6340debba1345dd7290c19ec8279c8568f3d8a",
+    "path": "docs/engineering/static-tray-qualification-c199/EXTERNAL-INPUTS.json",
+    "bytes": 19901,
+    "sha256": "21fd6bad8738ed51d4ced8036a0fcde5dd046823f55f71de52b9b81df659ccd5",
+    "match": true,
+    "identical_at_candidate": true
+   },
+   {
+    "group": "main",
+    "revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "path": "tools/local-environment.json",
+    "bytes": 7982,
+    "sha256": "c70b9d43634f9a35170e4ac633a6e352e7a986a6fb8ab10639fa60a9c776f9b4",
+    "match": true
+   },
+   {
+    "group": "main",
+    "revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "path": "tools/native-reader-verification-macos-arm64-cp312.lock",
+    "bytes": 799,
+    "sha256": "b1e3e86668421539c6817faefe7f126b4dbf25153fcbb2fab6325e080cf7a81c",
+    "match": true
+   },
+   {
+    "group": "main",
+    "revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "path": "tools/native-reader-verification-macos-arm64-cp312.provenance.json",
+    "bytes": 6508,
+    "sha256": "cbcc1b27797ab4a8742ad8b0360a25164e1dadb61f8da12d54e930c317355415",
+    "match": true
+   },
+   {
+    "group": "main",
+    "revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "path": "tests/test_static_tray_readback_v01.py",
+    "bytes": 9812,
+    "sha256": "2f0abd812aa668b7abf9e249315acdb9c0fd175adb59672ab1c454679d494394",
+    "match": true
+   },
+   {
+    "group": "main",
+    "revision": "51223c9b94a222f29d38eb6c33808f8e55e2bff9",
+    "path": "docs/engineering/OK-ENG-006-local-validation-and-hosted-ci-policy.md",
+    "bytes": 17273,
+    "sha256": "f0ef22f3d63ac9ee4748f9fabadffcda98377ceb1dfacc734e41d2d90740eca8",
+    "match": true
+   }
+  ]
+ },
+ "external_facts_checked": [
+  {
+   "url": "https://nodejs.org/dist/v24.22.1/SHASUMS256.txt",
+   "read_at_utc": [
+    "2026-11-26T04:43Z (approximate)",
+    "2026-11-26T04:59:55Z"
+   ],
+   "method": "curl over HTTPS to standard output; hashed in memory; not saved",
+   "bytes": 3171,
+   "sha256": "fdfbffc969c0f604beff0124d409b33a43b53f5c681d6220f80023e0d6df9dc4",
+   "facts": [
+    "node-v24.22.1-darwin-arm64.tar.gz 89c682593d76cd44233fa53b1563264e7de9cbb189cad169135c5b4fadfbc0a7",
+    "node-v24.22.1-darwin-arm64.tar.xz 654ba79de6155647e22321932b45f2a1ccb705976cc337c9b8e278beb085a628"
+   ],
+   "result": "matches the candidate (archive pin, checksum file size and SHA-256)"
+  },
+  {
+   "url": "https://nodejs.org/docs/v24.22.1/api/permissions.html",
+   "read_at_utc": "2026-11-26T04:44Z",
+   "method": "curl to standard output, tags stripped in memory; HTTP 200, 44,271 bytes; title names v24.22.1",
+   "facts": [
+    "Permission Model stable since v23.5.0/v22.13.0; --permission restricts fs, child processes, worker threads, addons, WASI, inspector",
+    "existing directories in grants are treated with an implicit wildcard; entry points are readable implicitly",
+    "descriptor-only fs operations (currently fsync/fdatasync, fchmod, fchown and sync variants) are disabled and throw ERR_ACCESS_DENIED",
+    "the model is not inherited by worker threads",
+    "using existing file descriptors bypasses the model",
+    "symbolic links are followed outside grants; relative links can expose arbitrary paths",
+    "seat-belt model for trusted code; no guarantee against malicious code"
+   ],
+   "result": "candidate's stated facts correct but incomplete; the descriptor-operation and worker-thread facts contradict S5 (G-01)"
+  },
+  {
+   "url": "https://nodejs.org/docs/v24.22.1/api/cli.html",
+   "read_at_utc": "2026-11-26T04:46Z",
+   "method": "curl to standard output, tags stripped in memory; title names v24.22.1",
+   "facts": [
+    "--allow-child-process / --allow-worker absent: restricted operation throws ERR_ACCESS_DENIED",
+    "--experimental-loader: history v23.6.1, v22.13.1, v20.18.2 — with the permission model it requires --allow-worker; the flag text repeats the requirement",
+    "--no-addons disables native addons"
+   ],
+   "result": "contradicts the contract's launch, which keeps the module loader and forbids --allow-worker (G-01)"
+  }
+ ],
+ "checks": [
+  {
+   "id": "C1",
+   "check": "candidate commit, tree, parent and file identities",
+   "result": "as recorded in candidate_files; tracked worktree clean at 4ee691ae"
+  },
+  {
+   "id": "C2",
+   "check": "READ-SET recomputation",
+   "result": "22/22 match"
+  },
+  {
+   "id": "C3",
+   "check": "Node checksum file and darwin-arm64 pin",
+   "result": "match"
+  },
+  {
+   "id": "C4",
+   "check": "Node v24.22.1 permissions page",
+   "result": "see external_facts_checked"
+  },
+  {
+   "id": "C5",
+   "check": "Node v24.22.1 CLI page",
+   "result": "see external_facts_checked"
+  },
+  {
+   "id": "C6",
+   "check": "host: sysctl -n kern.bootsessionuuid and sysctl.proc_translated; SystemVersion.plist via plutil (2026-11-26T04:51:35Z)",
+   "result": "boot session UUID present (UUID form, value not recorded); proc_translated 0; 26.6.2, 25G83, no ProductVersionExtra"
+  },
+  {
+   "id": "C7",
+   "check": "ctypes symbol lookup without calls (CDLL(None) and libSystem)",
+   "result": "renamex_np, renameatx_np, sysctlbyname present; renameat2 and prctl absent"
+  },
+  {
+   "id": "C8",
+   "check": "read-only ls/file of /usr/bin/git, /tmp, /var, /etc and the venv interpreter links",
+   "result": "/usr/bin/git 118,640-byte universal x86_64+arm64e binary (dispatcher-sized; inference); /tmp, /var, /etc symlinks into /private; venv python3.12 -> framework launcher 52,448 bytes; Python.app executable 51,392; framework library 5,984,672"
+  },
+  {
+   "id": "C9",
+   "check": "CONTRACT.md control table vs CONTRACT.json controls and p05_control_map",
+   "result": "same 25 IDs and routes; all CH01-CH20 plus CH11-P/C mapped consistently; MC13 and MC20 counts differ; MC12 non-Node child counted as Node start"
+  },
+  {
+   "id": "C10",
+   "check": "E1-E19 references in the candidate",
+   "result": "none in CONTRACT.md or CONTRACT.json"
+  },
+  {
+   "id": "C11",
+   "check": "main's driver skip accounting, local baseline record, macOS lock and local-environment specification",
+   "result": "any skip fails the unit step on main too; baseline unit stage failures=103, errors=311, skipped=3 (the readback CPU trio); macOS lock pins the same seven names and versions"
+  },
+  {
+   "id": "C12",
+   "check": "source tracing of probe reads/writes, provider paths, driver selection/workspace flow and preparer archive rules",
+   "result": "cited per finding in REVIEW.md"
+  }
+ ],
+ "executed_commands_policy_respected": true,
+ "executed_commands_policy_note": "No node, npm, ldd, codesign, container or VM tool, test or driver was started; nothing downloaded or installed; Git use read-only with --no-optional-locks; host facts limited to the permitted reads plus read-only ls/file.",
+ "write_scope": {
+  "review_directory": "/Volumes/P-SSD/Omegapy/OntoKin-local/c271-p31/review/",
+  "disclosed_exception": "temporary git-show copies and two helper scripts were written to the session's private scratchpad outside both checkouts and removed after use"
+ },
+ "independent_list_written_first": "REVIEW.md section 1, written at 2026-11-26T04:40Z before CONTRACT.md was read",
+ "reviewed_at_utc": "2026-11-26T05:04Z"
+}
