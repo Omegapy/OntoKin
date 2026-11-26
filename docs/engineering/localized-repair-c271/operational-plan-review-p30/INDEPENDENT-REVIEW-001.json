@@ -1,0 +1,94 @@
+{
+  "schema": "ontokin.c271.p30-independent-review/1",
+  "candidate_commit": "8aa4a80012a14a521a441b306635c4fad68ca573",
+  "verdict": "REJECT_WITH_MANDATORY_FINDINGS",
+  "findings": [
+    {
+      "id": "F-01",
+      "severity": "mandatory",
+      "location": "REVIEW-OUTCOME.md section 6 route C (lines 164-187) and recommendation (lines 203-208); OUTCOME.json routes_for_owner[C].substitutes and recommendation",
+      "summary": "Route C's substitution omits two contract terms that must change on Darwin. First, the original supervisor: P05 CONTRACT.md sections 3 and 7 require it (calling the original supervisor.run_process exactly once; 'Preserve the original Python run_process'), and P07 uses it for H1. It is Linux-only: supervisor.py lines 171-173 call prctl PR_SET_CHILD_SUBREAPER and otherwise raise 'Cannot establish Linux descendant reaping'. Second, the Linux host bindings of the provider and probe (Linux platform, procfs boot id, ldd role, ELF interpreter, Linux Node pin, linux-cp312 lock). Route C still lists 'exactly three real checkers' as unchanged. Add these terms to the route's substitutes, add the lost subreaper guarantee to the claims route C can never support, and restate the recommendation's basis."
+    },
+    {
+      "id": "F-02",
+      "severity": "nonmandatory",
+      "location": "EXECUTOR-INVENTORY.json host and executors; REVIEW-OUTCOME.md section 3",
+      "summary": "Some executor classes are not inventoried. Node executables bundled in apps, all Mach-O arm64: application A's bundled node 24.14.0, application B's bundled node 24.22.3-cua.1, application C's helper node, and Node embedded through Electron. Other Python interpreters: uv-managed CPython 3.12.11 and 3.11.14, and /usr/bin/python3. Remote agent sandboxes, which are of X4's kind and not local. The OS's own virtualization and Rosetta for Linux, with no VM manager installed. None changes a verdict."
+    },
+    {
+      "id": "F-03",
+      "severity": "nonmandatory",
+      "location": "OUTCOME.json preparation_dispositions[3]; REVIEW-OUTCOME.md section 3 X2, section 5 row 4, section 6",
+      "summary": "The VM reason covers only an emulated amd64 guest. An arm64 glibc Linux guest would run under native virtualization. It would keep Linux and the original supervisor's subreaper, but fail the x86-64 pins and profiles (E4-E7) and need installed tooling and a profile decision. State it as a route or record why it is excluded."
+    },
+    {
+      "id": "F-04",
+      "severity": "nonmandatory",
+      "location": "REVIEW-OUTCOME.md section 3 (lines 101-105), section 6 route C (lines 185-187), recommendation (lines 205-206); OUTCOME.json recommendation",
+      "summary": "The branch driver resolves the selection before the workspace copy and every step, so after R04 the whole local routine on the Mac would refuse to start, not only the unit stage. 'The integration gate needs [route C] in any case' is too strong: route C or another reviewed amendment of the selection rule would serve. Route D also needs no new machine and no change of mode."
+    },
+    {
+      "id": "F-05",
+      "severity": "nonmandatory",
+      "location": "EXECUTOR-INVENTORY.json X1, X3, X5; REVIEW-OUTCOME.md section 3",
+      "summary": "X3's facts about GitHub's runners were not observed and should be labelled inference; E7 may also be unmet. X5's statement that the startup report asked about a Linux machine is in no record. X1 lists E8 as unmet without a reason (C.UTF-8 exists on macOS). The Markdown says X1 fails E1-E8 while the JSON omits E3. Saying the inspector refuses X1 at its 'first host check' misstates the order: for /0.1.1 and later plans, _check_author_runtime (line 3011) runs before _check_host_static (line 3013)."
+    },
+    {
+      "id": "F-06",
+      "severity": "nonmandatory",
+      "location": "EXECUTOR-INVENTORY.json host.absent_paths; REVIEW-OUTCOME.md section 3 X1",
+      "summary": "The records list /usr/lib/x86_64-linux-gnu as absent, but the bound raw output EXECUTORS.txt (74ee47e5) observed /lib/x86_64-linux-gnu instead. The path is in fact absent, as observed again by this review, but the record should cite what its raw evidence shows."
+    },
+    {
+      "id": "F-07",
+      "severity": "nonmandatory",
+      "location": "REVIEW-OUTCOME.md section 8 (lines 226-228); OUTCOME.json executed_in_phase; EXECUTOR-INVENTORY.json host.node",
+      "summary": "Main's doctor starts Node once with --version (doctor_local.py line 741, always reached through collect at line 1038). It reads npm's version from npm's manifest (lines 664-676) and does not start npm, so 'started ... Node.js and npm' over-discloses. executed_in_phase omits the workflow and documentation checks and the pre-declaration doctor run with its Node start."
+    },
+    {
+      "id": "F-08",
+      "severity": "nonmandatory",
+      "location": "recorded_at_utc in CONTRACT-REQUIREMENTS.json, H0-CONSTRAINT-RECONCILIATION.json, OUTCOME.json",
+      "summary": "These records state 2026-11-26T03:40Z, but commit 8aa4a800 was authored and committed at 03:28:47Z. Correct the times."
+    },
+    {
+      "id": "F-09",
+      "severity": "nonmandatory",
+      "location": "READ-SET.json state_at_declaration; outcome records; REVIEW-OUTCOME.md header; inputs_identical_to fields",
+      "summary": "READ-SET promises that the outcome records list later inputs and the entries opened. They do not, and the outcome cites 8 inputs without identities, listed in REVIEW.md. The named h0-plan-p21, p23 and p26 directories (59, 187 and 22 files) are bound only by 2, 1 and 3 files. 'Every input is byte-identical to 4ee55b03' is untrue for the four workflow records that the declaration updated; the fields the outcome relies on are unchanged."
+    },
+    {
+      "id": "F-10",
+      "severity": "nonmandatory",
+      "location": "CONTRACT-REQUIREMENTS.json; REVIEW-OUTCOME.md section 2",
+      "summary": "A2 omits some H0/H1 requirements: the seven package metadata pins, the exact -I -S -B launcher with its exact environment, the preparer's installation receipts, the outer capture descriptors, the admitted Git closure and H1's use of the original supervisor. E1's line range is 1202-1221. No verdict changes, because E1 fails first."
+    },
+    {
+      "id": "F-11",
+      "severity": "nonmandatory",
+      "location": "REVIEW-OUTCOME.md section 6 route A (line 151)",
+      "summary": "'A changed Codex runtime would itself stop the plan (E2, E4)': E2's Node comes from the retained Library archive installed in a task-specific directory, not from the Codex runtime. Say E4, and E5-E7 if the host image changes."
+    }
+  ],
+  "read_set_recomputed": {
+    "entries": 61,
+    "matched": 61,
+    "mismatched": 0,
+    "unreadable": 0,
+    "main_entries_at_51223c9b": 20,
+    "branch_entries_at_4ee55b03": 41
+  },
+  "checks": [
+    "Wrote the independent answer before reading the verdict files: no executor available to a local session meets the adopted contract. The candidate's commit message headline had been seen first, as disclosed.",
+    "A1: recomputed the size and SHA-256 of all 61 READ-SET entries from Git blobs: 61 matched, 0 mismatched; the published copy equals the working raw copy.",
+    "A2: verified E1-E12 sources and inspector line anchors at 7a4ab162; the inspector is 71e837c3 at 7a4ab162 and 8aa4a800.",
+    "A3: identified the host read-only (Darwin 25.6.0, macOS 26.6.2 25G83, arm64 M3 Ultra, proc_translated 0); found no VM or container tool; all Node executables Mach-O arm64, none v24.22.1.",
+    "A3: P23 run001 shows all three pins matched; the 24 C195 files are JS, JSON or text only; main's skipUnless and the 3 skips are in BASELINE-CHECKS and CANDIDATE-CHECKS; the branch driver refuses without --readback-config; MAIN-CONFLICTS plus validate_selection/_verify_host support the R04 inference.",
+    "A4: remaining_h0_constraint is unchanged (canonical hash d4985696 at 4ee55b03, 7a4ab162 and 8aa4a800); every reconciliation field is supported (P29 baseline eea3e634, libdl.inert retained, flags rules at lines 2144-2145).",
+    "A5/A6: checked dispositions and routes against P05, P07, local-environment.json, OK-ENG-006, P09 and P24, and against the Linux-only supervisor, provider and probe.",
+    "Consistency: compared OUTCOME.json, REVIEW-OUTCOME.md and the JSON records; checked execution claims against CHECKS-BASELINE and the working evidence; raw EXECUTORS.txt hash matches; checked record times against commit times; checked the doctor disclosure against doctor_local.py; R06 copies beside the clone hash-match.",
+    "No relabelled gate, no adoption, recommendation left to the owner, source inferences labelled, no execution claimed beyond read-only inspection and record checks."
+  ],
+  "executed_commands_policy_respected": true,
+  "reviewed_at_utc": "2026-11-26T03:55:07Z"
+}
