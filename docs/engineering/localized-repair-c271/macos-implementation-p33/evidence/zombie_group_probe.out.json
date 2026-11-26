@@ -1,0 +1,36 @@
+{
+ "python": "3.12.13",
+ "platform": "macOS-26.6.2-arm64-arm-64bit",
+ "machine": "arm64",
+ "rows": [
+  [
+   "case1 direct child exited, not reaped",
+   "PermissionError errno=1"
+  ],
+  [
+   "case1 after waitpid",
+   "ProcessLookupError errno=3"
+  ],
+  [
+   "case2 grandchild alive, child reaped",
+   "0"
+  ],
+  [
+   "case2 after SIGKILL, polling 1 ms (run-length)",
+   [
+    [
+     "EPERM",
+     1
+    ],
+    [
+     "ESRCH",
+     1
+    ]
+   ]
+  ],
+  [
+   "case2 elapsed_ms_to_last_poll",
+   1.8
+  ]
+ ]
+}
