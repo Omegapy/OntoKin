@@ -641,3 +641,20 @@ The owner answered "Start gate MP" in this session and approved both downloads. 
 - **Main:** not written.
 - **Excluded:** MH, MR, R04 and R05.
 - **Unchanged:** R01/R02 remain done and R03–R05 not_done.
+
+### P34 preparation outcome (2026-11-26, UTC)
+
+The pinned inputs of the macOS readback qualification are prepared from the bound commit `601f39361940422179ff7683aa602c2b36622944`, under independently frozen and reviewed plans, and pushed without force and read back ([outcome](../../../engineering/localized-repair-c271/macos-preparation-p34/OUTCOME.json), [plan review](../../../engineering/localized-repair-c271/macos-preparation-p34/reviews/PLAN-REVIEW-001.md), [result review](../../../engineering/localized-repair-c271/macos-preparation-p34/reviews/RESULT-REVIEW-001.md)).
+- **Downloads:** exactly the two approved ones, the Node archive and the seven wheels, each equal to its pin.
+- **Node runtime:** exactly `bin/node` and `NODE-SOURCE.json`, `INSTALLED_EXACT` outside Git, from the official archive's frozen member inventory.
+- **Reader tree:** the 24 pinned files from the committed C195 archive, `INSTALLED_EXACT` outside Git.
+- **`.venv`:** exactly the seven pinned packages and no pip, as M0's exact package rule requires. It was installed with hash enforcement and wrote no bytecode, and the framework stayed unchanged.
+- **Reviews:** an independent reviewer accepted the plans before execution, with nonmandatory findings that were all adopted, and the results after it.
+- **Not run:** no Node, `ldd` or `codesign` start (process-start audit), no M0, M1 or qualifying cohort.
+- **Status, kept separate:**
+  - environment readiness: the runtime, reader tree and packages are prepared; the doctor reports `python-verification` as not checked because the `.venv` has no pip by design;
+  - test qualification: none;
+  - integration: none;
+  - product completion: no.
+- **Unchanged:** R01/R02 remain done and R03–R05 not_done.
+- **Next gate:** MH, the first that starts the pinned Node. It needs the owner's selection. Until then the `.venv` runs only with `-B`.

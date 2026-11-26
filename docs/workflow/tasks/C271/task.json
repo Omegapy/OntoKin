@@ -1406,6 +1406,82 @@
         "docs/engineering/localized-repair-c271/macos-implementation-p33/REVIEW-DISPOSITION-001.json",
         "docs/engineering/localized-repair-c271/macos-implementation-p33/INDEPENDENT-REVIEW-002.md"
       ]
+    },
+    {
+      "name": "P34 approved downloads against their pins",
+      "command": "curl over HTTPS into new empty directories; SHA-256 against the adopted Node pin and the macOS lock",
+      "result": "passed",
+      "required": true,
+      "scope": "8 files, HTTP 200, every digest and size equal to its pin; read-only afterwards",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/DOWNLOADS.json"
+      ]
+    },
+    {
+      "name": "P34 independent review of the preparation plans",
+      "command": "Fresh-context subagent W2, read-only, re-deriving every inventory and digest before execution",
+      "result": "passed",
+      "required": true,
+      "scope": "ACCEPT_WITH_NONMANDATORY_FINDINGS, P-01 to P-10, all adopted (PREPARATION-PLAN.md section 7)",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/reviews/PLAN-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/reviews/PLAN-REVIEW-DISPOSITION-001.json"
+      ]
+    },
+    {
+      "name": "P34 preparation from the bound commit",
+      "command": "run_preparation.sh at 601f39361940422179ff7683aa602c2b36622944: the preparer's dry run then --apply for each plan, with the reviewed digests",
+      "result": "passed",
+      "required": true,
+      "scope": "both plans DRY_RUN_READY then INSTALLED_EXACT, zero Node, ldd and checker starts; trees read back exactly; preparer_source equal to the bound commit's blobs; clean at the bound commit before and after every run",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/receipts/node-install-result.json",
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/receipts/reader-install-result.json",
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/run-001/00-steps.txt"
+      ]
+    },
+    {
+      "name": "P34 exact check of the .venv",
+      "command": "pip 26.0 of the base installation through --python, offline and hash-locked; venv_verify.py on the retained snapshots",
+      "result": "passed",
+      "required": true,
+      "scope": "exactly the seven distributions and no pip, 291 site-packages files and bin/jsonschema as expected, framework unchanged, no bytecode, M0's package rule accepted, 8 requirements met; the check script's first run crashed on single-quoted markers and its rerun passed",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/run-001/venv-verify-002.json",
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/run-001/venv-verify-rerun.md"
+      ]
+    },
+    {
+      "name": "P34 doctor and native-reader preflight",
+      "command": "tools/doctor_local.py with an absent --node and a minimal PATH; tools/check_native_reader_setup.py",
+      "result": "passed",
+      "required": true,
+      "scope": "the predicted result: lock, packages, imports and native reader ready; pip check not checked because the .venv has no pip by design; the profile not_checked and exit 1; rebuild advice not followed; Pillow 13.0.0 ready",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/run-001/doctor.json",
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/run-001/native-reader-preflight.txt"
+      ]
+    },
+    {
+      "name": "P34 process-start audit",
+      "command": "a Python audit hook around every preparation command",
+      "result": "passed",
+      "required": true,
+      "scope": "25 starts, none of Node, ldd or codesign; one failed attempt on the doctor's absent --node path; starts by pip's child outside the hook, as stated",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/AUDIT-SUMMARY.json"
+      ]
+    },
+    {
+      "name": "P34 independent review of the results",
+      "command": "The same reviewer W2, resumed, re-deriving receipts, trees and .venv from the files",
+      "result": "passed",
+      "required": true,
+      "scope": "ACCEPT_WITH_NONMANDATORY_FINDINGS, R-01 to R-03, resolved or carried to MH",
+      "evidence": [
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/reviews/RESULT-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/reviews/RESULT-REVIEW-DISPOSITION-001.json"
+      ]
     }
   ],
   "completion": {
@@ -1536,9 +1612,15 @@
       "review": "docs/engineering/localized-repair-c271/macos-implementation-p33/INDEPENDENT-REVIEW-002.md",
       "checks": "docs/engineering/localized-repair-c271/macos-implementation-p33/CHECKS.json",
       "scope": "gate MI only: source and synthetic-input tests; nothing prepared, qualified or integrated"
+    },
+    "macos_0_2_0_preparation": {
+      "bound_commit": "601f39361940422179ff7683aa602c2b36622944",
+      "outcome": "docs/engineering/localized-repair-c271/macos-preparation-p34/OUTCOME.json",
+      "review": "docs/engineering/localized-repair-c271/macos-preparation-p34/reviews/RESULT-REVIEW-001.md",
+      "scope": "gate MP only: the pinned runtime, reader tree and .venv prepared and receipted; nothing observed, qualified or integrated"
     }
   },
-  "next_action": "C271-P34-macos-preparation-mp is declared and in progress: gate MP of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001), the preparation, under independently frozen and reviewed plans, of the pinned Node.js v24.22.1 runtime, the 24-file reader tree from the committed C195 archive, and the worktree's .venv with exactly the seven pinned packages and no pip. The owner approved both downloads (the Node archive, 53,062,778 bytes; the seven wheels, 5,447,056 bytes). No Node, ldd or codesign process starts; nothing is observed, qualified or integrated. Then MH, MR (R03), R04 and R05, each a separate phase.",
+  "next_action": "C271-P34 prepared gate MP of the adopted macOS contract ontokin.current-host-readback/0.2.0 (design revision 4, P33-AMENDMENT-001) from the bound commit 601f39361940422179ff7683aa602c2b36622944: the pinned Node.js v24.22.1 runtime and the 24-file reader tree, both INSTALLED_EXACT outside Git with zero Node, ldd and checker starts, and the worktree's .venv with exactly the seven pinned packages and no pip, under independently frozen and reviewed plans and an independent result review (ACCEPT_WITH_NONMANDATORY_FINDINGS). Nothing is observed, qualified or integrated. The next gate is MH: N34-M, then M0 and M1 on this host, then the qualifying cohort of the seven readback methods and the direct negatives, with an independent audit; it is the first gate that starts the pinned Node, and a separate phase that needs the owner's selection. Until then the .venv runs only with -B. Then MR (R03), R04 and R05.",
   "session_phase": {
     "schema": "ontokin.c271.p34-macos-preparation/1",
     "task": "C271",
@@ -1555,7 +1637,10 @@
     "record": "docs/engineering/localized-repair-c271/macos-preparation-p34/PHASE.json",
     "plan": "docs/engineering/localized-repair-c271/macos-preparation-p34/PREPARATION-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P34-SESSION.md",
-    "status": "declared_preparation_pending"
+    "status": "preparation_complete_reviewed_pushed",
+    "completed_at_utc": "2026-11-26T22:32:39Z",
+    "bound_commit": "601f39361940422179ff7683aa602c2b36622944",
+    "outcome": "docs/engineering/localized-repair-c271/macos-preparation-p34/OUTCOME.json"
   },
   "delivery": {
     "schema": "ontokin.c271.p29-r02-delivery-receipt/1",
@@ -8191,7 +8276,7 @@
     "plan": "docs/engineering/localized-repair-c271/macos-preparation-p34/PREPARATION-PLAN.md",
     "session_checkpoint": "docs/workflow/tasks/C271/P34-SESSION.md",
     "declared_at_utc": "2026-11-26T21:01:00Z",
-    "status": "declared_preparation_pending",
+    "status": "preparation_complete_reviewed_pushed",
     "owner_direction": [
       {
         "date": "2026-11-26 (America/Denver and UTC)",
@@ -8209,7 +8294,14 @@
       }
     ],
     "gate": "MP of ontokin.current-host-readback/0.2.0",
-    "parent_complete": false
+    "parent_complete": false,
+    "completed_at_utc": "2026-11-26T22:32:39Z",
+    "bound_commit": "601f39361940422179ff7683aa602c2b36622944",
+    "plan_review_verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "result_review_verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+    "outcome": "docs/engineering/localized-repair-c271/macos-preparation-p34/OUTCOME.json",
+    "closing": "docs/engineering/localized-repair-c271/macos-preparation-p34/CLOSING.json",
+    "learning": "docs/engineering/localized-repair-c271/macos-preparation-p34/LEARNING-DECISION.md"
   },
   "p34_fields_index": {
     "recorded_at_utc": "2026-11-26T21:01:00Z",

@@ -301,6 +301,48 @@
       "scope": "Tests that assert on a mocked Popen called with an env argument, under CPython 3.12's unittest.mock; observed in C271's gate MI, where two 0.1.0 driver tests fail by design.",
       "recorded_at": "2026-11-26",
       "supersedes": null
+    },
+    {
+      "id": "memory-c271-pipless-exact-venv",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "To give a qualification venv exactly its pinned distributions and no pip, install the hash-locked wheels with the base interpreter installation's pip through --python, offline, with --no-deps, --only-binary=:all:, --require-hashes, --no-compile and no bytecode, under a declared environment. The setup tool installs through the venv's own pip, which would remain in site-packages, and M0's exact package rule refuses it; the doctor then reports pip check as not checked, by design.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/PREPARATION-PLAN.md",
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/run-001/venv-verify-002.json",
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/reviews/RESULT-REVIEW-001.md"
+      ],
+      "scope": "CPython 3.12.13 with pip 26.0 on macOS arm64, for the 0.2.0 readback contract's .venv; observed once, in C271's gate MP.",
+      "recorded_at": "2026-11-26",
+      "supersedes": null
+    },
+    {
+      "id": "memory-c271-preparer-dry-run-report",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "The 0.2.0 preparer writes its report on a dry run too, and every run needs an absent report path, so a dry run and its application need two frozen plan variants that differ only in report.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/plans/DRY-RUN-VARIANTS.json",
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/plans/AUTHOR-NOTES.md",
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/receipts/node-dry-run-result.json"
+      ],
+      "scope": "tools/prepare_current_host_readback.py, its install/0.2.0 route; observed in C271's gate MP.",
+      "recorded_at": "2026-11-26",
+      "supersedes": null
+    },
+    {
+      "id": "memory-c271-reviewed-digest-binding",
+      "kind": "lesson",
+      "status": "current",
+      "summary": "When exact plans live outside Git, pass their reviewed digests to the applying tool as recorded values. A digest recomputed from the plan file at run time makes the frozen-digest check vacuous, because it can never fail.",
+      "sources": [
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/reviews/PLAN-REVIEW-001.md",
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/PREPARATION-PLAN.md",
+        "docs/engineering/localized-repair-c271/macos-preparation-p34/run-001/00-steps.txt"
+      ],
+      "scope": "The preparer's --plan-sha256 and any check of a frozen input by digest; found by the independent plan review of C271's gate MP (P-07).",
+      "recorded_at": "2026-11-26",
+      "supersedes": null
     }
   ]
 }

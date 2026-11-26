@@ -1,0 +1,211 @@
+{
+  "schema": "ontokin.c271.p34-outcome/1",
+  "task": "C271",
+  "phase": "C271-P34-macos-preparation-mp",
+  "owner": "c271-p34-ec1a7de2360d",
+  "recorded_at_utc": "2026-11-26T22:32:39Z",
+  "status": "preparation_complete_reviewed",
+  "gate": "MP of ontokin.current-host-readback/0.2.0, profile darwin-arm64-v1, design revision 4 (P33-AMENDMENT-001)",
+  "outcome": "The pinned inputs of the macOS readback qualification are prepared, under independently frozen and reviewed plans, from a clean checkout at the bound commit: the Node.js v24.22.1 runtime (exactly bin/node and NODE-SOURCE.json) and the 24-file reader tree, both published INSTALLED_EXACT outside Git with zero Node, ldd and checker starts, and the worktree's .venv with exactly the seven pinned packages and no pip. The independent result review returned ACCEPT_WITH_NONMANDATORY_FINDINGS. Nothing was observed, qualified or integrated, and no Node, ldd or codesign process started.",
+  "starting_revision": "180075b7952fb4df50ec35eb64106410bfa1d8f9",
+  "bound_commit": "601f39361940422179ff7683aa602c2b36622944",
+  "commits": [
+    {
+      "commit": "6d08e0266623507786e991d8617a4a6a0d72e171",
+      "subject": "C271-P34: declare gate MP, the preparation of the runtime, reader tree and .venv"
+    },
+    {
+      "commit": "601f39361940422179ff7683aa602c2b36622944",
+      "subject": "C271-P34: the reviewed preparation plans of gate MP, the bound commit"
+    }
+  ],
+  "downloads": {
+    "record": "DOWNLOADS.json",
+    "approved_by_owner": true,
+    "files": 8,
+    "all_match_pins": true,
+    "bytes": 58509834
+  },
+  "prepared": {
+    "node_runtime": {
+      "place": "../OntoKin-local/c271-macos/node-v24.22.1-darwin-arm64/",
+      "state": "INSTALLED_EXACT",
+      "files": [
+        "bin/node",
+        "NODE-SOURCE.json"
+      ],
+      "bin_node": {
+        "mode": "0o755",
+        "sha256": "6f32069480ec14d52b6d7b1f3c7124cfbbc46203abf5ddf5c65b127435f3f329",
+        "size_bytes": 122545856
+      },
+      "node_source_sha256": "e928a8ec87a6fcd8f21d7bef3e080392e0bdaad3acbf2e767997dae5ead9ea2c",
+      "execution_counts": {
+        "checkers": 0,
+        "ldd": 0,
+        "node": 0
+      },
+      "publication": {
+        "call": "renamex_np",
+        "flag": "RENAME_EXCL",
+        "flag_value": 4,
+        "library": "/usr/lib/libSystem.B.dylib"
+      }
+    },
+    "reader_tree": {
+      "place": "../OntoKin-local/c271-macos/reader-c195/",
+      "state": "INSTALLED_EXACT",
+      "files": 24,
+      "directories": 13,
+      "execution_counts": {
+        "checkers": 0,
+        "ldd": 0,
+        "node": 0
+      },
+      "publication": {
+        "call": "renamex_np",
+        "flag": "RENAME_EXCL",
+        "flag_value": 4,
+        "library": "/usr/lib/libSystem.B.dylib"
+      }
+    },
+    "venv": {
+      "place": "the worktree's .venv",
+      "distributions": {
+        "Pillow": "13.0.0",
+        "attrs": "26.1.0",
+        "jsonschema": "4.26.0",
+        "jsonschema-specifications": "2025.9.1",
+        "referencing": "0.37.0",
+        "rpds-py": "2026.5.1",
+        "typing_extensions": "4.16.0"
+      },
+      "site_packages_files": 291,
+      "pip": "absent, by M0's exact package rule",
+      "framework_unchanged": true,
+      "requirements_met": 8,
+      "console_scripts": [
+        "bin/jsonschema"
+      ]
+    }
+  },
+  "plans": {
+    "author": "W1, independent; plans frozen before any extraction",
+    "portable_copies": "plans/",
+    "exact_digests": "plans/EXACT-PLANS-SHA256SUMS.txt",
+    "dry_run_variants": "plans/DRY-RUN-VARIANTS.json"
+  },
+  "reviews": {
+    "plans": {
+      "record": "reviews/PLAN-REVIEW-001.md",
+      "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "findings": [
+        "P-01",
+        "P-02",
+        "P-03",
+        "P-04",
+        "P-05",
+        "P-06",
+        "P-07",
+        "P-08",
+        "P-09",
+        "P-10"
+      ],
+      "disposition": "reviews/PLAN-REVIEW-DISPOSITION-001.json; all adopted in PREPARATION-PLAN.md section 7"
+    },
+    "results": {
+      "record": "reviews/RESULT-REVIEW-001.md",
+      "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+      "findings": [
+        {
+          "id": "R-01",
+          "severity": "nonmandatory"
+        },
+        {
+          "id": "R-02",
+          "severity": "nonmandatory"
+        },
+        {
+          "id": "R-03",
+          "severity": "nonmandatory"
+        }
+      ],
+      "disposition": "reviews/RESULT-REVIEW-DISPOSITION-001.json"
+    }
+  },
+  "audit": {
+    "record": "AUDIT-SUMMARY.json",
+    "records": 25,
+    "node_ldd_or_codesign_starts": 0,
+    "failed_attempts_on_absent_paths": [
+      {
+        "label": "doctor",
+        "program": "/nonexistent/node-not-started"
+      }
+    ],
+    "limit": "the hook sees the starts of each audited process; pip's one start of the .venv interpreter is recorded, and starts by that child are outside the hook; by reading pip 26.0, the child starts nothing for this offline, binary-only, no-dependency install (plan section 7, P-04)"
+  },
+  "recorded_failure": "The Director's exact .venv check crashed on its first run: its marker parser accepted only double quotes, and the installed METADATA uses python_version < '3.13'. The parser was fixed to accept either quote style and the check rerun on the same retained snapshots (run-001/venv-verify.txt, then run-001/venv-verify-002.json). The preparation itself was not repeated. The failed version of the script was overwritten by the fix and not kept; run-001/venv-verify-rerun.md records both edits, the fixed script's SHA-256, the rerun's command and time, and a clean check after it (result review R-01).",
+  "acceptance": [
+    {
+      "id": "A1",
+      "status": "met",
+      "evidence": "declaration 6d08e026 pushed at 21:03:39Z, before the downloads"
+    },
+    {
+      "id": "A2",
+      "status": "met",
+      "evidence": "DOWNLOADS.json: exactly the two approved downloads, 8 files, HTTP 200, every SHA-256 equal to its pin"
+    },
+    {
+      "id": "A3",
+      "status": "met",
+      "evidence": "plans/: W1's inventories, bin/node binding, NODE-SOURCE.json bytes, the 24-file mapping and the plans, frozen before extraction; D-06 confirmed"
+    },
+    {
+      "id": "A4",
+      "status": "met",
+      "evidence": "PLAN-REVIEW-001: ACCEPT_WITH_NONMANDATORY_FINDINGS; findings adopted; bound commit 601f39361940422179ff7683aa602c2b36622944"
+    },
+    {
+      "id": "A5",
+      "status": "met",
+      "evidence": "receipts/: DRY_RUN_READY then INSTALLED_EXACT for both plans, zero starts; trees read back exactly; preparer_source equal to B's blobs; clean at B before and after every run"
+    },
+    {
+      "id": "A6",
+      "status": "met, with the doctor's stated limit",
+      "evidence": "run-001/venv-verify-002.json: exactly the seven distributions and no other, 291 files as expected, framework unchanged, no bytecode, requirements met; the doctor's pip check not run because the .venv has no pip by design (profile not_checked, exit 1, rebuild advice not followed)"
+    },
+    {
+      "id": "A7",
+      "status": "met",
+      "evidence": "receipts' execution counts and AUDIT-SUMMARY.json: no Node, ldd or codesign start; the record checks pass"
+    },
+    {
+      "id": "A8",
+      "status": "met",
+      "evidence": "RESULT-REVIEW-001: ACCEPT_WITH_NONMANDATORY_FINDINGS"
+    },
+    {
+      "id": "A9",
+      "status": "completed by the closing record",
+      "evidence": "CLOSING.json"
+    }
+  ],
+  "for_mh": [
+    "W3's F4 continues: until MH has frozen the Python installation inventory and run M0, the worktree's .venv runs only with -B (or PYTHONDONTWRITEBYTECODE=1); bytecode written into site-packages would be unowned files, which M0 refuses",
+    "Retention (P-09): the Node archive beside the clone (mode 0o444) and the committed C195 archive stay unchanged at their paths; the prepared trees are not opened in Finder (.DS_Store)",
+    "Retention (R-03): the two exact apply plans in ../OntoKin-local/c271-p34/plans/ and the two install receipts in ../OntoKin-local/c271-p34/receipts/ stay unchanged at their paths, with their modes, until MH, because M0's receipt rule reads them by path and digest; the dry-run receipts and sidecars stay as evidence",
+    "The doctor's python-verification profile reports not_checked by design (no pip); its rebuild advice is not followed (D-21)",
+    "D-16 with W1's F2: bin/node links CoreFoundation statically; MH confirms it from M0's load commands before MC36 runs",
+    "MI's obligations for MH remain (MI's OUTCOME.json for_later_gates.MH)"
+  ],
+  "status_kept_separate": {
+    "environment_readiness": "the pinned Node runtime, the reader tree and the .venv's seven packages are prepared; the doctor reports python-verification not_checked because pip is absent by design",
+    "test_qualification": "none; nothing was observed and no readback method ran",
+    "integration": "none; main is not written",
+    "product_completion": "C271 is not complete; R01 and R02 are done, R03 to R05 are not done"
+  },
+  "next_action": "Gate MH of the adopted contract: N34-M, then M0 and M1 on this host, then the qualifying cohort of the seven readback methods and the direct negatives, with an independent audit. MH is the first gate that starts the pinned Node, under the supervisor's bounds; it is a separate phase that needs the owner's selection."
+}

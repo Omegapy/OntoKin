@@ -628,3 +628,16 @@ Ordered steps:
 6. Prepare from a clean checkout at that commit: a dry run, then the application of each plan, and the `.venv` procedure, under a process-start audit.
 7. Verify the receipts, the trees and the `.venv`, and have W2 review the results.
 8. Push without force, read the push back, record, comment once on PR274 and issue273, and stop.
+
+### P34 preparation outcome (2026-11-26, UTC)
+
+Every step ran as planned:
+- the declaration `6d08e0266623507786e991d8617a4a6a0d72e171`, pushed before the two approved downloads;
+- the independent author's frozen plans;
+- the plan review, whose findings P-01 to P-10 were all adopted in the plan's section 7;
+- the bound commit `601f39361940422179ff7683aa602c2b36622944`;
+- the preparation from that clean commit, with a dry run before each application;
+- the result review;
+- these outcome records.
+
+One recorded failure: the Director's exact `.venv` check crashed on its first run and was rerun after a fix on the retained snapshots. Each push was without force and read back. The next phase, not begun here, is gate MH. Then come MR (R03), R04 and R05, each a separate phase.

@@ -1,0 +1,31 @@
+{
+  "schema": "ontokin.c271.p34-audit-summary/1",
+  "records": 25,
+  "starts_by_label_and_program": {
+    "doctor": {
+      "git": 18,
+      "node-not-started (absent path)": 1,
+      "python": 5
+    },
+    "venv-install": {
+      "python": 1
+    }
+  },
+  "labels_with_no_start": [
+    "native-reader-preflight",
+    "node-apply",
+    "node-dry-run",
+    "reader-apply",
+    "reader-dry-run"
+  ],
+  "node_ldd_or_codesign_starts": 0,
+  "failed_attempts_on_absent_paths": [
+    {
+      "label": "doctor",
+      "program": "/nonexistent/node-not-started"
+    }
+  ],
+  "classification": "the doctor's one attempt on the absent --node path fails before any image runs; it is a failed attempt on a non-existent path, not a Node start (plan section 7, P-02)",
+  "limit": "the hook sees the starts of each audited process; pip's one start of the .venv interpreter is recorded, and starts by that child are outside the hook; by reading pip 26.0, the child starts nothing for this offline, binary-only, no-dependency install (plan section 7, P-04)",
+  "exact_log_sha256": "07d735c1fe1856d3f1a804f5cf7c07abf66e8934df1d7e93f90e72315b5df976"
+}

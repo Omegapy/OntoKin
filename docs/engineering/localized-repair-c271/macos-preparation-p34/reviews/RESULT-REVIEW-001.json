@@ -1,0 +1,697 @@
+{
+ "schema": "ontokin.c271.p34-result-review/1",
+ "review": "RESULT-REVIEW-001",
+ "task": "C271",
+ "phase": "C271-P34-macos-preparation-mp",
+ "gate": "MP",
+ "reviewer": "W2, fresh-context independent reviewer; author of PLAN-REVIEW-001; wrote none of the implementation, plans or run",
+ "director": "c271-p34-ec1a7de2360d",
+ "contract": "ontokin.current-host-readback/0.2.0",
+ "design_revision": 4,
+ "amendments": [
+  "P33-AMENDMENT-001"
+ ],
+ "bound_commit": {
+  "sha": "601f39361940422179ff7683aa602c2b36622944",
+  "parent": "6d08e0266623507786e991d8617a4a6a0d72e171",
+  "changes": "14 files under docs/engineering/localized-repair-c271/macos-preparation-p34/ only",
+  "state_now": "HEAD is B; git status --porcelain -uall empty; --ignored shows only .venv/; no __pycache__ in the source"
+ },
+ "date": "2026-11-26",
+ "verdict": "ACCEPT_WITH_NONMANDATORY_FINDINGS",
+ "mandatory_findings": [],
+ "answers": {
+  "receipts": "all four pass: DRY_RUN_READY then INSTALLED_EXACT, passed; zero node, ldd and checker starts; closed key sets; schema install-result/0.2.0, design_revision 4, amendments; adopted pins with origin adopted-contract; labels with executor, profile, bound pins and an OS label accepted by check_os_label and equal to the host now; preparer_source equal to B's blobs for the four files (SHA-256, size, mode 0o644); archive summaries equal to the plans and the reviewed inventory digests; one owned stage each, gone, intent record and publication through libSystem renamex_np with RENAME_EXCL (4); destination absent before, complete_exact after; preflight sidecars and CLI lines consistent; the observer's _install_receipts accepts both install receipts with their exact plans",
+  "trees": "both equal their plans exactly (files, digests, sizes, modes, directories, root 0o755); no link, special file or .DS_Store; one link per file; M0's tree_entries agrees; NODE-SOURCE.json is the frozen 976 bytes (e928a8ec...) and B's committed copy; check_node_source and read_macho/check_node_macho accept the published files; the reader tree's 24 files equal the C199 manifest pins and the package versions",
+  "venv": "re-derived from the wheels and pip 26.0's algorithm: 292 added files (291 site-packages and bin/jsonschema) with byte-identical content, all seven RECORD files included, 39 added directories, modes per umask 022; nothing removed or changed; no bytecode, pip or .pth; no setup-tool record; verify_packages accepts; 8 applicable Requires-Dist met; framework part identical (414 bytecode files); python_inventory now equals the after-snapshot digest; the parser fix and the rerun are sound in effect (R-01 for the record)",
+  "conduct": "B clean at every check and now; the declared environment (seven variables), umask 022 and the worktree root as cwd for pip; fresh HOME left empty; installer record recomputed equal; audit of 25 starts with no Node, ldd or codesign start; the doctor's one attempt is on a non-existent path, a failed attempt, not a Node start; the limit for pip's child stated",
+  "doctor": "exactly as predicted: core ready; python-verification not_checked from pip-check (pip is not installed), with lock, packages, imports and native-reader ready; exit 1; rebuild advice not followed",
+  "retention": "both archives unchanged at their paths with their modes (0o444 and 0o644) and one link; R-03 extends retention to the exact apply plans and install receipts",
+  "for_mh": [
+   "previews of M0's receipt, tree, NODE-SOURCE, Node Mach-O, package and Python-inventory rules accept the present state; previews, not M0",
+   "D-16: the published bin/node links CoreFoundation (plain LC_LOAD_DYLIB), pointing to MC36 standing as written; MH decides from M0's parse",
+   "W3's F4: the framework tree is owner-writable with only 414 bytecode files for 1,969 sources, and the .venv has none; every start of the qualification interpreter until M0 must keep -B (and PYTHONDONTWRITEBYTECODE=1 for children)",
+   "the exact plans' report paths now exist; any further preparer run needs report-only variants (W1's F1)",
+   "the closure records one absent LC_RPATH search directory in a dylib bundled with Pillow (PLAN-REVIEW-001 section 6)"
+  ]
+ },
+ "reproduced": {
+  "receipt_sha256": {
+   "node-apply": "65caf77a967898ef2d63a3f0595f6f754fde1e7fad9a61f938a084b6717d4729",
+   "node-dry-run": "ca970dc5a3f325483451725f1534dee27c64cda8d5d64034d0c8d99c0562c6cc",
+   "reader-apply": "03222a857c7a5a186f1bb30c205d10360882962a7a181d6b3659da47a0ac3fb2",
+   "reader-dry-run": "a0be99962a90d97be2afbafc6fdf4116b45e4361b3eba94369bbf5b50ce83e4c"
+  },
+  "python_inventory_after_sha256": "c277bdd3ac6aa73105df3924707a271a402a0dc7c722be27a6834f2c78605633",
+  "added": {
+   "directories": 39,
+   "files": 292
+  },
+  "added_modes": {
+   "directory 0o755": 39,
+   "file 0o644": 264,
+   "file 0o755": 28
+  },
+  "requirements": [
+   {
+    "distribution": "jsonschema-4.26.0.dist-info",
+    "installed": "26.1.0",
+    "met": true,
+    "requirement": "attrs>=22.2.0"
+   },
+   {
+    "distribution": "jsonschema-4.26.0.dist-info",
+    "installed": "2025.9.1",
+    "met": true,
+    "requirement": "jsonschema-specifications>=2023.03.6"
+   },
+   {
+    "distribution": "jsonschema-4.26.0.dist-info",
+    "installed": "0.37.0",
+    "met": true,
+    "requirement": "referencing>=0.28.4"
+   },
+   {
+    "distribution": "jsonschema-4.26.0.dist-info",
+    "installed": "2026.5.1",
+    "met": true,
+    "requirement": "rpds-py>=0.25.0"
+   },
+   {
+    "distribution": "jsonschema_specifications-2025.9.1.dist-info",
+    "installed": "0.37.0",
+    "met": true,
+    "requirement": "referencing>=0.31.0"
+   },
+   {
+    "distribution": "referencing-0.37.0.dist-info",
+    "installed": "26.1.0",
+    "met": true,
+    "requirement": "attrs>=22.2.0"
+   },
+   {
+    "distribution": "referencing-0.37.0.dist-info",
+    "installed": "2026.5.1",
+    "met": true,
+    "requirement": "rpds-py>=0.7.0"
+   },
+   {
+    "distribution": "referencing-0.37.0.dist-info",
+    "installed": "4.16.0",
+    "met": true,
+    "requirement": "typing-extensions>=4.4.0; python_version < '3.13'"
+   }
+  ]
+ },
+ "findings": [
+  {
+   "id": "R-01",
+   "severity": "nonmandatory",
+   "location": "run-001/venv-verify.txt and 00-steps.txt; ../OntoKin-local/c271-p34/director/venv_verify.py",
+   "issue": "The failed first check is kept as its output only: the failed script was overwritten by the fix and is not preserved (no copy or digest), and the rerun, at 22:17:58Z, 47 s after the run's last step and its final clean check, is not in the step log (no command, flags or digest of the fixed script, ef6cc0f5c4da36988044cc8f9f57db01e30b7609e751d7cd6156ac515277cefc). The traceback's line numbers (55, 67, 144, 171, now 56, 68, 145, 172) fit the stated one-line fix but cannot exclude another change of equal length.",
+   "required_change": "In the outcome, state that the failed version was not kept, and record the fixed script's SHA-256, the rerun's command, flags and time, and a clean check after it. W2's independent reproduction of every check the script makes supports the result."
+  },
+  {
+   "id": "R-02",
+   "severity": "nonmandatory",
+   "location": "run-001/doctor.json and its staged portable copy ../OntoKin-local/c271-p34/outcome-staging/run-001/doctor.json",
+   "issue": "The doctor's --portable-paths leaves nine distinct paths of the base installation (under <prefix>, which also names its package manager). A9 requires portable copies without machine paths, and the review rules exclude installed-application names.",
+   "required_change": "Label the base prefix (for example <prefix>) in the portable copy before commit."
+  },
+  {
+   "id": "R-03",
+   "severity": "nonmandatory",
+   "location": "PREPARATION-PLAN.md section 7, 'Retention (P-09)'; the observer's _install_receipts",
+   "issue": "M0's receipt rule reads each INSTALLED_EXACT receipt and its exact plan by path and digest, and requires the plan's report to equal the receipt's path; the retention statement covers only the archives.",
+   "required_change": "Also keep, unchanged at their paths until MH, the two exact apply plans in ../OntoKin-local/c271-p34/plans/ and the two install receipts in receipts/ (mode 0o600); keep the dry-run receipts and sidecars as evidence."
+  }
+ ],
+ "reviewed_files": [
+  {
+   "path": "<local>/c271-p34/workers/W2-RESULT-REVIEW.md",
+   "sha256": "eb7915a4efc31293e93df78e88528ad7ca26511e16df94f4a94cbf56c0702b08",
+   "size_bytes": 4385
+  },
+  {
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-preparation-p34/PREPARATION-PLAN.md",
+   "sha256": "aa6da13c24ebc0addb81f02b9aec052f82b0a4c3cb82ad4e6a9dbae3e791a90f",
+   "size_bytes": 14638
+  },
+  {
+   "path": "<worktree>/docs/engineering/localized-repair-c271/macos-preparation-p34/PHASE.json",
+   "sha256": "16c901d48d1c29f1d3cfe81275cebb11f1c5f1807a09b9abc0dd2a327aebc449",
+   "size_bytes": 7229
+  },
+  {
+   "path": "<worktree>/tools/doctor_local.py",
+   "sha256": "acf4947bd6d753ddb0a305f551fe93553c5bb43c7f094f22f287d30f9dc9e24b",
+   "size_bytes": 72988
+  },
+  {
+   "path": "<worktree>/tools/check_native_reader_setup.py",
+   "sha256": "585fac8ff9074c88a9bde9bc88054ca72fed5364b02c475910881800014268c3",
+   "size_bytes": 749
+  },
+  {
+   "path": "<worktree>/tools/prepare_current_host_readback.py",
+   "sha256": "dbb8cdec7bf43ec3618af17c7b322d5cc85a21d7375233959441f2e6f92ad46c",
+   "size_bytes": 55622
+  },
+  {
+   "path": "<worktree>/prototypes/static_tray_v01/current_host_observation_v02.py",
+   "sha256": "471a954703a1a7974638e500051a6ac538bf81dfb2a01a3944bf441e96622788",
+   "size_bytes": 162557
+  },
+  {
+   "path": "<local>/c271-p34/director/audited_run.py",
+   "sha256": "0ab7e62c2a92d051879114a3fa1761f3f786cb59882277cc11775fd7e6549934",
+   "size_bytes": 2293
+  },
+  {
+   "path": "<local>/c271-p34/director/build_p34_outcome.py",
+   "sha256": "c53a6a3e3120867b906385ff266e44eaa6322b34e9d62eec1ebfe6bde5691ea3",
+   "size_bytes": 9090
+  },
+  {
+   "path": "<local>/c271-p34/director/docs-check-B.txt",
+   "sha256": "5a3031594693c0c0cd2b642b648b35dc8e802b967c85a139f76741aa02882c0d",
+   "size_bytes": 6609
+  },
+  {
+   "path": "<local>/c271-p34/director/download_inputs.py",
+   "sha256": "93938c308c7560ef00944675c95ff3459024d81b2d1c0165544f753905cb5d14",
+   "size_bytes": 4739
+  },
+  {
+   "path": "<local>/c271-p34/director/make_portable_results.py",
+   "sha256": "818c77d72af9fa2972ae5dd58ebe99696701f68963d5c663221731b639ade9b3",
+   "size_bytes": 5019
+  },
+  {
+   "path": "<local>/c271-p34/director/run_preparation.sh",
+   "sha256": "c70ebf3c64ac499a8c3308d58158aa5c33e9e08c1a77fdb387881d54f968b9cc",
+   "size_bytes": 7734
+  },
+  {
+   "path": "<local>/c271-p34/director/venv_snapshot.py",
+   "sha256": "dadf2ccb3597a68e83b920c37e3c49ce6116bedead0c06c6cd15f6e93919d8a4",
+   "size_bytes": 4001
+  },
+  {
+   "path": "<local>/c271-p34/director/venv_verify.py",
+   "sha256": "ef6cc0f5c4da36988044cc8f9f57db01e30b7609e751d7cd6156ac515277cefc",
+   "size_bytes": 9286
+  },
+  {
+   "path": "<local>/c271-p34/receipts/node-dry-run-result.json",
+   "sha256": "ca970dc5a3f325483451725f1534dee27c64cda8d5d64034d0c8d99c0562c6cc",
+   "size_bytes": 2568
+  },
+  {
+   "path": "<local>/c271-p34/receipts/node-dry-run-result.json.preflight.json",
+   "sha256": "6f7a212d611a20cfc4eb9edf4aae461367bcc431678385d7e17cbc3f52be02ed",
+   "size_bytes": 2574
+  },
+  {
+   "path": "<local>/c271-p34/receipts/node-install-result.json",
+   "sha256": "65caf77a967898ef2d63a3f0595f6f754fde1e7fad9a61f938a084b6717d4729",
+   "size_bytes": 2897
+  },
+  {
+   "path": "<local>/c271-p34/receipts/node-install-result.json.preflight.json",
+   "sha256": "4a270e27ac3503107f6e88c20a0afb5b87f17abb2b250ad6e8b259f949fed5b1",
+   "size_bytes": 2573
+  },
+  {
+   "path": "<local>/c271-p34/receipts/node-install-result.json.publication.json",
+   "sha256": "7b8a309553ac41bcdc2a07aed7a518f4e5f8b41e1227dfaf0bb8d425cd9ef6f3",
+   "size_bytes": 385
+  },
+  {
+   "path": "<local>/c271-p34/receipts/reader-dry-run-result.json",
+   "sha256": "a0be99962a90d97be2afbafc6fdf4116b45e4361b3eba94369bbf5b50ce83e4c",
+   "size_bytes": 3785
+  },
+  {
+   "path": "<local>/c271-p34/receipts/reader-dry-run-result.json.preflight.json",
+   "sha256": "9e662878b0d80d35dd8a55243fc0e776f23b6244ce41e9af92eba5373fe81bf3",
+   "size_bytes": 3791
+  },
+  {
+   "path": "<local>/c271-p34/receipts/reader-install-result.json",
+   "sha256": "03222a857c7a5a186f1bb30c205d10360882962a7a181d6b3659da47a0ac3fb2",
+   "size_bytes": 4116
+  },
+  {
+   "path": "<local>/c271-p34/receipts/reader-install-result.json.preflight.json",
+   "sha256": "a09a518e90dc13992a00754a2333de3d02b3ae611bd55d7675b8cd83cb229669",
+   "size_bytes": 3790
+  },
+  {
+   "path": "<local>/c271-p34/receipts/reader-install-result.json.publication.json",
+   "sha256": "c9d13d140ce8213b46ca7abcda0c8ff48c9256a6621e7b3bdbc5471ff5fab6e2",
+   "size_bytes": 370
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/00-steps.txt",
+   "sha256": "d0f3bca0bc73ed146b75c9c3c737c175f20233b5c9c55a917ed7682ee10cd526",
+   "size_bytes": 2180
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/01-closure-digests.txt",
+   "sha256": "845ae1cdca3a2a98df37fdd65c4a4be02070998a534f162d5e9bc71aafc40721",
+   "size_bytes": 1822
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/doctor.json",
+   "sha256": "631e4d96378047f21b9e7db306d246e9978bfb4aa501f81551850ed5dfac9fea",
+   "size_bytes": 18186
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/doctor.stderr.txt",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/doctor.stdout.txt",
+   "sha256": "631e4d96378047f21b9e7db306d246e9978bfb4aa501f81551850ed5dfac9fea",
+   "size_bytes": 18186
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/native-reader-preflight.txt",
+   "sha256": "5c80245ab5424efe1d0cca0f408956ed0cb9698ff52b40ba51ff10daa7e760b2",
+   "size_bytes": 62
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/node-apply.stderr.txt",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/node-apply.stdout.txt",
+   "sha256": "f8867d19dbacd560c0545402670e850d53e189e5c7c934ca2c716a13eca89885",
+   "size_bytes": 138
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/node-dry-run.stderr.txt",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/node-dry-run.stdout.txt",
+   "sha256": "6e4509bf037c104f38bf23e48ec4465d0e88adab61af3ea36f59b1c5cd0fd48d",
+   "size_bytes": 136
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/reader-apply.stderr.txt",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/reader-apply.stdout.txt",
+   "sha256": "a135362bc7fd88411383d3c2339915751887d6e728cc7187484a2e2020496a73",
+   "size_bytes": 140
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/reader-dry-run.stderr.txt",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/reader-dry-run.stdout.txt",
+   "sha256": "2168522160348cb85182e65bec6d0ba11a8a2349359cd92aaff52604d663c093",
+   "size_bytes": 138
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/starts.jsonl",
+   "sha256": "07d735c1fe1856d3f1a804f5cf7c07abf66e8934df1d7e93f90e72315b5df976",
+   "size_bytes": 11785
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/venv-after.json",
+   "sha256": "c110f71abbb177011f65ba8cdaa52b65e491d1b328ab0db86308b9bb91c7d5c0",
+   "size_bytes": 964980
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/venv-after.txt",
+   "sha256": "51d176cff8b0a8da26deab3dafac8aa1f51fa946d35543f99caeb2b8f05f0c05",
+   "size_bytes": 116
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/venv-before.json",
+   "sha256": "bac8f299a357a5a8dabda5f6b80f4dccae572499945c0f622d36844aa5faab81",
+   "size_bytes": 865763
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/venv-before.txt",
+   "sha256": "147d6e20ddd8486545e0906c356b0134c6edc3cafcbb5d8b7d1e46ab03eb65fd",
+   "size_bytes": 115
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/venv-install.stderr.txt",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "size_bytes": 0
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/venv-install.stdout.txt",
+   "sha256": "593820c4766562522a9a0f67a44c021397be86f1a1b942ebefeff742f992e947",
+   "size_bytes": 1708
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/venv-installer.json",
+   "sha256": "b3d768ff7960c0a8cca90bcea7b972d9e174a28e2520278ae2181a2b41d54ba4",
+   "size_bytes": 137
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/venv-verify-002.json",
+   "sha256": "e59bc6a36a825f0ba6cff632c76d7398740447b1a909a9133e3f914df5e8308c",
+   "size_bytes": 9099
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/venv-verify-002.txt",
+   "sha256": "9d3dc54f6fa937f52f8b2da51ea56afab0e39e906b427bf54fd3a547e65f3134",
+   "size_bytes": 270
+  },
+  {
+   "path": "<local>/c271-p34/receipts/run-001/venv-verify.txt",
+   "sha256": "d61a8f948d88e9d41afd99a6d02fd5c4b6c85a76a8863c786c12dfd57fba4df0",
+   "size_bytes": 907
+  },
+  {
+   "path": "<local>/c271-p34/plans/AUTHOR-CROSSCHECK.json",
+   "sha256": "99b5f58a0c8a622a441241119314b8835e0d4c75938648db223d4b00117c5663",
+   "size_bytes": 4801
+  },
+  {
+   "path": "<local>/c271-p34/plans/AUTHOR-NOTES.md",
+   "sha256": "36c2bdb4cb31aa6e94df0a291ac3efbbd9e60965cfdc56d585adf42e2e63b202",
+   "size_bytes": 14031
+  },
+  {
+   "path": "<local>/c271-p34/plans/AUTHOR-OBSERVATIONS.json",
+   "sha256": "77d68343b58113adb078f94206d3c2d7ac683d8522155d62e65869123e329de5",
+   "size_bytes": 13444
+  },
+  {
+   "path": "<local>/c271-p34/plans/NODE-SOURCE.json.expected",
+   "sha256": "e928a8ec87a6fcd8f21d7bef3e080392e0bdaad3acbf2e767997dae5ead9ea2c",
+   "size_bytes": 976
+  },
+  {
+   "path": "<local>/c271-p34/plans/SHA256SUMS",
+   "sha256": "6e32a26772817a094d43930e3ad16c8118c3e1b1f3b6f1417bcb03481e0c9bc2",
+   "size_bytes": 1398
+  },
+  {
+   "path": "<local>/c271-p34/plans/node-install-plan.dry-run.json",
+   "sha256": "869b6414d42f6ced4ee4ad017ceff7cc63c33b563fcdffcc5999cebebae01d48",
+   "size_bytes": 956650
+  },
+  {
+   "path": "<local>/c271-p34/plans/node-install-plan.dry-run.portable.json",
+   "sha256": "352a43ee42fedf210f1ba12991c0428e982d4dab4d61d0827fddd8660d4a85e5",
+   "size_bytes": 956528
+  },
+  {
+   "path": "<local>/c271-p34/plans/node-install-plan.json",
+   "sha256": "1fee042d5e3c809a89d4975df40f69d7a27e88abf9ba58d8cf91ca16795c5ff1",
+   "size_bytes": 956650
+  },
+  {
+   "path": "<local>/c271-p34/plans/node-install-plan.portable.json",
+   "sha256": "314978d39c798fefc36022281fe18b90f514e415a4eb06eb14ff1cd2808abcd0",
+   "size_bytes": 956528
+  },
+  {
+   "path": "<local>/c271-p34/plans/reader-install-plan.dry-run.json",
+   "sha256": "a81897783b9df86bb216eb5c371a1191de0a89762e6cd88360c8cc7b7fecf10e",
+   "size_bytes": 158115
+  },
+  {
+   "path": "<local>/c271-p34/plans/reader-install-plan.dry-run.portable.json",
+   "sha256": "bba9aa9d73c89fcee92db27e07202b32276b4362fc88791a7d384a962b566d67",
+   "size_bytes": 157987
+  },
+  {
+   "path": "<local>/c271-p34/plans/reader-install-plan.json",
+   "sha256": "ff5a95da6d349e0bd6ea1d2c79fc02757de48ac9cbb89dc59737b67c6d7a71c8",
+   "size_bytes": 158115
+  },
+  {
+   "path": "<local>/c271-p34/plans/reader-install-plan.portable.json",
+   "sha256": "28714bad179cb55e649deeb95ab91e86920b1a862633973c296d27359da2fc0f",
+   "size_bytes": 157987
+  },
+  {
+   "path": "<local>/c271-p34/plans/venv-expectation.json",
+   "sha256": "171cd9d15407eca9622c8233c967027de06352ae6165378043322e49ea77478c",
+   "size_bytes": 57172
+  },
+  {
+   "path": "<local>/c271-p34/plans/w1_crosscheck_mp.py",
+   "sha256": "df09aac49b649a12df95d5531f8b92461b90385b36a14800e1688886ef8fbd0a",
+   "size_bytes": 7515
+  },
+  {
+   "path": "<local>/c271-p34/plans/w1_freeze_mp.py",
+   "sha256": "e8c537e3defd4553fe4ff0ae1c1b0e9ec06066d3c4293c915047adf3fa82cc88",
+   "size_bytes": 51872
+  },
+  {
+   "path": "<local>/c271-p34/outcome-staging/AUDIT-SUMMARY.json",
+   "sha256": "de87f9ecb6885c46cda9bb99f16b7da19c0402d1f3989e87c08d1589285f51cd",
+   "size_bytes": 1130
+  },
+  {
+   "path": "<local>/c271-p34/outcome-staging/EXACT-SHA256SUMS.txt",
+   "sha256": "4e333092e23db825af7dad5e430ed238eae127f553785fc0dcbd329cc767e769",
+   "size_bytes": 2031
+  },
+  {
+   "path": "<local>/c271-p34/outcome-staging/run-001/00-steps.txt",
+   "sha256": "d0f3bca0bc73ed146b75c9c3c737c175f20233b5c9c55a917ed7682ee10cd526",
+   "size_bytes": 2180
+  },
+  {
+   "path": "<local>/c271-p34/outcome-staging/run-001/01-closure-digests.txt",
+   "sha256": "845ae1cdca3a2a98df37fdd65c4a4be02070998a534f162d5e9bc71aafc40721",
+   "size_bytes": 1822
+  },
+  {
+   "path": "<local>/c271-p34/outcome-staging/run-001/doctor.json",
+   "sha256": "631e4d96378047f21b9e7db306d246e9978bfb4aa501f81551850ed5dfac9fea",
+   "size_bytes": 18186
+  },
+  {
+   "path": "<local>/c271-p34/outcome-staging/run-001/native-reader-preflight.txt",
+   "sha256": "5c80245ab5424efe1d0cca0f408956ed0cb9698ff52b40ba51ff10daa7e760b2",
+   "size_bytes": 62
+  },
+  {
+   "path": "<local>/c271-p34/outcome-staging/run-001/venv-install.stdout.txt",
+   "sha256": "d828b63543f99fd959f902213127991194f7903ea434285dd407d2ede7bba3e7",
+   "size_bytes": 1476
+  },
+  {
+   "path": "<local>/c271-p34/outcome-staging/run-001/venv-installer.json",
+   "sha256": "b3d768ff7960c0a8cca90bcea7b972d9e174a28e2520278ae2181a2b41d54ba4",
+   "size_bytes": 137
+  },
+  {
+   "path": "<local>/c271-p34/outcome-staging/run-001/venv-verify-002.json",
+   "sha256": "e59bc6a36a825f0ba6cff632c76d7398740447b1a909a9133e3f914df5e8308c",
+   "size_bytes": 9099
+  },
+  {
+   "path": "<local>/c271-p34/outcome-staging/run-001/venv-verify.txt",
+   "sha256": "b0a9295037510ef41dc6fd4488ea5bd8aa8cd924117c2ea78a140d290391b8d1",
+   "size_bytes": 791
+  },
+  {
+   "path": "<local>/c271-macos/node-v24.22.1-darwin-arm64/NODE-SOURCE.json",
+   "sha256": "e928a8ec87a6fcd8f21d7bef3e080392e0bdaad3acbf2e767997dae5ead9ea2c",
+   "size_bytes": 976
+  },
+  {
+   "path": "<local>/c271-macos/node-v24.22.1-darwin-arm64/bin/node",
+   "sha256": "6f32069480ec14d52b6d7b1f3c7124cfbbc46203abf5ddf5c65b127435f3f329",
+   "size_bytes": 122545856
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/LICENSE",
+   "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+   "size_bytes": 1081
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/package.json",
+   "sha256": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de",
+   "size_bytes": 3672
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/build/three.core.js",
+   "sha256": "9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6",
+   "size_bytes": 1458113
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/build/three.module.js",
+   "sha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+   "size_bytes": 662772
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/build/three.tsl.js",
+   "sha256": "6e6b92d8ce467818944f73815a96abadc6392fb34de577d479a23810b6aeeed0",
+   "size_bytes": 36854
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/build/three.webgpu.js",
+   "sha256": "15cfce5c653541704fd9a3463c39d3e8b854bb6265ccd854d7cfe74090625cc6",
+   "size_bytes": 2284850
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/controls/OrbitControls.js",
+   "sha256": "3d79d07ecb686b4e5d93232eedab255331c1beef711e13164eaa1f68655a5f2b",
+   "size_bytes": 40755
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/gpgpu/CountingSort.js",
+   "sha256": "e9e90b6940a4da923534c3f249e8e7bd2c7603f8b432c54c62ecdc6db4be47e3",
+   "size_bytes": 8392
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/loaders/GLTFGaussianSplatLoaderExtension.js",
+   "sha256": "2814d2e49dc31c8ea45a776978fa98bfb425b55265cd6200ef55472f5f3c9aaa",
+   "size_bytes": 9063
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/loaders/GLTFLoader.js",
+   "sha256": "131c0f78c01d19368ae495caa65b3adaa10487810a36a05bb5901b769a35ac16",
+   "size_bytes": 117570
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/objects/GaussianSplat.js",
+   "sha256": "ea3f148d39413ef31781cdbb1c97a8972b2dce01ef5eebe6ef800c2b1ba7ab42",
+   "size_bytes": 32105
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/utils/BufferGeometryUtils.js",
+   "sha256": "9fb63427ce6641fa14fd0baff9cc4d1b5f9c3d85fd084bf2e90e803c44ec1797",
+   "size_bytes": 37712
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/utils/GaussianSplatUtils.js",
+   "sha256": "4b9b010149b3e1a7673de37638365e937e005a03ba706e4cd81301b717d30f54",
+   "size_bytes": 5586
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/indexer-view/three/examples/jsm/utils/SkeletonUtils.js",
+   "sha256": "b1632a703206c3d830de9fcbe515696770d04b71a15ee6b50afa6d2c3298c86f",
+   "size_bytes": 11535
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/tools/three_loader.mjs",
+   "sha256": "927190e6d34940b2c7f9586c72459c24dc5fad497268bded628acd459ec9235e",
+   "size_bytes": 564
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/validator/package/ISSUES.md",
+   "sha256": "72981a105335964111253e7e5db4e956b8ab3a17fd74c2d02180bffc7f533c20",
+   "size_bytes": 17519
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/validator/package/LICENSE",
+   "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+   "size_bytes": 11560
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/validator/package/NOTICES",
+   "sha256": "933f161ca1e7b3ead5a6cf93ebb3bf6cb67f0e79b38e08d2046f8cdc41cb78a3",
+   "size_bytes": 22286
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/validator/package/README.md",
+   "sha256": "f5f26dc624a62817b356cec631b33af7358d046a4b2c0499a5f55189d986afa5",
+   "size_bytes": 6814
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/validator/package/gltf_validator.dart.js",
+   "sha256": "b73a7b2d455ac217567725138b46d826a13d7d1bb0c88c15f7c571bfb349298c",
+   "size_bytes": 307792
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/validator/package/index.js",
+   "sha256": "78deff9ea85743e86461c2d14fae76e7fc3ca0432e652f62948066b55fa16f0d",
+   "size_bytes": 2829
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/validator/package/module.mjs",
+   "sha256": "d2a88775a8b22f61be8e00644760f0f04b615fad0fc5175fefd40e0da4df2c8f",
+   "size_bytes": 2822
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/validator/package/package.json",
+   "sha256": "3578d16153fa237c72784588da2e8fcccc9cd3c1c58ef34c7912f0732d2f5fa6",
+   "size_bytes": 618
+  },
+  {
+   "path": "<local>/c271-macos/reader-c195/validator/package/validation.schema.json",
+   "sha256": "e33db4da1e907481a5fc056d2daab40be1a603620d8f4a1c81919120f3340365",
+   "size_bytes": 11107
+  },
+  {
+   "path": "<local>/c271-p34/downloads/node/node-v24.22.1-darwin-arm64.tar.gz",
+   "sha256": "89c682593d76cd44233fa53b1563264e7de9cbb189cad169135c5b4fadfbc0a7",
+   "size_bytes": 53062778
+  }
+ ],
+ "reproduction": {
+  "interpreter": "<worktree>/.venv/bin/python (CPython 3.12.13), -I -S -B, standard library only, under PLAN-REVIEW-001's audit hook (no process start, writes only in reviews/result-001/)",
+  "commands": [
+   "$PY -I -S -B result-001/rr_check.py PART <worktree> <local> <prefix>/lib/python3.12/site-packages/pip result-001/rr-PART.json  (PART: receipts, trees, venv, conduct, retention)",
+   "$PY -I -S -B result-001/rr_digests.py <worktree> <local> result-001/reviewed-files.json",
+   "git --no-optional-locks show B:<path> | shasum -a 256, for result-001/b-blobs.json"
+  ],
+  "check_counts": {
+   "rr-conduct.json": {
+    "checks": 21,
+    "failed": []
+   },
+   "rr-receipts.json": {
+    "checks": 73,
+    "failed": []
+   },
+   "rr-retention.json": {
+    "checks": 2,
+    "failed": []
+   },
+   "rr-trees.json": {
+    "checks": 15,
+    "failed": []
+   },
+   "rr-venv.json": {
+    "checks": 17,
+    "failed": []
+   }
+  },
+  "scratch_sha256": {
+   "result-001/b-blobs.json": "9df99473b155da808bc271ff0f168e7ad45013cd8592b890a233d201940d52ce",
+   "result-001/reviewed-files.json": "afed7c10b3ba37449bf3caf7f2e45387ce25c6a7ee8d78807c9daf7a27615f0b",
+   "result-001/rr-conduct.json": "b26a6a9253878b4af2a74578ea81668e42b57554d192536c90a90d1918100a91",
+   "result-001/rr-receipts.json": "9d5996a31b41469791bac1fe7816cc8e72cebcd2f3aeb2b7909cd0205a9dc26c",
+   "result-001/rr-retention.json": "48c696d00de1f3d5458748214139187122bda9e0ae4169f506baa95961286984",
+   "result-001/rr-trees.json": "c467ad29cc83a6dfd7089043f9d2d65f53b1396686d7355d3945bd4e8f07f2d9",
+   "result-001/rr-venv.json": "039255ae2dc2665a26fb55a0dc2b50108772a0b63b3eafc5d49b3fa5f0d7a6a8",
+   "result-001/rr_check.py": "e5674816762a210b7a6cf46459244ed77d7b3bf5b5aa665838cd4d5a0875982e",
+   "result-001/rr_digests.py": "5c4e6c2a263a31c1577431f7c9c62329f6d0efd098124df08ed6d6344ed878d1",
+   "result-001/rr_write_json.py": "a97f0840dfd85613c07a5dbe7bb86f43545788949bfc180c7c4aa47b30ba4898"
+  }
+ },
+ "conduct": {
+  "node_ldd_codesign_starts": 0,
+  "pip_run": false,
+  "downloads": 0,
+  "git_writes": 0,
+  "repository_edits": 0,
+  "writes": "only under ../OntoKin-local/c271-p34/reviews/",
+  "not_checked": "A7's workflow, documentation and whitespace checks, and docs-check-B.txt, outside the questions"
+ }
+}

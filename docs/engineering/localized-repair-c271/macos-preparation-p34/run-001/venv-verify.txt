@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<local>/c271-p34/director/venv_verify.py", line 171, in <module>
+    sys.exit(main(*sys.argv[1:5]))
+             ^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p34/director/venv_verify.py", line 144, in main
+    for row in requirements(text):
+               ^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p34/director/venv_verify.py", line 67, in requirements
+    rows.append({"line": body, "name": name, "specifiers": specifiers, "applies": marker_applies(marker)})
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "<local>/c271-p34/director/venv_verify.py", line 55, in marker_applies
+    raise ValueError("unsupported marker: " + marker)
+ValueError: unsupported marker: python_version < '3.13'
