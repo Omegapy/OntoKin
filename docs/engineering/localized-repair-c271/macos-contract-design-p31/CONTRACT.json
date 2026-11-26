@@ -1,0 +1,723 @@
+{
+  "schema": "ontokin.current-host-readback-design/0.2.0",
+  "contract": "ontokin.current-host-readback/0.2.0",
+  "profile": "darwin-arm64-node-permission-v1",
+  "status": "design_candidate_pending_independent_review",
+  "phase": "C271-P31-macos-contract-design",
+  "basis": "route C of docs/engineering/localized-repair-c271/operational-plan-review-p30/REVIEW-OUTCOME.md; owner's choice of 2026-11-25 ('Design macOS contract (C)')",
+  "relation_to_0_1_0": "A separate version. ontokin.current-host-readback/0.1.0 and inspection plans /0.1.1-/0.1.5 stay adopted and unchanged for the Linux x86-64 executor class; their H0 and H1 stay unmet in local mode (P30-EXECUTOR-001). Each version's entry points refuse the other's documents.",
+  "scope": "The seven methods of tests/test_static_tray_readback_v01.py within the complete default inventory, on the owner's prepared macOS arm64 environment",
+  "implemented": false,
+  "prepared": false,
+  "runtime_qualified": false,
+  "R03_accepted": false,
+  "main_integration": false,
+  "executor": {
+    "label": "macos-arm64-local",
+    "system": "Darwin",
+    "machine": "arm64",
+    "translated": false,
+    "observed_today": {
+      "product_version": "26.6.2",
+      "build": "25G83",
+      "kernel_release": "25.6.0",
+      "observed_at_utc": "2026-11-26T03:20:05Z"
+    },
+    "bound_at_preparation": [
+      "kernel name, release and machine (os.uname)",
+      "product version and build (/System/Library/CoreServices/SystemVersion.plist)",
+      "sysctl.proc_translated = 0 (sysctlbyname)",
+      "kern.bootsessionuuid (sysctlbyname)"
+    ]
+  },
+  "node": {
+    "version": "v24.22.1",
+    "release_file": "node-v24.22.1-darwin-arm64.tar.gz",
+    "archive_sha256": "89c682593d76cd44233fa53b1563264e7de9cbb189cad169135c5b4fadfbc0a7",
+    "checksum_source": {
+      "url": "https://nodejs.org/dist/v24.22.1/SHASUMS256.txt",
+      "bytes": 3171,
+      "sha256": "fdfbffc969c0f604beff0124d409b33a43b53f5c681d6220f80023e0d6df9dc4",
+      "read_at_utc": "2026-11-26T04:25:57Z",
+      "signatures_listed": [
+        "SHASUMS256.txt.sig",
+        "SHASUMS256.txt.asc"
+      ]
+    },
+    "trust_anchor": "this adopted pin; a signature check by a Node.js release key is optional additional evidence and is recorded either way",
+    "retrieval": "a separately selected preparation phase, after the owner's approval of the download (about 53 MB)",
+    "extraction": {
+      "member": "node-v24.22.1-darwin-arm64/bin/node",
+      "type": "regular file",
+      "other_members": "not extracted",
+      "refusals": [
+        "symlink",
+        "hard link",
+        "special file",
+        "traversing name",
+        "duplicate member"
+      ]
+    },
+    "executable_pin": "SHA-256, size and mode recorded at preparation and frozen in the reviewed execution plan before any start",
+    "mach_o": "thin 64-bit arm64 executable",
+    "destination": "an absent task-specific directory; never replaces another executable",
+    "version_predicate": "v24.22.1\\n from one bounded --version start (M1)"
+  },
+  "python": {
+    "interpreter": "the C271 worktree's own .venv, created in place from main's committed local environment specification",
+    "observed_today": "CPython 3.12.13 (Homebrew)",
+    "lock": "tools/native-reader-verification-macos-arm64-cp312.lock (main)",
+    "pins": {
+      "attrs": "26.1.0",
+      "jsonschema": "4.26.0",
+      "jsonschema-specifications": "2025.9.1",
+      "referencing": "0.37.0",
+      "rpds-py": "2026.5.1",
+      "typing_extensions": "4.16.0",
+      "Pillow": "13.0.0"
+    },
+    "comparison": "names and versions, as the provider and probe compare them today"
+  },
+  "dependencies": {
+    "files": 24,
+    "archive_sha256": "b1e54a6cfef133f7004b1988c90bc718fc954409843c2bcac3772d42e904a0c9",
+    "validator": "2.0.0-dev.3.10",
+    "three": "0.186.1",
+    "three_revision": "186",
+    "kinds": "JavaScript, JSON or text; no native module",
+    "unchanged": true
+  },
+  "launch": {
+    "order": [
+      "--permission",
+      "--allow-fs-read=<each declared read root>",
+      "--allow-fs-write=<the start's private stage>",
+      "--no-addons",
+      "--max-old-space-size=256",
+      "<module-loader entry>",
+      "<probe>",
+      "--job",
+      "<FILE>"
+    ],
+    "read_roots": [
+      "bound workspace source root",
+      "dependency root",
+      "cohort root holding the bound manifest, jobs, inputs and stage"
+    ],
+    "write_roots": [
+      "the private stage of that start"
+    ],
+    "forbidden_grants": [
+      "--allow-child-process",
+      "--allow-worker",
+      "--allow-addons",
+      "--allow-wasi"
+    ],
+    "node_facts": {
+      "source": "https://nodejs.org/docs/v24.22.1/api/permissions.html and cli.html, read 2026-11-26",
+      "facts": [
+        "Permission Model stability 2, Stable; enabled by --permission",
+        "spawning a child without --allow-child-process throws ERR_ACCESS_DENIED",
+        "a worker without --allow-worker throws ERR_ACCESS_DENIED",
+        "native addons are blocked",
+        "--allow-fs-read and --allow-fs-write accept specific paths",
+        "limits: symbolic links are followed outside granted paths; existing file descriptors bypass the model"
+      ]
+    },
+    "mitigations": [
+      "no symlink in the dependency tree or the stage (existing refusal)",
+      "the child receives only its three standard streams"
+    ],
+    "environment": {
+      "PATH": "/usr/bin:/bin",
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "TZ": "UTC",
+      "UV_THREADPOOL_SIZE": "2"
+    }
+  },
+  "supervisor": {
+    "module": "prototypes/static_tray_v01/supervisor_darwin_v01.py (proposed path)",
+    "imports_unchanged_from": "prototypes/static_tray_v01/supervisor.py",
+    "imported": [
+      "Clock",
+      "Stop",
+      "LIMITS",
+      "inventory",
+      "group_exists",
+      "terminate_group",
+      "json_bytes"
+    ],
+    "reimplemented": "run_process, with the original signature and receipt fields",
+    "only_change": "the Linux precondition prctl(PR_SET_CHILD_SUBREAPER) is replaced by: sys.platform == 'darwin', machine arm64, not translated",
+    "original_supervisor": "byte-identical; stays the Linux contract's supervisor",
+    "guarantees": {
+      "kept": [
+        "one direct child in its own session and process group",
+        "bounded capture, deadlines, no retry, receipts, handles closed",
+        "a live member of the child's process group after exit refuses the run",
+        "SIGTERM then SIGKILL of the group within 2,000 ms"
+      ],
+      "not_kept": [
+        "orphaned descendants re-parented to and reaped by the supervisor (Darwin re-parents them to launchd)"
+      ],
+      "added": [
+        "a Node checker creates no descendant: enforced by the permission model"
+      ]
+    }
+  },
+  "preparer": {
+    "rules": "P05 section 5 unchanged",
+    "publication": "renamex_np(staged, destination, RENAME_EXCL) from libSystem on the same APFS volume",
+    "flag_binding": "the implementation binds RENAME_EXCL's value from the SDK header or Apple's documentation and proves no-replace with control MC15",
+    "receipts": [
+      "INSTALLED_EXACT",
+      "ALREADY_PRESENT_EXACT"
+    ],
+    "starts_during_preparation": {
+      "node": 0,
+      "ldd": 0,
+      "checker": 0
+    }
+  },
+  "host_observation": {
+    "M0": {
+      "schema": "ontokin.current-host-readback-host/0.2.0",
+      "starts": 0,
+      "fields": [
+        "kernel name, release, machine",
+        "product version and build",
+        "translation",
+        "boot identity",
+        "Python executable, version, build, seven package versions, lock bytes",
+        "Node executable path, type, SHA-256, size, mode; archive pin",
+        "Mach-O header and load commands",
+        "exact clean environment",
+        "24-file reader tree",
+        "source inventory"
+      ],
+      "mach_o_rules": [
+        "thin 64-bit arm64 executable",
+        "LC_LOAD_DYLIB, LC_LOAD_WEAK_DYLIB and LC_REEXPORT_DYLIB under /usr/lib/ or /System/Library/",
+        "LC_LOAD_DYLINKER is /usr/lib/dyld",
+        "no LC_RPATH",
+        "no @rpath, @loader_path or @executable_path",
+        "LC_CODE_SIGNATURE presence recorded"
+      ]
+    },
+    "M1": {
+      "node_starts": 1,
+      "command": "node --version under the permission flags, through the Darwin supervisor",
+      "deadline_seconds": 5,
+      "expected_stdout": "v24.22.1\\n",
+      "optional": "one codesign --verify --strict inspection start, counted separately; not required"
+    },
+    "closure_claim": "The Node executable's bytes and load commands are bound; the system libraries it loads come from the OS build's dyld shared cache and are identified only by the recorded OS product version and build, not by per-file hashes."
+  },
+  "process_denominators": {
+    "M1_version": 1,
+    "syntax_check": 1,
+    "P06_H01": 1,
+    "P06_H02": 1,
+    "original_cpu_trio": 3,
+    "coordinator_quartet": 0,
+    "total_node_starts": 7,
+    "ldd_starts": 0,
+    "optional_codesign_starts": "0 or 1"
+  },
+  "selection_rule": {
+    "qualifying_run": "driver receives --readback-config and --readback-config-sha256 from an independently reviewed execution plan; all existing rules apply; any skip, error, expected failure or missing method of the readback cohort fails the run; only a qualifying run can be cited for the readback methods, Gate H or R03",
+    "ordinary_run": "no selection: the driver proceeds and records readback_selection {status: absent, run_kind: ordinary}; the CPU class skips its three methods with the fixed reason 'No approved current-host readback selection: ordinary run, not a qualification'; coordinator seams run; no ordinary run is evidence for the readback methods",
+    "partial_selection": "fails, in either run kind",
+    "amends": "P05 CONTRACT.json selection.absent_behavior, for ordinary runs only",
+    "rejected_alternative": "requiring a selection for every run, which would make main's ordinary routine refuse to start on any uncommitted change after R04"
+  },
+  "substitutions": {
+    "S1": "Node build: official v24.22.1 darwin-arm64 release instead of the Codex runtime's Linux build",
+    "S2": "qualification Python: the worktree .venv with main's macOS lock instead of the Codex runtime's CPython 3.12.14 and the linux-cp312 lock",
+    "S3": "host observation: M0 and M1 instead of the ELF closure, ldd and /0.1.1-/0.1.5 plans",
+    "S4": "process supervisor: Darwin variant without the child-subreaper precondition",
+    "S5": "Node launch flags: --permission with exact read and write grants added before --no-addons and --max-old-space-size=256",
+    "S6": "preparer: macOS no-replace rename and one-member extraction instead of renameat2 and Linux-only installation",
+    "S7": "host bindings of provider and probe: Darwin platform, build, translation, kern.bootsessionuuid, Mach-O binding, S1 pins, macOS lock",
+    "S8": "selection rule: absent selection is an ordinary run; qualifying runs keep every rule"
+  },
+  "kept": [
+    "seven method identities and bodies, check_case, four coordinator seam bodies",
+    "synthetic GLB construction and independent geometry oracle",
+    "24 reader files byte for byte",
+    "probe scientific body and its token-equivalence obligation",
+    "thresholds and scene counts",
+    "all limits and source ceilings",
+    "one real checker start per CPU case, three for the cohort",
+    "intended negative with exactly one matrix_0_3 finding",
+    "independent numerical recomputation",
+    "explicit selection by path and external digest for qualifying runs",
+    "clean commit/tree source binding and isolated-workspace derivation",
+    "process adapter single delegation, preflight, postflight, CurrentHostBindingError, unchanged re-raise of a genuine supervisor Stop",
+    "failure accounting"
+  ],
+  "not_applicable": [
+    "ELF policies of /0.1.1-/0.1.5",
+    "ldd literal list",
+    "N34 for the Linux loader"
+  ],
+  "schemas": {
+    "config": "ontokin.current-host-readback-config/0.2.0",
+    "manifest": "ontokin.current-host-readback-lock/0.2.0",
+    "host": "ontokin.current-host-readback-host/0.2.0",
+    "result": "ontokin.current-host-readback-result/0.2.0"
+  },
+  "limits": {
+    "source_operations": 100000,
+    "source_ms": 30000,
+    "host_ms": 30000,
+    "child_work_ms": 28000,
+    "cleanup_ms": 2000,
+    "glb_bytes": 8388608,
+    "result_bytes": 4194304,
+    "log_bytes": 4194304,
+    "manifest_bytes": 1048576,
+    "audit_bytes": 4194304,
+    "job_bytes": 32768,
+    "node_inspection_seconds": 5
+  },
+  "numeric": {
+    "position_tolerance_m": 5e-06,
+    "matrix_tolerance": 1e-06,
+    "normal_tolerance": 1e-06,
+    "nodes": 14,
+    "meshes": 12,
+    "scenes": 1,
+    "animations": 0,
+    "cameras": 0,
+    "negative_delta": 0.001,
+    "negative_field": "equipment-tray/pair/left/base.world_matrix[0][3]"
+  },
+  "controls": [
+    {
+      "id": "MC01",
+      "route": "preparation",
+      "case": "archive bytes differ from the pin",
+      "expected": "refused before extraction",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH01"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC02",
+      "route": "preparation",
+      "case": "bin/node member missing, linked, special, traversing or duplicated",
+      "expected": "refused; nothing published",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH02",
+        "CH07"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC03",
+      "route": "preparation",
+      "case": "extracted executable is not thin 64-bit arm64 Mach-O",
+      "expected": "refused",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH04"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC04",
+      "route": "preparation",
+      "case": "executable SHA-256, size or mode differs from the frozen plan",
+      "expected": "refused before M1",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH01",
+        "CH02",
+        "CH10"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC05",
+      "route": "M0",
+      "case": "load command outside /usr/lib or /System/Library, LC_RPATH, or @rpath/@loader_path/@executable_path",
+      "expected": "refused",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH04",
+        "CH05"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC06",
+      "route": "M0",
+      "case": "DYLD_*, NODE_OPTIONS, NODE_PATH or a Python startup hook present",
+      "expected": "refused",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH05"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC07",
+      "route": "M0",
+      "case": "translated execution, machine other than arm64, or system other than Darwin",
+      "expected": "refused",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH04"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC08",
+      "route": "M0",
+      "case": "boot identity or OS build differs from the HOST document",
+      "expected": "refused",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH04",
+        "CH10"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC09",
+      "route": "M1",
+      "case": "observed version differs (simulated at the command boundary, labelled mocked)",
+      "expected": "failed preparation; no qualification",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH03"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC10",
+      "route": "launch",
+      "case": "--permission missing, an extra grant, or a changed read or write path",
+      "expected": "refused before the start",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH12"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC11",
+      "route": "Node",
+      "case": "probe variant tries to spawn a child, start a worker or write outside the stage",
+      "expected": "ERR_ACCESS_DENIED or a refused write; one start; no descendant",
+      "expected_node_starts": 1,
+      "maps_p05": [
+        "CH19"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC12",
+      "route": "supervisor",
+      "case": "non-Node test child leaves a member of its process group alive after exiting",
+      "expected": "'Child exited while an owned descendant remained'; group terminated within 2,000 ms",
+      "expected_node_starts": 1,
+      "maps_p05": [
+        "CH19"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC13",
+      "route": "supervisor",
+      "case": "timeout and cancellation cleanup",
+      "expected": "original limits and receipts; no retry",
+      "expected_node_starts": null,
+      "maps_p05": [
+        "CH19"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC14",
+      "route": "supervisor",
+      "case": "token-level comparison with the original run_process",
+      "expected": "only the precondition differs",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH19"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC15",
+      "route": "preparer",
+      "case": "destination appears before publication",
+      "expected": "no-replace rename refuses; existing content untouched",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH08"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC16",
+      "route": "dependencies",
+      "case": "one of the 24 files missing, extra, changed or a symlink",
+      "expected": "refused",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH06",
+        "CH07"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC17",
+      "route": "source",
+      "case": "other checkout, dirty or untracked executable source, changed provider or probe",
+      "expected": "refused",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH09",
+        "CH10"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC18",
+      "route": "selection",
+      "case": "qualifying run with a missing, partial, malformed or mismatched selection",
+      "expected": "failed preparation",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH13"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC19",
+      "route": "selection",
+      "case": "ordinary run without selection",
+      "expected": "three CPU methods skipped with the fixed reason; summary records the ordinary run kind",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH13"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC20",
+      "route": "selection",
+      "case": "qualifying run whose readback cohort skips, errors or misses a method",
+      "expected": "run not qualified",
+      "expected_node_starts": null,
+      "maps_p05": [
+        "CH13",
+        "CH18"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC21",
+      "route": "original",
+      "case": "Q01 and Q03 positive",
+      "expected": "both readers read the actual bytes; all rows pass",
+      "expected_node_starts": 2,
+      "maps_p05": [
+        "CH16"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC22",
+      "route": "original",
+      "case": "Q01 changed reference",
+      "expected": "exit 1 with exactly the intended matrix_0_3 finding",
+      "expected_node_starts": 1,
+      "maps_p05": [
+        "CH15"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC23",
+      "route": "original",
+      "case": "the four coordinator seams",
+      "expected": "original outcomes, labelled mocked",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH17"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC24",
+      "route": "direct negatives",
+      "case": "P06-H01 and P06-H02 as P07 section 5 defines them",
+      "expected": "one start each; refusal before reader imports",
+      "expected_node_starts": 2,
+      "maps_p05": [
+        "CH11-C"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MC25",
+      "route": "discovery",
+      "case": "complete default inventory against baseline plus approved additions",
+      "expected": "exact match; no hidden skip or missing method in a qualifying run",
+      "expected_node_starts": 0,
+      "maps_p05": [
+        "CH18"
+      ],
+      "status": "NOT_RUN"
+    }
+  ],
+  "p05_control_map": {
+    "CH01": [
+      "MC01",
+      "MC04"
+    ],
+    "CH02": [
+      "MC02",
+      "MC04"
+    ],
+    "CH03": [
+      "MC09"
+    ],
+    "CH04": [
+      "MC03",
+      "MC05",
+      "MC07",
+      "MC08"
+    ],
+    "CH05": [
+      "MC05",
+      "MC06"
+    ],
+    "CH06": [
+      "MC16"
+    ],
+    "CH07": [
+      "MC02",
+      "MC16"
+    ],
+    "CH08": [
+      "MC15"
+    ],
+    "CH09": [
+      "MC17"
+    ],
+    "CH10": [
+      "MC04",
+      "MC08",
+      "MC17"
+    ],
+    "CH11-P": [
+      "kept with the 0.2.0 schemas"
+    ],
+    "CH11-C": [
+      "MC24"
+    ],
+    "CH12": [
+      "MC10"
+    ],
+    "CH13": [
+      "MC18",
+      "MC19",
+      "MC20"
+    ],
+    "CH14": [
+      "kept"
+    ],
+    "CH15": [
+      "MC22"
+    ],
+    "CH16": [
+      "MC21"
+    ],
+    "CH17": [
+      "MC23"
+    ],
+    "CH18": [
+      "MC25",
+      "MC20"
+    ],
+    "CH19": [
+      "MC11",
+      "MC12",
+      "MC13",
+      "MC14"
+    ],
+    "CH20": [
+      "kept"
+    ]
+  },
+  "labels": {
+    "executor": "macos-arm64-local",
+    "carried_with": [
+      "contract ontokin.current-host-readback/0.2.0",
+      "OS product version and build",
+      "Node archive and executable pins",
+      "Python identity",
+      "run kind"
+    ]
+  },
+  "never_supported": [
+    "a Linux x86-64 qualification",
+    "the historical C199/C225 replay",
+    "a P05 Gate H for the Codex Node build",
+    "any statement that the ELF policies of /0.1.1-/0.1.5 were exercised on a real host",
+    "N34 for the Linux loader",
+    "the original supervisor's Linux descendant-reaping guarantee",
+    "a per-file closure of the macOS system libraries"
+  ],
+  "gates": [
+    {
+      "id": "D2",
+      "scope": "this design independently reviewed and adopted (C271-P31)",
+      "status": "pending"
+    },
+    {
+      "id": "B",
+      "scope": "main's local-mode files on this branch through a reviewed merge of main into the branch, resolving the six overlaps by meaning; first part of R04's preparation; no integration into main",
+      "status": "pending"
+    },
+    {
+      "id": "I2",
+      "scope": "implementation of the 0.2.0 adaptations with independently frozen non-runtime controls and independent review",
+      "status": "pending"
+    },
+    {
+      "id": "P2",
+      "scope": "preparation after the owner's download approval: Node archive, reader tree, .venv; receipts; independent review",
+      "status": "pending"
+    },
+    {
+      "id": "H2",
+      "scope": "M0, M1 and the qualifying cohort on the owner's executor; independent audit",
+      "status": "pending"
+    },
+    {
+      "id": "R",
+      "scope": "complete default routine as a qualifying run with zero skipped obligations; R03 acceptance",
+      "status": "pending"
+    },
+    {
+      "id": "R04",
+      "scope": "integration and actual-main verification",
+      "status": "pending"
+    },
+    {
+      "id": "R05",
+      "scope": "parent completion and final delivery",
+      "status": "pending"
+    }
+  ]
+}
